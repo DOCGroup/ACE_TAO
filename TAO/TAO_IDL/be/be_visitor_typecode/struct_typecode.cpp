@@ -170,7 +170,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
 int
 TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 {
-  AST_Field ** member_ptr = nullptr;
+  AST_Field *member_ptr = nullptr;
   ACE_CDR::ULong const count = node->nfields ();
 
   for (ACE_CDR::ULong i = 0; i < count; ++i)
@@ -178,7 +178,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
       node->field (member_ptr, i);
 
       be_type * const member_type =
-        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> (member_ptr->field_type ());
 
       if (this->is_typecode_generation_required (member_type)
           && member_type->accept (this) != 0)
@@ -212,7 +212,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 int
 TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
 {
-  AST_Field ** member_ptr = nullptr;
+  AST_Field *member_ptr = nullptr;
   ACE_CDR::ULong const count = node->nfields ();
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -221,10 +221,10 @@ TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
       node->field (member_ptr, i);
 
       be_decl * const member_decl =
-        dynamic_cast<be_decl*> (*member_ptr);
+      dynamic_cast<be_decl*> (member_ptr);
 
       be_type * const member_type =
-        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> (member_ptr->field_type ());
 
       os << "{ "
          << "\"" << member_decl->original_local_name () << "\", "

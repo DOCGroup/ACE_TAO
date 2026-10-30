@@ -213,10 +213,17 @@ AST_Structure::nfields () const
 }
 
 int
-AST_Structure::field (AST_Field **&result,
+AST_Structure::field (AST_Field *&result,
                       ACE_CDR::ULong slot) const
 {
-  return this->fields_.get (result, slot);
+  if (slot >= this->fields_.size ())
+    {
+      result = nullptr;
+      return -1;
+    }
+
+  result = this->fields_[slot];
+  return 0;
 }
 
 bool
@@ -321,7 +328,7 @@ AST_Structure::fwd_decl (AST_StructureFwd *node)
   this->fwd_decl_ = node;
 }
 
-ACE_Unbounded_Queue<AST_Field *> &
+std::vector<AST_Field *> &
 AST_Structure::fields ()
 {
   return this->fields_;

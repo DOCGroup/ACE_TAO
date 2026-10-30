@@ -80,7 +80,7 @@ AST_Annotation_Decl::fe_add_annotation_member (
   AST_Annotation_Decl *s = dynamic_cast<AST_Annotation_Decl*> (this);
   if (s)
     {
-      s->fields ().enqueue_tail (annotation_member);
+      s->fields ().push_back (annotation_member);
     }
 
   return dynamic_cast<AST_Annotation_Member*> (d);

@@ -128,7 +128,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
 int
 TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
 {
-  AST_Field ** member_ptr = nullptr;
+  AST_Field *member_ptr = nullptr;
 
   ACE_CDR::ULong const count = node->nfields ();
 
@@ -137,7 +137,7 @@ TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
       node->field (member_ptr, i);
 
       be_type * const member_type =
-        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> (member_ptr->field_type ());
 
       if (this->is_typecode_generation_required (member_type)
           && member_type->accept (this) != 0)
@@ -183,14 +183,14 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   ACE_CDR::ULong const countFields = node->nfields ();
   for (ACE_CDR::ULong fieldNumber = 0u; fieldNumber < countFields; ++fieldNumber)
     {
-      AST_Field ** member_ptr = nullptr;
+      AST_Field *member_ptr = nullptr;
       node->field (member_ptr, fieldNumber);
 
       be_type * const type =
-        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> (member_ptr->field_type ());
 
       be_union_branch * const branch =
-        dynamic_cast<be_union_branch*> (*member_ptr);
+        dynamic_cast<be_union_branch*> (member_ptr);
 
       ACE_ASSERT (branch != nullptr);
       ACE_CDR::ULong numberOfLabels = branch->label_list_length ();

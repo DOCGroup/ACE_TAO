@@ -79,6 +79,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "ace/Unbounded_Queue.h"
 
+#include <vector>
+
 
 class TAO_IDL_FE_Export AST_Structure
   : public virtual AST_ConcreteType,
@@ -113,7 +115,7 @@ public:
   virtual ACE_CDR::ULong nfields () const;
   // Return the count of actual fields.
 
-  virtual int field (AST_Field **&result,
+  virtual int field (AST_Field *&result,
                      ACE_CDR::ULong slot) const;
   // Get an individual field node.
 
@@ -150,7 +152,7 @@ public:
   int ast_accept (ast_visitor *visitor) override;
 
   // Accessor for the member.
-  ACE_Unbounded_Queue<AST_Field *> &fields ();
+  std::vector<AST_Field *> &fields ();
 
   static AST_Decl::NodeType const NT;
 
@@ -179,7 +181,7 @@ protected:
   int compute_size_type () override;
   // Compute the size type if it is unknown.
 
-  ACE_Unbounded_Queue<AST_Field *> fields_;
+  std::vector<AST_Field *> fields_;
   // Container for this struct's field nodes. Excludes nodes included
   // in member_count, i.e., enum values of an enum declared inside
   // the struct.

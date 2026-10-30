@@ -535,7 +535,7 @@ UTL_Scope::fe_add_ref_decl (AST_Field *t)
   AST_Structure *s = dynamic_cast<AST_Structure*> (this);
   if (s != nullptr)
     {
-      s->fields ().enqueue_tail (t);
+      s->fields ().push_back (t);
     }
 
   return dynamic_cast<AST_Field*> (d);

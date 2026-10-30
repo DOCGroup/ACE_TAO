@@ -124,11 +124,11 @@ be_visitor_union::boolean_branch (be_union_branch *b)
   bool has_other = false, other_val = false;
   for (unsigned int i = 0; br_d && i < u->nfields (); ++i)
     {
-      AST_Field **f;
+      AST_Field *f = nullptr;
       u->field (f, i);
-      if (*f != b)
+      if (f != b)
         {
-          AST_UnionBranch *other = dynamic_cast<AST_UnionBranch*> (*f);
+          AST_UnionBranch *other = dynamic_cast<AST_UnionBranch*> (f);
           for (unsigned long j = 0; j < other->label_list_length (); ++j)
             {
               has_other = true;
@@ -147,14 +147,14 @@ be_visitor_union::branch_index (be_union_branch *b)
 
   for (unsigned long i = 0; u != nullptr && i < u->nfields (); ++i)
     {
-      AST_Field **field = nullptr;
+      AST_Field *field = nullptr;
 
       if (u->field (field, i) != 0 || field == nullptr)
         {
           return -1;
         }
 
-      if (*field == b)
+      if (field == b)
         {
           return static_cast<int> (i);
         }
