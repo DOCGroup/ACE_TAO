@@ -3666,7 +3666,7 @@ idl_parse_line_and_file (char *buf)
   if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
       std::string const nm =
-        FE_Utils::stripped_preproc_include (fname.c_str ());
+        FE_Utils::stripped_preproc_include (fname);
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);

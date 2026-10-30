@@ -952,7 +952,7 @@ UTL_ScopedName *
 be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
 {
   AST_Decl *tmp = d;
-  std::string_view const name (d->full_name ());
+  std::string const& name = d->full_name ();
 
   while (tmp != nullptr)
     {
@@ -961,7 +961,7 @@ be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
           std::string const& head = tmp->local_name ()->get_string ();
 
           std::size_t const head_start = name.find (head);
-          if (head_start == std::string_view::npos)
+          if (head_start == std::string::npos)
             {
               tmp = ScopeAsDecl (tmp->defined_in ());
               continue;

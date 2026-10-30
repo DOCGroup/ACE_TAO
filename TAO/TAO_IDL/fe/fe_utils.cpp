@@ -186,28 +186,29 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
 }
 
 UTL_ScopedName *
-FE_Utils::string_to_scoped_name (std::string_view s)
+FE_Utils::string_to_scoped_name (std::string const& name)
 {
   UTL_ScopedName *retval = nullptr;
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
+  std::string::size_type start = 0;
 
-  while (!s.empty ())
+  while (start < name.size ())
     {
       // Skip a leading double colon.
-      if (s.front () == ':')
+      if (name[start] == ':')
         {
-          s.remove_prefix (s.size () > 1 ? 2 : 1);
+          start += name.size () - start > 1 ? 2 : 1;
         }
 
       // Find the next double colon (if any) and get the next
       // name segment.
-      std::string_view::size_type const pos = s.find (':');
-      std::string_view const local_name (s.substr (0, pos));
+      std::string::size_type const pos = name.find (':', start);
+      std::string const local_name = name.substr (start, pos - start);
 
       // Construct a UTL_ScopedName segment.
       ACE_NEW_RETURN (id,
-                      Identifier (std::string (local_name)),
+                      Identifier (local_name),
                       nullptr);
 
       ACE_NEW_RETURN (sn,
@@ -226,46 +227,42 @@ FE_Utils::string_to_scoped_name (std::string_view s)
         }
 
       // Update the working string.
-      if (pos == std::string_view::npos)
+      if (pos == std::string::npos)
         {
-          s = {};
+          break;
         }
       else
         {
-          s.remove_prefix (pos);
+          start = pos;
         }
     }
 
   return retval;
 }
 
-std::string_view
-FE_Utils::stripped_preproc_include (std::string_view name)
+std::string
+FE_Utils::stripped_preproc_include (std::string const& name)
 {
+  std::string stripped_name (name);
   // Some preprocessors prepend "./" to filenames in the
   // working directory, some others prepend ".\". If either
   // of these are here, we want to strip them.
-  if (!name.empty () && name.front () == '.')
+  if (!stripped_name.empty () && stripped_name.front () == '.')
     {
-      if (name.size () > 1 && (name[1] == '\\' || name[1] == '/'))
+      if (stripped_name.size () > 1
+          && (stripped_name[1] == '\\' || stripped_name[1] == '/'))
         {
-          name.remove_prefix (2);
+          stripped_name.erase (0, 2);
         }
     }
 
-  return name;
-}
-
-char const *
-FE_Utils::stripped_preproc_include (char const *name)
-{
-  return FE_Utils::stripped_preproc_include (std::string_view (name)).data ();
+  return stripped_name;
 }
 
 void
 FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                       AST_Uses *u,
-                                      std::string_view prefix)
+                                      std::string const& prefix)
 {
   std::string struct_name (prefix);
 
@@ -437,7 +434,7 @@ FE_Utils::create_implied_ami_uses_stuff ()
 }
 
 int
-FE_Utils::path_cmp (std::string_view s, std::string_view t)
+FE_Utils::path_cmp (std::string const& s, std::string const& t)
 {
 #if defined (WIN32)
   // Since Windows has case-insensitive filenames, the preprocessor,
@@ -450,7 +447,7 @@ FE_Utils::path_cmp (std::string_view s, std::string_view t)
   size_t const common_length = s.size () < t.size () ? s.size () : t.size ();
   int const compare = common_length == 0
     ? 0
-    : ACE_OS::strncasecmp (s.data (), t.data (), common_length);
+    : ACE_OS::strncasecmp (s.c_str (), t.c_str (), common_length);
   if (compare != 0)
     {
       return compare;
@@ -463,7 +460,7 @@ FE_Utils::path_cmp (std::string_view s, std::string_view t)
 }
 
 bool
-FE_Utils::hasspace (std::string_view s)
+FE_Utils::hasspace (std::string const& s)
 {
   // Windows can't have a space as the first or last character
   // but a unix filename can. Need to check all characters.
@@ -514,7 +511,7 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
 }
 
 FILE *
-FE_Utils::open_included_file (std::string_view filename,
+FE_Utils::open_included_file (std::string const& filename,
                               std::string &directory)
 {
   FILE * f = nullptr;
