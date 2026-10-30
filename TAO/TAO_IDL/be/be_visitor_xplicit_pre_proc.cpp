@@ -707,7 +707,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
     {
       ACE_NEW_RETURN (v,
-                      AST_Expression (node->dims ()[i],
+                      AST_Expression (node->dims ()[i].get (),
                                       AST_Expression::EV_ulong),
                       -1);
 

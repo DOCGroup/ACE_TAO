@@ -350,13 +350,12 @@ ast_visitor_reifying::visit_array (AST_Array *node)
 
   bt = dynamic_cast<AST_Type*> (this->reified_node_);
 
-  AST_Expression **dims = node->dims ();
   AST_Expression *v = nullptr;
   UTL_ExprList *v_list = nullptr;
 
   for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
     {
-      AST_Param_Holder *ph = dims[i]->param_holder ();
+      AST_Param_Holder *ph = node->dims ()[i]->param_holder ();
 
       if (ph != nullptr)
         {
@@ -387,7 +386,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
       else
         {
           ACE_NEW_RETURN (v,
-                          AST_Expression (dims[i],
+                          AST_Expression (node->dims ()[i].get (),
                                           AST_Expression::EV_ulong),
                           -1);
         }

@@ -465,7 +465,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
   for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
-      AST_Expression *expr = array->dims ()[i];
+      AST_Expression *expr = array->dims ()[i].get ();
 
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
@@ -586,7 +586,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
-      AST_Expression *expr = node->dims ()[i];
+      AST_Expression *expr = node->dims ()[i].get ();
 
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {

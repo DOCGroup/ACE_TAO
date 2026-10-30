@@ -80,7 +80,7 @@ be_array::create_name ()
   // Now append dimensions.
   for (i = 0; i < this->n_dims (); ++i)
     {
-      AST_Expression *expr = this->dims ()[i];
+      AST_Expression *expr = this->dims ()[i].get ();
 
       // Dimension value.
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
@@ -195,7 +195,7 @@ be_array::gen_dimensions (TAO_OutStream *os,
   for (i = (slice ? 1 : 0); i < this->n_dims (); ++i)
     {
       // Retrieve the ith.
-      AST_Expression *expr = this->dims ()[i];
+      AST_Expression *expr = this->dims ()[i].get ();
 
       // Dimension value.
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
@@ -254,7 +254,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
     {
       *os << "strm << \"[\";" << be_nl_2;
 
-      AST_Expression *expr = this->dims ()[i];
+      AST_Expression *expr = this->dims ()[i].get ();
 
       // Generate a loop for each dimension.
       *os << "for (::CORBA::ULong i" << i << " = 0; i" << i << " < "

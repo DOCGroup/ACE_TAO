@@ -227,7 +227,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
-      AST_Expression *expr = node->dims ()[i];
+      AST_Expression *expr = node->dims ()[i].get ();
 
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
