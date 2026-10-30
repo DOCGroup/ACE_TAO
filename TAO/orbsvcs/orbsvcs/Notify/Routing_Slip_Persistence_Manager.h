@@ -25,7 +25,8 @@
 #include "tao/Versioned_Namespace.h"
 #include "tao/orbconf.h"
 #include "ace/Message_Block.h"
-#include "ace/Containers_T.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -212,13 +213,13 @@ private:
   bool build_chain(
     Persistent_Storage_Block* first_block,
     Block_Header& first_header,
-    ACE_Unbounded_Stack<size_t>& allocated_blocks,
+    std::vector<size_t>& allocated_blocks,
     const ACE_Message_Block& data);
 
   /// Reload a chain from persistent store.
   bool reload_chain(Persistent_Storage_Block* first_block,
     Block_Header& first_header,
-    ACE_Unbounded_Stack<size_t>& allocated_blocks,
+    std::vector<size_t>& allocated_blocks,
     ACE_Message_Block* amb,
     ACE_UINT64 expected_serial_number);
 
@@ -252,8 +253,8 @@ private:
   /// We are part of a doubly-linked list
   Routing_Slip_Persistence_Manager* prev_manager_;
   Routing_Slip_Persistence_Manager* next_manager_;
-  ACE_Unbounded_Stack<size_t> allocated_event_blocks_;
-  ACE_Unbounded_Stack<size_t> allocated_routing_slip_blocks_;
+  std::vector<size_t> allocated_event_blocks_;
+  std::vector<size_t> allocated_routing_slip_blocks_;
   Persistent_Callback* callback_ = nullptr;
 
   /// If these are non-zero we own 'em
