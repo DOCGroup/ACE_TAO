@@ -5336,7 +5336,7 @@ yyreduce:
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
           param->id = 0;
           param->expr = (yyvsp[0].exval);
-          params->push (param);
+          params->push_back (param);
           (yyval.annotation_params_val) = params;
         }
 #line 5343 "fe/idl.tab.cpp"
@@ -5362,7 +5362,7 @@ yyreduce:
 #line 2640 "fe/idl.ypp"
         {
           AST_Annotation_Appl::Params *params = (yyvsp[0].annotation_params_val);
-          params->push ((yyvsp[-1].annotation_param_val));
+          params->insert (params->begin (), (yyvsp[-1].annotation_param_val));
           (yyval.annotation_params_val) = params;
         }
 #line 5369 "fe/idl.tab.cpp"
@@ -5372,7 +5372,7 @@ yyreduce:
 #line 2648 "fe/idl.ypp"
         {
           AST_Annotation_Appl::Params *params = (yyvsp[0].annotation_params_val);
-          params->push ((yyvsp[-1].annotation_param_val));
+          params->insert (params->begin (), (yyvsp[-1].annotation_param_val));
           (yyval.annotation_params_val) = params;
         }
 #line 5379 "fe/idl.tab.cpp"

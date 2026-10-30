@@ -2622,7 +2622,7 @@ annotation_appl_params
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
           param->id = 0;
           param->expr = $1;
-          params->push (param);
+          params->push_back (param);
           $$ = params;
         }
         | named_annotation_appl_params
@@ -2639,7 +2639,7 @@ named_annotation_appl_params
         : named_annotation_appl_param more_named_annotation_appl_params
         {
           AST_Annotation_Appl::Params *params = $2;
-          params->push ($1);
+          params->insert (params->begin (), $1);
           $$ = params;
         }
 
@@ -2647,7 +2647,7 @@ more_named_annotation_appl_params
         : ',' named_annotation_appl_param more_named_annotation_appl_params
         {
           AST_Annotation_Appl::Params *params = $3;
-          params->push ($2);
+          params->insert (params->begin (), $2);
           $$ = params;
         }
         | %empty

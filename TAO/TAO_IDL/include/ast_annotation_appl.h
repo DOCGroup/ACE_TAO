@@ -9,18 +9,15 @@
 #include "utl_identifier.h"
 #include "ast_expression.h"
 
-#include "ace/Containers_T.h"
-#include "ace/Vector_T.h"
-
 #include <string>
-#include <string>
+#include <vector>
 
 /**
  * Abstract Syntax Tree Node for an application of an annotation.
  *
- * Params are implemented as a stack of name, value pairs which are independent
- * from the finished annotation members. The members which are AST_Fields subclasses
- * stored the same way as fields in AST_Struct.
+ * Params are implemented as a sequence of name, value pairs which are
+ * independent from the finished annotation members. The members which are
+ * AST_Field subclasses are stored the same way as fields in AST_Structure.
  */
 class TAO_IDL_FE_Export AST_Annotation_Appl : public virtual AST_Annotation_Decl
 {
@@ -35,13 +32,12 @@ public:
     Identifier *id;
     AST_Expression *expr;
     bool used;
-    using Iterator = ACE_Unbounded_Stack_Iterator<Param*>;
   };
-  using Params = ACE_Unbounded_Stack<Param*>;
+  using Params = std::vector<Param *>;
   ///}
 
   /// Delete Annotation Parameters
-  static void delete_params (Params* params);
+  static void delete_params (Params *params);
 
   /**
    * Create an Annotation using it's name and parameters
@@ -77,7 +73,7 @@ public:
   bool apply_from (AST_Annotation_Decl *decl);
 
   /**
-   * Return pointer to the stack of parameters passed. BACKENDS SHOULDN'T USE
+   * Return pointer to the list of parameters passed. BACKENDS SHOULDN'T USE
    * THIS UNLESS YOU NEED EXACTLY WHAT THE USER PASSED. Backends should use the
    * lookup and scope iterator APIs that this class inherits from AST_Scope
    * and AST_Struct. Can be null.
@@ -93,7 +89,7 @@ public:
   AST_Annotation_Decl *annotation_decl ();
 
   /**
-   * Return the parameter with the specified name if it's in the stack else
+   * Return the parameter with the specified name if it's in the list else
    * returns 0.
    */
   Param *find_param (std::string const& name) const;

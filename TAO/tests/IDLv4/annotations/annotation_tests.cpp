@@ -1083,9 +1083,9 @@ annotation_tests ()
                "case C:\n"
                "default: float cfloat;\n"
                "};\n").assert_node<AST_Union>("::empty_union");
-    AST_Field **af = 0;
+    AST_Field *af = nullptr;
     test_union->field(af, 2);
-    AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch *>(*af);
+    AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch *>(af);
     if (ub != nullptr)
       {
          AST_UnionLabel *ul = ub->label ();
