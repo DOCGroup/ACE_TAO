@@ -13,19 +13,17 @@
 #include "connector.h"
 
 #include <string>
-#include <string_view>
+
 #include "ast_generator.h"
 #include "be_predefined_type.h"
 
 namespace
 {
-  std::string_view
-  remove_ami4ccm_prefix (std::string_view name)
+  std::string
+  remove_ami4ccm_prefix (std::string const& name)
   {
-    constexpr std::string_view prefix = "AMI4CCM_";
-    return name.size () >= prefix.size ()
-      ? name.substr (prefix.size ())
-      : std::string_view {};
+    std::string const prefix = "AMI4CCM_";
+    return name.size () >= prefix.size () ? name.substr (prefix.size ()) : std::string {};
   }
 }
 
@@ -225,7 +223,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class ()
 {
   TAO_INSERT_COMMENT (&os_);
 
-  std::string_view const suffix = "_reply_handler";
+  std::string const suffix = "_reply_handler";
   this->init (false);
   if (this->sync_)
     return 0;
@@ -275,10 +273,10 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
 {
   TAO_INSERT_COMMENT (&os_);
 
-  std::string_view const suffix = "_exec_i";
-  std::string_view const scope_name =
+  std::string const suffix = "_exec_i";
+  std::string const scope_name =
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
-  std::string_view const iface_name = this->iface_->local_name ();
+  std::string const iface_name = this->iface_->local_name ();
 
   os_ << be_nl_2
       << "class " << export_macro_ << " "
@@ -299,7 +297,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
   handler_str += "::";
   handler_str += iface_name;
 
-  if (iface_name.find ("AMI4CCM") != std::string_view::npos)
+  if (iface_name.find ("AMI4CCM") != std::string::npos)
     this->sync_ = false;
   else
     this->sync_ = true;
@@ -364,7 +362,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
    (s->node_type () == AST_Decl::NT_root);
-  std::string_view const smart_scope = is_global ? "" : "::";
+  std::string const smart_scope = is_global ? "" : "::";
 
   os_ << be_nl_2
       << "virtual ::CORBA::Object_ptr _get_component ();";

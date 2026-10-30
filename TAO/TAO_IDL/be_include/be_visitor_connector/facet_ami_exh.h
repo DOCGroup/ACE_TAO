@@ -14,7 +14,6 @@
 #define _BE_COMPONENT_FACET_AMI_EXH_H_
 
 #include <string>
-#include <string_view>
 
 class be_visitor_facet_ami_exh
   : public be_visitor_component_scope
@@ -50,9 +49,9 @@ protected:
   be_interface *iface_ {};
   be_interface *callback_iface_ {};
   std::string handler_str_;
-  std::string_view scope_name_ {};
-  std::string_view iface_name_ {};
-  std::string_view smart_scope_ {};
+  std::string scope_name_;
+  std::string iface_name_;
+  std::string smart_scope_;
   bool sync_ {};
 
 private:

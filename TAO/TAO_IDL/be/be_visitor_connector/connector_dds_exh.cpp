@@ -11,8 +11,6 @@
 
 #include "connector.h"
 
-#include <string_view>
-
 #include "global_extern.h"
 #include "utl_strlist.h"
 #include "utl_string.h"
@@ -397,8 +395,8 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
     {
       AST_Decl *scope = ScopeAsDecl (iface->defined_in ());
       bool global = (scope->node_type () == AST_Decl::NT_root);
-      std::string_view const smart_scope = global ? "" : "::";
-      std::string_view const lname = iface->local_name ();
+      std::string const smart_scope = global ? "" : "::";
+      std::string const lname = iface->local_name ();
 
       os_ << be_nl
           << "using " << port_elem->local_name ()->get_string () << "_type = ::"

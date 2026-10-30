@@ -12,8 +12,6 @@
 
 #include "connector.h"
 
-#include <string_view>
-
 #include "ast_structure.h"
 #include "ast_typedef.h"
 #include "ast_template_module.h"

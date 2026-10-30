@@ -12,19 +12,17 @@
 #include "connector.h"
 
 #include <string>
-#include <string_view>
+
 #include "ast_generator.h"
 #include "be_predefined_type.h"
 
 namespace
 {
-  std::string_view
-  remove_ami4ccm_prefix (std::string_view name)
+  std::string
+  remove_ami4ccm_prefix (std::string const& name)
   {
-    constexpr std::string_view prefix = "AMI4CCM_";
-    return name.size () >= prefix.size ()
-      ? name.substr (prefix.size ())
-      : std::string_view {};
+    std::string const prefix = "AMI4CCM_";
+    return name.size () >= prefix.size () ? name.substr (prefix.size ()) : std::string {};
   }
 }
 
@@ -216,7 +214,7 @@ be_visitor_facet_ami_exs::init ()
   std::string handler_str (
     ScopeAsDecl (this->iface_->defined_in ())->full_name ());
   handler_str += "::AMI_";
-  std::string_view const iface_name = this->iface_->local_name ();
+  std::string const iface_name = this->iface_->local_name ();
   handler_str += remove_ami4ccm_prefix (iface_name);
   handler_str += "Handler";
 
@@ -248,13 +246,13 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
     return 0;
 
 
-  std::string_view const suffix = "_reply_handler";
+  std::string const suffix = "_reply_handler";
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
-  std::string_view const scope_name = scope->full_name ();
+  std::string const scope_name = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  std::string_view const smart_scope = global ? "" : "::";
-  std::string_view const iface_name = this->iface_->local_name ();
+  std::string const smart_scope = global ? "" : "::";
+  std::string const iface_name = this->iface_->local_name ();
 
   os_ << be_nl
       << iface_name << suffix << "::"
@@ -334,8 +332,8 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
 {
   this->for_reply_handler_ = false;
 
-  std::string_view const suffix = "_exec_i";
-  std::string_view const iface_name = this->iface_->local_name ();
+  std::string const suffix = "_exec_i";
+  std::string const iface_name = this->iface_->local_name ();
 
   os_ << be_nl_2
       << iface_name << suffix << "::"
@@ -413,7 +411,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
    (s->node_type () == AST_Decl::NT_root);
-  std::string_view const smart_scope = is_global ? "" : "::";
+  std::string const smart_scope = is_global ? "" : "::";
 
   os_ << be_nl_2
       << "::CORBA::Object_ptr" << be_nl
@@ -474,7 +472,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
       AST_Argument *arg =
         dynamic_cast<AST_Argument*> (d);
       AST_Type *t = arg->field_type ();
-      std::string_view const type_name = t->full_name ();
+      std::string const type_name = t->full_name ();
 
       if (type_name == "Messaging::ExceptionHolder")
         {
@@ -535,7 +533,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
   // do not handle not sendc operations.
   std::string const& local_name =
     node->local_name ()->get_string ();
-  if (local_name.find ("sendc_") == std::string_view::npos)
+  if (local_name.find ("sendc_") == std::string::npos)
     {
       return 0;
     }
@@ -559,10 +557,10 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 
   AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  std::string_view const smart_scope = global ? "" : "::";
+  std::string const smart_scope = global ? "" : "::";
 
-  std::string_view const iface_name = this->iface_->local_name ();
-  std::string_view const orig_iface_name = remove_ami4ccm_prefix (iface_name);
+  std::string const iface_name = this->iface_->local_name ();
+  std::string const orig_iface_name = remove_ami4ccm_prefix (iface_name);
 
   os_ << be_nl
       << "{" << be_idt_nl
@@ -688,9 +686,9 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
 
   AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  std::string_view const smart_scope = global ? "" : "::";
+  std::string const smart_scope = global ? "" : "::";
 
-  std::string_view const orig_iface_name = this->iface_->local_name ();
+  std::string const orig_iface_name = this->iface_->local_name ();
   os_ << be_nl
       << "{" << be_idt_nl;
 

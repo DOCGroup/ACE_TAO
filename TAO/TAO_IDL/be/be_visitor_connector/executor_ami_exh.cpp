@@ -12,8 +12,6 @@
 
 #include "connector.h"
 
-#include <string_view>
-
 be_visitor_executor_ami_exh::be_visitor_executor_ami_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -32,7 +30,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
 {
   node_ = node;
 
-  std::string_view const suffix = "_exec_i";
+  std::string const suffix = "_exec_i";
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
 
   os_ << be_nl_2
@@ -81,13 +79,13 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   /// First, we strip off the "_Connector" suffix.
   std::string const& connector_name =
     scope->local_name ()->get_string ();
-  std::string_view const half_stripped_name =
+  std::string const half_stripped_name =
     connector_name.substr (0, connector_name.find ("_Connector"));
 
   os_ << half_stripped_name << "_exec_i *facet_exec_0_;" << be_nl;
 
-  std::string_view const double_stripped_name =
-    half_stripped_name.substr (std::string_view ("AMI4CCM_").size ());
+  std::string const prefix = "AMI4CCM_";
+  std::string const double_stripped_name = half_stripped_name.substr (prefix.size ());
   os_ << double_stripped_name << "_exec_i *facet_exec_1_;";
 
   os_ << be_uidt_nl
@@ -102,7 +100,7 @@ be_visitor_executor_ami_exh::visit_provides (be_provides *node)
   AST_Type *t = node->provides_type ();
   AST_Decl *scope = ScopeAsDecl (t->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  std::string_view const smart_scope = global ? "" : "::";
+  std::string const smart_scope = global ? "" : "::";
 
   os_ << be_nl_2
       << "virtual " << smart_scope << scope->full_name ()
