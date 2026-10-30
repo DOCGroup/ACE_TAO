@@ -8,15 +8,15 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_signal.h"
 
-Echo::Echo(CORBA::ORB_ptr orb,
-           int abort_counter)
-  : orb_(CORBA::ORB::_duplicate(orb))
-  , abort_counter_(abort_counter)
+Echo::Echo (CORBA::ORB_ptr orb,
+            int abort_counter)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , abort_counter_ (abort_counter)
 {
 }
 
 void
-Echo::echo_payload(Test::Payload const &)
+Echo::echo_payload (Test::Payload const &)
 {
   --this->abort_counter_;
 
@@ -31,10 +31,10 @@ Echo::echo_payload(Test::Payload const &)
 void
 Echo::echo_payload_out (Test::Payload_out data)
 {
-  int j = ACE_OS::rand() % 40000;
+  int j = ACE_OS::rand () % 40000;
   data = new Test::Payload(j);
-  data->length(j);
-  ACE_OS::memset(data->get_buffer(), 0, data->length());
+  data->length (j);
+  ACE_OS::memset (data->get_buffer (), 0, data->length ());
 
   --this->abort_counter_;
 

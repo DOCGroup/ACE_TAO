@@ -26,10 +26,6 @@ Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
                 "activate failed\n"));
 }
 
-Thread_Pool::~Thread_Pool ()
-{
-}
-
 int
 Thread_Pool::shutdown ()
 {
@@ -41,7 +37,7 @@ Thread_Pool::shutdown ()
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) eof, sending block for thread=%d\n",
                   i + 1));
-      ACE_Message_Block *mb1;
+      ACE_Message_Block *mb1 = nullptr;
       ACE_NEW_RETURN (mb1,
                       ACE_Message_Block ((char*) Test::Echo::_nil ()),
                       -1);
@@ -63,10 +59,10 @@ Thread_Pool::shutdown ()
 int
 Thread_Pool::put (Test::Echo_ptr echoptr)
 {
-  char * charData = (char *) Test::Echo::_duplicate (echoptr);
+  char *char_data = (char *) Test::Echo::_duplicate (echoptr);
 
-  ACE_Message_Block *mb = 0;
-  ACE_NEW_RETURN(mb, ACE_Message_Block(charData), -1);
+  ACE_Message_Block *mb = nullptr;
+  ACE_NEW_RETURN (mb, ACE_Message_Block (char_data), -1);
   return this->put (mb);
 }
 
@@ -93,7 +89,7 @@ Thread_Pool::svc ()
 
   for (;; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,
@@ -125,7 +121,7 @@ Thread_Pool::svc ()
 
       mb->release ();
 
-      if (CORBA::is_nil(echo.in()))
+      if (CORBA::is_nil (echo.in ()))
         {
           //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
@@ -136,7 +132,7 @@ Thread_Pool::svc ()
         }
 
       // Keep calling a few times after receiving exceptions
-      for(int exception_count = 50; exception_count; --exception_count)
+      for (int exception_count = 50; exception_count; --exception_count)
         {
           try
             {
@@ -161,7 +157,7 @@ Thread_Pool::svc ()
                     }
               }
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               // Just forget the exception and continue
             }

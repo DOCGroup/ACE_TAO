@@ -13,7 +13,7 @@ class Thread_Pool;
 class Echo_Caller : public POA_Test::Echo_Caller
 {
 public:
-  Echo_Caller (Thread_Pool *pool_);
+  explicit Echo_Caller (Thread_Pool *pool_);
   Echo_Caller (Echo_Caller const &) = delete;
   Echo_Caller &operator= (Echo_Caller const &) = delete;
   Echo_Caller (Echo_Caller &&) = delete;

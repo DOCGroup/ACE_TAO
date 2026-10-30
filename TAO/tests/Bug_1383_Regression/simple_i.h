@@ -10,7 +10,7 @@
 class Simple_i : public POA_Simple, public ACE_Event_Handler
 {
 public:
-  Simple_i (CORBA::ORB_ptr orb);
+  explicit Simple_i (CORBA::ORB_ptr orb);
   Simple_i (Simple_i const &) = delete;
   Simple_i &operator= (Simple_i const &) = delete;
   Simple_i (Simple_i &&) = delete;

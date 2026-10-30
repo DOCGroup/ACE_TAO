@@ -5,7 +5,7 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_signal.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int serverthreads = 4;
 
 int
@@ -15,21 +15,25 @@ class Client_Timer : public ACE_Event_Handler
 {
 public:
   /// Constructor
-  Client_Timer (ACE_Reactor * reactor)
+  explicit Client_Timer (ACE_Reactor *reactor)
     : ACE_Event_Handler (reactor)
   {
     this->reference_counting_policy ().value (
       ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
   }
+  Client_Timer (Client_Timer const &) = delete;
+  Client_Timer &operator= (Client_Timer const &) = delete;
+  Client_Timer (Client_Timer &&) = delete;
+  Client_Timer &operator= (Client_Timer &&) = delete;
 
   void activate ()
   {
     ACE_Time_Value tv (150, 0);
-    this->reactor()->schedule_timer (this, 0, tv, tv);
+    this->reactor ()->schedule_timer (this, nullptr, tv, tv);
   }
 
   /// Thread entry point
-  int handle_timeout (ACE_Time_Value const & , void const *)
+  int handle_timeout (ACE_Time_Value const &, void const *) override
   {
     this->reactor ()->cancel_timer (this);
     // kill the application
@@ -65,13 +69,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::ServantBase_var impl;
       {
-        Echo * tmp = 0;
+        Echo *tmp = nullptr;
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
         // reasonable way to handle allocation errors in ACE.
         ACE_NEW_RETURN (tmp,
-                        Echo(orb.in(), 1000 / serverthreads),
+                        Echo (orb.in (), 1000 / serverthreads),
                         1);
         impl = tmp;
       }
@@ -100,22 +104,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      ORB_Task worker (orb.in());
+      ORB_Task worker (orb.in ());
       worker.activate (THR_NEW_LWP | THR_JOINABLE,
                        serverthreads);
 
       try
         {
-          for(int i = serverthreads; i; --i)
+          for (int i = serverthreads; i; --i)
             {
-              server->start_task(echo.in());
+              server->start_task (echo.in ());
             }
         }
       catch (...)
         {
         }
 
-      Client_Timer * task = new Client_Timer (orb->orb_core()->reactor());
+      Client_Timer *task = new Client_Timer (orb->orb_core ()->reactor ());
       task->activate ();
       task->remove_reference ();
 
@@ -131,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -144,7 +148,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
