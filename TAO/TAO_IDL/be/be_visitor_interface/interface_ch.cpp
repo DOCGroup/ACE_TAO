@@ -11,8 +11,6 @@
 
 #include "interface.h"
 
-#include <string_view>
-
 be_visitor_interface_ch::be_visitor_interface_ch (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
@@ -420,7 +418,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
 }
 
 bool
-be_visitor_interface_ch::gen_xxx_narrow (std::string_view nar,
+be_visitor_interface_ch::gen_xxx_narrow (std::string const& nar,
                                          be_interface *node,
                                          TAO_OutStream *os)
 {

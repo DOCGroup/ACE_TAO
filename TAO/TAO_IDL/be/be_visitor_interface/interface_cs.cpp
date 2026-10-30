@@ -10,8 +10,6 @@
 
 #include "interface.h"
 
-#include <string_view>
-
 be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
@@ -396,7 +394,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 }
 
 bool
-be_visitor_interface_cs::gen_xxx_narrow (std::string_view pre,
+be_visitor_interface_cs::gen_xxx_narrow (std::string const& pre,
                                          be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

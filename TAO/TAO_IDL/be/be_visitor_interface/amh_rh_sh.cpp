@@ -12,7 +12,7 @@
 #include "interface.h"
 
 #include <string>
-#include <string_view>
+#include <string>
 
 be_visitor_amh_rh_interface_sh::be_visitor_amh_rh_interface_sh (
     be_visitor_context *ctx)
@@ -60,7 +60,7 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   std::string inherit_client_parent (node->client_enclosing_scope ());
   inherit_client_parent += rh_base_class_name;
 
-  std::string_view const inherit_tao_parent = "TAO_AMH_Response_Handler";
+  std::string const inherit_tao_parent = "TAO_AMH_Response_Handler";
 
   // Now generate the class definition
   *os << "class " << be_global->skel_export_macro ()

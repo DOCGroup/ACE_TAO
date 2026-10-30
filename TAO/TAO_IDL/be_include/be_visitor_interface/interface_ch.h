@@ -13,7 +13,7 @@
 #ifndef _BE_INTERFACE_INTERFACE_CH_H_
 #define _BE_INTERFACE_INTERFACE_CH_H_
 
-#include <string_view>
+#include <string>
 
 // we need derived interface visitors for the client and server header files. For
 // the others, they use the default interface visitor
@@ -49,7 +49,7 @@ public:
 private:
   /// Helper to generate declarations for _narrow () and
   /// _unchecked_narrow ()
-  bool gen_xxx_narrow (std::string_view n,
+  bool gen_xxx_narrow (std::string const& n,
                        be_interface *node,
                        TAO_OutStream *os);
 };

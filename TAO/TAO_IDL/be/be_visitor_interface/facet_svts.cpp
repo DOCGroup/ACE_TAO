@@ -12,7 +12,7 @@
 
 #include "interface.h"
 
-#include <string_view>
+#include <string>
 
 be_visitor_facet_svts::be_visitor_facet_svts (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
@@ -33,14 +33,14 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
       return 0;
     }
 
-  std::string_view const lname = node->local_name ();
+  std::string const lname = node->local_name ();
 
   be_decl *scope =
     dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
-  std::string_view const sname_str = scope->full_name ();
+  std::string const sname_str = scope->full_name ();
 
-  std::string_view const global = sname_str.empty () ? "" : "::";
+  std::string const global = sname_str.empty () ? "" : "::";
 
   std::string suffix (scope->flat_name ());
 

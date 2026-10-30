@@ -13,7 +13,7 @@
 #ifndef _BE_INTERFACE_INTERFACE_CS_H_
 #define _BE_INTERFACE_INTERFACE_CS_H_
 
-#include <string_view>
+#include <string>
 
 /**
  * @class be_visitor_interface_cs
@@ -48,7 +48,7 @@ private:
   /// Helper method to generate _narrow and _unchecked_narrow. The
   /// string <n> will contain the needed predicate that needs to be
   /// generated.
-  bool gen_xxx_narrow (std::string_view pre,
+  bool gen_xxx_narrow (std::string const& pre,
                        be_interface *node);
 };
 

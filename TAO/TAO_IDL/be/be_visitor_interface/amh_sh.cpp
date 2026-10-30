@@ -12,7 +12,6 @@
 #include "interface.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
     be_visitor_context *ctx)

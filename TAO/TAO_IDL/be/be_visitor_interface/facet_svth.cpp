@@ -12,6 +12,8 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_facet_svth::be_visitor_facet_svth (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
@@ -31,7 +33,7 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
       return 0;
     }
 
-  std::string_view const lname = node->local_name ();
+  std::string const lname = node->local_name ();
 
   be_decl *scope =
     dynamic_cast<be_scope*> (node->defined_in ())->decl ();
