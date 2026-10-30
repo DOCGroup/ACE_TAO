@@ -27,6 +27,10 @@ public:
                       CORBA::Boolean verbose);
 
   ~TAO_Offer_Exporter ();
+  TAO_Offer_Exporter (TAO_Offer_Exporter const &) = delete;
+  TAO_Offer_Exporter &operator= (TAO_Offer_Exporter const &) = delete;
+  TAO_Offer_Exporter (TAO_Offer_Exporter &&) = delete;
+  TAO_Offer_Exporter &operator= (TAO_Offer_Exporter &&) = delete;
 
   void export_offers ();
   // Export a number of offers to the Trading Service.
