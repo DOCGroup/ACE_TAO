@@ -31,7 +31,7 @@ AST_Template_Module_Inst::ref () const
 FE_Utils::T_ARGLIST const *
 AST_Template_Module_Inst::template_args () const
 {
-  return this->template_args_;
+  return this->template_args_.get ();
 }
 
 void
@@ -43,8 +43,7 @@ AST_Template_Module_Inst::dump (ACE_OSTREAM_TYPE &)
 void
 AST_Template_Module_Inst::destroy ()
 {
-  delete this->template_args_;
-  this->template_args_ = nullptr;
+  this->template_args_.reset ();
 
   this->AST_Field::destroy ();
 }

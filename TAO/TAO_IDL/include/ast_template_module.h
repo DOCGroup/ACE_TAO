@@ -6,6 +6,8 @@
 
 #include "fe_utils.h"
 
+#include <memory>
+
 class TAO_IDL_FE_Export AST_Template_Module
   : public virtual AST_Module,
     public virtual AST_Type
@@ -45,7 +47,7 @@ public:
   static AST_Decl::NodeType const NT;
 
 protected:
-  FE_Utils::T_PARAMLIST_INFO * template_params_;
+  std::unique_ptr<FE_Utils::T_PARAMLIST_INFO> template_params_;
 
 private:
   // Match with a template arg.

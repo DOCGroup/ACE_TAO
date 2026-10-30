@@ -11,6 +11,8 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <memory>
+
 AST_Decl::NodeType const
 AST_Template_Module::NT = AST_Decl::NT_module;
 
@@ -34,7 +36,7 @@ AST_Template_Module::~AST_Template_Module () = default;
 FE_Utils::T_PARAMLIST_INFO *
 AST_Template_Module::template_params () const
 {
-  return this->template_params_;
+  return this->template_params_.get ();
 }
 
 bool
@@ -133,8 +135,7 @@ AST_Template_Module::match_param_refs (UTL_StrList const& refs,
 void
 AST_Template_Module::destroy ()
 {
-  delete this->template_params_;
-  this->template_params_ = nullptr;
+  this->template_params_.reset ();
 
   this->AST_Module::destroy ();
 }
@@ -180,9 +181,9 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
 
       AST_Expression *ex = c->constant_value ();
 
-      AST_Expression::AST_ExprValue *ev =
+      std::unique_ptr<AST_Expression::AST_ExprValue> ev (
         ex->check_and_coerce (param->const_type_,
-                              param->enum_const_type_decl_);
+                              param->enum_const_type_decl_));
 
       if (ev == nullptr)
         {
@@ -190,10 +191,7 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
                                               param->const_type_);
         }
 
-      bool retval = (ev != nullptr);
-      delete ev;
-      ev = nullptr;
-      return retval;
+      return ev != nullptr;
     }
 
   return (param->type_ == other_type);
