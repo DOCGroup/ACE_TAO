@@ -27,6 +27,8 @@
 
 #include "ace/streams.h"
 
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
@@ -71,7 +73,7 @@ private:
   /// The name of the file from which data is read.
   ACE_TString file_name_;
 
-  using TopoStack = ACE_Unbounded_Stack<Topology_Object *>;
+  using TopoStack = std::vector<Topology_Object *>;
   TopoStack object_stack_;
   /// If false, then we're just checking syntax of topology file.
   bool live_ = false;
