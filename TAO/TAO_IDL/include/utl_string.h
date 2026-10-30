@@ -103,7 +103,6 @@ public:
 
   std::string& get_string ()
   {
-    this->canonical_rep_.clear ();
     return this->value_;
   }
   std::string const& get_string () const
@@ -111,9 +110,6 @@ public:
     return this->value_;
   }
   // Get contents of utl_string as a standard string.
-
-  std::string const& get_canonical_rep ();
-  // Get canonical representation.
 
   bool compare (UTL_String const& s) const;
   // Compare two UTL_String values.
@@ -139,7 +135,6 @@ public:
 private:
   // Data
   std::string value_;
-  std::string canonical_rep_;
 };
 
 #endif           // _STRING_STRING_HH

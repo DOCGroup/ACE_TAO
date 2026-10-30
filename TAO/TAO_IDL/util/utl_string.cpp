@@ -182,7 +182,6 @@ UTL_String::~UTL_String () = default;
 void
 UTL_String::destroy ()
 {
-  this->canonical_rep_.clear ();
   this->value_.clear ();
 }
 
@@ -197,18 +196,6 @@ bool
 UTL_String::compare_quiet (UTL_String const& s) const
 {
   return compare_quiet (this->value_, s.value_);
-}
-
-// Get the canonical representation from a String.
-std::string const&
-UTL_String::get_canonical_rep ()
-{
-  if (this->canonical_rep_.empty () && !this->value_.empty ())
-    {
-      this->canonical_rep_ = get_canonical_rep (this->value_);
-    }
-
-  return this->canonical_rep_;
 }
 
 // AST Dumping.
