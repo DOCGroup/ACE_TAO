@@ -83,9 +83,8 @@ class TAO_IDL_FE_Export UTL_String
 public:
   UTL_String () = default;
 
-  explicit UTL_String (char const* str);
   // Compatibility with the checked-in lex/yacc generated parser sources.
-  UTL_String (char const* str, bool take_copy);
+  explicit UTL_String (char const* str);
 
   explicit UTL_String (std::string value);
   explicit UTL_String (UTL_String const *s);

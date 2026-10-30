@@ -172,12 +172,6 @@ UTL_String::UTL_String (char const* str)
 {
 }
 
-UTL_String::UTL_String (char const* str, bool take_copy)
-  : UTL_String (str)
-{
-  ACE_UNUSED_ARG (take_copy);
-}
-
 UTL_String::UTL_String (std::string value)
   : value_ (std::move (value))
 {
