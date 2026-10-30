@@ -17,10 +17,10 @@ public:
   TimeoutClient (CORBA::ORB_ptr orb,
                  TimeoutObj_ptr timeoutObject,
                  AMI_TimeoutObjHandler_ptr replyHandlerObject,
-                 TimeoutHandler_i *timeoutHandler_i,
+                 TimeoutHandler_i &timeoutHandler_i,
                  unsigned long timeToWait);
 
-  ~TimeoutClient ();
+  ~TimeoutClient () = default;
   TimeoutClient (TimeoutClient const &) = delete;
   TimeoutClient &operator= (TimeoutClient const &) = delete;
   TimeoutClient (TimeoutClient &&) = delete;
@@ -34,7 +34,7 @@ private:
   int svc () override;
 
   // Wrapps complex invocations logic.
-  void send (CORBA::Boolean async,
+  void send (bool async,
              unsigned long local_timeout,
              unsigned long remote_sleep);
 
@@ -56,18 +56,14 @@ private:
   // A CORBA object reference to the reply handler
   AMI_TimeoutObjHandler_var replyHandlerObject_;
 
-  // A pointer to the actual C++ reply handler implementation
-  TimeoutHandler_i *timeoutHandler_i_ {};
+  // The actual C++ reply handler implementation
+  TimeoutHandler_i &timeoutHandler_i_;
 
   // Remember the policy manager.
   CORBA::PolicyManager_var policy_manager_;
 
   // Count test local exceptions
-  unsigned short local_reply_excep_counter_;
-
-  CORBA::Boolean const INVOKE_SYNCH;
-
-  CORBA::Boolean const INVOKE_ASYNCH;
+  unsigned short local_reply_excep_counter_ {};
 
   unsigned long timeToWait_;
 };
