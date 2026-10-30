@@ -6,8 +6,6 @@
 #include "utl_identifier.h"
 #include "ast_constant.h"
 
-#include <string_view>
-
 AST_Decl::NodeType const AST_Annotation_Decl::NT =
   AST_Decl::NT_annotation_decl;
 

@@ -132,8 +132,8 @@ be_type::tc_name ()
 // to construct the full name ourselves.
 std::string
 be_type::nested_sp_type_name (be_decl *use_scope,
-                              std::string_view suffix,
-                              std::string_view prefix) const
+                              std::string const& suffix,
+                              std::string const& prefix) const
 {
   // Our defining scope.
   be_scope *const defining_scope =

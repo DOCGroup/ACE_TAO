@@ -68,7 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/CDR_Stream.h"
 #include "utl_scoped_name.h"
 
-#include <string_view>
+#include <string>
 
 class UTL_String;
 class UTL_Scope;
@@ -241,7 +241,7 @@ public:
 
   explicit AST_Expression (char *s);
 
-  explicit AST_Expression (std::string_view s);
+  explicit AST_Expression (std::string const& s);
 
   explicit AST_Expression (UTL_ScopedName *n);
 
@@ -308,7 +308,7 @@ public:
   // Accessor for the member.
   AST_Param_Holder *param_holder () const;
 
-  static std::string_view exprtype_to_string (ExprType t);
+  static std::string exprtype_to_string (ExprType t);
 
   /// Pointer to enum of this value if applicable
   ///{

@@ -602,7 +602,7 @@ AST_Structure::operator[] (const size_t index)
 }
 
 AST_Decl *
-AST_Structure::operator[] (std::string_view name)
+AST_Structure::operator[] (std::string const& name)
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();

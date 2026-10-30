@@ -11,8 +11,6 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
-#include <string_view>
-
 AST_Decl::NodeType const
 AST_Template_Module::NT = AST_Decl::NT_module;
 
@@ -219,7 +217,7 @@ AST_Template_Module::find_param (UTL_String *name)
       FE_Utils::T_Param_Info *param = nullptr;
       i.next (param);
 
-      if (std::string_view (param->name_) == name->get_string ())
+      if (param->name_ == name->get_string ())
         {
           return param;
         }

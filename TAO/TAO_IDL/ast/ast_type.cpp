@@ -180,8 +180,8 @@ AST_Type::has_constructor (bool value)
 // Return the type name.
 std::string
 AST_Type::nested_type_name (AST_Decl *use_scope,
-                            std::string_view suffix,
-                            std::string_view prefix) const
+                            std::string const& suffix,
+                            std::string const& prefix) const
 {
   return this->nested_name (
                             this->local_name ()->get_string (),
@@ -222,11 +222,11 @@ AST_Type::legal_for_primary_key () const
 
 // This is the real thing used by the method above.
 std::string
-AST_Type::nested_name (std::string_view local_name,
-                       std::string_view full_name,
+AST_Type::nested_name (std::string const& local_name,
+                       std::string const& full_name,
                        AST_Decl *use_scope,
-                       std::string_view suffix,
-                       std::string_view prefix) const
+                       std::string const& suffix,
+                       std::string const& prefix) const
 {
   // Some compilers do not like generating a fully scoped name for a type that
   // was defined in the same enclosing scope in which it was defined. For such,
@@ -257,7 +257,7 @@ AST_Type::nested_name (std::string_view local_name,
     || ((this->node_type () == AST_Decl::NT_pre_defined
         && this->flat_name () == "CORBA_TypeCode"));
 
-  std::string_view const fname = this->full_name ();
+  std::string const& fname = this->full_name ();
   bool const corba_type = fname.substr (0, 7) == "CORBA::";
 
   if (in_root && corba_type)

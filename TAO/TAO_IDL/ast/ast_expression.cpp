@@ -84,8 +84,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-#include <string_view>
-
 AST_Expression::ExprType
 AST_Expression::eval_kind_to_expr_type (AST_Expression::EvalKind eval_kind)
 {
@@ -497,7 +495,7 @@ AST_Expression::AST_Expression (UTL_String *sv)
 }
 
 // An AST_Expression denoting a wide string.
-AST_Expression::AST_Expression (std::string_view sv)
+AST_Expression::AST_Expression (std::string const& sv)
   : pd_ec (EC_none),
     pd_ev (nullptr),
     pd_v1 (nullptr),
@@ -511,7 +509,7 @@ AST_Expression::AST_Expression (std::string_view sv)
            AST_ExprValue);
 
   this->pd_ev->et = EV_wstring;
-  this->pd_ev->u.wstrval = ACE::strndup (sv.data (), sv.size ());
+  this->pd_ev->u.wstrval = ACE::strndup (sv.c_str (), sv.size ());
 }
 
 AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
@@ -3012,7 +3010,7 @@ AST_Expression::set_n (UTL_ScopedName *new_n)
   this->pd_n = new_n;
 }
 
-std::string_view
+std::string
 AST_Expression::exprtype_to_string (ExprType t)
 {
   switch (t) {

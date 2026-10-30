@@ -89,7 +89,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <ace/OS_NS_stdlib.h>
 
 #include <string>
-#include <string_view>
 
 COMMON_Base::COMMON_Base (bool local,
                           bool abstract)
@@ -434,7 +433,7 @@ AST_Decl::compute_repoID () const
 
   bool first = true;
   bool second = false;
-  std::string_view prefix = this->prefix_;
+  std::string prefix = this->prefix_;
   UTL_Scope *scope = this->defined_in ();
 
   // If our prefix is empty, we check to see if an ancestor has one.
@@ -452,7 +451,7 @@ AST_Decl::compute_repoID () const
     }
 
   // in the first loop compute the total length
-  std::string_view version = this->version_;
+  std::string version = this->version_;
   scope = this->defined_in ();
 
   // If our version has not been set, we use the parent's, if any.
@@ -484,12 +483,12 @@ AST_Decl::compute_repoID () const
           first = second = false;
         }
 
-      std::string_view identifier (j.item ()->get_string ());
+      std::string identifier (j.item ()->get_string ());
       bool const identifier_empty = identifier.empty ();
-      static constexpr std::string_view cxx_prefix ("_cxx_");
-      if (identifier.substr (0, cxx_prefix.size ()) == cxx_prefix)
+      static constexpr char cxx_prefix[] = "_cxx_";
+      if (identifier.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
         {
-          identifier.remove_prefix (cxx_prefix.size ());
+          identifier.erase (0, sizeof (cxx_prefix) - 1);
         }
       repo_id.append (identifier);
 
@@ -581,7 +580,7 @@ AST_Decl::compute_flat_name () const
   this->flat_name_ = flat_name;
 }
 
-std::string_view
+std::string
 AST_Decl::node_type_to_string (NodeType nt)
 {
   switch (nt)
@@ -686,7 +685,7 @@ AST_Decl::node_type_to_string (NodeType nt)
     }
 }
 
-std::string_view AST_Decl::node_type_name () const
+std::string AST_Decl::node_type_name () const
 {
   return node_type_to_string (pd_node_type);
 }
@@ -762,9 +761,9 @@ AST_Decl::dump (ACE_OSTREAM_TYPE &o)
 }
 
 void
-AST_Decl::dump_i (ACE_OSTREAM_TYPE &o, std::string_view s) const
+AST_Decl::dump_i (ACE_OSTREAM_TYPE &o, std::string const& s) const
 {
-  o << std::string (s);
+  o << s;
 }
 
 int
@@ -819,24 +818,24 @@ AST_Decl::version () const
   if (this->version_.empty ())
     {
       // Calling the method will compute if necessary.
-      std::string_view const repo_id = this->repoID ();
+      std::string const& repo_id = this->repoID ();
 
       // All forms of repo id should contain two colons, the
       // version coming after the second one.
       size_t const tail1 = repo_id.find (':');
-      size_t tail2 = std::string_view::npos;
+      size_t tail2 = std::string::npos;
 
-      if (tail1 != std::string_view::npos)
+      if (tail1 != std::string::npos)
         {
           tail2 = repo_id.find (':', tail1 + 1);
         }
 
-      if (!this->typeid_set_ && tail2 != std::string_view::npos)
+      if (!this->typeid_set_ && tail2 != std::string::npos)
         {
           tail2 = repo_id.find (':', tail2 + 1);
         }
 
-      if (!this->typeid_set_ && tail2 != std::string_view::npos)
+      if (!this->typeid_set_ && tail2 != std::string::npos)
         {
           this->version_ = repo_id.substr (tail2 + 1);
         }
@@ -1065,8 +1064,8 @@ AST_Decl::name () const
 // Variation of the <name>. Computes scoped name string, applying
 // prefix and suffix to the local name component.
 UTL_ScopedName *
-AST_Decl::compute_name (std::string_view prefix,
-                        std::string_view suffix) const
+AST_Decl::compute_name (std::string const& prefix,
+                        std::string const& suffix) const
 {
   // Prepare prefix_<local_name>_suffix string.
 
@@ -1180,8 +1179,8 @@ AST_Decl::local_name (Identifier *id)
 }
 
 Identifier *
-AST_Decl::compute_local_name (std::string_view prefix,
-                              std::string_view suffix) const
+AST_Decl::compute_local_name (std::string const& prefix,
+                              std::string const& suffix) const
 {
   // Init the result with prefix.
   std::string result_str (prefix);
@@ -1207,12 +1206,12 @@ AST_Decl::original_local_name (Identifier *local_name)
 {
   // Remove _cxx_ if it is present.
   std::string const& name (local_name->get_string ());
-  static constexpr std::string_view cxx_prefix ("_cxx_");
-  if (name.substr (0, cxx_prefix.size ()) == cxx_prefix)
+  static constexpr char cxx_prefix[] = "_cxx_";
+  if (name.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
     {
       // Assign to the Identifier variable.
       ACE_NEW (this->pd_original_local_name,
-               Identifier (std::string (name.substr (cxx_prefix.size ()))));
+               Identifier (name.substr (sizeof (cxx_prefix) - 1)));
     }
   else
     {

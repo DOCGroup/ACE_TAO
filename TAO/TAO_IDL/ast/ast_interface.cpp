@@ -487,7 +487,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
         }
     }
 
-  std::string_view const full_name = t->full_name ();
+  std::string const& full_name = t->full_name ();
 
   // Initialize an iterator to search the queue for duplicates.
   for (ACE_Unbounded_Queue_Iterator<AST_Type *> q_iter (

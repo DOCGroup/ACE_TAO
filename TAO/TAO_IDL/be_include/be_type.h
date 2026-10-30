@@ -20,7 +20,6 @@
 #include "ast_type.h"
 
 #include <string>
-#include <string_view>
 
 #include "ace/SString.h"
 
@@ -45,8 +44,8 @@ public:
   /// Type name of a node used when generating declarations for smart
   /// proxies.
   virtual std::string nested_sp_type_name (be_decl *use_scope,
-                                           std::string_view suffix = {},
-                                           std::string_view prefix = {}) const;
+                                           std::string const& suffix = {},
+                                           std::string const& prefix = {}) const;
 
   /// Compute the value of the member.
   void gen_fwd_helper_name ();

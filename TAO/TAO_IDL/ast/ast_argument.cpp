@@ -76,12 +76,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "global_extern.h"
 
-#include <string_view>
+#include <string>
 
 // Static functions.
 
 // Convert an enum Direction value to a char *.
-static std::string_view
+static std::string
 direction_to_string (AST_Argument::Direction d)
 {
   switch (d)

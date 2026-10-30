@@ -785,7 +785,7 @@ AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-AST_Generator::create_expr (std::string_view s)
+AST_Generator::create_expr (std::string const& s)
 {
   AST_Expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -798,7 +798,7 @@ AST_Generator::create_expr (std::string_view s)
 AST_Expression *
 AST_Generator::create_expr (char const *s)
 {
-  return this->create_expr (std::string_view (s));
+  return this->create_expr (std::string (s));
 }
 
 AST_Expression *

@@ -73,7 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "fe_utils.h"
 
-#include <string_view>
+#include <string>
 
 class UTL_LabelList;
 class UTL_ExprList;
@@ -303,7 +303,7 @@ public:
 
   virtual AST_Expression *create_expr (UTL_String *s);
 
-  virtual AST_Expression *create_expr (std::string_view s);
+  virtual AST_Expression *create_expr (std::string const& s);
   virtual AST_Expression *create_expr (char const *s);
 
   virtual AST_Expression *create_expr (ACE_CDR::Char c);

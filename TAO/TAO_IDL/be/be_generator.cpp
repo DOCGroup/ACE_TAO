@@ -799,7 +799,7 @@ be_generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-be_generator::create_expr (std::string_view s)
+be_generator::create_expr (std::string const& s)
 {
   be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,

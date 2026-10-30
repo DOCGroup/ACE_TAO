@@ -68,7 +68,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <optional>
 #include <string>
-#include <string_view>
 
 #include "utl_scoped_name.h"
 #include "ast_annotation_appls.h"
@@ -236,8 +235,8 @@ public:
 
   UTL_ScopedName *name () const;
 
-  UTL_ScopedName *compute_name (std::string_view prefix,
-                                std::string_view suffix) const;
+  UTL_ScopedName *compute_name (std::string const& prefix,
+                                std::string const& suffix) const;
   // Variation of the <name>. Computes scoped name string, applying
   // prefix and suffix to the local name component.
 
@@ -246,8 +245,8 @@ public:
   Identifier *local_name () const;
   void local_name (Identifier *id);
 
-  Identifier *compute_local_name (std::string_view prefix,
-                                  std::string_view sufix) const;
+  Identifier *compute_local_name (std::string const& prefix,
+                                  std::string const& sufix) const;
   // Apply prefix and suffix to the local name and return.
 
   virtual std::string const& full_name () const;
@@ -398,7 +397,7 @@ public:
    */
   virtual bool ami_visit () const;
 
-  virtual std::string_view node_type_name () const;
+  virtual std::string node_type_name () const;
 
 protected:
   // These are not private because they're used by
@@ -414,7 +413,7 @@ protected:
   int contains_wstring_ {-1};
   // If we are a scope, do we contain a wstring at some level?
 
-  void dump_i (ACE_OSTREAM_TYPE &o, std::string_view s) const;
+  void dump_i (ACE_OSTREAM_TYPE &o, std::string const& s) const;
 
   void compute_repoID () const;
   // Computes the repoID.
@@ -425,7 +424,7 @@ protected:
   void compute_flat_name () const;
   // Compute the flattened fully scoped name.
 
-  static std::string_view node_type_to_string (NodeType nt);
+  static std::string node_type_to_string (NodeType nt);
   // Convert a NodeType to a string for dumping.
 
   /// Annotations applied to this IDL element

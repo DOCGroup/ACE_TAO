@@ -7,8 +7,6 @@
 
 #include "ast_visitor_reifying.h"
 
-#include <string_view>
-
 #include "ast_visitor_context.h"
 #include "ast_generator.h"
 
@@ -37,8 +35,6 @@
 #include "utl_strlist.h"
 #include "utl_string.h"
 #include "nr_extern.h"
-
-#include <string_view>
 
 ast_visitor_reifying::ast_visitor_reifying (
       ast_visitor_context *ctx)
@@ -637,7 +633,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
       FE_Utils::T_Param_Info *item = nullptr;
       iter.next (item);
 
-      std::string_view const name (item->name_.c_str ());
+      std::string const& name = item->name_;
 
       /// The param holder's info->name_ may be the same as the
       /// node's local name, but if the node comes from an
