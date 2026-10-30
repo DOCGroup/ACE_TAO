@@ -44,9 +44,8 @@
 #include "ace/Log_Msg.h"
 
 #include <string>
-#include <string_view>
 
-be_visitor_arg_traits::be_visitor_arg_traits (std::string_view S,
+be_visitor_arg_traits::be_visitor_arg_traits (std::string const& S,
                                               be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     S_ (S)
@@ -1227,7 +1226,7 @@ be_visitor_arg_traits::generated (be_decl *node,
   node->srv_sarg_traits_gen (val);
 }
 
-std::string_view
+std::string
 be_visitor_arg_traits::insert_policy () const
 {
   if (be_global->any_support ())
