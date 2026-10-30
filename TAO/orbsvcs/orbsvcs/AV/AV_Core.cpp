@@ -226,10 +226,10 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                         "address given for flow %s\n",
                         entry->flowname ()));
 
-          address_flow_set.insert (entry);
+          TAO_AV_Container_Utils::insert (address_flow_set, entry);
         }
       else
-        flow_set.insert (entry);
+        TAO_AV_Container_Utils::insert (flow_set, entry);
     } //End of For Loop
 
 
@@ -280,10 +280,11 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                 }
               // Now if the address_set has been changed due to the addition of a control entry we should
               // add that to the flow_spec_set also.
-              if (flow_spec_set.find (entry) < 0)
+              if (std::find (flow_spec_set.begin (), flow_spec_set.end (), entry)
+                  == flow_spec_set.end ())
                 {
                   // entry doesn't exist so add it.
-                  flow_spec_set.insert (entry);
+                  TAO_AV_Container_Utils::insert (flow_spec_set, entry);
                   //                   size_t len = flow_spec.length ();
                   //                   flow_spec.length (len+1);
                   //                   flow_spec [len] = entry->entry_to_string ();
@@ -330,10 +331,11 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   }
                 // Now if the address_set has been changed due to the addition of a control entry we should
                 // add that to the flow_spec_set also.
-                if (flow_spec_set.find (entry) < 0)
+                if (std::find (flow_spec_set.begin (), flow_spec_set.end (), entry)
+                    == flow_spec_set.end ())
                 {
                   // entry doesn't exist so add it.
-                  flow_spec_set.insert (entry);
+                  TAO_AV_Container_Utils::insert (flow_spec_set, entry);
                 }
               }
           }
@@ -385,10 +387,11 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                   }
                 // Now if the address_set has been changed due to the addition of a control entry we should
                 // add that to the flow_spec_set also.
-                if (flow_spec_set.find (entry) < 0)
+                if (std::find (flow_spec_set.begin (), flow_spec_set.end (), entry)
+                    == flow_spec_set.end ())
                 {
                   // entry doesn't exist so add it.
-                  flow_spec_set.insert (entry);
+                  TAO_AV_Container_Utils::insert (flow_spec_set, entry);
                 }
               }
           }
@@ -525,7 +528,7 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
                 forward_entry->set_peer_addr (address);
             }
           else
-            connector_flow_set.insert (entry);
+            TAO_AV_Container_Utils::insert (connector_flow_set, entry);
         }
     }
   int result = -1;
@@ -717,7 +720,7 @@ TAO_AV_Core::load_default_transport_factories ()
   ACE_NEW_RETURN (udp_item, TAO_AV_Transport_Item ("UDP_Factory"), -1);
   udp_item->factory (udp_factory);
 
-  this->transport_factories_.insert (udp_item);
+  TAO_AV_Container_Utils::insert (this->transport_factories_, udp_item);
 
   TAO_AV_Transport_Factory *tcp_factory = nullptr;
   TAO_AV_Transport_Item *tcp_item = nullptr;
@@ -741,7 +744,7 @@ TAO_AV_Core::load_default_transport_factories ()
   ACE_NEW_RETURN (tcp_item, TAO_AV_Transport_Item ("TCP_Factory"), -1);
   tcp_item->factory (tcp_factory);
 
-  this->transport_factories_.insert (tcp_item);
+  TAO_AV_Container_Utils::insert (this->transport_factories_, tcp_item);
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
   char const *udp_qos_factory_str = "UDP_QoS_Factory";
@@ -771,7 +774,7 @@ TAO_AV_Core::load_default_transport_factories ()
 
   udp_qos_item->factory (udp_qos_factory);
 
-  this->transport_factories_.insert (udp_qos_item);
+  TAO_AV_Container_Utils::insert (this->transport_factories_, udp_qos_item);
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
 #if defined ACE_HAS_SCTP
@@ -802,7 +805,7 @@ TAO_AV_Core::load_default_transport_factories ()
 
   sctp_seq_item->factory (sctp_seq_factory);
 
-  this->transport_factories_.insert (sctp_seq_item);
+  TAO_AV_Container_Utils::insert (this->transport_factories_, sctp_seq_item);
 #endif /* ACE_HAS_SCTP */
 
   return 0;
@@ -887,7 +890,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   ACE_NEW_RETURN (udp_item, TAO_AV_Flow_Protocol_Item ("UDP_Flow_Factory"), -1);
   udp_item->factory (udp_flow_factory);
 
-  this->flow_protocol_factories_.insert (udp_item);
+  TAO_AV_Container_Utils::insert (this->flow_protocol_factories_, udp_item);
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
@@ -914,7 +917,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   ACE_NEW_RETURN (udp_qos_flow_item, TAO_AV_Flow_Protocol_Item ("UDP_QoS_Flow_Factory"), -1);
   udp_qos_flow_item->factory (udp_qos_flow_factory);
 
-  this->flow_protocol_factories_.insert (udp_qos_flow_item);
+  TAO_AV_Container_Utils::insert (this->flow_protocol_factories_, udp_qos_flow_item);
 
 #endif /* defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS) */
 
@@ -943,7 +946,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   ACE_NEW_RETURN (sctp_seq_flow_item, TAO_AV_Flow_Protocol_Item ("SCTP_SEQ_Flow_Factory"), -1);
   sctp_seq_flow_item->factory (sctp_seq_flow_factory);
 
-  this->flow_protocol_factories_.insert (sctp_seq_flow_item);
+  TAO_AV_Container_Utils::insert (this->flow_protocol_factories_, sctp_seq_flow_item);
 
 #endif /* ACE_HAS_SCTP */
 
@@ -969,7 +972,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   ACE_NEW_RETURN (tcp_item, TAO_AV_Flow_Protocol_Item ("TCP_Flow_Factory"), -1);
   tcp_item->factory (tcp_flow_factory);
 
-  this->flow_protocol_factories_.insert (tcp_item);
+  TAO_AV_Container_Utils::insert (this->flow_protocol_factories_, tcp_item);
 
   TAO_AV_Flow_Protocol_Factory *rtp_flow_factory = nullptr;
   TAO_AV_Flow_Protocol_Item *rtp_item = nullptr;
@@ -993,7 +996,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   ACE_NEW_RETURN (rtp_item, TAO_AV_Flow_Protocol_Item ("RTP_Flow_Factory"), -1);
   rtp_item->factory (rtp_flow_factory);
 
-  this->flow_protocol_factories_.insert (rtp_item);
+  TAO_AV_Container_Utils::insert (this->flow_protocol_factories_, rtp_item);
 
   TAO_AV_Flow_Protocol_Factory *rtcp_flow_factory = nullptr;
   TAO_AV_Flow_Protocol_Item *rtcp_item = nullptr;
@@ -1017,7 +1020,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   ACE_NEW_RETURN (rtcp_item, TAO_AV_Flow_Protocol_Item ("RTCP_Flow_Factory"), -1);
   rtcp_item->factory (rtcp_flow_factory);
 
-  this->flow_protocol_factories_.insert (rtcp_item);
+  TAO_AV_Container_Utils::insert (this->flow_protocol_factories_, rtcp_item);
 
   TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = nullptr;
   TAO_AV_Flow_Protocol_Item *sfp_item = nullptr;
@@ -1041,7 +1044,7 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   ACE_NEW_RETURN (sfp_item, TAO_AV_Flow_Protocol_Item ("SFP_Flow_Factory"), -1);
   sfp_item->factory (sfp_flow_factory);
 
-  this->flow_protocol_factories_.insert (sfp_item);
+  TAO_AV_Container_Utils::insert (this->flow_protocol_factories_, sfp_item);
 
   return 0;
 }

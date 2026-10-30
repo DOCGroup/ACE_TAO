@@ -1658,7 +1658,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::Connect: %s\n",  entry->entry_to_string ()));
 
-          this->forward_flow_spec_set.insert (entry);
+          TAO_AV_Container_Utils::insert (this->forward_flow_spec_set, entry);
         }
 
       int result =TAO_AV_CORE::instance ()->init_forward_flows (this,
@@ -1699,7 +1699,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                         "TAO_StreamEndPoint::Connect: Reverse Flow Spec %s\n",
                         entry->entry_to_string ()));
 
-          this->reverse_flow_spec_set.insert (entry);
+          TAO_AV_Container_Utils::insert (this->reverse_flow_spec_set, entry);
         }
 
       result = TAO_AV_CORE::instance ()->init_reverse_flows (this,
@@ -2075,7 +2075,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
                               entry->entry_to_string ()));
             }
 
-          this->forward_flow_spec_set.insert (entry);
+          TAO_AV_Container_Utils::insert (this->forward_flow_spec_set, entry);
         }
 
       result = TAO_AV_CORE::instance ()->init_forward_flows (this,
@@ -2556,7 +2556,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                         flow_spec[i] = CORBA::string_dup (new_entry->entry_to_string ());
                         //new_entry->is_multicast (1);
 
-                        this->forward_flow_spec_set.insert (new_entry);
+                        TAO_AV_Container_Utils::insert (this->forward_flow_spec_set, new_entry);
                         TAO_AV_Acceptor_Registry *acceptor_registry = TAO_AV_CORE::instance ()->acceptor_registry ();
                         result = acceptor_registry->open (this,
                                                           TAO_AV_CORE::instance (),
@@ -2702,7 +2702,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
                         //                 if (result < 0)
                         //                   return 0;
 
-                        this->forward_flow_spec_set.insert (forward_entry);
+                        TAO_AV_Container_Utils::insert (this->forward_flow_spec_set, forward_entry);
                         TAO_AV_Connector_Registry *connector_registry = TAO_AV_CORE::instance ()->connector_registry ();
                         result = connector_registry->open (this,
                                                            TAO_AV_CORE::instance (),
@@ -3562,8 +3562,8 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
       AVStreams::FlowConsumer_ptr flow_consumer =
         AVStreams::FlowConsumer::_duplicate (consumer);
 
-      this->flow_producer_set_.insert (flow_producer);
-      this->flow_consumer_set_.insert (flow_consumer);
+      TAO_AV_Container_Utils::insert (this->flow_producer_set_, flow_producer);
+      TAO_AV_Container_Utils::insert (this->flow_consumer_set_, flow_consumer);
       AVStreams::FlowConnection_var flowconnection =
         this->_this ();
 
@@ -3641,7 +3641,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
           // set, since multiconnect could be called many times which will lead to
           // a call to add_producer every time a sink is added. If the producer is already
           // present in our list we just return immediately.
-          int result = this->flow_producer_set_.insert (flow_producer);
+          int result = TAO_AV_Container_Utils::insert (this->flow_producer_set_, flow_producer);
           if (result == 1)
             {
               // producer exists in the set, a duplicate.
@@ -3721,7 +3721,7 @@ TAO_FlowConnection::add_consumer (AVStreams::FlowConsumer_ptr consumer,
             // Consumer exists in the set, a duplicate.
             ORBSVCS_ERROR_RETURN ((LM_WARNING, "TAO_FlowConnection::add_Consumer: Consumer already exists\n"), 1);
         }
-      int result = this->flow_consumer_set_.insert (flow_consumer);
+      int result = TAO_AV_Container_Utils::insert (this->flow_consumer_set_, flow_consumer);
       if (result == 1)
         {
           // consumer exists in the set, a duplicate.
@@ -4185,7 +4185,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
                         0);
 
         TAO_AV_Acceptor_Registry *acceptor_registry = TAO_AV_CORE::instance ()->acceptor_registry ();
-        this->flow_spec_set_.insert (entry);
+        TAO_AV_Container_Utils::insert (this->flow_spec_set_, entry);
         int result = acceptor_registry->open (this,
                                               TAO_AV_CORE::instance (),
                                               this->flow_spec_set_);
@@ -4229,7 +4229,7 @@ TAO_FlowEndPoint::connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
                                               use_flow_protocol,
                                               address),
                   0);
-  this->flow_spec_set_.insert (entry);
+  TAO_AV_Container_Utils::insert (this->flow_spec_set_, entry);
   TAO_AV_Connector_Registry *connector_registry = TAO_AV_CORE::instance ()->connector_registry ();
   int result = connector_registry->open (this,
                                          TAO_AV_CORE::instance (),
@@ -4353,7 +4353,7 @@ TAO_FlowProducer::connect_mcast (AVStreams::QoS & /* the_qos */,
                                              address),
                   0);
 
-  this->flow_spec_set_.insert (entry);
+  TAO_AV_Container_Utils::insert (this->flow_spec_set_, entry);
   TAO_AV_Acceptor_Registry *acceptor_registry =
     TAO_AV_CORE::instance ()->acceptor_registry ();
   int result = acceptor_registry->open (this,

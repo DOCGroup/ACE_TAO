@@ -18,8 +18,11 @@
 #include "tao/PortableServer/PortableServer.h"
 
 #include "ace/Singleton.h"
-#include "ace/Unbounded_Set.h"
 #include "ace/Null_Mutex.h"
+
+#include <algorithm>
+#include <list>
+#include <new>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
@@ -38,16 +41,48 @@ class TAO_AV_Transport_Factory;
 class TAO_AV_Flow_Protocol_Item;
 class TAO_AV_Flow_Protocol_Factory;
 
-using TAO_AV_FlowSpecSet = ACE_Unbounded_Set<TAO_FlowSpec_Entry*>;
-using TAO_AV_FlowSpecSetItor = ACE_Unbounded_Set_Iterator<TAO_FlowSpec_Entry*>;
+using TAO_AV_FlowSpecSet = std::list<TAO_FlowSpec_Entry *>;
+using TAO_AV_FlowSpecSetItor = TAO_AV_FlowSpecSet::iterator;
 
-using TAO_AV_TransportFactorySet = ACE_Unbounded_Set<TAO_AV_Transport_Item*>;
-using TAO_AV_TransportFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Transport_Item*>;
+using TAO_AV_TransportFactorySet = std::list<TAO_AV_Transport_Item *>;
+using TAO_AV_TransportFactorySetItor = TAO_AV_TransportFactorySet::iterator;
 
-// typedefs for containers containing the list of loaded Flow_Protocol factories.
-using TAO_AV_Flow_ProtocolFactorySet = ACE_Unbounded_Set<TAO_AV_Flow_Protocol_Item*>;
-using TAO_AV_Flow_ProtocolFactorySetItor =
-  ACE_Unbounded_Set_Iterator<TAO_AV_Flow_Protocol_Item*>;
+// Containers containing the list of loaded Flow_Protocol factories.
+using TAO_AV_Flow_ProtocolFactorySet = std::list<TAO_AV_Flow_Protocol_Item *>;
+using TAO_AV_Flow_ProtocolFactorySetItor = TAO_AV_Flow_ProtocolFactorySet::iterator;
+
+namespace TAO_AV_Container_Utils
+{
+  template <typename Container, typename T>
+  int insert (Container & container, T const & value)
+  {
+    if (std::find (container.begin (), container.end (), value) != container.end ())
+      return 1;
+
+    try
+      {
+        container.push_back (value);
+      }
+    catch (std::bad_alloc const &)
+      {
+        return -1;
+      }
+
+    return 0;
+  }
+
+  template <typename Container, typename T>
+  int remove (Container & container, T const & value)
+  {
+    typename Container::iterator const position =
+      std::find (container.begin (), container.end (), value);
+    if (position == container.end ())
+      return -1;
+
+    container.erase (position);
+    return 0;
+  }
+}
 
 /**
  * @class TAO_AV_Core

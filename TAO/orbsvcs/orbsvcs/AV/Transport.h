@@ -13,6 +13,7 @@
 #define TAO_AV_TRANSPORT_H
 #include /**/ "ace/pre.h"
 
+#include <list>
 
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/AV_Core.h"
@@ -278,8 +279,8 @@ protected:
   ACE_CString flowname_;
 };
 
-using TAO_AV_ConnectorSet = ACE_Unbounded_Set<TAO_AV_Connector*>;
-using TAO_AV_ConnectorSetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
+using TAO_AV_ConnectorSet = std::list<TAO_AV_Connector *>;
+using TAO_AV_ConnectorSetItor = TAO_AV_ConnectorSet::iterator;
 
 /**
  * @class TAO_AV_Connector_Registry
@@ -311,8 +312,8 @@ protected:
   TAO_AV_ConnectorSet connectors_;
 };
 
-using TAO_AV_AcceptorSet = ACE_Unbounded_Set<TAO_AV_Acceptor*>;
-using TAO_AV_AcceptorSetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>;
+using TAO_AV_AcceptorSet = std::list<TAO_AV_Acceptor *>;
+using TAO_AV_AcceptorSetItor = TAO_AV_AcceptorSet::iterator;
 
 /**
  * @class TAO_AV_Acceptor_Registry

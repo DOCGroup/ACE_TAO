@@ -16,6 +16,7 @@
 
 #if defined (ACE_HAS_SCTP)
 
+#include <list>
 #include <memory>
 #include "ace/Service_Config.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
@@ -29,8 +30,8 @@ extern "C" {
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-using Interface_Seq = ACE_Unbounded_Set<ACE_CString>;
-using Interface_Seq_Itor = ACE_Unbounded_Set_Iterator<ACE_CString>;
+using Interface_Seq = std::list<ACE_CString>;
+using Interface_Seq_Itor = Interface_Seq::iterator;
 
 using Secondary_Addr_Map = ACE_Hash_Map_Manager<ACE_CString, Interface_Seq, ACE_Null_Mutex>;
 using Secondary_Addr_Map_Entry = ACE_Hash_Map_Entry<ACE_CString, Interface_Seq>;
