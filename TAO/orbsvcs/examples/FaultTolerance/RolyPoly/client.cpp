@@ -2,8 +2,6 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/SString.h"
-#include "ace/Unbounded_Queue.h"
 
 // IOR manipulation.
 #include "tao/IORManipulation/IORManip_Loader.h"
@@ -12,9 +10,11 @@
 
 #include "RolyPolyC.h"
 
-using IOR_QUEUE = ACE_Unbounded_Queue<ACE_SString>;
+#include <new>
+#include <string>
+#include <vector>
 
-IOR_QUEUE ior_strs;
+std::vector<std::string> ior_strs;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -27,14 +27,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
     {
     case 'k':
       {
-      ACE_SString ior(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
-      if (ior_strs.enqueue_tail (ior) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to enqueue IOR: %s\n",
-                           ior.c_str ()),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG, "Enqueued IOR: %s\n", ior.c_str ()));
+      try
+        {
+          std::string const ior (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
+          ior_strs.push_back (ior);
+          ACE_DEBUG ((LM_DEBUG, "Enqueued IOR: %s\n", ior.c_str ()));
+        }
+      catch (std::bad_alloc const&)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to store IOR\n"),
+                            -1);
+        }
       }
       break;
     default:
@@ -61,7 +65,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (::parse_args (argc, argv) != 0) return -1;
 
-      if (ior_strs.is_empty ())
+      if (ior_strs.empty ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "No IOR provided\n"),
                           -1);
@@ -72,29 +76,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var object;
 
-      if (ior_strs.size() > 1)
+      if (ior_strs.size () > 1)
       {
         // merge case
 
-        ACE_DEBUG ((LM_DEBUG, "We got %d iors\n", ior_strs.size ()));
-        IOR_QUEUE::ITERATOR ior_go = ior_strs.begin ();
-        ACE_SString *pior = nullptr;
-         while (ior_go.next (pior) != 0)
-           {
-             ACE_DEBUG ((LM_DEBUG, "IOR: %s\n", pior->c_str ()));
-             ior_go.advance ();
-           }
-
-
-        IOR_QUEUE::ITERATOR ior_iter = ior_strs.begin ();
-
-        ACE_SString *ior = nullptr;
-        ior_iter.next (ior);
+        ACE_DEBUG ((LM_DEBUG, "We got %B iors\n", ior_strs.size ()));
+        for (std::string const& ior : ior_strs)
+          ACE_DEBUG ((LM_DEBUG, "IOR: %s\n", ior.c_str ()));
 
         CORBA::Object_var object_primary;
 
         object_primary =
-          orb->string_to_object (ior->c_str());
+          orb->string_to_object (ior_strs.front ().c_str ());
 
 
         // Get an object reference for the ORBs IORManipultion object!
@@ -107,18 +100,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
         // Create the list
-        TAO_IOP::TAO_IOR_Manipulation::IORList iors (ior_strs.size ());
-        iors.length(ior_strs.size ());
-        size_t cntr = 0;
-        iors [cntr] = CORBA::Object::_duplicate (object_primary.in ());
+        CORBA::ULong const ior_count = static_cast<CORBA::ULong> (ior_strs.size ());
+        TAO_IOP::TAO_IOR_Manipulation::IORList iors (ior_count);
+        iors.length (ior_count);
+        iors [0] = CORBA::Object::_duplicate (object_primary.in ());
 
-        while (ior_iter.advance ())
+        for (size_t cntr = 1; cntr < ior_strs.size (); ++cntr)
           {
-            ++cntr;
-            ior_iter.next (ior);
-            ACE_DEBUG ((LM_DEBUG, "IOR%d: %s\n",cntr, ior->c_str ()));
-            iors [cntr] =
-              orb->string_to_object (ior->c_str());
+            ACE_DEBUG ((LM_DEBUG, "IOR%B: %s\n", cntr, ior_strs[cntr].c_str ()));
+            iors [static_cast<CORBA::ULong> (cntr)] =
+              orb->string_to_object (ior_strs[cntr].c_str ());
           }
 
         ACE_DEBUG ((LM_DEBUG, "Prepare to merge IORs.\n"));
@@ -160,12 +151,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
       else
       {
-        ACE_SString *ior = nullptr;
-        if (ior_strs.get (ior) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to extract the only IOR string\n"),
-                            -1);
-        object = orb->string_to_object (ior->c_str());
+        object = orb->string_to_object (ior_strs.front ().c_str ());
       }
 
       RolyPoly_var server =
