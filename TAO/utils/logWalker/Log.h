@@ -9,6 +9,7 @@
 #include "ace/Synch.h"
 #include "ace/SString.h"
 #include "ace/Time_Value.h"
+#include <vector>
 #include "PeerProcess.h"
 #include "HostProcess.h"
 #include "GIOP_Buffer.h"
@@ -29,7 +30,7 @@ public:
   Invocation *invocation_;
 };
 
-using IncidentList = ACE_Unbounded_Queue<Incident>;
+using IncidentList = std::vector<Incident>;
 
 
 class Log

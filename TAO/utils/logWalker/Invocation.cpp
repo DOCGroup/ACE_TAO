@@ -56,7 +56,7 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
 void
 Invocation::add_notify_incident (const ACE_CString &text, size_t /* offset */)
 {
-  this->notify_incidents_.enqueue_tail (text);
+  this->notify_incidents_.push_back (text);
 }
 
 bool
@@ -452,14 +452,11 @@ Invocation::dump_detail (ostream &strm,
   if (this->req_octets_ != 0 && this->req_octets_->has_octets())
     this->dump_special_details (strm, indent, opname);
   strm << endl;
-  if (this->notify_incidents_.size() > 0)
+  if (!this->notify_incidents_.empty ())
     {
-      for (NotifyIncidents::ITERATOR i = this->notify_incidents_.begin();
-           !(i.done()); i.advance())
+      for (ACE_CString const & note : this->notify_incidents_)
         {
-          ACE_CString *note = 0;
-          i.next(note);
-          strm << "            " << *note << endl;
+          strm << "            " << note << endl;
         }
     }
 }
