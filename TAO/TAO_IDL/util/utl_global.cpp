@@ -1204,22 +1204,14 @@ IDL_GlobalData::fini ()
       ACE::strdelete (entry->int_id_);
     }
 
-  DCPS_Type_Info_Map::ENTRY *dcps_entry = nullptr;
-
-  for (DCPS_Type_Info_Map::ITERATOR dcps_iter (
-         this->dcps_type_info_map_);
-       !dcps_iter.done ();
-       dcps_iter.advance ())
+  for (std::pair<std::string const,
+                 std::unique_ptr<DCPS_Data_Type_Info>> const& dcps_entry :
+         this->dcps_type_info_map_)
     {
-      dcps_iter.next (dcps_entry);
-
-      dcps_entry->int_id_->name_->destroy ();
-      delete dcps_entry->int_id_->name_;
-      dcps_entry->int_id_->name_ = nullptr;
-
-      delete dcps_entry->int_id_;
-      dcps_entry->int_id_ = nullptr;
+      dcps_entry.second->name_->destroy ();
     }
+
+  this->dcps_type_info_map_.clear ();
 }
 
 ACE_Unbounded_Queue<AST_ValueType *> &
@@ -1352,10 +1344,9 @@ void
 IDL_GlobalData::add_dcps_data_type (std::string const& id)
 {
   // Check if the type already exists.
-  DCPS_Data_Type_Info *newinfo = nullptr;
   std::string const& type_name = id;
 
-  if (this->dcps_type_info_map_.find (type_name, newinfo) != 0)
+  if (this->dcps_type_info_map_.find (type_name) == this->dcps_type_info_map_.end ())
     {
       // No existing entry, add one.
 
@@ -1366,12 +1357,17 @@ IDL_GlobalData::add_dcps_data_type (std::string const& id)
       UTL_ScopedName* target =
         new UTL_ScopedName (new Identifier (""), t1);
 
-      newinfo = new DCPS_Data_Type_Info ();
-      newinfo->name_ = target;
+      std::unique_ptr<DCPS_Data_Type_Info> newinfo (
+        new DCPS_Data_Type_Info ());
+      newinfo->name_.reset (target);
 
       // Add the newly formed entry to the map.
-      if (this->dcps_type_info_map_.bind (type_name, newinfo) != 0)
+      std::pair<DCPS_Type_Info_Map::iterator, bool> const result =
+        this->dcps_type_info_map_.try_emplace (type_name, std::move (newinfo));
+      if (!result.second)
         {
+          newinfo->name_->destroy ();
+          newinfo->name_.reset ();
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to insert type into ")
                       ACE_TEXT ("DCPS type container: %s.\n"),
@@ -1391,13 +1387,14 @@ bool
 IDL_GlobalData::add_dcps_data_key (std::string const& id, std::string const& key)
 {
   // Search the map for the type.
-  DCPS_Data_Type_Info *newinfo = nullptr;
   std::string const& type_name = id;
+  DCPS_Type_Info_Map::iterator const entry =
+    this->dcps_type_info_map_.find (type_name);
 
-  if (this->dcps_type_info_map_.find (type_name, newinfo) == 0)
+  if (entry != this->dcps_type_info_map_.end ())
     {
       // Add the new key field to the type.
-      newinfo->key_list_.push_back (key);
+      entry->second->key_list_.push_back (key);
       return true;
     }
   else
@@ -1414,18 +1411,15 @@ IDL_GlobalData::DCPS_Data_Type_Info*
 IDL_GlobalData::is_dcps_type (UTL_ScopedName* target)
 {
   // Traverse the entire map.
-  DCPS_Type_Info_Map::ENTRY* entry ;
-
-  for (DCPS_Type_Info_Map::ITERATOR current (
-         this->dcps_type_info_map_);
-       current.next (entry);
-       current.advance ())
+  for (std::pair<std::string const,
+                 std::unique_ptr<DCPS_Data_Type_Info>> const& entry :
+         this->dcps_type_info_map_)
     {
       // Look for our Identifier.
-      if (0 == entry->int_id_->name_->compare (target))
+      if (0 == entry.second->name_->compare (target))
         {
           // Found it!
-          return entry->int_id_;
+          return entry.second.get ();
         }
     }
 

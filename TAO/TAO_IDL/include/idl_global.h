@@ -79,8 +79,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_utils.h"
 #include "idl_version.h"
 
+#include <memory>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
@@ -400,13 +402,18 @@ public:
 
   struct DCPS_Data_Type_Info
   {
-    UTL_ScopedName *name_;
+    DCPS_Data_Type_Info () = default;
+    DCPS_Data_Type_Info (DCPS_Data_Type_Info const&) = delete;
+    DCPS_Data_Type_Info (DCPS_Data_Type_Info&&) = delete;
+    DCPS_Data_Type_Info& operator= (DCPS_Data_Type_Info const&) = delete;
+    DCPS_Data_Type_Info& operator= (DCPS_Data_Type_Info&&) = delete;
+
+    std::unique_ptr<UTL_ScopedName> name_;
     DCPS_Key_List   key_list_;
   };
 
-  using DCPS_Type_Info_Map = ACE_Hash_Map_Manager<std::string,
-                                                   DCPS_Data_Type_Info*,
-                                                   ACE_Null_Mutex>;
+  using DCPS_Type_Info_Map =
+    std::unordered_map<std::string, std::unique_ptr<DCPS_Data_Type_Info>>;
 
   // FE calls when #pragma DCPS_DATA_TYPE is processed
   void add_dcps_data_type (std::string const& id);
