@@ -270,8 +270,8 @@ TAO_NotifyLogFactory_i::destroy ()
 
 //CosNotifyComm::NotifySubscribe
 void
-TAO_NotifyLogFactory_i::subscription_change (const CosNotification::EventTypeSeq& added,
-                          const CosNotification::EventTypeSeq& removed)
+TAO_NotifyLogFactory_i::subscription_change (CosNotification::EventTypeSeq const &added,
+                                             CosNotification::EventTypeSeq const &removed)
 {
   consumer_admin_->subscription_change (added, removed);
 }
@@ -283,14 +283,15 @@ TAO_NotifyLogFactory_i::get_qos ()
 }
 
 void
-TAO_NotifyLogFactory_i::set_qos (const CosNotification::QoSProperties& qos)
+TAO_NotifyLogFactory_i::set_qos (CosNotification::QoSProperties const &qos)
 {
   consumer_admin_->set_qos (qos);
 }
 
 void
-TAO_NotifyLogFactory_i::validate_qos (const CosNotification::QoSProperties& required_qos,
-                   CosNotification::NamedPropertyRangeSeq_out available_qos)
+TAO_NotifyLogFactory_i::validate_qos (
+    CosNotification::QoSProperties const &required_qos,
+    CosNotification::NamedPropertyRangeSeq_out available_qos)
 {
   consumer_admin_->validate_qos (required_qos, available_qos);
 }

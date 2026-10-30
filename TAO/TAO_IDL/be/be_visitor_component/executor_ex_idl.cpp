@@ -12,16 +12,15 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_executor_ex_idl::be_visitor_executor_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_executor_ex_idl::~be_visitor_executor_ex_idl (
-  )
-{
-}
+be_visitor_executor_ex_idl::~be_visitor_executor_ex_idl () = default;
 
 int
 be_visitor_executor_ex_idl::visit_component (
@@ -43,14 +42,13 @@ be_visitor_executor_ex_idl::visit_component (
     }
   else
     {
-      ACE_CString sname_str =
+      std::string const sname_str (
         IdentifierHelper::orig_sn (
-          ScopeAsDecl (base->defined_in ())->name ());
+          ScopeAsDecl (base->defined_in ())->name ()).c_str ());
 
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
+      std::string const global = sname_str.empty () ? "" : "::";
 
-      os_ << global << sname << "::CCM_"
+      os_ << global << sname_str << "::CCM_"
           << base->original_local_name ()->get_string ();
     }
 
@@ -106,8 +104,8 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
   be_type *ft = node->field_type ();
 
   os_ << IdentifierHelper::type_name (ft, this);
-  os_ << " " << this->ctx_->port_prefix ().c_str ()
-     << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
+  os_ << " " << this->ctx_->port_prefix ()
+     << IdentifierHelper::try_escape (node->original_local_name ());
 
   this->gen_exception_list (node->get_get_exceptions (),
                            rd_only ? "" : "get");
@@ -168,21 +166,19 @@ be_visitor_executor_ex_idl::visit_provides (
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
 
-  ACE_CString sname_str =
-    IdentifierHelper::orig_sn (scope->name ());
-  const char *sname = sname_str.c_str ();
-
-  const char *lname =
+  std::string const sname_str (
+    IdentifierHelper::orig_sn (scope->name ()).c_str ());
+  std::string const& lname =
     impl->original_local_name ()->get_string ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
   os_ << be_nl
-      << global << sname << "::CCM_" << lname << " get_"
+      << global << sname_str << "::CCM_" << lname << " get_"
       << port_name << " ();";
 
   return 0;
@@ -197,7 +193,7 @@ be_visitor_executor_ex_idl::visit_consumes (
   os_ << be_nl
       << "void push_" << node->local_name ()->get_string ()
       << " (in ::"
-      << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      << IdentifierHelper::orig_sn (impl->name ())
       << " e);";
 
   return 0;
@@ -214,7 +210,7 @@ be_visitor_executor_ex_idl::gen_supported ()
     {
       os_ << "," << be_nl
           << "::"
-          << IdentifierHelper::orig_sn (supported[i]->name ()).c_str ();
+          << IdentifierHelper::orig_sn (supported[i]->name ());
     }
 
   os_ << be_uidt;
@@ -223,7 +219,7 @@ be_visitor_executor_ex_idl::gen_supported ()
 void
 be_visitor_executor_ex_idl::gen_exception_list (
   UTL_ExceptList *exceptions,
-  const char *prefix,
+  std::string const& prefix,
   bool closed)
 {
   if (exceptions != nullptr && exceptions->length () > 0)
@@ -235,7 +231,7 @@ be_visitor_executor_ex_idl::gen_exception_list (
            !ei.is_done ();)
         {
           os_ << "::"
-              << IdentifierHelper::orig_sn (ei.item ()->name ()).c_str ();
+              << IdentifierHelper::orig_sn (ei.item ()->name ());
 
           ei.next ();
 

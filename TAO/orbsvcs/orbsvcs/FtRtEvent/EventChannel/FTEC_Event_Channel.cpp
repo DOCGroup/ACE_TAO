@@ -75,7 +75,7 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     GroupInfoPublisher::instance()->set_naming_context(naming_context);
 
     if (FTRTEC::Replication_Service::instance()->init(0, nullptr) == -1)
-      return 0;
+      return nullptr;
 
     GroupInfoPublisher::instance()->subscribe(FTRTEC::Replication_Service::instance());
 

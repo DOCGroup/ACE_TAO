@@ -26,14 +26,18 @@ class be_visitor_valuetype_init : public be_visitor_valuetype
 {
 public:
   /// constructor
-  be_visitor_valuetype_init (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_init (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_init ();
+  ~be_visitor_valuetype_init () override;
+  be_visitor_valuetype_init (be_visitor_valuetype_init const &) = delete;
+  be_visitor_valuetype_init (be_visitor_valuetype_init &&) = delete;
+  be_visitor_valuetype_init &operator= (be_visitor_valuetype_init const &) = delete;
+  be_visitor_valuetype_init &operator= (be_visitor_valuetype_init &&) = delete;
 
 public:
-  void begin_public ();
-  void begin_private ();
+  void begin_public () override;
+  void begin_private () override;
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_INIT_H_ */

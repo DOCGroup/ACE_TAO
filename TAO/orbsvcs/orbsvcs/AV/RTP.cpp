@@ -105,7 +105,6 @@ RTP_Packet::RTP_Packet(unsigned char padding,
                        ACE_UINT32 *csrc_list,
                        char *data,
                        ACE_UINT16 data_size)
-  :extension_bytes_(0)
 {
   //size of header (in octets) without contributing sources
   ACE_UINT16 size = 3*4;
@@ -175,9 +174,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       }
 }
 
-RTP_Packet::~RTP_Packet()
-{
-}
+RTP_Packet::~RTP_Packet() = default;
 
 ACE_UINT16
 RTP_Packet::packet_size()
@@ -334,7 +331,7 @@ TAO_AV_RTP_Object::handle_input ()
     {
       if ((errno == EADDRNOTAVAIL) || (errno == ECONNRESET))
         {
-          this->connection_gone_ = 1;
+          this->connection_gone_ = true;
           return -1;
         }
       else
@@ -488,7 +485,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_AV_RTP_Object::send_frame (const iovec *iov,
+TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                int iovcnt,
                                TAO_AV_frame_info *frame_info)
 {
@@ -612,7 +609,7 @@ TAO_AV_RTP_Object::send_frame (const iovec *iov,
 }
 
 int
-TAO_AV_RTP_Object::send_frame (const char*,
+TAO_AV_RTP_Object::send_frame (char const *,
                                size_t)
 {
   return 0;
@@ -622,9 +619,7 @@ TAO_AV_RTP_Object::send_frame (const char*,
 TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   : TAO_AV_Protocol_Object (callback, transport)
-  , format_ (0)
   , control_object_ (nullptr)
-  , connection_gone_ (0)
 {
   this->sequence_num_ = static_cast<ACE_UINT16> (ACE_OS::rand ());
   this->timestamp_offset_ = ACE_OS::rand ();
@@ -654,7 +649,7 @@ TAO_AV_RTP_Object::destroy ()
 }
 
 int
-TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
+TAO_AV_RTP_Object::set_policies (TAO_AV_PolicyList const &policy_list)
 {
   this->policy_list_ = policy_list;
   CORBA::ULong const num_policies = this->policy_list_.length ();
@@ -755,7 +750,7 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 }
 
 int
-TAO_AV_RTP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_RTP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strncasecmp (flow_string,"RTP",3) == 0)
     {
@@ -764,7 +759,7 @@ TAO_AV_RTP_Flow_Factory::match_protocol (const char *flow_string)
   return 0;
 }
 
-const char *
+char const *
 TAO_AV_RTP_Flow_Factory::control_flow_factory ()
 {
   return "RTCP";

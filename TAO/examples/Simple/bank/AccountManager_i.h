@@ -45,21 +45,26 @@ class AccountManager_i : public POA_Bank::AccountManager
 {
 public:
   /// Constructor.
-  AccountManager_i ();
+  AccountManager_i () = default;
 
   /// Destructor.
-  virtual ~AccountManager_i ();
+  ~AccountManager_i () override = default;
+
+  AccountManager_i (AccountManager_i const &) = delete;
+  AccountManager_i &operator= (AccountManager_i const &) = delete;
+  AccountManager_i (AccountManager_i &&) = delete;
+  AccountManager_i &operator= (AccountManager_i &&) = delete;
 
   /// Return the Account interface with the given name from the server.
   /// Put the initial balance specified in the new account.
-  virtual Bank::Account_ptr open (const char *name,
-                                  CORBA::Float initial_balance);
+  Bank::Account_ptr open (char const *name,
+                          CORBA::Float initial_balance) override;
 
   /// Close the given account.
-  virtual void close (Bank::Account_ptr);
+  void close (Bank::Account_ptr) override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
@@ -71,7 +76,7 @@ public:
   void set_orb_manager (TAO_ORB_Manager *orb_manager);
 
   /// The ORB manager.
-  TAO_ORB_Manager *orb_manager_;
+  TAO_ORB_Manager *orb_manager_ {};
 
 private:
   /// ORB pointer.
@@ -80,10 +85,10 @@ private:
   /// POA pointer.
   PortableServer::POA_var poa_;
 
-  typedef TAO_Intrusive_Ref_Count_Handle<Account_i> Account_i_var;
-  typedef ACE_Hash_Map_Manager<ACE_CString,
-                               Account_i_var,
-                               ACE_Null_Mutex> MAP_MANAGER_TYPE;
+  using Account_i_var = TAO_Intrusive_Ref_Count_Handle<Account_i>;
+  using MAP_MANAGER_TYPE = ACE_Hash_Map_Manager<ACE_CString,
+                                                Account_i_var,
+                                                ACE_Null_Mutex>;
 
   /**
    * Calls to <open> will create a new instance of <Account_i> and
@@ -92,7 +97,6 @@ private:
    */
   MAP_MANAGER_TYPE hash_map_;
 
-  void operator= (const AccountManager_i &);
 };
 
 #endif /* ACCOUNTMANAGER_I_H */

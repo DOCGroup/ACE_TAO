@@ -17,7 +17,7 @@ TAO_FT_Naming_Manager *TAO_FT_Persistent_Naming_Context::naming_manager_impl_ = 
 
 TAO_FT_Persistent_Naming_Context::TAO_FT_Persistent_Naming_Context (
   PortableServer::POA_ptr poa,
-  const char *poa_id,
+  char const *poa_id,
   TAO_Persistent_Context_Index *context_index,
   HASH_MAP *map,
   ACE_UINT32 *counter)
@@ -40,7 +40,7 @@ TAO_FT_Persistent_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 }
 
 CORBA::Object_ptr
-TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
+TAO_FT_Persistent_Naming_Context::resolve (CosNaming::Name const &n)
 {
   // Invoke the base class resolve operation to acquire the object at the
   // specified compound name.
@@ -57,7 +57,7 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
       return resolved_ref._retn ();
 
     // If there is no naming manager, we will fail and report an error.
-    if ( this->naming_manager_impl_ == 0)
+    if ( this->naming_manager_impl_ == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_FT_Persistent_Naming_Context::resolve ")
@@ -70,13 +70,13 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
     // next object reference from the object group.
     resolved_ref = this->naming_manager_impl_->next_member (resolved_ref.in ());
   }
-  catch (const PortableGroup::ObjectGroupNotFound&)
+  catch (PortableGroup::ObjectGroupNotFound const &)
   {
     // This is apparently not an object group, so we should return the
     // object reference itself
     // No action required
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
      ex._tao_print_exception (
         ACE_TEXT ("TAO_FT_Persistent_Naming_Context::resolve ")

@@ -40,11 +40,16 @@
 class Logger_Client
 {
 public:
+  Logger_Client (Logger_Client const&) = delete;
+  Logger_Client (Logger_Client&&) = delete;
+  Logger_Client& operator= (Logger_Client const&) = delete;
+  Logger_Client& operator= (Logger_Client&&) = delete;
+
   /// Constructor.
-  Logger_Client ();
+  Logger_Client () = default;
 
   /// Destructor.
-  ~Logger_Client ();
+  ~Logger_Client () = default;
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv);
@@ -59,7 +64,7 @@ private:
   /// Prepares the <Log_Record> for logging.
   void init_record (Logger::Log_Record &newrec,
                     Logger::Log_Priority lp,
-                    const char *msg);
+                    char const *msg);
 
   /// Initialises the name server and resolves the logger_factory
   int init_naming_service ();
@@ -68,7 +73,7 @@ private:
   int init_loggers ();
 
   /// Shows contents of the record (for debugging purposes).
-  void show_record (Logger::Log_Record &newrec);
+  void show_record (Logger::Log_Record const &newrec) const;
 
   /// Keep a pointer to the ORB for easy access
   CORBA::ORB_var orb_;
@@ -78,10 +83,10 @@ private:
   TAO_Naming_Client my_name_client_;
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// A pointer to the Logger_Factory; used in init_loggers
   Logger_Factory_var factory_;

@@ -17,9 +17,7 @@ be_visitor_enum_any_op_cs::be_visitor_enum_any_op_cs (
 {
 }
 
-be_visitor_enum_any_op_cs::~be_visitor_enum_any_op_cs ()
-{
-}
+be_visitor_enum_any_op_cs::~be_visitor_enum_any_op_cs () = default;
 
 int
 be_visitor_enum_any_op_cs::visit_enum (be_enum *node)

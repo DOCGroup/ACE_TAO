@@ -13,9 +13,7 @@ TAO_SequenceDef_i::TAO_SequenceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_SequenceDef_i::~TAO_SequenceDef_i ()
-{
-}
+TAO_SequenceDef_i::~TAO_SequenceDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_SequenceDef_i::def_kind ()

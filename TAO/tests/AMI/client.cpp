@@ -18,14 +18,14 @@
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
-int debug = 0;
-int shutdown_flag = 0;
-int perform_work_flag = 1;
+bool debug = false;
+bool shutdown_flag = false;
+bool perform_work_flag = true;
 int number_of_replies = 0;
 
 CORBA::Long in_number = 931232;
 char const *in_str = "Let's talk AMI.";
-int parameter_corruption = 0;
+bool parameter_corruption = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -49,10 +49,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        shutdown_flag = 1;
+        shutdown_flag = true;
         break;
       case 'w':
-        perform_work_flag = 0;
+        perform_work_flag = false;
         break;
       case '?':
       default:
@@ -106,9 +106,12 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler ()
-  {
-  };
+  Handler () = default;
+  ~Handler () override = default;
+  Handler (Handler const &) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   void foo (CORBA::Long result,
             CORBA::Long out_l) override
@@ -116,7 +119,7 @@ public:
       if (result == 0)
         {
           ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
-          parameter_corruption = 1;
+          parameter_corruption = true;
         }
 
       if (debug)
@@ -138,7 +141,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Caught exception:");
         }
@@ -168,10 +171,6 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     };
-  ~Handler ()
-  {
-  };
-
   void inout_arg_test (char const *) override
   {
     ACE_DEBUG ((LM_DEBUG,
@@ -291,7 +290,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -304,8 +303,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 Client::Client (A::AMI_Test_ptr server,
                 int niterations)
-                :  ami_test_var_ (A::AMI_Test::_duplicate (server)),
-     niterations_ (niterations)
+  : ami_test_var_ (A::AMI_Test::_duplicate (server)),
+    niterations_ (niterations)
 {
   the_handler_var_ = handler._this (/* */);
 }
@@ -326,7 +325,7 @@ Client::svc ()
                       niterations));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

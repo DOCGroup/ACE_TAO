@@ -53,9 +53,9 @@ public:
 
   void event_i (CORBA::ComponentIR::EventDef_ptr event);
 
-  virtual CORBA::Boolean is_a (const char *event_id);
+  virtual CORBA::Boolean is_a (char const *event_id);
 
-  CORBA::Boolean is_a_i (const char *event_id);
+  CORBA::Boolean is_a_i (char const *event_id);
 
   /// This can be the same for the three derived classes, so it is
   /// implemented here.

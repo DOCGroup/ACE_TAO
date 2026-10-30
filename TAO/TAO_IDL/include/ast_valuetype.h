@@ -3,10 +3,16 @@
 
 #include "ast_interface.h"
 
+#include <vector>
+
 class TAO_IDL_FE_Export AST_ValueType
   : public virtual AST_Interface
 {
 public:
+  AST_ValueType (AST_ValueType const &) = delete;
+  AST_ValueType (AST_ValueType &&) = delete;
+  AST_ValueType &operator= (AST_ValueType const &) = delete;
+  AST_ValueType &operator= (AST_ValueType &&) = delete;
   AST_ValueType (UTL_ScopedName *n,
                  AST_Type **inherits,
                  long n_inherits,
@@ -22,7 +28,7 @@ public:
 
   ~AST_ValueType () override;
 
-  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
+  bool in_recursion (std::vector<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
 
   // This also calls the base class version.
@@ -69,7 +75,7 @@ public:
   using FWD_TYPE = AST_ValueTypeFwd;
 
 protected:
-  AST_Type **pd_supports;
+  std::vector<AST_Type *> pd_supports;
   long pd_n_supports;
   AST_Type *pd_inherits_concrete;
   AST_Type *pd_supports_concrete;
@@ -78,11 +84,11 @@ protected:
   bool pd_custom;
 
 protected:
-  virtual AST_Factory *fe_add_factory (AST_Factory *f);
-  virtual AST_Field *fe_add_field (AST_Field *o);
+  AST_Factory *fe_add_factory (AST_Factory *f) override;
+  AST_Field *fe_add_field (AST_Field *o) override;
 
-  bool derived_from_primary_key_base (const AST_ValueType *node,
-                                      const AST_ValueType *pk_base) const;
+  bool derived_from_primary_key_base (AST_ValueType const *node,
+                                      AST_ValueType const *pk_base) const;
   AST_ValueType *lookup_primary_key_base () const;
 };
 

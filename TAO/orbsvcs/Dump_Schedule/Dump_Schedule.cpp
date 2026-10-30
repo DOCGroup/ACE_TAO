@@ -10,7 +10,7 @@
 // This program dumps the results of one scheduling in a C++ file.
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -32,7 +32,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-      const char *name = "ScheduleService";
+      char const *name = "ScheduleService";
       if (command_line.get_argc() > 1)
         {
           name = command_line.get_ASCII_argv()[1];
@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                                             anomalies.in (),
                                             ACE_TEXT("Scheduler_Runtime.cpp"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Dump_Schedule");
     }

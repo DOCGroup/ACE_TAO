@@ -25,15 +25,20 @@ class Test_impl : public POA_OBV_FactoryTest::Test
 {
 public:
   /// ctor
-  Test_impl (CORBA::ORB_ptr orb);
+  explicit Test_impl (CORBA::ORB_ptr orb);
 
-  virtual OBV_FactoryTest::BaseValue * get_base_value ();
+  Test_impl (Test_impl const&) = delete;
+  Test_impl (Test_impl&&) = delete;
+  Test_impl& operator= (Test_impl const&) = delete;
+  Test_impl& operator= (Test_impl&&) = delete;
 
-  virtual OBV_FactoryTest::Value1 * get_value1 ();
+  OBV_FactoryTest::BaseValue *get_base_value () override;
 
-  virtual OBV_FactoryTest::Value2 * get_value2 ();
+  OBV_FactoryTest::Value1 *get_value1 () override;
 
-  virtual void shutdown ();
+  OBV_FactoryTest::Value2 *get_value2 () override;
+
+  void shutdown () override;
 
 private:
   /// The ORB

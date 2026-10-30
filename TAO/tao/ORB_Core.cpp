@@ -695,7 +695,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
 #if defined (ACE_HAS_IPV6)
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferIPV6Interfaces"))))
         {
           int const prefer_ipv6_interfaces = ACE_OS::atoi (current_arg);
@@ -706,7 +706,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBConnectIPV6Only"))))
         {
           int const connect_ipv6_only = ACE_OS::atoi (current_arg);
@@ -717,7 +717,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter
+      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBUseIPV6LinkLocal"))))
         {
           int const use_ipv6_link_local = ACE_OS::atoi (current_arg);

@@ -37,34 +37,39 @@ class Consumer_Input_Handler : public ACE_Event_Handler
 public:
   // Initialization and termination methods.
   /// Constructor.
-  Consumer_Input_Handler();
+  Consumer_Input_Handler () = default;
 
   /// Destructor.
-  ~Consumer_Input_Handler () = default;
+  ~Consumer_Input_Handler () override = default;
+
+  Consumer_Input_Handler (Consumer_Input_Handler const &) = delete;
+  Consumer_Input_Handler &operator= (Consumer_Input_Handler const &) = delete;
+  Consumer_Input_Handler (Consumer_Input_Handler &&) = delete;
+  Consumer_Input_Handler &operator= (Consumer_Input_Handler &&) = delete;
 
   /// registers the input event handler.
   /// returns 0 on success, -1 on error.
   int initialize (Consumer_Handler *);
 
   /// Dispatch the callback when events occur.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Close down the handler.
   int close ();
 
   /// Report whether the Consumer initiated the shutdown.
-  int consumer_initiated_shutdown ();
+  bool consumer_initiated_shutdown () const;
 
   /// Indicate that the Consumer initiated the shutdown.
-  void consumer_initiated_shutdown (int);
+  void consumer_initiated_shutdown (bool);
 
 private:
   /// Pointer to the <Consumer_Handler> that receives notifications
   /// from the <Event_Comm::Notifier>.
-    Consumer_Handler *receiver_handler_;
+  Consumer_Handler *receiver_handler_ {};
 
   /// Keep track of whether the Consumer initiated the shutdown.
-  int consumer_initiated_shutdown_;
+  bool consumer_initiated_shutdown_ {};
 };
 
 #endif /* CONSUMER_INPUT_HANDLER_H */

@@ -55,6 +55,11 @@ public:
 
   /// Used to force the initialization.
   static int Initializer ();
+
+  TAO_FT_ClientService_Activate (TAO_FT_ClientService_Activate const&) = delete;
+  TAO_FT_ClientService_Activate& operator= (TAO_FT_ClientService_Activate const&) = delete;
+  TAO_FT_ClientService_Activate (TAO_FT_ClientService_Activate&&) = delete;
+  TAO_FT_ClientService_Activate& operator= (TAO_FT_ClientService_Activate&&) = delete;
 };
 
 static int

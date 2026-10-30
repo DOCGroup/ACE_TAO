@@ -65,11 +65,6 @@ inline void SCTP_Connector::set_heart_beat(int hb)
 }
 
 
-SCTP_Fault_Detector::~SCTP_Fault_Detector()
-{
-}
-
-
 int SCTP_Fault_Detector::parse_conf(int argc, ACE_TCHAR** argv)
 {
   ACE_TRACE ("SCTP_Fault_Detector::parse_conf");

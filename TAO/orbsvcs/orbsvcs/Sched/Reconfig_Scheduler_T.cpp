@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // This is awkward, but it makes MSVC++ happy.
 extern "C"
 {
-using COMP_FUNC = int (*) (const void *, const void *);
+using COMP_FUNC = int (*) (void const *, void const *);
 }
 
 
@@ -41,16 +41,14 @@ using COMP_FUNC = int (*) (const void *, const void *);
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-TAO_Reconfig_Scheduler (int enforce_schedule_stability,
-                        const CORBA::Double & critical_utilization_threshold,
-                        const CORBA::Double & noncritical_utilization_threshold)
+TAO_Reconfig_Scheduler (bool enforce_schedule_stability,
+                        CORBA::Double const & critical_utilization_threshold,
+                        CORBA::Double const & noncritical_utilization_threshold)
   : config_info_count_ (0),
     rt_info_count_ (0),
     rt_info_tuple_count_ (0),
     next_handle_ (1),
-    entry_ptr_array_ (0),
     entry_ptr_array_size_ (0),
-    tuple_ptr_array_ (0),
     tuple_ptr_array_size_ (0),
     stability_flags_ (SCHED_NONE_STABLE),
     enforce_schedule_stability_ (enforce_schedule_stability),
@@ -79,9 +77,9 @@ TAO_Reconfig_Scheduler (int config_count,
                         int dependency_count,
                         ACE_Scheduler_Factory::POD_Dependency_Info dependency_infos[],
                         u_long stability_flags,
-                        int enforce_schedule_stability,
-                        const CORBA::Double & critical_utilization_threshold,
-                        const CORBA::Double & noncritical_utilization_threshold)
+                        bool enforce_schedule_stability,
+                        CORBA::Double const & critical_utilization_threshold,
+                        CORBA::Double const & noncritical_utilization_threshold)
   : config_info_count_ (0),
     rt_info_count_ (0),
     rt_info_tuple_count_ (0),
@@ -113,7 +111,7 @@ TAO_Reconfig_Scheduler (int config_count,
                   dependency_count, dependency_infos,
                   stability_flags);
     }
-  catch (const CORBA::SystemException& )
+  catch (CORBA::SystemException const & )
     {
        ORBSVCS_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
                              "ACE_LOCK>::TAO_Reconfig_Scheduler "
@@ -137,7 +135,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
     {
       this->close ();
     }
-  catch (const CORBA::SystemException& )
+  catch (CORBA::SystemException const & )
     {
       ORBSVCS_ERROR ((LM_ERROR, "TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, "
                             "ACE_LOCK>::~TAO_Reconfig_Scheduler "
@@ -423,7 +421,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close ()
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-create (const char *entry_point)
+create (char const *entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -450,7 +448,7 @@ create (const char *entry_point)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-lookup (const char * entry_point)
+lookup (char const * entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -629,7 +627,7 @@ reset (RtecScheduler::handle_t handle,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-set_seq (const RtecScheduler::RT_Info_Set& infos)
+set_seq (RtecScheduler::RT_Info_Set const & infos)
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -685,7 +683,7 @@ set_seq (const RtecScheduler::RT_Info_Set& infos)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-reset_seq (const RtecScheduler::RT_Info_Set& infos)
+reset_seq (RtecScheduler::RT_Info_Set const & infos)
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -763,7 +761,7 @@ reset_seq (const RtecScheduler::RT_Info_Set& infos)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-replace_seq (const RtecScheduler::RT_Info_Set& infos)
+replace_seq (RtecScheduler::RT_Info_Set const & infos)
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -898,7 +896,7 @@ priority (RtecScheduler::handle_t handle,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-entry_point_priority (const char * entry_point,
+entry_point_priority (char const * entry_point,
                       RtecScheduler::OS_Priority& priority,
                       RtecScheduler::Preemption_Subpriority_t& subpriority,
                       RtecScheduler::Preemption_Priority_t& p_priority)
@@ -1008,7 +1006,7 @@ set_dependency_enable_state (RtecScheduler::handle_t handle,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
+set_dependency_enable_state_seq (RtecScheduler::Dependency_Set const & dependencies)
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -1068,7 +1066,7 @@ set_rt_info_enable_state (RtecScheduler::handle_t handle,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set)
+set_rt_info_enable_state_seq (RtecScheduler::RT_Info_Enable_State_Pair_Set const & pair_set)
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -1499,7 +1497,7 @@ get_config_infos (RtecScheduler::Config_Info_Set_out configs)
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RT_Info_Ex *
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-create_i (const char *entry_point,
+create_i (char const *entry_point,
           RtecScheduler::handle_t handle,
           int ignore_duplicates)
 {
@@ -1717,7 +1715,7 @@ set_i (TAO_RT_Info_Ex *rt_info,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::handle_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-lookup_i (const char * entry_point)
+lookup_i (char const * entry_point)
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2232,7 +2230,7 @@ detect_cycles_i ()
   for (int i = 0; i < this->rt_info_count_; ++i)
     {
       // Each new top level entry marks a potential new cycle.
-      scc_visitor.in_a_cycle (0);
+      scc_visitor.in_a_cycle (false);
 
       if (scc_visitor.visit (* (entry_ptr_array_ [i])) < 0)
         {
@@ -2723,7 +2721,7 @@ noncritical_utilization_threshold ()
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-noncritical_utilization_threshold (const CORBA::Double &d)
+noncritical_utilization_threshold (CORBA::Double const &d)
 {
   noncritical_utilization_threshold_ = d;
 }
@@ -2741,7 +2739,7 @@ critical_utilization_threshold ()
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-critical_utilization_threshold (const CORBA::Double &d)
+critical_utilization_threshold (CORBA::Double const &d)
 {
   critical_utilization_threshold_ = d;
 }

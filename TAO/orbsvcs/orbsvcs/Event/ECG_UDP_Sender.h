@@ -105,9 +105,9 @@ public:
   /// Create a new TAO_ECG_UDP_Sender object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
-  static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
+  static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = false);
 
-  ~TAO_ECG_UDP_Sender () override;
+  ~TAO_ECG_UDP_Sender () override = default;
 
   /**
    * @param lcl_ec Event Channel to which we will act as a consumer of events.
@@ -167,23 +167,23 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer () override;
-  virtual void push (const RtecEventComm::EventSet &events) override;
+  void disconnect_push_consumer () override;
+  void push (RtecEventComm::EventSet const &events) override;
   //@}
 
 protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Sender objects using the static create() method.
-  TAO_ECG_UDP_Sender (CORBA::Boolean crc = 0);
+  explicit TAO_ECG_UDP_Sender (CORBA::Boolean crc = false);
 
 private:
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.
-  void new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub);
+  void new_connect (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
   // Updates existing connection to the Event Channel.
-  void reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub);
+  void reconnect (RtecEventChannelAdmin::ConsumerQOS const &sub);
   //@}
 
   /// Proxy used to receive events from the Event Channel.

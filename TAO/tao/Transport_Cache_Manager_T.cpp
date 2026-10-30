@@ -8,6 +8,10 @@
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
+
+#include <algorithm>
+#include <new>
+#include <stdexcept>
 #include <vector>
 
 #if !defined (__ACE_INLINE__)
@@ -641,7 +645,7 @@ namespace TAO
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE);
 
-    if (result && entry.int_id_.transport () != 0)
+    if (result && entry.int_id_.transport () != nullptr)
     {
       // if it's not connected, it's not available
       result = entry.int_id_.is_connected ();
@@ -690,7 +694,7 @@ namespace TAO
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_CONNECTING);
 
-    if (!result && entry.int_id_.transport () != 0)
+    if (!result && entry.int_id_.transport () != nullptr)
       {
         // if we're not connected, that counts, too.
         // Can this happen?  Not sure <wilsond@ociweb.com>
@@ -734,7 +738,7 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge ()
   {
-    using transport_set_type = ACE_Unbounded_Set<transport_type *>;
+    using transport_set_type = std::vector<transport_type *>;
     transport_set_type transports_to_be_closed;
 
     {
@@ -743,10 +747,10 @@ namespace TAO
       DESCRIPTOR_SET sorted_set = nullptr;
       int const sorted_size = this->fill_set_i (sorted_set);
 
-      // Only call close_entries () if sorted_set != 0.  It takes
+      // Only call close_entries () if sorted_set != nullptr.  It takes
       // control of sorted_set and cleans up any allocated memory.  If
-      // sorted_set == 0, then there is nothing to de-allocate.
-      if (sorted_set != 0)
+      // sorted_set == nullptr, then there is nothing to de-allocate.
+      if (sorted_set != nullptr)
         {
           // BEGIN FORMER close_entries
           // Calculate the number of entries to purge, when we have
@@ -782,7 +786,28 @@ namespace TAO
                         transport->id ()));
                     }
 
-                  if (transports_to_be_closed.insert_tail (transport) != 0)
+                  int insert_result = 0;
+                  if (std::find (transports_to_be_closed.begin (),
+                                 transports_to_be_closed.end (),
+                                 transport) != transports_to_be_closed.end ())
+                    insert_result = 1;
+                  else
+                    {
+                      try
+                        {
+                          transports_to_be_closed.push_back (transport);
+                        }
+                      catch (std::bad_alloc const &)
+                        {
+                          insert_result = -1;
+                        }
+                      catch (std::length_error const &)
+                        {
+                          insert_result = -1;
+                        }
+                    }
+
+                  if (insert_result != 0)
                     {
                       if (TAO_debug_level > 0)
                         {
@@ -808,14 +833,13 @@ namespace TAO
     }
 
     // Now, without the lock held, lets go through and close all the transports.
-    if (!transports_to_be_closed.is_empty ())
+    if (!transports_to_be_closed.empty ())
       {
-        typename transport_set_type::iterator it (transports_to_be_closed);
-        while (! it.done ())
+        for (typename transport_set_type::iterator it = transports_to_be_closed.begin ();
+             it != transports_to_be_closed.end ();
+             ++it)
           {
             transport_type *transport = *it;
-
-            it.advance ();
 
             if (transport)
               {
@@ -882,8 +906,8 @@ namespace TAO
     int current_size = 0;
     int const cache_maximum = this->purging_strategy_->cache_maximum ();
 
-    // set sorted_set to 0.  This signifies nothing to purge.
-    sorted_set = 0;
+    // Set sorted_set to nullptr. This signifies nothing to purge.
+    sorted_set = nullptr;
 
     // Do we need to worry about cache purging?
     if (cache_maximum >= 0)

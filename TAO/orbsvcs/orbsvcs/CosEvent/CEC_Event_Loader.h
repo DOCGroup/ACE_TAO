@@ -65,7 +65,7 @@ protected:
   CORBA::ORB_var orb_;
 
   /// Flag to control the event loop
-  int terminate_flag_;
+  bool terminate_flag_ {};
 
   /// Attributes used to configure the Event Service properties.
   TAO_CEC_EventChannel_Attributes *attributes_;
@@ -88,14 +88,14 @@ protected:
   CosNaming::NamingContext_var naming_context_;
 
   /// Flag to check if '-x' option is passed
-  int bind_to_naming_service_;
+  bool bind_to_naming_service_ {};
 
   /// The name used when binding to the NamingService.
   CosNaming::Name channel_name_;
 
 private:
-  TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &) = delete;
-  TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &) = delete;
+  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader const &) = delete;
+  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader const &) = delete;
   TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
   TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
 };

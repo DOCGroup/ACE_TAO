@@ -11,7 +11,7 @@
 class ORB_Task : public ACE_Task_Base
 {
 public:
-  ORB_Task (CORBA::ORB_ptr orb);
+  explicit ORB_Task (CORBA::ORB_ptr orb);
   ORB_Task (ORB_Task const &) = delete;
   ORB_Task &operator= (ORB_Task const &) = delete;
   ORB_Task (ORB_Task &&) = delete;

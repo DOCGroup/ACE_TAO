@@ -30,7 +30,7 @@ public:
     int num_backups,
     int transaction_depth,
     bool& success);
-  ~Update_Manager();
+  ~Update_Manager() = default;
 
   void handle_reply(int id);
   void handle_exception(int id);

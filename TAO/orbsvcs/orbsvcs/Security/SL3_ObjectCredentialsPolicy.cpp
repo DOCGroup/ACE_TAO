@@ -3,12 +3,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ObjectCredentialsPolicy::ObjectCredentialsPolicy (
-  const SecurityLevel3::OwnCredentialsList & creds)
+  SecurityLevel3::OwnCredentialsList const & creds)
   : creds_list_ (creds)
-{
-}
-
-TAO::SL3::ObjectCredentialsPolicy::~ObjectCredentialsPolicy ()
 {
 }
 

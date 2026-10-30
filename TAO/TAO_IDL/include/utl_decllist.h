@@ -89,6 +89,7 @@ public:
 
   // Get element
   FE_Declarator *head ();
+  FE_Declarator const *head () const;
 
   // Cleanup.
   void destroy () override;
@@ -106,10 +107,10 @@ public:
   // Operations
 
   // Constructor(s)
-  UTL_DecllistActiveIterator (UTL_DeclList *s);
+  explicit UTL_DecllistActiveIterator (UTL_DeclList *s);
 
   // Get current item
-  FE_Declarator *item ();
+  FE_Declarator *item () const;
 };
 
 #endif           // _UTL_DECLLIST_UTL_DECLLIST_HH

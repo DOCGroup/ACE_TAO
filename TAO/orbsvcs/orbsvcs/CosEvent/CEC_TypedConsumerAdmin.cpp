@@ -17,7 +17,7 @@ TAO_CEC_TypedConsumerAdmin::TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChanne
 }
 
 void
-TAO_CEC_TypedConsumerAdmin::invoke (const TAO_CEC_TypedEvent& typed_event)
+TAO_CEC_TypedConsumerAdmin::invoke (TAO_CEC_TypedEvent const &typed_event)
 {
   TAO_CEC_Propagate_Typed_Event typed_event_worker (typed_event, this->typed_event_channel_);
 
@@ -50,14 +50,14 @@ TAO_CEC_TypedConsumerAdmin::shutdown ()
 
 CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
-    const char * /*supported_interface*/)
+    char const * /*supported_interface*/)
 {
   throw CosTypedEventChannelAdmin::InterfaceNotSupported ();
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
-    const char * uses_interface)
+    char const *uses_interface)
 {
   // Register the consumer uses_interface with the EC
   int result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface);

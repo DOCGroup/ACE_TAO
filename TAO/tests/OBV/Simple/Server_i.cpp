@@ -13,7 +13,6 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
   TAO_OBV_REGISTER_FACTORY (Event_factory, Event);
 }
 
-
 // Sidebar on assignment from pointer to _var type.
 //
 //   Event_var e_var (event);
@@ -56,14 +55,4 @@ Checkpoint_i::shutdown ()
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
-}
-
-// Constructor.
-Checkpoint_i::Checkpoint_i ()
-{
-}
-
-// Destructor.
-Checkpoint_i::~Checkpoint_i ()
-{
 }

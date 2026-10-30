@@ -10,7 +10,7 @@
 class Echo_Caller : public POA_Test::Echo_Caller
 {
 public:
-  Echo_Caller (CORBA::ORB_ptr orb);
+  explicit Echo_Caller (CORBA::ORB_ptr orb);
   Echo_Caller (Echo_Caller const &) = delete;
   Echo_Caller &operator= (Echo_Caller const &) = delete;
   Echo_Caller (Echo_Caller &&) = delete;

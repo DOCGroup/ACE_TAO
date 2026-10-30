@@ -2,12 +2,6 @@
 #include "Consumer.h"
 #include "ace/Get_Opt.h"
 
-Consumer::Consumer ()
-  :event_count_ (1)
-{
-  // No-Op.
-}
-
 int
 Consumer::parse_args (int argc, ACE_TCHAR *argv [])
 {
@@ -87,7 +81,7 @@ Consumer::disconnect ()
 }
 
 void
-Consumer::push (const CORBA::Any &)
+Consumer::push (CORBA::Any const &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P):%s\n",
@@ -135,7 +129,7 @@ Consumer::init_Consumer ()
 
       this->connect ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Consumer::connect ()\n");
       return -1;

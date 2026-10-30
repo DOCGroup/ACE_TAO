@@ -35,7 +35,7 @@ public:
   /**
    * @param mt Specifies whether multithreaded ORB is used.
    */
-  AMI_Primary_Replication_Strategy(bool mt);
+  explicit AMI_Primary_Replication_Strategy(bool mt);
   ~AMI_Primary_Replication_Strategy() override;
   void replicate_request(FTRT::State const& state,
                                    RollbackOperation rollback,
@@ -58,7 +58,7 @@ private:
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var poa_;
   PortableServer::POAManager_var mgr_;
-  bool running_;
+  bool running_ {};
   UpdateableHandler handler_;
   ACE_SYNCH_RW_MUTEX* mutex_;
 };

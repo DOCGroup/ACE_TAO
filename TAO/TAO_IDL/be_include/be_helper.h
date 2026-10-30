@@ -15,9 +15,10 @@
 #define TAO_BE_OUTSTRM_H
 
 #include "ace/CDR_Base.h"
-#include "ace/SString.h"
 
 #include "ace/OS_NS_stdio.h"
+
+#include <string>
 #include <type_traits>
 
 class Identifier;
@@ -44,7 +45,7 @@ struct TAO_NL_2
  */
 struct TAO_INDENT
 {
-  TAO_INDENT (int do_now = 0);
+  explicit TAO_INDENT (int do_now = 0);
 
   const int do_now_;
 };
@@ -57,7 +58,7 @@ struct TAO_INDENT
  */
 struct TAO_UNINDENT
 {
-  TAO_UNINDENT (int do_now = 0);
+  explicit TAO_UNINDENT (int do_now = 0);
 
   const int do_now_;
 };
@@ -73,11 +74,11 @@ extern const TAO_UNINDENT be_uidt_nl;
 // conditionally output a newline and some form of "ACE_CHECK".
 struct TAO_ACE_CHECK
 {
-  TAO_ACE_CHECK (const char *retval = 0,
+  TAO_ACE_CHECK (const char *retval = nullptr,
                  bool do_return = false);
 
   const char *retval_;
-  bool do_return_;
+  bool do_return_ {};
 };
 
 /**
@@ -127,7 +128,7 @@ public:
   virtual ~TAO_OutStream ();
 
   /// Open the underlying low-level handle for output.
-  int open (const char *fname,
+  int open (std::string const& fname,
             TAO_OutStream::STREAM_TYPE st = TAO_OutStream::TAO_CLI_HDR);
 
   /// Set the stream type
@@ -161,8 +162,8 @@ public:
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /// Generate a #if !defined, #defined macro
-  int gen_ifdef_macro (const char *flat_name,
-                       const char *suffix = 0,
+  int gen_ifdef_macro (std::string const& flat_name,
+                       std::string const& suffix = {},
                        bool add_stream_type_suffix = true);
 
   /// Generate an endif statement
@@ -177,6 +178,7 @@ public:
                           TAO_OutStream &>::type
   operator << (const size_t num)
   {
+    this->flush_pending_whitespace ();
     ACE_OS::fprintf (this->fp_,
                      ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
                      num);
@@ -186,7 +188,7 @@ public:
 
   TAO_OutStream &operator<< (const char *str);
   TAO_OutStream &operator<< (char ch);
-  TAO_OutStream &operator<< (const ACE_CString &str);
+  TAO_OutStream &operator<< (std::string const &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);
@@ -222,17 +224,23 @@ public:
 #define TAO_INSERT_COMMENT(STRM) (STRM)->insert_comment (__FILE__, __LINE__)
 
 protected:
+  void flush_pending_whitespace ();
+  void write_text (std::string const& text);
+
   /// The underlying low-level I/O handle
-  FILE *fp_;
+  FILE *fp_ {};
 
   /// Stream type
   TAO_OutStream::STREAM_TYPE st_;
 
   /// Indentation level
-  int indent_level_;
+  int indent_level_ {};
 
   /// Used to set tab spaces.
-  ACE_CString tab_unit_str_;
+  std::string tab_unit_str_;
+
+  /// Trailing whitespace is buffered until non-whitespace or newline output.
+  std::string pending_whitespace_;
 };
 
 #endif // if !defined

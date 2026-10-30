@@ -26,7 +26,7 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
     cur_size_ (size),
     allocator_ (alloc)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   if (size != 0)
@@ -48,7 +48,7 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
     cur_size_ (size),
     allocator_ (alloc)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   if (size != 0)
@@ -70,7 +70,7 @@ ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
     cur_size_ (s.size ()),
     allocator_ (s.allocator_)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_ALLOCATOR (this->array_,
@@ -218,7 +218,7 @@ ACE_Array_Iterator<T>::next (T *&item)
 
   if (this->done ())
     {
-      item = 0;
+      item = nullptr;
       return 0;
     }
   else

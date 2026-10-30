@@ -27,10 +27,15 @@ class be_visitor_map_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_map_ch (be_visitor_context *ctx);
+  explicit be_visitor_map_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_map_ch () = default;
+  ~be_visitor_map_ch () override = default;
+
+  be_visitor_map_ch (const be_visitor_map_ch &) = delete;
+  be_visitor_map_ch (be_visitor_map_ch &&) = delete;
+  be_visitor_map_ch &operator= (const be_visitor_map_ch &) = delete;
+  be_visitor_map_ch &operator= (be_visitor_map_ch &&) = delete;
 
   /// visit map node.
   int visit_map (be_map *node) override;

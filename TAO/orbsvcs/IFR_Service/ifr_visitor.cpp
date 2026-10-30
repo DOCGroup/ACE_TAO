@@ -9,7 +9,6 @@
 #include "ace/Null_Mutex.h"
 
 ifr_visitor::ifr_visitor ()
-  : lock_ (0)
 {
   // Create the appropriate lock.
   if (be_global->enable_locking ())

@@ -74,11 +74,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    supports_concrete,
                    abstract,
                    truncatable,
-                   custom),
-    supports_abstract_ (false),
-    var_out_seq_decls_gen_ (false),
-    full_obv_skel_name_ (nullptr),
-    is_amh_excep_holder_ (false)
+                   custom)
 {
   // Check that redefine() copies all members.
 
@@ -131,9 +127,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     }
 }
 
-be_valuetype::~be_valuetype ()
-{
-}
+be_valuetype::~be_valuetype () = default;
 
 void
 be_valuetype::redefine (AST_Interface *from)
@@ -160,17 +154,16 @@ be_valuetype::opt_accessor ()
 
 // Compute stringified fully scoped skeleton name (OBV_name).
 void
-be_valuetype::compute_fullobvskelname ()
+be_valuetype::compute_fullobvskelname () const
 {
-  this->compute_full_skel_name ("OBV_",
-                                this->full_obv_skel_name_);
+  this->full_obv_skel_name_ = this->compute_full_skel_name ("OBV_");
 }
 
 // Retrieve the fully scoped skeleton name.
-const char*
-be_valuetype::full_obv_skel_name ()
+std::string const&
+be_valuetype::full_obv_skel_name () const
 {
-  if (nullptr == this->full_obv_skel_name_)
+  if (this->full_obv_skel_name_.empty ())
     {
       this->compute_fullobvskelname ();
     }
@@ -178,10 +171,10 @@ be_valuetype::full_obv_skel_name ()
   return this->full_obv_skel_name_;
 }
 
-const char *
+std::string const&
 be_valuetype::fwd_helper_name () const
 {
-  return this->fwd_helper_name_.fast_rep ();
+  return this->fwd_helper_name_;
 }
 
 be_valuetype::FactoryStyle
@@ -511,7 +504,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
   *os << "void" << be_nl
       << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
       << "{" << be_idt_nl
-      << "if (vt != 0)" << be_idt_nl
+      << "if (vt != nullptr)" << be_idt_nl
       << "{" << be_idt_nl
       << "vt->_add_ref ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
@@ -520,7 +513,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
   *os << "void" << be_nl
       << "CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
       << "{" << be_idt_nl
-      << "if (vt != 0)" << be_idt_nl
+      << "if (vt != nullptr)" << be_idt_nl
       << "{" << be_idt_nl
       << "vt->_remove_ref ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
@@ -566,7 +559,7 @@ be_valuetype::gen_var_out_seq_decls ()
   os->gen_ifdef_macro (this->flat_name (),
                        "var_out");
 
-  const char *lname = this->local_name ();
+  std::string const& lname = this->local_name ();
 
   *os << be_nl_2
       << "class " << lname << ";" << be_nl
@@ -579,14 +572,14 @@ be_valuetype::gen_var_out_seq_decls ()
 }
 
 // For building the pre and postfix of private data fields.
-const char *
-be_valuetype::field_pd_prefix ()
+std::string
+be_valuetype::field_pd_prefix () const
 {
   return "_pd_";
 }
 
-const char *
-be_valuetype::field_pd_postfix ()
+std::string
+be_valuetype::field_pd_postfix () const
 {
   return "";
 }
@@ -616,8 +609,7 @@ be_valuetype::accept (be_visitor *visitor)
 void
 be_valuetype::destroy ()
 {
-  delete [] this->full_obv_skel_name_;
-  this->full_obv_skel_name_ = nullptr;
+  this->full_obv_skel_name_.clear ();
 
   this->be_interface::destroy ();
   this->AST_ValueType::destroy ();
@@ -689,8 +681,8 @@ be_valuetype::traverse_supports_list_graphs (
     }
 
   // Make sure the queues are empty.
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
+  this->insert_queue.clear ();
+  this->del_queue.clear ();
 
   be_interface *supported_interface = nullptr;
 
@@ -712,14 +704,7 @@ be_valuetype::traverse_supports_list_graphs (
         dynamic_cast<be_interface*> (this->pd_supports[i]);
 
       // Insert a supported interface in the queue.
-      if (this->insert_queue.enqueue_tail (supported_interface) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_valuetype::")
-                             ACE_TEXT ("traverse_supports_list_graphs - ")
-                             ACE_TEXT ("error generating entries\n")),
-                            -1);
-        }
+      this->insert_queue.push_back (supported_interface);
     }
 
   be_code_emitter_wrapper wrapper (gen);
@@ -744,18 +729,11 @@ be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
     dynamic_cast<be_interface*> (supported);
 
   // Make sure the queues are empty.
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
+  this->insert_queue.clear ();
+  this->del_queue.clear ();
 
   // Insert the supported concrete interface in the queue.
-  if (this->insert_queue.enqueue_tail (concrete) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_valuetype::")
-                         ACE_TEXT ("traverse_concrete_inheritance_graph - ")
-                         ACE_TEXT ("error generating entries\n")),
-                        -1);
-    }
+  this->insert_queue.push_back (concrete);
 
   be_code_emitter_wrapper wrapper (gen);
 

@@ -3,10 +3,7 @@
 AMI_Buffering::AMI_Buffering (CORBA::ORB_ptr orb,
                               Test::AMI_Buffering_Admin_ptr admin)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    admin_ (Test::AMI_Buffering_Admin::_duplicate (admin)),
-    nest_ (0),
-    max_nest_ (0),
-    must_shutdown_ (false)
+    admin_ (Test::AMI_Buffering_Admin::_duplicate (admin))
 {
 }
 
@@ -31,7 +28,7 @@ AMI_Buffering::receive_data (Test::Payload const &the_payload)
       AMI_Buffering::Nest_Guard ng (*this);
       this->admin_->request_received (the_payload.length ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) DEBUG: AMI_Buffering::receive_data"));
     }

@@ -40,23 +40,24 @@ Thread::add_time (const ACE_CString &time)
 void
 Thread::push_new_connection (PeerProcess *pp)
 {
-  this->new_connection_.push (pp);
+  this->new_connection_.push_back (pp);
 }
 
 PeerProcess *
 Thread::pop_new_connection ()
 {
-  PeerProcess *pp = 0;
-  this->new_connection_.pop (pp);
+  if (this->new_connection_.empty ())
+    return nullptr;
+
+  PeerProcess *pp = this->new_connection_.back ();
+  this->new_connection_.pop_back ();
   return pp;
 }
 
 PeerProcess *
 Thread::peek_new_connection () const
 {
-  PeerProcess *pp = 0;
-  this->new_connection_.top (pp);
-  return pp;
+  return this->new_connection_.empty () ? nullptr : this->new_connection_.back ();
 }
 
 void
@@ -82,7 +83,7 @@ Thread::handle_request ()
 void
 Thread::enter_wait (PeerProcess *pp)
 {
-  this->pending_.push (pp);
+  this->pending_.push_back (pp);
   this->client_encounters_++;
   if (this->pending_.size() > this->max_depth_)
     this->max_depth_ = this->pending_.size();
@@ -93,20 +94,26 @@ Thread::enter_wait (PeerProcess *pp)
 void
 Thread::exit_wait (PeerProcess *pp, size_t linenum)
 {
-  PeerProcess *old;
-  if (this->pending_.pop(old) == -1)
+  if (this->pending_.empty ())
     return;
+
+  PeerProcess *old = this->pending_.back ();
+  this->pending_.pop_back ();
   while (old != pp)
     {
       ACE_ERROR ((LM_ERROR,
                   "Line %d, Ending an invocation to peer %s, but most recent started"
                   " is to peer %s\n", linenum, pp->id(), old->id()));
       //      this->pending_.push(old);
-      if (this->pending_.pop(old) == -1)
+      if (this->pending_.empty ())
         return;
+
+      old = this->pending_.back ();
+      this->pending_.pop_back ();
     }
-  if (this->pending_.top (old) == 0)
+  if (! this->pending_.empty ())
     {
+      old = this->pending_.back ();
       this->active_handle (old->last_transport ()->handle_);
     }
   else
@@ -233,23 +240,20 @@ Thread::add_invocation (Invocation *inv)
 void
 Thread::push_invocation (Invocation *inv)
 {
-  this->current_invocation_.push(inv);
+  this->current_invocation_.push_back (inv);
 }
 
 void
 Thread::pop_invocation ()
 {
-  Invocation *inv;
-  this->current_invocation_.pop (inv);
+  if (! this->current_invocation_.empty ())
+    this->current_invocation_.pop_back ();
 }
 
 Invocation *
 Thread::current_invocation () const
 {
-  Invocation *inv = 0;
-  if (this->current_invocation_.size() > 0)
-    this->current_invocation_.top(inv);
-  return inv;
+  return this->current_invocation_.empty () ? nullptr : this->current_invocation_.back ();
 }
 
 void

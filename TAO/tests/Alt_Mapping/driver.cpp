@@ -39,15 +39,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// constructor
-Driver::Driver ()
-{
-}
-
-Driver::~Driver ()
-{
-}
-
 // initialize the driver
 int
 Driver::init (int argc, ACE_TCHAR **argv)
@@ -92,7 +83,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
 
       this->objref_ = Alt_Mapping::_narrow (temp.in());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (exception_string);
       return -1;
@@ -112,38 +103,28 @@ Driver::run ()
 
   switch (opt->test_type ())
     {
-    case Options::TEST_UB_STRING:
+    case Options::Test_Type::Unbounded_String:
       {
-        Alt_Mapping_Client<Test_Unbounded_String> *client = new
-          Alt_Mapping_Client<Test_Unbounded_String> (this->orb_.in (),
-                                                    this->objref_.in(),
-                                                    new Test_Unbounded_String);
-        retstatus = client->run_sii_test ();
-
-        delete client;
+        Alt_Mapping_Client<Test_Unbounded_String> client (
+          this->orb_.in (),
+          this->objref_.in (),
+          std::make_unique<Test_Unbounded_String> ());
+        retstatus = client.run_sii_test ();
       }
       break;
-    case Options::TEST_UB_STRUCT_SEQUENCE:
+    case Options::Test_Type::Unbounded_Struct_Sequence:
       {
-        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> *client = new
-          Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> (
+        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> client (
             this->orb_.in (),
-            this->objref_.in(),
-            new Test_Unbounded_Struct_Sequence);
+            this->objref_.in (),
+            std::make_unique<Test_Unbounded_Struct_Sequence> ());
+        retstatus = client.run_sii_test ();
 
-        retstatus = client->run_sii_test ();
-
-        delete client;
-
-        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> *client2 = new
-          Alt_Mapping_Client<Test_Unbounded_Struct_Sequence>
-          (this->orb_.in (),
-           this->objref_.in(),
-           new Test_Unbounded_Struct_Sequence);
-
-        retstatus = client2->run_sii_test ();
-
-        delete client2;
+        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> client2 (
+          this->orb_.in (),
+          this->objref_.in (),
+          std::make_unique<Test_Unbounded_Struct_Sequence> ());
+        retstatus = client2.run_sii_test ();
       }
       break;
     default:
@@ -158,7 +139,7 @@ Driver::run ()
           this->objref_->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("during shutdown");
     }

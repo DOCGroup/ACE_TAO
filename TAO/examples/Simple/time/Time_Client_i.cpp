@@ -3,20 +3,8 @@
 
 // This is the interface program that accesses the remote object
 
-// Constructor.
-Time_Client_i::Time_Client_i ()
-{
-  //no-op
-}
-
-//Destructor.
-Time_Client_i::~Time_Client_i ()
-{
-  //no-op
-}
-
 int
-Time_Client_i::run (const char *name,
+Time_Client_i::run (char const *name,
                     int argc,
                     ACE_TCHAR *argv[])
 {
@@ -34,7 +22,7 @@ Time_Client_i::run (const char *name,
       ACE_UNUSED_ARG (padding);
 
       //Make the RMI.
-      timedate = static_cast <time_t> (client_->current_time ());
+      timedate = static_cast<time_t> (client_->current_time ());
 
       // Print out value
       ACE_TCHAR ascii_timedate[64] = ACE_TEXT ("");
@@ -45,10 +33,10 @@ Time_Client_i::run (const char *name,
                   ACE_TEXT ("string time is %s\n"),
                   ascii_timedate));
 
-      if (client_.do_shutdown () == 1)
+      if (client_.do_shutdown ())
         client_->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\tException");
       return -1;

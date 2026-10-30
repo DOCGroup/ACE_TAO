@@ -5,20 +5,13 @@
 #include "ace/Log_Msg.h"
 #include "Callback_Handler.h"
 
-Callback_Handler::Callback_Handler (const char *pathname,
+Callback_Handler::Callback_Handler (char const *pathname,
                                     Web_Server::Callback_ptr client_callback)
   : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),
     file_io_ (),
     callback_ (Web_Server::Callback::_duplicate (client_callback)),
     ami_handler_ (),
-    chunk_ (new Web_Server::Chunk_Type),
-    chunk_index_ (0),
-    last_chunk_ (0)
-{
-  // Nothing else
-}
-
-Callback_Handler::~Callback_Handler ()
+    chunk_ (new Web_Server::Chunk_Type)
 {
   // Nothing else
 }
@@ -26,7 +19,7 @@ Callback_Handler::~Callback_Handler ()
 void
 Callback_Handler::next_chunk ()
 {
-  if (this->last_chunk_ == 1)
+  if (this->last_chunk_)
     {
       this->deactivate ();
 
@@ -37,11 +30,11 @@ Callback_Handler::next_chunk ()
   CORBA::Octet *buf =
     Web_Server::Chunk_Type::allocbuf (BUFSIZ);
 
-  if (buf == 0)
+  if (buf == nullptr)
     throw CORBA::NO_MEMORY ();
 
-  ssize_t bytes_read = this->file_io_.recv (buf,
-                                            BUFSIZ);
+  ssize_t const bytes_read = this->file_io_.recv (buf,
+                                                  BUFSIZ);
   if (bytes_read == -1)
     {
       Web_Server::Chunk_Type::freebuf (buf);
@@ -51,11 +44,11 @@ Callback_Handler::next_chunk ()
   else if (bytes_read == 0)
     {
       Web_Server::Chunk_Type::freebuf (buf);
-      this->last_chunk_ = 1;
+      this->last_chunk_ = true;
     }
   else
     {
-      this->chunk_index_++;
+      ++this->chunk_index_;
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Sending chunk %d from %s of size <%d>\n"),
@@ -80,7 +73,7 @@ void
 Callback_Handler::next_chunk_excep
   (::Messaging::ExceptionHolder *excep_holder)
 {
-  this->last_chunk_ = 1;
+  this->last_chunk_ = true;
 
   try
     {
@@ -88,7 +81,7 @@ Callback_Handler::next_chunk_excep
 
       excep_holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception occurred during ")
@@ -119,7 +112,7 @@ Callback_Handler::open_file ()
 
   if (connector.connect (this->file_io_,
                          this->file_,
-                         0,
+                         nullptr,
                          ACE_Addr::sap_any,
                          0,
                          O_RDONLY) == -1)

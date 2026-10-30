@@ -55,7 +55,8 @@ Control::join (Federated_Test::Peer_ptr peer)
   ACE_Utils::Auto_Functor<CORBA::ORB,ORB_Shutdown> orb_shutdown (this->orb_.in ());
 
   /// Automatically shutdown the peers
-  typedef ACE_Utils::Auto_Functor<Federated_Test::Peer,Shutdown<Federated_Test::Peer> > Peer_Shutdown;
+  using Peer_Shutdown = ACE_Utils::Auto_Functor<Federated_Test::Peer,
+                                                Shutdown<Federated_Test::Peer>>;
   std::unique_ptr<Peer_Shutdown[]> peer_shutdown (new Peer_Shutdown[this->peers_count_]);
 
   size_t i;
@@ -87,7 +88,7 @@ Control::join (Federated_Test::Peer_ptr peer)
           new Federated_Test::Loopback_var[2*this->peers_count_]);
 
       /// ... and automatically disconnect the loopbacks ...
-      typedef Auto_Disconnect<Federated_Test::Loopback> Loopback_Disconnect;
+      using Loopback_Disconnect = Auto_Disconnect<Federated_Test::Loopback>;
       std::unique_ptr<std::unique_ptr<Loopback_Disconnect>[] > disconnects (
           new std::unique_ptr<Loopback_Disconnect>[2*this->peers_count_]);
 

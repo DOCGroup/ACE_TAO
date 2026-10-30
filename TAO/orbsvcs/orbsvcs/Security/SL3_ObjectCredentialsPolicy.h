@@ -52,8 +52,8 @@ namespace TAO
     {
     public:
       /// Constructor
-      ObjectCredentialsPolicy (
-        const SecurityLevel3::OwnCredentialsList & creds);
+      explicit ObjectCredentialsPolicy (
+        SecurityLevel3::OwnCredentialsList const & creds);
 
       /**
        * @name SecurityLevel3::ObjectCredentialsPolicy Methods
@@ -77,9 +77,14 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ObjectCredentialsPolicy () override;
+      ~ObjectCredentialsPolicy () override = default;
 
     private:
+      ObjectCredentialsPolicy (ObjectCredentialsPolicy const &) = delete;
+      ObjectCredentialsPolicy (ObjectCredentialsPolicy &&) = delete;
+      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy const &) = delete;
+      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy &&) = delete;
+
       /// List of POA-specific OwnCredentials.
       SecurityLevel3::OwnCredentialsList creds_list_;
     };

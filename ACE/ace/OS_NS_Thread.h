@@ -1643,7 +1643,7 @@ namespace ACE_OS {
   int thr_equal (ACE_thread_t t1, ACE_thread_t t2);
 
   extern ACE_Export
-  void thr_exit (ACE_THR_FUNC_RETURN status = 0);
+  void thr_exit (ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_getconcurrency ();
@@ -2028,6 +2028,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_OS_Thread_Mutex_Guard
 {
 public:
+  ACE_OS_Thread_Mutex_Guard (ACE_OS_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Thread_Mutex_Guard (ACE_OS_Thread_Mutex_Guard &&) = delete;
+  ACE_OS_Thread_Mutex_Guard &operator= (ACE_OS_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Thread_Mutex_Guard &operator= (ACE_OS_Thread_Mutex_Guard &&) = delete;
+
   /// Implicitly and automatically acquire the lock.
   ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m);
 
@@ -2046,9 +2051,6 @@ protected:
 
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
-
-  ACE_OS_Thread_Mutex_Guard &operator= (const ACE_OS_Thread_Mutex_Guard &) = delete;
-  ACE_OS_Thread_Mutex_Guard (const ACE_OS_Thread_Mutex_Guard &) = delete;
 };
 
 /**
@@ -2072,6 +2074,11 @@ protected:
 class ACE_OS_Recursive_Thread_Mutex_Guard
 {
 public:
+  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_OS_Recursive_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard (ACE_OS_Recursive_Thread_Mutex_Guard &&) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (ACE_OS_Recursive_Thread_Mutex_Guard const &) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (ACE_OS_Recursive_Thread_Mutex_Guard &&) = delete;
+
   /// Implicitly and automatically acquire the lock.
   ACE_OS_Recursive_Thread_Mutex_Guard (ACE_recursive_thread_mutex_t &m);
 
@@ -2090,9 +2097,6 @@ protected:
 
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
-
-  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
-  ACE_OS_Recursive_Thread_Mutex_Guard (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

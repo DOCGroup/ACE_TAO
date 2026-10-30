@@ -12,14 +12,14 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_facet_svth::be_visitor_facet_svth (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_facet_svth::~be_visitor_facet_svth ()
-{
-}
+be_visitor_facet_svth::~be_visitor_facet_svth () = default;
 
 int
 be_visitor_facet_svth::visit_interface (be_interface *node)
@@ -33,19 +33,19 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
       return 0;
     }
 
-  const char *lname = node->local_name ();
+  std::string const lname = node->local_name ();
 
   be_decl *scope =
     dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-  ACE_CString suffix (scope->flat_name ());
+  std::string suffix (scope->flat_name ());
 
   if (suffix != "")
     {
-      suffix = ACE_CString ("_") + suffix;
+      suffix.insert (0, "_");
     }
 
   os_ << be_nl_2
-      << "namespace CIAO_FACET" << suffix.c_str () <<  be_nl
+      << "namespace CIAO_FACET" << suffix << be_nl
       << "{" << be_idt_nl;
 
   bool is_intf = node->node_type () == AST_Decl::NT_interface;
@@ -55,9 +55,6 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
       << ": public ::CIAO::Facet_Servant_Base_T<BASE, EXEC, "
       << "CONTEXT>" << be_uidt_nl << "{" << be_nl
       << "public:" << be_idt_nl;
-
-  AST_Decl *s = ScopeAsDecl (node->defined_in ());
-  ACE_CString sname_str (s->full_name ());
 
   os_ << lname << "_Servant_T (" << be_idt_nl
       << "typename EXEC::_ptr_type executor," << be_nl

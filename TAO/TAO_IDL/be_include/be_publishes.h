@@ -16,16 +16,16 @@ public:
   be_publishes (UTL_ScopedName *n,
                 AST_Type *publishes_type);
 
-  virtual ~be_publishes ();
+  ~be_publishes () override;
 
   // Non-virtual override of frontend method.
   be_eventtype *publishes_type () const;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif // BE_PUBLISHES_H

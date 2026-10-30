@@ -7,14 +7,19 @@
 class corbaloc_Status_i : public POA_corbaloc::Status
 {
 public:
-  corbaloc_Status_i ();
+  corbaloc_Status_i () = default;
 
-  CORBA::Boolean print_status ();
+  corbaloc_Status_i (corbaloc_Status_i const &) = delete;
+  corbaloc_Status_i &operator= (corbaloc_Status_i const &) = delete;
+  corbaloc_Status_i (corbaloc_Status_i &&) = delete;
+  corbaloc_Status_i &operator= (corbaloc_Status_i &&) = delete;
 
-  void set_name (const char *name) { server_name_ = name; }
+  CORBA::Boolean print_status () override;
+
+  void set_name (char const *name) { server_name_ = name; }
 
 private:
-  ACE_CString server_name_;
+  ACE_CString server_name_ {};
 };
 
 #endif /* STATUS_I_H */

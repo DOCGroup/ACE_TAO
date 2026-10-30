@@ -1,18 +1,6 @@
 #include "UDP_i.h"
 
 
-// Constructor
-UDP_i::UDP_i ()
-  : messages_count_ (0)
-  , wrong_messages_count_ (0)
-{
-}
-
-// Destructor
-UDP_i::~UDP_i ()
-{
-}
-
 // Set the ORB pointer.
 
 void
@@ -32,7 +20,7 @@ UDP_i::setResponseHandler (UDP_ptr udpHandler)
 }
 
 void
-UDP_i::invoke (const char * client_name,
+UDP_i::invoke (char const *client_name,
                CORBA::Long request_id)
 {
   try
@@ -72,7 +60,7 @@ UDP_i::invoke (const char * client_name,
         }
 
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
        ACE_DEBUG ((LM_DEBUG,
                    "UDP_i::invoke: Received exception\n"));
@@ -80,7 +68,7 @@ UDP_i::invoke (const char * client_name,
 }
 
 void
-UDP_i::reset (const char * client_name)
+UDP_i::reset (char const *client_name)
 {
   try
     {
@@ -94,7 +82,7 @@ UDP_i::reset (const char * client_name)
           responseHandler_->reset (client_name);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "UDP_i::reset: Received exception\n"));
@@ -115,7 +103,7 @@ UDP_i::shutdown ()
       // Instruct the ORB to shutdown.
       this->orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception: orb->shutdown");
     }

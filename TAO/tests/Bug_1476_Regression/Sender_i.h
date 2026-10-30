@@ -23,10 +23,10 @@ class Sender_i
 {
 public:
   /// Constructor
-  Sender_i (CORBA::ORB_ptr orb);
+  explicit Sender_i (CORBA::ORB_ptr orb);
 
   ///Destructor
-  ~Sender_i () override;
+  ~Sender_i () override = default;
   Sender_i (Sender_i const &) = delete;
   Sender_i &operator= (Sender_i const &) = delete;
   Sender_i (Sender_i &&) = delete;
@@ -46,10 +46,10 @@ private:
   CORBA::ORB_var orb_;
 
   /// Number of active objects who are trying to connect
-  CORBA::ULong active_objects_;
+  CORBA::ULong active_objects_ {};
 
   /// Number of invocations received
-  CORBA::ULong number_received_;
+  CORBA::ULong number_received_ {};
 };
 
 #include /**/ "ace/post.h"

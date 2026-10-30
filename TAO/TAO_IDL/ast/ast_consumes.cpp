@@ -16,9 +16,7 @@ AST_Consumes::AST_Consumes (UTL_ScopedName *n,
 {
 }
 
-AST_Consumes::~AST_Consumes ()
-{
-}
+AST_Consumes::~AST_Consumes () = default;
 
 AST_Type *
 AST_Consumes::consumes_type () const

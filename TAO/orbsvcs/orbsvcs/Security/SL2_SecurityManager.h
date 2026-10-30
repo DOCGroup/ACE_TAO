@@ -54,8 +54,8 @@ namespace TAO
     {
     public:
       /*! Constructor */
-      AccessDecision ();
-      ~AccessDecision () override;
+      AccessDecision () = default;
+      ~AccessDecision () override = default;
 
       ::CORBA::Boolean access_allowed (
         ::SecurityLevel2::CredentialsList const & cred_list,
@@ -96,14 +96,14 @@ namespace TAO
        * This is the default value that's returned from access_allowed()
        * when the access table doesn't contain an entry for the reference.
        */
-      ::CORBA::Boolean default_allowance_decision_;
+      ::CORBA::Boolean default_allowance_decision_ {};
 
       /*!
        * This is the default value that's returned from access_allowed()
        * when the access table doesn't contain an entry for the reference and
        * we are handling a collocated call
        */
-      ::CORBA::Boolean default_collocated_decision_;
+      ::CORBA::Boolean default_collocated_decision_ {};
       /*!
        * Map containing references and their designated insecure access.
        */
@@ -207,7 +207,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityManager () override;
+      ~SecurityManager () override = default;
 
     private:
       SecurityManager (SecurityManager const &) = delete;

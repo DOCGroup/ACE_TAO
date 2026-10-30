@@ -156,9 +156,7 @@ TAO_Notify_Builder::TAO_Notify_Builder ()
   TAO_Notify_AnyEvent::event_type_ = TAO_Notify_EventType::special ();
 }
 
-TAO_Notify_Builder::~TAO_Notify_Builder ()
-{
-}
+TAO_Notify_Builder::~TAO_Notify_Builder () = default;
 
 CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_Builder::build_filter_factory (PortableServer::POA_ptr poa, TAO_Notify_FilterFactory*& ff)

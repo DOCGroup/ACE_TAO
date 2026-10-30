@@ -17,9 +17,7 @@ be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
 {
 }
 
-be_visitor_interface_cdr_op_cs::~be_visitor_interface_cdr_op_cs ()
-{
-}
+be_visitor_interface_cdr_op_cs::~be_visitor_interface_cdr_op_cs () = default;
 
 int
 be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)

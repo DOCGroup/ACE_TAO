@@ -13,16 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Default constructor
-CC_LockSetFactory::CC_LockSetFactory ()
-{
-}
-
-// Destructor.
-CC_LockSetFactory::~CC_LockSetFactory ()
-{
-}
-
 CosConcurrencyControl::LockSet_ptr
 CC_LockSetFactory::create ()
 {

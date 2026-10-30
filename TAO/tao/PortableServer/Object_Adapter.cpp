@@ -699,16 +699,16 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
           CORBA::OctetSeq_var ocs;
           sri_adapter->tao_ft_interception_point (request,
-                                                 0,  // args
+                                                 nullptr,  // args
                                                  0,  // nargs
-                                                 0,  // servant_upcall
-                                                 0,  // exceptions
+                                                 nullptr,  // servant_upcall
+                                                 nullptr,  // exceptions
                                                  0, // nexceptions
                                                  ocs.out ());
 
           /// If we have a cached result, just go ahead and send the reply
           /// and let us  return
-          if (ocs.ptr () != 0)
+          if (ocs.ptr () != nullptr)
             {
               // request.result_seq (
               request.send_cached_reply (ocs.inout ());
@@ -730,10 +730,10 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           // must be invoked before the operation is dispatched to the
           // servant.
           sri_adapter->receive_request_service_contexts (request,
-                                                         0,  // args
+                                                         nullptr,  // args
                                                          0,  // nargs
-                                                         0,  // servant_upcall
-                                                         0,  // exceptions
+                                                         nullptr,  // servant_upcall
+                                                         nullptr,  // exceptions
                                                          0); // nexceptions
 
           // If a PortableInterceptor::ForwardRequest exception was
@@ -759,10 +759,10 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           if (sri_adapter != nullptr)
             {
               sri_adapter->send_other (request,
-                                       0,  // args
+                                       nullptr,  // args
                                        0,  // nargs
-                                       0,  // servant_upcall
-                                       0,  // exceptions
+                                       nullptr,  // servant_upcall
+                                       nullptr,  // exceptions
                                        0); // nexceptions
             }
         }
@@ -781,10 +781,10 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
           request.caught_exception (&ex);
 
           sri_adapter->send_exception (request,
-                                       0,  // args
+                                       nullptr,  // args
                                        0,  // nargs
-                                       0,  // servant_upcall
-                                       0,  // exceptions
+                                       nullptr,  // servant_upcall
+                                       nullptr,  // exceptions
                                        0);   // nexceptions
 
           status = request.pi_reply_status ();
@@ -1113,7 +1113,7 @@ TAO_Object_Adapter::iteratable_poa_name::begin () const
 TAO_Object_Adapter::iteratable_poa_name::iterator
 TAO_Object_Adapter::iteratable_poa_name::end () const
 {
-  return iterator (0,
+  return iterator (false,
                    this->folded_name_.length (),
                    this->folded_name_.get_buffer ());
 }

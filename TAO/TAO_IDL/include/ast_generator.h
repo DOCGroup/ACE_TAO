@@ -72,6 +72,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_porttype.h"
 
 #include "fe_utils.h"
+#include "utl_strlist.h"
+
+#include <string>
 
 class UTL_LabelList;
 class UTL_ExprList;
@@ -103,9 +106,9 @@ class AST_Annotation_Member;
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
-  AST_Generator () {}
+  AST_Generator () = default;
 
-  virtual ~AST_Generator () {}
+  virtual ~AST_Generator () = default;
 
   // Operations.
 
@@ -299,9 +302,8 @@ public:
   virtual AST_Expression *create_expr (ACE_CDR::ULong v,
                                        AST_Expression::ExprType t);
 
-  virtual AST_Expression *create_expr (UTL_String *s);
-
-  virtual AST_Expression *create_expr (char *s);
+  virtual AST_Expression *create_expr (std::string s);
+  virtual AST_Expression *create_wstring_expr (std::string s);
 
   virtual AST_Expression *create_expr (ACE_CDR::Char c);
 
@@ -309,7 +311,7 @@ public:
 
   virtual AST_Expression *create_expr (ACE_CDR::Double d);
 
-  virtual AST_Expression *create_expr (const ACE_CDR::Fixed &f);
+  virtual AST_Expression *create_expr (ACE_CDR::Fixed const &f);
 
   // Create a node representing an enumerator.
   virtual AST_EnumVal *create_enum_val (ACE_CDR::ULong v,
@@ -419,7 +421,7 @@ public:
   AST_Template_Module_Ref *create_template_module_ref (
     UTL_ScopedName *n,
     AST_Template_Module *ref,
-    UTL_StrList *param_refs);
+    UTL_StrList param_refs);
 
   virtual
   AST_Param_Holder *create_param_holder (

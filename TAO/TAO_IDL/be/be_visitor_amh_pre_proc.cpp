@@ -27,14 +27,14 @@
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
 
+#include <string>
+
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_amh_pre_proc::~be_visitor_amh_pre_proc ()
-{
-}
+be_visitor_amh_pre_proc::~be_visitor_amh_pre_proc () = default;
 
 int
 be_visitor_amh_pre_proc::visit_root (be_root *node)
@@ -142,7 +142,7 @@ be_visitor_amh_pre_proc::create_response_handler (
   )
 {
   // Generate 'AMH_InterfaceResponseHandler'
-  ACE_CString class_name;
+  std::string class_name;
   class_name += "AMH_";
   class_name += node->local_name ();
   class_name += "ResponseHandler";
@@ -156,7 +156,7 @@ be_visitor_amh_pre_proc::create_response_handler (
                        " - Scope downcast failed.\n"),
                       0);
   Identifier *local_name = amh_name->last_component ();
-  local_name->replace_string (class_name.c_str ());
+  local_name->replace_string (class_name);
 
   UTL_Scope *s = node->defined_in ();
   idl_global->scopes ().push (s);
@@ -190,8 +190,8 @@ be_visitor_amh_pre_proc::create_response_handler (
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
-  response_handler->AST_Decl::repoID (nullptr);
-  response_handler->prefix (const_cast<char*> (node->prefix ()));
+  response_handler->AST_Decl::clear_repoID ();
+  response_handler->prefix (node->prefix ());
 
   response_handler->gen_fwd_helper_name ();
   this->add_rh_node_members (node, response_handler, exception_holder);
@@ -411,15 +411,14 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
 
-  ACE_CString original_op_name (
-                  node->name ()->last_component ()->get_string ()
-                );
+  std::string const& original_op_name =
+    node->name ()->last_component ()->get_string ();
 
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (response_handler->name ()->copy ());
 
   ACE_NEW_RETURN (id,
-                  Identifier (original_op_name.c_str ()),
+                  Identifier (original_op_name),
                   -1);
 
   ACE_NEW_RETURN (sn,
@@ -581,8 +580,8 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
-  excep_holder->AST_Decl::repoID (nullptr);
-  excep_holder->prefix (const_cast<char*> (node->prefix ()));
+  excep_holder->AST_Decl::clear_repoID ();
+  excep_holder->prefix (node->prefix ());
 
   excep_holder->gen_fwd_helper_name ();
 
@@ -663,7 +662,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
   UTL_ScopedName *op_name =
     static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ());
 
-  ACE_CString new_local_name ("raise_");
+  std::string new_local_name ("raise_");
 
   if (operation_kind == Operation_Kind::SET)
     {
@@ -677,7 +676,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
   new_local_name += node->name ()->last_component ()->get_string ();
 
   ACE_NEW_RETURN (id,
-                  Identifier (new_local_name.c_str ()),
+                  Identifier (new_local_name),
                   -1);
 
   ACE_NEW_RETURN (sn,
@@ -725,14 +724,15 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
 
 int
-be_visitor_amh_pre_proc::generate_name (ACE_CString &destination,
-                                        const char *prefix,
-                                        const char *middle_name,
-                                        const char *suffix)
+be_visitor_amh_pre_proc::generate_name (std::string &destination,
+                                        char const *prefix,
+                                        char const *middle_name,
+                                        char const *suffix)
 {
-  destination = prefix;
+  destination.assign (prefix);
   destination += middle_name;
   destination += suffix;
+
   return 0;
 }
 
@@ -740,14 +740,12 @@ be_visitor_amh_pre_proc::generate_name (ACE_CString &destination,
 be_operation *
 be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (
-      node->name ()->last_component ()->get_string ()
-    );
-  ACE_CString new_op_name = ACE_CString ("get_") + original_op_name;
+  std::string new_op_name ("get_");
+  new_op_name += node->name ()->last_component ()->get_string ();
 
   UTL_ScopedName *get_name =
     static_cast<UTL_ScopedName *> (node->name ()-> copy ());
-  get_name->last_component ()->replace_string (new_op_name.c_str ());
+  get_name->last_component ()->replace_string (new_op_name);
 
   be_operation *operation = nullptr;
   ACE_NEW_RETURN (operation,
@@ -767,14 +765,12 @@ be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 be_operation *
 be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (
-      node->name ()->last_component ()->get_string ()
-    );
-  ACE_CString new_op_name = ACE_CString ("set_") + original_op_name;
+  std::string new_op_name ("set_");
+  new_op_name += node->name ()->last_component ()->get_string ();
 
   UTL_ScopedName *set_op_name =
     dynamic_cast<UTL_ScopedName *> (node->name ()-> copy ());
-  set_op_name->last_component ()->replace_string (new_op_name.c_str ());
+  set_op_name->last_component ()->replace_string (new_op_name);
 
   // argument type is the same as the attribute type
   be_argument *arg = nullptr;

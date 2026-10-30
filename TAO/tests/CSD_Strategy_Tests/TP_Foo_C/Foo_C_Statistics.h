@@ -19,12 +19,17 @@ class CSD_TP_Foo_C_Export Foo_C_Statistics
 
     bool actual_vs_expected();
 
+    Foo_C_Statistics (Foo_C_Statistics const &) = delete;
+    Foo_C_Statistics (Foo_C_Statistics &&) = delete;
+    Foo_C_Statistics & operator= (Foo_C_Statistics const &) = delete;
+    Foo_C_Statistics & operator= (Foo_C_Statistics &&) = delete;
+
 
   private:
     unsigned num_remote_clients_;
     unsigned num_collocated_clients_;
-    unsigned expected_[10];
-    unsigned actual_[10];
+    unsigned expected_[10] {};
+    unsigned actual_[10] {};
 
     LongVector actual_in_values_ [10];
 };

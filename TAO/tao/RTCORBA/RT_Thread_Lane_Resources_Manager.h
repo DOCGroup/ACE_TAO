@@ -60,7 +60,7 @@ public:
   void close_all_transports () override;
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile) override;
+  int is_collocated (TAO_MProfile const &mprofile) override;
 
   /// @name Accessors
   // @{

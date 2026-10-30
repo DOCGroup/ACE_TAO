@@ -17,8 +17,8 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "ace/RB_Tree.h"
-#include "ace/Null_Mutex.h"
+#include <cstddef>
+#include <set>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,15 +27,12 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree_Iterator
 {
 public:
-  using Implementation = ACE_RB_Tree_Iterator<PROXY *,
-                                               int,
-                                               ACE_Less_Than<PROXY *>,
-                                               ACE_Null_Mutex>;
+  using Implementation = typename std::set<PROXY *>::iterator;
 
-  TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
+  explicit TAO_ESF_Proxy_RB_Tree_Iterator (Implementation const &i);
 
-  bool operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
-  bool operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
+  bool operator == (TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> const &rhs) const;
+  bool operator != (TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> const &rhs) const;
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>& operator++ ();
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> operator++ (int);
   PROXY *operator *();
@@ -46,7 +43,7 @@ private:
 
 // ****************************************************************
 
-/// Concrete Proxy collection based on ACE_RB_Tree
+/// Concrete Proxy collection based on std::set
 /**
  * The Event Service Framework provides several alternatives for the
  * underlying proxy collections.
@@ -58,10 +55,10 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree
 {
 public:
-  /// A typedef for the underlying implementaiton class
-  using Implementation = ACE_RB_Tree<PROXY *, int, ACE_Less_Than<PROXY *>, ACE_Null_Mutex>;
+  /// An alias for the underlying implementation class
+  using Implementation = std::set<PROXY *>;
 
-  /// A typedef for the underlying iterator
+  /// An alias for the underlying iterator
   using Iterator = TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>;
 
   /// Constructor
@@ -75,7 +72,7 @@ public:
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> end ();
 
   /// Return the number of elements in the collection
-  size_t size () const;
+  std::size_t size () const;
 
   /// Insert a new element to the collection
   void connected (PROXY *);

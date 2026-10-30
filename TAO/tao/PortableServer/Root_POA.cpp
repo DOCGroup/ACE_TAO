@@ -32,6 +32,9 @@
 #include "tao/PortableServer/Acceptor_Filter_Factory.h"
 #include "tao/PortableServer/Network_Priority_Hook.h"
 
+#include <new>
+#include <stdexcept>
+
 #include "tao/StringSeqC.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PolicyC.h"
@@ -192,7 +195,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
 
     tagged_component_ (),
     tagged_component_id_ (),
-    profile_id_array_ (0),
+    profile_id_array_ (),
     policies_ (policies),
     adapter_state_ (PortableInterceptor::HOLDING),
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -333,7 +336,7 @@ TAO_Root_POA::complete_destruction_i ()
           // Add it to the sequence of object reference templates, we
           // just notify for ourselves that we are now non_existent,
           // our childs will do it for themselves.
-          my_array_obj_ref_template.size (1);
+          my_array_obj_ref_template.resize (1);
           my_array_obj_ref_template[0] = ort;
         }
 
@@ -455,12 +458,12 @@ TAO_Root_POA::create_POA_i (const char *adapter_name,
       // The POAManager name will be generated when the POAManager instance
       // is created.
       the_poa_manager
-        = tao_poa_manager_factory->create_POAManager (0, empty_policies);
+        = tao_poa_manager_factory->create_POAManager (nullptr, empty_policies);
 #else
 
       PortableServer::POAManager_ptr the_poa_manager_ptr;
       ACE_NEW_THROW_EX (the_poa_manager_ptr,
-                        TAO_POA_Manager (this->object_adapter (), 0),
+                        TAO_POA_Manager (this->object_adapter (), nullptr),
                         CORBA::NO_MEMORY ());
       the_poa_manager = the_poa_manager_ptr;
 #endif /* TAO_HAS_MINIMUM_POA == 0 && ! CORBA_E_COMPACT) */
@@ -771,7 +774,7 @@ TAO_Root_POA::destroy (CORBA::Boolean etherealize_objects,
                        CORBA::Boolean wait_for_completion)
 {
   // Lock access for the duration of this transaction.
-  TAO::Portable_Server::POA_Guard poa_guard (*this , 0);
+  TAO::Portable_Server::POA_Guard poa_guard (*this, false);
   ACE_UNUSED_ARG (poa_guard);
 
   this->destroy_i (etherealize_objects, wait_for_completion);
@@ -829,7 +832,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
           // Add it to the sequence of object reference templates that
           // will be destroyed.
-          array_obj_ref_template.size (1);
+          array_obj_ref_template.resize (1);
 
           array_obj_ref_template[0] = ort;
         }
@@ -878,7 +881,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
   TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress =
     this->object_adapter ().non_servant_upcall_in_progress ();
   if (this->outstanding_requests_ == 0 &&
-      (non_servant_upcall_in_progress == 0 ||
+      (non_servant_upcall_in_progress == nullptr ||
        &non_servant_upcall_in_progress->poa () != this))
     {
       TAO::ORT_Array my_array_obj_ref_template;
@@ -896,7 +899,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
           // Add it to the sequence of object reference templates, we
           // just notify for ourselves that we are now non_existent,
           // our childs will do it for themselves.
-          my_array_obj_ref_template.size (1);
+          my_array_obj_ref_template.resize (1);
           my_array_obj_ref_template[0] = ort;
         }
 
@@ -1403,7 +1406,7 @@ TAO_Root_POA::is_poa_generated (CORBA::Object_ptr reference,
                                       is_system_id,
                                       poa_creation_time);
   if (result != 0
-      || (this->root () == 0 && poa_system_name != this->system_name ())
+      || (!this->root () && poa_system_name != this->system_name ())
       || is_root != this->root ()
       || is_system_id != this->system_id ()
       || !this->validate_lifespan (is_persistent, poa_creation_time))
@@ -2061,11 +2064,23 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
 
   CORBA::ULong const new_len = old_len + 1;
 
+  try
+    {
+      this->profile_id_array_.reserve (new_len);
+    }
+  catch (std::bad_alloc const &)
+    {
+      throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+    }
+  catch (std::length_error const &)
+    {
+      throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+    }
+
   this->tagged_component_id_.length (new_len);
   this->tagged_component_id_[old_len] = component;
 
-  this->profile_id_array_.size (new_len);
-  this->profile_id_array_[old_len] = profile_id;
+  this->profile_id_array_.push_back (profile_id);
 }
 
 TAO_Stub *

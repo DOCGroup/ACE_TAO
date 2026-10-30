@@ -390,17 +390,15 @@ TAO_Thread_Lane_Resources::finalize ()
 
   // Go through the handler set, closing the connections and removing
   // the references.
-  TAO_Connection_Handler **handler = nullptr;
-
-  for (TAO::Connection_Handler_Set::iterator iter (handlers);
-       iter.next (handler);
-       iter.advance ())
+  for (TAO::Connection_Handler_Set::iterator iter = handlers.begin ();
+       iter != handlers.end ();
+       ++iter)
     {
       // Connection is closed.  Potential removal from the Reactor.
-      (*handler)->close_connection ();
+      (*iter)->close_connection ();
 
       // #REFCOUNT# related to the handler set decreases.
-      (*handler)->transport ()->remove_reference ();
+      (*iter)->transport ()->remove_reference ();
     }
 
   delete this->transport_cache_;
@@ -528,17 +526,15 @@ TAO_Thread_Lane_Resources::close_all_transports ()
 
   // Go through the handler set, closing the connections and removing
   // the references.
-  TAO_Connection_Handler **handler = nullptr;
-
-  for (TAO::Connection_Handler_Set::iterator iter (handlers);
-       iter.next (handler);
-       iter.advance ())
+  for (TAO::Connection_Handler_Set::iterator iter = handlers.begin ();
+       iter != handlers.end ();
+       ++iter)
     {
       // Connection is closed.  Potential removal from the Reactor.
-      (*handler)->close_connection ();
+      (*iter)->close_connection ();
 
       // #REFCOUNT# related to the handler set decreases.
-      (*handler)->transport ()->remove_reference ();
+      (*iter)->transport ()->remove_reference ();
     }
 }
 

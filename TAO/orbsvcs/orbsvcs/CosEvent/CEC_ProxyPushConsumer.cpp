@@ -15,11 +15,9 @@ using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 TAO_CEC_ProxyPushConsumer::
 TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec,
-                           const ACE_Time_Value &timeout)
+                           ACE_Time_Value const &timeout)
   : event_channel_ (ec),
-    timeout_(timeout),
-    refcount_ (1),
-    connected_ (false)
+    timeout_(timeout)
 {
   this->lock_ =
     this->event_channel_->create_consumer_lock ();
@@ -44,7 +42,7 @@ TAO_CEC_ProxyPushConsumer::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       result  =  CosEventChannelAdmin::ProxyPushConsumer::_nil ();
     }
@@ -62,7 +60,7 @@ TAO_CEC_ProxyPushConsumer::deactivate ()
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is being disconnected twice, or some
@@ -125,7 +123,7 @@ TAO_CEC_ProxyPushConsumer::shutdown ()
     {
       supplier->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions, we must isolate other clients from
       // failures on this one.
@@ -174,7 +172,7 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
 
     if (this->is_connected_i ())
       {
-        if (this->event_channel_->supplier_reconnect () == 0)
+        if (!this->event_channel_->supplier_reconnect ())
           throw CosEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed, go ahead and disconnect the
@@ -235,7 +233,7 @@ TAO_CEC_ProxyPushConsumer::apply_policy (CosEventComm::PushSupplier_ptr pre)
 }
 
 void
-TAO_CEC_ProxyPushConsumer::push (const CORBA::Any& event)
+TAO_CEC_ProxyPushConsumer::push (CORBA::Any const &event)
 {
   TAO_CEC_ProxyPushConsumer_Guard ace_mon (this->lock_,
                                            this->refcount_,
@@ -278,7 +276,7 @@ TAO_CEC_ProxyPushConsumer::disconnect_push_consumer ()
         {
           supplier->disconnect_push_supplier ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Ignore exceptions, we must isolate other clients from
           // failures on this one.
@@ -314,8 +312,7 @@ TAO_CEC_ProxyPushConsumer_Guard::
  :   lock_ (lock),
      refcount_ (refcount),
      event_channel_ (ec),
-     proxy_ (proxy),
-     locked_ (false)
+     proxy_ (proxy)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   // If the guard fails there is not much we can do, raising an

@@ -37,15 +37,10 @@ state_slot_id (PortableInterceptor::SlotId slot_id)
   state_slot_id_ = slot_id;
 }
 
-Checkpointable::
-~Checkpointable ()
-{
-}
-
 CORBA::Any* Checkpointable::
 get_state ()
 {
-  return 0;
+  return nullptr;
 }
 
 void Checkpointable::
@@ -64,7 +59,7 @@ associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 
     pic->set_slot (state_slot_id (), state);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Caught exception:");
   }
@@ -72,11 +67,6 @@ associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 
 // ReplyLogger
 //
-
-ReplicaController::
-~ReplicaController ()
-{
-}
 
 ReplicaController::
 ReplicaController (CORBA::ORB_ptr orb)
@@ -90,7 +80,7 @@ ReplicaController (CORBA::ORB_ptr orb)
     root_poa_ = PortableServer::POA::_narrow (
       poa_object.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Caught exception:");
     ACE_OS::abort ();
@@ -174,7 +164,7 @@ listener ()
         Checkpointable* target =
           dynamic_cast<Checkpointable*> (servant.in ());
 
-        if (target) target->set_state (state);
+        if (target != nullptr) target->set_state (state);
       }
     }
   }
@@ -202,9 +192,9 @@ resolve_poa (PortableInterceptor::AdapterName const&)
 ACE_THR_FUNC_RETURN ReplicaController::
 listener_thunk (void* p)
 {
-  ReplicaController* obj = reinterpret_cast<ReplicaController*> (p);
+  ReplicaController *obj = reinterpret_cast<ReplicaController*> (p);
   obj->listener();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 namespace
@@ -295,8 +285,8 @@ ReplicaController::send_reply (
 
   // @@ What if this throws an exception??  We don't have any way to
   // check whether this succeeded
-  for (ACE_Message_Block const* mb = cdr.begin ();
-       mb != 0;
+  for (ACE_Message_Block const *mb = cdr.begin ();
+       mb != nullptr;
        mb = mb->cont ())
   {
     ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
@@ -330,11 +320,11 @@ ReplicaController::send_reply (
       Checkpointable* target =
         dynamic_cast<Checkpointable*> (servant.in ());
 
-      if (target)
+      if (target != nullptr)
       {
         CORBA::Any_var tmp = target->get_state ();
 
-        if (tmp.ptr () != 0) state = tmp._retn ();
+        if (tmp.ptr () != nullptr) state = tmp._retn ();
       }
     }
 
@@ -358,8 +348,8 @@ ReplicaController::send_reply (
     {
       CORBA::Octet* buf = msg->get_buffer ();
 
-      for (ACE_Message_Block const* mb = cdr.begin ();
-           mb != 0;
+      for (ACE_Message_Block const *mb = cdr.begin ();
+           mb != nullptr;
            mb = mb->cont ())
       {
         ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
@@ -420,7 +410,7 @@ namespace
     IOP::ServiceContext_var svc =
       ri->get_request_service_context (IOP::FT_REQUEST);
 
-    TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
+    TAO_InputCDR cdr (reinterpret_cast<char const *> (svc->context_data.get_buffer ()),
                       svc->context_data.length ());
 
     CORBA::Boolean byte_order;

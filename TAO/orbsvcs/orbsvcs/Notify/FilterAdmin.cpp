@@ -14,16 +14,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Implementation skeleton constructor
-TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin ()
-{
-}
+TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin () = default;
 
-
-// Implementation skeleton destructor
-TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin ()
-{
-}
+TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin () = default;
 
 CosNotifyFilter::FilterID
 TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
@@ -152,8 +145,8 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver)
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs)
+TAO_Notify_FilterAdmin::load_child (ACE_CString const &type, CORBA::Long id,
+  TAO_Notify::NVPList const &attrs)
 {
   if (type == "filter")
   {

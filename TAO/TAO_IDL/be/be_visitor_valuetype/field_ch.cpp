@@ -22,9 +22,7 @@ be_visitor_valuetype_field_ch::be_visitor_valuetype_field_ch (
   setenclosings ("", ";");
 }
 
-be_visitor_valuetype_field_ch::~be_visitor_valuetype_field_ch ()
-{
-}
+be_visitor_valuetype_field_ch::~be_visitor_valuetype_field_ch () = default;
 
 int
 be_visitor_valuetype_field_ch::visit_field (be_field *node)
@@ -604,13 +602,13 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
           << "void " << ub->local_name () << " (char *val)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const char *val)"
+          << "void " << ub->local_name () << " (char const *val)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const ::CORBA::String_var &val)"
+          << "void " << ub->local_name () << " (::CORBA::String_var const &val)"
           << post_op () << be_nl;
       // Get method.
-      *os << pre_op () << "const char *" << ub->local_name ()
+      *os << pre_op () << "char const *" << ub->local_name ()
           << " () const" << post_op ();
     }
   else
@@ -619,13 +617,13 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
           << "void " << ub->local_name () << " (::CORBA::WChar *val)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const ::CORBA::WChar *val)"
+          << "void " << ub->local_name () << " (::CORBA::WChar const *val)"
           << post_op () << be_nl;
       *os << pre_op ()
-          << "void " << ub->local_name () << " (const ::CORBA::WString_var &val)"
+          << "void " << ub->local_name () << " (::CORBA::WString_var const &val)"
           << post_op () << be_nl;
       // Get method.
-      *os << pre_op() << "const ::CORBA::WChar *" << ub->local_name ()
+      *os << pre_op() << "::CORBA::WChar const *" << ub->local_name ()
           << " () const" << post_op();
     }
 
@@ -780,21 +778,21 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
 }
 
 void
-be_visitor_valuetype_field_ch::setenclosings (const char *pre,
-                                              const char *post)
+be_visitor_valuetype_field_ch::setenclosings (std::string const& pre,
+                                              std::string const& post)
 {
   pre_op_ = pre;
   post_op_ = post;
 }
 
-const char*
-be_visitor_valuetype_field_ch::pre_op ()
+std::string const&
+be_visitor_valuetype_field_ch::pre_op () const
 {
   return pre_op_;
 }
 
-const char*
-be_visitor_valuetype_field_ch::post_op ()
+std::string const&
+be_visitor_valuetype_field_ch::post_op () const
 {
   return post_op_;
 }

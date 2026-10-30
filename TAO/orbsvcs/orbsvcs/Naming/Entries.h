@@ -48,13 +48,13 @@ public:
             CosNaming::BindingType type /* = CosNaming::nobject */);
 
   /// Copy constructor.
-  TAO_IntId (const TAO_IntId & rhs);
+  TAO_IntId (TAO_IntId const &rhs);
 
   /// Destructor.
   ~TAO_IntId ();
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_IntId & rhs);
+  void operator= (TAO_IntId const &rhs);
 
   // = Data members.
 
@@ -84,11 +84,11 @@ public:
   TAO_ExtId ();
 
   /// Constructor.
-  TAO_ExtId (const char *id,
-            const char *kind);
+  TAO_ExtId (char const *id,
+            char const *kind);
 
   /// Copy constructor.
-  TAO_ExtId (const TAO_ExtId & rhs);
+  TAO_ExtId (TAO_ExtId const &rhs);
 
   /// Destructor.
   ~TAO_ExtId ();
@@ -96,13 +96,13 @@ public:
   // = Assignment and comparison operators.
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_ExtId & rhs);
+  void operator= (TAO_ExtId const &rhs);
 
   /// Equality comparison operator (must match both id_ and kind_).
-  bool operator== (const TAO_ExtId &rhs) const;
+  bool operator== (TAO_ExtId const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const TAO_ExtId &rhs) const;
+  bool operator!= (TAO_ExtId const &rhs) const;
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
@@ -120,11 +120,11 @@ public:
 
   // = Accessors
 
-  /// Return id_ in a const char * format.
-  const char * id ();
+  /// Return id_ in a char const * format.
+  char const * id ();
 
-  /// Return kind_ in a const char * format.
-  const char * kind ();
+  /// Return kind_ in a char const * format.
+  char const * kind ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

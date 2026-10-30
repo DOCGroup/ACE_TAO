@@ -19,17 +19,13 @@ Fault_Detector::ReactorTask::svc ()
 }
 
 
-Fault_Detector::~Fault_Detector()
-{
-}
-
-const FTRT::Location& Fault_Detector::my_location() const
+FTRT::Location const& Fault_Detector::my_location() const
 {
   return location_;
 }
 
 namespace {
-  Fault_Detector* detector;
+  Fault_Detector* detector {};
 }
 
 Fault_Detector* Fault_Detector::instance()

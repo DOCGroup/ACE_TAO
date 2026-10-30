@@ -65,7 +65,7 @@ TAO_DynStruct_i::set_from_any (CORBA::Any const& any)
     unaliased_tc->member_count ();
 
   // Resize the array.
-  this->da_members_.size (numfields);
+  TAO::resize_std_vector (this->da_members_, numfields);
 
   this->init_common ();
 
@@ -140,7 +140,7 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc)
     unaliased_tc->member_count ();
 
   // Resize the array.
-  this->da_members_.size (this->component_count_);
+  TAO::resize_std_vector (this->da_members_, this->component_count_);
 
   this->init_common ();
 

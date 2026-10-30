@@ -28,8 +28,13 @@ namespace FTRTEC
   class Identification_Service : public ACE_Service_Object
   {
   public:
-    Identification_Service();
+    Identification_Service() = default;
     ~Identification_Service() override = default;
+
+    Identification_Service(Identification_Service const&) = delete;
+    Identification_Service(Identification_Service&&) = delete;
+    Identification_Service& operator=(Identification_Service const&) = delete;
+    Identification_Service& operator=(Identification_Service&&) = delete;
 
     /**
     * This function returns 0 when init is not called yet.
@@ -38,8 +43,8 @@ namespace FTRTEC
 
     int init(int argc, ACE_TCHAR* argv[]);
 
-    const FtRtecEventComm::ObjectId& object_id() const;
-    const CosNaming::Name& name() const;
+    FtRtecEventComm::ObjectId const& object_id() const;
+    CosNaming::Name const& name() const;
   private:
     FtRtecEventComm::ObjectId object_id_;
     CosNaming::Name name_;

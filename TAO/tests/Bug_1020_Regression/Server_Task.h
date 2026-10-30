@@ -14,7 +14,7 @@ class Server_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Server_Task (Test::Echo_ptr echo);
+  explicit Server_Task (Test::Echo_ptr echo);
   Server_Task (Server_Task const &) = delete;
   Server_Task &operator= (Server_Task const &) = delete;
   Server_Task (Server_Task &&) = delete;

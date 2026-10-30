@@ -33,7 +33,11 @@ class Consumer : public POA_CosEventComm::PushConsumer, public Multiple
 public:
   // = Initializatiopn and termination methods.
   /// Constructor.
-  Consumer ();
+  Consumer () = default;
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   /// Initialize the Consumer.
   int init_Consumer ();
@@ -52,14 +56,14 @@ public:
   void disconnect ();
 
   /// push the event to the consumer.
-  virtual void push (const CORBA::Any &data);
+  void push (CORBA::Any const &data) override;
 
   /// disconnect the consumer from the EC.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
   // = CosEC_Multiple methods.
   /// Parse the command line options.
-  virtual int parse_args (int argc, ACE_TCHAR *argv []);
+  int parse_args (int argc, ACE_TCHAR *argv []) override;
 
 private:
   /// We talk to the EC using this proxy.
@@ -69,7 +73,7 @@ private:
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
 
   /// The number of Events to receive before switching off.
-  int event_count_;
+  int event_count_ {1};
 };
 
 #endif /* COSECCONSUMER_H_ */

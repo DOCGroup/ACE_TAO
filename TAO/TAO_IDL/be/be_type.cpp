@@ -26,6 +26,8 @@
 #include "idl_defines.h"
 #include "nr_extern.h"
 
+#include <string>
+
 be_type::be_type (AST_Decl::NodeType nt,
                   UTL_ScopedName *n)
   : COMMON_Base (),
@@ -34,12 +36,7 @@ be_type::be_type (AST_Decl::NodeType nt,
     AST_Type (nt,
               n),
     be_decl (nt,
-             n),
-    tc_name_ (nullptr),
-    common_varout_gen_ (false),
-    seen_in_sequence_ (false),
-    seen_in_map_(false),
-    seen_in_operation_ (false)
+             n)
 {
   if (n != nullptr)
     {
@@ -47,9 +44,7 @@ be_type::be_type (AST_Decl::NodeType nt,
     }
 }
 
-be_type::~be_type ()
-{
-}
+be_type::~be_type () = default;
 
 // Compute the typecode name. The idea is to use the fully scoped name,
 // however, prepend a _tc_ to the last component. A slightly different approach
@@ -59,7 +54,6 @@ be_type::~be_type ()
 void
 be_type::compute_tc_name ()
 {
-  static char namebuf [NAMEBUFSIZE];
   UTL_ScopedName *n = this->name ();
 
   if (this->tc_name_ != nullptr)
@@ -68,10 +62,6 @@ be_type::compute_tc_name ()
       delete this->tc_name_;
       this->tc_name_ = nullptr;
     }
-
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
 
   while (n->tail () != nullptr)
     {
@@ -95,9 +85,8 @@ be_type::compute_tc_name ()
       n = (UTL_ScopedName *)n->tail ();
     }
 
-  ACE_OS::sprintf (namebuf,
-                   "_tc_%s",
-                   n->last_component ()->get_string ());
+  std::string namebuf ("_tc_");
+  namebuf += n->last_component ()->get_string ();
 
   Identifier *id = nullptr;
   ACE_NEW (id,
@@ -140,46 +129,27 @@ be_type::tc_name ()
 //
 // We can use the flat_name() method for the local_name parm but have
 // to construct the full name ourselves.
-const char *
+std::string
 be_type::nested_sp_type_name (be_decl *use_scope,
-                              const char *suffix,
-                              const char *prefix)
+                              std::string const& suffix,
+                              std::string const& prefix) const
 {
   // Our defining scope.
-  be_decl *fu_scope = nullptr;
+  be_scope *const defining_scope =
+    this->defined_in () ? dynamic_cast<be_scope *> (this->defined_in ()) : nullptr;
+  AST_Decl *const defining_decl = defining_scope != nullptr
+    ? defining_scope->decl () : nullptr;
 
-  char fu_name [NAMEBUFSIZE];
-  char fl_name [NAMEBUFSIZE];
+  std::string full_name = defining_decl != nullptr
+    ? std::string (defining_decl->full_name ()) : "";
+  full_name.append ("::TAO_");
+  full_name.append (this->flat_name ());
 
-  ACE_OS::memset (fu_name,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string local_name ("TAO_");
+  local_name.append (this->flat_name ());
 
-  ACE_OS::memset (fl_name,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  fu_scope = this->defined_in ()
-               ? dynamic_cast<be_scope*> (this->defined_in ())->decl ()
-               : nullptr;
-
-  ACE_OS::strcat (fu_name,
-                  (fu_scope != nullptr ? fu_scope->full_name () : ""));
-
-  ACE_OS::strcat (fu_name,
-                  "::TAO_");
-
-  ACE_OS::strcat (fu_name,
-                  this->flat_name());
-
-  ACE_OS::strcat (fl_name,
-                  "TAO_");
-
-  ACE_OS::strcat (fl_name,
-                  this->flat_name());
-
-  return this->nested_name (fl_name,
-                            fu_name,
+  return this->nested_name (local_name,
+                            full_name,
                             use_scope,
                             suffix,
                             prefix);
@@ -190,8 +160,7 @@ be_type::gen_fwd_helper_name ()
 {
   AST_Decl *parent = ScopeAsDecl (this->defined_in ());
   Identifier *segment = nullptr;
-  char *tmp = nullptr;
-  this->fwd_helper_name_.clear (true);
+  this->fwd_helper_name_.clear ();
 
   if (parent != nullptr && parent->node_type () != AST_Decl::NT_root)
     {
@@ -200,14 +169,15 @@ be_type::gen_fwd_helper_name ()
            i.next ())
         {
           segment = i.item ();
-          tmp = segment->get_string ();
+          std::string const& name =
+            segment->get_string ();
 
-          if (ACE_OS::strcmp (tmp, "") == 0)
+          if (name.empty ())
             {
               continue;
             }
 
-          this->fwd_helper_name_ += tmp;
+          this->fwd_helper_name_ += name;
           this->fwd_helper_name_ += "::";
         }
     }
@@ -228,23 +198,30 @@ be_type::gen_ostream_operator (TAO_OutStream *,
 
 void
 be_type::gen_member_ostream_operator (TAO_OutStream *os,
-                                      const char *instance_name,
+                                      std::string const& instance_name,
                                       bool /* use_underscore */,
                                       bool accessor)
 {
   *os << instance_name << (accessor ? " ()" : "");
 }
 
-const char *
+std::string const&
 be_type::fwd_helper_name () const
 {
-  return this->fwd_helper_name_.fast_rep ();
+  return this->fwd_helper_name_;
 }
 
 void
-be_type::fwd_helper_name (const char *name)
+be_type::fwd_helper_name (std::string const& name)
 {
-  this->fwd_helper_name_ = name;
+  if (name.empty ())
+    {
+      this->fwd_helper_name_.clear ();
+    }
+  else
+    {
+      this->fwd_helper_name_ = name;
+    }
 }
 
 void
@@ -375,7 +352,7 @@ be_type::seen_in_operation (bool val)
 AST_Decl::NodeType
 be_type::base_node_type () const
 {
-  return const_cast<be_type*> (this)->node_type ();
+  return this->node_type ();
 }
 
 // Cleanup method

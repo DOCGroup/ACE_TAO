@@ -45,8 +45,8 @@ public:
   TAO_SFP_Fragment_Node () : data_ (nullptr) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
-  friend bool operator< (const TAO_SFP_Fragment_Node& left,
-                         const TAO_SFP_Fragment_Node& right);
+  friend bool operator< (TAO_SFP_Fragment_Node const &left,
+                         TAO_SFP_Fragment_Node const &right);
 };
 
 /**
@@ -56,12 +56,9 @@ public:
 class TAO_SFP_Fragment_Table_Entry
 {
 public:
-  TAO_SFP_Fragment_Table_Entry ()
-    :last_received_ (0),
-     num_fragments_ (0)
-    {}
-  int last_received_;
-  size_t num_fragments_;
+  TAO_SFP_Fragment_Table_Entry () = default;
+  bool last_received_ {};
+  size_t num_fragments_ {};
   TAO_AV_frame_info frame_info;
   ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node> fragment_set_;
 };
@@ -93,8 +90,8 @@ public:
   flowProtocol::frameHeader frame_header_;
   flowProtocol::fragment fragment_;
   flowProtocol::frame frame_;
-  CORBA::Boolean more_fragments_;
-  ACE_Message_Block *frame_block_;
+  bool more_fragments_ {};
+  ACE_Message_Block *frame_block_ {};
   // boolean flags indicating that there are more fragments.
   ACE_Message_Block static_frame_;
   TAO_SFP_Fragment_Table_Map fragment_table_map_;
@@ -121,13 +118,13 @@ public:
   static const char TAO_SFP_STARTREPLY_MAGIC_NUMBER[];
 
   // SFP version 1.0
-  static const unsigned char TAO_SFP_MAJOR_VERSION;
-  static const unsigned char TAO_SFP_MINOR_VERSION;
+  static constexpr unsigned char TAO_SFP_MAJOR_VERSION = 1;
+  static constexpr unsigned char TAO_SFP_MINOR_VERSION = 0;
 
   // lengths of various SFP headers
-  static const unsigned char TAO_SFP_FRAME_HEADER_LEN;
-  static const unsigned char TAO_SFP_MESSAGE_SIZE_OFFSET;
-  static const unsigned char TAO_SFP_FRAGMENT_SIZE_OFFSET;
+  static constexpr unsigned char TAO_SFP_FRAME_HEADER_LEN = 12;
+  static constexpr unsigned char TAO_SFP_MESSAGE_SIZE_OFFSET = 8;
+  static constexpr unsigned char TAO_SFP_FRAGMENT_SIZE_OFFSET = 16;
   static u_int frame_header_len;
   static u_int start_reply_len;
   static u_int start_len;
@@ -238,15 +235,15 @@ public:
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (const iovec *iov,
+  virtual int send_frame (iovec const *iov,
                           int iovcnt,
                           TAO_AV_frame_info *frame_info = nullptr) override;
 
-  int send_frame (const char *buf,
+  int send_frame (char const *buf,
                   size_t len) override;
 
   int destroy () override;
-  int set_policies (const TAO_AV_PolicyList &policies) override;
+  int set_policies (TAO_AV_PolicyList const &policies) override;
 
 protected:
   ACE_Message_Block *get_fragment (ACE_Message_Block *&frame,
@@ -269,7 +266,7 @@ class TAO_AV_Export TAO_SFP_Producer_Object : public TAO_SFP_Object
 public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
-                           const char *flow_options);
+                           char const *flow_options);
   int handle_input () override;
 protected:
   CORBA::ULong credit_sequence_num_;
@@ -303,7 +300,7 @@ public:
   ~TAO_AV_SFP_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialization hook.
-  int match_protocol (const char *flow_string) override;
+  int match_protocol (char const *flow_string) override;
   TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,
                                                 TAO_AV_Flow_Handler *handler,

@@ -84,9 +84,9 @@ int AMI_Primary_Replication_Strategy::svc()
 
 void
 AMI_Primary_Replication_Strategy::replicate_request(
-  const FTRT::State& state,
+  FTRT::State const& state,
   RollbackOperation rollback,
-  const FtRtecEventChannelAdmin::ObjectId& oid)
+  FtRtecEventChannelAdmin::ObjectId const& oid)
 {
    ACE_Auto_Event event;
    Update_Manager* manager = nullptr;
@@ -149,7 +149,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
 }
 
 void
-AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+AMI_Primary_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
                                              CORBA::ULong object_group_ref_version)
 {
   ACE_Auto_Event event;

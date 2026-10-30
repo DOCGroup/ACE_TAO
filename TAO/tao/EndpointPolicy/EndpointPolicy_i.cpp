@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const& value)
+TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (EndpointPolicy::EndpointList const &value)
 : value_ (value)
 {
 }

@@ -26,16 +26,20 @@ class be_visitor_interface_tie_ss : public be_visitor_interface
 {
 public:
   /// constructor
-  be_visitor_interface_tie_ss (be_visitor_context *ctx);
+  explicit be_visitor_interface_tie_ss (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_interface_tie_ss ();
+  ~be_visitor_interface_tie_ss () override;
+  be_visitor_interface_tie_ss (be_visitor_interface_tie_ss const &) = delete;
+  be_visitor_interface_tie_ss (be_visitor_interface_tie_ss &&) = delete;
+  be_visitor_interface_tie_ss &operator= (be_visitor_interface_tie_ss const &) = delete;
+  be_visitor_interface_tie_ss &operator= (be_visitor_interface_tie_ss &&) = delete;
 
   /// set the right context and make a visitor
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// set the right context and make a visitor
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 
   /// helper method to generate method declaration in the TIE classes.
   static int method_helper (be_interface *,

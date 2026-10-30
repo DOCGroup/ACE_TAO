@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char *TAO_ComponentContainer_i::tmp_name_holder_ = nullptr;
+char const *TAO_ComponentContainer_i::tmp_name_holder_ = nullptr;
 
 TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -17,17 +17,15 @@ TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentContainer_i::~TAO_ComponentContainer_i ()
-{
-}
+TAO_ComponentContainer_i::~TAO_ComponentContainer_i () = default;
 
 CORBA::ComponentIR::ComponentDef_ptr
 TAO_ComponentContainer_i::create_component (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq &supports_interfaces
+    CORBA::InterfaceDefSeq const &supports_interfaces
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
@@ -43,11 +41,11 @@ TAO_ComponentContainer_i::create_component (
 
 CORBA::ComponentIR::ComponentDef_ptr
 TAO_ComponentContainer_i::create_component_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::ComponentIR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq &supports_interfaces
+    CORBA::InterfaceDefSeq const &supports_interfaces
   )
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
@@ -68,7 +66,7 @@ TAO_ComponentContainer_i::create_component_i (
 
   if (! CORBA::is_nil (base_component))
     {
-      const char *base_path =
+      char const *base_path =
         TAO_IFR_Service_Utils::reference_to_path (base_component);
 
       // Get the servant's key into the temporary key holder, because
@@ -110,7 +108,7 @@ TAO_ComponentContainer_i::create_component_i (
                                                  "count",
                                                  count);
 
-      const char *supported_path = nullptr;
+      char const *supported_path = nullptr;
       char *stringified = nullptr;
 
       for (i = 0; i < count; ++i)
@@ -137,12 +135,12 @@ TAO_ComponentContainer_i::create_component_i (
 
 CORBA::ComponentIR::HomeDef_ptr
 TAO_ComponentContainer_i::create_home (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
-    const CORBA::InterfaceDefSeq &supports_interfaces,
+    CORBA::InterfaceDefSeq const &supports_interfaces,
     CORBA::ValueDef_ptr primary_key
   )
 {
@@ -161,12 +159,12 @@ TAO_ComponentContainer_i::create_home (
 
 CORBA::ComponentIR::HomeDef_ptr
 TAO_ComponentContainer_i::create_home_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::ComponentIR::HomeDef_ptr base_home,
     CORBA::ComponentIR::ComponentDef_ptr managed_component,
-    const CORBA::InterfaceDefSeq &supports_interfaces,
+    CORBA::InterfaceDefSeq const &supports_interfaces,
     CORBA::ValueDef_ptr primary_key
   )
 {
@@ -255,16 +253,16 @@ TAO_ComponentContainer_i::create_home_i (
 
 CORBA::ComponentIR::EventDef_ptr
 TAO_ComponentContainer_i::create_event (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces,
-    const CORBA::ExtInitializerSeq &initializers
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces,
+    CORBA::ExtInitializerSeq const &initializers
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
@@ -285,16 +283,16 @@ TAO_ComponentContainer_i::create_event (
 
 CORBA::ComponentIR::EventDef_ptr
 TAO_ComponentContainer_i::create_event_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces,
-    const CORBA::ExtInitializerSeq &initializers
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces,
+    CORBA::ExtInitializerSeq const &initializers
   )
 {
   TAO_ComponentContainer_i::tmp_name_holder_ = name;
@@ -327,7 +325,7 @@ TAO_ComponentContainer_i::create_event_i (
 
   if (!CORBA::is_nil (base_value))
     {
-      const char *base_path =
+      char const *base_path =
         TAO_IFR_Service_Utils::reference_to_path (base_value);
 
       // Get the servant's key into the temporary key holder, because
@@ -512,7 +510,7 @@ TAO_ComponentContainer_i::create_event_i (
 }
 
 int
-TAO_ComponentContainer_i::same_as_tmp_name (const char *name)
+TAO_ComponentContainer_i::same_as_tmp_name (char const *name)
 {
   return
     ACE_OS::strcmp (TAO_ComponentContainer_i::tmp_name_holder_, name) == 0;

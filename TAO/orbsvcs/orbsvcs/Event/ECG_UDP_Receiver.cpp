@@ -44,7 +44,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 }
 
 void
-TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::connect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
@@ -76,7 +76,7 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
 }
 
 void
-TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::new_connect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   // Activate with poa.
   RtecEventComm::PushSupplier_var supplier_ref;
@@ -106,7 +106,7 @@ TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
 }
 
 void
-TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::reconnect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   // Obtain our object reference from the POA.
   RtecEventComm::PushSupplier_var supplier_ref;

@@ -12,14 +12,14 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_facet_svts::be_visitor_facet_svts (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_facet_svts::~be_visitor_facet_svts ()
-{
-}
+be_visitor_facet_svts::~be_visitor_facet_svts () = default;
 
 int
 be_visitor_facet_svts::visit_interface (be_interface *node)
@@ -33,24 +33,24 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
       return 0;
     }
 
-  const char *lname = node->local_name ();
+  std::string const lname = node->local_name ();
 
   be_decl *scope =
     dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
-  ACE_CString sname_str (scope->full_name ());
+  std::string const sname_str = scope->full_name ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
-  ACE_CString suffix (scope->flat_name ());
+  std::string suffix (scope->flat_name ());
 
   if (suffix != "")
     {
-      suffix = ACE_CString ("_") + suffix;
+      suffix.insert (0, "_");
     }
 
   os_ << be_nl_2
-      << "namespace CIAO_FACET" << suffix.c_str () << be_nl
+      << "namespace CIAO_FACET" << suffix << be_nl
       << "{" << be_idt_nl;
 
   os_ << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
@@ -82,9 +82,9 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
 
       /// The overload of traverse_inheritance_graph() used here
       /// doesn't automatically prime the queues.
-      op_scope->get_insert_queue ().reset ();
-      op_scope->get_del_queue ().reset ();
-      op_scope->get_insert_queue ().enqueue_tail (op_scope);
+      op_scope->get_insert_queue ().clear ();
+      op_scope->get_del_queue ().clear ();
+      op_scope->get_insert_queue ().push_back (op_scope);
 
       be_facet_op_attr_defn_helper helper (op_scope);
 

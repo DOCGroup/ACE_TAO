@@ -29,10 +29,14 @@ class Basic
 {
 public:
   /// Constructor.
-  Basic ();
+  Basic () = default;
+  Basic (Basic const &) = delete;
+  Basic (Basic &&) = delete;
+  Basic &operator= (Basic const &) = delete;
+  Basic &operator= (Basic &&) = delete;
 
   /// Destructor.
-  ~Basic ();
+  ~Basic () = default;
 
   /// Starts up an ORB and the CosEC.
   /// Returns 0 on success, -1 on error.

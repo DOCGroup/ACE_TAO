@@ -33,9 +33,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef mock_reference *mock_reference_ptr;
-typedef TAO_Objref_Var_T<mock_reference> mock_reference_var;
-typedef TAO_Objref_Out_T<mock_reference> mock_reference_out;
+using mock_reference_ptr = mock_reference *;
+using mock_reference_var = TAO_Objref_Var_T<mock_reference>;
+using mock_reference_out = TAO_Objref_Out_T<mock_reference>;
 
 /**
  * @class mock_reference
@@ -48,8 +48,8 @@ class mock_reference
 public:
   virtual ~mock_reference();
 
-  typedef mock_reference_var _var_type;
-  typedef mock_reference_out _out_type;
+  using _var_type = mock_reference_var;
+  using _out_type = mock_reference_out;
 
   static mock_reference * allocate(int id);
   static mock_reference * _nil();
@@ -80,7 +80,7 @@ public:
 private:
   mock_reference ();
 
-  inline mock_reference(int id)
+  explicit inline mock_reference(int id)
     : id_(id)
   {}
 

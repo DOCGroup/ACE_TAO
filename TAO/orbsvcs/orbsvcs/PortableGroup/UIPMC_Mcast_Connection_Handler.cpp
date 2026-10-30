@@ -19,15 +19,12 @@
 
 #include "ace/Vector_T.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Mcast_Connection_Handler::TAO_UIPMC_Mcast_Connection_Handler (
   ACE_Thread_Manager *t)
-  : TAO_UIPMC_MCAST_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
-    listen_on_all_ (false),
-    listener_interfaces_ ()
+  : TAO_UIPMC_MCAST_SVC_HANDLER (t, nullptr, nullptr),
+    TAO_Connection_Handler (nullptr)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -38,15 +35,13 @@ TAO_UIPMC_Mcast_Connection_Handler::TAO_UIPMC_Mcast_Connection_Handler (
                   ACE_TEXT("TAO (%P|%t) - UIPMC_Mcast_Connection_Handler, ")
                   ACE_TEXT("this constructor should never be called.\n")
                   ACE_TEXT("  Check svc.conf configuration.\n") ));
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
 TAO_UIPMC_Mcast_Connection_Handler::TAO_UIPMC_Mcast_Connection_Handler (
   TAO_ORB_Core *orb_core)
-  : TAO_UIPMC_MCAST_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
-    TAO_Connection_Handler (orb_core),
-    listen_on_all_ (false),
-    listener_interfaces_ ()
+  : TAO_UIPMC_MCAST_SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
+    TAO_Connection_Handler (orb_core)
 {
   TAO_UIPMC_Mcast_Transport *specific_transport = nullptr;
   ACE_NEW (specific_transport,
@@ -71,26 +66,26 @@ TAO_UIPMC_Mcast_Connection_Handler::~TAO_UIPMC_Mcast_Connection_Handler ()
     }
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_UIPMC_Mcast_Connection_Handler::addr () const
 {
   return this->addr_;
 }
 
 void
-TAO_UIPMC_Mcast_Connection_Handler::addr (const ACE_INET_Addr &addr)
+TAO_UIPMC_Mcast_Connection_Handler::addr (ACE_INET_Addr const &addr)
 {
   this->addr_ = addr;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_UIPMC_Mcast_Connection_Handler::local_addr () const
 {
   return this->local_addr_;
 }
 
 void
-TAO_UIPMC_Mcast_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
+TAO_UIPMC_Mcast_Connection_Handler::local_addr (ACE_INET_Addr const &addr)
 {
   this->local_addr_ = addr;
 }
@@ -105,31 +100,31 @@ int
 TAO_UIPMC_Mcast_Connection_Handler::open (void *)
 {
   // Stingify the target multicast group IP address
-  char target_multicast_group[INET6_ADDRSTRLEN];
+  char target_multicast_group[INET6_ADDRSTRLEN] {};
   this->local_addr_.get_host_addr (target_multicast_group, sizeof target_multicast_group);
 
   // Check if we are supposed to be listening on specified interface(s)
-  size_t preferred_size= 0u;
-  if (this->listener_interfaces_[0])
+  size_t preferred_size {};
+  if (this->listener_interfaces_.length () != 0)
     {
       // Since we have been told to match some targetNetwork=localNetwork listener interface
       // strings, attempt to match the actual targetHost and our actual network interface cards
       // to see how many joins we need to attempt.
-      ACE_Vector<ACE_CString> preferred;
+      std::vector<ACE_CString> preferred;
       TAO_IIOP_Endpoint::find_preferred_interfaces (
         target_multicast_group,
         this->listener_interfaces_,
         preferred);
-      preferred_size= preferred.size ();
+      preferred_size = preferred.size ();
 
 #ifndef TAO_ALLOW_UNICAST_MIOP
       // If we are attempting to join ANY preferred listener interfaces, at least one join must
       // complete in the loop below for a successful outcome. If we have NO valid preferred
       // listener interfaces, then we are concidered successful HERE so as to allow the
       // default join to be attempted later.
-      bool success= !preferred_size;
+      bool success = preferred_size == 0;
 #endif // TAO_ALLOW_UNICAST_MIOP
-      for (size_t i= 0u; i < preferred_size; ++i)
+      for (size_t i = 0u; i < preferred_size; ++i)
         if (0 == this->peer ().join (
                    this->local_addr_,
                    1,
@@ -167,7 +162,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
   if (!preferred_size)
     {
       if (this->listen_on_all_)
-        this->peer ().opts(ACE_SOCK_Dgram_Mcast::OPT_NULLIFACE_ALL | this->peer ().opts());
+        this->peer ().opts (ACE_SOCK_Dgram_Mcast::OPT_NULLIFACE_ALL | this->peer ().opts());
 
       if (0 == this->peer ().join (this->local_addr_))
         {
@@ -198,7 +193,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
     }
 
   // Attempt to set the socket's receive buffer size.
-  TAO_MIOP_Resource_Factory *const factory =
+  TAO_MIOP_Resource_Factory * const factory =
     ACE_Dynamic_Service<TAO_MIOP_Resource_Factory>::instance (
       this->orb_core ()->configuration (),
       ACE_TEXT ("MIOP_Resource_Factory"));
@@ -234,7 +229,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
     }
 
   // Pass the connection over to the transport.
-  this->transport ()->id ((size_t) this->peer ().get_handle ());
+  this->transport ()->id (static_cast<size_t> (this->peer ().get_handle ()));
   return 0;
 }
 
@@ -273,8 +268,8 @@ TAO_UIPMC_Mcast_Connection_Handler::handle_output (ACE_HANDLE handle)
 
 int
 TAO_UIPMC_Mcast_Connection_Handler::handle_timeout (
-  const ACE_Time_Value &,
-  const void *)
+  ACE_Time_Value const &,
+  void const *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -
@@ -342,20 +337,20 @@ TAO_UIPMC_Mcast_Connection_Handler::add_transport_to_cache ()
 }
 
 int
-TAO_UIPMC_Mcast_Connection_Handler::handle_write_ready
-  (const ACE_Time_Value *t)
+TAO_UIPMC_Mcast_Connection_Handler::handle_write_ready (
+  ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }
 
 void
-TAO_UIPMC_Mcast_Connection_Handler::listen_on_all(bool value)
+TAO_UIPMC_Mcast_Connection_Handler::listen_on_all (bool value)
 {
   this->listen_on_all_ = value;
 }
 
 void
-TAO_UIPMC_Mcast_Connection_Handler::listener_interfaces (const char *value)
+TAO_UIPMC_Mcast_Connection_Handler::listener_interfaces (char const *value)
 {
   this->listener_interfaces_ = value;
 }

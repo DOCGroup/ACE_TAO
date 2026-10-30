@@ -15,6 +15,7 @@
 #endif /* ACE_WIN32 && ACE_HAS_IPV6 */
 
 #include <memory>
+#include <new>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
@@ -28,15 +29,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Acceptor_Registry::~TAO_Acceptor_Registry ()
 {
   this->close_all ();
-
-  delete [] this->acceptors_;
 }
 
 size_t
 TAO_Acceptor_Registry::endpoint_count ()
 {
   size_t count = 0;
-  const TAO_AcceptorSetIterator end = this->end ();
+  TAO_AcceptorSetIterator const end = this->end ();
 
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
@@ -47,7 +46,7 @@ TAO_Acceptor_Registry::endpoint_count ()
 }
 
 bool
-TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
+TAO_Acceptor_Registry::is_collocated (TAO_MProfile const &mprofile)
 {
   TAO_AcceptorSetIterator const end = this->end ();
   CORBA::ULong const count = mprofile.profile_count ();
@@ -58,7 +57,7 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
     {
       for (TAO_PHandle j = 0; j != count; ++j)
         {
-          const TAO_Profile *profile = mprofile.get_profile (j);
+          TAO_Profile const *profile = mprofile.get_profile (j);
 
           // @@ We need to invoke a nonconst <endpoint> method on
           //    <profile>.  The content of profile/endpoint will not
@@ -107,10 +106,10 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                              ACE_Reactor *reactor,
-                             const TAO_EndpointSet &endpoint_set,
+                             TAO_EndpointSet const &endpoint_set,
                              bool ignore_address)
 {
-  if (endpoint_set.is_empty ()
+  if (endpoint_set.empty ()
       // No endpoints were specified, we let each protocol pick its
       // own default.
 
@@ -128,14 +127,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   // Count the maximum number of endpoints in the set.  This will be
   // the maximum number of acceptors that need to be created.
   size_t acceptor_count = 0;
-  TAO_EndpointSetIterator endpts (endpoint_set);
-
-  for (ACE_CString *ep = nullptr;
-       endpts.next (ep) != 0;
-       endpts.advance ())
+  for (ACE_CString const& iop : endpoint_set)
     {
-      const ACE_CString &iop = (*ep);
-
       // IOP://address1,address2
       //    ^ slot
       ACE_CString::size_type const slot = iop.find ("://", 0);
@@ -164,11 +157,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       // to open explicitly on IPv6 ANY *and* IPv4 ANY.
 
       // Now get the list of available protocol factories.
-      const TAO_ProtocolFactorySetItor end =
+      TAO_ProtocolFactorySetItor const end =
         orb_core->protocol_factories ()->end ();
 
       // extract the protocol prefix
-      const ACE_CString prefix (iop.substring (0, slot));
+      ACE_CString const prefix (iop.substring (0, slot));
 
       for (TAO_ProtocolFactorySetItor factory =
              orb_core->protocol_factories ()->begin ();
@@ -190,10 +183,10 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       // Now count the number of commas.  That number will be the
       // remaining number of endpoints in the current endpoint
       // specification.
-      const char *ep_end =
-        ep->c_str () + std::strlen (ep->c_str ());
+      char const *ep_end =
+        iop.c_str () + std::strlen (iop.c_str ());
 
-      for (const char *e = std::strchr (ep->c_str (), ',');
+      for (char const *e = std::strchr (iop.c_str (), ',');
            e != nullptr && e != ep_end;
            e = std::strchr (e, ','))
         {
@@ -202,27 +195,26 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         }
     }
 
-  // The array containing the TAO_Acceptors will never contain more
-  // than the number of endpoints stored in TAO_ORB_Parameters.
-  if (this->acceptors_ == nullptr)
+  // The collection of TAO_Acceptors will never contain more than the
+  // number of endpoints stored in TAO_ORB_Parameters.
+  if (this->acceptors_.empty ())
     {
-      ACE_NEW_THROW_EX (this->acceptors_,
-                        TAO_Acceptor *[acceptor_count],
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
+      try
+        {
+          this->acceptors_.reserve (acceptor_count);
+        }
+      catch (std::bad_alloc const &)
+        {
+          throw CORBA::NO_MEMORY (
+            CORBA::SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              ENOMEM),
+            CORBA::COMPLETED_NO);
+        }
     }
 
-  TAO_EndpointSetIterator endpoints (endpoint_set);
-
-  for (ACE_CString *endpoint = nullptr;
-       endpoints.next (endpoint) != 0;
-       endpoints.advance ())
+  for (ACE_CString const& iop : endpoint_set)
     {
-      const ACE_CString &iop = (*endpoint);
-
       // IOP://address1,address2
       //    ^ slot
       ACE_CString::size_type const slot = iop.find ("://", 0);
@@ -244,7 +236,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             CORBA::COMPLETED_NO);
         }
 
-      const ACE_CString prefix (iop.substring (0, slot));
+      ACE_CString const prefix (iop.substring (0, slot));
 
       // @@ We could move the protocol factory loop to the outermost
       //    level but for now we leave it inside the endpoint loop
@@ -252,7 +244,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       //    than protocols.
 
       // Now get the list of available protocol factories.
-      const TAO_ProtocolFactorySetItor end =
+      TAO_ProtocolFactorySetItor const end =
         orb_core->protocol_factories ()->end ();
 
       bool found = false;
@@ -288,7 +280,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             }
         }
 
-      if (found == false)
+      if (!found)
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) ")
@@ -310,7 +302,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 // server for each protocol.
 int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                          ACE_Reactor *reactor,
-                                         const char *options)
+                                         char const *options)
 {
   // Flag that indicates at least one endpoint was opened.  If one
   // wasn't opened then there is a problem.
@@ -321,7 +313,8 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   vinfo.dwOSVersionInfoSize = sizeof (vinfo);
   int vres = GetVersionEx (&vinfo);
   if ((vres == 0 || vinfo.dwMajorVersion < 6) &&
-      !orb_core->orb_params ()->connect_ipv6_only () && this->acceptors_ == 0)
+      !orb_core->orb_params ()->connect_ipv6_only ()
+      && this->acceptors_.empty ())
     {
       // Since Win32 has single-stack IPv4/IPv6 we need an additional
       // acceptor to open explicitly on IPv6 ANY *and* IPv4 ANY.
@@ -332,7 +325,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
       // Number of acceptors to set up
       size_t acceptor_count = 0;
 
-      const TAO_ProtocolFactorySetItor end = pfs->end ();
+      TAO_ProtocolFactorySetItor const end = pfs->end ();
 
       // Loop through all the loaded protocols...
       for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
@@ -346,10 +339,14 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
             }
         }
 
-      // Allocate TAO_Acceptor array
-      ACE_NEW_RETURN (this->acceptors_,
-                      TAO_Acceptor *[acceptor_count],
-                      -1);
+      try
+        {
+          this->acceptors_.reserve (acceptor_count);
+        }
+      catch (std::bad_alloc const &)
+        {
+          return -1;
+        }
 
       // Loop through all the loaded protocols...
       for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
@@ -365,7 +362,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
               TAO_Acceptor *acceptor =
                 (*i)->factory ()->make_acceptor ();
 
-              if (acceptor == 0)
+              if (acceptor == nullptr)
                 {
                   if (TAO_debug_level > 0)
                     {
@@ -385,8 +382,8 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                   // Open first acceptor on IPv4 ANY
                   ACE_INET_Addr addr(static_cast<unsigned short> (0));
 
-                  TAO_IIOP_Acceptor* iiop_acceptor =
-                    dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                  TAO_IIOP_Acceptor *iiop_acceptor =
+                    dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
 
                   if (!iiop_acceptor)
                     return -1;
@@ -412,7 +409,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                   acceptor =
                     (*i)->factory ()->make_acceptor ();
 
-                  if (acceptor == 0)
+                  if (acceptor == nullptr)
                     {
                       if (TAO_debug_level > 0)
                         {
@@ -431,7 +428,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                       addr.set (port, ACE_IPV6_ANY, 1, AF_INET6) == 0)
                     {
                       iiop_acceptor =
-                        dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                        dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
 
                       if (!iiop_acceptor)
                         return -1;
@@ -477,14 +474,19 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   // endpoints were specified by the user, meaning that the number of
   // acceptors will never be more than the number of loaded protocols
   // in the ORB core.
-  if (this->acceptors_ == nullptr)
+  if (this->acceptors_.empty ())
     {
-      ACE_NEW_RETURN (this->acceptors_,
-                      TAO_Acceptor *[pfs->size ()],
-                      -1);
+      try
+        {
+          this->acceptors_.reserve (pfs->size ());
+        }
+      catch (std::bad_alloc const &)
+        {
+          return -1;
+        }
     }
 
-  const TAO_ProtocolFactorySetItor end = pfs->end ();
+  TAO_ProtocolFactorySetItor const end = pfs->end ();
 
   // Loop through all the loaded protocols...
   for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
@@ -539,7 +541,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                      int major,
                                      int minor,
                                      TAO_ProtocolFactorySetItor &factory,
-                                     const char *options)
+                                     char const *options)
 {
   // No endpoints were specified, we let each protocol pick its own
   // default endpoint.
@@ -579,7 +581,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
                                        int minor,
                                        TAO_ProtocolFactorySetItor &factory,
                                        TAO_Acceptor* acceptor,
-                                       const char *options)
+                                       char const *options)
 {
   // Initialize the acceptor to listen on a default endpoint.
   if (acceptor->open_default (orb_core, reactor, major, minor, options) == -1)
@@ -600,7 +602,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
       return -1;
     }
 
-  this->acceptors_[this->size_++] = acceptor;
+  this->acceptors_.push_back (acceptor);
 
   return 0;
 }
@@ -608,7 +610,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
 int
 TAO_Acceptor_Registry::close_all ()
 {
-  const TAO_AcceptorSetIterator end = this->end ();
+  TAO_AcceptorSetIterator const end = this->end ();
 
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
@@ -619,7 +621,7 @@ TAO_Acceptor_Registry::close_all ()
         }
     }
 
-  this->size_ = 0;
+  this->acceptors_.clear ();
   return 0;
 }
 
@@ -674,7 +676,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
   ACE_CString options_tmp;
   this->extract_endpoint_options (addrs, options_tmp, (*factory)->factory ());
 
-  const char *options = nullptr;
+  char const *options = nullptr;
 
   if (options_tmp.length () > 0)
     {
@@ -684,7 +686,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
   char *last_addr = nullptr;
   std::unique_ptr<char[]> addr_str (addrs.rep ());
 
-  const char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
+  char const *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
 
   // Iterate over the addrs specified in the endpoint.
 
@@ -718,7 +720,8 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                   // Open first acceptor on IPv4 ANY
                   ACE_INET_Addr addr(static_cast<unsigned short> (0)); // IPv4 ANY
 
-                  TAO_IIOP_Acceptor* iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                  TAO_IIOP_Acceptor *iiop_acceptor =
+                    dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
 
                   if (!iiop_acceptor)
                     return -1;
@@ -740,7 +743,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
                       acceptor =
                         (*factory)->factory ()->make_acceptor ();
 
-                      if (acceptor == 0)
+                      if (acceptor == nullptr)
                         {
                           if (TAO_debug_level > 0)
                             {
@@ -761,7 +764,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
 
                       addr.set (port, ACE_IPV6_ANY, AF_INET6); // IPv6 ANY on specified port
 
-                      iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor*> (acceptor);
+                      iiop_acceptor = dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
                       if (!iiop_acceptor)
                         return -1;
 
@@ -854,7 +857,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             }
 
           // add acceptor to list
-          this->acceptors_[this->size_++] = acceptor;
+          this->acceptors_.push_back (acceptor);
         }
       else
         {

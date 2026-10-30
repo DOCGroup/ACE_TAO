@@ -14,14 +14,11 @@
 be_visitor_home_ex_idl::be_visitor_home_ex_idl (
     be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
     os_ (*ctx->stream ())
 {
 }
 
-be_visitor_home_ex_idl::~be_visitor_home_ex_idl ()
-{
-}
+be_visitor_home_ex_idl::~be_visitor_home_ex_idl () = default;
 
 int
 be_visitor_home_ex_idl::visit_home (be_home *node)
@@ -66,7 +63,7 @@ be_visitor_home_ex_idl::visit_attribute (be_attribute *node)
 
    os_ << IdentifierHelper::type_name (ft, this);
    os_ << " "
-       << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
+       << IdentifierHelper::try_escape (node->original_local_name ());
 
    this->gen_exception_list (node->get_get_exceptions (),
                              rd_only ? "" : "get");
@@ -94,7 +91,7 @@ be_visitor_home_ex_idl::visit_operation (be_operation *node)
   os_ << IdentifierHelper::type_name (rt, this);
 
   os_ << " "
-      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << IdentifierHelper::try_escape (node->original_local_name ())
       << " (" << be_idt << be_idt;
 
   if (this->visit_scope (node) == -1)
@@ -140,7 +137,7 @@ be_visitor_home_ex_idl::visit_argument (be_argument *node)
 
   os_ << IdentifierHelper::type_name (ft, this)
       << " "
-      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << IdentifierHelper::try_escape (node->original_local_name ())
       << (this->last_node (node) ? "" : ",");
 
   return 0;
@@ -151,7 +148,7 @@ be_visitor_home_ex_idl::visit_factory (be_factory *node)
 {
   os_ << be_nl
       << "::Components::EnterpriseComponent "
-      << IdentifierHelper::try_escape (node->original_local_name ()).c_str ()
+      << IdentifierHelper::try_escape (node->original_local_name ())
       << " (" << be_idt << be_idt;
 
   if (this->visit_scope (node) == -1)
@@ -214,7 +211,7 @@ be_visitor_home_ex_idl::gen_implicit ()
 {
   os_ << be_nl
       << "local interface CCM_"
-      << IdentifierHelper::try_escape (node_->original_local_name ()).c_str ()
+      << IdentifierHelper::try_escape (node_->original_local_name ())
       << "Implicit" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent create ()" << be_idt_nl
@@ -228,7 +225,7 @@ be_visitor_home_ex_idl::gen_explicit ()
 {
   os_ << be_nl_2
       << "local interface CCM_"
-      << IdentifierHelper::try_escape (node_->original_local_name ()).c_str ()
+      << IdentifierHelper::try_escape (node_->original_local_name ())
       << "Explicit" << be_idt_nl
       << ": ";
 
@@ -242,15 +239,15 @@ be_visitor_home_ex_idl::gen_explicit ()
     }
   else
     {
-      ACE_CString sname_str =
+      std::string sname_str =
         IdentifierHelper::orig_sn (
           ScopeAsDecl (base->defined_in ())->name ());
 
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
+      char const *sname = sname_str.c_str ();
+      char const *global = (sname_str.empty () ? "" : "::");
 
       os_ << global << sname << "::CCM_"
-          << IdentifierHelper::try_escape (base->local_name ()).c_str ()
+          << IdentifierHelper::try_escape (base->local_name ())
           << "Explicit";
     }
 
@@ -272,9 +269,9 @@ be_visitor_home_ex_idl::gen_explicit ()
 void
 be_visitor_home_ex_idl::gen_derived ()
 {
-  ACE_CString lname_str =
+  std::string lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
-  const char *lname = lname_str.c_str ();
+  char const *lname = lname_str.c_str ();
 
   os_ << be_nl_2
       << "local interface CCM_" << lname << be_nl
@@ -295,7 +292,7 @@ be_visitor_home_ex_idl::gen_supported ()
     {
       os_ << "," << be_nl
           << "::"
-          << IdentifierHelper::orig_sn (supported[i]->name ()).c_str ();
+          << IdentifierHelper::orig_sn (supported[i]->name ());
     }
 
   os_ << be_uidt;
@@ -304,7 +301,7 @@ be_visitor_home_ex_idl::gen_supported ()
 void
 be_visitor_home_ex_idl::gen_exception_list (
   UTL_ExceptList *exceptions,
-  const char *prefix,
+  char const *prefix,
   bool init_op)
 {
   ACE_CDR::Long cutoff = (init_op ? 1 : 0);
@@ -319,7 +316,7 @@ be_visitor_home_ex_idl::gen_exception_list (
            ;)
         {
           AST_Type *ex = ei.item ();
-          ACE_CString ex_name =
+          std::string ex_name =
             IdentifierHelper::orig_sn (ex->name ());
 
           if (init_op)
@@ -336,7 +333,7 @@ be_visitor_home_ex_idl::gen_exception_list (
                 }
             }
 
-          os_ << "::" << ex_name.c_str ();
+          os_ << "::" << ex_name;
 
           ei.next ();
 
@@ -356,15 +353,15 @@ be_visitor_home_ex_idl::gen_home_executor ()
   AST_Component *comp = node_->managed_component ();
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
 
-  ACE_CString sname_str =
+  std::string sname_str =
     IdentifierHelper::orig_sn (scope->name ());
-  const char *sname = sname_str.c_str ();
+  char const *sname = sname_str.c_str ();
 
-  ACE_CString lname_str =
+  std::string lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
-  const char *lname = lname_str.c_str ();
+  char const *lname = lname_str.c_str ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  char const *global = (sname_str.empty () ? "" : "::");
 
   os_ << be_nl_2
       << "module CIAO_" << comp->flat_name () << "_Impl" << be_nl

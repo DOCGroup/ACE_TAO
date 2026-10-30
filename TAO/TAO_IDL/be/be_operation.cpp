@@ -41,10 +41,7 @@ be_operation::be_operation (AST_Type *rt,
                    abstract),
     be_scope (AST_Decl::NT_op),
     be_decl (AST_Decl::NT_op,
-             n),
-    is_sendc_ami_ (false),
-    is_excep_ami_ (false),
-    is_attr_op_ (false)
+             n)
 {
   if (this->imported ())
     {
@@ -62,9 +59,7 @@ be_operation::be_operation (AST_Type *rt,
     }
 }
 
-be_operation::~be_operation ()
-{
-}
+be_operation::~be_operation () = default;
 
 void
 be_operation::destroy ()
@@ -97,9 +92,10 @@ be_operation::be_insert_exception (AST_Exception *ex)
   UTL_ExceptList *new_list = nullptr;
   ACE_NEW_RETURN (new_list,
                   UTL_ExceptList (ex,
-                                  this->pd_exceptions),
+                                  this->pd_exceptions.get ()),
                   -1);
-  this->pd_exceptions = new_list;
+  this->pd_exceptions.release ();
+  this->pd_exceptions.reset (new_list);
   return 0;
 }
 

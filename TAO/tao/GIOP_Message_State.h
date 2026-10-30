@@ -79,24 +79,24 @@ private:
 
   /// Checks for the magic word 'GIOP' in the start of the incoming
   /// stream
-  int parse_magic_bytes (char *buf);
+  int parse_magic_bytes (char const *buf);
 
   /// Extracts the version information from the incoming
   /// stream. Performs a check for  whether the version information is
   /// right and sets the information in the <state>
-  int get_version_info (char *buf);
+  int get_version_info (char const *buf);
 
   /// Extracts the byte order information from the incoming
   /// stream. Performs a check for  whether the byte order information
   /// right and sets the information in the <state>
-  int get_byte_order_info (char *buf);
+  int get_byte_order_info (char const *buf);
 
   /// Gets the size of the payload and set the size in the <state>
-  void get_payload_size (char *buf);
+  void get_payload_size (char const *buf);
 
   /// Read the unsigned long from the buffer. The @a buf should just
   /// point to the next 4 bytes data that represent the ULong
-  CORBA::ULong read_ulong (const char *buf) const;
+  CORBA::ULong read_ulong (char const *buf) const;
 
 private:
   /// GIOP version information..

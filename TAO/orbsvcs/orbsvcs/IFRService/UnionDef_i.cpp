@@ -8,6 +8,7 @@
 
 #include <memory>
 #include "ace/SString.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -20,9 +21,7 @@ TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_UnionDef_i::~TAO_UnionDef_i ()
-{
-}
+TAO_UnionDef_i::~TAO_UnionDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_UnionDef_i::def_kind ()
@@ -184,7 +183,7 @@ TAO_UnionDef_i::discriminator_type_def_i (
 CORBA::UnionMemberSeq *
 TAO_UnionDef_i::members ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -194,7 +193,7 @@ TAO_UnionDef_i::members ()
 CORBA::UnionMemberSeq *
 TAO_UnionDef_i::members_i ()
 {
-  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+  std::deque<ACE_Configuration_Section_Key> key_queue;
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -231,7 +230,7 @@ TAO_UnionDef_i::members_i ()
                                                    0)
                == 0)
             {
-              key_queue.enqueue_tail (member_key);
+              key_queue.push_back (member_key);
             }
         }
     }
@@ -256,7 +255,8 @@ TAO_UnionDef_i::members_i ()
 
   for (CORBA::ULong k = 0; k < size; ++k)
     {
-      key_queue.dequeue_head (next_key);
+      next_key = key_queue.front ();
+      key_queue.pop_front ();
 
       this->repo_->config ()->get_string_value (next_key,
                                                 "name",
@@ -295,7 +295,7 @@ TAO_UnionDef_i::members_i ()
 }
 
 void
-TAO_UnionDef_i::members (const CORBA::UnionMemberSeq &members)
+TAO_UnionDef_i::members (CORBA::UnionMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -305,7 +305,7 @@ TAO_UnionDef_i::members (const CORBA::UnionMemberSeq &members)
 }
 
 void
-TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members)
+TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
 {
   // Destroy our old refs.
   TAO_Container_i::destroy_references_i ();

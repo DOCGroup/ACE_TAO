@@ -14,15 +14,8 @@ UDP_PerformanceClient::UDP_PerformanceClient (CORBA::ORB_ptr orb,
   : orb_ (CORBA::ORB::_duplicate (orb))
   , udp_ (UDP::_duplicate (udp))
   , udpHandler_ (udpHandler)
-  , last_wrong_messages_ (0)
   , burst_messages_ (burst_messages)
 {
-}
-
-//Destructor.
-UDP_PerformanceClient::~UDP_PerformanceClient ()
-{
-  //no-op
 }
 
 int
@@ -37,7 +30,7 @@ UDP_PerformanceClient::svc ()
   client_name += "_";
   client_name += pid;
 
-  ACE_UINT32 micro_seconds = 0;
+  ACE_UINT32 micro_seconds {};
   ACE_UINT32 delta_micro_seconds = 1;
 
   try
@@ -50,7 +43,7 @@ UDP_PerformanceClient::svc ()
       udp_->setResponseHandler (udpHandler_var.in ());
 
       ACE_High_Res_Timer timer;
-      while (1)
+      while (true)
         {
           //FUZZ: disable check_for_lack_ACE_OS
           ACE_DEBUG ((LM_DEBUG,
@@ -154,7 +147,7 @@ UDP_PerformanceClient::svc ()
       // in the main thread.
       orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\tException");
       return -1;

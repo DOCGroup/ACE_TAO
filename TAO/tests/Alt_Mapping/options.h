@@ -26,14 +26,14 @@
 class Options
 {
 public:
-  enum TEST_TYPE
+  enum class Test_Type
   {
-    NO_TEST,
-    TEST_UB_STRING,
-    TEST_UB_STRUCT_SEQUENCE
+    None,
+    Unbounded_String,
+    Unbounded_Struct_Sequence
   };
 
-  enum INVOKE_TYPE
+  enum class Invoke_Type
   {
     SII,
     DII
@@ -41,9 +41,13 @@ public:
 
   /// constructor
   Options ();
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
 
   /// destructor
-  ~Options ();
+  ~Options () = default;
 
   /// Parses the arguments passed on the command line.
   int parse_args (int argc, ACE_TCHAR **argv);
@@ -52,13 +56,13 @@ public:
   char const * param_test_ior () const;
 
   /// what test to run
-  TEST_TYPE test_type ();
+  Test_Type test_type () const;
 
   /// whether to use SII or DII
-  INVOKE_TYPE invoke_type ();
+  Invoke_Type invoke_type () const;
 
   /// number of times to run the test
-  CORBA::ULong loop_count ();
+  CORBA::ULong loop_count () const;
 
   /// whether debug option is on or not
   CORBA::Boolean debug () const;
@@ -74,19 +78,19 @@ private:
   CORBA::String_var ior_;
 
   /// what test to run
-  TEST_TYPE test_type_;
+  Test_Type test_type_;
 
   /// whether SII or DII
-  INVOKE_TYPE invoke_type_;
+  Invoke_Type invoke_type_;
 
   /// Number of times to do the "test_*" operations.
-  CORBA::ULong loop_count_;
+  CORBA::ULong loop_count_ {};
 
   /// debugging output values
-  CORBA::Boolean debug_;
+  bool debug_ {};
 
   /// server shutdown flag.
-  CORBA::Boolean shutdown_;
+  bool shutdown_ {};
 };
 
 using OPTIONS = ACE_Singleton<Options, TAO_SYNCH_RECURSIVE_MUTEX>;

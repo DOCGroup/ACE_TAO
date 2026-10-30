@@ -180,10 +180,6 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
 
 // ****************************************************************
 
-TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command ()
-{
-}
-
 // ****************************************************************
 
 int

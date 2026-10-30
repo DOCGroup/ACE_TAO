@@ -16,23 +16,15 @@ TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,
 
 template <class MAP_LOCK_TYPE>
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
-~TAO_Register_Offer_Iterator ()
-{
-  while (! this->offer_ids_.is_empty ())
-    {
-      CosTrading::OfferId offer_id = 0;
-      this->offer_ids_.dequeue_head (offer_id);
-
-      CORBA::string_free (offer_id);
-    }
-}
+~TAO_Register_Offer_Iterator () = default;
 
 template <class MAP_LOCK_TYPE> void
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 add_offer (CosTrading::OfferId id,
            const CosTrading::Offer* /* offer */)
 {
-  this->offer_ids_.enqueue_tail (id);
+  CORBA::String_var offer_id (id);
+  this->offer_ids_.emplace_back (offer_id.in ());
 }
 
 template <class MAP_LOCK_TYPE> CORBA::ULong
@@ -61,17 +53,15 @@ next_n (CORBA::ULong n,
 
   // While there are entries left and we haven't filled <offers>
   // with requested number.
-  while (! this->offer_ids_.is_empty ()
+  while (! this->offer_ids_.empty ()
          && n > ret_offers)
     {
       // If offer is found, put it into the sequence.
       // remove this id irrespective of whether the offer is found
       // or not.
-      CosTrading::OfferId id = 0;
-      this->offer_ids_.dequeue_head (id);
-
-      CosTrading::OfferId_var offerid_var (id);
-      CosTrading::Offer* offer = this->db_.lookup_offer (id);
+      std::string id = this->offer_ids_.front ();
+      this->offer_ids_.pop_front ();
+      CosTrading::Offer* offer = this->db_.lookup_offer (id.c_str ());
 
       if (offer != nullptr)
         this->pfilter_.filter_offer (offer,

@@ -16,13 +16,7 @@
 #include "ace/OS_NS_ctype.h"
 
 // Constructor.
-Notifier_Input_Handler::Notifier_Input_Handler ()
-  : ior_output_file_ (0),
-    argc_ (0),
-    argv_ (0),
-    using_naming_service_ (1)
-{
-}
+Notifier_Input_Handler::Notifier_Input_Handler () = default;
 
 // Destructor.
 Notifier_Input_Handler::~Notifier_Input_Handler ()
@@ -61,7 +55,7 @@ Notifier_Input_Handler::init_naming_service ()
       naming_server_->rebind (notifier_obj_name,
                               notifier_obj.in());
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s\n",
@@ -88,7 +82,7 @@ Notifier_Input_Handler::parse_args ()
 
       case 'f':  // output the IOR toi a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
+        if (this->ior_output_file_ == nullptr)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()),
@@ -96,7 +90,7 @@ Notifier_Input_Handler::parse_args ()
         break;
 
       case 's': // don't use the naming service
-        this->using_naming_service_ = 0;
+        this->using_naming_service_ = false;
         break;
 
       case '?':  // display help for use of the server.
@@ -220,7 +214,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
           this->notifier_i_.shutdown ();
         }
     }
-   catch (const CORBA::Exception& ex)
+   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Input_Handler::init");
       return -1;

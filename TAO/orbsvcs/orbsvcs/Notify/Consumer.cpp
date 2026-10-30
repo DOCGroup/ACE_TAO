@@ -18,20 +18,20 @@
 #include "tao/Messaging/Messaging_TypesC.h"
 
 #include "ace/Bound_Ptr.h"
-#include "ace/Unbounded_Queue.h"
+
+#include <new>
+#include <utility>
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
-static const int DEFAULT_RETRY_TIMEOUT = 10;//120; // Note : This should be a config param or qos setting
+static constexpr int DEFAULT_RETRY_TIMEOUT = 10;//120; // Note : This should be a config param or qos setting
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
 : proxy_ (proxy)
-, is_suspended_ (0)
-, have_not_yet_verified_publish_ (true)
 , pacing_ (proxy->qos_properties_.pacing_interval ())
 , max_batch_size_ (CosNotification::MaximumBatchSize, 0)
 , timer_id_ (-1)
@@ -76,7 +76,7 @@ TAO_Notify_Consumer::proxy ()
 }
 
 void
-TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_Consumer::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   this->max_batch_size_ = qos_properties.maximum_batch_size ();
 }
@@ -84,7 +84,7 @@ TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties
 void
 TAO_Notify_Consumer::resume ()
 {
-  this->is_suspended_ = 0;
+  this->is_suspended_ = false;
 
   this->dispatch_pending ();
 }
@@ -108,14 +108,22 @@ TAO_Notify_Consumer::enqueue_request (
     request
     ));
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
-  this->pending_events().enqueue_tail (queue_entry);
+  try
+    {
+      this->pending_events().push_back (queue_entry);
+    }
+  catch (const std::bad_alloc&)
+    {
+      queue_entry->release ();
+      throw CORBA::NO_MEMORY ();
+    }
 }
 
 bool
 TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * request)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock (), false);
-  if (! this->pending_events().is_empty ())
+  if (! this->pending_events().empty ())
     {
       if (DEBUG_LEVEL > 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -130,11 +138,19 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
                         TAO_Notify_Method_Request_Event_Queueable (*request,
                                                                    event),
                         CORBA::NO_MEMORY ());
-      this->pending_events().enqueue_tail (queue_entry);
+      try
+        {
+          this->pending_events().push_back (queue_entry);
+        }
+      catch (const std::bad_alloc&)
+        {
+          queue_entry->release ();
+          throw CORBA::NO_MEMORY ();
+        }
       this->schedule_timer (false);
       return true;
     }
-  if (this->is_suspended_ == 1)
+  if (this->is_suspended_)
     {
       if (DEBUG_LEVEL > 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -149,7 +165,15 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
                         TAO_Notify_Method_Request_Event_Queueable (*request,
                                                                    event),
                         CORBA::NO_MEMORY ());
-      this->pending_events().enqueue_tail (queue_entry);
+      try
+        {
+          this->pending_events().push_back (queue_entry);
+        }
+      catch (const std::bad_alloc&)
+        {
+          queue_entry->release ();
+          throw CORBA::NO_MEMORY ();
+        }
       this->schedule_timer (false);
       return true;
     }
@@ -485,7 +509,7 @@ TAO_Notify_Consumer::dispatch_pending ()
   bool ok = true;
   while (ok
          && !this->proxy_supplier ()->has_shutdown ()
-         && !this->pending_events().is_empty ())
+         && !this->pending_events().empty ())
     {
       if (! dispatch_from_queue ( this->pending_events(), ace_mon))
         {
@@ -506,8 +530,10 @@ TAO_Notify_Consumer::dispatch_from_queue (
 // FUZZ: enable check_for_ACE_Guard
   bool result = true;
   TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
-  if (requests.dequeue_head (request) == 0)
+  if (! requests.empty ())
     {
+      request = requests.front ();
+      requests.pop_front ();
       ace_mon.release ();
       DispatchStatus status = this->dispatch_request (request);
       switch (status)
@@ -529,7 +555,7 @@ TAO_Notify_Consumer::dispatch_from_queue (
                           request->sequence ()
                           ));
             ace_mon.acquire ();
-            requests.enqueue_head (request); // put the failed event back where it was
+            requests.push_front (request); // put the failed event back where it was
             result = false;
             break;
           }
@@ -558,8 +584,10 @@ TAO_Notify_Consumer::dispatch_from_queue (
                           ));
             request->complete ();
             ace_mon.acquire ();
-            while (requests.dequeue_head (request) == 0)
+            while (! requests.empty ())
               {
+                request = requests.front ();
+                requests.pop_front ();
                 ace_mon.release ();
                 request->complete ();
                 ace_mon.acquire ();
@@ -719,10 +747,10 @@ TAO_Notify_Consumer::assume_pending_events (TAO_Notify_Consumer& rhs)
   // by the caller.
 
   // If the original consumer has pending events
-  if (!rhs.pending_events ().is_empty ())
+  if (!rhs.pending_events ().empty ())
     {
       // We will take them away and cancel it's timer
-      this->pending_events_.reset (rhs.pending_events_.release ());
+      this->pending_events_ = std::move (rhs.pending_events_);
       if (rhs.timer_.isSet ())
         {
           rhs.cancel_timer ();

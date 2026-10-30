@@ -51,7 +51,7 @@ public:
   TAO_NotifyLogFactory_i ();
 
   /// Constructor.
-  TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
+  explicit TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
 
   /// Destructor.
   ~TAO_NotifyLogFactory_i () override;
@@ -113,14 +113,14 @@ public:
   void destroy ();
 
   /// CosNotifyComm::NotifySubscribe.
-  void subscription_change (const CosNotification::EventTypeSeq& added,
-                            const CosNotification::EventTypeSeq& removed);
+  void subscription_change (CosNotification::EventTypeSeq const &added,
+                            CosNotification::EventTypeSeq const &removed) override;
 
   /// CosNotification::QoSAdmin.
   CosNotification::QoSProperties* get_qos ();
-  void set_qos (const CosNotification::QoSProperties&);
-  void validate_qos (const CosNotification::QoSProperties&,
-                     CosNotification::NamedPropertyRangeSeq_out);
+  void set_qos (CosNotification::QoSProperties const &) override;
+  void validate_qos (CosNotification::QoSProperties const &,
+                     CosNotification::NamedPropertyRangeSeq_out) override;
 
   /// CosNotifyFilter::FilterAdmin.
   CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr);

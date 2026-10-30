@@ -51,14 +51,14 @@ public:
    * be represented by a CORBA::ULong should be plenty for any
    * application.
    */
-  CORBA::ULong group_id;
+  CORBA::ULong group_id {};
 
   /// Reference to the ObjectGroup.
   PortableGroup::ObjectGroup_var object_group;
 
-  /// Unbounded set containing member references and all related
+  /// List containing member references and all related
   /// information for each member.
-  TAO_PG_MemberInfo_Set member_infos;
+  TAO_PG_MemberInfo_List member_infos;
 
   /// Properties used when creating this object group, in addition to
   /// those set dynamically after the creation.

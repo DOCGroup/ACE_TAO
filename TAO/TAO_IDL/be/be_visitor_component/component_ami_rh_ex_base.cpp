@@ -12,18 +12,15 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_component_ami_rh_ex_base::be_visitor_component_ami_rh_ex_base (
       be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    iface_ (nullptr),
-    port_ (nullptr)
+  : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_component_ami_rh_ex_base::~be_visitor_component_ami_rh_ex_base (
-  )
-{
-}
+be_visitor_component_ami_rh_ex_base::~be_visitor_component_ami_rh_ex_base () = default;
 
 int
 be_visitor_component_ami_rh_ex_base::post_process (be_decl *bd)
@@ -51,27 +48,26 @@ be_visitor_component_ami_rh_ex_base::init ()
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
+  std::string const smart_scope = global ? "" : "::";
 
-  ACE_CString base ("AMI4CCM_");
+  std::string base ("AMI4CCM_");
   base += this->iface_->original_local_name ()->get_string ();
   base += "ReplyHandler";
 
-  this->base_class_name_ = scope->full_name ();
+  this->base_class_name_ = std::string (scope->full_name ());
   this->base_class_name_ += smart_scope;
   this->base_class_name_ += "CCM_";
   this->base_class_name_ += base;
 
   this->class_name_ = base;
   this->class_name_ += '_';
-  this->class_name_ +=
-    this->port_->original_local_name ()->get_string ();
+  this->class_name_ += this->port_->original_local_name ()->get_string ();
   this->class_name_ += "_i";
 }
 
 void
 be_visitor_component_ami_rh_ex_base::gen_excep_op (
-  const char *prefix,
+  std::string const& prefix,
   be_decl *node,
   bool for_defn)
 {

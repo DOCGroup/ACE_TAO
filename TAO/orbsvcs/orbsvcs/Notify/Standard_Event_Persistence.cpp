@@ -12,14 +12,10 @@ namespace TAO_Notify
 {
 Standard_Event_Persistence::Standard_Event_Persistence ()
   : filename_ (ACE_TEXT ("__PERSISTENT_EVENT__.DB"))
-  , block_size_ (512)
-  , factory_ (nullptr)
 {
 }
 
-Standard_Event_Persistence::~Standard_Event_Persistence ()
-{
-}
+Standard_Event_Persistence::~Standard_Event_Persistence () = default;
 
 // get the current factory, creating it if necessary
 Event_Persistence_Factory *
@@ -111,11 +107,7 @@ Standard_Event_Persistence::fini ()
 }
 
 Standard_Event_Persistence_Factory::Standard_Event_Persistence_Factory ()
-  : allocator_()
-  , root_(this)
-  , psb_(nullptr)
-  , serial_number_(ROUTING_SLIP_ROOT_SERIAL_NUMBER + 1)
-  , is_reloading_ (false)
+  : root_(this)
 {
 }
 

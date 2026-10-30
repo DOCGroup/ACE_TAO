@@ -4,36 +4,33 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory ()
-{
-}
+TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory () = default;
 
-TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory ()
-{
-  delete this->ft_endpoint_selector_;
-}
+TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory () = default;
 
 
 TAO_Invocation_Endpoint_Selector *
 TAO_FT_Endpoint_Selector_Factory::get_selector ()
 {
-    if (this->ft_endpoint_selector_ == nullptr)
+    if (!this->ft_endpoint_selector_)
     {
       ACE_MT (ACE_GUARD_RETURN  (TAO_SYNCH_MUTEX,
                                  guard,
                                  this->mutex_,
-                                 0));
+                                 nullptr));
 
       // Double checked locking..
-      if (this->ft_endpoint_selector_ == nullptr)
+      if (!this->ft_endpoint_selector_)
         {
-          ACE_NEW_THROW_EX (ft_endpoint_selector_,
+          TAO_FT_Invocation_Endpoint_Selector *selector = nullptr;
+          ACE_NEW_THROW_EX (selector,
                             TAO_FT_Invocation_Endpoint_Selector (),
                             CORBA::NO_MEMORY ());
+          this->ft_endpoint_selector_.reset (selector);
         }
     }
 
-  return this->ft_endpoint_selector_;
+  return this->ft_endpoint_selector_.get ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

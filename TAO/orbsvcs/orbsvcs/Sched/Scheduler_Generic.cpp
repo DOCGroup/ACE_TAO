@@ -12,8 +12,34 @@
 #include "orbsvcs/Sched/Scheduler_Generic.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <algorithm>
+#include <new>
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace
+{
+  template <typename T>
+  int insert_unique (std::vector<T> &entries, T const &entry)
+  {
+    if (std::find (entries.begin (), entries.end (), entry) != entries.end ())
+    {
+      return 1;
+    }
+
+    try
+    {
+      entries.push_back (entry);
+    }
+    catch (std::bad_alloc const &)
+    {
+      return -1;
+    }
+
+    return 0;
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -30,9 +56,9 @@ struct Mode_Entry
 
   Mode_Entry () = default;
 
-  Mode_Entry (RtecScheduler::RT_Info * const rt_info,
-             const u_long start_time = 0,
-             const u_long stop_time = 0) :
+  Mode_Entry (RtecScheduler::RT_Info *rt_info,
+             u_long start_time = 0,
+             u_long stop_time = 0) :
     rt_info_ (rt_info),
     start_time_ (start_time),
     stop_time_ (stop_time)
@@ -41,7 +67,7 @@ struct Mode_Entry
 
   ~Mode_Entry () = default;
 
-  Mode_Entry &operator= (const Mode_Entry &) = default;
+  Mode_Entry &operator= (Mode_Entry const &) = default;
 };
 
 
@@ -53,7 +79,6 @@ struct Mode_Entry
 
 Scheduler_Generic::Scheduler_Generic () :
   Scheduler (),
-  handles_ (0),
   // Set the minimum priority to that for the current platform.  This
   // shouldn't be necessary, but UPSingleProcessorOrb::initialize_reactors
   // creates threads before the Event Channel calls Scheduler::init ().
@@ -67,13 +92,6 @@ Scheduler_Generic::Scheduler_Generic () :
   config_info_.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
 }
 
-
-Scheduler_Generic::~Scheduler_Generic ()
-{
-  reset ();
-}
-
-
 void
 Scheduler_Generic::reset ()
 {
@@ -83,22 +101,18 @@ Scheduler::status_t
 Scheduler_Generic::lookup_rt_info (handle_t handle,
                                    RT_Info*& rtinfo)
 {
-  if (handle < 0 || (size_t) handle > task_entries_.size ())
+  if (handle < 0 || static_cast<size_t> (handle) > task_entries_.size ())
     {
       return ST_UNKNOWN_TASK;
     }
-  RT_Info*** entry;
-  ACE_Unbounded_Set_Iterator <RT_Info **> i (task_entries_);
-  while (i.next (entry) != 0)
+  for (RT_Info **array : task_entries_)
+  {
+    if (array[0]->handle == handle)
     {
-      i.advance ();
-      RT_Info** array = *entry;
-      if (array[0]->handle == handle)
-        {
-          rtinfo = array[0];
-          return SUCCEEDED;
-        }
+      rtinfo = array[0];
+      return SUCCEEDED;
     }
+  }
 
   return ST_UNKNOWN_TASK;
 }
@@ -122,13 +136,13 @@ Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
 
 Scheduler::status_t
 Scheduler_Generic::register_task (RT_Info *rt_info [],
-                                   const u_int number_of_modes,
+                                   u_int number_of_modes,
                                    handle_t &handle)
 {
   status_t ret;
 
   // try to store the new task's information . . .
-  switch (task_entries_.insert (rt_info))
+  switch (insert_unique (task_entries_, rt_info))
     {
       case 0 : // successfully inserted
         {
@@ -152,7 +166,7 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
             {
               ACE_OS::printf ("registered task \"%s\" with RT_Info starting "
                               "at %p\n",
-                              (const char*)rt_info[0]->entry_point,
+                              static_cast<char const *> (rt_info[0]->entry_point),
                               rt_info[0]);
             }
         }
@@ -175,11 +189,11 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
 
 
 void
-Scheduler_Generic::init (const int minimum_priority,
-                          const int maximum_priority,
-                          const char *runtime_filename,
-                          const char *rt_info_filename,
-                          const char *timeline_filename)
+Scheduler_Generic::init (int minimum_priority,
+                          int maximum_priority,
+                          char const *runtime_filename,
+                          char const *rt_info_filename,
+                          char const *timeline_filename)
 {
   minimum_priority_ = minimum_priority;
   maximum_priority_ = maximum_priority;
@@ -215,11 +229,11 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &
 
 
 int
-Scheduler_Generic::priority (const handle_t /* handle */,
+Scheduler_Generic::priority (handle_t /* handle */,
                              OS_Thread_Priority &priority,
                              Sub_Priority &subpriority,
                              Preemption_Priority &preemption_prio,
-                             const mode_t /* requested_mode */) const
+                             mode_t /* requested_mode */) const
 {
   priority = minimum_priority_;
   subpriority = ACE_Scheduler_MIN_SUB_PRIORITY;

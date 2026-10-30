@@ -55,3 +55,14 @@ interface ciao {};
 
 interface aloha {};
 
+module DCPS_Test
+{
+  struct Sample
+  {
+    long key;
+  };
+};
+
+#pragma DCPS_DATA_TYPE "DCPS_Test::Sample"
+#pragma DCPS_DATA_KEY "DCPS_Test::Sample key"
+

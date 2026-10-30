@@ -26,9 +26,7 @@ be_visitor_component_svh::be_visitor_component_svh (be_visitor_context *ctx)
     }
 }
 
-be_visitor_component_svh::~be_visitor_component_svh ()
-{
-}
+be_visitor_component_svh::~be_visitor_component_svh () = default;
 
 int
 be_visitor_component_svh::visit_component (be_component *node)
@@ -90,7 +88,7 @@ void
 be_visitor_component_svh::gen_entrypoint (be_component *node)
 {
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node->flat_name ()
       << "_Servant (" << be_idt_nl

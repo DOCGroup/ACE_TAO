@@ -12,10 +12,6 @@ TAO_Notify_ProxyPushConsumer::TAO_Notify_ProxyPushConsumer ()
 {
 }
 
-TAO_Notify_ProxyPushConsumer::~TAO_Notify_ProxyPushConsumer ()
-{
-}
-
 void
 TAO_Notify_ProxyPushConsumer::release ()
 {

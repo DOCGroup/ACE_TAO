@@ -36,13 +36,13 @@ namespace TAO
   {
   public:
     Any_Basic_Impl_T (CORBA::TypeCode_ptr,
-                      const T & val);
+                      T const & val);
     ~Any_Basic_Impl_T () override = default;
 
     static void insert (CORBA::Any &,
                         CORBA::TypeCode_ptr,
-                        const T &);
-    static CORBA::Boolean extract (const CORBA::Any &,
+                        T const &);
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    CORBA::TypeCode_ptr,
                                    T &);
 
@@ -50,7 +50,7 @@ namespace TAO
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     void _tao_decode (TAO_InputCDR &) override;
 
-    virtual const void *value () const;
+    virtual void const *value () const;
     static Any_Basic_Impl_T<T> *create_empty (CORBA::TypeCode_ptr);
 
   private:

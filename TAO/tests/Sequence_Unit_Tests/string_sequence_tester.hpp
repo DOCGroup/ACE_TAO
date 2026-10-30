@@ -109,12 +109,12 @@ struct string_sequence_test_helpers<CORBA::WChar>
 template<class tested_sequence>
 struct string_sequence_tester
 {
-  typedef typename tested_sequence::character_type character_type;
-  typedef string_sequence_test_helpers<character_type> helper;
-  typedef typename tested_sequence::value_type value_type;
-  typedef typename tested_sequence::const_value_type const_value_type;
-  typedef typename tested_sequence::element_traits tested_element_traits;
-  typedef typename tested_sequence::allocation_traits tested_allocation_traits;
+  using character_type = typename tested_sequence::character_type;
+  using helper = string_sequence_test_helpers<character_type>;
+  using value_type = typename tested_sequence::value_type;
+  using const_value_type = typename tested_sequence::const_value_type;
+  using tested_element_traits = typename tested_sequence::element_traits;
+  using tested_allocation_traits = typename tested_sequence::allocation_traits;
 
   int test_default_constructor()
   {
@@ -203,7 +203,7 @@ struct string_sequence_tester
 
     tested_sequence const & y = x;
     character_type const * lhs;
-    character_type const * rhs = 0;
+    character_type const * rhs = nullptr;
     CHECK_THROW(lhs = y[32], std::range_error);
     CHECK_THROW(x[32] = rhs, std::range_error);
     ACE_UNUSED_ARG (lhs);

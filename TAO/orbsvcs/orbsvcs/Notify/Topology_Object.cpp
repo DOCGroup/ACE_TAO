@@ -15,27 +15,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  Topology_Savable::~Topology_Savable ()
-  {
-  }
+  Topology_Savable::~Topology_Savable () = default;
 
   void
   Topology_Savable::reconnect ()
   {
   }
 
-  Topology_Object::Topology_Object ()
-    : TAO_Notify_Object ()
-    , Topology_Savable ()
-    , self_changed_ (false)
-    , children_changed_ (false)
-    , topology_parent_ (0)
-  {
-  }
+  Topology_Object::Topology_Object () = default;
 
-  Topology_Object::~Topology_Object ()
-  {
-  }
+  Topology_Object::~Topology_Object () = default;
 
   void
   Topology_Object::initialize (Topology_Parent* topology_parent)
@@ -57,7 +46,7 @@ namespace TAO_Notify
     CORBA::Long /* id */,
     const NVPList& /* attrs */)
   {
-    return 0;
+    return nullptr;
   }
 
   bool
@@ -68,7 +57,7 @@ namespace TAO_Notify
     {
       result = CosNotification::Persistent == this->qos_properties_.event_reliability().value ();
     }
-    else if (this->topology_parent () != 0)
+    else if (this->topology_parent () != nullptr)
     {
       result = this->topology_parent ()->is_persistent ();
     }
@@ -134,7 +123,7 @@ namespace TAO_Notify
   void
   Topology_Object::get_id_path (TAO_Notify::IdVec & id_path) const
   {
-    if (this->topology_parent() != 0)
+    if (this->topology_parent() != nullptr)
     {
       this->topology_parent()->get_id_path (id_path);
     }

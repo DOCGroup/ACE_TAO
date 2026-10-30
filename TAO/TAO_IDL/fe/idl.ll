@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * idl.ll - Lexical scanner for IDL
  */
 
+#include <string>
+
 #include "global_extern.h"
 #include "nr_extern.h"
 #include "utl_strlist.h"
@@ -90,17 +92,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_annotation_appl.h"
 #include "idl.tab.hpp"
 
-static char *               idl_wstring_escape_reader (char *);
+#include <string_view>
+
 static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
 static ACE_CDR::Char        idl_escape_reader (char *);
-static ACE_CDR::Double      idl_atof (char *);
-static ACE_CDR::LongLong    idl_atoi (char *, long);
-static ACE_CDR::ULongLong   idl_atoui (char *, long);
+static ACE_CDR::Double      idl_atof (char const *);
+static ACE_CDR::LongLong    idl_atoi (char const *, long);
+static ACE_CDR::ULongLong   idl_atoui (char const *, long);
 static void                 idl_parse_line_and_file (char *);
 static void                 idl_store_pragma (char *);
 static char *               idl_get_pragma_string (char *);
-static bool                 idl_valid_version (char *);
-static AST_Decl *           idl_find_node (const char *);
+static bool                 idl_valid_version (char const *);
+static AST_Decl *           idl_find_node (char const *);
 
 #define ace_yytext yytext
 
@@ -235,7 +238,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
   // regular expression is to handle EBCDIC, as well as ASCII.
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-  const TAO_IDL_CPP_Keyword_Entry *entry = 0;
+  TAO_IDL_CPP_Keyword_Entry const *entry = nullptr;
   if (!idl_global->preserve_cpp_keywords())
     {
       // This check will ensure that escaped C++ keywords will be
@@ -316,13 +319,13 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
                     }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.sval,
-                                  UTL_String (tmp + 1, true),
+                                  std::string (tmp + 1),
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
                 }
 (L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
-                  char * const tmp = ACE_OS::strdup (ace_yytext);
+                  char * const tmp = ace_yytext;
                   for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
                     {
                       if (isspace (tmp[i]))
@@ -335,8 +338,9 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
                         }
                     }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
-                  tao_yylval.wsval = ACE_OS::strdup (idl_wstring_escape_reader (tmp + 2));
-                  ACE_OS::free (tmp);
+                  ACE_NEW_RETURN (tao_yylval.wsval,
+                                  std::string (tmp + 2),
+                                  IDL_WSTRING_LITERAL);
                   return IDL_WSTRING_LITERAL;
                 }
 "'"."'"         {
@@ -439,16 +443,16 @@ L"'"\\u([0-9a-fA-F]{1,4})"'" {
         /* subroutines */
 
 static bool
-same_file (char *path1, char *path2)
+same_file (char const *path1, char const *path2)
 {
-  char fullpath1 [MAXPATHLEN + 1] = {0};
-  char fullpath2 [MAXPATHLEN + 1] = {0};
+  char fullpath1 [MAXPATHLEN + 1] = {};
+  char fullpath2 [MAXPATHLEN + 1] = {};
 
   char *fp1 = ACE_OS::realpath (path1, fullpath1);
   char *fp2 = ACE_OS::realpath (path2, fullpath2);
 
   return
-    (fp1 == 0 || fp2 == 0)
+    (fp1 == nullptr || fp2 == nullptr)
       ? false
       : FE_Utils::path_cmp (fullpath1,fullpath2) == 0;
 }
@@ -458,8 +462,7 @@ static void
 idl_parse_line_and_file (char *buf)
 {
   char *r = buf;
-  char *h = 0;
-  UTL_String *nm = 0;
+  char *h = nullptr;
 
   // Skip initial '#'.
   if (*r != '#')
@@ -512,8 +515,6 @@ idl_parse_line_and_file (char *buf)
     }
 
   *r = 0;
-  UTL_String *tmp = 0;
-
   if (*h == '\0')
     {
       ACE_ERROR ((LM_ERROR,
@@ -538,28 +539,25 @@ idl_parse_line_and_file (char *buf)
         }
 
       h[i] = '\0';
-      ACE_NEW (tmp,
-               UTL_String (h, true));
-      idl_global->update_prefix (tmp->get_string ());
+      std::string tmp (h);
+      idl_global->update_prefix (tmp);
       idl_global->set_filename (tmp);
     }
 
-  UTL_String *fname = idl_global->filename ();
+  std::string const& fname = idl_global->filename ();
   bool in_main_file = false;
 
   bool is_real_filename =
-    fname->compare (idl_global->real_filename ())
-    || same_file (fname->get_string(),
-                  idl_global->real_filename ()->get_string ());
+    UTL_String::compare (fname, idl_global->real_filename ())
+    || same_file (fname.c_str (), idl_global->real_filename ().c_str ());
 
   bool is_main_filename = false;
 
   if (!is_real_filename)
     {
       is_main_filename =
-        fname->compare (idl_global->main_filename ())
-        || same_file (fname->get_string (),
-                      idl_global->main_filename ()->get_string ());
+        UTL_String::compare (fname, idl_global->main_filename ())
+        || same_file (fname.c_str (), idl_global->main_filename ().c_str ());
     }
 
   if (is_real_filename || is_main_filename)
@@ -573,10 +571,8 @@ idl_parse_line_and_file (char *buf)
   // by the preprocessor.
   if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
-      ACE_NEW (nm,
-               UTL_String (
-                 FE_Utils::stripped_preproc_include (
-                   fname->get_string ()), true));
+      std::string const nm =
+        FE_Utils::stripped_preproc_include (fname);
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
@@ -632,13 +628,13 @@ idl_store_pragma (char *buf)
   sp -= crunched;
   *sp = '\0';
 
-  if (ACE_OS::strstr (buf + 8, "import") != 0)
+  if (ACE_OS::strstr (buf + 8, "import") != nullptr)
     {
       idl_global->set_import (true);
       return;
     }
 
-  if (ACE_OS::strstr (buf + 8, "include") != 0)
+  if (ACE_OS::strstr (buf + 8, "include") != nullptr)
     {
       idl_global->set_import (false);
       return;
@@ -646,35 +642,36 @@ idl_store_pragma (char *buf)
 
   if (ACE_OS::strncmp (buf + 8, "prefix", 6) == 0)
     {
-      char *new_prefix = idl_get_pragma_string (buf);
+      char *prefix_string = idl_get_pragma_string (buf);
 
-      if (new_prefix != 0)
+      if (prefix_string != nullptr)
         {
+          std::string const new_prefix (prefix_string);
+          delete [] prefix_string;
           unsigned long depth = idl_global->scopes ().depth ();
 
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
-          char *ext_id = idl_global->filename ()->get_string ();
-          ACE_Hash_Map_Entry<char *, char *> *entry = 0;
-          int const status =
-            idl_global->file_prefixes ().find (ext_id, entry);
+          std::string ext_id (idl_global->filename ());
+          IDL_GlobalData::File_Prefix_Map &file_prefixes =
+            idl_global->file_prefixes ();
+          IDL_GlobalData::File_Prefix_Map::iterator const entry =
+            file_prefixes.find (ext_id);
+          bool const found = entry != file_prefixes.end ();
 
-          if (status == 0)
+          if (found)
             {
-              if (ACE_OS::strcmp (entry->int_id_, "") != 0)
+              if (!entry->second.empty ())
                 {
-                  char *trash = 0;
-                  idl_global->pragma_prefixes ().pop (trash);
-                  delete [] trash;
+                  if (!idl_global->pragma_prefixes ().empty ())
+                    {
+                      idl_global->pragma_prefixes ().pop_back ();
+                    }
                 }
               else if (depth == 1)
                 {
                   // Remove the default "" and bind the new prefix.
-                  ACE::strdelete (entry->ext_id_);
-                  ACE::strdelete (entry->int_id_);
-                  (void) idl_global->file_prefixes ().unbind (entry);
-                  (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
-                                                            ACE::strnew (new_prefix));
+                  entry->second = new_prefix;
                 }
             }
 
@@ -686,7 +683,7 @@ idl_store_pragma (char *buf)
               ScopeAsDecl (top_scope)->prefix_scope (top_scope);
             }
 
-          idl_global->pragma_prefixes ().push (new_prefix);
+          idl_global->pragma_prefixes ().push_back (new_prefix);
 
           if (depth == 1)
             {
@@ -699,10 +696,9 @@ idl_store_pragma (char *buf)
               top_scope->has_prefix (true);
             }
 
-          if (status != 0)
+          if (!found)
             {
-              (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
-                                                        ACE::strnew (new_prefix));
+              file_prefixes.emplace (ext_id, new_prefix);
             }
         }
     }
@@ -717,22 +713,22 @@ idl_store_pragma (char *buf)
 
       char *number = ACE_OS::strchr (tmp, ' ');
 
-      if (number == 0)
+      if (number == nullptr)
         {
           number = ACE_OS::strchr (tmp, '\t');
         }
 
-      // Used later to trim the type string.
-      ptrdiff_t cutoff = number - tmp;
-
       // Most likely this means there is only a version number
       // without an identifier to apply it to.
-      if (number == 0)
+      if (number == nullptr)
         {
-          const char *msg = "no identifier or scoped name";
+          char const *msg = "no identifier or scoped name";
           idl_global->err ()->version_syntax_error (msg);
           return;
         }
+
+      // Used later to trim the type string.
+      ptrdiff_t const cutoff = number - tmp;
 
       while (*number == ' ' || *number == '\t')
         {
@@ -743,7 +739,7 @@ idl_store_pragma (char *buf)
 
       // For some reason, the SunCC preprocessor adds a trailing space, which
       // messes with idl_valid_version() below, so we check and remove.
-      while (number[len - 1] == ' ')
+      while (len != 0 && number[len - 1] == ' ')
         {
           number[len - 1] = '\0';
           len = ACE_OS::strlen (number);
@@ -756,7 +752,7 @@ idl_store_pragma (char *buf)
       // do it here.
       AST_Decl *d = idl_find_node (tmp);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           return;
         }
@@ -767,7 +763,7 @@ idl_store_pragma (char *buf)
           return;
         }
 
-      d->version (ACE::strnew (number));
+      d->version (std::string (number));
     }
   else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0)
     {
@@ -782,19 +778,23 @@ idl_store_pragma (char *buf)
           ++tmp;
         }
 
-      ACE_CString work (tmp);
-      work = work.substr (0, work.find (' '));
+      std::string work (tmp);
+      size_t const end = work.find (' ');
+      if (end != std::string::npos)
+        {
+          work.resize (end);
+        }
 
       AST_Decl *d = idl_find_node (work.c_str ());
 
-      if (d == 0)
+      if (d == nullptr)
         {
           return;
         }
 
       char *new_id = idl_get_pragma_string (buf);
 
-      if (new_id != 0)
+      if (new_id != nullptr)
         {
           if (d->typeid_set ())
             {
@@ -964,7 +964,7 @@ idl_store_pragma (char *buf)
  * idl_atoi - Convert a string of digits into a negative integer according to base b
  */
 static ACE_CDR::LongLong
-idl_atoi (char *s, long b)
+idl_atoi (char const *s, long b)
 {
   ACE_CDR::LongLong r = 0;
 
@@ -1010,7 +1010,7 @@ idl_atoi (char *s, long b)
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
 static ACE_CDR::ULongLong
-idl_atoui (char *s, long b)
+idl_atoui (char const *s, long b)
 {
   ACE_CDR::ULongLong r = 0;
 
@@ -1050,7 +1050,7 @@ idl_atoui (char *s, long b)
  * Convert a string to a float; atof doesn't seem to work, always.
  */
 static ACE_CDR::Double
-idl_atof (char *s)
+idl_atof (char const *s)
 {
   double d = 0.0;
   double e, k;
@@ -1231,20 +1231,11 @@ idl_wchar_escape_reader (char *str)
   return out;
 }
 
-/*
- * Checks wstring for validity
- */
-static char *
-idl_wstring_escape_reader (char *str)
-{
-  return str;
-}
-
 static char *
 idl_get_pragma_string (char *pragma)
 {
   // Get pointers to each end of the substring between the quotes.
-  const char *firstquote = ACE_OS::strchr (pragma, '"');
+  char const *firstquote = ACE_OS::strchr (pragma, '"');
 
   if (!firstquote)
     {
@@ -1253,8 +1244,8 @@ idl_get_pragma_string (char *pragma)
       return nullptr;
     }
 
-  const char *start = firstquote + 1;
-  const char *end = ACE_OS::strchr (start, '"');
+  char const *start = firstquote + 1;
+  char const *end = ACE_OS::strchr (start, '"');
 
   if (!end)
     {
@@ -1279,36 +1270,36 @@ idl_get_pragma_string (char *pragma)
 }
 
 static bool
-idl_valid_version (char *s)
+idl_valid_version (char const *s)
 {
   // Nothing preceding decimal point.
   if (*s == '.')
     {
-      return 0;
+      return false;
     }
 
-  char *minor = ACE_OS::strchr (s, '.');
+  char const *minor = ACE_OS::strchr (s, '.');
   int i;
 
-  if (minor == 0)
+  if (minor == nullptr)
     {
       // No decimal point.
-      return 0;
+      return false;
     }
 
   if (*(minor + 1) == '\0')
     {
       // Nothing following decimal point.
-      return 0;
+      return false;
     }
 
-  char *tmp = minor + 1;
+  char const *tmp = minor + 1;
 
   for (i = 0; tmp[i] != '\0'; ++i)
     {
       if (!isdigit (tmp[i]))
         {
-          return 0;
+          return false;
         }
     }
 
@@ -1318,7 +1309,7 @@ idl_valid_version (char *s)
     {
       if (!isdigit (s[i]))
         {
-          return 0;
+          return false;
         }
     }
 
@@ -1326,23 +1317,23 @@ idl_valid_version (char *s)
   if (ACE_OS::atoi (minor + 1) > ACE_UINT16_MAX
       || ACE_OS::atoi (s) > ACE_UINT16_MAX)
     {
-      return 0;
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
 static AST_Decl *
-idl_find_node (const char *s)
+idl_find_node (char const *s)
 {
   UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
-  AST_Decl * d = 0;
+  AST_Decl * d = nullptr;
 
-  if (node != 0)
+  if (node != nullptr)
     {
       d = idl_global->scopes ().top_non_null ()->lookup_by_name (node);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (node);
         }

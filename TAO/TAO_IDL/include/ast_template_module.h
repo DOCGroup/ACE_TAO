@@ -6,6 +6,8 @@
 
 #include "fe_utils.h"
 
+#include <memory>
+
 class TAO_IDL_FE_Export AST_Template_Module
   : public virtual AST_Module,
     public virtual AST_Type
@@ -15,6 +17,10 @@ public:
                        FE_Utils::T_PARAMLIST_INFO *template_params);
 
   ~AST_Template_Module () override;
+  AST_Template_Module (AST_Template_Module const &) = delete;
+  AST_Template_Module (AST_Template_Module &&) = delete;
+  AST_Template_Module &operator= (AST_Template_Module const &) = delete;
+  AST_Template_Module &operator= (AST_Template_Module &&) = delete;
 
   FE_Utils::T_PARAMLIST_INFO *
   template_params () const;
@@ -23,7 +29,7 @@ public:
   bool match_arg_names (FE_Utils::T_ARGLIST *args);
 
   // Checks for errors in the template param refs of an alias.
-  bool match_param_refs (UTL_StrList *refs, UTL_Scope *decl_scope);
+  bool match_param_refs (UTL_StrList const& refs, UTL_Scope *decl_scope);
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -41,7 +47,7 @@ public:
   static AST_Decl::NodeType const NT;
 
 protected:
-  FE_Utils::T_PARAMLIST_INFO * template_params_;
+  std::unique_ptr<FE_Utils::T_PARAMLIST_INFO> template_params_;
 
 private:
   // Match with a template arg.
@@ -49,7 +55,7 @@ private:
                         AST_Decl *d);
 
   // Find one of our params by name.
-  FE_Utils::T_Param_Info *find_param (UTL_String *name);
+  FE_Utils::T_Param_Info *find_param (std::string const& name);
 
   // Match a param with an aliased id by type.
   bool match_param_by_type (FE_Utils::T_Param_Info *param);

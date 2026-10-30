@@ -11,7 +11,6 @@
 #include "tao/Protocol_Factory.h"
 #include "tao/debug.h"
 #include "tao/SystemException.h"
-#include "ace/Vector_T.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"

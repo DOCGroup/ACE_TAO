@@ -18,13 +18,13 @@ BE_init (int &, ACE_TCHAR *[])
                   BE_GlobalData,
                   -1);
 
-  idl_global->default_idl_version_ = IDL_VERSION_3;
+  idl_global->default_idl_version_ = IdlVersion (IDL_VERSION_3);
 
   return 0;
 }
 
 TAO_IDL_BE_Export void
-BE_post_init (char *[], long)
+BE_post_init (std::vector<std::string> const &)
 {
 }
 

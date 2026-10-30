@@ -37,6 +37,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Recursive_Thread_Mutex
 {
 public:
+  ACE_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex const &) = delete;
+  ACE_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex &&) = delete;
+  ACE_Recursive_Thread_Mutex &operator= (ACE_Recursive_Thread_Mutex const &) = delete;
+  ACE_Recursive_Thread_Mutex &operator= (ACE_Recursive_Thread_Mutex &&) = delete;
+
   /// Initialize a recursive mutex.
   ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name = nullptr,
                               ACE_mutexattr_t *arg = nullptr);
@@ -171,10 +176,6 @@ protected:
   /// that you don't have multiple threads simultaneously calling
   /// remove() on the same object, which is a bad idea anyway...
   bool removed_;
-
-private:
-  void operator= (const ACE_Recursive_Thread_Mutex &) = delete;
-  ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

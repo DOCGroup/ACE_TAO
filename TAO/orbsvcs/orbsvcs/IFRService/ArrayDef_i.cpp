@@ -11,9 +11,7 @@ TAO_ArrayDef_i::TAO_ArrayDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ArrayDef_i::~TAO_ArrayDef_i ()
-{
-}
+TAO_ArrayDef_i::~TAO_ArrayDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ArrayDef_i::def_kind ()

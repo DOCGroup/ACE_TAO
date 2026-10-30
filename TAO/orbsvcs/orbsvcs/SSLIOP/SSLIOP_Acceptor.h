@@ -47,7 +47,7 @@ namespace TAO
     public:
       /// Constructor.
       Acceptor (::Security::QOP qop,
-                const ACE_Time_Value & timeout,
+                ACE_Time_Value const & timeout,
                 bool check_host);
 
       /// Destructor.
@@ -68,28 +68,28 @@ namespace TAO
                 ACE_Reactor *reactor,
                 int version_major,
                 int version_minor,
-                const char *address,
-                const char *options = nullptr) override;
+                char const *address,
+                char const *options = nullptr) override;
       int open_default (TAO_ORB_Core *orb_core,
                         ACE_Reactor *reactor,
                         int version_major,
                         int version_minor,
-                        const char *options = nullptr) override;
+                        char const *options = nullptr) override;
       int close () override;
-      int create_profile (const TAO::ObjectKey &object_key,
+      int create_profile (TAO::ObjectKey const &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority) override;
-      int is_collocated (const TAO_Endpoint* endpoint) override;
+      int is_collocated (TAO_Endpoint const* endpoint) override;
       //@}
 
       /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
       /// endpoints set up by this acceptor.
-      const ::SSLIOP::SSL &ssl_component () const;
+      ::SSLIOP::SSL const &ssl_component () const;
 
     private:
       /// Implement the common part of the open*() methods.
       int ssliop_open_i (TAO_ORB_Core *orb_core,
-                         const ACE_INET_Addr& addr,
+                         ACE_INET_Addr const& addr,
                          ACE_Reactor *reactor);
 
       /// Parse protocol specific options.
@@ -103,13 +103,13 @@ namespace TAO
 
       /// Helper method to add a new profile to the mprofile for
       /// each endpoint.
-      int create_new_profile (const TAO::ObjectKey &object_key,
+      int create_new_profile (TAO::ObjectKey const &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
       /// Helper method to create a profile that contains all of
       /// our endpoints.
-      int create_shared_profile (const TAO::ObjectKey &object_key,
+      int create_shared_profile (TAO::ObjectKey const &object_key,
                                  TAO_MProfile &mprofile,
                                  CORBA::Short priority);
 
@@ -147,7 +147,7 @@ namespace TAO
        */
       ACE_Time_Value const timeout_;
 
-      bool check_host_;
+      bool const check_host_;
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

@@ -81,14 +81,14 @@ public:
                  CORBA::Object_out forward_to);
 
   /// Create a collocated object using the given profile and stub.
-  CORBA::Object_ptr create_collocated_object (TAO_Stub *, const TAO_MProfile &);
+  CORBA::Object_ptr create_collocated_object (TAO_Stub *, TAO_MProfile const &);
 
   /// Initialize a collocated object using the given stub and object
   /// pointer for lazily evaluated object references.
   CORBA::Long initialize_collocated_object (TAO_Stub *);
 
   /// Fetch the adapter named @a name
-  TAO_Adapter *find_adapter (const char *name) const;
+  TAO_Adapter *find_adapter (char const *name) const;
 
 private:
   TAO_Adapter_Registry (TAO_Adapter_Registry const &) = delete;
@@ -100,9 +100,9 @@ private:
    * @name A simple array of adapters.
    */
   //@{
-  size_t adapters_capacity_;
-  size_t adapters_count_;
-  TAO_Adapter **adapters_;
+  size_t adapters_capacity_ {16}; // @@ Make it configurable
+  size_t adapters_count_ {0};
+  TAO_Adapter **adapters_ {nullptr};
   //@}
 };
 

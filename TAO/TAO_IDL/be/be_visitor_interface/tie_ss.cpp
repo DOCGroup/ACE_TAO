@@ -12,15 +12,15 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_interface_tie_ss::be_visitor_interface_tie_ss (
     be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_tie_ss::~be_visitor_interface_tie_ss ()
-{
-}
+be_visitor_interface_tie_ss::~be_visitor_interface_tie_ss () = default;
 
 int
 be_visitor_interface_tie_ss::visit_interface (be_interface *node)
@@ -32,46 +32,27 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       return 0;
     }
 
-  static char fulltiename [NAMEBUFSIZE];
-  static char localtiename [NAMEBUFSIZE];
-  static char localskelname [NAMEBUFSIZE];
+  std::string fulltiename (node->full_skel_name ());
+  fulltiename += "_tie";
 
-  ACE_OS::memset (fulltiename,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (localtiename,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (localskelname,
-                  '\0',
-                   NAMEBUFSIZE);
+  std::string const local_name (node->local_name ());
+  std::string localskelname;
+  std::string localtiename;
 
   // Generate the skeleton class name which will be used to determine the TIE
   // class name.
 
-  // We are outermost.
-  ACE_OS::sprintf (fulltiename,
-                   "%s_tie",
-                   node->full_skel_name ());
-
   if (!node->is_nested ())
     {
-      ACE_OS::sprintf (localskelname,
-                       "POA_%s",
-                       node->local_name ());
-      ACE_OS::sprintf (localtiename,
-                       "POA_%s_tie",
-                       node->local_name ());
+      localskelname = "POA_";
+      localskelname += local_name;
     }
   else
     {
-      ACE_OS::sprintf (localskelname,
-                       "%s",
-                       node->local_name ());
-      ACE_OS::sprintf (localtiename,
-                       "%s_tie",
-                       node->local_name ());
+      localskelname = local_name;
     }
+  localtiename = localskelname;
+  localtiename += "_tie";
 
   TAO_OutStream *os = this->ctx_->stream ();
 

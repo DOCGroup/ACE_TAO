@@ -21,20 +21,21 @@ class Checkpoint_i : public POA_Checkpoint
 {
 public:
   /// Constructor.
-  Checkpoint_i ();
+  Checkpoint_i () = default;
+  Checkpoint_i (Checkpoint_i const&) = delete;
+  Checkpoint_i (Checkpoint_i&&) = delete;
+  Checkpoint_i& operator= (Checkpoint_i const&) = delete;
+  Checkpoint_i& operator= (Checkpoint_i&&) = delete;
 
   /// Destructor.
-  ~Checkpoint_i ();
+  ~Checkpoint_i () override = default;
 
-  virtual void put_event (
-        Event * e
-  );
+  void put_event (Event *event) override;
 
-  virtual Event_List * get_critical_events (
-  );
+  Event_List *get_critical_events () override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

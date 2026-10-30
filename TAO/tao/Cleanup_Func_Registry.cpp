@@ -6,6 +6,8 @@
 
 #include "ace/Log_Msg.h"
 
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -14,17 +16,22 @@ TAO_Cleanup_Func_Registry::register_cleanup_function (ACE_CLEANUP_FUNC func,
 {
   size_t const slot = this->cleanup_funcs_.size ();
 
-  if (this->cleanup_funcs_.size (slot + 1) != 0)
-    return -1;
+  try
+    {
+      this->cleanup_funcs_.push_back (func);
+    }
+  catch (std::bad_alloc const &)
+    {
+      return -1;
+    }
 
-  this->cleanup_funcs_[slot] = func;
   slot_id = slot;
 
   return 0;
 }
 
 void
-TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base <void *> &ts_objects)
+TAO_Cleanup_Func_Registry::cleanup (const std::vector<void *> &ts_objects)
 {
   size_t const len = ts_objects.size ();
 

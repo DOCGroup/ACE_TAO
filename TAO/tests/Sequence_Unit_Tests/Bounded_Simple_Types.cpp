@@ -14,14 +14,14 @@ struct Foo
   int x;
 };
 
-CORBA::ULong const TEST_INT_MAX = 32;
-CORBA::ULong const TEST_FOO_MAX = 64;
+CORBA::ULong constexpr TEST_INT_MAX = 32;
+CORBA::ULong constexpr TEST_FOO_MAX = 64;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   try
     {
-      typedef TAO::bounded_value_sequence<int,TEST_INT_MAX> int_sequence;
+      using int_sequence = TAO::bounded_value_sequence<int,TEST_INT_MAX>;
 
       int_sequence a;
       int_sequence b(a);
@@ -64,7 +64,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       int_sequence e(c);
 
-      typedef TAO::bounded_value_sequence<Foo,TEST_FOO_MAX> Foo_sequence;
+      using Foo_sequence = TAO::bounded_value_sequence<Foo,TEST_FOO_MAX>;
 
       Foo_sequence u;
       Foo_sequence v(u);

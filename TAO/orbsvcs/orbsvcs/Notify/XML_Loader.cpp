@@ -49,14 +49,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  XML_Loader::XML_Loader ()
-    : live_ (false)
-  {
-  }
+  XML_Loader::XML_Loader () = default;
 
-  XML_Loader::~XML_Loader ()
-  {
-  }
+  XML_Loader::~XML_Loader () = default;
 
   bool
   XML_Loader::open (const ACE_TString & base_name)
@@ -144,11 +139,11 @@ namespace TAO_Notify
 
       try
       {
-        object_stack_.push (root);
+        object_stack_.push_back (root);
         parser.parse (&input);
         ACE_ASSERT (object_stack_.size () == 1);
-        Topology_Object* cur = nullptr;
-        object_stack_.pop (cur);
+        if (! object_stack_.empty ())
+          object_stack_.pop_back ();
       }
       catch (const ACEXML_Exception& ex)
       {
@@ -176,29 +171,29 @@ namespace TAO_Notify
     if (this->live_)
     {
       ACE_ASSERT (object_stack_.size () > 0);
-      Topology_Object* cur = nullptr;
-      if (object_stack_.top (cur) == 0)
-      {
-        try
+      if (! object_stack_.empty ())
         {
-          NVPList attrs;
-          CORBA::Long id = makeNVPList (attrs, xml_attrs);
+          Topology_Object* cur = object_stack_.back ();
+          try
+            {
+              NVPList attrs;
+              CORBA::Long id = makeNVPList (attrs, xml_attrs);
 
-          if (DEBUG_LEVEL > 5) ORBSVCS_DEBUG ((LM_INFO,
-            ACE_TEXT("(%P|%t) XML_Loader: Element %s\n"),
-            name
-            ));
+              if (DEBUG_LEVEL > 5) ORBSVCS_DEBUG ((LM_INFO,
+                ACE_TEXT("(%P|%t) XML_Loader: Element %s\n"),
+                name
+                ));
 
-          ACE_CString cname (ACE_TEXT_ALWAYS_CHAR(name));
-          Topology_Object* next = cur->load_child (cname, id, attrs);
-          ACE_ASSERT(next != nullptr);
-          object_stack_.push (next);
+              ACE_CString cname (ACE_TEXT_ALWAYS_CHAR(name));
+              Topology_Object* next = cur->load_child (cname, id, attrs);
+              ACE_ASSERT(next != nullptr);
+              object_stack_.push_back (next);
+            }
+          catch (const CORBA::Exception& ex)
+            {
+              throw ACEXML_SAXException (ACE_TEXT_CHAR_TO_TCHAR(ex._info ().c_str ()));
+            }
         }
-        catch (const CORBA::Exception& ex)
-        {
-          throw ACEXML_SAXException (ACE_TEXT_CHAR_TO_TCHAR(ex._info ().c_str ()));
-        }
-      }
     }
   }
 
@@ -217,8 +212,10 @@ namespace TAO_Notify
                       ACE_TEXT("(%P|%t) XML_Loader: End Element %s\n"),
                       name));
         }
-      Topology_Object* cur = nullptr;
-      object_stack_.pop (cur);
+      if (! object_stack_.empty ())
+        {
+          object_stack_.pop_back ();
+        }
     }
   }
 

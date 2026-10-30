@@ -4,6 +4,7 @@
 #include "orbsvcs/IFRService/ExceptionDef_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "ace/SString.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,9 +14,7 @@ TAO_AttributeDef_i::TAO_AttributeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AttributeDef_i::~TAO_AttributeDef_i ()
-{
-}
+TAO_AttributeDef_i::~TAO_AttributeDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_AttributeDef_i::def_kind ()
@@ -26,7 +25,7 @@ TAO_AttributeDef_i::def_kind ()
 CORBA::Contained::Description *
 TAO_AttributeDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -193,7 +192,7 @@ TAO_AttributeDef_i::make_description (
 CORBA::ExceptionDefSeq *
 TAO_AttributeDef_i::get_exceptions ()
 {
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<ACE_TString> path_queue;
   int index = 0;
   ACE_Configuration::VALUETYPE type;
   ACE_TString field_name;
@@ -230,7 +229,7 @@ TAO_AttributeDef_i::get_exceptions ()
 
           if (status == 0)
             {
-              path_queue.enqueue_tail (get_except_path);
+              path_queue.push_back (get_except_path);
             }
         }
     }
@@ -248,7 +247,8 @@ TAO_AttributeDef_i::get_exceptions ()
   for (CORBA::ULong i = 0; i < size; ++i)
     {
       ACE_TString path;
-      path_queue.dequeue_head (path);
+      path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
@@ -264,7 +264,7 @@ TAO_AttributeDef_i::get_exceptions ()
 CORBA::ExceptionDefSeq *
 TAO_AttributeDef_i::put_exceptions ()
 {
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<ACE_TString> path_queue;
   int index = 0;
   ACE_Configuration::VALUETYPE type;
   ACE_TString field_name;
@@ -301,7 +301,7 @@ TAO_AttributeDef_i::put_exceptions ()
 
           if (status == 0)
             {
-              path_queue.enqueue_tail (put_except_path);
+              path_queue.push_back (put_except_path);
             }
         }
     }
@@ -319,7 +319,8 @@ TAO_AttributeDef_i::put_exceptions ()
   for (CORBA::ULong i = 0; i < size; ++i)
     {
       ACE_TString path;
-      path_queue.dequeue_head (path);
+      path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,

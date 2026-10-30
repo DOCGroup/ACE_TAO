@@ -41,7 +41,7 @@ class TAO_PortableGroup_Export TAO_GroupId_Hash
 {
 public:
   /// Returns hash value.
-  u_long operator () (const PortableGroup::TagGroupTaggedComponent *id) const;
+  u_long operator () (PortableGroup::TagGroupTaggedComponent const *id) const;
 };
 
 /**
@@ -55,8 +55,8 @@ class TAO_PortableGroup_Export TAO_GroupId_Equal_To
 {
 public:
   /// Returns 1 if equal.
-  int operator () (const PortableGroup::TagGroupTaggedComponent *lhs,
-                   const PortableGroup::TagGroupTaggedComponent *rhs) const;
+  int operator () (PortableGroup::TagGroupTaggedComponent const *lhs,
+                   PortableGroup::TagGroupTaggedComponent const *rhs) const;
 };
 
 /**
@@ -78,7 +78,7 @@ public:
     TAO::ObjectKey key;
 
     /// next ObjectKey in the group.
-    struct Map_Entry *next;
+    struct Map_Entry *next {};
   };
 
   /// Constructor.
@@ -87,15 +87,20 @@ public:
   /// Destructor.
   ~TAO_Portable_Group_Map ();
 
+  TAO_Portable_Group_Map (TAO_Portable_Group_Map const &) = delete;
+  TAO_Portable_Group_Map (TAO_Portable_Group_Map &&) = delete;
+  TAO_Portable_Group_Map & operator= (TAO_Portable_Group_Map const &) = delete;
+  TAO_Portable_Group_Map & operator= (TAO_Portable_Group_Map &&) = delete;
+
   /// Add a GroupId->ObjectKey mapping to the map.
   /// This function takes ownership of the memory pointed to be group_id
   void add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
-                                   const TAO::ObjectKey &key);
+                                   TAO::ObjectKey const &key);
 
 
   /// Remove a GroupId->ObjectKey mapping from the map.
-  void remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* group_id,
-                                      const TAO::ObjectKey &key);
+  void remove_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent const *group_id,
+                                      TAO::ObjectKey const &key);
 
   /// Dispatch a request to all of the ObjectIds that belong to
   /// the specified group.

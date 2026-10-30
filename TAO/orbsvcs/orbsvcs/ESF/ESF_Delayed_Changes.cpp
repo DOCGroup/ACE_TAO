@@ -14,6 +14,8 @@
 
 #include "ace/Functor.h"
 #include "ace/Guard_T.h"
+#include <new>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +35,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    TAO_ESF_Delayed_Changes (const COLLECTION &collection)
+    TAO_ESF_Delayed_Changes (COLLECTION const &collection)
       :  collection_ (collection),
          lock_ (this),
          busy_cond_ (busy_lock_),
@@ -50,7 +52,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 {
   ACE_GUARD (Busy_Lock, ace_mon, this->lock_);
 
-  worker->set_size(this->collection_.size());
+  worker->set_size (this->collection_.size ());
   ITERATOR end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
@@ -92,14 +94,12 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> int
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     execute_delayed_operations ()
 {
-  while (!this->command_queue_.is_empty ())
+  while (!this->command_queue_.empty ())
     {
-      ACE_Command_Base* command = nullptr;
-      this->command_queue_.dequeue_head (command);
-
+      std::unique_ptr<ACE_Command_Base> command =
+        std::move (this->command_queue_.front ());
+      this->command_queue_.pop_front ();
       command->execute ();
-
-      delete command;
     }
   return 0;
 }
@@ -119,11 +119,17 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     }
   else
     {
-      ACE_Command_Base* command = nullptr;
-      ACE_NEW (command,
-               Connected_Command (this,
-                                  proxy));
-      this->command_queue_.enqueue_tail (command);
+      try
+        {
+          std::unique_ptr<ACE_Command_Base> command =
+            std::make_unique<Connected_Command> (this, proxy);
+          this->command_queue_.push_back (std::move (command));
+        }
+      catch (std::bad_alloc const &)
+        {
+          proxy->_decr_refcnt ();
+          throw CORBA::NO_MEMORY ();
+        }
       this->write_delay_count_++;
     }
 }
@@ -143,11 +149,17 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     }
   else
     {
-      ACE_Command_Base* command;
-      ACE_NEW (command,
-               Reconnected_Command (this,
-                                    proxy));
-      this->command_queue_.enqueue_tail (command);
+      try
+        {
+          std::unique_ptr<ACE_Command_Base> command =
+            std::make_unique<Reconnected_Command> (this, proxy);
+          this->command_queue_.push_back (std::move (command));
+        }
+      catch (std::bad_alloc const &)
+        {
+          proxy->_decr_refcnt ();
+          throw CORBA::NO_MEMORY ();
+        }
       this->write_delay_count_++;
     }
 }
@@ -166,11 +178,16 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     }
   else
     {
-      ACE_Command_Base* command;
-      ACE_NEW (command,
-               Disconnected_Command (this,
-                                     proxy));
-      this->command_queue_.enqueue_tail (command);
+      try
+        {
+          std::unique_ptr<ACE_Command_Base> command =
+            std::make_unique<Disconnected_Command> (this, proxy);
+          this->command_queue_.push_back (std::move (command));
+        }
+      catch (std::bad_alloc const &)
+        {
+          throw CORBA::NO_MEMORY ();
+        }
       this->write_delay_count_++;
     }
 }
@@ -188,10 +205,16 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::shutdown ()
     }
   else
     {
-      ACE_Command_Base* command;
-      ACE_NEW (command,
-               Shutdown_Command (this));
-      this->command_queue_.enqueue_tail (command);
+      try
+        {
+          std::unique_ptr<ACE_Command_Base> command =
+            std::make_unique<Shutdown_Command> (this);
+          this->command_queue_.push_back (std::move (command));
+        }
+      catch (std::bad_alloc const &)
+        {
+          throw CORBA::NO_MEMORY ();
+        }
       this->write_delay_count_++;
     }
 }

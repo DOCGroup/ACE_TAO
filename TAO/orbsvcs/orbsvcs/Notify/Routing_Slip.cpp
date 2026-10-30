@@ -166,13 +166,8 @@ Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 
 Routing_Slip::Routing_Slip(
       const TAO_Notify_Event::Ptr& event)
-  : is_safe_ (false)
-  , until_safe_ (internals_)
-  , this_ptr_ (0)
+  : until_safe_ (internals_)
   , event_(event)
-  , state_ (rssCREATING)
-  , complete_requests_ (0)
-  , rspm_ (0)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, sequence_lock_);
   this->sequence_ = ++routing_slip_sequence_;
@@ -308,7 +303,8 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
     {
       this->delivery_requests_.push_back (request);
 //      Delivery_Method_Dispatch method (request, ps, filter);
-      TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
+      TAO_Notify_Method_Request_Event event_request (request);
+      TAO_Notify_Method_Request_Dispatch_No_Copy method (event_request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -357,7 +353,8 @@ Routing_Slip::dispatch (
   if (! ps->has_shutdown() )
     {
       this->delivery_requests_.push_back (request);
-      TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
+      TAO_Notify_Method_Request_Event event_request (request);
+      TAO_Notify_Method_Request_Dispatch_No_Copy method (event_request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ORBSVCS_DEBUG ((LM_DEBUG,

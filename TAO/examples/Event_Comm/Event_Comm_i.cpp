@@ -1,6 +1,18 @@
 #include "Event_Comm_i.h"
 #include "ace/OS_NS_regex.h"
 
+#include <memory>
+#include <string>
+#include <string_view>
+
+struct Compiled_Regex_Deleter
+{
+  void operator() (char *regex) const
+  {
+    ACE_OS::free (regex);
+  }
+};
+
 /**
  * Keeps track of context information associated with
  * a <Event_Comm::Consumer> entry.
@@ -9,48 +21,43 @@ class Consumer_Entry
 {
 public:
   Consumer_Entry (Event_Comm::Consumer *consumer,
-                  const char *filtering_criteria);
+                 char const *filtering_criteria);
   // Constructor.
 
   ~Consumer_Entry ();
   // Descriptor.
 
+  Consumer_Entry (Consumer_Entry const &) = delete;
+  Consumer_Entry &operator= (Consumer_Entry const &) = delete;
+  Consumer_Entry (Consumer_Entry &&) = delete;
+  Consumer_Entry &operator= (Consumer_Entry &&) = delete;
+
   // = Set/get filtering criteria.
-  void criteria (const char *criteria);
-  const char *criteria ();
+  std::string const &criteria () const;
 
   // = Set/get Event_Comm::Consumer object reference.
-  Event_Comm::Consumer *consumer ();
+  Event_Comm::Consumer *consumer () const;
   void consumer (Event_Comm::Consumer *);
 
   // = Set/get the compiled regular expression buffer.
-  const char *regexp ();
-  void regexp (char *);
+  char *regexp ();
 
 private:
-  const char *filtering_criteria_;
+  std::string filtering_criteria_;
   // String containing the filtering criteria.
 
-  char *compiled_regexp_;
+  std::unique_ptr<char, Compiled_Regex_Deleter> compiled_regexp_ {};
   // Compiled representation of the regular expression (see
   // regexpr(3g)).
 
-  Event_Comm::Consumer_ptr consumer_;
+  Event_Comm::Consumer_ptr consumer_ {};
   // Object reference for the <Event_Comm::Consumer>.
 };
 
 // = Set/get filtering criteria.
 
-void
-Consumer_Entry::criteria (const char *criteria)
-{
-  ACE_OS::free ((void *) this->filtering_criteria_);
-  ACE_ALLOCATOR (this->filtering_criteria_,
-                 ACE_OS::strdup (criteria));
-}
-
-const char *
-Consumer_Entry::criteria ()
+std::string const &
+Consumer_Entry::criteria () const
 {
   return this->filtering_criteria_;
 }
@@ -58,7 +65,7 @@ Consumer_Entry::criteria ()
 // = Set/get Event_Comm::Consumer object reference.
 
 Event_Comm::Consumer *
-Consumer_Entry::consumer ()
+Consumer_Entry::consumer () const
 {
   return this->consumer_;
 }
@@ -69,29 +76,20 @@ Consumer_Entry::consumer (Event_Comm::Consumer *consumer)
   this->consumer_ = consumer;
 }
 
-const char *
+char *
 Consumer_Entry::regexp ()
 {
-  return this->compiled_regexp_;
-}
-
-void
-Consumer_Entry::regexp (char *regexp)
-{
-  ACE_OS::free ((void *) this->compiled_regexp_);
-  this->compiled_regexp_ = regexp;
+  return this->compiled_regexp_.get ();
 }
 
 Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
-                                const char *filtering_criteria)
-  : filtering_criteria_ (0),
-    compiled_regexp_ (0),
-    consumer_ (consumer)
+                                char const *filtering_criteria)
+  : filtering_criteria_ (filtering_criteria)
+  , consumer_ (consumer)
 {
-  char *compile_buffer = 0;
+  char *compile_buffer = nullptr;
 
-  this->criteria (filtering_criteria);
-  ACE_ASSERT (this->criteria ());
+  ACE_ASSERT (filtering_criteria != nullptr);
 
   // Check for wildcard case first.
   if (ACE_OS::strcmp (filtering_criteria, "") == 0)
@@ -102,7 +100,7 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 #if defined (ACE_HAS_REGEX)
     // Compile the regular expression (the 0's cause ACE_OS::compile
     // to allocate space).
-    compile_buffer = ACE_OS::compile (filtering_criteria, 0, 0);
+    compile_buffer = ACE_OS::compile (filtering_criteria, nullptr, nullptr);
 #else
     // Win32 does not support regular expression functions such as compile.
     ACE_ALLOCATOR (compile_buffer,
@@ -111,10 +109,10 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   }
 
   // Should throw an exception here!
-  ACE_ASSERT (compile_buffer != 0);
+  ACE_ASSERT (compile_buffer != nullptr);
 
-  this->regexp (compile_buffer);
-  ACE_ASSERT (this->regexp () != 0);
+  this->compiled_regexp_.reset (compile_buffer);
+  ACE_ASSERT (this->regexp () != nullptr);
 
   // Increment the reference count since we are keeping a copy of
   // this...
@@ -123,8 +121,6 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 
 Consumer_Entry::~Consumer_Entry ()
 {
-  ACE_OS::free ((void *) this->filtering_criteria_);
-  ACE_OS::free ((void *) this->compiled_regexp_);
   // Decrement the object reference count.
   CORBA::release (this->consumer_);
 }
@@ -153,8 +149,10 @@ The filtering criteria will not work.\n"));
 
 void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
-                       const char *filtering_criteria)
+                       char const *filtering_criteria)
 {
+  std::string_view const criteria_view (filtering_criteria);
+
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
               consumer_ref,
@@ -167,7 +165,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
   // criteria is different that is good news since we currently don't
   // allow duplicates...  @@ Should duplicates be allowed?
 
-  for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
+  for (MAP_ENTRY *me = nullptr; mi.next (me) != 0; mi.advance ())
     {
       Consumer_Entry *nr_entry = me->int_id_;
 
@@ -178,10 +176,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
       // Check for a duplicate entry.
       if (consumer_ref->_is_equivalent (me->ext_id_)
-          && (ACE_OS::strcmp (filtering_criteria,
-                              "") == 0
-              || ACE_OS::strcmp (filtering_criteria,
-                                 nr_entry->criteria ()) == 0))
+          && (criteria_view.empty () || criteria_view == nr_entry->criteria ()))
         {
           // Inform the caller that the <Event_Comm::Consumer> * is
           // already being used.
@@ -212,20 +207,22 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
 void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
-                         const char *filtering_criteria)
+                         char const *filtering_criteria)
 {
+  std::string_view const criteria_view (filtering_criteria);
+
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %x\n",
               consumer_ref));
 
-  Consumer_Entry *nr_entry = 0;
+  Consumer_Entry *nr_entry = nullptr;
   MAP_ITERATOR mi (this->map_);
-  int found = 0;
+  bool found = false;
 
   // Locate <Consumer_Entry> and free up resources.  @@ Note, we don't
   // properly handle deallocation of KEYS!
 
-  for (MAP_ENTRY *me = 0;
+  for (MAP_ENTRY *me = nullptr;
        mi.next (me) != 0;
        mi.advance ())
     {
@@ -238,15 +235,13 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 
       // Look for a match ..
       if (consumer_ref->_is_equivalent (me->ext_id_)
-          && (ACE_OS::strcmp (filtering_criteria, "") == 0
-              || ACE_OS::strcmp (filtering_criteria,
-                                 nr_entry->criteria ()) == 0))
+          && (criteria_view.empty () || criteria_view == nr_entry->criteria ()))
         {
           ACE_DEBUG ((LM_DEBUG,
                       "removed entry %x with criteria \"%s\"\n",
                       consumer_ref,
                       filtering_criteria));
-          found = 1;
+          found = true;
           // @@ This is a hack, we need a better approach!
           if (this->map_.unbind (me->ext_id_,
                                  nr_entry) == -1)
@@ -257,7 +252,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
         }
     }
 
-  if (found == 0)
+  if (!found)
     throw Event_Comm::Notifier::CannotUnsubscribe (
       "The Consumer and filtering criteria were not found.");
 }
@@ -265,7 +260,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 // Disconnect all the consumers, giving them the <reason>.
 
 void
-Notifier_i::disconnect (const char *reason)
+Notifier_i::disconnect (char const *reason)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_disconnect = %s\n",
@@ -277,14 +272,14 @@ Notifier_i::disconnect (const char *reason)
   // Notify all the consumers, taking into account the filtering
   // criteria.
 
-  for (MAP_ENTRY *me = 0;
+  for (MAP_ENTRY *me = nullptr;
        mi.next (me) != 0;
        mi.advance ())
     {
       Event_Comm::Consumer_ptr consumer_ref =
         me->ext_id_;
 
-      ACE_ASSERT (consumer_ref != 0);
+      ACE_ASSERT (consumer_ref != nullptr);
       ACE_DEBUG ((LM_DEBUG,
                   "disconnecting client %x\n",
                   consumer_ref));
@@ -292,7 +287,7 @@ Notifier_i::disconnect (const char *reason)
         {
           consumer_ref->disconnect (reason);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Unexpected exception\n");
         }
@@ -315,30 +310,28 @@ Notifier_i::disconnect (const char *reason)
 // Notify all consumers whose filtering criteria match the event.
 
 void
-Notifier_i::push (const Event_Comm::Event &event)
+Notifier_i::push (Event_Comm::Event const &event)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_notification = %s\n",
-              (const char *) event.tag_));
+              static_cast<char const *> (event.tag_)));
   MAP_ITERATOR mi (this->map_);
   int count = 0;
 
   // Notify all the consumers.
 
-  for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
+  for (MAP_ENTRY *me = nullptr; mi.next (me) != 0; mi.advance ())
     {
       Event_Comm::Consumer_ptr consumer_ref = me->int_id_->consumer ();
-      ACE_ASSERT (consumer_ref != 0);
+      ACE_ASSERT (consumer_ref != nullptr);
+      std::string const &criteria = me->int_id_->criteria ();
 
 #if defined (ACE_HAS_REGEX)
-      char *regexp = const_cast<char *> (me->int_id_->regexp ());
+      char *regexp = me->int_id_->regexp ();
       ACE_ASSERT (regexp);
 
-      const char *criteria = me->int_id_->criteria ();
-      ACE_ASSERT (criteria);
-
       // Do a regular expression comparison to determine matching.
-      if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
+      if (criteria.empty () // Everything matches the wildcard.
           || ACE_OS::step (event.tag_, regexp) != 0)
 #endif // #if defined (ACE_HAS_REGEX)
         // if ACE_HAS_REGEX has not been defined,
@@ -346,14 +339,14 @@ Notifier_i::push (const Event_Comm::Event &event)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "string %s matched regexp \"%s\" for client %x\n",
-                      (const char *) event.tag_,
-                      me->int_id_->criteria (),
+                      static_cast<char const *> (event.tag_),
+                      criteria.c_str (),
                       consumer_ref));
           try
             {
               consumer_ref->push (event);
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const &ex)
             {
               ex._tao_print_exception ("Unexpected exception\n");
               continue;
@@ -371,32 +364,13 @@ Notifier_i::push (const Event_Comm::Event &event)
                 count));
 }
 
-// -------------
-
-ShutdownCallback::~ShutdownCallback ()
-{
-}
-
-// -------------
-
-//FUZZ: disable check_for_lack_ACE_OS
-Consumer_i::Consumer_i ()
-  : shutdown (0)
-{
-}
-//FUZZ: enable check_for_lack_ACE_OS
-
-Consumer_i::~Consumer_i ()
-{
-}
-
 // Inform the <Event_Comm::Consumer> that <event> has
 // occurred.
 
 void
-Consumer_i::push (const Event_Comm::Event &event)
+Consumer_i::push (Event_Comm::Event const &event)
 {
-  const char *tmpstr = event.tag_;
+  char const *tmpstr = event.tag_;
 
   ACE_DEBUG ((LM_DEBUG,
               "**** got notification = %s\n",
@@ -407,20 +381,20 @@ Consumer_i::push (const Event_Comm::Event &event)
 // <Event_Comm::Notifier>.
 
 void
-Consumer_i::disconnect (const char *reason)
+Consumer_i::disconnect (char const *reason)
 {
   ACE_DEBUG ((LM_DEBUG,
               "**** got disconnected due to %s\n",
               reason));
 
-  ACE_ASSERT (shutdown != 0);
+  ACE_ASSERT (shutdown_ != nullptr);
 
-  shutdown->close ();
+  shutdown_->close ();
 }
 
 void
-Consumer_i::set (ShutdownCallback *_shutdown)
+Consumer_i::set (ShutdownCallback *shutdown_callback)
 {
-  shutdown = _shutdown;
+  shutdown_ = shutdown_callback;
 }
 

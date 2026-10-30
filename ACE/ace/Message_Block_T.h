@@ -36,6 +36,11 @@ template <class ACE_LOCK>
 class ACE_Locked_Data_Block : public ACE_Data_Block
 {
 public:
+  ACE_Locked_Data_Block (ACE_Locked_Data_Block const &) = delete;
+  ACE_Locked_Data_Block (ACE_Locked_Data_Block &&) = delete;
+  ACE_Locked_Data_Block &operator= (ACE_Locked_Data_Block const &) = delete;
+  ACE_Locked_Data_Block &operator= (ACE_Locked_Data_Block &&) = delete;
+
   /// Default "do-nothing" constructor.
   ACE_Locked_Data_Block ();
 
@@ -61,10 +66,6 @@ public:
 private:
   /// The lock
   ACE_LOCK lock_;
-
-  // = Disallow these operations.
-  ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
-  ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

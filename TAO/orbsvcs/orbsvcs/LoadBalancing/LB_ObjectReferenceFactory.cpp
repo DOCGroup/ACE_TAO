@@ -27,22 +27,14 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
     table_ (TAO_LB_ORF_GROUP_TABLE_SIZE),
     fcids_ (),
     orb_ (CORBA::ORB::_duplicate (orb)),
-    lm_ (CosLoadBalancing::LoadManager::_duplicate (lm))
+    lm_ (CosLoadBalancing::LoadManager::_duplicate (lm)),
+    registered_members_ (repository_ids.length (), false)
 {
   // Claim ownership of the old ObjectReferenceFactory.
   CORBA::add_ref (old_orf);
 
   this->location_.length (1);
   this->location_[0].id = CORBA::string_dup (location);
-
-  CORBA::ULong const len = repository_ids.length ();
-  ACE_NEW (this->registered_members_,
-           CORBA::Boolean[len]);
-
-  ACE_ASSERT (this->registered_members_ != nullptr);
-  ACE_OS::memset (this->registered_members_,
-                  0,
-                  len * sizeof (CORBA::Boolean));
 }
 
 ::CORBA::ValueBase *
@@ -76,8 +68,6 @@ TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
 
   // @todo De-register LoadAlert objects.
   // @todo De-register object group members.
-
-  delete [] this->registered_members_;
 }
 
 CORBA::Object_ptr
@@ -187,9 +177,7 @@ TAO_LB_ObjectReferenceFactory::find_object_group (
                                       criteria,
                                       fcid.out ());
 
-          CORBA::ULong const len = this->fcids_.size ();
-          this->fcids_.size (len + 1); // Incremental growth.  Yuck!
-          this->fcids_[len] = fcid;
+          this->fcids_.push_back (fcid);
         }
       else
         {

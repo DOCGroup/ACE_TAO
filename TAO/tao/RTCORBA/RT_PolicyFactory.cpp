@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_RT_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    const CORBA::Any &value)
+    CORBA::Any const &value)
 {
   switch (type)
   {

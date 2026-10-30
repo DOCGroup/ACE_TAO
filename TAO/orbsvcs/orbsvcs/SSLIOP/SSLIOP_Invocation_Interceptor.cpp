@@ -47,10 +47,6 @@ TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor (
   this->sec2manager_ = SecurityLevel2::SecurityManager::_narrow (obj.in ());
 }
 
-TAO::SSLIOP::Server_Invocation_Interceptor::~Server_Invocation_Interceptor ()
-{
-}
-
 char *
 TAO::SSLIOP::Server_Invocation_Interceptor::name ()
 {

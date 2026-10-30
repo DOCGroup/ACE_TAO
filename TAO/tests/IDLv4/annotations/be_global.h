@@ -1,7 +1,7 @@
 #ifndef ANNOTEST_IDL_BE_GLOBAL_HEADER
 #define ANNOTEST_IDL_BE_GLOBAL_HEADER
 
-#include "ace/SString.h"
+#include <string>
 
 class BE_GlobalData {
 public:
@@ -12,7 +12,7 @@ public:
   /**
    * Spawn Command Line Options
    */
-  ACE_CString spawn_options ();
+  std::string spawn_options ();
 
   /**
    * Parse an argument that the frontend did not recognize.

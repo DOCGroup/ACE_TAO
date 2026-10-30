@@ -37,21 +37,26 @@ public:
   /// Constructor
   TAO_Notify_Find_Worker_T ();
 
+  TAO_Notify_Find_Worker_T (TAO_Notify_Find_Worker_T const &) = delete;
+  TAO_Notify_Find_Worker_T (TAO_Notify_Find_Worker_T &&) = delete;
+  TAO_Notify_Find_Worker_T &operator= (TAO_Notify_Find_Worker_T const &) = delete;
+  TAO_Notify_Find_Worker_T &operator= (TAO_Notify_Find_Worker_T &&) = delete;
+
   /// Find the Type.
-  TYPE* find (const TAO_Notify_Object::ID id, CONTAINER& container);
+  TYPE* find (TAO_Notify_Object::ID const id, CONTAINER& container);
 
   /// Find and resolve to the Interface.
-  INTERFACE_PTR resolve (const TAO_Notify_Object::ID id, CONTAINER& container);
+  INTERFACE_PTR resolve (TAO_Notify_Object::ID const id, CONTAINER& container);
 
 protected:
   ///= TAO_ESF_Worker method
   void work (TYPE* object);
 
   /// The id we're looking for.
-  TAO_Notify_Object::ID id_;
+  TAO_Notify_Object::ID id_ {};
 
   /// The result
-  TYPE* result_;
+  TYPE* result_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

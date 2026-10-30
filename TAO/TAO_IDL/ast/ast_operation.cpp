@@ -84,10 +84,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_namelist.h"
 #include "utl_exceptlist.h"
 #include "utl_identifier.h"
-#include "utl_string.h"
 #include "utl_strlist.h"
 
 #include "global_extern.h"
+
+#include <utility>
 
 AST_Decl::NodeType const
 AST_Operation::NT = AST_Decl::NT_op;
@@ -104,11 +105,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
     UTL_Scope(AST_Decl::NT_op),
     pd_return_type (rt),
     pd_flags (fl),
-    pd_context (nullptr),
-    pd_exceptions (nullptr),
-    argument_count_ (-1),
-    has_in_arguments_ (false),
-    has_native_ (0)
+    pd_exceptions (nullptr)
 {
   AST_PredefinedType *pdt = nullptr;
 
@@ -133,14 +130,12 @@ AST_Operation::AST_Operation (AST_Type *rt,
     }
 }
 
-AST_Operation::~AST_Operation ()
-{
-}
+AST_Operation::~AST_Operation () = default;
 
 // Public operations.
 
 bool
-AST_Operation::void_return_type ()
+AST_Operation::void_return_type () const
 {
   AST_Type* type = this->return_type ();
 
@@ -200,16 +195,7 @@ AST_Operation::has_native ()
 void
 AST_Operation::destroy ()
 {
-  // No need to delete our exception list, the
-  // destroy() method does it. The UTL_ExceptList
-  // destroy() method does NOT delete the contained
-  // exception nodes.
-
-  if (this->pd_exceptions != nullptr)
-    {
-      this->pd_exceptions->destroy ();
-      this->pd_exceptions = nullptr;
-    }
+  this->pd_exceptions.reset ();
 
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
@@ -225,10 +211,10 @@ AST_Operation::be_add_exceptions (UTL_ExceptList *t)
     }
   else
     {
-      this->pd_exceptions = t;
+      this->pd_exceptions.reset (t);
     }
 
-  return this->pd_exceptions;
+  return this->pd_exceptions.get ();
 }
 
 // Private operations.
@@ -292,13 +278,11 @@ AST_Operation::compute_argument_attr ()
   return 0;
 }
 
-// Add this context (a UTL_StrList) to this scope.
-UTL_StrList *
-AST_Operation::fe_add_context (UTL_StrList *t)
+// Set the operation context.
+void
+AST_Operation::fe_add_context (UTL_StrList context)
 {
-  this->pd_context = t;
-
-  return t;
+  this->pd_context = std::move (context);
 }
 
 // Add these exceptions (identified by name) to this scope.
@@ -320,7 +304,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
   AST_Type *fe = nullptr;
   AST_Decl *d = nullptr;
 
-  this->pd_exceptions = nullptr;
+  this->pd_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
@@ -372,9 +356,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_native:
             {
               // This is the only use case for this node type.
-              int compare =
-                ACE_OS::strcmp (d->local_name ()->get_string (),
-                                "UserExceptionBase");
+              int compare = d->local_name ()->get_string () == "UserExceptionBase" ? 0 : 1;
 
               if (compare != 0)
                 {
@@ -413,10 +395,12 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 
       if (this->pd_exceptions == nullptr)
         {
-          ACE_NEW_RETURN (this->pd_exceptions,
+          UTL_ExceptList *exceptions = nullptr;
+          ACE_NEW_RETURN (exceptions,
                           UTL_ExceptList (fe,
                                           nullptr),
                           nullptr);
+          this->pd_exceptions.reset (exceptions);
         }
       else
         {
@@ -451,8 +435,6 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Decl *d = nullptr;
   AST_Type *e = nullptr;
-  UTL_String *s = nullptr;
-
   if (this->pd_flags == OP_oneway)
     {
       this->dump_i (o, "oneway ");
@@ -487,7 +469,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
       this->dump_i (o, " raises(");
 
       // Must advance the iterator explicity inside the loop.
-      for (UTL_ExceptlistActiveIterator ei (this->pd_exceptions);
+      for (UTL_ExceptlistActiveIterator ei (this->pd_exceptions.get ());
            !ei.is_done ();)
         {
           e = ei.item ();
@@ -503,21 +485,20 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
       this->dump_i (o, ")");
     }
 
-  if (this->pd_context != nullptr)
+  if (!this->pd_context.empty ())
     {
       this->dump_i (o, " context(");
 
-      // Must advance the iterator explicity inside the loop.
-      for (UTL_StrlistActiveIterator si (this->pd_context); !si.is_done();)
+      bool first = true;
+      for (std::string const& context : this->pd_context)
         {
-          s = si.item ();
-          si.next ();
-          this->dump_i (o, s->get_string ());
-
-          if (!si.is_done())
+          if (!first)
             {
               this->dump_i (o, ", ");
             }
+
+          this->dump_i (o, context);
+          first = false;
         }
 
       this->dump_i (o, ")");
@@ -533,27 +514,27 @@ AST_Operation::ast_accept (ast_visitor *visitor)
 // Data accessors
 
 AST_Type *
-AST_Operation::return_type ()
+AST_Operation::return_type () const
 {
   return this->pd_return_type;
 }
 
 AST_Operation::Flags
-AST_Operation::flags ()
+AST_Operation::flags () const
 {
   return this->pd_flags;
 }
 
-UTL_StrList *
-AST_Operation::context ()
+UTL_StrList const&
+AST_Operation::context () const
 {
   return this->pd_context;
 }
 
 UTL_ExceptList *
-AST_Operation::exceptions ()
+AST_Operation::exceptions () const
 {
-  return this->pd_exceptions;
+  return this->pd_exceptions.get ();
 }
 
 bool

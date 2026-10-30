@@ -27,8 +27,8 @@ class TAO_FTEC_Event_Channel_Impl;
 class Replication_Strategy
 {
 public:
-  Replication_Strategy();
-  virtual ~Replication_Strategy();
+  Replication_Strategy() = default;
+  virtual ~Replication_Strategy() = default;
 
   Replication_Strategy(Replication_Strategy const&) = delete;
   Replication_Strategy(Replication_Strategy&&) = delete;
@@ -52,15 +52,15 @@ public:
    * @param rollback The rollback operation when the replication failed.
    * @param oid The object id used for rollback operation.
    */
-    virtual void replicate_request(const FTRT::State& state,
+    virtual void replicate_request(FTRT::State const& state,
                                    RollbackOperation rollback,
-                                   const FtRtecEventChannelAdmin::ObjectId& oid)=0;
+                                   FtRtecEventChannelAdmin::ObjectId const& oid)=0;
 
   /**
    * Inform the backup replicas that a new replica has joined the object
    * group.
    */
-  virtual void add_member(const FTRT::ManagerInfo & info,
+  virtual void add_member(FTRT::ManagerInfo const &info,
                           CORBA::ULong object_group_ref_version)=0;
 
   virtual Replication_Strategy* make_primary_strategy();

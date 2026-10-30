@@ -25,7 +25,7 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i () :
 
       impl->activate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Caught exception in "

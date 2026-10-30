@@ -44,6 +44,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Errno_Guard
 {
 public:
+  ACE_Errno_Guard (ACE_Errno_Guard const &) = delete;
+  ACE_Errno_Guard (ACE_Errno_Guard &&) = delete;
+  ACE_Errno_Guard &operator= (ACE_Errno_Guard const &) = delete;
+  ACE_Errno_Guard &operator= (ACE_Errno_Guard &&) = delete;
+
   ///  Stash the value of @a error into @c error_ and initialize the
   ///  @c errno_ptr_ to the address of @a errno_ref.
   ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
@@ -65,9 +70,6 @@ public:
   bool operator!= (int error);
 
 private:
-  ACE_Errno_Guard (const ACE_Errno_Guard &) = delete;
-  ACE_Errno_Guard &operator= (const ACE_Errno_Guard &) = delete;
-
 #if defined (ACE_MT_SAFE)
   ACE_ERRNO_TYPE *errno_ptr_;
 #endif /* ACE_MT_SAFE */

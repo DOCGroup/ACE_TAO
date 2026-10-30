@@ -12,14 +12,14 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_context_svth::be_visitor_context_svth (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_context_svth::~be_visitor_context_svth ()
-{
-}
+be_visitor_context_svth::~be_visitor_context_svth () = default;
 
 int
 be_visitor_context_svth::visit_component (be_component *node)
@@ -30,14 +30,13 @@ be_visitor_context_svth::visit_component (be_component *node)
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (scope->full_name ());
 
   // No '_cxx_' prefix.
-  const char *lname =
+  std::string const& lname =
     node->original_local_name ()->get_string ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl
       << "class " << lname << "_Servant;"
@@ -51,7 +50,7 @@ be_visitor_context_svth::visit_component (be_component *node)
   AST_Component * base = node->base_component ();
   if (base)
     {
-      const char *lbase_name =
+      std::string const& lbase_name =
         base->original_local_name ()->get_string ();
 
       os_ << ": public " << global << "CIAO_" << base->flat_name ()
@@ -114,7 +113,7 @@ be_visitor_context_svth::visit_component (be_component *node)
       << "/** @name Operations and members for " << lname
       << " receptacles and event sources,"
       << be_nl
-      << " * defined in " << global << sname
+      << " * defined in " << global << sname_str
       << "::CCM_" << lname << "_Context." << be_nl << " */"
       << be_nl
       << "//@{";
@@ -146,11 +145,11 @@ be_visitor_context_svth::visit_connector (be_connector *node)
 int
 be_visitor_context_svth::visit_uses (be_uses *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
-  const char *obj_name = node->uses_type ()->full_name ();
+  std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_uidt_nl << be_nl
@@ -216,8 +215,9 @@ be_visitor_context_svth::visit_uses (be_uses *node)
 int
 be_visitor_context_svth::visit_publishes (be_publishes *node)
 {
-  const char *obj_name = node->publishes_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
+  std::string const obj_name = node->publishes_type ()->full_name ();
+  std::string const& port_name =
+    node->local_name ()->get_string ();
 
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
@@ -254,8 +254,9 @@ be_visitor_context_svth::visit_publishes (be_publishes *node)
 int
 be_visitor_context_svth::visit_emits (be_emits *node)
 {
-  const char *obj_name = node->emits_type ()->full_name ();
-  const char *port_name = node->local_name ()->get_string ();
+  std::string const obj_name = node->emits_type ()->full_name ();
+  std::string const& port_name =
+    node->local_name ()->get_string ();
 
   os_ << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;

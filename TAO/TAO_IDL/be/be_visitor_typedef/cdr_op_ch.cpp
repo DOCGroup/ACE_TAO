@@ -21,9 +21,6 @@ be_visitor_typedef_cdr_op_ch::be_visitor_typedef_cdr_op_ch (
 {
 }
 
-be_visitor_typedef_cdr_op_ch::~be_visitor_typedef_cdr_op_ch ()
-{
-}
 
 int
 be_visitor_typedef_cdr_op_ch::visit_typedef (be_typedef *node)

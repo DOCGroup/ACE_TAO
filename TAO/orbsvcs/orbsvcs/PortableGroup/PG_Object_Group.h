@@ -67,24 +67,24 @@ namespace TAO
       PortableGroup::GenericFactory_var factory_;
 
       /// FactoryCreationId assigned to the member. Empty if application created
-      PortableGroup::GenericFactory::FactoryCreationId factory_id_;
+      PortableGroup::GenericFactory::FactoryCreationId factory_id_ {};
 
       /// Location where this member exists
       PortableGroup::Location location_;
 
       /// TRUE if this is primary member
-      CORBA::Boolean is_primary_;
+      CORBA::Boolean is_primary_ {};
 
       ///////////////
       // Methods
 
       /// Construct an application-supplied member.
-      MemberInfo (CORBA::Object_ptr member, const PortableGroup::Location & location);
+      MemberInfo (CORBA::Object_ptr member, PortableGroup::Location const & location);
 
       /// Construct a infrastructure-created member.
       MemberInfo (
         CORBA::Object_ptr member,
-        const PortableGroup::Location & location,
+        PortableGroup::Location const & location,
         PortableGroup::GenericFactory_ptr factory,
         PortableGroup::GenericFactory::FactoryCreationId factory_id);
 
@@ -118,10 +118,10 @@ namespace TAO
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
-      const PortableGroup::TagGroupTaggedComponent & tagged_component,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      const TAO::PG_Property_Set_var & type_properties);
+      PortableGroup::TagGroupTaggedComponent const & tagged_component,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
+      TAO::PG_Property_Set_var const & type_properties);
     /**
      * This constructor is to be used for initialization when
      * reading the object group from a stream.
@@ -150,13 +150,13 @@ namespace TAO
     /**
      * get location of primary member
      */
-    virtual const PortableGroup::Location & get_primary_location();
+    virtual PortableGroup::Location const & get_primary_location();
 
     /**
      * returns a duplicate
      * caller must release
      */
-    PortableGroup::TypeId get_type_id ()const;
+    PortableGroup::TypeId get_type_id () const;
 
 
     /**
@@ -179,7 +179,7 @@ namespace TAO
      * @@TODO DOC
      */
     void set_properties_dynamically (
-        const PortableGroup::Properties & overrides);
+        PortableGroup::Properties const & overrides);
 
     /**
      * @@TODO DOC
@@ -197,7 +197,7 @@ namespace TAO
      * @param member the member to be added
      */
     virtual void add_member (
-        const PortableGroup::Location & the_location,
+        PortableGroup::Location const & the_location,
         CORBA::Object_ptr member);
 
     /**
@@ -209,22 +209,22 @@ namespace TAO
      */
     virtual int set_primary_member (
       TAO_IOP::TAO_IOR_Property * prop,
-      const PortableGroup::Location & the_location);
+      PortableGroup::Location const & the_location);
 
     /**
      * @@TODO DOC
      */
     virtual void remove_member (
-        const PortableGroup::Location & the_location);
+        PortableGroup::Location const & the_location);
 
 
     /**
      * @@TODO DOC
      */
     virtual void create_member (
-        const PortableGroup::Location & the_location,
-        const char * type_id,
-        const PortableGroup::Criteria & the_criteria);
+        PortableGroup::Location const & the_location,
+        char const * type_id,
+        PortableGroup::Criteria const & the_criteria);
 
     /**
      * @@TODO DOC
@@ -235,7 +235,7 @@ namespace TAO
      * @@TODO DOC
      */
     virtual CORBA::Object_ptr get_member_reference (
-        const PortableGroup::Location & the_location);
+        PortableGroup::Location const & the_location);
 
 
     /**
@@ -252,7 +252,7 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    virtual int has_member_at (const PortableGroup::Location & location );
+    virtual int has_member_at (PortableGroup::Location const & location);
 
 
     /**
@@ -261,9 +261,9 @@ namespace TAO
      */
     virtual void distribute (int value);
 
-    virtual void set_name (const char* group_name);
+    virtual void set_name (char const * group_name);
 
-    virtual const char* get_name ();
+    virtual char const * get_name ();
 
     /////////////////////////
     // Implementation methods
@@ -283,8 +283,10 @@ namespace TAO
     // Forbidden methods
   private:
     PG_Object_Group ();
-    PG_Object_Group (const PG_Object_Group & rhs);
-    PG_Object_Group & operator = (const PG_Object_Group & rhs);
+    PG_Object_Group (PG_Object_Group const &) = delete;
+    PG_Object_Group (PG_Object_Group &&) = delete;
+    PG_Object_Group &operator= (PG_Object_Group const &) = delete;
+    PG_Object_Group &operator= (PG_Object_Group &&) = delete;
 
 
     /////////////////
@@ -313,10 +315,10 @@ namespace TAO
     TAO::PG_Object_Group_Manipulator & manipulator_;
 
     /// boolean true if updates should be distributed
-    int distribute_;
+    int distribute_ { 1 };
 
     /// boolean true if empty group
-    int empty_;
+    bool empty_ {true};
 
     ACE_CString role_;
 
@@ -347,7 +349,7 @@ namespace TAO
      * an optional attribute of the object group which is a string
      * name that is assigned to the object group by the creator.
      */
-    char* group_name_;
+    char * group_name_ {};
 
     // group members
     MemberMap members_;
@@ -360,8 +362,8 @@ namespace TAO
 
     // Cached property information
 
-    PortableGroup::InitialNumberMembersValue initial_number_members_;
-    PortableGroup::MinimumNumberMembersValue minimum_number_members_;
+    PortableGroup::InitialNumberMembersValue initial_number_members_ {};
+    PortableGroup::MinimumNumberMembersValue minimum_number_members_ {};
     PortableGroup::FactoryInfos group_specific_factories_;
   };
 } // namespace TAO

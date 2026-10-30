@@ -10,9 +10,6 @@ TAO::SL3::SecurityManager::SecurityManager (
 {
 }
 
-TAO::SL3::SecurityManager::~SecurityManager ()
-= default;
-
 SecurityLevel3::CredentialsCurator_ptr
 TAO::SL3::SecurityManager::credentials_curator ()
 {

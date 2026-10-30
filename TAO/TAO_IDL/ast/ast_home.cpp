@@ -38,8 +38,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                    false),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
-    pd_primary_key (primary_key),
-    owns_primary_key_ (false)
+    pd_primary_key (primary_key)
 {
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
@@ -47,7 +46,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 
   if (pk != nullptr)
     {
-      idl_global->primary_keys ().enqueue_tail (pk);
+      idl_global->primary_keys ().push_back (pk);
     }
   else if (primary_key != nullptr)
     {
@@ -56,9 +55,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
     }
 }
 
-AST_Home::~AST_Home ()
-{
-}
+AST_Home::~AST_Home () = default;
 
 AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,
@@ -195,13 +192,8 @@ AST_Home::transfer_scope_elements (AST_Interface *dst)
       d->set_defined_in (dst);
     }
 
-  // Zero decls so that they are not cleaned twice.
-  long const end = this->pd_decls_used;
-  for (long i = 0; i < end; ++i)
-    {
-      this->pd_decls[i] = nullptr;
-      --this->pd_decls_used;
-    }
+  // Clear the declarations so that they are not cleaned twice.
+  this->pd_decls.clear ();
 }
 
 void

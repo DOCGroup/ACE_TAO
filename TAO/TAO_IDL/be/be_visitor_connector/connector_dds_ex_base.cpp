@@ -25,16 +25,7 @@
 
 be_visitor_connector_dds_ex_base::be_visitor_connector_dds_ex_base (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    t_inst_ (nullptr),
-    t_ref_ (nullptr),
-    t_params_ (nullptr),
-    base_tname_ (nullptr)
-{
-}
-
-be_visitor_connector_dds_ex_base::~be_visitor_connector_dds_ex_base (
-  )
+  : be_visitor_component_scope (ctx)
 {
 }
 
@@ -47,13 +38,13 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
 
   AST_Connector *base = node;
 
-  while (this->t_args_.is_empty () && base != nullptr)
+  while (this->t_args_.empty () && base != nullptr)
     {
       this->process_template_args (base);
       base = base->base_connector ();
     }
 
-  if (this->t_args_.is_empty ())
+  if (this->t_args_.empty ())
     {
       return false;
     }
@@ -83,9 +74,8 @@ be_visitor_connector_dds_ex_base::is_dds_type (
           base = base->base_connector ();
         }
 
-      const char* lname = base->local_name ()->get_string ();
-
-      if (ACE_OS::strcmp (lname, "DDS_Base") == 0)
+      if (base->local_name ()->get_string ()
+          == "DDS_Base")
         {
           AST_Structure *s = dynamic_cast<AST_Structure*> (d);
 
@@ -154,10 +144,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
 
   /// We depend on the DDS datatype being the first template
   /// argument for now, this may change.
-  AST_Decl **datatype = nullptr;
-  int const status = this->t_args_.get (datatype, 0UL);
-
-  if (status != 0)
+  if (this->t_args_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_connector_dds_ex_base::")
@@ -167,7 +154,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
       return;
     }
 
-  this->dds_traits_name_ = (*datatype)->flat_name ();
+  this->dds_traits_name_ = this->t_args_.front ()->flat_name ();
   this->dds_traits_name_ += "_DDS_Traits";
 }
 
@@ -185,28 +172,31 @@ be_visitor_connector_dds_ex_base::match_template_args ()
       return;
     }
 
-  for (UTL_StrlistActiveIterator i (this->t_ref_->param_refs ());
-       ! i.is_done ();
-       i.next ())
+  for (std::string const& ref_name : this->t_ref_->param_refs ())
     {
-      const char *ref_name = i.item ()->get_string ();
       size_t slot = 0;
 
-      for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR ci (
-             *this->t_inst_->ref ()->template_params ());
-           ! ci.done ();
-           ci.advance (), ++slot)
+      for (FE_Utils::T_Param_Info const& t_param :
+             *this->t_inst_->ref ()->template_params ())
         {
-          FE_Utils::T_Param_Info *t_param = nullptr;
-          ci.next (t_param);
-
-          if (t_param->name_ == ref_name)
+          if (t_param.name_ == ref_name)
             {
-              AST_Decl **d = nullptr;
-              this->t_inst_->template_args ()->get (d, slot);
-              this->t_args_.enqueue_tail (*d);
+              FE_Utils::T_ARGLIST const *template_args =
+                this->t_inst_->template_args ();
+              if (slot >= template_args->size ())
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("be_visitor_connector_dds_ex_base::")
+                              ACE_TEXT ("match_template_args - ")
+                              ACE_TEXT ("template arg not found\n ")));
+                  return;
+                }
+
+              this->t_args_.push_back ((*template_args)[slot]);
               break;
             }
+
+          ++slot;
         }
     }
 }

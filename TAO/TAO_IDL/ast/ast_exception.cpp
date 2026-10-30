@@ -100,15 +100,13 @@ AST_Exception::AST_Exception (UTL_ScopedName *n,
 {
 }
 
-AST_Exception::~AST_Exception ()
-{
-}
+AST_Exception::~AST_Exception () = default;
 
 // Public operations.
 
 // Are we or the parameter node involved in any recursion?
 bool
-AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_Exception::in_recursion (std::vector<AST_Type *> &list)
 {
   bool self_test = (list.size () == 0);
 
@@ -129,7 +127,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       }
   }
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)

@@ -21,9 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-template <class T> class ACE_Array_Base;
-ACE_END_VERSIONED_NAMESPACE_DECL
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,7 +30,7 @@ namespace TAO
   namespace TypeCodeFactory
   {
     struct TC_Info;
-    using TC_Info_List = ACE_Array_Base<TC_Info>;
+    using TC_Info_List = std::vector<TC_Info>;
 
     using factory = bool (*) (CORBA::TCKind,
                               TAO_InputCDR &,

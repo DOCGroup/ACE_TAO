@@ -20,9 +20,7 @@ be_emits::be_emits (UTL_ScopedName *n,
 {
 }
 
-be_emits::~be_emits ()
-{
-}
+be_emits::~be_emits () = default;
 
 be_eventtype *
 be_emits::emits_type () const

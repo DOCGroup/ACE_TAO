@@ -11,6 +11,8 @@
 
 #include "operation.h"
 
+#include <string>
+
 be_visitor_operation_ami_handler_reply_stub_operation_cs::
 be_visitor_operation_ami_handler_reply_stub_operation_cs (
     be_visitor_context *ctx)
@@ -19,9 +21,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs (
 }
 
 be_visitor_operation_ami_handler_reply_stub_operation_cs::
-~be_visitor_operation_ami_handler_reply_stub_operation_cs ()
-{
-}
+~be_visitor_operation_ami_handler_reply_stub_operation_cs () = default;
 
 // Processing to be done after every element in the scope is processed
 int
@@ -92,7 +92,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   // Generate the operation name.
   *os << "::";
 
-  *os << this->ctx_->port_prefix ().c_str ()
+  *os << this->ctx_->port_prefix ()
       << node->local_name () << "_reply_stub (" << be_idt_nl
       << "TAO_InputCDR &_tao_in," << be_nl
       << "::Messaging::ReplyHandler_ptr _tao_reply_handler," << be_nl
@@ -144,7 +144,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "{" << be_idt_nl
       << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl ;
 
-  const char *exception_data_arg = "0";
+  std::string exception_data_arg = "0";
   int excep_count = 0;
 
   // Don't do anything if the exception list is empty.

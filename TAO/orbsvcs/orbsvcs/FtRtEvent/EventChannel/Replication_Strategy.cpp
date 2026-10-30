@@ -3,16 +3,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-Replication_Strategy::Replication_Strategy()
-{
-}
-
-
-Replication_Strategy::~Replication_Strategy()
-{
-}
-
-
 void
 Replication_Strategy::check_validity()
 {

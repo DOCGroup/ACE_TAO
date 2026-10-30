@@ -16,6 +16,8 @@
 
 #include "orbsvcs/Trader/Trader.h"
 
+#include <vector>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -215,7 +217,6 @@ private:
 class TAO_Policies
 {
 public:
-#define TAO_NUM_POLICIES  11
   /**
     * This enum represents the relative order that properties are
     * passed from one trader to another. Hence, as recommended by the
@@ -440,7 +441,7 @@ private:
   TAO_Policies& operator= (TAO_Policies&&) = delete;
 
   /// The policies indexable from the enumerated type.
-  CosTrading::Policy* policies_[TAO_NUM_POLICIES];
+  CosTrading::Policy* policies_[REQUEST_ID + 1] {};
 
   /// For the validating identifier names.
   TAO_Trader_Base& trader_;
@@ -705,7 +706,7 @@ public:
                      CosTrading::Offer& destination);
 
 private:
-  using Prop_Queue = ACE_Unbounded_Queue<CosTrading::Property*>;
+  using Prop_Queue = std::vector<CosTrading::Property*>;
 
   TAO_String_Set props_;
   CosTrading::Lookup::HowManyProps policy_;

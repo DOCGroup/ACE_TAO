@@ -13,6 +13,10 @@ public:
     AST_PortType *porttype_ref);
 
   ~AST_Mirror_Port () override;
+  AST_Mirror_Port (AST_Mirror_Port const &) = delete;
+  AST_Mirror_Port (AST_Mirror_Port &&) = delete;
+  AST_Mirror_Port &operator= (AST_Mirror_Port const &) = delete;
+  AST_Mirror_Port &operator= (AST_Mirror_Port &&) = delete;
 
   // Cleanup function.
   void destroy () override;

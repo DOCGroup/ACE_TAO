@@ -37,22 +37,27 @@ public:
                          ACE_UINT32 burst_messages);
 
   /// Destructor
-  virtual ~UDP_PerformanceClient ();
+  ~UDP_PerformanceClient () override = default;
+
+  UDP_PerformanceClient (UDP_PerformanceClient const &) = delete;
+  UDP_PerformanceClient &operator= (UDP_PerformanceClient const &) = delete;
+  UDP_PerformanceClient (UDP_PerformanceClient &&) = delete;
+  UDP_PerformanceClient &operator= (UDP_PerformanceClient &&) = delete;
 
 private:
   // Runs in a separate thread.
-  virtual int svc ();
+  int svc () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
-  UDP_var udp_;
+  UDP_var udp_ {};
 
-  UDP_i *udpHandler_;
+  UDP_i *udpHandler_ {};
 
-  ACE_UINT32 last_wrong_messages_;
+  ACE_UINT32 last_wrong_messages_ {};
 
-  ACE_UINT32 burst_messages_;
+  ACE_UINT32 burst_messages_ {};
 };
 
 #endif /* UDP_PERFORMANCECLIENT_H */

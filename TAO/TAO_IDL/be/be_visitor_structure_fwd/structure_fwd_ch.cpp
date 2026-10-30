@@ -17,9 +17,6 @@ be_visitor_structure_fwd_ch::be_visitor_structure_fwd_ch (
 {
 }
 
-be_visitor_structure_fwd_ch::~be_visitor_structure_fwd_ch ()
-{
-}
 
 // Visit the interface_fwd_ch node.
 int

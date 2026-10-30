@@ -46,7 +46,7 @@ public:
   RTCP_Packet();
 
   /// Constructor for incoming RTCP packets.
-  RTCP_Packet(char *buffer);
+  explicit RTCP_Packet(char *buffer);
 
   /// Destructor
   virtual ~RTCP_Packet();
@@ -72,7 +72,7 @@ protected:
   RTCP_Common_Header chd_;
 
   /// Buffer to hold byte representation of the RTCP packet.
-  char *packet_data_;
+  char *packet_data_ {};
 
   /// Used to create the byte representation of the RTCP packet.
   /// Defined in child class.
@@ -92,7 +92,7 @@ public:
   /// and an optional reason for leaving the session.
   RTCP_BYE_Packet (ACE_UINT32 *srcList,
                    unsigned char length,
-                   const char *text = nullptr);
+                   char const *text = nullptr);
 
   /// Constructor for incoming BYE RTCP packets.
   RTCP_BYE_Packet (char *buffer,
@@ -114,7 +114,7 @@ public:
                   unsigned char &length);
 
   /// Returns the reason for leaving the session.
-  const char *reason ();
+  char const *reason ();
 
   /// Prints the contents of the packet.
   void dump ();
@@ -124,16 +124,16 @@ private:
   void build_packet () override;
 
   /// List of synchronization source ids that are leaving the session.
-  ACE_UINT32 *ssrc_list_;
+  ACE_UINT32 *ssrc_list_ {};
 
   /// The number of ssrc's that are leaving the session (1 for non-mixers).
-  unsigned char ssrc_list_length_;
+  unsigned char ssrc_list_length_ {};
 
   /// An optional reason for leaving the session.
   char reason_[256];
 
   /// The number of bytes in the reason for leaving the session.
-  unsigned char reason_length_;
+  unsigned char reason_length_ {};
 };
 
 /**
@@ -211,7 +211,7 @@ private:
   ACE_UINT32 ssrc_;
 
   /// A linked list of the receiver report block(s) being sent.
-  RR_Block *rr_;
+  RR_Block *rr_ {};
 };
 
 struct sdesItem_s;
@@ -308,7 +308,7 @@ public:
   void add_item(ACE_UINT32 ssrc,
                 unsigned char type,
                 unsigned char length,
-                const char* data);
+                char const *data);
 
   /// This will add a private item using the name and data for the ssrc specified.
   /// When the first item for a ssrc is added, a chunk is created.  Subsequent
@@ -316,9 +316,9 @@ public:
   /// for each unique ssrc.
   void add_priv_item(ACE_UINT32 ssrc,
                      unsigned char nameLength,
-                     const char *name,
+                     char const *name,
                      unsigned char dataLength,
-                     const char *data);
+                     char const *data);
 
   /// Returns the size of the packet in bytes.
   unsigned int packet_size () override;
@@ -340,12 +340,12 @@ private:
 
   /// The number of chunks contained in this packet.
   /// 1 for end systems, 1+ for mixers
-  unsigned long num_chunks_;
+  unsigned long num_chunks_ {};
 
 //  unsigned long num_items_;
 
   /// A linked list of chunks for this packet (only 1 for non-mixers).
-  sdesChunk_t *chunk_;
+  sdesChunk_t *chunk_ {};
 };
 
 /**
@@ -416,7 +416,7 @@ private:
   ACE_UINT32 osent_;
 
   /// A linked list of receiver report blocks.
-  RR_Block *rr_;
+  RR_Block *rr_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -5,16 +5,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char *TAO_Contained_i::tmp_name_holder_ = nullptr;
+char const *TAO_Contained_i::tmp_name_holder_ = nullptr;
 
 TAO_Contained_i::TAO_Contained_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)
 {
 }
 
-TAO_Contained_i::~TAO_Contained_i ()
-{
-}
+TAO_Contained_i::~TAO_Contained_i () = default;
 
 void
 TAO_Contained_i::destroy ()
@@ -84,7 +82,7 @@ TAO_Contained_i::destroy_i ()
 char *
 TAO_Contained_i::id ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -103,7 +101,7 @@ TAO_Contained_i::id_i ()
 }
 
 void
-TAO_Contained_i::id (const char *id)
+TAO_Contained_i::id (char const *id)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -113,7 +111,7 @@ TAO_Contained_i::id (const char *id)
 }
 
 void
-TAO_Contained_i::id_i (const char *id)
+TAO_Contained_i::id_i (char const *id)
 {
   ACE_TString tmp;
   if (this->repo_->config ()->get_string_value (
@@ -156,7 +154,7 @@ TAO_Contained_i::id_i (const char *id)
 char *
 TAO_Contained_i::name ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -177,7 +175,7 @@ TAO_Contained_i::name_i ()
 char *
 TAO_Contained_i::version ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -196,7 +194,7 @@ TAO_Contained_i::version_i ()
 }
 
 void
-TAO_Contained_i::name (const char *name)
+TAO_Contained_i::name (char const *name)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -206,7 +204,7 @@ TAO_Contained_i::name (const char *name)
 }
 
 void
-TAO_Contained_i::name_i (const char *name)
+TAO_Contained_i::name_i (char const *name)
 {
   // Check if name already exists in this container.
   CORBA::Boolean exists = this->name_exists (name);
@@ -239,7 +237,7 @@ TAO_Contained_i::name_i (const char *name)
 }
 
 void
-TAO_Contained_i::version (const char *version)
+TAO_Contained_i::version (char const *version)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -249,7 +247,7 @@ TAO_Contained_i::version (const char *version)
 }
 
 void
-TAO_Contained_i::version_i (const char *version)
+TAO_Contained_i::version_i (char const *version)
 {
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "version",
@@ -297,7 +295,7 @@ TAO_Contained_i::defined_in_i ()
 char *
 TAO_Contained_i::absolute_name ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -326,7 +324,7 @@ TAO_Contained_i::describe (
   )
 {
   // This will always be overridden by derived classes.
-  return 0;
+  return nullptr;
 }
 
 CORBA::Contained::Description *
@@ -334,13 +332,13 @@ TAO_Contained_i::describe_i (
   )
 {
   // This will always be overridden by derived classes.
-  return 0;
+  return nullptr;
 }
 
 void
 TAO_Contained_i::move (CORBA::Container_ptr new_container,
-                       const char *new_name,
-                       const char *new_version)
+                       char const *new_name,
+                       char const *new_version)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -353,7 +351,7 @@ TAO_Contained_i::move (CORBA::Container_ptr new_container,
 }
 
 CORBA::Boolean
-TAO_Contained_i::name_exists (const char *name)
+TAO_Contained_i::name_exists (char const *name)
 {
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -368,7 +366,7 @@ TAO_Contained_i::name_exists (const char *name)
                                           root_key,
                                           this->repo_,
                                           CORBA::dk_Repository);
-      return 0;
+      return false;
     }
 
   ACE_TString container_path;
@@ -409,11 +407,11 @@ TAO_Contained_i::name_exists (const char *name)
 
     if (defn_name == name)
       {
-        return 1;
+        return true;
       }
   }
 
-  return 0;
+  return false;
 }
 
 void
@@ -460,15 +458,15 @@ TAO_Contained_i::contents_name_update (ACE_TString stem,
 }
 
 int
-TAO_Contained_i::same_as_tmp_name (const char *name)
+TAO_Contained_i::same_as_tmp_name (char const *name)
 {
   return ACE_OS::strcmp (TAO_Contained_i::tmp_name_holder_, name) == 0;
 }
 
 void
 TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
-                         const char *new_name,
-                         const char *new_version,
+                         char const *new_name,
+                         char const *new_version,
                          CORBA::Boolean cleanup)
 {
   CORBA::Repository_var my_repo = this->repo_->repo_objref ();
@@ -866,7 +864,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           break;
       }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // If the move was not successful, we must restore this.
       this->repo_->config ()->set_string_value (
@@ -920,8 +918,8 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
 
 void
 TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
-                                   const char *contained_path,
-                                   const char *name)
+                                   char const *contained_path,
+                                   char const *name)
 {
   char *container_path =
     TAO_IFR_Service_Utils::reference_to_path (container);

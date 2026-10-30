@@ -16,8 +16,15 @@ static ACE_TCHAR const *lm_ior_file = ACE_TEXT("lm.ior");
 static int ping_timeout_milliseconds = 2000;
 static int ping_interval_seconds = 0;
 
+enum class Default_Strategy
+{
+  round_robin,
+  random,
+  least_loaded
+};
+
 void
-usage (const ACE_TCHAR * cmd)
+usage (ACE_TCHAR const * cmd)
 {
   ORBSVCS_DEBUG ((LM_INFO,
               ACE_TEXT ("Usage:\n")
@@ -36,7 +43,7 @@ usage (const ACE_TCHAR * cmd)
 void
 parse_args (int argc,
             ACE_TCHAR *argv[],
-            int & default_strategy)
+            Default_Strategy & default_strategy)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:s:i:t:h"));
 
@@ -53,13 +60,13 @@ parse_args (int argc,
         case 's':
           if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                   ACE_TEXT("RoundRobin")) == 0)
-            default_strategy = 0;
+            default_strategy = Default_Strategy::round_robin;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                        ACE_TEXT("Random")) == 0)
-            default_strategy = 1;
+            default_strategy = Default_Strategy::random;
           else if (ACE_OS::strcasecmp (get_opts.opt_arg (),
                                        ACE_TEXT("LeastLoaded")) == 0)
-            default_strategy = 2;
+            default_strategy = Default_Strategy::least_loaded;
           else
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Unknown strategy, using RoundRobin\n")));
@@ -102,7 +109,7 @@ TAO_LB_run_load_manager (void * orb_arg)
     {
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO Load Manager");
 
@@ -133,11 +140,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      // "built-in" strategies are the following:
-      //   0 = RoundRobin
-      //   1 = Random
-      //   2 = LeastLoaded
-      int default_strategy = 1;
+      // Select the default built-in strategy.
+      Default_Strategy default_strategy = Default_Strategy::random;
 
       // Check the non-ORB arguments.
       ::parse_args (argc,
@@ -171,13 +175,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       switch (default_strategy)
         {
-        case 0:
+        case Default_Strategy::round_robin:
           strategy_info.name = CORBA::string_dup ("RoundRobin");
           break;
-        case 1:
+        case Default_Strategy::random:
           strategy_info.name = CORBA::string_dup ("Random");
           break;
-        case 2:
+        case Default_Strategy::least_loaded:
           strategy_info.name = CORBA::string_dup ("LeastLoaded");
           break;
         default:
@@ -266,7 +270,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 //     {
 //       ORBSVCS_DEBUG ((LM_DEBUG, "Property ----> %s\n", ex.nam[0].id.in ()));
 //     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO Load Manager");
 

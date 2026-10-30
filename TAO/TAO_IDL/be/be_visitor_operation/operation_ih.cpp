@@ -16,9 +16,7 @@ be_visitor_operation_ih::be_visitor_operation_ih (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_ih::~be_visitor_operation_ih ()
-{
-}
+be_visitor_operation_ih::~be_visitor_operation_ih () = default;
 
 int
 be_visitor_operation_ih::visit_operation (be_operation *node)

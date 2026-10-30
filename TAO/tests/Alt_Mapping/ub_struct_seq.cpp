@@ -17,25 +17,10 @@
 //               Test_Struct_Sequence
 // ************************************************************************
 
-Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence (
-  void)
-  : opname_ (CORBA::string_dup ("test_struct_sequence"))
-{
-}
-
-Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (
-  void)
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
-}
-
 char const *
 Test_Unbounded_Struct_Sequence::opname () const
 {
-  return this->opname_;
+  return this->opname_.c_str ();
 }
 
 int
@@ -84,7 +69,7 @@ Test_Unbounded_Struct_Sequence::run_sii_test (
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Test_Struct_Sequence::run_sii_test\n");
     }
@@ -92,7 +77,7 @@ Test_Unbounded_Struct_Sequence::run_sii_test (
 }
 
 CORBA::Boolean
-Test_Unbounded_Struct_Sequence::check_validity ()
+Test_Unbounded_Struct_Sequence::check_validity () const
 {
   return (this->compare (this->in_, this->inout_)
           && this->compare (this->in_, this->out_)
@@ -100,7 +85,7 @@ Test_Unbounded_Struct_Sequence::check_validity ()
 }
 
 void
-Test_Unbounded_Struct_Sequence::print_values ()
+Test_Unbounded_Struct_Sequence::print_values () const
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
@@ -122,8 +107,8 @@ Test_Unbounded_Struct_Sequence::print_values ()
 
 CORBA::Boolean
 Test_Unbounded_Struct_Sequence::compare (
-  const Alt_Mapping::StructSeq &s1,
-  const Alt_Mapping::StructSeq &s2)
+  Alt_Mapping::StructSeq const &s1,
+  Alt_Mapping::StructSeq const &s2) const
 {
   ACE_CDR::ULong s1v = s1.capacity ();
   ACE_CDR::ULong s2v = s2.capacity ();
@@ -143,8 +128,8 @@ Test_Unbounded_Struct_Sequence::compare (
 
   for (CORBA::ULong i=0; i < s1.size (); i++)
     {
-      const Alt_Mapping::Fixed_Struct& vs1 = s1[i];
-      const Alt_Mapping::Fixed_Struct& vs2 = s2[i];
+      Alt_Mapping::Fixed_Struct const &vs1 = s1[i];
+      Alt_Mapping::Fixed_Struct const &vs2 = s2[i];
 
       if (vs1.l != vs2.l
           || vs1.c != vs2.c
@@ -161,7 +146,7 @@ Test_Unbounded_Struct_Sequence::compare (
 
 void
 Test_Unbounded_Struct_Sequence::print_sequence (
-  const Alt_Mapping::StructSeq &s)
+  Alt_Mapping::StructSeq const &s) const
 {
   ACE_DEBUG ((LM_DEBUG,
               "maximum = %d\n"
@@ -172,7 +157,7 @@ Test_Unbounded_Struct_Sequence::print_sequence (
 
   for (CORBA::ULong i = 0; i < s.size (); i++)
     {
-      const Alt_Mapping::Fixed_Struct& vs = s[i];
+      Alt_Mapping::Fixed_Struct const &vs = s[i];
 
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"

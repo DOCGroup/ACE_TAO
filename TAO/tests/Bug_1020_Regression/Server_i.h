@@ -11,7 +11,7 @@
 class Server : public POA_Test::Server
 {
 public:
-  Server (CORBA::ORB_ptr orb);
+  explicit Server (CORBA::ORB_ptr orb);
   Server (Server const &) = delete;
   Server &operator= (Server const &) = delete;
   Server (Server &&) = delete;

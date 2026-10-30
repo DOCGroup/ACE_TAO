@@ -489,8 +489,7 @@ ACE_Log_Msg::close ()
              ACE_Log_Msg *tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
              // we haven't been cleaned up
              ACE_TSS_CLEANUP_NAME(tss_log_msg);
-             if (ACE_Thread::setspecific(*(log_msg_tss_key()),
-                                         reinterpret_cast <void *>(0)) != 0)
+             if (ACE_Thread::setspecific(*(log_msg_tss_key()), nullptr) != 0)
                ACE_OS::printf ("ACE_Log_Msg::close failed to ACE_Thread::setspecific to 0\n");
            }
 

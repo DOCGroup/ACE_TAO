@@ -37,7 +37,7 @@ Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
     this->_this ();
 
   RtecEventChannelAdmin::SupplierQOS supplier_qos;
-  supplier_qos.is_gateway = 0;
+  supplier_qos.is_gateway = false;
   supplier_qos.publications.length (this->event_range_);
   for (CORBA::Long i = 0; i != this->event_range_; ++i)
     {

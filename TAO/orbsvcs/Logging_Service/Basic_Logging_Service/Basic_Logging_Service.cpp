@@ -6,15 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-Basic_Logging_Service::Basic_Logging_Service ()
-  : service_name_ ("BasicLogFactory"),
-    ior_file_name_ (nullptr),
-    pid_file_name_ (nullptr),
-    bind_to_naming_service_ (true),
-    nthreads_ (0)
-{
-  // No-Op.
-}
+Basic_Logging_Service::Basic_Logging_Service () = default;
 
 Basic_Logging_Service::~Basic_Logging_Service () = default;
 

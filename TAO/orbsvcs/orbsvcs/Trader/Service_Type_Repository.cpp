@@ -335,17 +335,10 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
   CORBA::ULong num_props = 0;
   CORBA::ULong num_types = static_cast<CORBA::ULong> (service_type_queue.size ());
 
-  TAO_String_Queue::ITERATOR iterator (service_type_queue);
-
-  for (;
-       iterator.done () == 0;
-       iterator.advance ())
+  for (std::string const& next_type_name : service_type_queue)
     {
-      char** next_type_name = nullptr;
       Service_Type_Map::ENTRY* type_entry = nullptr;
-
-      iterator.next (next_type_name);
-      CORBA::String_var hash_key (const_cast<const char *> (*next_type_name));
+      CORBA::String_var hash_key (next_type_name.c_str ());
       this->type_map_.find (hash_key,
                             type_entry);
 
@@ -368,15 +361,10 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
        i--)
     props[prop_index++] = type_struct.props[i];
 
-  for (iterator.first ();
-       iterator.done () == 0;
-       iterator.advance ())
+  for (std::string const& next_type_name : service_type_queue)
     {
-      char** next_type_name = nullptr;
       Service_Type_Map::ENTRY* type_entry = nullptr;
-
-      iterator.next (next_type_name);
-      CORBA::String_var hash_key (const_cast<const char *> (*next_type_name));
+      CORBA::String_var hash_key (next_type_name.c_str ());
       this->type_map_.find (hash_key,
                             type_entry);
 
@@ -416,7 +404,7 @@ collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::Typ
 
           const char *type_name =
             type_struct.super_types[i];
-          target.enqueue_tail (const_cast<char *> (type_name));
+          target.emplace_back (type_name);
 
           this->collect_inheritance_hierarchy (next_type_struct,
                                                target);
@@ -573,7 +561,7 @@ update_type_map (const char *name,
     {
       Type_Info *super_type_info =
         (*super_map_iterator).int_id_;
-      super_type_info->has_subtypes_ = 0;
+      super_type_info->has_subtypes_ = false;
     }
 
   // All parameters are valid, create an entry for this service type
@@ -587,7 +575,7 @@ update_type_map (const char *name,
   type->type_struct_.super_types = super_types;
   type->type_struct_.incarnation = this->incarnation_;
   type->type_struct_.masked = 0;
-  type->has_subtypes_ = 0;
+  type->has_subtypes_ = false;
 
   // Move the prop struct sequences and super type names from the in
   // params to the internal storage.

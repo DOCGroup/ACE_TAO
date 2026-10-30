@@ -5,6 +5,7 @@
 
 #include <memory>
 #include "ace/SString.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -17,9 +18,7 @@ TAO_StructDef_i::TAO_StructDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_StructDef_i::~TAO_StructDef_i ()
-{
-}
+TAO_StructDef_i::~TAO_StructDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_StructDef_i::def_kind ()
@@ -99,7 +98,7 @@ TAO_StructDef_i::type_i ()
 CORBA::StructMemberSeq *
 TAO_StructDef_i::members ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -109,9 +108,9 @@ TAO_StructDef_i::members ()
 CORBA::StructMemberSeq *
 TAO_StructDef_i::members_i ()
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
-  ACE_Unbounded_Queue<ACE_TString> name_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
+  std::deque<ACE_TString> name_queue;
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -148,14 +147,14 @@ TAO_StructDef_i::members_i ()
       // This entry may have been removed.
       if (status == 0)
         {
-          path_queue.enqueue_tail (path);
+          path_queue.push_back (path);
 
           ACE_TString name;
           this->repo_->config ()->get_string_value (member_key,
                                                     "name",
                                                     name);
 
-          name_queue.enqueue_tail (name);
+          name_queue.push_back (name);
 
           u_int kind = 0;
           this->repo_->config ()->get_integer_value (entry_key,
@@ -165,7 +164,7 @@ TAO_StructDef_i::members_i ()
           CORBA::DefinitionKind def_kind =
             static_cast<CORBA::DefinitionKind> (kind);
 
-          kind_queue.enqueue_tail (def_kind);
+          kind_queue.push_back (def_kind);
         }
     }
 
@@ -191,10 +190,13 @@ TAO_StructDef_i::members_i ()
 
   for (CORBA::ULong k = 0; k < size; ++k)
     {
-      name_queue.dequeue_head (name);
+      name = name_queue.front ();
+      name_queue.pop_front ();
       retval[k].name = name.c_str ();
-      kind_queue.dequeue_head (kind);
-      path_queue.dequeue_head (path);
+      kind = kind_queue.front ();
+      kind_queue.pop_front ();
+      path = path_queue.front ();
+      path_queue.pop_front ();
 
       obj = TAO_IFR_Service_Utils::create_objref (kind,
                                                   path.c_str (),
@@ -226,7 +228,7 @@ TAO_StructDef_i::members_i ()
 }
 
 void
-TAO_StructDef_i::members (const CORBA::StructMemberSeq &members)
+TAO_StructDef_i::members (CORBA::StructMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -236,7 +238,7 @@ TAO_StructDef_i::members (const CORBA::StructMemberSeq &members)
 }
 
 void
-TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members)
+TAO_StructDef_i::members_i (CORBA::StructMemberSeq const &members)
 {
   // Destroy our old refs.
   TAO_Container_i::destroy_references_i ();

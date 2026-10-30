@@ -174,7 +174,7 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
       // @note This could be problematic if the LoadAlert object is
       //       registered with more than LoadManager.
 
-      if (info.alerted == 1)
+      if (info.alerted)
         return;  // No need to set the alert status.  It has already
                  // been set.
 
@@ -187,8 +187,8 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
 
       // The alert condition will be enabled.
       // @@ What happens if the below call fails?  This variable
-      //    should be reset to zero!
-      info.alerted = 1;
+      //    should be reset to false!
+      info.alerted = true;
 
       {
         // Release the lock prior to making the below remote
@@ -227,7 +227,7 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
 
       // @note This could be problematic if the LoadAlert object is
       //       registered with more than LoadManager.
-      if (info.alerted == 0)
+      if (!info.alerted)
         return;  // No need to set the alert status.  It has already
                  // been set.
 
@@ -240,8 +240,8 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
 
       // The alert condition will be disabled.
       // @@ What happens if the below call fails?  This variable
-      //    should be reset to one!
-      info.alerted = 0;
+      //    should be reset to true!
+      info.alerted = false;
 
       {
         // Release the lock prior to making the below remote

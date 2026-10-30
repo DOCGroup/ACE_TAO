@@ -44,6 +44,11 @@ public:
   /// Constructor.
   Consumer_Handler ();
 
+  Consumer_Handler (Consumer_Handler const &) = delete;
+  Consumer_Handler &operator= (Consumer_Handler const &) = delete;
+  Consumer_Handler (Consumer_Handler &&) = delete;
+  Consumer_Handler &operator= (Consumer_Handler &&) = delete;
+
   /// Destructor.
   ~Consumer_Handler ();
 
@@ -54,37 +59,37 @@ public:
   int run ();
 
   /// the name of the stock the consumer is interested in.
-  ACE_CString stock_name_;
+  ACE_CString stock_name_ {"Unknown"};
 
   /// the desired price of the stock.
-  int threshold_value_;
+  int threshold_value_ {};
 
   /// Server object ptr.
-  Notifier_var server_;
+  Notifier_var server_ {};
 
   /// The consumer object.
   Consumer_i *consumer_servant_ {};
 
   /// Pointer to the consumer object registered with the ORB.
-  Callback_Quoter::Consumer_var consumer_var_;
+  Callback_Quoter::Consumer_var consumer_var_ {};
 
   /// This method gives the reactor pointer.
-  ACE_Reactor* reactor_used () const;
+  ACE_Reactor *reactor_used () const;
 
   /// Flag which notes whether the consumer has got registered with the
   /// Notifier-server.
-  int registered_;
+  bool registered_ {};
 
   /// Flag which notes whether the consumer has got unregistered from
   /// the Notifier-server.
-  int unregistered_;
+  bool unregistered_ {};
 
 private:
   /// Our orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Function to read the server IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parse the command line arguments.  Returns 0 on success, -1 on
   /// error.
@@ -95,16 +100,16 @@ private:
   int via_naming_service ();
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
-  ACE_TCHAR *ior_;
+  ACE_TCHAR *ior_ {};
 
   /// Flag for server shutdown.
-  int shutdown_;
+  bool shutdown_ {};
 
   /// An instance of the name client used for resolving the factory
   /// objects.
@@ -112,16 +117,16 @@ private:
 
   /// This variable denotes whether the naming service
   /// is used or not.
-  int use_naming_service_;
+  bool use_naming_service_ {true};
 
   /// Reference to the input_event_handler.
-  Consumer_Input_Handler *consumer_input_handler_;
+  Consumer_Input_Handler *consumer_input_handler_ {};
 
   /// Reference to the signal_event_handler.
-  Consumer_Signal_Handler *consumer_signal_handler_;
+  Consumer_Signal_Handler *consumer_signal_handler_ {};
 
   /// Is the example interactive?
-  int interactive_;
+  bool interactive_ {true};
 };
 
 #endif /* CONSUMER_HANDLER_H */

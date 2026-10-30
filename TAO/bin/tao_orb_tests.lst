@@ -8,6 +8,8 @@
 # NOTE: This file contains tests only for TAO's ORB. Please do not
 # include things like performance-tests, and examples here.
 
+TAO/tests/IDL_Illegal_Test/run_test.pl:
+
 TAO/tests/Oneway_Send_Timeouts/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32
 TAO/tests/Oneway_Send_Timeouts/run_test.pl -blocking: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32
 TAO/tests/Oneway_Send_Timeouts/run_test.pl -reactive:  !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !Win32

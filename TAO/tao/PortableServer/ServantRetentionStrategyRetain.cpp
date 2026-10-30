@@ -16,6 +16,8 @@
 #include "tao/PortableServer/Active_Object_Map.h"
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
 
+#include <vector>
+
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
 #endif /* TAO_HAS_MONITOR_POINTS */
@@ -87,7 +89,7 @@ namespace TAO
       // Inform the custom servant dispatching (CSD) strategy that the
       // servant is deactivated. This would be called just once when the
       // servant is deactivated the first time.
-      if (active_object_map_entry->deactivated_ == 0)
+      if (!active_object_map_entry->deactivated_)
         {
           this->poa_->servant_deactivated_hook (
             active_object_map_entry->servant_,
@@ -446,10 +448,8 @@ namespace TAO
 
       // We must copy the map entries into a separate place since we
       // cannot remove entries while iterating through the map.
-      ACE_Array_Base<TAO_Active_Object_Map_Entry *> map_entries
-        (this->active_object_map_->current_size ());
-
-      size_t counter = 0;
+      std::vector<TAO_Active_Object_Map_Entry *> map_entries;
+      map_entries.reserve (this->active_object_map_->current_size ());
       TAO_Active_Object_Map::user_id_map::iterator end
         = this->active_object_map_->user_id_map_->end ();
 
@@ -463,16 +463,13 @@ namespace TAO
 
           if (!active_object_map_entry->deactivated_)
             {
-              map_entries[counter] = active_object_map_entry;
-              ++counter;
+              map_entries.push_back (active_object_map_entry);
             }
         }
 
-      for (size_t i = 0;
-            i < counter;
-            ++i)
+      for (TAO_Active_Object_Map_Entry * entry : map_entries)
         {
-          this->deactivate_map_entry (map_entries[i]);
+          this->deactivate_map_entry (entry);
         }
     }
 
@@ -859,7 +856,7 @@ namespace TAO
       PortableServer::ObjectId user_id;
 
       if (this->active_object_map_->
-          bind_using_system_id_returning_system_id (0,
+          bind_using_system_id_returning_system_id (nullptr,
                                                     priority,
                                                     system_id.out ()) != 0)
         {
@@ -876,11 +873,11 @@ namespace TAO
 
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
-                                       intf,
-                                       0,
-                                       1,
-                                       priority,
-                                       true);
+                                             intf,
+                                             nullptr,
+                                             1,
+                                             priority,
+                                             true);
 
       return this->poa_->invoke_key_to_object_helper_i (intf,
                                                         user_id);

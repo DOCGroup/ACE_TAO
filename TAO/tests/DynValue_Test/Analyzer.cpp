@@ -69,7 +69,7 @@ DynAnyAnalyzer::get_base_types (
   // starting with.
 
   CORBA::ULong numberOfBases = 1u;
-  base_types.size (numberOfBases);
+  base_types.resize (numberOfBases);
   base_types[0] = TAO_DynAnyFactory::strip_alias (tc);
   if (total_member_count)
     {
@@ -80,7 +80,7 @@ DynAnyAnalyzer::get_base_types (
 
   CORBA::TypeCode_var
     base (base_types[0]->concrete_base_type());
-  while (0 != base.in() &&
+  while (base.in() != nullptr &&
          CORBA::tk_value ==
          (base = TAO_DynAnyFactory::strip_alias (base.in()))
          ->kind ())
@@ -90,7 +90,7 @@ DynAnyAnalyzer::get_base_types (
           *total_member_count += base->member_count ();
         }
 
-      base_types.size (numberOfBases + 1);
+      base_types.resize (numberOfBases + 1);
       base_types[numberOfBases++] = CORBA::TypeCode::_duplicate (base.in ());
       base = base->concrete_base_type();
     }
@@ -115,7 +115,7 @@ DynAnyAnalyzer::get_correct_base_type (
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO_DynValue_i::get_correct_base_type () ")
         ACE_TEXT ("BaseTypesList_t is not initialised\n")));
-      return 0;
+      return nullptr;
     }
 
   while (base_types[--currentBase]->member_count () <= index)
@@ -126,7 +126,7 @@ DynAnyAnalyzer::get_correct_base_type (
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO_DynValue_i::get_correct_base_type () ")
             ACE_TEXT ("BaseTypesList_t is not large enough\n")));
-          return 0;
+          return nullptr;
         }
     }
 

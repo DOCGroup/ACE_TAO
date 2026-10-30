@@ -20,15 +20,11 @@ Alt_Mapping_i::Alt_Mapping_i (CORBA::ORB_ptr orb)
 {
 }
 
-Alt_Mapping_i::~Alt_Mapping_i ()
-{
-}
-
 // test unbounded strings. For return and out types, we return duplicates of
 // the in string. For the inout, we append the same string to itself and send
 // it back
 std::string
-Alt_Mapping_i::test_unbounded_string (const std::string s1,
+Alt_Mapping_i::test_unbounded_string (std::string s1,
                                       std::string &s2,
                                       std::string &s3)
 {
@@ -41,7 +37,7 @@ Alt_Mapping_i::test_unbounded_string (const std::string s1,
 // test for struct sequences
 Alt_Mapping::StructSeq
 Alt_Mapping_i::test_struct_sequence (
-  const Alt_Mapping::StructSeq & s1,
+  Alt_Mapping::StructSeq const &s1,
   Alt_Mapping::StructSeq & s2,
   Alt_Mapping::StructSeq & s3)
 {

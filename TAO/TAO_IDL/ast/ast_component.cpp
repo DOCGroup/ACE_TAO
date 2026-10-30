@@ -46,9 +46,7 @@ AST_Component::AST_Component (UTL_ScopedName *n,
     }
 }
 
-AST_Component::~AST_Component ()
-{
-}
+AST_Component::~AST_Component () = default;
 
 void
 AST_Component::redefine (AST_Interface *from)
@@ -57,8 +55,9 @@ AST_Component::redefine (AST_Interface *from)
 
   if (c == nullptr)
     {
-      idl_global->err ()->redef_error (from->local_name ()->get_string (),
-                                       this->local_name ()->get_string ());
+      idl_global->err ()->redef_error (
+        from->local_name ()->get_string (),
+        this->local_name ()->get_string ());
       return;
     }
 

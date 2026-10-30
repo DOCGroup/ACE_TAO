@@ -22,7 +22,7 @@ static union
 } node;
 
 int
-hex_to_byte (char  h)
+hex_to_byte (char h)
 {
   if (h >= '0' && h <= '9') return h - '0';
   if (h >= 'A' && h <= 'F') return h - 'A' + 10;
@@ -31,7 +31,7 @@ hex_to_byte (char  h)
 }
 
 int
-hexbyte_to_byte (const char  *hexbyte)
+hexbyte_to_byte (char const *hexbyte)
 {
   int hi = hex_to_byte(*hexbyte);
   if (hi == -1) return -1;
@@ -48,14 +48,14 @@ static char const *seperators = "----";
 /**
  * construct an UUID from the string representation
  */
-UUID::UUID (const ACE_TCHAR *string_rep)
+UUID::UUID (ACE_TCHAR const *string_rep)
 {
   if (this->from_string(ACE_TEXT_ALWAYS_CHAR(string_rep)) == false)
     rep_.timestamp.hi = 0;
 }
 
 bool
-UUID::from_string (const char *string_rep)
+UUID::from_string (char const *string_rep)
 {
   int offset = 0;
 
@@ -85,9 +85,9 @@ UUID::from_string (const char *string_rep)
 static char const *table = "0123456789abcdef";
 
 inline char *
-bytes_to_hex (const unsigned char *bytes,
-              char  *dest,
-              int   len)
+bytes_to_hex (unsigned char const *bytes,
+              char *dest,
+              int len)
 {
   for (int i = 0; i < len; ++i)
   {
@@ -102,7 +102,7 @@ bytes_to_hex (const unsigned char *bytes,
  * convert to a string representation
  */
 void
-UUID::to_string (char  *string_rep) const
+UUID::to_string (char *string_rep) const
 {
   for (int i = 0; i < 5; ++i)
   {

@@ -45,7 +45,7 @@ namespace TAO
   class TAO_FoxResource_Export FoxResource_Loader
   {
   public:
-    FoxResource_Loader (FXApp *app);
+    explicit FoxResource_Loader (FXApp *app);
 
     virtual ~FoxResource_Loader ();
 

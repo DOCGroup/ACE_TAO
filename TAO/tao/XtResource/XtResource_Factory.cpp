@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  XtResource_Factory::XtResource_Factory (XtAppContext p_context)
+  XtResource_Factory::XtResource_Factory (XtAppContext const p_context)
     : context_ (p_context)
   {
   }

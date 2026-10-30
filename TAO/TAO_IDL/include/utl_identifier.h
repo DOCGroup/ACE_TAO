@@ -65,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 #define _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 
+#include <string>
+
 #include "TAO_IDL_FE_Export.h"
 
 #include "ace/iosfwd.h"
@@ -72,13 +74,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export Identifier
 {
 public:
-  Identifier ();
+  Identifier () = default;
   // Default Constructor.
 
-  Identifier (const char *s);
+  explicit Identifier (std::string const& s);
   // Constructor.
 
-  Identifier (const Identifier &other);
+  Identifier (Identifier const &other);
 
   virtual ~Identifier ();
   // Destructor.
@@ -89,25 +91,25 @@ public:
    * Get the underlying string.
    */
   ///{
-  char *get_string ();
-  const char *get_string () const;
+  std::string& get_string ();
+  std::string const& get_string () const;
   ///}
 
-  void replace_string (const char *s);
-  // Replace the underlying string and free the old one.
+  void replace_string (std::string const& s);
+  // Replace the underlying string.
 
-  void preprocess_and_replace_string (const char *s);
+  void preprocess_and_replace_string (std::string const& s);
 
-  bool compare (Identifier *other);
+  bool compare (Identifier const *other) const;
   // Compare with other Identifier.
 
-  bool case_compare (Identifier *other);
+  bool case_compare (Identifier const *other) const;
   // Also check for case-only difference.
 
-  bool case_compare_quiet (Identifier *other);
+  bool case_compare_quiet (Identifier const *other) const;
   // Like the above but suppressing error or warning I/O
 
-  Identifier *copy ();
+  Identifier *copy () const;
   // Create a deep copy.
 
   bool escaped () const;
@@ -119,16 +121,16 @@ public:
   virtual void destroy ();
   // Cleanup function.
 
-  bool operator== (const Identifier &other) const;
+  bool operator== (Identifier const &other) const;
 
-  Identifier &operator= (const Identifier &other);
+  Identifier &operator= (Identifier const &other);
 
 private:
   // Storage for data.
-  char *pv_string;
+  std::string pv_string_;
 
   // Did the IDL string have a leading underscore?
-  bool escaped_;
+  bool escaped_ {};
 };
 
 #endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH

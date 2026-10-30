@@ -11,6 +11,8 @@
 
 #include "typedef.h"
 
+#include <string>
+
 // ******************************************************
 // Typedef visitor for client header
 // ******************************************************
@@ -20,9 +22,6 @@ be_visitor_typedef_ch::be_visitor_typedef_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef_ch::~be_visitor_typedef_ch ()
-{
-}
 
 int
 be_visitor_typedef_ch::visit_typedef (be_typedef *node)
@@ -197,7 +196,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
 
       // The _alloc, _dup, copy, and free methods
 
-      // Since the function nested_type_name() contains a static buffer,
+      // Since the function nested_type_name() contains an internal buffer,
       // we can have only one call to it from any instantiation per stream
       // output statement.
 
@@ -205,9 +204,9 @@ be_visitor_typedef_ch::visit_array (be_array *node)
 
       // If the typedef is not declared globally or in a module, the
       // associated array memory management function must be static.
-      char const *const static_decl = tdef_scope ? "" : "static ";
+      std::string const static_decl = tdef_scope ? "" : "static ";
 
-      char const *td_name = tdef->nested_type_name (tdef_scope);
+      std::string td_name (tdef->nested_type_name (tdef_scope));
 
       // If the array and the typedef are both declared inside
       // an interface or valuetype, for example, nested_type_name()
@@ -231,14 +230,14 @@ be_visitor_typedef_ch::visit_array (be_array *node)
           << "ACE_INLINE " << static_decl << be_nl
           << td_name << "_slice *" << be_nl
           << td_name << "_dup (" << be_idt << be_idt_nl
-          << "const " << td_name << "_slice *_tao_slice);" << be_uidt
+          << td_name << "_slice const *_tao_slice);" << be_uidt
           << be_uidt_nl;
       // _copy
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
           << "void " << td_name << "_copy (" << be_idt << be_idt_nl
           << td_name << "_slice *_tao_to," << be_nl
-          << "const " << td_name << "_slice *_tao_from);" << be_uidt
+          << td_name << "_slice const *_tao_from);" << be_uidt
           << be_uidt_nl;
       // _free
       *os << be_nl

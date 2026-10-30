@@ -21,8 +21,8 @@ __published:  // IDE-managed Components
   TMemo *OutputMemo;
   TMemo *InputMemo;
   TOpenDialog *OpenDialog;
-  void __fastcall FormClose (TObject *Sender, TCloseAction &Action);
-  void __fastcall InputMemoKeyPress (TObject *Sender, char &Key);
+  void __fastcall FormClose (TObject *Sender, TCloseAction& Action);
+  void __fastcall InputMemoKeyPress (TObject *Sender, char& Key);
 
 private:
   // Function to read the server ior from a file.
@@ -38,25 +38,30 @@ private:
   String nickname_;
 
   // We run the orb's main loop in a separate thread.
-  std::unique_ptr<TORBThread> orb_thread_;
+  std::unique_ptr<TORBThread> orb_thread_ {};
 
   // Our orb. Order is important! The orb must have a longer lifetime than
   // any of the servants or stub vars/ptrs. Therefore we declare the orb var
   // first. There is probably a better way to do this, maybe by using a
   // singleton.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   // Server object ptr.
-  Broadcaster_var server_;
+  Broadcaster_var server_ {};
 
   // The receiver object.
   TReceiverImplementation receiver_i_;
 
   // Pointer to the receiver object registered with the ORB.
-  Receiver_var receiver_var_;
+  Receiver_var receiver_var_ {};
 
 public:    // User declarations
-  __fastcall TChatClientWindow (TComponent* Owner);
+  TChatClientWindow (TChatClientWindow const&) = delete;
+  TChatClientWindow (TChatClientWindow&&) = delete;
+  TChatClientWindow& operator= (TChatClientWindow const&) = delete;
+  TChatClientWindow& operator= (TChatClientWindow&&) = delete;
+
+  explicit __fastcall TChatClientWindow (TComponent *Owner);
 
 protected: // Message handlers
   void __fastcall WMMessageReceived (TMessage& Message);

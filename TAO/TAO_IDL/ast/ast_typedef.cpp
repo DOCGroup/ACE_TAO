@@ -92,26 +92,22 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
               n),
     AST_Field (AST_Decl::NT_typedef,
                bt,
-               n),
-    has_cached_annotations_ (false)
+               n)
 {
 }
 
-AST_Typedef::~AST_Typedef ()
-{
-}
+AST_Typedef::~AST_Typedef () = default;
 
 // Given a typedef node, traverse the chain of base types until they are no
 // more typedefs, and return that most primitive base type.
 AST_Type *
 AST_Typedef::primitive_base_type () const
 {
-  AST_Type *d = const_cast<AST_Typedef *> (this);
-  AST_Typedef *temp = nullptr;
+  AST_Type *d = this->base_type ();
 
   while (d && d->node_type () == AST_Decl::NT_typedef)
     {
-      temp = dynamic_cast<AST_Typedef*> (d);
+      AST_Typedef *temp = dynamic_cast<AST_Typedef*> (d);
       d = dynamic_cast<AST_Type*> (temp->base_type ());
     }
 

@@ -43,16 +43,11 @@
 
 be_visitor_xplicit_pre_proc::be_visitor_xplicit_pre_proc (
       be_visitor_context *ctx)
-  : be_visitor_ccm_pre_proc (ctx),
-    xplicit_ (nullptr),
-    type_holder_ (nullptr),
-    ref_type_ (false)
+  : be_visitor_ccm_pre_proc (ctx)
 {
 }
 
-be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc ()
-{
-}
+be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc () = default;
 
 int
 be_visitor_xplicit_pre_proc::visit_home (be_home *node)
@@ -712,7 +707,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
     {
       ACE_NEW_RETURN (v,
-                      AST_Expression (node->dims ()[i],
+                      AST_Expression (node->dims ()[i].get (),
                                       AST_Expression::EV_ulong),
                       -1);
 
@@ -953,19 +948,29 @@ UTL_ScopedName *
 be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
 {
   AST_Decl *tmp = d;
-  ACE_CString name (d->full_name ());
+  std::string const& name = d->full_name ();
 
   while (tmp != nullptr)
     {
       if (dynamic_cast<be_home*> (tmp) != nullptr)
         {
-          ACE_CString head (tmp->local_name ()->get_string ());
+          std::string const& head = tmp->local_name ()->get_string ();
 
-          ACE_CString::size_type start = name.find (head) + 2;
+          std::size_t const head_start = name.find (head);
+          if (head_start == std::string::npos)
+            {
+              tmp = ScopeAsDecl (tmp->defined_in ());
+              continue;
+            }
 
-          ACE_CString tail (name.substr (start + head.length ()));
+          std::size_t const tail_start = head_start + head.size () + 2;
+          if (tail_start > name.size ())
+            {
+              tmp = ScopeAsDecl (tmp->defined_in ());
+              continue;
+            }
 
-          return FE_Utils::string_to_scoped_name (tail.c_str ());
+          return FE_Utils::string_to_scoped_name (name.substr (tail_start));
         }
 
       tmp = ScopeAsDecl (tmp->defined_in ());

@@ -9,25 +9,22 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Leader_Follower.h"
 #include "tao/SystemException.h"
+#include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry ()
 {
   // Free the memory for the endpoints.
-  Entry *entry = nullptr;
-  Acceptor_Registry_Iterator iter (this->registry_);
-
-  while (iter.next (entry))
+  for (Entry &entry : this->registry_)
     {
-      delete entry->endpoint;
-      delete entry->acceptor;
-      iter.advance ();
+      delete entry.endpoint;
+      delete entry.acceptor;
     }
 }
 
 void
-TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
+TAO_PortableGroup_Acceptor_Registry::open (TAO_Profile const *profile,
                                            TAO_ORB_Core &orb_core)
 {
   Entry *entry = nullptr;
@@ -45,10 +42,6 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
       TAO_ProtocolFactorySetItor end =
         orb_core.protocol_factories ()->end ();
 
-      // int found = 0;
-      // If usable protocol (factory) is found then this will be
-      // set equal to 1.
-
       for (TAO_ProtocolFactorySetItor factory =
              orb_core.protocol_factories ()->begin ();
            factory != end;
@@ -60,33 +53,30 @@ TAO_PortableGroup_Acceptor_Registry::open (const TAO_Profile* profile,
                             orb_core,
                             factory);
 
-              // found = 1;  // A usable protocol was found.
             }
-          else
-            continue;
         }
     }
 }
 
-#define MAX_ADDR_LENGTH   (32)
+constexpr int MAX_ADDR_LENGTH = 32;
 
 void
-TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
+TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
                                              TAO_ORB_Core &orb_core,
                                              TAO_ProtocolFactorySetItor &factory)
 {
-  TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
+  TAO_Acceptor * const acceptor = (*factory)->factory ()->make_acceptor ();
 
   if (acceptor != nullptr)
     {
       // Extract the desired endpoint/protocol version if one
       // exists.
-      const TAO_GIOP_Message_Version &version = profile->version ();
-      char buffer [MAX_ADDR_LENGTH];
+      TAO_GIOP_Message_Version const &version = profile->version ();
+      char buffer [MAX_ADDR_LENGTH] {};
 
       // Removed the constness of profile.  We're not changing
       // anything, but need to call a nonconst function.
-      TAO_Profile* nc_profile = const_cast<TAO_Profile *> (profile);
+      TAO_Profile * const nc_profile = const_cast<TAO_Profile *> (profile);
       nc_profile->endpoint ()->addr_to_string (buffer, MAX_ADDR_LENGTH);
 
       if (acceptor->open (&orb_core,
@@ -119,8 +109,13 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
       tmp_entry.endpoint = nc_profile->endpoint ()->duplicate ();
       tmp_entry.cnt = 1;
 
-      if (this->registry_.enqueue_tail (tmp_entry) == -1)
+      try
         {
+          this->registry_.push_back (tmp_entry);
+        }
+      catch (std::bad_alloc const &)
+        {
+          delete tmp_entry.endpoint;
           delete acceptor;
 
           if (TAO_debug_level > 0)
@@ -131,10 +126,10 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
                         buffer,
                         ""));
 
-          throw CORBA::BAD_PARAM (
+          throw CORBA::NO_MEMORY (
             CORBA::SystemException::_tao_minor_code (
               TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-              EINVAL),
+              ENOMEM),
             CORBA::COMPLETED_NO);
         }
     }
@@ -155,24 +150,23 @@ TAO_PortableGroup_Acceptor_Registry::open_i (const TAO_Profile* profile,
 }
 
 int
-TAO_PortableGroup_Acceptor_Registry::find (const TAO_Profile* profile,
+TAO_PortableGroup_Acceptor_Registry::find (TAO_Profile const *profile,
                                            Entry *&entry)
 {
-  Acceptor_Registry_Iterator iter (this->registry_);
-
-  while (iter.next (entry))
+  for (Entry &current : this->registry_)
     {
       // Since the endpoint routine is nonconst, need to
       // cast away the constness even though we're not
       // changing anything.
-      TAO_Profile *nc_profile = const_cast<TAO_Profile *> (profile);
-      if (entry->endpoint->is_equivalent (nc_profile->endpoint ()))
-        return 1;
+      TAO_Profile * const nc_profile = const_cast<TAO_Profile *> (profile);
+      if (current.endpoint->is_equivalent (nc_profile->endpoint ()))
+        {
+          entry = &current;
+          return 1;
+        }
+    }
 
-      iter.advance ();
-   }
-
-   return 0;
+  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

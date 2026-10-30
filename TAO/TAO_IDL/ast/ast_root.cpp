@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // to subclass it to associate their own information with an entire
 // AST.
 
+#include <vector>
+
 #include "ast_root.h"
 #include "ast_sequence.h"
 #include "ast_string.h"
@@ -88,22 +90,18 @@ AST_Root::AST_Root (UTL_ScopedName *n)
 {
 }
 
-AST_Root::~AST_Root ()
-{
-}
+AST_Root::~AST_Root () = default;
 
 // Overrides the one in UTL_Scope - this one doesn't
 // count the predefined types.
 unsigned long
-AST_Root::nmembers ()
+AST_Root::nmembers () const
 {
   unsigned long retval = 0;
 
-  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
-        !si.is_done ();
-        si.next ())
+  for (AST_Decl *decl : this->pd_decls)
     {
-      if (si.item ()->node_type () == AST_Decl::NT_pre_defined)
+      if (decl->node_type () == AST_Decl::NT_pre_defined)
         {
           continue;
         }
@@ -171,47 +169,43 @@ AST_Root::ast_accept (ast_visitor *visitor)
 void
 AST_Root::destroy ()
 {
-  long i = 0;
-  AST_Decl *d = nullptr;
-
   // Just destroy and delete everything but the CORBA
   // module, and the 'void' keyword, in case we are
   // processing multiple IDL files.
   // Final cleanup will be done in fini().
-  long end = this->pd_decls_used;
-
-  for (i = 2; i < end; ++i)
+  if (this->pd_decls.size () > 2)
     {
-      d = this->pd_decls[i];
-
-      d->destroy ();
-      delete d;
-      d = nullptr;
-      --this->pd_decls_used;
+      for (std::vector<AST_Decl *>::iterator iter = this->pd_decls.begin () + 2;
+           iter != this->pd_decls.end ();
+           ++iter)
+        {
+          (*iter)->destroy ();
+          delete *iter;
+        }
+      this->pd_decls.erase (this->pd_decls.begin () + 2, this->pd_decls.end ());
     }
 
-  // Same goes for the references and the name
-  // references, leave the first 2.
+  // Same goes for the references and the name references, leave the first 2.
 
-  // This array of pointers holds references, no need
-  // for destruction. The array itself will be cleaned
+  // This vector holds references, no need for destruction. It will be cleaned
   // up when AST_Root::fini() calls UTL_Scope::destroy ().
-  for (i = 2; i < this->pd_referenced_used; ++i)
+  if (this->pd_referenced.size () > 2)
     {
-      this->pd_referenced[i] = nullptr;
+      this->pd_referenced.resize (2);
     }
 
-  this->pd_referenced_used = 2;
-
-  for (i = 2; i < this->pd_name_referenced_used; ++i)
+  if (this->pd_name_referenced.size () > 2)
     {
-      Identifier *id = this->pd_name_referenced[i];
-      id->destroy ();
-      delete id;
-      id = nullptr;
+      for (std::vector<Identifier *>::iterator iter =
+             this->pd_name_referenced.begin () + 2;
+           iter != this->pd_name_referenced.end ();
+           ++iter)
+        {
+          (*iter)->destroy ();
+          delete *iter;
+        }
+      this->pd_name_referenced.resize (2);
     }
-
-  this->pd_name_referenced_used = 2;
 }
 
 void

@@ -33,7 +33,7 @@ public:
   TAO_FDev ();
 
   /// constructor taking a flowname.
-  TAO_FDev (const char *flowname);
+  explicit TAO_FDev (char const *flowname);
 
   /// Destructor..
   ~TAO_FDev () override;
@@ -44,8 +44,8 @@ public:
 
   /// set/get the flowname.
   /// create a flow producer object.
-  const char *flowname ();
-  void flowname (const char *flowname);
+  char const *flowname ();
+  void flowname (char const *flowname);
   AVStreams::FlowProducer_ptr create_producer (AVStreams::FlowConnection_ptr the_requester,
                                                AVStreams::QoS & the_qos,
                                                CORBA::Boolean_out met_qos,
@@ -83,7 +83,7 @@ public:
 
   /// destroys this FDev.
   void destroy (AVStreams::FlowEndPoint_ptr the_ep,
-                const char * fdev_name) override;
+                char const *fdev_name) override;
 
 protected:
   ACE_DLList <TAO_FlowProducer> producer_list_;

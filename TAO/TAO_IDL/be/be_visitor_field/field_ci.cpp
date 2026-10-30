@@ -19,9 +19,7 @@ be_visitor_field_ci::be_visitor_field_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_ci::~be_visitor_field_ci ()
-{
-}
+be_visitor_field_ci::~be_visitor_field_ci () = default;
 
 int
 be_visitor_field_ci::visit_field (be_field *node)

@@ -6,13 +6,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Constraint_Interpreter::TAO_Notify_Constraint_Interpreter ()
-{
-}
+TAO_Notify_Constraint_Interpreter::TAO_Notify_Constraint_Interpreter () = default;
 
-TAO_Notify_Constraint_Interpreter::~TAO_Notify_Constraint_Interpreter ()
-{
-}
+TAO_Notify_Constraint_Interpreter::~TAO_Notify_Constraint_Interpreter () = default;
 
 void
 TAO_Notify_Constraint_Interpreter::build_tree (

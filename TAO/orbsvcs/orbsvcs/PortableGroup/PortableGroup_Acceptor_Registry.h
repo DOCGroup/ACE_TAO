@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Unbounded_Queue.h"
+#include <deque>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -53,13 +53,13 @@ public:
   struct Entry
   {
     /// Pointer to the acceptor for this GroupId.
-    TAO_Acceptor *acceptor;
+    TAO_Acceptor *acceptor {};
 
     /// Cached endpoint that the acceptor is listening on.
-    TAO_Endpoint *endpoint;
+    TAO_Endpoint *endpoint {};
 
     /// Count of times that this GroupId has been opened.
-    int cnt;
+    int cnt {};
   };
 
   ///  Default constructor.
@@ -69,29 +69,32 @@ public:
   ~TAO_PortableGroup_Acceptor_Registry ();
 
   /// Open an acceptor based on a tagged profile.
-  void open (const TAO_Profile* profile, TAO_ORB_Core &orb_core);
+  void open (TAO_Profile const *profile, TAO_ORB_Core &orb_core);
 
   /// Close all open acceptors.
   int close_all ();
 
-  using Acceptor_Registry = ACE_Unbounded_Queue<Entry>;
-  using Acceptor_Registry_Iterator = ACE_Unbounded_Queue_Iterator<Entry>;
+  using Acceptor_Registry = std::deque<Entry>;
 
 protected:
   /// Helper function to open a group acceptor.
-  void open_i (const TAO_Profile* profile,
+  void open_i (TAO_Profile const *profile,
                TAO_ORB_Core &orb_core,
                TAO_ProtocolFactorySetItor &factory);
 
   /// Find an acceptor by using a profile.
-  int find (const TAO_Profile* profile,
+  int find (TAO_Profile const *profile,
             Entry *&entry);
 
 private:
-  // The acceptor registry should not be copied.
   TAO_PortableGroup_Acceptor_Registry (
-    const TAO_PortableGroup_Acceptor_Registry&);
-  void operator= (const TAO_PortableGroup_Acceptor_Registry&);
+    TAO_PortableGroup_Acceptor_Registry const &) = delete;
+  TAO_PortableGroup_Acceptor_Registry (
+    TAO_PortableGroup_Acceptor_Registry &&) = delete;
+  TAO_PortableGroup_Acceptor_Registry &operator= (
+    TAO_PortableGroup_Acceptor_Registry const &) = delete;
+  TAO_PortableGroup_Acceptor_Registry &operator= (
+    TAO_PortableGroup_Acceptor_Registry &&) = delete;
 
 private:
   /// List of acceptors that are currently open.

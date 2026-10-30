@@ -9,9 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper ()
-{
-}
+TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper () = default;
 
 void
 TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params)

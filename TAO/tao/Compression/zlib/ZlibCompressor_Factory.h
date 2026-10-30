@@ -31,7 +31,7 @@ namespace TAO
     public ::TAO::CompressorFactory
   {
     using ZlibCompressorMap = std::map< ::Compression::CompressionLevel,
-                                        const ::Compression::Compressor_var>;
+                                        ::Compression::Compressor_var const>;
 
   public:
     Zlib_CompressorFactory ();

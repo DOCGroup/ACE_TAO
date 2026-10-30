@@ -329,9 +329,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // trailing '_'.  Since we can't count on 'em, I've defined them to
 // what GNU wants here.
 //
-typedef ios& (*__manip_)(ios&);
-typedef istream& (*__imanip_)(istream&);
-typedef ostream& (*__omanip_)(ostream&);
+using __manip_ = ios& (*)(ios&);
+using __imanip_ = istream& (*)(istream&);
+using __omanip_ = ostream& (*)(ostream&);
 
 // Trying to do something like is shown below instead of using the
 // __*manip typedefs causes Linux do segfault when "<<endl" is done.

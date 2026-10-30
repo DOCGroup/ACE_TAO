@@ -20,9 +20,7 @@ ifr_adding_visitor_exception::ifr_adding_visitor_exception (
 {
 }
 
-ifr_adding_visitor_exception::~ifr_adding_visitor_exception ()
-{
-}
+ifr_adding_visitor_exception::~ifr_adding_visitor_exception () = default;
 
 // Specialized visit_scope method for exceptions only.
 int
@@ -41,7 +39,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
 
   this->members_.length (nfields);
 
-  AST_Field **f = 0;
+  AST_Field **f = nullptr;
 
   try
     {
@@ -87,7 +85,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
             }
 
           this->members_[i].name =
-            CORBA::string_dup ((*f)->local_name ()->get_string ());
+            CORBA::string_dup ((*f)->local_name ()->get_string ().c_str ());
 
           // IfR method create_exception does not use this - it just needs
           // to be non-zero for marshaling.
@@ -98,7 +96,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
             CORBA::IDLType::_duplicate (this->ir_current_.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -117,7 +115,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
     {
       // Is this union already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -152,7 +150,7 @@ ifr_adding_visitor_exception::visit_structure (AST_Structure *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -171,7 +169,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
     {
       CORBA::ExceptionDef_var new_def;
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -193,9 +191,9 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
             }
 
           new_def =
-            current_scope->create_exception (node->repoID (),
-                                            node->local_name ()->get_string (),
-                                            node->version (),
+            current_scope->create_exception (IFR_C_String (node->repoID ()),
+                                            node->local_name ()->get_string ().c_str (),
+                                            IFR_C_String (node->version ()),
                                             dummyMembers);
 
           if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
@@ -281,7 +279,7 @@ ifr_adding_visitor_exception::visit_exception (AST_Exception *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -300,7 +298,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
     {
       // Is this enum already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -310,7 +308,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);
 
-          UTL_ScopedName *member_name = 0;
+          UTL_ScopedName *member_name = nullptr;
 
           // Get a list of the member names.
           for (CORBA::ULong i = 0; i < member_count; ++i)
@@ -319,15 +317,15 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
 
               members[i] =
                 CORBA::string_dup (
-                    member_name->last_component ()->get_string ()
+                    member_name->last_component ()->get_string ().c_str ()
                   );
             }
 
           this->ir_current_ =
             be_global->repository ()->create_enum (
-                                          node->repoID (),
-                                          node->local_name ()->get_string (),
-                                          node->version (),
+                                          IFR_C_String (node->repoID ()),
+                                          node->local_name ()->get_string ().c_str (),
+                                          IFR_C_String (node->version ()),
                                           members
                                         );
 
@@ -351,7 +349,7 @@ ifr_adding_visitor_exception::visit_enum (AST_Enum *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -370,7 +368,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
     {
       // Is this union already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -405,7 +403,7 @@ ifr_adding_visitor_exception::visit_union (AST_Union *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

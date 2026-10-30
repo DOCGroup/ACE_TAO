@@ -189,7 +189,7 @@ private:
     CosTradingRepos::ServiceTypeRepository::TypeStruct type_struct_;
 
     /// Names of subtypes.
-    CORBA::Boolean has_subtypes_;
+    CORBA::Boolean has_subtypes_ {};
   };
 
   using Prop_Map = ACE_Hash_Map_Manager_Ex<CORBA::String_var,

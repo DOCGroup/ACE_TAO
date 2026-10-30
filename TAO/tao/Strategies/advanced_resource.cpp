@@ -87,7 +87,7 @@ TAO_Advanced_Resource_Factory::~TAO_Advanced_Resource_Factory ()
        ++iterator)
     delete *iterator;
 
-  this->protocol_factories_.reset ();
+  this->protocol_factories_.clear ();
 }
 
 int
@@ -284,7 +284,7 @@ TAO_Advanced_Resource_Factory::load_default_protocols ()
   this->protocol_factories_ =
     this->TAO_Default_Resource_Factory::protocol_factories_;
 
-  this->TAO_Default_Resource_Factory::protocol_factories_.reset ();
+  this->TAO_Default_Resource_Factory::protocol_factories_.clear ();
 
   if (r == -1)
     return -1;

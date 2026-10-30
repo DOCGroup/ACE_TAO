@@ -73,6 +73,10 @@ class AST_Interface;
 class TAO_IDL_FE_Export AST_InterfaceFwd : public virtual AST_Type
 {
 public:
+  AST_InterfaceFwd (AST_InterfaceFwd const &) = delete;
+  AST_InterfaceFwd (AST_InterfaceFwd &&) = delete;
+  AST_InterfaceFwd &operator= (AST_InterfaceFwd const &) = delete;
+  AST_InterfaceFwd &operator= (AST_InterfaceFwd &&) = delete;
   AST_InterfaceFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
@@ -113,7 +117,7 @@ public:
   int ast_accept (ast_visitor *visitor) override;
 
   // Is this decl a forward declared type (Yes)
-  bool is_fwd () override;
+  bool is_fwd () const override;
 
   // We don't actually want the forward declaration,
   // but want to return the full definition member,
@@ -126,11 +130,11 @@ private:
   AST_Interface *pd_full_definition;
   // The interface this is a forward declaration of.
 
-  bool is_defined_;
+  bool is_defined_ {};
   // Checking the member above isn't good enough.
 
   /// True if we own pd_full_definition, which would be true if it's a dummy.
-  bool has_ownership_;
+  bool has_ownership_ {true};
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

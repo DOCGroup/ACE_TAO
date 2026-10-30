@@ -105,11 +105,8 @@ AST_Decl::NodeType const
 AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
   : AST_Decl (AST_Decl::NT_module, n),
     UTL_Scope (AST_Decl::NT_module),
-    pd_has_nested_valuetype_ (false),
     previous_opening_ (previous),
-    last_in_same_parent_scope_ (this),
-    from_inst_ (nullptr),
-    from_ref_ (nullptr)
+    last_in_same_parent_scope_ (this)
 {
   // NOTE previous passed into this constructor should be
   // the FIRST module that is a previous opening of this same
@@ -120,9 +117,7 @@ AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
   // below.
 }
 
-AST_Module::~AST_Module ()
-{
-}
+AST_Module::~AST_Module () = default;
 
 void
 AST_Module::destroy ()
@@ -228,7 +223,7 @@ AST_Module::referenced (AST_Decl *e,
 }
 
 AST_Module *
-AST_Module::previous_opening ()
+AST_Module::previous_opening () const
 {
   return this->previous_opening_;
 }
@@ -247,7 +242,7 @@ AST_Module::look_in_prev_mods_local (Identifier *e,
         {
           AST_Decl *d = iter.item ();
           if ((!ignore_fwd || !d->is_fwd ())
-              && 0 != (d = d->adjust_found (ignore_fwd, false))
+              && (d = d->adjust_found (ignore_fwd, false)) != nullptr
               && e->case_compare (d->local_name ()))
             {
               return d;
@@ -349,22 +344,15 @@ AST_Module *
 AST_Module::fe_add_module (AST_Module *t)
 {
   // If our prefix is empty, we check to see if an ancestor has one.
-  if (!ACE_OS::strcmp (t->prefix (), ""))
+  if (t->prefix ().empty ())
     {
       UTL_Scope *scope = t->defined_in ();
       while (scope)
         {
           AST_Decl *parent = ScopeAsDecl (scope);
-          const char *prefix_holder = parent->prefix ();
+          t->prefix (parent->prefix ());
 
-          if (!prefix_holder)
-            {
-              break; // We have reached global scope.
-            }
-
-          t->prefix (const_cast<char *> (prefix_holder));
-
-          if (ACE_OS::strcmp (t->prefix (), ""))
+          if (!t->prefix ().empty ())
             {
               break;
             }
@@ -396,16 +384,16 @@ AST_Module::fe_add_module (AST_Module *t)
           return nullptr;
         }
 
-      const char *prev_prefix = d->prefix ();
-      const char *this_prefix = t->prefix ();
+      std::string const& prev_prefix = d->prefix ();
+      std::string const& this_prefix = t->prefix ();
 
-      if (!ACE_OS::strcmp (this_prefix, ""))
+      if (this_prefix.empty ())
         {
-          t->prefix (const_cast<char *> (prev_prefix));
+          t->prefix (prev_prefix);
         }
-      else if (!ACE_OS::strcmp (prev_prefix, ""))
+      else if (prev_prefix.empty ())
         {
-          d->prefix (const_cast<char *> (this_prefix));
+          d->prefix (this_prefix);
         }
     }
 

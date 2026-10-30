@@ -290,9 +290,9 @@ annotation_tests ()
     AST_Annotation_Member *value =
       t.get_annotation_member (string_annotation, "value");
 
-    UTL_String test_string ("This is some text");
-    t.assert_annotation_member_value<UTL_String*, UTL_String*>
-      (value, &test_string);
+    std::string test_string ("This is some text");
+    t.assert_annotation_member_value<std::string, std::string>
+      (value, test_string);
   } catch (Failed const &) {}
 
   AST_Expression *constant_annotation_x = 0;
@@ -443,16 +443,12 @@ annotation_tests ()
     if (annotation->annotation_decl () != test_annotation_1)
       {
         UTL_ScopedName *scopedname = annotation->name ();
-        const char *name = scopedname ?
-          scopedname-> get_string_copy () : "UNKNOWN";
+        std::string const name = scopedname ?
+          scopedname->get_string_copy () : "UNKNOWN";
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for test_seq_t base type to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_.c_str (), name));
-        if (scopedname)
-          {
-            delete [] name;
-          }
+          t.name_.c_str (), name.c_str ()));
         t.failed ();
       }
   } catch (Failed const &) {}
@@ -573,16 +569,12 @@ annotation_tests ()
     if (annotation->annotation_decl () != test_annotation_1)
       {
         UTL_ScopedName *scopedname = annotation->name ();
-        const char *name = scopedname ?
-          scopedname-> get_string_copy () : "UNKNOWN";
+        std::string const name = scopedname ?
+          scopedname->get_string_copy () : "UNKNOWN";
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for test_union discriminator to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_.c_str (), name));
-        if (scopedname)
-          {
-            delete [] name;
-          }
+          t.name_.c_str (), name.c_str ()));
         t.failed ();
       }
 
@@ -690,23 +682,23 @@ annotation_tests ()
     AST_Annotation_Member *member;
     AST_Annotation_Appl *annotation;
 
-    UTL_String first_string ("This is some text");
+    std::string first_string ("This is some text");
     annotation = t.assert_annotation_appl (value, 0, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String *, UTL_String *>
-      (member, &first_string);
+    t.assert_annotation_member_value <std::string, std::string>
+      (member, first_string);
 
-    UTL_String second_string ("Something else");
+    std::string second_string ("Something else");
     annotation = t.assert_annotation_appl (value, 1, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String *, UTL_String *>
-      (member, &second_string);
+    t.assert_annotation_member_value <std::string, std::string>
+      (member, second_string);
 
-    UTL_String third_string ("One last thing");
+    std::string third_string ("One last thing");
     annotation = t.assert_annotation_appl (value, 2, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String *, UTL_String *>
-      (member, &third_string);
+    t.assert_annotation_member_value <std::string, std::string>
+      (member, third_string);
   } catch (Failed const &) {}
 
   try {
@@ -765,16 +757,12 @@ annotation_tests ()
     if (annotation->annotation_decl () != test_annotation_1)
       {
         UTL_ScopedName *scopedname = annotation->name ();
-        const char *name = scopedname ?
-          scopedname-> get_string_copy () : "UNKNOWN";
+        std::string const name = scopedname ?
+          scopedname->get_string_copy () : "UNKNOWN";
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for struct12Array base type to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_.c_str (), name));
-        if (scopedname)
-          {
-            delete [] name;
-          }
+          t.name_.c_str (), name.c_str ()));
         t.failed ();
       }
   } catch (Failed const &) {}
@@ -1095,9 +1083,9 @@ annotation_tests ()
                "case C:\n"
                "default: float cfloat;\n"
                "};\n").assert_node<AST_Union>("::empty_union");
-    AST_Field **af = 0;
+    AST_Field *af = nullptr;
     test_union->field(af, 2);
-    AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch *>(*af);
+    AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch *>(af);
     if (ub != nullptr)
       {
          AST_UnionLabel *ul = ub->label ();

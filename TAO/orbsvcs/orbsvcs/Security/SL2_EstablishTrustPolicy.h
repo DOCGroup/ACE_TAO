@@ -54,7 +54,7 @@ namespace TAO
     {
     public:
       /// Constructor
-      EstablishTrustPolicy (const ::Security::EstablishTrust &trust);
+      explicit EstablishTrustPolicy (::Security::EstablishTrust const & trust);
 
       /**
        * @name CORBA::Policy Methods
@@ -77,9 +77,14 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~EstablishTrustPolicy () override;
+      ~EstablishTrustPolicy () override = default;
 
     private:
+      EstablishTrustPolicy (EstablishTrustPolicy const &) = delete;
+      EstablishTrustPolicy (EstablishTrustPolicy &&) = delete;
+      EstablishTrustPolicy &operator= (EstablishTrustPolicy const &) = delete;
+      EstablishTrustPolicy &operator= (EstablishTrustPolicy &&) = delete;
+
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
       ::Security::EstablishTrust const trust_;

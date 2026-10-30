@@ -107,10 +107,7 @@ AST_Map::AST_Map (AST_Expression *ms,
                       n),
     pd_max_size (ms),
     key_pd_type (key_bt),
-    value_pd_type (val_bt),
-    unbounded_ (true),
-    owns_key_type_ (false),
-    owns_value_type_ (false)
+    value_pd_type (val_bt)
 {
   FE_Utils::tmpl_mod_ref_check (this, key_bt);
 
@@ -159,26 +156,36 @@ AST_Map::AST_Map (AST_Expression *ms,
   // A map data type is always VARIABLE.
   this->size_type (AST_Type::VARIABLE);
 
-  this->owns_key_type_ =
+  bool const owns_key_type =
     knt == AST_Decl::NT_array
     || knt == AST_Decl::NT_map
     || knt == AST_Decl::NT_param_holder;
 
-  this->owns_value_type_ =
+  if (owns_key_type)
+    {
+      this->owned_key_type_.reset (key_bt);
+    }
+
+  bool const owns_value_type =
     vnt == AST_Decl::NT_array
     || vnt == AST_Decl::NT_map
     || vnt == AST_Decl::NT_param_holder;
+
+  if (owns_value_type)
+    {
+      this->owned_value_type_.reset (val_bt);
+    }
 }
 
 // Public operations.
 
 bool
-AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_Map::in_recursion (std::vector<AST_Type *> &list)
 {
-  if (list.is_empty ()) // only structs, unions and valuetypes can be recursive
+  if (list.empty ()) // only structs, unions and valuetypes can be recursive
     return false;
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   AST_Type *key_type = dynamic_cast<AST_Type*> (this->key_type ());
   AST_Type *val_type = dynamic_cast<AST_Type*> (this->value_type());
@@ -229,12 +236,9 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
 
   bool recursion_found = false;
-  AST_Type** recursable_type = nullptr;
-  list.get (recursable_type, 0);
-  if (!std::strcmp (key_type->full_name (),
-                  (*recursable_type)->full_name ())
-      || !std::strcmp(val_type->full_name (),
-                  (*recursable_type)->full_name ()))
+  AST_Type *recursable_type = list.front ();
+  if (key_type->full_name () == recursable_type->full_name ()
+      || val_type->full_name () == recursable_type->full_name ())
     {
       // They match.
       recursion_found = true;
@@ -291,7 +295,7 @@ AST_Map::ast_accept (ast_visitor *visitor)
 AST_Expression *
 AST_Map::max_size () const
 {
-  return this->pd_max_size;
+  return this->pd_max_size.get ();
 }
 
 AST_Type *
@@ -353,23 +357,21 @@ AST_Map::is_defined ()
 void
 AST_Map::destroy ()
 {
-  if (this->owns_key_type_)
+  if (this->owned_key_type_ != nullptr)
     {
-      this->key_pd_type->destroy ();
-      delete this->key_pd_type;
+      this->owned_key_type_->destroy ();
+      this->owned_key_type_.reset ();
       this->key_pd_type = nullptr;
     }
 
-  if (this->owns_value_type_)
+  if (this->owned_value_type_ != nullptr)
     {
-      this->value_pd_type->destroy();
-      delete this->value_pd_type;
+      this->owned_value_type_->destroy ();
+      this->owned_value_type_.reset ();
       this->value_pd_type = nullptr;
     }
 
-  this->pd_max_size->destroy ();
-  delete this->pd_max_size;
-  this->pd_max_size = nullptr;
+  this->pd_max_size.reset ();
 
   this->AST_ConcreteType::destroy ();
 }

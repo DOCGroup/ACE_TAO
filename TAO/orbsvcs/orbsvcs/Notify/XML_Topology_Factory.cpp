@@ -1,12 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Topology_Factory.h"
 #include "orbsvcs/Notify/XML_Saver.h"
 #include "orbsvcs/Notify/XML_Loader.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
-//#include "ace/Service_Object.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -15,18 +13,10 @@ namespace TAO_Notify
 {
   const char TOPOLOGY_ID_NAME[] = "TopologyID";
 
-  XML_Topology_Factory::XML_Topology_Factory()
-    : save_base_path_ (ACE_TEXT("./Notification_Service_Topology"))
-    , load_base_path_ (ACE_TEXT("./Notification_Service_Topology"))
-    , backup_count_ (2)
-    , timestamp_ (true)
-  {
-  }
+  XML_Topology_Factory::XML_Topology_Factory () = default;
 
   // virtual
-  XML_Topology_Factory::~XML_Topology_Factory ()
-  {
-  }
+  XML_Topology_Factory::~XML_Topology_Factory () = default;
 
   // virtual
   Topology_Saver*
@@ -34,7 +24,7 @@ namespace TAO_Notify
   {
     XML_Saver *saver = nullptr;
 
-    ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), 0);
+    ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), nullptr);
 
     if (! saver->open ( this->save_base_path_.c_str (), this->backup_count_))
     {
@@ -118,7 +108,7 @@ namespace TAO_Notify
         if (TAO_debug_level > 0 || verbose)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -file_count: %d\n"),
+            ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -file_count: %B\n"),
             this->backup_count_
           ));
         }

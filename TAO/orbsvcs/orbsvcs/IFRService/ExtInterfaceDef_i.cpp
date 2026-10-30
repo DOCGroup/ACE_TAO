@@ -13,8 +13,6 @@ TAO_ExtInterfaceDef_i::TAO_ExtInterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtInterfaceDef_i::~TAO_ExtInterfaceDef_i ()
-{
-}
+TAO_ExtInterfaceDef_i::~TAO_ExtInterfaceDef_i () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

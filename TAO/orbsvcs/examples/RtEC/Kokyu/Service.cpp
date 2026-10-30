@@ -22,11 +22,11 @@
 
 namespace
 {
-  int config_run = 0;
+  constexpr int config_run = 0;
   ACE_CString sched_type ="rms";
 }
 
-inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
+inline RtecScheduler::Period_t time_val_to_period (ACE_Time_Value const &tv)
 {
   //100s of nanoseconds
   return static_cast<RtecScheduler::Period_t> (tv.sec () * 1000000 + tv.usec ())*10;
@@ -34,9 +34,11 @@ inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
 
 int parse_args (int argc, ACE_TCHAR *argv[]);
 
-typedef TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_RMS_SCHED_TYPE;
+using RECONFIG_RMS_SCHED_TYPE =
+  TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 
-typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_MUF_SCHED_TYPE;
+using RECONFIG_MUF_SCHED_TYPE =
+  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -72,7 +74,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ****************************************************************
 
       // Create an scheduling service
-      POA_RtecScheduler::Scheduler* sched_impl = 0;
+      POA_RtecScheduler::Scheduler *sched_impl = nullptr;
 
       if (ACE_OS::strcasecmp(sched_type.c_str(), "rms") == 0)
         {
@@ -426,7 +428,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // just a simple demo so we are going to be lazy.
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Service");
       return 1;

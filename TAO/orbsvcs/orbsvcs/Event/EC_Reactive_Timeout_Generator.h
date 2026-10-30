@@ -39,14 +39,14 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_Timeout_Generator
 public:
   /// Constructor.
   /// If <reactor> is 0 then we use the reactor in the ORB singleton.
-  TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor = nullptr);
+  explicit TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor = nullptr);
 
   /// destructor
-  virtual ~TAO_EC_Reactive_Timeout_Generator () override;
+  ~TAO_EC_Reactive_Timeout_Generator () override = default;
 
   // = The TAO_EC_Timeout_Generator methods.
-  virtual void activate () override;
-  virtual void shutdown () override;
+  void activate () override;
+  void shutdown () override;
   virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
                               const ACE_Time_Value& delta,
                               const ACE_Time_Value& interval);

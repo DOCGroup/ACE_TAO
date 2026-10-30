@@ -197,7 +197,7 @@ ACE_INLINE int
 TAO_EC_Event_Channel_Base::destroyed ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return (this->status_ == EC_S_DESTROYED);
+  return (this->status_ == Status::destroyed);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

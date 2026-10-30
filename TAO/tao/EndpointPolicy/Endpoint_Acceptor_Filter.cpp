@@ -10,7 +10,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (EndpointPolicy::EndpointList const& eps)
+TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (
+  EndpointPolicy::EndpointList const &eps)
 : endpoints_(eps)
 {
 }

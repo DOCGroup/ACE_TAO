@@ -218,12 +218,11 @@ Annotation_Test::assert_annotation_appl_count (
   AST_Annotation_Appls &annotations = node->annotations ();
   if (annotations.size () != count)
     {
-      char *node_name = node->name ()->get_string_copy ();
+      std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("asserted that %C has %d annotation(s), but there are %d!\n"),
-        name_.c_str (), node_name, count, annotations.size ()));
-      delete [] node_name;
+        name_.c_str (), node_name.c_str (), count, annotations.size ()));
       failed ();
     }
 }
@@ -244,51 +243,46 @@ Annotation_Test::assert_annotation_appl (
   AST_Annotation_Appls &annotations = node->annotations ();
   if (!annotations.size ())
     {
-      char *node_name = node->name ()->get_string_copy ();
+      std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("can not access %C annotation %d, ")
         ACE_TEXT ("it has no annotations!\n"),
-        name_.c_str (), node_name, index));
-      delete [] node_name;
+        name_.c_str (), node_name.c_str (), index));
       failed ();
     }
 
   if (index >= annotations.size ())
     {
-      char *node_name = node->name ()->get_string_copy ();
+      std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("can not access %C annotation %d, ")
         ACE_TEXT ("it only has %d annotation(s)!\n"),
-        name_.c_str (), node_name, index, annotations.size ()));
-      delete [] node_name;
+        name_.c_str (), node_name.c_str (), index, annotations.size ()));
       failed ();
     }
 
   AST_Annotation_Appl *anno_appl = annotations[index];
   if (!anno_appl)
     {
-      char *node_name = node->name ()->get_string_copy ();
+      std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("%C annotation %d is null!\n"),
-        name_.c_str (), node_name, index));
-      delete [] node_name;
+        name_.c_str (), node_name.c_str (), index));
       failed ();
     }
   if (anno_appl->annotation_decl () != anno_decl)
     {
-      char *anno_appl_name = anno_appl->name ()->get_string_copy ();
-      char *anno_decl_name = anno_decl->name ()->get_string_copy ();
-      char *node_name = node->name ()->get_string_copy ();
+      std::string const anno_appl_name = anno_appl->name ()->get_string_copy ();
+      std::string const anno_decl_name = anno_decl->name ()->get_string_copy ();
+      std::string const node_name = node->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("%C annotation %d is a %C, looking for a %C!\n"),
-        name_.c_str (), node_name, index, anno_appl_name, anno_decl_name));
-      delete [] anno_appl_name;
-      delete [] anno_decl_name;
-      delete [] node_name;
+        name_.c_str (), node_name.c_str (), index,
+        anno_appl_name.c_str (), anno_decl_name.c_str ()));
       failed ();
     }
 
@@ -311,12 +305,11 @@ Annotation_Test::assert_annotation_member_count (
   size_t actual_count = anno_decl->member_count ();
   if (actual_count != count)
     {
-      char *anno_decl_name = anno_decl->name ()->get_string_copy ();
+      std::string const anno_decl_name = anno_decl->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("%C should have %d members, but it actually has %d!\n"),
-        name_.c_str (), anno_decl_name, count, actual_count));
-      delete [] anno_decl_name;
+        name_.c_str (), anno_decl_name.c_str (), count, actual_count));
       failed ();
     }
 }
@@ -361,15 +354,14 @@ Annotation_Test::assert_annotation_member_type (
 {
   if (member->expr_type () != type)
     {
-      char *member_name = member->name ()->get_string_copy ();
+      std::string const member_name = member->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("For Annotation Member %C, ")
         ACE_TEXT ("expecting it to be a %C, but it is a %C!\n"),
-        name_.c_str (), member_name,
+        name_.c_str (), member_name.c_str (),
         AST_Expression::exprtype_to_string (type),
         AST_Expression::exprtype_to_string (member->expr_type ())));
-      delete [] member_name;
       failed ();
     }
 }
@@ -381,25 +373,23 @@ Annotation_Test::assert_annotation_member_value (
   AST_Expression *member_value = member->value ();
   if (!member_value)
     {
-      char *member_name = member->name ()->get_string_copy ();
+      std::string const member_name = member->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("For Annotation Member %C, ")
         ACE_TEXT ("expecting it to have a value, but it doesn't!\n"),
-        name_.c_str (), member_name));
-      delete [] member_name;
+        name_.c_str (), member_name.c_str ()));
       failed ();
     }
 
   if (!expected)
     {
-      char *member_name = member->name ()->get_string_copy ();
+      std::string const member_name = member->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("For Annotation Member %C, ")
         ACE_TEXT ("expected value is null, can't compare!\n"),
-        name_.c_str (), member_name));
-      delete [] member_name;
+        name_.c_str (), member_name.c_str ()));
       failed ();
     }
 
@@ -417,12 +407,11 @@ Annotation_Test::assert_annotation_member_value (
 
   if (!equal)
     {
-      char *member_name = member->name ()->get_string_copy ();
+      std::string const member_name = member->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("For Annotation Member %C, expecting "),
-        name_.c_str (), member_name));
-      delete [] member_name;
+        name_.c_str (), member_name.c_str ()));
       expected->dump (*ACE_DEFAULT_LOG_STREAM);
       ACE_ERROR ((LM_ERROR, ACE_TEXT (", got ")));
       member_value->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -437,13 +426,12 @@ Annotation_Test::assert_annotation_member_no_value (AST_Annotation_Member *membe
   AST_Expression *member_value = member->value ();
   if (member_value)
     {
-      char *member_name = member->name ()->get_string_copy ();
+      std::string const member_name = member->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("For Annotation Member %C, ")
         ACE_TEXT ("expecting it to not have a value, but it does!\n"),
-        name_.c_str (), member_name));
-      delete [] member_name;
+        name_.c_str (), member_name.c_str ()));
       failed ();
     }
 }

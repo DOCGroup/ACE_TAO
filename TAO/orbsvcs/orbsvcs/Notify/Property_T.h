@@ -38,13 +38,13 @@ public:
   TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial);
 
   /// Constructor
-  TAO_Notify_PropertyBase_T (const char* name);
+  explicit TAO_Notify_PropertyBase_T (const char* name);
 
   /// Copy Constructor
   TAO_Notify_PropertyBase_T (const TAO_Notify_PropertyBase_T &rhs);
 
   /// Destructor
-  ~TAO_Notify_PropertyBase_T ();
+  ~TAO_Notify_PropertyBase_T () = default;
 
   /// Equality comparison operator.
   bool operator== (const TYPE &rhs) const;
@@ -75,10 +75,10 @@ protected:
   const char* name_;
 
   /// The value
-  TYPE value_;
+  TYPE value_ {};
 
   /// Is the value valid
-  CORBA::Boolean valid_;
+  CORBA::Boolean valid_ = false;
 };
 
 
@@ -96,7 +96,7 @@ public:
   TAO_Notify_Property_T (const char* name, const TYPE& initial);
 
   /// Constructor
-  TAO_Notify_Property_T (const char* name);
+  explicit TAO_Notify_Property_T (const char* name);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
@@ -121,7 +121,7 @@ public:
   TAO_Notify_StructProperty_T (const char* name, const TYPE& initial);
 
   /// Constructor
-  TAO_Notify_StructProperty_T (const char* name);
+  explicit TAO_Notify_StructProperty_T (const char* name);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
@@ -141,10 +141,10 @@ protected:
   const char* name_;
 
   /// The value
-  TYPE value_;
+  TYPE value_ {};
 
   /// Is the value valid
-  CORBA::Boolean valid_;
+  CORBA::Boolean valid_ = false;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

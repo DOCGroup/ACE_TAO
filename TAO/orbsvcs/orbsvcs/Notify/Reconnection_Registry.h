@@ -50,7 +50,7 @@ namespace TAO_Notify
 
   public:
     /// Constructor
-    Reconnection_Registry (Topology_Parent & parent);
+    explicit Reconnection_Registry (Topology_Parent & parent);
 
     /// Destructor
     virtual ~Reconnection_Registry ();

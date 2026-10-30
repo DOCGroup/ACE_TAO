@@ -38,7 +38,7 @@ TAO_IFR_Client_Adapter_Impl::dispose (CORBA::InterfaceDef_ptr orphan)
 CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface (
     CORBA::ORB_ptr orb,
-    const char *repo_id)
+    char const *repo_id)
 {
   CORBA::Object_var obj =
     orb->resolve_initial_references ("InterfaceRepository");
@@ -92,7 +92,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
     {
       _tao_call.invoke (nullptr, 0);
     }
-  catch (const ::CORBA::OBJECT_NOT_EXIST&)
+  catch (::CORBA::OBJECT_NOT_EXIST const &)
     {
       return CORBA::InterfaceDef::_nil ();
     }

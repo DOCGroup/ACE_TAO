@@ -11,6 +11,8 @@
 
 #include "array.h"
 
+#include <string>
+
 be_visitor_array_ci::be_visitor_array_ci (be_visitor_context *ctx)
   : be_visitor_array (ctx)
 {
@@ -91,23 +93,16 @@ int be_visitor_array_ci::visit_array (be_array *node)
         }
     }
 
-  // To hold the full and local.
-  char fname [NAMEBUFSIZE];
-  char lname [NAMEBUFSIZE];
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (lname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string const& local_name =
+    node->local_name ()->get_string ();
+  std::string fname;
+  std::string lname;
 
   if (this->ctx_->tdef ())
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, "%s",
-                       node->full_name ());
-      ACE_OS::sprintf (lname, "%s",
-                       node->local_name ()->get_string ());
+      fname = node->full_name ();
+      lname = local_name;
     }
   else
     {
@@ -118,22 +113,18 @@ int be_visitor_array_ci::visit_array (be_array *node)
         {
           be_decl *parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
-          ACE_OS::sprintf (lname,
-                           "_%s",
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += local_name;
+          lname = "_";
+          lname += local_name;
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
-          ACE_OS::sprintf (lname,
-                           "_%s",
-                           node->local_name ()->get_string ());
+          fname = "_";
+          fname += node->full_name ();
+          lname = "_";
+          lname += local_name;
         }
     }
 
@@ -144,7 +135,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   // Generate the array traits specialization definitions,
   // guarded by #ifdef on unaliased array element type and length.
 
-  ACE_CString unique;
+  std::string unique;
 
   if (nt == AST_Decl::NT_typedef)
     {
@@ -156,18 +147,12 @@ int be_visitor_array_ci::visit_array (be_array *node)
       unique = bt->flat_name ();
     }
 
-  char buf[NAMEBUFSIZE];
   ACE_CDR::ULong i;
 
   for (i = 0UL; i < node->n_dims (); ++i)
     {
-      ACE_OS::memset (buf,
-                      '\0',
-                      NAMEBUFSIZE);
-      ACE_OS::sprintf (buf,
-                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-                       node->dims ()[i]->ev ()->u.ulval);
-      unique += buf;
+      unique += '_';
+      unique += std::to_string (node->dims ()[i]->ev ()->u.ulval);
     }
 
   unique += "_traits";
@@ -242,7 +227,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
-      AST_Expression *expr = node->dims ()[i];
+      AST_Expression *expr = node->dims ()[i].get ();
 
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {

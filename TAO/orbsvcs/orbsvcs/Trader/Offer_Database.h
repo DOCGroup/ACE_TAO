@@ -63,19 +63,19 @@ public:
   CosTrading::OfferId insert_offer (const char* type,
                                     CosTrading::Offer* offer);
 
-  int remove_offer (const CosTrading::OfferId offer_id);
+  int remove_offer (char const* offer_id);
 
   /// Lookup an offer whose offer_id is @a offer_id, and return
   /// it. Otherwise, throw the appropriate exception.
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id);
+  CosTrading::Offer* lookup_offer (char const* offer_id);
 
   /**
    * Lookup an offer whose OfferId is @a offer_id and return in
    * @a type_name the type name of the object. Type name is just a
    * pointer to a location in offer_id, so DON'T DELETE IT.
    */
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
-                                   char*& type_name);
+  CosTrading::Offer* lookup_offer (char const* offer_id,
+                                   char const*& type_name);
 
   /// Return an iterator that will traverse and return all the offer
   /// ids in the service type map.
@@ -119,8 +119,8 @@ private:
 
   /// Take in a previously generated offer id and return the type
   /// and id that were used to generate the offer id.
-  static void parse_offer_id (const CosTrading::OfferId offer_id,
-                              char* &service_type,
+  static void parse_offer_id (char const* offer_id,
+                              char const*& service_type,
                               CORBA::ULong& id);
 
   // = Disallow these operations.

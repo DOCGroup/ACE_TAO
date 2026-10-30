@@ -45,6 +45,11 @@ namespace TAO
     /// Destructor.
     ~PG_Object_Group_Manipulator () = default;
 
+    PG_Object_Group_Manipulator (PG_Object_Group_Manipulator const &) = delete;
+    PG_Object_Group_Manipulator (PG_Object_Group_Manipulator &&) = delete;
+    PG_Object_Group_Manipulator & operator= (PG_Object_Group_Manipulator const &) = delete;
+    PG_Object_Group_Manipulator & operator= (PG_Object_Group_Manipulator &&) = delete;
+
     /**
      * Initializes the group creator.
      */
@@ -55,8 +60,8 @@ namespace TAO
      * Create an empty object group.
      */
     PortableGroup::ObjectGroup_ptr create_object_group (
-      const char * type_id,
-      const char * domain_id,
+      char const * type_id,
+      char const * domain_id,
       PortableGroup::ObjectGroupId & group_id);
 
     /**
@@ -65,9 +70,9 @@ namespace TAO
      * as the next object group ID to use will not necessarily be unique.
      */
     PortableGroup::ObjectGroup_ptr create_object_group_using_id (
-      const char * type_id,
-      const char * domain_id,
-      const PortableGroup::ObjectGroupId & group_id);
+      char const * type_id,
+      char const * domain_id,
+      PortableGroup::ObjectGroupId const & group_id);
 
     PortableGroup::ObjectGroup_ptr remove_profiles (
       PortableGroup::ObjectGroup_ptr group,
@@ -81,7 +86,7 @@ namespace TAO
       PortableGroup::ObjectGroup_ptr reference,
       CORBA::Object_ptr new_primary) const;
 
-  void dump_membership (const char * label,
+  void dump_membership (char const * label,
                         PortableGroup::ObjectGroup_ptr member) const;
 
   private:
@@ -110,7 +115,7 @@ namespace TAO
     TAO_SYNCH_MUTEX lock_ogid_;
 
     /// Next ogid to be allocated.
-    PortableGroup::ObjectGroupId next_ogid_;
+    PortableGroup::ObjectGroupId next_ogid_ { 1 };
   };
 } //namespace TAO
 

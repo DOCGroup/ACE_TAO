@@ -13,49 +13,34 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <algorithm>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-Task_Entry::Task_Entry ()
-  : rt_info_ (nullptr),
-    effective_period_(0),
-    dfs_status_ (NOT_VISITED),
-    discovered_ (-1),
-    finished_ (-1),
-    is_thread_delineator_ (0),
-    has_unresolved_remote_dependencies_ (0),
-    has_unresolved_local_dependencies_ (0),
-    calls_ (),
-    callers_ ()
-{
-}
 
 Task_Entry::~Task_Entry ()
 {
   // Zero out the task entry ACT in the corresponding rt_info
-  rt_info_->volatile_token = 0;
-
-  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter(calls_);
-  Task_Entry_Link **link = nullptr;
+  if (rt_info_ != nullptr)
+    {
+      rt_info_->volatile_token = 0;
+    }
 
   // Iterate through the "calls" set of Task Entry Links and free each one
-
-  for (iter.first ();
-       ! iter.done ();
-       iter.advance (), link = nullptr)
+  for (Task_Entry_Link * const link : calls_)
+  {
+    if (link != nullptr)
     {
-      if (iter.next (link) != 0 && link != nullptr && *link != nullptr)
-        {
-          // remove the link object pointer from the calling entry's
-          // "callers" set and destroy the link object
-          (*link)->called ().callers_.remove (*link);
-          delete (*link);
-        }
+      // remove the link object pointer from the calling entry's
+      // "callers" set and destroy the link object
+      std::vector<Task_Entry_Link *> &callers = link->called ().callers_;
+      callers.erase (std::remove (callers.begin (), callers.end (), link), callers.end ());
+      delete link;
     }
+  }
 }
 
 // Merge dispatches according to info type and type of call, update
@@ -145,16 +130,9 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
 {
   // Iterate over the set of dependencies, ensuring none of them has
   // the given dependency type.
-  for (ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
-       ! iter.done ();
-      iter.advance ())
+  for (Task_Entry_Link * const link : callers_)
     {
-      Task_Entry_Link **link;
-
-      if (iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr
-          || (*link)->dependency_type () == dt)
+      if (link == nullptr || link->dependency_type () == dt)
         return -1;
     }
 
@@ -175,62 +153,56 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
 
   // Iterate over the set of dependencies, merging dispatches of the
   // callers over the enclosing frame size.
-  for (ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
-       ! iter.done ();
-       iter.advance ())
+  for (Task_Entry_Link * const link : callers_)
     {
-      Task_Entry_Link **link;
-
-      if (iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (link == nullptr)
         return -1;
 
       // The link matches the dependency type given
-      if ((*link)->dependency_type () == dt)
+      if (link->dependency_type () == dt)
         {
           // Check for and warn about unresolved remote dependencies
           // in the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
-              && (*link)->caller ().has_unresolved_remote_dependencies ()
+          if (link->dependency_type () == RtecBase::ONE_WAY_CALL
+              && link->caller ().has_unresolved_remote_dependencies ()
               && ! this->has_unresolved_remote_dependencies ())
             {
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_remote_dependencies (1);
+              this->has_unresolved_remote_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved remote
               // dependencies
               ACE_OS::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
                 ACE_CString (string_buffer);
             }
 
           // Check for and warn about unresolved local dependencies in
           // the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
-              && (*link)->caller ().has_unresolved_local_dependencies ()
+          if (link->dependency_type () == RtecBase::ONE_WAY_CALL
+              && link->caller ().has_unresolved_local_dependencies ()
               && ! this->has_unresolved_local_dependencies ())
             {
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_local_dependencies (1);
+              this->has_unresolved_local_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local
               // dependencies
               ACE_OS::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
                 ACE_CString (string_buffer);
             }
@@ -239,9 +211,9 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
           if (merge_frames (dispatch_entries,
                             *this,
                             dispatches_,
-                            (*link)->caller ().dispatches_, effective_period_,
-                            (*link)->caller ().effective_period_,
-                            (*link)->number_of_calls ()) < 0)
+                            link->caller ().dispatches_, effective_period_,
+                            link->caller ().effective_period_,
+                            link->number_of_calls ()) < 0)
             return -1;
         }
     }
@@ -270,69 +242,61 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
 
   u_long frame_size = 1;
 
-  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> dep_iter (callers_);
-
-  for (dep_iter.first ();
-       dep_iter.done () == 0;
-       dep_iter.advance ())
+  for (Task_Entry_Link * const link : callers_)
     {
-      Task_Entry_Link **link;
-
-      if (dep_iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (link == nullptr)
         return -1;
 
       // The link matches the dependency type given.
-      if ((*link)->dependency_type () == dt)
+      if (link->dependency_type () == dt)
         {
           // Check for and warn about unresolved remote dependencies
           // in the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
-              && (*link)->caller ().has_unresolved_remote_dependencies ()
+          if (link->dependency_type () == RtecBase::ONE_WAY_CALL
+              && link->caller ().has_unresolved_remote_dependencies ()
               && ! this->has_unresolved_remote_dependencies ())
             {
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_remote_dependencies (1);
+              this->has_unresolved_remote_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved remote
               // dependencies
               ACE_OS::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
                 ACE_CString (string_buffer);
             }
 
           // Check for and warn about unresolved local dependencies in
           // the ONE_WAY call graph.
-          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
-              && (*link)->caller ().has_unresolved_local_dependencies ()
+          if (link->dependency_type () == RtecBase::ONE_WAY_CALL
+              && link->caller ().has_unresolved_local_dependencies ()
               && ! this->has_unresolved_local_dependencies ())
             {
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_local_dependencies (1);
+              this->has_unresolved_local_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local dependencies
               ACE_OS::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
                 ACE_CString (string_buffer);
             }
 
           frame_size = ACE::minimum_frame_size (frame_size,
-                                                (*link)->caller ().effective_period_);
+                                                link->caller ().effective_period_);
         }
     }
 
@@ -353,25 +317,20 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
   // type, create a Dispatch_Proxy_Iterator for the caller's dispatch
   // set, using the caller's period, the total frame size, and the
   // number of calls: if any of the sets is empty, just return 0;
-  for (dep_iter.first ();
-       dep_iter.done () == 0;
-       dep_iter.advance ())
+  for (Task_Entry_Link * const link : callers_)
     {
-      Task_Entry_Link **link;
-      if (dep_iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (link == nullptr)
         return -1;
 
       // The link matches the dependency type given.
-      if ((*link)->dependency_type () == dt)
+      if (link->dependency_type () == dt)
         {
           Dispatch_Proxy_Iterator *proxy_ptr;
           ACE_NEW_RETURN (proxy_ptr,
-                          Dispatch_Proxy_Iterator ((*link)->caller ().dispatches_,
-                                                   (*link)->caller ().effective_period_,
+                          Dispatch_Proxy_Iterator (link->caller ().dispatches_,
+                                                   link->caller ().effective_period_,
                                                    frame_size,
-                                                   (*link)->number_of_calls ()),
+                                                   link->number_of_calls ()),
                           -1);
 
           // If there are no entries in the virtual set, we're done.
@@ -648,7 +607,7 @@ Dispatch_Entry::Dispatch_Entry (Time arrival,
   dispatch_id_ = next_id_++;
 }
 
-Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
+Dispatch_Entry::Dispatch_Entry (Dispatch_Entry const &d)
   : priority_ (d.priority_),
     OS_priority_ (d.OS_priority_),
     dynamic_subpriority_ (d.dynamic_subpriority_),
@@ -663,7 +622,7 @@ Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
 }
 
 bool
-Dispatch_Entry::operator < (const Dispatch_Entry &d) const
+Dispatch_Entry::operator < (Dispatch_Entry const &d) const
 {
   // for positioning in the ordered dispatch multiset
 
@@ -704,7 +663,7 @@ Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry &d)
 
 // copy ctor
 
-Dispatch_Entry_Link::Dispatch_Entry_Link (const Dispatch_Entry_Link &d)
+Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry_Link const &d)
   : dispatch_entry_ (d.dispatch_entry_)
 {
 }

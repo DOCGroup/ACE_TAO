@@ -27,9 +27,7 @@ TAO_Notify_QoSProperties::TAO_Notify_QoSProperties ()
   unsupported_[0] = CosNotification::StartTimeSupported;
 }
 
-TAO_Notify_QoSProperties::~TAO_Notify_QoSProperties ()
-{
-}
+TAO_Notify_QoSProperties::~TAO_Notify_QoSProperties () = default;
 
 int
 TAO_Notify_QoSProperties::unsupported (ACE_CString& name)

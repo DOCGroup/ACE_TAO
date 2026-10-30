@@ -43,24 +43,24 @@ class TAO_RTEvent_Serv_Export TAO_EC_Per_Supplier_Filter : public TAO_EC_Supplie
 {
 public:
   /// Constructor
-  TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
+  explicit TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
 
   /// Destructor
-  virtual ~TAO_EC_Per_Supplier_Filter () override;
+  ~TAO_EC_Per_Supplier_Filter () override;
 
   // = The TAO_EC_Supplier_Filter methods.
-  virtual void bind (TAO_EC_ProxyPushConsumer* consumer) override;
-  virtual void unbind (TAO_EC_ProxyPushConsumer* consumer) override;
-  virtual void connected (TAO_EC_ProxyPushSupplier* supplier) override;
-  virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier) override;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier) override;
-  virtual void shutdown () override;
-  virtual void push (const RtecEventComm::EventSet& event,
-                     TAO_EC_ProxyPushConsumer *consumer) override;
-  virtual void push_scheduled_event (RtecEventComm::EventSet &event,
-                                     const TAO_EC_QOS_Info &event_info) override;
-  virtual CORBA::ULong _decr_refcnt () override;
-  virtual CORBA::ULong _incr_refcnt () override;
+  void bind (TAO_EC_ProxyPushConsumer* consumer) override;
+  void unbind (TAO_EC_ProxyPushConsumer* consumer) override;
+  void connected (TAO_EC_ProxyPushSupplier* supplier) override;
+  void reconnected (TAO_EC_ProxyPushSupplier* supplier) override;
+  void disconnected (TAO_EC_ProxyPushSupplier* supplier) override;
+  void shutdown () override;
+  void push (RtecEventComm::EventSet const &event,
+             TAO_EC_ProxyPushConsumer *consumer) override;
+  void push_scheduled_event (RtecEventComm::EventSet &event,
+                             TAO_EC_QOS_Info const &event_info) override;
+  CORBA::ULong _decr_refcnt () override;
+  CORBA::ULong _incr_refcnt () override;
 
 private:
   /// The event channel, used to locate the set of consumers.
@@ -91,12 +91,12 @@ class TAO_RTEvent_Serv_Export TAO_EC_Per_Supplier_Filter_Builder : public TAO_EC
 {
 public:
   /// constructor....
-  TAO_EC_Per_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
+  explicit TAO_EC_Per_Supplier_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
   // = The TAO_EC_Supplier_Filter_Builder methods...
-  virtual TAO_EC_Supplier_Filter*
+  TAO_EC_Supplier_Filter*
       create (RtecEventChannelAdmin::SupplierQOS& qos) override;
-  virtual void
+  void
       destroy (TAO_EC_Supplier_Filter *filter) override;
 
 private:

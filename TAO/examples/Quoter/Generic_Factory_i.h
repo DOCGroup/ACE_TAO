@@ -25,24 +25,24 @@
 class Quoter_Generic_Factory_i : public POA_Stock::Quoter_Generic_Factory
 {
 public:
-  Quoter_Generic_Factory_i (int debug_level = 1);
-  ~Quoter_Generic_Factory_i ();
+  explicit Quoter_Generic_Factory_i (int debug_level = 1);
+  ~Quoter_Generic_Factory_i () override = default;
 
   /// Returns true if the Generic Factory is able to forward a request
   /// for creating an object described by the <factory_key>.
-  CORBA::Boolean supports (const CosLifeCycle::Key &factory_key);
+  CORBA::Boolean supports (CosLifeCycle::Key const &factory_key) override;
 
   /**
    * Returns an object reference to a newly created object, though the
    * Generic Factory itself cannot create objects, it will forward the
    * request to a more concrete Factory.
    */
-  CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key,
-                                   const CosLifeCycle::Criteria &the_criteria);
+  CORBA::Object_ptr create_object (CosLifeCycle::Key const &factory_key,
+                                   CosLifeCycle::Criteria const &the_criteria) override;
 
 private:
   /// a helper to get the proper naming context.
-  CosNaming::NamingContext_ptr get_naming_context (const CosLifeCycle::Key &factory_key);
+  CosNaming::NamingContext_ptr get_naming_context (CosLifeCycle::Key const &factory_key);
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_;

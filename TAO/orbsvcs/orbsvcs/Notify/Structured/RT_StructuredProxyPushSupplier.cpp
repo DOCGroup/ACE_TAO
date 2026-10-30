@@ -9,10 +9,6 @@ TAO_Notify_RT_StructuredProxyPushSupplier::TAO_Notify_RT_StructuredProxyPushSupp
 {
 }
 
-TAO_Notify_RT_StructuredProxyPushSupplier::~TAO_Notify_RT_StructuredProxyPushSupplier ()
-{
-}
-
 CORBA::Object_ptr
 TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant servant)
 {

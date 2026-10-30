@@ -22,9 +22,7 @@ be_visitor_obv_module::be_visitor_obv_module (be_visitor_context *ctx)
 {
 }
 
-be_visitor_obv_module::~be_visitor_obv_module ()
-{
-}
+be_visitor_obv_module::~be_visitor_obv_module () = default;
 
 int
 be_visitor_obv_module::visit_module (be_module *node)

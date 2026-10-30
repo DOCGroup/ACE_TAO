@@ -14,46 +14,27 @@
 #include "DOVE_Supplier.h"
 #include "tao/ORB_Core.h"
 
+#include <new>
+#include <utility>
+
 // Static pointer member initialization for Singleton.
 
 ACE_Scheduler_Factory::POD_RT_Info *
-DOVE_Supplier::pod_rt_info_instance_ = 0;
+DOVE_Supplier::pod_rt_info_instance_ = nullptr;
 
 // Constructor.
 
 DOVE_Supplier::DOVE_Supplier ()
-  : initialized_ (0),
-    connected_ (0),
-    connection_params_list_ (0),
-    current_connection_params_ (0),
-    connection_count_ (0),
-    current_connection_index_ (0),
-    internal_DOVE_Supplier_ptr_ (0),
-    MIB_name_ (0)
+  : current_connection_params_ (nullptr),
+    internal_DOVE_Supplier_ptr_ (
+      std::unique_ptr<Internal_DOVE_Supplier> (new (std::nothrow) Internal_DOVE_Supplier (this)))
 {
-  ACE_NEW (internal_DOVE_Supplier_ptr_,
-           Internal_DOVE_Supplier (this));
-
-  if (internal_DOVE_Supplier_ptr_ == 0)
+  if (internal_DOVE_Supplier_ptr_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "DOVE_Supplier::DOVE_Supplier internal "
                   "supplier not allocated."));
     }
-}
-
-// Destructor.
-
-DOVE_Supplier::~DOVE_Supplier ()
-{
-  for (int i = 0; i < this->connection_count_; ++i)
-    {
-      delete (this->connection_params_list_ [i]);
-    }
-
-  delete [] this->connection_params_list_;
-
-  delete internal_DOVE_Supplier_ptr_;
 }
 
 // Initialize the ORB and the connection to the Name Service
@@ -91,24 +72,24 @@ DOVE_Supplier::init ()
     this->namingContext_var_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("DOVE_Supplier::init");
     return -1;
   }
 
-  initialized_ = 1;
+  initialized_ = true;
   return 0;
 }
 
 int
-DOVE_Supplier::connect (const char* MIB_name,
-                        const char* es_name,
-                        const char * ss_name,
+DOVE_Supplier::connect (char const *MIB_name,
+                        char const *es_name,
+                        char const *ss_name,
                         ACE_Scheduler_Factory::POD_RT_Info * pod_rt_info)
 {
   // Initialize the supplier if this has not already been done.
-  if ((initialized_ == 0) &&  (this->init () == -1))
+  if (! initialized_ && this->init () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          " (%P|%t) Unable to initialize the DOVE_Supplier.\n"),
@@ -117,11 +98,11 @@ DOVE_Supplier::connect (const char* MIB_name,
 
 
   // Grab the default RT_Info settings if others were not provided.
-  if (pod_rt_info == 0)
+  if (pod_rt_info == nullptr)
     {
       // Get the default singleton if we were not passed the data
       pod_rt_info = DOVE_Supplier::pod_rt_info_instance ();
-      if (pod_rt_info == 0)
+      if (pod_rt_info == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              " (%P|%t) Unable to obtain"
@@ -131,54 +112,35 @@ DOVE_Supplier::connect (const char* MIB_name,
     }
 
   // Save the passed MIB name
-  MIB_name_ = (MIB_name == 0) ? "MIB_unknown" : MIB_name;
+  MIB_name_ = (MIB_name == nullptr) ? "MIB_unknown" : MIB_name;
 
   // Create a new connection parameters structure.
-  Connection_Params * cp_temp = 0;
-  ACE_NEW_RETURN (cp_temp, Connection_Params, -1);
+  std::unique_ptr<Connection_Params> cp_temp (
+    new (std::nothrow) Connection_Params);
+  if (cp_temp == nullptr)
+  {
+    return -1;
+  }
 
   // Populate the known fields of the new connection params struct.
   cp_temp->pod_rt_info_ = *pod_rt_info;
-  cp_temp->es_name_ = (es_name == 0) ?  "EventService" : es_name;
-  cp_temp->ss_name_ = (ss_name == 0) ?  "ScheduleService" : ss_name;
+  cp_temp->es_name_ = (es_name == nullptr) ? "EventService" : es_name;
+  cp_temp->ss_name_ = (ss_name == nullptr) ? "ScheduleService" : ss_name;
 
-  // Allocate a new connection parameters pointer array.
-  // Cannot use ACE_NEW_RETURN here, as we need to clean up
-  // cp_temp if we fail here, and we need what cp_temp points
-  // to after the current scope if we succeed here.
-  Connection_Params ** cp_list_temp;
-  cp_list_temp =
-    new Connection_Params * [this->connection_count_ + 1];
-  if (cp_list_temp == 0)
-    {
-      // Avoid a memory leak if we failed to allocate.
-      delete cp_temp;
+  try
+  {
+    connection_params_list_.push_back (std::move (cp_temp));
+  }
+  catch (std::bad_alloc const &)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) DOVE_Supplier::connect could not "
+                       "reallocate connection params list"),
+                      -1);
+  }
 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) DOVE_Supplier::connect could not "
-                         "reallocate connection params list"),
-                        -1);
-    }
-
-  // Copy the connection struct pointers from
-  // the old list (if any) to the new one.
-  for (int i = 0; i < this->connection_count_; ++i)
-    {
-      cp_list_temp [i] =
-        this->connection_params_list_ [i];
-    }
-
-  // Put a pointer to the new connection params structure
-  // in the new list, increment the connection params count,
-  // and point to the latest connection parameters.
-  cp_list_temp [this->connection_count_] = cp_temp;
-  this->current_connection_params_ = cp_temp;
-  current_connection_index_ = connection_count_;
-  ++ (this->connection_count_);
-
-  // Replace the old list of pointers with the new one
-  delete [] this->connection_params_list_;
-  this->connection_params_list_ = cp_list_temp;
+  current_connection_index_ = connection_params_list_.size () - 1;
+  current_connection_params_ = connection_params_list_.back ().get ();
 
   // Resolve the event service reference.
   if (this->get_EventChannel () == -1)
@@ -218,7 +180,7 @@ DOVE_Supplier::connected ()
       // Code to do post-connection-establishment
       // one-time logic goes here.
 
-      connected_ = 1;
+      connected_ = true;
     }
 }
 
@@ -257,7 +219,7 @@ DOVE_Supplier::notify (CORBA::Any &message)
     // Now we invoke a RPC
     this->current_connection_params_->proxyPushConsumer_var_->push (events);
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     ACE_ERROR ((LM_ERROR,
                 "DOVE_Supplier::notify: "
@@ -271,14 +233,14 @@ DOVE_Supplier::notify (CORBA::Any &message)
 void
 DOVE_Supplier::use_next_connection ()
 {
-  if (connection_count_ > 0)
+  if (! connection_params_list_.empty ())
     {
       current_connection_index_ =
-        (current_connection_index_ == connection_count_ - 1)
+        (current_connection_index_ == connection_params_list_.size () - 1)
         ? 0 : current_connection_index_ + 1;
 
       current_connection_params_ =
-        connection_params_list_ [current_connection_index_];
+        connection_params_list_ [current_connection_index_].get ();
     }
 }
 
@@ -288,15 +250,15 @@ DOVE_Supplier::use_next_connection ()
 void
 DOVE_Supplier::use_prev_connection ()
 {
-  if (connection_count_ > 0)
+  if (! connection_params_list_.empty ())
     {
       current_connection_index_ =
         (current_connection_index_ == 0)
-        ? connection_count_ - 1
+        ? connection_params_list_.size () - 1
         : current_connection_index_ - 1;
 
       current_connection_params_ =
-        connection_params_list_ [current_connection_index_];
+        connection_params_list_ [current_connection_index_].get ();
     }
 }
 
@@ -326,9 +288,9 @@ DOVE_Supplier::get_Scheduler ()
       this->current_connection_params_->scheduler_var_ =
         RtecScheduler::Scheduler::_narrow(objref.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
-      current_connection_params_->scheduler_var_ = 0;
+      current_connection_params_->scheduler_var_ = nullptr;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DOVE_Supplier::get_Scheduler: "
                          "error while resolving scheduler %s\n",
@@ -362,7 +324,7 @@ DOVE_Supplier::get_EventChannel ()
                          "The reference to the event channel is nil!"),
                          1);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("DOVE_Supplier::get_EventChannel");
     return -1;
@@ -399,7 +361,7 @@ DOVE_Supplier::connect_Supplier ()
 
     // Set the publications to report them to the event channel.
 
-    CORBA::Short x = 0;
+    CORBA::Short x {};
     RtecEventChannelAdmin::SupplierQOS qos;
     qos.publications.length (1);
     qos.publications[0].event.header.source = SOURCE_ID;
@@ -431,7 +393,7 @@ DOVE_Supplier::connect_Supplier ()
       proxyPushConsumer_var_->connect_push_supplier (pushSupplier_var.in (),
                                                      qos);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("DOVE_Supplier::connect_supplier");
     return -1;
@@ -446,11 +408,11 @@ DOVE_Supplier::connect_Supplier ()
 ACE_Scheduler_Factory::POD_RT_Info *
 DOVE_Supplier::pod_rt_info_instance ()
 {
-  if (DOVE_Supplier::pod_rt_info_instance_ == 0)
+  if (DOVE_Supplier::pod_rt_info_instance_ == nullptr)
     {
       ACE_NEW_RETURN (DOVE_Supplier::pod_rt_info_instance_,
                       ACE_Scheduler_Factory::POD_RT_Info,
-                      0);
+                      nullptr);
 
       // Set up the default data.
       DOVE_Supplier::pod_rt_info_instance_->entry_point = "ABC";

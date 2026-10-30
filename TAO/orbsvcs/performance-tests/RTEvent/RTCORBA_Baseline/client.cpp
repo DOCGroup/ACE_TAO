@@ -27,9 +27,14 @@ public:
   {
   }
 
+  Roundtrip_Task (Roundtrip_Task const &) = delete;
+  Roundtrip_Task (Roundtrip_Task &&) = delete;
+  Roundtrip_Task &operator= (Roundtrip_Task const &) = delete;
+  Roundtrip_Task &operator= (Roundtrip_Task &&) = delete;
+
   virtual void run_test () = 0;
 
-  virtual int svc ()
+  int svc () override
   {
     this->barrier_->wait ();
     try
@@ -66,7 +71,7 @@ public:
   {
   }
 
-  virtual void run_test ()
+  void run_test () override
   {
     for (int i = 0; i != this->iterations_; ++i)
       {
@@ -103,7 +108,6 @@ public:
                      int period_in_usecs,
                      int workload)
     : Roundtrip_Task (roundtrip, the_barrier)
-    , stopped_ (0)
     , period_in_usecs_ (period_in_usecs)
     , workload_ (workload)
   {
@@ -112,10 +116,10 @@ public:
   void stop ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    this->stopped_ = 1;
+    this->stopped_ = true;
   }
 
-  virtual void run_test ()
+  void run_test () override
   {
     for (;;)
       {
@@ -140,7 +144,7 @@ public:
 private:
   TAO_SYNCH_MUTEX mutex_;
 
-  int stopped_;
+  bool stopped_ {};
 
   int period_in_usecs_;
 

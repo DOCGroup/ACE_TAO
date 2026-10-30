@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time/Timer_Helper.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
 
@@ -10,18 +9,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-Timer_Helper::Timer_Helper ()
-  : clerk_ (nullptr)
-{
-}
-
 Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk * clerk)
   : clerk_ (clerk)
 {
 }
-
-Timer_Helper::~Timer_Helper ()
-= default;
 
 int
 Timer_Helper::handle_timeout (ACE_Time_Value const &,
@@ -37,14 +28,11 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
 
   try
     {
-      IORS::TYPE* value;
-      for (IORS::ITERATOR server_iterator (this->clerk_->server_);
-           server_iterator.next (value) != 0;
-           server_iterator.advance ())
+      for (CosTime::TimeService_var const & server : this->clerk_->server_)
         {
           // This is a remote call.
           CosTime::UTO_var UTO_server =
-            (*value)->universal_time ();
+            server->universal_time ();
 
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_DEBUG,
@@ -98,7 +86,7 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
       else
         clerk_->inaccuracy (0);
 
-      const ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
+      ACE_Time_Value const timeofday = ACE_OS::gettimeofday ();
 
       // Record the current time in a timestamp to know when global
       // updation of time was done.
@@ -107,7 +95,7 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
         static_cast<ACE_UINT32> (10000000) +
         static_cast<CORBA::ULongLong> (timeofday.usec () * 10);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level > 0)
         ex._tao_print_exception ("Exception in handle_timeout()\n");

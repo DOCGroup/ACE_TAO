@@ -5,50 +5,47 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
-                               const TAO::ObjectKey & object_key,
-                               const TAO_GIOP_Message_Version & version,
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (ACE_INET_Addr const & addr,
+                               TAO::ObjectKey const & object_key,
+                               TAO_GIOP_Message_Version const & version,
                                TAO_ORB_Core * orb_core,
-                               const ::SSLIOP::SSL * ssl_component)
+                               ::SSLIOP::SSL const * ssl_component)
   : TAO_IIOP_Profile (addr,
                       object_key,
                       version,
                       orb_core),
-  ssl_endpoint_ (ssl_component, nullptr),
-  ssl_only_ (0)
+  ssl_endpoint_ (ssl_component, nullptr)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char * host,
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (char const * host,
                                CORBA::UShort port,
-                               const TAO::ObjectKey & object_key,
-                               const ACE_INET_Addr & addr,
-                               const TAO_GIOP_Message_Version & version,
+                               TAO::ObjectKey const & object_key,
+                               ACE_INET_Addr const & addr,
+                               TAO_GIOP_Message_Version const & version,
                                TAO_ORB_Core * orb_core,
-                               const ::SSLIOP::SSL * ssl_component)
+                               ::SSLIOP::SSL const * ssl_component)
   : TAO_IIOP_Profile (host,
                       port,
                       object_key,
                       addr,
                       version,
                       orb_core),
-  ssl_endpoint_ (ssl_component, nullptr),
-  ssl_only_ (0)
+  ssl_endpoint_ (ssl_component, nullptr)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
 
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
-                               const ::SSLIOP::SSL * ssl_component)
+                               ::SSLIOP::SSL const * ssl_component)
   : TAO_IIOP_Profile (orb_core),
-    ssl_endpoint_ (ssl_component, nullptr),
-    ssl_only_ (0)
+    ssl_endpoint_ (ssl_component, nullptr)
 {
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
 
-TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only)
+TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, bool ssl_only)
   : TAO_IIOP_Profile (orb_core),
     ssl_endpoint_ (nullptr, nullptr),
     ssl_only_ (ssl_only)
@@ -84,7 +81,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
 
   // Attempt to decode SSLIOP::SSL tagged component.  It may not be
   // there if we are dealing with pure IIOP profile.
-  int ssl_component_found = 0;
+  bool ssl_component_found = false;
   IOP::TaggedComponent component;
   component.tag = ::SSLIOP::TAG_SSL_SEC_TRANS;
 
@@ -93,12 +90,12 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
       TAO_InputCDR cdr_component (reinterpret_cast<char const *> (component.component_data.get_buffer ()),
                                   component.component_data.length ());
       CORBA::Boolean byte_order;
-      if ((cdr_component >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      if (!(cdr_component >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
       cdr_component.reset_byte_order (static_cast<int> (byte_order));
 
       if (cdr_component >> this->ssl_endpoint_.ssl_component_)
-        ssl_component_found = 1;
+        ssl_component_found = true;
       else
         return -1;
     }
@@ -164,17 +161,17 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
 }
 
 CORBA::Boolean
-TAO_SSLIOP_Profile::do_is_equivalent (const TAO_Profile * other_profile)
+TAO_SSLIOP_Profile::do_is_equivalent (TAO_Profile const * other_profile)
 {
-  const TAO_SSLIOP_Profile *op =
-    dynamic_cast<const TAO_SSLIOP_Profile *> (other_profile);
+  TAO_SSLIOP_Profile const *op =
+    dynamic_cast<TAO_SSLIOP_Profile const *> (other_profile);
 
   // Make sure we have a TAO_SSLIOP_Profile.
   if (op == nullptr)
-    return 0;
+    return false;
 
   // Now verify TAO_SSLIOP_Endpoint equivalence.
-  const TAO_SSLIOP_Endpoint *other_endp = &op->ssl_endpoint_;
+  TAO_SSLIOP_Endpoint const *other_endp = &op->ssl_endpoint_;
   for (TAO_SSLIOP_Endpoint *endp = &this->ssl_endpoint_;
        endp != nullptr;
        endp = endp->next_)
@@ -182,10 +179,10 @@ TAO_SSLIOP_Profile::do_is_equivalent (const TAO_Profile * other_profile)
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 TAO_Endpoint*
@@ -222,7 +219,7 @@ TAO_SSLIOP_Profile::encode_endpoints ()
       TAO_SSLEndpointSequence endpoints;
       endpoints.length (this->count_ - 1);
 
-      const TAO_SSLIOP_Endpoint *endpoint = this->ssl_endpoint_.next_;
+      TAO_SSLIOP_Endpoint const *endpoint = this->ssl_endpoint_.next_;
       for (CORBA::ULong i = 0; i < this->count_ - 1; ++i)
         {
           endpoints[i] = endpoint->ssl_component ();
@@ -231,9 +228,8 @@ TAO_SSLIOP_Profile::encode_endpoints ()
 
       // Encode the data structure.
       TAO_OutputCDR out_cdr;
-      if (((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
-           == 0)
-          || (out_cdr << endpoints) == 0)
+      if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
+          || !(out_cdr << endpoints))
         return -1;
 
       CORBA::ULong const length = static_cast<CORBA::ULong> (out_cdr.total_length ());
@@ -244,7 +240,7 @@ TAO_SSLIOP_Profile::encode_endpoints ()
       CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      for (const ACE_Message_Block *iterator = out_cdr.begin ();
+      for (ACE_Message_Block const *iterator = out_cdr.begin ();
            iterator != nullptr;
            iterator = iterator->cont ())
         {
@@ -270,21 +266,21 @@ TAO_SSLIOP_Profile::decode_tagged_endpoints ()
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char* > (buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<char const* > (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
-      if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO_SSLEndpointSequence endpoints;
-      if ((in_cdr >> endpoints) == 0)
+      if (!(in_cdr >> endpoints))
         return -1;
 
       // Use information extracted from the tagged component to
@@ -326,7 +322,7 @@ TAO_SSLIOP_Profile::decode_tagged_endpoints ()
 }
 
 void
-TAO_SSLIOP_Profile::parse_string (const char * ior)
+TAO_SSLIOP_Profile::parse_string (char const * ior)
 {
    TAO_IIOP_Profile::parse_string (ior);
 

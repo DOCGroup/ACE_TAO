@@ -18,7 +18,8 @@
 
 #include "orbsvcs/ESF/ESF_Busy_Lock.h"
 #include "tao/Basic_Types.h"
-#include "ace/Containers.h"
+#include <deque>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Command_Base;
@@ -87,7 +88,12 @@ class TAO_ESF_Delayed_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
   TAO_ESF_Delayed_Changes ();
-  TAO_ESF_Delayed_Changes (const COLLECTION &collection);
+  explicit TAO_ESF_Delayed_Changes (COLLECTION const &collection);
+
+  TAO_ESF_Delayed_Changes (TAO_ESF_Delayed_Changes const &) = delete;
+  TAO_ESF_Delayed_Changes (TAO_ESF_Delayed_Changes &&) = delete;
+  TAO_ESF_Delayed_Changes &operator= (TAO_ESF_Delayed_Changes const &) = delete;
+  TAO_ESF_Delayed_Changes &operator= (TAO_ESF_Delayed_Changes &&) = delete;
 
   int busy ();
   int idle ();
@@ -134,7 +140,7 @@ private:
   CORBA::ULong busy_hwm_;
   CORBA::ULong max_write_delay_;
 
-  ACE_Unbounded_Queue<ACE_Command_Base*> command_queue_;
+  std::deque<std::unique_ptr<ACE_Command_Base>> command_queue_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

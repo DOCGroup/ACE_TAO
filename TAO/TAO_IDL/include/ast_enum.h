@@ -75,6 +75,10 @@ class TAO_IDL_FE_Export AST_Enum
     public virtual UTL_Scope
 {
 public:
+  AST_Enum (AST_Enum const &) = delete;
+  AST_Enum (AST_Enum &&) = delete;
+  AST_Enum &operator= (AST_Enum const &) = delete;
+  AST_Enum &operator= (AST_Enum &&) = delete;
   AST_Enum (UTL_ScopedName *n,
             bool local,
             bool abstract);
@@ -85,7 +89,7 @@ public:
   void dump (ACE_OSTREAM_TYPE &) override;
 
   // Look up an AST_EnumVal by value
-  AST_EnumVal *lookup_by_value (const AST_Expression *v);
+  AST_EnumVal *lookup_by_value (AST_Expression const *v);
 
   // Get value to be assigned to next enumerator.
   unsigned long next_enum_val ();
@@ -94,7 +98,7 @@ public:
   virtual int member_count ();
 
   // Convert a numeric value to the enum's string name for it.
-  UTL_ScopedName *value_to_name (const unsigned long v);
+  UTL_ScopedName *value_to_name (unsigned long const v);
 
   // Cleanup function.
   void destroy () override;
@@ -109,10 +113,10 @@ public:
 private:
   friend int tao_yyparse ();
 
-  unsigned long pd_enum_counter;
+  unsigned long pd_enum_counter {};
   // Value for next enumerator.
 
-  int member_count_;
+  int member_count_ {-1};
   // Number of members.
 
   int compute_member_count ();

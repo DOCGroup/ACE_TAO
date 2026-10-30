@@ -52,7 +52,7 @@ TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
           PortableInterceptor::register_orb_initializer (
             bidir_orb_initializer.in ());
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
             {

@@ -79,10 +79,10 @@ protected:
   CORBA::ORB_var orb_;
 
   /// Root POA reference.
-  PortableServer::POA_ptr root_poa_;
+  PortableServer::POA_ptr root_poa_ {};
 
   /// The Repository's POA reference.
-  PortableServer::POA_ptr repo_poa_;
+  PortableServer::POA_ptr repo_poa_ {};
 
   /// Event handler that responds to multicast requests.
   TAO_IOR_Multicast *ior_multicast_ {};
@@ -107,7 +107,7 @@ public:
 
   ~TAO_IFR_Service_Utils ();
 
-  using name_clash_checker = int (*) (const char *);
+  using name_clash_checker = int (*) (char const *);
 
   /// Convert the hex form of an 4-byte unsigned int to a string.
   static ACE_TCHAR *int_to_string (CORBA::ULong number);
@@ -121,14 +121,14 @@ public:
                                CORBA::DefinitionKind contained_kind);
 
   /// Wrapper for id_exists() and name_exists().
-  static void pre_exist (const char *id,
+  static void pre_exist (char const *id,
                          name_clash_checker checker,
                          ACE_Configuration_Section_Key &key,
                          TAO_Repository_i *repo,
                          CORBA::DefinitionKind kind);
 
   /// Checks for a global repository id clash.
-  static void id_exists (const char *id,
+  static void id_exists (char const *id,
                          TAO_Repository_i *repo);
 
   /// Checks for a local name clash.
@@ -140,14 +140,14 @@ public:
   /// Used by interfaces and components to check for name clashes
   /// in the attributes, operations, or component ports subsections.
   static void check_subsection (name_clash_checker checker,
-                                const char *sub_section,
+                                char const *sub_section,
                                 ACE_Configuration *config,
                                 ACE_Configuration_Section_Key &key);
 
   /// Top-level method which calls all the above error-checking methods.
   static void valid_creation (CORBA::DefinitionKind container_kind,
                               CORBA::DefinitionKind contained_kind,
-                              const char *id,
+                              char const *id,
                               name_clash_checker checker,
                               ACE_Configuration_Section_Key &key,
                               TAO_Repository_i *repo);
@@ -159,24 +159,24 @@ public:
       ACE_Configuration_Section_Key container_key,
       ACE_Configuration_Section_Key &new_key,
       TAO_Repository_i *repo,
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       name_clash_checker checker,
-      const char *version,
-      const char *sub_section_name);
+      char const *version,
+      char const *sub_section_name);
 
   /// Common to Container::create_value() and ValueDef::supported_interfaces(),
   /// Container::create_component() and Component::supported_interfaces().
   static void set_supported_interfaces (
-      const CORBA::InterfaceDefSeq &supported_interfaces,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
       ACE_Configuration *config,
       ACE_Configuration_Section_Key &key);
 
   /// Common code for operations, attributes, and valuetype initializers.
   static void set_exceptions (ACE_Configuration *config,
                               ACE_Configuration_Section_Key &key,
-                              const char *sub_section,
-                              const CORBA::ExceptionDefSeq &exceptions);
+                              char const *sub_section,
+                              CORBA::ExceptionDefSeq const &exceptions);
 
   /// Implemented here to avoid recursion in the servant classes.
   static CORBA::TypeCode_ptr gen_valuetype_tc_r (
@@ -218,7 +218,7 @@ public:
 
   /// Can be called from the above method or directly from a derived class.
   static CORBA::Object_ptr create_objref (CORBA::DefinitionKind def_kind,
-                                          const char *obj_id,
+                                          char const *obj_id,
                                           TAO_Repository_i *repo);
 
   /// Copy and octet sequence to a string..

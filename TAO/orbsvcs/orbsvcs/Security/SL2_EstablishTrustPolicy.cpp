@@ -5,12 +5,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Security::EstablishTrustPolicy::EstablishTrustPolicy (
-  const ::Security::EstablishTrust &trust)
+  ::Security::EstablishTrust const & trust)
   : trust_ (trust)
-{
-}
-
-TAO::Security::EstablishTrustPolicy::~EstablishTrustPolicy ()
 {
 }
 

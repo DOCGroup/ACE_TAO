@@ -98,6 +98,11 @@ extern "C" {
 class ACE_SSL_Export ACE_SSL_Context
 {
 public:
+  ACE_SSL_Context (ACE_SSL_Context const &) = delete;
+  ACE_SSL_Context (ACE_SSL_Context &&) = delete;
+  ACE_SSL_Context &operator= (ACE_SSL_Context const &) = delete;
+  ACE_SSL_Context &operator= (ACE_SSL_Context &&) = delete;
+
 #ifdef ACE_HAS_THREADS
   using lock_type = ACE_SYNCH_MUTEX;
 #endif  /* ACE_HAS_THREADS */
@@ -374,10 +379,6 @@ private:
   void ssl_library_init ();
   void ssl_library_fini ();
 
-  ACE_SSL_Context (const ACE_SSL_Context &) = delete;
-  ACE_SSL_Context & operator= (const ACE_SSL_Context &) = delete;
-
-private:
   /// The SSL_CTX structure
   SSL_CTX *context_;
 

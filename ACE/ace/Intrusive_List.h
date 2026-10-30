@@ -102,12 +102,14 @@ public:
   void unsafe_remove (T *node);
 
 private:
-  /** @name Disallow copying
+  /** @name Disallow copying and moving
    *
    */
   //@{
-  ACE_Intrusive_List (const ACE_Intrusive_List<T> &) = delete;
-  ACE_Intrusive_List<T>& operator= (const ACE_Intrusive_List<T> &) = delete;
+  ACE_Intrusive_List (ACE_Intrusive_List const &) = delete;
+  ACE_Intrusive_List (ACE_Intrusive_List &&) = delete;
+  ACE_Intrusive_List<T> &operator= (ACE_Intrusive_List const &) = delete;
+  ACE_Intrusive_List<T> &operator= (ACE_Intrusive_List &&) = delete;
   //@}
 
 private:

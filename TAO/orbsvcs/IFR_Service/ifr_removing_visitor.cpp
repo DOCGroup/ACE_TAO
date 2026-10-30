@@ -4,13 +4,9 @@
 #include "utl_scope.h"
 #include "ast_root.h"
 
-ifr_removing_visitor::ifr_removing_visitor ()
-{
-}
+ifr_removing_visitor::ifr_removing_visitor () = default;
 
-ifr_removing_visitor::~ifr_removing_visitor ()
-{
-}
+ifr_removing_visitor::~ifr_removing_visitor () = default;
 
 int
 ifr_removing_visitor::visit_scope (UTL_Scope *node)
@@ -22,7 +18,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
       UTL_ScopeActiveIterator si (node,
                                   UTL_Scope::IK_decls);
 
-      AST_Decl *d = 0;
+      AST_Decl *d = nullptr;
 
       try
         {
@@ -31,7 +27,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
             {
               d = si.item ();
 
-              if (d == 0)
+              if (d == nullptr)
                 {
                   ORBSVCS_ERROR_RETURN ((
                       LM_ERROR,
@@ -50,7 +46,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
                 }
 
               CORBA::Contained_var top_level =
-                be_global->repository ()->lookup_id (d->repoID ());
+                be_global->repository ()->lookup_id (IFR_C_String (d->repoID ()));
 
               if (!CORBA::is_nil (top_level.in ()))
                 {
@@ -63,7 +59,7 @@ ifr_removing_visitor::visit_scope (UTL_Scope *node)
               si.next ();
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception (
             ACE_TEXT (
@@ -119,7 +115,7 @@ ifr_removing_visitor::visit_root (AST_Root *node)
           );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("visit_root"));
 

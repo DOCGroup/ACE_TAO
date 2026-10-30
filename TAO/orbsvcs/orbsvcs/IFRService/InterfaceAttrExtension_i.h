@@ -52,22 +52,22 @@ public:
   describe_ext_interface_i ();
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode,
-      const CORBA::ExceptionDefSeq &get_exceptions,
-      const CORBA::ExceptionDefSeq &set_exceptions);
+      CORBA::ExceptionDefSeq const &get_exceptions,
+      CORBA::ExceptionDefSeq const &set_exceptions);
 
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode,
-      const CORBA::ExceptionDefSeq &get_exceptions,
-      const CORBA::ExceptionDefSeq &set_exceptions);
+      CORBA::ExceptionDefSeq const &get_exceptions,
+      CORBA::ExceptionDefSeq const &set_exceptions);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

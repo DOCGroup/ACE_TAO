@@ -43,6 +43,13 @@ class TAO_CEC_TypedEvent;
 class TAO_Event_Serv_Export TAO_CEC_Dispatching
 {
 public:
+  TAO_CEC_Dispatching () = default;
+
+  TAO_CEC_Dispatching (TAO_CEC_Dispatching const &) = delete;
+  TAO_CEC_Dispatching (TAO_CEC_Dispatching &&) = delete;
+  TAO_CEC_Dispatching &operator= (TAO_CEC_Dispatching const &) = delete;
+  TAO_CEC_Dispatching &operator= (TAO_CEC_Dispatching &&) = delete;
+
   /// destructor...
   virtual ~TAO_CEC_Dispatching ();
 
@@ -59,12 +66,12 @@ public:
 
   /// The consumer represented by @a proxy should receive @a event.
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
-                     const CORBA::Any &event) = 0;
+                     CORBA::Any const &event) = 0;
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
                             CORBA::Any &event) = 0;
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
-                       const TAO_CEC_TypedEvent &typed_event) = 0;
+                       TAO_CEC_TypedEvent const &typed_event) = 0;
   virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
                               TAO_CEC_TypedEvent &typed_event) = 0;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */

@@ -10,7 +10,7 @@
 class Echo_Callback : public POA_Test::AMI_EchoHandler
 {
 public:
-  Echo_Callback ();
+  Echo_Callback () = default;
   Echo_Callback (Echo_Callback const &) = delete;
   Echo_Callback &operator= (Echo_Callback const &) = delete;
   Echo_Callback (Echo_Callback &&) = delete;

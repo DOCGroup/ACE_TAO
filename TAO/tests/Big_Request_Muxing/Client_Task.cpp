@@ -4,8 +4,8 @@
 
 namespace
 {
-  const ACE_Time_Value TRANSIENT_HOLDOFF (0, 2000); // 2ms delay
-  const int TRANSIENT_LIMIT = 100;
+  ACE_Time_Value const TRANSIENT_HOLDOFF (0, 2000); // 2ms delay
+  int constexpr TRANSIENT_LIMIT = 100;
 }
 
 Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
@@ -14,21 +14,21 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
                           CORBA::ULong event_size,
                           CORBA::ORB_ptr orb,
                           Messaging::SyncScope sync_scope,
-                          const ACE_CString & ident)
+                          ACE_CString const &ident)
   : ACE_Task_Base (thr_mgr)
   , payload_receiver_ (Test::Payload_Receiver::_duplicate (payload_receiver))
   , event_count_ (event_count)
   , event_size_ (event_size)
   , orb_ (CORBA::ORB::_duplicate (orb))
   , sync_scope_ (sync_scope)
-  , tasks_running_(0)
-  , done_(false)
+  , tasks_running_ (0)
+  , done_ (false)
   , id_ (ident)
 {
 }
 
 bool
-Client_Task::done() const
+Client_Task::done () const
 {
   if (tasks_running_ == 0)
     return done_;
@@ -37,7 +37,7 @@ Client_Task::done() const
   return false;
 }
 
-const char *
+char const *
 Client_Task::ID () const
 {
   return id_.c_str ();
@@ -85,7 +85,7 @@ Client_Task::svc ()
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s sending %d payloads.\n",
                      this->ID (), this->event_count_));
         }
-      int transient_count= 0;
+      int transient_count {};
       for (int i = 0; i != this->event_count_; ++i)
         {
           try
@@ -93,7 +93,7 @@ Client_Task::svc ()
               this->payload_receiver_->more_data (payload, this->sync_scope_ != Messaging::SYNC_WITH_TARGET);
               transient_count= 0;
             }
-          catch (const CORBA::TRANSIENT &)
+          catch (CORBA::TRANSIENT const &)
             {
               if (++transient_count < TRANSIENT_LIMIT)
                 {
@@ -112,7 +112,7 @@ Client_Task::svc ()
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s: ", this->ID ()));
       ex._tao_print_exception ("CORBA Exception caught:");
@@ -142,8 +142,7 @@ Client_Task::validate_connection ()
 {
   try
     {
-      int transient_count= 0;
-      Test::Payload payload(0);
+      int transient_count {};
       for (int i = 0; i != 100; ++i)
         {
           try
@@ -151,7 +150,7 @@ Client_Task::validate_connection ()
               this->payload_receiver_->ping();
               transient_count= 0;
             }
-          catch (const CORBA::TRANSIENT &)
+          catch (CORBA::TRANSIENT const &)
             {
               if (++transient_count < TRANSIENT_LIMIT)
                 {
@@ -171,7 +170,7 @@ Client_Task::validate_connection ()
             }
         }
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       // Deliberatly ignores any other corba exceptions
     }

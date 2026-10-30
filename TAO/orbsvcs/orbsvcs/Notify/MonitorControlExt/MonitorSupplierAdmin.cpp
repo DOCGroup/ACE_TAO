@@ -13,14 +13,14 @@ class SupplierAdminControl: public TAO_NS_Control
 {
 public:
   SupplierAdminControl (TAO_MonitorEventChannel* ec,
-                        const ACE_CString& name,
+                        ACE_CString const &name,
                         CosNotifyChannelAdmin::AdminID id)
   : TAO_NS_Control (name.c_str ()),
     ec_ (ec),
     id_ (id) {
   }
 
-  virtual bool execute (const char* command) {
+  bool execute (char const *command) override {
     if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIERADMIN) == 0)
       {
         CosNotifyChannelAdmin::SupplierAdmin_var admin =
@@ -41,16 +41,12 @@ private:
   CosNotifyChannelAdmin::AdminID id_;
 };
 
-TAO_MonitorSupplierAdmin::TAO_MonitorSupplierAdmin ()
-{
-}
-
 TAO_MonitorSupplierAdmin::~TAO_MonitorSupplierAdmin ()
 {
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec != 0)
+  if (ec != nullptr)
     {
       ec->remove_supplieradmin (this->id ());
       TAO_Control_Registry* cinstance = TAO_Control_Registry::instance ();
@@ -61,7 +57,7 @@ TAO_MonitorSupplierAdmin::~TAO_MonitorSupplierAdmin ()
 void
 TAO_MonitorSupplierAdmin::register_stats_controls (
                                           TAO_MonitorEventChannel* mec,
-                                          const ACE_CString& base)
+                                          ACE_CString const &base)
 {
   this->control_name_ = base;
   SupplierAdminControl* control = nullptr;
@@ -83,12 +79,12 @@ CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_MonitorSupplierAdmin::obtain_named_notification_push_consumer (
         CosNotifyChannelAdmin::ClientType ctype,
         CosNotifyChannelAdmin::ProxyID_out proxy_id,
-        const char * name)
+        char const *name)
 {
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec == 0)
+  if (ec == nullptr)
     throw CORBA::INTERNAL ();
 
   // Next, create the push consumer proxy
@@ -110,7 +106,7 @@ TAO_MonitorSupplierAdmin::obtain_notification_push_consumer (
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
     dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
-  if (ec == 0)
+  if (ec == nullptr)
     throw CORBA::INTERNAL ();
 
   // Next, create the push consumer proxy

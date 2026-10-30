@@ -6,22 +6,9 @@
 #include "Push_Iterator_Handler.h"
 #include "Callback_i.h"
 
-Push_Iterator_Handler::Push_Iterator_Handler ()
-  : callback_servant_ (0),
-    callback_ (),
-    ami_handler_ ()
-{
-  // Nothing else
-}
-
-Push_Iterator_Handler::~Push_Iterator_Handler ()
-{
-  // Nothing else
-}
-
 void
 Push_Iterator_Handler::register_callback
-  (const Web_Server::Metadata_Type &metadata)
+  (Web_Server::Metadata_Type const& metadata)
 {
   this->callback_servant_->metadata (metadata);
 
@@ -31,7 +18,7 @@ Push_Iterator_Handler::register_callback
 
 void
 Push_Iterator_Handler::run (int *request_count,
-                            const char *pathname,
+                            char const *pathname,
                             Web_Server::Iterator_Factory_ptr factory)
 {
   ACE_NEW_THROW_EX (this->callback_servant_,

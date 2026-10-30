@@ -10,23 +10,27 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION>
-TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::TAO_Notify_Find_Worker_T ()
-  :id_ (0), result_ (0)
-{
-}
+TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::TAO_Notify_Find_Worker_T () = default;
 
-template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> TYPE*
-TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::find (const TAO_Notify_Object::ID id, CONTAINER& container)
+template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION>
+TYPE*
+TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::find (
+  TAO_Notify_Object::ID const id,
+  CONTAINER& container)
 {
   this->id_ = id;
+  this->result_ = nullptr;
 
   container.collection ()->for_each (this);
 
   return this->result_;
 }
 
-template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION> INTERFACE_PTR
-TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (const TAO_Notify_Object::ID id, CONTAINER& container)
+template<class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION>
+INTERFACE_PTR
+TAO_Notify_Find_Worker_T<TYPE,INTERFACE,INTERFACE_PTR,EXCEPTION>::resolve (
+  TAO_Notify_Object::ID const id,
+  CONTAINER& container)
 {
   this->find (id, container);
 

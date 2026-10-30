@@ -6,7 +6,7 @@
 namespace
 {
   // defaults only
-  const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+  ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
   int expected   = 200;
   int maybe_lost = 400;
 }
@@ -15,7 +15,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:e:l:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -72,7 +72,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      Payload_Receiver *payload_receiver_impl;
+      Payload_Receiver *payload_receiver_impl = nullptr;
       ACE_NEW_RETURN (payload_receiver_impl,
                       Payload_Receiver (),
                       1);
@@ -108,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                  "(%P) Server waiting for %d (+%d possible) messages...\n",
                  expected, maybe_lost));
 
-      const ACE_Time_Value start_time = ACE_OS::gettimeofday ();
+      ACE_Time_Value const start_time = ACE_OS::gettimeofday ();
       ACE_Time_Value end_time = start_time + ACE_Time_Value (27);
       ACE_Time_Value runtime;
       int count = 0;
@@ -178,7 +178,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P) Ending server (result %d)\n", result));
       return result;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P) Server terminated by: "));
       ex._tao_print_exception ("CORBA Exception:");

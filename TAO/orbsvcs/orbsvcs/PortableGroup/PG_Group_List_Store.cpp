@@ -24,24 +24,24 @@ namespace TAO
   class PG_Group_List_Store_File_Guard : public TAO::Storable_File_Guard
   {
   public:
-    PG_Group_List_Store_File_Guard (PG_Group_List_Store & list_store,
-                                    Method_Type method_type);
+    PG_Group_List_Store_File_Guard (PG_Group_List_Store &list_store,
+                                    Method_Type const method_type);
 
-    ~PG_Group_List_Store_File_Guard () noexcept(false);
+    ~PG_Group_List_Store_File_Guard () noexcept(false) override;
 
-    virtual void set_object_last_changed (const time_t & time);
+    void set_object_last_changed (time_t const &time) override;
 
-    virtual time_t get_object_last_changed ();
+    time_t get_object_last_changed () override;
 
-    virtual bool object_obsolete ();
+    bool object_obsolete () override;
 
-    virtual void mark_object_current ();
+    void mark_object_current () override;
 
-    virtual int load_from_stream ();
+    int load_from_stream () override;
 
-    virtual bool is_loaded_from_stream ();
+    bool is_loaded_from_stream () override;
 
-    virtual TAO::Storable_Base * create_stream (const char * mode);
+    TAO::Storable_Base * create_stream (char const *mode) override;
 
 private:
     PG_Group_List_Store & list_store_;
@@ -49,7 +49,7 @@ private:
 }
 
 TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
-  PG_Group_List_Store & list_store, Method_Type method_type)
+  PG_Group_List_Store &list_store, Method_Type const method_type)
   : TAO::Storable_File_Guard(true),
   list_store_(list_store)
 {
@@ -61,7 +61,7 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
     {
       this->init (method_type);
     }
-  catch (const TAO::Storable_Exception &)
+  catch (TAO::Storable_Exception const &)
     {
       throw CORBA::INTERNAL ();
     }
@@ -78,7 +78,7 @@ TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard () noexcept
 
 void
 TAO::PG_Group_List_Store_File_Guard::set_object_last_changed (
-  const time_t & time)
+  time_t const &time)
 {
   list_store_.last_changed_ = time;
 }
@@ -120,7 +120,7 @@ TAO::PG_Group_List_Store_File_Guard::is_loaded_from_stream ()
 }
 
 TAO::Storable_Base *
-TAO::PG_Group_List_Store_File_Guard::create_stream (const char * mode)
+TAO::PG_Group_List_Store_File_Guard::create_stream (char const *mode)
 {
   return list_store_.create_stream (mode);
 }
@@ -132,15 +132,11 @@ using SFG = TAO::Storable_File_Guard;
 
 TAO::PG_Group_List_Store::PG_Group_List_Store (
   Storable_Factory & storable_factory)
-  : next_group_id_ (0)
-  , storable_factory_ (storable_factory)
-  , loaded_from_stream_ (false)
-  , last_changed_ (0)
-  , stale_ (false)
+  : storable_factory_ (storable_factory)
 {
   // Create a temporary stream simply to check if a readable
   // version already exists.
-  bool stream_exists = false;
+  bool stream_exists {};
   {
     std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
@@ -159,15 +155,13 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (
     }
 }
 
-TAO::PG_Group_List_Store::~PG_Group_List_Store ()
-{
-}
+TAO::PG_Group_List_Store::~PG_Group_List_Store () = default;
 
 PortableGroup::ObjectGroupId
 TAO::PG_Group_List_Store::get_next_group_id ()
 {
   File_Guard fg(*this, SFG::MUTATOR);
-  PortableGroup::ObjectGroupId next_id = this->next_group_id_;
+  PortableGroup::ObjectGroupId const next_id = this->next_group_id_;
   ++this->next_group_id_;
   this->write (fg.peer ());
   return next_id;
@@ -217,10 +211,10 @@ TAO::PG_Group_List_Store::read (TAO::Storable_Base & stream)
 
   stream >> this->next_group_id_;
 
-  ACE_UINT64 size;
+  ACE_UINT64 size {};
   stream >> size;
 
-  PortableGroup::ObjectGroupId group_id;
+  PortableGroup::ObjectGroupId group_id {};
   for (ACE_UINT64 i = 0; i < size; ++i)
     {
       stream >> group_id;
@@ -245,9 +239,9 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 }
 
 TAO::Storable_Base *
-TAO::PG_Group_List_Store::create_stream (const char * mode)
+TAO::PG_Group_List_Store::create_stream (char const *mode)
 {
-  ACE_CString file_name("ObjectGroup_global");
+  ACE_CString const file_name ("ObjectGroup_global");
 
   return this->storable_factory_.create_stream (
     file_name.c_str (), mode);

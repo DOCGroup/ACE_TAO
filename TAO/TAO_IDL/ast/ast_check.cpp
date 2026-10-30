@@ -65,68 +65,30 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // The check ensures that for every forward declared struct or union we also
 // saw a full definition.
 
+#include <vector>
+
 #include "global_extern.h"
 #include "utl_err.h"
 
 #include "utl_scope.h"
 
 // Static storage for remembering nodes.
-static AST_Type  **ast_fwds = nullptr;
-static long  ast_n_fwds_used = 0;
-static long  ast_n_fwds_alloc = 0;
-
-#undef  INCREMENT
-#define  INCREMENT  64
+static std::vector<AST_Type *> ast_fwds;
 
 // Store a node representing a forward declared struct or union.
 void
 AST_record_fwd_decl (AST_Type *n)
 {
-  AST_Type **o_ast_fwds = nullptr;
-  long o_ast_n_fwds_alloc = 0;
-
-  // Make sure there's space to store one more.
-  if (ast_n_fwds_used == ast_n_fwds_alloc)
-    {
-      if (ast_n_fwds_alloc == 0)
-        {
-          ast_n_fwds_alloc = INCREMENT;
-          ACE_NEW (ast_fwds,
-                   AST_Type *[ast_n_fwds_alloc]);
-        }
-      else
-        {
-          o_ast_fwds = ast_fwds;
-          o_ast_n_fwds_alloc = ast_n_fwds_alloc;
-
-          ast_n_fwds_alloc += INCREMENT;
-          ACE_NEW (ast_fwds,
-                   AST_Type *[ast_n_fwds_alloc]);
-
-          for (long i = 0; i < o_ast_n_fwds_alloc; i++)
-            {
-              ast_fwds[i] = o_ast_fwds[i];
-            }
-
-          delete o_ast_fwds;
-        }
-    }
-
-  // Insert new node.
-  ast_fwds[ast_n_fwds_used++] = n;
+  ast_fwds.push_back (n);
 }
 
 // Check that all forward declared structs and unions were also defined.
 TAO_IDL_FE_Export void
 AST_check_fwd_decls ()
 {
-  AST_Type *d = nullptr;
-
-  for (long i = 0; i < ast_n_fwds_used; ++i)
+  for (AST_Type *decl : ast_fwds)
     {
-      d = ast_fwds[i];
-
-      if (!d->is_defined ())
+      if (!decl->is_defined ())
         {
           // The member pd_full_definition is no longer set for
           // every fwd decl, if there is more than one. So if
@@ -134,12 +96,12 @@ AST_check_fwd_decls ()
           // that has the full def, and emit an error only if
           // this lookup fails.
           AST_Decl *f =
-            d->defined_in ()->lookup_by_name_local (d->local_name (),
-                                                    true);
+            decl->defined_in ()->lookup_by_name_local (decl->local_name (),
+                                                       true);
 
           if (f == nullptr)
             {
-              idl_global->err ()->fwd_decl_not_defined (d);
+              idl_global->err ()->fwd_decl_not_defined (decl);
             }
         }
     }
@@ -147,8 +109,5 @@ AST_check_fwd_decls ()
   // This method is called once per file in the command line,
   // in between which the elements of ast_fwds are destroyed,
   // so we have to clean up.
-  delete [] ast_fwds;
-  ast_fwds = nullptr;
-  ast_n_fwds_alloc = 0;
-  ast_n_fwds_used = 0;
+  std::vector<AST_Type *> ().swap (ast_fwds);
 }

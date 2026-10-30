@@ -48,8 +48,8 @@ TAO_AV_UDP_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_UDP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                         const void *arg)
+TAO_AV_UDP_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
+                                         void const *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
@@ -168,7 +168,7 @@ TAO_AV_UDP_Transport::TAO_AV_UDP_Transport (TAO_AV_UDP_Flow_Handler *handler)
 TAO_AV_UDP_Transport::~TAO_AV_UDP_Transport () = default;
 
 int
-TAO_AV_UDP_Transport::set_remote_address (const ACE_INET_Addr &address)
+TAO_AV_UDP_Transport::set_remote_address (ACE_INET_Addr const &address)
 {
   this->peer_addr_ = address;
   return 0;
@@ -199,7 +199,7 @@ TAO_AV_UDP_Transport::get_peer_addr ()
 }
 
 ssize_t
-TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
+TAO_AV_UDP_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *)
 {
   // For the most part this was copied from GIOP::send_request and
   // friends.
@@ -209,7 +209,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (ACE_Message_Block const *i = mblk;
        i != nullptr;
        i = i->cont ())
     {
@@ -228,7 +228,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
           // we should set ACE_IOV_MAX to that limit.
           if (iovcnt == ACE_IOV_MAX)
             {
-               n = this->handler_->get_socket ()->send ((const iovec *) iov,
+               n = this->handler_->get_socket ()->send ((iovec const *) iov,
                                                         iovcnt,
                                                         this->peer_addr_);
 
@@ -244,7 +244,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->get_socket ()->send ((const iovec *) iov,
+      n = this->handler_->get_socket ()->send ((iovec const *) iov,
                                                iovcnt,
                                                this->peer_addr_);
 
@@ -258,7 +258,7 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
 }
 
 ssize_t
-TAO_AV_UDP_Transport::send (const char *buf,
+TAO_AV_UDP_Transport::send (char const *buf,
                             size_t len,
                             ACE_Time_Value *)
 {
@@ -271,11 +271,11 @@ TAO_AV_UDP_Transport::send (const char *buf,
 }
 
 ssize_t
-TAO_AV_UDP_Transport::send (const iovec *iov,
+TAO_AV_UDP_Transport::send (iovec const *iov,
                           int iovcnt,
                           ACE_Time_Value *)
 {
-  return this->handler_->get_socket ()->send ((const iovec *) iov,
+  return this->handler_->get_socket ()->send ((iovec const *) iov,
                                               iovcnt,
                                               this->peer_addr_);
 }
@@ -314,11 +314,7 @@ TAO_AV_UDP_Transport::recv (iovec *iov,
 // TAO_AV_UDP_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_UDP_Acceptor::TAO_AV_UDP_Acceptor ()
-  : address_ (0),
-    control_inet_address_ (0)
-{
-}
+TAO_AV_UDP_Acceptor::TAO_AV_UDP_Acceptor () = default;
 
 TAO_AV_UDP_Acceptor::~TAO_AV_UDP_Acceptor ()
 {
@@ -560,11 +556,7 @@ TAO_AV_UDP_Acceptor::close ()
 //------------------------------------------------------------
 // TAO_AV_UDP_Connector
 //------------------------------------------------------------
-TAO_AV_UDP_Connector::TAO_AV_UDP_Connector ()
-  : control_inet_address_ (0)
-  , delete_control_inet_address_ (false)
-{
-}
+TAO_AV_UDP_Connector::TAO_AV_UDP_Connector () = default;
 
 TAO_AV_UDP_Connector::~TAO_AV_UDP_Connector ()
 {
@@ -915,7 +907,7 @@ TAO_AV_UDP_Factory::TAO_AV_UDP_Factory ()
 TAO_AV_UDP_Factory::~TAO_AV_UDP_Factory () = default;
 
 int
-TAO_AV_UDP_Factory::match_protocol (const char *protocol_string)
+TAO_AV_UDP_Factory::match_protocol (char const *protocol_string)
 {
   if (ACE_OS::strcasecmp (protocol_string,"UDP") == 0)
     return 1;
@@ -983,7 +975,7 @@ TAO_AV_UDP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_AV_UDP_Object::send_frame (const iovec *iov,
+TAO_AV_UDP_Object::send_frame (iovec const *iov,
                                int iovcnt,
                                TAO_AV_frame_info * /*frame_info*/)
 {
@@ -994,7 +986,7 @@ TAO_AV_UDP_Object::send_frame (const iovec *iov,
 }
 
 int
-TAO_AV_UDP_Object::send_frame (const char*buf,
+TAO_AV_UDP_Object::send_frame (char const *buf,
                                size_t len)
 {
   int const result = this->transport_->send (buf, len, 0);
@@ -1039,7 +1031,7 @@ TAO_AV_UDP_Flow_Factory::init (int /* argc */,
 }
 
 int
-TAO_AV_UDP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_UDP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strcasecmp (flow_string,"UDP") == 0)
     return 1;

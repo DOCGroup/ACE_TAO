@@ -38,8 +38,15 @@ class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher
   friend class TAO_GOA;
 
 public:
+  PortableGroup_Request_Dispatcher () = default;
+
   /// Destructor.
   ~PortableGroup_Request_Dispatcher () override = default;
+
+  PortableGroup_Request_Dispatcher (PortableGroup_Request_Dispatcher const &) = delete;
+  PortableGroup_Request_Dispatcher (PortableGroup_Request_Dispatcher &&) = delete;
+  PortableGroup_Request_Dispatcher & operator= (PortableGroup_Request_Dispatcher const &) = delete;
+  PortableGroup_Request_Dispatcher & operator= (PortableGroup_Request_Dispatcher &&) = delete;
 
   /**
    * Dispatch a request.

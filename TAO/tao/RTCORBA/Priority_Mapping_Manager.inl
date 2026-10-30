@@ -22,7 +22,8 @@ TAO_Priority_Mapping_Manager_var::ptr () const
 }
 
 ACE_INLINE
-TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var (const ::TAO_Priority_Mapping_Manager_var &p) // copy constructor
+TAO_Priority_Mapping_Manager_var::TAO_Priority_Mapping_Manager_var (
+  TAO_Priority_Mapping_Manager_var const &p) // copy constructor
   : TAO_Base_var (),
     ptr_ (TAO_Priority_Mapping_Manager::_duplicate (p.ptr ()))
 {}
@@ -42,7 +43,7 @@ TAO_Priority_Mapping_Manager_var::operator= (TAO_Priority_Mapping_Manager_ptr p)
 }
 
 ACE_INLINE TAO_Priority_Mapping_Manager_var &
-TAO_Priority_Mapping_Manager_var::operator= (const ::TAO_Priority_Mapping_Manager_var &p)
+TAO_Priority_Mapping_Manager_var::operator= (TAO_Priority_Mapping_Manager_var const &p)
 {
   if (this != &p)
   {
@@ -53,7 +54,7 @@ TAO_Priority_Mapping_Manager_var::operator= (const ::TAO_Priority_Mapping_Manage
 }
 
 ACE_INLINE
-TAO_Priority_Mapping_Manager_var::operator const ::TAO_Priority_Mapping_Manager_ptr &() const // cast
+TAO_Priority_Mapping_Manager_var::operator ::TAO_Priority_Mapping_Manager_ptr const &() const // cast
 {
   return this->ptr_;
 }
@@ -155,19 +156,20 @@ TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (TAO_Priority
 }
 
 ACE_INLINE
-TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (const ::TAO_Priority_Mapping_Manager_out &p) // copy constructor
+TAO_Priority_Mapping_Manager_out::TAO_Priority_Mapping_Manager_out (
+  TAO_Priority_Mapping_Manager_out const &p) // copy constructor
   : ptr_ (const_cast<TAO_Priority_Mapping_Manager_out &> (p).ptr_)
 {}
 
 ACE_INLINE ::TAO_Priority_Mapping_Manager_out &
-TAO_Priority_Mapping_Manager_out::operator= (const ::TAO_Priority_Mapping_Manager_out &p)
+TAO_Priority_Mapping_Manager_out::operator= (TAO_Priority_Mapping_Manager_out const &p)
 {
   this->ptr_ = const_cast<TAO_Priority_Mapping_Manager_out&> (p).ptr_;
   return *this;
 }
 
 ACE_INLINE TAO_Priority_Mapping_Manager_out &
-TAO_Priority_Mapping_Manager_out::operator= (const ::TAO_Priority_Mapping_Manager_var &p)
+TAO_Priority_Mapping_Manager_out::operator= (TAO_Priority_Mapping_Manager_var const &p)
 {
   this->ptr_ = ::TAO_Priority_Mapping_Manager::_duplicate (p.ptr ());
   return *this;

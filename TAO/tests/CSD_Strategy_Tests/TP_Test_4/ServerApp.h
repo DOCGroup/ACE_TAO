@@ -13,10 +13,15 @@ class ServerApp : public TestAppBase
 {
   public:
     ServerApp();
-    virtual ~ServerApp() = default;
+    ~ServerApp() override = default;
 
   protected:
-    virtual int run_i(int argc, ACE_TCHAR* argv[]);
+    int run_i(int argc, ACE_TCHAR* argv[]) override;
+
+    ServerApp (ServerApp const &) = delete;
+    ServerApp (ServerApp &&) = delete;
+    ServerApp & operator= (ServerApp const &) = delete;
+    ServerApp & operator= (ServerApp &&) = delete;
 
   private:
     // These are all called, in order, by the run_i() method.
@@ -48,7 +53,7 @@ class ServerApp : public TestAppBase
     PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
                                        const char* poa_name);
 
-    typedef ServantList<Foo_C_i> ServantListType;
+    using ServantListType = ServantList<Foo_C_i>;
 
     CORBA::ORB_var               orb_;
     PortableServer::POA_var      poa_;

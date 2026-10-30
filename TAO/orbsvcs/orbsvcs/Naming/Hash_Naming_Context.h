@@ -57,8 +57,8 @@ public:
    * Return 0 on success and -1 on failure, 1 if there already is a
    * binding with @a id and @a kind.
    */
-  virtual int bind (const char *id,
-                    const char *kind,
+  virtual int bind (char const *id,
+                    char const *kind,
                     CORBA::Object_ptr obj,
                     CosNaming::BindingType type) = 0;
 
@@ -67,15 +67,15 @@ public:
    * one if one doesn't exist) with the specified parameters.  Returns
    * -1 on failure.
    */
-  virtual int rebind (const char *id,
-                      const char *kind,
+  virtual int rebind (char const *id,
+                      char const *kind,
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type) = 0;
 
   /// Remove a binding containing @a id and @a kind from the table.
   /// Return 0 on success and -1 on failure.
-  virtual int unbind (const char * id,
-                      const char * kind) = 0;
+  virtual int unbind (char const *id,
+                      char const *kind) = 0;
 
   /**
    * Find the binding containing @a id and @a kind in the table, and
@@ -84,8 +84,8 @@ public:
    * reference is assigned to @a obj, so the caller is responsible for
    * its deallocation.
    */
-  virtual int find (const char * id,
-                    const char * kind,
+  virtual int find (char const *id,
+                    char const *kind,
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) = 0;
 };
@@ -109,13 +109,18 @@ class TAO_Naming_Serv_Export TAO_Hash_Naming_Context :public TAO_Naming_Context_
 public:
   /// Constructor.
   TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
-                           const char *poa_id);
+                           char const *poa_id);
 
   /// Set our interface_ pointer.
   void interface (TAO_Naming_Context *i);
 
   /// Destructor.
   ~TAO_Hash_Naming_Context () override;
+
+  TAO_Hash_Naming_Context (TAO_Hash_Naming_Context const &) = delete;
+  TAO_Hash_Naming_Context (TAO_Hash_Naming_Context &&) = delete;
+  TAO_Hash_Naming_Context &operator= (TAO_Hash_Naming_Context const &) = delete;
+  TAO_Hash_Naming_Context &operator= (TAO_Hash_Naming_Context &&) = delete;
 
   // = Accessors.
 
@@ -141,7 +146,7 @@ public:
    * be bound using <bind_context> and <rebind_context> in order to
    * participate in name resolution later.
    */
-  void bind (const CosNaming::Name &n,
+  void bind (CosNaming::Name const &n,
              CORBA::Object_ptr obj) override;
 
   /**
@@ -150,7 +155,7 @@ public:
    * context.  In that case, the existing binding is replaced with the
    * new one.
    */
-  void rebind (const CosNaming::Name &n,
+  void rebind (CosNaming::Name const &n,
                CORBA::Object_ptr obj) override;
 
   /**
@@ -158,7 +163,7 @@ public:
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  void bind_context (const CosNaming::Name &n,
+  void bind_context (CosNaming::Name const &n,
                      CosNaming::NamingContext_ptr nc) override;
 
   /**
@@ -166,7 +171,7 @@ public:
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-  void rebind_context (const CosNaming::Name &n,
+  void rebind_context (CosNaming::Name const &n,
                        CosNaming::NamingContext_ptr nc) override;
 
   /**
@@ -176,14 +181,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
+  CORBA::Object_ptr resolve (CosNaming::Name const &n) override;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  void unbind (const CosNaming::Name &n) override;
+  void unbind (CosNaming::Name const &n) override;
 
   /**
    * This operation creates a new context and binds it to the name
@@ -191,7 +196,7 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n) override;
+  CosNaming::NamingContext_ptr bind_new_context (CosNaming::Name const &n) override;
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -218,7 +223,7 @@ protected:
    * component that doesn't need to be resolved), and returns a
    * pointer to the target context.
    */
-  CosNaming::NamingContext_ptr get_context (const CosNaming::Name &name);
+  CosNaming::NamingContext_ptr get_context (CosNaming::Name const &name);
 
   /**
    * Pointer to the data structure used to store this Naming Context's

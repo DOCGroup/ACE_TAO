@@ -33,9 +33,7 @@ be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh ()
-{
-}
+be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh () = default;
 
 int
 be_visitor_connector_dds_exh::visit_connector (be_connector *node)
@@ -51,17 +49,11 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     }
 
   // If we have a connector within a templated module
-  if (! this->t_args_.is_empty ())
+  if (!this->t_args_.empty ())
     {
       // Generate all needed dds_traits
-      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
-          !i.done ();
-          i.advance ())
+      for (AST_Decl *d : this->t_args_)
         {
-          AST_Decl **item = nullptr;
-          i.next (item);
-          AST_Decl *d = *item;
-
           if (this->is_dds_type (node, d))
             {
               this->gen_dds_traits (d);
@@ -72,7 +64,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       this->gen_connector_traits ();
 
       os_ << be_nl_2
-          << "class " << this->export_macro_.c_str () << " "
+          << "class " << this->export_macro_ << " "
           << this->node_->local_name () << "_exec_i" << be_idt_nl
           << ": public " << this->base_tname_ << "_Connector_T";
 
@@ -83,14 +75,8 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
       size_t slot = 1UL;
 
-      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
-          !i.done ();
-          i.advance (), ++slot)
+      for (AST_Decl *d : this->t_args_)
         {
-          AST_Decl **item = nullptr;
-          i.next (item);
-          AST_Decl *d = *item;
-
           if (this->is_dds_type (node, d))
             {
               os_ << d->flat_name ()
@@ -105,7 +91,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
           bool is_fixed = false;
           FE_Utils::T_Param_Info *param = nullptr;
 
-          if (this->t_params_->get (param, slot - 1) != 0)
+          if (slot - 1 >= this->t_params_->size ())
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_connector_dds_exh::")
@@ -113,6 +99,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
                                  ACE_TEXT ("template param fetch failed\n ")),
                                 -1);
             }
+          param = &(*this->t_params_)[slot - 1];
 
           if (d->node_type () == AST_Decl::NT_typedef)
             {
@@ -147,6 +134,8 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
             {
               os_ << "," << be_nl;
             }
+
+          ++slot;
         }
 
       os_ << ">";
@@ -169,15 +158,9 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
   /// also done in visit_mirror_port(), but we must also do
   /// it here to catch a port interface that didn't come to
   /// us from an extended port or mirror port.
-  for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
-        this->port_ifaces_);
-      !iter.done ();
-      iter.advance ())
+  for (be_interface *iface : this->port_ifaces_)
     {
-      be_interface **item = nullptr;
-      iter.next (item);
-
-      (*item)->dds_connector_traits_done (false);
+      iface->dds_connector_traits_done (false);
     }
 
   return 0;
@@ -212,15 +195,9 @@ be_visitor_connector_dds_exh::visit_mirror_port (
 
   /// Unset the flags in the port interfaces list so
   /// they can be used again in another port.
-  for (ACE_Unbounded_Queue<be_interface *>::ITERATOR iter (
-         this->port_ifaces_);
-       !iter.done ();
-       iter.advance ())
+  for (be_interface *iface : this->port_ifaces_)
     {
-      be_interface **item = nullptr;
-      iter.next (item);
-
-      (*item)->dds_connector_traits_done (false);
+      iface->dds_connector_traits_done (false);
     }
 
   return 0;
@@ -263,7 +240,8 @@ be_visitor_connector_dds_exh::visit_attribute (
     }
 
   os_ << be_nl
-      << "using " << node->local_name ()->get_string () << "_type = "
+      << "using " << node->local_name ()->get_string ()
+      << "_type = "
       << node->field_type ()->full_name () << ";";
 
   return 0;
@@ -396,8 +374,8 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
     {
       AST_Decl *scope = ScopeAsDecl (iface->defined_in ());
       bool global = (scope->node_type () == AST_Decl::NT_root);
-      const char *smart_scope = (global ? "" : "::");
-      const char *lname = iface->local_name ();
+      std::string const smart_scope = global ? "" : "::";
+      std::string const lname = iface->local_name ();
 
       os_ << be_nl
           << "using " << port_elem->local_name ()->get_string () << "_type = ::"
@@ -405,6 +383,6 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
           << lname << ";";
 
       iface->dds_connector_traits_done (true);
-      this->port_ifaces_.enqueue_tail (iface);
+      this->port_ifaces_.push_back (iface);
     }
 }

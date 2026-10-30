@@ -10,16 +10,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Factory.inl"
-#endif /* __ACE_INLINE__ */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_EC_Sched_Factory::~TAO_EC_Sched_Factory ()
-{
-}
 
 int
 TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
@@ -28,7 +20,7 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR* arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatching")) == 0)
         {
@@ -36,7 +28,7 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->dispatching_ = 0;
@@ -66,7 +58,7 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->filtering_ = 0;
@@ -100,7 +92,7 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->timeout_ = 0;
@@ -128,7 +120,7 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->scheduling_ = 0;

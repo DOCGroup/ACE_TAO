@@ -40,7 +40,7 @@ public:
   /// Constructor
   TAO_CEC_TypedProxyPushConsumer (
       TAO_CEC_TypedEventChannel* typed_event_channel,
-      const ACE_Time_Value &timeout);
+      ACE_Time_Value const &timeout);
 
   /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer () override;
@@ -71,7 +71,7 @@ public:
 
   void push (CORBA::Any const &event) override;
 
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (TAO_CEC_TypedEvent const &typed_event);
 
   void disconnect_push_consumer () override;
 
@@ -106,15 +106,15 @@ private:
   TAO_CEC_TypedProxyPushConsumer &operator= (TAO_CEC_TypedProxyPushConsumer &&) = delete;
 
   /// The typed supplier admin, used for activation and memory management.
-  TAO_CEC_TypedEventChannel* typed_event_channel_;
+  TAO_CEC_TypedEventChannel* typed_event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The typed supplier -- use apply_policy() instead of assigning directly to
   /// typed_supplier_.  This will keep typed_supplier_ and
@@ -125,14 +125,13 @@ private:
   CosEventComm::PushSupplier_var nopolicy_typed_supplier_;
 
   /// The DSI impl
-  TAO_CEC_DynamicImplementationServer* dsi_impl_;
+  TAO_CEC_DynamicImplementationServer* dsi_impl_ {};
 
   /// The DSI Portable Server OID
   PortableServer::ObjectId_var oid_;
 
-  /// If the flag is not zero then we are connected, notice that the
-  /// supplier can be nil.
-  int connected_;
+  /// Whether the proxy is connected. The supplier can be nil.
+  bool connected_ {};
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -186,9 +185,8 @@ private:
   /// The proxy whose lifetime is controlled by the reference count
   TAO_CEC_TypedProxyPushConsumer *proxy_;
 
-  /// This flag is set to 1 if the reference count was successfully
-  /// acquired.
-  int locked_;
+  /// Whether the reference count was successfully acquired.
+  bool locked_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

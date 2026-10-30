@@ -34,8 +34,8 @@ public:
   /**
    * @param mt Specifies whether multithreaded ORB is used.
    */
-  AMI_Replication_Strategy(bool mt);
-  ~AMI_Replication_Strategy() override;
+  explicit AMI_Replication_Strategy(bool mt);
+  ~AMI_Replication_Strategy() override = default;
   void replicate_request(FTRT::State const& state,
     RollbackOperation rollback,
     FtRtecEventChannelAdmin::ObjectId const& oid) override;

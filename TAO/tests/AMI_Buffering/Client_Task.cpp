@@ -3,7 +3,6 @@
 
 Client_Task::Client_Task (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , terminate_loop_ (false)
 {
 }
 
@@ -31,7 +30,7 @@ Client_Task::svc ()
             break;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

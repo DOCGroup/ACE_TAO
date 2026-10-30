@@ -115,7 +115,7 @@ TAO_Hash_LogRecordStore::reset_gauge ()
 }
 
 int
-TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec)
+TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord const &const_rec)
 {
   // Get log record size...
   size_t record_size = log_record_size (const_rec);
@@ -238,8 +238,7 @@ TAO_Hash_LogRecordStore::purge_old_records ()
 
 void
 TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
-                const DsLogAdmin::NVList
-                &attr_list)
+                                              DsLogAdmin::NVList const &attr_list)
 {
   // TODO: validate attributes here.
 
@@ -259,10 +258,9 @@ TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
 
 CORBA::ULong
 TAO_Hash_LogRecordStore::set_records_attribute (
-  const char *grammar,
-  const char *constraint,
-  const DsLogAdmin::NVList
-  &attr_list)
+  char const *grammar,
+  char const *constraint,
+  DsLogAdmin::NVList const &attr_list)
 {
   this->check_grammar (grammar);
 
@@ -321,7 +319,7 @@ TAO_Hash_LogRecordStore::flush ()
 }
 
 size_t
-TAO_Hash_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
+TAO_Hash_LogRecordStore::log_record_size (DsLogAdmin::LogRecord const &rec)
 {
   size_t mb_size = 0;
   TAO::Any_Impl *impl = rec.info.impl ();
@@ -344,7 +342,7 @@ TAO_Hash_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
 }
 
 DsLogAdmin::RecordList*
-TAO_Hash_LogRecordStore::query_i (const char *constraint,
+TAO_Hash_LogRecordStore::query_i (char const *constraint,
                                   DsLogAdmin::Iterator_out &iter_out,
                                   CORBA::ULong how_many)
 {
@@ -422,8 +420,8 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
 }
 
 DsLogAdmin::RecordList*
-TAO_Hash_LogRecordStore::query (const char *grammar,
-                                const char *constraint,
+TAO_Hash_LogRecordStore::query (char const *grammar,
+                                char const *constraint,
                                 DsLogAdmin::Iterator_out iter_out)
 {
   this->check_grammar (grammar);
@@ -462,8 +460,8 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::match (const char* grammar,
-                                const char *constraint)
+TAO_Hash_LogRecordStore::match (char const *grammar,
+                                char const *constraint)
 {
   this->check_grammar (grammar);
 
@@ -492,8 +490,8 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::delete_records (const char *grammar,
-                                         const char *constraint)
+TAO_Hash_LogRecordStore::delete_records (char const *grammar,
+                                         char const *constraint)
 {
   this->check_grammar (grammar);
 
@@ -527,7 +525,7 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &ids)
+TAO_Hash_LogRecordStore::delete_records_by_id (DsLogAdmin::RecordIdList const &ids)
 {
   CORBA::ULong count (0);
 
@@ -578,15 +576,15 @@ TAO_Hash_LogRecordStore::remove_old_records ()
   return count;
 }
 
-ACE_SYNCH_RW_MUTEX&
-TAO_Hash_LogRecordStore::lock()
+ACE_SYNCH_RW_MUTEX &
+TAO_Hash_LogRecordStore::lock ()
 {
   return lock_;
 }
 
 
 void
-TAO_Hash_LogRecordStore::check_grammar (const char* grammar)
+TAO_Hash_LogRecordStore::check_grammar (char const *grammar)
 {
   // Verify grammar
   if (ACE_OS::strcmp (grammar, "TCL") != 0 &&
@@ -621,7 +619,8 @@ TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds () const
 }
 
 void
-TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds)
+TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (
+    DsLogAdmin::CapacityAlarmThresholdList const &thresholds)
 {
   this->thresholds_ = thresholds;
 }
@@ -646,7 +645,7 @@ TAO_Hash_LogRecordStore::get_interval () const
 }
 
 void
-TAO_Hash_LogRecordStore::set_interval (const DsLogAdmin::TimeInterval &interval)
+TAO_Hash_LogRecordStore::set_interval (DsLogAdmin::TimeInterval const &interval)
 {
   this->interval_ = interval;
 }
@@ -676,7 +675,7 @@ TAO_Hash_LogRecordStore::get_log_qos () const
 }
 
 void
-TAO_Hash_LogRecordStore::set_log_qos (const DsLogAdmin::QoSList& qos)
+TAO_Hash_LogRecordStore::set_log_qos (DsLogAdmin::QoSList const &qos)
 {
   this->log_qos_ = qos;
 }
@@ -717,7 +716,7 @@ TAO_Hash_LogRecordStore::get_week_mask ()
 }
 
 void
-TAO_Hash_LogRecordStore::set_week_mask (const DsLogAdmin::WeekMask &masks)
+TAO_Hash_LogRecordStore::set_week_mask (DsLogAdmin::WeekMask const &masks)
 {
   this->weekmask_ = masks;
 }

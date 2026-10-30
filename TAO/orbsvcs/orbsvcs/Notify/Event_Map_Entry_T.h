@@ -72,10 +72,10 @@ public:
 
 protected:
   /// The Collection
-  COLLECTION* collection_;
+  COLLECTION* collection_ {};
 
   /// Count of PROXY's connected in the collection;
-  int count_;
+  int count_ {};
 
   /// Count of users accessing this entry.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> usage_count_;

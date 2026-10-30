@@ -75,6 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 # define NFILES 1024
 #endif /* ! NFILES */
 
-const char *DRV_files[NFILES];
+char const *DRV_files[NFILES];
 long DRV_nfiles = 0;
 long DRV_file_index = -1;

@@ -15,10 +15,7 @@ namespace TAO_Notify
   extern const char TOPOLOGY_ID_NAME[];
 
   XML_Saver::XML_Saver(bool timestamp)
-    : output_ (nullptr)
-    , close_out_ (false)
-    , backup_count_ (1)
-    , timestamp_ (timestamp)
+    : timestamp_ (timestamp)
   {
   }
 
@@ -121,7 +118,7 @@ namespace TAO_Notify
         ACE_Time_Value const now = ACE_High_Res_Timer::gettimeofday();
 
         ACE_UINT64 nowus = now.usec();
-        static const ACE_UINT64 USECSPERSEC = 1000 * 1000;
+        static constexpr ACE_UINT64 USECSPERSEC = 1000 * 1000;
         ACE_UINT64 const tmpus = now.sec();
         nowus += tmpus * USECSPERSEC;
 

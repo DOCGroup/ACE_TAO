@@ -14,9 +14,9 @@
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <new>
 
-TAO::ORBInitializer_Registry::ORBInitializer_Registry () = default;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
@@ -49,7 +49,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
 
       this->register_orb_initializer (orb_initializer.in ());
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -96,11 +96,15 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
                  guard,
                  this->lock_);
 
-      // Increase the length of the ORBInitializer array by one.
       size_t const cur_len = this->initializers_.size ();
-      size_t const new_len = cur_len + 1;
-      if (this->initializers_.size (new_len) != 0)
-        throw ::CORBA::INTERNAL ();
+      try
+        {
+          this->initializers_.emplace_back ();
+        }
+      catch (std::bad_alloc const &)
+        {
+          throw ::CORBA::INTERNAL ();
+        }
 
       // Add the given ORBInitializer to the sequence.
       if (TAO_debug_level > 8)

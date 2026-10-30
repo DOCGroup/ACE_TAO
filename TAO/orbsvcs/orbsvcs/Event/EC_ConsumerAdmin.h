@@ -54,10 +54,10 @@ public:
    * Constructor. Builds one using the @a event_channel argument.
    * In any case it assumes ownership.
    */
-  TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// Destructor...
-  virtual ~TAO_EC_ConsumerAdmin ();
+  virtual ~TAO_EC_ConsumerAdmin () = default;
 
   TAO_EC_ConsumerAdmin (TAO_EC_ConsumerAdmin const &) = delete;
   TAO_EC_ConsumerAdmin (TAO_EC_ConsumerAdmin &&) = delete;

@@ -15,7 +15,7 @@ void Simple_i::registerCallee (Callee_ptr value)
 
   // register a callback with the reactor so we can invoke the
   // callback method
-  m_orb->orb_core ()->reactor ()->schedule_timer (this, 0, ACE_Time_Value (5));
+  m_orb->orb_core ()->reactor ()->schedule_timer (this, nullptr, ACE_Time_Value (5));
 }
 
 int Simple_i::handle_timeout (ACE_Time_Value const &,

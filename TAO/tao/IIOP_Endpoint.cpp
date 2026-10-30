@@ -20,11 +20,11 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
 
-#include "ace/Vector_T.h"
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 #include <cstring>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -215,7 +215,7 @@ TAO_IIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
-  if (std::strchr (h, ':') != 0)
+  if (std::strchr (h, ':') != nullptr)
     this->is_ipv6_decimal_ = true;
 #endif /* ACE_HAS_IPV6 */
 
@@ -235,7 +235,7 @@ TAO_IIOP_Endpoint::next_filtered (TAO_ORB_Core * orb_core, TAO_Endpoint *root)
   bool ipv6_only = false;
   bool prefer_ipv6 = false;
 #if defined (ACE_HAS_IPV6)
-  want_ipv6 = root == 0 || this->is_ipv6_decimal();
+  want_ipv6 = root == nullptr || this->is_ipv6_decimal();
   ipv6_only = orb_core->orb_params()->connect_ipv6_only();
   prefer_ipv6 = orb_core->orb_params()->prefer_ipv6_interfaces();
 #else
@@ -264,7 +264,7 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
 #if defined (ACE_HAS_IPV6)
   if (ipv6_only)
     {
-      if (candidate == 0 || candidate->is_ipv6_decimal())
+      if (candidate == nullptr || candidate->is_ipv6_decimal())
         return candidate;
       const ACE_INET_Addr &addr = candidate->object_addr ();
       bool allowed = addr.get_type () == AF_INET6 &&
@@ -275,9 +275,9 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
     }
   if (prefer_ipv6)
     {
-      if (candidate == 0)
+      if (candidate == nullptr)
         return !want_ipv6 ? candidate :
-          root->next_filtered_i(0, ipv6_only, prefer_ipv6, false);
+          root->next_filtered_i(nullptr, ipv6_only, prefer_ipv6, false);
 
       if (want_ipv6 == candidate->is_ipv6_decimal())
         return candidate;
@@ -396,7 +396,7 @@ TAO_IIOP_Endpoint::add_local_endpoint (TAO_IIOP_Endpoint *ep,
 
 // local helper function for TAO_IIOP_Endpoint::find_preferred_interfaces
 static void
-TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
+TAO_IIOP_Endpoint_get_ip_interfaces (std::vector<ACE_CString> &local_ips)
 {
   ACE_INET_Addr* tmp = nullptr;
   size_t cnt = 0u;
@@ -422,7 +422,7 @@ TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
 static void
 TAO_IIOP_Endpoint_none_duplicate_insert (
   const ACE_CString &value,
-  ACE_Vector<ACE_CString> &vector)
+  std::vector<ACE_CString> &vector)
 {
   bool found= false;
   for (size_t x= 0u; x < vector.size (); ++x)
@@ -444,7 +444,7 @@ void
 TAO_IIOP_Endpoint::find_preferred_interfaces (
   const ACE_CString &host,
   const ACE_CString &csvPreferred,
-  ACE_Vector<ACE_CString> &preferred)
+  std::vector<ACE_CString> &preferred)
 {
   // When no preferred interfaces directives are given we can directly return
   if(csvPreferred.length() == 0)
@@ -452,7 +452,7 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
       return;
     }
 
-  ACE_Vector<ACE_CString> local_ips;
+  std::vector<ACE_CString> local_ips;
   TAO_IIOP_Endpoint_get_ip_interfaces (local_ips);
   if (local_ips.size () == 0)
     {
@@ -536,7 +536,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
                                          bool enforce,
                                          TAO_IIOP_Profile &profile)
 {
-  ACE_Vector<ACE_CString> preferred;
+  std::vector<ACE_CString> preferred;
   find_preferred_interfaces(this->host_.in(), csv, preferred);
   CORBA::ULong count = static_cast<CORBA::ULong> (preferred.size());
   size_t i = 0;

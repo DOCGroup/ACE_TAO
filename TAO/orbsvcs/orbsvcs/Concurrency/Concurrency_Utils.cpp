@@ -15,11 +15,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Default constructor
-TAO_Concurrency_Server::TAO_Concurrency_Server ()
-{
-}
-
 // Constructor which takes an ORB and POA.
 TAO_Concurrency_Server::TAO_Concurrency_Server (CORBA::ORB_ptr orb,
                                                 PortableServer::POA_ptr poa)
@@ -62,7 +57,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
                   "listening as object <%s>\n",
                   str.in ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Concurrency Service");
       return CORBA::Object::_nil ();
@@ -81,7 +76,7 @@ TAO_Concurrency_Server::fini ()
 
       this->poa_->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -95,13 +90,9 @@ TAO_Concurrency_Server::fini ()
 }
 
 CC_LockSetFactory *
-TAO_Concurrency_Server::GetLockSetFactory()
+TAO_Concurrency_Server::GetLockSetFactory ()
 {
   return &this->lock_set_factory_;
-}
-
-TAO_Concurrency_Server::~TAO_Concurrency_Server ()
-{
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

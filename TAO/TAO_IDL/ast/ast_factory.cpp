@@ -87,26 +87,22 @@ AST_Factory::AST_Factory (UTL_ScopedName *n)
               n),
     UTL_Scope (AST_Decl::NT_factory),
     pd_exceptions (nullptr),
-    pd_n_exceptions (0),
-    argument_count_ (-1),
-    has_native_ (0)
+    pd_n_exceptions (0)
 {
 }
 
-AST_Factory::~AST_Factory ()
-{
-}
+AST_Factory::~AST_Factory () = default;
 
 // Public operations.
 
 UTL_ExceptList *
-AST_Factory::exceptions ()
+AST_Factory::exceptions () const
 {
-  return this->pd_exceptions;
+  return this->pd_exceptions.get ();
 }
 
 int
-AST_Factory::n_exceptions ()
+AST_Factory::n_exceptions () const
 {
   return this->pd_n_exceptions;
 }
@@ -132,11 +128,7 @@ AST_Factory::has_native ()
 void
 AST_Factory::destroy ()
 {
-  if (nullptr != this->pd_exceptions)
-    {
-      this->pd_exceptions->destroy ();
-      this->pd_exceptions = nullptr;
-    }
+  this->pd_exceptions.reset ();
 
   this->AST_Decl::destroy ();
   this->UTL_Scope::destroy ();
@@ -152,11 +144,11 @@ AST_Factory::be_add_exceptions (UTL_ExceptList *t)
     }
   else
     {
-      this->pd_exceptions = t;
+      this->pd_exceptions.reset (t);
       this->pd_n_exceptions = (t == nullptr ? 0 : t->length ());
     }
 
-  return this->pd_exceptions;
+  return this->pd_exceptions.get ();
 }
 
 // Private operations.
@@ -218,7 +210,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
   AST_Type *fe = nullptr;
   AST_Decl *d = nullptr;
 
-  this->pd_exceptions = nullptr;
+  this->pd_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t);
        !nl_i.is_done ();
@@ -253,7 +245,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
 
       if (this->pd_exceptions == nullptr)
         {
-          this->pd_exceptions = el;
+          this->pd_exceptions.reset (el);
         }
       else
         {

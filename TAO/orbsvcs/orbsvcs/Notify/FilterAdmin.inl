@@ -14,7 +14,7 @@ TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event)
 
   // We want to return true if atleast one constraint matches.
   FILTER_LIST::ITERATOR iter (this->filter_list_);
-  FILTER_LIST::ENTRY *entry = 0;
+  FILTER_LIST::ENTRY *entry = nullptr;
   CORBA::Boolean ret_val = 0;
 
   for (; iter.next (entry); iter.advance ())

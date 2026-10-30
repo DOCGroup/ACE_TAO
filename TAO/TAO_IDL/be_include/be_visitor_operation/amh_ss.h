@@ -11,6 +11,8 @@
 #ifndef AMH_OPERATION_SS_H
 #define AMH_OPERATION_SS_H
 
+#include <string>
+
 /**
  * @class be_visitor_operation_amh_ss
  *
@@ -20,17 +22,21 @@
 class be_visitor_amh_operation_ss : public be_visitor_operation
 {
 public:
-  be_visitor_amh_operation_ss (be_visitor_context *ctx);
+  explicit be_visitor_amh_operation_ss (be_visitor_context *ctx);
 
-  ~be_visitor_amh_operation_ss ();
+  ~be_visitor_amh_operation_ss () override;
+  be_visitor_amh_operation_ss (be_visitor_amh_operation_ss const &) = delete;
+  be_visitor_amh_operation_ss (be_visitor_amh_operation_ss &&) = delete;
+  be_visitor_amh_operation_ss &operator= (be_visitor_amh_operation_ss const &) = delete;
+  be_visitor_amh_operation_ss &operator= (be_visitor_amh_operation_ss &&) = delete;
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
 
 protected:
   int generate_shared_prologue (be_decl *node,
                                 TAO_OutStream *os,
-                                const char *skel_prefix);
+                                std::string const& skel_prefix);
   int generate_shared_section (be_decl *node,
                                TAO_OutStream *os);
   int generate_shared_epilogue (TAO_OutStream *os);

@@ -28,16 +28,20 @@ class be_visitor_obv_module : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_obv_module (be_visitor_context *ctx);
+  explicit be_visitor_obv_module (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_obv_module ();
+  ~be_visitor_obv_module () override;
+  be_visitor_obv_module (be_visitor_obv_module const &) = delete;
+  be_visitor_obv_module (be_visitor_obv_module &&) = delete;
+  be_visitor_obv_module &operator= (be_visitor_obv_module const &) = delete;
+  be_visitor_obv_module &operator= (be_visitor_obv_module &&) = delete;
 
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 
-  virtual int visit_valuetype (be_valuetype *node);
+  int visit_valuetype (be_valuetype *node) override;
 
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_eventtype (be_eventtype *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_OBV_MODULE_H_ */

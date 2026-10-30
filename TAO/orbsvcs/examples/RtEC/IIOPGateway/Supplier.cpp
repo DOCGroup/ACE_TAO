@@ -7,10 +7,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
+constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
-static const ACE_TCHAR *ecname = 0;
+static ACE_TCHAR const *ecname = nullptr;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -21,10 +21,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Supplier::Supplier ()
-{
-}
 
 int
 Supplier::run (int argc, ACE_TCHAR* argv[])
@@ -128,7 +124,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       // Destroy the POA
       poa->destroy (1, 0);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Supplier::run");
       return 1;
@@ -148,7 +144,7 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-e")) == 0)
         {

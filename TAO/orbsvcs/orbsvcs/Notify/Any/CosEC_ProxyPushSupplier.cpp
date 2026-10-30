@@ -9,10 +9,6 @@ TAO_Notify_CosEC_ProxyPushSupplier::TAO_Notify_CosEC_ProxyPushSupplier ()
 {
 }
 
-TAO_Notify_CosEC_ProxyPushSupplier::~TAO_Notify_CosEC_ProxyPushSupplier ()
-{
-}
-
 void
 TAO_Notify_CosEC_ProxyPushSupplier::release ()
 {

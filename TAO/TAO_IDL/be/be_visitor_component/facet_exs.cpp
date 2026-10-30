@@ -11,18 +11,15 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_facet_exs::be_visitor_facet_exs (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    op_scope_ (nullptr),
-    comment_start_border_ ("/**"),
-    comment_end_border_ (" */")
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_facet_exs::~be_visitor_facet_exs ()
-{
-}
+be_visitor_facet_exs::~be_visitor_facet_exs () = default;
 
 int
 be_visitor_facet_exs::visit_operation (be_operation *node)
@@ -76,7 +73,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 {
   be_type *impl = node->provides_type ();
 
-  ACE_CString lname_str (this->ctx_->port_prefix ());
+  std::string lname_str (this->ctx_->port_prefix ());
   lname_str += node->original_local_name ()->get_string ();
   const char *lname = lname_str.c_str ();
 
@@ -88,7 +85,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
   bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (is_global ? "" : "::");
+  std::string const smart_scope = is_global ? "" : "::";
 
   os_ << be_nl_2
       << lname << "_exec_i::" << lname
@@ -122,9 +119,9 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 
       /// The overload of traverse_inheritance_graph() used here
       /// doesn't automatically prime the queues.
-      intf->get_insert_queue ().reset ();
-      intf->get_del_queue ().reset ();
-      intf->get_insert_queue ().enqueue_tail (intf);
+      intf->get_insert_queue ().clear ();
+      intf->get_del_queue ().clear ();
+      intf->get_insert_queue ().push_back (intf);
 
       Component_Exec_Op_Attr_Generator op_attr_gen (this);
 

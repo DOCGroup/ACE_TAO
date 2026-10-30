@@ -67,14 +67,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_String nodes have a maximum size (an AST_Expression which must
 // evaluate to a positive integer).
 
+#include <string>
+
 #include "ast_string.h"
 #include "ast_expression.h"
 #include "ast_visitor.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "utl_identifier.h"
-#include "idl_defines.h"
 #include "global_extern.h"
+
+#include <string>
 
 // Note we are overlooking the wstring case here.
 AST_Decl::NodeType const
@@ -124,33 +125,21 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 
   unsigned long bound = ms->ev ()->u.ulval;
 
-  static char namebuf[NAMEBUFSIZE];
-  static char boundbuf[NAMEBUFSIZE];
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (boundbuf,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  if (bound)
+  std::string namebuf ("CORBA_");
+  if (wide != 1)
     {
-      ACE_OS::sprintf (boundbuf,
-                       "_%ld",
-                       bound);
+      namebuf += 'W';
+    }
+  namebuf += "STRING";
+  if (bound != 0)
+    {
+      namebuf += '_' + std::to_string (bound);
     }
 
-  ACE_OS::sprintf (namebuf,
-                   "CORBA_%sSTRING%s",
-                   (wide == 1 ? "" : "W"),
-                   boundbuf);
-
-  this->flat_name_ = ACE::strnew (namebuf);
+  this->flat_name_ = namebuf;
 }
 
-AST_String::~AST_String ()
-{
-}
+AST_String::~AST_String () = default;
 
 // Redefinition of inherited virtual operations.
 
@@ -172,9 +161,7 @@ AST_String::ast_accept (ast_visitor *visitor)
 void
 AST_String::destroy ()
 {
-  this->pd_max_size->destroy ();
-  delete this->pd_max_size;
-  this->pd_max_size = nullptr;
+  this->pd_max_size.reset ();
 
   this->AST_ConcreteType::destroy ();
 }
@@ -182,13 +169,13 @@ AST_String::destroy ()
 // Data accessors.
 
 AST_Expression *
-AST_String::max_size ()
+AST_String::max_size () const
 {
-  return this->pd_max_size;
+  return this->pd_max_size.get ();
 }
 
 long
-AST_String::width ()
+AST_String::width () const
 {
   return this->pd_width;
 }

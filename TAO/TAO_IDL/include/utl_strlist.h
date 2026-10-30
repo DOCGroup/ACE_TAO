@@ -65,59 +65,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_STRLIST_UTL_STRLIST_HH
 #define _UTL_STRLIST_UTL_STRLIST_HH
 
-#include "utl_list.h"
-#include "ace/iosfwd.h"
+#include <string>
+#include <vector>
 
-class UTL_String;
-
-// List of String nodes.
-
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
-class TAO_IDL_FE_Export UTL_StrList : public UTL_List
-{
-public:
-  UTL_StrList (UTL_String *s,
-               UTL_StrList *cdr);
-
-  ~UTL_StrList () override;
-
-  // AST Dumping
-  virtual void dump (ACE_OSTREAM_TYPE &o);
-
-  // Copy a list of strings
-  UTL_List *copy () override;
-
-  // Cleanup method.
-  void destroy () override;
-
-  // Get list element
-  UTL_String *head ();
-
-  // Set the list element
-  void set_head (UTL_String *);
-
-  // Get last element in this list
-  UTL_String *last_component ();
-
-private:
-  // The list item
-  UTL_String *pd_car_data;
-};
-
-// Active iterator for  UTL_StrList
-class TAO_IDL_FE_Export UTL_StrlistActiveIterator
-  : public UTL_ListActiveIterator
-{
-public:
-  UTL_StrlistActiveIterator(UTL_StrList *s);
-
-  // Get current item.
-  UTL_String *item ();
-};
+using UTL_StrList = std::vector<std::string>;
 
 #endif           // _UTL_STRLIST_UTL_STRLIST_HH

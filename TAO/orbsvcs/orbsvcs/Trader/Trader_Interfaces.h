@@ -19,6 +19,8 @@
 #include "orbsvcs/Trader/Constraint_Interpreter.h"
 #include "orbsvcs/Trader/Offer_Iterators_T.h"
 
+#include <deque>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -247,7 +249,7 @@ private:
   /// A reference to the trader for obtaining offer maps.
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
-  using Request_Ids = ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq const*>;
+  using Request_Ids = std::deque<CosTrading::Admin::OctetSeq const*>;
 
   /// A list of recent request_id_stems
   Request_Ids request_ids_;

@@ -86,7 +86,7 @@ TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager ()
 }
 
 void
-TAO_FT_Naming_Manager::set_global_strategy (const ACE_TCHAR *name)
+TAO_FT_Naming_Manager::set_global_strategy (ACE_TCHAR const *name)
 {
   if (ACE_OS::strcasecmp (name, ACE_TEXT ("round")) == 0 ||
       ACE_OS::strcasecmp (name, ACE_TEXT ("round_robin")) == 0)
@@ -111,9 +111,9 @@ TAO_FT_Naming_Manager::set_global_strategy (const ACE_TCHAR *name)
 
 CORBA::Object_ptr
 TAO_FT_Naming_Manager::create_object_group (
-    const char * group_name,
+    char const * group_name,
     ::FT_Naming::LoadBalancingStrategyValue lb_strategy,
-    const ::PortableGroup::Criteria & the_criteria)
+    ::PortableGroup::Criteria const & the_criteria)
 {
   // Make sure the object group does not already exist.
   TAO::PG_Object_Group* group;
@@ -132,7 +132,7 @@ TAO_FT_Naming_Manager::create_object_group (
   // When creating the object group, it starts as a generic
   // CORBA Object. It will become the type of the first added
   // member.
-  const char * type_id = "IDL:omg.org:CORBA/Object:1.0";
+  char const * type_id = "IDL:omg.org:CORBA/Object:1.0";
 
   // Add the group name to the criteria and create the object
   TAO::PG_Property_Set property_set (the_criteria);
@@ -152,7 +152,7 @@ TAO_FT_Naming_Manager::create_object_group (
 }
 
 void
-TAO_FT_Naming_Manager::delete_object_group (const char * group_name)
+TAO_FT_Naming_Manager::delete_object_group (char const * group_name)
 {
   // Find the object group with the specified name and delete the object
   PortableGroup::ObjectGroup_var group =
@@ -174,7 +174,7 @@ TAO_FT_Naming_Manager::delete_object_group (const char * group_name)
 }
 
 PortableGroup::ObjectGroup_ptr
-TAO_FT_Naming_Manager::get_object_group_ref_from_name (const char * group_name)
+TAO_FT_Naming_Manager::get_object_group_ref_from_name (char const * group_name)
 {
   TAO::PG_Object_Group* group;
   if (this->group_factory_.find_group_with_name (group_name, group))
@@ -257,7 +257,7 @@ TAO_FT_Naming_Manager::groups (::FT_Naming::LoadBalancingStrategyValue target_st
 
 void
 TAO_FT_Naming_Manager::set_load_balancing_strategy (
-  const char * group_name,
+  char const * group_name,
   ::FT_Naming::LoadBalancingStrategyValue lb_strategy)
 {
   CORBA::Object_var group = this->get_object_group_ref_from_name (group_name);
@@ -290,8 +290,8 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group,
   TAO::PG_Object_Group* pg_group;
   if (this->group_factory_.find_group (group, pg_group))
   { // Found the object group in the factory
-    const char* grp_name = pg_group->get_name ();
-    if (grp_name != 0)
+    char const * grp_name = pg_group->get_name ();
+    if (grp_name != nullptr)
     { // Valid group name defined
       name = CORBA::string_dup (grp_name);
       return true;
@@ -312,7 +312,7 @@ TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group,
 
 void
 TAO_FT_Naming_Manager::set_default_properties (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   this->properties_support_.set_default_properties (props);
   //@@ validate properties?
@@ -326,15 +326,15 @@ TAO_FT_Naming_Manager::get_default_properties ()
 
 void
 TAO_FT_Naming_Manager::remove_default_properties (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   this->properties_support_.remove_default_properties (props);
 }
 
 void
 TAO_FT_Naming_Manager::set_type_properties (
-    const char *type_id,
-    const PortableGroup::Properties & overrides)
+    char const *type_id,
+    PortableGroup::Properties const & overrides)
 {
   this->properties_support_.set_type_properties (
     type_id,
@@ -343,15 +343,15 @@ TAO_FT_Naming_Manager::set_type_properties (
 
 PortableGroup::Properties *
 TAO_FT_Naming_Manager::get_type_properties (
-    const char *type_id)
+    char const *type_id)
 {
   return this->properties_support_.get_type_properties (type_id);
 }
 
 void
 TAO_FT_Naming_Manager::remove_type_properties (
-    const char *type_id,
-    const PortableGroup::Properties & props)
+    char const *type_id,
+    PortableGroup::Properties const & props)
 {
   this->properties_support_.remove_type_properties (
     type_id,
@@ -361,7 +361,7 @@ TAO_FT_Naming_Manager::remove_type_properties (
 void
 TAO_FT_Naming_Manager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Properties & overrides)
+    PortableGroup::Properties const & overrides)
 {
   TAO::PG_Object_Group * group = nullptr;
   if (this->group_factory_.find_group (object_group, group))
@@ -396,9 +396,9 @@ TAO_FT_Naming_Manager::get_properties (
 PortableGroup::ObjectGroup_ptr
 TAO_FT_Naming_Manager::create_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria)
+    PortableGroup::Location const & the_location,
+    char const * type_id,
+    PortableGroup::Criteria const & the_criteria)
 {
   PortableGroup::ObjectGroup_var result = PortableGroup::ObjectGroup::_nil();
   TAO::PG_Object_Group * group = nullptr;
@@ -424,7 +424,7 @@ TAO_FT_Naming_Manager::create_member (
 PortableGroup::ObjectGroup_ptr
 TAO_FT_Naming_Manager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CORBA::Object_ptr member)
 {
   METHOD_ENTRY (TAO::FT_Naming_Manager::add_member);
@@ -480,7 +480,7 @@ TAO_FT_Naming_Manager::add_member (
 PortableGroup::ObjectGroup_ptr
 TAO_FT_Naming_Manager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (object_group))
     {
@@ -530,7 +530,7 @@ TAO_FT_Naming_Manager::locations_of_members (
       throw PortableGroup::ObjectGroupNotFound ();
     }
 
-  PortableGroup::Locations_var result = 0;
+  PortableGroup::Locations_var result = nullptr;
 
   // Find the object group corresponding to this IOGR
   TAO::PG_Object_Group * group = nullptr;
@@ -554,7 +554,7 @@ TAO_FT_Naming_Manager::locations_of_members (
 
 PortableGroup::ObjectGroups *
 TAO_FT_Naming_Manager::groups_at_location (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   return this->group_factory_.groups_at_location (the_location);
 }
@@ -654,7 +654,7 @@ PortableGroup::ObjectGroup_ptr TAO_FT_Naming_Manager::get_object_group_ref_from_
 CORBA::Object_ptr
 TAO_FT_Naming_Manager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (object_group))
     {
@@ -688,9 +688,9 @@ TAO_FT_Naming_Manager::get_member_ref (
 
 CORBA::Object_ptr
 TAO_FT_Naming_Manager::create_object (
-    const char * object_name,
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria,
+    char const * object_name,
+    char const * type_id,
+    PortableGroup::Criteria const & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out
       factory_creation_id)
 {
@@ -716,7 +716,7 @@ TAO_FT_Naming_Manager::create_object (
     // that knows about the factory, too.
 
  // Allocate a new FactoryCreationId for use as an "out" parameter.
-  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = 0;
+  PortableGroup::GenericFactory::FactoryCreationId_ptr factory_id_ptr = nullptr;
   ACE_NEW_THROW_EX (factory_id_ptr,
                     PortableGroup::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
@@ -734,7 +734,7 @@ TAO_FT_Naming_Manager::create_object (
 
 void
 TAO_FT_Naming_Manager::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId &
+    PortableGroup::GenericFactory::FactoryCreationId const &
       factory_creation_id)
 {
   PortableGroup::ObjectGroupId group_id = 0;
@@ -847,7 +847,7 @@ TAO_FT_Naming_Manager::set_object_group_storable_factory (TAO::Storable_Factory 
 }
 
 void
-TAO_FT_Naming_Manager::set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info)
+TAO_FT_Naming_Manager::set_object_group_stale (FT_Naming::ObjectGroupUpdate const & group_info)
 {
   this->group_factory_.set_object_group_stale (group_info);
 }

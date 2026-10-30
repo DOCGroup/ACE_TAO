@@ -45,7 +45,7 @@ namespace TAO
             ++invocation.stack_size ();
           }
       }
-    catch (const ::PortableInterceptor::ForwardRequest& exc)
+    catch (::PortableInterceptor::ForwardRequest const &exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -127,7 +127,7 @@ namespace TAO
               }
           }
       }
-    catch (const ::PortableInterceptor::ForwardRequest& exc)
+    catch (::PortableInterceptor::ForwardRequest const &exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -196,7 +196,7 @@ namespace TAO
             }
         }
       }
-    catch (const ::PortableInterceptor::ForwardRequest& exc)
+    catch (::PortableInterceptor::ForwardRequest const &exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -231,7 +231,7 @@ namespace TAO
   void
   ClientRequestInterceptor_Adapter_Impl::process_forward_request (
       Invocation_Base &invocation,
-      const PortableInterceptor::ForwardRequest &exc)
+      PortableInterceptor::ForwardRequest const &exc)
   {
     invocation.forwarded_reference (exc.forward.in ());
 
@@ -249,7 +249,7 @@ namespace TAO
   void
   ClientRequestInterceptor_Adapter_Impl::add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies)
+    CORBA::PolicyList const &policies)
   {
     this->interceptor_list_.add_interceptor (interceptor, policies);
   }

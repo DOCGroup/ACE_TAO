@@ -38,19 +38,24 @@ class Content_Iterator_i :
 
   friend class Iterator_Factory_i;
 public:
+  Content_Iterator_i (Content_Iterator_i const&) = delete;
+  Content_Iterator_i (Content_Iterator_i&&) = delete;
+  Content_Iterator_i& operator= (Content_Iterator_i const&) = delete;
+  Content_Iterator_i& operator= (Content_Iterator_i&&) = delete;
+
   /// Constructor
-  Content_Iterator_i (const char *filename, CORBA::ULongLong file_size);
+  Content_Iterator_i (char const *filename, CORBA::ULongLong file_size);
 
   /// Destructor
-  ~Content_Iterator_i ();
+  ~Content_Iterator_i () override;
 
   /// This operation returns the next <chunk> of the file starting at
   /// <offset>.  If there are no more bindings, false is returned.
-  virtual CORBA::Boolean next_chunk (CORBA::ULongLong offset,
-                                     Web_Server::Chunk_Type_out chunk);
+  CORBA::Boolean next_chunk (CORBA::ULongLong offset,
+                             Web_Server::Chunk_Type_out chunk) override;
 
   /// Destroy the iterator.
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   /// Initialize the Content_Iterator.

@@ -47,7 +47,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::insert (CORBA::Any & any,
 
 template<typename T_slice, typename T_forany>
 CORBA::Boolean
-TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
+TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (CORBA::Any const & any,
                                                    _tao_destructor destructor,
                                                    CORBA::TypeCode_ptr tc,
                                                    T_slice *& _tao_elem)
@@ -115,7 +115,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (any_tc);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -130,7 +130,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::marshal_value (TAO_OutputCDR &cdr)
 }
 
 template<typename T_slice, typename T_forany>
-const void *
+void const *
 TAO::Any_Array_Impl_T<T_slice, T_forany>::value () const
 {
   return this->value_;

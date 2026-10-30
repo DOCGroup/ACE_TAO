@@ -41,11 +41,12 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Reconnect_ConsumerEC_Control_Adapter
 {
 public:
   /// Constructor
-  TAO_ECG_Reconnect_ConsumerEC_Control_Adapter (TAO_ECG_Reconnect_ConsumerEC_Control *adaptee);
+  explicit TAO_ECG_Reconnect_ConsumerEC_Control_Adapter (
+    TAO_ECG_Reconnect_ConsumerEC_Control *adaptee);
 
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              void const *arg = nullptr);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
 private:
   /// The adapted object
@@ -71,24 +72,24 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Reconnect_ConsumerEC_Control
 public:
   /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
-  TAO_ECG_Reconnect_ConsumerEC_Control (const ACE_Time_Value &rate,
-                                        const ACE_Time_Value &timeout,
+  TAO_ECG_Reconnect_ConsumerEC_Control (ACE_Time_Value const &rate,
+                                        ACE_Time_Value const &timeout,
                                         TAO_EC_Gateway_IIOP* gateway,
                                         CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_ECG_Reconnect_ConsumerEC_Control () override;
+  ~TAO_ECG_Reconnect_ConsumerEC_Control () override = default;
 
   /// Receive the timeout from the adapter
-  void handle_timeout (const ACE_Time_Value &tv,
-                       const void* arg);
+  void handle_timeout (ACE_Time_Value const &tv,
+                       void const *arg);
 
   // = Documented in TAO_EC_ConsumerControl
-  virtual int activate () override;
-  virtual int shutdown () override;
-  virtual void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway) override;
-  virtual void system_exception (TAO_EC_Gateway_IIOP *gateway,
-                                 CORBA::SystemException &);
+  int activate () override;
+  int shutdown () override;
+  void event_channel_not_exist (TAO_EC_Gateway_IIOP *gateway) override;
+  void system_exception (TAO_EC_Gateway_IIOP *gateway,
+                         CORBA::SystemException &) override;
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
@@ -127,7 +128,7 @@ private:
   ACE_Reactor *reactor_;
 
   /// Do we have a connection to the consumer ec
-  int is_consumer_ec_connected_;
+  bool is_consumer_ec_connected_ {true};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   /// The timer id

@@ -17,8 +17,9 @@
 
 #include "orbsvcs/Notify/Persistent_File_Allocator.h"  // for Persistent_Callback
 
-#include <ace/Vector_T.h>
 #include <ace/Malloc_Base.h>  // necessary?
+
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,10 +43,10 @@ class Routing_Slip_Persistence_Manager;
 // referenced from this header
 
 /// A vector of Delivery Requests.  The body of a Routing_Slip.
-using Delivery_Request_Vec = ACE_Vector <Delivery_Request_Ptr>;
+using Delivery_Request_Vec = std::vector<Delivery_Request_Ptr>;
 
 /// A vector of Methods_.  Used during recovery.
-using Delivery_Method_Vec = ACE_Vector <TAO_Notify_Method_Request_Queueable *>;
+using Delivery_Method_Vec = std::vector<TAO_Notify_Method_Request_Queueable *>;
 
 class Routing_Slip;
 /// A reference-counted smart pointer to a Routing_Slip
@@ -79,7 +80,12 @@ public:
   void reconnect ();
 
   /// Destructor (should be private but that inspires compiler wars)
-  virtual ~Routing_Slip ();
+  ~Routing_Slip () override;
+
+  Routing_Slip (Routing_Slip const &) = delete;
+  Routing_Slip (Routing_Slip &&) = delete;
+  Routing_Slip &operator= (Routing_Slip const &) = delete;
+  Routing_Slip &operator= (Routing_Slip &&) = delete;
 
   //////////////////
   // Action requests
@@ -147,7 +153,7 @@ private:
   bool create_persistence_manager();
 
   /// Private constructor for use by create method
-  Routing_Slip(const TAO_Notify_Event::Ptr& event);
+  explicit Routing_Slip(const TAO_Notify_Event::Ptr& event);
 
   /// Test to see if all deliveries are complete.
   bool all_deliveries_complete () const;
@@ -165,14 +171,14 @@ private:
   /// Protection for internal information
   TAO_SYNCH_MUTEX internals_;
   /// true when event persistence qos is guaranteed
-  bool is_safe_;
+  bool is_safe_ = false;
   /// signalled when is_safe_ goes true
   ACE_SYNCH_CONDITION until_safe_;
 
   /// Smart pointer to this object
   /// Provides continuity between smart pointers and "Routing_Slip::this"
   /// Also lets the Routing_Slip manage its own minimum lifetime.
-  Routing_Slip_Ptr this_ptr_;
+  Routing_Slip_Ptr this_ptr_ {};
 
   // The event being delivered.
   TAO_Notify_Event::Ptr event_;
@@ -194,7 +200,7 @@ private:
     rssCOMPLETE,
     rssDELETING,
     rssTERMINAL
-  } state_;
+  } state_ = rssCREATING;
 
   /// A collection of delivery requests
   Delivery_Request_Vec delivery_requests_;
@@ -203,10 +209,10 @@ private:
   Delivery_Method_Vec delivery_methods_;
 
   /// How many delivery requests are complete
-  size_t complete_requests_;
+  size_t complete_requests_ {};
 
   /// Pointer to a Routing_Slip_Persistence_Manager
-  Routing_Slip_Persistence_Manager * rspm_;
+  Routing_Slip_Persistence_Manager * rspm_ = nullptr;
 
   int sequence_;
 

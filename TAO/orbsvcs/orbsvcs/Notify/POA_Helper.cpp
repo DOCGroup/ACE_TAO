@@ -17,9 +17,7 @@ TAO_Notify_POA_Helper::TAO_Notify_POA_Helper ()
 {
 }
 
-TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper ()
-{
-}
+TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper () = default;
 
 ACE_CString
 TAO_Notify_POA_Helper::get_unique_id ()

@@ -50,10 +50,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const ACE_TCHAR* primary_replica_ior_filename =
+constexpr ACE_TCHAR const *primary_replica_ior_filename =
   ACE_TEXT ("ns_replica_primary.ior");
 
-const ACE_TCHAR* backup_replica_ior_filename =
+constexpr ACE_TCHAR const *backup_replica_ior_filename =
   ACE_TEXT ("ns_replica_backup.ior");
 
 
@@ -77,7 +77,6 @@ TAO_FTNS_Notifier::handle_exception (ACE_HANDLE )
 TAO_FT_Naming_Server::TAO_FT_Naming_Server ()
   : TAO_Naming_Server (IOR_ARRAY_SIZE),
     naming_manager_ (),
-    use_object_group_persistence_ (0),
     server_role_ (STANDALONE),
     ft_endpoint_ (""),
     ft_update_delay_ (ACE_Time_Value::zero),
@@ -100,10 +99,12 @@ TAO_FT_Naming_Server::update_info_i ()
       FT_Naming::UpdateInfoSeq_var block;
       {
         ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
-        if (this->u_infos_.dequeue_head(block.out()) == -1)
+        if (this->u_infos_.empty ())
           {
             break;
           }
+        block.out () = this->u_infos_.front ();
+        this->u_infos_.pop_front ();
       }
 
       for (CORBA::ULong i = 0; i < block->length(); i++)
@@ -127,11 +128,12 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
 {
   CORBA::ULong count = infos.length();
   FT_Naming::UpdateInfo* guts = infos.get_buffer(true);
-  FT_Naming::UpdateInfoSeq_var block = 0;
+  FT_Naming::UpdateInfoSeq_var block = nullptr;
   ACE_NEW(block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
   {
     ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
-    this->u_infos_.enqueue_tail (block._retn());
+    this->u_infos_.push_back (block.ptr ());
+    block._retn ();
   }
 
   this->orb_->orb_core ()->reactor ()->notify (&this->info_notifier_);
@@ -145,10 +147,12 @@ TAO_FT_Naming_Server::update_iors_i ()
       FT_Naming::ReplicaInfo rep;
       {
         ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->ior_lock_);
-        if (this->u_iors_.dequeue_head(rep) == -1)
+        if (this->u_iors_.empty ())
           {
             break;
           }
+        rep = this->u_iors_.front ();
+        this->u_iors_.pop_front ();
       }
 
       if (rep.combined)
@@ -166,11 +170,11 @@ TAO_FT_Naming_Server::update_iors_i ()
 }
 
 void
-TAO_FT_Naming_Server::update_iors (const FT_Naming::ReplicaInfo & iors )
+TAO_FT_Naming_Server::update_iors (FT_Naming::ReplicaInfo const &iors)
 {
   {
     ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->ior_lock_);
-    this->u_iors_.enqueue_tail(iors);
+    this->u_iors_.push_back (iors);
   }
   this->orb_->orb_core ()->reactor ()->notify (&this->ior_notifier_);
 }
@@ -241,7 +245,7 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
       init_replication_pairing ();
       this->naming_manager_.set_replicator (this->replicator_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     { // No exceptions are expected.
       ex._tao_print_exception
         (ACE_TEXT ("TAO_FT_Naming_Server::init_with_orb"));
@@ -321,7 +325,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::O
       this->naming_manager_.initialize (this->orb_.in (),
                                         this->naming_manager_poa_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
                                ACE_TEXT ("TAO_FT_Naming_Server::init_naming_manager_with_orb"));
@@ -358,7 +362,7 @@ TAO_FT_Naming_Server::init_replicator ()
       this->iors_[REPLICATOR].filename_ = this->replica_ior_filename (false);
       this->write(REPLICATOR);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("TAO_FT_Naming_Server::init_replicator\n"));
@@ -444,10 +448,10 @@ TAO_FT_Naming_Server::parse_args (int argc,
 #endif /* CORBA_E_MICRO */
 
   // Make sure only one naming context persistence option is specified
-  int f_opt_used = 0;
-  int u_opt_used = 0;
-  int r_opt_used = 0;
-  int v_opt_used = 0;
+  bool f_opt_used = false;
+  bool u_opt_used = false;
+  bool r_opt_used = false;
+  bool v_opt_used = false;
 
   // TODO: remove unsupported options with FT Naming Server
   while ((c = get_opts ()) != -1)
@@ -500,36 +504,36 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
       case 'f':
         this->persistence_dir_ = get_opts.opt_arg ();
-        f_opt_used = 1;
+        f_opt_used = true;
         break;
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       case 'r':
-        this->use_redundancy_ = 1;
-        this->use_storable_context_ = 1;
+        this->use_redundancy_ = true;
+        this->use_storable_context_ = true;
         this->persistence_dir_ = get_opts.opt_arg ();
-        r_opt_used = 1;
+        r_opt_used = true;
         break;
       case 'u':
-        this->use_storable_context_ = 1;
+        this->use_storable_context_ = true;
         this->persistence_dir_ = get_opts.opt_arg ();
-        u_opt_used = 1;
+        u_opt_used = true;
         break;
       case 'v':
-        this->use_object_group_persistence_ = 1;
+        this->use_object_group_persistence_ = true;
         this->object_group_dir_ = get_opts.opt_arg ();
-        v_opt_used = 1;
+        v_opt_used = true;
         break;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 #endif /* !CORBA_E_MICRO */
       case 'z':
-        this->use_round_trip_timeout_ = 1;
+        this->use_round_trip_timeout_ = true;
         this->round_trip_timeout_ =
           (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 0:   // A long option was found
         {
-          const ACE_TCHAR *long_option = get_opts.long_option ();
+          ACE_TCHAR const *long_option = get_opts.long_option ();
           if (ACE_OS::strcmp (long_option, ACE_TEXT ("backup")) == 0)
             {
               this->server_role_ = TAO_FT_Naming_Server::BACKUP;
@@ -591,7 +595,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
       }
 
 
-  if (f_opt_used + u_opt_used + r_opt_used > 1)
+  if ((f_opt_used && (u_opt_used || r_opt_used)) || (u_opt_used && r_opt_used))
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ERROR: Only one persistence option ")
                        ACE_TEXT ("can be provided.\n\n")),
@@ -626,7 +630,7 @@ TAO_FT_Naming_Server::fini ()
         {
           this->replicator_->stop ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Ignore
         }
@@ -639,7 +643,7 @@ TAO_FT_Naming_Server::fini ()
         this->naming_manager_poa_->destroy (1, 1);
       this->naming_manager_poa_ = PortableServer::POA::_nil ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore
     }
@@ -656,7 +660,7 @@ TAO_FT_Naming_Server::fini ()
           ior_table->unbind ("NamingManager");
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore
     }
@@ -670,7 +674,7 @@ TAO_FT_Naming_Server::fini ()
 #endif /* CORBA_E_MICRO */
 
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore
     }
@@ -712,7 +716,7 @@ TAO_FT_Naming_Server::naming_manager_ior ()
 
 int
 TAO_FT_Naming_Server::update_object_group (
-    const FT_Naming::ObjectGroupUpdate & group_info)
+    FT_Naming::ObjectGroupUpdate const &group_info)
 {
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
@@ -746,7 +750,7 @@ TAO_FT_Naming_Server::update_object_group (
 
 int
 TAO_FT_Naming_Server::update_naming_context (
-    const FT_Naming::NamingContextUpdate & context_info)
+    FT_Naming::NamingContextUpdate const &context_info)
 {
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
@@ -775,7 +779,7 @@ TAO_FT_Naming_Server::update_naming_context (
   TAO_Naming_Context* changed_context_servant =
     dynamic_cast<TAO_Naming_Context*> (servant.in ());
 
-  if (changed_context_servant == 0)
+  if (changed_context_servant == nullptr)
   { // Another type of class was used as the servant. Should not happen.
     ORBSVCS_ERROR ((LM_ERROR,
                ACE_TEXT ("(%P|%t) ERROR: Invalid servant type registered")
@@ -805,7 +809,7 @@ TAO_FT_Naming_Server::update_naming_context (
 TAO_FT_Naming_Server::~TAO_FT_Naming_Server ()
 {
   // Clear out the static naming manager from the persistent naming context
-  TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (0);
+  TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (nullptr);
 }
 
 CosNaming::NamingContext_ptr
@@ -870,20 +874,20 @@ TAO_FT_Naming_Server::ft_naming_manager () const
   //  return FT_Naming::NamingManager::_narrow (this->iors_[FT_GROUP].ref_.in ());
 }
 
-const ACE_CString &
-TAO_FT_Naming_Server::ft_endpoint ()
+ACE_CString const &
+TAO_FT_Naming_Server::ft_endpoint () const
 {
   return this->ft_endpoint_;
 }
 
-const ACE_Time_Value &
-TAO_FT_Naming_Server::ft_update_delay ()
+ACE_Time_Value const &
+TAO_FT_Naming_Server::ft_update_delay () const
 {
   return this->ft_update_delay_;
 }
 
 void
-TAO_FT_Naming_Server::update_ior (FT_Naming::EntityKind kind, CORBA::Object_ptr ft_obj)
+TAO_FT_Naming_Server::update_ior (FT_Naming::EntityKind kind, CORBA::Object_ptr const ft_obj)
 {
   size_t combo = kind == FT_Naming::obj_grp ? FT_GROUP : FT_ROOT;
 
@@ -892,7 +896,7 @@ TAO_FT_Naming_Server::update_ior (FT_Naming::EntityKind kind, CORBA::Object_ptr 
 }
 
 void
-TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_ptr peer)
+TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_ptr const peer)
 {
   size_t local = ROOT;
   size_t combo = FT_ROOT;
@@ -903,7 +907,7 @@ TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_pt
     }
 
   CORBA::Object_var IORM =
-    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, nullptr);
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm =
     TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
@@ -975,7 +979,7 @@ TAO_FT_Naming_Server::recover_iors ()
               this->assign(index[i], true, obj);
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
             {

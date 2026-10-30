@@ -31,9 +31,7 @@ be_root::be_root (UTL_ScopedName *n)
 {
 }
 
-be_root::~be_root ()
-{
-}
+be_root::~be_root () = default;
 
 void
 be_root::destroy ()

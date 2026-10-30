@@ -16,13 +16,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Acceptor::TAO_UIPMC_Acceptor (
   bool listen_on_all_ifs,
-  const char *listener_interfaces)
+  char const *listener_interfaces)
   : TAO_Acceptor (IOP::TAG_UIPMC),
-    addrs_ (0),
-    hosts_ (0),
-    endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0),
     listen_on_all_ (listen_on_all_ifs),
     listener_interfaces_ (listener_interfaces)
 {
@@ -44,7 +40,7 @@ TAO_UIPMC_Acceptor::~TAO_UIPMC_Acceptor ()
 
 int
 TAO_UIPMC_Acceptor::create_profile (
-  const TAO::ObjectKey &,
+  TAO::ObjectKey const &,
   TAO_MProfile &,
   CORBA::Short)
 {
@@ -59,7 +55,7 @@ TAO_UIPMC_Acceptor::create_profile (
 }
 
 int
-TAO_UIPMC_Acceptor::is_collocated (const TAO_Endpoint *)
+TAO_UIPMC_Acceptor::is_collocated (TAO_Endpoint const *)
 {
   // @@ Not clear how
   // to best handle collation.  For example, one servant could
@@ -81,8 +77,8 @@ TAO_UIPMC_Acceptor::open (
   ACE_Reactor *reactor,
   int major,
   int minor,
-  const char *address,
-  const char *options)
+  char const *address,
+  char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -108,8 +104,8 @@ TAO_UIPMC_Acceptor::open (
 
   ACE_INET_Addr addr;
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
-  const char *specified_hostname = nullptr;
+  char const *port_separator_loc = ACE_OS::strchr (address, ':');
+  char const *specified_hostname = nullptr;
   char tmp_host[MAXHOSTNAMELEN + 1];
 
 #if defined (ACE_HAS_IPV6)
@@ -124,7 +120,7 @@ TAO_UIPMC_Acceptor::open (
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos = ACE_OS::strchr(address, ']');
+      char const *cp_pos = ACE_OS::strchr(address, ']');
       if (cp_pos == nullptr)
         {
           // No valid IPv6 address specified.
@@ -138,9 +134,9 @@ TAO_UIPMC_Acceptor::open (
           if (cp_pos[1] == ':')    // Look for a port
             port_separator_loc = cp_pos + 1;
           else
-            port_separator_loc = 0;
+            port_separator_loc = nullptr;
           // Extract out just the host part of the address.
-          const size_t len = cp_pos - (address + 1);
+          size_t const len = cp_pos - (address + 1);
           ACE_OS::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
         }
@@ -192,7 +188,7 @@ TAO_UIPMC_Acceptor::open (
                   char *[this->endpoint_count_],
                   -1);
 
-  this->hosts_[0] = 0;
+  this->hosts_[0] = nullptr;
 
   if (this->hostname (orb_core,
                       addr,
@@ -215,7 +211,7 @@ TAO_UIPMC_Acceptor::open_default (
   ACE_Reactor *,
   int,
   int,
-  const char *)
+  char const *)
 {
   // There is no such thing as a default multicast listen
   // port.  The mechanism for choosing these ports is done
@@ -225,7 +221,7 @@ TAO_UIPMC_Acceptor::open_default (
 
 int
 TAO_UIPMC_Acceptor::open_i (
-  const ACE_INET_Addr &addr,
+  ACE_INET_Addr const &addr,
   ACE_Reactor *reactor)
 {
   // Check for the special "CopyPreferredInterfaces" token(s) stored in the
@@ -242,7 +238,7 @@ TAO_UIPMC_Acceptor::open_i (
         right = this->listener_interfaces_.substr (foundToken +
           static_cast<ACE_CString::size_type> (
             sizeof (CopyPreferredInterfaceToken)-1u ));
-      const char *preferred_interfaces =
+      char const *preferred_interfaces =
         this->orb_core_->orb_params ()->preferred_interfaces ();
       if (preferred_interfaces && preferred_interfaces[0])
         {
@@ -336,7 +332,7 @@ TAO_UIPMC_Acceptor::hostname (
   TAO_ORB_Core *,
   ACE_INET_Addr &addr,
   char *&host,
-  const char *)
+  char const *)
 {
   // Only have dotted decimal addresses for multicast.
   return this->dotted_decimal_address (addr, host);
@@ -378,7 +374,7 @@ TAO_UIPMC_Acceptor::object_key (
 }
 
 int
-TAO_UIPMC_Acceptor::parse_options (const char *str)
+TAO_UIPMC_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
     return 0;  // No options to parse.  Not a problem.
@@ -387,11 +383,11 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
 
-  ACE_CString options (str);
+  ACE_CString const options (str);
 
-  size_t len = options.length ();
+  size_t const len = options.length ();
 
-  const char option_delimiter = '&';
+  char const option_delimiter = '&';
 
   // Count the number of options.
   CORBA::ULong option_count = 1;
@@ -428,7 +424,7 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                           -1);
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt = options.substring (begin, end);
+          ACE_CString const opt = options.substring (begin, end);
 
           ACE_CString::size_type const slot = opt.find ("=");
 
@@ -440,8 +436,8 @@ TAO_UIPMC_Acceptor::parse_options (const char *str)
                                opt.c_str ()),
                               -1);
 
-          ACE_CString name = opt.substring (0, slot);
-          ACE_CString value = opt.substring (slot + 1);
+          ACE_CString const name = opt.substring (0, slot);
+          ACE_CString const value = opt.substring (slot + 1);
 
           begin = end + 1;
 

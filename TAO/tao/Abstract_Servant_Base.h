@@ -70,7 +70,7 @@ public:
   virtual ~TAO_Abstract_ServantBase () = default;
 
   /// Local implementation of the CORBA::Object::_is_a method.
-  virtual CORBA::Boolean _is_a (const char* logical_type_id) = 0;
+  virtual CORBA::Boolean _is_a (char const *logical_type_id) = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   /// Default @c _non_existent: always returns false.
@@ -111,24 +111,24 @@ public:
 
   /// Find an operation in the operation table and return a
   /// TAO_Skeleton which can be used to make upcalls
-  virtual int _find (const char *opname,
+  virtual int _find (char const *opname,
                      TAO_Skeleton &skelfunc,
-                     const size_t length = 0) = 0;
+                     size_t length = 0) = 0;
 
   /// Find an operation in the operation table and return a
   /// TAO_Collocated_Skeleton which can be used to make upcalls onto
   /// collocated servants.
-  virtual int _find (const char *opname,
+  virtual int _find (char const *opname,
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy s,
-                     const size_t length = 0) = 0;
+                     size_t length = 0) = 0;
 
   virtual void _collocated_dispatch (::CORBA::Object_ptr obj,
                                      ::CORBA::Object_out forward_obj,
                                      bool &is_forwarded,
-                                     TAO::Argument ** args,
+                                     TAO::Argument **args,
                                      int num_args,
-                                     const char * op,
+                                     char const *op,
                                      size_t op_len,
                                      TAO::Collocation_Strategy strategy) = 0;
 
@@ -153,7 +153,7 @@ protected:
     TAO::Portable_Server::Servant_Upcall *servant_upcall) = 0;
 
   /// Get this interface's repository id (TAO specific).
-  virtual const char *_interface_repository_id () const = 0;
+  virtual char const *_interface_repository_id () const = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,7 +17,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:c:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -47,7 +47,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -82,7 +82,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Any scope_as_any;
       scope_as_any <<= Messaging::SYNC_NONE;
 
-      CORBA::PolicyList policies (1); policies.length (1);
+      CORBA::PolicyList policies (1);
+      policies.length (1);
       policies[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any);
@@ -95,7 +96,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get the sender reference..
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Sender_var sender =
         Test::Sender::_narrow(tmp.in ());
@@ -108,7 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Client_Task client_task (orb.in(),
+      Client_Task client_task (orb.in (),
                                sender.in (),
                                ACE_Thread_Manager::instance (),
                                number_of_oneways);
@@ -120,36 +121,37 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // will have two threads that would make invocations..
       // this is the first oneway we do, so after this we would have a queue
       // on one of the transports
-      sender->active_objects ((CORBA::Short) number_of_client_tasks);
+      sender->active_objects (static_cast<CORBA::Short> (number_of_client_tasks));
 
-      TAO::Transport_Cache_Manager& manager = orb->orb_core()->lane_resources ().transport_cache ();
+      TAO::Transport_Cache_Manager &manager =
+        orb->orb_core ()->lane_resources ().transport_cache ();
 
-      TAO::Transport_Cache_Manager::HASH_MAP& cachemap = manager.map();
+      TAO::Transport_Cache_Manager::HASH_MAP &cachemap = manager.map ();
       TAO::Transport_Cache_Manager::HASH_MAP_ITER end_iter = cachemap.end ();
 
-      bool tranportwithqueue = false;
+      bool transport_with_queue = false;
       for (TAO::Transport_Cache_Manager::HASH_MAP_ITER iter = cachemap.begin ();
            iter != end_iter;
            ++iter)
         {
-          TAO_Transport* transport = (*iter).int_id_.transport ();
+          TAO_Transport *transport = (*iter).int_id_.transport ();
           if (!transport->queue_is_empty () && !transport->is_connected ())
             {
-              tranportwithqueue = true;
+              transport_with_queue = true;
               break;
             }
         }
 
-        if (!tranportwithqueue)
+        if (!transport_with_queue)
           {
             ACE_ERROR ((LM_ERROR, "(%P|%t) Error: expect a not connected transport with a queue\n"));
           }
         else
           {
-            ACE_DEBUG((LM_DEBUG, "(%P|%t) Found not connected transport with a queue\n"));
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Found not connected transport with a queue\n"));
           }
 
-      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 2,1) == -1)
+      if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 2, 1) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating server task\n"));
         }
@@ -166,12 +168,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      if (tranportwithqueue == false)
-      {
+      if (!transport_with_queue)
         return 1;
-      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

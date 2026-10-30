@@ -68,7 +68,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/CDR_Stream.h"
 #include "utl_scoped_name.h"
 
-class UTL_String;
+#include <memory>
+#include <string>
+
 class UTL_Scope;
 class ast_visitor;
 class AST_Decl;
@@ -166,14 +168,14 @@ public:
   // Structure to describe value of constant expression and its type.
   struct AST_ExprValue
     {
-      AST_ExprValue ();
+      AST_ExprValue () = default;
 
       union Value
         {
           ACE_CDR::Short      sval;     // Contains short expression value.
           ACE_CDR::UShort     usval;    // Contains unsigned short expr value.
           ACE_CDR::Long       lval;     // Contains long expression value.
-          ACE_CDR::ULong      ulval;    // Contains unsigned long expr value.
+          ACE_CDR::ULong      ulval {}; // Contains unsigned long expr value.
           ACE_CDR::Boolean    bval;     // Contains boolean expression value.
           ACE_CDR::LongLong   llval;   // Contains long long expr value.
           ACE_CDR::ULongLong  ullval;  // Contains unsigned long long expr value.
@@ -182,16 +184,15 @@ public:
           ACE_CDR::Char       cval;     // Contains char expression value.
           ACE_CDR::WChar      wcval;    // Contains wchar expression value.
           ACE_CDR::Octet      oval;     // Contains octet expr value.
-          UTL_String          *strval;  // Contains String * expr value.
-          char                *wstrval; // Contains wide string expr value.
           ACE_CDR::ULong      eval;     // Contains enumeration value.
           ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
           ACE_CDR::Int8       int8val;  // Signed Byte Sized Integer
           ACE_CDR::UInt8      uint8val; // Unsigned Byte Sized Integer
         };
 
-      ExprType et;
-      Value u;
+      ExprType et {EV_none};
+      Value u {};
+      std::string strval;
     };
 
  // Operations.
@@ -199,71 +200,74 @@ public:
   // Constructor(s).
   AST_Expression (AST_Expression *v,
                   ExprType t);
+  AST_Expression (AST_Expression const &) = delete;
+  AST_Expression (AST_Expression &&) = delete;
+  AST_Expression &operator= (AST_Expression const &) = delete;
+  AST_Expression &operator= (AST_Expression &&) = delete;
 
   AST_Expression (ExprComb c,
                   AST_Expression *v1,
                   AST_Expression *v2);
 
-  AST_Expression (ACE_CDR::Short s);
+  explicit AST_Expression (ACE_CDR::Short s);
 
-  AST_Expression (ACE_CDR::UShort us);
+  explicit AST_Expression (ACE_CDR::UShort us);
 
-  AST_Expression (ACE_CDR::Long l);
+  explicit AST_Expression (ACE_CDR::Long l);
 
-  AST_Expression (ACE_CDR::LongLong ll);
+  explicit AST_Expression (ACE_CDR::LongLong ll);
 
-  AST_Expression (ACE_CDR::Boolean b);
+  explicit AST_Expression (ACE_CDR::Boolean b);
 
-  AST_Expression (ACE_CDR::ULong ul);
+  explicit AST_Expression (ACE_CDR::ULong ul);
 
-  AST_Expression (ACE_CDR::ULongLong ull);
+  explicit AST_Expression (ACE_CDR::ULongLong ull);
 
   AST_Expression (ACE_CDR::ULong,
                   ExprType t);
 
-  AST_Expression (ACE_CDR::Float f);
+  explicit AST_Expression (ACE_CDR::Float f);
 
-  AST_Expression (ACE_CDR::Double d);
+  explicit AST_Expression (ACE_CDR::Double d);
 
-  AST_Expression (ACE_CDR::Char c);
+  explicit AST_Expression (ACE_CDR::Char c);
 
-  AST_Expression (ACE_OutputCDR::from_wchar wc);
+  explicit AST_Expression (ACE_OutputCDR::from_wchar wc);
 
-  AST_Expression (ACE_CDR::Octet o);
+  explicit AST_Expression (ACE_CDR::Octet o);
 
-  AST_Expression (UTL_String *s);
+  explicit AST_Expression (std::string s);
+  AST_Expression (std::string s, ExprType t);
 
-  AST_Expression (char *s);
+  explicit AST_Expression (UTL_ScopedName *n);
 
-  AST_Expression (UTL_ScopedName *n);
-
-  AST_Expression (const ACE_CDR::Fixed &f);
+  explicit AST_Expression (ACE_CDR::Fixed const& f);
 
   // Destructor.
   virtual ~AST_Expression ();
 
   // Data Accessors.
-  UTL_Scope *defined_in ();
+  UTL_Scope *defined_in () const;
   void set_defined_in (UTL_Scope *d);
 
-  long line ();
+  long line () const;
   void set_line (long l);
 
-  UTL_String *file_name ();
-  void set_file_name (UTL_String *f);
+  std::string const& file_name () const;
+  void set_file_name (std::string const& file_name);
 
-  ExprComb ec ();
+  ExprComb ec () const;
 
-  AST_ExprValue *ev ();
+  AST_ExprValue *ev () const;
   void set_ev (AST_ExprValue *new_ev);
 
-  AST_Expression *v1 ();
+  AST_Expression *v1 () const;
   void set_v1 (AST_Expression *e);
 
-  AST_Expression *v2 ();
+  AST_Expression *v2 () const;
   void set_v2 (AST_Expression *e);
 
-  UTL_ScopedName *n ();
+  UTL_ScopedName *n () const;
   void set_n (UTL_ScopedName *new_n);
 
   // AST Dumping.
@@ -300,11 +304,11 @@ public:
   // Accessor for the member.
   AST_Param_Holder *param_holder () const;
 
-  static const char *exprtype_to_string (ExprType t);
+  static std::string exprtype_to_string (ExprType t);
 
   /// Pointer to enum of this value if applicable
   ///{
-  AST_Enum *enum_parent ();
+  AST_Enum *enum_parent () const;
   void enum_parent (AST_Enum *node);
   ///}
 
@@ -329,7 +333,7 @@ private:
   long pd_line;
   // Line defined in.
 
-  UTL_String *pd_file_name;
+  std::string pd_file_name;
   // What file defined in.
 
   ExprComb pd_ec;
@@ -338,19 +342,19 @@ private:
   AST_ExprValue *pd_ev;
   // Computed value.
 
-  AST_Expression *pd_v1;
+  std::unique_ptr<AST_Expression> pd_v1;
   // 1st sub-expression.
 
-  AST_Expression *pd_v2;
+  std::unique_ptr<AST_Expression> pd_v2;
   // 2nd sub-expression.
 
-  UTL_ScopedName *pd_n;
+  std::unique_ptr<UTL_ScopedName> pd_n;
   // Symbolic name (if any).
 
   AST_Decl *tdef;
   // Propagates aliased constant type.
 
-  AST_Param_Holder *param_holder_;
+  AST_Param_Holder *param_holder_ {};
   // Non-zero if we were created from a reference template param.
 
   // Fill out the lineno, filename and definition scope details.

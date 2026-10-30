@@ -42,7 +42,8 @@ public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event>;
 
   // Codes to distinguish marshaled events in persistent storage
-  enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};
+  static constexpr int MARSHAL_ANY = 1;
+  static constexpr int MARSHAL_STRUCTURED = 2;
 
   /// Constructor
   TAO_Notify_Event ();
@@ -53,7 +54,7 @@ public:
   TAO_Notify_Event &operator= (TAO_Notify_Event &&) = delete;
 
   /// Destructor
-  virtual ~TAO_Notify_Event ();
+  ~TAO_Notify_Event () override;
 
   /// Translate Any to Structured
   static void translate (const CORBA::Any& any, CosNotification::StructuredEvent& notification);
@@ -128,7 +129,7 @@ private:
   virtual void release ();
 
   mutable Ptr clone_;
-  bool        is_on_heap_;
+  bool is_on_heap_ = false;
   ACE_Time_Value time_;
 };
 

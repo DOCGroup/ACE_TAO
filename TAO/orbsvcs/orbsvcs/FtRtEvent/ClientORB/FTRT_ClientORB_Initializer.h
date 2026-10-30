@@ -38,7 +38,7 @@ class FTRT_ClientORB_Initializer
 {
 public:
   /// Priority mapping types
-  FTRT_ClientORB_Initializer (int transaction_depth);
+  explicit FTRT_ClientORB_Initializer (int transaction_depth);
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 

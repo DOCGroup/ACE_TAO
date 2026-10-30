@@ -15,11 +15,12 @@
 #include "ace/OS_NS_unistd.h"
 
 
-int config_run = 0;
+bool config_run = false;
 
 int parse_args (int argc, ACE_TCHAR *argv[]);
 
-typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
+using RECONFIG_SCHED_TYPE =
+  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -61,7 +62,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ****************************************************************
 
       // Create an scheduling service
-      POA_RtecScheduler::Scheduler* sched_impl = 0;
+      POA_RtecScheduler::Scheduler *sched_impl = nullptr;
       if (config_run)
         {
           ACE_NEW_RETURN (sched_impl,
@@ -328,7 +329,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // just a simple demo so we are going to be lazy.
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -347,7 +348,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'c':
-        config_run = 1;
+        config_run = true;
         break;
 
       case '?':

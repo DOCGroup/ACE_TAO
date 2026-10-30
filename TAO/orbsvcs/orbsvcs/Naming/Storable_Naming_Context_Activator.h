@@ -49,7 +49,7 @@ public:
     CORBA::ORB_ptr orb,
     TAO::Storable_Factory *factory,
     TAO_Storable_Naming_Context_Factory *context_impl_factory,
-    const ACE_TCHAR *);
+    ACE_TCHAR const *);
 
   ~TAO_Storable_Naming_Context_Activator () override;
 

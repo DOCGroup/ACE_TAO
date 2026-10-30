@@ -137,7 +137,7 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
 
       pref_info.offer_ = offer;
       pref_info.offer_id_ = offer_id;
-      pref_info.evaluated_ = 1;
+      pref_info.evaluated_ = true;
 
       if (evaluator.evaluate_preference (this->root_, pref_info.value_) == 0)
         {
@@ -148,37 +148,29 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
           if (expr_type == TAO_FIRST
               || (expr_type == TAO_WITH
                   && ! static_cast<CORBA::Boolean> (pref_info.value_)))
-            this->offers_.enqueue_tail (pref_info);
+            this->offers_.push_back (pref_info);
           else
-            this->offers_.enqueue_head (pref_info);
+            this->offers_.push_front (pref_info);
 
           if (expr_type == TAO_MIN || expr_type == TAO_MAX)
             {
-              Ordered_Offers::ITERATOR offer_iter (this->offers_);
-
               // Push the new item down the list until the min/max
               // criterion is satisfied. Observe the evaluation failed
               // / evaluation suceeded partion in the list.
-              offer_iter.advance ();
-
-              for (int i = 1;
-                   offer_iter.done () == 0;
-                   offer_iter.advance (), i++)
+              for (size_t i = 1; i < this->offers_.size (); ++i)
                 {
-                  Preference_Info* current_offer = nullptr;
-                  offer_iter.next (current_offer);
+                  Preference_Info const &current_offer = this->offers_[i];
 
                   // Maintain the sorted order in the first partition.
-                  if (current_offer->evaluated_ == 1
+                  if (current_offer.evaluated_
                       && ((expr_type == TAO_MIN
-                        && pref_info.value_ > current_offer->value_)
+                        && pref_info.value_ > current_offer.value_)
                        || (expr_type == TAO_MAX
-                           && pref_info.value_ < current_offer->value_)))
+                           && pref_info.value_ < current_offer.value_)))
                     {
                       // Swap the out of order pair
-                      this->offers_.set (*current_offer,
-                                         i - 1);
-                      this->offers_.set (pref_info, i);
+                      this->offers_[i - 1] = current_offer;
+                      this->offers_[i] = pref_info;
                     }
                   else
                     break;
@@ -189,8 +181,8 @@ order_offer (TAO_Constraint_Evaluator& evaluator,
         {
           // If the evaluation fails, just tack the sucker onto the
           // end of the queue.
-          pref_info.evaluated_ = 0;
-          this->offers_.enqueue_tail (pref_info);
+          pref_info.evaluated_ = false;
+          this->offers_.push_back (pref_info);
         }
     }
 }
@@ -203,7 +195,12 @@ remove_offer (CosTrading::Offer*& offer,
   int return_value = -1;
   Preference_Info pref_info;
 
-  return_value = this->offers_.dequeue_head (pref_info);
+  if (! this->offers_.empty ())
+    {
+      pref_info = this->offers_.front ();
+      this->offers_.pop_front ();
+      return_value = 0;
+    }
 
   if (return_value == 0)
     {

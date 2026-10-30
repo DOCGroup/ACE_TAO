@@ -11,7 +11,6 @@ RTCP_Packet::RTCP_Packet()
   this->chd_.count_ = 0;
   this->chd_.pad_ = 0;
   this->chd_.length_ = 0;
-  this->packet_data_ = 0;
 }
 
 RTCP_Packet::RTCP_Packet(char* buffer)
@@ -27,12 +26,9 @@ RTCP_Packet::RTCP_Packet(char* buffer)
   this->chd_.count_ = buffer[0] & 0x1F;
   this->chd_.pt_ = buffer[1];
   this->chd_.length_ = ACE_NTOHS(*(ACE_UINT16*)&buffer[2]);
-  this->packet_data_ = 0;
 }
 
-RTCP_Packet::~RTCP_Packet()
-{
-}
+RTCP_Packet::~RTCP_Packet() = default;
 
 void
 RTCP_Packet::get_packet_data(char **buffer, ACE_UINT16 &length)
@@ -74,7 +70,7 @@ RTCP_Packet::is_valid (char is_first)
 
 RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
                                  unsigned char length,
-                                 const char *text)
+                                 char const *text)
 {
   this->chd_.ver_ = 2;
   this->chd_.count_ = length;
@@ -108,8 +104,6 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
   this->chd_.length_ = static_cast<ACE_UINT16> (this->chd_.count_ + (this->reason_length_+1)/4);
   if ((this->reason_length_+1)%4)
     this->chd_.length_++;
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -149,8 +143,6 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   // Decrement the length by the size of this message. This is necessary
   // because multiple RTCP packets may be contained in a single UDP packet.
   *len-=(chd_.length_+1)*4;
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -191,10 +183,10 @@ RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
 
 //==============================================================================
 
-const char *
+char const *
 RTCP_BYE_Packet::reason ()
 {
-  ACE_CString reason = (const char *)this->reason_;
+  ACE_CString reason = reinterpret_cast<char const *> (this->reason_);
 
   return reason.c_str();
 }
@@ -274,7 +266,7 @@ RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
       // Can only have 31 receiver reports
       if (this->chd_.count_ == 31)
         {
-          block_ptr->next_ = 0;
+          block_ptr->next_ = nullptr;
           break;
         }
 
@@ -282,8 +274,6 @@ RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
     }
 
   this->chd_.length_ = static_cast<ACE_UINT16> (1+6*(this->chd_.count_)); // + profile specific extensions ??
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -294,8 +284,6 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
 {
   unsigned int i = 0;
   RR_Block *local_block_ptr = nullptr;
-
-  this->rr_ = 0;
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -316,7 +304,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
           local_block_ptr = local_block_ptr->next_;
         }
 
-      local_block_ptr->next_ = 0;
+      local_block_ptr->next_ = nullptr;
       local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
       ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
@@ -334,8 +322,6 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
     }
 
   *len-=(this->chd_.length_+1)*4;
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -450,9 +436,6 @@ RTCP_SDES_Packet::RTCP_SDES_Packet() :
                    RTCP_Packet ()
 {
   this->chd_.pt_ = RTCP_PT_SDES;
-  this->chunk_ = 0;
-  this->packet_data_ = 0;
-  this->num_chunks_ = 0;
 //  this->num_items_ = 0;
 }
 
@@ -487,8 +470,8 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
           this->num_chunks_++;
         }
-      cp->next_ = 0;
-      cp->item_ = 0;
+      cp->next_ = nullptr;
+      cp->item_ = nullptr;
       cp->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
 
@@ -510,7 +493,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
 //              this->num_items_++;
             }
-          ip->next_ = 0;
+          ip->next_ = nullptr;
           ip->type_ = buffer[i];
           i++;
           if (ip->type_ != RTCP_SDES_PRIV)
@@ -554,7 +537,6 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
   *len-=(this->chd_.length_+1)*4;
 
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -607,8 +589,8 @@ RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
     {
       ACE_NEW (this->chunk_,
                sdesChunk_t);
-      this->chunk_->next_ = 0;
-      this->chunk_->item_ = 0;
+      this->chunk_->next_ = nullptr;
+      this->chunk_->item_ = nullptr;
       cp = this->chunk_;
     }
   else
@@ -620,8 +602,8 @@ RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
       ACE_NEW (cp->next_,
                sdesChunk_t);
       cp = cp->next_;
-      cp->next_ = 0;
-      cp->item_ = 0;
+      cp->next_ = nullptr;
+      cp->item_ = nullptr;
     }
   cp->ssrc_ = ssrc;    // store the source
   chd_.count_++;       // increment the source count
@@ -633,7 +615,7 @@ void
 RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
                             unsigned char type,
                             unsigned char length,
-                            const char *data)
+                            char const *data)
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
@@ -670,7 +652,7 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
                sdesItem_t);
 
       ip = cp->item_;
-      ip->next_= 0;
+      ip->next_ = nullptr;
     }
   else
     {
@@ -683,7 +665,7 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
                sdesItem_t);
 
       ip = ip->next_;
-      ip->next_ = 0;
+      ip->next_ = nullptr;
     }
 
   ip->type_ = type;
@@ -701,9 +683,9 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
 void
 RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
                                  unsigned char nameLength,
-                                 const char* name,
+                                 char const *name,
                                  unsigned char dataLength,
-                                 const char* data)
+                                 char const *data)
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
@@ -740,7 +722,7 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
                sdesItem_t);
 
       ip = cp->item_;
-      ip->next_ = 0;
+      ip->next_ = nullptr;
     }
   else
     {
@@ -753,7 +735,7 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
                sdesItem_t);
 
       ip = ip->next_;
-      ip->next_ = 0;
+      ip->next_ = nullptr;
     }
 
   ip->type_ = RTCP_SDES_PRIV;
@@ -1007,7 +989,7 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
       // Can only have 31 receiver reports
       if (this->chd_.count_ == 31)
         {
-          block_ptr->next_ = 0;
+          block_ptr->next_ = nullptr;
           break;
         }
 
@@ -1015,8 +997,6 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
     }
 
   this->chd_.length_ = static_cast<ACE_UINT16> (6 + 6*(chd_.count_)); //+profile specific extensions ??
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================
@@ -1027,8 +1007,6 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
 {
   unsigned int i = 0;
   RR_Block *local_block_ptr = nullptr;
-
-  this->rr_ = 0;
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -1059,7 +1037,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
           local_block_ptr = local_block_ptr->next_;
         }
 
-      local_block_ptr->next_ = 0;
+      local_block_ptr->next_ = nullptr;
       local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
       ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
@@ -1077,8 +1055,6 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
     }
 
   *len-=(this->chd_.length_+1)*4;
-
-  this->packet_data_ = 0;
 }
 
 //==============================================================================

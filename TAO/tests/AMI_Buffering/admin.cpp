@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      AMI_Buffering_Admin *AMI_buffering_admin_impl;
+      AMI_Buffering_Admin *AMI_buffering_admin_impl = nullptr;
       ACE_NEW_RETURN (AMI_buffering_admin_impl,
                       AMI_Buffering_Admin (orb.in ()),
                       1);
@@ -92,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in admin:");
       return 1;

@@ -11,8 +11,8 @@
 template <typename T>
 struct RefHelper
 {
-  typedef typename T::_ptr_type T_ptr;
-  typedef typename T::_var_type T_var;
+  using T_ptr = typename T::_ptr_type;
+  using T_var = typename T::_var_type;
 
   static T_ptr string_to_ref(CORBA::ORB_ptr orb,
                              const ACE_TCHAR* ior)

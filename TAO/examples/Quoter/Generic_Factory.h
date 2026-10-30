@@ -36,6 +36,11 @@ public:
   /// Destructor
   ~Quoter_Generic_Factory_Server ();
 
+  Quoter_Generic_Factory_Server (Quoter_Generic_Factory_Server const &) = delete;
+  Quoter_Generic_Factory_Server &operator= (Quoter_Generic_Factory_Server const &) = delete;
+  Quoter_Generic_Factory_Server (Quoter_Generic_Factory_Server &&) = delete;
+  Quoter_Generic_Factory_Server &operator= (Quoter_Generic_Factory_Server &&) = delete;
+
   /// Initialize the Quoter_Server state - parsing arguments and ...
   int init (int argc,
             ACE_TCHAR *argv[]);
@@ -51,22 +56,22 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// Instance of the Quoter Generic Factory.
-  Quoter_Generic_Factory_i *quoter_Generic_Factory_i_ptr_;
+  Quoter_Generic_Factory_i *quoter_Generic_Factory_i_ptr_ {};
 
   /// Reference to the Quoter naming context.
-  CosNaming::NamingContext_var quoterNamingContext_var_;
+  CosNaming::NamingContext_var quoterNamingContext_var_ {};
 
   /// Number of commandline arguments.
-  int argc_;
+  int argc_ {};
 
   /// commandline arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// flag for whether or not to use the lifecycle service
-  unsigned char use_LifeCycle_Service_;
+  bool use_LifeCycle_Service_ {};
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_;
+  int debug_level_ {1};
 };
 
 #endif /* GENERIC_FACTORY_H */

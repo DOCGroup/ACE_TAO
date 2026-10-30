@@ -67,8 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_field.h"
 #include "utl_scoped_name.h"
+#include "utl_exceptlist.h"
 
-class UTL_ExceptList;
 class UTL_NameList;
 
 class TAO_IDL_FE_Export AST_Attribute : public virtual AST_Field
@@ -81,6 +81,10 @@ public:
                  bool abstract);
 
   ~AST_Attribute () override;
+  AST_Attribute (AST_Attribute const &) = delete;
+  AST_Attribute (AST_Attribute &&) = delete;
+  AST_Attribute &operator= (AST_Attribute const &) = delete;
+  AST_Attribute &operator= (AST_Attribute &&) = delete;
 
   // Data Accessors.
 
@@ -108,11 +112,11 @@ public:
 private:
   // Data.
 
-  const bool pd_readonly;
+  bool const pd_readonly;
   // Is attribute read-only?
 
-  UTL_ExceptList *pd_get_exceptions;
-  UTL_ExceptList *pd_set_exceptions;
+  UTL_ExceptList_Owner pd_get_exceptions;
+  UTL_ExceptList_Owner pd_set_exceptions;
 
   // Operations.
 

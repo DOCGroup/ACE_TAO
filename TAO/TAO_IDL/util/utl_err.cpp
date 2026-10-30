@@ -67,7 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_err.h"
 #include "utl_identifier.h"
-#include "utl_string.h"
 #include "global_extern.h"
 #include "nr_extern.h"
 #include "fe_extern.h"
@@ -82,13 +81,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_annotation_member.h"
 #include "ast_annotation_appl.h"
 
+#include <string>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #include "ace/Log_Msg.h"
 
-// Convert an error code into a const char *
-static const char *
+// Convert an error code into a message.
+static std::string
 error_string (UTL_Error::ErrorCode c)
 {
   switch (c)
@@ -258,11 +259,15 @@ error_string (UTL_Error::ErrorCode c)
 /**
  * Get filename from node or from idl_global if node is null.
  */
-static const char *
+static std::string const&
 get_filename (AST_Decl *node = nullptr)
 {
-  return node ? node->file_name ().c_str ()
-    : idl_global->filename ()->get_string ();
+  if (node != nullptr)
+    {
+      return node->file_name ();
+    }
+
+  return idl_global->filename ();
 }
 
 /**
@@ -279,17 +284,18 @@ get_lineno (AST_Decl *node = nullptr)
  */
 ///{
 static void
-idl_error_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
+idl_error_header (UTL_Error::ErrorCode c, long lineno, std::string const& filename)
 {
+  std::string const message = error_string (c);
   idl_global->err ()->last_error = c;
-  const long line_number = lineno == -1 ? idl_global->lineno () : lineno;
+  long const line_number = lineno == -1 ? idl_global->lineno () : lineno;
   idl_global->err ()->last_error_lineno = line_number;
   ACE_ERROR ((LM_ERROR,
               "Error - %C: \"%C\", line %d: %C",
-              idl_global->prog_name (),
-              s.c_str (),
+              idl_global->prog_name ().c_str (),
+              filename.c_str (),
               line_number,
-              error_string (c)));
+              message.c_str ()));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 static void
@@ -304,17 +310,18 @@ idl_error_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
  */
 ///{
 static void
-idl_warning_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
+idl_warning_header (UTL_Error::ErrorCode c, long lineno, std::string const& filename)
 {
+  std::string const message = error_string (c);
   idl_global->err ()->last_warning = c;
-  const long line_number = lineno == -1 ? idl_global->lineno () : lineno;
+  long const line_number = lineno == -1 ? idl_global->lineno () : lineno;
   idl_global->err ()->last_warning_lineno = lineno;
   ACE_ERROR ((LM_WARNING,
               "Warning - %C: \"%C\", line %d: %C",
-              idl_global->prog_name (),
-              s.c_str (),
+              idl_global->prog_name ().c_str (),
+              filename.c_str (),
               line_number,
-              error_string (c)));
+              message.c_str ()));
 }
 static void
 idl_warning_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
@@ -324,7 +331,7 @@ idl_warning_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
 ///}
 
 // Convert a parse state into a possible error message
-static const char *
+static std::string
 parse_state_to_error_message (IDL_GlobalData::ParseState ps)
 {
   switch (ps)
@@ -717,13 +724,7 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   }
 }
 
-UTL_Error::UTL_Error ()
-  : last_error (EIDL_OK),
-    last_error_lineno (-1),
-    last_warning (EIDL_OK),
-    last_warning_lineno (-1)
-{
-}
+UTL_Error::UTL_Error () = default;
 
 // Public methods.
 
@@ -732,12 +733,13 @@ UTL_Error::UTL_Error ()
 void
 UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
 {
+  std::string const message = parse_state_to_error_message (ps);
   idl_error_header (EIDL_SYNTAX_ERROR,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "%C\n",
-              parse_state_to_error_message (ps)));
+              message.c_str ()));
 
   // Better to bail here than to increment the error count and
   // try to avoid further bogus error messages and crashes
@@ -865,11 +867,11 @@ UTL_Error::coercion_error (AST_Expression *v,
 {
   idl_error_header (EIDL_COERCION_FAILURE,
                     v->line (),
-                    v->file_name ()->get_string ());
+                    v->file_name ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " to %C\n",
-              AST_Expression::exprtype_to_string (t)));
+              AST_Expression::exprtype_to_string (t).c_str ()));
 }
 
 // Report a failed name lookup attempt.
@@ -896,21 +898,21 @@ UTL_Error::lookup_warning (UTL_ScopedName *n)
 
 // Report an illegal version number assignment.
 void
-UTL_Error::version_number_error (char *n)
+UTL_Error::version_number_error (std::string const& n)
 {
   idl_error_header (EIDL_ILLEGAL_VERSION);
   ACE_ERROR ((LM_ERROR,
               "%C\n",
-              n));
+              n.c_str ()));
 }
 
 void
-UTL_Error::version_syntax_error (const char *msg)
+UTL_Error::version_syntax_error (std::string const& msg)
 {
   idl_error_header (EIDL_ILLEGAL_VERSION);
   ACE_ERROR ((LM_ERROR,
               "%C\n",
-              msg));
+              msg.c_str ()));
 }
 
 // Report an attempt to set the version a second time.
@@ -924,14 +926,14 @@ UTL_Error::version_reset_error ()
 
 // Report a reset of the id a second time to a different string.
 void
-UTL_Error::id_reset_error (const char *o,
-                           const char *n)
+UTL_Error::id_reset_error (std::string const& o,
+                           std::string const& n)
 {
   idl_error_header (EIDL_ID_RESET);
   ACE_ERROR ((LM_ERROR,
-              "%s, %s\n",
-              o,
-              n));
+              "%C, %C\n",
+              o.c_str (),
+              n.c_str ()));
 }
 
 // Report an attempt to inherit from an interface which was only
@@ -947,7 +949,7 @@ UTL_Error::inheritance_fwd_error (UTL_ScopedName *n,
   n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " cannot inherit from forward declared interface "));
-  if (f)
+  if (f != nullptr)
     {
       f->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
     }
@@ -1072,7 +1074,7 @@ UTL_Error::eval_error (AST_Expression *v)
 {
   idl_error_header (EIDL_EVAL_ERROR,
                     v->line (),
-                    v->file_name ()->get_string ());
+                    v->file_name ());
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1212,9 +1214,10 @@ UTL_Error::enum_val_expected (AST_Union *u,
                               AST_UnionLabel *l)
 {
   idl_error_header (EIDL_ENUM_VAL_EXPECTED, u);
+  std::string const union_name (u->local_name ()->get_string ());
   ACE_ERROR ((LM_ERROR,
               " union %C, ",
-              u->local_name ()->get_string ()));
+              union_name.c_str ()));
   l->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1231,10 +1234,12 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
                                     UTL_ScopedName *n)
 {
   idl_error_header (EIDL_ENUM_VAL_NOT_FOUND, u);
+  std::string const union_name (u->local_name ()->get_string ());
+  std::string const enum_name (e->local_name ()->get_string ());
   ACE_ERROR ((LM_ERROR,
               " union %C,  enum %C,  enumerator ",
-              u->local_name ()->get_string (),
-              e->local_name ()->get_string ()));
+              union_name.c_str (),
+              enum_name.c_str ()));
   n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
@@ -1242,58 +1247,58 @@ UTL_Error::enum_val_lookup_failure (AST_Union *u,
 
 // Report clash between declared and referenced indentifiers.
 void
-UTL_Error::redef_error (const char *b, const char *n)
+UTL_Error::redef_error (std::string const& b, std::string const& n)
 {
   idl_error_header (EIDL_REDEF);
   ACE_ERROR ((LM_ERROR,
               "\"%s\" and \"%s\"\n",
-              b,
-              n));
+              b.c_str (),
+              n.c_str ()));
 }
 
 // Report two or more spellings for an identifier.
 void
-UTL_Error::name_case_error (char *b, char *n)
+UTL_Error::name_case_error (std::string const& b, std::string const& n)
 {
   idl_error_header (EIDL_NAME_CASE_ERROR);
   ACE_ERROR ((LM_ERROR,
               "\"%C\" and \"%C\"\n",
-              b,
-              n));
+              b.c_str (),
+              n.c_str ()));
 }
 
 void
-UTL_Error::name_case_warning (char *b,
-                              char *n)
+UTL_Error::name_case_warning (std::string const& b,
+                              std::string const& n)
 {
   if (idl_global->print_warnings ())
     {
       idl_warning_header (EIDL_NAME_CASE_WARNING);
       ACE_ERROR ((LM_WARNING,
                   "\"%C\" and \"%C\"\n",
-                  b,
-                  n));
+                  b.c_str (),
+                  n.c_str ()));
     }
 }
 
 void
-UTL_Error::idl_keyword_error (char *n)
+UTL_Error::idl_keyword_error (std::string const& n)
 {
   idl_error_header (EIDL_KEYWORD_ERROR);
   ACE_ERROR ((LM_ERROR,
               "\"%C\"\n",
-              n));
+              n.c_str ()));
 }
 
 void
-UTL_Error::idl_keyword_warning (char *n)
+UTL_Error::idl_keyword_warning (std::string const& n)
 {
   if (idl_global->print_warnings ())
     {
       idl_warning_header (EIDL_KEYWORD_WARNING);
       ACE_ERROR ((LM_ERROR,
                   "\"%C\"\n",
-                  n));
+                  n.c_str ()));
     }
 }
 
@@ -1304,9 +1309,11 @@ UTL_Error::ambiguous (UTL_Scope *s,
                       AST_Decl *d)
 {
   idl_error_header (EIDL_AMBIGUOUS, d);
+  std::string const scope_name (
+    (ScopeAsDecl (s))->local_name ()->get_string ());
   ACE_ERROR ((LM_ERROR,
               " scope: %C,  collision: ",
-              (ScopeAsDecl (s))->local_name ()->get_string ()));
+              scope_name.c_str ()));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " vs. "));
@@ -1383,11 +1390,11 @@ UTL_Error::fixed_unsupported (AST_Fixed *d)
 
 void
 UTL_Error::back_end (long lineno,
-                     UTL_String *s)
+                     std::string const& s)
 {
   idl_error_header (EIDL_BACK_END,
                     lineno,
-                    s->get_string ());
+                    s);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -1443,41 +1450,40 @@ UTL_Error::duplicate_param_id (UTL_ScopedName *n)
 }
 
 void
-UTL_Error::mismatched_template_param (const char *name)
+UTL_Error::mismatched_template_param (std::string const& name)
 {
   idl_error_header (EIDL_MISMATCHED_T_PARAM);
-  ACE_ERROR ((LM_ERROR, " - %s\n", name));
+  ACE_ERROR ((LM_ERROR, " - %s\n", name.c_str ()));
 }
 
 void
-UTL_Error::mismatch_seq_of_param (const char *param_id)
+UTL_Error::mismatch_seq_of_param (std::string const& param_id)
 {
   idl_error_header (EIDL_MISMATCHED_SEQ_PARAM);
-  ACE_ERROR ((LM_ERROR, " - %s\n", param_id));
+  ACE_ERROR ((LM_ERROR, " - %s\n", param_id.c_str ()));
 }
 
 void
 UTL_Error::scope_masking_error (AST_Decl *masked,
                                 AST_Decl *masking)
 {
-  const char *this_file = idl_global->filename ()->get_string ();
-  const char *masked_file = masked->file_name ().c_str ();
-  const char *masking_file = masking->file_name ().c_str ();
+  std::string const& this_file = idl_global->filename ();
+  std::string const& masked_file = masked->file_name ();
+  std::string const& masking_file = masking->file_name ();
 
   idl_error_header (EIDL_MISC);
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Did you mean \"::%C\"\n")
               ACE_TEXT ("   declared at "),
-              masked->full_name () ));
+              masked->full_name ().c_str () ));
 
-  const bool same_file =
-    (0 == ACE_OS::strcmp (this_file, masked_file));
+  bool const same_file = (this_file == masked_file);
 
   if (!same_file)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%C "),
-                  masked_file));
+                  masked_file.c_str ()));
     }
 
   ACE_ERROR ((LM_ERROR,
@@ -1486,18 +1492,18 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
 
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("::%C\""),
-              masking->full_name ()));
+              masking->full_name ().c_str ()));
 
-  const bool same_file_again =
+  bool const same_file_again =
     (same_file
-     && 0 == ACE_OS::strcmp (this_file, masking_file));
+     && this_file == masking_file);
 
   if (!same_file_again)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("\n")
                   ACE_TEXT ("   declared at %C "),
-                  masking_file));
+                  masking_file.c_str ()));
     }
   else
     {
@@ -1544,47 +1550,48 @@ UTL_Error::template_scope_ref_not_aliased (AST_Decl *d)
 }
 
 void
-UTL_Error::idl_version_error (const char *reason)
+UTL_Error::idl_version_error (std::string const& reason)
 {
+  std::string const version_string (idl_global->idl_version_.to_string ());
   idl_error_header (EIDL_IDL_VERSION_ERROR);
   ACE_ERROR ((LM_ERROR,
     ACE_TEXT ("\n%C\nCurrent IDL version is %C, use --idl-version VERSION to ")
     ACE_TEXT ("set the IDL version to use.\n"),
-    reason, idl_global->idl_version_.to_string ()
+    reason.c_str (), version_string.c_str ()
     ));
 }
 
 void
-UTL_Error::unsupported_error (const char *reason)
+UTL_Error::unsupported_error (std::string const& reason)
 {
   idl_error_header (EIDL_UNSUPPORTED);
-  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason.c_str ()));
 }
 
 void
-UTL_Error::unsupported_warning (const char *reason)
+UTL_Error::unsupported_warning (std::string const& reason)
 {
   if (idl_global->print_warnings ())
     {
       idl_warning_header (EIDL_UNSUPPORTED);
-      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
+      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason.c_str ()));
     }
 }
 
 void
-UTL_Error::misc_error (const char *reason, AST_Decl *node)
+UTL_Error::misc_error (std::string const& reason, AST_Decl *node)
 {
   idl_error_header (EIDL_MISC, node);
-  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason.c_str ()));
 }
 
 void
-UTL_Error::misc_warning (const char *reason, AST_Decl *node)
+UTL_Error::misc_warning (std::string const& reason, AST_Decl *node)
 {
   if (idl_global->print_warnings ())
     {
       idl_warning_header (EIDL_MISC, node);
-      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
+      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason.c_str ()));
     }
 }
 
@@ -1593,6 +1600,7 @@ UTL_Error::invalid_annotation_param_error (
   AST_Annotation_Appl *appl, AST_Annotation_Decl *decl,
   Identifier *invalid_id)
 {
+  std::string const filename (get_filename (decl));
   bool is_builtin = decl->builtin ();
   idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
     static_cast<AST_Decl*>(appl));
@@ -1603,7 +1611,7 @@ UTL_Error::invalid_annotation_param_error (
   if (!is_builtin)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT (" declared in \"%C\" on line %d"),
-        get_filename (decl), get_lineno (decl)));
+        filename.c_str (), get_lineno (decl)));
     }
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("\n")));
 }
@@ -1613,6 +1621,7 @@ UTL_Error::invalid_annotation_param_type (
   AST_Annotation_Appl *appl, AST_Annotation_Member *member,
   AST_Expression *offending_value)
 {
+  std::string const filename (get_filename (member));
   bool is_builtin = member->builtin ();
   idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
     static_cast<AST_Decl*>(appl));
@@ -1625,7 +1634,7 @@ UTL_Error::invalid_annotation_param_type (
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT (" declared in \"%C\" on line %d"),
-        get_filename (member), get_lineno (member)));
+        filename.c_str (), get_lineno (member)));
     }
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" can not be set to ")));
   offending_value->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1636,6 +1645,7 @@ void
 UTL_Error::annotation_param_missing_error (
   AST_Annotation_Appl *appl, AST_Annotation_Member *member)
 {
+  std::string const filename (get_filename (member));
   bool is_builtin = member->builtin ();
   idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
     static_cast<AST_Decl*>(appl));
@@ -1648,29 +1658,31 @@ UTL_Error::annotation_param_missing_error (
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT (" declared in \"%C\" on line %d"),
-        get_filename (member), get_lineno (member)));
+        filename.c_str (), get_lineno (member)));
     }
   ACE_ERROR ((LM_ERROR,
     ACE_TEXT (" needs to be defined because it does not have a default value!\n"),
-    get_filename (member), get_lineno (member)));
+    filename.c_str (), get_lineno (member)));
 }
 
 void
 UTL_Error::direct_error (
-  const char *reason, const ACE_CString &filename, long lineno, UTL_Error::ErrorCode error_code)
+  std::string const& reason, std::string const& filename, long lineno,
+  UTL_Error::ErrorCode error_code)
 {
   idl_error_header (error_code, lineno, filename);
-  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason.c_str ()));
 }
 
 void
 UTL_Error::direct_warning (
-  const char *reason, const ACE_CString &filename, long lineno, UTL_Error::ErrorCode error_code)
+  std::string const& reason, std::string const& filename, long lineno,
+  UTL_Error::ErrorCode error_code)
 {
   if (idl_global->print_warnings ())
     {
       idl_warning_header (error_code, lineno, filename);
-      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
+      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason.c_str ()));
     }
 }
 

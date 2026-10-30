@@ -43,7 +43,7 @@ public:
   TAO_UIPMC_Endpoint ();
 
   /// Constructor.
-  TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr);
+  explicit TAO_UIPMC_Endpoint (ACE_INET_Addr const &addr);
 
   /// Destructor.
   ~TAO_UIPMC_Endpoint () override;
@@ -59,7 +59,7 @@ public:
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
-  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
+  CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
@@ -69,14 +69,14 @@ public:
   // = UIPMC_Endpoint-specific methods.
 
   /// Return a reference to the  object_addr .
-  const ACE_INET_Addr &object_addr () const;
+  ACE_INET_Addr const &object_addr () const;
 
   /// Set the IP multicast address and port.
-  void object_addr (const ACE_INET_Addr &addr);
+  void object_addr (ACE_INET_Addr const &addr);
 
   /// Return a pointer to the stringified host address (not including the
   /// port).  This class retains ownership of the address memory.
-  const char *host () const;
+  char const *host () const;
 
   /// Return the port number.
   CORBA::UShort port () const;
@@ -90,7 +90,7 @@ public:
   bool is_preferred_network () const;
 
   /// Return the preferred network interface if any.
-  const char *preferred_network () const;
+  char const *preferred_network () const;
 
   /// Transform this endpoint into (potentially) a chain of endpoints
   /// in preferrence order of specific local interface bind address (if
@@ -98,14 +98,19 @@ public:
   CORBA::ULong preferred_interfaces (TAO_ORB_Core *oc);
 
   /// Acessor for the preferred network interface name if set
-  const char *preferred_if () const;
+  char const *preferred_if () const;
 
 private:
+  TAO_UIPMC_Endpoint (TAO_UIPMC_Endpoint const &) = delete;
+  TAO_UIPMC_Endpoint (TAO_UIPMC_Endpoint &&) = delete;
+  TAO_UIPMC_Endpoint & operator= (TAO_UIPMC_Endpoint const &) = delete;
+  TAO_UIPMC_Endpoint & operator= (TAO_UIPMC_Endpoint &&) = delete;
+
   /// String representing the host address.
   CORBA::String_var host_;
 
   /// UDP port number.
-  CORBA::UShort port_;
+  CORBA::UShort port_ {};
 
   /// Cached instance of ACE_INET_Addr for use in making
   /// invocations, etc.
@@ -116,7 +121,7 @@ private:
 
   /// UIPMC Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_UIPMC_Endpoint *next_;
+  TAO_UIPMC_Endpoint *next_ {};
 
   /// Preferred interface name (if set)
   CORBA::String_var preferred_if_;

@@ -189,11 +189,6 @@ TAO_FTEC_Event_Channel_Impl::TAO_FTEC_Event_Channel_Impl(
   this->create_strategies ();
 }
 
-TAO_FTEC_Event_Channel_Impl::~TAO_FTEC_Event_Channel_Impl()
-{
-}
-
-
 TAO_FTEC_Basic_Factory*
 TAO_FTEC_Event_Channel_Impl::factory()
 {

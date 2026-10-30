@@ -16,10 +16,9 @@ using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 TAO_CEC_ProxyPullConsumer::
 TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* ec,
-                           const ACE_Time_Value &timeout)
+                           ACE_Time_Value const &timeout)
   : event_channel_ (ec),
-    timeout_ (timeout),
-    refcount_ (1)
+    timeout_ (timeout)
 {
   this->lock_ =
     this->event_channel_->create_consumer_lock ();
@@ -44,7 +43,7 @@ TAO_CEC_ProxyPullConsumer::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       result = CosEventChannelAdmin::ProxyPullConsumer::_nil ();
     }
@@ -62,7 +61,7 @@ TAO_CEC_ProxyPullConsumer::deactivate ()
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is being disconnected twice, or some
@@ -80,7 +79,7 @@ CORBA::Any*
 TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
     CORBA::Boolean_out has_event)
 {
-  has_event = 0;
+  has_event = false;
   CosEventComm::PullSupplier_var supplier;
   {
     ACE_GUARD_THROW_EX (
@@ -89,7 +88,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
-      return 0; // ACE_THROW (CosEventComm::Disconnected ());????
+      return nullptr; // ACE_THROW (CosEventComm::Disconnected ());????
 
     supplier =
       CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());
@@ -109,7 +108,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
       // Inform the control that we got something from the supplier
       control->successful_transmission(this);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       control->supplier_not_exist (this);
     }
@@ -117,7 +116,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
     {
       control->system_exception (this, sysex);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Should not happen
     }
@@ -135,7 +134,7 @@ TAO_CEC_ProxyPullConsumer::pull_from_supplier ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
-      return 0; // ACE_THROW (CosEventComm::Disconnected ());????
+      return nullptr; // ACE_THROW (CosEventComm::Disconnected ());????
 
     supplier =
       CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());
@@ -149,7 +148,7 @@ TAO_CEC_ProxyPullConsumer::pull_from_supplier ()
     {
       any = supplier->pull ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ This is where the policies for misbehaving suppliers
       //    should kick in.... for the moment just ignore them.
@@ -210,7 +209,7 @@ TAO_CEC_ProxyPullConsumer::shutdown ()
     {
       supplier->disconnect_pull_supplier ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions, we must isolate other clients from
       // failures on this one.
@@ -262,7 +261,7 @@ TAO_CEC_ProxyPullConsumer::connect_pull_supplier (
 
     if (this->is_connected_i ())
       {
-        if (this->event_channel_->supplier_reconnect () == 0)
+        if (!this->event_channel_->supplier_reconnect ())
           throw CosEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed, go ahead and disconnect the
@@ -348,7 +347,7 @@ TAO_CEC_ProxyPullConsumer::disconnect_pull_consumer ()
         {
           supplier->disconnect_pull_supplier ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Ignore exceptions, we must isolate other clients from
           // failures on this one.

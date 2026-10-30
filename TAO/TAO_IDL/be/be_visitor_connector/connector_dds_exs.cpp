@@ -24,9 +24,7 @@ be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_dds_exs::~be_visitor_connector_dds_exs ()
-{
-}
+be_visitor_connector_dds_exs::~be_visitor_connector_dds_exs () = default;
 
 int
 be_visitor_connector_dds_exs::visit_connector (be_connector *node)
@@ -42,7 +40,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
     }
 
   // If we have a connector within a templated module
-  if (! this->t_args_.is_empty ())
+  if (!this->t_args_.empty ())
     {
       os_ << be_nl
           << this->node_->local_name () << "_exec_i::"
@@ -57,14 +55,8 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 
       size_t slot = 1UL;
 
-      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
-          !i.done ();
-          i.advance (), ++slot)
+      for (AST_Decl *d : this->t_args_)
         {
-          AST_Decl **item = nullptr;
-          i.next (item);
-          AST_Decl *d = *item;
-
           if (this->is_dds_type (node, d))
             {
               os_ << d->flat_name ()
@@ -79,7 +71,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           bool is_fixed = false;
           FE_Utils::T_Param_Info *param = nullptr;
 
-          if (this->t_params_->get (param, slot - 1) != 0)
+          if (slot - 1 >= this->t_params_->size ())
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_connector_dds_exh::")
@@ -87,6 +79,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
                                  ACE_TEXT ("template param fetch failed\n ")),
                                 -1);
             }
+          param = &(*this->t_params_)[slot - 1];
 
           if (d->node_type () == AST_Decl::NT_typedef)
             {
@@ -121,6 +114,8 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
             {
               os_ << "," << be_nl;
             }
+
+          ++slot;
         }
 
       os_ << "> ()"

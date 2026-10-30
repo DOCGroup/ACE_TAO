@@ -27,13 +27,9 @@ AST_Annotation_Appl::delete_params (AST_Annotation_Appl::Params* params)
 {
   if (params)
     {
-      Params::ITERATOR iter (*params);
-      while (!iter.done ())
+      for (Param *param : *params)
         {
-          Param **i = nullptr;
-          iter.next (i);
-          delete *i;
-          iter.advance ();
+          delete param;
         }
       delete params;
     }
@@ -50,40 +46,37 @@ AST_Annotation_Appl::AST_Annotation_Appl (
     AST_Structure (name, false, false),
     AST_Annotation_Decl (name),
     original_name_ (name->get_string_copy ()),
-    params_ (params),
-    annotation_decl_ (nullptr)
+    params_ (params)
 {
 }
 
 AST_Annotation_Appl::~AST_Annotation_Appl ()
 {
-  delete [] original_name_;
   delete_params (params_);
   AST_Structure::destroy ();
 }
 
 void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
 {
-  dump_i (o, original_name_);
+  dump_i (o, this->original_name_.c_str ());
   if (params_)
     {
       dump_i (o, "(");
-      Params::ITERATOR iter (*params_);
-      while (!iter.done ())
+      bool first = true;
+      for (Param *param : *params_)
         {
-          Param **i = nullptr;
-          iter.next (i);
-          if ((*i)->id)
-            {
-              (*i)->id->dump (o);
-              dump_i (o, " = ");
-            }
-          (*i)->expr->dump (o);
-          iter.advance ();
-          if (!iter.done ())
+          if (!first)
             {
               dump_i (o, ", ");
             }
+          first = false;
+
+          if (param->id)
+            {
+              param->id->dump (o);
+              dump_i (o, " = ");
+            }
+          param->expr->dump (o);
         }
       dump_i (o, ")");
     }
@@ -98,7 +91,7 @@ void AST_Annotation_Appl::destroy ()
 {
 }
 
-const char *AST_Annotation_Appl::original_name () const
+std::string const& AST_Annotation_Appl::original_name () const
 {
   return original_name_;
 }
@@ -124,7 +117,8 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
            * Check to see if we have a parameter that matches this. If not,
            * make sure that the member has a default value.
            */
-          Param *param = find_param (member->local_name ()->get_string ());
+          Param *param = find_param (
+            member->local_name ()->get_string ());
           if (param)
             {
               new_member->value (new AST_Expression (param->expr, member->expr_type()));
@@ -148,15 +142,12 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
   // Make sure all the parameters were used
   if (params_)
     {
-      for (Param::Iterator it (*params_);
-          !it.done (); it.advance ())
+      for (Param *param : *params_)
         {
-          Param **param = nullptr;
-          it.next (param);
-          if ((*param) && !(*param)->used)
+          if (param && !param->used)
             {
               idl_global->err ()->invalid_annotation_param_error (
-                this, decl, (*param)->id);
+                this, decl, param->id);
               return false;
             }
         }
@@ -180,29 +171,26 @@ AST_Annotation_Appl::annotation_decl ()
 }
 
 AST_Annotation_Appl::Param *
-AST_Annotation_Appl::find_param (const char *name)
+AST_Annotation_Appl::find_param (std::string const& name) const
 {
   if (params_)
     {
       // Check for single nameless parameter
       if (params_->size () == 1)
         {
-          Param *top = nullptr;
-          params_->top (top);
+          Param *top = params_->front ();
           if (top && !top->id && top->expr)
             {
               // Don't reuse it if used
               return top->used ? nullptr : top;
             }
         }
-      for (Param::Iterator it (*params_);
-          !it.done (); it.advance ())
+      for (Param *param : *params_)
         {
-          Param **param = nullptr;
-          it.next (param);
-          if ((*param) && (*param)->id && !ACE_OS::strcmp ((*param)->id->get_string (), name))
+          if (param && param->id
+              && param->id->get_string () == name)
             {
-              return (*param);
+              return param;
             }
         }
     }

@@ -28,6 +28,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Timer_Queuefwd.h"
 
+#include <string>
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Object_Adapter;
@@ -67,7 +70,7 @@ public:
   /// Add a new codeset
   void add_translator (const ACE_TCHAR* name);
 
-  using iterator = ACE_Unbounded_Queue_Iterator<ACE_TCHAR*>;
+  using iterator = std::vector<std::basic_string<ACE_TCHAR>>::const_iterator;
 
   /// Iterate through the registered translators
   iterator translators ();
@@ -78,8 +81,10 @@ public:
 private:
   TAO_Codeset_Parameters (const TAO_Codeset_Parameters &) = delete;
   TAO_Codeset_Parameters &operator= (const TAO_Codeset_Parameters &) = delete;
+  TAO_Codeset_Parameters (TAO_Codeset_Parameters &&) = delete;
+  TAO_Codeset_Parameters &operator= (TAO_Codeset_Parameters &&) = delete;
 
-  ACE_Unbounded_Queue<ACE_TCHAR*> translators_;
+  std::vector<std::basic_string<ACE_TCHAR>> translators_;
   ACE_TCHAR* native_;
 };
 

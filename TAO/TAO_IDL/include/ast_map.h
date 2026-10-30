@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_concrete_type.h"
 
+#include <memory>
 
 class AST_Expression;
 class AST_Type;
@@ -82,8 +83,12 @@ public:
            bool abstract);
 
   ~AST_Map () override = default;
+  AST_Map (AST_Map const &) = delete;
+  AST_Map (AST_Map &&) = delete;
+  AST_Map &operator= (AST_Map const &) = delete;
+  AST_Map &operator= (AST_Map &&) = delete;
 
-  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
+  bool in_recursion (std::vector<AST_Type *> &list) override;
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
@@ -132,7 +137,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &key_type_annotations ();
-  void key_type_annotations (const AST_Annotation_Appls &annotations);
+  void key_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
   /**
@@ -140,12 +145,12 @@ public:
    */
   ///{
   AST_Annotation_Appls &value_type_annotations ();
-  void value_type_annotations (const AST_Annotation_Appls &annotations);
+  void value_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
 private:
   // Data.
-  AST_Expression *pd_max_size;
+  std::unique_ptr<AST_Expression> pd_max_size;
   // Maximum map size.
 
   /**
@@ -158,15 +163,11 @@ private:
   **/
   AST_Type *value_pd_type;
 
-  bool unbounded_;
+  bool unbounded_ {true};
   // Whether we are bounded or unbounded.
 
-  bool owns_key_type_;
-  // If our key type is anonymous array or map, we're
-  // responsible for destroying it.
-  bool owns_value_type_;
-  // If our value type is anonymous array or map, we're
-  // responsible for destroying it.
+  std::unique_ptr<AST_Type> owned_key_type_;
+  std::unique_ptr<AST_Type> owned_value_type_;
 
   /**
    * Annotations on the key type

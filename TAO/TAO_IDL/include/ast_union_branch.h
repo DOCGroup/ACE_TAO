@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_field.h"
 #include "utl_scoped_name.h"
 
+#include <memory>
+
 class UTL_LabelList;
 class AST_Type;
 class AST_UnionLabel;
@@ -82,14 +84,20 @@ public:
   AST_UnionBranch (UTL_LabelList *ll,
                    AST_Type *ft,
                    UTL_ScopedName *n);
+  AST_UnionBranch (AST_UnionBranch const &) = delete;
+  AST_UnionBranch (AST_UnionBranch &&) = delete;
+  AST_UnionBranch &operator= (AST_UnionBranch const &) = delete;
+  AST_UnionBranch &operator= (AST_UnionBranch &&) = delete;
 
   ~AST_UnionBranch () override;
 
-  UTL_LabelList *labels () const;
+  UTL_LabelList *labels ();
+  UTL_LabelList const *labels () const;
 
   AST_UnionLabel *label (unsigned long index = 0);
+  AST_UnionLabel const *label (unsigned long index = 0) const;
 
-  unsigned long label_list_length ();
+  unsigned long label_list_length () const;
 
   // Called if our labels are enum values - adds them to the
   // enclosing scope's name_referenced list.
@@ -117,7 +125,7 @@ public:
 
 private:
   // list of labels.
-  UTL_LabelList *pd_ll;
+  std::unique_ptr<UTL_LabelList> pd_ll;
 };
 
 #endif           // _AST_UNION_BRANCH_AST_UNION_BRAN_HH

@@ -70,8 +70,8 @@ namespace TAO
      * @param name the name of the property to set
      * @param value an Any containing the value.
      */
-    void set_default_property (const char * name,
-          const PortableGroup::Value & value);
+    void set_default_property (char const * name,
+          PortableGroup::Value const & value);
 
     /**
      * Update the default property set.
@@ -81,7 +81,7 @@ namespace TAO
      *
      * @param props the set of properties to update the defaults.
      */
-    void set_default_properties (const PortableGroup::Properties & props);
+    void set_default_properties (PortableGroup::Properties const & props);
 
     /**
      * Export the default properties in PortableGroup::Properties format.
@@ -104,7 +104,7 @@ namespace TAO
      * @param props a set of properties to be removed by name.
      */
     void remove_default_properties (
-        const PortableGroup::Properties & props);
+        PortableGroup::Properties const & props);
 
     /**
      * Override or define properties associated with a type_id.
@@ -119,8 +119,8 @@ namespace TAO
      * validation.)
      */
     void set_type_properties (
-        const char *type_id,
-        const PortableGroup::Properties & overrides);
+        char const * type_id,
+        PortableGroup::Properties const & overrides);
 
     /**
      * Export the property set in a PortableGroup::Properties format.
@@ -140,7 +140,7 @@ namespace TAO
      * @returns a newly allocated PortableGroup::Properties that must be released by the caller.
      */
     PortableGroup::Properties * get_type_properties (
-        const char *type_id);
+        char const * type_id);
 
     /**
      * Export the property set in a PortableGroup::Properties format.
@@ -156,7 +156,7 @@ namespace TAO
      * @returns a pointer to a Property_Set owned by this Properties_Support object.
      */
     TAO::PG_Property_Set_var  find_typeid_properties (
-        const char *type_id);
+        char const * type_id);
 
     /**
      * Undefine default properties that appear in props.
@@ -169,12 +169,17 @@ namespace TAO
      * @param props a set of properties to be removed by name from the type_id set.
      */
     void remove_type_properties (
-        const char *type_id,
-        const PortableGroup::Properties & props);
+        char const * type_id,
+        PortableGroup::Properties const & props);
 
     ///////////////
     // Data Members
   private:
+    PG_Properties_Support (PG_Properties_Support const &) = delete;
+    PG_Properties_Support (PG_Properties_Support &&) = delete;
+    PG_Properties_Support &operator= (PG_Properties_Support const &) = delete;
+    PG_Properties_Support &operator= (PG_Properties_Support &&) = delete;
+
     /**
      * Protect internal state.
      */

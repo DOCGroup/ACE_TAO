@@ -131,17 +131,17 @@ namespace TAO
     FT::FaultNotifier_var fault_notifier_;
 
     /// Application-specific Fault Analyzer.
-    TAO::FT_FaultAnalyzer * fault_analyzer_;
+    TAO::FT_FaultAnalyzer * fault_analyzer_ {};
 
     /// ConsumerId assigned by the notifier.
-    FT::FaultNotifier::ConsumerId consumer_id_;
+    FT::FaultNotifier::ConsumerId consumer_id_ {};
 
     /// Our consumer object reference.
     CosNotifyComm::StructuredPushConsumer_var consumer_ref_;
 
     ///TODO: Remove this later, it is just for testing.
     // Keep track of how many notifications we have received.
-    size_t notifications_;
+    size_t notifications_ {};
   };
 } // namespace TAO
 

@@ -643,6 +643,11 @@ private:
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
 {
 public:
+  ACE_WFMO_Reactor (ACE_WFMO_Reactor const &) = delete;
+  ACE_WFMO_Reactor (ACE_WFMO_Reactor &&) = delete;
+  ACE_WFMO_Reactor &operator= (ACE_WFMO_Reactor const &) = delete;
+  ACE_WFMO_Reactor &operator= (ACE_WFMO_Reactor &&) = delete;
+
   friend class ACE_WFMO_Reactor_Handler_Repository;
   friend class ACE_WFMO_Reactor_Test;
 
@@ -1337,10 +1342,6 @@ protected:
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
   sig_atomic_t deactivated_;
-
-private:
-  ACE_WFMO_Reactor (const ACE_WFMO_Reactor &) = delete;
-  ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

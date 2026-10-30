@@ -41,16 +41,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RecursiveDef_OuterScopes
 {
 public:
-  TAO_RecursiveDef_OuterScopes( const ACE_TString &id ); // "Push" scope's ID
+  explicit TAO_RecursiveDef_OuterScopes (ACE_TString const &id); // "Push" scope's ID
   ~TAO_RecursiveDef_OuterScopes(); // "Pop" this scope
 
-  static bool SeenBefore( const ACE_TString &id ); // Check for outer ID
+  static bool SeenBefore (ACE_TString const &id); // Check for outer ID
+
+  TAO_RecursiveDef_OuterScopes (TAO_RecursiveDef_OuterScopes const &) = delete;
+  TAO_RecursiveDef_OuterScopes (TAO_RecursiveDef_OuterScopes &&) = delete;
+  TAO_RecursiveDef_OuterScopes &operator= (TAO_RecursiveDef_OuterScopes const &) = delete;
+  TAO_RecursiveDef_OuterScopes &operator= (TAO_RecursiveDef_OuterScopes &&) = delete;
 
 private: // Data
-  const ACE_TString id_;
-  const TAO_RecursiveDef_OuterScopes *const pNextOuterID_;
+  ACE_TString const id_;
+  TAO_RecursiveDef_OuterScopes const *const pNextOuterID_;
 
-  static const TAO_RecursiveDef_OuterScopes *pIDsSeenAlready;
+  static TAO_RecursiveDef_OuterScopes const *pIDsSeenAlready;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

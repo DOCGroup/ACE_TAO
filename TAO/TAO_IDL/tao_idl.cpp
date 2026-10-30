@@ -76,6 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "utl_identifier.h"
 
+#include <string>
+
 #include "drv_extern.h"
 
 #include "tao/Version.h"
@@ -88,12 +90,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #  include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-extern const ACE_TCHAR *DRV_arglist[];
-extern unsigned long DRV_argcount;
-
-char *DRV_files[NFILES];
-long DRV_nfiles = 0;
-long DRV_file_index = -1;
+std::vector<std::string> DRV_files;
 
 void
 DRV_version ()
@@ -101,7 +98,7 @@ DRV_version ()
   ACE_DEBUG ((LM_DEBUG,
               "%C\n"
               "TAO_IDL_FE, version %s%s (Based on Sun IDL FE, version %s)\n",
-              idl_global->prog_name (),
+              idl_global->prog_name ().data (),
               ACE_TEXT (TAO_VERSION),
               ACE_TEXT (TAO_PATCH),
               ACE_TEXT (SUN_IDL_FE_VERSION)));
@@ -115,10 +112,9 @@ DRV_init (int &argc, ACE_TCHAR *argv[])
   // Initialize front end.
   FE_init ();
 
-  // Initialize driver private data. DRV_nfiles will be updated
+  // Initialize driver private data. DRV_files will be updated
   // by DRV_parse_args().
-  DRV_nfiles = 0;
-  DRV_file_index = 0;
+  DRV_files.clear ();
 
 #if defined (TAO_IDL_PREPROCESSOR)
   idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
@@ -138,10 +134,10 @@ void
 DRV_refresh ()
 {
   idl_global->set_err_count (0);
-  idl_global->set_filename (nullptr);
-  idl_global->set_main_filename (nullptr);
-  idl_global->set_real_filename (nullptr);
-  idl_global->set_stripped_filename (nullptr);
+  idl_global->set_filename ({});
+  idl_global->set_main_filename ({});
+  idl_global->set_real_filename ({});
+  idl_global->set_stripped_filename ({});
   idl_global->set_lineno (-1);
   idl_global->reset_flag_seen ();
 }
@@ -160,18 +156,6 @@ DRV_cleanup ()
   idl_global->fini ();
   delete idl_global;
   idl_global = nullptr;
-
-  for (DRV_file_index = 0;
-       DRV_file_index < DRV_nfiles;
-       ++DRV_file_index)
-    {
-      ACE::strdelete (DRV_files[DRV_file_index]);
-    }
-
-  for (unsigned long i = 0; i < DRV_argcount; ++i)
-    {
-      ACE::strdelete (const_cast<ACE_TCHAR *> (DRV_arglist[i]));
-    }
 }
 
 /*
@@ -190,22 +174,18 @@ DRV_cleanup ()
 */
 
 void
-DRV_drive (const char *s)
+DRV_drive (char const *s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
-  UTL_String *utl_string = nullptr;
-  ACE_NEW (utl_string,
-           UTL_String (s, true));
-
-  idl_global->idl_src_file (utl_string);
+  idl_global->idl_src_file (s);
 
   // Pass through CPP.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: preprocessing %C\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s));
     }
 
@@ -223,7 +203,7 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: parsing %C\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s));
     }
 
@@ -237,9 +217,10 @@ DRV_drive (const char *s)
       (idl_global->compile_flags () & IDL_CF_INFORMATIVE))
     {
       // Filename set by FE_yyparse(), so we output it immediately after.
+      std::string const& filename = idl_global->filename ();
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("processing %C\n"),
-                  idl_global->filename ()->get_string ()));
+                  filename.c_str ()));
     }
 
   // We must do this as late as possible to make sure any
@@ -252,7 +233,7 @@ DRV_drive (const char *s)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("%C: %C: found %d error%s\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s,
                   idl_global->err_count (),
                   (idl_global->err_count () > 1
@@ -269,7 +250,7 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: dump %C\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s));
     }
 
@@ -292,7 +273,7 @@ DRV_drive (const char *s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: BE processing on %C\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().data (),
                   s));
     }
 
@@ -382,7 +363,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       FE_populate ();
 
       // Does various things in various backends.
-      BE_post_init (DRV_files, DRV_nfiles);
+      BE_post_init (DRV_files);
 
       // Dump Builtin IDL AST
       if (idl_global->just_dump_builtins_)
@@ -400,7 +381,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // If there are no input files, and we are not using the
       // directory recursion option, there's no sense going any further.
-      if (0 == DRV_nfiles && nullptr == idl_global->recursion_start ())
+      if (DRV_files.empty () && !idl_global->recursion_start ())
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("IDL: No input files\n")));
@@ -413,33 +394,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (idl_global->multi_file_input ())
         {
           output_file =
-            ACE_OS::fopen (idl_global->big_file_name (), "w");
+            ACE_OS::fopen (idl_global->big_file_name ().c_str (), "w");
         }
 
-      for (DRV_file_index = 0;
-           DRV_file_index < DRV_nfiles;
-           ++DRV_file_index)
+      for (std::size_t i = 0; i < DRV_files.size (); ++i)
         {
           if (idl_global->multi_file_input ())
             {
               ACE_OS::fprintf (output_file,
                                "#include \"%s\"\n",
-                               DRV_files[DRV_file_index]);
+                               DRV_files[i].c_str ());
             }
           else
             {
-              DRV_drive (DRV_files[DRV_file_index]);
+              DRV_drive (DRV_files[i].c_str ());
             }
         }
 
       if (idl_global->multi_file_input ())
         {
           ACE_OS::fclose (output_file);
-          DRV_drive (idl_global->big_file_name ());
-          ACE_OS::unlink (idl_global->big_file_name ());
+          DRV_drive (idl_global->big_file_name ().c_str ());
+          ACE_OS::unlink (idl_global->big_file_name ().c_str ());
         }
     }
-  catch (const Bailout &bailout)
+  catch (Bailout const &bailout)
     {
       if (bailout.increment_errors_)
         {

@@ -68,6 +68,11 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Message_Queue : public ACE_Message_Queue_Base
 {
 public:
+  ACE_Message_Queue (ACE_Message_Queue const &) = delete;
+  ACE_Message_Queue (ACE_Message_Queue &&) = delete;
+  ACE_Message_Queue &operator= (ACE_Message_Queue const &) = delete;
+  ACE_Message_Queue &operator= (ACE_Message_Queue &&) = delete;
+
   friend class ACE_Message_Queue_Iterator<ACE_SYNCH_USE, TIME_POLICY>;
   friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE, TIME_POLICY>;
 
@@ -622,11 +627,6 @@ protected:
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE::Monitor_Control::Size_Monitor *monitor_;
 #endif
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &) = delete;
-  ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &) = delete;
 };
 
 // This typedef is used to get around a compiler bug in g++/vxworks.
@@ -780,6 +780,11 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
+  ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Queue const &) = delete;
+  ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Queue &&) = delete;
+  ACE_Dynamic_Message_Queue &operator= (ACE_Dynamic_Message_Queue const &) = delete;
+  ACE_Dynamic_Message_Queue &operator= (ACE_Dynamic_Message_Queue &&) = delete;
+
   ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
                              size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                              size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
@@ -894,11 +899,6 @@ protected:
   ACE_Dynamic_Message_Strategy &message_strategy_;
 
 private:
-  // = Disallow public access to these operations.
-
-  void operator= (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
-  ACE_Dynamic_Message_Queue (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
-
   // provide definitions for these (just call base class method),
   // but make them private so they're not accessible outside the class
 

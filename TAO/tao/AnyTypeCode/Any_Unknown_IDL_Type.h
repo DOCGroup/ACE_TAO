@@ -46,7 +46,7 @@ namespace TAO
     ~Unknown_IDL_Type () override;
 
     CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
     TAO_InputCDR &_tao_get_cdr ();

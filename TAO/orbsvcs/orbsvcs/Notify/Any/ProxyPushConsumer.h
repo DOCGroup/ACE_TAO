@@ -42,29 +42,34 @@ public:
   TAO_Notify_ProxyPushConsumer ();
 
   /// Destructor
-  virtual ~TAO_Notify_ProxyPushConsumer ();
+  ~TAO_Notify_ProxyPushConsumer () override = default;
 
-  virtual const char * get_proxy_type_name () const;
+  TAO_Notify_ProxyPushConsumer (TAO_Notify_ProxyPushConsumer const &) = delete;
+  TAO_Notify_ProxyPushConsumer (TAO_Notify_ProxyPushConsumer &&) = delete;
+  TAO_Notify_ProxyPushConsumer &operator= (TAO_Notify_ProxyPushConsumer const &) = delete;
+  TAO_Notify_ProxyPushConsumer &operator= (TAO_Notify_ProxyPushConsumer &&) = delete;
 
-  virtual void load_attrs (const TAO_Notify::NVPList& attrs);
-  virtual void validate ();
+  char const * get_proxy_type_name () const override;
+
+  void load_attrs (TAO_Notify::NVPList const &attrs) override;
+  void validate () override;
 
   virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 
-  virtual CosNotifyChannelAdmin::ProxyType MyType ();
+  CosNotifyChannelAdmin::ProxyType MyType () override;
 
-  virtual void push (const CORBA::Any & data);
+  void push (CORBA::Any const &data) override;
 
-  virtual void connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier);
+  void connect_any_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
 private:
   /// Release
-  virtual void release ();
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

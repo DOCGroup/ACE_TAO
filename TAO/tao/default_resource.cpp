@@ -44,16 +44,6 @@ TAO_Codeset_Parameters::TAO_Codeset_Parameters ()
 
 TAO_Codeset_Parameters::~TAO_Codeset_Parameters ()
 {
-  for (TAO_Codeset_Parameters::iterator i =
-         this->translators ();
-       !i.done ();
-       i.advance ())
-    {
-      ACE_TCHAR** element = nullptr;
-      if (i.next (element))
-        ACE_OS::free (*element);
-    }
-
   ACE_OS::free (this->native_);
 }
 
@@ -72,13 +62,9 @@ TAO_Codeset_Parameters::apply_to (TAO_Codeset_Descriptor_Base *csd)
   if (this->native () != nullptr)
       csd->ncs (this->native ());
 
-  ACE_TCHAR** element = nullptr;
-  for (TAO_Codeset_Parameters::iterator i = this->translators ();
-       !i.done ();
-       i.advance ())
+  for (std::basic_string<ACE_TCHAR> const& translator : this->translators_)
     {
-      if (i.next (element))
-        csd->add_translator (*element);
+      csd->add_translator (translator.c_str ());
     }
 }
 
@@ -92,7 +78,7 @@ TAO_Codeset_Parameters::native (const ACE_TCHAR* n)
 void
 TAO_Codeset_Parameters::add_translator (const ACE_TCHAR*name)
 {
-  this->translators_.enqueue_tail (ACE_OS::strdup (name));
+  this->translators_.emplace_back (name);
 }
 
 TAO_Codeset_Parameters::iterator
@@ -157,7 +143,7 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory ()
       delete *iterator;
     }
 
-  this->protocol_factories_.reset ();
+  this->protocol_factories_.clear ();
 
   for (int i = 0; i < this->parser_names_count_; ++i)
     CORBA::string_free (this->parser_names_[i]);
@@ -243,7 +229,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             ACE_NEW_RETURN (item,
                             TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                             -1);
-            if (pset->insert (item) == -1)
+            if (TAO_ProtocolFactorySet_insert (*pset, item) == -1)
               TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Unable to add protocol factories ")
                           ACE_TEXT ("for %s: %m\n"),

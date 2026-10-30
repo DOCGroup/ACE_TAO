@@ -17,7 +17,8 @@
 #define TAO_BE_VISITOR_AMI_PRE_PROC_H
 
 #include "be_visitor_scope.h"
-#include "ace/SString.h"
+
+#include <string>
 
 class AST_Type;
 
@@ -39,7 +40,7 @@ private:
   };
 
 public:
-  be_visitor_ami_pre_proc (be_visitor_context *ctx);
+  explicit be_visitor_ami_pre_proc (be_visitor_context *ctx);
 
   ~be_visitor_ami_pre_proc () override;
 
@@ -78,10 +79,10 @@ private:
 
   /// concatenate the prefix, middle_name and suffix
   /// and store the result in desination.
-  int generate_name (ACE_CString &desintation,
-                     const char *prefix,
-                     const char *middle_name,
-                     const char *suffix);
+  int generate_name (std::string &destination,
+                     std::string const& prefix,
+                     std::string const& middle_name,
+                     std::string const& suffix);
 
   /// generate a get operation out of the attribute.
   be_operation *generate_get_operation (be_attribute *node);

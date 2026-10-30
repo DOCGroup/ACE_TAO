@@ -44,6 +44,14 @@
 #if YYDEBUG
 extern int tao_yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 168 "fe/idl.ypp"
+
+#include <string>
+#include <utility>
+#include <utl_strlist.h>
+
+#line 55 "fe/idl.tab.hpp"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -159,7 +167,7 @@ extern int tao_yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 171 "fe/idl.ypp"
+#line 178 "fe/idl.ypp"
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
@@ -187,8 +195,8 @@ union YYSTYPE
   ACE_CDR::Char                 cval;           /* Char value           */
   ACE_CDR::WChar                wcval;          /* WChar value          */
   ACE_CDR::Fixed                fixval;         /* Fixed point value    */
-  UTL_String                    *sval;          /* String value         */
-  char                          *wsval;         /* WString value        */
+  std::string                   *sval;          /* String value         */
+  std::string                   *wsval;         /* WString value        */
   char                          *strval;        /* char * value         */
   Identifier                    *idval;         /* Identifier           */
   UTL_IdList                    *idlist;        /* Identifier list      */
@@ -205,7 +213,7 @@ union YYSTYPE
   Decl_Annotations_Pair *decl_annotations_pair_val;
   Decl_Annotations_Pair_Pair* decl_annotations_pair_val_pair;
 
-#line 209 "fe/idl.tab.hpp"
+#line 217 "fe/idl.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -14,9 +14,12 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Sched/Scheduler.h"
+
 #include "ace/Unbounded_Set.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Recursive_Thread_Mutex.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,18 +34,18 @@ class TAO_RTSched_Export Scheduler_Generic : public ACE_Scheduler
 {
 public:
   Scheduler_Generic ();
-  ~Scheduler_Generic () override;
+  ~Scheduler_Generic () override = default;
 
   // = Initialize the scheduler.
-  void init (const int minimum_priority,
-             const int maximum_priority,
-             const char *runtime_filename = nullptr,
-             const char *rt_info_filename = nullptr,
-             const char *timeline_filename = nullptr) override;
+  void init (int minimum_priority,
+             int maximum_priority,
+             char const *runtime_filename = nullptr,
+             char const *rt_info_filename = nullptr,
+             char const *timeline_filename = nullptr) override;
 
   // = Registers a task.
   status_t register_task (RT_Info *[],
-                          const u_int number_of_modes,
+                          u_int number_of_modes,
                           handle_t &handle) override;
 
   /// Obtains an RT_Info based on its "handle".
@@ -64,15 +67,15 @@ public:
    * as the relative ordering (due to dependencies) within the priority.
    * Returns 0 on success, or 1 if an invalid mode or handle are supplied.
    */
-  int priority (const handle_t handle,
+  int priority (handle_t handle,
                 OS_Thread_Priority &priority,
                 Sub_Priority &subpriority,
                 Preemption_Priority &preemption_prio,
-                const mode_t = CURRENT_MODE) const override;
+                mode_t = CURRENT_MODE) const override;
 
 private:
   /// The number of task handles dispensed so far.
-  u_int handles_;
+  u_int handles_ {};
 
   /// The minimum priority value that the application specified (in
   /// its call to init ()).
@@ -80,16 +83,16 @@ private:
 
   /// The maximum priority value that the application specified (in
   /// its call to init ()).
-  int maximum_priority_;
+  int maximum_priority_ {};
 
   /// Destination file of Scheduler output from the configuration run.
-  const char *runtime_filename_;
+  char const *runtime_filename_ {};
 
   /// Destination file of all rt_info data from the configuration run.
-  const char *rt_info_filename_;
+  char const *rt_info_filename_ {};
 
   /// The destination of the timeline.
-  const char *timeline_filename_;
+  char const *timeline_filename_ {};
 
   /**
    * Set to 1 if priority values increase with increasing priority,
@@ -99,7 +102,7 @@ private:
   int increasing_priority_;
 
   /// Collection of known tasks.
-  ACE_Unbounded_Set <RT_Info **> task_entries_;
+  std::vector<RT_Info **> task_entries_;
 
   /// dispatchin configuration info
   Config_Info config_info_;
@@ -125,9 +128,9 @@ private:
   /// Display the schedule, task-by-task.
   void print_schedule ();
 
-  Scheduler_Generic (const Scheduler_Generic &) = delete;
+  Scheduler_Generic (Scheduler_Generic const &) = delete;
   Scheduler_Generic (Scheduler_Generic &&) = delete;
-  Scheduler_Generic &operator= (const Scheduler_Generic &) = delete;
+  Scheduler_Generic &operator= (Scheduler_Generic const &) = delete;
   Scheduler_Generic &operator= (Scheduler_Generic &&) = delete;
 };
 

@@ -174,7 +174,7 @@ TAO_Notify_Tracker::dump( const char* title )
 TAO_Notify_Tracker&
 TAO_Notify_Tracker::get_instance()
 {
-  if ( s_instance.get() == 0 )
+  if ( s_instance.get() == nullptr )
   {
     s_instance.reset( new TAO_Notify_Tracker );
   }

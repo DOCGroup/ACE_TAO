@@ -15,8 +15,6 @@
 TAO::be_visitor_union_typecode::be_visitor_union_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
-  , is_recursive_ (false)
-  , is_nested_ (false)
 {
 }
 
@@ -32,7 +30,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
   be_visitor_typecode_defn::QNode const * const qnode =
     this->queue_lookup (this->tc_queue_, node);
 
-  ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+  std::vector<AST_Type *> recursion_queue;
   bool in_recursion = node->in_recursion (recursion_queue);
   if (qnode && in_recursion)
     {
@@ -81,9 +79,9 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
       return -1;
     }
 
-  static char const StringType[]      = "char const *";
-  static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
-  static char const MemberArrayType[] =
+  static constexpr char StringType[]      = "char const *";
+  static constexpr char TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
+  static constexpr char MemberArrayType[] =
     "TAO::TypeCode::Case<char const *, "
     "::CORBA::TypeCode_ptr const *> const * const *";
 
@@ -130,7 +128,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
 int
 TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
 {
-  AST_Field ** member_ptr = nullptr;
+  AST_Field *member_ptr = nullptr;
 
   ACE_CDR::ULong const count = node->nfields ();
 
@@ -139,7 +137,7 @@ TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
       node->field (member_ptr, i);
 
       be_type * const member_type =
-        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> (member_ptr->field_type ());
 
       if (this->is_typecode_generation_required (member_type)
           && member_type->accept (this) != 0)
@@ -153,7 +151,7 @@ TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
       be_visitor_typecode_defn::QNode const * const qnode =
         this->queue_lookup (this->tc_queue_, node);
 
-      ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+      std::vector<AST_Type *> recursion_queue;
       recursion_queue.enqueue_tail (node);
       if (qnode
         &&
@@ -175,10 +173,8 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   be_type * const discriminant_type =
     dynamic_cast<be_type*> (node->disc_type ());
 
-  ACE_CString tao_cases ("_tao_cases_");
-  ACE_CString const fields_name (tao_cases
-                                 + node->flat_name ());
-  const char *fields_name_str = fields_name.c_str ();
+  std::string const fields_name =
+    std::string ("_tao_cases_") + std::string (node->flat_name ());
 
   TAO_OutStream & os = *this->ctx_->stream ();
   ACE_CDR::ULong countLabels = 0u;
@@ -187,14 +183,14 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   ACE_CDR::ULong const countFields = node->nfields ();
   for (ACE_CDR::ULong fieldNumber = 0u; fieldNumber < countFields; ++fieldNumber)
     {
-      AST_Field ** member_ptr = nullptr;
+      AST_Field *member_ptr = nullptr;
       node->field (member_ptr, fieldNumber);
 
       be_type * const type =
-        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> (member_ptr->field_type ());
 
       be_union_branch * const branch =
-        dynamic_cast<be_union_branch*> (*member_ptr);
+        dynamic_cast<be_union_branch*> (member_ptr);
 
       ACE_ASSERT (branch != nullptr);
       ACE_CDR::ULong numberOfLabels = branch->label_list_length ();
@@ -209,7 +205,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
             os << "static TAO::TypeCode::Case_T<"
                << discriminant_type->full_name () << ", "
                << "char const *, ::CORBA::TypeCode_ptr const *> const "
-               << fields_name_str << "__" << countLabels++ << " (";
+               << fields_name << "__" << countLabels++ << " (";
 
             branch->gen_default_label_value (&os, node);
 
@@ -236,7 +232,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
           os << "static TAO::TypeCode::Case_T<"
              << discriminant_type->full_name () << ", "
              << "char const *, ::CORBA::TypeCode_ptr const *> const "
-             << fields_name_str << "__" << countLabels++ << " (";
+             << fields_name << "__" << countLabels++ << " (";
 
           branch->gen_label_value (&os, labelNumber);
 
@@ -250,13 +246,13 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   os << be_nl
      << "static TAO::TypeCode::Case<char const *, "
      << "::CORBA::TypeCode_ptr const *> const * const "
-     << fields_name_str
+     << fields_name
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
 
   for (ACE_CDR::ULong n = 0u; n < countLabels; ++n)
     {
-      os << "&" << fields_name_str << "__" << n;
+      os << "&" << fields_name << "__" << n;
 
       if (n < countLabels - 1u)
         {

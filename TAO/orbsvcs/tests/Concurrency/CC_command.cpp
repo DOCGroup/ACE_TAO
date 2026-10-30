@@ -20,9 +20,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-CC_Command::~CC_Command()
-{
-}
+CC_Command::~CC_Command() = default;
 
 int CC_Command::execute()
 {
@@ -34,7 +32,7 @@ CC_Command::CC_Command()
 }
 
 CosConcurrencyControl::LockSet_var
-CC_Command::GetLockSet (const char *lock_set_name)
+CC_Command::GetLockSet (char const* lock_set_name)
 {
   CosConcurrencyControl::LockSet_var ccls_ret;
 
@@ -52,7 +50,7 @@ CC_Command::GetLockSet (const char *lock_set_name)
       else
         {
           // No lock set name was given. Use the global lock set.
-          if(cc_lockset_.in()==0)
+          if(cc_lockset_.in() == nullptr)
             {
               throw CORBA::UNKNOWN ();
             }
@@ -68,11 +66,11 @@ CC_Command::GetLockSet (const char *lock_set_name)
   return ccls_ret;
 }
 
-CORBA::Exception *CC_Command::excep_ = 0;
+CORBA::Exception *CC_Command::excep_ = nullptr;
 
-CosConcurrencyControl::LockSet_var CC_Command::cc_lockset_(0);
+CosConcurrencyControl::LockSet_var CC_Command::cc_lockset_ (nullptr);
 
-CC_Start_Cmd::CC_Start_Cmd (const char *config_file_name)
+CC_Start_Cmd::CC_Start_Cmd (char const* config_file_name)
   : cfg_name_ (ACE_OS::strdup (config_file_name))
 {
   //  printf("CC_Start_Cmd::CC_Start_Cmd: config: %s\n", config_file_name);
@@ -84,7 +82,7 @@ CC_Start_Cmd::~CC_Start_Cmd()
   if (cfg_name_)
     {
       ACE_OS::free(cfg_name_);
-      cfg_name_ = 0;
+      cfg_name_ = nullptr;
     }
 }
 
@@ -94,7 +92,7 @@ int CC_Start_Cmd::execute()
     {
       ACE_OS::printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -114,7 +112,7 @@ int CC_Start_Cmd::execute()
   return 1; // CC_SUCCESS
 }
 
-CC_CreateLockSet_Cmd::CC_CreateLockSet_Cmd (const char *lock_set_name)
+CC_CreateLockSet_Cmd::CC_CreateLockSet_Cmd (char const* lock_set_name)
   : name_ (ACE_OS::strdup (lock_set_name))
 {
   //  printf("CC_CreateLockSet_Cmd::CC_CreateLockSet_Cmd: lock set: %s\n",
@@ -127,7 +125,7 @@ CC_CreateLockSet_Cmd::~CC_CreateLockSet_Cmd()
   if(name_)
     {
       ACE_OS::free(name_);
-      name_ = 0;
+      name_ = nullptr;
     }
 }
 
@@ -137,7 +135,7 @@ int CC_CreateLockSet_Cmd::execute()
     {
       ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -166,7 +164,7 @@ int CC_CreateLockSet_Cmd::execute()
   return 1; // CC_SUCCESS
 }
 
-CC_Lock_Cmd::CC_Lock_Cmd (const char *lock_set_name,
+CC_Lock_Cmd::CC_Lock_Cmd (char const* lock_set_name,
                           CosConcurrencyControl::lock_mode mode)
   : name_ (ACE_OS::strdup (lock_set_name)),
     mode_(mode)
@@ -186,7 +184,7 @@ int CC_Lock_Cmd::execute()
     {
       ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -207,7 +205,7 @@ int CC_Lock_Cmd::execute()
   return 1; // CC_SUCCESS
 }
 
-CC_UnLock_Cmd::CC_UnLock_Cmd (const char *lock_set_name,
+CC_UnLock_Cmd::CC_UnLock_Cmd (char const* lock_set_name,
                               CosConcurrencyControl::lock_mode mode)
   : name_ (ACE_OS::strdup (lock_set_name)),
     mode_ (mode)
@@ -227,7 +225,7 @@ int CC_UnLock_Cmd::execute()
     {
       ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -248,7 +246,7 @@ int CC_UnLock_Cmd::execute()
   return 1; // CC_SUCCESS
 }
 
-CC_TryLock_Cmd::CC_TryLock_Cmd (const char *lock_set_name,
+CC_TryLock_Cmd::CC_TryLock_Cmd (char const* lock_set_name,
                                 CosConcurrencyControl::lock_mode mode)
   : name_ (ACE_OS::strdup (lock_set_name)),
     mode_ (mode)
@@ -268,7 +266,7 @@ int CC_TryLock_Cmd::execute()
     {
       ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -304,7 +302,7 @@ int CC_TryLock_Cmd::execute()
 }
 
 CC_ChangeMode_Cmd::
-    CC_ChangeMode_Cmd (const char *lock_set_name,
+    CC_ChangeMode_Cmd (char const* lock_set_name,
                        CosConcurrencyControl::lock_mode held_mode,
                        CosConcurrencyControl::lock_mode new_mode)
   : name_(ACE_OS::strdup (lock_set_name)),
@@ -328,7 +326,7 @@ int CC_ChangeMode_Cmd::execute()
     {
       ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -354,17 +352,13 @@ CC_Sleep_Cmd::CC_Sleep_Cmd(int seconds)
 {
 }
 
-CC_Sleep_Cmd::~CC_Sleep_Cmd()
-{
-}
-
 int CC_Sleep_Cmd::execute()
 {
   if(excep_)
     {
       ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -379,17 +373,13 @@ CC_Repeat_Cmd::CC_Repeat_Cmd(int times)
 {
 }
 
-CC_Repeat_Cmd::~CC_Repeat_Cmd()
-{
-}
-
 int CC_Repeat_Cmd::execute()
 {
   if(excep_)
     {
       ACE_OS::printf("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -398,7 +388,7 @@ int CC_Repeat_Cmd::execute()
   return 1; // CC_SUCCESS
 }
 
-CC_Wait_Cmd::CC_Wait_Cmd (const char *prompt)
+CC_Wait_Cmd::CC_Wait_Cmd (char const* prompt)
   : prompt_ (ACE_OS::strdup (prompt))
 {
 }
@@ -414,7 +404,7 @@ int CC_Wait_Cmd::execute()
     {
       ACE_OS::printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
@@ -426,7 +416,7 @@ int CC_Wait_Cmd::execute()
   return 1; // CC_SUCCESS
 }
 
-CC_Excep_Cmd::CC_Excep_Cmd (const char *excep)
+CC_Excep_Cmd::CC_Excep_Cmd (char const* excep)
   : ex_ (ACE_OS::strdup (excep))
 {
   //  printf("CC_Excep_Cmd::CC_Excep_Cmd: excep: %s\n", excep);
@@ -443,31 +433,23 @@ CC_Excep_Cmd::execute()
   ACE_OS::printf ("Executing excep command (expected: %s)\n", ex_);
   // First we check to see if an exception has occurred. If not we fail
   // because we expected to see one
-  if(excep_==0)
+  if(excep_ == nullptr)
     return 0; // CC_FAIL
 
   // If there is an exception check that it's the expected one
   if(ACE_OS::strcmp(excep_->_rep_id (), ex_)==0)
     {
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 1; // CC_SUCCESS
     }
   else
     {
       ACE_OS::printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
-}
-
-CC_Dummy_Cmd::CC_Dummy_Cmd()
-{
-}
-
-CC_Dummy_Cmd::~CC_Dummy_Cmd()
-{
 }
 
 int
@@ -476,7 +458,7 @@ CC_Dummy_Cmd::execute()
   return 1; // CC_SUCCESS
 }
 
-CC_Print_Cmd::CC_Print_Cmd (const char * message)
+CC_Print_Cmd::CC_Print_Cmd (char const* message)
   : msg_ (ACE_OS::strdup (message))
 {
 }
@@ -493,7 +475,7 @@ CC_Print_Cmd::execute()
   return 1; // CC_SUCCESS
 }
 
-CC_Lookup_Cmd::CC_Lookup_Cmd (const char *lock_set_name)
+CC_Lookup_Cmd::CC_Lookup_Cmd (char const* lock_set_name)
   : name_ (ACE_OS::strdup (lock_set_name))
 {
 }
@@ -503,7 +485,7 @@ CC_Lookup_Cmd::~CC_Lookup_Cmd()
   if(name_)
     {
       ACE_OS::free(name_);
-      name_ = 0;
+      name_ = nullptr;
     }
 }
 
@@ -514,14 +496,14 @@ CC_Lookup_Cmd::execute()
     {
       ACE_OS::printf ("Exception: %s\n", excep_->_rep_id ());
       delete excep_;
-      excep_ = 0;
+      excep_ = nullptr;
       return 0; // CC_FAIL
     }
 
   ACE_OS::printf ("Executing lookup command (lock set: %s)\n", name_);
 
   // Do the lookup if we haven't done it before
-  if(cc_lockset_.in() == 0)
+  if(cc_lockset_.in() == nullptr)
     {
       try
         {
@@ -547,10 +529,6 @@ CC_CommandElem::CC_CommandElem(CC_Command *cmd, CC_CommandElem *next)
 {
 }
 
-CC_CommandElem::~CC_CommandElem()
-{
-}
-
 CC_Command *CC_CommandElem::GetCommand()
 {
   return cmd_;
@@ -569,26 +547,22 @@ CC_CommandElem::SetNext(CC_CommandElem *next)
 }
 
 CC_CommandList::CC_CommandList()
-  : head_ (0), last_ (0), times_ (1)
+  : head_ (nullptr), last_ (nullptr), times_ (1)
 {
   ACE_OS::printf("CC_CommandList::CC_CommandList\n");
-}
-
-CC_CommandList::~CC_CommandList()
-{
 }
 
 int
 CC_CommandList::add(CC_Command *cmd)
 {
-  if(head_==0)
+  if(head_ == nullptr)
     {
-      head_ = new CC_CommandElem(cmd, 0);
+      head_ = new CC_CommandElem(cmd, nullptr);
       last_ = head_;
     }
   else
     {
-      CC_CommandElem *tmp = new CC_CommandElem(cmd, 0);
+      CC_CommandElem *tmp = new CC_CommandElem(cmd, nullptr);
       last_->SetNext(tmp);
       last_ = tmp;
     }
@@ -603,7 +577,7 @@ CC_CommandList::execute()
   for(int i=0; i<times_; i++)
     {
       current = head_;
-      while(current!=0)
+      while(current != nullptr)
         {
           if(current->GetCommand()->execute()==0) // == CC_FAIL
             {

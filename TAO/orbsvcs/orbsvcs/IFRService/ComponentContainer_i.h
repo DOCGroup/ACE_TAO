@@ -45,66 +45,66 @@ public:
   ~TAO_ComponentContainer_i () override;
 
   virtual CORBA::ComponentIR::ComponentDef_ptr create_component (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ComponentIR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq &supports_interfaces);
+      CORBA::InterfaceDefSeq const &supports_interfaces);
 
   CORBA::ComponentIR::ComponentDef_ptr create_component_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ComponentIR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq &supports_interfaces);
+      CORBA::InterfaceDefSeq const &supports_interfaces);
 
   virtual CORBA::ComponentIR::HomeDef_ptr create_home (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ComponentIR::HomeDef_ptr base_home,
       CORBA::ComponentIR::ComponentDef_ptr managed_component,
-      const CORBA::InterfaceDefSeq &supports_interfaces,
+      CORBA::InterfaceDefSeq const &supports_interfaces,
       CORBA::ValueDef_ptr primary_key);
 
   CORBA::ComponentIR::HomeDef_ptr create_home_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::ComponentIR::HomeDef_ptr base_home,
       CORBA::ComponentIR::ComponentDef_ptr managed_component,
-      const CORBA::InterfaceDefSeq &supports_interfaces,
+      CORBA::InterfaceDefSeq const &supports_interfaces,
       CORBA::ValueDef_ptr primary_key);
 
   virtual CORBA::ComponentIR::EventDef_ptr create_event (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers);
 
   CORBA::ComponentIR::EventDef_ptr create_event_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers);
 
   /// Called from TAO_IFR_Service_Utils::name_exisits.
-  static int same_as_tmp_name (const char *name);
+  static int same_as_tmp_name (char const *name);
 
 protected:
-  static const char *tmp_name_holder_;
+  static char const *tmp_name_holder_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

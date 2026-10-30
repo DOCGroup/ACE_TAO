@@ -25,6 +25,8 @@
 #include "orbsvcs/Sched/SchedEntry.h"
 #include "orbsvcs/Sched/sched_export.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include <deque>
+#include <vector>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -65,7 +67,7 @@ public:
   using Thread_Map_Iterator = ACE_Map_Iterator<ACE_CString, RT_Info *, ACE_Null_Mutex>;
 
   /// Objects are named by unique strings.
-  using Object_Name = const char *;
+  using Object_Name = char const *;
 
   enum status_t {
     // The following are used both by the runtime Scheduler and during
@@ -113,7 +115,7 @@ public:
 
   // = Utility function for outputting the textual
   //   representation of a status_t value.
-  static const char * status_message (status_t status);
+  static char const * status_message (status_t status);
 
   // = Utility function for creating an entry for determining
   //   the severity of an anomaly detected during scheduling.
@@ -133,12 +135,12 @@ public:
    * as VxWorks that use lower values to indicate higher priorities.
    *
    * When Scheduler::schedule is called, the schedule is output to the
-   * file named by "runtime_filename" if it is non-zero.
+   * file named by "runtime_filename" if it is non-null.
    * This file is compilable; it is linked into the runtime executable
    * to provide priorities to the runtime scheduling component.
-   * If the "rt_info_filename" is non-zero, the RT_Info for
+   * If the "rt_info_filename" is non-null, the RT_Info for
    * every task is exported to it.  It is not used at runtime.
-   * If the "timeline_filename" is non-zero, the timeline output
+   * If the "timeline_filename" is non-null, the timeline output
    * file is created.  It is not used at runtime.
    *
    * The runtime scheduling component ignores these filenames.  It just
@@ -147,9 +149,9 @@ public:
    */
   void init (const OS_Priority minimum_priority,
              const OS_Priority maximum_priority,
-             const char *runtime_filename = nullptr,
-             const char *rt_info_filename = nullptr,
-             const char *timeline_filename = nullptr);
+             char const *runtime_filename = nullptr,
+             char const *rt_info_filename = nullptr,
+             char const *timeline_filename = nullptr);
 
   /**
    * Prepare for another schedule computation: once a reasonable schedule
@@ -201,7 +203,7 @@ public:
     schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set);
 
   /// this prints the entire set of timeline outputs to the specified file
-  status_t output_timeline (const char *filename, const char *heading);
+  status_t output_timeline (char const *filename, char const *heading);
 
 
   // = Access a thread priority.
@@ -255,7 +257,7 @@ public:
   u_long max_dispatch_id () const;
 
   /// provide the thread priority and queue type for the given priority level
-  virtual int dispatch_configuration (const Preemption_Priority &p_priority,
+  virtual int dispatch_configuration (Preemption_Priority const &p_priority,
                                       OS_Priority& priority,
                                       Dispatching_Type & d_type);
 
@@ -317,8 +319,7 @@ protected:
   /// = schedule a dispatch entry into the timeline being created
   virtual status_t
     schedule_timeline_entry (Dispatch_Entry &dispatch_entry,
-                             ACE_Unbounded_Queue <Dispatch_Entry *>
-                               &reschedule_queue) = 0;
+                             std::deque<Dispatch_Entry *> &reschedule_queue) = 0;
 
   ////////////////////////////
   // protected data members //
@@ -333,7 +334,7 @@ protected:
   OS_Priority maximum_priority_;
 
   /// Collection of known tasks.
-  Task_Entry *task_entries_;
+  Task_Entry *task_entries_ {};
 
   /**
    * An array of pointers to task entries which wrap RT_Infos. It is
@@ -341,38 +342,38 @@ protected:
    * over the call graph is used both to check for call chain cycles and
    * to correctly propagate scheduling information away from the threads.
    */
-  Task_Entry **ordered_task_entries_;
+  Task_Entry **ordered_task_entries_ {};
 
     /// identifies dispatch entries whose underlying
     /// Task Entries delineate threads
-  ACE_Unbounded_Set <Dispatch_Entry *> *thread_delineators_;
+  ACE_Unbounded_Set <Dispatch_Entry *> *thread_delineators_ {};
 
   /// An array of pointers to task entries which initiate call chains.
   /// It is sorted by the schedule_threads method defined in the derived class.
-  Dispatch_Entry **ordered_thread_dispatch_entries_;
+  Dispatch_Entry **ordered_thread_dispatch_entries_ {};
 
     /// the set of dispatch entries
-  ACE_Unbounded_Set <Dispatch_Entry *> *dispatch_entries_;
+  ACE_Unbounded_Set <Dispatch_Entry *> *dispatch_entries_ {};
 
   /// Collection of dispatch configuration entries.
-  ACE_Unbounded_Set <Config_Info *> *config_info_entries_;
+  ACE_Unbounded_Set <Config_Info *> *config_info_entries_ {};
 
     /// expanded set of dispatch entries (all dispatch entries produced by
     /// expanding sub-frames to the total frame size during timeline creation)
-  ACE_Unbounded_Set <Dispatch_Entry *> *expanded_dispatches_;
+  ACE_Unbounded_Set <Dispatch_Entry *> *expanded_dispatches_ {};
 
   /// An array of pointers to  dispatch entries. It is
   /// sorted by the schedule_dispatches method.
-  Dispatch_Entry **ordered_dispatch_entries_;
+  Dispatch_Entry **ordered_dispatch_entries_ {};
 
   /// the number of dispatch entries in the schedule
-  u_int dispatch_entry_count_;
+  u_int dispatch_entry_count_ {};
 
   /// the number of dispatch entries in the schedule
-  u_int threads_;
+  u_int threads_ {};
 
   /// Ordered MultiSet of timeline entries.
-  ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_;
+  ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_ {};
 
 private:
   ///////////////////////////////
@@ -402,19 +403,19 @@ private:
   status_t create_timeline ();
 
   /// this prints a dispatch timeline to the specified file
-  status_t output_dispatch_timeline (const char *filename);
+  status_t output_dispatch_timeline (char const *filename);
   status_t output_dispatch_timeline (FILE *file);
 
   /// this prints a preemption timeline to the specified file
-  status_t output_preemption_timeline (const char *filename);
+  status_t output_preemption_timeline (char const *filename);
   status_t output_preemption_timeline (FILE *file);
 
   /// this prints a scheduling viewer timeline to the specified file
-  status_t output_viewer_timeline (const char *filename);
+  status_t output_viewer_timeline (char const *filename);
   status_t output_viewer_timeline (FILE *file);
 
   /// this prints the scheduling parameters and assigned priorities to the specified file
-  status_t output_dispatch_priorities (const char *filename);
+  status_t output_dispatch_priorities (char const *filename);
   status_t output_dispatch_priorities (FILE *file);
 
   // = Set up the task entry data structures
@@ -463,9 +464,9 @@ private:
   status_t calculate_utilization_params ();
 
   // the following functions are not implememented
-  ACE_DynScheduler (const ACE_DynScheduler &) = delete;
+  ACE_DynScheduler (ACE_DynScheduler const &) = delete;
   ACE_DynScheduler (ACE_DynScheduler &&) = delete;
-  ACE_DynScheduler &operator= (const ACE_DynScheduler &) = delete;
+  ACE_DynScheduler &operator= (ACE_DynScheduler const &) = delete;
   ACE_DynScheduler &operator= (ACE_DynScheduler &&) = delete;
 
   //////////////////////////
@@ -476,48 +477,48 @@ private:
   LOCK lock_;
 
   /// Collection of known tasks.
-  ACE_Unbounded_Set <RT_Info *> rt_info_entries_;
+  std::vector<RT_Info *> rt_info_entries_;
 
   /// The number of task handles dispensed so far.
-  u_int handles_;
+  u_int handles_ {};
 
   /// Destination file of Scheduler output from the configuration run.
-  const char *runtime_filename_;
+  char const *runtime_filename_ {};
 
   /// Destination file of all rt_info data from the configuration run.
-  const char *rt_info_filename_;
+  char const *rt_info_filename_ {};
 
   /// The destination of the timeline.
-  const char *timeline_filename_;
+  char const *timeline_filename_ {};
 
   /// A binding of name to rt_info.  This is the mapping for every
   /// rt_info in the process.
   Info_Collection info_collection_;
 
-  u_int tasks_;
+  u_int tasks_ {};
 
-  status_t status_;
+  status_t status_ {NOT_SCHEDULED};
 
-  u_int output_level_;
+  u_int output_level_ {};
 
     /// minimum frame size for all tasks
-  u_long frame_size_; /* 100 nanosec */
+  u_long frame_size_ {1}; /* 100 nanosec */
 
     /// minimum frame size for guaranteed schedulable tasks
-  u_long critical_set_frame_size_; /* 100 nanosec */
+  u_long critical_set_frame_size_ {}; /* 100 nanosec */
 
     /// total utilization for all tasks
-  double utilization_;
+  double utilization_ {};
 
     /// minimum frame size for guaranteed schedulable tasks
-  double critical_set_utilization_;
+  double critical_set_utilization_ {};
 
     /**
      * The platform-independent priority value of the Event Channel's
      * minimum priority dispatch queue.  The value of the maximum priority
      * dispatch queue is always 0.
      */
-  Preemption_Priority minimum_priority_queue_;
+  Preemption_Priority minimum_priority_queue_ {};
 
     /**
      * The platform-independent priority value of the minimum priority dispatch
@@ -525,15 +526,15 @@ private:
      * the maximum priority dispatch queue is always 0, -1 indicates none can
      * be guaranteed.
      */
-  Preemption_Priority minimum_guaranteed_priority_queue_;
+  Preemption_Priority minimum_guaranteed_priority_queue_ {-1};
 
     /// indicates whether the a valid schedule has been generated since the last
     /// relevant change (addition, alteration or removal of an RT_Info, etc.)
-  u_int up_to_date_;
+  bool up_to_date_ {};
 
-  u_long min_dispatch_id_;
+  u_long min_dispatch_id_ {};
 
-  u_long max_dispatch_id_;
+  u_long max_dispatch_id_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

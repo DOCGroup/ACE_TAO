@@ -3,14 +3,10 @@
 
 //============= "BaseValue" Value Type implimentation =======
 
-BaseValue_impl::~BaseValue_impl ()
-{
-}
-
 CORBA::ValueBase *
 BaseValue_impl::_copy_value ()
 {
-  CORBA::ValueBase *vb= 0;
+  CORBA::ValueBase *vb = nullptr;
   ACE_NEW_THROW_EX (
     vb,
     BaseValue_impl (this->Base_us1 (), this->Base_us2 ()),
@@ -33,20 +29,16 @@ const char * BaseValue_Factory::id () const
 
 CORBA::ValueBase * BaseValue_Factory::create_for_unmarshal ()
 {
-  CORBA::ValueBase *vb= 0;
+  CORBA::ValueBase *vb = nullptr;
   ACE_NEW_THROW_EX (vb, BaseValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
 
 //============= "Nested" Value Type implimentation =======
 
-NestedValue_impl::~NestedValue_impl ()
-{
-}
-
 CORBA::ValueBase * NestedValue_impl::_copy_value ()
 {
-  CORBA::ValueBase *vb= 0;
+  CORBA::ValueBase *vb = nullptr;
   ACE_NEW_THROW_EX (
     vb,
     NestedValue_impl (this->Nested_s1 (), this->Nested_s2 ()),
@@ -61,20 +53,16 @@ const char * NestedValue_Factory::id () const
 
 CORBA::ValueBase * NestedValue_Factory::create_for_unmarshal ()
 {
-  CORBA::ValueBase *vb= 0;
+  CORBA::ValueBase *vb = nullptr;
   ACE_NEW_THROW_EX (vb, NestedValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
 
 //============= "Null" Value Type implimentation =======
 
-NullValue_impl::~NullValue_impl ()
-{
-}
-
 CORBA::ValueBase * NullValue_impl::_copy_value ()
 {
-  CORBA::ValueBase *vb= 0;
+  CORBA::ValueBase *vb = nullptr;
   ACE_NEW_THROW_EX (vb, NullValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
@@ -86,20 +74,16 @@ const char * NullValue_Factory::id () const
 
 CORBA::ValueBase * NullValue_Factory::create_for_unmarshal ()
 {
-  CORBA::ValueBase *vb= 0;
+  CORBA::ValueBase *vb = nullptr;
   ACE_NEW_THROW_EX (vb, NullValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
 
 //============= "Trunc" Value Type implimentation =======
 
-Trunc_impl::~Trunc_impl ()
-{
-}
-
 CORBA::ValueBase * Trunc_impl::_copy_value ()
 {
-  CORBA::ValueBase *vb= 0;
+  CORBA::ValueBase *vb = nullptr;
   ACE_NEW_THROW_EX (
     vb,
     Trunc_impl (
@@ -144,7 +128,7 @@ const char * Trunc_Factory::id () const
 
 CORBA::ValueBase * Trunc_Factory::create_for_unmarshal ()
 {
-  CORBA::ValueBase *vb= 0;
+  CORBA::ValueBase *vb = nullptr;
   ACE_NEW_THROW_EX (vb, Trunc_impl (), CORBA::NO_MEMORY ());
   return vb;
 }

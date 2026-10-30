@@ -20,12 +20,18 @@ class Server_IORInterceptor_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
  public:
+  Server_IORInterceptor_ORBInitializer () = default;
+  Server_IORInterceptor_ORBInitializer (Server_IORInterceptor_ORBInitializer const &) = delete;
+  Server_IORInterceptor_ORBInitializer (Server_IORInterceptor_ORBInitializer &&) = delete;
+  Server_IORInterceptor_ORBInitializer &operator= (Server_IORInterceptor_ORBInitializer const &) = delete;
+  Server_IORInterceptor_ORBInitializer &operator= (Server_IORInterceptor_ORBInitializer &&) = delete;
+
   //@{
   /// The pre-initialization hook.
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// The post-initialization hook.
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
   //@}
 };
 

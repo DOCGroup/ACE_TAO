@@ -4,20 +4,17 @@
 
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
 
 MT_AMH_Server::MT_AMH_Server (int &argc, ACE_TCHAR **argv)
   : Base_Server (argc, argv)
 {
 }
 
-MT_AMH_Server::~MT_AMH_Server ()
-{
-}
-
 void
-MT_AMH_Server::usage (const char *message)
+MT_AMH_Server::usage (char const *message)
 {
-  static const char * usage =
+  static constexpr char usage[] =
     "invoke as: mt_server -o <ior_output_file>\n"
     " -n <num_threads>\n"
     "-s <sleep_time (in microseconds)>\n";
@@ -42,8 +39,8 @@ MT_AMH_Server::parse_args ()
     }
 
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("n:"));
-  int c;
-  int count_argv = 0;
+  int c {};
+  int count_argv {};
 
   while ((c = get_opts ()) != -1)
     {

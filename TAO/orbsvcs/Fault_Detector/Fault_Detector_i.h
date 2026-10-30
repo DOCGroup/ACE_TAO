@@ -20,6 +20,7 @@
 #define FAULT_DETECTOR_I_H_
 #include /**/ <ace/pre.h>
 #include <ace/ACE.h>
+#include <atomic>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -66,7 +67,7 @@ namespace TAO
       FT::FaultNotifier_ptr & notifier,
       FT::PullMonitorable_ptr & monitorable,
       FT::FTDomainId domain_id,
-      const PortableGroup::Location & object_location,
+      PortableGroup::Location const & object_location,
       PortableGroup::TypeId object_type,
       PortableGroup::ObjectGroupId group_id);
     /**
@@ -170,9 +171,9 @@ namespace TAO
     ACE_Manual_Event sleep_;
 
     /**
-     * A boolean flag.  If true, this fault detector should leave.
+     * An atomic flag.  If true, this fault detector should leave.
      */
-    int quit_requested_;
+    std::atomic<bool> quit_requested_ {};
   };
 }   // namespace TAO
 

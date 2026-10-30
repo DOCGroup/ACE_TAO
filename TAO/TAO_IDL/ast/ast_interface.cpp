@@ -97,6 +97,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <memory>
+#include <string>
+
 #include "ace/streams.h"
 
 AST_Decl::NodeType const
@@ -116,16 +119,22 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     AST_Type (AST_Decl::NT_interface,
               n),
     UTL_Scope (AST_Decl::NT_interface),
-    pd_inherits (ih),
     pd_n_inherits (nih),
-    pd_inherits_flat (ih_flat),
-    pd_n_inherits_flat (nih_flat),
-    home_equiv_ (false),
-    fwd_decl_ (nullptr),
-    has_mixed_parentage_ (-1),
-    ami_handler_ (nullptr),
-    ami4ccm_uses_ (nullptr)
+    pd_n_inherits_flat (nih_flat)
 {
+  std::unique_ptr<AST_Type *[]> inherits_owner (ih);
+  std::unique_ptr<AST_Interface *[]> inherits_flat_owner (ih_flat);
+
+  if (nih > 0)
+    {
+      this->pd_inherits.assign (ih, ih + nih);
+    }
+
+  if (nih_flat > 0)
+    {
+      this->pd_inherits_flat.assign (ih_flat, ih_flat + nih_flat);
+    }
+
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
 
@@ -138,16 +147,14 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     {
       if (ih[i]->node_type () == AST_Decl::NT_param_holder)
         {
-          this->param_holders_.enqueue_tail (ih[i]);
+          this->param_holders_.push_back (ih[i]);
         }
 
       FE_Utils::tmpl_mod_ref_check (this, ih[i]);
     }
 }
 
-AST_Interface::~AST_Interface ()
-{
-}
+AST_Interface::~AST_Interface () = default;
 
 void
 AST_Interface::be_replace_operation (AST_Decl *old_op,
@@ -310,21 +317,11 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
     }
 
   UTL_Scope *scope = i->defined_in ();
-  const char *prefix_holder = nullptr;
-
   // If our prefix is empty, we check to see if an ancestor has one.
-  while (ACE_OS::strcmp (i->prefix (), "") == 0 && scope != nullptr)
+  while (i->prefix ().empty () && scope != nullptr)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
-      prefix_holder = parent->prefix ();
-
-      // We have reached global scope.
-      if (prefix_holder == nullptr)
-        {
-          break;
-        }
-
-      i->prefix (const_cast<char *> (prefix_holder));
+      i->prefix (parent->prefix ());
       scope = parent->defined_in ();
     }
 
@@ -336,18 +333,10 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       scope = d->defined_in ();
 
       // If the lookup prefix is empty, we check to see if an ancestor has one.
-      while (ACE_OS::strcmp (d->prefix (), "") == 0 && scope != nullptr)
+      while (d->prefix ().empty () && scope != nullptr)
         {
           AST_Decl *parent = ScopeAsDecl (scope);
-          prefix_holder = parent->prefix ();
-
-          // We have reached global scope.
-          if (prefix_holder == nullptr)
-            {
-              break;
-            }
-
-          d->prefix (const_cast<char *> (prefix_holder));
+          d->prefix (parent->prefix ());
           scope = parent->defined_in ();
         }
 
@@ -510,56 +499,29 @@ AST_Interface::insert_non_dup (AST_Type *t,
         }
     }
 
-  const char *full_name = t->full_name ();
+  std::string const& full_name = t->full_name ();
 
-  // Initialize an iterator to search the queue for duplicates.
-  for (ACE_Unbounded_Queue_Iterator<AST_Type *> q_iter (
-           this->insert_queue
-         );
-       !q_iter.done ();
-       (void) q_iter.advance ())
+  // Search the queue for duplicates.
+  for (AST_Type *queued_type : this->insert_queue)
     {
-      // Queue element.
-      AST_Type **temp = nullptr;
-
-      (void) q_iter.next (temp);
-
-      if (!ACE_OS::strcmp (full_name,
-                           (*temp)->full_name ()))
+      if (full_name == queued_type->full_name ())
         {
           // We exist in this queue and cannot be inserted.
           return 0;
         }
     }
 
-  // Initialize an iterator to search the del_queue for duplicates.
-  for (ACE_Unbounded_Queue_Iterator<AST_Type *> del_q_iter (
-           this->del_queue
-         );
-       !del_q_iter.done ();
-       (void) del_q_iter.advance ())
+  // Search the del_queue for duplicates.
+  for (AST_Type *queued_type : this->del_queue)
     {
-      // Queue element.
-      AST_Type **temp = nullptr;
-
-      (void) del_q_iter.next (temp);
-
-      if (!ACE_OS::strcmp (full_name,
-                           (*temp)->full_name ()))
+      if (full_name == queued_type->full_name ())
         {
           // We exist in this del_queue and cannot be inserted.
           return 0;
         }
     }
 
-  // Insert the parent in the queue.
-  if (this->insert_queue.enqueue_tail (t) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_interface::insert_non_dup - "
-                        "enqueue failed\n"),
-                        0);
-    }
+  this->insert_queue.push_back (t);
 
   return 1;
 }
@@ -575,28 +537,10 @@ AST_Interface::redefine (AST_Interface *from)
   // Since 'this' will replace 'from' upon returning
   // from here, we have to update the scope now.
   this->pd_n_inherits = from->pd_n_inherits;
-  unsigned long i = 0;
-
-  unsigned long array_size =
-    static_cast<unsigned long> (from->pd_n_inherits);
-  ACE_NEW (this->pd_inherits,
-           AST_Type *[array_size]);
-
-  for (i = 0; i < array_size; ++i)
-    {
-      this->pd_inherits[i] = from->pd_inherits[i];
-    }
+  this->pd_inherits = from->pd_inherits;
 
   this->pd_n_inherits_flat = from->pd_n_inherits_flat;
-  array_size =
-    static_cast<unsigned long> (from->pd_n_inherits_flat);
-  ACE_NEW (this->pd_inherits_flat,
-           AST_Interface *[array_size]);
-
-  for (i = 0; i < array_size; ++i)
-    {
-      this->pd_inherits_flat[i] = from->pd_inherits_flat[i];
-    }
+  this->pd_inherits_flat = from->pd_inherits_flat;
 
   // We've already checked for inconsistent prefixes.
   this->prefix (from->prefix ());
@@ -605,7 +549,7 @@ AST_Interface::redefine (AST_Interface *from)
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
-  this->set_file_name (idl_global->filename ()->get_string ());
+  this->set_file_name (idl_global->filename ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
 }
@@ -615,7 +559,9 @@ AST_Interface::redefine (AST_Interface *from)
 AST_Type **
 AST_Interface::inherits () const
 {
-  return this->pd_inherits;
+  return this->pd_inherits.empty ()
+    ? nullptr
+    : const_cast<AST_Type **> (this->pd_inherits.data ());
 }
 
 long
@@ -627,7 +573,9 @@ AST_Interface::n_inherits () const
 AST_Interface **
 AST_Interface::inherits_flat () const
 {
-  return this->pd_inherits_flat;
+  return this->pd_inherits_flat.empty ()
+    ? nullptr
+    : const_cast<AST_Interface **> (this->pd_inherits_flat.data ());
 }
 
 long
@@ -636,13 +584,13 @@ AST_Interface::n_inherits_flat () const
   return pd_n_inherits_flat;
 }
 
-ACE_Unbounded_Queue<AST_Type *> &
+std::deque<AST_Type *> &
 AST_Interface::get_insert_queue ()
 {
   return this->insert_queue;
 }
 
-ACE_Unbounded_Queue<AST_Type *> &
+std::deque<AST_Type *> &
 AST_Interface::get_del_queue ()
 {
   return this->del_queue;
@@ -651,26 +599,17 @@ AST_Interface::get_del_queue ()
 bool
 AST_Interface::redef_clash ()
 {
-  this->insert_queue.reset ();
+  this->insert_queue.clear ();
   this->redef_clash_populate_r (this);
 
-  AST_Type **group1_member = nullptr;
-  AST_Type **group2_member = nullptr;
   AST_Decl *group1_member_item = nullptr;
   AST_Decl *group2_member_item = nullptr;
 
-  int i = 1;
-
   // Now compare all pairs.
-  for (ACE_Unbounded_Queue_Iterator<AST_Type *> group1_iter (
-           this->insert_queue
-         );
-       !group1_iter.done ();
-       (void) group1_iter.advance (), ++i)
+  for (std::size_t i = 0; i < this->insert_queue.size (); ++i)
     {
-      // Queue element.
-      (void) group1_iter.next (group1_member);
-      UTL_Scope *s = DeclAsScope (*group1_member);
+      AST_Type *group1_member = this->insert_queue[i];
+      UTL_Scope *s = DeclAsScope (group1_member);
 
       if (s != nullptr)
         {
@@ -693,28 +632,10 @@ AST_Interface::redef_clash ()
                 }
 
               Identifier *pid1 = group1_member_item->local_name ();
-              int j = 0;
-
-              for (ACE_Unbounded_Queue_Iterator<AST_Type *> group2_iter (
-                     this->insert_queue);
-                   !group2_iter.done ();
-                   (void) group2_iter.advance ())
+              for (std::size_t j = i + 1; j < this->insert_queue.size (); ++j)
                 {
-                  // Since group1 and group2 are the same list, we can start this
-                  // iterator from where the outer one is.
-                  while (j++ < i)
-                    {
-                      group2_iter.advance ();
-                    }
-
-                  if (group2_iter.done ())
-                    {
-                      break;
-                    }
-
-                  // Queue element.
-                  (void) group2_iter.next (group2_member);
-                  UTL_Scope *ss = DeclAsScope (*group2_member);
+                  AST_Type *group2_member = this->insert_queue[j];
+                  UTL_Scope *ss = DeclAsScope (group2_member);
 
                   if (ss != nullptr)
                     {
@@ -745,8 +666,8 @@ AST_Interface::redef_clash ()
                             {
                               idl_global->err ()->error3 (
                                 UTL_Error::EIDL_REDEF,
-                                *group1_member,
-                                *group2_member,
+                                group1_member,
+                                group2_member,
                                 group2_member_item);
 
                               return true;
@@ -757,7 +678,7 @@ AST_Interface::redef_clash ()
                                 {
                                   idl_global->err ()->error3 (
                                     UTL_Error::EIDL_NAME_CASE_ERROR,
-                                    *group1_member,
+                                    group1_member,
                                     group1_member_item,
                                     group2_member_item);
 
@@ -767,7 +688,7 @@ AST_Interface::redef_clash ()
                                 {
                                   idl_global->err ()->warning3 (
                                     UTL_Error::EIDL_NAME_CASE_WARNING,
-                                    *group1_member,
+                                    group1_member,
                                     group1_member_item,
                                     group2_member_item);
                                 }
@@ -827,9 +748,11 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
               // Conflict against further results?
               if (d != d_before)
                 {
+                  std::string const filename (
+                    idl_global->filename ());
                   ACE_ERROR ((LM_ERROR,
                               "warning in %C line %d: ",
-                              idl_global->filename ()->get_string (),
+                              filename.c_str (),
                               idl_global->lineno ()));
 
                   e->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1026,7 +949,7 @@ AST_Interface::analyze_parentage ()
       && !this->imported ()
       && !in_tmpl_module)
     {
-      idl_global->mixed_parentage_interfaces ().enqueue_tail (this);
+      idl_global->mixed_parentage_interfaces ().push_back (this);
     }
 }
 
@@ -1085,30 +1008,21 @@ AST_Interface::ami4ccm_uses (AST_Interface *implied)
 void
 AST_Interface::destroy ()
 {
-  for (ACE_Unbounded_Queue_Iterator<AST_Type *> i (
-         this->param_holders_);
-       !i.done ();
-       (void) i.advance ())
+  for (AST_Type *t : this->param_holders_)
     {
-      AST_Type **tt = nullptr;
-      i.next (tt);
-      AST_Type *t = *tt;
       t->destroy ();
       delete t;
-      t = nullptr;
     }
 
   // The destroy() we are in gets called twice if we start from
   // be_valuetype or be_eventtype. This line keeps us from
   // iterating over null pointers the 2nd time.
-  this->param_holders_.reset ();
+  this->param_holders_.clear ();
 
-  delete [] this->pd_inherits;
-  this->pd_inherits = nullptr;
+  this->pd_inherits.clear ();
   this->pd_n_inherits = 0;
 
-  delete [] this->pd_inherits_flat;
-  this->pd_inherits_flat = nullptr;
+  this->pd_inherits_flat.clear ();
   this->pd_n_inherits_flat = 0;
 
   this->UTL_Scope::destroy ();

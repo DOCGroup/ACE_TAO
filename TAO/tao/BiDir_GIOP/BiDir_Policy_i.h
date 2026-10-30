@@ -43,7 +43,7 @@ class TAO_BidirectionalPolicy
 {
 public:
   /// Constructor.
-  TAO_BidirectionalPolicy (BiDirPolicy::BidirectionalPolicyValue val);
+  explicit TAO_BidirectionalPolicy (BiDirPolicy::BidirectionalPolicyValue val);
 
   /// Copy constructor.
   TAO_BidirectionalPolicy (TAO_BidirectionalPolicy const& rhs);

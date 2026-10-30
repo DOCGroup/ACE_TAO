@@ -18,14 +18,11 @@ AST_StructureFwd::AST_StructureFwd (AST_Structure *full_defn,
               n),
     AST_Type (AST_Decl::NT_struct_fwd,
               n),
-    pd_full_definition (full_defn),
-    is_defined_ (false)
+    pd_full_definition (full_defn)
 {
 }
 
-AST_StructureFwd::~AST_StructureFwd ()
-{
-}
+AST_StructureFwd::~AST_StructureFwd () = default;
 
 // Redefinition of inherited virtual operations.
 
@@ -88,7 +85,7 @@ AST_StructureFwd::destroy ()
 }
 
 bool
-AST_StructureFwd::is_fwd ()
+AST_StructureFwd::is_fwd () const
 {
   return true; // This is a fwd declared type
 }

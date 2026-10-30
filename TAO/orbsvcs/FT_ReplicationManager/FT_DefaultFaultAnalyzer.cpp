@@ -21,9 +21,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Default constructor.
-TAO::FT_DefaultFaultAnalyzer::FT_DefaultFaultAnalyzer () = default;
-
 /// Destructor.
 TAO::FT_DefaultFaultAnalyzer::~FT_DefaultFaultAnalyzer () = default;
 
@@ -33,7 +30,7 @@ TAO::FT_DefaultFaultAnalyzer::~FT_DefaultFaultAnalyzer () = default;
 int TAO::FT_DefaultFaultAnalyzer::validate_event_type (
   CosNotification::StructuredEvent const & event)
 {
-  int result = 0;
+  int result {};
 
   // CORBA 3.0.2, section 23.4.5.1 states:
   //

@@ -104,7 +104,7 @@ namespace TAO
        * Protected destructor to force deallocation by the reference
        * counting mechanism.
        */
-      ~Server_Invocation_Interceptor ();
+      ~Server_Invocation_Interceptor () override = default;
 
     private:
       /**
@@ -131,7 +131,7 @@ namespace TAO
       ::Security::QOP qop_;
 
       /// Are we handling collocated calls
-      bool collocated_;
+      bool const collocated_;
 
       /// SecurityLevel2 security manager reference
       SecurityLevel2::SecurityManager_var sec2manager_;

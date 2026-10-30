@@ -45,7 +45,7 @@ TAO_DynArray_i::init (const CORBA::Any & any)
 
   CORBA::ULong numfields = this->get_tc_length (tc.in ());
   // Resize the array.
-  this->da_members_.size (numfields);
+  TAO::resize_std_vector (this->da_members_, numfields);
 
   this->init_common ();
 
@@ -111,7 +111,7 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
   CORBA::ULong numfields = this->get_tc_length (tc);
 
   // Resize the array.
-  this->da_members_.size (numfields);
+  TAO::resize_std_vector (this->da_members_, numfields);
 
   this->init_common ();
 

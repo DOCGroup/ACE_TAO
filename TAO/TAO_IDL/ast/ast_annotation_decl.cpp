@@ -1,3 +1,5 @@
+#include <string>
+
 #include "ast_annotation_decl.h"
 #include "ast_annotation_member.h"
 #include "utl_indenter.h"
@@ -14,16 +16,15 @@ AST_Annotation_Decl::AST_Annotation_Decl (UTL_ScopedName *name)
     UTL_Scope (NT),
     AST_Structure (name, false, false)
 {
-  if (!ACE_OS::strcmp(name->last_component ()->get_string (), "@annotation"))
+  if (name->last_component ()->get_string ()
+      == "@annotation")
     {
       idl_global->err ()-> misc_error(
         "An Annotation can not be named \"annotation\"");
     }
 }
 
-AST_Annotation_Decl::~AST_Annotation_Decl ()
-{
-}
+AST_Annotation_Decl::~AST_Annotation_Decl () = default;
 
 void AST_Annotation_Decl::dump (ACE_OSTREAM_TYPE &o)
 {
@@ -44,16 +45,9 @@ void
 AST_Annotation_Decl::escape_name (Identifier *name)
 {
   FE_Utils::original_local_name (name); // Annotations can't clash with C++ keywords
-  char *old_name = name->get_string ();
-  char *new_name = new char [ACE_OS::strlen (old_name) + 2]; // '@' and '\0'
-  if (new_name)
-    {
-      new_name[0] = '@';
-      new_name[1] = '\0';
-      ACE_OS::strcat (new_name, old_name);
-      name->replace_string (new_name);
-      delete [] new_name;
-    }
+  std::string new_name ("@");
+  new_name += name->get_string ();
+  name->replace_string (new_name);
 }
 
 void
@@ -86,7 +80,7 @@ AST_Annotation_Decl::fe_add_annotation_member (
   AST_Annotation_Decl *s = dynamic_cast<AST_Annotation_Decl*> (this);
   if (s)
     {
-      s->fields ().enqueue_tail (annotation_member);
+      s->fields ().push_back (annotation_member);
     }
 
   return dynamic_cast<AST_Annotation_Member*> (d);
@@ -106,7 +100,7 @@ AST_Annotation_Decl::ast_accept (ast_visitor *visitor)
 }
 
 bool
-AST_Annotation_Decl::ami_visit ()
+AST_Annotation_Decl::ami_visit () const
 {
   return false;
 }

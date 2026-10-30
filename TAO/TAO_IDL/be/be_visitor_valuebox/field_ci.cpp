@@ -12,18 +12,18 @@
 //=============================================================================
 
 #include "valuebox.h"
+#include "valuebox_type_name.h"
+
+#include <string>
+#include "valuebox_type_name.h"
 
 be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
     be_visitor_context *ctx
   )
-  : be_visitor_decl (ctx),
-    vb_node_ (nullptr)
+  : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_valuebox_field_ci::~be_visitor_valuebox_field_ci ()
-{
-}
 
 int
 be_visitor_valuebox_field_ci::visit_field (be_field *node)
@@ -86,10 +86,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (bt->node_type () != AST_Decl::NT_typedef)
     {
@@ -100,24 +97,20 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
         {
           be_decl *parent =
                  dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           bt->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += bt->local_name ()->get_string ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           bt->full_name ());
+          fname = "_";
+          fname += bt->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname,
-                       "%s",
-                       bt->full_name ());
+      fname = bt->full_name ();
     }
 
   TAO_INSERT_COMMENT (os);
@@ -135,7 +128,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
 
   *os << "/// Accessor to retrieve the member." << be_nl;
 
-  *os << "ACE_INLINE const " << fname << "_slice *" << be_nl
+  *os << "ACE_INLINE " << fname << "_slice const *" << be_nl
       << vb_node_->name () << "::" << field->local_name ()
       << " () const" << be_nl
       << "{" << be_idt_nl
@@ -430,7 +423,7 @@ be_visitor_valuebox_field_ci::visit_string (be_string *node)
 
   *os << "// Modifier to set the member." << be_nl;
 
-  const char *string_type = "";
+  char const *string_type {""};
   if (node->node_type () == AST_Decl::NT_string)
     {
       string_type = "String";
@@ -442,7 +435,7 @@ be_visitor_valuebox_field_ci::visit_string (be_string *node)
 
   *os << "ACE_INLINE void" << be_nl
       << vb_node_->name () << "::" << field->local_name ()
-      << " (const ::CORBA::" << string_type << "_var & val)"
+      << " (::CORBA::" << string_type << "_var const &val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
       << " = val;" << be_uidt_nl
@@ -547,16 +540,17 @@ be_visitor_valuebox_field_ci::visit_union (be_union *node)
 void
 be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
                                                be_type *field_type,
-                                               const char *const_arg,
-                                               const char *arg_modifier)
+                                               std::string const &const_arg,
+                                               std::string const &arg_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "// Modifier to set the member." << be_nl;
 
   *os << "ACE_INLINE void" << be_nl
-      << vb_node_->name () << "::" << field->local_name ()
-      << " (" << const_arg << field_type->name () << arg_modifier << " val)"
+      << vb_node_->name () << "::" << field->local_name () << " (";
+  emit_valuebox_type_name (os, const_arg, field_type->name (), arg_modifier);
+  *os << " val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
       << " = val;" << be_uidt_nl
@@ -566,17 +560,18 @@ be_visitor_valuebox_field_ci::emit_member_set (be_decl *field,
 void
 be_visitor_valuebox_field_ci::emit_member_get (be_decl *field,
                                                be_type *field_type,
-                                               const char *const_prefix,
-                                               const char *type_suffix,
-                                               const char *const_method,
-                                               const char *access_modifier)
+                                               std::string const &const_prefix,
+                                               std::string const &type_suffix,
+                                               char const *const_method,
+                                               char const *access_modifier)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "/// Accessor to retrieve the member." << be_nl;
 
-  *os << "ACE_INLINE " << const_prefix << field_type->name () << type_suffix
-      << be_nl
+  *os << "ACE_INLINE ";
+  emit_valuebox_type_name (os, const_prefix, field_type->name (), type_suffix);
+  *os << be_nl
       << vb_node_->name () << "::" << field->local_name ()
       << " () " << const_method << be_nl
       << "{" << be_idt_nl

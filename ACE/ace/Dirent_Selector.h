@@ -52,8 +52,8 @@ public:
   /// Open the directory @a dir and populate the current list of names with
   /// directory entries that match the @a selector and @a comparator.
   int open (const ACE_TCHAR *dir,
-            ACE_SCANDIR_SELECTOR selector = 0,
-            ACE_SCANDIR_COMPARATOR comparator = 0);
+            ACE_SCANDIR_SELECTOR selector = nullptr,
+            ACE_SCANDIR_COMPARATOR comparator = nullptr);
 
 protected:
   /// Ptr to the namelist array.

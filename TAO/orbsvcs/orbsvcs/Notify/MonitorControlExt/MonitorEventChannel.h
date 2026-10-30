@@ -42,33 +42,38 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorEventChannel
 public:
   /// Construct a named event channel and associate various
   /// statistic objects with it in the statistic registry.
-  TAO_MonitorEventChannel (const char* name);
+  explicit TAO_MonitorEventChannel (char const *name);
+
+  TAO_MonitorEventChannel (TAO_MonitorEventChannel const&) = delete;
+  TAO_MonitorEventChannel (TAO_MonitorEventChannel&&) = delete;
+  TAO_MonitorEventChannel& operator= (TAO_MonitorEventChannel const&) = delete;
+  TAO_MonitorEventChannel& operator= (TAO_MonitorEventChannel&&) = delete;
 
   /// Remove the statistics for this event channel.
-  ~TAO_MonitorEventChannel ();
+  ~TAO_MonitorEventChannel () override;
 
   /// Return the name of this event channel.
-  const ACE_CString& name () const;
+  ACE_CString const &name () const;
 
   /// Register a single statistic with the EC and statistic registry.
-  bool register_statistic (const ACE_CString& name,
+  bool register_statistic (ACE_CString const &name,
                            Monitor_Base* stat);
 
   /// Unregister a single statistic from the EC and statistic registry.
-  bool unregister_statistic (const ACE_CString& name);
+  bool unregister_statistic (ACE_CString const &name);
 
   /// Keep track of the supplier name associated with the proxy id.
   void map_supplier_proxy (CosNotifyChannelAdmin::ProxyID id,
-                           const ACE_CString& name);
+                           ACE_CString const &name);
 
   /// Keep track of the consumer name associated with the proxy id.
   void map_consumer_proxy (CosNotifyChannelAdmin::ProxyID id,
-                           const ACE_CString& name);
+                           ACE_CString const &name);
 
   /// Remove the supplier/consumer proxy id/name mapping.
-  virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
-                              bool is_supplier,
-                              bool experienced_timeout);
+  void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
+                      bool is_supplier,
+                      bool experienced_timeout) override;
 
   /// Remove the consumer admin id/name mapping.
   virtual void remove_consumeradmin (CosNotifyChannelAdmin::AdminID id);
@@ -79,27 +84,27 @@ public:
   /// Add the statistics for this event channel.  If the ec was
   /// constructed with a non-zero length string, this method will
   /// do nothing.
-  void add_stats (const char* name = 0);
+  void add_stats (char const *name = nullptr);
 
-  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr
     new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                       CosNotifyChannelAdmin::AdminID_out id);
+                       CosNotifyChannelAdmin::AdminID_out id) override;
 
-  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr
     named_new_for_consumers (
                        CosNotifyChannelAdmin::InterFilterGroupOperator op,
                        CosNotifyChannelAdmin::AdminID_out id,
-                       const char* name);
+                       char const *name) override;
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
+  CosNotifyChannelAdmin::SupplierAdmin_ptr
     new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
-                       CosNotifyChannelAdmin::AdminID_out id);
+                       CosNotifyChannelAdmin::AdminID_out id) override;
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
+  CosNotifyChannelAdmin::SupplierAdmin_ptr
     named_new_for_suppliers (
                        CosNotifyChannelAdmin::InterFilterGroupOperator op,
                        CosNotifyChannelAdmin::AdminID_out id,
-                       const char* name);
+                       char const *name) override;
 
 private:
   size_t get_consumers (Monitor_Control_Types::NameList* names);
@@ -129,13 +134,13 @@ private:
                                    ACE_SYNCH_NULL_MUTEX>;
 
   size_t get_admins (Map& map,
-                     const CosNotifyChannelAdmin::AdminIDSeq& ids,
+                     CosNotifyChannelAdmin::AdminIDSeq const &ids,
                      Monitor_Control_Types::NameList* names);
-  bool is_duplicate_name (const Map& map,
-                          const ACE_CString& name) const;
+  bool is_duplicate_name (Map const &map,
+                          ACE_CString const &name) const;
 
   void remove_list_name (Monitor_Control_Types::NameList& list,
-                         const ACE_CString& name);
+                         ACE_CString const &name);
 
   ACE_CString name_;
 

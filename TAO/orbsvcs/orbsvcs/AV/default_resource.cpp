@@ -24,7 +24,7 @@ TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory ()
        ++tfiterator)
     delete *tfiterator;
 
-  TAO_AV_CORE::instance ()->transport_factories ()->reset ();
+  TAO_AV_CORE::instance ()->transport_factories ()->clear ();
 
   TAO_AV_Flow_ProtocolFactorySetItor fp_end = TAO_AV_CORE::instance ()->flow_protocol_factories ()->end ();
   for (TAO_AV_Flow_ProtocolFactorySetItor pfiterator =
@@ -33,7 +33,7 @@ TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory ()
        ++pfiterator)
     delete *pfiterator;
 
-  TAO_AV_CORE::instance ()->flow_protocol_factories ()->reset ();
+  TAO_AV_CORE::instance ()->flow_protocol_factories ()->clear ();
 
   if (TAO_debug_level > 0)
   ORBSVCS_DEBUG ((LM_DEBUG,
@@ -62,7 +62,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               ACE_NEW_RETURN (item,
                               TAO_AV_Transport_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
-              if (tset->insert (item) == -1)
+              if (TAO_AV_Container_Utils::insert (*tset, item) == -1)
                 ORBSVCS_ERROR ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) Unable to add transport factories for %s: %p\n"),
 
@@ -80,7 +80,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               ACE_NEW_RETURN (item,
                               TAO_AV_Flow_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
-              if (fpset->insert (item) == -1)
+              if (TAO_AV_Container_Utils::insert (*fpset, item) == -1)
                 ORBSVCS_ERROR ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) Unable to add flow protocol factories for %s: %p\n"),
 

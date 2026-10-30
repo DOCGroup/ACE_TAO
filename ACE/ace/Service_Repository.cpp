@@ -278,7 +278,7 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
 
   for (iter = this->service_array_.begin(); iter != this->service_array_.end(); ++iter)
     {
-      if ((*iter).second != 0 // skip any empty slots
+      if ((*iter).second != nullptr // skip any empty slots
           && ACE_OS::strcmp (name, (*iter).second->name ()) == 0)
       {
         break;

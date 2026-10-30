@@ -61,12 +61,12 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
   /// typed ec constructor
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* typed_event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
@@ -99,19 +99,19 @@ public:
   virtual void shutdown ();
 
   /// Internal methods to push an event to each consumer.
-  virtual void push (const CORBA::Any &event);
+  virtual void push (CORBA::Any const &event);
   virtual void push_nocopy (CORBA::Any &event);
   /// Internal methods to invoke a typed event to each consumer.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (TAO_CEC_TypedEvent const &typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Pushes to the consumer, verifies that it is connected.
-  void push_to_consumer (const CORBA::Any &event);
-  void reactive_push_to_consumer (const CORBA::Any &event);
+  void push_to_consumer (CORBA::Any const &event);
+  void reactive_push_to_consumer (CORBA::Any const &event);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  void invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event);
-  void reactive_invoke_to_consumer (const TAO_CEC_TypedEvent &typed_event);
+  void invoke_to_consumer (TAO_CEC_TypedEvent const &typed_event);
+  void reactive_invoke_to_consumer (TAO_CEC_TypedEvent const &typed_event);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /**
@@ -168,20 +168,20 @@ protected:
 
 private:
   /// The Event Channel that owns this object.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The Typed Event Channel that owns this object.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  TAO_CEC_TypedEventChannel *typed_event_channel_;
+  TAO_CEC_TypedEventChannel *typed_event_channel_ {};
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The consumer -- use apply_policy() instead of assigning directly to
   /// consumer_.  This will keep consumer_ and nopolicy_consumer_ in sync.

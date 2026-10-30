@@ -28,7 +28,7 @@ TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
 int
 TAO_ORB_Manager::init (int &argc,
                        ACE_TCHAR *argv[],
-                       const char *orb_name)
+                       char const *orb_name)
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
@@ -63,8 +63,8 @@ TAO_ORB_Manager::init (int &argc,
 int
 TAO_ORB_Manager::init_child_poa (int& argc,
                                  ACE_TCHAR **argv,
-                                 const char *poa_name,
-                                 const char *orb_name)
+                                 char const *poa_name,
+                                 char const *orb_name)
 {
   // Check to see if root poa has to be created.
   if (this->init (argc, argv, orb_name) == -1)
@@ -118,7 +118,7 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant)
 }
 
 void
-TAO_ORB_Manager::deactivate (const char *id)
+TAO_ORB_Manager::deactivate (char const *id)
 {
   CORBA::Object_var object = this->orb_->string_to_object (id);
 
@@ -131,7 +131,7 @@ TAO_ORB_Manager::deactivate (const char *id)
 #if !defined (CORBA_E_MICRO)
 // Activate the object with the object_name under the child POA.
 char *
-TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
+TAO_ORB_Manager::activate_under_child_poa (char const *object_name,
                                            PortableServer::Servant servant)
 {
   if (object_name == nullptr)
@@ -153,7 +153,7 @@ TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
 }
 
 void
-TAO_ORB_Manager::deactivate_under_child_poa (const char *id)
+TAO_ORB_Manager::deactivate_under_child_poa (char const *id)
 {
   CORBA::Object_var object = this->orb_->string_to_object (id);
 
@@ -245,7 +245,7 @@ TAO_ORB_Manager::~TAO_ORB_Manager ()
           this->orb_->destroy ();
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       // ignore any exceptions..
     }

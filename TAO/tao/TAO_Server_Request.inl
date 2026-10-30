@@ -101,7 +101,7 @@ ACE_INLINE void
 TAO_ServerRequest::sync_before_dispatch ()
 {
   if (this->sync_with_server_ &&
-      this->transport_ != 0 &&
+      this->transport_ != nullptr &&
       this->is_queued_)
     {
       this->send_no_exception_reply ();
@@ -112,7 +112,7 @@ ACE_INLINE void
 TAO_ServerRequest::sync_after_dispatch ()
 {
   if (this->sync_with_server_ &&
-      this->transport_ != 0 &&
+      this->transport_ != nullptr &&
       !this->is_queued_)
     {
       this->send_no_exception_reply ();
@@ -262,7 +262,7 @@ TAO_ServerRequest::argument_flag (CORBA::Boolean flag)
 ACE_INLINE bool
 TAO_ServerRequest::collocated () const
 {
-  return this->transport_.get () == 0;
+  return this->transport_.get () == nullptr;
 }
 
 

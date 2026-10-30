@@ -8,7 +8,7 @@
 #include "ORB_Initializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior_file = 0;
+ACE_TCHAR const *ior_file = nullptr;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -44,7 +44,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       if (::parse_args (argc, argv) != 0) return -1;
 
-      ORB_Initializer *temp_initializer = 0;
+      ORB_Initializer *temp_initializer = nullptr;
       ACE_NEW_RETURN (temp_initializer,
                       ORB_Initializer,
                       -1);  // No exceptions yet!
@@ -90,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
@@ -113,7 +113,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

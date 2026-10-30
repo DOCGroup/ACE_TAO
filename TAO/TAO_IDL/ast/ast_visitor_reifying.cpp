@@ -6,6 +6,7 @@
 //=============================================================================
 
 #include "ast_visitor_reifying.h"
+
 #include "ast_visitor_context.h"
 #include "ast_generator.h"
 
@@ -38,14 +39,11 @@
 ast_visitor_reifying::ast_visitor_reifying (
       ast_visitor_context *ctx)
   : ast_visitor (),
-    ctx_ (ctx),
-    reified_node_ (nullptr)
+    ctx_ (ctx)
 {
 }
 
-ast_visitor_reifying::~ast_visitor_reifying ()
-{
-}
+ast_visitor_reifying::~ast_visitor_reifying () = default;
 
 AST_Decl *
 ast_visitor_reifying::reified_node () const
@@ -352,13 +350,12 @@ ast_visitor_reifying::visit_array (AST_Array *node)
 
   bt = dynamic_cast<AST_Type*> (this->reified_node_);
 
-  AST_Expression **dims = node->dims ();
   AST_Expression *v = nullptr;
   UTL_ExprList *v_list = nullptr;
 
   for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
     {
-      AST_Param_Holder *ph = dims[i]->param_holder ();
+      AST_Param_Holder *ph = node->dims ()[i]->param_holder ();
 
       if (ph != nullptr)
         {
@@ -389,7 +386,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
       else
         {
           ACE_NEW_RETURN (v,
-                          AST_Expression (dims[i],
+                          AST_Expression (node->dims ()[i].get (),
                                           AST_Expression::EV_ulong),
                           -1);
         }
@@ -623,19 +620,16 @@ ast_visitor_reifying::visit_constant (AST_Constant *node)
 int
 ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
 {
-  size_t i = 0;
   FE_Utils::T_ARGLIST const *t_args =
     this->ctx_->template_args ();
 
-  for (FE_Utils::T_PARAMLIST_INFO::ITERATOR iter (
-         *this->ctx_->template_params ());
-       !iter.done ();
-       iter.advance (), ++i)
+  FE_Utils::T_PARAMLIST_INFO const& t_params =
+    *this->ctx_->template_params ();
+  for (size_t i = 0; i < t_params.size (); ++i)
     {
-      FE_Utils::T_Param_Info *item = nullptr;
-      iter.next (item);
+      FE_Utils::T_Param_Info const& item = t_params[i];
 
-      ACE_CString name (item->name_);
+      std::string const& name = item.name_;
 
       /// The param holder's info->name_ may be the same as the
       /// node's local name, but if the node comes from an
@@ -645,11 +639,9 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
       /// name, which is what we want.
       if (name == node->local_name ()->get_string ())
         {
-          AST_Decl **ret_ptr = nullptr;
-
-          if (t_args->get (ret_ptr, i) == 0)
+          if (i < t_args->size ())
             {
-              AST_Decl *candidate = *ret_ptr;
+              AST_Decl *candidate = (*t_args)[i];
 
               return candidate->ast_accept (this);
             }
@@ -660,8 +652,8 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                                  ACE_TEXT ("visit_param_holder() - access of ")
                                  ACE_TEXT ("current template arglist failed - ")
                                  ACE_TEXT ("param=%C scope=%C index=%d\n"),
-                                 item->name_.c_str (),
-                                 ScopeAsDecl (idl_global->scopes ().top ())->full_name (),
+                                 item.name_.c_str (),
+                                 ScopeAsDecl (idl_global->scopes ().top ())->full_name ().c_str (),
                                  i),
                                 -1);
             }
@@ -672,8 +664,8 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                      ACE_TEXT ("ast_visitor_reifying::")
                      ACE_TEXT ("visit_param_holder() - no match for ")
                      ACE_TEXT ("template param %C in %C\n"),
-                     node->local_name ()->get_string (),
-                     ScopeAsDecl (idl_global->scopes ().top ())->full_name ()),
+                     node->local_name ()->get_string ().data (),
+                     ScopeAsDecl (idl_global->scopes ().top ())->full_name ().c_str ()),
                     -1);
 }
 
@@ -707,19 +699,19 @@ UTL_ScopedName *
 ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
 {
   AST_Decl *tmp = d;
-  ACE_CString name (d->full_name ());
+  std::string const& name = d->full_name ();
 
   while (tmp != nullptr)
     {
       if (dynamic_cast<AST_Template_Module*> (tmp) != nullptr)
         {
-          ACE_CString head (tmp->local_name ()->get_string ());
+          std::string const& head (tmp->local_name ()->get_string ());
 
-          ACE_CString::size_type start = name.find (head) + 2;
+          size_t const start = name.find (head) + 2;
 
-          ACE_CString tail (name.substr (start + head.length ()));
+          std::string const tail = name.substr (start + head.length ());
 
-          return FE_Utils::string_to_scoped_name (tail.c_str ());
+          return FE_Utils::string_to_scoped_name (tail);
         }
 
       tmp = ScopeAsDecl (tmp->defined_in ());

@@ -9,14 +9,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class SERVANT_TYPE>
-TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::TAO_Notify_ProxyConsumer_T ()
-{
-}
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::TAO_Notify_ProxyConsumer_T () = default;
 
 template <class SERVANT_TYPE>
-TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer_T ()
-{
-}
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer_T () = default;
 
 template <class SERVANT_TYPE> void
 TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::admin_types_changed (const CosNotification::EventTypeSeq & added,

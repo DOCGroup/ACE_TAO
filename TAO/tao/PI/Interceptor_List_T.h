@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Array_Base.h"
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,13 +60,13 @@ namespace TAO
     };
 
     /// Constructor.
-    Interceptor_List ();
+    Interceptor_List () = default;
 
     void add_interceptor (InterceptorType_ptr_type i);
 
     /// Register an interceptor with policies.
     void add_interceptor (InterceptorType_ptr_type i,
-                          const CORBA::PolicyList& policies);
+                          CORBA::PolicyList const &policies);
 
     void destroy_interceptors ();
 
@@ -79,10 +79,13 @@ namespace TAO
     size_t size () const;
 
   private:
-    using RegisteredArray = ACE_Array_Base<RegisteredInterceptor >;
+    Interceptor_List (Interceptor_List const &) = delete;
+    Interceptor_List &operator= (Interceptor_List const &) = delete;
+    Interceptor_List (Interceptor_List &&) = delete;
+    Interceptor_List &operator= (Interceptor_List &&) = delete;
 
-    /// Dynamic array of registered interceptors.
-    RegisteredArray interceptors_;
+    /// Registered interceptors.
+    std::vector<RegisteredInterceptor> interceptors_;
   };
 }
 

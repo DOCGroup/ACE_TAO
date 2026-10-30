@@ -57,11 +57,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      try{
+      try
+        {
           Test::Timestamp time = 10;
           roundtrip->test_method (time);
         }
-      catch (const Test::ServerOverload& )
+      catch (Test::ServerOverload const &)
         {
           ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
           received_expected_exception = true;
@@ -71,7 +72,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("");
       return 1;

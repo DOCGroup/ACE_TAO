@@ -30,8 +30,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  static const ACE_UINT32 ROUTING_SLIP_ROOT_BLOCK_NUMBER = 0;
-  static const ACE_UINT64 ROUTING_SLIP_ROOT_SERIAL_NUMBER = 1;
+  constexpr ACE_UINT32 ROUTING_SLIP_ROOT_BLOCK_NUMBER = 0;
+  constexpr ACE_UINT64 ROUTING_SLIP_ROOT_SERIAL_NUMBER = 1;
 
   /// \brief Standard (i.e. default) implementation of Event_Persistence_Factory interface
   class TAO_Notify_Serv_Export Standard_Event_Persistence_Factory :
@@ -41,7 +41,12 @@ namespace TAO_Notify
     /// Constructor
     Standard_Event_Persistence_Factory ();
     /// Destructor
-    virtual ~Standard_Event_Persistence_Factory();
+    ~Standard_Event_Persistence_Factory() override;
+
+    Standard_Event_Persistence_Factory (Standard_Event_Persistence_Factory const &) = delete;
+    Standard_Event_Persistence_Factory (Standard_Event_Persistence_Factory &&) = delete;
+    Standard_Event_Persistence_Factory &operator= (Standard_Event_Persistence_Factory const &) = delete;
+    Standard_Event_Persistence_Factory &operator= (Standard_Event_Persistence_Factory &&) = delete;
 
     /// Open persistence file and initialize.
     /// /param filename the fully qualified path/name of the file to contain
@@ -52,10 +57,10 @@ namespace TAO_Notify
 
     //////////////////////////////////////////////////////
     // Implement Event_Persistence_Factory virtual methods.
-    virtual Routing_Slip_Persistence_Manager*
-      create_routing_slip_persistence_manager(Persistent_Callback* callback);
+    Routing_Slip_Persistence_Manager*
+      create_routing_slip_persistence_manager(Persistent_Callback* callback) override;
 
-    virtual Routing_Slip_Persistence_Manager * first_reload_manager();
+    Routing_Slip_Persistence_Manager * first_reload_manager() override;
 
     /// reloading process complete.  Where should the chain continue?
     void done_reloading(
@@ -89,9 +94,9 @@ namespace TAO_Notify
   private:
     Persistent_File_Allocator allocator_;
     Routing_Slip_Persistence_Manager root_;
-    Persistent_Storage_Block* psb_;
-    ACE_UINT64 serial_number_;
-    bool is_reloading_;
+    Persistent_Storage_Block* psb_ {};
+    ACE_UINT64 serial_number_ {ROUTING_SLIP_ROOT_SERIAL_NUMBER + 1};
+    bool is_reloading_ {};
   };
 
   /// \brief The standard implementation of the
@@ -103,24 +108,29 @@ namespace TAO_Notify
     /// Constructor.
     Standard_Event_Persistence ();
     /// Destructor.
-    virtual ~Standard_Event_Persistence ();
+    ~Standard_Event_Persistence () override;
+
+    Standard_Event_Persistence (Standard_Event_Persistence const &) = delete;
+    Standard_Event_Persistence (Standard_Event_Persistence &&) = delete;
+    Standard_Event_Persistence &operator= (Standard_Event_Persistence const &) = delete;
+    Standard_Event_Persistence &operator= (Standard_Event_Persistence &&) = delete;
     /////////////////////////////////////////////
     // Override Event_Persistent_Strategy methods
     // Parse arguments and initialize.
-    virtual int init(int argc, ACE_TCHAR *argv[]);
+    int init(int argc, ACE_TCHAR *argv[]) override;
     // Prepare for shutdown
-    virtual int fini ();
+    int fini () override;
 
     // get the current factory, creating it if necessary
-    virtual Event_Persistence_Factory * get_factory ();
+    Event_Persistence_Factory * get_factory () override;
 
   private:
     // release the current factory so a new one can be created
-    virtual void reset ();
+    void reset () override;
 
     ACE_TString filename_;  // set via -file_path
-    ACE_UINT32 block_size_; // set via -block_size
-    Standard_Event_Persistence_Factory * factory_;
+    ACE_UINT32 block_size_ {512}; // set via -block_size
+    Standard_Event_Persistence_Factory * factory_ {};
   };
 }
 

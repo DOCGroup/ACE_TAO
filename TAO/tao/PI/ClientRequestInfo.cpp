@@ -24,8 +24,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
-  : invocation_ (inv),
-    rs_pi_current_ ()
+  : invocation_ (inv)
 {
   this->setup_picurrent ();
 }
@@ -293,7 +292,7 @@ TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type)
 
 void
 TAO_ClientRequestInfo::add_request_service_context (
-    const IOP::ServiceContext & service_context,
+    IOP::ServiceContext const &service_context,
     CORBA::Boolean replace)
 {
   this->check_validity ();

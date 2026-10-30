@@ -29,7 +29,7 @@ TAO_Priority_Mapping_Manager::_duplicate (TAO_Priority_Mapping_Manager_ptr obj)
   return obj;
 }
 
-const char*
+char const *
 TAO_Priority_Mapping_Manager::_interface_repository_id () const
 {
   return "IDL:Priority_Mapping_Manager:1.0";

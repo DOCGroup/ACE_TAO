@@ -19,6 +19,9 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <algorithm>
+#include <new>
+
 #include "tao/debug.h"
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
@@ -27,14 +30,34 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace
+{
+  int
+  insert_routing_slip (std::vector<TAO_Notify::Routing_Slip_Ptr> & routing_slips,
+                       TAO_Notify::Routing_Slip_Ptr const & routing_slip)
+  {
+    if (std::find (routing_slips.begin (), routing_slips.end (), routing_slip)
+        != routing_slips.end ())
+      return 1;
+
+    try
+      {
+        routing_slips.push_back (routing_slip);
+      }
+    catch (std::bad_alloc const &)
+      {
+        return -1;
+      }
+
+    return 0;
+  }
+}
+
 // Include this here since this is the only file that
 // requires Topology_Factory.
 namespace TAO_Notify
 {
-  // virtual
-  Topology_Factory::~Topology_Factory ()
-  {
-  }
+  Topology_Factory::~Topology_Factory () = default;
 }
 
 using TAO_Notify_EventChannel_Find_Worker =
@@ -46,16 +69,11 @@ using TAO_Notify_EventChannel_Find_Worker =
 using TAO_Notify_EventChannel_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel>;
 
 TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory ()
-  : topology_save_seq_ (0)
-  , topology_factory_(0)
-  , reconnect_registry_(*this)
-  , loading_topology_ (false)
+  : reconnect_registry_ (*this)
 {
 }
 
-TAO_Notify_EventChannelFactory::~TAO_Notify_EventChannelFactory ()
-{
-}
+TAO_Notify_EventChannelFactory::~TAO_Notify_EventChannelFactory () = default;
 
 void
 TAO_Notify_EventChannelFactory::destroy ()
@@ -69,7 +87,7 @@ TAO_Notify_EventChannelFactory::destroy ()
   properties->orb (CORBA::ORB::_nil ());
   properties->default_poa (PortableServer::POA::_nil ());
 
-  ec_container_.reset( 0 );
+  ec_container_.reset (nullptr);
 }
 
 void
@@ -169,18 +187,18 @@ TAO_Notify_EventChannelFactory::shutdown ()
 
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannelFactory::create_named_channel (
-    const CosNotification::QoSProperties& initial_qos,
-    const CosNotification::AdminProperties& initial_admin,
+    CosNotification::QoSProperties const &initial_qos,
+    CosNotification::AdminProperties const &initial_admin,
     CosNotifyChannelAdmin::ChannelID_out id,
-    const char*)
+    char const *)
 {
   return this->create_channel (initial_qos, initial_admin, id);
 }
 
 
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory::create_channel (
-    const CosNotification::QoSProperties & initial_qos,
-    const CosNotification::AdminProperties & initial_admin,
+    CosNotification::QoSProperties const &initial_qos,
+    CosNotification::AdminProperties const &initial_admin,
     CosNotifyChannelAdmin::ChannelID_out id
   )
 {
@@ -311,7 +329,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence ()
           TAO_Notify::Routing_Slip_Ptr routing_slip = TAO_Notify::Routing_Slip::create (*this, rspm);
           if (!routing_slip.null ())
           {
-            this->routing_slip_restart_set_.insert (routing_slip);
+            insert_routing_slip (this->routing_slip_restart_set_, routing_slip);
           }
           else
           {
@@ -365,10 +383,9 @@ TAO_Notify_EventChannelFactory::change_to_parent ()
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
+TAO_Notify_EventChannelFactory::load_child (ACE_CString const &type,
                                         CORBA::Long id,
-                                        const TAO_Notify::
-                                        NVPList& attrs)
+                                        TAO_Notify::NVPList const &attrs)
 {
   // ignore anything but our valid children (ie channel)
   TAO_Notify::Topology_Object * result = this;
@@ -408,13 +425,9 @@ TAO_Notify_EventChannelFactory::reconnect ()
   this->reconnect_registry_.send_reconnect (this->channel_factory_.in ());
 
   // reactivate events in-progress
-  Routing_Slip_Set::CONST_ITERATOR iter (this->routing_slip_restart_set_);
-  TAO_Notify::Routing_Slip_Ptr * routing_slip;
-  for (iter.first(); iter.next(routing_slip); iter.advance())
-  {
-    (*routing_slip)->reconnect();
-  }
-  this->routing_slip_restart_set_.reset ();
+  for (TAO_Notify::Routing_Slip_Ptr const & routing_slip : this->routing_slip_restart_set_)
+    routing_slip->reconnect ();
+  this->routing_slip_restart_set_.clear ();
 }
 
 NotifyExt::ReconnectionRegistry::ReconnectionID

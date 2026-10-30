@@ -40,9 +40,7 @@ public:
   {
   }
 
-  ~object_reference_const_sequence_element()
-  {
-  }
+  ~object_reference_const_sequence_element () = default;
 
   inline operator object_reference_type * () const
   {

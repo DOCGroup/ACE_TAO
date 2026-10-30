@@ -80,7 +80,7 @@ namespace TAO
       //@}
 
       /// Accessor for cases_
-      const CaseArrayType& cases() const;
+      CaseArrayType const & cases() const;
 
     protected:
       /**

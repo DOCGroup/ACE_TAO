@@ -25,13 +25,17 @@ public:
                CORBA::ULong event_size,
                CORBA::ORB_ptr orb,
                Messaging::SyncScope sync_scope,
-               const ACE_CString& ident);
+               ACE_CString const &ident);
+  Client_Task (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
-  bool done() const;
-  const char *ID () const;
+  bool done () const;
+  char const *ID () const;
 
 private:
   /// Make sure that all threads have connections available to

@@ -3,13 +3,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Operation_Details::TAO_Operation_Details (const char *name,
-                                              const CORBA::ULong len,
+TAO_Operation_Details::TAO_Operation_Details (char const *name,
+                                              CORBA::ULong len,
                                               TAO::Argument **args,
-                                              const CORBA::ULong num,
-                                              const CORBA::Boolean has_in_args,
-                                              const TAO::Exception_Data *data,
-                                              const CORBA::ULong count)
+                                              CORBA::ULong num,
+                                              CORBA::Boolean has_in_args,
+                                              TAO::Exception_Data const *data,
+                                              CORBA::ULong count)
   : opname_ (name)
     , opname_len_ (len)
     , request_id_ (0)
@@ -30,7 +30,7 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
 {
 }
 
-ACE_INLINE const char*
+ACE_INLINE char const *
 TAO_Operation_Details::opname () const
 {
   return this->opname_;
@@ -60,7 +60,7 @@ TAO_Operation_Details::in_argument_flag () const
 {
   for (CORBA::ULong i = 1; i < this->num_args_ && !this->has_in_args_; i++)
     {
-      if (dynamic_cast<TAO::InArgument *>(args_[i]) != 0 ||
+      if (dynamic_cast<TAO::InArgument *>(args_[i]) != nullptr ||
           dynamic_cast<TAO::InoutArgument *>(args_[i]))
         {
           return true;
@@ -76,7 +76,7 @@ TAO_Operation_Details::request_service_context ()
   return this->request_service_info_;
 }
 
-ACE_INLINE const TAO_Service_Context &
+ACE_INLINE TAO_Service_Context const &
 TAO_Operation_Details::request_service_context () const
 {
   return this->request_service_info_;
@@ -88,7 +88,7 @@ TAO_Operation_Details::request_service_info ()
   return this->request_service_context ().service_info ();
 }
 
-ACE_INLINE const IOP::ServiceContextList &
+ACE_INLINE IOP::ServiceContextList const &
 TAO_Operation_Details::request_service_info () const
 {
   return this->request_service_context ().service_info ();
@@ -100,7 +100,7 @@ TAO_Operation_Details::reply_service_context ()
   return this->reply_service_info_;
 }
 
-ACE_INLINE const TAO_Service_Context &
+ACE_INLINE TAO_Service_Context const &
 TAO_Operation_Details::reply_service_context () const
 {
   return this->reply_service_info_;
@@ -112,7 +112,7 @@ TAO_Operation_Details::reply_service_info ()
   return this->reply_service_context ().service_info ();
 }
 
-ACE_INLINE const IOP::ServiceContextList &
+ACE_INLINE IOP::ServiceContextList const &
 TAO_Operation_Details::reply_service_info () const
 {
   return this->reply_service_context ().service_info ();

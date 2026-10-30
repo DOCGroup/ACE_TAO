@@ -88,7 +88,7 @@ TAO_Active_Object_Map::find_system_id_using_user_id (
 
   TAO_Active_Object_Map_Entry *entry {};
   int result =
-    this->id_uniqueness_strategy_->bind_using_user_id (0,
+    this->id_uniqueness_strategy_->bind_using_user_id (nullptr,
                                                        user_id,
                                                        priority,
                                                        entry);

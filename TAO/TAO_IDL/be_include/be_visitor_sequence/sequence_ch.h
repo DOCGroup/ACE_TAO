@@ -28,10 +28,15 @@ class be_visitor_sequence_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_sequence_ch (be_visitor_context *ctx);
+  explicit be_visitor_sequence_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_ch () override;
+  ~be_visitor_sequence_ch () override  = default;
+
+  be_visitor_sequence_ch (const be_visitor_sequence_ch &) = delete;
+  be_visitor_sequence_ch (be_visitor_sequence_ch &&) = delete;
+  be_visitor_sequence_ch &operator= (const be_visitor_sequence_ch &) = delete;
+  be_visitor_sequence_ch &operator= (be_visitor_sequence_ch &&) = delete;
 
   /// visit sequence node.
   int visit_sequence (be_sequence *node) override;

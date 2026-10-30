@@ -11,6 +11,7 @@
 
 #include "argument.h"
 
+
 #include "be_map.h"
 
 // ************************************************************
@@ -19,14 +20,11 @@
 // ************************************************************
 
 be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
-  : be_visitor_args (ctx),
-    unused_ (false)
+  : be_visitor_args (ctx)
 {
 }
 
-be_visitor_args_arglist::~be_visitor_args_arglist ()
-{
-}
+be_visitor_args_arglist::~be_visitor_args_arglist () = default;
 
 int be_visitor_args_arglist::visit_argument (be_argument *node)
 {
@@ -217,7 +215,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
     {
       // The only PT_pseudo that doesn't take a _ptr suffix.
       bool is_tckind =
-        (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0);
+        (node->local_name ()->get_string () == "TCKind");
 
       switch (this->direction ())
         {
@@ -270,7 +268,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
 int be_visitor_args_arglist::visit_fixed (be_fixed *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  const char * const type = this->type_name (node);
+  std::string const type = this->type_name (node);
 
   if (this->direction () == AST_Argument::dir_IN)
     {

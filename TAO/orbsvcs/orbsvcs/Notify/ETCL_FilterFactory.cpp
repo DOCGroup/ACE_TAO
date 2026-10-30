@@ -25,7 +25,7 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
     iterator.advance ())
   {
     delete entry->int_id_;
-    entry->int_id_ = 0;
+    entry->int_id_ = nullptr;
   }
 
   this->filters_.unbind_all ();
@@ -97,7 +97,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
   TAO_Notify_ETCL_Filter*& filter)
 {
   // Create the RefCounted servant.
-  filter = 0;
+  filter = nullptr;
 
   ACE_NEW_THROW_EX (filter,
                     TAO_Notify_ETCL_Filter (this->filter_poa_.in (),
@@ -110,7 +110,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
     if (filters_.bind (id, filter) == -1)
     {
       throw CORBA::INTERNAL ();
-      return 0;
+      return nullptr;
     }
   }
 
@@ -128,7 +128,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
       catch (const CORBA::Exception& )
         {
           throw CORBA::INTERNAL ();
-          return 0;
+          return nullptr;
         }
     }
   CORBA::Object_var obj =
@@ -182,7 +182,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 void
-TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver& saver)
+TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver &saver)
 {
   bool changed = true;
   TAO_Notify::NVPList attrs; // ECF has no attributes
@@ -208,8 +208,8 @@ TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver& save
 
 
 TAO_Notify::Topology_Object*
-TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
-  CORBA::Long id, const TAO_Notify::NVPList& attrs)
+TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
+  CORBA::Long id, TAO_Notify::NVPList const &attrs)
 {
   ACE_UNUSED_ARG (id);
 
@@ -255,7 +255,7 @@ TAO_Notify_ETCL_FilterFactory::get_filter_id (CosNotifyFilter::Filter_ptr filter
 
 
 CosNotifyFilter::Filter_ptr
-TAO_Notify_ETCL_FilterFactory::get_filter (const TAO_Notify_Object::ID& id)
+TAO_Notify_ETCL_FilterFactory::get_filter (TAO_Notify_Object::ID const &id)
 {
   return this->find_filter(id);
 }

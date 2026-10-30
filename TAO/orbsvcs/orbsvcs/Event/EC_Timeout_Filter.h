@@ -43,38 +43,38 @@ public:
   /// Constructor.
   TAO_EC_Timeout_Filter (TAO_EC_Event_Channel_Base *event_channel,
                          TAO_EC_ProxyPushSupplier *supplier,
-                         const TAO_EC_QOS_Info& qos_info,
+                         TAO_EC_QOS_Info const &qos_info,
                          RtecEventComm::EventType type,
                          RtecEventComm::Time period);
 
   /// Destructor.
-  virtual ~TAO_EC_Timeout_Filter () override;
+  ~TAO_EC_Timeout_Filter () override;
 
   /// Return the QOS_Info for this Timeout filter.
-  const TAO_EC_QOS_Info& qos_info () const;
+  TAO_EC_QOS_Info const &qos_info () const;
 
   /// The type of timeout event that we generate.
   RtecEventComm::EventType type () const;
 
   /// Callback from the Timeout_Generator
-  void push_to_proxy (const RtecEventComm::EventSet& event,
+  void push_to_proxy (RtecEventComm::EventSet const &event,
                       TAO_EC_QOS_Info& qos_info);
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info) override;
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info) override;
-  virtual void push (const RtecEventComm::EventSet& event,
+  int filter (RtecEventComm::EventSet const &event,
+              TAO_EC_QOS_Info& qos_info) override;
+  int filter_nocopy (RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info) override;
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info) override;
-  virtual void clear () override;
-  virtual CORBA::ULong max_event_size () const override;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const override;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info) override;
+  void push (RtecEventComm::EventSet const &event,
+             TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (RtecEventComm::EventSet& event,
+                    TAO_EC_QOS_Info& qos_info) override;
+  void clear () override;
+  CORBA::ULong max_event_size () const override;
+  int can_match (RtecEventComm::EventHeader const &header) const override;
+  int add_dependencies (RtecEventComm::EventHeader const &header,
+                        TAO_EC_QOS_Info const &qos_info) override;
 
 private:
   TAO_EC_Timeout_Filter (TAO_EC_Timeout_Filter const &) = delete;

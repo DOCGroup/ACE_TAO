@@ -17,13 +17,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE>
 TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (const char* name)
-  : name_ (name), valid_(0)
+  : name_ (name)
 {
 }
 
 template <class TYPE>
 TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial)
-  : name_ (name), value_ (initial), valid_ (1)
+  : name_ (name), value_ (initial), valid_ (true)
 {
 }
 
@@ -33,11 +33,6 @@ TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (
   : name_ (rhs.name_),
     value_ (rhs.value_),
     valid_ (rhs.valid_)
-{
-}
-
-template <class TYPE>
-TAO_Notify_PropertyBase_T<TYPE>::~TAO_Notify_PropertyBase_T ()
 {
 }
 
@@ -71,11 +66,11 @@ TAO_Notify_Property_T<TYPE>::set (const TAO_Notify_PropertySeq& property_seq)
 
   if (property_seq.find (this->name_, value) == 0 && (value >>= this->value_))
     {
-      this->valid_ = 1;
+      this->valid_ = true;
       return 0;
     }
 
-  this->valid_ = 0;
+  this->valid_ = false;
   return -1;
 }
 
@@ -84,7 +79,7 @@ TAO_Notify_Property_T<TYPE>::set(const CosNotification::PropertyValue &value)
 {
   if (value >>= this->value_)
   {
-    this->valid_ = 1;
+    this->valid_ = true;
     return 0;
   }
 
@@ -95,13 +90,13 @@ TAO_Notify_Property_T<TYPE>::set(const CosNotification::PropertyValue &value)
 
 template <class TYPE>
 TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (const char* name)
-  :name_ (name), valid_(0)
+  :name_ (name)
 {
 }
 
 template <class TYPE>
 TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (const char* name, const TYPE& initial)
-  :name_ (name), value_ (initial), valid_ (1)
+  :name_ (name), value_ (initial), valid_ (true)
 {
 }
 
@@ -118,12 +113,12 @@ TAO_Notify_StructProperty_T<TYPE>::set (
       if ((value >>= extract_type)  && extract_type != 0) // make sure we get something valid.
         {
           this->value_ = *extract_type; // copy
-          this->valid_ = 1;
+          this->valid_ = true;
           return 0;
         }
     }
 
-  this->valid_ = 0;
+  this->valid_ = false;
   return -1;
 }
 

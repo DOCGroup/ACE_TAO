@@ -29,21 +29,23 @@
 
 #include "ace/OS_NS_string.h"
 
+#include <string>
+
 void
 be_util::gen_nested_namespace_begin (TAO_OutStream *os,
                                      be_module *node,
                                      bool skel)
 {
-  char *item_name = nullptr;
   bool first_level = true;
 
   for (UTL_IdListActiveIterator i (node->name ());
        !i.is_done ();
        i.next ())
     {
-      item_name = i.item ()->get_string ();
+      std::string const& item_name =
+        i.item ()->get_string ();
 
-      if (ACE_OS::strcmp (item_name, "") != 0)
+      if (!item_name.empty ())
         {
           // Leave the outermost root scope.
           *os << be_nl << "namespace ";
@@ -69,7 +71,7 @@ be_util::gen_nested_namespace_end (TAO_OutStream *os,
        !i.is_done ();
        i.next ())
     {
-      if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
+      if (!i.item ()->get_string ().empty ())
         {
           // Leave the outermost root scope.
           *os << be_uidt_nl << "}";
@@ -94,11 +96,11 @@ be_util::gen_nesting_open (TAO_OutStream &os, AST_Decl *node)
 
   if (nt == AST_Decl::NT_module)
     {
-      ACE_CString module_name (
+      std::string module_name (
         IdentifierHelper::try_escape (node->original_local_name ()));
 
       os << be_nl
-         << "module " << module_name.c_str () << be_nl
+         << "module " << module_name << be_nl
          << "{" << be_idt;
    }
 }
@@ -121,206 +123,211 @@ be_util::gen_nesting_close (TAO_OutStream &os, AST_Decl *node)
 
 // Prepare an argument for a BE
 void
-be_util::prep_be_arg (char *s)
+be_util::prep_be_arg (std::string const& s)
 {
-  static constexpr char arg_macro[]            = "export_macro=";
-  static constexpr char arg_include[]          = "export_include=";
-  static constexpr char skel_arg_macro[]       = "skel_export_macro=";
-  static constexpr char skel_arg_include[]     = "skel_export_include=";
-  static constexpr char skel_arg_file[]        = "skel_export_file=";
-  static constexpr char stub_arg_macro[]       = "stub_export_macro=";
-  static constexpr char stub_arg_include[]     = "stub_export_include=";
-  static constexpr char stub_arg_file[]        = "stub_export_file=";
-  static constexpr char anyop_arg_macro[]      = "anyop_export_macro=";
-  static constexpr char anyop_arg_include[]    = "anyop_export_include=";
-  static constexpr char exec_arg_macro[]       = "exec_export_macro=";
-  static constexpr char exec_arg_include[]     = "exec_export_include=";
-  static constexpr char svnt_arg_macro[]       = "svnt_export_macro=";
-  static constexpr char svnt_arg_include[]     = "svnt_export_include=";
-  static constexpr char conn_arg_macro[]       = "conn_export_macro=";
-  static constexpr char conn_arg_include[]     = "conn_export_include=";
-  static constexpr char arg_pch_include[]      = "pch_include=";
-  static constexpr char arg_pre_include[]      = "pre_include=";
-  static constexpr char arg_post_include[]     = "post_include=";
-  static constexpr char arg_versioning_begin[] = "versioning_begin=";
-  static constexpr char arg_versioning_end[]   = "versioning_end=";
-  static constexpr char arg_versioning_include[]  = "versioning_include=";
-  static constexpr char obv_opt_accessor[]     = "obv_opt_accessor";
-  static constexpr char ciao_container_type[]  = "ciao_container_type=";
-  static constexpr char include_guard[]        = "include_guard=";
-  static constexpr char safe_include[]         = "safe_include=";
-  static constexpr char unique_include[]       = "unique_include=";
-  static constexpr char dds_impl[]             = "dds_impl=";
-  static constexpr char stripped_filename[]    = "stripped_filename=";
-  static constexpr char no_fixed_err[]         = "no_fixed_err";
+  static std::string const arg_macro = "export_macro=";
+  static std::string const arg_include = "export_include=";
+  static std::string const skel_arg_macro = "skel_export_macro=";
+  static std::string const skel_arg_include = "skel_export_include=";
+  static std::string const skel_arg_file = "skel_export_file=";
+  static std::string const stub_arg_macro = "stub_export_macro=";
+  static std::string const stub_arg_include = "stub_export_include=";
+  static std::string const stub_arg_file = "stub_export_file=";
+  static std::string const anyop_arg_macro = "anyop_export_macro=";
+  static std::string const anyop_arg_include = "anyop_export_include=";
+  static std::string const exec_arg_macro = "exec_export_macro=";
+  static std::string const exec_arg_include = "exec_export_include=";
+  static std::string const svnt_arg_macro = "svnt_export_macro=";
+  static std::string const svnt_arg_include = "svnt_export_include=";
+  static std::string const conn_arg_macro = "conn_export_macro=";
+  static std::string const conn_arg_include = "conn_export_include=";
+  static std::string const arg_pch_include = "pch_include=";
+  static std::string const arg_pre_include = "pre_include=";
+  static std::string const arg_post_include = "post_include=";
+  static std::string const arg_versioning_begin = "versioning_begin=";
+  static std::string const arg_versioning_end = "versioning_end=";
+  static std::string const arg_versioning_include = "versioning_include=";
+  static std::string const obv_opt_accessor = "obv_opt_accessor";
+  static std::string const ciao_container_type = "ciao_container_type=";
+  static std::string const include_guard = "include_guard=";
+  static std::string const safe_include = "safe_include=";
+  static std::string const unique_include = "unique_include=";
+  static std::string const dds_impl = "dds_impl=";
+  static std::string const stripped_filename = "stripped_filename=";
+  static std::string const no_fixed_err = "no_fixed_err";
 
-  char* last = nullptr;
-
-  for (char* arg = ACE_OS::strtok_r (s, ",", &last);
-       arg != nullptr;
-       arg = ACE_OS::strtok_r (nullptr, ",", &last))
+  std::string remaining (s);
+  while (!remaining.empty ())
     {
-      if (ACE_OS::strstr (arg, arg_macro) == arg)
+      size_t const comma = remaining.find (',');
+      std::string const argument (remaining.substr (0, comma));
+      remaining = comma == std::string::npos
+        ? std::string {}
+        : remaining.substr (comma + 1);
+
+      if (argument.empty ())
         {
-          char* val = arg + sizeof (arg_macro) - 1;
+          continue;
+        }
+
+      if (argument.substr (0, arg_macro.size ()) == arg_macro)
+        {
+          std::string const val (argument.substr (arg_macro.size ()));
           be_global->skel_export_macro (val);
           be_global->stub_export_macro (val);
           be_global->anyop_export_macro (val);
         }
-      else if (ACE_OS::strstr (arg, arg_include) == arg)
+      else if (argument.substr (0, arg_include.size ()) == arg_include)
         {
-          char* val = arg + sizeof (arg_include) - 1;
+          std::string const val (argument.substr (arg_include.size ()));
           be_global->stub_export_include (val);
         }
-      else if (ACE_OS::strstr (arg, skel_arg_macro) == arg)
+      else if (argument.substr (0, skel_arg_macro.size ()) == skel_arg_macro)
         {
-          char* val = arg + sizeof (skel_arg_macro) - 1;
+          std::string const val (argument.substr (skel_arg_macro.size ()));
           be_global->skel_export_macro (val);
         }
-      else if (ACE_OS::strstr (arg, skel_arg_include) == arg)
+      else if (argument.substr (0, skel_arg_include.size ()) == skel_arg_include)
         {
-          char* val = arg + sizeof (skel_arg_include) - 1;
+          std::string const val (argument.substr (skel_arg_include.size ()));
           be_global->skel_export_include (val);
         }
-      else if (ACE_OS::strstr (arg, skel_arg_file) == arg)
+      else if (argument.substr (0, skel_arg_file.size ()) == skel_arg_file)
         {
-          char* val = arg + sizeof (skel_arg_file) - 1;
+          std::string const val (argument.substr (skel_arg_file.size ()));
           be_global->skel_export_file (val);
         }
-      else if (ACE_OS::strstr (arg, stub_arg_macro) == arg)
+      else if (argument.substr (0, stub_arg_macro.size ()) == stub_arg_macro)
         {
-          char* val = arg + sizeof (stub_arg_macro) - 1;
+          std::string const val (argument.substr (stub_arg_macro.size ()));
           be_global->stub_export_macro (val);
         }
-      else if (ACE_OS::strstr (arg, stub_arg_include) == arg)
+      else if (argument.substr (0, stub_arg_include.size ()) == stub_arg_include)
         {
-          char* val = arg + sizeof (stub_arg_include) - 1;
+          std::string const val (argument.substr (stub_arg_include.size ()));
           be_global->stub_export_include (val);
         }
-      else if (ACE_OS::strstr (arg, stub_arg_file) == arg)
+      else if (argument.substr (0, stub_arg_file.size ()) == stub_arg_file)
         {
-          char* val = arg + sizeof (stub_arg_file) - 1;
+          std::string const val (argument.substr (stub_arg_file.size ()));
           be_global->stub_export_file (val);
         }
-      else if (ACE_OS::strstr (arg, anyop_arg_macro) == arg)
+      else if (argument.substr (0, anyop_arg_macro.size ()) == anyop_arg_macro)
         {
-          char* val = arg + sizeof (anyop_arg_macro) - 1;
+          std::string const val (argument.substr (anyop_arg_macro.size ()));
           be_global->anyop_export_macro (val);
         }
-      else if (ACE_OS::strstr (arg, anyop_arg_include) == arg)
+      else if (argument.substr (0, anyop_arg_include.size ()) == anyop_arg_include)
         {
-          char* val = arg + sizeof (anyop_arg_include) - 1;
+          std::string const val (argument.substr (anyop_arg_include.size ()));
           be_global->anyop_export_include (val);
         }
-      else if (ACE_OS::strstr (arg, exec_arg_macro) == arg)
+      else if (argument.substr (0, exec_arg_macro.size ()) == exec_arg_macro)
         {
-          char* val = arg + sizeof (exec_arg_macro) - 1;
+          std::string const val (argument.substr (exec_arg_macro.size ()));
           be_global->exec_export_macro (val);
         }
-      else if (ACE_OS::strstr (arg, exec_arg_include) == arg)
+      else if (argument.substr (0, exec_arg_include.size ()) == exec_arg_include)
         {
-          char* val = arg + sizeof (exec_arg_include) - 1;
+          std::string const val (argument.substr (exec_arg_include.size ()));
           be_global->exec_export_include (val);
         }
-      else if (ACE_OS::strstr (arg, svnt_arg_macro) == arg)
+      else if (argument.substr (0, svnt_arg_macro.size ()) == svnt_arg_macro)
         {
-          char* val = arg + sizeof (svnt_arg_macro) - 1;
+          std::string const val (argument.substr (svnt_arg_macro.size ()));
           be_global->svnt_export_macro (val);
         }
-      else if (ACE_OS::strstr (arg, svnt_arg_include) == arg)
+      else if (argument.substr (0, svnt_arg_include.size ()) == svnt_arg_include)
         {
-          char* val = arg + sizeof (svnt_arg_include) - 1;
+          std::string const val (argument.substr (svnt_arg_include.size ()));
           be_global->svnt_export_include (val);
         }
-      else if (ACE_OS::strstr (arg, conn_arg_macro) == arg)
+      else if (argument.substr (0, conn_arg_macro.size ()) == conn_arg_macro)
         {
-          char* val = arg + sizeof (conn_arg_macro) - 1;
+          std::string const val (argument.substr (conn_arg_macro.size ()));
           be_global->conn_export_macro (val);
         }
-      else if (ACE_OS::strstr (arg, conn_arg_include) == arg)
+      else if (argument.substr (0, conn_arg_include.size ()) == conn_arg_include)
         {
-          char* val = arg + sizeof (conn_arg_include) - 1;
+          std::string const val (argument.substr (conn_arg_include.size ()));
           be_global->conn_export_include (val);
         }
-      else if (ACE_OS::strstr (arg, arg_pch_include) == arg)
+      else if (argument.substr (0, arg_pch_include.size ()) == arg_pch_include)
         {
-          char* val = arg + sizeof (arg_pch_include) - 1;
+          std::string const val (argument.substr (arg_pch_include.size ()));
           be_global->pch_include (val);
         }
-      else if (ACE_OS::strstr (arg, arg_pre_include) == arg)
+      else if (argument.substr (0, arg_pre_include.size ()) == arg_pre_include)
         {
-          char* val = arg + sizeof (arg_pre_include) - 1;
+          std::string const val (argument.substr (arg_pre_include.size ()));
           be_global->pre_include (val);
         }
-      else if (ACE_OS::strstr (arg, arg_post_include) == arg)
+      else if (argument.substr (0, arg_post_include.size ()) == arg_post_include)
         {
-          char* val = arg + sizeof (arg_post_include) - 1;
+          std::string const val (argument.substr (arg_post_include.size ()));
           be_global->post_include (val);
         }
-      else if (ACE_OS::strstr (arg, include_guard) == arg)
+      else if (argument.substr (0, include_guard.size ()) == include_guard)
         {
-          char* val = arg + sizeof (include_guard) - 1;
+          std::string const val (argument.substr (include_guard.size ()));
           be_global->include_guard (val);
         }
-      else if (ACE_OS::strstr (arg, safe_include) == arg)
+      else if (argument.substr (0, safe_include.size ()) == safe_include)
         {
-          char* val = arg + sizeof (safe_include) - 1;
+          std::string const val (argument.substr (safe_include.size ()));
           be_global->safe_include (val);
         }
-      else if (ACE_OS::strstr (arg, unique_include) == arg)
+      else if (argument.substr (0, unique_include.size ()) == unique_include)
         {
-          char* val = arg + sizeof (unique_include) - 1;
+          std::string const val (argument.substr (unique_include.size ()));
           be_global->unique_include (val);
         }
-      else if (ACE_OS::strstr (arg, stripped_filename) == arg)
+      else if (argument.substr (0, stripped_filename.size ()) == stripped_filename)
         {
-          char* val = arg + sizeof (stripped_filename) - 1;
+          std::string const val (argument.substr (stripped_filename.size ()));
           be_global->stripped_filename (val);
         }
-      else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
+      else if (argument.substr (0, obv_opt_accessor.size ()) == obv_opt_accessor)
         {
           be_global->obv_opt_accessor (true);
         }
-      else if (ACE_OS::strstr (arg, ciao_container_type) == arg)
+      else if (argument.substr (0, ciao_container_type.size ()) == ciao_container_type)
         {
-          char* val = arg + sizeof (ciao_container_type) - 1;
+          std::string const val (argument.substr (ciao_container_type.size ()));
           be_global->ciao_container_type (val);
         }
-      else if (ACE_OS::strstr (arg, arg_versioning_begin) == arg)
+      else if (argument.substr (0, arg_versioning_begin.size ()) == arg_versioning_begin)
         {
-          char const * const val =
-            arg + sizeof (arg_versioning_begin) - 1;
+          std::string const val (argument.substr (arg_versioning_begin.size ()));
           be_global->versioning_begin (val);
         }
-      else if (ACE_OS::strstr (arg, arg_versioning_end) == arg)
+      else if (argument.substr (0, arg_versioning_end.size ()) == arg_versioning_end)
         {
-          char const * const val =
-            arg + sizeof (arg_versioning_end) - 1;
+          std::string const val (argument.substr (arg_versioning_end.size ()));
           be_global->versioning_end (val);
         }
-      else if (ACE_OS::strstr (arg, arg_versioning_include) == arg)
+      else if (argument.substr (0, arg_versioning_include.size ()) == arg_versioning_include)
         {
-          char const * const val =
-            arg + sizeof (arg_versioning_include) - 1;
+          std::string const val (argument.substr (arg_versioning_include.size ()));
           be_global->versioning_include (val);
         }
-      else if (ACE_OS::strstr (arg, dds_impl) == arg)
+      else if (argument.substr (0, dds_impl.size ()) == dds_impl)
         {
-          char const * const val =
-            arg + sizeof (dds_impl) - 1;
+          std::string const val = argument.substr (dds_impl.size ());
           be_global->dds_impl (val);
         }
-      else if (ACE_OS::strstr (arg, no_fixed_err) == arg)
+      else if (argument.substr (0, no_fixed_err.size ()) == no_fixed_err)
         {
           be_global->no_fixed_err (true);
         }
       else
         {
+          std::string const arg (argument);
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%C: invalid or unknown ")
                       ACE_TEXT ("argument <%C> to back end\n"),
-                      idl_global->prog_name (),
-                      arg));
+                      idl_global->prog_name ().data (),
+                      arg.c_str ()));
         }
     }
 }
@@ -947,20 +954,20 @@ be_util::generator_init ()
   return gen;
 }
 
-const char *
+std::string const&
 be_util::get_output_path (bool for_anyop,
                           bool for_skel,
                           bool for_exec)
 {
-  if (for_anyop && nullptr != be_global->anyop_output_dir ())
+  if (for_anyop && !be_global->anyop_output_dir ().empty ())
     {
       return be_global->anyop_output_dir ();
     }
-  else if (for_skel && nullptr != be_global->skel_output_dir ())
+  else if (for_skel && !be_global->skel_output_dir ().empty ())
     {
       return be_global->skel_output_dir ();
     }
-  else if (for_exec && nullptr != be_global->exec_output_dir ())
+  else if (for_exec && !be_global->exec_output_dir ().empty ())
     {
       return be_global->exec_output_dir ();
     }
@@ -978,16 +985,16 @@ be_util::overwrite_ciao_exec_files ()
     {
       bool src_exist = false;
       bool hdr_exist = false;
-      const char *fname_hdr = be_global->be_get_ciao_exec_hdr_fname (false);
-      FILE* fp_hdr = ACE_OS::fopen(fname_hdr, "r");
+      std::string const fname_hdr = be_global->be_get_ciao_exec_hdr_fname (false);
+      FILE* fp_hdr = ACE_OS::fopen(fname_hdr.c_str (), "r");
       if (fp_hdr)
         {
           // file exists, don't generate new exec files.
           ACE_OS::fclose(fp_hdr);
           hdr_exist = true;
         }
-      const char *fname_src = be_global->be_get_ciao_exec_src_fname (false);
-      FILE* fp_src = ACE_OS::fopen(fname_src, "r");
+      std::string const fname_src = be_global->be_get_ciao_exec_src_fname (false);
+      FILE* fp_src = ACE_OS::fopen(fname_src.c_str (), "r");
       if (fp_src)
         {
           // file exists, don't generate new exec files.

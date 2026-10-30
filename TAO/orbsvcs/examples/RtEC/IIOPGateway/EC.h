@@ -25,7 +25,11 @@ class EC
 {
 public:
   /// Constructor
-  EC ();
+  EC () = default;
+  EC (EC const &) = delete;
+  EC (EC &&) = delete;
+  EC &operator= (EC const &) = delete;
+  EC &operator= (EC &&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);

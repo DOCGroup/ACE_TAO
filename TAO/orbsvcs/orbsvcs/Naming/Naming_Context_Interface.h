@@ -62,7 +62,7 @@ public:
    * be bound using <bind_context> and <rebind_context> in order to
    * participate in name resolution later.
    */
-  void bind (const CosNaming::Name &n,
+  void bind (CosNaming::Name const &n,
              CORBA::Object_ptr obj) override;
 
   /**
@@ -71,7 +71,7 @@ public:
    * context.  In that case, the existing binding is replaced with the
    * new one.
    */
-  void rebind (const CosNaming::Name &n,
+  void rebind (CosNaming::Name const &n,
                CORBA::Object_ptr obj) override;
 
   /**
@@ -79,7 +79,7 @@ public:
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  void bind_context (const CosNaming::Name &n,
+  void bind_context (CosNaming::Name const &n,
                      CosNaming::NamingContext_ptr nc) override;
 
   /**
@@ -87,7 +87,7 @@ public:
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-  void rebind_context (const CosNaming::Name &n,
+  void rebind_context (CosNaming::Name const &n,
                        CosNaming::NamingContext_ptr nc) override;
 
   /**
@@ -97,14 +97,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
+  CORBA::Object_ptr resolve (CosNaming::Name const &n) override;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  void unbind (const CosNaming::Name &n) override;
+  void unbind (CosNaming::Name const &n) override;
 
 
   /**
@@ -121,7 +121,7 @@ public:
    * bound (the name argument excluding the last component).
    */
   CosNaming::NamingContext_ptr bind_new_context (
-      const CosNaming::Name &n) override;
+      CosNaming::Name const &n) override;
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any
@@ -149,14 +149,14 @@ public:
    * is invalid i.e. if the number of characters in the name is zero,
    * an InvalidName exception is to be raised.
    */
-  char * to_string (const CosNaming::Name &n) override;
+  char * to_string (CosNaming::Name const &n) override;
 
   /**
    * The in parameter is an stringified name. This function removes the
    * escape character '\' and destringifies the stringified name and returns
    * it.
    */
-  CosNaming::Name * to_name (const char *sn) override;
+  CosNaming::Name * to_name (char const *sn) override;
 
   /**
    * The in parameter addr refers to the address of the naming context
@@ -164,14 +164,14 @@ public:
    * context. This function returns a fully formed URL string like
    * iiopname://1.1@myhost.555xyz.com:9999/a/b/c
    */
-  char * to_url ( const char * addr,
-                  const char * sn) override;
+  char * to_url (char const *addr,
+                 char const *sn) override;
 
   /**
    * Similar to <resolve> as in the CosNaming::NamingContext interface.
    * It accepts a strigified name as an argument instead of a Name.
    */
-  CORBA::Object_ptr resolve_str (const char * n) override;
+  CORBA::Object_ptr resolve_str (char const *n) override;
 
   /**
    * Mark the implementation stale state for replicated
@@ -197,14 +197,14 @@ private:
    * 'kind' fields or a seperator between two name components, the
    * control is returned back to the calling function <to_name>.
    */
-  void to_name_helper (char *dest, const char*& src, Hint hint);
+  void to_name_helper (char *dest, char const *&src, Hint hint);
 
   /**
    * This method functions similar to <to_name_helper>. If the
    * character read is '.' or '/' or '\', an escape character '\' is
    * prepended before the character.
    */
-  void to_string_helper_assign (char * &k, const char * &src);
+  void to_string_helper_assign (char *&k, char const *&src);
 
   /**
    * This method helps count the number of characters in 'src' so
@@ -214,7 +214,7 @@ private:
    * added. Seperators between 'id' and 'kind' as well as seperators
    * between the name components are also counted.
    */
-  void to_string_helper_length (CORBA::ULong &len, const char * &src);
+  void to_string_helper_length (CORBA::ULong &len, char const *&src);
 
   /// Return 1 if the character is alphanumeric or a non-scaped
   /// punctuation.
@@ -222,8 +222,8 @@ private:
 
   /// Validate the to_url() method input, and compute the size of the
   /// returned URL address.
-  static size_t to_url_validate_and_compute_size (const char *add,
-                                                  const char *sn);
+  static size_t to_url_validate_and_compute_size (char const *add,
+                                                  char const *sn);
 
 protected:
   /// A concrete implementor of the NamingContext functions.
@@ -256,7 +256,7 @@ public:
    * be bound using <bind_context> and <rebind_context> in order to
    * participate in name resolution later.
    */
-  virtual void bind (const CosNaming::Name &n,
+  virtual void bind (CosNaming::Name const &n,
                      CORBA::Object_ptr obj) = 0;
 
   /**
@@ -265,7 +265,7 @@ public:
    * context.  In that case, the existing binding is replaced with the
    * new one.
    */
-  virtual void rebind (const CosNaming::Name &n,
+  virtual void rebind (CosNaming::Name const &n,
                        CORBA::Object_ptr obj) = 0;
 
   /**
@@ -273,7 +273,7 @@ public:
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  virtual void bind_context (const CosNaming::Name &n,
+  virtual void bind_context (CosNaming::Name const &n,
                              CosNaming::NamingContext_ptr nc) = 0;
 
   /**
@@ -281,7 +281,7 @@ public:
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-  virtual void rebind_context (const CosNaming::Name &n,
+  virtual void rebind_context (CosNaming::Name const &n,
                                CosNaming::NamingContext_ptr nc) = 0;
 
   /**
@@ -291,14 +291,14 @@ public:
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n) = 0;
+  virtual CORBA::Object_ptr resolve (CosNaming::Name const &n) = 0;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
    * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
    */
-  virtual void unbind (const CosNaming::Name &n) = 0;
+  virtual void unbind (CosNaming::Name const &n) = 0;
 
   /**
    * This operation returns a new naming context implemented by the
@@ -313,7 +313,7 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n) = 0;
+  virtual CosNaming::NamingContext_ptr bind_new_context (CosNaming::Name const &n) = 0;
 
   /**
    * Delete the naming context.  The user should take care to <unbind> any

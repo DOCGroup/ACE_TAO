@@ -15,8 +15,6 @@
 TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
-  , is_recursive_ (false)
-  , is_nested_ (false)
 {
 }
 
@@ -32,7 +30,7 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
   be_visitor_typecode_defn::QNode const * const qnode =
     this->queue_lookup (this->tc_queue_, node);
 
-  ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+  std::vector<AST_Type *> recursion_queue;
   bool in_recursion = node->in_recursion (recursion_queue);
   if (qnode && in_recursion)
     {
@@ -56,7 +54,7 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
   // as this was no nested visit mark this typecode as recursive
   this->is_recursive_ = in_recursion;
 
-  static bool const is_exception = false;
+  constexpr bool is_exception = false;
   return this->visit (node, is_exception);
 }
 
@@ -70,7 +68,7 @@ TAO::be_visitor_struct_typecode::visit_exception (be_exception * node)
 
   // No need to check for recursion since exceptions are never
   // recursive.
-  static bool const is_exception = true;
+  constexpr bool is_exception = true;
   return this->visit (node, is_exception);
 }
 
@@ -92,9 +90,8 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
                         -1);
     }
 
-  ACE_CString const tao_fields ("_tao_fields_");
-  ACE_CString const fields_name (tao_fields
-                                 + node->flat_name ());
+  std::string fields_name ("_tao_fields_");
+  fields_name += node->flat_name ();
 
   // Generate array containing struct field characteristics.
   os << "static TAO::TypeCode::Struct_Field<" << be_idt_nl
@@ -105,12 +102,12 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
     {
       // Should only be possible for user exceptions with no fields.
       os << " * const" << be_idt_nl
-         << fields_name.c_str () << " = nullptr;" << be_uidt << be_uidt << be_nl_2;
+         << fields_name << " = nullptr;" << be_uidt << be_uidt << be_nl_2;
     }
   else
     {
       os << be_idt_nl
-         << fields_name.c_str () << "[] =" << be_idt_nl
+         << fields_name << "[] =" << be_idt_nl
          << "{" << be_idt_nl;
 
       if (this->visit_members (node) != 0)
@@ -122,9 +119,9 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
          << "};" << be_uidt << be_uidt << be_uidt << be_nl_2;
     }
 
-  static char const StringType[]      = "char const *";
-  static char const TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
-  static char const MemberArrayType[] = "TAO::TypeCode::Struct_Field";
+  static constexpr char StringType[]      = "char const *";
+  static constexpr char TypeCodeType[]    = "::CORBA::TypeCode_ptr const *";
+  static constexpr char MemberArrayType[] = "TAO::TypeCode::Struct_Field";
 
   // Generate the TypeCode instantiation.
   os << "static ";
@@ -173,7 +170,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
 int
 TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 {
-  AST_Field ** member_ptr = nullptr;
+  AST_Field *member_ptr = nullptr;
   ACE_CDR::ULong const count = node->nfields ();
 
   for (ACE_CDR::ULong i = 0; i < count; ++i)
@@ -181,7 +178,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
       node->field (member_ptr, i);
 
       be_type * const member_type =
-        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> (member_ptr->field_type ());
 
       if (this->is_typecode_generation_required (member_type)
           && member_type->accept (this) != 0)
@@ -198,7 +195,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
           be_visitor_typecode_defn::QNode const * const qnode =
             this->queue_lookup (this->tc_queue_, bs);
 
-          ACE_Unbounded_Queue<AST_Type *> recursion_queue;
+          std::vector<AST_Type *> recursion_queue;
           recursion_queue.enqueue_tail(node);
           if (qnode
             && member_type->in_recursion (recursion_queue))
@@ -215,7 +212,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 int
 TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
 {
-  AST_Field ** member_ptr = nullptr;
+  AST_Field *member_ptr = nullptr;
   ACE_CDR::ULong const count = node->nfields ();
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -224,10 +221,10 @@ TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
       node->field (member_ptr, i);
 
       be_decl * const member_decl =
-        dynamic_cast<be_decl*> (*member_ptr);
+      dynamic_cast<be_decl*> (member_ptr);
 
       be_type * const member_type =
-        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> (member_ptr->field_type ());
 
       os << "{ "
          << "\"" << member_decl->original_local_name () << "\", "

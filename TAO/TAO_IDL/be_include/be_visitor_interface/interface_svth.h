@@ -26,13 +26,17 @@
 class be_visitor_interface_svth : public be_visitor_interface
 {
 public:
-  be_visitor_interface_svth (be_visitor_context *ctx);
+  explicit be_visitor_interface_svth (be_visitor_context *ctx);
 
-  ~be_visitor_interface_svth ();
+  ~be_visitor_interface_svth () override;
+  be_visitor_interface_svth (be_visitor_interface_svth const &) = delete;
+  be_visitor_interface_svth (be_visitor_interface_svth &&) = delete;
+  be_visitor_interface_svth &operator= (be_visitor_interface_svth const &) = delete;
+  be_visitor_interface_svth &operator= (be_visitor_interface_svth &&) = delete;
 
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_attribute (be_attribute *node);
+  int visit_interface (be_interface *node) override;
+  int visit_operation (be_operation *node) override;
+  int visit_attribute (be_attribute *node) override;
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_SVTH_H_ */

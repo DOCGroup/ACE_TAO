@@ -19,18 +19,13 @@ TAO_Notify_Event::TAO_Notify_Event ()
 , timeout_ (CosNotification::Timeout)
 , reliable_ (CosNotification::EventReliability, true)
 , clone_ (0)
-, is_on_heap_ (false)
 , time_ (ACE_OS::gettimeofday ())
 {
   //  if (TAO_debug_level > 0)
   //  ORBSVCS_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
 }
 
-TAO_Notify_Event::~TAO_Notify_Event ()
-{
-  // if (TAO_debug_level > 1)
-  //  ORBSVCS_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
-}
+TAO_Notify_Event::~TAO_Notify_Event () = default;
 void
 TAO_Notify_Event::release ()
 {

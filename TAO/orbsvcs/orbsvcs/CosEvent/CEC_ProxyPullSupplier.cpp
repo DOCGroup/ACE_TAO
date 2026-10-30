@@ -3,6 +3,7 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
 #include "ace/Reverse_Lock_T.h"
+#include <new>
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.inl"
@@ -13,11 +14,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier
-(TAO_CEC_EventChannel* ec, const ACE_Time_Value &timeout)
+(TAO_CEC_EventChannel* ec, ACE_Time_Value const &timeout)
   : event_channel_ (ec),
     timeout_ (timeout),
-    refcount_ (1),
-    connected_ (0),
     wait_not_empty_ (queue_lock_)
 {
   this->lock_ =
@@ -43,7 +42,7 @@ TAO_CEC_ProxyPullSupplier::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       result = CosEventChannelAdmin::ProxyPullSupplier::_nil ();
     }
@@ -61,7 +60,7 @@ TAO_CEC_ProxyPullSupplier::deactivate ()
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is being disconnected twice, or some
@@ -95,7 +94,7 @@ TAO_CEC_ProxyPullSupplier::shutdown ()
     {
       consumer->disconnect_pull_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions, we must isolate other clients from
       // problems on this one.
@@ -133,15 +132,22 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
 }
 
 void
-TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event)
+TAO_CEC_ProxyPullSupplier::push (CORBA::Any const &event)
 {
-  if (this->is_connected () == 0)
+  if (!this->is_connected ())
     return;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
 
-  // Ignore errors
-  (void) this->queue_.enqueue_tail (event);
+  try
+    {
+      this->queue_.push_back (event);
+    }
+  catch (std::bad_alloc const &)
+    {
+      // Ignore allocation failure, matching the previous queue behavior.
+      return;
+    }
 
   this->wait_not_empty_.signal ();
 }
@@ -149,42 +155,38 @@ TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event)
 CORBA::Any *
 TAO_CEC_ProxyPullSupplier::pull ()
 {
-  if (this->is_connected () == 0)
+  if (!this->is_connected ())
     throw CosEventComm::Disconnected ();
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
-  while (this->queue_.is_empty ())
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, nullptr);
+  while (this->queue_.empty ())
     {
       this->wait_not_empty_.wait ();
     }
   CORBA::Any any;
-  if (this->queue_.dequeue_head (any) != 0)
-    {
-      throw CORBA::INTERNAL ();
-    }
+  any = this->queue_.front ();
+  this->queue_.pop_front ();
   return new CORBA::Any (any);
 }
 
 CORBA::Any *
 TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
 {
-  has_event = 0;
-  if (this->is_connected () == 0)
+  has_event = false;
+  if (!this->is_connected ())
     throw CosEventComm::Disconnected ();
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, nullptr);
   CORBA::Any any;
-  if (this->queue_.is_empty ())
+  if (this->queue_.empty ())
     {
       any <<= CORBA::Long(0);
       return new CORBA::Any (any);
     }
 
-  if (this->queue_.dequeue_head (any) != 0)
-    {
-      throw CORBA::INTERNAL ();
-    }
-  has_event = 1;
+  any = this->queue_.front ();
+  this->queue_.pop_front ();
+  has_event = true;
   return new CORBA::Any (any);
 }
 
@@ -193,7 +195,7 @@ TAO_CEC_ProxyPullSupplier::cleanup_i ()
 {
   this->consumer_ =
     CosEventComm::PullConsumer::_nil ();
-  this->connected_ = 0;
+  this->connected_ = false;
 }
 
 CORBA::ULong
@@ -230,14 +232,14 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
 
     if (this->is_connected_i ())
       {
-        if (this->event_channel_->consumer_reconnect () == 0)
+        if (!this->event_channel_->consumer_reconnect ())
           throw CosEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed....
         this->cleanup_i ();
 
         this->consumer_ = apply_policy (pull_consumer);
-        this->connected_ = 1;
+        this->connected_ = true;
 
         TAO_CEC_Unlock reverse_lock (*this->lock_);
 
@@ -253,7 +255,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
       }
 
     this->consumer_ = apply_policy (pull_consumer);
-    this->connected_ = 1;
+    this->connected_ = true;
   }
 
   // Notify the event channel...
@@ -319,7 +321,7 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier ()
         {
           consumer->disconnect_pull_consumer ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.

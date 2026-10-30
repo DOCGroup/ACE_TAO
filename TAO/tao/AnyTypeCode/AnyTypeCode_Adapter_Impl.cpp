@@ -92,14 +92,14 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::WChar co
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const std::string & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, std::string const & value)
 {
   (*any) <<= value.c_str ();
 }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const std::wstring & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, std::wstring const & value)
 {
   (*any) <<= value.c_str ();
 }
@@ -197,91 +197,91 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, ACE_OutputCDR::
 
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::BooleanSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::BooleanSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::OctetSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::OctetSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::CharSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::CharSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::WCharSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::WCharSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::ShortSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::ShortSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::UShortSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::UShortSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::LongSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::LongSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::ULongSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::ULongSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::LongLongSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::LongLongSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::ULongLongSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::ULongLongSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::FloatSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::FloatSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::DoubleSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::DoubleSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::LongDoubleSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::LongDoubleSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::StringSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::StringSeq const & value)
 {
   (*any) <<= value;
 }
 
 void
-TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::WStringSeq & value)
+TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, CORBA::WStringSeq const & value)
 {
   (*any) <<= value;
 }

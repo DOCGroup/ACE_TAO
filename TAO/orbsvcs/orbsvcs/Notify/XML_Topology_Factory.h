@@ -52,25 +52,30 @@ namespace TAO_Notify
   public:
     /// The constructor.
     XML_Topology_Factory ();
-    virtual ~XML_Topology_Factory ();
+    ~XML_Topology_Factory () override;
+
+    XML_Topology_Factory (XML_Topology_Factory const &) = delete;
+    XML_Topology_Factory (XML_Topology_Factory &&) = delete;
+    XML_Topology_Factory &operator= (XML_Topology_Factory const &) = delete;
+    XML_Topology_Factory &operator= (XML_Topology_Factory &&) = delete;
 
     ////////////////////////////////////
     // Override Topology_Factory methods
     // documented in Topology_Factory.h
-    virtual Topology_Saver* create_saver ();
-    virtual Topology_Loader* create_loader();
+    Topology_Saver* create_saver () override;
+    Topology_Loader* create_loader() override;
 
     ////////////////////////////////
     // Override Share_Object methods
     // documented in ace/Shared_Object.h
-    virtual int init (int argc, ACE_TCHAR *argv[]);
-    virtual int fini ();
+    int init (int argc, ACE_TCHAR *argv[]) override;
+    int fini () override;
 
    private:
-    ACE_TString save_base_path_;
-    ACE_TString load_base_path_;
-    size_t backup_count_;
-    bool timestamp_;
+    ACE_TString save_base_path_ = ACE_TEXT("./Notification_Service_Topology");
+    ACE_TString load_base_path_ = ACE_TEXT("./Notification_Service_Topology");
+    size_t backup_count_ = 2;
+    bool timestamp_ = true;
   };
 } // namespace TAO_Notify
 

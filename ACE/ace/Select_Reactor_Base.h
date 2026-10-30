@@ -408,8 +408,8 @@ private:
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
 public:
-  typedef
-    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
+  using const_base_iterator =
+    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator;
 
   explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
@@ -451,6 +451,11 @@ private:
 class ACE_Export ACE_Select_Reactor_Impl : public ACE_Reactor_Impl
 {
 public:
+  ACE_Select_Reactor_Impl (ACE_Select_Reactor_Impl const &) = delete;
+  ACE_Select_Reactor_Impl (ACE_Select_Reactor_Impl &&) = delete;
+  ACE_Select_Reactor_Impl &operator= (ACE_Select_Reactor_Impl const &) = delete;
+  ACE_Select_Reactor_Impl &operator= (ACE_Select_Reactor_Impl &&) = delete;
+
   /// Default size of the Select_Reactor's handle table.
   static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE;
 
@@ -576,9 +581,6 @@ private:
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
   bool supress_renew_;
-
-  ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &) = delete;
-  ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

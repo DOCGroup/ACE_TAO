@@ -1,22 +1,22 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-static const ACE_TCHAR *ior_input_file = ACE_TEXT("file://test.ior");
+static ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://test.ior");
 
-static obvmod::tcOffset1 *vt1 = 0;
-static obvmod::tcOffset003 *vt3 = 0;
-static obvmod::tcOffset00005 *vt5 = 0;
-static obvmod::tcOffset0000007 *vt7 = 0;
+static obvmod::tcOffset1 *vt1 = nullptr;
+static obvmod::tcOffset003 *vt3 = nullptr;
+static obvmod::tcOffset00005 *vt5 = nullptr;
+static obvmod::tcOffset0000007 *vt7 = nullptr;
 
-int debug = 0;
-int do_shutdown = 0;
+bool debug = false;
+bool do_shutdown = false;
 
 int
 register_factories (CORBA::ORB_ptr orb)
 {
   // Create and register factories.
 
-  obvmod::tcOffset1_init *factory1 = 0;
+  obvmod::tcOffset1_init *factory1 = nullptr;
   ACE_NEW_RETURN (factory1,
                   obvmod::tcOffset1_init,
                   -1);
@@ -26,7 +26,7 @@ register_factories (CORBA::ORB_ptr orb)
 
   factory1->_remove_ref ();
 
-  obvmod::tcOffset003_init *factory3 = 0;
+  obvmod::tcOffset003_init *factory3 = nullptr;
   ACE_NEW_RETURN (factory3,
                   obvmod::tcOffset003_init,
                   -1);
@@ -36,7 +36,7 @@ register_factories (CORBA::ORB_ptr orb)
 
   factory3->_remove_ref ();
 
-  obvmod::tcOffset00005_init *factory5 = 0;
+  obvmod::tcOffset00005_init *factory5 = nullptr;
   ACE_NEW_RETURN (factory5,
                   obvmod::tcOffset00005_init,
                   -1);
@@ -46,7 +46,7 @@ register_factories (CORBA::ORB_ptr orb)
 
   factory5->_remove_ref ();
 
-  obvmod::tcOffset0000007_init *factory7 = 0;
+  obvmod::tcOffset0000007_init *factory7 = nullptr;
   ACE_NEW_RETURN (factory7,
                   obvmod::tcOffset0000007_init,
                   -1);
@@ -64,7 +64,7 @@ run_test (test_ptr objref,
 {
   CORBA::Any_var result = objref->get_value (offset);
 
-  CORBA::Boolean status = 0;
+  CORBA::Boolean status = false;
   CORBA::Long member_value = 0;
 
   switch (offset)
@@ -89,7 +89,7 @@ run_test (test_ptr objref,
       return -1;
   }
 
-  if (status == 0)
+  if (!status)
     {
       if (debug)
         {
@@ -115,7 +115,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
 
       case 'k':
@@ -123,7 +123,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'x':
-        do_shutdown = 1;
+        do_shutdown = true;
         break;
 
       case '?':
@@ -142,7 +142,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -196,7 +196,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("exception:");
       return 1;

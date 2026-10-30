@@ -1,7 +1,7 @@
 // -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const TAO_EC_QOS_Info&
+ACE_INLINE TAO_EC_QOS_Info const &
 TAO_EC_Timeout_Filter::qos_info () const
 {
   return this->qos_info_;

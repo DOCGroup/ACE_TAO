@@ -131,7 +131,7 @@ namespace TAO
         this->transport_property_ =
           rhs.transport_property_->duplicate ();
 
-        if (this->transport_property_ == 0)
+        if (this->transport_property_ == nullptr)
           {
             this->is_delete_ = false;
             this->index_ = 0;

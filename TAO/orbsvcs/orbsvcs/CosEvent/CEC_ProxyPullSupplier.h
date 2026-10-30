@@ -20,9 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Queue.h"
 #include "ace/Condition_Thread_Mutex.h"
-#include "ace/Unbounded_Queue.h"
+#include <deque>
 
 #include "orbsvcs/CosEvent/event_serv_export.h"
 
@@ -56,7 +55,7 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
   /// destructor...
   ~TAO_CEC_ProxyPullSupplier () override;
@@ -95,7 +94,7 @@ public:
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
   /// Push an event into the queue.
-  void push (const CORBA::Any &event);
+  void push (CORBA::Any const &event);
 
   // = The CosEventChannelAdmin::ProxyPullSupplier methods...
   void connect_pull_consumer (CosEventComm::PullConsumer_ptr pull_consumer) override;
@@ -131,15 +130,15 @@ protected:
 
 private:
   /// The Event Channel that owns this object.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The consumer -- use apply_policy() instead of assigning directly to
   /// consumer_.  This will keep consumer_ and nopolicy_consumer_ in sync.
@@ -148,9 +147,8 @@ private:
   /// The consumer without any policies applied
   CosEventComm::PullConsumer_var nopolicy_consumer_;
 
-  /// If the flag is not zero then we are connected, notice that the
-  /// consumer can be nil.
-  int connected_;
+  /// Whether the proxy is connected. The consumer can be nil.
+  bool connected_ {};
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -158,7 +156,7 @@ private:
   /// Use a message queue to pass the
   TAO_SYNCH_MUTEX queue_lock_;
   TAO_SYNCH_CONDITION wait_not_empty_;
-  ACE_Unbounded_Queue<CORBA::Any> queue_;
+  std::deque<CORBA::Any> queue_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

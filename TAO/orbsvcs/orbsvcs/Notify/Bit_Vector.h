@@ -22,8 +22,9 @@
 
 #include "tao/Versioned_Namespace.h"
 
-#include "ace/Vector_T.h"
 #include "ace/Basic_Types.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,16 +37,14 @@ namespace TAO_Notify
 class TAO_Notify_Serv_Export Bit_Vector
 {
   using BASIC_UINT_TYPE = ACE_UINT32;
-  using VECTOR_TYPE = ACE_Vector<BASIC_UINT_TYPE>;
-  enum {
-    BITS_PER_WORD = 32,
-    BPW_LOG_2 = 5
-  };
+  using VECTOR_TYPE = std::vector<BASIC_UINT_TYPE>;
+  static constexpr int BITS_PER_WORD = 32;
+  static constexpr int BPW_LOG_2 = 5;
 public:
   /// The constructor.
   Bit_Vector();
   /// The destructor.
-  ~Bit_Vector();
+  ~Bit_Vector() = default;
 
   /// \brief Determine if a bit at location is set.
   bool is_set(const size_t location) const;
@@ -64,9 +63,9 @@ private:
 
 private:
   VECTOR_TYPE bitvec_;
-  size_t size_;
-  size_t first_set_bit_;
-  size_t first_cleared_bit_;
+  size_t size_ {};
+  size_t first_set_bit_ {};
+  size_t first_cleared_bit_ {};
 };
 }
 

@@ -7,17 +7,10 @@ Foo_C_Statistics::Foo_C_Statistics(unsigned num_remote_clients,
 : num_remote_clients_ (num_remote_clients),
   num_collocated_clients_ (num_collocated_clients)
 {
-  for (unsigned i = 0; i < 10; i++)
-    {
-      this->expected_[i] = 0;
-      this->actual_[i] = 0;
-    }
 }
 
 
-Foo_C_Statistics::~Foo_C_Statistics()
-{
-}
+Foo_C_Statistics::~Foo_C_Statistics() = default;
 
 
 void

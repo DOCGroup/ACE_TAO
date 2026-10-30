@@ -54,17 +54,12 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
       ast_visitor_context *ctx,
       bool ref_only)
   : ast_visitor (),
-    tmi_ (nullptr),
     ctx_ (ctx),
-    for_eventtype_ (false),
-    for_finder_ (false),
     ref_only_ (ref_only)
 {
 }
 
-ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst ()
-{
-}
+ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst () = default;
 
 int ast_visitor_tmpl_module_inst::visit_decl (AST_Decl *)
 {
@@ -681,7 +676,7 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
   idl_global->scopes ().push (added_module);
 
   AST_Template_Module_Ref *ref = node->from_ref ();
-  UTL_StrList const *old_refs = idl_global->alias_params ();
+  std::optional<UTL_StrList> old_refs = idl_global->alias_params ();
 
   if (ref != nullptr)
     {
@@ -701,7 +696,7 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
   // Restore scope stack.
   idl_global->scopes ().pop ();
 
-  idl_global->alias_params (const_cast<UTL_StrList *> (old_refs));
+  idl_global->alias_params (std::move (old_refs));
 
   return 0;
 }
@@ -1253,7 +1248,7 @@ ast_visitor_tmpl_module_inst::reify_type (AST_Decl *d)
                   ACE_TEXT ("ast_visitor_tmpl_module_inst::")
                   ACE_TEXT ("reify_type() - reifying ")
                   ACE_TEXT ("visitor failed on %C\n"),
-                  d->full_name ()));
+                  d->full_name ().c_str ()));
 
       return nullptr;
     }

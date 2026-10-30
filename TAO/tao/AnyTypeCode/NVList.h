@@ -14,8 +14,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Unbounded_Queue.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -24,9 +22,10 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
 
-#include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
+
 #include <atomic>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -80,7 +79,7 @@ namespace CORBA
 
   public:
     /// optional name
-    const char * name () const;
+    char const * name () const;
 
     /// return the value
     Any_ptr value () const;
@@ -91,6 +90,11 @@ namespace CORBA
     // The pseudo object static methods..
     static NamedValue * _duplicate (NamedValue *);
     static NamedValue * _nil ();
+
+    NamedValue (NamedValue const &) = delete;
+    NamedValue (NamedValue &&) = delete;
+    NamedValue &operator= (NamedValue const &) = delete;
+    NamedValue &operator= (NamedValue &&) = delete;
 
     // = Reference counting.
     ULong _incr_refcount ();
@@ -162,10 +166,10 @@ namespace CORBA
     NamedValue_ptr add (Flags);
 
     /// add an element and initialize its name and flags
-    NamedValue_ptr add_item (const char *, Flags);
+    NamedValue_ptr add_item (char const *, Flags);
 
     /// initializes a value, name, and flags
-    NamedValue_ptr add_value (const char *, const Any &, Flags);
+    NamedValue_ptr add_value (char const *, Any const &, Flags);
 
     /// just like add_item. In addition, memory management of char *
     /// name is taken over by the NVList
@@ -189,6 +193,11 @@ namespace CORBA
     // = Reference counting.
     ULong _incr_refcount ();
     ULong _decr_refcount ();
+
+    NVList (NVList const &) = delete;
+    NVList (NVList &&) = delete;
+    NVList &operator= (NVList const &) = delete;
+    NVList &operator= (NVList &&) = delete;
 
     // = TAO Extensions:
 
@@ -251,10 +260,7 @@ namespace CORBA
 
   private:
     /// Internal list of parameters stored as NamedValues
-    ACE_Unbounded_Queue<NamedValue_ptr> values_;
-
-    /// Maximum length of list
-    ULong max_ {};
+    std::vector<NamedValue_ptr> values_;
 
     /// Reference counter.
     std::atomic<uint32_t> refcount_ {1};

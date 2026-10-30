@@ -2,8 +2,6 @@
 
 AMI_Buffering_Admin::AMI_Buffering_Admin (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , request_count_ (0)
-  , bytes_received_count_ (0)
 {
 }
 

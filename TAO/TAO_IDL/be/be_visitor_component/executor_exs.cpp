@@ -11,13 +11,11 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_executor_exs::be_visitor_executor_exs (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    op_scope_ (nullptr),
-    comment_start_border_ ("/**"),
-    comment_end_border_ (" */"),
-    your_code_here_ ("/* Your code here. */")
+  : be_visitor_component_scope (ctx)
 {
 }
 
@@ -67,12 +65,13 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
 
   os_ << be_nl
       << this->node_->original_local_name () << "_exec_i::"
-      << this->ctx_->port_prefix ().c_str ()
+      << this->ctx_->port_prefix ()
       << node->local_name () << " ()" << be_nl
       << "{" << be_idt;
 
   be_visitor_attr_return ar_visitor (this->ctx_);
-  ar_visitor.attr_name (node->original_local_name ()->get_string ());
+  ar_visitor.attr_name (
+    node->original_local_name ()->get_string ());
 
   if (ft->accept (&ar_visitor) == -1)
     {
@@ -95,7 +94,7 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
   os_ << be_nl_2
       << "void" << be_nl
       << this->node_->original_local_name () << "_exec_i::"
-      << this->ctx_->port_prefix ().c_str ()
+      << this->ctx_->port_prefix ()
       << node->local_name () << " (" << be_idt_nl;
 
   be_visitor_attr_setarg_type at_visitor (this->ctx_);
@@ -113,7 +112,8 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
       << "{" << be_idt;
 
   be_visitor_attr_assign as_visitor (this->ctx_);
-  as_visitor.attr_name (node->original_local_name ()->get_string ());
+  as_visitor.attr_name (
+    node->original_local_name ()->get_string ());
 
   if (ft->accept (&as_visitor) == -1)
     {
@@ -138,7 +138,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
       return 0;
     }
   node_ = node;
-  const char *lname = node->local_name ();
+  std::string const lname = node->local_name ();
 
   os_ << be_nl_2
       << comment_start_border_ << be_nl
@@ -152,9 +152,9 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   /// The overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
-  node->get_insert_queue ().enqueue_tail (this->node_);
+  node->get_insert_queue ().clear ();
+  node->get_del_queue ().clear ();
+  node->get_insert_queue ().push_back (this->node_);
 
   be_visitor_executor_exs_attr_init ai_visitor (this->ctx_);
   ai_visitor.node (node);
@@ -205,9 +205,9 @@ be_visitor_executor_exs::visit_component (be_component *node)
           << lname << "_exec_i::reactor ()" << be_nl
           << "{" << be_idt_nl
           << "ACE_Reactor* reactor {};" << be_nl
-          << "::CORBA::Object_var ccm_object = " << be_idt_nl
+          << "::CORBA::Object_var ccm_object =" << be_idt_nl
           << "this->ciao_context_->get_CCM_object();" << be_uidt_nl
-          << "if (! ::CORBA::is_nil (ccm_object.in ())) " << be_idt_nl
+          << "if (! ::CORBA::is_nil (ccm_object.in ()))" << be_idt_nl
           << "{" << be_idt_nl
           << "::CORBA::ORB_var orb = ccm_object->_get_orb ();" << be_nl
           << "if (! ::CORBA::is_nil (orb.in ()))" << be_idt_nl
@@ -227,9 +227,9 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   /// The overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
-  node->get_insert_queue ().enqueue_tail (node_);
+  node->get_insert_queue ().clear ();
+  node->get_del_queue ().clear ();
+  node->get_insert_queue ().push_back (node_);
 
   Component_Exec_Op_Attr_Generator op_attr_gen (this);
 
@@ -266,21 +266,19 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << be_global->ciao_container_type () << "Component.";
 
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *global = (sname_str == "" ? "" : "::");
-  const char *container_type = be_global->ciao_container_type ();
+  std::string const sname_str (scope->full_name ());
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "void" << be_nl
       << lname << "_exec_i::set_"
-      << tao_cg->downcase (container_type)
+      << tao_cg->downcase (be_global->ciao_container_type ())
       << "_context (" << be_idt_nl
       << "::Components::" << be_global->ciao_container_type ()
       << "Context_ptr ctx)" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->ciao_context_ =" << be_idt_nl
-      << global << sname << "::CCM_" << lname
+      << global << sname_str << "::CCM_" << lname
       << "_Context::_narrow (ctx);" << be_uidt << be_nl_2
       << "if (::CORBA::is_nil (this->ciao_context_.in ()))"
       << be_idt_nl
@@ -289,7 +287,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
       << "}" << be_uidt << be_uidt_nl
       << "}";
 
-  if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
+  if (be_global->ciao_container_type () == "Session")
     {
       os_ << be_nl_2
           << "void" << be_nl
@@ -327,20 +325,20 @@ be_visitor_executor_exs::visit_component (be_component *node)
 int
 be_visitor_executor_exs::visit_provides (be_provides *node)
 {
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
 
   be_type *obj = node->provides_type ();
-  const char *iname =
+  std::string const& iname =
     obj->original_local_name ()->get_string ();
 
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const sname_str (scope->full_name ());
+  char const * const sname = sname_str.c_str ();
+  char const * const global = (sname_str.empty () ? "" : "::");
 
-  ACE_CString lname_str (this->ctx_->port_prefix ());
+  std::string lname_str (this->ctx_->port_prefix ());
   lname_str += node->original_local_name ()->get_string ();
   const char *lname = lname_str.c_str ();
 
@@ -376,13 +374,14 @@ int
 be_visitor_executor_exs::visit_consumes (be_consumes *node)
 {
   be_eventtype *obj = node->consumes_type ();
-  const char *port_name = node->local_name ()->get_string ();
+  std::string const& port_name =
+    node->local_name ()->get_string ();
 
   os_ << be_nl_2
       << "void" << be_nl
       << node_->original_local_name () << "_exec_i::push_"
       << port_name << " (" << be_idt_nl
-      << "::" << IdentifierHelper::orig_sn (obj->name (), false).c_str ()
+      << "::" << IdentifierHelper::orig_sn (obj->name (), false)
       << " * /* ev */)" << be_uidt_nl
       << "{" << be_idt_nl
       << your_code_here_ << be_uidt_nl

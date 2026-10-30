@@ -9,17 +9,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_RT_Builder::TAO_Notify_RT_Builder ()
-{
-}
+TAO_Notify_RT_Builder::TAO_Notify_RT_Builder () = default;
 
-TAO_Notify_RT_Builder::~TAO_Notify_RT_Builder ()
-{
-}
+TAO_Notify_RT_Builder::~TAO_Notify_RT_Builder () = default;
 
 void
 TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
-                                                       , const NotifyExt::ThreadPoolParams& tp_params)
+                                                       , NotifyExt::ThreadPoolParams const &tp_params)
 {
   TAO_Notify_RT_POA_Helper* proxy_poa = nullptr;
 
@@ -40,7 +36,7 @@ TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
 
 void
 TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
-                                                , const NotifyExt::ThreadPoolLanesParams& tpl_params)
+                                                , NotifyExt::ThreadPoolLanesParams const &tpl_params)
 {
   TAO_Notify_RT_POA_Helper* proxy_poa = nullptr;
 

@@ -115,6 +115,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_generator.h"
 
+#include <utility>
+
 AST_PredefinedType *
 AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
                                        UTL_ScopedName *n)
@@ -146,7 +148,7 @@ AST_Generator::create_module (UTL_Scope *s,
           // Create this new module with referance to the
           // "first" previous module found in scope.
           ACE_NEW_RETURN (retval, AST_Module (n, m), nullptr);
-          retval->prefix (const_cast<char *> (m->prefix ()));
+          retval->prefix (m->prefix ());
           return retval;
         }
     }
@@ -159,7 +161,7 @@ AST_Generator::create_module (UTL_Scope *s,
   AST_Module *prev_module = dynamic_cast<AST_Module*> (s);
   if (prev_module)
     {
-      while (0 != (prev_module = prev_module->previous_opening ()))
+      while ((prev_module = prev_module->previous_opening ()) != nullptr)
         {
           for (UTL_ScopeActiveIterator iter (prev_module, UTL_Scope::IK_decls);
                !iter.is_done ();
@@ -752,11 +754,11 @@ AST_Generator::create_expr (ACE_CDR::ULong v,
 }
 
 AST_Expression *
-AST_Generator::create_expr (UTL_String *s)
+AST_Generator::create_expr (std::string s)
 {
   AST_Expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (s),
+                  AST_Expression (std::move (s)),
                   nullptr);
 
   return retval;
@@ -785,11 +787,11 @@ AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-AST_Generator::create_expr (char *s)
+AST_Generator::create_wstring_expr (std::string s)
 {
   AST_Expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (s),
+                  AST_Expression (std::move (s), AST_Expression::EV_wstring),
                   nullptr);
 
   return retval;
@@ -1155,13 +1157,13 @@ AST_Template_Module_Ref *
 AST_Generator::create_template_module_ref (
   UTL_ScopedName *n,
   AST_Template_Module *ref,
-  UTL_StrList *param_refs)
+  UTL_StrList param_refs)
 {
   AST_Template_Module_Ref *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   AST_Template_Module_Ref (n,
                                            ref,
-                                           param_refs),
+                                           std::move (param_refs)),
                   nullptr);
 
   return retval;

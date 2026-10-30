@@ -4,12 +4,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 TAO_Object_Ref_Table::TAO_Object_Ref_Table ()
   : table_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE)
-  , lock_ ()
 {
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_Object_Ref_Table::find_i (const char *id)
+TAO_Object_Ref_Table::find_i (char const *id)
 {
   iterator const found =
     this->table_.find (CORBA::String_var (id));
@@ -51,7 +50,7 @@ TAO_Object_Ref_Table::current_size () const
 }
 
 ACE_INLINE int
-TAO_Object_Ref_Table::unbind_i (const char *id)
+TAO_Object_Ref_Table::unbind_i (char const *id)
 {
   return
     (this->table_.erase (CORBA::String_var (id)) == 0 ? -1 : 0);

@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_list.h"
 
+#include <memory>
+
 // Member type is not AST_Exception, since it could also be a
 // param holder for a template parameter.
 class AST_Type;
@@ -85,6 +87,7 @@ public:
 
   // Get list item.
   AST_Type *head ();
+  AST_Type const *head () const;
 
   // Cleanup.
   void destroy () override;
@@ -98,15 +101,29 @@ private:
   AST_Type *pd_car_data;
 };
 
+struct UTL_ExceptList_Deleter
+{
+  void operator() (UTL_ExceptList *list) const
+  {
+    if (list != nullptr)
+      {
+        list->destroy ();
+      }
+  }
+};
+
+using UTL_ExceptList_Owner =
+  std::unique_ptr<UTL_ExceptList, UTL_ExceptList_Deleter>;
+
 // Active iterator for UTL_ExceptList.
 class TAO_IDL_FE_Export UTL_ExceptlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
-  UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
+  explicit UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
 
   // Get current item
-  AST_Type *item ();
+  AST_Type *item () const;
 };
 
 #endif           // _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH

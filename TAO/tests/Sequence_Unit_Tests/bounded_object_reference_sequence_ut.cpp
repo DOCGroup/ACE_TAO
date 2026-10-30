@@ -19,17 +19,17 @@
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
-CORBA::ULong const TMAX = 64;
+CORBA::ULong constexpr TMAX = 64;
 
 struct Tester
 {
-  typedef bounded_object_reference_sequence<mock_reference,mock_reference_var,TMAX> tested_sequence;
-  typedef tested_sequence::value_type value_type;
-  typedef tested_sequence::const_value_type const_value_type;
+  using tested_sequence = bounded_object_reference_sequence<mock_reference,mock_reference_var,TMAX>;
+  using value_type = tested_sequence::value_type;
+  using const_value_type = tested_sequence::const_value_type;
 
-  typedef tested_sequence::element_traits tested_element_traits;
-  typedef tested_sequence::allocation_traits tested_allocation_traits;
-  typedef TAO::details::range_checking<value_type,true> range;
+  using tested_element_traits = tested_sequence::element_traits;
+  using tested_allocation_traits = tested_sequence::allocation_traits;
+  using range = TAO::details::range_checking<value_type,true>;
 
   int test_default_constructor()
   {
@@ -127,7 +127,7 @@ struct Tester
     expected_calls di(tested_element_traits::default_initializer_calls);
     expected_calls d(mock_reference::duplicate_calls);
     expected_calls r(mock_reference::release_calls);
-    CORBA::ULong const l = 16;
+    CORBA::ULong constexpr l = 16;
     {
       tested_sequence x;
       FAIL_RETURN_IF_NOT(da.expect(1), da);
@@ -173,7 +173,7 @@ struct Tester
     expected_calls i(tested_element_traits::default_initializer_calls);
     expected_calls d(mock_reference::duplicate_calls);
     expected_calls r(mock_reference::release_calls);
-    CORBA::ULong const l = 16;
+    CORBA::ULong constexpr l = 16;
     {
       tested_sequence x;
       FAIL_RETURN_IF_NOT(da.expect(1), da);

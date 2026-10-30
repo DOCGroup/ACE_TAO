@@ -14,9 +14,7 @@ TAO_EnumDef_i::TAO_EnumDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EnumDef_i::~TAO_EnumDef_i ()
-{
-}
+TAO_EnumDef_i::~TAO_EnumDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_EnumDef_i::def_kind ()
@@ -57,7 +55,7 @@ TAO_EnumDef_i::type_i ()
 CORBA::EnumMemberSeq *
 TAO_EnumDef_i::members ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -100,7 +98,7 @@ TAO_EnumDef_i::members_i ()
 }
 
 void
-TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members)
+TAO_EnumDef_i::members (CORBA::EnumMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -110,7 +108,7 @@ TAO_EnumDef_i::members (const CORBA::EnumMemberSeq &members)
 }
 
 void
-TAO_EnumDef_i::members_i (const CORBA::EnumMemberSeq &members)
+TAO_EnumDef_i::members_i (CORBA::EnumMemberSeq const &members)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "members",

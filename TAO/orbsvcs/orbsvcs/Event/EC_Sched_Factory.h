@@ -33,33 +33,29 @@ class TAO_RTSchedEvent_Export TAO_EC_Sched_Factory : public TAO_EC_Default_Facto
 {
 public:
   /// Constructor
-  TAO_EC_Sched_Factory ();
+  TAO_EC_Sched_Factory () = default;
 
   /// destructor...
-  virtual ~TAO_EC_Sched_Factory () override;
+  ~TAO_EC_Sched_Factory () override = default;
 
   // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]) override;
-  virtual int fini () override;
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
 
   // = The EC_Factory methods
-  virtual TAO_EC_Dispatching*
+  TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*) override;
-  virtual TAO_EC_Filter_Builder*
+  TAO_EC_Filter_Builder*
       create_filter_builder (TAO_EC_Event_Channel_Base*) override;
-  virtual TAO_EC_Timeout_Generator*
+  TAO_EC_Timeout_Generator*
       create_timeout_generator (TAO_EC_Event_Channel_Base*) override;
-  virtual TAO_EC_Scheduling_Strategy*
+  TAO_EC_Scheduling_Strategy*
       create_scheduling_strategy (TAO_EC_Event_Channel_Base*) override;
 
 private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Factory.inl"
-#endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Sched_Factory)
 ACE_FACTORY_DECLARE (TAO_RTSchedEvent, TAO_EC_Sched_Factory)

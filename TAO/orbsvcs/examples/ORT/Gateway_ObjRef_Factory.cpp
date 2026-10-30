@@ -13,7 +13,7 @@ Gateway_ObjRef_Factory (
 ::CORBA::ValueBase *
 Gateway_ObjRef_Factory::_copy_value ()
 {
-  Gateway_ObjRef_Factory *ret_val= 0;
+  Gateway_ObjRef_Factory *ret_val = nullptr;
   ACE_NEW_THROW_EX (
     ret_val,
     Gateway_ObjRef_Factory (
@@ -28,8 +28,8 @@ Gateway_ObjRef_Factory::_copy_value ()
 
 CORBA::Object_ptr
 Gateway_ObjRef_Factory::
-make_object (const char *interface_repository_id,
-             const PortableInterceptor::ObjectId & id)
+make_object (char const *interface_repository_id,
+             PortableInterceptor::ObjectId const &id)
 {
   CORBA::Object_var object =
     this->old_factory_->make_object (interface_repository_id,

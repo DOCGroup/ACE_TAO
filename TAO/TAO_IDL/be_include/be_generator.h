@@ -72,39 +72,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_BE_Export.h"
 #include "ast_generator.h"
+#include "utl_strlist.h"
 
 class TAO_IDL_BE_Export be_generator : public AST_Generator
 {
 public:
   // Create a node representing a module which is the root of an AST made
   // up of BE nodes.
-  virtual AST_Root *create_root (UTL_ScopedName *n);
+  AST_Root *create_root (UTL_ScopedName *n) override;
 
-  virtual AST_PredefinedType *create_predefined_type (
+  AST_PredefinedType *create_predefined_type (
       AST_PredefinedType::PredefinedType t,
       UTL_ScopedName *n
-    );
+    ) override;
 
-  virtual AST_Module *create_module (UTL_Scope *s,
-                                     UTL_ScopedName *n);
+  AST_Module *create_module (UTL_Scope *s,
+                                     UTL_ScopedName *n) override;
 
-  virtual AST_Interface *create_interface (UTL_ScopedName *n,
+  AST_Interface *create_interface (UTL_ScopedName *n,
                                            AST_Type **ih,
                                            long nih,
                                            AST_Interface **ih_flat,
                                            long nih_flat,
                                            bool is_local,
-                                           bool is_abstract);
+                                           bool is_abstract) override;
 
-  virtual AST_InterfaceFwd *create_interface_fwd (UTL_ScopedName *n,
+  AST_InterfaceFwd *create_interface_fwd (UTL_ScopedName *n,
                                                   bool is_local,
-                                                  bool is_abstract);
+                                                  bool is_abstract) override;
 
   // Create a node representing a boxed value type
-  virtual AST_ValueBox *create_valuebox (UTL_ScopedName *n,
-                                         AST_Type *boxed_type);
+  AST_ValueBox *create_valuebox (UTL_ScopedName *n,
+                                         AST_Type *boxed_type) override;
 
-  virtual AST_ValueType *create_valuetype (UTL_ScopedName *n,
+  AST_ValueType *create_valuetype (UTL_ScopedName *n,
                                            AST_Type **inherits,
                                            long n_inherits,
                                            AST_Type *inherits_concrete,
@@ -115,12 +116,12 @@ public:
                                            AST_Type *supports_concrete,
                                            bool is_abstract,
                                            bool is_truncatable,
-                                           bool is_custom);
+                                           bool is_custom) override;
 
-  virtual AST_ValueTypeFwd *create_valuetype_fwd (UTL_ScopedName *n,
-                                                  bool abstract);
+  AST_ValueTypeFwd *create_valuetype_fwd (UTL_ScopedName *n,
+                                                  bool abstract) override;
 
-  virtual AST_EventType *create_eventtype (UTL_ScopedName *n,
+  AST_EventType *create_eventtype (UTL_ScopedName *n,
                                            AST_Type **inherits,
                                            long n_inherits,
                                            AST_Type *inherits_concrete,
@@ -131,218 +132,204 @@ public:
                                            AST_Type *supports_concrete,
                                            bool is_abstract,
                                            bool is_truncatable,
-                                           bool is_custom);
+                                           bool is_custom) override;
 
-  virtual AST_EventTypeFwd *create_eventtype_fwd (UTL_ScopedName *n,
-                                                  bool abstract);
+  AST_EventTypeFwd *create_eventtype_fwd (UTL_ScopedName *n,
+                                                  bool abstract) override;
 
-  virtual AST_Component *create_component (UTL_ScopedName *n,
+  AST_Component *create_component (UTL_ScopedName *n,
                                            AST_Component *base_component,
                                            AST_Type **supports_list,
                                            long n_supports,
                                            AST_Interface **supports_flat,
-                                           long n_supports_flat);
+                                           long n_supports_flat) override;
 
-  virtual AST_ComponentFwd *create_component_fwd (UTL_ScopedName *n);
+  AST_ComponentFwd *create_component_fwd (UTL_ScopedName *n) override;
 
-  virtual AST_Home *create_home (UTL_ScopedName *n,
+  AST_Home *create_home (UTL_ScopedName *n,
                                  AST_Home *base_home,
                                  AST_Component *managed_component,
                                  AST_Type *primary_key,
                                  AST_Type **supports_list,
                                  long n_supports,
                                  AST_Interface **supports_flat,
-                                 long n_supports_flat);
+                                 long n_supports_flat) override;
 
-  virtual AST_Exception *create_exception (UTL_ScopedName *n,
+  AST_Exception *create_exception (UTL_ScopedName *n,
                                            bool is_local,
-                                           bool is_abstract);
+                                           bool is_abstract) override;
 
-  virtual AST_Structure *create_structure (UTL_ScopedName *n,
+  AST_Structure *create_structure (UTL_ScopedName *n,
                                            bool is_local,
-                                           bool is_abstract);
+                                           bool is_abstract) override;
 
-  virtual AST_StructureFwd *create_structure_fwd (UTL_ScopedName *n);
+  AST_StructureFwd *create_structure_fwd (UTL_ScopedName *n) override;
 
-  virtual AST_Enum *create_enum (UTL_ScopedName *n,
+  AST_Enum *create_enum (UTL_ScopedName *n,
                                  bool is_local,
-                                 bool is_abstract);
+                                 bool is_abstract) override;
 
-  virtual AST_Operation *create_operation (AST_Type *rt,
+  AST_Operation *create_operation (AST_Type *rt,
                                            AST_Operation::Flags fl,
                                            UTL_ScopedName *n,
                                            bool is_local,
-                                           bool is_abstract);
+                                           bool is_abstract) override;
 
-  virtual AST_Field *create_field (AST_Type *ft,
+  AST_Field *create_field (AST_Type *ft,
                                    UTL_ScopedName *n,
                                    AST_Field::Visibility vis =
-                                     AST_Field::vis_NA);
+                                     AST_Field::vis_NA) override;
 
-  virtual AST_Argument *create_argument (AST_Argument::Direction d,
+  AST_Argument *create_argument (AST_Argument::Direction d,
                                          AST_Type *ft,
-                                         UTL_ScopedName *n);
+                                         UTL_ScopedName *n) override;
 
-  virtual AST_Attribute *create_attribute (bool ro,
+  AST_Attribute *create_attribute (bool ro,
                                            AST_Type *ft,
                                            UTL_ScopedName *n,
                                            bool is_local,
-                                           bool is_abstract);
+                                           bool is_abstract) override;
 
-  virtual AST_Union *create_union (AST_ConcreteType *dt,
+  AST_Union *create_union (AST_ConcreteType *dt,
                                    UTL_ScopedName *n,
                                    bool is_local,
-                                   bool is_abstract);
+                                   bool is_abstract) override;
 
-  virtual AST_UnionFwd *create_union_fwd (UTL_ScopedName *n);
+  AST_UnionFwd *create_union_fwd (UTL_ScopedName *n) override;
 
-  virtual AST_UnionBranch *create_union_branch (UTL_LabelList *ll,
+  AST_UnionBranch *create_union_branch (UTL_LabelList *ll,
                                                 AST_Type *ft,
-                                                UTL_ScopedName *n);
+                                                UTL_ScopedName *n) override;
 
-  virtual AST_UnionLabel *create_union_label (AST_UnionLabel::UnionLabel ul,
-                                              AST_Expression *lv);
+  AST_UnionLabel *create_union_label (AST_UnionLabel::UnionLabel ul,
+                                              AST_Expression *lv) override;
 
-  virtual AST_Constant *create_constant (AST_Expression::ExprType et,
+  AST_Constant *create_constant (AST_Expression::ExprType et,
                                          AST_Expression *ev,
-                                         UTL_ScopedName *n);
+                                         UTL_ScopedName *n) override;
 
-  virtual AST_Expression *create_expr (UTL_ScopedName *n);
+  AST_Expression *create_expr (UTL_ScopedName *n) override;
 
-  virtual AST_Expression *create_expr (AST_Expression *v,
-                                       AST_Expression::ExprType t);
+  AST_Expression *create_expr (AST_Expression *v,
+                                       AST_Expression::ExprType t) override;
 
-  virtual AST_Expression *create_expr (AST_Expression::ExprComb c,
+  AST_Expression *create_expr (AST_Expression::ExprComb c,
                                        AST_Expression *v1,
-                                       AST_Expression *v2);
+                                       AST_Expression *v2) override;
 
-  virtual AST_Expression *create_expr (ACE_CDR::Long v);
+  AST_Expression *create_expr (ACE_CDR::Long v) override;
 
-  virtual AST_Expression *create_expr (ACE_CDR::LongLong v);
+  AST_Expression *create_expr (ACE_CDR::LongLong v) override;
 
-  virtual AST_Expression *create_expr (ACE_CDR::Boolean b);
+  AST_Expression *create_expr (ACE_CDR::Boolean b) override;
 
-  virtual AST_Expression *create_expr (ACE_CDR::ULong v);
+  AST_Expression *create_expr (ACE_CDR::ULong v) override;
 
-  virtual AST_Expression *create_expr (ACE_CDR::ULongLong v);
+  AST_Expression *create_expr (ACE_CDR::ULongLong v) override;
 
-  virtual AST_Expression *create_expr (ACE_CDR::ULong v,
-                                       AST_Expression::ExprType t);
+  AST_Expression *create_expr (ACE_CDR::ULong v,
+                                       AST_Expression::ExprType t) override;
 
-  virtual AST_Expression *create_expr (UTL_String *s);
+  AST_Expression *create_expr (std::string s) override;
+  AST_Expression *create_wstring_expr (std::string s) override;
 
-  virtual AST_Expression *create_expr (char *s);
+  AST_Expression *create_expr (ACE_CDR::Char c) override;
 
-  virtual AST_Expression *create_expr (ACE_CDR::Char c);
+  AST_Expression *create_expr (ACE_OutputCDR::from_wchar wc) override;
 
-  virtual AST_Expression *create_expr (ACE_OutputCDR::from_wchar wc);
+  AST_Expression *create_expr (ACE_CDR::Double d) override;
 
-  virtual AST_Expression *create_expr (ACE_CDR::Double d);
+  AST_Expression *create_expr (const ACE_CDR::Fixed &f) override;
 
-  virtual AST_Expression *create_expr (const ACE_CDR::Fixed &f);
+  AST_EnumVal *create_enum_val (ACE_CDR::ULong v,
+                                        UTL_ScopedName *n) override;
 
-  virtual AST_EnumVal *create_enum_val (ACE_CDR::ULong v,
-                                        UTL_ScopedName *n);
-
-  virtual AST_Array *create_array (UTL_ScopedName *n,
+  AST_Array *create_array (UTL_ScopedName *n,
                                    ACE_CDR::ULong ndims,
                                    UTL_ExprList *dims,
                                    bool is_local,
-                                   bool is_abstract);
+                                   bool is_abstract) override;
 
-  virtual AST_Sequence *create_sequence (AST_Expression *v,
+  AST_Sequence *create_sequence (AST_Expression *v,
                                          AST_Type *bt,
                                          UTL_ScopedName *n,
                                          bool is_local,
-                                         bool is_abstract);
+                                         bool is_abstract) override;
 
-  virtual AST_Map *create_map (AST_Expression *v,
+  AST_Map *create_map (AST_Expression *v,
                                AST_Type *kt,
                                AST_Type *vt,
                                UTL_ScopedName *n,
                                bool is_local,
-                               bool is_abstract);
+                               bool is_abstract) override;
 
-  virtual AST_String *create_string (AST_Expression *v);
+  AST_String *create_string (AST_Expression *v) override;
 
-  virtual AST_String *create_wstring (AST_Expression *v);
+  AST_String *create_wstring (AST_Expression *v) override;
 
-  virtual AST_Fixed *create_fixed (AST_Expression *digits,
-                                   AST_Expression *scale);
+  AST_Fixed *create_fixed (AST_Expression *digits,
+                                   AST_Expression *scale) override;
 
-  virtual AST_Typedef *create_typedef (AST_Type *bt,
+  AST_Typedef *create_typedef (AST_Type *bt,
                                        UTL_ScopedName *n,
                                        bool is_local,
-                                       bool is_abstract);
+                                       bool is_abstract) override;
 
   // Create a node representing a native
-  virtual AST_Native *create_native (UTL_ScopedName *n);
+  AST_Native *create_native (UTL_ScopedName *n) override;
 
   // Create a node representing a OBV or home factory construct
-  virtual AST_Factory *create_factory (UTL_ScopedName *n);
+  AST_Factory *create_factory (UTL_ScopedName *n) override;
 
   // Create a node representing an home finder construct.
-  virtual AST_Finder *create_finder (UTL_ScopedName *n);
+  AST_Finder *create_finder (UTL_ScopedName *n) override;
 
-  virtual
-  AST_PortType *create_porttype (UTL_ScopedName *n);
+  AST_PortType *create_porttype (UTL_ScopedName *n) override;
 
-  virtual
   AST_Provides *create_provides (UTL_ScopedName *n,
-                                 AST_Type *provides_type);
+                                 AST_Type *provides_type) override;
 
-  virtual
   AST_Uses *create_uses (UTL_ScopedName *n,
                          AST_Type *uses_type,
-                         bool is_multiple);
+                         bool is_multiple) override;
 
-  virtual
   AST_Publishes *create_publishes (UTL_ScopedName *n,
-                                   AST_Type *publishes_type);
+                                   AST_Type *publishes_type) override;
 
-  virtual
   AST_Emits *create_emits (UTL_ScopedName *n,
-                           AST_Type *emits_type);
+                           AST_Type *emits_type) override;
 
-  virtual
   AST_Consumes *create_consumes (UTL_ScopedName *n,
-                                 AST_Type *consumes_type);
-  virtual
+                                 AST_Type *consumes_type) override;
   AST_Extended_Port *create_extended_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
+    AST_PortType *porttype_ref) override;
 
-  virtual
   AST_Mirror_Port *create_mirror_port (
     UTL_ScopedName *n,
-    AST_PortType *porttype_ref);
+    AST_PortType *porttype_ref) override;
 
-  virtual
   AST_Connector *create_connector (
     UTL_ScopedName *n,
-    AST_Connector *base_connector);
+    AST_Connector *base_connector) override;
 
-  virtual
   AST_Template_Module *create_template_module (
     UTL_ScopedName *n,
-    FE_Utils::T_PARAMLIST_INFO *template_params);
+    FE_Utils::T_PARAMLIST_INFO *template_params) override;
 
-  virtual
   AST_Template_Module_Inst *create_template_module_inst (
     UTL_ScopedName *n,
     AST_Template_Module *ref,
-    FE_Utils::T_ARGLIST *template_args);
+    FE_Utils::T_ARGLIST *template_args) override;
 
-  virtual
   AST_Template_Module_Ref *create_template_module_ref (
     UTL_ScopedName *n,
     AST_Template_Module *ref,
-    UTL_StrList *param_refs);
+    UTL_StrList param_refs) override;
 
-  virtual
   AST_Param_Holder *create_param_holder (
     UTL_ScopedName *parameter_name,
-    FE_Utils::T_Param_Info *info);
+    FE_Utils::T_Param_Info *info) override;
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

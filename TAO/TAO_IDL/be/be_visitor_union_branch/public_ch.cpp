@@ -11,6 +11,7 @@
 
 #include "union_branch.h"
 
+
 // **********************************************
 //  Visitor for union_branch in the client header file.
 // **********************************************
@@ -22,9 +23,7 @@ be_visitor_union_branch_public_ch::be_visitor_union_branch_public_ch (
 {
 }
 
-be_visitor_union_branch_public_ch::~be_visitor_union_branch_public_ch ()
-{
-}
+be_visitor_union_branch_public_ch::~be_visitor_union_branch_public_ch () = default;
 
 int
 be_visitor_union_branch_public_ch::visit_union_branch (be_union_branch *node)
@@ -445,7 +444,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
     case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_abstract:
       *os << be_nl_2
-          << "void " << ub->local_name () << " (const "
+          << "void " << ub->local_name () << " ("
           << bt->nested_type_name (bu, "_ptr") << ");" << be_nl;
       *os << bt->nested_type_name (bu, "_ptr") << " "
           << ub->local_name () << " () const;";
@@ -459,9 +458,9 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
       break;
     case AST_PredefinedType::PT_any:
       *os << be_nl_2
-          << "void " << ub->local_name () << " (const "
-          << bt->nested_type_name (bu) << " &);" << be_nl;
-      *os << "const " << bt->nested_type_name (bu) << " &"
+          << "void " << ub->local_name () << " ("
+          << bt->nested_type_name (bu) << " const &);" << be_nl;
+      *os << bt->nested_type_name (bu) << " const &"
           << ub->local_name () << " () const;" << be_nl;
       *os << bt->nested_type_name (bu) << " &"
           << ub->local_name () << " ();";
@@ -525,7 +524,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      const char* kind = nullptr;
+      char const *kind = nullptr;
       switch (node->node_type ())
       {
         case AST_Decl::NT_sequence:
@@ -557,7 +556,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%N:%l) be_visitor_union_branch_public_ch::"
                                "visit_seq_map_common - "
-                               "invalid type: %C\n", node->node_type_name ()),
+                               "invalid type: %C\n", node->node_type_name ().c_str ()),
                               -1);
           }
       };
@@ -575,9 +574,9 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
   TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
-      << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &);" << be_nl;
-  *os << "const " << bt->nested_type_name (bu) << " &"
+      << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu) << " const &);" << be_nl;
+  *os << bt->nested_type_name (bu) << " const &"
       << ub->local_name  () << " () const;"
       << be_nl;
   *os << bt->nested_type_name (bu) << " &" << ub->local_name ()
@@ -610,22 +609,22 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
     {
       *os << be_nl_2
           << "void " << ub->local_name () << " (char *);" << be_nl;
-      *os << "void " << ub->local_name () << " (const char *);"
+      *os << "void " << ub->local_name () << " (char const *);"
           << be_nl;
-      *os << "void " << ub->local_name () << " (const ::CORBA::String_var&);"
+      *os << "void " << ub->local_name () << " (::CORBA::String_var const&);"
           << be_nl;
-      *os << "const char *" << ub->local_name ()
+      *os << "char const *" << ub->local_name ()
           << " () const;";
     }
   else
     {
       *os << be_nl_2
           << "void " << ub->local_name () << " (::CORBA::WChar *);" << be_nl;
-      *os << "void " << ub->local_name () << " (const ::CORBA::WChar *);"
+      *os << "void " << ub->local_name () << " (::CORBA::WChar const *);"
           << be_nl;
-      *os << "void " << ub->local_name () << " (const ::CORBA::WString_var&);"
+      *os << "void " << ub->local_name () << " (::CORBA::WString_var const&);"
           << be_nl;
-      *os << "const ::CORBA::WChar *" << ub->local_name ()
+      *os << "::CORBA::WChar const *" << ub->local_name ()
           << " () const;";
     }
 
@@ -681,9 +680,9 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
   TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
-      << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &);" << be_nl
-      << "const " << bt->nested_type_name (bu) << " &"
+      << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu) << " const &);" << be_nl
+      << bt->nested_type_name (bu) << " const &"
       << ub->local_name  () << " () const;"
       << be_nl
       << bt->nested_type_name (bu) << " &" << ub->local_name ()
@@ -773,9 +772,9 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
   TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
-      << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &);" << be_nl
-      << "const " << bt->nested_type_name (bu) << " &"
+      << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu) << " const &);" << be_nl
+      << bt->nested_type_name (bu) << " const &"
       << ub->local_name  () << " () const;"
       << be_nl
       << bt->nested_type_name (bu) << " &" << ub->local_name ()

@@ -17,9 +17,7 @@ be_visitor_exception_any_op_ch::be_visitor_exception_any_op_ch (
 {
 }
 
-be_visitor_exception_any_op_ch::~be_visitor_exception_any_op_ch ()
-{
-}
+be_visitor_exception_any_op_ch::~be_visitor_exception_any_op_ch () = default;
 
 int
 be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
@@ -31,7 +29,7 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  std::string macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

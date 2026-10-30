@@ -18,15 +18,6 @@ const char TAO_SFP_Base::TAO_SFP_START_MAGIC_NUMBER[] = "=STA";
 const char TAO_SFP_Base::TAO_SFP_CREDIT_MAGIC_NUMBER[] = "=CRE";
 const char TAO_SFP_Base::TAO_SFP_STARTREPLY_MAGIC_NUMBER[] = "=STR";
 
-// SFP version 1.0
-const unsigned char TAO_SFP_Base::TAO_SFP_MAJOR_VERSION = 1;
-const unsigned char TAO_SFP_Base::TAO_SFP_MINOR_VERSION = 0;
-
-// lengths of various SFP headers
-const unsigned char TAO_SFP_Base::TAO_SFP_FRAME_HEADER_LEN = 12;
-const unsigned char TAO_SFP_Base::TAO_SFP_MESSAGE_SIZE_OFFSET = 8;
-const unsigned char TAO_SFP_Base::TAO_SFP_FRAGMENT_SIZE_OFFSET = 16;
-
 u_int TAO_SFP_Base::frame_header_len;
 u_int TAO_SFP_Base::start_reply_len;
 u_int TAO_SFP_Base::start_len;
@@ -34,8 +25,8 @@ u_int TAO_SFP_Base::credit_len;
 u_int TAO_SFP_Base::fragment_len;
 
 bool
-operator< (const TAO_SFP_Fragment_Node& left,
-           const TAO_SFP_Fragment_Node& right)
+operator< (TAO_SFP_Fragment_Node const &left,
+           TAO_SFP_Fragment_Node const &right)
 {
   return left.fragment_info_.frag_number < right.fragment_info_.frag_number;
 }
@@ -227,7 +218,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
     {
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG,"fragmented frame:0th fragment\n"));
-      state.more_fragments_ = 1;
+      state.more_fragments_ = true;
       ACE_Message_Block *data = nullptr;
       switch (frame_header.message_type)
         {
@@ -311,7 +302,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
           state.frame_block_ =
             TAO_SFP_Base::check_all_fragments (fragment_entry);
           if (state.frame_block_ != nullptr)
-            state.more_fragments_ = 0;
+            state.more_fragments_ = false;
         }
       else
         {
@@ -350,10 +341,10 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
     }
   else
     {
-      state.more_fragments_ = 0;
+      state.more_fragments_ = false;
       state.frame_block_ = message_block;
     }
-  if (state.more_fragments_ == 0)
+  if (!state.more_fragments_)
     {
       if (fragment_entry != nullptr)
         {
@@ -437,7 +428,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"Last fragment received\n"));
       // if bit 1 is not set then there are
       // no more fragments.
-      fragment_entry->last_received_ = 1;
+      fragment_entry->last_received_ = true;
       // since fragment number starts from 0 to n-1 we add 1.
       fragment_entry->num_fragments_ = fragment.frag_number + 1;
     }
@@ -446,7 +437,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
   state.frame_block_ = check_all_fragments (fragment_entry);
   if (state.frame_block_ != nullptr)
     {
-      state.more_fragments_ = 0;
+      state.more_fragments_ = false;
       ACE_NEW_RETURN (frame_info,
                       TAO_AV_frame_info,
                       -1);
@@ -1023,7 +1014,7 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_SFP_Object::send_frame (const iovec * /*iov*/,
+TAO_SFP_Object::send_frame (iovec const * /*iov*/,
                             int /*iovcnt*/,
                             TAO_AV_frame_info * /*frame_info*/)
 {
@@ -1031,7 +1022,7 @@ TAO_SFP_Object::send_frame (const iovec * /*iov*/,
 }
 
 int
-TAO_SFP_Object::send_frame (const char* /*buf*/,
+TAO_SFP_Object::send_frame (char const * /*buf*/,
                                size_t /*len*/)
 {
   return 0;
@@ -1082,7 +1073,7 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
 }
 
 int
-TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
+TAO_SFP_Object::set_policies (TAO_AV_PolicyList const &policies)
 {
   TAO_AV_Policy *policy = nullptr;
   for (CORBA::ULong i=0;i<policies.length ();i++)
@@ -1158,7 +1149,7 @@ TAO_SFP_Consumer_Object::handle_input ()
 
 TAO_SFP_Producer_Object::TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                                                   TAO_AV_Transport *transport,
-                                                  const char *sfp_options)
+                                                  char const *sfp_options)
   :TAO_SFP_Object (callback,transport),
    credit_sequence_num_ (0)
 
@@ -1231,7 +1222,7 @@ TAO_AV_SFP_Factory::init (int /*argc*/, ACE_TCHAR ** /*argv*/)
 }
 
 int
-TAO_AV_SFP_Factory::match_protocol (const char *flow_string)
+TAO_AV_SFP_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strncasecmp (flow_string,"sfp",3) == 0)
     return 1;
@@ -1293,9 +1284,7 @@ TAO_SFP_Frame_State::TAO_SFP_Frame_State ()
                             0,
                             0),
         0,
-        TAO_ENCAP_BYTE_ORDER),
-   more_fragments_ (0),
-   frame_block_ (nullptr)
+        TAO_ENCAP_BYTE_ORDER)
 {
 }
 

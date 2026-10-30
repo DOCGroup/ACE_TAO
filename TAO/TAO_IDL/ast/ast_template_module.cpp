@@ -11,6 +11,8 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <memory>
+
 AST_Decl::NodeType const
 AST_Template_Module::NT = AST_Decl::NT_module;
 
@@ -29,14 +31,12 @@ AST_Template_Module::AST_Template_Module (
 {
 }
 
-AST_Template_Module::~AST_Template_Module ()
-{
-}
+AST_Template_Module::~AST_Template_Module () = default;
 
 FE_Utils::T_PARAMLIST_INFO *
 AST_Template_Module::template_params () const
 {
-  return this->template_params_;
+  return this->template_params_.get ();
 }
 
 bool
@@ -51,14 +51,8 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 
   size_t slot = 0UL;
 
-  for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (*args);
-       !i.done ();
-       i.advance (), ++slot)
+  for (AST_Decl *d : *args)
     {
-      AST_Decl **item = nullptr;
-      i.next (item);
-      AST_Decl *d = *item;
-
       if (d->node_type () == AST_Decl::NT_typedef)
         {
           AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
@@ -66,13 +60,12 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
           d = td->primitive_base_type ();
         }
 
-      FE_Utils::T_Param_Info *param = nullptr;
-      (void) this->template_params_->get (param, slot);
+      FE_Utils::T_Param_Info *param = &(*this->template_params_)[slot];
 
       if (!this->match_one_param (param, d))
         {
           UTL_ScopedName *n = d->name ();
-          const char *s = nullptr;
+          std::string s;
 
           if (!n)
             {
@@ -88,13 +81,15 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 
           return false;
         }
+
+      ++slot;
     }
 
   return true;
 }
 
 bool
-AST_Template_Module::match_param_refs (UTL_StrList *refs,
+AST_Template_Module::match_param_refs (UTL_StrList const& refs,
                                        UTL_Scope *decl_scope)
 {
   UTL_Scope *s = decl_scope;
@@ -116,12 +111,10 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
                         false);
     }
 
-  for (UTL_StrlistActiveIterator i (refs);
-       !i.is_done ();
-       i.next ())
+  for (std::string const& ref : refs)
     {
       FE_Utils::T_Param_Info *enclosing_param =
-        enclosing->find_param (i.item ());
+        enclosing->find_param (ref);
 
       if (enclosing_param == nullptr)
         {
@@ -142,8 +135,7 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
 void
 AST_Template_Module::destroy ()
 {
-  delete this->template_params_;
-  this->template_params_ = nullptr;
+  this->template_params_.reset ();
 
   this->AST_Module::destroy ();
 }
@@ -189,9 +181,9 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
 
       AST_Expression *ex = c->constant_value ();
 
-      AST_Expression::AST_ExprValue *ev =
+      std::unique_ptr<AST_Expression::AST_ExprValue> ev (
         ex->check_and_coerce (param->const_type_,
-                              param->enum_const_type_decl_);
+                              param->enum_const_type_decl_));
 
       if (ev == nullptr)
         {
@@ -199,29 +191,20 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
                                               param->const_type_);
         }
 
-      bool retval = (ev != nullptr);
-      delete ev;
-      ev = nullptr;
-      return retval;
+      return ev != nullptr;
     }
 
   return (param->type_ == other_type);
 }
 
 FE_Utils::T_Param_Info *
-AST_Template_Module::find_param (UTL_String *name)
+AST_Template_Module::find_param (std::string const& name)
 {
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (
-         *this->template_params_);
-       !i.done ();
-       i.advance ())
+  for (FE_Utils::T_Param_Info &param : *this->template_params_)
     {
-      FE_Utils::T_Param_Info *param = nullptr;
-      i.next (param);
-
-      if (param->name_ == name->get_string ())
+      if (param.name_ == name)
         {
-          return param;
+          return &param;
         }
     }
 
@@ -232,24 +215,18 @@ bool
 AST_Template_Module::match_param_by_type (
   FE_Utils::T_Param_Info *param)
 {
-  for (FE_Utils::T_PARAMLIST_INFO::CONST_ITERATOR i (
-         *this->template_params_);
-       !i.done ();
-       i.advance ())
+  for (FE_Utils::T_Param_Info const& my_param : *this->template_params_)
     {
-      FE_Utils::T_Param_Info *my_param = nullptr;
-      i.next (my_param);
-
-      if (param->type_ == my_param->type_)
+      if (param->type_ == my_param.type_)
         {
           if (param->type_ == AST_Decl::NT_const)
             {
-              if (param->const_type_ == my_param->const_type_)
+              if (param->const_type_ == my_param.const_type_)
                 {
                   if (param->const_type_ == AST_Expression::EV_enum)
                     {
                       if (param->enum_const_type_decl_
-                            == my_param->enum_const_type_decl_)
+                            == my_param.enum_const_type_decl_)
                         {
                           return true;
                         }

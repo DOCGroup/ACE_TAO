@@ -173,7 +173,7 @@ namespace TAO
      * bool: if true, register with ReplicationManager.
      * default is true. -r turns it off.
      */
-    int rm_register_;
+    bool rm_register_ {true};
 
     /**
      * the replication manager
@@ -183,7 +183,7 @@ namespace TAO
     /**
      * bool: if true the registration with ReplicationManager was successful.
      */
-    int registered_;
+    bool registered_ {};
 
     /**
      * A human-readable string to distinguish this from other Notifiers.
@@ -194,11 +194,11 @@ namespace TAO
     //
     struct ProxyInfo
     {
-      ::CosNotifyChannelAdmin::ProxyID proxyId_;
+      ::CosNotifyChannelAdmin::ProxyID proxyId_ {};
       ::CosNotifyChannelAdmin::ProxySupplier_var proxyVar_;
 
-      ProxyInfo ();
-      ProxyInfo (ProxyInfo const & rhs);
+      ProxyInfo () = default;
+      ProxyInfo (ProxyInfo const &) = default;
       ProxyInfo & operator= (ProxyInfo const &) = default;
     };
 
@@ -221,17 +221,17 @@ namespace TAO
     /*
      * boolean quit when all consumers disconnect
      */
-    int quit_on_idle_;
+    bool quit_on_idle_ {};
 
     /**
      * boolean: set true we've asked CORBA to deactivate
      */
-    int quitting_;
+    bool quitting_ {};
 
     /**
      * boolean: set true when CORBA is done with this object.
      */
-    int gone_;
+    bool gone_ {};
   };
 } // namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

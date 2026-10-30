@@ -17,6 +17,8 @@
 #include "be_type.h"
 #include "ast_array.h"
 
+#include <string>
+
 class UTL_ExprList;
 class TAO_OutStream;
 class be_visitor;
@@ -42,7 +44,7 @@ public:
   void gen_ostream_operator (TAO_OutStream *os,
                              bool use_underscore) override;
   void gen_member_ostream_operator (TAO_OutStream *os,
-                                    const char *instance_name,
+                                    std::string const& instance_name,
                                     bool use_underscore,
                                     bool accessor) override;
 

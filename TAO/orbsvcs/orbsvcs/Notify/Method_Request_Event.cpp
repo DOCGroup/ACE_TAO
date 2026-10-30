@@ -9,6 +9,8 @@ TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
 {
 }
 
+TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event () = default;
+
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
       const TAO_Notify::Delivery_Request_Ptr & request)
   : event_ (request->event ().get ())
@@ -21,10 +23,6 @@ TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
       const TAO_Notify_Event * event)
   : event_ (event)
   , delivery_request_ (rhs.delivery_request_)
-{
-}
-
-TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event()
 {
 }
 
@@ -73,12 +71,9 @@ TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queue
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request)
   : TAO_Notify_Method_Request_Queueable (request->event ().get ())
-  , TAO_Notify_Method_Request_Event (request, request->event ().get ())
+  , TAO_Notify_Method_Request_Event (
+      TAO_Notify_Method_Request_Event (request), request->event ().get ())
   , event_var_ (request->event ())
-{
-}
-
-TAO_Notify_Method_Request_Event_Queueable::~TAO_Notify_Method_Request_Event_Queueable ()
 {
 }
 

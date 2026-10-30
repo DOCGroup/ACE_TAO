@@ -11,7 +11,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Persistent_Context_Index::unbind (const char *poa_id)
+TAO_Persistent_Context_Index::unbind (char const *poa_id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
@@ -28,7 +28,7 @@ TAO_Persistent_Context_Index::unbind (const char *poa_id)
 }
 
 int
-TAO_Persistent_Context_Index::bind (const char *poa_id,
+TAO_Persistent_Context_Index::bind (char const *poa_id,
                                     ACE_UINT32 *&counter,
                                     TAO_Persistent_Context_Index::CONTEXT *hash_map)
 {
@@ -39,7 +39,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
   size_t counter_len = sizeof (ACE_UINT32);
   char *ptr = (char *) this->allocator_->malloc (poa_id_len + counter_len);
 
-  if (ptr == 0)
+  if (ptr == nullptr)
     return -1;
   else
     {
@@ -82,11 +82,7 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
   (CORBA::ORB_ptr orb,
    PortableServer::POA_ptr poa,
    TAO_Persistent_Naming_Context_Factory * context_impl_factory)
-  : allocator_ (0),
-    index_ (0),
-    index_file_ (0),
-    base_address_ (0),
-    orb_ (CORBA::ORB::_duplicate (orb)),
+  : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     context_impl_factory_ (context_impl_factory)
 {
@@ -118,13 +114,13 @@ TAO_Persistent_Context_Index::orb ()
 }
 
 int
-TAO_Persistent_Context_Index::open (const ACE_TCHAR *file_name,
+TAO_Persistent_Context_Index::open (ACE_TCHAR const *file_name,
                                     void *base_address)
 {
   this->base_address_ = base_address;
 
   index_file_ = ACE_OS::strdup (file_name);
-  if (index_file_ == 0)
+  if (index_file_ == nullptr)
     return -1;
 
   return create_index ();
@@ -229,7 +225,7 @@ TAO_Persistent_Context_Index::recreate_all ()
 TAO_Persistent_Naming_Context*
 TAO_Persistent_Context_Index::create_naming_context_impl (
   PortableServer::POA_ptr poa,
-  const char *poa_id)
+  char const *poa_id)
 {
   return this->context_impl_factory_->create_naming_context_impl(poa,
                                                                  poa_id,
@@ -278,7 +274,7 @@ TAO_Persistent_Context_Index::create_index ()
       size_t index_size = sizeof (CONTEXT_INDEX);
       context_index = this->allocator_->malloc (index_size);
 
-      if (context_index == 0
+      if (context_index == nullptr
           || create_index_helper (context_index) == -1
           || this->allocator_->bind (TAO_NAMING_CONTEXT_INDEX,
                                      context_index) == -1)

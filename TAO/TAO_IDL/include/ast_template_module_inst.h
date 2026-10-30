@@ -4,6 +4,8 @@
 #include "ast_field.h"
 #include "fe_utils.h"
 
+#include <memory>
+
 class AST_Template_Module;
 
 class TAO_IDL_FE_Export AST_Template_Module_Inst
@@ -15,6 +17,10 @@ public:
                             FE_Utils::T_ARGLIST *template_args);
 
   ~AST_Template_Module_Inst () override;
+  AST_Template_Module_Inst (AST_Template_Module_Inst const &) = delete;
+  AST_Template_Module_Inst (AST_Template_Module_Inst &&) = delete;
+  AST_Template_Module_Inst &operator= (AST_Template_Module_Inst const &) = delete;
+  AST_Template_Module_Inst &operator= (AST_Template_Module_Inst &&) = delete;
 
   AST_Template_Module *ref () const;
 
@@ -33,7 +39,7 @@ public:
   static AST_Decl::NodeType const NT;
 
 private:
-  FE_Utils::T_ARGLIST * template_args_;
+  std::unique_ptr<FE_Utils::T_ARGLIST> template_args_;
 };
 
 #endif           // AST_TEMPLATE_MODULE_INST_H

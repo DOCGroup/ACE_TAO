@@ -24,7 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using namespace TAO;
 
-CORBA::Any::Any (const CORBA::Any &rhs)
+CORBA::Any::Any (CORBA::Any const &rhs)
   : impl_ (rhs.impl_)
 {
   if (this->impl_)
@@ -42,7 +42,7 @@ CORBA::Any::~Any ()
 }
 
 CORBA::Any &
-CORBA::Any::operator= (const CORBA::Any &rhs)
+CORBA::Any::operator= (CORBA::Any const &rhs)
 {
   if (this->impl_ != rhs.impl_)
     {
@@ -98,7 +98,7 @@ CORBA::Any::_tao_get_typecode () const
 }
 
 void
-CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
+CORBA::Any::_tao_set_typecode (CORBA::TypeCode_ptr const tc)
 {
   if (!this->impl_)
     {
@@ -199,7 +199,7 @@ CORBA::Any::checked_to_abstract_base (CORBA::AbstractBase_ptr &_tao_elem) const
 
 // ****************************************************************
 
-CORBA::Any_var::Any_var (const CORBA::Any_var &r)
+CORBA::Any_var::Any_var (CORBA::Any_var const &r)
 {
   if (r.ptr_)
     {
@@ -221,7 +221,7 @@ CORBA::Any_var::operator= (CORBA::Any *p)
 }
 
 CORBA::Any_var &
-CORBA::Any_var::operator= (const CORBA::Any_var &r)
+CORBA::Any_var::operator= (CORBA::Any_var const &r)
 {
   delete this->ptr_;
   this->ptr_ = nullptr;
@@ -239,7 +239,7 @@ CORBA::Any_var::operator= (const CORBA::Any_var &r)
 // ***********************************************************************
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR &cdr, const CORBA::Any &any)
+operator<< (TAO_OutputCDR &cdr, CORBA::Any const &any)
 {
   TAO::Any_Impl *impl = any.impl ();
 
@@ -271,7 +271,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       any.replace (impl);
       impl->_tao_decode (cdr);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       return false;
     }
@@ -282,7 +282,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 #if defined (GEN_OSTREAM_OPS)
 
 std::ostream &
-operator<< (std::ostream &strm, const CORBA::Any &)
+operator<< (std::ostream &strm, CORBA::Any const &)
 {
   return strm << "CORBA::Any";
 }
@@ -415,7 +415,7 @@ operator<<= (CORBA::Any &any, CORBA::LongDouble ld)
 
 // Insertion of Any - copying.
 void
-operator<<= (CORBA::Any &any, const CORBA::Any &a)
+operator<<= (CORBA::Any &any, CORBA::Any const &a)
 {
   TAO::Any_Dual_Impl_T<CORBA::Any>::insert_copy (
       any,
@@ -455,7 +455,7 @@ operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr * tc)
 
 // Insertion of CORBA object - copying.
 void
-operator<<= (CORBA::Any &any, const CORBA::Object_ptr obj)
+operator<<= (CORBA::Any &any, CORBA::Object_ptr const obj)
 {
   CORBA::Object_ptr dup = CORBA::Object::_duplicate (obj);
   any <<= &dup;
@@ -475,7 +475,7 @@ operator<<= (CORBA::Any &any, CORBA::Object_ptr *objptr)
 // to avoid use in Any.inl before definition in ORB.inl.
 
 void
-operator<<= (CORBA::Any &any, const char *s)
+operator<<= (CORBA::Any &any, char const *s)
 {
   TAO::Any_Special_Impl_T<
       char,
@@ -489,7 +489,7 @@ operator<<= (CORBA::Any &any, const char *s)
 }
 
 void
-operator<<= (CORBA::Any &any, const CORBA::WChar *ws)
+operator<<= (CORBA::Any &any, CORBA::WChar const *ws)
 {
   TAO::Any_Special_Impl_T<
       CORBA::WChar,
@@ -503,7 +503,7 @@ operator<<= (CORBA::Any &any, const CORBA::WChar *ws)
 }
 
 void
-operator <<= (CORBA::Any &any, const std::string & str)
+operator <<= (CORBA::Any &any, std::string const &str)
 {
   any <<= str.c_str ();
 }
@@ -516,7 +516,7 @@ operator <<= (CORBA::Any &, std::string *)
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 void
-operator <<= (CORBA::Any &any, const std::wstring & str)
+operator <<= (CORBA::Any &any, std::wstring const &str)
 {
   any <<= str.c_str ();
 }
@@ -609,61 +609,61 @@ CORBA::Any::operator>>= (CORBA::Any::to_value obj) const
 // Extraction into the other basic types.
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::Short &s)
+operator>>= (CORBA::Any const &any, CORBA::Short &s)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_short, std::addressof(s));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::UShort &us)
+operator>>= (CORBA::Any const &any, CORBA::UShort &us)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ushort, std::addressof(us));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::Long &l)
+operator>>= (CORBA::Any const &any, CORBA::Long &l)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_long, std::addressof(l));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::ULong &ul)
+operator>>= (CORBA::Any const &any, CORBA::ULong &ul)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ulong, std::addressof(ul));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::LongLong &ll)
+operator>>= (CORBA::Any const &any, CORBA::LongLong &ll)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_longlong, std::addressof(ll));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::ULongLong &ull)
+operator>>= (CORBA::Any const &any, CORBA::ULongLong &ull)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ulonglong, std::addressof(ull));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::Float &f)
+operator>>= (CORBA::Any const &any, CORBA::Float &f)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_float, std::addressof(f));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::Double &d)
+operator>>= (CORBA::Any const &any, CORBA::Double &d)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_double, std::addressof(d));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::LongDouble &ld)
+operator>>= (CORBA::Any const &any, CORBA::LongDouble &ld)
 {
   return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_longdouble, std::addressof(ld));
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, const CORBA::Any *&a)
+operator>>= (CORBA::Any const &any, CORBA::Any const *&a)
 {
   return TAO::Any_Dual_Impl_T<CORBA::Any>::extract (
       any,
@@ -673,7 +673,7 @@ operator>>= (const CORBA::Any &any, const CORBA::Any *&a)
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, const CORBA::Char *&s)
+operator>>= (CORBA::Any const &any, CORBA::Char const *&s)
 {
   return
     TAO::Any_Special_Impl_T<
@@ -688,7 +688,7 @@ operator>>= (const CORBA::Any &any, const CORBA::Char *&s)
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, const CORBA::WChar *&ws)
+operator>>= (CORBA::Any const &any, CORBA::WChar const *&ws)
 {
   return
     TAO::Any_Special_Impl_T<
@@ -703,7 +703,7 @@ operator>>= (const CORBA::Any &any, const CORBA::WChar *&ws)
 }
 
 CORBA::Boolean
-operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
+operator>>= (CORBA::Any const &any, CORBA::TypeCode_ptr &tc)
 {
   return TAO::Any_Impl_T<CORBA::TypeCode>::extract (
       any,
@@ -713,9 +713,9 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 }
 
 CORBA::Boolean
-operator >>= (const CORBA::Any &any, std::string &str)
+operator >>= (CORBA::Any const &any, std::string &str)
 {
-  const char *buf = nullptr;
+  char const *buf = nullptr;
   CORBA::Boolean const flag = any >>= buf;
 
   if (buf)
@@ -728,9 +728,9 @@ operator >>= (const CORBA::Any &any, std::string &str)
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 CORBA::Boolean
-operator >>= (const CORBA::Any &any, std::wstring &str)
+operator >>= (CORBA::Any const &any, std::wstring &str)
 {
-  const wchar_t *buf = nullptr;
+  wchar_t const *buf = nullptr;
   CORBA::Boolean const flag = any >>= buf;
 
   if (buf)

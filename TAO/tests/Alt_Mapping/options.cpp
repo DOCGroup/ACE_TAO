@@ -22,15 +22,11 @@
 // Constructor.p
 Options::Options ()
   : ior_ (CORBA::string_dup ("file://test.ior")),
-    test_type_ (Options::NO_TEST),
-    invoke_type_ (Options::SII),
+    test_type_ (Options::Test_Type::None),
+    invoke_type_ (Options::Invoke_Type::SII),
     loop_count_ (1),
-    debug_ (0),
-    shutdown_ (0)
-{
-}
-
-Options::~Options ()
+    debug_ (false),
+    shutdown_ (false)
 {
 }
 
@@ -48,11 +44,11 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
       {
       case 'd':  // debug flag
         TAO_debug_level++;
-        this->debug_ = 1;
+        this->debug_ = true;
         break;
 
       case 'x':
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
 
       case 'n':                 // loop count
@@ -76,14 +72,14 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
 
       case 'i':  // invocation
         if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("dii")))
-          this->invoke_type_ = Options::DII;
+          this->invoke_type_ = Options::Invoke_Type::DII;
         break;
 
       case 't': // data type
         if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ubstring")))
-          this->test_type_ = Options::TEST_UB_STRING;
+          this->test_type_ = Options::Test_Type::Unbounded_String;
         else if (!ACE_OS::strcmp (get_opts.opt_arg (), ACE_TEXT("ub_struct_seq")))
-          this->test_type_ = Options::TEST_UB_STRUCT_SEQUENCE;
+          this->test_type_ = Options::Test_Type::Unbounded_Struct_Sequence;
         break;
 
       case '?':
@@ -119,7 +115,7 @@ Options::read_ior (ACE_TCHAR *filename)
   ACE_Read_Buffer ior_buffer (f_handle, true);
   this->ior_ = ior_buffer.read ();
 
-  if (this->ior_.in () == 0)
+  if (this->ior_.in () == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);
@@ -132,20 +128,20 @@ Options::param_test_ior () const
   return this->ior_.in ();
 }
 
-Options::TEST_TYPE
-Options::test_type ()
+Options::Test_Type
+Options::test_type () const
 {
   return this->test_type_;
 }
 
-Options::INVOKE_TYPE
-Options::invoke_type ()
+Options::Invoke_Type
+Options::invoke_type () const
 {
   return this->invoke_type_;
 }
 
 CORBA::ULong
-Options::loop_count ()
+Options::loop_count () const
 {
   return this->loop_count_;
 }

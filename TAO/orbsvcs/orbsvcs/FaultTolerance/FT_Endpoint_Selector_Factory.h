@@ -24,6 +24,8 @@
 
 #include "ace/Service_Config.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FT_Invocation_Endpoint_Selector;
@@ -54,7 +56,7 @@ public:
 private:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
-  TAO_FT_Invocation_Endpoint_Selector *ft_endpoint_selector_ {};
+  std::unique_ptr<TAO_FT_Invocation_Endpoint_Selector> ft_endpoint_selector_;
 
   /// Mutex to prevent multiple initializations
   TAO_SYNCH_MUTEX mutex_;

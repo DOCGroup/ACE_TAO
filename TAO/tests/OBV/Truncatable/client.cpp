@@ -2,11 +2,11 @@
 #include "ExtraC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int fail = 0;
 int pretest = 0;
-int verbose = 0;
+bool verbose = false;
 
 #if defined (VERIFY)
 #undef VERIFY
@@ -14,7 +14,7 @@ int verbose = 0;
 
 #define VERIFY(Condition) \
 { \
-    if ((Condition)==0) \
+    if (!(Condition)) \
     { \
         fail++; \
         if (!verbose) \
@@ -35,7 +35,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.optarg;
         break;
       case 'v':
-        verbose = 1;
+        verbose = true;
         break;
       case '?':
       default:
@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Create factories.
 
-      OBV_TruncatableTest::BaseValue_init *base_factory = 0;
+      OBV_TruncatableTest::BaseValue_init *base_factory = nullptr;
       ACE_NEW_RETURN (base_factory,
                       OBV_TruncatableTest::BaseValue_init,
                       1);
@@ -72,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    base_factory);
       base_factory->_remove_ref (); // release ownership
 
-      OBV_TruncatableTest::TValue1_init *value1_factory = 0;
+      OBV_TruncatableTest::TValue1_init *value1_factory = nullptr;
       ACE_NEW_RETURN (value1_factory,
                       OBV_TruncatableTest::TValue1_init,
                       1);
@@ -81,7 +81,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value1_factory);
       value1_factory->_remove_ref ();
 
-      OBV_TruncatableTest::TValue2_init *value2_factory = 0;
+      OBV_TruncatableTest::TValue2_init *value2_factory = nullptr;
       ACE_NEW_RETURN (value2_factory,
                       OBV_TruncatableTest::TValue2_init,
                       1);
@@ -90,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value2_factory);
       value2_factory->_remove_ref ();
 
-      OBV_TruncatableTest::TValue3_init *value3_factory = 0;
+      OBV_TruncatableTest::TValue3_init *value3_factory = nullptr;
       ACE_NEW_RETURN (value3_factory,
                       OBV_TruncatableTest::TValue3_init,
                       1);
@@ -99,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value3_factory);
       value3_factory->_remove_ref ();
 
-      OBV_TruncatableTest::TValue4_init *value4_factory = 0;
+      OBV_TruncatableTest::TValue4_init *value4_factory = nullptr;
       ACE_NEW_RETURN (value4_factory,
                       OBV_TruncatableTest::TValue4_init,
                       1);
@@ -108,7 +108,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value4_factory);
       value4_factory->_remove_ref ();
 
-      OBV_TruncatableTest::TValue5_init *value5_factory = 0;
+      OBV_TruncatableTest::TValue5_init *value5_factory = nullptr;
       ACE_NEW_RETURN (value5_factory,
                       OBV_TruncatableTest::TValue5_init,
                       1);
@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                    value5_factory);
       value5_factory->_remove_ref ();
 
-      OBV_TruncatableTest::NestedValue_init *nested_value_factory = 0;
+      OBV_TruncatableTest::NestedValue_init *nested_value_factory = nullptr;
       ACE_NEW_RETURN (nested_value_factory,
                       OBV_TruncatableTest::NestedValue_init,
                       1);
@@ -128,7 +128,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       OBV_TruncatableTest::Test_var test =
         OBV_TruncatableTest::Test::_narrow (tmp.in ());
@@ -251,7 +251,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           desc.in ()));
             test->op1 ("case4", v3.in (), ov3.out (), desc.inout ());
           }
-        catch (const CORBA::MARSHAL&)
+        catch (CORBA::MARSHAL const&)
           {
             if (verbose)
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("passed\n")));
@@ -477,7 +477,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: test passed\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

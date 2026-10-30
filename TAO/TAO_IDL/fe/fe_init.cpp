@@ -74,7 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_generator.h"
 #include "ast_root.h"
 
-const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
+#include <string>
+#include <unordered_set>
 
 // Populate the global scope with all predefined entities.
 void
@@ -99,8 +100,7 @@ fe_populate_global_scope ()
 
   /// Put this prefix in force while we're creating the
   /// CORBA module and its contents.
-  char *prefix = ACE::strnew ("omg.org");
-  idl_global->pragma_prefixes ().push (prefix);
+  idl_global->pragma_prefixes ().push_back ("omg.org");
 
   Identifier corba_id ("CORBA");
   UTL_ScopedName sn (&corba_id, nullptr);
@@ -257,9 +257,10 @@ fe_populate_global_scope ()
 
   m->fe_add_predefined_type (pdt);
 
-  char *trash = nullptr;
-  idl_global->pragma_prefixes ().pop (trash);
-  ACE::strdelete (trash);
+  if (!idl_global->pragma_prefixes ().empty ())
+    {
+      idl_global->pragma_prefixes ().pop_back ();
+    }
 }
 
 // Populate idl_global's hash map with upper case versions of
@@ -267,7 +268,7 @@ fe_populate_global_scope ()
 void
 fe_populate_idl_keywords ()
 {
-  static constexpr char const *keywords[] =
+  static constexpr char const* keywords[] =
     {
       "ABSTRACT",
       "ALIAS",
@@ -340,19 +341,11 @@ fe_populate_idl_keywords ()
       "WSTRING"
     };
 
-  ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> &map =
-    idl_global->idl_keywords ();
+  std::unordered_set<std::string> &keywords_set = idl_global->idl_keywords ();
 
-  u_long length = sizeof (keywords) / sizeof (char *);
-  ACE_CString ext_id;
-  int int_id = 0;
-
-  for (u_long i = 0; i < length; ++i)
+  for (char const* const keyword : keywords)
     {
-      ext_id.set (keywords[i],
-                  false);
-      (void) map.bind (ext_id,
-                       int_id);
+      keywords_set.emplace (keyword);
     }
 }
 
@@ -370,29 +363,18 @@ FE_init ()
   idl_global->set_err (FE_new_UTL_Error ());
   idl_global->set_err_count (0);
   idl_global->set_indent (FE_new_UTL_Indenter ());
-  idl_global->set_filename (nullptr);
-  idl_global->set_main_filename (nullptr);
-  idl_global->set_real_filename (nullptr);
-  idl_global->set_stripped_filename (nullptr);
   idl_global->set_import (true);
   idl_global->set_in_main_file (false);
   idl_global->set_lineno (-1);
-  idl_global->set_prog_name (nullptr);
+  idl_global->clear_prog_name ();
 
-  char local_escapes[LOCAL_ESCAPES_BUFFER_SIZE];
-  ACE_OS::memset (&local_escapes,
-                  0,
-                  LOCAL_ESCAPES_BUFFER_SIZE);
-
-  idl_global->set_local_escapes (local_escapes);
+  idl_global->set_local_escapes ({});
   idl_global->set_compile_flags (0);
-  idl_global->set_include_file_names (nullptr);
-  idl_global->set_n_include_file_names (0);
   idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
   idl_global->preserve_cpp_keywords (false);
 
   // Put an empty prefix on the stack for the global scope.
-  idl_global->pragma_prefixes ().push (ACE::strnew (""));
+  idl_global->pragma_prefixes ().emplace_back ();
 }
 
 void
@@ -441,29 +423,35 @@ FE_populate ()
 }
 
 void
-FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list)
+FE_extract_env_include_paths (std::vector<std::string> &list)
 {
   ACE_Env_Value<char*> incl_paths (ACE_TEXT ("INCLUDE"),
-                                   (char *) nullptr);
-  const char *aggr_str = incl_paths;
+                                   nullptr);
+  char const * const env_paths = incl_paths;
 
-  if (aggr_str != nullptr)
+  if (env_paths != nullptr)
     {
-      char separator;
 #if defined (ACE_WIN32)
-      separator = ';';
+      constexpr char separator = ';';
 #else
-      separator = ':';
+      constexpr char separator = ':';
 #endif
-      ACE_CString aggr_cstr (aggr_str);
-      ACE_CString::size_type pos;
+      std::string const paths (env_paths);
+      std::string::size_type start = 0;
 
       do
         {
-          pos = aggr_cstr.find (separator);
-          list.enqueue_tail (aggr_cstr.substr (0, pos));
-          aggr_cstr = aggr_cstr.substr (pos + 1);
-        } while (pos != ACE_CString::npos);
+          std::string::size_type const end = paths.find (separator, start);
+          if (end == std::string::npos)
+            {
+              list.emplace_back (paths.substr (start));
+              break;
+            }
+
+          list.emplace_back (paths.substr (start, end - start));
+          start = end + 1;
+        }
+      while (true);
     }
 }
 
@@ -471,56 +459,43 @@ FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list)
 void
 FE_store_env_include_paths ()
 {
-  ACE_Unbounded_Queue<ACE_CString> list;
+  std::vector<std::string> list;
   FE_extract_env_include_paths (list);
 
-  ACE_CString *path_tmp = nullptr;
-  for (ACE_Unbounded_Queue_Iterator<ACE_CString>iter (list);
-       !iter.done (); iter.advance ())
+  for (std::string const &path : list)
     {
-      if (iter.next (path_tmp) != 0)
-        {
-          idl_global->add_include_path (path_tmp->fast_rep (), false);
-        }
+      idl_global->add_include_path (path.c_str (), false);
     }
 }
 
-const char *
+std::string
 FE_get_cpp_loc_from_env ()
 {
-  const char *cpp_loc = nullptr;
-
   // See if TAO_IDL_PREPROCESSOR is defined.
   ACE_Env_Value<char*> preprocessor (ACE_TEXT ("TAO_IDL_PREPROCESSOR"),
-                                     (char *) nullptr);
+                                     nullptr);
 
-  // Set cpp_loc to the built in location, unless it has been overriden by
-  // environment variables.
-  if (preprocessor != 0)
+  char const * const env_preprocessor = preprocessor;
+  if (env_preprocessor != nullptr)
     {
-      cpp_loc = preprocessor;
-    }
-  else
-    {
-      cpp_loc = idl_global->cpp_location ();
+      return env_preprocessor;
     }
 
-  return cpp_loc;
+  return idl_global->cpp_location ();
 }
 
-const char *
+std::optional<std::string>
 FE_get_cpp_args_from_env ()
 {
-  const char *cpp_args = nullptr;
-
   // Added some customizable preprocessor options
   ACE_Env_Value<char*> args1 (ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS"),
-                              (char *) nullptr);
+                              nullptr);
 
-  if (args1 != 0)
+  char const * const env_args = args1;
+  if (env_args != nullptr)
     {
-      cpp_args = args1;
+      return std::string (env_args);
     }
 
-  return cpp_args;
+  return std::nullopt;
 }

@@ -22,8 +22,8 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/PortableGroup/portablegroup_export.h"
 
-#include "ace/Vector_T.h"
 #include "ace/SString.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,22 +46,21 @@ namespace TAO_PG
     public:
       ACE_CString name_;
       PortableGroup::Value value_;
-      NamedValue ();
-      NamedValue (const ACE_CString & name, const PortableGroup::Value & value);
-      NamedValue (const NamedValue & rhs);
-      NamedValue & operator = (const NamedValue & rhs);
-      /// Meaningless method to keep ACE_Vector happy
-      bool operator == (const NamedValue &rhs) const;
-      /// Meaningless method to keep ACE_Vector happy
-      bool operator != (const NamedValue &rhs) const;
+      NamedValue () = default;
+      NamedValue (ACE_CString const & name, PortableGroup::Value const & value);
+      NamedValue (NamedValue const & rhs);
+      NamedValue & operator = (NamedValue const & rhs);
     };
-    using NamedValueVec = ACE_Vector<NamedValue, 10>;
+    using NamedValueVec = std::vector<NamedValue>;
 
   public:
     /**
      * Construct an empty set of properties.
      */
-    Properties_Encoder ();
+    Properties_Encoder ()
+    {
+      values_.reserve (10);
+    }
 
     /// standard destructor
     ~Properties_Encoder () = default;
@@ -69,7 +68,7 @@ namespace TAO_PG
     /**
      * add a name/value property to the Properties_Encoder.
      */
-    void add (const char * name, const PortableGroup::Value & value);
+    void add (char const * name, PortableGroup::Value const & value);
 
     /**
      * Encode all properties in this Properties_Encoder into a PortableGroup::Properties.
@@ -78,8 +77,10 @@ namespace TAO_PG
     void encode (PortableGroup::Properties * property_set) const;
 
   private:
-    Properties_Encoder (const Properties_Encoder & rhs) = delete;
-    Properties_Encoder & operator = (const Properties_Encoder & rhs) = delete;
+    Properties_Encoder (Properties_Encoder const &) = delete;
+    Properties_Encoder &operator= (Properties_Encoder const &) = delete;
+    Properties_Encoder (Properties_Encoder &&) = delete;
+    Properties_Encoder &operator= (Properties_Encoder &&) = delete;
   private:
     NamedValueVec values_;
   };

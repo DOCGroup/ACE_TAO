@@ -17,7 +17,6 @@
 
 Quoter_Factory_i::Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr)
   : poa_ptr_ (poa_ptr),
-    my_quoters_ (0),
     quoter_num_ (num),
     next_quoter_ (0)
 {
@@ -47,11 +46,11 @@ int Quoter_Factory_i::init ()
     {
       ACE_NEW_RETURN (this->my_quoters_[i],
                       Quoter_i("x",  // name
-                               0,    // don't use the LifeCycle_Service
+                               false, // don't use the LifeCycle_Service
                                this->poa_ptr_), // a reference to the poa
                       -1);
 
-      const char *location_string = "POA::activate";
+      char const *location_string = "POA::activate";
       try
         {
           this->poa_ptr_->activate_object (this->my_quoters_[i]);
@@ -64,7 +63,7 @@ int Quoter_Factory_i::init ()
           CORBA::String_var quoter_ior =
             TAO_ORB_Core_instance()->orb()->object_to_string (quoter_var.in ());
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception (location_string);
           return -1;
@@ -79,7 +78,7 @@ int Quoter_Factory_i::init ()
 // Return the quoter by the id <name>.
 
 Stock::Quoter_ptr
-Quoter_Factory_i::create_quoter (const char *)
+Quoter_Factory_i::create_quoter (char const *)
 {
   this->next_quoter_ = (this->next_quoter_ + 1) % this->quoter_num_;
 
@@ -92,21 +91,13 @@ Quoter_Factory_i::create_quoter (const char *)
 
 // Constructor
 
-Quoter_i::Quoter_i (const char *name,
-                    const unsigned char use_LifeCycle_Service,
+Quoter_i::Quoter_i (char const *name,
+                    bool use_LifeCycle_Service,
                     PortableServer::POA_ptr poa_ptr)
   : use_LifeCycle_Service_ (use_LifeCycle_Service),
     poa_var_ (PortableServer::POA::_duplicate (poa_ptr))
 {
   ACE_UNUSED_ARG (name);
-}
-
-
-// Destructor
-
-Quoter_i::~Quoter_i ()
-{
-  // Nothing
 }
 
 
@@ -124,9 +115,9 @@ Quoter_i::get_quote (char const *)
 
 CosLifeCycle::LifeCycleObject_ptr
 Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
-                const CosLifeCycle::Criteria &/*the_criteria*/)
+                CosLifeCycle::Criteria const &/*the_criteria*/)
 {
-  const char *exception_message = "Null message";
+  char const *exception_message = "Null message";
   CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr =
     CosLifeCycle::LifeCycleObject::_nil ();
   try
@@ -134,7 +125,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       // The name of the Generic Factory
       CosLifeCycle::Key factoryKey (2);  // max = 2
 
-      if (this->use_LifeCycle_Service_ == 1)
+      if (this->use_LifeCycle_Service_)
         {
           // use the LifeCycle Service
           factoryKey.length(1);
@@ -218,7 +209,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       lifeCycleObject_ptr =
         CosLifeCycle::LifeCycleObject::_duplicate ((CosLifeCycle::LifeCycleObject_ptr) quoter_var.in());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_i::copy - %C\n", exception_message));
       ex._tao_print_exception ("Exception");
@@ -236,7 +227,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 
 void
 Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
-                const CosLifeCycle::Criteria & /* the_criteria */)
+                CosLifeCycle::Criteria const & /* the_criteria */)
 {
   ACE_ERROR ((LM_ERROR,
               "Quoter_i::move: The Quoter object is not movable!"));

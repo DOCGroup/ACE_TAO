@@ -47,29 +47,29 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     public:
       /// Profile constructor, same as above except the object_key has
       /// already been marshaled.
-      TAO_SSLIOP_Profile (const ACE_INET_Addr & addr,
-                          const TAO::ObjectKey & object_key,
-                          const TAO_GIOP_Message_Version & version,
+      TAO_SSLIOP_Profile (ACE_INET_Addr const & addr,
+                          TAO::ObjectKey const & object_key,
+                          TAO_GIOP_Message_Version const & version,
                           TAO_ORB_Core * orb_core,
-                          const ::SSLIOP::SSL * ssl_component);
+                          ::SSLIOP::SSL const * ssl_component);
 
       ///  Profile constructor, this is the most efficient since it
       /// doesn't require any address resolution processing.
-      TAO_SSLIOP_Profile (const char *host,
+      TAO_SSLIOP_Profile (char const *host,
                           CORBA::UShort port,
-                          const TAO::ObjectKey & object_key,
-                          const ACE_INET_Addr & addr,
-                          const TAO_GIOP_Message_Version & version,
+                          TAO::ObjectKey const & object_key,
+                          ACE_INET_Addr const & addr,
+                          TAO_GIOP_Message_Version const & version,
                           TAO_ORB_Core * orb_core,
-                          const ::SSLIOP::SSL * ssl_component);
+                          ::SSLIOP::SSL const * ssl_component);
 
       /// Create profile with the given SSLIOP tagged component.
       TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core,
-                          const ::SSLIOP::SSL * ssl_component);
+                          ::SSLIOP::SSL const * ssl_component);
 
-      /// Profile constructor. ssl_only != 0 will force secure
-      /// connections, pnly.
-      TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only = 0);
+      /// Profile constructor. When ssl_only is true, only secure
+      /// connections are used.
+      explicit TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, bool ssl_only = false);
 
 
       // = Please see Profile.h for the documentation of these methods.
@@ -85,7 +85,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * Initialize this object using the given input string.
        * URL-style string contain only one endpoint.
        */
-      void parse_string (const char * string) override;
+      void parse_string (char const * string) override;
 
       /**
        * Add @a endp to this profile's list of endpoints (it is
@@ -116,7 +116,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * @see TAO_Profile::do_is_equivalent()
        */
       CORBA::Boolean do_is_equivalent (
-        const TAO_Profile * other_profile) override;
+        TAO_Profile const * other_profile) override;
 
     private:
       /**
@@ -167,7 +167,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * Most likely the parse_string() will supply a subset of the
        * attributes - port number, for instance.
        */
-      int ssl_only_;
+      bool const ssl_only_ {};
     };
 
 //   }  // End SSLIOP namespace.

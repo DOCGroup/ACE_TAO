@@ -1,6 +1,6 @@
 #include "Supports_Test_impl.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int num_trials = 1;
 int id = 0;
 
@@ -41,7 +41,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -66,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       /* Create, register factories */
 
-      Supports_Test::Node_init * node_factory = 0;
+      Supports_Test::Node_init *node_factory = nullptr;
 
       ACE_NEW_RETURN (node_factory, node_init_impl, 1);
 
@@ -74,12 +74,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->register_value_factory (node_factory->tao_repository_id (),
                                      node_factory);
 
-      ACE_ASSERT (returned_factory == 0);
+      ACE_ASSERT (returned_factory == nullptr);
 
       node_factory->_remove_ref ();
 
 
-      Supports_Test::vt_graph_init * vt_graph_factory = 0;
+      Supports_Test::vt_graph_init *vt_graph_factory = nullptr;
 
       ACE_NEW_RETURN (vt_graph_factory, vt_graph_init_impl, 1);
 
@@ -87,14 +87,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->register_value_factory (vt_graph_factory->tao_repository_id (),
                                      vt_graph_factory);
 
-      ACE_ASSERT (returned_factory == 0);
+      ACE_ASSERT (returned_factory == nullptr);
 
       vt_graph_factory->_remove_ref ();
 
 
       /* Check return values for register_value_factory */
 
-      Supports_Test::Node_init * node_factory2 = 0;
+      Supports_Test::Node_init *node_factory2 = nullptr;
 
       ACE_NEW_RETURN (node_factory2, node_init_impl, 1);
 
@@ -127,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // vt_graph_var. Then register the instance with the POA to obtain an
           // object reference, stored as a graph_var. Increment the reference count
           // of the vt_graph_impl instance.
-          vt_graph_impl * the_vt_graph = 0;
+          vt_graph_impl *the_vt_graph = nullptr;
           ACE_NEW_RETURN (the_vt_graph, vt_graph_impl (3), 1);
           Supports_Test::vt_graph_var test_vt_graph = the_vt_graph;
 
@@ -185,7 +185,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Client (%P.%t) completed test successfully\n", id));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

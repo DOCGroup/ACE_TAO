@@ -91,8 +91,7 @@ AST_Field::AST_Field (AST_Type *ft,
     AST_Decl (AST_Decl::NT_field,
               n),
     ref_type_ (ft),
-    visibility_ (vis),
-    owns_base_type_ (false)
+    visibility_ (vis)
 {
   FE_Utils::tmpl_mod_ref_check (this, ft);
 
@@ -131,8 +130,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
     AST_Decl (nt,
               n),
     ref_type_ (ft),
-    visibility_ (vis),
-    owns_base_type_ (false)
+    visibility_ (vis)
 {
   AST_Decl::NodeType fnt = ft->node_type ();
 
@@ -162,16 +160,13 @@ AST_Field::AST_Field (
   : COMMON_Base (),
     AST_Decl (name, dynamic_cast<AST_Decl*>(other)),
     ref_type_ (other->field_type ()),
-    visibility_ (other->visibility ()),
-    owns_base_type_ (false)
+    visibility_ (other->visibility ())
 {
   // We definitely don't own the base type and the param holder check shouldn't
   // be an issue here.
 }
 
-AST_Field::~AST_Field ()
-{
-}
+AST_Field::~AST_Field () = default;
 
 void
 AST_Field::dump (ACE_OSTREAM_TYPE &o)
@@ -229,7 +224,7 @@ AST_Field::visibility () const
 }
 
 void
-AST_Field::visibility (AST_Field::Visibility val)
+AST_Field::visibility (AST_Field::Visibility const val)
 {
   visibility_ = val;
 }

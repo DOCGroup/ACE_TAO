@@ -48,6 +48,11 @@ class ACE_Time_Value;
 class ACE_Export ACE_Mutex
 {
 public:
+  ACE_Mutex (ACE_Mutex const &) = delete;
+  ACE_Mutex (ACE_Mutex &&) = delete;
+  ACE_Mutex &operator= (ACE_Mutex const &) = delete;
+  ACE_Mutex &operator= (ACE_Mutex &&) = delete;
+
   /// Initialize the mutex.
   ACE_Mutex (int type = USYNC_THREAD,
              const ACE_TCHAR *name = nullptr,
@@ -188,10 +193,6 @@ public:
   /// that you don't have multiple threads simultaneously calling
   /// @c remove on the same object, which is a bad idea anyway.
   bool removed_;
-
-private:
-  ACE_Mutex &operator= (const ACE_Mutex &) = delete;
-  ACE_Mutex (const ACE_Mutex &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

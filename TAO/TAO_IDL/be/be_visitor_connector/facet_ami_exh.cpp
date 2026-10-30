@@ -11,27 +11,31 @@
 //=============================================================================
 
 #include "connector.h"
+
+#include <string>
+
 #include "ast_generator.h"
 #include "be_predefined_type.h"
 
+namespace
+{
+  std::string
+  remove_ami4ccm_prefix (std::string const& name)
+  {
+    std::string const prefix = "AMI4CCM_";
+    return name.size () >= prefix.size () ? name.substr (prefix.size ()) : std::string {};
+  }
+}
+
 be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    iface_ (nullptr),
-    callback_iface_ (nullptr),
-    scope_name_ (nullptr),
-    iface_name_ (nullptr),
-    sync_ (false)
+  : be_visitor_component_scope (ctx)
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor
   // classes generating servant code. So we can just override
   // all that here.
   export_macro_ = be_global->conn_export_macro ();
-}
-
-be_visitor_facet_ami_exh::~be_visitor_facet_ami_exh ()
-{
 }
 
 int
@@ -181,7 +185,7 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   AST_Decl *scope = ScopeAsDecl (s);
   this->scope_name_ = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  this->smart_scope_ = (global ? "" : "::");
+  this->smart_scope_ = global ? "" : "::";
   this->iface_name_ = this->iface_->local_name ();
 
   /// The reply handler class we are generating inherits from the
@@ -193,17 +197,16 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   this->handler_str_ = this->scope_name_;
   this->handler_str_ += this->smart_scope_;
 
-  this->handler_str_ += (for_impl ? "" : "AMI_");
-  ACE_CString tmp (this->iface_name_);
-  this->handler_str_ +=
-    (for_impl ? tmp : tmp.substr (ACE_OS::strlen ("AMI4CCM_")));
+  this->handler_str_ += for_impl ? "" : "AMI_";
+  this->handler_str_ += for_impl ? this->iface_name_ :
+    remove_ami4ccm_prefix (this->iface_name_);
   this->handler_str_ += (for_impl ? "Reply" : "");
   this->handler_str_ += "Handler";
 
   /// Look up the AMI_xxxCallback class (see comment above)
   /// so we can traverse its inheritance graph below.
   UTL_ScopedName *sn =
-    FE_Utils::string_to_scoped_name (this->handler_str_.c_str ());
+    FE_Utils::string_to_scoped_name (this->handler_str_);
   AST_Decl *d = s->lookup_by_name (sn, true, false);
   this->callback_iface_ = dynamic_cast<be_interface*> (d);
 
@@ -220,14 +223,14 @@ be_visitor_facet_ami_exh::gen_reply_handler_class ()
 {
   TAO_INSERT_COMMENT (&os_);
 
-  const char *suffix = "_reply_handler";
+  std::string const suffix = "_reply_handler";
   this->init (false);
   if (this->sync_)
     return 0;
   os_ << be_nl
-      << "class " << this->export_macro_.c_str () << " "
+      << "class " << this->export_macro_ << " "
       << this->iface_name_ << suffix << be_idt_nl
-      << ": public ::POA_" << this->handler_str_.c_str ()
+      << ": public ::POA_" << this->handler_str_
       << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
@@ -270,13 +273,13 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
 {
   TAO_INSERT_COMMENT (&os_);
 
-  const char *suffix = "_exec_i";
-  const char *scope_name =
+  std::string const suffix = "_exec_i";
+  std::string const scope_name =
     ScopeAsDecl (this->iface_->defined_in ())->full_name ();
-  const char *iface_name = this->iface_->local_name ();
+  std::string const iface_name = this->iface_->local_name ();
 
   os_ << be_nl_2
-      << "class " << export_macro_.c_str () << " "
+      << "class " << export_macro_ << " "
       << iface_name << suffix << be_idt_nl
       << ": public virtual ::" << scope_name << "::CCM_"
       << iface_name << "," << be_idt_nl
@@ -289,13 +292,12 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
       << " ();";
 
 
-  ACE_CString handler_str (
-  ScopeAsDecl (this->iface_->defined_in ())->full_name ());
-  ACE_CString tmp (this->iface_->local_name ());
+  std::string handler_str (
+    ScopeAsDecl (this->iface_->defined_in ())->full_name ());
   handler_str += "::";
-  handler_str += tmp;
+  handler_str += iface_name;
 
-  if (ACE_OS::strstr (tmp.c_str(), "AMI4CCM") != nullptr)
+  if (iface_name.find ("AMI4CCM") != std::string::npos)
     this->sync_ = false;
   else
     this->sync_ = true;
@@ -303,7 +305,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
    {
      UTL_Scope *ss = this->iface_->defined_in();
      UTL_ScopedName *sn =
-     FE_Utils::string_to_scoped_name (handler_str.c_str ());
+     FE_Utils::string_to_scoped_name (handler_str);
      AST_Decl *d = ss->lookup_by_name (sn, true);
 
      sn->destroy ();
@@ -315,9 +317,9 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
 
      /// The overload of traverse_inheritance_graph() used here
      /// doesn't automatically prime the queues.
-     sync_iface->get_insert_queue ().reset ();
-     sync_iface->get_del_queue ().reset ();
-     sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
+     sync_iface->get_insert_queue ().clear ();
+     sync_iface->get_del_queue ().clear ();
+     sync_iface->get_insert_queue ().push_back (sync_iface);
 
 
      Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);
@@ -350,11 +352,9 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
        }
    }
 
-  const char *container_type = be_global->ciao_container_type ();
-
   os_ << be_nl_2
       << "virtual void set_"
-      << tao_cg->downcase (container_type)
+      << tao_cg->downcase (be_global->ciao_container_type ())
       << "_context ("
       << "::Components::"
       << be_global->ciao_container_type () << "Context_ptr ctx);";
@@ -362,7 +362,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
    (s->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (is_global ? "" : "::");
+  std::string const smart_scope = is_global ? "" : "::";
 
   os_ << be_nl_2
       << "virtual ::CORBA::Object_ptr _get_component ();";

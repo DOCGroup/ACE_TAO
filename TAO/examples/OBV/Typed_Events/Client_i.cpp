@@ -7,7 +7,7 @@
 #include "ace/OS_NS_sys_time.h"
 
 int
-Checkpoint_Client_i::run (const char *name,
+Checkpoint_Client_i::run (char const *name,
                           int argc,
                           ACE_TCHAR *argv[])
 {
@@ -16,8 +16,8 @@ Checkpoint_Client_i::run (const char *name,
     return -1;
 
   // Set random seed
-  ACE_Time_Value now (ACE_OS::gettimeofday ());
-  ACE_OS::srand ((unsigned int) now.sec () );
+  ACE_Time_Value const now (ACE_OS::gettimeofday ());
+  ACE_OS::srand (static_cast<unsigned int> (now.sec ()));
 
 
   try
@@ -57,9 +57,9 @@ Checkpoint_Client_i::run (const char *name,
       checkpoint->put_event (p_e);
 
 
-      int urgent = (random_number (0,2) > 1) ? 1 : 0;
-      const char *a_text = (random_number (0,2) > 1) ? "Coffee is cold."
-                                                     : "I want pasta.";
+      bool const urgent = random_number (0, 2) > 1;
+      char const *a_text = random_number (0, 2) > 1 ? "Coffee is cold."
+                                                   : "I want pasta.";
       Log_Msg_var l_e (static_cast<Log_Msg*> (new Log_Msg_impl (urgent, a_text)));
       l_e->origin_id_ (JONAS);
       l_e->do_print ();
@@ -78,7 +78,7 @@ Checkpoint_Client_i::run (const char *name,
       if (checkpoint.shutdown () == 1)
         checkpoint->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("\n Exception in RMI");
       return -1;
@@ -86,19 +86,6 @@ Checkpoint_Client_i::run (const char *name,
 
   return 0;
 }
-
-// Constructor.
-Checkpoint_Client_i::Checkpoint_Client_i ()
-{
-  //no-op
-}
-
-//Destructor.
-Checkpoint_Client_i::~Checkpoint_Client_i ()
-{
-  //no-op
-}
-
 
 // A random number in the range of min to max.
 CORBA::Float random_number (double min, double max)

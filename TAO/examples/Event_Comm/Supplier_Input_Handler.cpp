@@ -3,12 +3,6 @@
 #include "Supplier_Input_Handler.h"
 #include "tao/ORB_Core.h"
 
-Supplier_Input_Handler::Supplier_Input_Handler ()
-  : notifier_ (0)
-{
-  // No-Op.
-}
-
 Supplier_Input_Handler::~Supplier_Input_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -90,7 +84,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
   else
     {
       Event_Comm::Notifier *notifier = this->notifier_->notifier ();
-      ACE_ASSERT (notifier != 0);
+      ACE_ASSERT (notifier != nullptr);
 
       // Use the notifier to notify Consumers.
       try
@@ -106,7 +100,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
           // Forward <Event> to all <Consumers>.
           notifier->push (event);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Unexpected Error\n");
         }

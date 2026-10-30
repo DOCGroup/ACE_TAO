@@ -4,6 +4,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"
 
+#include <new>
+
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -13,9 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-Persistent_Callback::~Persistent_Callback()
-{
-}
+Persistent_Callback::~Persistent_Callback() = default;
 
 Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
   const size_t block_size)
@@ -237,7 +237,6 @@ Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
   bool cached = false;
   if (result)
   {
-    Persistent_Storage_Block** psbtemp = nullptr;
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_, false);
       size_t queue_size = this->block_queue_.size();
@@ -245,16 +244,13 @@ Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
       {
         // We want to start at the end of the queue and work backwards...
         size_t actual_block = (queue_size - idx) - 1;
-        if ((0 == this->block_queue_.get(psbtemp, actual_block))
-            && (psbtemp != nullptr))
+        Persistent_Storage_Block* queued_block = this->block_queue_[actual_block];
+        if (queued_block != nullptr)
         {
-          cached = ((*psbtemp)->block_number() == psb->block_number());
+          cached = (queued_block->block_number() == psb->block_number());
         }
-      }
-      // this needs to be done in the guarded section
-      if (cached && (0 != psbtemp))
-      {
-        ACE_OS::memcpy(psb->data(), (*psbtemp)->data(), this->block_size());
+        if (cached)
+          ACE_OS::memcpy(psb->data(), queued_block->data(), this->block_size());
       }
     }
     if (!cached)
@@ -286,8 +282,17 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
       ACE_TEXT ("(%P|%t) Queueing PSB to write block %B\n")
       , psb->block_number ()
       ));
-    result = (0 == this->block_queue_.enqueue_tail(ourpsb));
-    this->wake_up_thread_.signal();
+    try
+      {
+        this->block_queue_.push_back (ourpsb);
+        this->wake_up_thread_.signal();
+      }
+    catch (const std::bad_alloc&)
+      {
+        if (ourpsb != psb)
+          delete ourpsb;
+        result = false;
+      }
   }
   return result;
 }
@@ -350,16 +355,14 @@ Persistent_File_Allocator::run()
     Persistent_Storage_Block * blk = nullptr;
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
-      while (this->block_queue_.is_empty() && !terminate_thread_)
+      while (this->block_queue_.empty() && !terminate_thread_)
       {
         this->wake_up_thread_.wait();
       }
-      // Awkward interface to peek at head of unbounded queue
-      Persistent_Storage_Block ** pblk = nullptr;
-      if (0 == this->block_queue_.get(pblk))
+      if (! this->block_queue_.empty ())
       {
         do_more_work = true;
-        blk = *pblk;
+        blk = this->block_queue_.front ();
       }
     }
     if (blk != nullptr)
@@ -372,7 +375,11 @@ Persistent_File_Allocator::run()
       {
         Persistent_Storage_Block * blk2 = nullptr;
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
-        this->block_queue_.dequeue_head (blk2);
+        if (! this->block_queue_.empty ())
+          {
+            blk2 = this->block_queue_.front ();
+            this->block_queue_.pop_front ();
+          }
         // if this triggers, someone pushed onto the head of the queue
         // or removed the head from the queue without telling ME.
         ACE_ASSERT (blk2 == blk);

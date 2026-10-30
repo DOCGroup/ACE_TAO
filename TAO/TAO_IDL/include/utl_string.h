@@ -65,78 +65,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _STRING_STRING_HH
 #define _STRING_STRING_HH
 
-#include "TAO_IDL_FE_Export.h"
+#include <string>
 
-#include "ace/iosfwd.h"
-  /* Basic_Types.h are needed in QNX for size_t type. */
-#include "ace/Basic_Types.h"
-#include "ace/SStringfwd.h"
+#include "TAO_IDL_FE_Export.h"
 
 class TAO_IDL_FE_Export UTL_String
 {
   // =TITLE
   //  UTL_String
   // =DESCRIPTION
-  //  string class to store identifiers
+  //  String comparison and canonicalization helpers.
 public:
-  UTL_String ();
-
-  UTL_String (const char *str, bool take_copy= false);
-
-  UTL_String (UTL_String *s, bool force_copy= false);
-
-  virtual ~UTL_String ();
-
-  virtual void destroy ();
-  // Cleanup function.
-
-  virtual void dump (ACE_OSTREAM_TYPE &o);
-  // Dump to the ostream.
-
-  char *get_string () const {return this->p_str;}
-  // Get contents of utl_string.
-
-  char *get_canonical_rep ();
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
-
-  bool compare (UTL_String *s);
-  // Compare two UTL_String *
-
-  bool compare_quiet (UTL_String *s);
-  // Like the above but without error or warning message output.
-
   static bool strcmp_caseless (
-    const char *lhs,
-    const char *rhs,
+    std::string const& lhs,
+    std::string const& rhs,
     bool &mixed_case);
   // Caseless string compare returns true if match, mixed_case is
   // true if match only true due to ignoring case differences.
 
-  static bool compare (const char *lhs, const char *rhs);
-  // Compare two const char * (like the UTL_String compare)
+  static bool compare (std::string const& lhs, std::string const& rhs);
+  // Compare two strings and report case-only differences.
 
-  static bool compare_quiet (const char *lhs, const char *rhs);
+  static bool compare_quiet (std::string const& lhs, std::string const& rhs);
   // Like the above but without error or warning message output.
 
-  static void get_canonical_rep (const char *src, char *dest);
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
-
-  static void get_canonical_rep (ACE_CString &cstr);
-  // Get canonical representation. This is (implemented as) the all upper
-  // case corresponding string.
-
-private:
-  // Data
-  bool copy_taken;
-  // If delete needs to be called on destroy/delete
-
-  char *p_str;
-  // Storage for characters.
-
-  char *c_str;
-  // Storage for canonicalized string.
+  static std::string get_canonical_rep (std::string const& str);
 };
 
 #endif           // _STRING_STRING_HH

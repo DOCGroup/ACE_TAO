@@ -22,6 +22,8 @@
 
 #include "ace/Log_Msg.h"
 
+#include <string>
+
 be_array::be_array (UTL_ScopedName *n,
                     unsigned long ndims,
                     UTL_ExprList *dims,
@@ -55,14 +57,10 @@ be_array::be_array (UTL_ScopedName *n,
 int
 be_array::create_name ()
 {
-  char namebuf [NAMEBUFSIZE];
   unsigned long i;
   UTL_ScopedName *n = nullptr;
   be_decl *scope = nullptr;
 
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
   // Retrieve the base type.
   // The name always starts this way.
   be_type *bt = dynamic_cast<be_type*> (this->base_type ());
@@ -76,14 +74,13 @@ be_array::create_name ()
                         0);
     }
 
-  ACE_OS::sprintf (namebuf,
-                   "_tao_array_%s",
-                   bt->local_name ()->get_string ());
+  std::string namebuf ("_tao_array_");
+  namebuf += bt->local_name ()->get_string ();
 
   // Now append dimensions.
   for (i = 0; i < this->n_dims (); ++i)
     {
-      AST_Expression *expr = this->dims ()[i];
+      AST_Expression *expr = this->dims ()[i].get ();
 
       // Dimension value.
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
@@ -96,10 +93,8 @@ be_array::create_name ()
         }
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
-          ACE_OS::sprintf (namebuf,
-                           "%s_%d",
-                           namebuf,
-                           ((int)expr->ev ()->u.ulval));
+          namebuf.push_back ('_');
+          namebuf += std::to_string (static_cast<int> (expr->ev ()->u.ulval));
         }
       else
         {
@@ -121,7 +116,7 @@ be_array::create_name ()
 
       Identifier *id = nullptr;
       ACE_NEW_RETURN (id,
-                      Identifier (ACE_OS::strdup (namebuf)),
+                      Identifier (namebuf),
                       -1);
 
       UTL_ScopedName *sn = nullptr;
@@ -161,9 +156,8 @@ be_array::compute_tc_name ()
            UTL_ScopedName (tao_id,
                            nullptr));
 
-  ACE_CString local_tc_name =
-    ACE_CString ("tc_")
-    + ACE_CString (this->flat_name ());
+  std::string local_tc_name ("tc_");
+  local_tc_name += this->flat_name ();
 
   Identifier * typecode_scope = nullptr;
   ACE_NEW (typecode_scope,
@@ -178,7 +172,7 @@ be_array::compute_tc_name ()
 
   Identifier * id = nullptr;
   ACE_NEW (id,
-           Identifier (local_tc_name.c_str ()));
+           Identifier (local_tc_name));
 
   UTL_ScopedName * conc_name = nullptr;
   ACE_NEW (conc_name,
@@ -201,7 +195,7 @@ be_array::gen_dimensions (TAO_OutStream *os,
   for (i = (slice ? 1 : 0); i < this->n_dims (); ++i)
     {
       // Retrieve the ith.
-      AST_Expression *expr = this->dims ()[i];
+      AST_Expression *expr = this->dims ()[i].get ();
 
       // Dimension value.
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
@@ -237,18 +231,18 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
 {
   be_scope* scope = dynamic_cast<be_scope*> (this->defined_in ());
   be_decl* parent = scope->decl ();
-  ACE_CString arg_name (ACE_CString (parent->full_name ())
-                        + "::"
-                        + (use_underscore ? "_" : "")
-                        + this->local_name ()->get_string ()
-                        + "_forany &_tao_array");
+  std::string arg_name (parent->full_name ());
+  arg_name += "::";
+  arg_name += use_underscore ? "_" : "";
+  arg_name += this->local_name ()->get_string ();
+  arg_name += "_forany &_tao_array";
 
   // Using 'const' with xxx_forany here prevents the compiler from
   // automatically converting back to xxx_slice *.
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
       << "std::ostream &strm," << be_nl
-      << "const " << arg_name.c_str () << be_uidt_nl
+      << "const " << arg_name << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "\";" <<  be_nl_2;
@@ -260,7 +254,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
     {
       *os << "strm << \"[\";" << be_nl_2;
 
-      AST_Expression *expr = this->dims ()[i];
+      AST_Expression *expr = this->dims ()[i].get ();
 
       // Generate a loop for each dimension.
       *os << "for (::CORBA::ULong i" << i << " = 0; i" << i << " < "
@@ -274,19 +268,20 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
 
   *os << "strm << ";
 
-  ACE_CString instance_name ("_tao_array.in ()");
+  std::string instance_name ("_tao_array.in ()");
 
   for (i = 0; i < ndims; ++i)
     {
-      char *working = instance_name.rep ();
+      char index[32];
+      ACE_OS::itoa (i, index, 10);
       instance_name += "[i";
-      instance_name += ACE_OS::itoa (i, working, 10);
+      instance_name += index;
       instance_name += "]";
     }
 
   be_type *bt = dynamic_cast<be_type*> (this->base_type ());
   bt->gen_member_ostream_operator (os,
-                                   instance_name.c_str (),
+                                   instance_name,
                                    use_underscore,
                                    false);
 
@@ -306,21 +301,21 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
 
 void
 be_array::gen_member_ostream_operator (TAO_OutStream *os,
-                                       const char *instance_name,
+                                       std::string const& instance_name,
                                        bool use_underscore,
                                        bool accessor)
 {
   be_scope* scope = dynamic_cast<be_scope*> (this->defined_in ());
   be_decl* parent = scope->decl ();
-  ACE_CString decl_name (ACE_CString (parent->full_name ())
-                         + "::"
-                         + (use_underscore ? "_" : "")
-                         + this->local_name ()->get_string ());
+  std::string decl_name (parent->full_name ());
+  decl_name += "::";
+  decl_name += use_underscore ? "_" : "";
+  decl_name += this->local_name ()->get_string ();
 
  // The container is always const, so the member is const as well,
  // but we have to cast it away for the forany constructor.
- *os << decl_name.c_str () << "_forany ("
-     << "const_cast< " << decl_name.c_str () << "_slice *> (";
+ *os << decl_name << "_forany ("
+     << "const_cast< " << decl_name << "_slice *> (";
 
   this->be_type::gen_member_ostream_operator (os,
                                               instance_name,

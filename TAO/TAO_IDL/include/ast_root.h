@@ -72,11 +72,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Root : public virtual AST_Module
 {
 public:
-  AST_Root (UTL_ScopedName *n);
+  explicit AST_Root (UTL_ScopedName *n);
 
   ~AST_Root () override;
 
-  unsigned long nmembers () override;
+  unsigned long nmembers () const override;
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -98,9 +98,9 @@ private:
 
   // Add protocol.
 
-  virtual AST_Sequence *fe_add_sequence (AST_Sequence *s);
-  virtual AST_String *fe_add_string (AST_String *s);
-  virtual AST_Array *fe_add_array (AST_Array *a);
+  AST_Sequence *fe_add_sequence (AST_Sequence *s) override;
+  AST_String *fe_add_string (AST_String *s) override;
+  AST_Array *fe_add_array (AST_Array *a) override;
 };
 
 #endif           // _AST_ROOT_AST_ROOT_HH

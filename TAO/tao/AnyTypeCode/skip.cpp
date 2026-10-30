@@ -396,10 +396,10 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc, TAO_InputCDR *src)
       return TAO::TRAVERSE_STOP;
     }
 
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count ();
 
-  const CORBA::ULong null_member = ~static_cast<CORBA::ULong> (0U);
+  CORBA::ULong const null_member = ~static_cast<CORBA::ULong> (0U);
 
   CORBA::ULong current_member = null_member;
   CORBA::ULong default_member = null_member;
@@ -800,7 +800,7 @@ TAO_Marshal_Except::skip (CORBA::TypeCode_ptr tc, TAO_InputCDR *stream)
     return TAO::TRAVERSE_STOP;
 
   // Number of fields in the exception
-  const CORBA::ULong member_count =
+  CORBA::ULong const member_count =
     tc->member_count ();
 
   for (CORBA::ULong i = 0;

@@ -16,14 +16,14 @@ TAO_Notify_EventType::native () const
 ACE_INLINE bool
 TAO_Notify_EventType::domain_is_wildcard (const char* domain) const
 {
-  return (domain == 0 || ACE_OS::strcmp (domain, "") == 0 ||
+  return (domain == nullptr || ACE_OS::strcmp (domain, "") == 0 ||
           ACE_OS::strcmp (domain, "*") == 0);
 }
 
 ACE_INLINE bool
 TAO_Notify_EventType::type_is_wildcard (const char* type) const
 {
-  return (type == 0 || ACE_OS::strcmp (type, "") == 0 ||
+  return (type == nullptr || ACE_OS::strcmp (type, "") == 0 ||
           ACE_OS::strcmp (type, "*") == 0 ||
           ACE_OS::strcmp (type, "%ALL") == 0);
 }

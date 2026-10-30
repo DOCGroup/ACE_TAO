@@ -29,7 +29,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
       TAO_CEC_Operation_Params *oper_params =
         this->typed_event_channel_->find_from_ifr_cache (request->operation () );
 
-      if (oper_params == 0)
+      if (oper_params == nullptr)
         {
           if (TAO_debug_level >= 10)
             {
@@ -57,7 +57,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
 }
 
 CORBA::RepositoryId
-TAO_CEC_DynamicImplementationServer::_primary_interface (const PortableServer::ObjectId &,
+TAO_CEC_DynamicImplementationServer::_primary_interface (PortableServer::ObjectId const &,
                                                          PortableServer::POA_ptr)
 {
   return CORBA::string_dup (repository_id_);
@@ -88,7 +88,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
   CORBA::NamedValue_ptr nv = list->item (0);
 
   CORBA::Any_ptr ap = nv->value ();
-  const char *value {};
+  char const *value {};
   *ap >>= value;
 
   if (TAO_debug_level >= 10)
@@ -98,7 +98,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                   value));
     }
 
-  const char *object_id =
+  char const *object_id =
     CORBA::_tc_Object->id ();
 
   if (TAO_debug_level >= 10)
@@ -111,11 +111,11 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                   object_id));
     }
 
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   if (ACE_OS::strcmp (value, this->repository_id_) == 0
       || ACE_OS::strcmp (value, object_id) == 0)
     {
-      result = 1;
+      result = true;
     }
   else
     {
@@ -131,7 +131,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
 
           if (ACE_OS::strcmp (value, this->typed_event_channel_->base_interfaces (base) ) == 0)
             {
-              result = 1;
+              result = true;
             }
         }
     }

@@ -20,7 +20,7 @@
 
 #include "tao/PI_ForwardC.h"
 #include "ace/Service_Object.h"
-#include "ace/Array_Base.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -91,7 +91,7 @@ namespace TAO
     //@}
   };
 
-  using ORT_Array = ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*>;
+  using ORT_Array = std::vector<PortableInterceptor::ObjectReferenceTemplate*>;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

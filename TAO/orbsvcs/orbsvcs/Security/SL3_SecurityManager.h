@@ -47,7 +47,7 @@ namespace TAO
     {
     public:
       /// Constructor
-      SecurityManager (SecurityLevel3::CredentialsCurator_ptr cc);
+      explicit SecurityManager (SecurityLevel3::CredentialsCurator_ptr cc);
 
       /**
        * @name SecurityLevel3::SecurityManager Methods
@@ -81,7 +81,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~SecurityManager () override;
+      ~SecurityManager () override = default;
 
     private:
       SecurityManager (SecurityManager const &) = delete;

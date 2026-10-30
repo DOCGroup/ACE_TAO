@@ -19,27 +19,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor ()
-    : name_ ("TAO_FT_ClientRequest_Interceptor")
-      , uuid_ (nullptr)
-      , lock_ (nullptr)
-      , retention_id_ (0)
-      , ft_send_extended_sc_ (false)
   {
     ACE_Utils::UUID_GENERATOR::instance ()->init ();
 
-    this->uuid_ =
-      ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ();
+    this->uuid_.reset (
+      ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
 
     // Would be nice to have runtime option.
-    ACE_NEW (this->lock_,
+    ACE_Lock *lock = nullptr;
+    ACE_NEW (lock,
              ACE_Lock_Adapter<TAO_SYNCH_MUTEX>);
+    this->lock_.reset (lock);
   }
 
-  FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor ()
-  {
-    delete this->uuid_;
-    delete this->lock_;
-  }
+  FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor () = default;
 
   char *
   FT_ClientRequest_Interceptor::name ()
@@ -79,7 +72,7 @@ namespace TAO
       {
         tp = ri->get_effective_component (IOP::TAG_FT_GROUP);
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         return;
       }
@@ -120,7 +113,7 @@ namespace TAO
     {
        status = ri->reply_status();
     }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
     {
        // No reply status => Not a location forward.
        return;
@@ -232,7 +225,7 @@ namespace TAO
       else
         {
           // Grab the object group version
-          TAO_InputCDR cdr (reinterpret_cast<const char*> (tp->component_data.get_buffer ()),
+          TAO_InputCDR cdr (reinterpret_cast<char const *> (tp->component_data.get_buffer ()),
             tp->component_data.length ());
           CORBA::Boolean byte_order;
 
@@ -269,7 +262,7 @@ namespace TAO
       // Add this context to the service context list.
       ri->add_request_service_context (sc, false);
     }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
     {
       // Not much can be done anyway. Just keep quiet
     }
@@ -343,7 +336,7 @@ namespace TAO
       // Add this context to the service context list.
       ri->add_request_service_context (sc, false);
     }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
     {
     }
   }

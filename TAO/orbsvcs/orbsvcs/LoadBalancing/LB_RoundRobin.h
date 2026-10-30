@@ -23,7 +23,7 @@
 #include "orbsvcs/LoadBalancing/LB_Location_Index_Map.h"
 
 #include "orbsvcs/CosLoadBalancingS.h"
-#include "ace/Vector_T.h"
+#include <vector>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -107,7 +107,7 @@ private:
   TAO_LB_Location_Index_Map location_index_map_;
 
   /// Locations list retrieved in last next_member() call.
-  ACE_Vector<PortableGroup::Location> last_locations_;
+  std::vector<PortableGroup::Location> last_locations_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -3,17 +3,6 @@
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
-// Constructor.
-Notifier_Server::Notifier_Server ()
-{
-}
-
-// Destructor.
-
-Notifier_Server::~Notifier_Server ()
-{
-}
-
 int
 Notifier_Server::close ()
 {
@@ -33,7 +22,7 @@ Notifier_Server::close ()
       // Instruct the ORB to shutdown.
       this->orb_manager_.orb ()->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -72,7 +61,7 @@ Notifier_Server::init_naming_service ()
       this->naming_server_->bind (notifier_obj_name,
                                   notifier_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Notifier_Server::init_naming_service\n");
       return -1;
@@ -122,7 +111,7 @@ Notifier_Server::run ()
 }
 
 ACE_Reactor *
-Notifier_Server::reactor ()
+Notifier_Server::reactor () const
 {
   return TAO_ORB_Core_instance ()->reactor ();
 }

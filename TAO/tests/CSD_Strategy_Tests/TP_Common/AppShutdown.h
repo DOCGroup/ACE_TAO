@@ -20,6 +20,11 @@ public:
 
   static AppShutdown* instance ();
 
+  AppShutdown (AppShutdown const &) = delete;
+  AppShutdown (AppShutdown &&) = delete;
+  AppShutdown & operator= (AppShutdown const &) = delete;
+  AppShutdown & operator= (AppShutdown &&) = delete;
+
 private:
   CORBA::ORB_var orb_;
   unsigned num_clients_;

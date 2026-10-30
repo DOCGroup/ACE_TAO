@@ -3,21 +3,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY> ACE_INLINE
 TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::
-    TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i)
+    TAO_ESF_Proxy_RB_Tree_Iterator (Implementation const &i)
       :  impl_ (i)
 {
 }
 
 template<class PROXY> ACE_INLINE bool
 TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator == (
-  const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const
+  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> const &rhs) const
 {
   return this->impl_ == rhs.impl_;
 }
 
 template<class PROXY> ACE_INLINE bool
 TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator != (
-  const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const
+  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> const &rhs) const
 {
   return this->impl_ != rhs.impl_;
 }
@@ -40,7 +40,7 @@ TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator++ (int)
 template<class PROXY> ACE_INLINE PROXY*
 TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator *()
 {
-  return (*this->impl_).key ();
+  return *this->impl_;
 }
 
 // ****************************************************************
@@ -57,10 +57,10 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::end ()
   return Iterator (this->impl_.end ());
 }
 
-template<class PROXY> ACE_INLINE size_t
+template<class PROXY> ACE_INLINE std::size_t
 TAO_ESF_Proxy_RB_Tree<PROXY>::size () const
 {
-  return this->impl_.current_size ();
+  return this->impl_.size ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

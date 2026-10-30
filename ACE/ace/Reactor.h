@@ -49,6 +49,11 @@ class ACE_Sig_Set;
 class ACE_Export ACE_Reactor : public ACE_Reactor_Timer_Interface
 {
 public:
+  ACE_Reactor (ACE_Reactor const &) = delete;
+  ACE_Reactor (ACE_Reactor &&) = delete;
+  ACE_Reactor &operator= (ACE_Reactor const &) = delete;
+  ACE_Reactor &operator= (ACE_Reactor &&) = delete;
+
   /// Operations on the "ready" mask and the "dispatch" mask.
   enum
   {
@@ -867,10 +872,6 @@ protected:
 
   /// Must delete the reactor_ singleton if true.
   static bool delete_reactor_;
-
-  /// Deny access since member-wise won't work...
-  ACE_Reactor (const ACE_Reactor &) = delete;
-  ACE_Reactor &operator = (const ACE_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

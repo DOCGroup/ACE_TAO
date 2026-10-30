@@ -4,7 +4,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 CORBA::ULong peer_count    = 4;
 CORBA::ULong payload_size  = 1024;
 CORBA::ULong message_count = 1000;
@@ -14,7 +14,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:b:i:n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -81,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Coordinator *coordinator_impl;
+      Coordinator *coordinator_impl = nullptr;
       ACE_NEW_RETURN (coordinator_impl,
                       Coordinator (peer_count),
                       1);
@@ -99,7 +99,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // If the ior_output_file exists, output the ior to it
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -128,7 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Building session list . . . "));
 
-      Session_Control *session_control_impl = 0;
+      Session_Control *session_control_impl = nullptr;
       ACE_NEW_RETURN (session_control_impl,
                       Session_Control (peer_count),
                       1);
@@ -151,13 +151,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "done.\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Giving start signal . . . "));
-      CORBA::ULong j;
+      CORBA::ULong j {};
       for (j = 0; j != peer_count; ++j)
         {
           // Make a copy of the sessions, excluding the j-th element
           Test::Session_List other_sessions (peer_count - 1);
           other_sessions.length (peer_count - 1);
-          CORBA::ULong count = 0;
+          CORBA::ULong count {};
           for (CORBA::ULong k = 0; k != peer_count; ++k)
             {
               if (k == j)
@@ -207,7 +207,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

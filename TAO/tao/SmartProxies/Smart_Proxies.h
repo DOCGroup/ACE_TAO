@@ -45,7 +45,7 @@ protected:
   TAO_Smart_Proxy_Base () = default;
 
   /// Constructor.
-  TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy);
+  explicit TAO_Smart_Proxy_Base (CORBA::Object_ptr proxy);
 
   /// The proxy to which remote/collocated calls are made.
   CORBA::Object_var base_proxy_;

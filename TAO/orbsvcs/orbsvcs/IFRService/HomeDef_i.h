@@ -81,10 +81,10 @@ public:
   CORBA::InterfaceDefSeq *supported_interfaces_i ();
 
   virtual void supported_interfaces (
-      const CORBA::InterfaceDefSeq &supported_interfaces);
+      CORBA::InterfaceDefSeq const &supported_interfaces);
 
   void supported_interfaces_i (
-      const CORBA::InterfaceDefSeq &supported_interfaces);
+      CORBA::InterfaceDefSeq const &supported_interfaces);
 
   virtual CORBA::ComponentIR::ComponentDef_ptr managed_component ();
 
@@ -105,75 +105,75 @@ public:
   void primary_key_i (CORBA::ValueDef_ptr primary_key);
 
   virtual CORBA::ComponentIR::FactoryDef_ptr create_factory (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions);
 
   CORBA::ComponentIR::FactoryDef_ptr create_factory_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions);
 
   virtual CORBA::ComponentIR::FinderDef_ptr create_finder (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions);
 
   CORBA::ComponentIR::FinderDef_ptr create_finder_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions);
 
 private:
   // Common code for create_factory_i and create_finder_i.
   CORBA::Object_ptr create_common (
       CORBA::DefinitionKind created_kind,
-      const char *id,
-      const char *name,
-      const char *version,
-      const char *sub_section,
-      const CORBA::ParDescriptionSeq &params,
-      const CORBA::ExceptionDefSeq &exceptions);
+      char const *id,
+      char const *name,
+      char const *version,
+      char const *sub_section,
+      CORBA::ParDescriptionSeq const &params,
+      CORBA::ExceptionDefSeq const &exceptions);
 
   void fill_op_desc_seq (ACE_Configuration_Section_Key &key,
                          CORBA::OpDescriptionSeq &ods,
-                         const char *sub_section);
+                         char const *sub_section);
 
   void fill_op_desc (ACE_Configuration_Section_Key &key,
                      CORBA::OperationDescription &od,
-                     const char *sub_section);
+                     char const *sub_section);
 
   void fill_param_desc_seq (ACE_Configuration_Section_Key &key,
                             CORBA::ParDescriptionSeq &pds,
-                            const char *sub_section);
+                            char const *sub_section);
 
   void fill_param_desc (ACE_Configuration_Section_Key &key,
                         CORBA::ParameterDescription &pd,
-                        const char *sub_section);
+                        char const *sub_section);
 
   void fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
                           CORBA::ExcDescriptionSeq &eds,
-                          const char *sub_section);
+                          char const *sub_section);
 
   void fill_exc_desc (ACE_Configuration_Section_Key &key,
                       CORBA::ExceptionDescription &ed,
-                      const char *sub_section);
+                      char const *sub_section);
 
   void fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
                            CORBA::ExtAttrDescriptionSeq &eads,
-                           const char *sub_section);
+                           char const *sub_section);
 
   void fill_attr_desc (ACE_Configuration_Section_Key &key,
                        CORBA::ExtAttributeDescription &ead,
-                       const char *sub_section);
+                       char const *sub_section);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

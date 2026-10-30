@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (
   SecurityLevel3::CredsDirective             creds_directive,
-  const SecurityLevel3::OwnCredentialsList & creds_list,
+  SecurityLevel3::OwnCredentialsList const & creds_list,
   SecurityLevel3::FeatureDirective           use_client_auth,
   SecurityLevel3::FeatureDirective           use_target_auth,
   SecurityLevel3::FeatureDirective           use_confidentiality,
@@ -15,10 +15,6 @@ TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (
     use_target_auth_ (use_target_auth),
     use_confidentiality_ (use_confidentiality),
     use_integrity_ (use_integrity)
-{
-}
-
-TAO::SL3::ContextEstablishmentPolicy::~ContextEstablishmentPolicy ()
 {
 }
 

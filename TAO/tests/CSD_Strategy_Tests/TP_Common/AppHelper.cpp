@@ -9,7 +9,7 @@ AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
 
   FILE* ior_file = ACE_OS::fopen(filename, ACE_TEXT("w"));
 
-  if (ior_file == 0)
+  if (ior_file == nullptr)
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Cannot open output file [%s] to write IOR.\n",

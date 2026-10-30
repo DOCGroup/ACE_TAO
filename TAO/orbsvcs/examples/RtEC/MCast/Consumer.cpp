@@ -2,11 +2,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-Consumer::Consumer ()
-  : event_count_ (0)
-{
-}
-
 void
 Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
@@ -19,7 +14,7 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
   // Simple subscription, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
   RtecEventChannelAdmin::ConsumerQOS qos;
-  qos.is_gateway = 0;
+  qos.is_gateway = false;
 
   qos.dependencies.length (2);
   RtecEventComm::EventHeader& h0 =
@@ -43,7 +38,7 @@ Consumer::disconnect ()
       // Disconnect from the proxy
       this->proxy_->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions
     }
@@ -60,7 +55,7 @@ Consumer::disconnect ()
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {

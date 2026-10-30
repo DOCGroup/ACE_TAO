@@ -80,7 +80,7 @@ namespace TAO
                       protocol_factory),
                       transfer_ownership);
 
-      if (protocol_set.insert (item) == -1)
+      if (TAO_ProtocolFactorySet_insert (protocol_set, item) == -1)
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) Unable to add ")

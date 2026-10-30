@@ -46,7 +46,7 @@ void Request_Context_Repository::generate_object_id(
 
 void
 Request_Context_Repository::set_object_id(
-  const FtRtecEventChannelAdmin::ObjectId& object_id)
+  FtRtecEventChannelAdmin::ObjectId const &object_id)
 {
   /*
   PortableInterceptor::Current_var pic =
@@ -63,9 +63,9 @@ Request_Context_Repository::set_object_id(
 FtRtecEventChannelAdmin::ObjectId_var
 get_object_id(CORBA::Any_var a)
 {
-  const FtRtecEventChannelAdmin::ObjectId *object_id {};
+  FtRtecEventChannelAdmin::ObjectId const *object_id {};
 
-  if ((a.in() >>= object_id) == 0)
+  if (!(a.in () >>= object_id))
     throw CORBA::NO_MEMORY();
 
   FtRtecEventChannelAdmin::ObjectId *r {};
@@ -109,7 +109,7 @@ Request_Context_Repository::get_object_id(
 void
 Request_Context_Repository::set_cached_result(
   PortableInterceptor::ServerRequestInfo_ptr ri,
-  const CORBA::Any& result)
+  CORBA::Any const &result)
 {
   ri->set_slot(cached_result_slot,
                result);

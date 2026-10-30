@@ -38,7 +38,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushConsumer :
 {
 public:
   /// Constructor...
-  TAO_EC_Default_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_EC_Default_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   /// Destructor...
   virtual ~TAO_EC_Default_ProxyPushConsumer () = default;

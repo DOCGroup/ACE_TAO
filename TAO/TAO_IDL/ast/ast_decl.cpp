@@ -81,9 +81,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <ast_annotation_appl.h>
 #include <utl_indenter.h>
 
+#include <utility>
+
 // FUZZ: disable check_for_streams_include
 #include <ace/streams.h>
 #include <ace/OS_NS_stdio.h>
+#include <ace/OS_NS_stdlib.h>
+
+#include <string>
 
 COMMON_Base::COMMON_Base (bool local,
                           bool abstract)
@@ -92,9 +97,7 @@ COMMON_Base::COMMON_Base (bool local,
 {
 }
 
-COMMON_Base::~COMMON_Base ()
-{
-}
+COMMON_Base::~COMMON_Base () = default;
 
 void
 COMMON_Base::destroy ()
@@ -129,10 +132,6 @@ AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     bool anonymous)
   : COMMON_Base (),
-    repoID_ (nullptr),
-    flat_name_ (nullptr),
-    contains_wstring_ (-1),
-    annotation_appls_ (nullptr),
     builtin_ (idl_global->in_eval_),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
@@ -141,27 +140,25 @@ AST_Decl::AST_Decl (NodeType nt,
                      : nullptr),
     pd_node_type (nt),
     pd_line (idl_global->lineno ()),
-    pd_name (nullptr),
     pd_local_name (n ? n->last_component ()->copy () : nullptr),
-    pd_original_local_name (nullptr),
-    full_name_ (nullptr),
-    prefix_ (nullptr),
-    version_ (nullptr),
     anonymous_ (anonymous),
-    typeid_set_ (false),
-    last_referenced_as_ (nullptr),
-    prefix_scope_ (nullptr),
     in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
-  UTL_String *fn = idl_global->filename ();
-  this->pd_file_name = (fn ? fn->get_string () : "");
+  std::string const& fn = idl_global->filename ();
+  if (!fn.empty ())
+    {
+      this->pd_file_name = fn;
+    }
 
   this->compute_full_name (n);
+  this->compute_full_name ();
 
-  char *prefix = nullptr;
-  idl_global->pragma_prefixes ().top (prefix);
-  this->prefix_ = ACE::strnew (prefix ? prefix : "");
+  std::vector<std::string> const& prefixes = idl_global->pragma_prefixes ();
+  if (!prefixes.empty ())
+    {
+      this->prefix_ = prefixes.back ();
+    }
 
   if (n)
     {
@@ -176,10 +173,6 @@ AST_Decl::AST_Decl (
   UTL_ScopedName *name,
   AST_Decl *other)
   : COMMON_Base (),
-    repoID_ (nullptr),
-    flat_name_ (nullptr),
-    contains_wstring_ (-1),
-    annotation_appls_ (nullptr),
     builtin_ (idl_global->in_eval_),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
@@ -188,27 +181,25 @@ AST_Decl::AST_Decl (
                      : nullptr),
     pd_node_type (other->node_type ()),
     pd_line (idl_global->lineno ()),
-    pd_name (nullptr),
     pd_local_name (name ? name->last_component ()->copy () : nullptr),
-    pd_original_local_name (nullptr),
-    full_name_ (nullptr),
-    prefix_ (nullptr),
-    version_ (nullptr),
     anonymous_ (other->anonymous ()),
-    typeid_set_ (false),
-    last_referenced_as_ (nullptr),
-    prefix_scope_ (nullptr),
     in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
-  UTL_String *fn = idl_global->filename ();
-  this->pd_file_name = (fn ? fn->get_string () : "");
+  std::string const& fn = idl_global->filename ();
+  if (!fn.empty ())
+    {
+      this->pd_file_name = fn;
+    }
 
   this->compute_full_name (name);
+  this->compute_full_name ();
 
-  char *prefix = nullptr;
-  idl_global->pragma_prefixes ().top (prefix);
-  this->prefix_ = ACE::strnew (prefix ? prefix : "");
+  std::vector<std::string> const& prefixes = idl_global->pragma_prefixes ();
+  if (!prefixes.empty ())
+    {
+      this->prefix_ = prefixes.back ();
+    }
 
   if (name)
     {
@@ -219,9 +210,7 @@ AST_Decl::AST_Decl (
   this->compute_repoID ();
 }
 
-AST_Decl::~AST_Decl ()
-{
-}
+AST_Decl::~AST_Decl () = default;
 
 void
 AST_Decl::destroy ()
@@ -230,22 +219,19 @@ AST_Decl::destroy ()
   if (this->pd_name)
     {
       this->pd_name->destroy ();
-      delete this->pd_name;
-      this->pd_name = nullptr;
+      this->pd_name.reset ();
     }
 
   if (this->pd_local_name)
     {
       this->pd_local_name->destroy ();
-      delete this->pd_local_name;
-      this->pd_local_name = nullptr;
+      this->pd_local_name.reset ();
     }
 
   if (this->pd_original_local_name)
     {
       this->pd_original_local_name->destroy ();
-      delete this->pd_original_local_name;
-      this->pd_original_local_name = nullptr;
+      this->pd_original_local_name.reset ();
     }
 
   if (this->last_referenced_as_)
@@ -255,20 +241,11 @@ AST_Decl::destroy ()
       this->last_referenced_as_ = nullptr;
     }
 
-  delete [] this->full_name_;
-  this->full_name_ = nullptr;
-
-  delete [] this->repoID_;
-  this->repoID_ = nullptr;
-
-  delete [] this->prefix_;
-  this->prefix_ = nullptr;
-
-  delete [] this->version_;
-  this->version_ = nullptr;
-
-  delete [] this->flat_name_;
-  this->flat_name_ = nullptr;
+  this->full_name_.clear ();
+  this->repoID_.clear ();
+  this->prefix_.clear ();
+  this->version_.clear ();
+  this->flat_name_.clear ();
 
   delete annotation_appls_;
   annotation_appls_ = nullptr;
@@ -283,7 +260,7 @@ AST_Decl::adjust_found (
 }
 
 bool
-AST_Decl::is_fwd ()
+AST_Decl::is_fwd () const
 {
   return false; // Not a fwd declared type (by default)
 }
@@ -305,12 +282,12 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
   // Global scope?
   if (!this->defined_in ())
     {
-      this->pd_name = (UTL_IdList *) n->copy ();
+      this->pd_name.reset (static_cast<UTL_IdList *> (n->copy ()));
       return;
     }
 
   // Initialize this name to 0.
-  this->pd_name = nullptr;
+  this->pd_name.reset ();
 
   // OK, not global. So copy name of containing scope, then
   // smash last cdr of copy with new component
@@ -321,7 +298,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
       cn = d->name ();
       if (cn)
         {
-          this->pd_name = (UTL_IdList *) cn->copy ();
+          this->pd_name.reset (static_cast<UTL_IdList *> (cn->copy ()));
         }
     }
 
@@ -336,14 +313,16 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
         }
       else
         {
-          ACE_NEW (this->pd_name,
+          UTL_ScopedName *scoped_name = nullptr;
+          ACE_NEW (scoped_name,
                    UTL_ScopedName (this->pd_local_name->copy (), nullptr));
+          this->pd_name.reset (scoped_name);
         }
     }
 }
 
 void
-AST_Decl::set_prefix_with_typeprefix_r (const char *value,
+AST_Decl::set_prefix_with_typeprefix_r (std::string const& value,
                                         UTL_Scope *appeared_in)
 {
   if (this->typeid_set_)
@@ -362,8 +341,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
         }
     }
 
-  delete [] this->repoID_;
-  this->repoID_ = nullptr;
+  this->repoID_.clear ();
   this->prefix (value);
   this->prefix_scope_ = appeared_in;
 
@@ -387,7 +365,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
   if (this->node_type () == AST_Decl::NT_module)
     {
       AST_Module *m = dynamic_cast<AST_Module*> (this);
-      while (0 != (m = m->previous_opening ()))
+      while ((m = m->previous_opening ()) != nullptr)
         {
           for (UTL_ScopeActiveIterator si (m, UTL_Scope::IK_decls);
                !si.is_done ();
@@ -411,99 +389,58 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
 void
 AST_Decl::compute_full_name ()
 {
-  if (!this->full_name_)
+  std::string name;
+  bool first = true;
+  bool second = false;
+
+  for (UTL_IdListActiveIterator i (this->pd_name.get ());
+       !i.is_done ();
+       i.next ())
     {
-      size_t namelen = 0;
-      long first = true;
-      long second = false;
-      char *name = nullptr;
-
-      for (UTL_IdListActiveIterator i (this->name ());
-           !i.is_done ();
-           i.next ())
+      if (!first)
         {
-          if (!first)
-            {
-              namelen += 2; // for "::"
-            }
-          else if (second)
-            {
-              first = second = false;
-            }
-
-          // Print the identifier.
-          name = i.item ()->get_string ();
-          namelen += ACE_OS::strlen (name);
-          if (first)
-            {
-              if (ACE_OS::strcmp (name, ""))
-                {
-                  // Does not start with a "".
-                  first = false;
-                }
-              else
-                {
-                  second = true;
-                }
-            }
+          name += "::";
+        }
+      else if (second)
+        {
+          first = second = false;
         }
 
-      ACE_NEW (this->full_name_, char [namelen + 1]);
-      this->full_name_ [0] = '\0';
-      first = true;
-      second = false;
-
-      for (UTL_IdListActiveIterator j (this->name ());
-           !j.is_done ();
-           j.next ())
+      std::string const& identifier (i.item ()->get_string ());
+      name.append (identifier);
+      if (first)
         {
-          if (!first)
+          if (!identifier.empty ())
             {
-              ACE_OS::strcat (this->full_name_, "::");
+              // Does not start with a "".
+              first = false;
             }
-          else if (second)
+          else
             {
-              first = second = false;
-            }
-
-          // Print the identifier.
-          name = j.item ()->get_string ();
-          ACE_OS::strcat (this->full_name_, name);
-          if (first)
-            {
-              if (ACE_OS::strcmp (name, ""))
-                {
-                  // Does not start with a "".
-                  first = false;
-                }
-              else
-                {
-                  second = true;
-                }
+              second = true;
             }
         }
     }
+
+  this->full_name_ = name;
 }
 
 // Compute stringified repository ID.
 void
-AST_Decl::compute_repoID ()
+AST_Decl::compute_repoID () const
 {
-  if (this->repoID_)
+  if (!this->repoID_.empty () || this->pd_node_type == NT_root)
     {
       return;
     }
 
-  size_t namelen = 4; // for the prefix "IDL:"
-  long first = true;
-  long second = false;
-  char *name = nullptr;
-  const char *prefix = (this->prefix_ ? this->prefix_ : "");
+  bool first = true;
+  bool second = false;
+  std::string prefix = this->prefix_;
   UTL_Scope *scope = this->defined_in ();
-  const char *parent_prefix = nullptr;
 
   // If our prefix is empty, we check to see if an ancestor has one.
-  while (scope && !ACE_OS::strcmp (prefix, ""))
+  while (scope && prefix.empty ())
     {
       AST_Decl *parent = ScopeAsDecl (scope);
       if (parent->node_type () == AST_Decl::NT_root
@@ -512,87 +449,29 @@ AST_Decl::compute_repoID ()
           break;
         }
 
-      parent_prefix = parent->prefix ();
-      prefix = (parent_prefix ? parent_prefix : "");
+      prefix = parent->prefix ();
       scope = parent->defined_in ();
     }
 
   // in the first loop compute the total length
-  namelen += ACE_OS::strlen (prefix) + 1;
-
-  const char *version = this->version_;
+  std::string version = this->version_;
   scope = this->defined_in ();
 
-  // If our version is has not bee set, we use the parent's, if any.
-  while (!version && scope)
+  // If our version has not been set, we use the parent's, if any.
+  while (version.empty () && scope)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
       version = parent->version_;
       scope = parent->defined_in ();
     }
 
-  if (version)
+  std::string repo_id ("IDL:");
+
+  if (!prefix.empty ())
     {
-      // Version member string + ':'
-      namelen += ACE_OS::strlen (version) + 1;
+      repo_id += prefix;
+      repo_id += '/';
     }
-  else
-    {
-      // For ":1.0"
-      namelen += 4;
-    }
-
-  for (UTL_IdListActiveIterator i (this->name ());
-       !i.is_done ();
-       i.next ())
-    {
-      if (!first)
-        {
-          namelen += 1; // for "/"
-        }
-      else if (second)
-        {
-          first = second = false;
-        }
-
-      // Print the identifier.
-      name = i.item ()->get_string ();
-      size_t item_len = ACE_OS::strlen (name);
-
-      if (ACE_OS::strstr (name, "_cxx_") == name)
-        {
-          namelen += (item_len - ACE_OS::strlen ("_cxx_"));
-        }
-      else
-        {
-          namelen += item_len;
-        }
-
-      if (first)
-        {
-          if (ACE_OS::strcmp (name, ""))
-            {
-              // Does not start with a "".
-              first = false;
-            }
-          else
-            {
-              second = true;
-            }
-        }
-    }
-
-  ACE_NEW (this->repoID_, char [namelen + 1]);
-  ACE_OS::sprintf (this->repoID_, "IDL:");
-
-  if (ACE_OS::strcmp (prefix, ""))
-    {
-      ACE_OS::strcat (this->repoID_, prefix);
-      ACE_OS::strcat (this->repoID_, "/");
-    }
-
-  first = true;
-  second = false;
 
   for (UTL_IdListActiveIterator j (this->name ());
        !j.is_done ();
@@ -600,29 +479,25 @@ AST_Decl::compute_repoID ()
     {
       if (!first)
         {
-          ACE_OS::strcat (this->repoID_, "/");
+          repo_id += '/';
         }
       else if (second)
         {
           first = second = false;
         }
 
-      // Print the identifier.
-      name = j.item ()->get_string ();
-
-      if (ACE_OS::strstr (name, "_cxx_") == name)
+      std::string identifier (j.item ()->get_string ());
+      bool const identifier_empty = identifier.empty ();
+      static constexpr char cxx_prefix[] = "_cxx_";
+      if (identifier.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
         {
-          ACE_OS::strcat (this->repoID_,
-                          name + ACE_OS::strlen ("_cxx_"));
+          identifier.erase (0, sizeof (cxx_prefix) - 1);
         }
-      else
-        {
-          ACE_OS::strcat (this->repoID_, name);
-        }
+      repo_id.append (identifier);
 
       if (first)
         {
-          if (ACE_OS::strcmp (name, ""))
+          if (!identifier_empty)
             {
               // Does not start with a "".
               first = false;
@@ -634,23 +509,25 @@ AST_Decl::compute_repoID ()
         }
     }
 
-  if (version)
+  if (!version.empty ())
     {
-      ACE_OS::strcat (this->repoID_, ":");
-      ACE_OS::strcat (this->repoID_, version);
+      repo_id += ':';
+      repo_id += version;
     }
   else
     {
-      ACE_OS::strcat (this->repoID_, ":1.0");
+      repo_id += ":1.0";
     }
+
+  this->repoID_ = repo_id;
 }
 
 // Public operations.
 
-const char *
-AST_Decl::flat_name ()
+std::string const&
+AST_Decl::flat_name () const
 {
-  if (!this->flat_name_)
+  if (this->flat_name_.empty ())
     {
       this->compute_flat_name ();
     }
@@ -660,100 +537,53 @@ AST_Decl::flat_name ()
 
 // Compute stringified flattened fully scoped name.
 void
-AST_Decl::compute_flat_name ()
+AST_Decl::compute_flat_name () const
 {
-  if (this->flat_name_ == nullptr)
+  std::string flat_name;
+  bool first = true;
+  bool second = false;
+
+  for (UTL_IdListActiveIterator j (this->name ());
+       !j.is_done ();
+       j.next ())
     {
-      size_t namelen = 0;
-      long first = true;
-      long second = false;
-      char *item_name = nullptr;
-
-      // In the first loop, compute the total length.
-      for (UTL_IdListActiveIterator i (this->name ());
-           !i.is_done ();
-           i.next ())
+      if (!first)
         {
-          if (!first)
-            {
-              namelen += 1; // for "_"
-            }
-          else if (second)
-            {
-              first = second = false;
-            }
-
-          // Print the identifier, leaving out
-          // _cxx_ prefix, if any.
-          Identifier *tmp = i.item ()->copy ();
-          FE_Utils::original_local_name (tmp);
-          item_name = tmp->get_string ();
-          namelen += ACE_OS::strlen (item_name);
-
-          if (first)
-            {
-              if (ACE_OS::strcmp (item_name, "") != 0)
-                {
-                  // Does not start with a "".
-                  first = false;
-                }
-              else
-                {
-                  second = true;
-                }
-            }
-
-          tmp->destroy ();
-          delete tmp;
-          tmp = nullptr;
+          flat_name += '_';
+        }
+      else if (second)
+        {
+          first = second = false;
         }
 
-      ACE_NEW (this->flat_name_, char [namelen + 1]);
-      this->flat_name_ [0] = '\0';
-      first = true;
-      second = false;
+      // Print the identifier, leaving out
+      // _cxx_ prefix, if any.
+      Identifier *tmp = j.item ()->copy ();
+      FE_Utils::original_local_name (tmp);
+      std::string const& item_name (tmp->get_string ());
+      flat_name.append (item_name);
 
-      for (UTL_IdListActiveIterator j (this->name ());
-           !j.is_done ();
-           j.next ())
+      if (first)
         {
-          if (!first)
+          if (!item_name.empty ())
             {
-              ACE_OS::strcat (this->flat_name_, "_");
+              // Does not start with a "".
+              first = false;
             }
-          else if (second)
+          else
             {
-              first = second = false;
+              second = true;
             }
-
-          // Print the identifier, leaving out
-          // _cxx_ prefix, if any.
-          Identifier *tmp = j.item ()->copy ();
-          FE_Utils::original_local_name (tmp);
-          item_name = tmp->get_string ();
-          ACE_OS::strcat (this->flat_name_, item_name);
-
-          if (first)
-            {
-              if (ACE_OS::strcmp (item_name, ""))
-                {
-                  // Does not start with a "".
-                  first = false;
-                }
-              else
-                {
-                  second = true;
-                }
-            }
-
-          tmp->destroy ();
-          delete tmp;
-          tmp = nullptr;
         }
+
+      tmp->destroy ();
+      delete tmp;
     }
+
+  this->flat_name_ = flat_name;
 }
 
-const char *
+std::string
 AST_Decl::node_type_to_string (NodeType nt)
 {
   switch (nt)
@@ -858,7 +688,7 @@ AST_Decl::node_type_to_string (NodeType nt)
     }
 }
 
-const char *AST_Decl::node_type_name () const
+std::string AST_Decl::node_type_name () const
 {
   return node_type_to_string (pd_node_type);
 }
@@ -866,9 +696,9 @@ const char *AST_Decl::node_type_name () const
 // Return TRUE if one of my ancestor scopes is "s"
 // and FALSE otherwise.
 bool
-AST_Decl::has_ancestor (AST_Decl *s)
+AST_Decl::has_ancestor (AST_Decl const *s) const
 {
-  AST_Decl *work = this;
+  AST_Decl const *work = this;
   do
     {
       if (work == s)
@@ -876,12 +706,12 @@ AST_Decl::has_ancestor (AST_Decl *s)
           return true;
         }
 
-      AST_Module *m = dynamic_cast<AST_Module*> (s);
+      AST_Module const *m = dynamic_cast<AST_Module const*> (s);
       if (m)
         {
-          while (0 != (m = m->previous_opening ()))
+          while ((m = m->previous_opening ()) != nullptr)
             {
-              if (static_cast<AST_Decl *> (m) == s)
+              if (static_cast<AST_Decl const *> (m) == s)
                 {
                   return true;
                 }
@@ -897,7 +727,7 @@ AST_Decl::has_ancestor (AST_Decl *s)
 }
 
 bool
-AST_Decl::is_child (AST_Decl *s)
+AST_Decl::is_child (AST_Decl *s) const
 {
   if (this->defined_in ())
     {
@@ -907,7 +737,7 @@ AST_Decl::is_child (AST_Decl *s)
           return false;
         }
 
-      if (!ACE_OS::strcmp (d->full_name (), s->full_name ()))
+      if (d->full_name () == s->full_name ())
         {
           return true;
         }
@@ -917,7 +747,7 @@ AST_Decl::is_child (AST_Decl *s)
 }
 
 bool
-AST_Decl::is_nested ()
+AST_Decl::is_nested () const
 {
   AST_Decl *d = ScopeAsDecl (this->defined_in ());
 
@@ -934,11 +764,9 @@ AST_Decl::dump (ACE_OSTREAM_TYPE &o)
 }
 
 void
-AST_Decl::dump_i (ACE_OSTREAM_TYPE &o, const char *s) const
+AST_Decl::dump_i (ACE_OSTREAM_TYPE &o, std::string const& s) const
 {
-  // Have to use ACE_CString here to avoid ambiguous overload error, see
-  // SString.h for an the overloaded operator << () methods.
-  o << ACE_CString(s);
+  o << s;
 }
 
 int
@@ -949,84 +777,74 @@ AST_Decl::ast_accept (ast_visitor *visitor)
 
 // Data accessors.
 
-const char *
-AST_Decl::full_name ()
+std::string const&
+AST_Decl::full_name () const
 {
-  if (!this->full_name_)
-    {
-      this->compute_full_name ();
-    }
-
   return this->full_name_;
 }
 
-const char *
-AST_Decl::repoID ()
+std::string const&
+AST_Decl::repoID () const
 {
-  if (this->pd_node_type == NT_root)
-    {
-      delete [] this->repoID_;
-      this->repoID_ = ACE::strnew ("");
-    }
-
-  if (!this->repoID_)
-    {
-      this->compute_repoID ();
-    }
+  this->compute_repoID ();
 
   return this->repoID_;
 }
 
 void
-AST_Decl::repoID (char *value)
+AST_Decl::repoID (std::string const& value)
 {
-  delete [] this->repoID_;
   this->repoID_ = value;
 }
 
-const char *
-AST_Decl::prefix ()
+void
+AST_Decl::clear_repoID ()
+{
+  this->repoID_.clear ();
+}
+
+std::string const&
+AST_Decl::prefix () const
 {
   return this->prefix_;
 }
 
 void
-AST_Decl::prefix (const char *value)
+AST_Decl::prefix (std::string const& value)
 {
-  delete [] this->prefix_;
-  this->prefix_ = ACE::strnew (value);
+  this->prefix_ = value;
 }
 
-const char *
-AST_Decl::version ()
+std::string const&
+AST_Decl::version () const
 {
-  if (!this->version_)
+  if (this->version_.empty ())
     {
       // Calling the method will compute if necessary.
-      const char *repo_id = this->repoID ();
+      std::string const& repo_id = this->repoID ();
 
       // All forms of repo id should contain two colons, the
       // version coming after the second one.
-      const char *tail1 = nullptr;
-      const char *tail2 = nullptr;
+      size_t const tail1 = repo_id.find (':');
+      size_t tail2 = std::string::npos;
 
-      if (repo_id)
+      if (tail1 != std::string::npos)
         {
-          tail1 = ACE_OS::strchr (repo_id, ':');
+          tail2 = repo_id.find (':', tail1 + 1);
         }
 
-      if (tail1)
+      if (!this->typeid_set_ && tail2 != std::string::npos)
         {
-          tail2 = ACE_OS::strchr (tail1 + 1, ':');
+          tail2 = repo_id.find (':', tail2 + 1);
         }
 
-      if (!this->typeid_set_ && tail2)
+      if (!this->typeid_set_ && tail2 != std::string::npos)
         {
-          this->version_ = ACE::strnew (tail2 + 1);
+          this->version_ = repo_id.substr (tail2 + 1);
         }
       else
         {
-          this->version_ = ACE::strnew ("1.0");
+          this->version_ = "1.0";
         }
     }
 
@@ -1034,26 +852,24 @@ AST_Decl::version ()
 }
 
 void
-AST_Decl::version (char *value)
+AST_Decl::version (std::string const& value)
 {
   // Previous #pragma version or #pragma id make this illegal.
-  if ((!this->version_ || !ACE_OS::strcmp (this->version_, value))
+  if ((this->version_.empty () || this->version_ == value)
       && !this->typeid_set_)
     {
-      delete [] this->version_;
       this->version_ = value;
 
       // Repo id is now computed eagerly, so a version set must update
       // is as well.
-      if (this->repoID_)
+      if (!this->repoID_.empty ())
         {
-          ACE_CString tmp (this->repoID_);
-          ACE_CString::size_type const pos = tmp.rfind (':');
-          if (pos != ACE_CString::npos)
+          std::string tmp (this->repoID_);
+          std::string::size_type const pos = tmp.rfind (':');
+          if (pos != std::string::npos)
             {
               tmp = tmp.substr (0, pos + 1) + value;
-              delete [] this->repoID_;
-              this->repoID_ = ACE::strnew (tmp.fast_rep ());
+              this->repoID_ = tmp;
             }
         }
     }
@@ -1061,6 +877,15 @@ AST_Decl::version (char *value)
     {
       idl_global->err ()->version_reset_error ();
     }
+}
+
+void
+AST_Decl::version (char *value)
+{
+  // The checked-in generated lexer still passes an owned C string.
+  std::string version_value (value);
+  delete [] value;
+  this->version (version_value);
 }
 
 bool
@@ -1088,7 +913,7 @@ AST_Decl::typeid_set (bool val)
 }
 
 void
-AST_Decl::set_id_with_typeid (char *value)
+AST_Decl::set_id_with_typeid (std::string const& value)
 {
   // Can't call 'typeid' twice, even with the same value.
   if (this->typeid_set ())
@@ -1135,14 +960,13 @@ AST_Decl::set_id_with_typeid (char *value)
       return;
     }
 
-  delete [] this->repoID_;
-  this->repoID_ = nullptr;
-  this->repoID (ACE::strnew (value));
+  this->repoID_.clear ();
+  this->repoID (value);
   this->typeid_set_ = true;
 }
 
 void
-AST_Decl::set_prefix_with_typeprefix (const char *value)
+AST_Decl::set_prefix_with_typeprefix (std::string const& value)
 {
   // Are we a legal type for 'typeprefix'? This is checked only at
   // the top level.
@@ -1166,7 +990,7 @@ AST_Decl::set_prefix_with_typeprefix (const char *value)
 }
 
 bool
-AST_Decl::imported ()
+AST_Decl::imported () const
 {
   return this->pd_imported;
 }
@@ -1178,7 +1002,7 @@ AST_Decl::set_imported (bool is_it)
 }
 
 bool
-AST_Decl::in_main_file ()
+AST_Decl::in_main_file () const
 {
   return this->pd_in_main_file;
 }
@@ -1190,7 +1014,7 @@ AST_Decl::set_in_main_file (bool is_it)
 }
 
 UTL_Scope *
-AST_Decl::defined_in ()
+AST_Decl::defined_in () const
 {
   return this->pd_defined_in;
 }
@@ -1202,13 +1026,13 @@ AST_Decl::set_defined_in (UTL_Scope *s)
 }
 
 AST_Decl::NodeType
-AST_Decl::node_type ()
+AST_Decl::node_type () const
 {
   return this->pd_node_type;
 }
 
 long
-AST_Decl::line ()
+AST_Decl::line () const
 {
   return this->pd_line;
 }
@@ -1219,22 +1043,22 @@ AST_Decl::set_line (long l)
   this->pd_line = l;
 }
 
-ACE_CString &
-AST_Decl::file_name ()
+std::string const&
+AST_Decl::file_name () const
 {
   return this->pd_file_name;
 }
 
 void
-AST_Decl::set_file_name (ACE_CString s)
+AST_Decl::set_file_name (std::string const& s)
 {
   this->pd_file_name = s;
 }
 
 UTL_ScopedName *
-AST_Decl::name ()
+AST_Decl::name () const
 {
-  return this->pd_name;
+  return this->pd_name.get ();
 }
 
 // @@ Wherever compute_* are called, we should remember to delete them
@@ -1243,27 +1067,19 @@ AST_Decl::name ()
 // Variation of the <name>. Computes scoped name string, applying
 // prefix and suffix to the local name component.
 UTL_ScopedName *
-AST_Decl::compute_name (const char *prefix,
-                        const char *suffix)
+AST_Decl::compute_name (std::string const& prefix,
+                        std::string const& suffix) const
 {
-  if (!prefix || !suffix)
-    {
-      return nullptr;
-    }
-
   // Prepare prefix_<local_name>_suffix string.
 
-  ACE_CString suffix_str (suffix);
-  ACE_CString local_str (this->local_name ()->get_string ());
-
-  ACE_CString result_local_str (prefix);
-  result_local_str += local_str;
-  result_local_str += suffix_str;
+  std::string result_local_str (prefix);
+  result_local_str.append (this->local_name ()->get_string ());
+  result_local_str.append (suffix);
 
   // Identifier for the resulting local name.
   Identifier *result_local_id = nullptr;
   ACE_NEW_RETURN (result_local_id,
-                  Identifier (result_local_str.c_str ()),
+                  Identifier (result_local_str),
                   nullptr);
 
   // UTL_Scoped name for the resulting local name.
@@ -1308,7 +1124,7 @@ AST_Decl::compute_name (const char *prefix,
 void
 AST_Decl::set_name (UTL_ScopedName *n)
 {
-  if (this->pd_name == n)
+  if (this->pd_name.get () == n)
     {
       return;
     }
@@ -1316,82 +1132,69 @@ AST_Decl::set_name (UTL_ScopedName *n)
   if (this->pd_name)
     {
       this->pd_name->destroy ();
-      delete this->pd_name;
     }
 
-  this->pd_name = n;
+  this->pd_name.reset (n);
+  this->compute_full_name ();
 
   if (n)
     {
       if (this->pd_local_name)
         {
           this->pd_local_name->destroy ();
-          delete this->pd_local_name;
         }
 
-      this->pd_local_name = n->last_component ()->copy ();
+      this->pd_local_name.reset (n->last_component ()->copy ());
 
       // The name without _cxx_ prefix removed, if there was any.
       if (this->pd_original_local_name)
         {
           this->pd_original_local_name->destroy ();
-          delete this->pd_original_local_name;
         }
 
       this->original_local_name (n->last_component ());
 
-      // These will be recomputed on demand.
-      delete [] this->flat_name_;
-      this->flat_name_ = nullptr;
-
-      delete [] this->full_name_;
-      this->full_name_ = nullptr;
-
-      delete [] this->repoID_;
-      this->repoID_ = nullptr;
+      // The flattened name and repo ID will be recomputed on demand.
+      this->flat_name_.clear ();
+      this->repoID_.clear ();
     }
 }
 
 Identifier *
 AST_Decl::local_name () const
 {
-  return this->pd_local_name;
+  return this->pd_local_name.get ();
 }
 
 void
 AST_Decl::local_name (Identifier *id)
 {
+  if (this->pd_local_name.get () == id)
+    {
+      return;
+    }
+
   if (this->pd_local_name)
     {
       this->pd_local_name->destroy ();
     }
 
-  delete this->pd_local_name;
-  this->pd_local_name = id;
+  this->pd_local_name.reset (id);
 }
 
 Identifier *
-AST_Decl::compute_local_name (const char *prefix,
-                              const char *suffix)
+AST_Decl::compute_local_name (std::string const& prefix,
+                              std::string const& suffix) const
 {
-  if (!prefix || !suffix)
-    {
-      return nullptr;
-    }
-
   // Init the result with prefix.
-  ACE_CString result_str (prefix);
-
-  // Put local.
-  result_str += ACE_CString (this->local_name ()->get_string ());
-
-  // Put suffix.
-  result_str += ACE_CString (suffix);
+  std::string result_str (prefix);
+  result_str.append (this->local_name ()->get_string ());
+  result_str.append (suffix);
 
   // Identifier for the resulting local name.
   Identifier *result_id = nullptr;
   ACE_NEW_RETURN (result_id,
-                  Identifier (result_str.c_str ()),
+                  Identifier (result_str),
                   nullptr);
 
   return result_id;
@@ -1406,29 +1209,24 @@ void
 AST_Decl::original_local_name (Identifier *local_name)
 {
   // Remove _cxx_ if it is present.
-  if (ACE_OS::strstr (local_name->get_string (), "_cxx_")
-        == local_name->get_string ())
+  std::string const& name (local_name->get_string ());
+  static constexpr char cxx_prefix[] = "_cxx_";
+  if (name.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
     {
-      // AACE_CString class is good to do this stuff.
-      ACE_CString name_str (local_name->get_string ());
-
-      // Remove _cxx_.
-      name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
-
       // Assign to the Identifier variable.
-      ACE_NEW (this->pd_original_local_name,
-               Identifier (name_str.c_str ()));
+      this->pd_original_local_name = std::make_unique<Identifier> (
+        name.substr (sizeof (cxx_prefix) - 1));
     }
   else
     {
-      this->pd_original_local_name = local_name->copy ();
+      this->pd_original_local_name.reset (local_name->copy ());
     }
 }
 
 Identifier *
-AST_Decl::original_local_name ()
+AST_Decl::original_local_name () const
 {
-  return this->pd_original_local_name;
+  return this->pd_original_local_name.get ();
 }
 
 bool
@@ -1458,7 +1256,7 @@ AST_Decl::last_referenced_as (UTL_ScopedName *n)
 }
 
 UTL_Scope *
-AST_Decl::prefix_scope ()
+AST_Decl::prefix_scope () const
 {
   return this->prefix_scope_;
 }
@@ -1596,7 +1394,7 @@ AST_Decl::annotation_appls (const AST_Annotation_Appls &annotations)
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("WARNING: %C is annotated but its type can't be annotated!\n"),
-        full_name ()
+        full_name ().c_str ()
         ));
     }
 }
@@ -1689,7 +1487,7 @@ AST_Decl::annotations ()
 }
 
 bool
-AST_Decl::ami_visit ()
+AST_Decl::ami_visit () const
 {
   return true;
 }

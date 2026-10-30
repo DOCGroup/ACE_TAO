@@ -69,8 +69,10 @@ private:
   ACE_Parse_Node *next_;
 
 private:
-  ACE_Parse_Node (const ACE_Parse_Node&) = delete;
-  ACE_Parse_Node& operator= (const ACE_Parse_Node&) = delete;
+  ACE_Parse_Node (ACE_Parse_Node const &) = delete;
+  ACE_Parse_Node (ACE_Parse_Node &&) = delete;
+  ACE_Parse_Node &operator= (ACE_Parse_Node const &) = delete;
+  ACE_Parse_Node &operator= (ACE_Parse_Node &&) = delete;
 };
 
 /**
@@ -97,8 +99,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Suspend_Node (const ACE_Suspend_Node&) = delete;
-  ACE_Suspend_Node& operator= (const ACE_Suspend_Node&) = delete;
+  ACE_Suspend_Node (ACE_Suspend_Node const &) = delete;
+  ACE_Suspend_Node (ACE_Suspend_Node &&) = delete;
+  ACE_Suspend_Node &operator= (ACE_Suspend_Node const &) = delete;
+  ACE_Suspend_Node &operator= (ACE_Suspend_Node &&) = delete;
 };
 
 /**
@@ -125,8 +129,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Resume_Node (const ACE_Resume_Node&) = delete;
-  ACE_Resume_Node& operator= (const ACE_Resume_Node&) = delete;
+  ACE_Resume_Node (ACE_Resume_Node const &) = delete;
+  ACE_Resume_Node (ACE_Resume_Node &&) = delete;
+  ACE_Resume_Node &operator= (ACE_Resume_Node const &) = delete;
+  ACE_Resume_Node &operator= (ACE_Resume_Node &&) = delete;
 };
 
 /**
@@ -153,8 +159,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Remove_Node (const ACE_Remove_Node&) = delete;
-  ACE_Remove_Node& operator= (const ACE_Remove_Node&) = delete;
+  ACE_Remove_Node (ACE_Remove_Node const &) = delete;
+  ACE_Remove_Node (ACE_Remove_Node &&) = delete;
+  ACE_Remove_Node &operator= (ACE_Remove_Node const &) = delete;
+  ACE_Remove_Node &operator= (ACE_Remove_Node &&) = delete;
 };
 
 /**
@@ -188,8 +196,10 @@ private:
   ACE_TCHAR *parameters_;
 
 private:
-  ACE_Static_Node (const ACE_Static_Node&) = delete;
-  ACE_Static_Node& operator= (const ACE_Static_Node&) = delete;
+  ACE_Static_Node (ACE_Static_Node const &) = delete;
+  ACE_Static_Node (ACE_Static_Node &&) = delete;
+  ACE_Static_Node &operator= (ACE_Static_Node const &) = delete;
+  ACE_Static_Node &operator= (ACE_Static_Node &&) = delete;
 };
 
 
@@ -225,8 +235,10 @@ private:
   std::unique_ptr<const ACE_Service_Type_Factory> factory_;
 
 private:
-  ACE_Dynamic_Node (const ACE_Dynamic_Node&) = delete;
-  ACE_Dynamic_Node& operator= (const ACE_Dynamic_Node&) = delete;
+  ACE_Dynamic_Node (ACE_Dynamic_Node const &) = delete;
+  ACE_Dynamic_Node (ACE_Dynamic_Node &&) = delete;
+  ACE_Dynamic_Node &operator= (ACE_Dynamic_Node const &) = delete;
+  ACE_Dynamic_Node &operator= (ACE_Dynamic_Node &&) = delete;
 };
 
 /**
@@ -258,8 +270,10 @@ private:
   const ACE_Parse_Node *mods_;
 
 private:
-  ACE_Stream_Node (const ACE_Stream_Node&) = delete;
-  ACE_Stream_Node& operator= (const ACE_Stream_Node&) = delete;
+  ACE_Stream_Node (ACE_Stream_Node const &) = delete;
+  ACE_Stream_Node (ACE_Stream_Node &&) = delete;
+  ACE_Stream_Node &operator= (ACE_Stream_Node const &) = delete;
+  ACE_Stream_Node &operator= (ACE_Stream_Node &&) = delete;
 };
 
 /**
@@ -290,8 +304,10 @@ private:
   const ACE_Parse_Node *mods_;
 
 private:
-  ACE_Dummy_Node (const ACE_Dummy_Node&) = delete;
-  ACE_Dummy_Node& operator= (const ACE_Dummy_Node&) = delete;
+  ACE_Dummy_Node (ACE_Dummy_Node const &) = delete;
+  ACE_Dummy_Node (ACE_Dummy_Node &&) = delete;
+  ACE_Dummy_Node &operator= (ACE_Dummy_Node const &) = delete;
+  ACE_Dummy_Node &operator= (ACE_Dummy_Node &&) = delete;
 };
 
 /**
@@ -347,8 +363,10 @@ protected:
   void *symbol_;
 
 private:
-  ACE_Location_Node (const ACE_Location_Node&) = delete;
-  ACE_Location_Node& operator= (const ACE_Location_Node&) = delete;
+  ACE_Location_Node (ACE_Location_Node const &) = delete;
+  ACE_Location_Node (ACE_Location_Node &&) = delete;
+  ACE_Location_Node &operator= (ACE_Location_Node const &) = delete;
+  ACE_Location_Node &operator= (ACE_Location_Node &&) = delete;
 };
 
 /**
@@ -380,8 +398,10 @@ private:
   const ACE_TCHAR *object_name_;
 
 private:
-  ACE_Object_Node (const ACE_Object_Node&) = delete;
-  ACE_Object_Node& operator= (const ACE_Object_Node&) = delete;
+  ACE_Object_Node (ACE_Object_Node const &) = delete;
+  ACE_Object_Node (ACE_Object_Node &&) = delete;
+  ACE_Object_Node &operator= (ACE_Object_Node const &) = delete;
+  ACE_Object_Node &operator= (ACE_Object_Node &&) = delete;
 };
 
 /**
@@ -433,8 +453,10 @@ private:
   const ACE_TCHAR *function_name_;
 
 private:
-  ACE_Function_Node (const ACE_Function_Node&) = delete;
-  ACE_Function_Node& operator= (const ACE_Function_Node&) = delete;
+  ACE_Function_Node (ACE_Function_Node const &) = delete;
+  ACE_Function_Node (ACE_Function_Node &&) = delete;
+  ACE_Function_Node &operator= (ACE_Function_Node const &) = delete;
+  ACE_Function_Node &operator= (ACE_Function_Node &&) = delete;
 };
 
 /**
@@ -468,8 +490,10 @@ private:
   const ACE_TCHAR *function_name_;
 
 private:
-  ACE_Static_Function_Node (const ACE_Static_Function_Node&) = delete;
-  ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&) = delete;
+  ACE_Static_Function_Node (ACE_Static_Function_Node const &) = delete;
+  ACE_Static_Function_Node (ACE_Static_Function_Node &&) = delete;
+  ACE_Static_Function_Node &operator= (ACE_Static_Function_Node const &) = delete;
+  ACE_Static_Function_Node &operator= (ACE_Static_Function_Node &&) = delete;
 };
 
 /// A helper class used to safely register dynamic services, which may contains
@@ -493,11 +517,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /**
-   * Not implemented to enforce no copying
-   */
-  ACE_Service_Type_Factory(const ACE_Service_Type_Factory&) = delete;
-  ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&) = delete;
+  // Prevent copying and moving.
+  ACE_Service_Type_Factory (ACE_Service_Type_Factory const &) = delete;
+  ACE_Service_Type_Factory (ACE_Service_Type_Factory &&) = delete;
+  ACE_Service_Type_Factory &operator= (ACE_Service_Type_Factory const &) = delete;
+  ACE_Service_Type_Factory &operator= (ACE_Service_Type_Factory &&) = delete;
 
 private:
   ACE_TString name_;

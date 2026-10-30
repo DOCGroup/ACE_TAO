@@ -4,20 +4,6 @@
 
 // This is the interface program that accesses the remote object
 
-// Constructor.
-Persistent_Client_i::Persistent_Client_i ()
-  : height_ (0),
-    width_ (0)
-{
-  //no-op
-}
-
-//Destructor.
-Persistent_Client_i::~Persistent_Client_i ()
-{
-  //no-op
-}
-
 int
 Persistent_Client_i::parse_args (int argc,
                                  ACE_TCHAR *argv[])
@@ -37,7 +23,7 @@ Persistent_Client_i::parse_args (int argc,
         this->height_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'r':
-        this->remove_ = 1;
+        this->remove_ = true;
         break;
       }
     }
@@ -46,7 +32,7 @@ Persistent_Client_i::parse_args (int argc,
 }
 
 int
-Persistent_Client_i::run (const char *name,
+Persistent_Client_i::run (char const *name,
                           int argc,
                           ACE_TCHAR *argv[])
 {
@@ -80,20 +66,22 @@ Persistent_Client_i::run (const char *name,
             }
         }
 
-      if (client.shutdown () == 1) {
-        client->shutdown ();
-      }
+      if (client.shutdown ())
+        {
+          client->shutdown ();
+        }
 
-      if (this->remove_ == 1) {
-        client->cleanup ();
-      }
+      if (this->remove_)
+        {
+          client->cleanup ();
+        }
     }
-  catch (const CORBA::UserException& range_ex)
+  catch (CORBA::UserException const& range_ex)
     {
       range_ex._tao_print_exception ("\tFrom get and set grid");
       return -1;
     }
-  catch (const CORBA::SystemException& memex)
+  catch (CORBA::SystemException const& memex)
     {
       memex._tao_print_exception ("Cannot make grid as Memory exhausted");
       return -1;

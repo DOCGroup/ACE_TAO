@@ -18,9 +18,6 @@ be_visitor_union_discriminant_cs::be_visitor_union_discriminant_cs (
 {
 }
 
-be_visitor_union_discriminant_cs::~be_visitor_union_discriminant_cs ()
-{
-}
 
 int
 be_visitor_union_discriminant_cs::visit_enum (be_enum *node)

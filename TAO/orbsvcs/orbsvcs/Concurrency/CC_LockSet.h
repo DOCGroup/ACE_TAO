@@ -39,7 +39,8 @@
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Token.h"
-#include "ace/Unbounded_Queue.h"
+
+#include <deque>
 
 #include "orbsvcs/CosConcurrencyControlS.h"
 #include "orbsvcs/Concurrency/concurrency_serv_export.h"
@@ -47,11 +48,6 @@
 #if defined (lock_held)
 #undef lock_held
 #endif /* lock_held */
-
-/// This constant defines the number of lock modes. There is really no
-/// way to set this constant dynamically because the nuber of lock
-/// modes are not stated as part of the IDL.
-#define NUMBER_OF_LOCK_MODES 5
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -80,10 +76,15 @@ public:
 
   /// Constructor used if create_related is used to create the lock
   /// set.
-  CC_LockSet (CosConcurrencyControl::LockSet_ptr related);
+  explicit CC_LockSet (CosConcurrencyControl::LockSet_ptr related);
 
   /// Destructor.
-  ~CC_LockSet () override;
+  ~CC_LockSet () override = default;
+
+  CC_LockSet (CC_LockSet const &) = delete;
+  CC_LockSet &operator = (CC_LockSet const &) = delete;
+  CC_LockSet (CC_LockSet &&) = delete;
+  CC_LockSet &operator = (CC_LockSet &&) = delete;
 
   // = CosConcurrencyControl methods
   /// Acquires this lock. Blocks until lock is obtained
@@ -102,19 +103,19 @@ public:
 
   // = Debugging methods
   /// Dump the state of the object to stdout
-  void dump ();
+  void dump () const;
 
 private:
   /// Converts the CORBA specification's lock mode to the internal
   /// representation
-  CC_LockModeEnum lmconvert (CosConcurrencyControl::lock_mode mode);
+  static CC_LockModeEnum lmconvert (CosConcurrencyControl::lock_mode mode);
 
   /// Initiatlizes the lock set array and acquires the initial
   /// semaphore.
   void Init ();
 
   /// Returns true if the held lock and the requested lock are compatible
-  CORBA::Boolean compatible (CC_LockModeEnum mr);
+  bool compatible (CC_LockModeEnum mr) const;
 
   // The _i functions below ensures atomical access the the state data
   // for the lock set. The functions acquires a thread lock in order
@@ -123,8 +124,8 @@ private:
   // suspended or not (by locking the semaphore.
 
   /// Locks the access to the data and decides whether to lock or
-  /// not. Returns 1 if the semaphore should be locked.
-  int lock_i (CC_LockModeEnum lm);
+  /// not. Returns true if the semaphore should be locked.
+  bool lock_i (CC_LockModeEnum lm);
 
   // int unlock_i (CosConcurrencyControl::lock_mode lm);
   // This function is not necessary because we lock access to the data
@@ -132,20 +133,21 @@ private:
   // the queue. Thereafter we release the lock.
 
   /// Locks the access to the data and determines whether to return
-  /// true or false. Returns 1 if true should be returned.
-  int try_lock_i (CC_LockModeEnum lm);
+  /// true or false.
+  bool try_lock_i (CC_LockModeEnum lm);
 
   /// Locks access to the data and determines if the semaphore should
-  /// be locked. Returns 1 if the semaphore should be locked.
-  int change_mode_i (CC_LockModeEnum lm_held,
-                     CC_LockModeEnum lm_new);
+  /// be locked.
+  bool change_mode_i (CC_LockModeEnum lm_held,
+                      CC_LockModeEnum lm_new);
 
   /// Locks access ti the data and checks whether the lock is held.
-  int lock_held (CC_LockModeEnum lm);
+  bool lock_held (CC_LockModeEnum lm);
 
   /// An array of lock counters that counts how many locks of that type
   /// that the lock set holds.
-  int lock_[NUMBER_OF_LOCK_MODES];
+  static constexpr int number_of_lock_modes = 5;
+  int lock_[number_of_lock_modes] {};
 
   // ACE_Thread_Semaphore semaphore_;
   /**
@@ -168,13 +170,19 @@ private:
 
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.
-  static CORBA::Boolean const compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES];
+  inline static constexpr bool compatible_[number_of_lock_modes][number_of_lock_modes] = {
+    {true, true, true, true, false},
+    {true, true, true, false, false},
+    {true, true, false, false, false},
+    {true, false, false, true, false},
+    {false, false, false, false, false}
+  };
 
   /// Lock to ensure that race conditions does not occur.
   TAO_SYNCH_MUTEX mlock_;
 
   /// Queue to hold the requested locks not yet granted.
-  ACE_Unbounded_Queue <CC_LockModeEnum> lock_queue_;
+  std::deque<CC_LockModeEnum> lock_queue_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

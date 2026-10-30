@@ -6,14 +6,14 @@
 
 #include "ace/Manual_Event.h"
 
-Server_Task::Server_Task (const ACE_TCHAR *output,
+Server_Task::Server_Task (ACE_TCHAR const *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-    , output_ (output)
-    , me_ (me)
-    , sorb_ (CORBA::ORB::_duplicate (sorb))
+  , output_ (output)
+  , me_ (me)
+  , sorb_ (CORBA::ORB::_duplicate (sorb))
 {
 }
 
@@ -26,39 +26,39 @@ Server_Task::svc ()
       // compiler so we just to put everything in a right order.
 
       // Create and register factory for BaseNode.
-      BaseNode_init *bn_factory = 0;
+      BaseNode_init *bn_factory = nullptr;
       ACE_NEW_RETURN (bn_factory,
                       BaseNode_init,
                       1);
 
       this->sorb_->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory);
+                                           bn_factory);
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
-      TreeController_init *tc_factory = 0;
+      TreeController_init *tc_factory = nullptr;
       ACE_NEW_RETURN (tc_factory,
                       TreeController_init,
                       1);
 
       this->sorb_->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory);
+                                           tc_factory);
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
-      StringNode_init *sn_factory = 0;
+      StringNode_init *sn_factory = nullptr;
       ACE_NEW_RETURN (sn_factory,
                       StringNode_init,
                       1);
 
       this->sorb_->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory);
+                                           sn_factory);
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
 
       CORBA::Object_var poa_object =
-        this->sorb_->resolve_initial_references("RootPOA");
+        this->sorb_->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -76,7 +76,7 @@ Server_Task::svc ()
                       Test_impl (this->sorb_.in ()),
                       1);
 
-      PortableServer::ServantBase_var owner_transfer(test_impl);
+      PortableServer::ServantBase_var owner_transfer (test_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (test_impl);
@@ -89,8 +89,8 @@ Server_Task::svc ()
         this->sorb_->object_to_string (test.in ());
 
       // If the this->output_ exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (this->output_, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (this->output_, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            this->output_),
@@ -110,7 +110,7 @@ Server_Task::svc ()
 
       this->sorb_->destroy ();
    }
- catch (const CORBA::Exception& ex)
+ catch (CORBA::Exception const& ex)
    {
      ex._tao_print_exception ("Exception caught:");
      return 1;

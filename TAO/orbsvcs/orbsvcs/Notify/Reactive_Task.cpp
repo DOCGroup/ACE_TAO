@@ -8,14 +8,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task ()
-  :timer_ (0)
-{
-}
+TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task () = default;
 
-TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task ()
-{
-}
+TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task () = default;
 
 void
 TAO_Notify_Reactive_Task::init ()

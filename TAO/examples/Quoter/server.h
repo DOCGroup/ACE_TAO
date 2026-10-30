@@ -47,6 +47,11 @@ public:
   /// Destructor
   ~Quoter_Server ();
 
+  Quoter_Server (Quoter_Server const &) = delete;
+  Quoter_Server &operator= (Quoter_Server const &) = delete;
+  Quoter_Server (Quoter_Server &&) = delete;
+  Quoter_Server &operator= (Quoter_Server &&) = delete;
+
   /// Initialize the Quoter_Server state - parsing arguments and ...
   int init (int argc, ACE_TCHAR *argv[]);
 
@@ -62,25 +67,25 @@ private:
   int init_naming_service ();
 
   /// Number of quoter objects we export.
-  int num_of_objs_;
+  int num_of_objs_ {1};
 
   /// Naming Service context
-  CosNaming::NamingContext_var namingContext_var_;
+  CosNaming::NamingContext_var namingContext_var_ {};
 
   /// Instantiate the Quoter Factory
-  Quoter_Factory_i  *quoter_Factory_i_ptr_;
+  Quoter_Factory_i *quoter_Factory_i_ptr_ {};
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
   /// Number of commandline arguments.
-  int argc_;
+  int argc_ {};
 
   /// commandline arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_;
+  int debug_level_ {1};
 };
 
 #endif /* QUOTER_SERVER_H */

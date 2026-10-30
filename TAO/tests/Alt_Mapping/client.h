@@ -16,6 +16,7 @@
 #include "tao/Codeset/Codeset.h"
 #include "alt_mappingC.h"
 #include "results.h"
+#include <memory>
 
 /**
  * @class Alt_Mapping_Client
@@ -37,9 +38,13 @@ public:
   // = Constructor and destructor.
   Alt_Mapping_Client (CORBA::ORB_ptr orb,
                      Alt_Mapping_ptr objref,
-                     T *);
+                     std::unique_ptr<T>);
 
-  ~Alt_Mapping_Client ();
+  ~Alt_Mapping_Client () = default;
+  Alt_Mapping_Client (Alt_Mapping_Client const &) = delete;
+  Alt_Mapping_Client (Alt_Mapping_Client &&) = delete;
+  Alt_Mapping_Client &operator= (Alt_Mapping_Client const &) = delete;
+  Alt_Mapping_Client &operator= (Alt_Mapping_Client &&) = delete;
 
   /// run the SII test
   int run_sii_test ();
@@ -52,7 +57,7 @@ private:
   Alt_Mapping_ptr alt_mapping_test_;
 
   /// object doing the actual work
-  TEST_OBJECT *test_object_;
+  std::unique_ptr<TEST_OBJECT> test_object_;
 
   /// results
   Results results_;

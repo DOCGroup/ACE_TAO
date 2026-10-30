@@ -28,6 +28,11 @@ public:
   {
   }
 
+  TAO_Dynamic_Statistic (TAO_Dynamic_Statistic const&) = delete;
+  TAO_Dynamic_Statistic (TAO_Dynamic_Statistic&&) = delete;
+  TAO_Dynamic_Statistic& operator= (TAO_Dynamic_Statistic const&) = delete;
+  TAO_Dynamic_Statistic& operator= (TAO_Dynamic_Statistic&&) = delete;
+
   /// Take the interface, update the data, calculate the statistic and
   /// store it for later calculations.  The implementation of this
   /// method is expected to call the receive base class method. This

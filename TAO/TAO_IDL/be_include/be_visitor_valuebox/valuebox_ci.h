@@ -15,6 +15,8 @@
 #ifndef _BE_VISITOR_VALUEBOX_CI_H_
 #define _BE_VISITOR_VALUEBOX_CI_H_
 
+#include <string>
+
 /**
  * @class be_visitor_valuebox_ci
  *
@@ -26,10 +28,15 @@ class be_visitor_valuebox_ci : public be_visitor_valuebox
 {
 public:
   /// constructor
-  be_visitor_valuebox_ci (be_visitor_context *ctx);
+  explicit be_visitor_valuebox_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_ci () override;
+  ~be_visitor_valuebox_ci () override  = default;
+
+  be_visitor_valuebox_ci (be_visitor_valuebox_ci const &) = delete;
+  be_visitor_valuebox_ci (be_visitor_valuebox_ci &&) = delete;
+  be_visitor_valuebox_ci &operator= (be_visitor_valuebox_ci const &) = delete;
+  be_visitor_valuebox_ci &operator= (be_visitor_valuebox_ci &&) = delete;
 
   /// visit valuebox.
   int visit_valuebox (be_valuebox *node) override;
@@ -63,30 +70,30 @@ public:
 
 private:
   int emit_for_predef_enum (be_type *node,
-                            const char * type_suffix,
+                            std::string const& type_suffix,
                             bool is_any);
 
-  void emit_default_constructor ();
+  void emit_default_constructor () const;
 
-  void emit_default_constructor_alloc (be_decl *node);
+  void emit_default_constructor_alloc (be_decl *node) const;
 
   void emit_constructor_one_arg (be_decl *node,
-                                const char * type_suffix);
+                                std::string const& type_suffix);
 
-  void emit_constructor_one_arg_alloc (be_decl *node);
+  void emit_constructor_one_arg_alloc (be_decl *node) const;
 
-  void emit_copy_constructor ();
+  void emit_copy_constructor () const;
 
-  void emit_copy_constructor_alloc (be_decl *node);
+  void emit_copy_constructor_alloc (be_decl *node) const;
 
   void emit_assignment (be_decl *node,
-                        const char * type_suffix);
+                        std::string const& type_suffix);
 
-  void emit_assignment_alloc (be_decl *node);
+  void emit_assignment_alloc (be_decl *node) const;
 
-  void emit_accessor_modifier (be_decl *node);
+  void emit_accessor_modifier (be_decl *node) const;
 
-  void emit_boxed_access (be_decl *node, const char *out_ref_modifier);
+  void emit_boxed_access (be_decl *node, std::string const& out_ref_modifier);
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CI_H_ */

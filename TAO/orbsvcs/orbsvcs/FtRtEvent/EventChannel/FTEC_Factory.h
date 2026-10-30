@@ -24,6 +24,10 @@ class TAO_FTEC_Basic_Factory : public TAO_EC_Default_Factory
 public:
     /// Constructor
   TAO_FTEC_Basic_Factory ();
+  TAO_FTEC_Basic_Factory(TAO_FTEC_Basic_Factory const&) = delete;
+  TAO_FTEC_Basic_Factory(TAO_FTEC_Basic_Factory&&) = delete;
+  TAO_FTEC_Basic_Factory& operator=(TAO_FTEC_Basic_Factory const&) = delete;
+  TAO_FTEC_Basic_Factory& operator=(TAO_FTEC_Basic_Factory&&) = delete;
   TAO_EC_ConsumerAdmin*
       create_consumer_admin (TAO_EC_Event_Channel_Base*) override;
   TAO_EC_SupplierAdmin*

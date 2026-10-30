@@ -29,25 +29,28 @@ class Time_i: public POA_Time
 {
 public:
   /// Constructor
-  Time_i ();
+  Time_i () = default;
 
   /// Destructor
-  virtual ~Time_i ();
+  ~Time_i () override = default;
+
+  Time_i (Time_i const &) = delete;
+  Time_i &operator= (Time_i const &) = delete;
+  Time_i (Time_i &&) = delete;
+  Time_i &operator= (Time_i &&) = delete;
 
   /// Return the current time/date on the server
-  virtual CORBA::Long current_time ();
+  CORBA::Long current_time () override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
 
 private:
   /// ORB pointer.
-  CORBA::ORB_var orb_;
-
-  void operator= (const Time_i &);
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* TIME_I_H */

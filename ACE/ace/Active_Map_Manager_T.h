@@ -36,6 +36,11 @@ template <class T>
 class ACE_Active_Map_Manager : public ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>
 {
 public:
+  ACE_Active_Map_Manager (ACE_Active_Map_Manager const &) = delete;
+  ACE_Active_Map_Manager (ACE_Active_Map_Manager &&) = delete;
+  ACE_Active_Map_Manager &operator= (ACE_Active_Map_Manager const &) = delete;
+  ACE_Active_Map_Manager &operator= (ACE_Active_Map_Manager &&) = delete;
+
   // = Traits.
   using key_type = ACE_Active_Map_Manager_Key;
   using mapped_type = T;
@@ -179,11 +184,6 @@ public:
 protected:
   /// Private base class
   using ACE_AMM_BASE = ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>;
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Active_Map_Manager<T> &) = delete;
-  ACE_Active_Map_Manager (const ACE_Active_Map_Manager<T> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

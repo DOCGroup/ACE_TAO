@@ -31,7 +31,7 @@ IFR_Service::init (int argc,
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("IFR_Service::init");
 
@@ -55,7 +55,7 @@ IFR_Service::fini ()
     {
       this->my_ifr_server_.fini ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("IFR_Service::fini");
       throw;

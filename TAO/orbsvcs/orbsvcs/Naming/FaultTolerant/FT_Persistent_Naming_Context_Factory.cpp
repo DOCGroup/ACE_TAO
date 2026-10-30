@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Persistent_Naming_Context*
 TAO_FT_Persistent_Naming_Context_Factory::create_naming_context_impl (
   PortableServer::POA_ptr poa,
-  const char *poa_id,
+  char const *poa_id,
   TAO_Persistent_Context_Index *context_index,
   HASH_MAP * map,
   ACE_UINT32 *counter)

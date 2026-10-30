@@ -1,6 +1,6 @@
 #include "test_i.h"
 
-int Simple_Server_count=0;
+int Simple_Server_count {};
 
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb))
@@ -8,14 +8,14 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 }
 
 void
-Simple_Server_i::sendCharSeq (const Char_Seq &)
+Simple_Server_i::sendCharSeq (Char_Seq const &)
 {
   Simple_Server_count++;
   //ACE_DEBUG ((LM_DEBUG, "."));
 }
 
 void
-Simple_Server_i::sendOctetSeq (const Octet_Seq &)
+Simple_Server_i::sendOctetSeq (Octet_Seq const &)
 {
   Simple_Server_count++;
   //ACE_DEBUG ((LM_DEBUG, "."));
@@ -38,7 +38,7 @@ Simple_Server_i::shutdown ()
     {
       this->orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }

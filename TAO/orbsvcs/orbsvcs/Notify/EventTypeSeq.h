@@ -16,7 +16,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Notify/EventType.h"
-#include "ace/Unbounded_Set.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -26,15 +27,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Allows operations using the CosNotification::EventTypeSeq type.
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq
-  : public ACE_Unbounded_Set <TAO_Notify_EventType>
-  , public TAO_Notify::Topology_Object
+  : public TAO_Notify::Topology_Object
 {
-  using inherited = ACE_Unbounded_Set <TAO_Notify_EventType>;
+  using Storage = std::vector<TAO_Notify_EventType>;
 
 public:
+  using const_iterator = Storage::const_iterator;
+
   /// Constructor
   TAO_Notify_EventTypeSeq ();
-  TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq);
+  explicit TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq);
   TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs);
   TAO_Notify_EventTypeSeq & operator = (const TAO_Notify_EventTypeSeq & rhs);
 
@@ -63,17 +65,28 @@ public:
   /// Excludes the special event type. This is used to avoid sending * type updates to proxys.
   void populate_no_special (CosNotification::EventTypeSeq& event_type) const;
 
+  const_iterator begin () const;
+  const_iterator end () const;
+  size_t size () const;
+  bool empty () const;
+  void clear ();
+  bool contains (TAO_Notify_EventType const & event_type) const;
+  int add (TAO_Notify_EventType const & event_type);
+  int erase (TAO_Notify_EventType const & event_type);
+
   /// Print the contents.
   void dump () const;
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type, CORBA::Long id,
-    const TAO_Notify::NVPList& attrs);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  TAO_Notify::Topology_Object* load_child (ACE_CString const & type, CORBA::Long id,
+                                           TAO_Notify::NVPList const & attrs) override;
 
 private:
-  virtual void release ();
+  void release () override;
+
+  Storage event_types_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

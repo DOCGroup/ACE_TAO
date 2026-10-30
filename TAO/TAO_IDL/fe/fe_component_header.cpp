@@ -19,16 +19,13 @@ FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
                         supports,
                         false,
                         false,
-                        false),
-    base_component_ (nullptr)
+                        false)
 {
   this->compile_inheritance (base_component);
   this->compile_supports (supports);
 }
 
-FE_ComponentHeader::~FE_ComponentHeader ()
-{
-}
+FE_ComponentHeader::~FE_ComponentHeader () = default;
 
 AST_Component *
 FE_ComponentHeader::base_component () const
@@ -117,8 +114,6 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
   UTL_ScopedName *item = nullptr;
   AST_Interface *iface = nullptr;
   AST_Type *t = nullptr;
-  long j = 0;
-  long k = 0;
 
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.
@@ -226,31 +221,31 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 
   // OK, install in interface header.
   // First the flat list (all ancestors).
-  if (this->iused_flat_ > 0)
+  if (!this->iseen_flat_.empty ())
     {
       ACE_NEW (this->inherits_flat_,
-               AST_Interface *[this->iused_flat_]);
+               AST_Interface *[this->iseen_flat_.size ()]);
 
-      for (j = 0; j < this->iused_flat_; ++j)
+      for (std::size_t i = 0; i < this->iseen_flat_.size (); ++i)
         {
-          this->inherits_flat_[j] = this->iseen_flat_[j];
+          this->inherits_flat_[i] = this->iseen_flat_[i];
         }
 
-      this->n_inherits_flat_ = this->iused_flat_;
+      this->n_inherits_flat_ = static_cast<long> (this->iseen_flat_.size ());
     }
 
   // Then the list of immediate ancestors.
-  if (this->iused_ > 0)
+  if (!this->iseen_.empty ())
     {
       ACE_NEW (this->inherits_,
-               AST_Type *[this->iused_]);
+               AST_Type *[this->iseen_.size ()]);
 
-      for (k = 0; k < this->iused_; ++k)
+      for (std::size_t i = 0; i < this->iseen_.size (); ++i)
         {
-          this->inherits_[k] = this->iseen_[k];
+          this->inherits_[i] = this->iseen_[i];
         }
 
-      this->n_inherits_ = this->iused_;
+      this->n_inherits_ = static_cast<long> (this->iseen_.size ());
     }
 }
 

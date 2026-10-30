@@ -80,21 +80,21 @@ retrieve_ft_request_context(
 {
   service_context = ri->get_request_service_context(IOP::FT_REQUEST);
 
-  const char * buf =
-    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+  char const *buf =
+    reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
 
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
 
-  if ((cdr >> ft_request_service_context) == 0)
+  if (!(cdr >> ft_request_service_context))
     throw CORBA::BAD_PARAM ();
 }
 
@@ -106,26 +106,26 @@ get_transaction_depth_context(
   try{
     service_context = ri->get_request_service_context(FTRT::FT_TRANSACTION_DEPTH);
   }
-  catch (const CORBA::BAD_PARAM&)
+  catch (CORBA::BAD_PARAM const &)
   {
     ORBSVCS_DEBUG((LM_DEBUG, "Received request without transaction depth context\n"));
     return -1;
   }
 
-  const char * buf =
-    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+  char const *buf =
+    reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   FTRT::TransactionDepth result;
-  if ((cdr >> result) == 0)
+  if (!(cdr >> result))
     throw CORBA::BAD_PARAM ();
 
   return result;
@@ -139,19 +139,19 @@ get_sequence_number_context(
   IOP::ServiceContext_var service_context;
   service_context = ri->get_request_service_context(FTRT::FT_SEQUENCE_NUMBER);
 
-  const char * buf =
-    reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+  char const *buf =
+    reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
   Safe_InputCDR cdr (buf,
     service_context->context_data.length ());
 
   CORBA::Boolean byte_order;
 
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+  if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
-  if ((cdr >> result) == 0)
+  if (!(cdr >> result))
     throw CORBA::BAD_PARAM ();
 
   return result;

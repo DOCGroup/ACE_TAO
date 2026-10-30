@@ -80,7 +80,7 @@ TAO_RT_Thread_Lane_Resources_Manager::close_all_transports ()
 }
 
 int
-TAO_RT_Thread_Lane_Resources_Manager::is_collocated (const TAO_MProfile &mprofile)
+TAO_RT_Thread_Lane_Resources_Manager::is_collocated (TAO_MProfile const &mprofile)
 {
   int result =
     this->default_lane_resources_->is_collocated (mprofile);
@@ -130,7 +130,7 @@ TAO_RT_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manag
   /// Create the RT Thread Lane Resources Manager.
   ACE_NEW_RETURN (manager,
                   TAO_RT_Thread_Lane_Resources_Manager (core),
-                  0);
+                  nullptr);
 
   return manager;
 }

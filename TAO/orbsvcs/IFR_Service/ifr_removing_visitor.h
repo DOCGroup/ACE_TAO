@@ -35,13 +35,17 @@ public:
   ifr_removing_visitor ();
 
   /// Destructor.
-  virtual ~ifr_removing_visitor ();
+  ~ifr_removing_visitor () override;
+  ifr_removing_visitor (ifr_removing_visitor const &) = delete;
+  ifr_removing_visitor (ifr_removing_visitor &&) = delete;
+  ifr_removing_visitor &operator= (ifr_removing_visitor const &) = delete;
+  ifr_removing_visitor &operator= (ifr_removing_visitor &&) = delete;
 
   /// Visit the scope.
-  virtual int visit_scope (UTL_Scope *node);
+  int visit_scope (UTL_Scope *node) override;
 
   /// Visit the root.
-  virtual int visit_root (AST_Root *node);
+  int visit_root (AST_Root *node) override;
 };
 
 #endif /* TAO_IFR_REMOVING_VISITOR_H */

@@ -30,7 +30,6 @@
 #include "ace/Task.h"
 #include "ace/Synch.h"
 #include "ace/Containers_T.h"
-#include "ace/Vector_T.h"
 #include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

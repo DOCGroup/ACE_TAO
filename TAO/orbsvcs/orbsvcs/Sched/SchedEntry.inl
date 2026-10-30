@@ -84,14 +84,14 @@ Task_Entry::dfs_status (Task_Entry::DFS_Status ds)
 // Sets a flag indicating whether node is a thread delineator.
 
 ACE_INLINE void
-Task_Entry::is_thread_delineator (int i)
+Task_Entry::is_thread_delineator (bool value)
 {
-  is_thread_delineator_ = i;
+  is_thread_delineator_ = value;
 }
 
 // Gets the flag indicating whether node is a thread delineator.
 
-ACE_INLINE int
+ACE_INLINE bool
 Task_Entry::is_thread_delineator () const
 {
   return is_thread_delineator_;
@@ -100,14 +100,14 @@ Task_Entry::is_thread_delineator () const
 // Sets a flag indicating whether node has unresolved remote dependencies.
 
 ACE_INLINE void
-Task_Entry::has_unresolved_remote_dependencies (int i)
+Task_Entry::has_unresolved_remote_dependencies (bool value)
 {
-  has_unresolved_remote_dependencies_ = i;
+  has_unresolved_remote_dependencies_ = value;
 }
 
 // Gets the flag indicating whether node has unresolved remote dependencies.
 
-ACE_INLINE int
+ACE_INLINE bool
 Task_Entry::has_unresolved_remote_dependencies () const
 {
   return has_unresolved_remote_dependencies_;
@@ -117,14 +117,14 @@ Task_Entry::has_unresolved_remote_dependencies () const
 // Sets a flag indicating whether node has unresolved local dependencies.
 
 ACE_INLINE void
-Task_Entry::has_unresolved_local_dependencies (int i)
+Task_Entry::has_unresolved_local_dependencies (bool value)
 {
-  has_unresolved_local_dependencies_ = i;
+  has_unresolved_local_dependencies_ = value;
 }
 
 // Gets the flag indicating whether node has unresolved local dependencies.
 
-ACE_INLINE int
+ACE_INLINE bool
 Task_Entry::has_unresolved_local_dependencies () const
 {
   return has_unresolved_local_dependencies_;
@@ -132,7 +132,7 @@ Task_Entry::has_unresolved_local_dependencies () const
 
 // Gets the set of Task Entries on which this entry depends.
 
-ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
+ACE_INLINE std::vector<Task_Entry_Link *> &
 Task_Entry::calls ()
 {
   return calls_;
@@ -140,7 +140,7 @@ Task_Entry::calls ()
 
 // Gets the set of Task Entries which depend on this entry.
 
-ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
+ACE_INLINE std::vector<Task_Entry_Link *> &
 Task_Entry::callers ()
 {
   return callers_;
@@ -298,14 +298,8 @@ Dispatch_Entry::original_dispatch ()
 // Class Dispatch_Entry_Link //
 ///////////////////////////////
 
-ACE_INLINE
-Dispatch_Entry_Link::~Dispatch_Entry_Link ()
-{
-}
-  // dtor
-
 ACE_INLINE bool
-Dispatch_Entry_Link::operator < (const Dispatch_Entry_Link &d) const
+Dispatch_Entry_Link::operator < (Dispatch_Entry_Link const &d) const
 {
   return (this->dispatch_entry_ < d.dispatch_entry_);
 }
@@ -403,7 +397,7 @@ TimeLine_Entry::prev (TimeLine_Entry *t)
 
 
 ACE_INLINE bool
-TimeLine_Entry::operator < (const TimeLine_Entry &t) const
+TimeLine_Entry::operator < (TimeLine_Entry const &t) const
 {
   return (start_ < t.start_) ? true : false;
 }
@@ -415,7 +409,7 @@ TimeLine_Entry::operator < (const TimeLine_Entry &t) const
 ///////////////////////////////
 
 
-ACE_INLINE TimeLine_Entry_Link::TimeLine_Entry_Link  (TimeLine_Entry &t)
+ACE_INLINE TimeLine_Entry_Link::TimeLine_Entry_Link (TimeLine_Entry &t)
   : entry_ (t)
 {
 }
@@ -429,7 +423,7 @@ TimeLine_Entry_Link::entry () const
   // accessor for the underlying entry
 
 ACE_INLINE bool
-TimeLine_Entry_Link::operator < (const TimeLine_Entry_Link &l) const
+TimeLine_Entry_Link::operator < (TimeLine_Entry_Link const &l) const
 {
   return (entry_ < l.entry_);
 }

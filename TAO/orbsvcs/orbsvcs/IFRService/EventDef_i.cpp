@@ -13,9 +13,7 @@ TAO_EventDef_i::TAO_EventDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EventDef_i::~TAO_EventDef_i ()
-{
-}
+TAO_EventDef_i::~TAO_EventDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_EventDef_i::def_kind ()
@@ -43,7 +41,7 @@ TAO_EventDef_i::destroy_i ()
 CORBA::Contained::Description *
 TAO_EventDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -57,9 +55,9 @@ TAO_EventDef_i::describe_i ()
 }
 
 CORBA::Boolean
-TAO_EventDef_i::is_a (const char *event_id)
+TAO_EventDef_i::is_a (char const *event_id)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 
@@ -67,11 +65,11 @@ TAO_EventDef_i::is_a (const char *event_id)
 }
 
 CORBA::Boolean
-TAO_EventDef_i::is_a_i (const char *event_id)
+TAO_EventDef_i::is_a_i (char const *event_id)
 {
   if (ACE_OS::strcmp (event_id, "IDL:omg.org/CORBA/EventBase:1.0") == 0)
     {
-      return 1;
+      return true;
     }
 
   return this->TAO_ValueDef_i::is_a_i (event_id);

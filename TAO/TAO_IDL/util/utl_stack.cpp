@@ -68,52 +68,30 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_decl.h"
 #include "global_extern.h"
 
-const size_t UTL_ScopeStack::increments = 64;
+#include <new>
+#include <stdexcept>
 
 UTL_ScopeStack::UTL_ScopeStack ()
-  : pd_stack_data_nalloced (increments),
-    pd_stack_top (0)
 {
-  ACE_NEW (this->pd_stack_data, UTL_Scope *[increments]);
-}
-
-UTL_ScopeStack::~UTL_ScopeStack ()
-{
-  if (this->pd_stack_data != nullptr)
-    {
-      delete [] this->pd_stack_data;
-    }
+  this->pd_stack_data.reserve (increments);
 }
 
 // Push an element on the stack.
 UTL_ScopeStack *
 UTL_ScopeStack::push (UTL_Scope *el)
 {
-  UTL_Scope **tmp = nullptr;
-  long ostack_data_nalloced;
-  long i;
-
-  // Make sure there's space for one more.
-  if (this->pd_stack_data_nalloced == this->pd_stack_top)
+  try
     {
-      ostack_data_nalloced = this->pd_stack_data_nalloced;
-      this->pd_stack_data_nalloced += increments;
-
-      ACE_NEW_RETURN (tmp,
-                      UTL_Scope *[this->pd_stack_data_nalloced],
-                      nullptr);
-
-      for (i = 0; i < ostack_data_nalloced; ++i)
-        {
-          tmp[i] = this->pd_stack_data[i];
-        }
-
-      delete [] this->pd_stack_data;
-      this->pd_stack_data = tmp;
+      this->pd_stack_data.push_back (el);
     }
-
-  // Insert new scope.
-  this->pd_stack_data[this->pd_stack_top++] = el;
+  catch (std::bad_alloc const &)
+    {
+      return nullptr;
+    }
+  catch (std::length_error const &)
+    {
+      return nullptr;
+    }
 
   return this;
 }
@@ -122,7 +100,7 @@ UTL_ScopeStack::push (UTL_Scope *el)
 void
 UTL_ScopeStack::pop ()
 {
-  if (this->pd_stack_top <= 0)
+  if (this->pd_stack_data.empty ())
     {
       return;
     }
@@ -133,79 +111,76 @@ UTL_ScopeStack::pop ()
   // it goes away with the scope.
   if (current != nullptr && current->has_prefix ())
     {
-      char *trash = nullptr;
-      idl_global->pragma_prefixes ().pop (trash);
-      delete [] trash;
+      if (!idl_global->pragma_prefixes ().empty ())
+        {
+          idl_global->pragma_prefixes ().pop_back ();
+        }
     }
 
-  --this->pd_stack_top;
+  this->pd_stack_data.pop_back ();
 }
 
 // Return top element on stack.
 UTL_Scope *
-UTL_ScopeStack::top ()
+UTL_ScopeStack::top () const
 {
-  if (this->pd_stack_top <= 0)
+  if (this->pd_stack_data.empty ())
     {
       return nullptr;
     }
 
-  return this->pd_stack_data[pd_stack_top - 1];
+  return this->pd_stack_data.back ();
 }
 
 // Return bottom element on stack.
 UTL_Scope *
-UTL_ScopeStack::bottom ()
+UTL_ScopeStack::bottom () const
 {
-  if (this->pd_stack_top == 0)
+  if (this->pd_stack_data.empty ())
     {
       return nullptr;
     }
 
-  return this->pd_stack_data[0];
+  return this->pd_stack_data.front ();
 }
 
 // Clear entire stack.
 void
 UTL_ScopeStack::clear ()
 {
-  this->pd_stack_top = 0;
+  this->pd_stack_data.clear ();
 }
 
 // How deep is the stack?
 unsigned long
-UTL_ScopeStack::depth ()
+UTL_ScopeStack::depth () const
 {
-  return this->pd_stack_top;
+  return static_cast<unsigned long> (this->pd_stack_data.size ());
 }
 
 // Return (top - 1) element on stack.
 UTL_Scope *
-UTL_ScopeStack::next_to_top ()
+UTL_ScopeStack::next_to_top () const
 {
-  UTL_Scope  *tmp, *retval;
-
-  if (this->depth () < 2)
+  if (this->pd_stack_data.size () < 2)
     {
       return nullptr;
     }
 
-  tmp = top ();    // Save top
-  (void) pop ();    // Pop it
-  retval = top ();  // Get next one down
-  (void) push (tmp);  // Push top back
-  return retval;  // Return next one down
+  return this->pd_stack_data[this->pd_stack_data.size () - 2];
 }
 
 // Return topmost non-NULL element.
 UTL_Scope *
-UTL_ScopeStack::top_non_null ()
+UTL_ScopeStack::top_non_null () const
 {
-  for (long i = this->pd_stack_top - 1; i >= 0; --i)
+  for (std::size_t i = this->pd_stack_data.size (); i > 0; --i)
     {
-      if (this->pd_stack_data[i] != nullptr)
+      UTL_Scope *scope = this->pd_stack_data[i - 1];
+
+      if (scope != nullptr)
         {
-          return this->pd_stack_data[i];
+          return scope;
         }
     }
 
@@ -216,13 +191,13 @@ AST_Decl *
 UTL_ScopeStack::lookup_by_name (
   UTL_ScopedName *name, bool full_def_only, bool for_add)
 {
-  for (long i = pd_stack_top - 1; i >= 0; --i)
+  for (std::size_t i = this->pd_stack_data.size (); i > 0; --i)
     {
-      UTL_Scope *scope = pd_stack_data[i];
-      if (scope)
+      UTL_Scope *scope = this->pd_stack_data[i - 1];
+      if (scope != nullptr)
         {
           AST_Decl *node = scope->lookup_by_name (name, full_def_only, for_add);
-          if (node) return node;
+          if (node != nullptr) return node;
         }
     }
   return nullptr;
@@ -230,7 +205,7 @@ UTL_ScopeStack::lookup_by_name (
 
 UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
   : source (s),
-    il (s.pd_stack_top - 1)
+    il (static_cast<long> (s.pd_stack_data.size ()) - 1)
 {
 }
 
@@ -243,11 +218,11 @@ UTL_ScopeStackActiveIterator::next ()
 
 // Get current item.
 UTL_Scope *
-UTL_ScopeStackActiveIterator::item ()
+UTL_ScopeStackActiveIterator::item () const
 {
   if (this->il >= 0)
     {
-      return this->source.pd_stack_data[il];
+      return this->source.pd_stack_data[static_cast<std::size_t> (il)];
     }
 
   return nullptr;

@@ -15,15 +15,15 @@
 
 #include "TAO_IDL_BE_Export.h"
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/SString.h"
+#include <deque>
+#include <optional>
+#include <string>
 
 class be_interface;
 class be_valuetype;
 class be_module;
 class be_interface;
 class be_interface_fwd;
-class UTL_String;
 class AST_PredefinedType;
 class AST_Generator;
 
@@ -55,11 +55,17 @@ public:
     COREDX
   };
 
-  static const char *const core_versioned_ns_begin;
-  static const char *const core_versioned_ns_end;
+  inline static std::string const core_versioned_ns_begin =
+    "\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n";
+  inline static std::string const core_versioned_ns_end =
+    "\nTAO_END_VERSIONED_NAMESPACE_DECL\n";
 
   BE_GlobalData ();
   ~BE_GlobalData ();
+  BE_GlobalData (BE_GlobalData const &) = delete;
+  BE_GlobalData (BE_GlobalData &&) = delete;
+  BE_GlobalData &operator= (BE_GlobalData const &) = delete;
+  BE_GlobalData &operator= (BE_GlobalData &&) = delete;
 
   // To switch between changing or non-changing standard include
   // files (e.g. tao/corba.h)  so that #include statements can be
@@ -72,76 +78,76 @@ public:
   // The parameter <base_name_only> set to 0 (no base name, but full
   // name with output dir path, is useful, when I just want just the
   // base name to use in #include's etc.
-  static const char *be_get_client_hdr_fname (
+  static std::string be_get_client_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_client_stub_fname ();
+  static std::string be_get_client_stub_fname ();
 
-  static const char *be_get_client_inline_fname (
+  static std::string be_get_client_inline_fname (
     bool base_name_only = false);
 
-  static const char *be_get_server_hdr_fname (
+  static std::string be_get_server_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_implementation_hdr_fname (
+  static std::string be_get_implementation_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_implementation_skel_fname (
+  static std::string be_get_implementation_skel_fname (
     bool base_name_only = false);
 
-  static const char *be_get_server_template_hdr_fname (
+  static std::string be_get_server_template_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_server_skeleton_fname ();
+  static std::string be_get_server_skeleton_fname ();
 
-  static const char *be_get_implementation_skeleton_fname ();
+  static std::string be_get_implementation_skeleton_fname ();
 
-  static const char *be_get_server_template_skeleton_fname (
+  static std::string be_get_server_template_skeleton_fname (
     bool base_name_only = false);
 
-  static const char *be_get_anyop_source_fname (
+  static std::string be_get_anyop_source_fname (
     bool base_name_only = false);
 
-  static const char *be_get_anyop_header_fname (
+  static std::string be_get_anyop_header_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_svnt_hdr_fname (
+  static std::string be_get_ciao_svnt_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_tmpl_svnt_hdr_fname (
+  static std::string be_get_ciao_tmpl_svnt_hdr_fname (
     bool base_name_only=false);
 
-  static const char *be_get_ciao_svnt_src_fname (
+  static std::string be_get_ciao_svnt_src_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_tmpl_svnt_src_fname (
+  static std::string be_get_ciao_tmpl_svnt_src_fname (
     bool base_name_only=false);
 
-  static const char *be_get_ciao_exec_hdr_fname (
+  static std::string be_get_ciao_exec_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_exec_src_fname (
+  static std::string be_get_ciao_exec_src_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_exec_stub_hdr_fname (
+  static std::string be_get_ciao_exec_stub_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_exec_idl_fname (
+  static std::string be_get_ciao_exec_idl_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_conn_hdr_fname (
+  static std::string be_get_ciao_conn_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_conn_src_fname (
+  static std::string be_get_ciao_conn_src_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_ami_conn_idl_fname (
+  static std::string be_get_ciao_ami_conn_idl_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_ami_conn_impl_hdr_fname (
+  static std::string be_get_ciao_ami_conn_impl_hdr_fname (
     bool base_name_only = false);
 
-  static const char *be_get_ciao_ami_conn_impl_src_fname (
+  static std::string be_get_ciao_ami_conn_impl_src_fname (
     bool base_name_only = false);
 
   // Helper functions: obtain the names of each generated file given
@@ -149,433 +155,433 @@ public:
   // The parameter <base_name_only> set to 0 (no base name, but full
   // name with output dir path, is useful, when I want just the
   // base name to use in #include's etc.
-  static const char *be_get_client_hdr (
-    UTL_String *idl_file_name,
+  static std::string be_get_client_hdr (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_client_stub (
-    UTL_String *idl_file_name);
+  static std::string be_get_client_stub (
+    std::string const& idl_file_name);
 
-  static const char *be_get_client_inline (
-    UTL_String *idl_file_name,
+  static std::string be_get_client_inline (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_server_hdr (
-    UTL_String *idl_file_name,
+  static std::string be_get_server_hdr (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_svnt_template_hdr (
-    UTL_String *idl_file_name,
+  static std::string be_get_svnt_template_hdr (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_implementation_hdr (
-    UTL_String *idl_file_name,
+  static std::string be_get_implementation_hdr (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_implementation_skel (
-    UTL_String *idl_file_name,
+  static std::string be_get_implementation_skel (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_server_template_hdr (
-    UTL_String *idl_file_name,
+  static std::string be_get_server_template_hdr (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_server_skeleton (
-    UTL_String *idl_file_name);
+  static std::string be_get_server_skeleton (
+    std::string const& idl_file_name);
 
-  static const char *be_get_server_template_skeleton (
-      UTL_String *idl_file_name,
+  static std::string be_get_server_template_skeleton (
+      std::string const& idl_file_name,
       bool base_name_only = false);
 
-  static const char *be_get_anyop_header (
-    UTL_String *idl_file_name,
+  static std::string be_get_anyop_header (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_anyop_source (
-    UTL_String *idl_file_name,
+  static std::string be_get_anyop_source (
+      std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_svnt_header (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_svnt_header (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_svnt_template_header (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_svnt_template_header (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_svnt_source (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_svnt_source (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_svnt_template_source (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_svnt_template_source (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_exec_header (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_exec_header (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_exec_source (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_exec_source (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_exec_stub_header (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_exec_stub_header (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_exec_idl (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_exec_idl (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_conn_header (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_conn_header (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_conn_source (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_conn_source (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_dds_typesupport_header (
-    UTL_String *idl_file_name,
+  static std::string be_get_dds_typesupport_header (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_ami_conn_idl (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_ami_conn_idl (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_ami_conn_impl_hdr (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_ami_conn_impl_hdr (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
-  static const char *be_get_ciao_ami_conn_impl_src (
-    UTL_String *idl_file_name,
+  static std::string be_get_ciao_ami_conn_impl_src (
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   /// Returns the macro name for exporting server side classes in Win32
   /// DLL.
-  const char* skel_export_macro () const;
+  std::string const& skel_export_macro () const;
 
   /// Set the macro name for export server side classes in Win32 DLL.
-  void skel_export_macro (const char* s);
+  void skel_export_macro (std::string const& s);
 
   /// Returns the name of the include file that contains the server
   /// side export macro definition.
-  const char* skel_export_include () const;
+  std::string const& skel_export_include () const;
 
   /// Set the name of the include file that contains the server side
   /// export macro definition.
-  void skel_export_include (const char* s);
+  void skel_export_include (std::string const& s);
 
   /// Returns the name of the include file that will be generated for the
   /// server side export macro definition.
-  const char* skel_export_file () const;
+  std::string const& skel_export_file () const;
 
   /// Set the name of the include file that the will be generated for server
   /// side export macro definition.
-  void skel_export_file (const char* s);
+  void skel_export_file (std::string const& s);
 
   /// Returns the macro name for exporting client side classes in Win32
   /// DLL.
-  const char* stub_export_macro () const;
+  std::string const& stub_export_macro () const;
 
   /// Set the macro name for export client side classes in Win32 DLL.
-  void stub_export_macro (const char* s);
+  void stub_export_macro (std::string const& s);
 
   /// Returns the name of the include file that contains the client
   /// side export macro definition.
-  const char* stub_export_include () const;
+  std::string const& stub_export_include () const;
 
   /// Set the name of the include file that contains the client side
   /// export macro definition.
-  void stub_export_include (const char* s);
+  void stub_export_include (std::string const& s);
 
   /// Returns the name of the include file will be generated for the client
   /// side export macro definition.
-  const char* stub_export_file () const;
+  std::string const& stub_export_file () const;
 
   /// Set the name of the include file that will be generated for the client
   /// side export macro definition.
-  void stub_export_file (const char* s);
+  void stub_export_file (std::string const& s);
 
   /// Returns the macro name for exporting *A.h file classes in Win32
   /// DLL.
-  const char* anyop_export_macro () const;
+  std::string const& anyop_export_macro () const;
 
   /// Set the macro name for export *A.h file classes in Win32 DLL.
-  void anyop_export_macro (const char* s);
+  void anyop_export_macro (std::string const& s);
 
   /// Returns the name of the include file that contains the *A.h
   /// file export macro definition.
-  const char* anyop_export_include () const;
+  std::string const& anyop_export_include () const;
 
   /// Set the name of the include file that contains the *A.h file
   /// export macro definition.
-  void anyop_export_include (const char* s);
+  void anyop_export_include (std::string const& s);
 
   /// Returns the macro name for exporting exec impl classes in Win32
   /// DLL.
-  const char* exec_export_macro () const;
+  std::string const& exec_export_macro () const;
 
   /// Set the macro name for export exec impl classes in Win32 DLL.
-  void exec_export_macro (const char* s);
+  void exec_export_macro (std::string const& s);
 
   /// Returns the name of the include file that contains the exec
   /// impl export macro definition.
-  const char* exec_export_include () const;
+  std::string const& exec_export_include () const;
 
   /// Set the name of the include file that contains the exec impl
   /// export macro definition.
-  void exec_export_include (const char* s);
+  void exec_export_include (std::string const& s);
 
   /// Returns the macro name for exporting CIAO svnt classes in Win32
   /// DLL.
-  const char* svnt_export_macro () const;
+  std::string const& svnt_export_macro () const;
 
   /// Set the macro name for export CIAO svnt classes in Win32 DLL.
-  void svnt_export_macro (const char* s);
+  void svnt_export_macro (std::string const& s);
 
   /// Returns the name of the include file that contains the CIAO
   /// svnt export macro definition.
-  const char* svnt_export_include () const;
+  std::string const& svnt_export_include () const;
 
   /// Set the name of the include file that contains the CIAO svnt
   /// export macro definition.
-  void svnt_export_include (const char* s);
+  void svnt_export_include (std::string const& s);
 
   /// Returns the macro name for exporting CIAO connector
   /// classes in Win32 DLL.
-  const char* conn_export_macro () const;
+  std::string const& conn_export_macro () const;
 
   /// Set the macro name for export CIAO connector
   /// classes in Win32 DLL.
-  void conn_export_macro (const char* s);
+  void conn_export_macro (std::string const& s);
 
   /// Returns the name of the include file that contains the CIAO
   /// connector export macro definition.
-  const char* conn_export_include () const;
+  std::string const& conn_export_include () const;
 
   /// Set the name of the include file that contains the CIAO
   /// connector export macro definition.
-  void conn_export_include (const char* s);
+  void conn_export_include (std::string const& s);
 
   /// Returns the name of the include file to be used for precompiled
   /// header support.
-  const char* pch_include () const;
+  std::string const& pch_include () const;
 
   /// Set the name of the include file to be used for precompiled
   /// header support.
-  void pch_include (const char* s);
+  void pch_include (std::string const& s);
 
   /// Returns the name of the include file to be put at the top of
   /// every header file.
-  const char* pre_include () const;
+  std::string const& pre_include () const;
 
   /// Set the name of the include file to be put at the top of every
   /// header file.
-  void pre_include (const char* s);
+  void pre_include (std::string const& s);
 
   /// Returns the name of the include file to be put at the bottom of
   /// every header file.
-  const char* post_include () const;
+  std::string const& post_include () const;
 
   /// Set the name of the include file to be put at the bottom of every
   /// header file.
-  void post_include (const char* s);
+  void post_include (std::string const& s);
 
   /// Returns the guard that is placed in the client header file
-  const char* include_guard () const;
+  std::string const& include_guard () const;
 
   /// Set the guard that is placed in the client header file
-  void include_guard (const char* s);
+  void include_guard (std::string const& s);
 
   /// Returns the name of the include file that is used instead of the own
   /// generated client header file
-  const char* safe_include () const;
+  std::string const& safe_include () const;
 
   /// set the name of the include file that is used instead of the own
   /// generated client header file
-  void safe_include (const char* s);
+  void safe_include (std::string const& s);
 
   /// Returns the name of the include file that should on get
   /// generated in the client header file
-  const char* unique_include () const;
+  std::string const& unique_include () const;
 
   /// Set the name of the include file that should on get
   /// generated in the client header file
-  void unique_include (const char* s);
+  void unique_include (std::string const& s);
 
   /// Returns the name of the include file that should be used as
   /// stripped_filename
-  const char* stripped_filename () const;
+  std::string const& stripped_filename () const;
 
   /// Set the name of the include file that should be used as stripped_filename
-  void stripped_filename (const char* s);
+  void stripped_filename (std::string const& s);
 
   /// Set text that opens a "versioned" namespace.
-  void versioning_begin (const char* s);
+  void versioning_begin (std::string const& s);
 
   /// Get text that opens a "versioned" namespace.
-  const char * versioning_begin () const;
+  std::string const& versioning_begin () const;
 
   /// Set include file for "versioned" namespace.
-  void versioning_include (const char* s);
+  void versioning_include (std::string const& s);
 
   /// Get include file for "versioned" namespace.
-  const char * versioning_include () const;
+  std::string const& versioning_include () const;
 
   /// Get text that opens a "versioned" namespace for core TAO/orbsvcs
   /// related code.
-  const char * core_versioning_begin () const;
+  std::string const& core_versioning_begin () const;
 
   /// Set text that closes a "versioned" namespace.
-  void versioning_end (const char* s);
+  void versioning_end (std::string const& s);
 
   /// Get text that closes a "versioned" namespace.
-  const char * versioning_end () const;
+  std::string const& versioning_end () const;
 
   /// Get text that closes a "versioned" namespace for core TAO/orbsvcs
   /// related code.
-  const char * core_versioning_end () const;
+  std::string const& core_versioning_end () const;
 
   /// Get text that opens a "versioned" namespace for CORBA::Any operators
-  const char *anyops_versioning_begin () const;
+  std::string const& anyops_versioning_begin () const;
 
   /// Get text that closes a "versioned" namespace for CORBA::Any operators
-  const char *anyops_versioning_end () const;
+  std::string const& anyops_versioning_end () const;
 
   // = Set and get methods for different file name endings.
 
   /// Set the client_hdr_ending.
-  void client_hdr_ending (const char* s);
+  void client_hdr_ending (std::string const& s);
 
   /// Get the client_hdr_ending.
-  const char* client_hdr_ending () const;
+  std::string const& client_hdr_ending () const;
 
   /// Set the client_inline_ending.
-  void client_inline_ending (const char* s);
+  void client_inline_ending (std::string const& s);
 
   /// Get the client_inline_ending.
-  const char* client_inline_ending () const;
+  std::string const& client_inline_ending () const;
 
   /// Set the client_stub_ending.
-  void  client_stub_ending (const char* s);
+  void  client_stub_ending (std::string const& s);
 
   /// Get the client_stub_ending.
-  const char* client_stub_ending () const;
+  std::string const& client_stub_ending () const;
 
   /// Set the server_hdr_ending.
-  void server_hdr_ending (const char* s);
+  void server_hdr_ending (std::string const& s);
 
   /// Get the server_hdr_ending.
-  const char* server_hdr_ending () const;
+  std::string const& server_hdr_ending () const;
 
   /// Set the implementation_hdr_ending.
-  void implementation_hdr_ending (const char* s);
+  void implementation_hdr_ending (std::string const& s);
 
   /// Set the implementation class prefix.
-  void impl_class_prefix (const char* s);
+  void impl_class_prefix (std::string const& s);
 
   /// Set the implementation class suffix.
-  void impl_class_suffix (const char* s);
+  void impl_class_suffix (std::string const& s);
 
   /// Set the implementation_skel_ending.
-  void implementation_skel_ending (const char* s);
+  void implementation_skel_ending (std::string const& s);
 
   /// Get the implementation_hdr_ending.
-  const char* implementation_hdr_ending () const;
+  std::string const& implementation_hdr_ending () const;
 
   ///Get implementation class prefix
-  const char* impl_class_prefix () const;
+  std::string const& impl_class_prefix () const;
 
   ///Get implementation class suffix
-  const char* impl_class_suffix () const;
+  std::string const& impl_class_suffix () const;
 
   /// Get the implementation_skel_ending.
-  const char* implementation_skel_ending () const;
+  std::string const& implementation_skel_ending () const;
 
   /// Set the server_template_hdr_ending.
-  void server_template_hdr_ending (const char* s);
+  void server_template_hdr_ending (std::string const& s);
 
   /// Get the server_template_hdr_ending.
-  const char* server_template_hdr_ending () const;
+  std::string const& server_template_hdr_ending () const;
 
   /// Set the server_skeleton_ending.
-  void server_skeleton_ending (const char* s);
+  void server_skeleton_ending (std::string const& s);
 
   /// Get the server_skeleton_ending.
-  const char* server_skeleton_ending () const;
+  std::string const& server_skeleton_ending () const;
 
   /// Set the server_template_skeleton_ending.
-  void server_template_skeleton_ending (const char* s);
+  void server_template_skeleton_ending (std::string const& s);
 
   /// Get the server_template_skeleton_ending.
-  const char* server_template_skeleton_ending () const;
+  std::string const& server_template_skeleton_ending () const;
 
   /// Set the anyop_header_ending.
-  void anyop_header_ending (const char* s);
+  void anyop_header_ending (std::string const& s);
 
   /// Get the anyop_header_ending.
-  const char* anyop_header_ending () const;
+  std::string const& anyop_header_ending () const;
 
   /// Set the anyop_source_ending.
-  void anyop_source_ending (const char* s);
+  void anyop_source_ending (std::string const& s);
 
   /// Get the anyop_source_ending.
-  const char* anyop_source_ending () const;
+  std::string const& anyop_source_ending () const;
 
   /// Similar to above, but for CIAO servant and executor
   /// impl and executor IDL files, if generated.
-  void ciao_svnt_header_template_ending (const char* s);
-  const char* ciao_svnt_header_template_ending () const;
+  void ciao_svnt_header_template_ending (std::string const& s);
+  std::string const& ciao_svnt_header_template_ending () const;
 
-  void ciao_svnt_source_template_ending (const char* s);
-  const char* ciao_svnt_source_template_ending () const;
+  void ciao_svnt_source_template_ending (std::string const& s);
+  std::string const& ciao_svnt_source_template_ending () const;
 
-  void ciao_svnt_header_ending (const char* s);
-  const char* ciao_svnt_header_ending () const;
+  void ciao_svnt_header_ending (std::string const& s);
+  std::string const& ciao_svnt_header_ending () const;
 
-  void ciao_svnt_source_ending (const char* s);
-  const char* ciao_svnt_source_ending () const;
+  void ciao_svnt_source_ending (std::string const& s);
+  std::string const& ciao_svnt_source_ending () const;
 
-  void ciao_exec_header_ending (const char* s);
-  const char* ciao_exec_header_ending () const;
+  void ciao_exec_header_ending (std::string const& s);
+  std::string const& ciao_exec_header_ending () const;
 
-  void ciao_exec_source_ending (const char* s);
-  const char* ciao_exec_source_ending () const;
+  void ciao_exec_source_ending (std::string const& s);
+  std::string const& ciao_exec_source_ending () const;
 
-  void ciao_exec_stub_header_ending (const char* s);
-  const char* ciao_exec_stub_header_ending () const;
+  void ciao_exec_stub_header_ending (std::string const& s);
+  std::string const& ciao_exec_stub_header_ending () const;
 
-  void ciao_exec_idl_ending (const char* s);
-  const char* ciao_exec_idl_ending () const;
+  void ciao_exec_idl_ending (std::string const& s);
+  std::string const& ciao_exec_idl_ending () const;
 
-  void ciao_conn_header_ending (const char* s);
-  const char* ciao_conn_header_ending () const;
+  void ciao_conn_header_ending (std::string const& s);
+  std::string const& ciao_conn_header_ending () const;
 
-  void ciao_conn_source_ending (const char* s);
-  const char* ciao_conn_source_ending () const;
+  void ciao_conn_source_ending (std::string const& s);
+  std::string const& ciao_conn_source_ending () const;
 
   /// For generating TypeSupport header file includes.
-  void dds_typesupport_hdr_ending (const char* s);
-  const char* dds_typesupport_hdr_ending () const;
+  void dds_typesupport_hdr_ending (std::string const& s);
+  std::string const& dds_typesupport_hdr_ending () const;
 
   /// For optionally generating CIAO AMI connector IDL file.
-  void ciao_ami_conn_idl_ending (const char* s);
-  const char* ciao_ami_conn_idl_ending () const;
+  void ciao_ami_conn_idl_ending (std::string const& s);
+  std::string const& ciao_ami_conn_idl_ending () const;
 
   /// For optionally generating CIAO AMI reply handler
   /// impl header file.
-  void ciao_ami_conn_impl_hdr_ending (const char* s);
-  const char* ciao_ami_conn_impl_hdr_ending () const;
+  void ciao_ami_conn_impl_hdr_ending (std::string const& s);
+  std::string const& ciao_ami_conn_impl_hdr_ending () const;
 
   /// For optionally generating CIAO AMI reply handler
   /// impl source file.
-  void ciao_ami_conn_impl_src_ending (const char* s);
-  const char* ciao_ami_conn_impl_src_ending () const;
+  void ciao_ami_conn_impl_src_ending (std::string const& s);
+  std::string const& ciao_ami_conn_impl_src_ending () const;
 
   /// For optionally controlling the container type, default is Session
-  void ciao_container_type (const char* s);
-  const char* ciao_container_type () const;
+  void ciao_container_type (std::string const& s);
+  std::string const& ciao_container_type () const;
 
   /// Set the clonable_in_args.
   void use_clonable_in_args (bool clonable);
@@ -607,46 +613,46 @@ public:
    * to be kept. Default is current directory from which the
    * <tao_idl> is called.
    */
-  void output_dir (const char* s);
+  void output_dir (std::string const& s);
 
   /**
    * Get the directory where all the IDL-Compiler-Generated files are
    * to be kept. Default is current directory from which the
    * <tao_idl> is called.
    */
-  const char* output_dir () const;
+  std::string const& output_dir () const;
 
   /// Set the path for all *C.* file includes.
   /// Default is local directory or $TAO_ROOT/tao.
-  void stub_include_dir (const char* s);
+  void stub_include_dir (std::string const& s);
 
   /// Get the path for all *C.* file includes.
   /// Default is local directory or $TAO_ROOT/tao.
-  const char* stub_include_dir () const;
+  std::string const& stub_include_dir () const;
 
   /// Set the directory where all the *S.* files are
   /// to be kept. Default is output_dir_.
-  void skel_output_dir (const char* s);
+  void skel_output_dir (std::string const& s);
 
   /// Get the directory where all the *S.* files are
   /// to be kept. Default is output_dir_.
-  const char* skel_output_dir () const;
+  std::string const& skel_output_dir () const;
 
   /// Set the directory where all the *A.* files are
   /// to be kept. Default is output_dir_.
-  void anyop_output_dir (const char* s);
+  void anyop_output_dir (std::string const& s);
 
   /// Get the directory where all the *A.* files are
   /// to be kept. Default is output_dir_.
-  const char* anyop_output_dir () const;
+  std::string const& anyop_output_dir () const;
 
   /// Set the directory where all the *exec.* files are
   /// to be kept. Default is output_dir_.
-  void exec_output_dir (const char* s);
+  void exec_output_dir (std::string const& s);
 
   /// Get the directory where all the *exec.* files are
   /// to be kept. Default is output_dir_.
-  const char* exec_output_dir () const;
+  std::string const& exec_output_dir () const;
 
   ///Get the flag for not overwriting already existing exec files.
   bool overwrite_not_exec () const;
@@ -802,7 +808,7 @@ public:
   LOOKUP_STRATEGY lookup_strategy () const;
 
   /// Set the DDS implementation.
-  void dds_impl (char const * const val);
+  void dds_impl (std::string const& val);
 
   /// Return the enumerated value for the DDS implementation.
   /// Default is NDDS.
@@ -813,7 +819,7 @@ public:
 
   /// Used in the generation of extern function declarations so we
   /// can use non-defined interfaces as members and parameters.
-  ACE_Unbounded_Queue<be_interface_fwd *> non_defined_interfaces;
+  std::deque<be_interface_fwd *> non_defined_interfaces;
 
   /// Accessor for the member, sets it on the first call.
   AST_PredefinedType *void_type ();
@@ -936,7 +942,7 @@ public:
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
-  ACE_CString spawn_options ();
+  std::string spawn_options () const;
 
   /**
    * Parse an argument that the frontend did not recognize.
@@ -949,393 +955,393 @@ private:
    * files (e.g. tao/corba.h)  so that #include statements can be
    * generated with ""s or <>s respectively.
    */
-  size_t changing_standard_include_files_;
+  size_t changing_standard_include_files_ {1};
 
   // Macros and includes used to export classes from generated code.
-  char* skel_export_macro_;
-  char* skel_export_include_;
-  char* skel_export_file_;
-  char* stub_export_macro_;
-  char* stub_export_include_;
-  char* stub_export_file_;
+  std::string skel_export_macro_;
+  std::string skel_export_include_;
+  std::string skel_export_file_;
+  std::string stub_export_macro_;
+  std::string stub_export_include_;
+  std::string stub_export_file_;
 
   // Macro and include used on ORB .pidl files generating to the
   // AnyTypeCode library.
-  char* anyop_export_macro_;
-  char* anyop_export_include_;
+  std::string anyop_export_macro_;
+  std::string anyop_export_include_;
 
-  char* exec_export_macro_;
-  char* exec_export_include_;
-  char* svnt_export_macro_;
-  char* svnt_export_include_;
-  char* conn_export_macro_;
-  char* conn_export_include_;
+  std::string exec_export_macro_;
+  std::string exec_export_include_;
+  std::string svnt_export_macro_;
+  std::string svnt_export_include_;
+  std::string conn_export_macro_;
+  std::string conn_export_include_;
 
-  char* pch_include_;
-  char* pre_include_;
-  char* post_include_;
-  char* include_guard_;
-  char* safe_include_;
-  char* unique_include_;
-  char* stripped_filename_;
+  std::string pch_include_;
+  std::string pre_include_;
+  std::string post_include_;
+  std::string include_guard_;
+  std::string safe_include_;
+  std::string unique_include_;
+  std::string stripped_filename_;
 
   /// Text that opens a "versioned" namespace for core TAO and orbsvcs
   /// related code.
-  ACE_CString core_versioning_begin_;
+  std::string core_versioning_begin_;
 
   /// Text that closes a "versioned" namespace for core TAO and
   /// orbsvcs related code.
-  ACE_CString core_versioning_end_;
+  std::string core_versioning_end_;
 
   /// Text that opens a "versioned" namespace for CORBA::Any operators
-  ACE_CString anyops_versioning_begin_;
+  std::string anyops_versioning_begin_;
 
   /// Text that closes a "versioned" namespace for CORBA::Any operators
-  ACE_CString anyops_versioning_end_;
+  std::string anyops_versioning_end_;
 
   /// Text that opens a "versioned" namespace.
-  ACE_CString versioning_begin_;
+  std::string versioning_begin_;
 
   /// Text that closes a "versioned" namespace.
-  ACE_CString versioning_end_;
+  std::string versioning_end_;
 
   /// Include for versioned namespace include
-  ACE_CString versioning_include_;
+  std::string versioning_include_;
 
   /// Client's header file name ending. Default is "C.h".
-  char* client_hdr_ending_;
+  std::string client_hdr_ending_ {"C.h"};
 
   /// Client's stub's file name ending. Default is "C.cpp".
-  char* client_stub_ending_;
+  std::string client_stub_ending_ {"C.cpp"};
 
   /// Client's inline file name ending. Default is "C.i".
-  char* client_inline_ending_;
+  std::string client_inline_ending_ {"C.inl"};
 
   /// Server's hdr file name ending. Default is "S.h".
-  char* server_hdr_ending_;
+  std::string server_hdr_ending_ {"S.h"};
 
   /// Implementation's hdr file name ending. Default is "I.h".
-  char* implementation_hdr_ending_;
+  std::string implementation_hdr_ending_ {"I.h"};
 
   // Implementation's skeleton file name ending. Default is "I.cpp".
-  char* implementation_skel_ending_;
+  std::string implementation_skel_ending_ {"I.cpp"};
 
   /// Implementaion class prefix
-  char* impl_class_prefix_;
+  std::string impl_class_prefix_;
 
   /// Implementation class suffix
-  char* impl_class_suffix_;
+  std::string impl_class_suffix_ {"_i"};
 
   /// Server's template hdr file name ending. Default is "S_T.h".
-  char* server_template_hdr_ending_;
+  std::string server_template_hdr_ending_ {"S_T.h"};
 
   /// Server's skeleton file name ending. Default is "S.cpp".
-  char* server_skeleton_ending_;
+  std::string server_skeleton_ending_ {"S.cpp"};
 
   /// Server's template skeleton file name ending. Default is
   /// "S_T.cpp".
-  char* server_template_skeleton_ending_;
+  std::string server_template_skeleton_ending_ {"S_T.cpp"};
 
   /// Anyop header file name ending. Default is "A.h".
-  char* anyop_hdr_ending_;
+  std::string anyop_hdr_ending_ {"A.h"};
 
   /// Anyop source file name ending. Default is "A.cpp".
-  char* anyop_src_ending_;
+  std::string anyop_src_ending_ {"A.cpp"};
 
   /// CIAO servant template header file name ending. Default is "_svnt_T.h".
-  char* ciao_svnt_hdr_template_ending_;
+  std::string ciao_svnt_hdr_template_ending_ {"_svnt_T.h"};
 
   /// CIAO servant template source file name ending. Default is "_svnt_T.cpp".
-  char* ciao_svnt_src_template_ending_;
+  std::string ciao_svnt_src_template_ending_ {"_svnt_T.cpp"};
 
   /// CIAO servant header file name ending. Default is "_svnt.h".
-  char* ciao_svnt_hdr_ending_;
+  std::string ciao_svnt_hdr_ending_ {"_svnt.h"};
 
   /// CIAO servant source file name ending. Default is "_svnt.cpp".
-  char* ciao_svnt_src_ending_;
+  std::string ciao_svnt_src_ending_ {"_svnt.cpp"};
 
   /// CIAO executor impl header file name ending. Default is "_exec.h".
-  char* ciao_exec_hdr_ending_;
+  std::string ciao_exec_hdr_ending_ {"_exec.h"};
 
   /// CIAO executor impl source file name ending. Default is "_exec.cpp".
-  char* ciao_exec_src_ending_;
+  std::string ciao_exec_src_ending_ {"_exec.cpp"};
 
   /// CIAO executor stub header file name ending. Default is "EC.h".
-  char* ciao_exec_stub_hdr_ending_;
+  std::string ciao_exec_stub_hdr_ending_ {"EC.h"};
 
   /// CIAO executor IDL file name ending. Default is "E.idl".
-  char* ciao_exec_idl_ending_;
+  std::string ciao_exec_idl_ending_ {"E.idl"};
 
   /// CIAO connector impl header file name ending. Default is "_conn.h".
-  char* ciao_conn_hdr_ending_;
+  std::string ciao_conn_hdr_ending_ {"_conn.h"};
 
   /// CIAO connector impl source file name ending. Default is "_conn.cpp".
-  char* ciao_conn_src_ending_;
+  std::string ciao_conn_src_ending_ {"_conn.cpp"};
 
   /// DDS TypeSupport header file name ending. Default is "Support.h".
-  char* dds_typesupport_hdr_ending_;
+  std::string dds_typesupport_hdr_ending_ {"Support.h"};
 
   /// CIAO AMI connector IDL file name ending. Default is "A.idl".
-  char* ciao_ami_conn_idl_ending_;
+  std::string ciao_ami_conn_idl_ending_ {"A.idl"};
 
   /// CIAO AMI reply handler impl header file name ending.
   /// Default is "A_impl.h".
-  char* ciao_ami_conn_impl_hdr_ending_;
+  std::string ciao_ami_conn_impl_hdr_ending_ {"_conn_i.h"};
 
   /// CIAO AMI reply handler impl source file name ending.
   /// Default is "A_impl.cpp".
-  char* ciao_ami_conn_impl_src_ending_;
+  std::string ciao_ami_conn_impl_src_ending_ {"_conn_i.cpp"};
 
   /// CIAO container type
   /// Default is "Session".
-  char* ciao_container_type_;
+  std::string ciao_container_type_ {"Session"};
 
   /**
    * Directory where all the IDL-Compiler-Generated files are to be
    * kept. Default value is 0 for this string which means the current
    * directory from which the <tao_idl> is called.
    */
-  char* output_dir_;
+  std::string output_dir_;
 
   /**
    * Path for all *C.* includes. Default value is 0, in which case
    * the local directory or $TAO_ROOT/tao is used.
    */
-  char* stub_include_dir_;
+  std::string stub_include_dir_;
 
   /**
    * Directory where all the *S.* files are to be
    * kept. Default value is 0 for this string which means the
    * value for output_dir_ is used.
    */
-  char* skel_output_dir_;
+  std::string skel_output_dir_;
 
   /**
    * Directory where all the *A.* files are to be
    * kept. Default value is 0 for this string which means the
    * value for output_dir_ is used.
    */
-  char* anyop_output_dir_;
+  std::string anyop_output_dir_;
 
   /**
     * Directory where all the *exec.* files are to be
     * kept. Default value is 0 for this string which means the
     * value for output_dir_ is used.
     */
-  char* exec_output_dir_;
+  std::string exec_output_dir_;
 
 
   /// do we support Any operators?
-  bool any_support_;
+  bool any_support_ {true};
 
   /// do we support cdr?
-  bool cdr_support_;
+  bool cdr_support_ {true};
 
   /// do we support typecodes?
-  bool tc_support_;
+  bool tc_support_ {true};
 
   /// do we optimize valuetype accessors?
-  bool obv_opt_accessor_;
+  bool obv_opt_accessor_ {};
 
   /// are we generating implementation files?
-  bool gen_impl_files_;
+  bool gen_impl_files_ {};
 
   /// are we generating source file and line numbers for implementation files?
-  bool gen_impl_debug_info_;
+  bool gen_impl_debug_info_ {};
 
   /// are we generating the copy constructor?
-  bool gen_copy_ctor_;
+  bool gen_copy_ctor_ {};
 
   /// are we generating the assignment operator?
-  bool gen_assign_op_;
+  bool gen_assign_op_ {};
 
   /// are we generating Thru_POA collocated stubs?
-  bool gen_thru_poa_collocation_;
+  bool gen_thru_poa_collocation_ {true};
 
   /// are we generating Direct collocated stubs?
-  bool gen_direct_collocation_;
+  bool gen_direct_collocation_ {};
 
   /// are we generating for CORBA/e
-  bool gen_corba_e_;
+  bool gen_corba_e_ {};
 
   /// are we generating for Minimum CORBA
-  bool gen_minimum_corba_;
+  bool gen_minimum_corba_ {};
 
   /// are we generating for LwCCM
-  bool gen_lwccm_;
+  bool gen_lwccm_ {};
 
   /// are we generating for noeventCCM
-  bool gen_noeventccm_;
+  bool gen_noeventccm_ {};
 
   /// do we generate optimized typecodes?
-  bool opt_tc_;
+  bool opt_tc_ {};
 
   /// Flag to indicate whether the AMI4ccm Call back feature should be enabled
   /// for the generated files or not.
-  bool ami4ccm_call_back_;
+  bool ami4ccm_call_back_ {};
 
   /**
    * Flag to indicate whether the AMI Call back feature of the
    * Messaging specification should be enabled for the generated files
    * or not.
    */
-  bool ami_call_back_;
+  bool ami_call_back_ {};
 
   /// Flag for generating AMH classes.
-  bool gen_amh_classes_;
+  bool gen_amh_classes_ {};
 
   /// Flag to indicate whether we generate the tie classes and
   /// files or not.
-  bool gen_tie_classes_;
+  bool gen_tie_classes_ {};
 
   /// Flag to indicate whether smart proxies classes will be generated
   /// or not.
-  bool gen_smart_proxies_;
+  bool gen_smart_proxies_ {};
 
   /// Flag to indicate whether we are using an inline form of constant
   /// generation that pleases the C++ compiler better on some platforms.
-  bool gen_inline_constants_;
+  bool gen_inline_constants_ {true};
 
   /// Flag to indicate whether ORB.h include should be generated, needed for
   /// regenerating the pidl files.
-  bool gen_orb_h_include_;
+  bool gen_orb_h_include_ {true};
 
   /// Flag to indicate whether an empty A.h should be generated
-  bool gen_empty_anyop_header_;
+  bool gen_empty_anyop_header_ {};
 
   /// The enumerated value indicating the lookup strategy.
-  LOOKUP_STRATEGY lookup_strategy_;
+  LOOKUP_STRATEGY lookup_strategy_ {TAO_PERFECT_HASH};
 
   /// The enumerated value indicating the DDS implementation.
-  DDS_IMPL dds_impl_;
+  DDS_IMPL dds_impl_ {DDS_NONE};
 
   /// Used for void operation return types.
-  AST_PredefinedType *void_type_;
+  AST_PredefinedType *void_type_ {};
 
   /// Reference holder for component skeleton visitors.
-  be_interface *ccmobject_;
+  be_interface *ccmobject_ {};
 
   /// Storage for the messaging exceptions holder's virtual scope.
-  be_module *messaging_;
+  be_module *messaging_ {};
 
   /// Storage for exception holders' base class node.
-  be_valuetype *messaging_exceptionholder_;
+  be_valuetype *messaging_exceptionholder_ {};
 
   /// Storage for the reply handlers' base class node.
-  be_interface *messaging_replyhandler_;
+  be_interface *messaging_replyhandler_ {};
 
   /// Separate files for generated Any operators?
-  bool gen_anyop_files_;
+  bool gen_anyop_files_ {};
 
   /// True by default, but a command line option can turn this off so that
   /// we don't generate a S.cpp file
-  bool gen_skel_files_;
+  bool gen_skel_files_ {true};
 
   /// True by default, but a command line option can turn this of so that
   /// we don't generate a svnt.cpp file
-  bool gen_svnt_cpp_files_;
+  bool gen_svnt_cpp_files_ {true};
 
   /// True by default, but a command line option can turn this of so that
   /// we don't generate a svnt_T.cpp file
-  bool gen_svnt_t_files_;
+  bool gen_svnt_t_files_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client inline file
-  bool gen_client_inline_;
+  bool gen_client_inline_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client stub file
-  bool gen_client_stub_;
+  bool gen_client_stub_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a client header file
-  bool gen_client_header_;
+  bool gen_client_header_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a server skeleton file
-  bool gen_server_skeleton_;
+  bool gen_server_skeleton_ {true};
 
   /// True by default, but a command line option can turn this off so
   /// that we don't generate a server header file
-  bool gen_server_header_;
+  bool gen_server_header_ {true};
 
   /// True by default, can be turned off by a command line option
   /// for regenerating internal ORB files.
-  bool gen_local_iface_anyops_;
+  bool gen_local_iface_anyops_ {true};
 
   /// Use in_clonable_arg_val instead of in_arg_val?
-  bool use_clonable_in_args_;
+  bool use_clonable_in_args_ {};
 
   /// Generate explicit export for Visual Studio bug workaround,
   /// needed only in TAO basic sequence *C.h files.
-  bool gen_template_export_;
+  bool gen_template_export_ {};
 
   /// Generate ostream operators for each type declaration, for
   /// debugging or logging.
-  bool gen_ostream_operators_;
+  bool gen_ostream_operators_ {};
 
   /// Generate static description operations for each interface
-  bool gen_static_desc_operations_;
+  bool gen_static_desc_operations_ {};
 
   /**
    * True by default, but a command line option can turn this off so
    * custom ending will not be applied to files in $TAO_ROOT/,
    * $TAO_ROOT/tao, $TAO_ROOT/orbsvcs, $TAO_ROOT/CIAO, $TAO_ROOT/CIAO/ciao.
    */
-  bool gen_custom_ending_;
+  bool gen_custom_ending_ {true};
 
  /**
    * True by default, but a command line option can turn this off so
    * the generated code (header) files will not be proteced by unique guards.
    */
-  bool gen_unique_guards_;
+  bool gen_unique_guards_ {true};
 
   /// False by default, these flags trigger code generation
-  bool gen_ciao_svnt_;
-  bool gen_ciao_exec_idl_;
-  bool gen_ciao_exec_impl_;
-  bool gen_ciao_exec_reactor_impl_;
+  bool gen_ciao_svnt_ {};
+  bool gen_ciao_exec_idl_ {};
+  bool gen_ciao_exec_impl_ {};
+  bool gen_ciao_exec_reactor_impl_ {};
 
   ///Flag to indicate whether generated exec files should
    ///overwritten already existing exe files
-   bool overwrite_not_exec_;
+   bool overwrite_not_exec_ {};
 
   /// False by default, this flag triggers code generation
   /// for CCM connector implementations.
-  bool gen_ciao_conn_impl_;
+  bool gen_ciao_conn_impl_ {};
 
   /// Used for DDS implementations other than OpenDDS.
-  bool gen_dds_typesupport_idl_;
+  bool gen_dds_typesupport_idl_ {};
 
   /// Generate automatic valuetype factory registration in
   /// CIAO servants.
-  bool gen_ciao_valuefactory_reg_;
+  bool gen_ciao_valuefactory_reg_ {true};
 
   /// Flags toggling export header file generation.
-  bool gen_stub_export_hdr_file_;
-  bool gen_skel_export_hdr_file_;
-  bool gen_svnt_export_hdr_file_;
-  bool gen_exec_export_hdr_file_;
-  bool gen_conn_export_hdr_file_;
+  bool gen_stub_export_hdr_file_ {};
+  bool gen_skel_export_hdr_file_ {};
+  bool gen_svnt_export_hdr_file_ {};
+  bool gen_exec_export_hdr_file_ {};
+  bool gen_conn_export_hdr_file_ {};
 
   /// 2 spaces by default, can be set from the command line.
-  unsigned int tab_size_;
+  unsigned int tab_size_ {2};
 
   /// Are we generating STL types?
-  bool alt_mapping_;
+  bool alt_mapping_ {};
 
   /// Are we in the act of generating a facet servant?
-  bool in_facet_servant_;
+  bool in_facet_servant_ {};
 
   /// Are we generating arg traits template instantiations?
-  bool gen_arg_traits_;
+  bool gen_arg_traits_ {true};
 
   /// Generating arg traits in the ORB for the basic type
   /// sequences requires the AnyTypeCode_Adapter class.
-  bool gen_anytypecode_adapter_;
+  bool gen_anytypecode_adapter_ {};
 
   /// Don't generate an error for usage of the fixed data type
-  bool no_fixed_err_;
+  bool no_fixed_err_ {};
 };
 
 #endif /* _BE_GLOBAL_H */

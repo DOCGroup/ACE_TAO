@@ -13,10 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy ()
-{
-}
-
 // ****************************************************************
 
 RtecEventChannelAdmin::Observer_Handle
@@ -259,10 +255,6 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
 
 // ****************************************************************
-
-TAO_EC_Reactive_ObserverStrategy::~TAO_EC_Reactive_ObserverStrategy ()
-{
-}
 
 void
 TAO_EC_Reactive_ObserverStrategy::supplier_qos_update (

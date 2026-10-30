@@ -9,12 +9,14 @@
 #include <iterator>
 #include <map>
 
-typedef std::map<long,double> Vector;
-typedef std::pair<long,double> Element;
+#include "ace/OS_main.h"
+
+using Vector = std::map<long, double>;
+using Element = std::pair<long, double>;
 
 std::ostream &
 operator<< (std::ostream &os,
-            const Vector::value_type &p)
+            Vector::value_type const &p)
 {
   return os << p.first << " " << p.second;
 }
@@ -22,23 +24,24 @@ operator<< (std::ostream &os,
 
 void
 load_file (Vector &vector,
-           const char *filename)
+           char const *filename)
 {
   std::ifstream is (filename);
   if (!is)
     throw "Cannot open file";
 
-  while (is && !is.eof ())
+  long i {};
+  double v {};
+
+  while (is >> i >> v)
     {
-      long i; double v;
-      is >> i >> v;
       Vector::value_type e (i, v);
       vector.insert (e);
     }
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   Vector X;
   load_file (X, argv[1]);
@@ -46,22 +49,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   load_file (Y, argv[2]);
 
   Vector Z;
-  for (Vector::iterator i = X.begin (); i != X.end (); ++i) {
-    for (Vector::iterator j = Y.begin (); j != Y.end (); ++j) {
-      long ki = (*i).first - (*j).first;
-      double p = (*i).second * (*j).second;
-
-      Vector::iterator k = Z.find (ki);
-      if (k == Z.end ())
-        Z.insert (Element (ki, p));
-      else
-        Z[ki] += p;
-    }
-  }
-
-  for (Vector::iterator i = Z.begin (); i != Z.end (); ++i)
+  for (Vector::value_type const &x : X)
     {
-      std::cout << (*i) << "\n";
+      for (Vector::value_type const &y : Y)
+        {
+          long const ki = x.first - y.first;
+          double const p = x.second * y.second;
+
+          Vector::iterator k = Z.find (ki);
+          if (k == Z.end ())
+            Z.insert (Element (ki, p));
+          else
+            Z[ki] += p;
+        }
+    }
+
+  for (Vector::value_type const &entry : Z)
+    {
+      std::cout << entry << "\n";
     }
 
   return 0;

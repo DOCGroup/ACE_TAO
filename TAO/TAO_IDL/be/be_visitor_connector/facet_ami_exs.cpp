@@ -10,18 +10,25 @@
 //=============================================================================
 
 #include "connector.h"
+
+#include <string>
+
 #include "ast_generator.h"
 #include "be_predefined_type.h"
 
-be_visitor_facet_ami_exs::be_visitor_facet_ami_exs (
-      be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    for_reply_handler_ (true),
-    sync_(false)
+namespace
 {
+  std::string
+  remove_ami4ccm_prefix (std::string const& name)
+  {
+    std::string const prefix = "AMI4CCM_";
+    return name.size () >= prefix.size () ? name.substr (prefix.size ()) : std::string {};
+  }
 }
 
-be_visitor_facet_ami_exs::~be_visitor_facet_ami_exs ()
+be_visitor_facet_ami_exs::be_visitor_facet_ami_exs (
+      be_visitor_context *ctx)
+  : be_visitor_component_scope (ctx)
 {
 }
 
@@ -204,15 +211,15 @@ void
 be_visitor_facet_ami_exs::init ()
 {
   UTL_Scope *s = this->iface_->defined_in ();
-  ACE_CString handler_str (
+  std::string handler_str (
     ScopeAsDecl (this->iface_->defined_in ())->full_name ());
   handler_str += "::AMI_";
-  ACE_CString tmp (this->iface_->local_name ());
-  handler_str += tmp.substr (ACE_OS::strlen ("AMI4CCM_"));
+  std::string const iface_name = this->iface_->local_name ();
+  handler_str += remove_ami4ccm_prefix (iface_name);
   handler_str += "Handler";
 
   UTL_ScopedName *sn =
-    FE_Utils::string_to_scoped_name (handler_str.c_str ());
+    FE_Utils::string_to_scoped_name (handler_str);
   AST_Decl *d = s->lookup_by_name (sn, true);
 
   sn->destroy ();
@@ -239,13 +246,13 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
     return 0;
 
 
-  const char *suffix = "_reply_handler";
+  std::string const suffix = "_reply_handler";
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
-  const char *scope_name = scope->full_name ();
+  std::string const scope_name = scope->full_name ();
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
-  const char *iface_name = this->iface_->local_name ();
+  std::string const smart_scope = global ? "" : "::";
+  std::string const iface_name = this->iface_->local_name ();
 
   os_ << be_nl
       << iface_name << suffix << "::"
@@ -275,15 +282,14 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
   /// So to get the correct *_excep operation signatures, we
   /// visit the scope of the AMI_xxxHandler interface generated
   /// by -GC, which must be applied to this IDL file.
-  ACE_CString handler_str (
+  std::string handler_str (
     ScopeAsDecl (this->iface_->defined_in ())->full_name ());
   handler_str += "::AMI_";
-  ACE_CString tmp (this->iface_->local_name ());
-  handler_str += tmp.substr (ACE_OS::strlen ("AMI4CCM_"));
+  handler_str += remove_ami4ccm_prefix (iface_name);
   handler_str += "Handler";
 
   UTL_ScopedName *sn =
-    FE_Utils::string_to_scoped_name (handler_str.c_str ());
+    FE_Utils::string_to_scoped_name (handler_str);
   AST_Decl *d = s->lookup_by_name (sn, true);
 
   sn->destroy ();
@@ -296,9 +302,9 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
 
   /// The overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  callback_iface->get_insert_queue ().reset ();
-  callback_iface->get_del_queue ().reset ();
-  callback_iface->get_insert_queue ().enqueue_tail (callback_iface);
+  callback_iface->get_insert_queue ().clear ();
+  callback_iface->get_del_queue ().clear ();
+  callback_iface->get_insert_queue ().push_back (callback_iface);
 
   Facet_AMI_Exec_Op_Attr_Generator op_attr_gen (this);
 
@@ -326,10 +332,8 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
 {
   this->for_reply_handler_ = false;
 
-  const char *suffix = "_exec_i";
-  const char *scope_name =
-    ScopeAsDecl (this->iface_->defined_in ())->full_name ();
-  const char *iface_name = this->iface_->local_name ();
+  std::string const suffix = "_exec_i";
+  std::string const iface_name = this->iface_->local_name ();
 
   os_ << be_nl_2
       << iface_name << suffix << "::"
@@ -343,15 +347,14 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
       << "{" << be_nl
       << "}";
 
-    ACE_CString handler_str (
-    ScopeAsDecl (this->iface_->defined_in ())->full_name ());
-    ACE_CString tmp (this->iface_->local_name ());
+    std::string handler_str (
+      ScopeAsDecl (this->iface_->defined_in ())->full_name ());
     handler_str += "::";
-    handler_str += tmp;
+    handler_str += iface_name;
 
     UTL_Scope *ss = this->iface_->defined_in();
     UTL_ScopedName *sn =
-       FE_Utils::string_to_scoped_name (handler_str.c_str ());
+       FE_Utils::string_to_scoped_name (handler_str);
     AST_Decl *d = ss->lookup_by_name (sn, true);
 
     sn->destroy ();
@@ -363,9 +366,9 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
 
     /// The overload of traverse_inheritance_graph() used here
     /// doesn't automatically prime the queues.
-    sync_iface->get_insert_queue ().reset ();
-    sync_iface->get_del_queue ().reset ();
-    sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
+    sync_iface->get_insert_queue ().clear ();
+    sync_iface->get_del_queue ().clear ();
+    sync_iface->get_insert_queue ().push_back (sync_iface);
 
     Facet_AMI_Exec_Op_Attr_Generator op_attr_gen (this);
     int status =
@@ -384,14 +387,10 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
                         ACE_TEXT ("interface failed\n")));
       }
 
-  ACE_CString scope_str (scope_name, nullptr, false);
-
-  const char *container_type = be_global->ciao_container_type ();
-
   os_ << be_nl_2
       << "void" << be_nl
       << iface_name << "_exec_i::set_"
-      << tao_cg->downcase (container_type)
+      << tao_cg->downcase (be_global->ciao_container_type ())
       << "_context ("
       << be_idt_nl
       << "::Components::" << be_global->ciao_container_type ()
@@ -412,7 +411,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
   bool is_global =
    (s->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (is_global ? "" : "::");
+  std::string const smart_scope = is_global ? "" : "::";
 
   os_ << be_nl_2
       << "::CORBA::Object_ptr" << be_nl
@@ -473,7 +472,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
       AST_Argument *arg =
         dynamic_cast<AST_Argument*> (d);
       AST_Type *t = arg->field_type ();
-      ACE_CString type_name = t->full_name ();
+      std::string const type_name = t->full_name ();
 
       if (type_name == "Messaging::ExceptionHolder")
         {
@@ -532,8 +531,12 @@ int
 be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 {
   // do not handle not sendc operations.
-  if (ACE_OS::strstr (node->local_name()->get_string (), "sendc_")== nullptr)
-     return 0;
+  std::string const& local_name =
+    node->local_name ()->get_string ();
+  if (local_name.find ("sendc_") == std::string::npos)
+    {
+      return 0;
+    }
 
     os_ << be_nl_2
       << "void" << be_nl
@@ -554,13 +557,10 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 
   AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
+  std::string const smart_scope = global ? "" : "::";
 
-  const char *prefix = "AMI4CCM_";
-  ACE_CString iface_str (this->iface_->local_name ());
-  ACE_CString orig_iface_str (
-    iface_str.substr (ACE_OS::strlen (prefix)));
-  const char *orig_iface_name = orig_iface_str.c_str ();
+  std::string const iface_name = this->iface_->local_name ();
+  std::string const orig_iface_name = remove_ami4ccm_prefix (iface_name);
 
   os_ << be_nl
       << "{" << be_idt_nl
@@ -582,7 +582,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
       << "this->context_->resolve_service_reference (\"POA\");" << be_uidt_nl
       << "::PortableServer::POA_var poa =" << be_idt_nl
       << "::PortableServer::POA::_narrow (objvar.in ());" << be_uidt_nl
-      << this->iface_->local_name () << "_reply_handler *handler = 0;"
+      << this->iface_->local_name () << "_reply_handler *handler = nullptr;"
       << be_nl
       << "ACE_NEW (handler," << be_nl
       << "         " << this->iface_->local_name ()
@@ -686,10 +686,9 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
 
   AST_Decl *scope = ScopeAsDecl (this->iface_->defined_in ());
   bool global = (scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (global ? "" : "::");
+  std::string const smart_scope = global ? "" : "::";
 
-  ACE_CString iface_str (this->iface_->local_name ());
-  const char *orig_iface_name = iface_str.c_str ();
+  std::string const orig_iface_name = this->iface_->local_name ();
   os_ << be_nl
       << "{" << be_idt_nl;
 

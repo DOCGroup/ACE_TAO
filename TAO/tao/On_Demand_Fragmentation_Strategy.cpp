@@ -16,10 +16,7 @@ TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
 {
 }
 
-TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy (
-  )
-{
-}
+TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy () = default;
 
 int
 TAO_On_Demand_Fragmentation_Strategy::fragment (

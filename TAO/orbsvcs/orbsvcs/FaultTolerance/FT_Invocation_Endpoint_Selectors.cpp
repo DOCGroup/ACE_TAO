@@ -12,26 +12,19 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector ()
-  : TAO_Default_Endpoint_Selector ()
-{
-}
+TAO_FT_Invocation_Endpoint_Selector::TAO_FT_Invocation_Endpoint_Selector () = default;
 
-TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector ()
-{
-}
+TAO_FT_Invocation_Endpoint_Selector::~TAO_FT_Invocation_Endpoint_Selector () = default;
 
 void
 TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
     TAO::Profile_Transport_Resolver *r,
     ACE_Time_Value *val)
 {
-  bool retval = this->select_primary (r, val);
-
-  if (retval)
+  if (this->select_primary (r, val))
     return;
 
-  retval = this->select_secondary (r, val);
+  this->select_secondary (r, val);
 
   // If we get here and still haven't found a primary or
   // secondary then we used to throw a TRANSIENT exception here.
@@ -47,7 +40,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_endpoint (
 bool
 TAO_FT_Invocation_Endpoint_Selector::select_primary (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *max_wait_time)
+    ACE_Time_Value *max_wait_time) const
 {
   // Set lock, as forward_profiles might be deleted concurrently.
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -81,7 +74,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
        i != sz;
        ++i)
     {
-      TAO_Profile *tmp = prof_list->get_profile (i);
+      TAO_Profile * const tmp = prof_list->get_profile (i);
 
       bool retval =
         this->check_profile_for_primary (tmp);
@@ -105,7 +98,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_primary (
 bool
 TAO_FT_Invocation_Endpoint_Selector::select_secondary (
     TAO::Profile_Transport_Resolver *r,
-    ACE_Time_Value *max_wait_time)
+    ACE_Time_Value *max_wait_time) const
 {
   // Set lock, as forward_profiles might be deleted concurrently.
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -137,7 +130,7 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
        i != sz;
        ++i)
     {
-      TAO_Profile *tmp =
+      TAO_Profile * const tmp =
         prof_list->get_profile (i);
 
       bool retval =
@@ -162,12 +155,12 @@ TAO_FT_Invocation_Endpoint_Selector::select_secondary (
 bool
 TAO_FT_Invocation_Endpoint_Selector::try_connect (
     TAO::Profile_Transport_Resolver *r,
-    TAO_Profile *profile,
-    ACE_Time_Value *max_wait_time)
+    TAO_Profile * const profile,
+    ACE_Time_Value *max_wait_time) const
 {
   r->profile (profile);
 
-  size_t endpoint_count =
+  size_t const endpoint_count =
     r->profile ()->endpoint_count ();
 
   TAO_Endpoint *ep =
@@ -177,7 +170,7 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
     {
       TAO_Base_Transport_Property desc (ep);
 
-      bool retval =
+      bool const retval =
         r->try_connect (&desc,
                         max_wait_time);
 
@@ -199,7 +192,7 @@ TAO_FT_Invocation_Endpoint_Selector::try_connect (
 
 bool
 TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
-    TAO_Profile *pfile)
+    TAO_Profile const * const pfile) const
 {
   if (!pfile)
     return false;
@@ -208,7 +201,7 @@ TAO_FT_Invocation_Endpoint_Selector::check_profile_for_primary (
   tagged_component.tag = IOP::TAG_FT_PRIMARY;
 
   // Get the tagged component from the  profile
-  TAO_Tagged_Components &pfile_tagged =
+  TAO_Tagged_Components const &pfile_tagged =
     pfile->tagged_components ();
 
   // Search for the TaggedComponent that we want

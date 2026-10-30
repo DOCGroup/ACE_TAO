@@ -22,9 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = nullptr;
 
-TAO_IFR_Server::TAO_IFR_Server ()
-{
-}
+TAO_IFR_Server::TAO_IFR_Server () = default;
 
 TAO_IFR_Server::~TAO_IFR_Server ()
 {
@@ -72,7 +70,7 @@ TAO_IFR_Server::init_with_orb (int argc,
         PortableServer::POA::_narrow (poa_object.in ());
       return this->init_with_poa (argc, argv, orb, rp.in(), use_multicast_server);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("IFR_Service::init_with_orb");
 
@@ -136,7 +134,7 @@ TAO_IFR_Server::init_with_poa (int argc,
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("IFR_Service::init");
 
@@ -153,7 +151,7 @@ TAO_IFR_Server::fini ()
       this->root_poa_->destroy (1,
                                 1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_IFR_Server::fini");
       throw;
@@ -236,12 +234,12 @@ TAO_IFR_Server::open_config ()
 
       if (OPTIONS::instance ()->persistent ())
         {
-          const char *filename = OPTIONS::instance ()->persistent_file ();
+          char const *filename = OPTIONS::instance ()->persistent_file ();
 
           if (heap->open (filename))
             {
               delete heap;
-              heap = 0;
+              heap = nullptr;
 
               ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
@@ -349,7 +347,7 @@ TAO_IFR_Server::create_repository ()
     ACE_OS::fopen (OPTIONS::instance ()->ior_output_file (),
                    ACE_TEXT ("w"));
 
-  if (output_file_ == 0)
+  if (output_file_ == nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_IFR_Server::create_repository - ")
@@ -390,10 +388,10 @@ TAO_IFR_Server::init_multicast_server ()
   if (port == 0)
     {
       // Check environment var. for multicast port.
-      const char *port_number =
+      char const *port_number =
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
-      if (port_number != 0)
+      if (port_number != nullptr)
         port = static_cast<u_short> (ACE_OS::atoi (port_number));
     }
 
@@ -465,9 +463,7 @@ TAO_IFR_Service_Utils::TAO_IFR_Service_Utils ()
 {
 }
 
-TAO_IFR_Service_Utils::~TAO_IFR_Service_Utils ()
-{
-}
+TAO_IFR_Service_Utils::~TAO_IFR_Service_Utils () = default;
 
 ACE_Configuration_Section_Key
 TAO_IFR_Service_Utils::tmp_key_;
@@ -489,7 +485,7 @@ TAO_IFR_Service_Utils::valid_container (
     CORBA::DefinitionKind contained_kind
   )
 {
-  int error_flag = 0;
+  bool error_flag = false;
 
   switch (container_kind)
   {
@@ -506,7 +502,7 @@ TAO_IFR_Service_Utils::valid_container (
         case CORBA::dk_Enum:
           break;
         default:
-          error_flag = 1;
+          error_flag = true;
           break;
       }
       break;
@@ -520,7 +516,7 @@ TAO_IFR_Service_Utils::valid_container (
         case CORBA::dk_Module:
         case CORBA::dk_Interface:
         case CORBA::dk_Value:
-          error_flag = 1;
+          error_flag = true;
           break;
         default:
           break;
@@ -537,7 +533,7 @@ TAO_IFR_Service_Utils::valid_container (
         case CORBA::dk_Attribute:
           break;
         default:
-          error_flag = 1;
+          error_flag = true;
           break;
       }
       break;
@@ -545,7 +541,7 @@ TAO_IFR_Service_Utils::valid_container (
       break;
   }
 
-  if (error_flag == 1)
+  if (error_flag)
     {
       throw
         CORBA::BAD_PARAM (CORBA::OMGVMCID | 4,
@@ -555,7 +551,7 @@ TAO_IFR_Service_Utils::valid_container (
 
 void
 TAO_IFR_Service_Utils::pre_exist (
-    const char *id,
+    char const *id,
     name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo,
@@ -572,7 +568,7 @@ TAO_IFR_Service_Utils::pre_exist (
 }
 
 void
-TAO_IFR_Service_Utils::id_exists (const char *id,
+TAO_IFR_Service_Utils::id_exists (char const *id,
                                   TAO_Repository_i *repo)
 {
   // The repo id must not already exist.
@@ -726,7 +722,7 @@ TAO_IFR_Service_Utils::name_exists (
 void
 TAO_IFR_Service_Utils::check_subsection (
     TAO_IFR_Service_Utils::name_clash_checker checker,
-    const char *sub_section,
+    char const *sub_section,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key
   )
@@ -775,7 +771,7 @@ void
 TAO_IFR_Service_Utils::valid_creation (
     CORBA::DefinitionKind container_kind,
     CORBA::DefinitionKind contained_kind,
-    const char *id,
+    char const *id,
     name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo
@@ -804,11 +800,11 @@ TAO_IFR_Service_Utils::create_common (
     ACE_Configuration_Section_Key container_key,
     ACE_Configuration_Section_Key &new_key,
     TAO_Repository_i *repo,
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     TAO_IFR_Service_Utils::name_clash_checker checker,
-    const char *version,
-    const char *sub_section_name
+    char const *version,
+    char const *sub_section_name
   )
 {
   ACE_TString path;
@@ -927,8 +923,8 @@ void
 TAO_IFR_Service_Utils::set_exceptions (
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
-    const char *sub_section,
-    const CORBA::ExceptionDefSeq &exceptions
+    char const *sub_section,
+    CORBA::ExceptionDefSeq const &exceptions
   )
 {
   CORBA::ULong length = exceptions.length ();
@@ -1134,7 +1130,7 @@ TAO_IFR_Service_Utils::reference_to_path (CORBA::IRObject_ptr obj)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "reference_to_path - parse_ir_object_key failed\n"));
-      return 0;
+      return nullptr;
     }
 
   return TAO_IFR_Service_Utils::oid_to_string (object_id);
@@ -1181,12 +1177,12 @@ TAO_IFR_Service_Utils::path_to_idltype (ACE_TString &path,
     TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
   TAO_IDLType_i *retval = repo->select_idltype (def_kind);
 
-  if (retval == 0)
+  if (retval == nullptr)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "path_to_idltype - not an IDLType: '%s'\n",
                   path.c_str ()));
-      return 0;
+      return nullptr;
     }
 
   retval->section_key (TAO_IFR_Service_Utils::tmp_key_);
@@ -1201,12 +1197,12 @@ TAO_IFR_Service_Utils::path_to_contained (ACE_TString &path,
     TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
   TAO_Contained_i *retval = repo->select_contained (def_kind);
 
-  if (retval == 0)
+  if (retval == nullptr)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "path_to_contained - not a contained type: '%s'\n",
                   path.c_str ()));
-      return 0;
+      return nullptr;
     }
 
   retval->section_key (TAO_IFR_Service_Utils::tmp_key_);
@@ -1221,7 +1217,7 @@ TAO_IFR_Service_Utils::path_to_container (ACE_TString &path,
     TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
   TAO_Container_i *retval = repo->select_container (def_kind);
 
-  if (retval != 0)
+  if (retval != nullptr)
     {
       retval->section_key (TAO_IFR_Service_Utils::tmp_key_);
     }
@@ -1243,7 +1239,7 @@ TAO_IFR_Service_Utils::path_to_ir_object (ACE_TString &path,
 
 CORBA::Object_ptr
 TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
-                                      const char *obj_id,
+                                      char const *obj_id,
                                       TAO_Repository_i *repo)
 {
   ACE_TString repo_id ("IDL:omg.org/");

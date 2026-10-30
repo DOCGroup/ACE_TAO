@@ -20,6 +20,9 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
+
+#include <string>
+#include <unordered_set>
 #if defined (ACE_WIN32)
 # include "ace/Task.h"
 #endif /* ACE_WIN32 */
@@ -60,7 +63,7 @@ class Active_Pid_Setter;
 class Activator_Export Watchdog : public ACE_Task_Base
 {
 public:
-  Watchdog (ACE_Process_Manager& procman);
+  explicit Watchdog (ACE_Process_Manager& procman);
   int svc () override;
   bool start ();
   void stop ();
@@ -86,6 +89,10 @@ public:
   friend class Active_Pid_Setter;
 
   ImR_Activator_i ();
+  ImR_Activator_i (ImR_Activator_i const &) = delete;
+  ImR_Activator_i &operator= (ImR_Activator_i const &) = delete;
+  ImR_Activator_i (ImR_Activator_i &&) = delete;
+  ImR_Activator_i &operator= (ImR_Activator_i &&) = delete;
 
   void start_server (const char* name,
                      const char* cmdline,
@@ -127,7 +134,7 @@ private:
   bool in_upcall ();
 
 private:
-  using UniqueServerList = ACE_Unbounded_Set<ACE_CString>;
+  using UniqueServerList = std::unordered_set<std::string>;
 
   using ProcessMap = ACE_Hash_Map_Manager_Ex<pid_t,
                                               ACE_CString,

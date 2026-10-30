@@ -95,35 +95,27 @@ AST_Array::AST_Array (UTL_ScopedName *n,
               n),
     AST_ConcreteType (AST_Decl::NT_array,
                       n),
-    pd_n_dims (nd),
-    pd_base_type (nullptr),
-    owns_base_type_ (false)
+    pd_base_type (nullptr)
 {
-  this->pd_dims = this->compute_dims (ds,
-                                      nd);
+  this->pd_dims = this->compute_dims (ds, nd);
 }
 
-AST_Array::~AST_Array ()
-{
-}
+AST_Array::~AST_Array () = default;
 
 // Private operations.
 
-// Compute how many dimensions there are and collect their expressions
-// into an array.
-AST_Expression **
+// Collect the array's owned dimension expressions.
+std::vector<std::unique_ptr<AST_Expression>>
 AST_Array::compute_dims (UTL_ExprList *ds,
                          ACE_CDR::ULong nds)
 {
   if (ds == nullptr)
     {
-      return nullptr;
+      return {};
     }
 
-  AST_Expression **result = nullptr;
-  ACE_NEW_RETURN (result,
-                  AST_Expression *[nds],
-                  nullptr);
+  std::vector<std::unique_ptr<AST_Expression>> result;
+  result.reserve (nds);
 
   UTL_ExprlistActiveIterator iter (ds);
 
@@ -141,9 +133,9 @@ AST_Array::compute_dims (UTL_ExprList *ds,
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
                                       ex_type),
-                      nullptr);
+                      std::vector<std::unique_ptr<AST_Expression>> ());
 
-      result[i] = copy;
+      result.emplace_back (copy);
     }
 
   return result;
@@ -161,7 +153,7 @@ AST_Array::dump (ACE_OSTREAM_TYPE &o)
 
   this->local_name ()->dump (o);
 
-  for (ACE_CDR::ULong i = 0; i < this->pd_n_dims; i++)
+  for (ACE_CDR::ULong i = 0; i < this->n_dims (); i++)
     {
       this->dump_i (o, "[");
 
@@ -201,13 +193,13 @@ AST_Array::compute_size_type ()
 
 // Data accessors.
 ACE_CDR::ULong
-AST_Array::n_dims ()
+AST_Array::n_dims () const
 {
-  return this->pd_n_dims;
+  return static_cast<ACE_CDR::ULong> (this->pd_dims.size ());
 }
 
-AST_Expression **
-AST_Array::dims ()
+std::vector<std::unique_ptr<AST_Expression>> const &
+AST_Array::dims () const
 {
   return this->pd_dims;
 }
@@ -221,6 +213,13 @@ AST_Array::base_type () const
 void
 AST_Array::set_base_type (AST_Type *nbt)
 {
+  if (this->owned_base_type_ != nullptr
+      && this->owned_base_type_.get () != nbt)
+    {
+      this->owned_base_type_->destroy ();
+      this->owned_base_type_.reset ();
+    }
+
   this->pd_base_type = nbt;
   this->is_local_ = nbt->is_local ();
   AST_Decl::NodeType bnt = nbt->node_type ();
@@ -229,7 +228,10 @@ AST_Array::set_base_type (AST_Type *nbt)
       || bnt == AST_Decl::NT_map
       || bnt == AST_Decl::NT_param_holder)
     {
-      this->owns_base_type_ = true;
+      if (this->owned_base_type_.get () != nbt)
+        {
+          this->owned_base_type_.reset (nbt);
+        }
     }
 }
 
@@ -242,33 +244,16 @@ AST_Array::legal_for_primary_key () const
 void
 AST_Array::destroy ()
 {
-  if (this->owns_base_type_)
+  if (this->owned_base_type_ != nullptr)
     {
-      this->pd_base_type->destroy ();
-      delete this->pd_base_type;
+      this->owned_base_type_->destroy ();
+      this->owned_base_type_.reset ();
       this->pd_base_type = nullptr;
     }
 
-  for (ACE_CDR::ULong i = 0; i < this->pd_n_dims; ++i)
-    {
-      this->pd_dims[i]->destroy ();
-      delete this->pd_dims[i];
-      this->pd_dims[i] = nullptr;
-    }
-
-  delete [] this->pd_dims;
-  this->pd_dims = nullptr;
-  this->pd_n_dims = 0;
+  this->pd_dims.clear ();
 
   this->AST_ConcreteType::destroy ();
-}
-
-void
-AST_Array::set_dims (AST_Expression **ds,
-                     ACE_CDR::ULong nds)
-{
-  this->pd_dims = ds;
-  this->pd_n_dims = nds;
 }
 
 AST_Annotation_Appls &

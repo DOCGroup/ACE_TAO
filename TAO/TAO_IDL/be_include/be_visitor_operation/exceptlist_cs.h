@@ -30,13 +30,17 @@ class be_visitor_operation_exceptlist_cs : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_operation_exceptlist_cs (be_visitor_context *ctx);
+  explicit be_visitor_operation_exceptlist_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_exceptlist_cs ();
+  ~be_visitor_operation_exceptlist_cs () override;
+  be_visitor_operation_exceptlist_cs (be_visitor_operation_exceptlist_cs const &) = delete;
+  be_visitor_operation_exceptlist_cs (be_visitor_operation_exceptlist_cs &&) = delete;
+  be_visitor_operation_exceptlist_cs &operator= (be_visitor_operation_exceptlist_cs const &) = delete;
+  be_visitor_operation_exceptlist_cs &operator= (be_visitor_operation_exceptlist_cs &&) = delete;
 
   /// visit the operation
-  int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 };
 
 #endif /* _BE_VISITOR_OPERATION_EXCEPTIONLIST_CS_H_ */

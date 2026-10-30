@@ -12,6 +12,8 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
@@ -26,31 +28,31 @@ be_visitor_servant_svh::visit_component (be_component *node)
   node_ = node;
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (scope->full_name ());
+  char const * const sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
-  const char *lname =
+  std::string const& lname =
     node_->original_local_name ()->get_string ();
 
-  const char *global = (sname_str == "" ? "" : "::");
+  char const * const global = (sname_str.empty () ? "" : "::");
 
 // ::CIAO::Session_Context_Impl<
 //       ::Inherited::CCM_Base_comp_Context,
 //       ::Inherited::Base_comp>
 
   os_ << be_nl_2
-      << "class " << export_macro_.c_str () << " " << lname
+      << "class " << export_macro_ << " " << lname
       << "_Servant" << be_idt_nl
       << ": public virtual" << be_idt << be_idt_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Servant_Impl_T<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
       << global << sname << "::CCM_" << lname << "," << be_nl
-      << lname << "_Context_T< " << be_idt_nl
+      << lname << "_Context_T<" << be_idt_nl
       << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T< "
-      << be_idt_nl << global << sname << "::CCM_" << lname << "_Context, " << be_nl
+      << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T<"
+      << be_idt_nl << global << sname << "::CCM_" << lname << "_Context," << be_nl
       << global << sname << "::" << lname << "> > >"
       << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -152,10 +154,10 @@ be_visitor_servant_svh::visit_provides (be_provides *node)
       return 0;
     }
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  const char *obj_name = node->provides_type ()->full_name ();
+  std::string const obj_name = node->provides_type ()->full_name ();
 
   if (!be_global->gen_lwccm ())
     {
@@ -189,10 +191,10 @@ be_visitor_servant_svh::visit_uses (be_uses *node)
       return 0;
     }
 
-  ACE_CString prefix (this->ctx_->port_prefix ());
-  prefix +=node->local_name ()->get_string ();
+  std::string prefix (this->ctx_->port_prefix ());
+  prefix += node->local_name ()->get_string ();
   const char *port_name = prefix.c_str ();
-  const char *obj_name = node->uses_type ()->full_name ();
+  std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_uidt_nl << be_nl
@@ -239,8 +241,9 @@ be_visitor_servant_svh::visit_publishes (be_publishes *node)
 {
   if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
-      const char *obj_name = node->publishes_type ()->full_name ();
-      const char *port_name = node->local_name ()->get_string ();
+      std::string const obj_name = node->publishes_type ()->full_name ();
+      std::string const& port_name =
+        node->local_name ()->get_string ();
 
       os_ << be_uidt_nl << be_nl
           << "public:" << be_idt_nl;
@@ -262,8 +265,9 @@ be_visitor_servant_svh::visit_emits (be_emits *node)
 {
    if(!be_global->gen_noeventccm () && !be_global->gen_lwccm ())
     {
-      const char *obj_name = node->emits_type ()->full_name ();
-      const char *port_name = node->local_name ()->get_string ();
+      std::string const obj_name = node->emits_type ()->full_name ();
+      std::string const& port_name =
+        node->local_name ()->get_string ();
 
       os_ << be_nl_2
           << "virtual void" << be_nl
@@ -282,21 +286,22 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 {
   if(!be_global->gen_noeventccm ())
     {
-      const char *obj_name = node->consumes_type ()->full_name ();
-      const char *port_name = node->local_name ()->get_string ();
+      std::string const obj_name = node->consumes_type ()->full_name ();
+      std::string const& port_name =
+        node->local_name ()->get_string ();
 
-      ACE_CString holder (obj_name);
-      ACE_CString::size_type pos = holder.rfind (':');
-      const char *ev_lname = nullptr;
+      std::string holder (obj_name);
+      std::size_t const pos = holder.rfind (':');
+      std::string ev_lname;
 
-      if (pos == ACE_CString::npos)
+      if (pos == std::string::npos)
         {
           ev_lname = obj_name;
         }
       else
         {
           holder = holder.substr (pos + 1);
-          ev_lname = holder.c_str ();
+          ev_lname = holder;
         }
 
       os_ << be_uidt_nl << be_nl
@@ -304,24 +309,23 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 
       os_ << "// Servant class for the " << port_name
           << " consumer." << be_nl
-          << "class " << export_macro_.c_str () << " " << ev_lname
+          << "class " << export_macro_ << " " << ev_lname
           << "Consumer_" << port_name << "_Servant" << be_idt_nl
           << ": public virtual ::POA_" << obj_name << "Consumer"
           << be_uidt_nl
           << "{" << be_nl
           << "public:" << be_idt_nl;
 
-      ACE_CString sname_str (
+      std::string const sname_str (
         ScopeAsDecl (node_->defined_in ())->full_name ());
-      const char *sname = sname_str.c_str ();
-      const char *lname = node_->local_name ();
-      const char *global = (sname_str == "" ? "" : "::");
+      std::string const& lname = node_->local_name ();
+      std::string const global = sname_str.empty () ? "" : "::";
 
       os_ << ev_lname << "Consumer_" << port_name
           << "_Servant (" << be_idt_nl
-          << global << sname << "::CCM_" << lname
+          << global << sname_str << "::CCM_" << lname
           << "_ptr executor," << be_nl
-          << global << sname << "::CCM_" << lname
+          << global << sname_str << "::CCM_" << lname
           << "_Context_ptr c);" << be_uidt_nl << be_nl;
 
       os_ << "virtual ~" << ev_lname << "Consumer_" << port_name
@@ -345,11 +349,11 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
       os_ << be_uidt_nl << be_nl
           << "protected:" << be_idt_nl;
 
-      os_ << global << sname << "::CCM_" << lname << "_var" << be_nl
+      os_ << global << sname_str << "::CCM_" << lname << "_var" << be_nl
           << "executor_;";
 
       os_ << be_nl_2
-          << global << sname << "::CCM_"
+          << global << sname_str << "::CCM_"
           << lname << "_Context_var" << be_nl
           << "ctx_;";
 

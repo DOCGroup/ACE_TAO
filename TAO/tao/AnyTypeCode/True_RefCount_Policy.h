@@ -69,6 +69,11 @@ namespace TAO
   class TAO_AnyTypeCode_Export True_RefCount_Policy
   {
   public:
+    True_RefCount_Policy (True_RefCount_Policy const &) = delete;
+    True_RefCount_Policy (True_RefCount_Policy &&) = delete;
+    True_RefCount_Policy &operator= (True_RefCount_Policy const &) = delete;
+    True_RefCount_Policy &operator= (True_RefCount_Policy &&) = delete;
+
     /// Increase the reference count on this object.
     void add_ref ();
 

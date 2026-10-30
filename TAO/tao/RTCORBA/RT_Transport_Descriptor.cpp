@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Transport_Descriptor::~TAO_RT_Transport_Descriptor ()
 {
-  if (this->delete_properties_ == 1)
+  if (this->delete_properties_)
     {
       TAO_RT_Transport_Descriptor_Property *current =
         this->property_list_;
@@ -41,8 +41,8 @@ TAO_RT_Transport_Descriptor::duplicate ()
   TAO_RT_Transport_Descriptor *new_descriptor = nullptr;
 
   ACE_NEW_RETURN (new_descriptor,
-                  TAO_RT_Transport_Descriptor (endpoint, 1),
-                  0);
+                  TAO_RT_Transport_Descriptor (endpoint, true),
+                  nullptr);
 
   // Copy the Properties.
   TAO_RT_Transport_Descriptor_Property *current_property =
@@ -70,16 +70,16 @@ TAO_RT_Transport_Descriptor::duplicate ()
 }
 
 CORBA::Boolean
-TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Interface *other_prop)
+TAO_RT_Transport_Descriptor::is_equivalent (TAO_Transport_Descriptor_Interface const *other_prop)
 {
-  const TAO_RT_Transport_Descriptor *rhs =
-    dynamic_cast<const TAO_RT_Transport_Descriptor*> (other_prop);
+  TAO_RT_Transport_Descriptor const *rhs =
+    dynamic_cast<TAO_RT_Transport_Descriptor const *> (other_prop);
 
   if (rhs == nullptr)
     return false;
 
   // Check if endpoint is equivalent.
-  if (this->endpoint_->is_equivalent (rhs->endpoint_) == 0)
+  if (!this->endpoint_->is_equivalent (rhs->endpoint_))
     return false;
 
   // Check the property_list_.
@@ -94,7 +94,7 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
       if (rhs_current == nullptr || current == nullptr)
         return false;
 
-      if (current->is_equivalent (rhs_current) == 0)
+      if (!current->is_equivalent (rhs_current))
         return false;
 
       current = current->next_;

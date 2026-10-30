@@ -46,7 +46,7 @@ class TAO_CodecFactory
 {
 public:
   /// Constructor
-  TAO_CodecFactory (TAO_ORB_Core * orb_core);
+  explicit TAO_CodecFactory (TAO_ORB_Core * orb_core);
 
   /// Create a Coder/Decoder for the given type of encoding.
   IOP::Codec_ptr create_codec (IOP::Encoding const& enc) override;

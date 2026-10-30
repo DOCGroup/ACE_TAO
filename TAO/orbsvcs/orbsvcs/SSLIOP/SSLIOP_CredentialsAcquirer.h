@@ -36,8 +36,8 @@
 /// Forward declarations for OpenSSL data structures.
 extern "C"
 {
-  typedef struct x509_st X509;
-  typedef struct evp_pkey_st EVP_PKEY;
+  using X509 = struct x509_st;
+  using EVP_PKEY = struct evp_pkey_st;
 }
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -61,7 +61,7 @@ namespace TAO
     public:
       /// Constructor
       CredentialsAcquirer (TAO::SL3::CredentialsCurator_ptr curator,
-                           const CORBA::Any & acquisition_arguments);
+                           CORBA::Any const & acquisition_arguments);
 
       /**
        * @name SecurityLevel3::CredentialsAcquirer Methods
@@ -79,7 +79,7 @@ namespace TAO
       CORBA::Any * get_continuation_data () override;
 
       SecurityLevel3::AcquisitionStatus continue_acquisition (
-          const CORBA::Any & acquisition_arguments) override;
+          CORBA::Any const & acquisition_arguments) override;
 
       SecurityLevel3::OwnCredentials_ptr get_credentials (
           CORBA::Boolean on_list) override;
@@ -93,7 +93,7 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~CredentialsAcquirer ();
+      ~CredentialsAcquirer () override = default;
 
     private:
       /// Verify that this CredentialsAcquirer object is still valid,
@@ -101,10 +101,10 @@ namespace TAO
       void check_validity ();
 
       /// Create an OpenSSL X.509 certificate data structure.
-      static ::X509 * make_X509 (const ::SSLIOP::File &certificate);
+      static ::X509 * make_X509 (::SSLIOP::File const &certificate);
 
       /// Create an OpenSSL EVP_PKEY key data structure.
-      static ::EVP_PKEY * make_EVP_PKEY (const ::SSLIOP::File &key);
+      static ::EVP_PKEY * make_EVP_PKEY (::SSLIOP::File const &key);
 
     private:
       /// Lock used for synchronization.
@@ -114,11 +114,11 @@ namespace TAO
       TAO::SL3::CredentialsCurator_var curator_;
 
       /// SSLIOP-specific credentials acquisition arguments.
-      const CORBA::Any & acquisition_arguments_;
+      CORBA::Any const & acquisition_arguments_;
 
       /// Has this CredentialsAcquirer object completed credentials
       /// acquisition or been explicitly destroyed?
-      bool destroyed_;
+      bool destroyed_ {};
     };
   } // End SSLIOP namespace
 }  // End TAO namespace

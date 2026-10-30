@@ -8,27 +8,23 @@
 #include "ace/UUID.h"
 #include "ace/Arg_Shifter.h"
 
-static const char the_prefix[] = "uipmc";
+static constexpr char the_prefix[] = "uipmc";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Protocol_Factory::TAO_UIPMC_Protocol_Factory ()
-  :  TAO_Protocol_Factory (IOP::TAG_UIPMC),
-     // major_ (TAO_DEF_GIOP_MAJOR),
-     // minor_ (TAO_DEF_GIOP_MINOR),
-     listen_on_all_ (false),
-     listener_interfaces_ ()
+  : TAO_Protocol_Factory (IOP::TAG_UIPMC)
 {
 }
 
 int
-TAO_UIPMC_Protocol_Factory::match_prefix (const ACE_CString &prefix)
+TAO_UIPMC_Protocol_Factory::match_prefix (ACE_CString const &prefix)
 {
   // Check for the proper prefix for this protocol.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
 }
 
-const char *
+char const *
 TAO_UIPMC_Protocol_Factory::prefix () const
 {
   return ::the_prefix;
@@ -48,20 +44,20 @@ TAO_UIPMC_Protocol_Factory::make_acceptor ()
                   TAO_UIPMC_Acceptor (
                     this->listen_on_all_,
                     this->listener_interfaces_.c_str ()),
-                  0);
+                  nullptr);
 
   return acceptor;
 }
 
 int
 TAO_UIPMC_Protocol_Factory::init (int argc,
-                                  ACE_TCHAR* argv [])
+                                  ACE_TCHAR *argv [])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg = nullptr;
+      ACE_TCHAR const *current_arg = nullptr;
 
       // This option lets you override the default
       if (0 != (current_arg = arg_shifter.get_the_parameter
@@ -90,7 +86,7 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
             }
           else
             {
-              const char *const always_char = ACE_TEXT_ALWAYS_CHAR (current_arg);
+              char const * const always_char = ACE_TEXT_ALWAYS_CHAR (current_arg);
               if (TAO_ORB_Parameters::check_preferred_interfaces_string (always_char))
                 {
                   // Append any valid string to those already specified
@@ -132,7 +128,7 @@ TAO_UIPMC_Protocol_Factory::make_connector ()
   TAO_Connector *connector = nullptr;
   ACE_NEW_RETURN (connector,
                   TAO_UIPMC_Connector,
-                  0);
+                  nullptr);
   return connector;
 }
 

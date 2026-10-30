@@ -25,7 +25,7 @@ template<class PROXY>
 class TAO_ESF_Shutdown_Proxy : public TAO_ESF_Worker<PROXY>
 {
 public:
-  TAO_ESF_Shutdown_Proxy ();
+  TAO_ESF_Shutdown_Proxy () = default;
 
   void work (PROXY *proxy) override;
 };

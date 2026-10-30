@@ -25,17 +25,21 @@ public:
   Scavenger_Task (ACE_TCHAR const * endpoint,
                   ACE_Barrier * the_barrier,
                   int period_in_usecs);
+  Scavenger_Task (Scavenger_Task const &) = delete;
+  Scavenger_Task (Scavenger_Task &&) = delete;
+  Scavenger_Task &operator= (Scavenger_Task const &) = delete;
+  Scavenger_Task &operator= (Scavenger_Task &&) = delete;
 
   void stop();
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   ACE_TCHAR const * endpoint_;
   ACE_Barrier * the_barrier_;
   int period_in_usecs_;
   TAO_SYNCH_MUTEX mutex_;
-  int stopped_;
+  bool stopped_ {};
 };
 
 class Measuring_Task : public ACE_Task_Base
@@ -45,8 +49,12 @@ public:
                   ACE_Barrier *the_barrier,
                   int iterations,
                   int period_in_usecs);
+  Measuring_Task (Measuring_Task const &) = delete;
+  Measuring_Task (Measuring_Task &&) = delete;
+  Measuring_Task &operator= (Measuring_Task const &) = delete;
+  Measuring_Task &operator= (Measuring_Task &&) = delete;
 
-  virtual int svc();
+  int svc () override;
 
   ACE_Sample_History sample_history;
 
@@ -124,7 +132,6 @@ Scavenger_Task::Scavenger_Task(ACE_TCHAR const * endpoint,
   , the_barrier_ (the_barrier)
   , period_in_usecs_ (period_in_usecs)
   , mutex_ ()
-  , stopped_ (0)
 {
 }
 
@@ -132,7 +139,7 @@ void
 Scavenger_Task::stop()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->stopped_ = 1;
+  this->stopped_ = true;
 }
 
 int

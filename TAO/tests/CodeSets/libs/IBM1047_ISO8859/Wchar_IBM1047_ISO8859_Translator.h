@@ -43,25 +43,29 @@ class IBM1047_ISO8859_Export WIBM1047_ISO8859 : public ACE_WChar_Codeset_Transla
 public:
   /// A do nothing constructor.
   WIBM1047_ISO8859 ();
+  WIBM1047_ISO8859 (WIBM1047_ISO8859 const &) = delete;
+  WIBM1047_ISO8859 (WIBM1047_ISO8859 &&) = delete;
+  WIBM1047_ISO8859 &operator= (WIBM1047_ISO8859 const &) = delete;
+  WIBM1047_ISO8859 &operator= (WIBM1047_ISO8859 &&) = delete;
 
   /// Virtual destruction
-  virtual ~WIBM1047_ISO8859 ();
+  ~WIBM1047_ISO8859 () override;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &, ACE_CDR::WChar &);
-  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR &, ACE_CDR::WChar *&);
-  virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR &,
-                                            ACE_CDR::WChar *,
-                                            ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR &, ACE_CDR::WChar);
-  virtual ACE_CDR::Boolean write_wstring (ACE_OutputCDR &,
-                                         ACE_CDR::ULong,
-                                         const ACE_CDR::WChar *);
-  virtual ACE_CDR::Boolean write_wchar_array (ACE_OutputCDR &,
-                                             const ACE_CDR::WChar *,
-                                             ACE_CDR::ULong);
-  virtual ACE_CDR::ULong ncs () {return 0x10020417;}
-  virtual ACE_CDR::ULong tcs () {return 0x00010001;}
+  ACE_CDR::Boolean read_wchar (ACE_InputCDR &, ACE_CDR::WChar &) override;
+  ACE_CDR::Boolean read_wstring (ACE_InputCDR &, ACE_CDR::WChar *&) override;
+  ACE_CDR::Boolean read_wchar_array (ACE_InputCDR &,
+                                     ACE_CDR::WChar *,
+                                     ACE_CDR::ULong) override;
+  ACE_CDR::Boolean write_wchar (ACE_OutputCDR &, ACE_CDR::WChar) override;
+  ACE_CDR::Boolean write_wstring (ACE_OutputCDR &,
+                                 ACE_CDR::ULong,
+                                 ACE_CDR::WChar const *) override;
+  ACE_CDR::Boolean write_wchar_array (ACE_OutputCDR &,
+                                     ACE_CDR::WChar const *,
+                                     ACE_CDR::ULong) override;
+  ACE_CDR::ULong ncs () override {return 0x10020417;}
+  ACE_CDR::ULong tcs () override {return 0x00010001;}
 };
 
 #include /**/ "ace/post.h"

@@ -24,8 +24,8 @@ public:
   /// Perform member initialization
   TAO_MonitorManager ();
 
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
 
   /// Start the ORB task which includes initializtion of the ORB,
   /// creation of the monitor servant and activation.
@@ -33,7 +33,12 @@ public:
   int run ();
 
   /// This will call the run() method.
-  virtual int resume ();
+  int resume () override;
+
+  TAO_MonitorManager (TAO_MonitorManager const&) = delete;
+  TAO_MonitorManager (TAO_MonitorManager&&) = delete;
+  TAO_MonitorManager& operator= (TAO_MonitorManager const&) = delete;
+  TAO_MonitorManager& operator= (TAO_MonitorManager&&) = delete;
 
   /// Get the dynamic instance of the TAO_MonitorManager and
   /// shut it down
@@ -44,7 +49,12 @@ private:
   {
   public:
     ORBTask ();
-    virtual int svc ();
+    ORBTask (ORBTask const&) = delete;
+    ORBTask (ORBTask&&) = delete;
+    ORBTask& operator= (ORBTask const&) = delete;
+    ORBTask& operator= (ORBTask&&) = delete;
+
+    int svc () override;
 
     TAO_SYNCH_MUTEX mutex_;
     ACE_ARGV_T<ACE_TCHAR> argv_;

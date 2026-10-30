@@ -15,11 +15,6 @@ namespace TAO_Notify
 {
   Routing_Slip_Queue::Routing_Slip_Queue (size_t allowed)
     : allowed_ (allowed)
-    , active_ (0)
-  {
-  }
-
-  Routing_Slip_Queue::~Routing_Slip_Queue ()
   {
   }
 
@@ -35,7 +30,7 @@ namespace TAO_Notify
     }
     else
     {
-      this->queue_.enqueue_tail (routing_slip);
+      this->queue_.push_back (routing_slip);
       dispatch (guard);
     }
   }
@@ -74,8 +69,10 @@ namespace TAO_Notify
   {
     bool ok = false;
     Routing_Slip_Ptr routing_slip;
-    if (this->queue_.dequeue_head (routing_slip) == 0)
+    if (! this->queue_.empty ())
     {
+      routing_slip = this->queue_.front ();
+      this->queue_.pop_front ();
       ++this->active_;
       guard.release ();
       routing_slip->at_front_of_persist_queue ();

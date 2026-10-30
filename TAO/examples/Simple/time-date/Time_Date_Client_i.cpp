@@ -4,16 +4,6 @@
 
 // This is the interface program that accesses the remote object
 
-// Constructor.
-Time_Date_Client_i::Time_Date_Client_i ()
-{
-}
-
-//Destructor.
-Time_Date_Client_i::~Time_Date_Client_i ()
-{
-}
-
 int
 Time_Date_Client_i::parse_args (int,
                                 ACE_TCHAR *[])
@@ -22,7 +12,7 @@ Time_Date_Client_i::parse_args (int,
 }
 
 int
-Time_Date_Client_i::run (const char *name,
+Time_Date_Client_i::run (char const *name,
                          int argc,
                          ACE_TCHAR *argv[])
 {
@@ -52,15 +42,15 @@ Time_Date_Client_i::run (const char *name,
                   ACE_TEXT ("(%P|%t) String time_date = %C\n"),
                   str_var.in()));
 
-      if (client_.do_shutdown () == 1)
+      if (client_.do_shutdown ())
         client_->shutdown ();
     }
-  catch (const CORBA::UserException& range_ex)
+  catch (CORBA::UserException const &range_ex)
     {
       range_ex._tao_print_exception ("\tFrom get and set time_date");
       return -1;
     }
-  catch (const CORBA::SystemException& memex)
+  catch (CORBA::SystemException const &memex)
     {
       memex._tao_print_exception ("Cannot make time_date");
       return -1;

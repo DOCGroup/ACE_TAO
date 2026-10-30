@@ -18,8 +18,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy ()
-   :  stream_endpoint_a_servant_(0), stream_endpoint_b_servant_(0), vdev_servant_(0),
-      media_ctrl_servant_(0)
+   :  stream_endpoint_a_servant_ (nullptr), stream_endpoint_b_servant_ (nullptr),
+      vdev_servant_ (nullptr), media_ctrl_servant_ (nullptr)
 {
 }
 
@@ -49,7 +49,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_
           media_ctrl_servant_->_remove_ref ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -71,7 +71,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
       this->activate_mediactrl ();
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activated mediactrl\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_Endpoint_Reactive_Strategy::activate");
@@ -118,7 +118,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
       // Save the object reference, so that create_A can return it
       this->vdev_ = vdev->_this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Reactive_Strategy::activate_vdev");
@@ -150,7 +150,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
      this->vdev_->define_property ("Related_MediaCtrl",
                                    anyval);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Reactive_Strategy::activate_mediactrl");
@@ -201,16 +201,14 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
 
 //Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_A ()
-{
-}
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
+  TAO_AV_Endpoint_Reactive_Strategy_A () = default;
 
 
 // Destructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_A ()
-{
-}
+TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
+  ~TAO_AV_Endpoint_Reactive_Strategy_A () = default;
 
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
@@ -253,7 +251,7 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
       // Save the object references, so that create_a can return them
       this->stream_endpoint_a_ = this->stream_endpoint_a_servant_->_this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Reactive_Strategy_A::activate_stream_endpoint");
@@ -269,15 +267,13 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
 // Constructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy_B ()
-{
-}
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
+  TAO_AV_Endpoint_Reactive_Strategy_B () = default;
 
 // Destructor
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy_B ()
-{
-}
+TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
+  ~TAO_AV_Endpoint_Reactive_Strategy_B () = default;
 
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
@@ -301,7 +297,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 
       this->stream_endpoint_b_ = this->stream_endpoint_b_servant_->_this ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Endpoint_Reactive_Strategy_B::activate_stream_endpoint");
@@ -336,9 +332,9 @@ template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process ()
   : stream_endpoint_name_ (0),
     pid_ (-1),
-    stream_endpoint_(0),
-    vdev_ (0),
-    media_ctrl_ (0)
+    stream_endpoint_ (nullptr),
+    vdev_ (nullptr),
+    media_ctrl_ (nullptr)
 {
   this->pid_ = ACE_OS::getpid ();
   if (this->pid_ == 0)
@@ -374,7 +370,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
       // register the stream_endpoing with the naming_service
       this->register_stream_endpoint ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_Child_Process");
       return -1;
@@ -442,7 +438,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
 
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Child_Process::activate_objects,media_ctrl_ior is: %s\n",media_ctrl_ior.in ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_AV_Child_Process::init ");
       return -1;
@@ -467,7 +463,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::bind_to_naming_se
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Child_Process::bind_to_naming_service");
@@ -511,21 +507,21 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev ()
           this->naming_context_->bind (this->vdev_name_,
                                        vdev_obj_.in());
         }
-      catch (const CosNaming::NamingContext::AlreadyBound& )
+      catch (CosNaming::NamingContext::AlreadyBound const & )
         {
           // If the object was already there, replace the older reference
           // with this one
           this->naming_context_->rebind (this->vdev_name_,
                                          vdev_obj_.in());
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception (
             "TAO_AV_Child_Process::register_vdev");
           return -1;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_AV_Child_Process::register_vdev");
@@ -543,7 +539,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_V
     {
       this->orb_->run (tv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("orb.run ()");
       return -1;
@@ -600,13 +596,13 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
       this->naming_context_->bind (this->stream_endpoint_name_,
                                    stream_endpoint_obj);
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& )
+  catch (CosNaming::NamingContext::AlreadyBound const & )
     {
       // if the name was already there, replace the reference with the new one
       this->naming_context_->rebind (this->stream_endpoint_name_,
                                      stream_endpoint_obj);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_Endpoint_Reactive_Strategy::activate");
@@ -663,7 +659,7 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::unbind_names ()
 
       this->naming_context_->unbind (this->vdev_name_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_Endpoint_Process_Strategy::activate");
@@ -705,9 +701,7 @@ TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 }
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_A ()
-{
-}
+TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_A () = default;
 
 // ----------------------------------------------------------------------
 // TAO_AV_Child_Process_B
@@ -731,9 +725,7 @@ TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 }
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_B ()
-{
-}
+TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Process_B () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

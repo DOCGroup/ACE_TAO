@@ -57,10 +57,10 @@ class TAO_ESF_Peer_Admin : public TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERF
 {
 public:
   /// Constructor
-  TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
+  explicit TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
 
   /// destructor
-  ~TAO_ESF_Peer_Admin () override;
+  ~TAO_ESF_Peer_Admin () override = default;
 
   /**
    * A <peer> has connected, this is invoked when the peer's client

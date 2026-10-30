@@ -49,7 +49,7 @@ namespace TAO
       /// Constructor
       ContextEstablishmentPolicy (
         SecurityLevel3::CredsDirective             creds_directive,
-        const SecurityLevel3::OwnCredentialsList & creds_list,
+        SecurityLevel3::OwnCredentialsList const & creds_list,
         SecurityLevel3::FeatureDirective           use_client_auth,
         SecurityLevel3::FeatureDirective           use_target_auth,
         SecurityLevel3::FeatureDirective           use_confidentiality,
@@ -87,9 +87,14 @@ namespace TAO
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ContextEstablishmentPolicy () override;
+      ~ContextEstablishmentPolicy () override = default;
 
     private:
+      ContextEstablishmentPolicy (ContextEstablishmentPolicy const &) = delete;
+      ContextEstablishmentPolicy (ContextEstablishmentPolicy &&) = delete;
+      ContextEstablishmentPolicy &operator= (ContextEstablishmentPolicy const &) = delete;
+      ContextEstablishmentPolicy &operator= (ContextEstablishmentPolicy &&) = delete;
+
       SecurityLevel3::CredsDirective     creds_directive_;
       SecurityLevel3::OwnCredentialsList creds_list_;
       SecurityLevel3::FeatureDirective   use_client_auth_;

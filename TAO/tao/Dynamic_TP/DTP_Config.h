@@ -66,10 +66,10 @@ public:
   int init (int argc, ACE_TCHAR* []) override;
 
   /// initializes the supplied set value with the configuration associated with the name, or returns false.
-  bool find (const ACE_CString& name, TAO_DTP_Definition &entry);
+  bool find (ACE_CString const &name, TAO_DTP_Definition &entry);
 
-  int bind (const ACE_CString& name, TAO_DTP_Definition &entry);
-  int rebind (const ACE_CString& name, TAO_DTP_Definition &entry);
+  int bind (ACE_CString const &name, TAO_DTP_Definition &entry);
+  int rebind (ACE_CString const &name, TAO_DTP_Definition &entry);
 
  private:
   TAO_DTP_Config_Registry (TAO_DTP_Config_Registry const &) = delete;
@@ -92,7 +92,7 @@ public:
   ~TAO_DTP_Config () override;
 
   /// Read a definition parameter set from the supplied args.
-  /// There must be a -TPName argument, which, if replicated will cause the set to be ignored, unless -TPOverwrite is also set
+  /// A repeated -TPName is ignored unless -TPOverwrite is also set.
   /// constriants: min threads <= initial threads <= max_threads.
   /// defaults: min threads = initial = max = 5
   /// default lifespan = infinite
@@ -108,11 +108,14 @@ private:
   TAO_DTP_Config (TAO_DTP_Config &&) = delete;
   TAO_DTP_Config &operator= (TAO_DTP_Config &&) = delete;
 
-  int parse_long (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, long &value);
-  int parse_bool (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, bool &value);
-  int parse_string (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, ACE_TCHAR *&value);
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  int parse_long (int &curarg, int argc, ACE_TCHAR* argv[],
+                  ACE_TCHAR const *match, long &value);
+  int parse_bool (int &curarg, int argc, ACE_TCHAR* argv[],
+                  ACE_TCHAR const *match, bool &value);
+  int parse_string (int &curarg, int argc, ACE_TCHAR* argv[],
+                    ACE_TCHAR const *match, ACE_TCHAR *&value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 };
 
 static TAO_DTP_Config_Registry_Installer config_installer;

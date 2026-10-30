@@ -78,13 +78,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
 {
 public:
+  AST_Exception (AST_Exception const &) = delete;
+  AST_Exception (AST_Exception &&) = delete;
+  AST_Exception &operator= (AST_Exception const &) = delete;
+  AST_Exception &operator= (AST_Exception &&) = delete;
   AST_Exception (UTL_ScopedName *n,
                  bool local,
                  bool abstract);
 
   ~AST_Exception () override;
 
-  bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list) override;
+  bool in_recursion (std::vector<AST_Type *> &list) override;
   // Check if we or the parameter node is in recursion.
 
   // AST Dumping.

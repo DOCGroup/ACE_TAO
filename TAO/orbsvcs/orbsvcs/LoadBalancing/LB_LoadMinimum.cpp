@@ -369,8 +369,8 @@ TAO_LB_LoadMinimum::get_location (
                                     // positive value.
 
   CORBA::ULong location_index = 0;
-  CORBA::Boolean found_location = 0;
-  CORBA::Boolean found_load = 0;
+  CORBA::Boolean found_location = false;
+  CORBA::Boolean found_load = false;
 
   const CORBA::ULong len = locations.length ();
 
@@ -387,7 +387,7 @@ TAO_LB_LoadMinimum::get_location (
           CosLoadBalancing::LoadList_var current_loads =
             load_manager->get_loads (loc);
 
-          found_load = 1;
+          found_load = true;
 
           CosLoadBalancing::Load load;
           load.value = 0.0;
@@ -454,7 +454,7 @@ TAO_LB_LoadMinimum::get_location (
                         {
                           min_load = load.value;
                           location_index = i;
-                          found_location = 1;
+                          found_location = true;
 
 //                           ORBSVCS_DEBUG ((LM_DEBUG,
 //                                       "** NEW MIN_LOAD == %f\n",
@@ -470,7 +470,7 @@ TAO_LB_LoadMinimum::get_location (
                     {
                       min_load = load.value;
                       location_index = i;
-                      found_location = 1;
+                      found_location = true;
 
 //                       ORBSVCS_DEBUG ((LM_DEBUG,
 //                                   "***** NEW MIN_LOAD == %f\n",
@@ -481,7 +481,7 @@ TAO_LB_LoadMinimum::get_location (
                 {
                   min_load = load.value;
                   location_index = i;
-                  found_location = 1;
+                  found_location = true;
 
 //                   ORBSVCS_DEBUG ((LM_DEBUG,
 //                               "NEW MIN_LOAD == %f\n",

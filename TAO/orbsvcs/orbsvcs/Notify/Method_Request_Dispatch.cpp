@@ -53,16 +53,14 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 {
 }
 
-TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch ()
-{
-}
+TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch () = default;
 
 int TAO_Notify_Method_Request_Dispatch::execute_i ()
 {
   if (this->proxy_supplier_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
 
-  if (this->filtering_ == 1)
+  if (this->filtering_)
     {
       TAO_Notify_Admin& parent = this->proxy_supplier_->consumer_admin ();
       CORBA::Boolean const val = this->proxy_supplier_->check_filters (this->event_,
@@ -113,7 +111,8 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
   CORBA::ULong count;
   if (cdr.read_ulong (count))
   {
-    TAO_Notify::IdVec id_path (count);
+    TAO_Notify::IdVec id_path;
+    id_path.reserve (count);
     for (size_t nid = 0; ok && nid < count; ++nid)
     {
       TAO_Notify_Object::ID id = 0;
@@ -198,14 +197,12 @@ TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch
         const TAO_Notify::Delivery_Request_Ptr & request,
         TAO_Notify_ProxySupplier* proxy_supplier,
         bool filtering)
-  : TAO_Notify_Method_Request_Dispatch (request, request->event ().get (), proxy_supplier, filtering)
+  : TAO_Notify_Method_Request_Dispatch (
+      TAO_Notify_Method_Request_Event (request),
+      request->event ().get (), proxy_supplier, filtering)
   , TAO_Notify_Method_Request_Queueable (request->event ().get ())
   , event_var_( request->event () )
 
-{
-}
-
-TAO_Notify_Method_Request_Dispatch_Queueable::~TAO_Notify_Method_Request_Dispatch_Queueable ()
 {
 }
 
@@ -223,10 +220,6 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_N
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Dispatch (request, request.event (), proxy_supplier, filtering)
-{
-}
-
-TAO_Notify_Method_Request_Dispatch_No_Copy:: ~TAO_Notify_Method_Request_Dispatch_No_Copy ()
 {
 }
 

@@ -37,13 +37,9 @@ public:
   }
 };
 
-TAO_Notify_Default_Factory::TAO_Notify_Default_Factory ()
-{
-}
+TAO_Notify_Default_Factory::TAO_Notify_Default_Factory () = default;
 
-TAO_Notify_Default_Factory::~TAO_Notify_Default_Factory ()
-{
-}
+TAO_Notify_Default_Factory::~TAO_Notify_Default_Factory () = default;
 
 void
 TAO_Notify_Default_Factory::create (TAO_Notify_ProxySupplier_Collection* &collection)
@@ -89,7 +85,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_Proxy_Collection* &collection)
 
 void
 TAO_Notify_Default_Factory::create (TAO_Notify_EventChannelFactory*& factory,
-                                    const char*)
+                                    char const *)
 {
   ACE_NEW_THROW_EX (factory,
                     TAO_Notify_EventChannelFactory (),
@@ -98,7 +94,7 @@ TAO_Notify_Default_Factory::create (TAO_Notify_EventChannelFactory*& factory,
 
 void
 TAO_Notify_Default_Factory::create (TAO_Notify_EventChannel*& channel,
-                                    const char*)
+                                    char const *)
 {
   ACE_NEW_THROW_EX (channel,
                     TAO_Notify_EventChannel (),

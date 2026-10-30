@@ -8,12 +8,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current::Current (TAO_ORB_Core *orb_core)
-  : tss_slot_ (0),
-    orb_core_ (orb_core)
-{
-}
-
-TAO::SSLIOP::Current::~Current ()
+  : orb_core_ (orb_core)
 {
 }
 
@@ -80,7 +75,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 CORBA::Boolean
 TAO::SSLIOP::Current::no_context ()
 {
-  return (this->implementation () == nullptr ? true : false);
+  return this->implementation () == nullptr;
 }
 
 void
@@ -126,7 +121,7 @@ TAO::SSLIOP::Current::_duplicate (TAO::SSLIOP::Current_ptr obj)
   return obj;
 }
 
-const char *
+char const *
 TAO::SSLIOP::Current::_interface_repository_id () const
 {
   return "IDL:TAO/SSLIOP/Current:1.0";

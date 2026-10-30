@@ -50,7 +50,7 @@ Consumer::disconnect ()
 }
 
 void
-Consumer::push (const CORBA::Any &)
+Consumer::push (CORBA::Any const &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Consumer::push\n"));

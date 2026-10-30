@@ -12,15 +12,15 @@
 
 #include "array.h"
 
+#include <string>
+
 be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs ()
-{
-}
+be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs () = default;
 
 int
 be_visitor_array_cdr_op_cs::visit_array (be_array *node)
@@ -116,19 +116,13 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute the
   // full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];  // to hold the full and
-
-  // Save the node's local name and full name in a buffer for quick use later
-  // on.
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   bool use_underscore = (this->ctx_->tdef () == nullptr);
 
   if (!use_underscore)
     {
-      ACE_OS::sprintf (fname, "%s", node->full_name ());
+      fname = node->full_name ();
     }
   else
     {
@@ -141,16 +135,14 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
         {
           be_decl *parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += node->local_name ()->get_string ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
+          fname = "_";
+          fname += node->full_name ();
         }
     }
 
@@ -473,7 +465,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
   for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
-      AST_Expression *expr = array->dims ()[i];
+      AST_Expression *expr = array->dims ()[i].get ();
 
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
@@ -594,7 +586,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
-      AST_Expression *expr = node->dims ()[i];
+      AST_Expression *expr = node->dims ()[i].get ();
 
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
@@ -763,7 +755,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       else if (nt == AST_Decl::NT_interface
                || nt == AST_Decl::NT_interface_fwd)
         {
-          *os << "_tao_marshal_flag = " << be_idt_nl
+          *os << "_tao_marshal_flag =" << be_idt_nl
               << "TAO::Objref_Traits<" << bt->name () << ">::"
               << "marshal (_tao_array";
 

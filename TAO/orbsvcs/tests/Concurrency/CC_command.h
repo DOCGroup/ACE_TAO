@@ -34,6 +34,11 @@ class CC_Command
   /// Destructor
   virtual ~CC_Command();
 
+  CC_Command (CC_Command const&) = delete;
+  CC_Command (CC_Command&&) = delete;
+  CC_Command& operator= (CC_Command const&) = delete;
+  CC_Command& operator= (CC_Command&&) = delete;
+
   /// Abstract execute method
   virtual int execute() = 0;
 
@@ -41,7 +46,7 @@ class CC_Command
   /// Function to look up the lock set we are operating on, or if the
   /// name is "" return the global lock set variable
   CosConcurrencyControl::LockSet_var
-    GetLockSet (const char *lock_set_name);
+    GetLockSet (char const* lock_set_name);
 
   /// Default constructor. We do not want instances of this class
   CC_Command();
@@ -76,7 +81,7 @@ class CC_Start_Cmd : public CC_Command
 {
  public:
   /// Constructor
-  CC_Start_Cmd (const char *config_file_name);
+  explicit CC_Start_Cmd (char const* config_file_name);
 
   /// Destructor
   ~CC_Start_Cmd() override;
@@ -103,7 +108,7 @@ class CC_CreateLockSet_Cmd : public CC_Command
 {
  public:
   /// Constructor
-  CC_CreateLockSet_Cmd (const char *lock_set_name);
+  explicit CC_CreateLockSet_Cmd (char const* lock_set_name);
 
   /// Destructor
   ~CC_CreateLockSet_Cmd () override;
@@ -129,7 +134,7 @@ class CC_Lock_Cmd:public CC_Command
 {
  public:
   /// Constructor.
-  CC_Lock_Cmd(const char *lock_set_name,
+  CC_Lock_Cmd(char const* lock_set_name,
               CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
@@ -159,7 +164,7 @@ class CC_UnLock_Cmd:public CC_Command
 {
  public:
   /// Constructor.
-  CC_UnLock_Cmd(const char *lock_set_name,
+  CC_UnLock_Cmd(char const* lock_set_name,
                 CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
@@ -192,7 +197,7 @@ class CC_TryLock_Cmd:public CC_Command
 {
  public:
   /// Constructor
-  CC_TryLock_Cmd(const char *lock_set_name,
+  CC_TryLock_Cmd(char const* lock_set_name,
                  CosConcurrencyControl::lock_mode mode);
 
   /// Destructor
@@ -225,7 +230,7 @@ class CC_ChangeMode_Cmd:public CC_Command
 {
  public:
   /// Constructor
-  CC_ChangeMode_Cmd (const char *lock_set_name,
+  CC_ChangeMode_Cmd (char const* lock_set_name,
                      CosConcurrencyControl::lock_mode held_mode,
                      CosConcurrencyControl::lock_mode new_mode);
 
@@ -263,10 +268,10 @@ class CC_Sleep_Cmd:public CC_Command
 {
  public:
   /// Constructor.
-  CC_Sleep_Cmd(int seconds);
+  explicit CC_Sleep_Cmd(int seconds);
 
   /// Destructor.
-  ~CC_Sleep_Cmd() override;
+  ~CC_Sleep_Cmd() override = default;
 
   /// Executes the command.
   int execute() override;
@@ -289,10 +294,10 @@ class CC_Repeat_Cmd:public CC_Command
 {
  public:
   /// Constructor.
-  CC_Repeat_Cmd(int times);
+  explicit CC_Repeat_Cmd(int times);
 
   /// Destructor.
-  ~CC_Repeat_Cmd() override;
+  ~CC_Repeat_Cmd() override = default;
 
   /// Executes the command.
   int execute() override;
@@ -314,7 +319,7 @@ class CC_Wait_Cmd:public CC_Command
 {
  public:
   /// Constructor.
-  CC_Wait_Cmd (const char *prompt);
+  explicit CC_Wait_Cmd (char const* prompt);
 
   /// Destructor.
   ~CC_Wait_Cmd() override;
@@ -340,7 +345,7 @@ class CC_Excep_Cmd : public CC_Command
 {
  public:
   /// Constructor.
-  CC_Excep_Cmd (const char *excep);
+  explicit CC_Excep_Cmd (char const* excep);
 
   /// Destructor.
   ~CC_Excep_Cmd() override;
@@ -369,10 +374,10 @@ class CC_Dummy_Cmd: public CC_Command
 {
  public:
   /// Constructor.
-  CC_Dummy_Cmd();
+  CC_Dummy_Cmd() = default;
 
   /// Destructor.
-  ~CC_Dummy_Cmd() override;
+  ~CC_Dummy_Cmd() override = default;
 
   /// Executes the command, i.e. does nothing.
   int execute() override;
@@ -392,7 +397,7 @@ class CC_Print_Cmd: public CC_Command
 {
 public:
   /// Constructor.
-  CC_Print_Cmd (const char *message);
+  explicit CC_Print_Cmd (char const* message);
 
   /// Destructor.
   ~CC_Print_Cmd() override;
@@ -418,7 +423,7 @@ class CC_Lookup_Cmd:public CC_Command
 {
 public:
   /// Constructor
-  CC_Lookup_Cmd (const char *lock_set_name);
+  explicit CC_Lookup_Cmd (char const* lock_set_name);
 
   /// Destructor
   ~CC_Lookup_Cmd() override;
@@ -448,7 +453,12 @@ class CC_CommandElem
   CC_CommandElem (CC_Command *cmd, CC_CommandElem *next);
 
   /// Destructor.
-  ~CC_CommandElem();
+  ~CC_CommandElem() = default;
+
+  CC_CommandElem (CC_CommandElem const&) = delete;
+  CC_CommandElem (CC_CommandElem&&) = delete;
+  CC_CommandElem& operator= (CC_CommandElem const&) = delete;
+  CC_CommandElem& operator= (CC_CommandElem&&) = delete;
 
   /// Returns a pointer to the command in this element
   CC_Command *GetCommand();
@@ -483,7 +493,12 @@ class CC_CommandList
   CC_CommandList();
 
   /// Destructor.
-  ~CC_CommandList();
+  ~CC_CommandList() = default;
+
+  CC_CommandList (CC_CommandList const&) = delete;
+  CC_CommandList (CC_CommandList&&) = delete;
+  CC_CommandList& operator= (CC_CommandList const&) = delete;
+  CC_CommandList& operator= (CC_CommandList&&) = delete;
 
   /// Adds the command to the list
   int add(CC_Command *cmd);

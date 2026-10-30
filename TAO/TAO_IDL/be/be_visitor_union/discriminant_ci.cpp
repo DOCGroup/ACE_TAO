@@ -28,14 +28,14 @@ namespace
 
         for (unsigned long i = 0; i < node->nfields (); ++i)
           {
-            AST_Field **field = nullptr;
+            AST_Field *field = nullptr;
 
             if (node->field (field, i) != 0 || field == nullptr)
               {
                 return -1;
               }
 
-            be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
+            be_union_branch *branch = dynamic_cast<be_union_branch*> (field);
 
             if (branch == nullptr)
               {
@@ -83,14 +83,14 @@ namespace
 
     for (unsigned long i = 0; i < node->nfields (); ++i)
       {
-        AST_Field **field = nullptr;
+        AST_Field *field = nullptr;
 
         if (node->field (field, i) != 0 || field == nullptr)
           {
             return -1;
           }
 
-        be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
+        be_union_branch *branch = dynamic_cast<be_union_branch*> (field);
 
         if (branch == nullptr)
           {
@@ -158,9 +158,6 @@ be_visitor_union_discriminant_ci::be_visitor_union_discriminant_ci (
 {
 }
 
-be_visitor_union_discriminant_ci::~be_visitor_union_discriminant_ci ()
-{
-}
 
 int
 be_visitor_union_discriminant_ci::visit_enum (be_enum *node)

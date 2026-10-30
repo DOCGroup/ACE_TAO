@@ -12,16 +12,15 @@
 #include "operation.h"
 #include "be_visitor_operation/operation_svs.h"
 
+#include <string>
+
 be_visitor_operation_svs::be_visitor_operation_svs (
       be_visitor_context *ctx)
-  : be_visitor_scope (ctx),
-    scope_ (nullptr)
+  : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_operation_svs::~be_visitor_operation_svs ()
-{
-}
+be_visitor_operation_svs::~be_visitor_operation_svs () = default;
 
 int
 be_visitor_operation_svs::visit_operation (be_operation *node)
@@ -101,18 +100,19 @@ be_visitor_operation_svs::gen_op_body (be_operation *node)
   os_ << be_nl
       << "{" << be_idt_nl;
 
-  ACE_CString sname_str (ScopeAsDecl (scope_->defined_in ())->full_name ());
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const& sname_str =
+    ScopeAsDecl (scope_->defined_in ())->full_name ();
+  std::string const global = sname_str.empty () ? "" : "::";
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SVTS)
     {
-      os_ << "typename EXEC::_var_type executor = " << be_idt_nl
+      os_ << "typename EXEC::_var_type executor =" << be_idt_nl
           << "EXEC::_duplicate (this->executor_.in ());" << be_uidt;
     }
   else
     {
       os_ << "::" << sname_str << global << "CCM_" << scope_->original_local_name ()
-          << "_var executor = " << be_idt_nl
+          << "_var executor =" << be_idt_nl
           << "::" << sname_str << global << "CCM_" << scope_->original_local_name ()
           << "::_duplicate (this->executor_.in ());" << be_uidt;
     }

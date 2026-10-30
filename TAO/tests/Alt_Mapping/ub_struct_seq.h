@@ -14,6 +14,7 @@
 #define ALT_MAPPING_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 
 #include "alt_mappingC.h"
+#include <string>
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //           test unbounded sequence of structs
@@ -23,10 +24,14 @@ class Test_Unbounded_Struct_Sequence
 {
 public:
   /// ctor
-  Test_Unbounded_Struct_Sequence ();
+  Test_Unbounded_Struct_Sequence () = default;
 
   /// dtor
-  ~Test_Unbounded_Struct_Sequence ();
+  ~Test_Unbounded_Struct_Sequence () = default;
+  Test_Unbounded_Struct_Sequence (Test_Unbounded_Struct_Sequence const &) = delete;
+  Test_Unbounded_Struct_Sequence (Test_Unbounded_Struct_Sequence &&) = delete;
+  Test_Unbounded_Struct_Sequence &operator= (Test_Unbounded_Struct_Sequence const &) = delete;
+  Test_Unbounded_Struct_Sequence &operator= (Test_Unbounded_Struct_Sequence &&) = delete;
 
   /// run the SII test
   int run_sii_test (Alt_Mapping_ptr objref);
@@ -41,21 +46,21 @@ public:
   int reset_parameters ();
 
   /// check if results are valid
-  CORBA::Boolean check_validity ();
+  CORBA::Boolean check_validity () const;
 
   /// print all the values
-  void print_values ();
+  void print_values () const;
 
 protected:
   /// compare
   CORBA::Boolean compare (Alt_Mapping::StructSeq const &s1,
-                          Alt_Mapping::StructSeq const &s2);
+                          Alt_Mapping::StructSeq const &s2) const;
 
   /// print individual sequence
-  void print_sequence (Alt_Mapping::StructSeq const &s);
+  void print_sequence (Alt_Mapping::StructSeq const &s) const;
 
 private:
- char *opname_;
+  std::string opname_ {"test_struct_sequence"};
 
   Alt_Mapping::StructSeq in_;
 

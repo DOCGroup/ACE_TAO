@@ -28,7 +28,12 @@ public:
   /**
    *  Constructor
    */
-  NS_group_svc (bool quiet = false);
+  explicit NS_group_svc (bool quiet = false);
+
+  NS_group_svc (NS_group_svc const &) = delete;
+  NS_group_svc (NS_group_svc &&) = delete;
+  NS_group_svc &operator= (NS_group_svc const &) = delete;
+  NS_group_svc &operator= (NS_group_svc &&) = delete;
 
   /**
    * The naming service shall provide a command line utility for creating
@@ -39,7 +44,7 @@ public:
    *
    * @return 0 on success, -1 on failure, -2 on bad argument.
    */
- int group_create (const ACE_TCHAR* group, const ACE_TCHAR* policy);
+ int group_create (ACE_TCHAR const *group, ACE_TCHAR const *policy);
 
   /**
    *  The naming service shall provide a command line utility for binding an
@@ -50,7 +55,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_bind (const ACE_TCHAR* group, const ACE_TCHAR* path);
+  int group_bind (ACE_TCHAR const *group, ACE_TCHAR const *path);
 
   /**
    *  @param group    group name
@@ -58,7 +63,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_unbind (const ACE_TCHAR* path);
+  int group_unbind (ACE_TCHAR const *path);
 
   /**
    *  The naming service shall provide a command line utility to display all
@@ -66,7 +71,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_list ();
+  int group_list () const;
 
   /**
    *  The naming service shall provide a command line utility to modify the load
@@ -77,7 +82,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_modify (const ACE_TCHAR* group, const ACE_TCHAR* policy);
+  int group_modify (ACE_TCHAR const *group, ACE_TCHAR const *policy);
 
   /**
    *  The naming service shall provide a command line utility to remove a
@@ -87,7 +92,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_remove (const ACE_TCHAR* group);
+  int group_remove (ACE_TCHAR const *group);
 
   /**
    *  The naming service shall provide a command line utility for adding object
@@ -99,9 +104,9 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_add (const ACE_TCHAR* group,
-                  const ACE_TCHAR* location,
-                  const ACE_TCHAR* ior);
+  int member_add (ACE_TCHAR const *group,
+                  ACE_TCHAR const *location,
+                  ACE_TCHAR const *ior);
 
   /**
    *  The naming service shall provide a command line utility for displaying all
@@ -111,7 +116,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_list (const ACE_TCHAR* group);
+  int member_list (ACE_TCHAR const *group);
 
   /**
    *  The naming service shall provide a command line utility for removing
@@ -122,7 +127,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_remove (const ACE_TCHAR* group, const ACE_TCHAR* location);
+  int member_remove (ACE_TCHAR const *group, ACE_TCHAR const *location);
 
   /**
    *  The naming service shall provide a command line utility to display an
@@ -133,14 +138,14 @@ public:
    *
    *  @return zero for success; nonzero for failure.
    */
-  int member_show (const ACE_TCHAR* group, const ACE_TCHAR* location);
+  int member_show (ACE_TCHAR const *group, ACE_TCHAR const *location);
 
   /**
    *  @param group    group name
    *
    *  @return true if the specified object group name is found
    */
-  bool group_exist (const ACE_TCHAR* group_name);
+  bool group_exist (ACE_TCHAR const *group_name) const;
 
   /**
    *  @return 0 on success, -1 on failure.
@@ -165,8 +170,8 @@ private:
    *  @param FT_Naming::LoadBalancingStrategyValue& value
    *  @return true on success, false on failure.
    */
-  bool determine_policy_string (
-    const ACE_TCHAR *policy,
+  static bool determine_policy_string (
+    ACE_TCHAR const *policy,
     FT_Naming::LoadBalancingStrategyValue& value);
 
   /**
@@ -174,7 +179,7 @@ private:
    */
   int display_load_policy_group (
     FT_Naming::LoadBalancingStrategyValue strategy,
-    const ACE_TCHAR *display_label);
+    ACE_TCHAR const *display_label) const;
 
 private:
   FT_Naming::NamingManager_var naming_manager_;

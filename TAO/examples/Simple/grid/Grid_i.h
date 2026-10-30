@@ -27,51 +27,56 @@ class Grid_i: public POA_Grid
 {
 public:
   /// Constructor
-  Grid_i ();
+  Grid_i () = default;
 
   /// Constructor.
   Grid_i (CORBA::Short,
           CORBA::Short);
 
   /// Destructor
-  virtual ~Grid_i ();
+  ~Grid_i () override = default;
+
+  Grid_i (Grid_i const &) = delete;
+  Grid_i &operator= (Grid_i const &) = delete;
+  Grid_i (Grid_i &&) = delete;
+  Grid_i &operator= (Grid_i &&) = delete;
 
   /// Returns the width of the grid
-  virtual CORBA::Short width ();
+  CORBA::Short width () override;
 
   /// Returns the height of the grid
-  virtual CORBA::Short height ();
+  CORBA::Short height () override;
 
   /// Sets the width of the grid.
-  virtual void width (CORBA::Short);
+  void width (CORBA::Short) override;
 
   /// Sets the height of the grid.
-  virtual void height (CORBA::Short);
+  void height (CORBA::Short) override;
 
   /// Sets the grid value.
-  virtual void set (CORBA::Short,
-                    CORBA::Short,
-                    CORBA::Long);
+  void set (CORBA::Short,
+            CORBA::Short,
+            CORBA::Long) override;
 
   /// Gets the grid value.
-  virtual CORBA::Long get (CORBA::Short,
-                           CORBA::Short);
+  CORBA::Long get (CORBA::Short,
+                   CORBA::Short) override;
 
   /// Destroy the grid.
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   /// Allocates array
   static CORBA::Long *allocate_array (CORBA::Short x, CORBA::Short y);
 
   /// Width of the grid.
-  CORBA::Short width_;
+  CORBA::Short width_ {};
 
   /// Height of the grid.
-  CORBA::Short height_;
+  CORBA::Short height_ {};
 
   /// Pointer to the matrix.  This is organized as an "array of arrays."
-  typedef std::unique_ptr<CORBA::Long[]> GridArray;
+  using GridArray = std::unique_ptr<CORBA::Long[]>;
   GridArray array_;
 
   /// Some Windows compilers don't have min in std namespaces
@@ -87,30 +92,33 @@ class Grid_Factory_i : public POA_Grid_Factory
 {
 public:
   /// Constructor.
-  Grid_Factory_i ();
+  Grid_Factory_i () = default;
 
   /// Destructor.
-  virtual ~Grid_Factory_i ();
+  ~Grid_Factory_i () override = default;
+
+  Grid_Factory_i (Grid_Factory_i const &) = delete;
+  Grid_Factory_i &operator= (Grid_Factory_i const &) = delete;
+  Grid_Factory_i (Grid_Factory_i &&) = delete;
+  Grid_Factory_i &operator= (Grid_Factory_i &&) = delete;
 
   /// This function creates and returns a <Grid>.
-  virtual Grid_ptr make_grid (CORBA::Short,
-                              CORBA::Short);
+  Grid_ptr make_grid (CORBA::Short,
+                      CORBA::Short) override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
 
 private:
   /// This container is here only for proper clean up.
-  typedef ACE_Vector<PortableServer::ServantBase_var> GridsHolder;
+  using GridsHolder = ACE_Vector<PortableServer::ServantBase_var>;
   GridsHolder grids_holder_;
 
   /// ORB pointer.
-  CORBA::ORB_var orb_;
-
-  void operator= (const Grid_Factory_i &);
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* GRID_I_H */

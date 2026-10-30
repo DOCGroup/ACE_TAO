@@ -70,12 +70,12 @@ BE_ifr_orb_init (int &ac, ACE_TCHAR *av[])
 {
   try
     {
-      ACE_TCHAR* name = 0;
+      ACE_TCHAR *name = nullptr;
       be_global->orb (CORBA::ORB_init (ac,
                                        av,
                                        name));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("BE_ifr_orb_init"));
 
@@ -116,7 +116,7 @@ BE_init (int &argc, ACE_TCHAR *argv[])
 }
 
 TAO_IFR_BE_Export void
-BE_post_init (char *[], long)
+BE_post_init (std::vector<std::string> const &)
 {
 }
 

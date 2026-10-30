@@ -36,7 +36,7 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager
 {
 public:
   /// Constructor.
-  TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_Default_Thread_Lane_Resources_Manager () override;
@@ -69,6 +69,10 @@ private:
     TAO_Default_Thread_Lane_Resources_Manager const &) = delete;
   TAO_Default_Thread_Lane_Resources_Manager &operator= (
     TAO_Default_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager (
+    TAO_Default_Thread_Lane_Resources_Manager &&) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager &operator= (
+    TAO_Default_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
   /// Default lane resources.
@@ -87,6 +91,17 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager_Factory
   : public TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
+  TAO_Default_Thread_Lane_Resources_Manager_Factory () = default;
+
+  TAO_Default_Thread_Lane_Resources_Manager_Factory (
+    TAO_Default_Thread_Lane_Resources_Manager_Factory const &) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager_Factory &operator= (
+    TAO_Default_Thread_Lane_Resources_Manager_Factory const &) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager_Factory (
+    TAO_Default_Thread_Lane_Resources_Manager_Factory &&) = delete;
+  TAO_Default_Thread_Lane_Resources_Manager_Factory &operator= (
+    TAO_Default_Thread_Lane_Resources_Manager_Factory &&) = delete;
+
   /// Destructor.
   ~TAO_Default_Thread_Lane_Resources_Manager_Factory () override;
 

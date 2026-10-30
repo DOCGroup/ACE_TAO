@@ -1,12 +1,12 @@
 
 #include "Client_Task.h"
 
-Client_Task::Client_Task (const ACE_TCHAR *ior,
+Client_Task::Client_Task (ACE_TCHAR const *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-    , input_ (ior)
-    , corb_ (CORBA::ORB::_duplicate (corb))
+  , input_ (ior)
+  , corb_ (CORBA::ORB::_duplicate (corb))
 
 {
 }
@@ -21,40 +21,40 @@ Client_Task::svc ()
       // compiler so we just to put everything in a right order.
 
       // Create and register factory for BaseNode.
-      BaseNode_init *bn_factory = 0;
+      BaseNode_init *bn_factory = nullptr;
       ACE_NEW_RETURN (bn_factory,
                       BaseNode_init,
                       1);
 
       this->corb_->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory);
+                                           bn_factory);
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
-      TreeController_init *tc_factory = 0;
+      TreeController_init *tc_factory = nullptr;
       ACE_NEW_RETURN (tc_factory,
                       TreeController_init,
                       1);
 
       this->corb_->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory);
+                                           tc_factory);
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
-      StringNode_init *sn_factory = 0;
+      StringNode_init *sn_factory = nullptr;
       ACE_NEW_RETURN (sn_factory,
                       StringNode_init,
                       1);
 
       this->corb_->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory);
+                                           sn_factory);
       sn_factory->_remove_ref (); // release ownership
 
       //Well, done with factories.
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        this->corb_->string_to_object(this->input_);
+        this->corb_->string_to_object (this->input_);
 
       Test_var test = Test::_narrow(tmp.in ());
 
@@ -79,7 +79,7 @@ Client_Task::svc ()
         ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
-        sn->name ((const char*)("RootNode"));
+        sn->name ("RootNode");
         tc->root (sn);
 
         // Create the left leaf.
@@ -88,7 +88,7 @@ Client_Task::svc ()
           ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
-          dummy->name ((const char*)("LeftNode"));
+          dummy->name ("LeftNode");
           sn->left (dummy);
         }
 
@@ -98,7 +98,7 @@ Client_Task::svc ()
           ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
-          dummy->name ((const char*)("RightNode"));
+          dummy->name ("RightNode");
           sn->right (dummy);
 
           // dummy->right (sn); // ;-)
@@ -118,7 +118,7 @@ Client_Task::svc ()
         ACE_NEW_RETURN (sn.inout (),
                         OBV_StringNode,
                         1);
-        sn->name ((const char*)("RootNode"));
+        sn->name ("RootNode");
         tc_copy->root (sn);
 
         // Create the left leaf.
@@ -127,7 +127,7 @@ Client_Task::svc ()
           ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
-          dummy->name ((const char*)("LeftNode"));
+          dummy->name ("LeftNode");
           sn->left (dummy);
         }
 
@@ -137,7 +137,7 @@ Client_Task::svc ()
           ACE_NEW_RETURN (dummy.inout (),
                           OBV_StringNode,
                           1);
-          dummy->name ((const char*)("RightNode"));
+          dummy->name ("RightNode");
           sn->right (dummy);
 
           // dummy->right (sn); // ;-)
@@ -172,7 +172,7 @@ Client_Task::svc ()
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -181,58 +181,61 @@ Client_Task::svc ()
   return result;
 }
 
-int
-Client_Task::is_equal_tree (TreeController * tree1, TreeController * tree2)
+bool
+Client_Task::is_equal_tree (TreeController *tree1, TreeController *tree2)
 {
   return is_equal_node (tree1->root (), tree2->root ());
 }
 
 
-int
-Client_Task::is_equal_node (BaseNode * node1, BaseNode * node2)
+bool
+Client_Task::is_equal_node (BaseNode *node1, BaseNode *node2)
 {
-  int ret_val = 0;
-  if (!(node1 || node2))
-    return 1;
-  if (node1 && node2)
+  bool ret_val = false;
+  if (node1 == nullptr && node2 == nullptr)
+    return true;
+  if (node1 != nullptr && node2 != nullptr)
     {
-      StringNode * sn1 = StringNode::_downcast (node1);
-      StringNode * sn2 = StringNode::_downcast (node2);
+      StringNode *sn1 = StringNode::_downcast (node1);
+      StringNode *sn2 = StringNode::_downcast (node2);
       if (sn1 && sn2)
         if (!ACE_OS::strcmp (sn1->name (), sn2->name ()))
-          ret_val = 1;
+          ret_val = true;
       if (!(sn1 || sn2))
-        ret_val = 1;
-      return (ret_val &&
-              is_equal_node (node1->left (), node2->left ()) &&
-              is_equal_node (node1->right (), node2->right ()));
+        ret_val = true;
+      return ret_val
+        && is_equal_node (node1->left (), node2->left ())
+        && is_equal_node (node1->right (), node2->right ());
     }
 
-  return 0;
+  return false;
 }
 
 void
 Client_Task::dump_node (BaseNode *bn, int indent)
 {
-  if (bn == 0) return;
+  if (bn == nullptr)
+    {
+      return;
+    }
 
   // This is ugly I know
   int i = indent;
   for (; i != 0; i--) ACE_DEBUG ((LM_DEBUG, "  "));
 
   StringNode *sn = StringNode::_downcast (bn);
-  if (sn != 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
-               bn,
-               sn->name ()));
-  }
+  if (sn != nullptr)
+    {
+      ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
+                  bn,
+                  sn->name ()));
+    }
   else
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "%x <BaseNode>\n",
-                bn));
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%x <BaseNode>\n",
+                  bn));
+    }
 
   dump_node (bn->left (), indent + 1);
   dump_node (bn->right (), indent + 1);

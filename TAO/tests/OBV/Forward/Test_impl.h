@@ -25,12 +25,16 @@ class Test_impl : public POA_Test
 {
 public:
   /// ctor
-  Test_impl (CORBA::ORB_ptr orb);
+  explicit Test_impl (CORBA::ORB_ptr orb);
 
-  virtual TreeController * reflect (
-      TreeController * tc);
+  Test_impl (Test_impl const&) = delete;
+  Test_impl (Test_impl&&) = delete;
+  Test_impl& operator= (Test_impl const&) = delete;
+  Test_impl& operator= (Test_impl&&) = delete;
 
-  virtual void shutdown ();
+  TreeController *reflect (TreeController *tc) override;
+
+  void shutdown () override;
 
 private:
   /// The ORB

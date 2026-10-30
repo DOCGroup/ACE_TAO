@@ -40,7 +40,7 @@ class TAO_Export TAO_Thread_Lane_Resources_Manager
 {
 public:
   /// Constructor.
-  TAO_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
+  explicit TAO_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   virtual ~TAO_Thread_Lane_Resources_Manager ();
@@ -58,7 +58,7 @@ public:
   virtual void close_all_transports () = 0;
 
   /// Does @a mprofile belong to us?
-  virtual int is_collocated (const TAO_MProfile& mprofile) = 0;
+  virtual int is_collocated (TAO_MProfile const &mprofile) = 0;
 
   /// @name Accessors
   // @{
@@ -73,6 +73,9 @@ private:
   TAO_Thread_Lane_Resources_Manager (TAO_Thread_Lane_Resources_Manager const &) = delete;
   TAO_Thread_Lane_Resources_Manager &operator= (
     TAO_Thread_Lane_Resources_Manager const &) = delete;
+  TAO_Thread_Lane_Resources_Manager (TAO_Thread_Lane_Resources_Manager &&) = delete;
+  TAO_Thread_Lane_Resources_Manager &operator= (
+    TAO_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
   /// The ORB Core.
@@ -94,12 +97,24 @@ class TAO_Export TAO_Thread_Lane_Resources_Manager_Factory
   : public ACE_Service_Object
 {
 public:
+  TAO_Thread_Lane_Resources_Manager_Factory () = default;
+
   /// Virtual destructor.
   ~TAO_Thread_Lane_Resources_Manager_Factory () override;
 
   /// Factory method.
   virtual TAO_Thread_Lane_Resources_Manager *
   create_thread_lane_resources_manager (TAO_ORB_Core &core) = 0;
+
+private:
+  TAO_Thread_Lane_Resources_Manager_Factory (
+    TAO_Thread_Lane_Resources_Manager_Factory const &) = delete;
+  TAO_Thread_Lane_Resources_Manager_Factory &operator= (
+    TAO_Thread_Lane_Resources_Manager_Factory const &) = delete;
+  TAO_Thread_Lane_Resources_Manager_Factory (
+    TAO_Thread_Lane_Resources_Manager_Factory &&) = delete;
+  TAO_Thread_Lane_Resources_Manager_Factory &operator= (
+    TAO_Thread_Lane_Resources_Manager_Factory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

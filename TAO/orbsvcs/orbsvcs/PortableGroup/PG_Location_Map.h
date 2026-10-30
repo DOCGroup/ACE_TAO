@@ -25,16 +25,17 @@
 
 #include "orbsvcs/PortableGroupC.h"
 
-#include "ace/Array_Base.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 struct TAO_PG_ObjectGroup_Map_Entry;
 
-using TAO_PG_ObjectGroup_Array = ACE_Array_Base<TAO_PG_ObjectGroup_Map_Entry *>;
+using TAO_PG_ObjectGroup_Array = std::vector<TAO_PG_ObjectGroup_Map_Entry *>;
 
 /// Location hash map.
 using TAO_PG_Location_Map = ACE_Hash_Map_Manager_Ex<

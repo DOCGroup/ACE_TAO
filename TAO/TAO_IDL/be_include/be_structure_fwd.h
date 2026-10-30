@@ -32,13 +32,13 @@ public:
   be_structure_fwd (AST_Structure *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~be_structure_fwd ();
+  ~be_structure_fwd () override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 };
 
 #endif // if !defined

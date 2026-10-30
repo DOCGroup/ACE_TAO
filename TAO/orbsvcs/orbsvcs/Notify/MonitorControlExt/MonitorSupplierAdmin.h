@@ -23,25 +23,30 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorSupplierAdmin:
 {
 public:
   /// Construct a monitor supplier admin
-  TAO_MonitorSupplierAdmin ();
+  TAO_MonitorSupplierAdmin () = default;
 
   /// Remove the statistics for this event channel
-  ~TAO_MonitorSupplierAdmin ();
+  ~TAO_MonitorSupplierAdmin () override;
+
+  TAO_MonitorSupplierAdmin (TAO_MonitorSupplierAdmin const&) = delete;
+  TAO_MonitorSupplierAdmin (TAO_MonitorSupplierAdmin&&) = delete;
+  TAO_MonitorSupplierAdmin& operator= (TAO_MonitorSupplierAdmin const&) = delete;
+  TAO_MonitorSupplierAdmin& operator= (TAO_MonitorSupplierAdmin&&) = delete;
 
   /// Register our statistic and control objects
   void register_stats_controls (TAO_MonitorEventChannel* mec,
-                                const ACE_CString& name);
+                                ACE_CString const &name);
 
-  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr
+  CosNotifyChannelAdmin::ProxyConsumer_ptr
     obtain_named_notification_push_consumer (
         CosNotifyChannelAdmin::ClientType ctype,
         CosNotifyChannelAdmin::ProxyID_out proxy_id,
-        const char * name);
+        char const *name) override;
 
-  virtual CosNotifyChannelAdmin::ProxyConsumer_ptr
+  CosNotifyChannelAdmin::ProxyConsumer_ptr
     obtain_notification_push_consumer (
         CosNotifyChannelAdmin::ClientType ctype,
-        CosNotifyChannelAdmin::ProxyID_out proxy_id);
+        CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
 private:
   ACE_CString control_name_;

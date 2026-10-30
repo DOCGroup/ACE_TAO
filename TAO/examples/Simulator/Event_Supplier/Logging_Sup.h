@@ -19,6 +19,9 @@
 #include "NavWeapC.h"
 #include "DOVE_Supplier.h"
 
+#include <cstddef>
+#include <vector>
+
 struct Schedule_Viewer_Data
 {
   char operation_name [BUFSIZ];
@@ -47,6 +50,11 @@ public:
 
   ~Logging_Supplier ();
 
+  Logging_Supplier (Logging_Supplier const &) = delete;
+  Logging_Supplier (Logging_Supplier &&) = delete;
+  Logging_Supplier &operator= (Logging_Supplier const &) = delete;
+  Logging_Supplier &operator= (Logging_Supplier &&) = delete;
+
   /// connect the DOVE_Supplier
   int init ();
 
@@ -55,13 +63,14 @@ public:
   void start_generating_events ();
 
   /// Load the scheduling information into memory
-  void load_schedule_data (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data);
+  void load_schedule_data (std::vector<Schedule_Viewer_Data *> &schedule_data);
 
 
 private:
   /// just a helper to put all the information into the CORBA::Any
   void insert_event_data (CORBA::Any &data,
-                          ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter);
+                          std::vector<Schedule_Viewer_Data *> const &schedule_data,
+                          std::size_t &schedule_index);
 
   unsigned int get_options (int argc, ACE_TCHAR *argv []);
 
@@ -74,7 +83,7 @@ private:
   unsigned long total_messages_;
   ACE_TCHAR *input_file_name_;
   unsigned long update_data_;
-  const ACE_TCHAR* schedule_file_name_;
+  ACE_TCHAR const *schedule_file_name_;
 };
 
 #endif /* LOGGING_SUP_H */

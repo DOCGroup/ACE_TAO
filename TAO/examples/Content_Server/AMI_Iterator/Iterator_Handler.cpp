@@ -9,13 +9,11 @@
 #include "ace/OS_NS_string.h"
 
 Iterator_Handler::Iterator_Handler ()
-  : file_ (ACE_sap_any_cast (const ACE_FILE_Addr &)),
+  : file_ (ACE_sap_any_cast (ACE_FILE_Addr const&)),
     file_io_ (),
     contents_ (),
     metadata_ (),
-    offset_ (0),
-    ami_handler_ (),
-    request_count_ (0)
+    ami_handler_ ()
 {
   // Nothing else
 }
@@ -27,7 +25,7 @@ Iterator_Handler::~Iterator_Handler ()
 
 void
 Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
-                              const Web_Server::Chunk_Type &chunk_data)
+                              Web_Server::Chunk_Type const& chunk_data)
 {
   if (pending_data)
     {
@@ -77,10 +75,10 @@ Iterator_Handler::destroy ()
 
 void
 Iterator_Handler::run (int *request_count,
-                       const char *pathname,
+                       char const *pathname,
                        Web_Server::Iterator_Factory_ptr factory)
 {
-  if (request_count != 0)
+  if (request_count != nullptr)
       this->request_count_ = request_count;
   else
     // @@ Application code shouldn't throw system exceptions.
@@ -99,7 +97,7 @@ Iterator_Handler::run (int *request_count,
 
 void
 Iterator_Handler::initialize_content_iterator
-  (const char *pathname,
+  (char const *pathname,
    Web_Server::Iterator_Factory_ptr factory)
 {
   // Obtain a Content Iterator for the desired file.
@@ -112,7 +110,7 @@ Iterator_Handler::initialize_content_iterator
 
   if (connector.connect (this->file_io_,
                          this->file_,
-                         0,
+                         nullptr,
                          ACE_Addr::sap_any,
                          0,
                          O_CREAT | O_TRUNC | O_WRONLY,
@@ -144,12 +142,12 @@ int
 Iterator_Handler::get_viewer (char *viewer,
                               size_t length)
 {
-  const char *content_type =
+  char const *content_type =
     this->metadata_->content_type.in ();
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
     {
-      const char lynx[] = "lynx";
+      char const lynx[] = "lynx";
       if (length <= sizeof (lynx))
         return -1;
       else
@@ -158,7 +156,7 @@ Iterator_Handler::get_viewer (char *viewer,
   else if (ACE_OS::strcasecmp (content_type,
                                "text/plain") == 0)
     {
-      const char more[] = "more";
+      char const more[] = "more";
       if (length <= sizeof (more))
         return -1;
       else
@@ -167,7 +165,7 @@ Iterator_Handler::get_viewer (char *viewer,
   else if (ACE_OS::strcasecmp (content_type,
                                "application/postscript") == 0)
     {
-      const char ghostview[] = "ghostview";
+      char const ghostview[] = "ghostview";
       if (length <= sizeof (ghostview))
         return -1;
       else
@@ -176,7 +174,7 @@ Iterator_Handler::get_viewer (char *viewer,
   else if (ACE_OS::strcasecmp (content_type,
                                "application/pdf") == 0)
     {
-      const char acroread[] = "acroread";
+      char const acroread[] = "acroread";
       if (length <= sizeof (acroread))
         return -1;
       else
@@ -191,7 +189,7 @@ Iterator_Handler::get_viewer (char *viewer,
            || ACE_OS::strcasecmp (content_type,
                                   "image/png") == 0)
     {
-      const char xv[] = "xv";
+      char const xv[] = "xv";
       if (length <= sizeof (xv))
         return -1;
       else
@@ -209,7 +207,7 @@ Iterator_Handler::get_viewer (char *viewer,
 int
 Iterator_Handler::spawn_viewer ()
 {
-  char viewer[BUFSIZ];
+  char viewer[BUFSIZ] {};
 
   if (this->get_viewer (viewer,
                         sizeof viewer) != 0)

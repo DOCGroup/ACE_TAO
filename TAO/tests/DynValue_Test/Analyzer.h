@@ -4,6 +4,8 @@
 #include "ValueTypes_impl.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 
+#include <vector>
+
 //============= class DynAnyAnalyzer ============
 
 class DynAnyAnalyzer
@@ -29,7 +31,7 @@ public:
 
 private:
   /// List of base types.
-  typedef ACE_Array_Base<CORBA::TypeCode_var> BaseTypesList_t;
+  using BaseTypesList_t = std::vector<CORBA::TypeCode_var>;
 
   void tab (const char p[])
   {
@@ -45,7 +47,7 @@ private:
   static void get_base_types (
     CORBA::TypeCode_ptr tc,
     BaseTypesList_t &base_types,
-    CORBA::ULong *total_member_count = 0);
+    CORBA::ULong *total_member_count = nullptr);
 
   /// Return the unaliased valuetype typecode that corresponds to
   /// index (0..total_members-1) from the given hierarchical list of

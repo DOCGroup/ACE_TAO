@@ -1,6 +1,5 @@
 #include "tao/ImR_Client/ImR_Client.h"
 
-#include "ace/Vector_T.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
@@ -11,6 +10,7 @@
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include <cstring>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -203,7 +203,7 @@ namespace
     TAO_ORB_Core& orb_core_;
     const char* const key_str_;
     const char* const type_id_;
-    ACE_Vector<CORBA::Object_var> objs_;
+    std::vector<CORBA::Object_var> objs_;
     CORBA::Object_ptr* const list_buffer_;
     TAO_IOP::TAO_IOR_Manipulation::IORList ior_list_;
   };

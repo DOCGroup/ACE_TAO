@@ -36,8 +36,8 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor
 {
 public:
   /// Constructor
-  TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
-                               CORBA::Boolean flag = false);
+  explicit TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
+                                        CORBA::Boolean flag = false);
 
   /// Destructor
   ~TAO_RT_Transport_Descriptor () override;
@@ -53,7 +53,7 @@ public:
 
   /// Try to determine if this object is same as the <other_prop>.
   CORBA::Boolean is_equivalent (
-      const TAO_Transport_Descriptor_Interface *other_prop) override;
+      TAO_Transport_Descriptor_Interface const *other_prop) override;
 
   /// Generate hash value for our class
   u_long hash () const override;
@@ -63,7 +63,7 @@ private:
   TAO_RT_Transport_Descriptor_Property *property_list_ {};
 
   /// Flag to delete properties.
-  int delete_properties_;
+  bool delete_properties_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

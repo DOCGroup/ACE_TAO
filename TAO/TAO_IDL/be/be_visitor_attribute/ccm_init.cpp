@@ -12,17 +12,15 @@
 
 #include "attribute.h"
 
+#include <string>
+
 be_visitor_attribute_ccm_init::be_visitor_attribute_ccm_init (
     be_visitor_context *ctx)
-  : be_visitor_any_extracted_type_decl (ctx),
-    attr_ (nullptr)
+  : be_visitor_any_extracted_type_decl (ctx)
 {
 }
 
-be_visitor_attribute_ccm_init::~be_visitor_attribute_ccm_init (
-  )
-{
-}
+be_visitor_attribute_ccm_init::~be_visitor_attribute_ccm_init () = default;
 
 int
 be_visitor_attribute_ccm_init::visit_attribute (
@@ -188,7 +186,7 @@ be_visitor_attribute_ccm_init::emit_init_block ()
       << "{" << be_idt_nl
       << "throw ::CORBA::BAD_PARAM ();" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "this->" << this->ctx_->port_prefix ().c_str ()
+      << "this->" << this->ctx_->port_prefix ()
       << attr_->local_name ()->get_string ()
       << " (";
 
@@ -212,7 +210,7 @@ be_visitor_attribute_ccm_init::emit_init_block ()
 
 void
 be_visitor_attribute_ccm_init::emit_error (
-  const char *corba_kind)
+  std::string const& corba_kind)
 {
   this->open_if_block ();
 
@@ -232,7 +230,7 @@ be_visitor_attribute_ccm_init::open_if_block ()
 {
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (descr_name, \""
-      << this->ctx_->port_prefix ().c_str ()
+      << this->ctx_->port_prefix ()
       << attr_->local_name ()->get_string ()
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl;

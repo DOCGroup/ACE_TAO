@@ -65,6 +65,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_SCOPE_UTL_SCOPE_HH
 #define _UTL_SCOPE_UTL_SCOPE_HH
 
+
 // This is the base class for name scoping. Each entity which can
 // be directly contained in a naming scope has an add() function
 // defined for it. The functions defined on the base scoping class
@@ -80,6 +81,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // function defined in the parent "AST_" class.
 
 #include "fe_utils.h"
+#include "utl_strlist.h"
+
+#include <vector>
 
 class Identifier;
 class AST_PredefinedType;
@@ -126,7 +130,6 @@ class AST_Consumes;
 class AST_Extended_Port;
 class AST_Mirror_Port;
 class AST_Connector;
-class UTL_StrList;
 class UTL_NameList;
 class AST_Annotation_Decl;
 class AST_Annotation_Member;
@@ -153,13 +156,13 @@ public:
 
   // Constructor(s).
   UTL_Scope ();
-  UTL_Scope (AST_Decl::NodeType nt);
+  explicit UTL_Scope (AST_Decl::NodeType nt);
 
   // Destructor.
-  virtual ~UTL_Scope ();
+  ~UTL_Scope () override;
 
   // Data Accessors.
-  AST_Decl::NodeType scope_node_type ()
+  AST_Decl::NodeType scope_node_type () const
   {
     return pd_scope_node_type;
   }
@@ -191,7 +194,7 @@ public:
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
-  AST_Decl *lookup_by_name (const char *name);
+  AST_Decl *lookup_by_name (std::string const& name);
 
   virtual AST_Decl *look_in_prev_mods_local (Identifier *e,
                                              bool ignore_fwd = false);
@@ -203,7 +206,7 @@ public:
                                     AST_Decl *&final_parent_decl);
 
   // How many entries are used?
-  virtual unsigned long nmembers ();
+  virtual unsigned long nmembers () const;
 
   // If the Identifier string (from the scoped name which has been
   // already determined to be of length 1) matches a param,
@@ -224,11 +227,11 @@ public:
   void add_to_name_referenced (Identifier *id);
 
   // Accessors for the has_prefix_ member.
-  bool has_prefix ();
+  bool has_prefix () const;
   void has_prefix (bool val);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -291,32 +294,24 @@ protected:
 
   // What type is this node? This is a cache of the information
   // in AST_Decl
-  const AST_Decl::NodeType pd_scope_node_type;
+  AST_Decl::NodeType const pd_scope_node_type;
 
   // Storage for declarations in this scope.
-  AST_Decl **pd_decls;                // Store declarations
-  long pd_decls_allocated;            // How many allocated?
-  long pd_decls_used;                 // How many used?
+  std::vector<AST_Decl *> pd_decls;             // Store declarations
 
   // Storage for local manifest types in this scope.
-  AST_Decl **pd_local_types;          // Store types
-  long pd_locals_allocated;           // How many allocated?
-  long pd_locals_used;                // How many used?
+  std::vector<AST_Decl *> pd_local_types;       // Store types
 
   // Storage for referenced nodes in this scope.
-  AST_Decl **pd_referenced;           // Store references
-  long pd_referenced_allocated;       // How many allocated?
-  long  pd_referenced_used;           // How many used?
+  std::vector<AST_Decl *> pd_referenced;        // Store references
 
   // Storage for identifiers used in this scope. CORBA 2.3 introduced
   // stricter rules for clashes during name resolution, and the information
   // in pd_referenced is not enough to catch them all.
-  Identifier **pd_name_referenced;    // Store name references
-  long pd_name_referenced_allocated;  // How many allocated?
-  long pd_name_referenced_used;       // How many used?
+  std::vector<Identifier *> pd_name_referenced; // Store name references
 
   // Have we seen a #pragma prefix declaration in this scope?
-  bool has_prefix_;
+  bool has_prefix_ {};
 
   // Used in lookup of various CORBA pseudo objects, which also
   // determines generation of specific #include headers.
@@ -328,7 +323,7 @@ protected:
     PSEUDO_ABSTRACTBASE
   };
 
-  WHICH_PSEUDO which_pseudo_;
+  WHICH_PSEUDO which_pseudo_ {PSEUDO_ABSTRACTBASE};
 
 public:
   /// Scope Management Protocol.
@@ -438,8 +433,7 @@ public:
   virtual
   AST_Typedef *fe_add_typedef (AST_Typedef *t);
 
-  virtual
-  UTL_StrList *fe_add_context (UTL_StrList *c);
+  virtual void fe_add_context (UTL_StrList context);
 
   virtual
   UTL_NameList *fe_add_exceptions (UTL_NameList *e);
@@ -499,7 +493,7 @@ public:
 
 protected:
   /// Quick check on the head of a name to see if it's global.
-  bool is_global_name (Identifier *i);
+  bool is_global_name (Identifier const *i) const;
 
 private:
   /// Checks called from fe_add_decl() specific to interfaces
@@ -539,10 +533,10 @@ public:
   bool is_done ();
 
   // What kind of iterator is this?
-  UTL_Scope::ScopeIterationKind iteration_kind ();
+  UTL_Scope::ScopeIterationKind iteration_kind () const;
 
   // What stage are we in with this iterator?
-  UTL_Scope::ScopeIterationKind iteration_stage ();
+  UTL_Scope::ScopeIterationKind iteration_stage () const;
 
 private:
   // Scope to iterate over.
@@ -555,7 +549,7 @@ private:
   UTL_Scope::ScopeIterationKind stage;
 
   // What location in stage?
-  long il;
+  std::size_t il;
 };
 
 #include "utl_scope_T.cpp"

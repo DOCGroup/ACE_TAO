@@ -35,8 +35,12 @@ class ast_visitor_context;
 class ast_visitor_tmpl_module_inst : public ast_visitor
 {
 public:
-  ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
-                                bool ref_only = false);
+  explicit ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
+                                         bool ref_only = false);
+  ast_visitor_tmpl_module_inst (ast_visitor_tmpl_module_inst const &) = delete;
+  ast_visitor_tmpl_module_inst (ast_visitor_tmpl_module_inst &&) = delete;
+  ast_visitor_tmpl_module_inst &operator= (ast_visitor_tmpl_module_inst const &) = delete;
+  ast_visitor_tmpl_module_inst &operator= (ast_visitor_tmpl_module_inst &&) = delete;
 
   ~ast_visitor_tmpl_module_inst () override;
 
@@ -95,7 +99,7 @@ public:
 
 protected:
   // Store for passing on to subsequent create modules.
-  AST_Template_Module_Inst *tmi_;
+  AST_Template_Module_Inst *tmi_ {};
 
 private:
   // If arg is a param holder, return the matching template arg,
@@ -116,11 +120,11 @@ private:
 
   // Flag to branch in visit_valuetype() where we create an
   // eventtype or a valuetype.
-  bool for_eventtype_;
+  bool for_eventtype_ {};
 
   // Flag to branch in visit_factory() where we create a
   // finder or a factory.
-  bool for_finder_;
+  bool for_finder_ {};
 
   // Flag to short_circuit reifying if we are the base class of
   // ast_visitor_tmpl_module_ref.

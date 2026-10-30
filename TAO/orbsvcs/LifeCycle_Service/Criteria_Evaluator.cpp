@@ -41,8 +41,7 @@ Criteria_Evaluator::getInitialization ()
 char *
 Criteria_Evaluator::getFilter ()
 {
-  char const * string;
-  CORBA::Any value;
+  char const * string {};
   CORBA::Any_ptr any_ptr = this->getCriteriaMember ("filter");
 
   if (any_ptr == nullptr)
@@ -67,7 +66,7 @@ Criteria_Evaluator::getCriteriaMember (char const * member_name)
     if (ACE_OS::strcmp (member_name,
                         criteria_[i].name) == 0)
       {
-        CORBA::Any_ptr value_ptr;
+        CORBA::Any_ptr value_ptr {};
 
         // @@ We should use ACE_NEW_THROW_EX + ACE_CHECK_RETURN here.
         ACE_NEW_RETURN (value_ptr,

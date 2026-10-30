@@ -18,9 +18,6 @@ be_visitor_union_cdr_op_ch::be_visitor_union_cdr_op_ch (
 {
 }
 
-be_visitor_union_cdr_op_ch::~be_visitor_union_cdr_op_ch ()
-{
-}
 
 int
 be_visitor_union_cdr_op_ch::visit_union (be_union *node)
@@ -39,8 +36,8 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
   *os << be_global->core_versioning_begin () << be_nl;
 
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator<< (TAO_OutputCDR &, const " << node->name ()
-      << " &);" << be_nl;
+      << " operator<< (TAO_OutputCDR &, " << node->name ()
+      << " const &);" << be_nl;
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);" << be_nl;
@@ -48,8 +45,8 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
   if (be_global->gen_ostream_operators ())
     {
       *os << be_global->stub_export_macro () << " std::ostream&"
-          << " operator<< (std::ostream &strm, const "
-          << node->name () << " &);" << be_nl;
+          << " operator<< (std::ostream &strm, "
+          << node->name () << " const &);" << be_nl;
     }
 
   *os << be_global->core_versioning_end () << be_nl;

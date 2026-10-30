@@ -13,9 +13,7 @@ TAO_NativeDef_i::TAO_NativeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_NativeDef_i::~TAO_NativeDef_i ()
-{
-}
+TAO_NativeDef_i::~TAO_NativeDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_NativeDef_i::def_kind ()

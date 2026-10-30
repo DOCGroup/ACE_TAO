@@ -25,17 +25,21 @@ class be_visitor_valuetype_ci : public be_visitor_valuetype
 {
 public:
   /// constructor
-  be_visitor_valuetype_ci (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_ci ();
+  ~be_visitor_valuetype_ci () override;
+  be_visitor_valuetype_ci (be_visitor_valuetype_ci const &) = delete;
+  be_visitor_valuetype_ci (be_visitor_valuetype_ci &&) = delete;
+  be_visitor_valuetype_ci &operator= (be_visitor_valuetype_ci const &) = delete;
+  be_visitor_valuetype_ci &operator= (be_visitor_valuetype_ci &&) = delete;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 private:
-  bool opt_accessor_;
+  bool opt_accessor_ {};
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_CI_H_ */

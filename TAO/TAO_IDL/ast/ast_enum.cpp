@@ -84,16 +84,12 @@ AST_Enum::AST_Enum (UTL_ScopedName *n,
               n),
     AST_ConcreteType (AST_Decl::NT_enum,
                       n),
-    UTL_Scope (AST_Decl::NT_enum),
-    pd_enum_counter (0),
-    member_count_ (-1)
+    UTL_Scope (AST_Decl::NT_enum)
 {
   this->size_type (AST_Type::FIXED);
 }
 
-AST_Enum::~AST_Enum ()
-{
-}
+AST_Enum::~AST_Enum () = default;
 
 // Return the member count.
 int
@@ -151,7 +147,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
       // Enum union label expressions don't get evaluated upon
       // creation, to evaluate them later, we have only the
       // string name to look up the enum value with.
-      UTL_ScopedName *v_n = const_cast<AST_Expression *> (v)->n ();
+      UTL_ScopedName *v_n = v->n ();
 
       if (v_n != nullptr)
         {

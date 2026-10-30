@@ -31,13 +31,13 @@ public:
   be_union_fwd (AST_Union *dummy,
                 UTL_ScopedName *n);
 
-  virtual ~be_union_fwd ();
+  ~be_union_fwd () override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 };
 
 #endif // if !defined

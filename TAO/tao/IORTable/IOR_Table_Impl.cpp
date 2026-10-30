@@ -46,13 +46,13 @@ TAO_IOR_Table_Impl::find (char const *object_key)
   // We don't want the lock held during locate, so make it go out
   // of scope before then.
   {
-    ACE_CString key (object_key);
-    ACE_CString ior;
+    std::string const key (object_key);
 
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-    if (this->map_.find (key, ior) == 0)
+    Map::const_iterator const iter = this->map_.find (key);
+    if (iter != this->map_.end ())
       {
-        return CORBA::string_dup (ior.c_str ());
+        return CORBA::string_dup (iter->second.c_str ());
       }
     if (CORBA::is_nil (this->locator_.in ()))
       throw IORTable::NotFound ();
@@ -65,7 +65,7 @@ void
 TAO_IOR_Table_Impl::bind (char const *object_key, char const *IOR)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  if (this->map_.bind (object_key, IOR) != 0)
+  if (!this->map_.emplace (object_key, IOR).second)
     throw IORTable::AlreadyBound ();
 }
 
@@ -73,14 +73,14 @@ void
 TAO_IOR_Table_Impl::rebind (char const *object_key, char const *IOR)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  this->map_.rebind (object_key, IOR);
+  this->map_[object_key] = IOR;
 }
 
 void
 TAO_IOR_Table_Impl::unbind (char const *object_key)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  if (this->map_.unbind (object_key) != 0)
+  if (this->map_.erase (object_key) == 0)
     throw IORTable::NotFound ();
 }
 

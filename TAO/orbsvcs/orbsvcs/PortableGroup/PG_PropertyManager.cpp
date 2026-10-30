@@ -22,7 +22,7 @@ TAO_PG_PropertyManager::TAO_PG_PropertyManager (
 
 void
 TAO_PG_PropertyManager::set_default_properties (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   // First verify that the "Factories" property is not in the
   // Properties sequence.  According to the spec, it is not allowed to
@@ -31,10 +31,10 @@ TAO_PG_PropertyManager::set_default_properties (
   factories.length (1);
   factories[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
 
-  CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      PortableGroup::Property property = props[i];
+      PortableGroup::Property const property = props[i];
 
       if (property.nam == factories)
         throw PortableGroup::InvalidProperty (property.nam, property.val);
@@ -51,7 +51,7 @@ TAO_PG_PropertyManager::set_default_properties (
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_default_properties ()
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, nullptr);
 
   PortableGroup::Properties * props = nullptr;
   ACE_NEW_THROW_EX (props,
@@ -68,7 +68,7 @@ TAO_PG_PropertyManager::get_default_properties ()
 
 void
 TAO_PG_PropertyManager::remove_default_properties (
-    const PortableGroup::Properties &props)
+    PortableGroup::Properties const & props)
 {
   if (props.length () == 0)
     return;  // @@ Throw CORBA::BAD_PARAM instead?
@@ -82,8 +82,8 @@ TAO_PG_PropertyManager::remove_default_properties (
 
 void
 TAO_PG_PropertyManager::set_type_properties (
-    const char * type_id,
-    const PortableGroup::Properties & overrides)
+    char const * type_id,
+    PortableGroup::Properties const & overrides)
 {
   this->property_validator_.validate_property (overrides);
 
@@ -105,9 +105,9 @@ TAO_PG_PropertyManager::set_type_properties (
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_type_properties (
-    const char * type_id)
+    char const * type_id)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, nullptr);
 
 
   Type_Prop_Table::ENTRY * entry = nullptr;
@@ -116,10 +116,10 @@ TAO_PG_PropertyManager::get_type_properties (
   if (this->type_properties_.find (type_id, entry) == 0)
     type_properties = &entry->int_id_;
 
-  const CORBA::ULong def_props_len = this->default_properties_.length ();
-  const CORBA::ULong type_props_len =
+  CORBA::ULong const def_props_len = this->default_properties_.length ();
+  CORBA::ULong const type_props_len =
     (type_properties == nullptr ? 0 : type_properties->length ());
-  const CORBA::ULong props_len =
+  CORBA::ULong const props_len =
     (def_props_len > type_props_len ? def_props_len : type_props_len);
 
   PortableGroup::Properties * tmp_properties = nullptr;
@@ -150,8 +150,8 @@ TAO_PG_PropertyManager::get_type_properties (
 
 void
 TAO_PG_PropertyManager::remove_type_properties (
-    const char * type_id,
-    const PortableGroup::Properties & props)
+    char const * type_id,
+    PortableGroup::Properties const & props)
 {
   if (props.length () == 0)
     return;  // @@ Throw CORBA::BAD_PARAM instead?
@@ -172,7 +172,7 @@ TAO_PG_PropertyManager::remove_type_properties (
 void
 TAO_PG_PropertyManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr /* object_group */,
-    const PortableGroup::Properties & /* overrides */)
+    PortableGroup::Properties const & /* overrides */)
 {
 #if 0
   // First verify that the "InitialNumberMembers" property is not in
@@ -205,22 +205,22 @@ PortableGroup::Properties *
 TAO_PG_PropertyManager::get_properties (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-  CORBA::ULong properties_len = 0;
+  CORBA::ULong properties_len {};
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, property_map_guard, this->lock_, 0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, property_map_guard, this->lock_, nullptr);
 
   // @@ Race condition here!
   PortableGroup::Properties_var dynamic_properties =
     this->object_group_manager_.get_properties (object_group);
 
-  CORBA::ULong dyn_props_len = dynamic_properties->length ();
+  CORBA::ULong const dyn_props_len = dynamic_properties->length ();
   if (dyn_props_len > properties_len)
     properties_len = dyn_props_len;
 
   CORBA::String_var type_id =
     this->object_group_manager_.type_id (object_group);
 
-  CORBA::ULong type_props_len = 0;
+  CORBA::ULong type_props_len {};
   PortableGroup::Properties * type_properties = nullptr;
   Type_Prop_Table::ENTRY * type_entry = nullptr;
   if (this->type_properties_.find (type_id.in (), type_entry) == 0)
@@ -232,7 +232,7 @@ TAO_PG_PropertyManager::get_properties (
         properties_len = type_props_len;
     }
 
-  CORBA::ULong def_props_len = this->default_properties_.length ();
+  CORBA::ULong const def_props_len = this->default_properties_.length ();
   if (def_props_len > properties_len)
     properties_len = def_props_len;
 
@@ -269,16 +269,16 @@ TAO_PG_PropertyManager::get_properties (
 
 void
 TAO_PG_PropertyManager::remove_properties (
-    const PortableGroup::Properties & to_be_removed,
-    PortableGroup::Properties &properties)
+    PortableGroup::Properties const & to_be_removed,
+    PortableGroup::Properties & properties)
 {
-  const CORBA::ULong num_removed = to_be_removed.length ();
+  CORBA::ULong const num_removed = to_be_removed.length ();
   if (num_removed == 0)
     return;  // @@ Throw CORBA::BAD_PARAM instead?
 
-  const CORBA::ULong old_length = properties.length ();
+  CORBA::ULong const old_length = properties.length ();
 
-  const CORBA::ULong new_length = old_length - num_removed;
+  CORBA::ULong const new_length = old_length - num_removed;
 
   PortableGroup::Properties new_properties (new_length);
   new_properties.length (new_length);
@@ -286,11 +286,11 @@ TAO_PG_PropertyManager::remove_properties (
   // @@ Slow O(n^2) operation.  Switching to a faster container for
   //    the default properties might be a good idea at some point in
   //    the future.
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
   for (CORBA::ULong i = 0; i < num_removed; ++i)
     {
-      const CORBA::ULong old_n = n;
-      const PortableGroup::Property &remove = to_be_removed[i];
+      CORBA::ULong const old_n = n;
+      PortableGroup::Property const & remove = to_be_removed[i];
 
       for (CORBA::ULong j = 0; j < old_length; ++j)
         if (remove.nam != properties[j].nam)

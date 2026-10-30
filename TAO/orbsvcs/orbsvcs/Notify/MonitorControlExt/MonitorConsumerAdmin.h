@@ -40,39 +40,44 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorConsumerAdmin
 {
 public:
   /// Construct a monitor supplier admin.
-  TAO_MonitorConsumerAdmin ();
+  TAO_MonitorConsumerAdmin () = default;
 
   /// Remove the statistics for this event channel.
-  virtual ~TAO_MonitorConsumerAdmin ();
+  ~TAO_MonitorConsumerAdmin () override;
+
+  TAO_MonitorConsumerAdmin (TAO_MonitorConsumerAdmin const&) = delete;
+  TAO_MonitorConsumerAdmin (TAO_MonitorConsumerAdmin&&) = delete;
+  TAO_MonitorConsumerAdmin& operator= (TAO_MonitorConsumerAdmin const&) = delete;
+  TAO_MonitorConsumerAdmin& operator= (TAO_MonitorConsumerAdmin&&) = delete;
 
   /// Register our statistic and control objects.
   void register_stats_controls (TAO_MonitorEventChannel* mec,
-                                const ACE_CString& name);
+                                ACE_CString const &name);
 
-  virtual CosNotifyChannelAdmin::ProxySupplier_ptr
+  CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_named_notification_push_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id,
-    const char * name);
+    char const *name) override;
 
-  virtual CosNotifyChannelAdmin::ProxySupplier_ptr
+  CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID_out proxy_id);
+    CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
 
   TAO_MonitorEventChannel* get_ec () const;
 
-  const ACE_CString & stat_name () const;
+  ACE_CString const &stat_name () const;
 
 
   /// Receive the queue count and store the approximated queue size in
   /// our statistic object.
-  virtual void update_queue_count (size_t count);
+  void update_queue_count (size_t count) override;
 
-  virtual void count_queue_overflow (bool local_overflow, bool global_overflow);
+  void count_queue_overflow (bool local_overflow, bool global_overflow) override;
 
-  virtual void destroy ();
+  void destroy () override;
 
 private:
   virtual void remove ();
@@ -81,8 +86,8 @@ private:
   ACE_CString queue_size_stat_name_;
   ACE_CString overflow_stat_name_;
   ACE_CString control_name_;
-  Monitor_Base * queue_size_;
-  Monitor_Base * overflows_;
+  Monitor_Base *queue_size_ {};
+  Monitor_Base *overflows_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

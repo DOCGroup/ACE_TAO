@@ -160,7 +160,7 @@ public:
   void wait ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  int is_collocated (TAO_MProfile const &mprofile);
 
   /// Create the static threads - only called once.
   int create_static_threads ();
@@ -283,7 +283,7 @@ public:
   TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                    CORBA::ULong id,
                    CORBA::ULong stack_size,
-                   const RTCORBA::ThreadpoolLanes &lanes,
+                   RTCORBA::ThreadpoolLanes const &lanes,
                    CORBA::Boolean allow_borrowing,
                    CORBA::Boolean allow_request_buffering,
                    CORBA::ULong max_buffered_requests,
@@ -310,7 +310,7 @@ public:
   void shutting_down ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  int is_collocated (TAO_MProfile const &mprofile);
 
   /// Create the static threads - only called once.
   int create_static_threads ();
@@ -378,7 +378,7 @@ public:
   void wait ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  int is_collocated (TAO_MProfile const &mprofile);
 
   /// Create a threadpool without lanes.
   RTCORBA::ThreadpoolId
@@ -395,7 +395,7 @@ public:
   /// Create a threadpool with lanes.
   RTCORBA::ThreadpoolId
   create_threadpool_with_lanes (CORBA::ULong stacksize,
-                                const RTCORBA::ThreadpoolLanes & lanes,
+                                RTCORBA::ThreadpoolLanes const & lanes,
                                 CORBA::Boolean allow_borrowing,
                                 CORBA::Boolean allow_request_buffering,
                                 CORBA::ULong max_buffered_requests,
@@ -432,7 +432,7 @@ private:
 
   RTCORBA::ThreadpoolId
   create_threadpool_with_lanes_i (CORBA::ULong stacksize,
-                                  const RTCORBA::ThreadpoolLanes & lanes,
+                                  RTCORBA::ThreadpoolLanes const & lanes,
                                   CORBA::Boolean allow_borrowing,
                                   CORBA::Boolean allow_request_buffering,
                                   CORBA::ULong max_buffered_requests,

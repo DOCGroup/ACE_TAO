@@ -55,25 +55,25 @@ public:
 
   char *id_i ();
 
-  virtual void id (const char *id);
+  virtual void id (char const *id);
 
-  void id_i (const char *id);
+  void id_i (char const *id);
 
   virtual char *name ();
 
   char *name_i ();
 
-  virtual void name (const char *name);
+  virtual void name (char const *name);
 
-  void name_i (const char *name);
+  void name_i (char const *name);
 
   virtual char *version ();
 
   char *version_i ();
 
-  virtual void version (const char *version);
+  virtual void version (char const *version);
 
-  void version_i (const char *version);
+  void version_i (char const *version);
 
   virtual CORBA::Container_ptr defined_in ();
 
@@ -91,11 +91,11 @@ public:
 
   virtual void move (
       CORBA::Container_ptr new_container,
-      const char *new_name,
-      const char *new_version);
+      char const *new_name,
+      char const *new_version);
 
   /// Called from TAO_IFR_Service_Utils::name_exists.
-  static int same_as_tmp_name (const char *name);
+  static int same_as_tmp_name (char const *name);
 
 protected:
   /**
@@ -106,15 +106,15 @@ protected:
    */
   void move_i (
       CORBA::Container_ptr new_container,
-      const char *new_name,
-      const char *new_version,
+      char const *new_name,
+      char const *new_version,
       CORBA::Boolean cleanup
     );
 
 private:
   /// Check if <name> already exists in our container
   CORBA::Boolean name_exists (
-      const char *name
+      char const *name
     );
 
   /// Recursively update the scoped name of our contents.
@@ -131,8 +131,8 @@ private:
    */
   void move_pre_process (
       CORBA::Container_ptr container,
-      const char *contained_path,
-      const char *name
+      char const *contained_path,
+      char const *name
     );
 
   /**
@@ -145,7 +145,7 @@ private:
     );
 
 private:
-  static const char *tmp_name_holder_;
+  static char const *tmp_name_holder_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

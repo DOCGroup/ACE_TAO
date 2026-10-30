@@ -24,8 +24,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
-  : SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
+  : SVC_HANDLER (t, nullptr, nullptr),
+    TAO_Connection_Handler (nullptr),
     current_ ()
 {
   // This constructor should *never* get called, it is just here to
@@ -37,7 +37,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
 }
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
-  : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core),
     current_ ()
 {
@@ -105,7 +105,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
               tph->server_protocol_properties_at_orb_level (protocol_properties);
             }
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           return -1;
         }
@@ -277,8 +277,8 @@ TAO::SSLIOP::Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO::SSLIOP::Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                                 const void *)
+TAO::SSLIOP::Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                                 void const *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -
@@ -345,7 +345,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache ()
   // @@ This is broken.  We need to include the SecurityAssociation
   //    options to be able to truly distinguish cached SSLIOP
   //    transports.
-  const ::SSLIOP::SSL ssl =
+  ::SSLIOP::SSL const ssl =
     {
       0,                        // target_supports
       0,                        // target_requires
@@ -453,7 +453,7 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
 }
 
 int
-TAO::SSLIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+TAO::SSLIOP::Connection_Handler::handle_write_ready (ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }

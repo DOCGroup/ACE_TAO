@@ -3,18 +3,10 @@
 #include "CustomExceptionC.h"
 
 
-Foo_C_i::Foo_C_i()
-{
-  for (unsigned i = 0; i < 10; i++)
-    {
-      this->count_[i] = 0;
-    }
-}
+Foo_C_i::Foo_C_i() = default;
 
 
-Foo_C_i::~Foo_C_i()
-{
-}
+Foo_C_i::~Foo_C_i() = default;
 
 
 void

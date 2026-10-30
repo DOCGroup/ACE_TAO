@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 TAO::Any_Basic_Impl_T<T>::Any_Basic_Impl_T (CORBA::TypeCode_ptr tc,
-                                            const T & val)
+                                            T const & val)
   : Any_Impl (nullptr,
               tc),
     value_ (val)
@@ -30,7 +30,7 @@ template<typename T>
 void
 TAO::Any_Basic_Impl_T<T>::insert (CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
-                                  const T & value)
+                                  T const & value)
 {
   Any_Basic_Impl_T<T> *new_impl = nullptr;
   ACE_NEW (new_impl,
@@ -41,7 +41,7 @@ TAO::Any_Basic_Impl_T<T>::insert (CORBA::Any & any,
 
 template<typename T>
 CORBA::Boolean
-TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
+TAO::Any_Basic_Impl_T<T>::extract (CORBA::Any const & any,
                                    CORBA::TypeCode_ptr tc,
                                    T & _tao_elem)
 {
@@ -100,7 +100,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (any_tc);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -115,7 +115,7 @@ TAO::Any_Basic_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
 }
 
 template<typename T>
-const void *
+void const *
 TAO::Any_Basic_Impl_T<T>::value () const
 {
   return &this->value_;
@@ -128,8 +128,8 @@ TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
   TAO::Any_Basic_Impl_T<T> * retval = nullptr;
   ACE_NEW_RETURN (retval,
                   TAO::Any_Basic_Impl_T<T> (tc,
-                                            static_cast<T> (0)),
-                  0);
+                                            T{}),
+                  nullptr);
   return retval;
 }
 

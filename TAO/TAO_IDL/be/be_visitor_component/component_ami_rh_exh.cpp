@@ -11,6 +11,7 @@
 
 #include "component.h"
 
+
 be_visitor_component_ami_rh_exh::be_visitor_component_ami_rh_exh (
       be_visitor_context *ctx)
   : be_visitor_component_ami_rh_ex_base (ctx),
@@ -18,9 +19,7 @@ be_visitor_component_ami_rh_exh::be_visitor_component_ami_rh_exh (
 {
 }
 
-be_visitor_component_ami_rh_exh::~be_visitor_component_ami_rh_exh ()
-{
-}
+be_visitor_component_ami_rh_exh::~be_visitor_component_ami_rh_exh () = default;
 
 int
 be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
@@ -43,9 +42,9 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
 
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  this->iface_->get_insert_queue ().reset ();
-  this->iface_->get_del_queue ().reset ();
-  this->iface_->get_insert_queue ().enqueue_tail (this->iface_);
+  this->iface_->get_insert_queue ().clear ();
+  this->iface_->get_del_queue ().clear ();
+  this->iface_->get_insert_queue ().push_back (this->iface_);
 
   Exec_ReplyHandler_Op_Attr_Generator op_attr_gen (this);
 

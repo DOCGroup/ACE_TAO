@@ -11,6 +11,8 @@
 
 #include "valuetype.h"
 
+#include <string>
+
 // ************************************************************
 // Valuetype visitor for client stubs.
 // ************************************************************
@@ -20,9 +22,7 @@ be_visitor_valuetype_cs::be_visitor_valuetype_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_cs::~be_visitor_valuetype_cs ()
-{
-}
+be_visitor_valuetype_cs::~be_visitor_valuetype_cs () = default;
 
 int
 be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
@@ -94,7 +94,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_nl_2;
 
   // The _tao_obv_repository_id method.
-  *os << "const char *" << be_nl
+  *os << "char const *" << be_nl
       << node->name ()
       << "::_tao_obv_repository_id () const" << be_nl
       << "{" << be_idt_nl
@@ -539,10 +539,10 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
       *os << be_nl
           << "     << ";
 
-      ACE_CString instance_name ("this->");
+      std::string instance_name ("this->");
       instance_name += f->local_name ()->get_string ();
       f->gen_member_ostream_operator (os,
-                                      instance_name.c_str (),
+                                      instance_name,
                                       false,
                                       true);
     }

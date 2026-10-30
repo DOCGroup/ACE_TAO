@@ -29,13 +29,18 @@ class Persistent_Client_i
 {
 public:
   /// Constructor
-  Persistent_Client_i ();
+  Persistent_Client_i () = default;
 
   /// Destructor
-  virtual ~Persistent_Client_i ();
+  virtual ~Persistent_Client_i () = default;
+
+  Persistent_Client_i (Persistent_Client_i const&) = delete;
+  Persistent_Client_i (Persistent_Client_i&&) = delete;
+  Persistent_Client_i& operator= (Persistent_Client_i const&) = delete;
+  Persistent_Client_i& operator= (Persistent_Client_i&&) = delete;
 
   /// Execute the methods.
-  virtual int run (const char *, int, ACE_TCHAR *[]);
+  virtual int run (char const *, int, ACE_TCHAR *[]);
 
   /// Parses the command line arguments.
   virtual int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -45,13 +50,13 @@ private:
   Client<Grid_Factory, Grid_Factory_var> client;
 
   /// Height of the grid
-  CORBA::Short height_;
+  CORBA::Short height_ {};
 
   /// Width of the grid.
-  CORBA::Short width_;
+  CORBA::Short width_ {};
 
   /// Flag for the deletion of memory
-  CORBA::Short remove_;
+  bool remove_ {};
 };
 
 #endif /* PERSISTENT_CLIENT_I_H */

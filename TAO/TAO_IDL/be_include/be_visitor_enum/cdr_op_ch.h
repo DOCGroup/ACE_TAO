@@ -26,10 +26,14 @@ class be_visitor_enum_cdr_op_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_enum_cdr_op_ch (be_visitor_context *ctx);
+  explicit be_visitor_enum_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_enum_cdr_op_ch () override;
+  be_visitor_enum_cdr_op_ch (be_visitor_enum_cdr_op_ch const &) = delete;
+  be_visitor_enum_cdr_op_ch (be_visitor_enum_cdr_op_ch &&) = delete;
+  be_visitor_enum_cdr_op_ch &operator= (be_visitor_enum_cdr_op_ch const &) = delete;
+  be_visitor_enum_cdr_op_ch &operator= (be_visitor_enum_cdr_op_ch &&) = delete;
 
   /// visit enum
   int visit_enum (be_enum *node) override;

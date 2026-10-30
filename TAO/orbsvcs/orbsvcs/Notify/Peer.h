@@ -41,6 +41,11 @@ public:
   /// Destructor
   virtual ~TAO_Notify_Peer ();
 
+  TAO_Notify_Peer (TAO_Notify_Peer const &) = delete;
+  TAO_Notify_Peer (TAO_Notify_Peer &&) = delete;
+  TAO_Notify_Peer &operator= (TAO_Notify_Peer const &) = delete;
+  TAO_Notify_Peer &operator= (TAO_Notify_Peer &&) = delete;
+
   /// This method sigantures deliberately match the RefCounting methods
   /// required for ESF Proxy
   CORBA::ULong _incr_refcnt ();

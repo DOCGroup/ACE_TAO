@@ -23,7 +23,7 @@ BE_init (int &, ACE_TCHAR *[])
   ACE_NEW_RETURN (be_global, BE_GlobalData, -1);
 
   // Enable Annotations
-  idl_global->default_idl_version_ = IDL_VERSION_4;
+  idl_global->default_idl_version_ = IdlVersion (IDL_VERSION_4);
 
   // Disable Trying to Parse File Arguments and creating File Output
   idl_global->ignore_files_ = true;
@@ -32,7 +32,7 @@ BE_init (int &, ACE_TCHAR *[])
 }
 
 void
-BE_post_init (char *[], long)
+BE_post_init (std::vector<std::string> const &)
 {
   annotation_tests ();
 }

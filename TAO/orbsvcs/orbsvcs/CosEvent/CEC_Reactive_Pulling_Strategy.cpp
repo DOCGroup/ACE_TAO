@@ -21,8 +21,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_Reactive_Pulling_Strategy::
-    TAO_CEC_Reactive_Pulling_Strategy (const ACE_Time_Value &rate,
-                                       const ACE_Time_Value &relative_timeout,
+    TAO_CEC_Reactive_Pulling_Strategy (ACE_Time_Value const &rate,
+                                       ACE_Time_Value const &relative_timeout,
                                        TAO_CEC_EventChannel *event_channel,
                                        CORBA::ORB_ptr orb)
   :  adapter_ (this),
@@ -42,8 +42,8 @@ TAO_CEC_Reactive_Pulling_Strategy::
 
 void
 TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
-      const ACE_Time_Value &,
-      const void *)
+      ACE_Time_Value const &,
+      void const *)
 {
   try
     {
@@ -64,7 +64,7 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
 
           this->event_channel_->supplier_admin ()->for_each (&worker);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Ignore all exceptions
         }
@@ -76,7 +76,7 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -117,7 +117,7 @@ TAO_CEC_Reactive_Pulling_Strategy::activate ()
                Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                any);
     }
-  catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
     {
     }
 #endif /* TAO_HAS_CORBA_MESSAGING */
@@ -142,8 +142,8 @@ TAO_CEC_Pulling_Strategy_Adapter::TAO_CEC_Pulling_Strategy_Adapter (
 
 int
 TAO_CEC_Pulling_Strategy_Adapter::handle_timeout (
-      const ACE_Time_Value &tv,
-      const void *arg)
+      ACE_Time_Value const &tv,
+      void const *arg)
 {
   this->adaptee_->handle_timeout (tv, arg);
   return 0;
@@ -154,14 +154,14 @@ TAO_CEC_Pulling_Strategy_Adapter::handle_timeout (
 void
 TAO_CEC_Pull_Event::work (TAO_CEC_ProxyPullConsumer *consumer)
 {
-  CORBA::Boolean has_event = 0;
+  CORBA::Boolean has_event = false;
   CORBA::Any_var any;
 
   try
     {
       any = consumer->try_pull_from_supplier (has_event);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
       return;

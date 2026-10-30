@@ -14,14 +14,11 @@
 be_visitor_ami4ccm_sendc_ex_idl::be_visitor_ami4ccm_sendc_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    os_ (*ctx->stream ()),
-    iface_ (nullptr)
+    os_ (*ctx->stream ())
 {
 }
 
-be_visitor_ami4ccm_sendc_ex_idl::~be_visitor_ami4ccm_sendc_ex_idl ()
-{
-}
+be_visitor_ami4ccm_sendc_ex_idl::~be_visitor_ami4ccm_sendc_ex_idl () = default;
 
 int
 be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)

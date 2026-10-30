@@ -10,7 +10,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -36,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -44,7 +44,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -60,11 +60,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Sender_i *sender_impl;
+      Sender_i *sender_impl = nullptr;
       ACE_NEW_RETURN (sender_impl,
                       Sender_i (orb.in ()),
                       1);
-      PortableServer::ServantBase_var receiver_owner_transfer(sender_impl);
+      PortableServer::ServantBase_var receiver_owner_transfer (sender_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (sender_impl);
@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (sender.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
       if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
@@ -100,9 +100,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Now terminating test\n"));
 
-      CORBA::ULong activeobjects = sender_impl->get_active_objects ();
-      if (((number_of_oneways * activeobjects) !=
-            sender_impl->get_number_received ()) && activeobjects != 0)
+      CORBA::ULong const active_objects = sender_impl->get_active_objects ();
+      if (((number_of_oneways * active_objects) !=
+            sender_impl->get_number_received ()) && active_objects != 0)
         {
           ACE_ERROR ((LM_ERROR, "Error, expected %d oneways, received %d\n",
                       number_of_oneways,
@@ -124,7 +124,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

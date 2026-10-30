@@ -76,8 +76,10 @@ protected:
   ACE_Null_Mutex &mutex_; // Reference to mutex lock.
 
 private:
-  void operator= (const ACE_Condition<ACE_Null_Mutex> &) = delete;
-  ACE_Condition (const ACE_Condition<ACE_Null_Mutex> &) = delete;
+  ACE_Condition (ACE_Condition const &) = delete;
+  ACE_Condition (ACE_Condition &&) = delete;
+  ACE_Condition &operator= (ACE_Condition const &) = delete;
+  ACE_Condition &operator= (ACE_Condition &&) = delete;
 };
 
 using ACE_Null_Condition = ACE_Condition<ACE_Null_Mutex>;

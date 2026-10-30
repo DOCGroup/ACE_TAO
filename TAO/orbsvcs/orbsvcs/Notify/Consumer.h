@@ -25,6 +25,9 @@
 #include "ace/Event_Handler.h"
 #include "ace/Atomic_Op.h"
 
+#include <deque>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_ProxySupplier;
@@ -54,10 +57,15 @@ public:
 using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
 
   /// Constructor
-  TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
+  explicit TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
+
+  TAO_Notify_Consumer (TAO_Notify_Consumer const &) = delete;
+  TAO_Notify_Consumer (TAO_Notify_Consumer &&) = delete;
+  TAO_Notify_Consumer &operator= (TAO_Notify_Consumer const &) = delete;
+  TAO_Notify_Consumer &operator= (TAO_Notify_Consumer &&) = delete;
 
   /// Destructor
-  virtual ~TAO_Notify_Consumer ();
+  ~TAO_Notify_Consumer () override;
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt ();
@@ -67,7 +75,7 @@ using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
   TAO_Notify_ProxySupplier* proxy_supplier ();
 
   /// Access Base Proxy.
-  virtual TAO_Notify_Proxy* proxy ();
+  TAO_Notify_Proxy* proxy () override;
 
   /// Dispatch Event to consumer
   void deliver (TAO_Notify_Method_Request_Event * request);
@@ -97,14 +105,14 @@ using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
   void resume ();
 
   /// Shutdown the consumer
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// On reconnect we need to move events from the old consumer
   /// to the new one
   virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) = 0;
 
   /// Override, Peer::qos_changed
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  void qos_changed (TAO_Notify_QoSProperties const &qos_properties) override;
 
   /// Take the pending queue from the rhs, cancel it's timer and
   /// schedule our timer.  The caller should have locked the proxy lock
@@ -125,7 +133,7 @@ protected:
   /// the connected consumer or nil if there is none.
   virtual CORBA::Object_ptr get_consumer () = 0;
 
-  using Request_Queue = ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *>;
+  using Request_Queue = std::deque<TAO_Notify_Method_Request_Event_Queueable *>;
 
   DispatchStatus dispatch_request (TAO_Notify_Method_Request_Event * request);
 
@@ -161,8 +169,8 @@ protected:
   TAO_SYNCH_MUTEX* proxy_lock ();
 
 protected:
-  virtual int handle_timeout (const ACE_Time_Value& current_time,
-                              const void* act = nullptr);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
 
 
   /// Schedule timer
@@ -179,11 +187,11 @@ protected:
   TAO_Notify_ProxySupplier* proxy_;
 
   /// Suspended Flag.
-  CORBA::Boolean is_suspended_;
+  CORBA::Boolean is_suspended_ = false;
 
   /// Interface that accepts offer_changes
   CosNotifyComm::NotifyPublish_var publish_;
-  bool have_not_yet_verified_publish_;
+  bool have_not_yet_verified_publish_ = true;
 
   /// The Pacing Interval
   const TAO_Notify_Property_Time & pacing_;

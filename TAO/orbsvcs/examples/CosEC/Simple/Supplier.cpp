@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://ec.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://ec.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -40,10 +40,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Supplier::Supplier ()
-{
-}
 
 int
 Supplier::run (int argc, ACE_TCHAR* argv[])
@@ -112,7 +108,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       // Destroy the POA
       poa->destroy (1, 0);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Supplier::run");
       return 1;

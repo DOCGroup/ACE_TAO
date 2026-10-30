@@ -47,9 +47,9 @@ namespace TAO
     {
       HASH_MAP_ENTRY* cached_entry = nullptr;
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-      if (entry != 0) // in case someone beat us to it (entry is reference to transport member)
+      if (entry != nullptr) // in case someone beat us to it (entry is reference to transport member)
       {
-        // Store the entry in a temporary and zero out the reference.
+        // Store the entry in a temporary and null out the reference.
         // If there is only one reference count for the transport, we will end up causing
         // it's destruction.  And the transport can not be holding a cache map entry if
         // that happens.
@@ -150,11 +150,11 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     close (Connection_Handler_Set &handlers)
   {
-    // The cache lock pointer should only be zero if
+    // The cache lock pointer should only be null if
     // Transport_Cache_Manager_T::open() was never called.  Note that
     // only one thread opens the Transport_Cache_Manager_T at any given
-    // time, so it is safe to check for a non-zero lock pointer.
-    if (this->cache_lock_ == 0)
+    // time, so it is safe to check for a non-null lock pointer.
+    if (this->cache_lock_ == nullptr)
       return -1;
 
     long timer_id = -1;

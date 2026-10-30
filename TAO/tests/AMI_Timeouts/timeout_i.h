@@ -18,7 +18,7 @@ class Timeout_i
 : public POA_TimeoutObj
 {
 public:
-  Timeout_i (CORBA::ORB_ptr orb);
+  explicit Timeout_i (CORBA::ORB_ptr orb);
 
   ~Timeout_i () = default;
   Timeout_i (Timeout_i const &) = delete;
@@ -54,24 +54,22 @@ public:
 
   void reset_reply_excep_counter ();
 
-  unsigned short reply_counter ();
+  unsigned short reply_counter () const;
 
-  unsigned short reply_excep_counter ();
+  unsigned short reply_excep_counter () const;
 
   /// Start the time measurement
   void start ();
 
   /// Return the elapsed time
-  ACE_Time_Value &elapsed_time ();
+  ACE_Time_Value elapsed_time () const;
 
 private:
-  unsigned short reply_counter_;
+  unsigned short reply_counter_ {};
 
-  unsigned short reply_excep_counter_;
+  unsigned short reply_excep_counter_ {};
 
   ACE_High_Res_Timer timer_;
-
-  ACE_Time_Value elapsed_time_;
 };
 
 #endif /* TIMEOUT_I_H */

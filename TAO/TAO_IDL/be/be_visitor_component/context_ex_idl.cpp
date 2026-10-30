@@ -12,16 +12,15 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_context_ex_idl::be_visitor_context_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_context_ex_idl::~be_visitor_context_ex_idl (
-  )
-{
-}
+be_visitor_context_ex_idl::~be_visitor_context_ex_idl () = default;
 
 int
 be_visitor_context_ex_idl::visit_component (be_component *node)
@@ -46,16 +45,14 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
       AST_Decl *scope =
         ScopeAsDecl (base->defined_in ());
 
-      ACE_CString sname_str =
-        IdentifierHelper::orig_sn (scope->name ());
-      const char *sname = sname_str.c_str ();
-
-      const char *lname =
+      std::string const sname_str (
+        IdentifierHelper::orig_sn (scope->name ()).c_str ());
+      std::string const& lname =
         base->original_local_name ()->get_string ();
 
-      const char *global = (sname_str == "" ? "" : "::");
+      std::string const global = sname_str.empty () ? "" : "::";
 
-      os_ << global << sname << "::CCM_"
+      os_ << global << sname_str << "::CCM_"
           << lname << "_Context";
     }
 
@@ -91,7 +88,7 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
   os_ << be_nl
       << "::";
 
-  ACE_CString port_name (this->ctx_->port_prefix ());
+  std::string port_name (this->ctx_->port_prefix ());
   port_name += node->local_name ()->get_string ();
   const char *lname = port_name.c_str ();
 
@@ -102,13 +99,13 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
   // strip it off here.
   if (node->is_multiple ())
     {
-      os_ << IdentifierHelper::orig_sn (node_->name ()).c_str ()
+      os_ << IdentifierHelper::orig_sn (node_->name ())
           << "::" << lname << "Connections get_connections_"
           << lname << " ();";
     }
   else
     {
-      os_ << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      os_ << IdentifierHelper::orig_sn (impl->name ())
           << " get_connection_" << lname << " ();";
     }
 
@@ -123,7 +120,7 @@ be_visitor_context_ex_idl::visit_publishes (be_publishes *node)
   os_ << be_nl
       << "void push_" << node->local_name ()->get_string ()
       << " (in ::"
-      << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      << IdentifierHelper::orig_sn (impl->name ())
       << " e);";
 
   return 0;
@@ -137,7 +134,7 @@ be_visitor_context_ex_idl::visit_emits (be_emits *node)
   os_ << be_nl
       << "void push_" << node->local_name ()->get_string ()
       << " (in ::"
-      << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      << IdentifierHelper::orig_sn (impl->name ())
       << " e);";
 
   return  0;

@@ -17,7 +17,11 @@
 #include "tao/CSD_Framework/CSD_FrameworkC.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
+#include "ace/SString.h"
 #include "ace/Synch.h"
+
+#include <string>
+#include <unordered_map>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +44,7 @@ public:
   TAO_CSD_Strategy_Repository() = default;
 
   /// Virtual Destructor.
-  ~TAO_CSD_Strategy_Repository() override;
+  ~TAO_CSD_Strategy_Repository() override = default;
 
   int init (int argc, ACE_TCHAR ** argv) override;
 
@@ -51,32 +55,15 @@ public:
                     CSD_Framework::Strategy_ptr strategy);
 
 private:
-  struct Strategy_Node {
-    Strategy_Node(ACE_CString const &poa_name,
-                  CSD_Framework::Strategy_ptr strategy);
-    ~Strategy_Node();
-    void add_node (Strategy_Node *);
-    Strategy_Node *find(ACE_CString const &name);
-
-  private:
-    Strategy_Node (Strategy_Node const &) = delete;
-    Strategy_Node &operator= (Strategy_Node const &) = delete;
-    Strategy_Node (Strategy_Node &&) = delete;
-    Strategy_Node &operator= (Strategy_Node &&) = delete;
-
-  public:
-
-    ACE_CString poa_name_;
-    CSD_Framework::Strategy_var strategy_;
-    Strategy_Node *next_ {};
-  };
-
   TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository const &) = delete;
   TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository const &) = delete;
   TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository &&) = delete;
   TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository &&) = delete;
 
-  Strategy_Node *strategy_list_head_ {};
+  using Strategy_Map =
+    std::unordered_map<std::string, CSD_Framework::Strategy_var>;
+
+  Strategy_Map strategy_map_;
 };
 
 

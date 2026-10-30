@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 
+#include <vector>
+
 class UTL_Scope;
 class UTL_IdList;
 class AST_Decl;
@@ -80,13 +82,17 @@ class TAO_IDL_FE_Export UTL_ScopeStack
 {
 public:
   UTL_ScopeStack ();
-  ~UTL_ScopeStack ();
+  ~UTL_ScopeStack () = default;
+  UTL_ScopeStack (UTL_ScopeStack const&) = delete;
+  UTL_ScopeStack (UTL_ScopeStack&&) = delete;
+  UTL_ScopeStack& operator= (UTL_ScopeStack const&) = delete;
+  UTL_ScopeStack& operator= (UTL_ScopeStack&&) = delete;
 
-  /// The initial capacity and how much to increment the capacity when needed.
-  static const size_t increments;
+  /// The initial capacity reserved for scope stack entries.
+  static constexpr std::size_t increments = 64;
 
   // Return top element.
-  UTL_Scope *top ();
+  UTL_Scope *top () const;
 
   // Pop top element.
   void pop ();
@@ -98,16 +104,16 @@ public:
   UTL_ScopeStack *push (UTL_Scope *el);
 
   // How deep is the stack now?
-  unsigned long depth ();
+  unsigned long depth () const;
 
   // Return bottom element.
-  UTL_Scope *bottom ();
+  UTL_Scope *bottom () const;
 
   // Return (top - 1) element.
-  UTL_Scope *next_to_top ();
+  UTL_Scope *next_to_top () const;
 
   // return topmost non-NULL element.
-  UTL_Scope *top_non_null ();
+  UTL_Scope *top_non_null () const;
 
   /**
    * Call lookup_by_name on all the scopes from the top down.
@@ -117,13 +123,7 @@ public:
 
 private:
   // Store scopes stack
-  UTL_Scope **pd_stack_data;
-
-  // How many allocated?
-  unsigned long pd_stack_data_nalloced;
-
-  // How many used?
-  unsigned long pd_stack_top;
+  std::vector<UTL_Scope *> pd_stack_data;
 
   // Friend active iterator class for UTL_ScopeStack.
   friend class UTL_ScopeStackActiveIterator;
@@ -133,13 +133,13 @@ private:
 class TAO_IDL_FE_Export UTL_ScopeStackActiveIterator
 {
 public:
-  UTL_ScopeStackActiveIterator (UTL_ScopeStack &s);
+  explicit UTL_ScopeStackActiveIterator (UTL_ScopeStack &s);
 
   // Advance to next element.
   void next ();
 
   // Get current item.
-  UTL_Scope* item ();
+  UTL_Scope* item () const;
 
   // Is the iteration finished?
   bool is_done () const;

@@ -135,6 +135,11 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Manager
 {
 public:
+  ACE_Hash_Multi_Map_Manager (ACE_Hash_Multi_Map_Manager const &) = delete;
+  ACE_Hash_Multi_Map_Manager (ACE_Hash_Multi_Map_Manager &&) = delete;
+  ACE_Hash_Multi_Map_Manager &operator= (ACE_Hash_Multi_Map_Manager const &) = delete;
+  ACE_Hash_Multi_Map_Manager &operator= (ACE_Hash_Multi_Map_Manager &&) = delete;
+
   friend class ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
@@ -583,10 +588,6 @@ private:
   /// @note That this can be larger than total_size_ due to the
   /// bucket chaining).
   size_t cur_size_;
-
-  // = Disallow these operations.
-  void operator= (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
-  ACE_Hash_Multi_Map_Manager (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
 };
 
 /**

@@ -66,6 +66,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_DECL_AST_DECL_HH
 #define _AST_DECL_AST_DECL_HH
 
+#include <memory>
+#include <optional>
+#include <string>
+
 #include "utl_scoped_name.h"
 #include "ast_annotation_appls.h"
 
@@ -75,7 +79,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class Identifier;
 class UTL_Scope;
-class UTL_String;
 class ast_visitor;
 
 /**
@@ -183,6 +186,10 @@ public:
   AST_Decl (NodeType type,
             UTL_ScopedName *n,
             bool anonymous = false);
+  AST_Decl (AST_Decl const &) = delete;
+  AST_Decl (AST_Decl &&) = delete;
+  AST_Decl &operator= (AST_Decl const &) = delete;
+  AST_Decl &operator= (AST_Decl &&) = delete;
 
   /**
    * A sort of copy constructor that creates a copy of the AST_Decl for a new
@@ -205,31 +212,31 @@ public:
   virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
 
   // Is this decl a forward declared type (default false)
-  virtual bool is_fwd ();
+  virtual bool is_fwd () const;
 
   // Data Accessors.
 
-  bool imported ();
+  bool imported () const;
   void set_imported (bool is_it);
 
-  bool in_main_file ();
+  bool in_main_file () const;
   void set_in_main_file (bool is_it);
 
-  UTL_Scope *defined_in ();
+  UTL_Scope *defined_in () const;
   void set_defined_in (UTL_Scope *);
 
-  NodeType node_type ();
+  NodeType node_type () const;
 
-  long line ();
+  long line () const;
   void set_line (long l);
 
-  ACE_CString & file_name ();
-  void set_file_name (ACE_CString s);
+  std::string const& file_name () const;
+  void set_file_name (std::string const& s);
 
-  UTL_ScopedName *name ();
+  UTL_ScopedName *name () const;
 
-  UTL_ScopedName *compute_name (const char *prefix,
-                                const char *suffix);
+  UTL_ScopedName *compute_name (std::string const& prefix,
+                                std::string const& suffix) const;
   // Variation of the <name>. Computes scoped name string, applying
   // prefix and suffix to the local name component.
 
@@ -238,25 +245,27 @@ public:
   Identifier *local_name () const;
   void local_name (Identifier *id);
 
-  Identifier *compute_local_name (const char *prefix,
-                                  const char *sufix);
+  Identifier *compute_local_name (std::string const& prefix,
+                                  std::string const& sufix) const;
   // Apply prefix and suffix to the local name and return.
 
-  virtual const char *full_name ();
+  virtual std::string const& full_name () const;
   // Return the stringified full name.
 
-  virtual const char *flat_name ();
+  virtual std::string const& flat_name () const;
   // Return the flattened full scoped name.
 
-  const char *repoID ();
-  void repoID (char *value);
+  std::string const& repoID () const;
+  void repoID (std::string const& value);
+  void clear_repoID ();
   // Accessors for the repository ID.
 
-  const char *prefix ();
-  void prefix (const char *value);
+  std::string const& prefix () const;
+  void prefix (std::string const& value);
   // Accessors for the repository ID prefix.
 
-  const char *version ();
+  std::string const& version () const;
+  void version (std::string const& value);
   void version (char *value);
   // Accessors for the version_ member.
 
@@ -268,10 +277,10 @@ public:
   void typeid_set (bool val);
   // Accessors for the typeid_set_ member.
 
-  void set_id_with_typeid (char *value);
+  void set_id_with_typeid (std::string const& value);
   // Called by a 'typeId' declaration.
 
-  void set_prefix_with_typeprefix (const char *value);
+  void set_prefix_with_typeprefix (std::string const& value);
   // Called by a 'type_prefix' declaration.
 
   // If there is _cxx_ in the beginning, we will remove that and keep
@@ -279,7 +288,7 @@ public:
   // prefix to the all the reserved keywords. But when we invoke the
   // operation remotely, we should be sending only the name with out
   // "_cxx_" prefix.
-  Identifier *original_local_name ();
+  Identifier *original_local_name () const;
   void original_local_name (Identifier *);
 
   // To be overridden by the subclasses interface, struct, union, and
@@ -295,19 +304,19 @@ public:
   // Other operations
 
   // Return TRUE if "this" has "s" as an ancestor.
-  bool has_ancestor (AST_Decl *s);
+  bool has_ancestor (AST_Decl const *s) const;
 
   // Return TRUE if "this" is a child of "s".
-  bool is_child (AST_Decl *s);
+  bool is_child (AST_Decl *s) const;
 
-  bool is_nested ();
+  bool is_nested () const;
   // Determines if we are inside of a nested scope or not.
 
   UTL_ScopedName *last_referenced_as () const;
   void last_referenced_as (UTL_ScopedName *n);
 
   // Accessors for the prefix_scope_ member.
-  UTL_Scope *prefix_scope ();
+  UTL_Scope *prefix_scope () const;
   void prefix_scope (UTL_Scope *s);
 
   // Useful for GIOP to know if a wstring is being marshaled.
@@ -325,7 +334,7 @@ public:
 
   /// Set and get annotations for this IDL element
   ///{
-  void annotation_appls (const AST_Annotation_Appls &annotations);
+  void annotation_appls (AST_Annotation_Appls const &annotations);
   AST_Annotation_Appls &annotation_appls ();
   ///}
 
@@ -386,40 +395,40 @@ public:
   /**
    * Should AMI visit this node?
    */
-  virtual bool ami_visit ();
+  virtual bool ami_visit () const;
 
-  virtual const char *node_type_name() const;
+  virtual std::string node_type_name () const;
 
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called
   // from be_decl.
 
-  char *repoID_;
+  mutable std::string repoID_;
   // Repository ID.
 
-  char *flat_name_;
+  mutable std::string flat_name_;
   // Flattened fully scoped name.
 
-  int contains_wstring_;
+  int contains_wstring_ {-1};
   // If we are a scope, do we contain a wstring at some level?
 
-  void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const;
+  void dump_i (ACE_OSTREAM_TYPE &o, std::string const& s) const;
 
-  void compute_repoID ();
+  void compute_repoID () const;
   // Computes the repoID.
 
   void compute_full_name ();
   // Computes the stringified scoped name.
 
-  void compute_flat_name ();
+  void compute_flat_name () const;
   // Compute the flattened fully scoped name.
 
-  static const char *node_type_to_string (NodeType nt);
+  static std::string node_type_to_string (NodeType nt);
   // Convert a NodeType to a string for dumping.
 
   /// Annotations applied to this IDL element
-  AST_Annotation_Appls *annotation_appls_;
+  AST_Annotation_Appls *annotation_appls_ {};
 
   /**
    * True if defined using idl_global->eval()
@@ -444,38 +453,41 @@ private:
   long pd_line;
   // Line defined in.
 
-  ACE_CString pd_file_name;
+  std::string pd_file_name;
   // What file defined in.
 
-  UTL_ScopedName *pd_name;
+  std::unique_ptr<UTL_ScopedName> pd_name;
 
-  Identifier *pd_local_name;
+  std::unique_ptr<Identifier> pd_local_name;
   // Name in scope.
 
-  Identifier *pd_original_local_name;
+  std::unique_ptr<Identifier> pd_original_local_name;
   // _cxx_ removed if any.
 
-  char *full_name_;
+  std::string full_name_;
   // Our full scoped name.
 
-  char *prefix_;
+  std::string prefix_;
   // The repository ID prefix.
 
-  char *version_;
+  mutable std::string version_;
   // Set by #pragma version.
 
   bool anonymous_;
   // Are we an anonymous (no repo ID) type?
 
-  bool typeid_set_;
+  bool typeid_set_ {};
   // Has our repo id been set by a typeId declaration?
 
-  UTL_ScopedName *last_referenced_as_;
+  UTL_ScopedName *last_referenced_as_ {};
   // Temporary holder of the most recent way we were reference.
   // The top level component of this is added to pd_name_referenced.
 
   // The scope in which our prefix, if any, was assigned.
-  UTL_Scope *prefix_scope_;
+  UTL_Scope *prefix_scope_ {};
+
+  void set_prefix_with_typeprefix_r (std::string const& value,
+                                     UTL_Scope *appeared_in);
 
   bool in_tmpl_mod_not_aliased_;
   // false by default - if true, we can't be referenced.
@@ -483,9 +495,6 @@ private:
   void compute_full_name (UTL_ScopedName *n);
   // Compute the full name of an AST node.
 
-  void set_prefix_with_typeprefix_r (const char *value,
-                                     UTL_Scope *appeared_in);
-  // Non-top-level version of set_prefix_with_typeprefix.
 };
 
 using AST_Decls = ACE_Vector<AST_Decl*>;

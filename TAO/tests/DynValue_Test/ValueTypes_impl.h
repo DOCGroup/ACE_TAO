@@ -17,19 +17,19 @@ class BaseValue_impl : public virtual OBV_DynValue_Test::BaseValue,
                        public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  BaseValue_impl () {}
+  BaseValue_impl () = default;
   BaseValue_impl (CORBA::UShort us1, CORBA::UShort us2)
   : OBV_DynValue_Test::BaseValue (us1,us2) {}
-  virtual ~BaseValue_impl ();
-  virtual CORBA::ValueBase * _copy_value ();
-  virtual void print ();
+  ~BaseValue_impl () override = default;
+  CORBA::ValueBase * _copy_value () override;
+  void print () override;
 };
 
 class BaseValue_Factory : public factory_id
 {
 public:
-  const char * id () const;
-  virtual CORBA::ValueBase * create_for_unmarshal ();
+  const char * id () const override;
+  CORBA::ValueBase * create_for_unmarshal () override;
 };
 
 //============= "Nested" Value Type implimentation =======
@@ -38,18 +38,18 @@ class NestedValue_impl : public virtual OBV_DynValue_Test::NestedValue,
                          public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  NestedValue_impl () {}
+  NestedValue_impl () = default;
   NestedValue_impl (CORBA::Short s1, CORBA::Short s2)
   : OBV_DynValue_Test::NestedValue (s1,s2) {}
-  virtual ~NestedValue_impl ();
-  virtual CORBA::ValueBase * _copy_value ();
+  ~NestedValue_impl () override = default;
+  CORBA::ValueBase * _copy_value () override;
 };
 
 class NestedValue_Factory : public factory_id
 {
 public:
-  const char * id () const;
-  virtual CORBA::ValueBase * create_for_unmarshal ();
+  const char * id () const override;
+  CORBA::ValueBase * create_for_unmarshal () override;
 };
 
 //============= "Null" Value Type implimentation =======
@@ -58,16 +58,16 @@ class NullValue_impl : public virtual OBV_DynValue_Test::NullValue,
                        public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  NullValue_impl () {}
-  virtual ~NullValue_impl ();
-  virtual CORBA::ValueBase * _copy_value ();
+  NullValue_impl () = default;
+  ~NullValue_impl () override = default;
+  CORBA::ValueBase * _copy_value () override;
 };
 
 class NullValue_Factory : public factory_id
 {
 public:
-  const char * id () const;
-  virtual CORBA::ValueBase * create_for_unmarshal ();
+  const char * id () const override;
+  CORBA::ValueBase * create_for_unmarshal () override;
 };
 
 //============= "Trunc" Value Type implimentation =======
@@ -76,7 +76,7 @@ class Trunc_impl : public virtual OBV_DynValue_Test::Trunc,
                    public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  Trunc_impl () {}
+  Trunc_impl () = default;
   Trunc_impl (
     CORBA::UShort us1,
     CORBA::UShort us2,
@@ -94,16 +94,16 @@ public:
     this->Trunc_null2  (nv3);
     this->Trunc_null3  (nv4);
   }
-  virtual ~Trunc_impl ();
-  virtual CORBA::ValueBase * _copy_value ();
-  virtual void print ();
+  ~Trunc_impl () override = default;
+  CORBA::ValueBase * _copy_value () override;
+  void print () override;
 };
 
 class Trunc_Factory : public factory_id
 {
 public:
-  const char * id () const;
-  virtual CORBA::ValueBase * create_for_unmarshal ();
+  const char * id () const override;
+  CORBA::ValueBase * create_for_unmarshal () override;
 };
 
 #endif // INCLUDE_VALUETYPE_IMPL_H

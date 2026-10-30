@@ -72,7 +72,7 @@ ACE_INLINE X *
 ACE_Utils::Auto_Functor<X,Functor>::release()
 {
   X * tmp = p_;
-  p_ = 0;
+  p_ = nullptr;
   return tmp;
 }
 

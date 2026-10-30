@@ -27,14 +27,10 @@ TAO_Notify_StructuredEvent_No_Copy::type () const
   return this->type_;
 }
 
-TAO_Notify_StructuredEvent_No_Copy::~TAO_Notify_StructuredEvent_No_Copy ()
-{
-}
-
 void
 TAO_Notify_StructuredEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 {
-  static const ACE_CDR::Octet STRUCTURED_CODE = MARSHAL_STRUCTURED;
+  static constexpr ACE_CDR::Octet STRUCTURED_CODE = MARSHAL_STRUCTURED;
   cdr.write_octet (STRUCTURED_CODE);
   cdr << (*this->notification_);
 }
@@ -128,10 +124,6 @@ TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::S
     , notification_copy (notification)
 {
   this->notification_ = &notification_copy;
-}
-
-TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
-{
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

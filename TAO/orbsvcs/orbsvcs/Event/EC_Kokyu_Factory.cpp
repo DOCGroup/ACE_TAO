@@ -17,10 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Kokyu_Factory::~TAO_EC_Kokyu_Factory ()
-{
-}
-
 int
 TAO_EC_Kokyu_Factory::init_svcs ()
 {
@@ -35,7 +31,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR* arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatching")) == 0)
         {
@@ -43,7 +39,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->dispatching_ = 0;
@@ -70,7 +66,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               if (arg_shifter.is_parameter_next ())
                 {
-                  const ACE_TCHAR* opt = arg_shifter.get_current ();
+                  ACE_TCHAR const *opt = arg_shifter.get_current ();
                   if (ACE_OS::strcasecmp (opt, ACE_TEXT("SCHED_FIFO")) == 0)
                     {
                       this->disp_sched_policy_ = ACE_SCHED_FIFO;
@@ -87,7 +83,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
 
                   if (arg_shifter.is_parameter_next ())
                     {
-                      const ACE_TCHAR* opt = arg_shifter.get_current ();
+                      ACE_TCHAR const *opt = arg_shifter.get_current ();
                       if (ACE_OS::strcasecmp (opt, ACE_TEXT("SYSTEM")) == 0)
                         {
                           this->disp_sched_scope_ = ACE_SCOPE_THREAD;
@@ -108,7 +104,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->filtering_ = 0;
@@ -142,7 +138,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
                   this->timeout_ = 0;
@@ -170,7 +166,7 @@ TAO_EC_Kokyu_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->scheduling_ = 0;

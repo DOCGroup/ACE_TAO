@@ -18,11 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
   : TAO_IIOP_Connector (),
     connect_strategy_ (),
-    base_connector_ (0)
-{
-}
-
-TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector ()
+    base_connector_ (nullptr)
 {
 }
 
@@ -77,7 +73,7 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   if (iiop_endpoint == nullptr)
     return -1;
 
-  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
+  ACE_INET_Addr const &remote_address = iiop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
@@ -114,7 +110,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   if (iiop_endpoint == nullptr)
     return nullptr;
 
-  const ACE_INET_Addr &remote_address =
+  ACE_INET_Addr const &remote_address =
     iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 4)
@@ -246,7 +242,7 @@ TAO::IIOP_SSL_Connector::make_connection (
                     "in the reactor.\n",
                     transport->id ()));
 
-      return 0;
+      return nullptr;
     }
 
   svc_handler_auto_ptr.release ();

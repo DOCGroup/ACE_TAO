@@ -13,8 +13,6 @@
 
 be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
-    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ())
 {
@@ -28,9 +26,7 @@ be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
     }
 }
 
-be_visitor_home_svh::~be_visitor_home_svh ()
-{
-}
+be_visitor_home_svh::~be_visitor_home_svh () = default;
 
 int
 be_visitor_home_svh::visit_home (be_home *node)
@@ -122,18 +118,17 @@ int
 be_visitor_home_svh::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
+  std::string sname_str (scope->full_name ());
+  char const *sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
-  const char *lname =
-    node_->original_local_name ()->get_string ();
+  std::string const& lname = node_->original_local_name ()->get_string ();
 
-  const char *clname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const& clname = comp_->local_name ()->get_string ();
+  char const *global = (sname_str == "" ? "" : "::");
 
   os_ << be_nl
-      << "class " << export_macro_.c_str () << " " << lname
+      << "class " << export_macro_ << " " << lname
       << "_Servant" << be_idt_nl
       << ": public virtual" << be_idt << be_idt_nl
       << "::CIAO::"
@@ -148,7 +143,7 @@ be_visitor_home_svh::gen_servant_class ()
 
   os_ << lname << "_Servant (" << be_idt_nl
       << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
-      << "const char * ins_name," << be_nl
+      << "char const * ins_name," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c);" << be_uidt;
 
@@ -229,7 +224,7 @@ AST_Type *pk = node_->primary_key ();
                                  ACE_TEXT ("gen_servant_class - ")
                                  ACE_TEXT ("traverse_inheritance_graph() ")
                                  ACE_TEXT ("failed for %s\n"),
-                                 bi->full_name ()),
+                                 bi->full_name ().c_str ()),
                                 -1);
             }
         }
@@ -247,14 +242,14 @@ void
 be_visitor_home_svh::gen_entrypoint ()
 {
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::PortableServer::Servant" << be_nl
       << "create_" << node_->flat_name ()
       << "_Servant (" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr p," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c," << be_nl
-      << "const char * ins_name);" << be_uidt;
+      << "char const * ins_name);" << be_uidt;
 }
 
 int

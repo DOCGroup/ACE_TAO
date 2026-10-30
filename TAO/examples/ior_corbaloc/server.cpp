@@ -66,12 +66,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::SystemException& ex){
-    ex._tao_print_exception ("CORBA exception raised! ");
-  }
-  catch (const CORBA::Exception& ex){
-    ex._tao_print_exception ("Exception caught in server");
-  }
+  catch (CORBA::SystemException const &ex)
+    {
+      ex._tao_print_exception ("CORBA exception raised! ");
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Exception caught in server");
+    }
 
   return 0;
 }

@@ -10,10 +10,6 @@ TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
   this->attr_time_interval.upper_bound = upper;
 }
 
-// Destructor.
-TAO_TIO::~TAO_TIO ()
-= default;
-
 // This is the get method for the attribute time interval.
 
 TimeBase::IntervalT
@@ -125,7 +121,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
           overlap = tio->_this ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
     }

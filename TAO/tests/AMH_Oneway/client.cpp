@@ -71,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // wilsond@ociweb.com
       ACE_OS::sleep (num_calls / 2);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("");
       return 1;

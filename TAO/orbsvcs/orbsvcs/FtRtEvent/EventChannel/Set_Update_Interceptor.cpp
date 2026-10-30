@@ -41,9 +41,9 @@ TAO_Set_Update_Interceptor::send_request (
     {
       CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri);
 
-      const IOP::ServiceContext* scp {};
+      IOP::ServiceContext const *scp {};
 
-      if ((a.in() >>= scp) == 0)
+      if (!(a.in () >>= scp))
         return;
 
       IOP::ServiceContext sc = *scp;
@@ -59,7 +59,7 @@ TAO_Set_Update_Interceptor::send_request (
           throw CORBA::MARSHAL ();
 
         // Add Transaction Depth Context
-        if ((cdr << transaction_depth) == 0)
+        if (!(cdr << transaction_depth))
           throw CORBA::MARSHAL ();
         sc.context_id = FTRT::FT_TRANSACTION_DEPTH;
 
@@ -94,7 +94,7 @@ TAO_Set_Update_Interceptor::send_request (
       if (sequence_number != 0) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
           throw CORBA::MARSHAL ();
-        if ((cdr << sequence_number) == 0)
+        if (!(cdr << sequence_number))
           throw CORBA::MARSHAL ();
         sc.context_id = FTRT::FT_SEQUENCE_NUMBER;
 

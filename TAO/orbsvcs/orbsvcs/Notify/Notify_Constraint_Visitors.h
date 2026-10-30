@@ -15,8 +15,9 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Unbounded_Queue.h"
 #include "ace/Null_Mutex.h"
+
+#include <deque>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,8 +42,13 @@ public:
   /// Constructor.
   TAO_Notify_Constraint_Visitor ();
 
+  TAO_Notify_Constraint_Visitor (const TAO_Notify_Constraint_Visitor&) = delete;
+  TAO_Notify_Constraint_Visitor (TAO_Notify_Constraint_Visitor&&) = delete;
+  TAO_Notify_Constraint_Visitor& operator= (const TAO_Notify_Constraint_Visitor&) = delete;
+  TAO_Notify_Constraint_Visitor& operator= (TAO_Notify_Constraint_Visitor&&) = delete;
+
   /// Put the event data into our hash map.
-  int bind_structured_event (const CosNotification::StructuredEvent &s_event);
+  int bind_structured_event (CosNotification::StructuredEvent const &s_event);
 
   /**
    * Returns true if the event satisfies the constraint
@@ -53,22 +59,22 @@ public:
   CORBA::Boolean evaluate_constraint (ETCL_Constraint *root);
 
   // The overridden methods.
-  virtual int visit_literal (ETCL_Literal_Constraint *);
-  virtual int visit_identifier (ETCL_Identifier *);
-  virtual int visit_union_value (ETCL_Union_Value *);
-  virtual int visit_union_pos (ETCL_Union_Pos *);
-  virtual int visit_component_pos (ETCL_Component_Pos *);
-  virtual int visit_component_assoc (ETCL_Component_Assoc *);
-  virtual int visit_component_array (ETCL_Component_Array *);
-  virtual int visit_special (ETCL_Special *);
-  virtual int visit_component (ETCL_Component *);
-  virtual int visit_dot (ETCL_Dot *);
-  virtual int visit_eval (ETCL_Eval *);
-  virtual int visit_default (ETCL_Default *);
-  virtual int visit_exist (ETCL_Exist *);
-  virtual int visit_unary_expr (ETCL_Unary_Expr *);
-  virtual int visit_binary_expr (ETCL_Binary_Expr *);
-  virtual int visit_preference (ETCL_Preference *);
+  int visit_literal (ETCL_Literal_Constraint *) override;
+  int visit_identifier (ETCL_Identifier *) override;
+  int visit_union_value (ETCL_Union_Value *) override;
+  int visit_union_pos (ETCL_Union_Pos *) override;
+  int visit_component_pos (ETCL_Component_Pos *) override;
+  int visit_component_assoc (ETCL_Component_Assoc *) override;
+  int visit_component_array (ETCL_Component_Array *) override;
+  int visit_special (ETCL_Special *) override;
+  int visit_component (ETCL_Component *) override;
+  int visit_dot (ETCL_Dot *) override;
+  int visit_eval (ETCL_Eval *) override;
+  int visit_default (ETCL_Default *) override;
+  int visit_exist (ETCL_Exist *) override;
+  int visit_unary_expr (ETCL_Unary_Expr *) override;
+  int visit_binary_expr (ETCL_Binary_Expr *) override;
+  int visit_preference (ETCL_Preference *) override;
 
 protected:
   // Sub-methods for visit_binary_expr().
@@ -116,8 +122,7 @@ protected:
   /// @note A fixed set of 9 keys are stored in this map.  In the absence
   /// of a minimal perfect hash, ACE's default hash_pjw() and a hash size
   /// of 27 ensures each element is hashed to a unique bucket.
-  /// @todo define inline once VC6 support is deprecated.
-  static const size_t implicit_ids_size_;
+  static constexpr size_t implicit_ids_size_ = 27;
 
   /// Lookup table for the implicit ids, to avoid string comparisons in
   /// derived visitors.
@@ -125,16 +130,14 @@ protected:
     implicit_ids_;
 
   /// Size of filterable_data_ hash map.
-  /// @todo define inline once VC6 support is deprecated.
-  static const size_t filterable_data_size_;
+  static constexpr size_t filterable_data_size_ = 31;
 
   /// Used to lookup names and values in the event's 'filterable_data' field.
   ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, ACE_Null_Mutex>
     filterable_data_;
 
   /// Size of variable_header_ hash map.
-  /// @todo define inline once VC6 support is deprecated.
-  static const size_t variable_header_size_;
+  static constexpr size_t variable_header_size_ = 31;
 
   /// Used to lookup names and values in the event's 'variable_header' field.
   ACE_Hash_Map_Manager <ACE_CString, CORBA::Any, ACE_Null_Mutex>
@@ -150,7 +153,7 @@ protected:
   CORBA::Any remainder_of_body_;
 
   /// The result of a non_boolean operation.
-  ACE_Unbounded_Queue <TAO_ETCL_Literal_Constraint> queue_;
+  std::deque<TAO_ETCL_Literal_Constraint> queue_;
 
   /// Holder for a value found in the event fields filterable_data,
   /// variable_header or remainder_of_body.

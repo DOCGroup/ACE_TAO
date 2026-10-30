@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of the BE-subclassed classes instead of of AST classes.
 
 #include "be_generator.h"
+
+#include <utility>
 #include "be_root.h"
 #include "be_predefined_type.h"
 #include "be_module.h"
@@ -163,7 +165,7 @@ be_generator::create_module (UTL_Scope *s,
           // Create this new module with referance to the
           // "first" previous module found in scope.
           ACE_NEW_RETURN (retval, be_module (n, m), nullptr);
-          retval->prefix (const_cast<char *> (m->prefix ()));
+          retval->prefix (m->prefix ());
           return retval;
         }
     }
@@ -766,11 +768,11 @@ be_generator::create_expr (ACE_CDR::ULong l,
 }
 
 AST_Expression *
-be_generator::create_expr (UTL_String *s)
+be_generator::create_expr (std::string s)
 {
   be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_expression (s),
+                  be_expression (std::move (s), AST_Expression::EV_string),
                   nullptr);
 
   return retval;
@@ -799,11 +801,11 @@ be_generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-be_generator::create_expr (char *s)
+be_generator::create_wstring_expr (std::string s)
 {
   be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_expression (s),
+                  be_expression (std::move (s), AST_Expression::EV_wstring),
                   nullptr);
 
   return retval;
@@ -1158,13 +1160,13 @@ AST_Template_Module_Ref *
 be_generator::create_template_module_ref (
   UTL_ScopedName *n,
   AST_Template_Module *ref,
-  UTL_StrList *param_refs)
+  UTL_StrList param_refs)
 {
   be_template_module_ref *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_template_module_ref (n,
                                           ref,
-                                          param_refs),
+                                          std::move (param_refs)),
                   nullptr);
 
   return retval;

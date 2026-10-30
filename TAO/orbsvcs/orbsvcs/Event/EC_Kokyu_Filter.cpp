@@ -3,7 +3,7 @@
 #include "orbsvcs/Log_Macros.h"
 
 TAO_EC_Kokyu_Filter::
-    TAO_EC_Kokyu_Filter (const char* name,
+    TAO_EC_Kokyu_Filter (char const *name,
                          RtecScheduler::handle_t rt_info,
                          RtecScheduler::Scheduler_ptr scheduler,
                          TAO_EC_Filter* body,
@@ -12,7 +12,6 @@ TAO_EC_Kokyu_Filter::
                          RtecScheduler::Info_Type_t info_type)
 
   :  rt_info_ (rt_info),
-     rt_info_computed_ (0),
      name_ (name),
      scheduler_ (RtecScheduler::Scheduler::_duplicate (scheduler)),
      body_ (body),
@@ -23,7 +22,7 @@ TAO_EC_Kokyu_Filter::
   this->adopt_child (this->body_);
 
 #if 1 //by VS
-this->rt_info_computed_ = 1;
+this->rt_info_computed_ = true;
 #endif
 }
 
@@ -51,7 +50,7 @@ TAO_EC_Kokyu_Filter::size () const
 }
 
 int
-TAO_EC_Kokyu_Filter::filter (const RtecEventComm::EventSet &event,
+TAO_EC_Kokyu_Filter::filter (RtecEventComm::EventSet const &event,
                              TAO_EC_QOS_Info& qos_info)
 {
   return this->body_->filter (event, qos_info);
@@ -93,7 +92,7 @@ TAO_EC_Kokyu_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info)
 }
 
 void
-TAO_EC_Kokyu_Filter::push (const RtecEventComm::EventSet &event,
+TAO_EC_Kokyu_Filter::push (RtecEventComm::EventSet const &event,
                            TAO_EC_QOS_Info& qos_info)
 {
   if (this->parent () != 0)
@@ -129,7 +128,7 @@ TAO_EC_Kokyu_Filter::max_event_size () const
 }
 
 int
-TAO_EC_Kokyu_Filter::can_match (const RtecEventComm::EventHeader& header) const
+TAO_EC_Kokyu_Filter::can_match (RtecEventComm::EventHeader const &header) const
 {
   return this->body_->can_match (header);
 }
@@ -161,8 +160,8 @@ supplier2<-----|
 */
 
 int
-TAO_EC_Kokyu_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
-                                       const TAO_EC_QOS_Info &qos_info)
+TAO_EC_Kokyu_Filter::add_dependencies (RtecEventComm::EventHeader const &header,
+                                       TAO_EC_QOS_Info const &qos_info)
 {
 #ifdef EC_KOKYU_LOGGING
   ORBSVCS_DEBUG ((LM_DEBUG, "Entering EC_Kokyu_Filter::add_dependencies\n"));
@@ -275,5 +274,5 @@ TAO_EC_Kokyu_Filter::init_rt_info ()
               info->entry_point.in ()));
 #endif /* 0 */
 
-  this->rt_info_computed_ = 1;
+  this->rt_info_computed_ = true;
 }

@@ -161,8 +161,8 @@ ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (
 template <>
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
                                               ACE_Filecache_Hash_Entry *prev)
-  : ext_id_ (0),
-    int_id_ (0),
+  : ext_id_ (nullptr),
+    int_id_ (nullptr),
     next_ (next),
     prev_ (prev)
 {

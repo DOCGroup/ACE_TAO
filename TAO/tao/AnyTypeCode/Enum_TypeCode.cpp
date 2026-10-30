@@ -10,6 +10,8 @@
 #include "ace/Dynamic_Service.h"
 #include <cstring>
 
+#include <vector>
+
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
@@ -130,7 +132,7 @@ TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
+  std::vector<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
   // Dynamically construct a new array of enumerators stripped of
   // member names.

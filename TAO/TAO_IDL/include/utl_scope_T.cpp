@@ -16,7 +16,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
 {
   if (t->redef_clash ())
     {
-      return 0;
+      return nullptr;
     }
 
   AST_Decl *predef = nullptr;
@@ -30,7 +30,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
           DECL *fwd = dynamic_cast<DECL *> (predef);
           if (fwd == nullptr)
             {
-              return 0;
+              return nullptr;
             }
 
           // Forward declared and not defined yet.
@@ -43,7 +43,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
                                               t,
                                               ScopeAsDecl (this));
 
-                  return 0;
+                  return nullptr;
                 }
             }
           // OK, not illegal redef of forward declaration. Now check whether.
@@ -55,7 +55,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
                                           ScopeAsDecl (this),
                                           predef);
 
-              return 0;
+              return nullptr;
             }
 
         }
@@ -66,7 +66,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
                                       ScopeAsDecl (this),
                                       predef);
 
-          return 0;
+          return nullptr;
         }
       else if (referenced (predef, t->local_name ()) && !t->is_defined ())
         {
@@ -75,13 +75,13 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
                                       ScopeAsDecl (this),
                                       predef);
 
-          return 0;
+          return nullptr;
         }
       else if (t->has_ancestor (predef))
         {
           idl_global->err ()->redefinition_in_scope (t, predef);
 
-          return 0;
+          return nullptr;
         }
     }
 
@@ -128,7 +128,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
           FULL_DECL *itf = dynamic_cast<FULL_DECL *> (d);
           if (itf == nullptr)
             {
-              return 0;
+              return nullptr;
             }
 
           // If the lookup found the full_definition member of another
@@ -148,7 +148,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
                                       t,
                                       ScopeAsDecl (this),
                                       d);
-          return 0;
+          return nullptr;
         }
 
       // No need to call referenced() for forward declared interafces,
@@ -157,7 +157,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
       if (t->has_ancestor (d))
         {
           idl_global->err ()->redefinition_in_scope  (t, d);
-          return 0;
+          return nullptr;
         }
     }
 

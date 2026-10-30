@@ -17,15 +17,12 @@ be_visitor_union_cdr_op_cs::be_visitor_union_cdr_op_cs (
 {
 }
 
-be_visitor_union_cdr_op_cs::~be_visitor_union_cdr_op_cs ()
-{
-}
 
 namespace {
   void
   serialize_disc (TAO_OutStream *os, AST_Expression::ExprType disc_type, bool out)
   {
-    const char* tmp_suffix = nullptr;
+  char const *tmp_suffix = nullptr;
     switch (disc_type)
       {
         case AST_Expression::EV_bool:
@@ -50,7 +47,7 @@ namespace {
           break;
       }
 
-    const char* val = out ? "_tao_union._d ()" : "_tao_discriminant";
+  char const *val = out ? "_tao_union._d ()" : "_tao_discriminant";
     if (tmp_suffix)
       {
         *os << (out ? "::ACE_OutputCDR::from_" : "::ACE_InputCDR::to_")
@@ -125,13 +122,13 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_union)" << be_uidt
+      << node->name () << " const &_tao_union)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
 
   serialize_disc (os, node->udisc_type (), true /* out */);
 
-  const bool boolDisc = node->udisc_type () == AST_Expression::EV_bool;
+  bool const boolDisc = node->udisc_type () == AST_Expression::EV_bool;
   if (!boolDisc)
     {
       *os << "switch (_tao_union._d ())" << be_nl

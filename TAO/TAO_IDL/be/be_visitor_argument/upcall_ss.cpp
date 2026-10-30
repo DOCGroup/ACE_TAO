@@ -21,9 +21,7 @@ be_visitor_args_upcall_ss::be_visitor_args_upcall_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_args_upcall_ss::~be_visitor_args_upcall_ss ()
-{
-}
+be_visitor_args_upcall_ss::~be_visitor_args_upcall_ss () = default;
 
 int be_visitor_args_upcall_ss::visit_argument (be_argument *node)
 {

@@ -12,6 +12,8 @@
 
 #include "typecode.h"
 
+#include <string>
+
 TAO::be_visitor_objref_typecode::be_visitor_objref_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
@@ -24,13 +26,13 @@ TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
   if (!node->is_defined ())
     return this->gen_forward_declared_typecode (node);
 
-  static char const abstract_interface[] = "abstract_interface";
-  static char const component[]          = "component";
-  static char const home[]               = "home";
-  static char const local_interface[]    = "local_interface";
-  static char const objref[]             = "objref";
+  static constexpr char abstract_interface[] = "abstract_interface";
+  static constexpr char component[]          = "component";
+  static constexpr char home[]               = "home";
+  static constexpr char local_interface[]    = "local_interface";
+  static constexpr char objref[]             = "objref";
 
-  char const * kind = nullptr;
+  std::string kind;
 
   if (dynamic_cast<be_component *> (node))
     kind = component;
@@ -57,10 +59,10 @@ TAO::be_visitor_objref_typecode::visit_native (be_native * /* node */)
 }
 
 int
-TAO::be_visitor_objref_typecode::visit_i (char const * kind,
-                                          char const * flat_name,
-                                          char const * repository_id,
-                                          char const * original_local_name,
+TAO::be_visitor_objref_typecode::visit_i (std::string const& kind,
+                                          std::string const& flat_name,
+                                          std::string const& repository_id,
+                                          std::string const& original_local_name,
                                           be_type * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();

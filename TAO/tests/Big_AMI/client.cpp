@@ -15,10 +15,10 @@
 
 #include "ami_testS.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
-int shutdown_flag = 0;
-int debug = 1;
+bool shutdown_flag = false;
+bool debug = true;
 CORBA::ULong payload_size  = 128000;
 
 int
@@ -31,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -40,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        shutdown_flag = 1;
+        shutdown_flag = true;
         break;
       case 'b':
         payload_size  = ACE_OS::atoi (get_opts.opt_arg ());
@@ -65,10 +65,14 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler () : reply_count_ (0) {};
+  Handler () = default;
 
   /// Destructor.
-  ~Handler () = default;
+  ~Handler () override = default;
+  Handler (Handler const &) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   /// Get the reply count
   long reply_count () const
@@ -77,7 +81,7 @@ public:
   }
 
   void foo (CORBA::Long ami_return_val,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       ++reply_count_;
       if (debug)
@@ -89,7 +93,7 @@ public:
         }
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ++reply_count_;
 
@@ -100,7 +104,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... caught the wrong exception -> ERROR\n"));
@@ -108,7 +112,7 @@ public:
     };
 
 private:
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> reply_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> reply_count_ {};
 };
 
 int
@@ -211,12 +215,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ami_test_var->shutdown ();
         }
 
-      poa_var->destroy (1,  // ethernalize objects
-                        0);  // wait for completion
+      poa_var->destroy (true,  // ethernalize objects
+                        false);  // wait for completion
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

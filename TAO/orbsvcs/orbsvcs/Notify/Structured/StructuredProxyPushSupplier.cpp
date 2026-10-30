@@ -13,10 +13,6 @@ TAO_Notify_StructuredProxyPushSupplier::TAO_Notify_StructuredProxyPushSupplier (
 {
 }
 
-TAO_Notify_StructuredProxyPushSupplier::~TAO_Notify_StructuredProxyPushSupplier ()
-{
-}
-
 void
 TAO_Notify_StructuredProxyPushSupplier::release ()
 {

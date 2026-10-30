@@ -7,10 +7,10 @@ TAO_CEC_TypedEventChannel_Attributes (PortableServer::POA_ptr s_poa,
                                       PortableServer::POA_ptr c_poa,
                                       CORBA::ORB_ptr _orb,
                                       CORBA::Repository_ptr _interface_repository)
-  :  consumer_reconnect (TAO_CEC_DEFAULT_CONSUMER_RECONNECT),
-     supplier_reconnect (TAO_CEC_DEFAULT_SUPPLIER_RECONNECT),
-     disconnect_callbacks (TAO_CEC_DEFAULT_DISCONNECT_CALLBACKS),
-     destroy_on_shutdown (0),
+  :  consumer_reconnect (TAO_CEC_DEFAULT_CONSUMER_RECONNECT != 0),
+     supplier_reconnect (TAO_CEC_DEFAULT_SUPPLIER_RECONNECT != 0),
+     disconnect_callbacks (TAO_CEC_DEFAULT_DISCONNECT_CALLBACKS != 0),
+     destroy_on_shutdown (false),
      //busy_hwm (TAO_CEC_DEFAULT_BUSY_HWM),
      //max_write_delay (TAO_CEC_DEFAULT_MAX_WRITE_DELAY),
      typed_supplier_poa (s_poa),
@@ -134,25 +134,25 @@ TAO_CEC_TypedEventChannel::destroy_supplier_lock (ACE_Lock* x)
   this->factory_->destroy_supplier_lock (x);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_CEC_TypedEventChannel::consumer_reconnect () const
 {
   return this->consumer_reconnect_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_CEC_TypedEventChannel::supplier_reconnect () const
 {
   return this->supplier_reconnect_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_CEC_TypedEventChannel::disconnect_callbacks () const
 {
   return this->disconnect_callbacks_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_CEC_TypedEventChannel::supported_interface () const
 {
   return this->supported_interface_.c_str ();

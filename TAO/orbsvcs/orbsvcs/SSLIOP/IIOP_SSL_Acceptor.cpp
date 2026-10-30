@@ -4,12 +4,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor ()
-  : TAO_IIOP_Acceptor (),
-    base_acceptor_ ()
-{
-}
-
 TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor ()
 {
   // Make sure we are closed before we start destroying the

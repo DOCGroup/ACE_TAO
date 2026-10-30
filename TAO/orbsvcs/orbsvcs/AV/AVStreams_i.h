@@ -13,6 +13,8 @@
 #define AVSTREAMS_I_H
 #include /**/ "ace/pre.h"
 
+#include <list>
+
 #include "orbsvcs/AV/AV_Core.h"
 
 #include "orbsvcs/AV/AV_export.h"
@@ -84,40 +86,40 @@ public:
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
-  void stop (const AVStreams::flowSpec &the_spec) override;
+  void stop (AVStreams::flowSpec const &the_spec) override;
 
   /// Start the transfer of data in the stream.
   /// Empty the_spec means apply operation to all flows
-  void start (const AVStreams::flowSpec &the_spec) override;
+  void start (AVStreams::flowSpec const &the_spec) override;
 
   /**
    * Tears down the stream. This will close the connection, and delete
    * the streamendpoint and vdev associated with this stream
    * Empty the_spec means apply operation to all flows
    */
-  void destroy (const AVStreams::flowSpec &the_spec) override;
+  void destroy (AVStreams::flowSpec const &the_spec) override;
 
   /// Changes the QoS associated with the stream
   /// Empty the_spec means apply operation to all flows
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                             const AVStreams::flowSpec &the_spec) override;
+                             AVStreams::flowSpec const &the_spec) override;
 
   /// Used by StreamEndPoint and VDev to inform StreamCtrl of events.
   /// E.g., loss of flow, reestablishment of flow, etc..
-  void push_event (const struct CosPropertyService::Property &the_event) override;
+  void push_event (struct CosPropertyService::Property const &the_event) override;
 
   /// Used to control the flow protocol parameters.
-  void set_FPStatus (const AVStreams::flowSpec &the_spec,
-                     const char *fp_name,
-                     const CORBA::Any &fp_settings) override;
+  void set_FPStatus (AVStreams::flowSpec const &the_spec,
+                     char const *fp_name,
+                     CORBA::Any const &fp_settings) override;
 
   /// Not implemented in the light profile, will raise the notsupported
   /// exception
-  CORBA::Object_ptr get_flow_connection (const char *flow_name) override;
+  CORBA::Object_ptr get_flow_connection (char const *flow_name) override;
 
   /// Not implemented in the light profile, will raise the notsupported
   /// exception
-  void set_flow_connection (const char *flow_name,
+  void set_flow_connection (char const *flow_name,
                             CORBA::Object_ptr flow_connection) override;
 
 protected:
@@ -155,7 +157,7 @@ public:
   TAO_Negotiator &operator= (TAO_Negotiator const &) = delete;
   TAO_Negotiator &operator= (TAO_Negotiator &&) = delete;
   CORBA::Boolean negotiate (AVStreams::Negotiator_ptr remote_negotiator,
-                            const AVStreams::streamQoS &qos_spec) override;
+                            AVStreams::streamQoS const &qos_spec) override;
 };
 
 class TAO_MCastConfigIf;
@@ -167,25 +169,25 @@ public:
   MMDevice_Map_Hash_Key ();
 
   /// constructor.
-  MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice);
+  explicit MMDevice_Map_Hash_Key (AVStreams::MMDevice_ptr mmdevice);
 
   /// copy constructor.
-  MMDevice_Map_Hash_Key (const MMDevice_Map_Hash_Key&);
+  MMDevice_Map_Hash_Key (MMDevice_Map_Hash_Key const &);
 
   /// destructor.
   ~MMDevice_Map_Hash_Key ();
 
   /// operator== needed by  ACE_Hash_Map_Manager.
-  bool operator == (const MMDevice_Map_Hash_Key &hash_key) const;
+  bool operator == (MMDevice_Map_Hash_Key const &hash_key) const;
 
   /// operator== needed by  ACE_Hash_Map_Manager.
-  friend bool operator < (const MMDevice_Map_Hash_Key &left,
-                          const MMDevice_Map_Hash_Key &right);
+  friend bool operator < (MMDevice_Map_Hash_Key const &left,
+                          MMDevice_Map_Hash_Key const &right);
 
   /// hash function for this mmdevice.
   u_long hash () const;
 
-  static const int hash_maximum_;
+  static constexpr int hash_maximum_ = 10000;
 protected:
   AVStreams::MMDevice_ptr mmdevice_;
 };
@@ -213,18 +215,18 @@ public:
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
-  void stop (const AVStreams::flowSpec &the_spec) override;
+  void stop (AVStreams::flowSpec const &the_spec) override;
 
   /// Start the transfer of data in the stream.
   /// Empty the_spec means apply operation to all flows
-  void start (const AVStreams::flowSpec &the_spec) override;
+  void start (AVStreams::flowSpec const &the_spec) override;
 
   /**
    * Tears down the stream. This will close the connection, and delete
    * the streamendpoint and vdev associated with this stream
    * Empty the_spec means apply operation to all flows
    */
-  void destroy (const AVStreams::flowSpec &the_spec) override;
+  void destroy (AVStreams::flowSpec const &the_spec) override;
 
   /**
    * Establish a stream between a_party and b_party,
@@ -236,7 +238,7 @@ public:
   CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party,
                             AVStreams::MMDevice_ptr b_party,
                             AVStreams::streamQoS& the_qos,
-                            const AVStreams::flowSpec& the_flows) override;
+                            AVStreams::flowSpec const &the_flows) override;
 
   /**
    * Establish a connection between two streamendpoints. This can
@@ -246,14 +248,14 @@ public:
   CORBA::Boolean bind (AVStreams::StreamEndPoint_A_ptr a_party,
                        AVStreams::StreamEndPoint_B_ptr b_party,
                        AVStreams::streamQoS &the_qos,
-                       const AVStreams::flowSpec &the_flows) override;
+                       AVStreams::flowSpec const &the_flows) override;
 
   void unbind_dev (AVStreams::MMDevice_ptr dev,
-                   const AVStreams::flowSpec &the_spec) override;
+                   AVStreams::flowSpec const &the_spec) override;
 
   /// Unbind the_ep from the stream. Empty the_spec means apply to all flows.
   void unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
-                     const AVStreams::flowSpec &the_spec) override;
+                     AVStreams::flowSpec const &the_spec) override;
 
   /// unbind the stream. Same effect as Basic_StreamCtrl::destroy ()
   void unbind () override;
@@ -264,7 +266,7 @@ public:
   /// Changes the QoS associated with the stream
   /// Empty the_spec means apply operation to all flows
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                             const AVStreams::flowSpec &the_spec) override;
+                             AVStreams::flowSpec const &the_spec) override;
 
 protected:
   struct MMDevice_Map_Entry
@@ -313,21 +315,21 @@ public:
 
   CORBA::Boolean set_peer (CORBA::Object_ptr peer,
                            AVStreams::streamQoS &the_qos,
-                           const AVStreams::flowSpec &the_spec) override;
+                           AVStreams::flowSpec const &the_spec) override;
 
-  void configure (const CosPropertyService::Property &a_configuration) override;
+  void configure (CosPropertyService::Property const &a_configuration) override;
 
-  void set_initial_configuration (const CosPropertyService::Properties &initial) override;
+  void set_initial_configuration (CosPropertyService::Properties const &initial) override;
 
-  void set_format (const char *flowName,
-                   const char *format_name) override;
+  void set_format (char const *flowName,
+                   char const *format_name) override;
 
-  void set_dev_params (const char *flowName,
-                       const CosPropertyService::Properties &new_params) override;
+  void set_dev_params (char const *flowName,
+                       CosPropertyService::Properties const &new_params) override;
 
 protected:
   /// checks whether the flowname is  in the flow_spec.
-  int in_flowSpec (const AVStreams::flowSpec& flow_spec, const char *flow_name);
+  int in_flowSpec (AVStreams::flowSpec const &flow_spec, char const *flow_name);
 
   /// Multicast socket.
   ACE_SOCK_Dgram_Mcast sock_mcast_;
@@ -355,13 +357,13 @@ public:
   TAO_AV_QoS &operator= (TAO_AV_QoS &&) = delete;
 
   /// constructor taking a stream qos parameter.
-  TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
+  explicit TAO_AV_QoS (AVStreams::streamQoS &stream_qos);
 
   /// sets the maps with the QoS parameter.
   int set (AVStreams::streamQoS &stream_qos);
 
   /// gets the flow_qos.
-  int get_flow_qos (const char *flowname,AVStreams::QoS &flow_qos);
+  int get_flow_qos (char const *flowname,AVStreams::QoS &flow_qos);
 
   /// converts the application level QoS to Network-level QoS.
   int convert (AVStreams::streamQoS &network_qos);
@@ -412,13 +414,13 @@ public:
   virtual int handle_close ();
 
   /// Application needs to define this
-  virtual int handle_stop (const AVStreams::flowSpec &the_spec);
+  virtual int handle_stop (AVStreams::flowSpec const &the_spec);
 
   /// Application needs to define this
-  virtual int handle_start (const AVStreams::flowSpec &the_spec);
+  virtual int handle_start (AVStreams::flowSpec const &the_spec);
 
   /// Application needs to define this
-  virtual int handle_destroy (const AVStreams::flowSpec &the_spec);
+  virtual int handle_destroy (AVStreams::flowSpec const &the_spec);
 
   /// Application needs to define this
   virtual CORBA::Boolean handle_preconnect (AVStreams::flowSpec &the_spec);
@@ -429,19 +431,19 @@ public:
   /// Application needs to define this
   virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec);
 
-  virtual int get_callback (const char *flowname,
+  virtual int get_callback (char const *flowname,
                             TAO_AV_Callback *&callback);
 
-  virtual int get_control_callback (const char *flowname,
+  virtual int get_control_callback (char const *flowname,
                                     TAO_AV_Callback *&callback);
 
-  virtual int set_protocol_object (const char *flowname,
+  virtual int set_protocol_object (char const *flowname,
                                    TAO_AV_Protocol_Object *object);
 
-  virtual void set_flow_handler (const char *flowname,
+  virtual void set_flow_handler (char const *flowname,
                                  TAO_AV_Flow_Handler *handler);
 
-  virtual void set_control_flow_handler (const char *flowname,
+  virtual void set_control_flow_handler (char const *flowname,
                                          TAO_AV_Flow_Handler *handler);
 
   TAO_AV_QoS &qos ();
@@ -453,7 +455,7 @@ protected:
   TAO_AV_QoS qos_;
   Flow_Handler_Map flow_handler_map_;
   Flow_Handler_Map control_flow_handler_map_;
-  int protocol_object_set_;
+  bool protocol_object_set_ {};
 };
 
 // Forward declarations.
@@ -480,18 +482,18 @@ public:
   TAO_StreamEndPoint &operator= (TAO_StreamEndPoint &&) = delete;
 
    /// Stop the stream. Empty the_spec means, for all the flows
-  void stop (const AVStreams::flowSpec &the_spec) override;
+  void stop (AVStreams::flowSpec const &the_spec) override;
 
   /// Start the stream, Empty the_spec means, for all the flows
-  void start (const AVStreams::flowSpec &the_spec) override;
+  void start (AVStreams::flowSpec const &the_spec) override;
 
   /// Destroy the stream, Empty the_spec means, for all the flows
-  void destroy (const AVStreams::flowSpec &the_spec) override;
+  void destroy (AVStreams::flowSpec const &the_spec) override;
 
   /// Called by StreamCtrl. responder is the peer to connect to
   CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder,
                           AVStreams::streamQoS& qos_spec,
-                          const AVStreams::flowSpec& the_spec) override;
+                          AVStreams::flowSpec const &the_spec) override;
 
   /// Called by the peer StreamEndPoint. The flow_spec indicates the
   /// flows (which contain transport addresses etc.)
@@ -502,37 +504,37 @@ public:
 
   /// Change the transport qos on a stream
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                             const AVStreams::flowSpec &the_flows) override;
+                             AVStreams::flowSpec const &the_flows) override;
 
   virtual int change_qos (AVStreams::streamQoS &new_qos,
-                          const AVStreams::flowSpec &the_flows);
+                          AVStreams::flowSpec const &the_flows);
 
   /// Used to restrict the set of protocols
-  CORBA::Boolean set_protocol_restriction (const AVStreams::protocolSpec &the_pspec) override;
+  CORBA::Boolean set_protocol_restriction (AVStreams::protocolSpec const &the_pspec) override;
 
   /// disconnect the flows
-  void disconnect (const AVStreams::flowSpec &the_spec) override;
+  void disconnect (AVStreams::flowSpec const &the_spec) override;
 
   /// Used to control the flow
-  void set_FPStatus (const AVStreams::flowSpec &the_spec,
-                     const char *fp_name,
-                     const CORBA::Any &fp_settings) override;
+  void set_FPStatus (AVStreams::flowSpec const &the_spec,
+                     char const *fp_name,
+                     CORBA::Any const &fp_settings) override;
 
   /// Not implemented in the light profile, throws notsupported
-  CORBA::Object_ptr get_fep (const char *flow_name) override;
+  CORBA::Object_ptr get_fep (char const *flow_name) override;
 
   /// Not implemented in the light profile, throws notsupported
   char *add_fep (CORBA::Object_ptr the_fep) override;
 
   /// Not implemented in the light profile, throws notsupported
-  void remove_fep (const char *fep_name) override;
+  void remove_fep (char const *fep_name) override;
 
   /// Used to "attach" a negotiator to the endpoint
   void set_negotiator (AVStreams::Negotiator_ptr new_negotiator) override;
 
   /// Used for public key encryption.
-  void set_key (const char *flow_name,
-                const AVStreams::key &the_key) override;
+  void set_key (char const *flow_name,
+                AVStreams::key const &the_key) override;
 
   /// Used to set a unique id for packets sent by this streamendpoint
   void set_source_id (CORBA::Long source_id) override;
@@ -549,7 +551,7 @@ protected:
   char* add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep);
 
   /// translate from application level to network level qos.
-  int translate_qos (const AVStreams::streamQoS& application_qos,
+  int translate_qos (AVStreams::streamQoS const &application_qos,
                      AVStreams::streamQoS& network_qos);
 
   /// Count of the number of flows in this streamendpoint, used to
@@ -588,7 +590,7 @@ protected:
   TAO_AV_FlowSpecSet forward_flow_spec_set;
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
   AVStreams::StreamEndPoint_var peer_sep_;
-  const AVStreams::SFPStatus *sfp_status_;
+  AVStreams::SFPStatus const *sfp_status_;
   AVStreams::StreamCtrl_var streamctrl_;
 };
 
@@ -615,11 +617,11 @@ public:
   /// Used for ATM-style multicast
   CORBA::Boolean connect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
                                AVStreams::streamQoS &the_qos,
-                               const AVStreams::flowSpec &the_flows) override;
+                               AVStreams::flowSpec const &the_flows) override;
 
   /// Used to remove a multicast leaf
   void disconnect_leaf (AVStreams::StreamEndPoint_B_ptr the_ep,
-                        const AVStreams::flowSpec &theSpec) override;
+                        AVStreams::flowSpec const &theSpec) override;
 
   /// Destructor
   ~TAO_StreamEndPoint_A () override;
@@ -676,28 +678,28 @@ public:
   CORBA::Boolean set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                            AVStreams::VDev_ptr the_peer_dev,
                            AVStreams::streamQoS &the_qos,
-                           const AVStreams::flowSpec &the_spec) override;
+                           AVStreams::flowSpec const &the_spec) override;
 
   /// Used to set the streamctrl and multicast device
   CORBA::Boolean set_Mcast_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                                  AVStreams::MCastConfigIf_ptr a_mcastconfigif,
                                  AVStreams::streamQoS &the_qos,
-                                 const AVStreams::flowSpec &the_spec) override;
+                                 AVStreams::flowSpec const &the_spec) override;
 
   /// Called by the peer VDev to configure the device (catch all)
-  void configure (const CosPropertyService::Property &the_config_mesg) override;
+  void configure (CosPropertyService::Property const &the_config_mesg) override;
 
   /// Used to set a format on a flowname
-  void set_format (const char *flowName,
-                   const char *format_name) override;
+  void set_format (char const *flowName,
+                   char const *format_name) override;
 
   /// Used to set device parameters
-  void set_dev_params (const char *flowName,
-                       const CosPropertyService::Properties &new_params) override;
+  void set_dev_params (char const *flowName,
+                       CosPropertyService::Properties const &new_params) override;
 
   /// Called to change QoS of the device
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &the_qos,
-                             const AVStreams::flowSpec &the_spec) override;
+                             AVStreams::flowSpec const &the_spec) override;
 
 protected:
   /// Destructor for a servant should be protected or private.
@@ -730,7 +732,7 @@ class TAO_AV_Export TAO_MMDevice
 public:
   /// Constructor
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
-  TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
+  explicit TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
   TAO_MMDevice (TAO_MMDevice const &) = delete;
   TAO_MMDevice (TAO_MMDevice &&) = delete;
   TAO_MMDevice &operator= (TAO_MMDevice const &) = delete;
@@ -742,20 +744,20 @@ public:
                                             AVStreams::streamQoS &the_qos,
                                             CORBA::Boolean_out met_qos,
                                             char *&named_vdev,
-                                            const AVStreams::flowSpec &the_spec);
+                                            AVStreams::flowSpec const &the_spec);
 
   /// Can be used to request the MMDevice to create a new StreamCtrl,
   /// and call bind_devs on it
   AVStreams::StreamCtrl_ptr bind (AVStreams::MMDevice_ptr peer_device,
                                   AVStreams::streamQoS &the_qos,
                                   CORBA::Boolean_out is_met,
-                                  const AVStreams::flowSpec &the_spec) override;
+                                  AVStreams::flowSpec const &the_spec) override;
 
   /// Multicast bind
   AVStreams::StreamCtrl_ptr bind_mcast (AVStreams::MMDevice_ptr first_peer,
                                         AVStreams::streamQoS &the_qos,
                                         CORBA::Boolean_out is_met,
-                                        const AVStreams::flowSpec &the_spec) override;
+                                        AVStreams::flowSpec const &the_spec) override;
 
   /// Called by StreamCtrl to create a "A" type streamandpoint and vdev
   AVStreams::StreamEndPoint_A_ptr create_A (AVStreams::StreamCtrl_ptr the_requester,
@@ -763,7 +765,7 @@ public:
                                             AVStreams::streamQoS &the_qos,
                                             CORBA::Boolean_out met_qos,
                                             char *&named_vdev,
-                                            const AVStreams::flowSpec &the_spec) override;
+                                            AVStreams::flowSpec const &the_spec) override;
 
   /// Called by StreamCtrl to create a "B" type streamandpoint and vdev
   AVStreams::StreamEndPoint_B_ptr create_B (AVStreams::StreamCtrl_ptr the_requester,
@@ -771,20 +773,20 @@ public:
                                             AVStreams::streamQoS &the_qos,
                                             CORBA::Boolean_out met_qos,
                                             char *&named_vdev,
-                                            const AVStreams::flowSpec &the_spec) override;
+                                            AVStreams::flowSpec const &the_spec) override;
 
   /// Remove the StreamEndPoint and the related vdev
   void destroy (AVStreams::StreamEndPoint_ptr the_ep,
-                const char *vdev_name) override;
+                char const *vdev_name) override;
 
   /// Not supported in the light profile, raises notsupported
   char *add_fdev (CORBA::Object_ptr the_fdev) override;
 
   /// Not supported in the light profile, raises notsupported
-  CORBA::Object_ptr get_fdev (const char *flow_name) override;
+  CORBA::Object_ptr get_fdev (char const *flow_name) override;
 
   /// Not supported in the light profile, raises notsupported
-  void remove_fdev (const char *flow_name) override;
+  void remove_fdev (char const *flow_name) override;
 
   /// Destructor
   ~TAO_MMDevice () override;
@@ -850,11 +852,11 @@ public:
   CORBA::Boolean modify_QoS (AVStreams::QoS &new_qos) override;
 
   /// use the specified flow protocol for this flow.
-  CORBA::Boolean use_flow_protocol (const char *fp_name,
-                                    const CORBA::Any &fp_settings) override;
+  CORBA::Boolean use_flow_protocol (char const *fp_name,
+                                    CORBA::Any const &fp_settings) override;
 
   /// pushes an event , to be handled by the application.
-  void push_event (const AVStreams::streamEvent &the_event) override;
+  void push_event (AVStreams::streamEvent const &the_event) override;
 
 
   /// connect 2 Flow Devices.
@@ -882,12 +884,12 @@ public:
   CORBA::Boolean drop (AVStreams::FlowEndPoint_ptr target) override;
 
   int set_mcast_addr (ACE_CString addr,u_short port);
-  void set_protocol (const char *protocol);
+  void set_protocol (char const *protocol);
 protected:
-  using FlowProducer_Set = ACE_Unbounded_Set<AVStreams::FlowProducer_ptr>;
-  using FlowProducer_SetItor = ACE_Unbounded_Set_Iterator<AVStreams::FlowProducer_ptr>;
-  using FlowConsumer_Set = ACE_Unbounded_Set<AVStreams::FlowConsumer_ptr>;
-  using FlowConsumer_SetItor = ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer_ptr>;
+  using FlowProducer_Set = std::list<AVStreams::FlowProducer_ptr>;
+  using FlowProducer_SetItor = FlowProducer_Set::iterator;
+  using FlowConsumer_Set = std::list<AVStreams::FlowConsumer_ptr>;
+  using FlowConsumer_SetItor = FlowConsumer_Set::iterator;
 
   /// The multicast address returned by the producer.
   FlowProducer_Set flow_producer_set_;
@@ -897,7 +899,7 @@ protected:
   CORBA::String_var producer_address_;
 
   /// IP Multicasting is used.
-  int ip_multicast_;
+  bool ip_multicast_ {};
   TAO_MCastConfigIf *mcastconfigif_i_;
   AVStreams::MCastConfigIf_var mcastconfigif_;
   u_short mcast_port_;
@@ -918,20 +920,20 @@ public:
   ///default constructor.
   TAO_FlowEndPoint ();
 
-  TAO_FlowEndPoint (const char *flowname,
+  TAO_FlowEndPoint (char const *flowname,
                     AVStreams::protocolSpec &protocols,
-                    const char *format);
+                    char const *format);
 
-  int open (const char *flowname,
+  int open (char const *flowname,
             AVStreams::protocolSpec &protocols,
-            const char *format);
+            char const *format);
 
-  int set_flowname (const char *flowname);
+  int set_flowname (char const *flowname);
 
-  void set_flow_handler (const char *flowname,
+  void set_flow_handler (char const *flowname,
                          TAO_AV_Flow_Handler *handler) override;
 
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
   /// lock the flow endpoint for a particular flow.
@@ -963,17 +965,17 @@ public:
   AVStreams::FlowEndPoint_ptr get_connected_fep () override;
 
   //// use the specified flow protocol.
-  CORBA::Boolean use_flow_protocol (const char *fp_name,
-                                    const CORBA::Any &fp_settings) override;
+  CORBA::Boolean use_flow_protocol (char const *fp_name,
+                                    CORBA::Any const &fp_settings) override;
 
   /// sets the data format.
-  void set_format (const char *format) override;
+  void set_format (char const *format) override;
 
   /// sets the device parameters.
-  void set_dev_params (const CosPropertyService::Properties &new_settings) override;
+  void set_dev_params (CosPropertyService::Properties const &new_settings) override;
 
   /// sets the list of protocols to be used.
-  void set_protocol_restriction (const AVStreams::protocolSpec &the_spec) override;
+  void set_protocol_restriction (AVStreams::protocolSpec const &the_spec) override;
 
   /// checks whether the passed flowendpoint is compatible with this.
   CORBA::Boolean is_fep_compatible (AVStreams::FlowEndPoint_ptr fep) override;
@@ -995,14 +997,14 @@ public:
    * protocol objects. eg. in SFP to create Producer Object/ Consumer Object.
    */
   virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
-                                          const char * address,
-                                          const char * use_flow_protocol) = 0;
+                                          char const *address,
+                                          char const *use_flow_protocol) = 0;
 
   /// connect to the peer endpoint.
   virtual CORBA::Boolean connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
                                             AVStreams::QoS & the_qos,
-                                            const char * address,
-                                            const char * use_flow_protocol);
+                                            char const *address,
+                                            char const *use_flow_protocol);
 
   /**
    * This should be implemented in both the FlowProducer and consumer and hence is
@@ -1042,7 +1044,7 @@ protected:
   AVStreams::MCastConfigIf_var mcast_peer_;
 
   /// Lock.
-  CORBA::Boolean lock_;
+  bool lock_ {};
 
   CORBA::String_var format_;
   CORBA::String_var flowname_;
@@ -1050,8 +1052,8 @@ protected:
   TAO_AV_FlowSpecSet flow_spec_set_;
   CORBA::String_var reverse_channel_;
 
-  TAO_FlowEndPoint (const TAO_FlowEndPoint &) = delete;
-  TAO_FlowEndPoint &operator= (const TAO_FlowEndPoint &) = delete;
+  TAO_FlowEndPoint (TAO_FlowEndPoint const &) = delete;
+  TAO_FlowEndPoint &operator= (TAO_FlowEndPoint const &) = delete;
   TAO_FlowEndPoint (TAO_FlowEndPoint &&) = delete;
   TAO_FlowEndPoint &operator= (TAO_FlowEndPoint &&) = delete;
 };
@@ -1068,9 +1070,9 @@ public:
   TAO_FlowProducer &operator= (TAO_FlowProducer const &) = delete;
   TAO_FlowProducer &operator= (TAO_FlowProducer &&) = delete;
 
-  TAO_FlowProducer (const char *flowname,
+  TAO_FlowProducer (char const *flowname,
                     AVStreams::protocolSpec protocols,
-                    const char *format);
+                    char const *format);
 
   /**
    * get the reverse channel, to be used for feedback for protocols like UDP.
@@ -1079,7 +1081,7 @@ public:
    * UDP if the producer is listening and the consumer connects (logically) then the producer needs to
    * know the reverse channel on its peer fep to send data to.
    */
-  char *get_rev_channel (const char *pcol_name) override;
+  char *get_rev_channel (char const *pcol_name) override;
 
   /// stop this flow, to be overridden by the application.
   void stop () override;
@@ -1093,18 +1095,18 @@ public:
                       char *&flowProtocol) override;
 
   CORBA::Boolean connect_to_peer (AVStreams::QoS &the_qos,
-                                  const char *address,
-                                  const char *use_flow_protocol) override;
+                                  char const *address,
+                                  char const *use_flow_protocol) override;
 
   /// connect to the multicast address, not implemented.
   char *connect_mcast (AVStreams::QoS &the_qos,
                        CORBA::Boolean_out is_met,
-                       const char *address,
-                       const char *use_flow_protocol) override;
+                       char const *address,
+                       char const *use_flow_protocol) override;
 
 
   /// sets the public key  to be used for encryption of the data.
-  void set_key (const AVStreams::key &the_key) override;
+  void set_key (AVStreams::key const &the_key) override;
 
   /// sets the source id of this flow producer so that it can be used
   /// to distinguish this producer from others in the multicast case.
@@ -1128,9 +1130,9 @@ public:
   TAO_FlowConsumer &operator= (TAO_FlowConsumer const &) = delete;
   TAO_FlowConsumer &operator= (TAO_FlowConsumer &&) = delete;
 
-  TAO_FlowConsumer (const char *flowname,
+  TAO_FlowConsumer (char const *flowname,
                     AVStreams::protocolSpec protocols,
-                    const char *format);
+                    char const *format);
 
   /// stop this flow, to be overridden by the application.
   void stop () override;
@@ -1144,8 +1146,8 @@ public:
                       char *&flowProtocol) override;
 
   CORBA::Boolean connect_to_peer (AVStreams::QoS &the_qos,
-                                  const char *address,
-                                  const char *use_flow_protocol) override;
+                                  char const *address,
+                                  char const *use_flow_protocol) override;
 };
 
 /**
@@ -1168,15 +1170,15 @@ public:
   AVStreams::Position get_media_position (AVStreams::PositionOrigin an_origin,
                                           AVStreams::PositionKey a_key) override = 0;
 
-  void set_media_position (const AVStreams::Position &a_position) override = 0;
+  void set_media_position (AVStreams::Position const &a_position) override = 0;
 
-  void start (const AVStreams::Position &a_position) override = 0;
+  void start (AVStreams::Position const &a_position) override = 0;
 
-  void pause (const AVStreams::Position &a_position) override = 0;
+  void pause (AVStreams::Position const &a_position) override = 0;
 
-  void resume (const AVStreams::Position &a_position) override = 0;
+  void resume (AVStreams::Position const &a_position) override = 0;
 
-  void stop (const AVStreams::Position &a_position) override = 0;
+  void stop (AVStreams::Position const &a_position) override = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

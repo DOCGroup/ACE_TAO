@@ -51,10 +51,10 @@ public:
   ~TAO_ECG_UDP_Out_Endpoint ();
 
   /// Copy Constructor
-  TAO_ECG_UDP_Out_Endpoint (const TAO_ECG_UDP_Out_Endpoint& rhs);
+  TAO_ECG_UDP_Out_Endpoint (TAO_ECG_UDP_Out_Endpoint const &rhs);
 
   /// Assignment operator
-  TAO_ECG_UDP_Out_Endpoint& operator= (const TAO_ECG_UDP_Out_Endpoint& rhs);
+  TAO_ECG_UDP_Out_Endpoint& operator= (TAO_ECG_UDP_Out_Endpoint const &rhs);
 
   /// Obtain the datagram associated with this endpoint. Clients of
   /// this class must open, and register (if necessary) this datagram.
@@ -65,7 +65,7 @@ public:
 
   /// The endpoint can detect if a data-gram was sent by itself, this
   /// is useful to ignore or remove messages sent by the same process.
-  CORBA::Boolean is_loopback (const ACE_INET_Addr& from);
+  CORBA::Boolean is_loopback (ACE_INET_Addr const &from);
 
 private:
   /// The request id....

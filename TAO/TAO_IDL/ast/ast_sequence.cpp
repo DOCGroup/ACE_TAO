@@ -103,9 +103,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     AST_ConcreteType (AST_Decl::NT_sequence,
                       n),
     pd_max_size (ms),
-    pd_base_type (bt),
-    unbounded_ (true),
-    owns_base_type_ (false)
+    pd_base_type (bt)
 {
   FE_Utils::tmpl_mod_ref_check (this, bt);
 
@@ -138,26 +136,29 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 
   AST_Decl::NodeType nt = bt->node_type ();
 
-  this->owns_base_type_ =
+  bool const owns_base_type =
     nt == AST_Decl::NT_array
     || nt == AST_Decl::NT_sequence
     || nt == AST_Decl::NT_map
     || nt == AST_Decl::NT_param_holder;
+
+  if (owns_base_type)
+    {
+      this->owned_base_type_.reset (bt);
+    }
 }
 
-AST_Sequence::~AST_Sequence ()
-{
-}
+AST_Sequence::~AST_Sequence () = default;
 
 // Public operations.
 
 bool
-AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_Sequence::in_recursion (std::vector<AST_Type *> &list)
 {
   if (list.size () == 0) // only structs, unions and valuetypes can be recursive
     return false;
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   AST_Type *type = dynamic_cast<AST_Type*> (this->base_type ());
 
@@ -188,10 +189,8 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
 
   bool recursion_found = false;
-  AST_Type** recursable_type = nullptr;
-  list.get (recursable_type, 0);
-  if (!ACE_OS::strcmp (type->full_name (),
-                           (*recursable_type)->full_name ()))
+  AST_Type *recursable_type = list.front ();
+  if (type->full_name () == recursable_type->full_name ())
     {
       // They match.
       recursion_found = true;
@@ -236,9 +235,9 @@ AST_Sequence::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Expression *
-AST_Sequence::max_size ()
+AST_Sequence::max_size () const
 {
-  return this->pd_max_size;
+  return this->pd_max_size.get ();
 }
 
 AST_Type *
@@ -281,16 +280,14 @@ AST_Sequence::is_defined ()
 void
 AST_Sequence::destroy ()
 {
-  if (this->owns_base_type_)
+  if (this->owned_base_type_ != nullptr)
     {
-      this->pd_base_type->destroy ();
-      delete this->pd_base_type;
+      this->owned_base_type_->destroy ();
+      this->owned_base_type_.reset ();
       this->pd_base_type = nullptr;
     }
 
-  this->pd_max_size->destroy ();
-  delete this->pd_max_size;
-  this->pd_max_size = nullptr;
+  this->pd_max_size.reset ();
 
   this->AST_ConcreteType::destroy ();
 }

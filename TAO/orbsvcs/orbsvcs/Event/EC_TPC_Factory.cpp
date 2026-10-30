@@ -21,10 +21,6 @@ TAO_EC_TPC_Factory::TAO_EC_TPC_Factory ()
   TAO_EC_TPC_debug_level = 0;
 }
 
-TAO_EC_TPC_Factory::~TAO_EC_TPC_Factory ()
-{
-}
-
 int
 TAO_EC_TPC_Factory::init_svcs ()
 {
@@ -40,7 +36,7 @@ TAO_EC_TPC_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatching")) == 0)
         {

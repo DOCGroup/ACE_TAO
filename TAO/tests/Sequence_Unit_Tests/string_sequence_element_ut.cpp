@@ -99,12 +99,12 @@ struct helper <CORBA::WChar>
 template<class charT>
 struct Tester
 {
-  typedef string_traits <charT, true> tested_element_traits;
-  typedef string_sequence_element <tested_element_traits> tested_element;
-  typedef charT *string_type;
-  typedef charT const *const_string_type;
-  typedef typename tested_element_traits::string_var string_var;
-  typedef typename tested_element_traits::string_mgr string_mgr;
+  using tested_element_traits = string_traits <charT, true>;
+  using tested_element = string_sequence_element <tested_element_traits>;
+  using string_type = charT *;
+  using const_string_type = charT const *;
+  using string_var = typename tested_element_traits::string_var;
+  using string_mgr = typename tested_element_traits::string_mgr;
 
   int
   test_assignment_from_const_string ()
@@ -214,7 +214,7 @@ struct Tester
     expected_calls r (tested_element_traits::release_calls);
 
     {
-      string_type xe = 0;
+      string_type xe = nullptr;
       tested_element x(xe, true);
 
       string_type y =

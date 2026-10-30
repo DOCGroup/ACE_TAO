@@ -6,24 +6,6 @@
 
 // This is the interface program that accesses the remote object
 
-// Constructor.
-Grid_Client_i::Grid_Client_i ()
-  : height_ (0),
-    width_ (0),
-    setx_ (0),
-    sety_ (0),
-    value_ (0)
-
-{
-  //no-op
-}
-
-//Destructor.
-Grid_Client_i::~Grid_Client_i ()
-{
-  //no-op
-}
-
 int
 Grid_Client_i::parse_args (int argc,
                            ACE_TCHAR *argv[])
@@ -31,7 +13,7 @@ Grid_Client_i::parse_args (int argc,
   // Parses some of the options that are specific to this example
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("df:nk:xw:h:p:q:v:"));
 
-  int c = 0;
+  int c;
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -64,7 +46,7 @@ Grid_Client_i::parse_args (int argc,
 }
 
 int
-Grid_Client_i::run (const char *name,
+Grid_Client_i::run (char const *name,
                     int argc,
                     ACE_TCHAR *argv[])
 {
@@ -132,17 +114,17 @@ Grid_Client_i::run (const char *name,
           grid->get (setx_,
                      sety_);
         }
-      catch (const Grid::RANGE_ERROR &)
+      catch (Grid::RANGE_ERROR const &)
         {
           // It's ok.
         }
 
-      if (client_.do_shutdown () == 1)
+      if (client_.do_shutdown ())
         client_->shutdown ();
 
       ACE_UNUSED_ARG (ret_val);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Grid_Client_i::run:");
       return -1;

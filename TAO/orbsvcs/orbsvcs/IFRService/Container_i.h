@@ -17,6 +17,7 @@
 
 #include "orbsvcs/IFRService/IRObject_i.h"
 #include "orbsvcs/IFRService/ifr_service_export.h"
+#include <deque>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,10 +63,10 @@ public:
   virtual void destroy_definitions_i ();
 
   virtual CORBA::Contained_ptr lookup (
-      const char *search_name);
+      char const *search_name);
 
   CORBA::Contained_ptr lookup_i (
-      const char *search_name);
+      char const *search_name);
 
   virtual CORBA::ContainedSeq *contents (
       CORBA::DefinitionKind limit_type,
@@ -76,13 +77,13 @@ public:
       CORBA::Boolean exclude_inherited);
 
   virtual CORBA::ContainedSeq *lookup_name (
-      const char *search_name,
+      char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
 
   CORBA::ContainedSeq *lookup_name_i (
-      const char *search_name,
+      char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
@@ -98,232 +99,232 @@ public:
       CORBA::Long max_returned_objs);
 
   virtual CORBA::ModuleDef_ptr create_module (
-      const char *id,
-      const char *name,
-      const char *version);
+      char const *id,
+      char const *name,
+      char const *version);
 
   CORBA::ModuleDef_ptr create_module_i (
-      const char *id,
-      const char *name,
-      const char *version);
+      char const *id,
+      char const *name,
+      char const *version);
 
   virtual CORBA::ConstantDef_ptr create_constant (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
-      const CORBA::Any & value);
+      CORBA::Any const &value);
 
   CORBA::ConstantDef_ptr create_constant_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
-      const CORBA::Any & value);
+      CORBA::Any const &value);
 
   virtual CORBA::StructDef_ptr create_struct (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::StructMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::StructMemberSeq const &members);
 
   CORBA::StructDef_ptr create_struct_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::StructMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::StructMemberSeq const &members);
 
   virtual CORBA::UnionDef_ptr create_union (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members);
+      CORBA::UnionMemberSeq const &members);
 
   CORBA::UnionDef_ptr create_union_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members);
+      CORBA::UnionMemberSeq const &members);
 
   virtual CORBA::EnumDef_ptr create_enum (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::EnumMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::EnumMemberSeq const &members);
 
   CORBA::EnumDef_ptr create_enum_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::EnumMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::EnumMemberSeq const &members);
 
   virtual CORBA::AliasDef_ptr create_alias (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr original_type);
 
   CORBA::AliasDef_ptr create_alias_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr original_type);
 
   virtual CORBA::InterfaceDef_ptr create_interface (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::InterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::InterfaceDefSeq const &base_interfaces);
 
   CORBA::InterfaceDef_ptr create_interface_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::InterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::InterfaceDefSeq const &base_interfaces);
 
   virtual CORBA::ValueDef_ptr create_value (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
-      const CORBA::InitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::InitializerSeq const &initializers);
 
   CORBA::ValueDef_ptr create_value_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq & supported_interfaces,
-      const CORBA::InitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::InitializerSeq const &initializers);
 
   virtual CORBA::ValueBoxDef_ptr create_value_box (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr original_type_def);
 
   CORBA::ValueBoxDef_ptr create_value_box_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr original_type_def);
 
   virtual CORBA::ExceptionDef_ptr create_exception (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::StructMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::StructMemberSeq const &members);
 
   CORBA::ExceptionDef_ptr create_exception_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::StructMemberSeq &members);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::StructMemberSeq const &members);
 
   virtual CORBA::NativeDef_ptr create_native (
-      const char *id,
-      const char *name,
-      const char *version);
+      char const *id,
+      char const *name,
+      char const *version);
 
   CORBA::NativeDef_ptr create_native_i (
-      const char *id,
-      const char *name,
-      const char *version);
+      char const *id,
+      char const *name,
+      char const *version);
 
   virtual CORBA::AbstractInterfaceDef_ptr create_abstract_interface (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::AbstractInterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::AbstractInterfaceDefSeq const &base_interfaces);
 
   CORBA::AbstractInterfaceDef_ptr create_abstract_interface_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::AbstractInterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::AbstractInterfaceDefSeq const &base_interfaces);
 
   virtual CORBA::LocalInterfaceDef_ptr create_local_interface (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::InterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::InterfaceDefSeq const &base_interfaces);
 
   CORBA::LocalInterfaceDef_ptr create_local_interface_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      const CORBA::InterfaceDefSeq &base_interfaces);
+      char const *id,
+      char const *name,
+      char const *version,
+      CORBA::InterfaceDefSeq const &base_interfaces);
 
   virtual ::CORBA::ExtValueDef_ptr create_ext_value (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers);
 
   CORBA::ExtValueDef_ptr create_ext_value_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers);
 
   /// Called from TAO_IFR_Service_Utils::name_exists.
-  static int same_as_tmp_name (const char *name);
+  static int same_as_tmp_name (char const *name);
 
   /// Accesses the static member.
-  static void tmp_name_holder (const char *name);
+  static void tmp_name_holder (char const *name);
 
   /// Used with structs, unions and exceptions.
   void update_refs (
-      const char *path,
-      const char *name = 0
+      char const *path,
+      char const *name = nullptr
     );
 
 protected:
   /// Store a union member's label value.
    void store_label (
       ACE_Configuration_Section_Key key,
-      const CORBA::Any &value);
+      CORBA::Any const &value);
 
   void lookup_attr (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
+      char const *search_name,
       CORBA::Boolean exclude_inherited);
 
   void lookup_op (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
+      char const *search_name,
       CORBA::Boolean exclude_inherited);
 
 private:
   void lookup_name_recursive (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
+      char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
@@ -333,18 +334,18 @@ private:
       CORBA::DefinitionKind container_kind,
       ACE_Configuration_Section_Key &container_key,
       ACE_Configuration_Section_Key &new_key,
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces);
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces);
 
 protected:
-  static const char *tmp_name_holder_;
+  static char const *tmp_name_holder_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

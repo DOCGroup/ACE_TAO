@@ -22,7 +22,11 @@ class Server_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  Server_IORInterceptor (Gateway::Object_Factory_ptr gateway_object_factory);
+  explicit Server_IORInterceptor (Gateway::Object_Factory_ptr gateway_object_factory);
+  Server_IORInterceptor (Server_IORInterceptor const &) = delete;
+  Server_IORInterceptor (Server_IORInterceptor &&) = delete;
+  Server_IORInterceptor &operator= (Server_IORInterceptor const &) = delete;
+  Server_IORInterceptor &operator= (Server_IORInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -33,25 +37,25 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name ();
+  char * name () override;
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Add the tagged components to the IOR.
-  virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info);
+  void establish_components (
+      PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void components_established (
-      PortableInterceptor::IORInfo_ptr info);
+  void components_established (
+      PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void adapter_manager_state_changed (
-      const char * id,
-      PortableInterceptor::AdapterState state);
+  void adapter_manager_state_changed (
+      char const *id,
+      PortableInterceptor::AdapterState state) override;
 
-  virtual void adapter_state_changed (
-      const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state);
+  void adapter_state_changed (
+      PortableInterceptor::ObjectReferenceTemplateSeq const &templates,
+      PortableInterceptor::AdapterState state) override;
 
   //@}
 

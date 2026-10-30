@@ -19,6 +19,8 @@
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
 
+#include <deque>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Evaluator;
@@ -119,7 +121,7 @@ public:
   struct Preference_Info
   {
     /// True if the preference evaluation didn't return an error for this offer.
-    CORBA::Boolean evaluated_;
+    CORBA::Boolean evaluated_ {};
 
     /// The value of the preference evaluation.
     TAO_Literal_Constraint value_;
@@ -131,7 +133,7 @@ public:
     CosTrading::Offer* offer_;
   };
 
-  using Ordered_Offers = ACE_Unbounded_Queue<Preference_Info>;
+  using Ordered_Offers = std::deque<Preference_Info>;
 
 private:
   TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;

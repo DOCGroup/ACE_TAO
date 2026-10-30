@@ -18,14 +18,11 @@ be_uses::be_uses (UTL_ScopedName *n,
     be_decl (AST_Decl::NT_uses,
              n),
     be_field (uses_type,
-              n),
-    original_uses_ (nullptr)
+              n)
 {
 }
 
-be_uses::~be_uses ()
-{
-}
+be_uses::~be_uses () = default;
 
 be_type *
 be_uses::uses_type () const

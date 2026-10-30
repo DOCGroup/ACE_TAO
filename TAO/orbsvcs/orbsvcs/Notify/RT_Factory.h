@@ -32,7 +32,7 @@ public:
   TAO_Notify_RT_Factory ();
 
   /// Destructor
-  virtual ~TAO_Notify_RT_Factory ();
+  ~TAO_Notify_RT_Factory () override;
 
   /// Instruct the compiler that we want the create
   /// methods from the base class as well

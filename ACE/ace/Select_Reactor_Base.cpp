@@ -333,10 +333,10 @@ ACE_Select_Reactor_Handler_Repository::unbind (
   if (!has_any_wait_mask && !has_any_suspend_mask)
     {
 #if defined (ACE_SELECT_REACTOR_BASE_USES_HASH_MAP)
-      if (event_handler != 0 && this->event_handlers_.unbind (pos) == -1)
+      if (event_handler != nullptr && this->event_handlers_.unbind (pos) == -1)
         return -1;  // Should not happen!
 #else
-      this->event_handlers_[handle] = 0;
+      this->event_handlers_[handle] = nullptr;
 
       if (this->max_handlep1_ == handle + 1)
         {

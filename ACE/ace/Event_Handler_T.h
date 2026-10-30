@@ -79,14 +79,14 @@ public:
   /// Initialize the op_handler.
   ACE_Event_Handler_T (T *op_handler,
                        int delete_handler,
-                       GET_HANDLE get_handle = 0,
-                       IO_HANDLER input = 0,
-                       CL_HANDLER close = 0,
-                       SIG_HANDLER sig = 0,
-                       TO_HANDLER timeout = 0,
-                       IO_HANDLER output = 0,
-                       SET_HANDLE set_handle = 0,
-                       IO_HANDLER except = 0);
+                       GET_HANDLE get_handle = nullptr,
+                       IO_HANDLER input = nullptr,
+                       CL_HANDLER close = nullptr,
+                       SIG_HANDLER sig = nullptr,
+                       TO_HANDLER timeout = nullptr,
+                       IO_HANDLER output = nullptr,
+                       SET_HANDLE set_handle = nullptr,
+                       IO_HANDLER except = nullptr);
 
   /// Close down and delete the <op_handler>
   ~ACE_Event_Handler_T () override;
@@ -101,7 +101,7 @@ public:
   int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_timeout (const ACE_Time_Value &tv, const void *arg = nullptr) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
   // = Get/set the operations handler.
   T *op_handler ();

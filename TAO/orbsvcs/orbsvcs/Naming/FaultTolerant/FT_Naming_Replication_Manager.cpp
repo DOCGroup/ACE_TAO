@@ -58,7 +58,7 @@ FT_Update_Replicant_i::notify_update (CORBA::ULongLong seq_num,
 
 void
 FT_Update_Replicant_i::register_peer (FT_Naming::UpdatePushNotifier_ptr peer,
-                                      const FT_Naming::ReplicaInfo& iors,
+                                      FT_Naming::ReplicaInfo const &iors,
                                       CORBA::ULongLong seq_num)
 {
   this->owner_.peer_ = FT_Naming::UpdatePushNotifier::_duplicate (peer);
@@ -86,10 +86,6 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Nam
 {
 }
 
-TAO_FT_Naming_Replication_Manager::~TAO_FT_Naming_Replication_Manager()
-{
-}
-
 void
 TAO_FT_Naming_Replication_Manager::init_orb ()
 {
@@ -111,10 +107,10 @@ TAO_FT_Naming_Replication_Manager::init_orb ()
     }
   else
     {
-      argv[8] = 0;
-      argv[9] = 0;
+      argv[8] = nullptr;
+      argv[9] = nullptr;
     }
-  argv[10] = 0;
+  argv[10] = nullptr;
 
   this->orb_ = CORBA::ORB_init (argc, argv, "replicator_orb");
   this->reactor_ = this->orb_->orb_core ()->reactor ();
@@ -164,7 +160,7 @@ TAO_FT_Naming_Replication_Manager::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::SystemException &ex)
+  catch (CORBA::SystemException const &ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -234,7 +230,7 @@ TAO_FT_Naming_Replication_Manager::handle_exception (ACE_HANDLE )
 
       this->peer_->notify_update (seq, payload);
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       this->peer_ = FT_Naming::UpdatePushNotifier::_nil ();
     }
@@ -292,7 +288,7 @@ TAO_FT_Naming_Replication_Manager::send_objgrp_update (PortableGroup::ObjectGrou
 }
 
 void
-TAO_FT_Naming_Replication_Manager::send_context_update (const ACE_CString & name,
+TAO_FT_Naming_Replication_Manager::send_context_update (ACE_CString const &name,
                                     FT_Naming::ChangeType change)
 {
   if (this->reactor_ == nullptr)
@@ -380,7 +376,7 @@ TAO_FT_Naming_Replication_Manager::peer_init_i ()
           this->peer_ = FT_Naming::UpdatePushNotifier::_narrow (obj.in());
           non_exist = (this->peer_->_non_existent() == 1);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
             {
@@ -439,7 +435,7 @@ TAO_FT_Naming_Replication_Manager::update_peer_registration ()
       this->peer_->register_peer (this->me_, info, this->seq_num_);
       success = true;
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
     }
   return success;

@@ -50,48 +50,48 @@ public:
 
   CORBA::ExtInitializerSeq *ext_initializers_i ();
 
-  virtual void ext_initializers (const CORBA::ExtInitializerSeq &ext_initializers);
+  virtual void ext_initializers (CORBA::ExtInitializerSeq const &ext_initializers);
 
-  void ext_initializers_i (const CORBA::ExtInitializerSeq &ext_initializers);
+  void ext_initializers_i (CORBA::ExtInitializerSeq const &ext_initializers);
 
   virtual CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value (   );
 
   CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value_i ();
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode,
-      const CORBA::ExceptionDefSeq &get_exceptions,
-      const CORBA::ExceptionDefSeq &set_exceptions);
+      CORBA::ExceptionDefSeq const &get_exceptions,
+      CORBA::ExceptionDefSeq const &set_exceptions);
 
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode,
-      const CORBA::ExceptionDefSeq &get_exceptions,
-      const CORBA::ExceptionDefSeq &set_exceptions);
+      CORBA::ExceptionDefSeq const &get_exceptions,
+      CORBA::ExceptionDefSeq const &set_exceptions);
 
   //// Public because it's also called from
   //// TAO_Container_i::create_ext_value_i.
   void exceptions (ACE_Configuration_Section_Key &key,
-                   const char *sub_section,
-                   const CORBA::ExcDescriptionSeq &exceptions);
+                   char const *sub_section,
+                   CORBA::ExcDescriptionSeq const &exceptions);
 
 private:
   /// Common code for the set/get operations with attributes and initializers.
 
   void fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
                         ACE_Configuration_Section_Key &key,
-                        const char *sub_section);
+                        char const *sub_section);
 
   void exceptions (ACE_Configuration_Section_Key &key,
-                   const char *sub_section,
-                   const CORBA::ExceptionDefSeq &exceptions);
+                   char const *sub_section,
+                   CORBA::ExceptionDefSeq const &exceptions);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

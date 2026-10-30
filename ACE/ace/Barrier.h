@@ -93,6 +93,11 @@ struct ACE_Export ACE_Sub_Barrier
 class ACE_Export ACE_Barrier
 {
 public:
+  ACE_Barrier (ACE_Barrier const &) = delete;
+  ACE_Barrier (ACE_Barrier &&) = delete;
+  ACE_Barrier &operator= (ACE_Barrier const &) = delete;
+  ACE_Barrier &operator= (ACE_Barrier &&) = delete;
+
   /// Initialize the barrier to synchronize @a count threads.
   ACE_Barrier (unsigned int count,
                const ACE_TCHAR *name = nullptr,
@@ -146,10 +151,6 @@ protected:
   ACE_Sub_Barrier sub_barrier_1_;
   ACE_Sub_Barrier sub_barrier_2_;
   ACE_Sub_Barrier *sub_barrier_[2];
-
-private:
-  void operator= (const ACE_Barrier &) = delete;
-  ACE_Barrier (const ACE_Barrier &) = delete;
 };
 
 /**

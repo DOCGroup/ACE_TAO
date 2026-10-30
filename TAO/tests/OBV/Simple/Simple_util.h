@@ -32,14 +32,19 @@ class Server
 {
 public:
   /// Constructor.
-  Server ();
+  Server () = default;
 
   /// Destructor.
-  ~Server ();
+  ~Server () = default;
+
+  Server (Server const&) = delete;
+  Server (Server&&) = delete;
+  Server& operator= (Server const&) = delete;
+  Server& operator= (Server&&) = delete;
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
-  int init (const char *servant_name,
+  int init (char const *servant_name,
             int argc,
             ACE_TCHAR *argv[]);
 
@@ -55,7 +60,7 @@ protected:
   Servant servant_;
 
   /// name of the servant to be used for TAO Naming Service
-  const char *name;
+  char const *name {};
 
   /// Parses the commandline arguments.
   int parse_args ();
@@ -68,13 +73,13 @@ protected:
   // helper class for getting access to Naming Service.
 
   /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
+  FILE *ior_output_file_ {};
 
   /// Number of command line arguments.
-  int argc_;
+  int argc_ {};
 
   /// The command line arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 };
 
 /**
@@ -91,13 +96,18 @@ class Client
 {
 public:
   /// Constructor.
-  Client ();
+  Client () = default;
 
   /// Destructor.
   ~Client ();
 
+  Client (Client const&) = delete;
+  Client (Client&&) = delete;
+  Client& operator= (Client const&) = delete;
+  Client& operator= (Client&&) = delete;
+
   /// Initialize the client communication endpoint with server.
-  int init (const char *name,int argc, ACE_TCHAR *argv[]);
+  int init (char const *name, int argc, ACE_TCHAR *argv[]);
 
   /// Return the interface object pointer.
   InterfaceObj *operator-> () { return server_.in ();};
@@ -113,7 +123,7 @@ public:
 
 protected:
   /// Function to read the server IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parses the arguments passed on the command line.
   int parse_args ();
@@ -122,16 +132,16 @@ protected:
   // helper class for getting access to Naming Service.
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
-  ACE_TCHAR *ior_;
+  ACE_TCHAR *ior_ {};
 
   /// Name to be usred for the naming service
-  char *name_;
+  char *name_ {};
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
@@ -140,10 +150,10 @@ protected:
   Var server_;
 
   /// Flag to use the naming service
-  int naming_;
+  bool naming_ {};
 
   /// Flag for shutting down the server
-  int shutdown_;
+  bool shutdown_ {};
 };
 
 #include "Simple_util.cpp"

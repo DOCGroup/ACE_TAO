@@ -11,7 +11,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:k"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,7 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -61,11 +61,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Test_i *server_impl = 0;
+      Test_i *server_impl = nullptr;
       ACE_NEW_RETURN (server_impl,
                       Test_i (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(server_impl);
+      PortableServer::ServantBase_var owner_transfer (server_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (server_impl);
@@ -83,9 +83,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       IORTable::Table_var adapter =
         IORTable::Table::_narrow (table_object.in ());
 
-      adapter->bind("Name-with-hyphens", ior.in());
+      adapter->bind ("Name-with-hyphens", ior.in ());
 
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
+      FILE *output_file = ACE_OS::fopen (ior_file, "w");
       if (output_file == nullptr)
          ACE_ERROR_RETURN ((LM_ERROR,
                                "SERVER (%P): Cannot open output file "
@@ -99,7 +99,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "SERVER (%P): Activated as file://%s\n",
                       ior_file));
 
-      poa_manager->activate();
+      poa_manager->activate ();
 
       orb->run ();
 
@@ -107,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("SERVER (%P): Caught exception:");
       return 1;

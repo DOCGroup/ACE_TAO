@@ -9,30 +9,28 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO::Less_Than_ObjectKey::operator () (const TAO::ObjectKey &lhs,
-                                       const TAO::ObjectKey &rhs) const
+TAO::Less_Than_ObjectKey::operator () (TAO::ObjectKey const &lhs,
+                                       TAO::ObjectKey const &rhs) const
 {
-  const CORBA::ULong rlen = rhs.length ();
-  const CORBA::ULong llen = lhs.length ();
+  CORBA::ULong const rlen = rhs.length ();
+  CORBA::ULong const llen = lhs.length ();
   if (llen < rlen)
     {
-      return 1;
+      return true;
     }
   else if (llen > rlen)
     {
-      return 0;
+      return false;
     }
 
-  const CORBA::Octet * rhs_buff = rhs.get_buffer ();
-  const CORBA::Octet * lhs_buff = lhs.get_buffer ();
-  const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) < 0);
+  CORBA::Octet const * const rhs_buff = rhs.get_buffer ();
+  CORBA::Octet const * const lhs_buff = lhs.get_buffer ();
+  bool const result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) < 0);
 
   return result;
 }
 
 /********************************************************/
-TAO::ObjectKey_Table::ObjectKey_Table () = default;
-
 TAO::ObjectKey_Table::~ObjectKey_Table ()
 {
   this->table_.close ();
@@ -64,7 +62,7 @@ TAO::ObjectKey_Table::destroy ()
 }
 
 int
-TAO::ObjectKey_Table::bind_i (const TAO::ObjectKey &key,
+TAO::ObjectKey_Table::bind_i (TAO::ObjectKey const &key,
                               TAO::Refcounted_ObjectKey *&key_new)
 {
   ACE_NEW_RETURN (key_new,

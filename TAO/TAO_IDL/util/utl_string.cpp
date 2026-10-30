@@ -67,97 +67,79 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "utl_err.h"
 
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
-
 #include "ace/OS_NS_ctype.h"
 
+#include <string>
+#include <utility>
+
 //////////////////////////////////////////////////////////////////////
-//// Static functions may be used by non-UTL_String i.e. const char *
+//// Static functions may be used by non-UTL_String instances.
 //////////////////////////////////////////////////////////////////////
 
 bool
 UTL_String::strcmp_caseless (
-  const char *lhs,
-  const char *rhs,
+  std::string const& lhs,
+  std::string const& rhs,
   bool &mixed_case)
 {
-  int difference;
-
-  // Advance until (difference between the strings is found) or (End of String)
-  while (0 == (difference = static_cast<int> (*lhs) - static_cast<int> (*rhs)) && *lhs)
+  mixed_case = false;
+  if (lhs.size () != rhs.size ())
     {
-      ++lhs;
-      ++rhs;
+      return false;
     }
 
-  // If not (End of Strings, therefore difference found above) check if a
-  // caseless match would work instead.
-  mixed_case=
-    (*lhs &&
-     *rhs &&
-     !(static_cast<int> (ACE_OS::ace_toupper (*lhs)) -
-       static_cast<int> (ACE_OS::ace_toupper (*rhs))
-    ) );
-  if (mixed_case)
+  for (size_t i = 0; i < lhs.size (); ++i)
     {
-      ++lhs;
-      ++rhs;
-
-      // Continue caseless compare until (difference between strings) or (End of String)
-      while (0 == (difference = static_cast<int> (ACE_OS::ace_toupper (*lhs)) -
-                                static_cast<int> (ACE_OS::ace_toupper (*rhs))) && *lhs)
+      if (lhs[i] != rhs[i])
         {
-          ++lhs;
-          ++rhs;
+          if (ACE_OS::ace_toupper (lhs[i]) != ACE_OS::ace_toupper (rhs[i]))
+            {
+              return false;
+            }
+
+          mixed_case = true;
         }
     }
 
-  // true is match (no difference found), false is difference found.
-  return !difference;
+  return true;
 }
 
-// Compare two const char *.
+// Compare two strings.
 bool
-UTL_String::compare (const char *lhs, const char *rhs)
+UTL_String::compare (std::string const& lhs, std::string const& rhs)
 {
   bool result= false;
   bool mixed=  false;
 
-  if (lhs && rhs && strcmp_caseless (lhs, rhs, mixed))
+  if (strcmp_caseless (lhs, rhs, mixed))
     {
       result= !mixed;
       if (mixed) // Strings match (differing case)
         {
           if (idl_global->case_diff_error ())
             {
-              idl_global->err ()->name_case_error (
-                  const_cast<char *> (lhs),
-                  const_cast<char *> (rhs));
+              idl_global->err ()->name_case_error (lhs, rhs);
 
               // If we try to continue from here, we risk a crash.
               throw Bailout ();
             }
           else
             {
-              idl_global->err ()->name_case_warning (
-                const_cast<char *> (lhs),
-                const_cast<char *> (rhs));
+              idl_global->err ()->name_case_warning (lhs, rhs);
             }
         }
     }
 
   return result;
 }
-
 // Like the above but without error or warning message output.
 bool
-UTL_String::compare_quiet (const char *lhs, const char *rhs)
+UTL_String::compare_quiet (std::string const& lhs, std::string const& rhs)
 {
   bool result= false;
   bool mixed=  false;
 
-  if (lhs && rhs && strcmp_caseless (lhs, rhs, mixed))
+  if (strcmp_caseless (lhs, rhs, mixed))
     {
       result= mixed;
     }
@@ -165,102 +147,16 @@ UTL_String::compare_quiet (const char *lhs, const char *rhs)
   return result;
 }
 
-// Get canonical representation. This is (implemented as) the all upper
-// case corresponding string.
-void
-UTL_String::get_canonical_rep (const char *src, char *dest)
+// Get canonical representation. This is the all upper case corresponding string.
+std::string
+UTL_String::get_canonical_rep (std::string const& str)
 {
-  while (0 != (*dest++ = static_cast<char> (ACE_OS::ace_toupper (*src++))))
-    {}
-}
+  std::string result (str);
 
-// Get canonical representation. This is (implemented as) the all upper
-// case corresponding string.
-void
-UTL_String::get_canonical_rep (ACE_CString &cstr)
-{
-  get_canonical_rep (&cstr [0], &cstr [0]);
-}
-
-//////////////////////////////////////////////////////////////////////
-
-UTL_String::UTL_String ()
-  : copy_taken (false),
-    p_str      (nullptr),
-    c_str      (nullptr)
-{
-}
-
-UTL_String::UTL_String (const char *str, bool take_copy)
-  : copy_taken (str ? take_copy : false),
-    p_str      (this->copy_taken ? ACE::strnew (str)
-                                 : const_cast<char *>(str)),
-    c_str      (nullptr)
-{
-}
-
-UTL_String::UTL_String (UTL_String *s, bool force_copy)
-  : copy_taken (force_copy ? true : s->copy_taken),
-    p_str      (this->copy_taken ? ACE::strnew (s->p_str)
-                                 : const_cast<char *> (s->p_str)),
-    c_str      (nullptr)
-{
-}
-
-UTL_String::~UTL_String ()
-{
-  delete [] this->c_str;
-  if (copy_taken)
+  for (char &c : result)
     {
-      ACE::strdelete (this->p_str);
-    }
-}
-
-void
-UTL_String::destroy ()
-{
-  delete [] this->c_str;
-  this->c_str = nullptr;
-  if (this->copy_taken)
-    {
-       ACE::strdelete (this->p_str);
-       this->copy_taken = false;
-    }
-  this->p_str = nullptr;
-}
-
-// Compare two UTL_String *.
-bool
-UTL_String::compare (UTL_String *s)
-{
-  return (this->p_str && s && s->get_string () &&
-          compare (this->p_str, s->get_string ()));
-}
-
-bool
-UTL_String::compare_quiet (UTL_String *s)
-{
-  return (this->p_str && s && s->get_string () &&
-          compare_quiet (this->p_str, s->get_string ()));
-}
-
-// Get the canonical representation from a String.
-char *
-UTL_String::get_canonical_rep ()
-{
-  if (!this->c_str && this->p_str)
-    {
-      get_canonical_rep (
-        this->p_str,
-        this->c_str = new char [ACE_OS::strlen (this->p_str)+1]);
+      c = static_cast<char> (ACE_OS::ace_toupper (static_cast<unsigned char> (c)));
     }
 
-  return this->c_str;
-}
-
-// AST Dumping.
-void
-UTL_String::dump (ACE_OSTREAM_TYPE &o)
-{
-  o << this->p_str;
+  return result;
 }

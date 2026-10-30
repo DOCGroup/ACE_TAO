@@ -28,7 +28,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
-static const char usage [] =
+constexpr char usage [] =
 "[[-?]\n"
 "                 [-O[RBport] ORB port number]\n"
 "                 [-m <count> of messages to send [100]\n"
@@ -41,9 +41,9 @@ Logging_Supplier::Logging_Supplier (int argc, ACE_TCHAR** argv)
 : argc_(argc),
   argv_(argv),
   total_messages_(10),
-  input_file_name_(0),
+  input_file_name_ (nullptr),
   update_data_ (1),
-  schedule_file_name_(0)
+  schedule_file_name_ (nullptr)
 {
   navigation_.roll = navigation_.pitch = 0;
 }
@@ -66,12 +66,10 @@ Logging_Supplier::start_generating_events ()
   unsigned long total_sent = 0;
 
   // Load the scheduling data for the simulation.
-  ACE_Unbounded_Queue<Schedule_Viewer_Data *> schedule_data;
+  std::vector<Schedule_Viewer_Data *> schedule_data;
   this->load_schedule_data (schedule_data);
-  ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *>
-    schedule_iter (schedule_data);
 
-  if (schedule_iter.done ())
+  if (schedule_data.empty ())
     {
       ACE_ERROR ((LM_ERROR,
                   "DOVE_Supplier::start_generating_events: "
@@ -80,12 +78,12 @@ Logging_Supplier::start_generating_events ()
     }
 
   CORBA::Any any;
+  std::size_t schedule_index = 0;
 
   do
   {
   // Insert the event data
-    this->insert_event_data (any,
-                             schedule_iter);
+    this->insert_event_data (any, schedule_data, schedule_index);
 
     // deliver it over the wire
     dOVE_Supplier_.notify (any);
@@ -100,19 +98,15 @@ Logging_Supplier::start_generating_events ()
   while (++total_sent < this->total_messages_);
 
   // clean up the scheduling data
-  Schedule_Viewer_Data **data_temp;
-  for (schedule_iter.first ();
-       schedule_iter.done () == 0;
-       schedule_iter.advance ())
-    if (schedule_iter.next (data_temp) && data_temp)
-      delete (*data_temp);
+  for (Schedule_Viewer_Data * const data : schedule_data)
+    delete data;
 }
 
 void
 Logging_Supplier::load_schedule_data
-      (ACE_Unbounded_Queue<Schedule_Viewer_Data *> &schedule_data)
+      (std::vector<Schedule_Viewer_Data *> &schedule_data)
 {
-  Schedule_Viewer_Data *data = 0;
+  Schedule_Viewer_Data *data = nullptr;
 
   if (this->input_file_name_)
     {
@@ -159,7 +153,7 @@ Logging_Supplier::load_schedule_data
                     }
 
                   // Insert the data into the queue.
-                  schedule_data.enqueue_tail (data);
+                  schedule_data.push_back (data);
                 }
             }
         }
@@ -181,7 +175,7 @@ Logging_Supplier::load_schedule_data
     {
       ACE_NEW (data, Schedule_Viewer_Data);
 
-      const char *oper_name = 0;
+      char const *oper_name = nullptr;
       switch (i % 4)
       {
       case 0:
@@ -223,7 +217,7 @@ Logging_Supplier::load_schedule_data
       data->deadline_time = data->completion_time + (ACE_OS::rand() % 200) - 50;
 
       // insert the data into the queue.
-      schedule_data.enqueue_tail (data);
+      schedule_data.push_back (data);
     }
   }
 }
@@ -233,7 +227,8 @@ Logging_Supplier::load_schedule_data
 
 void
 Logging_Supplier::insert_event_data (CORBA::Any &data,
-                                  ACE_Unbounded_Queue_Iterator<Schedule_Viewer_Data *> &schedule_iter)
+                                     std::vector<Schedule_Viewer_Data *> const &schedule_data,
+                                     std::size_t &schedule_index)
 {
   static u_long last_completion = 0;
 
@@ -245,9 +240,9 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 
   try
   {
-    Schedule_Viewer_Data **sched_data;
+    Schedule_Viewer_Data * const *sched_data = &schedule_data[schedule_index];
 
-    if ((schedule_iter.next (sched_data)) && (sched_data) && (*sched_data))
+    if (sched_data != nullptr && *sched_data != nullptr)
     {
       if ((ACE_OS::strcmp((*sched_data)->operation_name, "high_20") == 0) ||
            (ACE_OS::strcmp((*sched_data)->operation_name, "low_20") == 0)  ||
@@ -372,12 +367,10 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
                   "Logging_Supplier::insert_event_data:"
                   "Could Not access scheduling data"));
 
-    schedule_iter.advance ();
-
-    if (schedule_iter.done ())
-      schedule_iter.first ();
+    if (++schedule_index == schedule_data.size ())
+      schedule_index = 0;
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     ACE_ERROR ((LM_ERROR,
                 "(%t)Error in Logging_Supplier::insert_event_data.\n"));
@@ -418,7 +411,7 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
             ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
           else
             {
-              this->input_file_name_ = 0;
+              this->input_file_name_ = nullptr;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "%s: file name must be specified with -f option",
                                  argv[0]),
@@ -432,7 +425,7 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
             ACE_DEBUG ((LM_DEBUG,"Dumping file!\n"));
           else
             {
-              this->input_file_name_ = 0;
+              this->input_file_name_ = nullptr;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "%s: file name must be specified with -d option",
                                  argv[0]),
@@ -495,7 +488,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // when done, we clean up
       delete event_Supplier_ptr;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }

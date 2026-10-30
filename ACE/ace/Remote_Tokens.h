@@ -80,7 +80,7 @@ public:
    * Returns 0 on success, -1 on failure with @c errno == problem.
    */
   virtual int acquire (int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
+                       void (*sleep_hook)(void *) = nullptr,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::synch);
 
@@ -90,7 +90,7 @@ public:
    * Returns 0 on success (the token was acquired), and -1 with
    * EWOULDBLOCK if the token was already held.
    */
-  virtual int tryacquire (void (*sleep_hook)(void *) = 0);
+  virtual int tryacquire (void (*sleep_hook)(void *) = nullptr);
 
   /**
    * Renew the token by offering to release it if there are any other
@@ -274,6 +274,11 @@ protected:
 class ACE_Export ACE_TSS_Connection : public ACE_TSS<ACE_SOCK_Stream>
 {
 public:
+  ACE_TSS_Connection (ACE_TSS_Connection const &) = delete;
+  ACE_TSS_Connection (ACE_TSS_Connection &&) = delete;
+  ACE_TSS_Connection &operator= (ACE_TSS_Connection const &) = delete;
+  ACE_TSS_Connection &operator= (ACE_TSS_Connection &&) = delete;
+
   // Necessary to make some compilers work...
   ACE_TSS_Connection ();
   ~ACE_TSS_Connection ();
@@ -298,10 +303,6 @@ protected:
   /// The address of the Token Server used by all instances of
   /// Token_Proxy.
   static ACE_INET_Addr server_address_;
-
-private:
-  ACE_TSS_Connection (const ACE_TSS_Connection &) = delete;
-  void operator= (const ACE_TSS_Connection &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

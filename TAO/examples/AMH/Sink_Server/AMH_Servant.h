@@ -22,24 +22,29 @@ class AMH_Servant
   : public virtual POA_Test::AMH_Roundtrip
 {
 public:
-  AMH_Servant (CORBA::ORB_ptr orb);
+  AMH_Servant (AMH_Servant const&) = delete;
+  AMH_Servant (AMH_Servant&&) = delete;
+  AMH_Servant& operator= (AMH_Servant const&) = delete;
+  AMH_Servant& operator= (AMH_Servant&&) = delete;
 
-  virtual ~AMH_Servant ();
+  explicit AMH_Servant (CORBA::ORB_ptr orb);
+
+  ~AMH_Servant () override = default;
 
   /// parse arguments from command line for sleep time
-  virtual int parse_args (int &argc, ACE_TCHAR **argv);
+  int parse_args (int& argc, ACE_TCHAR **argv);
 
   // = The skeleton methods
-  virtual void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
+  void start_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh) override;
 
-  virtual void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
+  void end_test (Test::AMH_RoundtripResponseHandler_ptr _tao_rh) override;
 
-  virtual void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                            Test::Timestamp send_time);
+  void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
+                    Test::Timestamp send_time) override;
 
 protected:
-  ACE_Reactor *reactor_;
-  int sleep_time_;
+  ACE_Reactor *reactor_ {};
+  int sleep_time_ {};
 };
 
 #include /**/ "ace/post.h"

@@ -6,6 +6,7 @@
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -17,9 +18,7 @@ TAO_InterfaceDef_i::TAO_InterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_InterfaceDef_i::~TAO_InterfaceDef_i ()
-{
-}
+TAO_InterfaceDef_i::~TAO_InterfaceDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_InterfaceDef_i::def_kind ()
@@ -66,7 +65,7 @@ TAO_InterfaceDef_i::destroy_i ()
 CORBA::Contained::Description *
 TAO_InterfaceDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -168,7 +167,7 @@ TAO_InterfaceDef_i::type_i ()
 CORBA::InterfaceDefSeq *
 TAO_InterfaceDef_i::base_interfaces ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -178,8 +177,8 @@ TAO_InterfaceDef_i::base_interfaces ()
 CORBA::InterfaceDefSeq *
 TAO_InterfaceDef_i::base_interfaces_i ()
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   this->base_interfaces_recursive (kind_queue,
                                    path_queue);
@@ -196,11 +195,11 @@ TAO_InterfaceDef_i::base_interfaces_i ()
 
   for (CORBA::ULong i = 0; i < size; ++i)
     {
-      CORBA::DefinitionKind def_kind;
-      kind_queue.dequeue_head (def_kind);
+      kind_queue.pop_front ();
 
       ACE_TString path;
-      path_queue.dequeue_head (path);
+      path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::path_to_ir_object (path,
@@ -213,7 +212,7 @@ TAO_InterfaceDef_i::base_interfaces_i ()
 }
 
 void
-TAO_InterfaceDef_i::base_interfaces (const CORBA::InterfaceDefSeq &base_interfaces)
+TAO_InterfaceDef_i::base_interfaces (CORBA::InterfaceDefSeq const &base_interfaces)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -223,7 +222,7 @@ TAO_InterfaceDef_i::base_interfaces (const CORBA::InterfaceDefSeq &base_interfac
 }
 
 void
-TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interfaces)
+TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interfaces)
 {
   // If we are an abstract interface, all our base interfaces must be
   // abstract as well.
@@ -293,9 +292,9 @@ TAO_InterfaceDef_i::base_interfaces_i (const CORBA::InterfaceDefSeq &base_interf
 }
 
 CORBA::Boolean
-TAO_InterfaceDef_i::is_a (const char *interface_id)
+TAO_InterfaceDef_i::is_a (char const *interface_id)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (false);
 
   this->update_key ();
 
@@ -303,11 +302,11 @@ TAO_InterfaceDef_i::is_a (const char *interface_id)
 }
 
 CORBA::Boolean
-TAO_InterfaceDef_i::is_a_i (const char *interface_id)
+TAO_InterfaceDef_i::is_a_i (char const *interface_id)
 {
   if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
-      return 1;
+      return true;
     }
 
   ACE_TString id;
@@ -318,7 +317,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id)
   // Is it our type?
   if (ACE_OS::strcmp (id.fast_rep (), interface_id) == 0)
     {
-      return 1;
+      return true;
     }
 
   // Is it one of our ancestors' types?
@@ -345,19 +344,19 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id)
 
       CORBA::Boolean success = impl.is_a_i (interface_id);
 
-      if (success == 1)
+      if (success)
         {
-          return 1;
+          return true;
         }
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::InterfaceDef::FullInterfaceDescription *
 TAO_InterfaceDef_i::describe_interface ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -397,7 +396,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
 
   CORBA::ULong i = 0;
   CORBA::ULong j = 0;
-  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+  std::deque<ACE_Configuration_Section_Key> key_queue;
 
   // Store our section key for later restoration after we have
   // traversed entries for inherited interfaces.
@@ -436,7 +435,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
 
           if (status == 0)
             {
-              key_queue.enqueue_tail (op_key);
+              key_queue.push_back (op_key);
             }
         }
     }
@@ -447,7 +446,8 @@ TAO_InterfaceDef_i::describe_interface_i ()
   for (i = 0; i < size; ++i)
     {
       ACE_Configuration_Section_Key key;
-      key_queue.dequeue_head (key);
+      key = key_queue.front ();
+      key_queue.pop_front ();
 
       TAO_OperationDef_i op (this->repo_);
       op.section_key (key);
@@ -494,7 +494,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
 
           if (status == 0)
             {
-              key_queue.enqueue_tail (attr_key);
+              key_queue.push_back (attr_key);
             }
         }
     }
@@ -505,7 +505,8 @@ TAO_InterfaceDef_i::describe_interface_i ()
   for (i = 0; i < size; ++i)
     {
       ACE_Configuration_Section_Key key;
-      key_queue.dequeue_head (key);
+      key = key_queue.front ();
+      key_queue.pop_front ();
 
       TAO_AttributeDef_i attr (this->repo_);
       attr.section_key (key);
@@ -555,9 +556,9 @@ TAO_InterfaceDef_i::describe_interface_i ()
 
 CORBA::AttributeDef_ptr
 TAO_InterfaceDef_i::create_attribute (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode
   )
@@ -575,9 +576,9 @@ TAO_InterfaceDef_i::create_attribute (
 
 CORBA::AttributeDef_ptr
 TAO_InterfaceDef_i::create_attribute_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode
   )
@@ -628,14 +629,14 @@ TAO_InterfaceDef_i::create_attribute_i (
 }
 
 CORBA::OperationDef_ptr
-TAO_InterfaceDef_i::create_operation (const char *id,
-                                      const char *name,
-                                      const char *version,
+TAO_InterfaceDef_i::create_operation (char const *id,
+                                      char const *name,
+                                      char const *version,
                                       CORBA::IDLType_ptr result,
                                       CORBA::OperationMode mode,
-                                      const CORBA::ParDescriptionSeq &params,
-                                      const CORBA::ExceptionDefSeq &exceptions,
-                                      const CORBA::ContextIdSeq &contexts)
+                                      CORBA::ParDescriptionSeq const &params,
+                                      CORBA::ExceptionDefSeq const &exceptions,
+                                      CORBA::ContextIdSeq const &contexts)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::OperationDef::_nil ());
 
@@ -652,14 +653,14 @@ TAO_InterfaceDef_i::create_operation (const char *id,
 }
 
 CORBA::OperationDef_ptr
-TAO_InterfaceDef_i::create_operation_i (const char *id,
-                                        const char *name,
-                                        const char *version,
+TAO_InterfaceDef_i::create_operation_i (char const *id,
+                                        char const *name,
+                                        char const *version,
                                         CORBA::IDLType_ptr result,
                                         CORBA::OperationMode mode,
-                                        const CORBA::ParDescriptionSeq &params,
-                                        const CORBA::ExceptionDefSeq &exceptions,
-                                        const CORBA::ContextIdSeq &contexts)
+                                        CORBA::ParDescriptionSeq const &params,
+                                        CORBA::ExceptionDefSeq const &exceptions,
+                                        CORBA::ContextIdSeq const &contexts)
 {
   // This will throw an exception if a name clash is found.
   // create_common() will check for all other errors.
@@ -824,8 +825,8 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
 
 void
 TAO_InterfaceDef_i::interface_contents (
-    ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-    ACE_Unbounded_Queue<ACE_TString> &path_queue,
+    std::deque<CORBA::DefinitionKind> &kind_queue,
+    std::deque<ACE_TString> &path_queue,
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited
   )
@@ -863,9 +864,9 @@ TAO_InterfaceDef_i::interface_contents (
                                                              section_name)
                   == 0)
             {
-              kind_queue.enqueue_tail (CORBA::dk_Attribute);
+              kind_queue.push_back (CORBA::dk_Attribute);
 
-              path_queue.enqueue_tail (
+              path_queue.push_back (
                   path + "\\attrs\\" + section_name.c_str ()
                 );
             }
@@ -893,16 +894,16 @@ TAO_InterfaceDef_i::interface_contents (
                                                              section_name)
                   == 0)
             {
-              kind_queue.enqueue_tail (CORBA::dk_Operation);
+              kind_queue.push_back (CORBA::dk_Operation);
 
-              path_queue.enqueue_tail (
+              path_queue.push_back (
                   path + "\\ops\\" + section_name.c_str ()
                 );
             }
         }
     }
 
-  if (exclude_inherited == 0)
+  if (!exclude_inherited)
     {
       // Must recurse through the base interfaces.
       ACE_Configuration_Section_Key inherited_key;
@@ -947,7 +948,7 @@ TAO_InterfaceDef_i::interface_contents (
 }
 
 int
-TAO_InterfaceDef_i::name_clash (const char *name)
+TAO_InterfaceDef_i::name_clash (char const *name)
 {
   try
     {
@@ -957,7 +958,7 @@ TAO_InterfaceDef_i::name_clash (const char *name)
                                           TAO_IFR_Service_Utils::repo_,
                                           CORBA::dk_Interface);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return 1;
     }
@@ -967,8 +968,8 @@ TAO_InterfaceDef_i::name_clash (const char *name)
 
 void
 TAO_InterfaceDef_i::base_interfaces_recursive (
-    ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-    ACE_Unbounded_Queue<ACE_TString> &path_queue
+    std::deque<CORBA::DefinitionKind> &kind_queue,
+    std::deque<ACE_TString> &path_queue
   )
 {
   ACE_Configuration_Section_Key inherited_key;
@@ -1015,7 +1016,7 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
           tmp.base_interfaces_recursive (kind_queue,
                                          path_queue);
 
-          path_queue.enqueue_tail (inherited_path);
+          path_queue.push_back (inherited_path);
 
           this->repo_->config ()->get_integer_value (base_key,
                                                      "def_kind",
@@ -1023,18 +1024,18 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
 
           def_kind = static_cast<CORBA::DefinitionKind> (kind);
 
-          kind_queue.enqueue_tail (def_kind);
+          kind_queue.push_back (def_kind);
         }
     }
 }
 
 void
 TAO_InterfaceDef_i::inherited_attributes (
-    ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
+    std::deque<ACE_Configuration_Section_Key> &key_queue
   )
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   this->base_interfaces_recursive (kind_queue,
                                    path_queue);
@@ -1047,7 +1048,8 @@ TAO_InterfaceDef_i::inherited_attributes (
 
   for (size_t i = 0; i < size; ++i)
     {
-      path_queue.dequeue_head (path_name);
+      path_name = path_queue.front ();
+      path_queue.pop_front ();
 
       status =
         this->repo_->config ()->expand_path (this->repo_->root_key (),
@@ -1074,7 +1076,7 @@ TAO_InterfaceDef_i::inherited_attributes (
                                                     0,
                                                     attr_key);
 
-              key_queue.enqueue_tail (attr_key);
+              key_queue.push_back (attr_key);
             }
         }
     }
@@ -1082,11 +1084,11 @@ TAO_InterfaceDef_i::inherited_attributes (
 
 void
 TAO_InterfaceDef_i::inherited_operations (
-    ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
+    std::deque<ACE_Configuration_Section_Key> &key_queue
   )
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   this->base_interfaces_recursive (kind_queue,
                                    path_queue);
@@ -1099,7 +1101,8 @@ TAO_InterfaceDef_i::inherited_operations (
 
   for (size_t i = 0; i < size; ++i)
     {
-      path_queue.dequeue_head (path_name);
+      path_name = path_queue.front ();
+      path_queue.pop_front ();
 
       status =
         this->repo_->config ()->expand_path (this->repo_->root_key (),
@@ -1126,17 +1129,17 @@ TAO_InterfaceDef_i::inherited_operations (
                                                     0,
                                                     op_key);
 
-              key_queue.enqueue_tail (op_key);
+              key_queue.push_back (op_key);
             }
         }
     }
 }
 
 void
-TAO_InterfaceDef_i::check_inherited (const char *name,
+TAO_InterfaceDef_i::check_inherited (char const *name,
                                      CORBA::DefinitionKind kind)
 {
-  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+  std::deque<ACE_Configuration_Section_Key> key_queue;
 
   switch (kind)
   {
@@ -1156,7 +1159,8 @@ TAO_InterfaceDef_i::check_inherited (const char *name,
 
   for (u_int i = 0; i < size; ++i)
     {
-      key_queue.dequeue_head (inherited_key);
+      inherited_key = key_queue.front ();
+      key_queue.pop_front ();
 
       this->repo_->config ()->get_string_value (inherited_key,
                                                 "name",

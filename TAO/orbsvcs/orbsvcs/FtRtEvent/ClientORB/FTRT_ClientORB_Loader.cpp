@@ -17,13 +17,13 @@ namespace TAO_FTRT {
   int FTRT_ClientORB_Loader::init (int argc,
     ACE_TCHAR* argv[])
   {
-    static int initialized = 0;
+    static bool initialized {};
 
     // Only allow initialization once.
     if (initialized)
       return 0;
 
-    initialized = 1;
+    initialized = true;
 
     // Set defaults.
     int transaction_depth = 1;
@@ -60,7 +60,7 @@ namespace TAO_FTRT {
 
         PortableInterceptor::register_orb_initializer (orb_initializer.in ());
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const& ex)
       {
         ex._tao_print_exception (
           "Unexpected exception caught while ""initializing the TransactionDepth");

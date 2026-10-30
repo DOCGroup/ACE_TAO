@@ -18,9 +18,7 @@ ifr_adding_visitor_union::ifr_adding_visitor_union (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_union::~ifr_adding_visitor_union ()
-{
-}
+ifr_adding_visitor_union::~ifr_adding_visitor_union () = default;
 
 // Specialized visit_scope method for unions only.
 int
@@ -39,7 +37,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
   this->members_.length (nfields);
 
-  AST_Field **f = 0;
+  AST_Field **f = nullptr;
 
   // Index into members_.
   CORBA::ULong index = 0;
@@ -110,7 +108,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
           // Get the case label(s).
 
-          AST_UnionLabel *case_label = 0;
+          AST_UnionLabel *case_label = nullptr;
           AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (*f);
           unsigned long len = ub->label_list_length ();
 
@@ -140,7 +138,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                       TAO_OutputCDR cdr;
                       cdr.write_ulong (ev->u.ulval);
                       TAO_InputCDR in_cdr (cdr);
-                      TAO::Unknown_IDL_Type *unk = 0;
+                      TAO::Unknown_IDL_Type *unk = nullptr;
                       ACE_NEW_RETURN (unk,
                                       TAO::Unknown_IDL_Type (
                                         this->disc_tc_.in (),
@@ -160,7 +158,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                 }
 
               this->members_[index].name =
-                CORBA::string_dup ((*f)->local_name ()->get_string ());
+                CORBA::string_dup ((*f)->local_name ()->get_string ().c_str ());
 
               // IfR method create_union does not use this - it just needs
               // to be non-zero for marshaling.
@@ -172,7 +170,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -191,7 +189,7 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
     {
       // Is this struct already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -226,7 +224,7 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -245,7 +243,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
     {
       // Is this enum already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -256,7 +254,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);
 
-          UTL_ScopedName *member_name = 0;
+          UTL_ScopedName *member_name = nullptr;
 
           // Get a list of the member names.
           for (CORBA::ULong i = 0; i < member_count; ++i)
@@ -265,14 +263,14 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
 
               members[i] =
                 CORBA::string_dup (
-                  member_name->last_component ()->get_string ());
+                  member_name->last_component ()->get_string ().c_str ());
             }
 
           this->ir_current_ =
             be_global->repository ()->create_enum (
-                                          node->repoID (),
-                                          node->local_name ()->get_string (),
-                                          node->version (),
+                                          IFR_C_String (node->repoID ()),
+                                          node->local_name ()->get_string ().c_str (),
+                                          IFR_C_String (node->version ()),
                                           members
                                         );
 
@@ -296,7 +294,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -328,7 +326,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 
       CORBA::UnionDef_var union_def;
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -349,9 +347,9 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           // First create the named union without any members.
           union_def =
             current_scope->create_union (
-                node->repoID (),
-                node->local_name ()->get_string (),
-                node->version (),
+                IFR_C_String (node->repoID ()),
+                node->local_name ()->get_string ().c_str (),
+                IFR_C_String (node->version ()),
                 this->ir_current_.in (),
                 dummyMembers
               );
@@ -446,7 +444,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

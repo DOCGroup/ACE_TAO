@@ -7,5 +7,5 @@
 template<class Task> ACE_INLINE void
 Task_Activator<Task>::release ()
 {
-  this->task_ = 0;
+  this->task_ = nullptr;
 }

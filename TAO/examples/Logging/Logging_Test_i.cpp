@@ -9,18 +9,6 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_sys_time.h"
 
-  // Constructor
-  Logger_Client::Logger_Client ()
-{
-  // Do nothing
-}
-
-// Destructor
-Logger_Client::~Logger_Client ()
-{
-  // Do nothing
-}
-
 int
 Logger_Client::init (int argc, ACE_TCHAR *argv[])
 {
@@ -60,7 +48,7 @@ Logger_Client::init (int argc, ACE_TCHAR *argv[])
                            "instances.\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("init");
       return -1;
@@ -162,7 +150,7 @@ Logger_Client::init_loggers ()
                         "\nResolution succeeded."));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("init_loggers");
       return -1;
@@ -183,7 +171,6 @@ Logger_Client::run ()
       Logger::Log_Record rec2;
       Logger::Log_Record rec3;
       Logger::Log_Record rec4;
-      ;
       // Setup the first log record
       this->init_record (rec1,
                          Logger::LM_DEBUG,
@@ -251,7 +238,7 @@ Logger_Client::run ()
       this->logger_2_->log_twoway (rec4);
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("run");
     }
@@ -291,7 +278,7 @@ Logger_Client::parse_args ()
 void
 Logger_Client::init_record (Logger::Log_Record &newrec,
                             Logger::Log_Priority lp,
-                            const char *msg)
+                            char const *msg)
 {
   // Copy the message data into newrec.
   newrec.msg_data = CORBA::string_dup (msg);
@@ -301,25 +288,25 @@ Logger_Client::init_record (Logger::Log_Record &newrec,
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Create and assign the timestamp.
-  ACE_Time_Value time (ACE_OS::gettimeofday ());
+  ACE_Time_Value const time (ACE_OS::gettimeofday ());
   //FUZZ: enable check_for_lack_ACE_OS
 
   newrec.time = static_cast<CORBA::Long> (time.sec ());
 
   // Get and store the PID of the calling process.
-  pid_t pid = ACE_OS::getpid ();
+  pid_t const pid = ACE_OS::getpid ();
   newrec.app_id = pid;
 
   // Get and store the IP of the local host .
-  char name[MAXHOSTNAMELEN];
+  char name[MAXHOSTNAMELEN] {};
   ACE_OS::hostname (name, MAXHOSTNAMELEN);
-  hostent *he = ACE_OS::gethostbyname (name);
+  hostent const *he = ACE_OS::gethostbyname (name);
   newrec.host_addr =
-    (reinterpret_cast<in_addr *> (he->h_addr_list[0])->s_addr);
+    reinterpret_cast<in_addr const *> (he->h_addr_list[0])->s_addr;
 }
 
 void
-Logger_Client::show_record (Logger::Log_Record &newrec)
+Logger_Client::show_record (Logger::Log_Record const &newrec) const
 {
   in_addr address;
   address.s_addr = newrec.host_addr;

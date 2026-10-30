@@ -9,10 +9,6 @@ TAO::Security::QOPPolicy::QOPPolicy (::Security::QOP qop)
 {
 }
 
-TAO::Security::QOPPolicy::~QOPPolicy ()
-{
-}
-
 CORBA::PolicyType
 TAO::Security::QOPPolicy::policy_type ()
 {

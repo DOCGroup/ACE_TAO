@@ -7,10 +7,6 @@ Big_Reply_i::Big_Reply_i (CORBA::ORB_ptr orb,
 {
 }
 
-Big_Reply_i::~Big_Reply_i ()
-{
-}
-
 Test::Octet_Seq *
 Big_Reply_i::get_big_reply (/**/)
 {

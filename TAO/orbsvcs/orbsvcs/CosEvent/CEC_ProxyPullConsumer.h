@@ -49,7 +49,7 @@ public:
 
   /// constructor...
   TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
   /// destructor...
   ~TAO_CEC_ProxyPullConsumer () override;
@@ -119,15 +119,15 @@ protected:
 
 private:
   /// The supplier admin, used for activation and memory management.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The supplier -- use apply_policy() instead of assigning directly to
   /// supplier_.  This will keep supplier_ and nopolicy_supplier_ in sync.

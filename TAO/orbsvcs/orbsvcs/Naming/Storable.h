@@ -25,9 +25,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-static const int szInt =  sizeof(int);
-static const int szChar = sizeof(char);
-static const int szBool = sizeof(int);
+constexpr int szInt = sizeof(int);
+constexpr int szChar = sizeof(char);
+constexpr int szBool = sizeof(int);
 
 class TAO_NS_Persistence_Header
 {
@@ -39,8 +39,8 @@ class TAO_NS_Persistence_Header
   int destroyed () const ;
 
   private:
-  unsigned int size_;
-  int destroyed_;
+  unsigned int size_ {};
+  int destroyed_ {};
 };
 
 class TAO_NS_Persistence_Record
@@ -54,13 +54,13 @@ class TAO_NS_Persistence_Record
   void type (Record_Type type);
 
   ACE_CString id () const;
-  void id (const ACE_CString& id);
+  void id (ACE_CString const &id);
 
   ACE_CString kind () const;
-  void kind (const ACE_CString& kind);
+  void kind (ACE_CString const &kind);
 
   ACE_CString ref () const;
-  void ref (const ACE_CString& ior);
+  void ref (ACE_CString const &ior);
 
  private:
   Record_Type type_;
@@ -76,7 +76,7 @@ class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
   unsigned int counter () const ;
 
   private:
-  unsigned int counter_;
+  unsigned int counter_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

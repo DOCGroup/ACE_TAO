@@ -6,6 +6,10 @@
 class TAO_IDL_FE_Export AST_ValueBox :  public virtual AST_ConcreteType
 {
 public:
+  AST_ValueBox (AST_ValueBox const &) = delete;
+  AST_ValueBox (AST_ValueBox &&) = delete;
+  AST_ValueBox &operator= (AST_ValueBox const &) = delete;
+  AST_ValueBox &operator= (AST_ValueBox &&) = delete;
   AST_ValueBox (UTL_ScopedName *n,
                 AST_Type       *boxed_type);
 
