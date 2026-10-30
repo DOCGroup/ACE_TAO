@@ -41,7 +41,7 @@ be_null_return_emitter::emit (be_type *node)
                          ACE_TEXT ("be_null_return_emitter::")
                          ACE_TEXT ("emit(be_decl *) - accept() ")
                          ACE_TEXT ("failed for %C\n"),
-                         node->full_name ()),
+                         node->full_name ().c_str ()),
                         -1);
     }
 

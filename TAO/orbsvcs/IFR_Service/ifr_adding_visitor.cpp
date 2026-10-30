@@ -162,7 +162,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
             {
               new_def = container->create_module (
                                        IFR_C_String (node->repoID ()),
-                                       node->local_name ()->get_string (),
+                                       node->local_name ()->get_string ().c_str (),
                                        IFR_C_String (node->version ())
                                      );
             }
@@ -472,7 +472,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                   this->ir_current_ =
                     current_scope->create_local_interface (
                                        IFR_C_String (i->repoID ()),
-                                       i->local_name ()->get_string (),
+                                       i->local_name ()->get_string ().c_str (),
                                        IFR_C_String (i->version ()),
                                        bases
                                      );
@@ -482,7 +482,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                   this->ir_current_ =
                     current_scope->create_interface (
                                        IFR_C_String (i->repoID ()),
-                                       i->local_name ()->get_string (),
+                                       i->local_name ()->get_string ().c_str (),
                                        IFR_C_String (i->version ()),
                                        bases
                                      );
@@ -536,7 +536,7 @@ ifr_adding_visitor::visit_valuebox (AST_ValueBox *node)
           this->ir_current_ =
             current_scope->create_value_box (
                 IFR_C_String (node->repoID ()),
-                node->local_name ()->get_string (),
+                node->local_name ()->get_string ().c_str (),
                 IFR_C_String (node->version ()),
                 this->ir_current_.in ()
               );
@@ -802,7 +802,7 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
               this->ir_current_ =
                 current_scope->create_value (
                                    IFR_C_String (v->repoID ()),
-                                   v->local_name ()->get_string (),
+                                   v->local_name ()->get_string ().c_str (),
                                    IFR_C_String (v->version ()),
                                    0, // 'custom' not handled yet
                                    abstract,
@@ -1063,7 +1063,7 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
               this->ir_current_ =
                 ccm_scope->create_component (
                                IFR_C_String (c->repoID ()),
-                               c->local_name ()->get_string (),
+                               c->local_name ()->get_string ().c_str (),
                                IFR_C_String (c->version ()),
                                base_component.in (),
                                supported_interfaces
@@ -1476,7 +1476,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
               this->ir_current_ =
                 ccm_scope->create_event (
                                IFR_C_String (v->repoID ()),
-                               v->local_name ()->get_string (),
+                               v->local_name ()->get_string ().c_str (),
                                IFR_C_String (v->version ()),
                                0, // 'custom' not handled yet
                                abstract,
@@ -1726,7 +1726,7 @@ ifr_adding_visitor::visit_structure_fwd (AST_StructureFwd *node)
           CORBA::StructDef_var struct_def =
             current_scope->create_struct (
                 IFR_C_String (node->repoID ()),
-                node->local_name ()->get_string (),
+                node->local_name ()->get_string ().c_str (),
                 IFR_C_String (node->version ()),
                 dummyMembers
               );
@@ -1794,7 +1794,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
 
               members[i] =
                 CORBA::string_dup (
-                    member_name->last_component ()->get_string ()
+                    member_name->last_component ()->get_string ().c_str ()
                   );
             }
 
@@ -1806,7 +1806,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
               this->ir_current_ =
                 current_scope->create_enum (
                     IFR_C_String (node->repoID ()),
-                    node->local_name ()->get_string (),
+                    node->local_name ()->get_string ().c_str (),
                     IFR_C_String (node->version ()),
                     members
                   );
@@ -1944,7 +1944,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
               CORBA::ExtAttributeDef_var new_def =
                 value->create_ext_attribute (
                     IFR_C_String (node->repoID ()),
-                    node->local_name ()->get_string (),
+                    node->local_name ()->get_string ().c_str (),
                     IFR_C_String (node->version ()),
                     this->ir_current_.in (),
                     mode,
@@ -1962,7 +1962,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
               CORBA::ExtAttributeDef_var new_def =
                 iface->create_ext_attribute (
                     IFR_C_String (node->repoID ()),
-                    node->local_name ()->get_string (),
+                    node->local_name ()->get_string ().c_str (),
                     IFR_C_String (node->version ()),
                     this->ir_current_.in (),
                     mode,
@@ -2103,7 +2103,7 @@ ifr_adding_visitor::visit_union_fwd (AST_UnionFwd *node)
           CORBA::UnionDef_var union_def =
             current_scope->create_union (
                 IFR_C_String (node->repoID ()),
-                node->local_name ()->get_string (),
+                node->local_name ()->get_string ().c_str (),
                 IFR_C_String (node->version ()),
                 CORBA::IDLType::_nil (),
                 dummyMembers
@@ -2206,7 +2206,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
           CORBA::ConstantDef_var new_def =
             current_scope->create_constant (
                 id.c_str (),
-                node->local_name ()->get_string (),
+                node->local_name ()->get_string ().c_str (),
                 IFR_C_String (node->version ()),
                 this->ir_current_.in (),
                 any
@@ -2366,7 +2366,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
           this->ir_current_ =
             current_scope->create_alias (
                 IFR_C_String (node->repoID ()),
-                node->local_name ()->get_string (),
+                node->local_name ()->get_string ().c_str (),
                 IFR_C_String (node->version ()),
                 this->ir_current_.in ()
               );
@@ -2397,7 +2397,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
           ORBSVCS_DEBUG ((LM_DEBUG,
               "%s %s\n",
               ACE_TEXT ("ifr_adding_visitor::visit_typedef - ignoring duplicate typedef"),
-              node->local_name ()->get_string ()));
+              node->local_name ()->get_string ().c_str ()));
         }
     }
 
@@ -2469,7 +2469,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
               this->ir_current_ =
                 current_scope->create_native (
                     IFR_C_String (node->repoID ()),
-                    node->local_name ()->get_string (),
+                    node->local_name ()->get_string ().c_str (),
                     IFR_C_String (node->version ())
                   );
             }
@@ -2877,7 +2877,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
           new_def =
             current_scope->create_local_interface (
                                IFR_C_String (node->repoID ()),
-                               node->local_name ()->get_string (),
+                               node->local_name ()->get_string ().c_str (),
                                IFR_C_String (node->version ()),
                                bases
                              );
@@ -2887,7 +2887,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
           new_def =
             current_scope->create_abstract_interface (
                                IFR_C_String (node->repoID ()),
-                               node->local_name ()->get_string (),
+                               node->local_name ()->get_string ().c_str (),
                                IFR_C_String (node->version ()),
                                abs_bases
                              );
@@ -2897,7 +2897,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
           new_def =
             current_scope->create_interface (
                                IFR_C_String (node->repoID ()),
-                               node->local_name ()->get_string (),
+                               node->local_name ()->get_string ().c_str (),
                                IFR_C_String (node->version ()),
                                bases
                              );
@@ -3001,7 +3001,7 @@ ifr_adding_visitor::create_value_def (AST_ValueType *node)
       CORBA::ExtValueDef_var new_def =
         current_scope->create_ext_value (
                            IFR_C_String (node->repoID ()),
-                           node->local_name ()->get_string (),
+                           node->local_name ()->get_string ().c_str (),
                            IFR_C_String (node->version ()),
                            static_cast<CORBA::Boolean> (node->custom ()),
                            static_cast<CORBA::Boolean> (node->is_abstract ()),
@@ -3103,7 +3103,7 @@ ifr_adding_visitor::create_component_def (AST_Component *node)
 
       CORBA::ComponentIR::ComponentDef_var new_def =
         ccm_scope->create_component (IFR_C_String (node->repoID ()),
-                                     node->local_name ()->get_string (),
+                                     node->local_name ()->get_string ().c_str (),
                                      IFR_C_String (node->version ()),
                                      base_component.in (),
                                      supported_interfaces);
@@ -3203,7 +3203,7 @@ ifr_adding_visitor::create_home_def (AST_Home *node)
 
       CORBA::ComponentIR::HomeDef_var new_def =
         ccm_scope->create_home (IFR_C_String (node->repoID ()),
-                                node->local_name ()->get_string (),
+                                node->local_name ()->get_string ().c_str (),
                                 IFR_C_String (node->version ()),
                                 base_home.in (),
                                 managed_component.in (),
@@ -3318,7 +3318,7 @@ ifr_adding_visitor::create_event_def (AST_EventType *node)
       CORBA::ExtValueDef_var new_def =
         ccm_scope->create_event (
                        IFR_C_String (node->repoID ()),
-                       node->local_name ()->get_string (),
+                       node->local_name ()->get_string ().c_str (),
                        IFR_C_String (node->version ()),
                        static_cast<CORBA::Boolean> (node->custom ()),
                        static_cast<CORBA::Boolean> (node->is_abstract ()),
@@ -3476,7 +3476,7 @@ ifr_adding_visitor::create_value_member (AST_Field *node)
 
       CORBA::ValueMemberDef_var vm =
         vt->create_value_member (IFR_C_String (node->repoID ()),
-                                 node->local_name ()->get_string (),
+                                 node->local_name ()->get_string ().c_str (),
                                  IFR_C_String (node->version ()),
                                  this->ir_current_.in (),
                                  vis);
@@ -3819,7 +3819,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
   for (CORBA::ULong i = 0; i < n_factories; ++i)
     {
       result[i].name =
-        CORBA::string_dup (factories[i]->local_name ()->get_string ());
+        CORBA::string_dup (factories[i]->local_name ()->get_string ().c_str ());
       n_args = static_cast<CORBA::ULong> (factories[i]->argument_count ());
       result[i].members.length (n_args);
 
@@ -3831,7 +3831,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
         {
           arg = dynamic_cast<AST_Argument*> (f_iter.item ());
           result[i].members[index].name =
-            CORBA::string_dup (arg->local_name ()->get_string ());
+            CORBA::string_dup (arg->local_name ()->get_string ().c_str ());
           result[i].members[index].type =
             CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
@@ -3862,7 +3862,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
         {
           excp = dynamic_cast<AST_Exception*> (ei.item ());
           result[i].exceptions[index].name =
-            CORBA::string_dup (excp->local_name ()->get_string ());
+            CORBA::string_dup (excp->local_name ()->get_string ().c_str ());
           result[i].exceptions[index].id =
             CORBA::string_dup (IFR_C_String (excp->repoID ()));
           result[i].exceptions[index].defined_in =
@@ -3969,7 +3969,7 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
     {
       arg = dynamic_cast<AST_Argument*> (iter.item ());
       result[index].name =
-        CORBA::string_dup (arg->local_name ()->get_string ());
+        CORBA::string_dup (arg->local_name ()->get_string ().c_str ());
       result[index].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
 
       // Get the arg type into ir_current_.
@@ -4011,7 +4011,7 @@ ifr_adding_visitor::visit_all_factories (AST_Home *node,
       this->fill_exceptions (exceptions, f);
 
       new_def = h->create_factory (IFR_C_String (f->repoID ()),
-                                   f->local_name ()->get_string (),
+                                   f->local_name ()->get_string ().c_str (),
                                    IFR_C_String (f->version ()),
                                    params,
                                    exceptions);
@@ -4045,7 +4045,7 @@ ifr_adding_visitor::visit_all_finders (AST_Home *node,
       this->fill_exceptions (exceptions, f);
 
       new_def = h->create_finder (IFR_C_String (f->repoID ()),
-                                  f->local_name ()->get_string (),
+                                  f->local_name ()->get_string ().c_str (),
                                   IFR_C_String (f->version ()),
                                   params,
                                   exceptions);

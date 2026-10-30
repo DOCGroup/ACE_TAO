@@ -1490,7 +1490,7 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Did you mean \"::%C\"\n")
               ACE_TEXT ("   declared at "),
-              masked->full_name () ));
+              masked->full_name ().c_str () ));
 
   bool const same_file = (this_file == masked_file);
 
@@ -1507,7 +1507,7 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
 
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("::%C\""),
-              masking->full_name ()));
+              masking->full_name ().c_str ()));
 
   bool const same_file_again =
     (same_file

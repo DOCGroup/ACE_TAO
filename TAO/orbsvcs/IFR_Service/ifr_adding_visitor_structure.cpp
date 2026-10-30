@@ -94,7 +94,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
             }
 
           this->members_[i].name =
-            CORBA::string_dup ((*f)->local_name ()->get_string ());
+            CORBA::string_dup ((*f)->local_name ()->get_string ().c_str ());
 
           // IfR method create_struct does not use this - it just needs
           // to be non-zero for marshaling.
@@ -148,7 +148,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           struct_def =
             current_scope->create_struct (
                 IFR_C_String (node->repoID ()),
-                node->local_name ()->get_string (),
+                node->local_name ()->get_string ().c_str (),
                 IFR_C_String (node->version ()),
                 dummyMembers
               );
@@ -282,14 +282,14 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
 
               members[i] =
                 CORBA::string_dup (
-                    member_name->last_component ()->get_string ()
+                    member_name->last_component ()->get_string ().c_str ()
                   );
             }
 
           this->ir_current_ =
             be_global->repository ()->create_enum (
                                           IFR_C_String (node->repoID ()),
-                                          node->local_name ()->get_string (),
+                                          node->local_name ()->get_string ().c_str (),
                                           IFR_C_String (node->version ()),
                                           members
                                         );

@@ -1248,7 +1248,7 @@ ast_visitor_tmpl_module_inst::reify_type (AST_Decl *d)
                   ACE_TEXT ("ast_visitor_tmpl_module_inst::")
                   ACE_TEXT ("reify_type() - reifying ")
                   ACE_TEXT ("visitor failed on %C\n"),
-                  d->full_name ()));
+                  d->full_name ().c_str ()));
 
       return nullptr;
     }

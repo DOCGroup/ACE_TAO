@@ -115,7 +115,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
         {
           str = ctx_iter.item ();
 
-          contexts[i++] = str->get_string ();
+          contexts[i++] = str->get_string ().c_str ();
 
           ctx_iter.next ();
         }
@@ -149,7 +149,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
               CORBA::OperationDef_var new_def =
                 iface->create_operation (IFR_C_String (node->repoID ()),
-                                         node->local_name ()->get_string (),
+                                         node->local_name ()->get_string ().c_str (),
                                          IFR_C_String (node->version ()),
                                          this->ir_current_.in (),
                                          mode,
@@ -164,7 +164,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
               CORBA::OperationDef_var new_def =
                 vtype->create_operation (IFR_C_String (node->repoID ()),
-                                         node->local_name ()->get_string (),
+                                         node->local_name ()->get_string ().c_str (),
                                          IFR_C_String (node->version ()),
                                          this->ir_current_.in (),
                                          mode,
@@ -202,7 +202,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 {
   // Get the parameter's name.
   this->params_[this->index_].name =
-    CORBA::string_dup (node->local_name ()->get_string ());
+    CORBA::string_dup (node->local_name ()->get_string ().c_str ());
 
   AST_Type *arg_type = node->field_type ();
 

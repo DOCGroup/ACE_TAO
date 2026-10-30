@@ -203,7 +203,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (
                                    ACE_TEXT ("be_visitor_component_scope")
                                    ACE_TEXT ("::visit_porttype_mirror - ")
                                    ACE_TEXT ("%s->accept() failed\n"),
-                                   d->full_name ()),
+                                   d->full_name ().c_str ()),
                                   -1);
               }
 

@@ -154,7 +154,7 @@ be_visitor_home_exh::gen_exec_class ()
                                  ACE_TEXT ("gen_exec_class - ")
                                  ACE_TEXT ("traverse_inheritance_graph() ")
                                  ACE_TEXT ("failed on %s\n"),
-                                 bi->full_name ()),
+                                 bi->full_name ().c_str ()),
                                 -1);
             }
         }

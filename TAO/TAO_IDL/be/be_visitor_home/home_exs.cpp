@@ -169,7 +169,7 @@ be_visitor_home_exs::gen_exec_class ()
                                  ACE_TEXT ("gen_exec_class - ")
                                  ACE_TEXT ("traverse_inheritance_graph() ")
                                  ACE_TEXT ("failed for %s\n"),
-                                 bi->full_name ()),
+                                 bi->full_name ().c_str ()),
                                 -1);
             }
         }

@@ -363,7 +363,7 @@ be_visitor_home_svs::gen_servant_class ()
                                  ACE_TEXT ("gen_servant_class - ")
                                  ACE_TEXT ("traverse_inheritance_graph() ")
                                  ACE_TEXT ("failed for %s\n"),
-                                 bi->full_name ()),
+                                 bi->full_name ().c_str ()),
                                 -1);
             }
 

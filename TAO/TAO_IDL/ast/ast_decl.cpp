@@ -1394,7 +1394,7 @@ AST_Decl::annotation_appls (const AST_Annotation_Appls &annotations)
     {
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("WARNING: %C is annotated but its type can't be annotated!\n"),
-        full_name ()
+        full_name ().c_str ()
         ));
     }
 }

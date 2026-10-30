@@ -663,7 +663,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                                  ACE_TEXT ("current template arglist failed - ")
                                  ACE_TEXT ("param=%C scope=%C index=%d\n"),
                                  item->name_.c_str (),
-                                 ScopeAsDecl (idl_global->scopes ().top ())->full_name (),
+                                 ScopeAsDecl (idl_global->scopes ().top ())->full_name ().c_str (),
                                  i),
                                 -1);
             }
@@ -675,7 +675,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                      ACE_TEXT ("visit_param_holder() - no match for ")
                      ACE_TEXT ("template param %C in %C\n"),
                      node->local_name ()->get_string ().data (),
-                     ScopeAsDecl (idl_global->scopes ().top ())->full_name ()),
+                     ScopeAsDecl (idl_global->scopes ().top ())->full_name ().c_str ()),
                     -1);
 }
 
