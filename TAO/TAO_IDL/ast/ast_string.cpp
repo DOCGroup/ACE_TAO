@@ -161,9 +161,7 @@ AST_String::ast_accept (ast_visitor *visitor)
 void
 AST_String::destroy ()
 {
-  this->pd_max_size->destroy ();
-  delete this->pd_max_size;
-  this->pd_max_size = nullptr;
+  this->pd_max_size.reset ();
 
   this->AST_ConcreteType::destroy ();
 }
@@ -173,7 +171,7 @@ AST_String::destroy ()
 AST_Expression *
 AST_String::max_size () const
 {
-  return this->pd_max_size;
+  return this->pd_max_size.get ();
 }
 
 long

@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_concrete_type.h"
 
+#include <memory>
 
 class AST_Expression;
 class AST_Type;
@@ -133,7 +134,7 @@ public:
 
 private:
   // Data.
-  AST_Expression *pd_max_size;
+  std::unique_ptr<AST_Expression> pd_max_size;
   // Maximum sequence size.
 
   AST_Type *pd_base_type;

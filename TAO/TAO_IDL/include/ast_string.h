@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_concrete_type.h"
 #include "utl_scoped_name.h"
 
+#include <memory>
+
 class AST_Expression;
 
 // Representation of string declaration.
@@ -105,7 +107,7 @@ public:
 private:
   // Data.
 
-  AST_Expression *pd_max_size;
+  std::unique_ptr<AST_Expression> pd_max_size;
   // String maximum size.
 
   long pd_width;

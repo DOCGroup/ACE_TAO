@@ -285,7 +285,7 @@ AST_Map::ast_accept (ast_visitor *visitor)
 AST_Expression *
 AST_Map::max_size () const
 {
-  return this->pd_max_size;
+  return this->pd_max_size.get ();
 }
 
 AST_Type *
@@ -361,9 +361,7 @@ AST_Map::destroy ()
       this->value_pd_type = nullptr;
     }
 
-  this->pd_max_size->destroy ();
-  delete this->pd_max_size;
-  this->pd_max_size = nullptr;
+  this->pd_max_size.reset ();
 
   this->AST_ConcreteType::destroy ();
 }

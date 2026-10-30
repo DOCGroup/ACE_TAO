@@ -232,7 +232,7 @@ AST_Sequence::ast_accept (ast_visitor *visitor)
 AST_Expression *
 AST_Sequence::max_size () const
 {
-  return this->pd_max_size;
+  return this->pd_max_size.get ();
 }
 
 AST_Type *
@@ -282,9 +282,7 @@ AST_Sequence::destroy ()
       this->pd_base_type = nullptr;
     }
 
-  this->pd_max_size->destroy ();
-  delete this->pd_max_size;
-  this->pd_max_size = nullptr;
+  this->pd_max_size.reset ();
 
   this->AST_ConcreteType::destroy ();
 }
