@@ -11,6 +11,8 @@
  */
 //=============================================================================
 
+#include <cstddef>
+
 #include "be_union.h"
 #include "be_union_branch.h"
 #include "be_union_label.h"
@@ -105,7 +107,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
-  for (long i = 0; i < this->pd_decls_used; ++i)
+  for (std::size_t i = 0; i < this->pd_decls.size (); ++i)
     {
       be_union_branch *ub =
         dynamic_cast<be_union_branch*> (this->pd_decls[i]);

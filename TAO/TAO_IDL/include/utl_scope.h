@@ -83,6 +83,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_utils.h"
 #include "utl_strlist.h"
 
+#include <vector>
+
 class Identifier;
 class AST_PredefinedType;
 class AST_Module;
@@ -295,26 +297,18 @@ protected:
   AST_Decl::NodeType const pd_scope_node_type;
 
   // Storage for declarations in this scope.
-  AST_Decl **pd_decls {};             // Store declarations
-  long pd_decls_allocated {};         // How many allocated?
-  long pd_decls_used {};              // How many used?
+  std::vector<AST_Decl *> pd_decls;             // Store declarations
 
   // Storage for local manifest types in this scope.
-  AST_Decl **pd_local_types {};       // Store types
-  long pd_locals_allocated {};        // How many allocated?
-  long pd_locals_used {};             // How many used?
+  std::vector<AST_Decl *> pd_local_types;       // Store types
 
   // Storage for referenced nodes in this scope.
-  AST_Decl **pd_referenced {};        // Store references
-  long pd_referenced_allocated {};    // How many allocated?
-  long pd_referenced_used {};         // How many used?
+  std::vector<AST_Decl *> pd_referenced;        // Store references
 
   // Storage for identifiers used in this scope. CORBA 2.3 introduced
   // stricter rules for clashes during name resolution, and the information
   // in pd_referenced is not enough to catch them all.
-  Identifier **pd_name_referenced {}; // Store name references
-  long pd_name_referenced_allocated {}; // How many allocated?
-  long pd_name_referenced_used {};    // How many used?
+  std::vector<Identifier *> pd_name_referenced; // Store name references
 
   // Have we seen a #pragma prefix declaration in this scope?
   bool has_prefix_ {};
@@ -555,7 +549,7 @@ private:
   UTL_Scope::ScopeIterationKind stage;
 
   // What location in stage?
-  long il;
+  std::size_t il;
 };
 
 #include "utl_scope_T.cpp"

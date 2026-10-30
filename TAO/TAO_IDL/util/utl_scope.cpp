@@ -62,6 +62,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
+#include <algorithm>
 #include <string>
 
 #include "utl_scope.h"
@@ -115,9 +116,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-#undef  INCREMENT
-#define INCREMENT 64
-
 //  Constructors.
 
 UTL_Scope::UTL_Scope ()
@@ -142,18 +140,11 @@ UTL_Scope::~UTL_Scope ()
       delete d;
     }
 
-  delete [] this->pd_decls;
-  delete [] this->pd_local_types;
-  delete [] this->pd_referenced;
-
-  for (long i = this->pd_name_referenced_used; i--;) // NOTE test with i--
+  for (Identifier *id : this->pd_name_referenced)
     {
-      Identifier *id = this->pd_name_referenced[i];
       id->destroy ();
       delete id;
     }
-
-  delete [] this->pd_name_referenced;
 }
 
 void
@@ -168,32 +159,16 @@ UTL_Scope::destroy ()
       delete d;
     }
 
-  delete [] this->pd_decls;
-  this->pd_decls = nullptr;
-  this->pd_decls_allocated = 0;
-  this->pd_decls_used = 0;
+  std::vector<AST_Decl *> ().swap (this->pd_decls);
+  std::vector<AST_Decl *> ().swap (this->pd_local_types);
+  std::vector<AST_Decl *> ().swap (this->pd_referenced);
 
-  delete [] this->pd_local_types;
-  this->pd_local_types = nullptr;
-  this->pd_locals_allocated = 0;
-  this->pd_locals_used = 0;
-
-  delete [] this->pd_referenced;
-  this->pd_referenced = nullptr;
-  this->pd_referenced_allocated = 0;
-  this->pd_referenced_used = 0;
-
-  for (long i = this->pd_name_referenced_used; i--;) // NOTE test with i--
+  for (Identifier *id : this->pd_name_referenced)
     {
-      Identifier *id = this->pd_name_referenced[i];
       id->destroy ();
       delete id;
     }
-
-  delete [] this->pd_name_referenced;
-  this->pd_name_referenced = nullptr;
-  this->pd_name_referenced_allocated = 0;
-  this->pd_name_referenced_used = 0;
+  std::vector<Identifier *> ().swap (this->pd_name_referenced);
 }
 
 // Protected operations.
@@ -1400,40 +1375,19 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
   // Sets the appropriate *_seen_ flag for future use.
   this->check_for_predef_seq (e);
 
-  // Make sure there's space for one more decl.
-  if (this->pd_referenced_allocated == this->pd_referenced_used)
-    {
-      long oreferenced_allocated = this->pd_referenced_allocated;
-      this->pd_referenced_allocated += INCREMENT;
-
-      AST_Decl **tmp = nullptr;
-      ACE_NEW (tmp, AST_Decl *[this->pd_referenced_allocated]);
-
-      for (long i = 0; i < oreferenced_allocated; ++i)
-        {
-          tmp [i] = this->pd_referenced [i];
-        }
-
-      delete [] this->pd_referenced;
-      this->pd_referenced = tmp;
-    }
-
   // Insert new reference.
   if (ex == nullptr)
     {
-      this->pd_referenced [this->pd_referenced_used++] = e;
+      this->pd_referenced.push_back (e);
     }
   else if (this->referenced (ex))
     {
-      long i;
-      for (i = this->pd_referenced_used;
-           0 < i && this->pd_referenced [i - 1] != ex;
-           --i)
-        {
-          this->pd_referenced [i] = this->pd_referenced [i - 1];
-        }
-      this->pd_referenced [i] = e;
-      ++this->pd_referenced_used;
+      std::vector<AST_Decl *>::iterator const pos =
+        std::find (this->pd_referenced.begin (),
+                   this->pd_referenced.end (),
+                   ex);
+      this->pd_referenced.insert (
+        pos == this->pd_referenced.end () ? pos : pos + 1, e);
     }
 
   // Now, if recursive is specified and "this" is not a common ancestor
@@ -1458,37 +1412,19 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
 void
 UTL_Scope::add_to_name_referenced (Identifier *id)
 {
-  // Make sure we have enough space.
-  if (this->pd_name_referenced_allocated == this->pd_name_referenced_used)
-    {
-      long name_referenced_allocated = this->pd_name_referenced_allocated;
-      this->pd_name_referenced_allocated += INCREMENT;
-
-      Identifier **name_tmp = nullptr;
-      ACE_NEW (name_tmp, Identifier *[this->pd_name_referenced_allocated]);
-
-      for (long i = 0; i < name_referenced_allocated; ++i)
-        {
-          name_tmp[i] = this->pd_name_referenced[i];
-        }
-
-      delete [] this->pd_name_referenced;
-      this->pd_name_referenced = name_tmp;
-    }
-
   // Insert new identifier.
-  this->pd_name_referenced[this->pd_name_referenced_used++] = id->copy ();
+  this->pd_name_referenced.push_back (id->copy ());
 }
 
 void
 UTL_Scope::replace_referenced (AST_Decl *old_decl,
                                AST_Decl *new_decl)
 {
-  for (int i = 0; i < this->pd_referenced_used; ++i)
+  for (AST_Decl *&decl : this->pd_referenced)
     {
-      if (this->pd_referenced[i] == old_decl)
+      if (decl == old_decl)
         {
-          this->pd_referenced[i] = new_decl;
+          decl = new_decl;
           break;
         }
     }
@@ -1498,11 +1434,11 @@ void
 UTL_Scope::replace_scope (AST_Decl *old_decl,
                           AST_Decl *new_decl)
 {
-  for (int i = 0; i < pd_decls_used; ++i)
+  for (AST_Decl *&decl : this->pd_decls)
     {
-      if (this->pd_decls[i] == old_decl)
+      if (decl == old_decl)
         {
-          this->pd_decls[i] = new_decl;
+          decl = new_decl;
           break;
         }
     }
@@ -1525,20 +1461,17 @@ UTL_Scope::add_to_scope (AST_Decl *e,
   // First, make sure there's no clash between e, that was
   // just declared, and some other identifier referenced
   // in this scope.
-  AST_Decl **tmp = this->pd_decls;
-  for (long i = this->pd_decls_used;
-       i--; // NOTE i-- test
-       ++tmp)
+  for (AST_Decl *decl : this->pd_decls)
     {
       // A local declaration doesn't use a scoped name.
-      Identifier *ref_name = (*tmp)->local_name ();
+      Identifier *ref_name = decl->local_name ();
       std::string const& ref_string = ref_name->get_string ();
 
       // If the names compare exactly, it's a redefini8tion
       // error, unless they're both modules (which can be
       // reopened) or we have a belated definition of a
       // forward-declared interface.
-      AST_Decl::NodeType scope_elem_nt = (*tmp)->node_type ();
+      AST_Decl::NodeType scope_elem_nt = decl->node_type ();
 
       if (this->redef_clash (new_nt, scope_elem_nt)
           && decl_name->compare (ref_name))
@@ -1612,38 +1545,21 @@ UTL_Scope::add_to_scope (AST_Decl *e,
         }
     }
 
-  // Now make sure there's space for one more.
-  if (this->pd_decls_allocated == this->pd_decls_used)
-    {
-      long odecls_allocated = this->pd_decls_allocated;
-      this->pd_decls_allocated += INCREMENT;
-
-      ACE_NEW (tmp, AST_Decl *[pd_decls_allocated]);
-      for (long i = 0; i < odecls_allocated; ++i)
-        {
-          tmp [i] = this->pd_decls [i];
-        }
-
-      delete [] this->pd_decls;
-      this->pd_decls = tmp;
-    }
-
   // Insert new decl.
   if (ex == nullptr)
     {
-      this->pd_decls [this->pd_decls_used++] = e;
+      this->pd_decls.push_back (e);
     }
   else
     {
-      long i;
-      for (i = this->pd_decls_used;
-           0 < i && this->pd_decls [i - 1] != ex;
-           --i)
-        {
-          this->pd_decls [i] = this->pd_decls [i - 1];
-        }
-      this->pd_decls [i] = e;
-      ++this->pd_decls_used;
+      std::vector<AST_Decl *>::reverse_iterator const pos =
+        std::find (this->pd_decls.rbegin (),
+                   this->pd_decls.rend (),
+                   ex);
+      this->pd_decls.insert (pos == this->pd_decls.rend ()
+                               ? this->pd_decls.begin ()
+                               : pos.base (),
+                             e);
     }
 }
 
@@ -1657,25 +1573,8 @@ UTL_Scope::add_to_local_types (AST_Decl *e)
       return;
     }
 
-  // Make sure there's space for one more.
-  if (this->pd_locals_allocated == this->pd_locals_used)
-    {
-      long olocals_allocated = this->pd_locals_allocated;
-      this->pd_locals_allocated += INCREMENT;
-
-      AST_Decl **tmp = nullptr;
-      ACE_NEW (tmp, AST_Decl *[this->pd_locals_allocated]);
-      for (long i = 0; i < olocals_allocated; ++i)
-        {
-          tmp[i] = this->pd_local_types[i];
-        }
-
-      delete [] this->pd_local_types;
-      this->pd_local_types = tmp;
-    }
-
   // Insert new decl.
-  this->pd_local_types[this->pd_locals_used++] = e;
+  this->pd_local_types.push_back (e);
 }
 
 // Has this node been referenced here before?
@@ -1686,21 +1585,18 @@ UTL_Scope::referenced (AST_Decl *const e,
   Identifier *test = e->local_name ();
   AST_Decl::NodeType const nt = e->node_type ();
 
-  AST_Decl **tmp = this->pd_referenced;
-  for (long i = this->pd_referenced_used;
-       i--; // NOTE test with i--
-       ++tmp)
+  for (AST_Decl *decl : this->pd_referenced)
     {
       // Same node?
-      if (*tmp == e)
+      if (decl == e)
         {
           return true;
         }
 
       // Are we definging a forward declared struct, union, or interface,
       // or reopening a module?
-      if (!this->redef_clash (nt, (*tmp)->node_type ())
-          && (*tmp)->local_name ()->compare (test))
+      if (!this->redef_clash (nt, decl->node_type ())
+          && decl->local_name ()->compare (test))
         {
           return false;
         }
@@ -1714,10 +1610,7 @@ UTL_Scope::referenced (AST_Decl *const e,
   // so we can catch these name reolution clashes.
   if (id != nullptr)
     {
-      Identifier **name_tmp = this->pd_name_referenced;
-      for (long j = this->pd_name_referenced_used;
-           j--; // NOTE test with j--
-           ++name_tmp)
+      for (Identifier *name : this->pd_name_referenced)
         {
           // If we are a module, there is no clash, if we
           // are an interface, this is not the right place to
@@ -1728,29 +1621,29 @@ UTL_Scope::referenced (AST_Decl *const e,
           if (   nt != AST_Decl::NT_module
               && nt != AST_Decl::NT_param_holder
               && e->defined_in () == this
-              && id->compare (*name_tmp))
+              && id->compare (name))
             {
               idl_global->err ()->redef_error (
                 id->get_string (),
-                (*name_tmp)->get_string ());
+                name->get_string ());
               return true;
             }
           // No clash if one or the other of the identifiers was escaped.
-          else if (!(id->escaped () ^ (*name_tmp)->escaped ())
-                   && id->case_compare_quiet (*name_tmp))
+          else if (!(id->escaped () ^ name->escaped ())
+                   && id->case_compare_quiet (name))
             {
               if (idl_global->case_diff_error ())
                 {
                   idl_global->err ()->name_case_error (
                                           id->get_string (),
-                                          (*name_tmp)->get_string ()
+                                          name->get_string ()
                                         );
                 }
               else
                 {
                   idl_global->err ()->name_case_warning (
                                           id->get_string (),
-                                          (*name_tmp)->get_string ()
+                                          name->get_string ()
                                         );
                 }
 
@@ -1789,7 +1682,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
     }
   idl_global->indent ()->increase ();
 
-  if (0 < this->pd_locals_used)
+  if (!this->pd_local_types.empty ())
     {
       o << '\n';
       idl_global->indent ()->skip_to (o);
@@ -1809,7 +1702,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
         }
     }
 
-  if (0 < this->pd_decls_used)
+  if (!this->pd_decls.empty ())
     {
       o << '\n';
       idl_global->indent ()->skip_to (o);
@@ -1842,7 +1735,7 @@ UTL_Scope::ast_accept (ast_visitor *visitor)
 unsigned long
 UTL_Scope::nmembers () const
 {
-  return this->pd_decls_used;
+  return static_cast<unsigned long> (this->pd_decls.size ());
 }
 
 AST_Param_Holder *
@@ -2140,10 +2033,10 @@ UTL_ScopeActiveIterator::item ()
 bool
 UTL_ScopeActiveIterator::is_done ()
 {
-  long limit =
+  std::size_t limit =
     (stage == UTL_Scope::IK_decls)
-      ? iter_source->pd_decls_used
-      : iter_source->pd_locals_used;
+      ? iter_source->pd_decls.size ()
+      : iter_source->pd_local_types.size ();
 
   for (;;)
     {
@@ -2168,7 +2061,7 @@ UTL_ScopeActiveIterator::is_done ()
       // Switch to next stage.
       this->stage = UTL_Scope::IK_decls;
       this->il = 0;
-      limit = this->iter_source->pd_decls_used;
+      limit = this->iter_source->pd_decls.size ();
     }
 }
 

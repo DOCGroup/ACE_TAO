@@ -192,13 +192,8 @@ AST_Home::transfer_scope_elements (AST_Interface *dst)
       d->set_defined_in (dst);
     }
 
-  // Zero decls so that they are not cleaned twice.
-  long const end = this->pd_decls_used;
-  for (long i = 0; i < end; ++i)
-    {
-      this->pd_decls[i] = nullptr;
-      --this->pd_decls_used;
-    }
+  // Clear the declarations so that they are not cleaned twice.
+  this->pd_decls.clear ();
 }
 
 void
