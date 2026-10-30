@@ -291,10 +291,7 @@ DualEC_Supplier::run_nav_thread (void *arg)
 
   try
     {
-      ACE_Unbounded_Queue_Iterator<Navigation *>
-        nav_iter (sup->navigation_data_);
-
-      if (nav_iter.done ())
+      if (sup->navigation_data_.empty ())
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DualEC_Supplier::run_event_thread: "
@@ -304,13 +301,14 @@ DualEC_Supplier::run_nav_thread (void *arg)
       CORBA::Any any;
 
       long total_sent = 0;
+      std::size_t nav_index = 0;
 
       do
       {
         // Insert the event data
-        Navigation **nav;
+        Navigation * const *nav = &sup->navigation_data_[nav_index];
 
-        if ((nav_iter.next (nav)) && (nav) && (*nav))
+        if (nav != nullptr && *nav != nullptr)
           {
             any <<= *nav;
 
@@ -344,10 +342,8 @@ DualEC_Supplier::run_nav_thread (void *arg)
           ACE_DEBUG ((LM_DEBUG,
                       "Everything is running. Going to be mute.\n"));
 
-        nav_iter.advance ();
-
-        if (nav_iter.done ())
-          nav_iter.first ();
+        if (++nav_index == sup->navigation_data_.size ())
+          nav_index = 0;
       }
       while (++total_sent < sup->total_messages_);
     }
@@ -369,10 +365,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
 
   try
     {
-      ACE_Unbounded_Queue_Iterator<Weapons *>
-        weap_iter (sup->weapons_data_);
-
-      if (weap_iter.done ())
+      if (sup->weapons_data_.empty ())
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "DualEC_Supplier::run_event_thread: "
@@ -382,13 +375,14 @@ DualEC_Supplier::run_weap_thread (void *arg)
       CORBA::Any any;
 
       long total_sent = 0;
+      std::size_t weap_index = 0;
 
       do
       {
         // Insert the event data
-        Weapons **weap;
+        Weapons * const *weap = &sup->weapons_data_[weap_index];
 
-        if ((weap_iter.next (weap)) && (weap) && (*weap))
+        if (weap != nullptr && *weap != nullptr)
           {
             any <<= *weap;
 
@@ -411,10 +405,8 @@ DualEC_Supplier::run_weap_thread (void *arg)
           ACE_DEBUG ((LM_DEBUG,
                       "Everything is running. Going to be mute.\n"));
 
-        weap_iter.advance ();
-
-        if (weap_iter.done ())
-          weap_iter.first ();
+        if (++weap_index == sup->weapons_data_.size ())
+          weap_index = 0;
       }
       while (++total_sent < sup->total_messages_);
     }
@@ -695,24 +687,12 @@ DualEC_Supplier::start_generating_events ()
       orb_thread_manager.wait ();
 
       // Clean up the navigation data.
-      ACE_Unbounded_Queue_Iterator<Navigation *>
-        nav_iter (this->navigation_data_);
-      Navigation **nav_temp;
-      for (nav_iter.first ();
-           nav_iter.done () == 0;
-           nav_iter.advance ())
-        if (nav_iter.next (nav_temp) && nav_temp)
-          delete (*nav_temp);
+      for (Navigation * const nav : this->navigation_data_)
+        delete nav;
 
       // Clean up the weapons data.
-      ACE_Unbounded_Queue_Iterator<Weapons *>
-        weap_iter (this->weapons_data_);
-      Weapons **weap_temp;
-      for (weap_iter.first ();
-           weap_iter.done () == 0;
-           weap_iter.advance ())
-        if (weap_iter.next (weap_temp) && weap_temp)
-          delete (*weap_temp);
+      for (Weapons * const weap : this->weapons_data_)
+        delete weap;
     }
   catch (const CORBA::Exception& ex)
     {
@@ -815,7 +795,7 @@ DualEC_Supplier::load_schedule_data ()
                       weap->update_data =       update_data_;
 
                       // Insert the data into the queue.
-                      weapons_data_.enqueue_tail (weap);
+                      weapons_data_.push_back (weap);
                     }
                   else
                     {
@@ -848,7 +828,7 @@ DualEC_Supplier::load_schedule_data ()
                       nav->overhead = (double) (ACE_OS::rand() % 10);
 
                       // Insert the data into the queue.
-                      navigation_data_.enqueue_tail (nav);
+                      navigation_data_.push_back (nav);
                     }
                 }
             }

@@ -25,6 +25,8 @@
 #include "NavWeapS.h"
 #include "DOVE_Supplier.h"
 
+#include <vector>
+
 struct Schedule_Viewer_Data
 {
   char operation_name [BUFSIZ];
@@ -165,8 +167,8 @@ private:
   RtecScheduler::Scheduling_Anomaly_Set_var anomalies_lo_;
 
   // Queues to store event carried data structures.
-  ACE_Unbounded_Queue<Navigation *> navigation_data_;
-  ACE_Unbounded_Queue<Weapons *> weapons_data_;
+  std::vector<Navigation *> navigation_data_;
+  std::vector<Weapons *> weapons_data_;
 
   int argc_;
   ACE_TCHAR **argv_;
