@@ -15,8 +15,7 @@
 
 #include "TAO_IDL_BE_Export.h"
 
-#include "ace/Unbounded_Queue.h"
-
+#include <deque>
 #include <optional>
 #include <string>
 
@@ -821,7 +820,7 @@ public:
 
   /// Used in the generation of extern function declarations so we
   /// can use non-defined interfaces as members and parameters.
-  ACE_Unbounded_Queue<be_interface_fwd *> non_defined_interfaces;
+  std::deque<be_interface_fwd *> non_defined_interfaces;
 
   /// Accessor for the member, sets it on the first call.
   AST_PredefinedType *void_type ();

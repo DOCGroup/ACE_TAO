@@ -186,7 +186,8 @@ be_visitor_root_ch::gen_ref_counting_overrides ()
 
   for (index = 0; index < size; ++index)
     {
-      be_global->non_defined_interfaces.dequeue_head (ifwd);
+      ifwd = be_global->non_defined_interfaces.front ();
+      be_global->non_defined_interfaces.pop_front ();
 
       *o_ << be_nl_2;
 
