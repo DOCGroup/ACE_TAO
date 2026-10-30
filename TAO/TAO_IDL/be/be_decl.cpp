@@ -51,8 +51,8 @@ be_decl::be_decl (AST_Decl::NodeType type,
 be_decl::~be_decl () = default;
 
 std::string
-be_decl::compute_full_name (std::string_view prefix,
-                            std::string_view suffix)
+be_decl::compute_full_name (std::string const& prefix,
+                            std::string const& suffix)
 {
   std::string result_str (prefix);
 
@@ -107,8 +107,8 @@ be_decl::compute_full_name (std::string_view prefix,
 }
 
 std::string
-be_decl::compute_flat_name (std::string_view prefix,
-                            std::string_view suffix)
+be_decl::compute_flat_name (std::string const& prefix,
+                            std::string const& suffix)
 {
   std::string result_str (prefix);
 
