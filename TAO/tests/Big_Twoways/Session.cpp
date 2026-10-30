@@ -7,18 +7,12 @@ Session::Session (Test::Session_Control_ptr control,
                   CORBA::ULong message_count,
                   CORBA::ULong peer_count)
   : control_ (Test::Session_Control::_duplicate (control))
-  , running_ (0)
   , payload_size_ (payload_size)
   , thread_count_ (thread_count)
   , message_count_ (message_count)
-  , active_thread_count_ (0)
   , expected_messages_ (thread_count * message_count * (peer_count - 1))
   , task_ (this)
   , barrier_ (thread_count + 1)
-{
-}
-
-Session::~Session ()
 {
 }
 
@@ -68,9 +62,9 @@ Session::svc ()
             return 0;
           }
       }
-      this->terminate (1);
+      this->terminate (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR,
                           "(%P|%t) ERROR: Session::svc, "
@@ -111,11 +105,11 @@ Session::start (const Test::Session_List &other_sessions)
               }
             else
               {
-                this->running_ = 1;
+                this->running_ = true;
                 this->active_thread_count_++;
               }
           }
-        catch (const CORBA::Exception& ex)
+        catch (CORBA::Exception const &ex)
           {
             ex._tao_print_exception ("Session::start, ignored");
           }
@@ -129,16 +123,16 @@ Session::start (const Test::Session_List &other_sessions)
 
   this->barrier_.wait ();
 
-  if (this->running_ != 0)
+  if (this->running_)
     return;
 
   /// None of the threads are running, this session is useless at
   /// this point, report the problem and destroy the local objects
-  this->terminate (0);
+  this->terminate (false);
 }
 
 Test::Payload *
-Session::echo_payload (const Test::Payload &the_payload)
+Session::echo_payload (Test::Payload const &the_payload)
 {
   if (the_payload.length () != this->payload_size_)
     {
@@ -155,7 +149,7 @@ Session::echo_payload (const Test::Payload &the_payload)
                       retval._retn ());
     this->expected_messages_--;
 
-    int verbose = 0;
+    bool verbose = false;
 #if 0
     verbose = this->expected_messages_ % 500 == 0;
     if (this->expected_messages_ < 500)
@@ -164,7 +158,7 @@ Session::echo_payload (const Test::Payload &the_payload)
     verbose = (this->expected_messages_ % 10 == 0);
 #endif /* 0 */
     if (this->expected_messages_ < 5)
-      verbose = 1;
+      verbose = true;
 
     if (verbose)
       {
@@ -176,7 +170,7 @@ Session::echo_payload (const Test::Payload &the_payload)
     if (this->more_work ())
       return retval._retn ();
   }
-  this->terminate (1);
+  this->terminate (true);
 
   return retval._retn ();
 }
@@ -194,21 +188,21 @@ Session::destroy ()
   poa->deactivate_object (oid.in ());
 }
 
-int
+bool
 Session::more_work () const
 {
   if (this->expected_messages_ > 0
       || this->active_thread_count_ > 0
-      || this->running_ == 0)
-    return 1;
+      || !this->running_)
+    return true;
 
-  return 0;
+  return false;
 }
 
 void
 Session::validate_connections ()
 {
-  const CORBA::ULong session_count =
+  CORBA::ULong const session_count =
     this->other_sessions_.length ();
   for (CORBA::ULong j = 0; j != session_count; ++j)
     {
@@ -221,7 +215,7 @@ Session::validate_connections ()
           (void) this->other_sessions_[j]->_is_a ("Not_An_IDL_Type");
 #endif /* TAO_HAS_MESSAGING == 1 */
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
         }
     }
@@ -235,7 +229,7 @@ Session::terminate (CORBA::Boolean success)
     {
       this->control_->session_finished (success);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Session::terminate, ignored");
     }

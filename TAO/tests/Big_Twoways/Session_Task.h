@@ -16,10 +16,14 @@ class Session_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Session_Task (Session *session);
+  explicit Session_Task (Session *session);
+  Session_Task (Session_Task const &) = delete;
+  Session_Task &operator= (Session_Task const &) = delete;
+  Session_Task (Session_Task &&) = delete;
+  Session_Task &operator= (Session_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Reference to the test interface

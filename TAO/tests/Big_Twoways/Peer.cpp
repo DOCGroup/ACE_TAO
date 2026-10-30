@@ -6,10 +6,6 @@ Peer::Peer (CORBA::ORB_ptr orb)
 {
 }
 
-Peer::~Peer ()
-{
-}
-
 Test::Session_ptr
 Peer::create_session (Test::Session_Control_ptr control,
                       CORBA::ULong payload_size,
@@ -17,7 +13,7 @@ Peer::create_session (Test::Session_Control_ptr control,
                       CORBA::ULong message_count,
                       CORBA::ULong peer_count)
 {
-  Session *session_impl = 0;
+  Session *session_impl = nullptr;
   ACE_NEW_THROW_EX (session_impl,
                     Session (control,
                              payload_size,
