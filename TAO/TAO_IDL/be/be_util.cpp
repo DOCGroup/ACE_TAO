@@ -29,7 +29,7 @@
 
 #include "ace/OS_NS_string.h"
 
-#include <string_view>
+#include <string>
 
 void
 be_util::gen_nested_namespace_begin (TAO_OutStream *os,
@@ -125,44 +125,44 @@ be_util::gen_nesting_close (TAO_OutStream &os, AST_Decl *node)
 void
 be_util::prep_be_arg (std::string const& s)
 {
-  static constexpr std::string_view arg_macro = "export_macro=";
-  static constexpr std::string_view arg_include = "export_include=";
-  static constexpr std::string_view skel_arg_macro = "skel_export_macro=";
-  static constexpr std::string_view skel_arg_include = "skel_export_include=";
-  static constexpr std::string_view skel_arg_file = "skel_export_file=";
-  static constexpr std::string_view stub_arg_macro = "stub_export_macro=";
-  static constexpr std::string_view stub_arg_include = "stub_export_include=";
-  static constexpr std::string_view stub_arg_file = "stub_export_file=";
-  static constexpr std::string_view anyop_arg_macro = "anyop_export_macro=";
-  static constexpr std::string_view anyop_arg_include = "anyop_export_include=";
-  static constexpr std::string_view exec_arg_macro = "exec_export_macro=";
-  static constexpr std::string_view exec_arg_include = "exec_export_include=";
-  static constexpr std::string_view svnt_arg_macro = "svnt_export_macro=";
-  static constexpr std::string_view svnt_arg_include = "svnt_export_include=";
-  static constexpr std::string_view conn_arg_macro = "conn_export_macro=";
-  static constexpr std::string_view conn_arg_include = "conn_export_include=";
-  static constexpr std::string_view arg_pch_include = "pch_include=";
-  static constexpr std::string_view arg_pre_include = "pre_include=";
-  static constexpr std::string_view arg_post_include = "post_include=";
-  static constexpr std::string_view arg_versioning_begin = "versioning_begin=";
-  static constexpr std::string_view arg_versioning_end = "versioning_end=";
-  static constexpr std::string_view arg_versioning_include = "versioning_include=";
-  static constexpr std::string_view obv_opt_accessor = "obv_opt_accessor";
-  static constexpr std::string_view ciao_container_type = "ciao_container_type=";
-  static constexpr std::string_view include_guard = "include_guard=";
-  static constexpr std::string_view safe_include = "safe_include=";
-  static constexpr std::string_view unique_include = "unique_include=";
-  static constexpr std::string_view dds_impl = "dds_impl=";
-  static constexpr std::string_view stripped_filename = "stripped_filename=";
-  static constexpr std::string_view no_fixed_err = "no_fixed_err";
+  static std::string const arg_macro = "export_macro=";
+  static std::string const arg_include = "export_include=";
+  static std::string const skel_arg_macro = "skel_export_macro=";
+  static std::string const skel_arg_include = "skel_export_include=";
+  static std::string const skel_arg_file = "skel_export_file=";
+  static std::string const stub_arg_macro = "stub_export_macro=";
+  static std::string const stub_arg_include = "stub_export_include=";
+  static std::string const stub_arg_file = "stub_export_file=";
+  static std::string const anyop_arg_macro = "anyop_export_macro=";
+  static std::string const anyop_arg_include = "anyop_export_include=";
+  static std::string const exec_arg_macro = "exec_export_macro=";
+  static std::string const exec_arg_include = "exec_export_include=";
+  static std::string const svnt_arg_macro = "svnt_export_macro=";
+  static std::string const svnt_arg_include = "svnt_export_include=";
+  static std::string const conn_arg_macro = "conn_export_macro=";
+  static std::string const conn_arg_include = "conn_export_include=";
+  static std::string const arg_pch_include = "pch_include=";
+  static std::string const arg_pre_include = "pre_include=";
+  static std::string const arg_post_include = "post_include=";
+  static std::string const arg_versioning_begin = "versioning_begin=";
+  static std::string const arg_versioning_end = "versioning_end=";
+  static std::string const arg_versioning_include = "versioning_include=";
+  static std::string const obv_opt_accessor = "obv_opt_accessor";
+  static std::string const ciao_container_type = "ciao_container_type=";
+  static std::string const include_guard = "include_guard=";
+  static std::string const safe_include = "safe_include=";
+  static std::string const unique_include = "unique_include=";
+  static std::string const dds_impl = "dds_impl=";
+  static std::string const stripped_filename = "stripped_filename=";
+  static std::string const no_fixed_err = "no_fixed_err";
 
-  std::string_view remaining (s);
+  std::string remaining (s);
   while (!remaining.empty ())
     {
       size_t const comma = remaining.find (',');
       std::string const argument (remaining.substr (0, comma));
-      remaining = comma == std::string_view::npos
-        ? std::string_view {}
+      remaining = comma == std::string::npos
+        ? std::string {}
         : remaining.substr (comma + 1);
 
       if (argument.empty ())
