@@ -132,7 +132,7 @@ Task_Entry::has_unresolved_local_dependencies () const
 
 // Gets the set of Task Entries on which this entry depends.
 
-ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
+ACE_INLINE std::vector<Task_Entry_Link *> &
 Task_Entry::calls ()
 {
   return calls_;
@@ -140,7 +140,7 @@ Task_Entry::calls ()
 
 // Gets the set of Task Entries which depend on this entry.
 
-ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
+ACE_INLINE std::vector<Task_Entry_Link *> &
 Task_Entry::callers ()
 {
   return callers_;

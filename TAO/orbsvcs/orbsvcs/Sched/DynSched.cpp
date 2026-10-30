@@ -1443,8 +1443,21 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
                                        entry.rt_info ()->dependencies[i].dependency_type),
                       ST_VIRTUAL_MEMORY_EXHAUSTED);
 
-      dependency_entry_ptr->callers ().insert (link);
-      entry.calls ().insert (link);
+      int const caller_result = insert_unique (dependency_entry_ptr->callers (), link);
+      if (caller_result != 0)
+      {
+        delete link;
+        return caller_result < 0 ? ST_VIRTUAL_MEMORY_EXHAUSTED : ST_BAD_INTERNAL_POINTER;
+      }
+
+      int const call_result = insert_unique (entry.calls (), link);
+      if (call_result != 0)
+      {
+        std::vector<Task_Entry_Link *> &callers = dependency_entry_ptr->callers ();
+        callers.erase (std::remove (callers.begin (), callers.end (), link), callers.end ());
+        delete link;
+        return call_result < 0 ? ST_VIRTUAL_MEMORY_EXHAUSTED : ST_BAD_INTERNAL_POINTER;
+      }
 
       // depth first recursion on the newly identified entry
       relate_task_entries_recurse (time, *dependency_entry_ptr);
@@ -1473,7 +1486,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
   {
     // if entry has exposed threads or no callers, it may be a thread
     if ((task_entries_ [i].rt_info ()->threads > 0) ||
-        (task_entries_ [i].callers ().is_empty ()))
+        (task_entries_ [i].callers ().empty ()))
     {
       // if its period is valued, it's a thread delineator
       if (task_entries_ [i].rt_info ()->period > 0)
@@ -1617,23 +1630,20 @@ ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
   // check all the calling operations: if there is one that has not already been
   // visited, mark the return status indicating there is a cycle, print
   // an error message to that effect, and recurse on that dependant
-  Task_Entry_Link **calling_entry_link;
-  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> i (entry.callers ());
-  while (i.next (calling_entry_link) != 0)
+  for (Task_Entry_Link * const calling_entry_link : entry.callers ())
   {
-    i.advance ();
-    if ((*calling_entry_link)->caller ().dfs_status () == Task_Entry::NOT_VISITED)
+    if (calling_entry_link->caller ().dfs_status () == Task_Entry::NOT_VISITED)
     {
       // indicate the two tasks are in (the same) dependency cycle
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT("Tasks \"%C\" and \"%C\" are part of a call cycle.\n"),
-                  (*calling_entry_link)->caller ().rt_info ()->entry_point.in (),
+                  calling_entry_link->caller ().rt_info ()->entry_point.in (),
                   entry.rt_info ()->entry_point.in ()));
 
       // set return status, ignore status returned by recursive call:
       // we already know there are cycles in the dependencies
       return_status = ST_CYCLE_IN_DEPENDENCIES;
-      check_dependency_cycles_recurse ((*calling_entry_link)->caller ());
+      check_dependency_cycles_recurse (calling_entry_link->caller ());
     }
   }
 
