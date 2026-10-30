@@ -21,8 +21,8 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Event_Handler.h"
-#include "ace/Containers.h"
 #include "orbsvcs/Time/time_serv_export.h"
+#include <vector>
 
 #include "orbsvcs/TimeServiceS.h"
 
@@ -70,8 +70,8 @@ protected:
   /// Clerk's instance that this class helps to update time.
   TAO_Time_Service_Clerk *clerk_ {};
 
-  /// The set of server IORs.
-  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
+  /// The server IORs.
+  using IORS = std::vector<CosTime::TimeService_var>;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

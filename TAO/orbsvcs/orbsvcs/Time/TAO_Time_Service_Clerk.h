@@ -19,6 +19,7 @@
 #include "orbsvcs/TimeServiceS.h"
 #include "orbsvcs/Time/Timer_Helper.h"
 #include "orbsvcs/Time/time_serv_export.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,8 +41,8 @@ public:
   /// Helper class to help in the updation of time.
   friend class Timer_Helper;
 
-  /// Unbounded set of IORs.
-  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
+  /// Time server references.
+  using IORS = std::vector<CosTime::TimeService_var>;
 
   /// Constructor.
   TAO_Time_Service_Clerk (int timer_value,

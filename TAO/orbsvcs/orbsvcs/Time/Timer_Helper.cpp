@@ -28,14 +28,11 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
 
   try
     {
-      IORS::TYPE* value;
-      for (IORS::ITERATOR server_iterator (this->clerk_->server_);
-           server_iterator.next (value) != 0;
-           server_iterator.advance ())
+      for (CosTime::TimeService_var const & server : this->clerk_->server_)
         {
           // This is a remote call.
           CosTime::UTO_var UTO_server =
-            (*value)->universal_time ();
+            server->universal_time ();
 
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_DEBUG,
