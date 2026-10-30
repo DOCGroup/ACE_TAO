@@ -20,10 +20,12 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Notify/CosNotify_Initializer.h"
-#include "ace/SString.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
 #include "Notify_Service_Export.h"
+
+#include <string>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;
@@ -146,7 +148,7 @@ protected:
   ACE_CString notify_factory_name_;
 
   /// The event channel names.
-  ACE_Unbounded_Set <ACE_CString> notify_channel_name_;
+  std::vector<std::string> notify_channel_name_;
 
   /// true: create an event channel and registers it with the Naming Service
   /// with the name <notify_channel_name_>

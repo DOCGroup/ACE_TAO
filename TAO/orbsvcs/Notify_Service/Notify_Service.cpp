@@ -31,6 +31,8 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Logging_Strategy.h"
 
+#include <algorithm>
+
 TAO_Notify_Service_Driver::TAO_Notify_Service_Driver ()
   : notify_factory_name_ (NOTIFY_KEY),
     logging_worker_ (this)
@@ -246,13 +248,12 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR * argv[])
       if (this->register_event_channel_)
         {
           // If we don't have any name configured, default to the standard name
-          if (this->notify_channel_name_.is_empty ())
+          if (this->notify_channel_name_.empty ())
             {
-              notify_channel_name_.insert (NOTIFY_CHANNEL_NAME);
+              this->notify_channel_name_.emplace_back (NOTIFY_CHANNEL_NAME);
             }
 
-          for (ACE_Unbounded_Set<ACE_CString>::const_iterator ci (
-                this->notify_channel_name_); !ci.done(); ci++)
+          for (std::string const& channel_name : this->notify_channel_name_)
             {
               // create an event channel
               CosNotifyChannelAdmin::ChannelID id;
@@ -274,10 +275,10 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR * argv[])
                 {
                   ec = factory_impl->create_named_channel (
                                        initial_qos, initial_admin,id,
-                                       (*ci).c_str ());
+                                       channel_name.c_str ());
                 }
 
-              name = this->naming_->to_name ((*ci).c_str ());
+              name = this->naming_->to_name (channel_name.c_str ());
 
               this->naming_->rebind (name.in (), ec.in ());
 
@@ -286,7 +287,7 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR * argv[])
                   ORBSVCS_DEBUG ((LM_DEBUG,
                               "Registered an Event Channel with the naming "
                               "service as: %C\n",
-                              (*ci).c_str()));
+                              channel_name.c_str()));
                 }
             }
         }
@@ -400,10 +401,9 @@ TAO_Notify_Service_Driver::fini ()
       // Unbind all event channels from the naming service
       if (this->register_event_channel_)
         {
-          for (ACE_Unbounded_Set<ACE_CString>::const_iterator ci (
-               this->notify_channel_name_); !ci.done(); ci++)
+          for (std::string const& channel_name : this->notify_channel_name_)
             {
-              CosNaming::Name_var name = naming->to_name ((*ci).c_str ());
+              CosNaming::Name_var name = naming->to_name (channel_name.c_str ());
               naming->unbind (name.in ());
             }
         }
@@ -558,7 +558,13 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
         }
       else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))) != nullptr)
         {
-          this->notify_channel_name_.insert(ACE_CString(ACE_TEXT_ALWAYS_CHAR(current_arg)));
+          std::string const channel_name (ACE_TEXT_ALWAYS_CHAR (current_arg));
+          if (std::find (this->notify_channel_name_.begin (),
+                         this->notify_channel_name_.end (),
+                         channel_name) == this->notify_channel_name_.end ())
+            {
+              this->notify_channel_name_.push_back (channel_name);
+            }
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Channel")) == 0)
