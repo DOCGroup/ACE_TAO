@@ -25,6 +25,7 @@
 #include "orbsvcs/Sched/SchedEntry.h"
 #include "orbsvcs/Sched/sched_export.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include <deque>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -317,8 +318,7 @@ protected:
   /// = schedule a dispatch entry into the timeline being created
   virtual status_t
     schedule_timeline_entry (Dispatch_Entry &dispatch_entry,
-                             ACE_Unbounded_Queue <Dispatch_Entry *>
-                               &reschedule_queue) = 0;
+                             std::deque<Dispatch_Entry *> &reschedule_queue) = 0;
 
   ////////////////////////////
   // protected data members //
