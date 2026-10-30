@@ -15,9 +15,11 @@
 #define _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_
 
 #include "ace/CDR_Base.h"
-#include "ace/Containers_T.h"
 #include "be_visitor_decl.h"
 #include "be_visitor_scope.h"
+
+#include <memory>
+#include <vector>
 
 constexpr unsigned long TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE = 1024;
 
@@ -106,15 +108,12 @@ protected:
 
 protected:
   /// Queue to keep nodes
-  ACE_Unbounded_Queue <QNode*> tc_queue_;
+  std::vector<std::unique_ptr<QNode>> tc_queue_;
 
   /// @c true if we are detecting recursion.
   bool recursion_detect_ {};
 
 private:
-  //
-  friend class Scoped_Compute_Queue_Guard;
-
   /// the tc size of the node under consideration
   // ACE_CDR::Long computed_tc_size_;
 
@@ -128,9 +127,6 @@ private:
 
   /// current computed length of the typecode
   // ACE_CDR::Long tc_offset_;
-
-  /// queue to keep nodes
-  ACE_Unbounded_Queue <QNode*> compute_queue_;
 
   /// stores scope lens during computation
   ACE_CDR::Long scope_stack_ [TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE] {};
@@ -146,12 +142,11 @@ private:
 protected:
   // queue related routines
 
-  QNode const *queue_insert (ACE_Unbounded_Queue <QNode*> &,
+  QNode const *queue_insert (std::vector<std::unique_ptr<QNode>> &,
                              be_type *node, ACE_CDR::Long offset);
 
-  QNode const *queue_lookup (ACE_Unbounded_Queue <QNode*> &, be_type *node);
-
-  void queue_reset (ACE_Unbounded_Queue <QNode*> &);
+  QNode const *queue_lookup (std::vector<std::unique_ptr<QNode>> &,
+                             be_type *node);
 };
 
 #endif /* _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_ */
