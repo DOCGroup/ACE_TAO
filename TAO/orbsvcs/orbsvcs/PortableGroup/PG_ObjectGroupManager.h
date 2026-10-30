@@ -251,7 +251,7 @@ protected:
 
 private:
   /// Help function to get active or inactive member infos.
-  TAO_PG_MemberInfo_Set get_members (bool is_alive);
+  TAO_PG_MemberInfo_List get_members (bool is_alive);
 
   /// Ping the remote to verify the connections.
   bool ping (CORBA::ORB_ptr orb,
@@ -277,7 +277,7 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   /// The list of inactive members.
-  TAO_PG_MemberInfo_Set inactive_members_;
+  TAO_PG_MemberInfo_List inactive_members_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

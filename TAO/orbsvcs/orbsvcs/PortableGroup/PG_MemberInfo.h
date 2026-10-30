@@ -21,7 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/PortableGroupC.h"
-#include "ace/Unbounded_Set.h"
+
+#include <list>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,14 +49,14 @@ struct TAO_PG_MemberInfo
 
   /// Equality operator.
   /**
-   * For the purposes of the member info set, only the location is
+   * For the purposes of the member info collection, only the location is
    * important.  In particular, if a member already resides at the
    * given location, this equality operator will return true.
    */
   bool operator== (TAO_PG_MemberInfo const & rhs) const;
 };
 
-using TAO_PG_MemberInfo_Set = ACE_Unbounded_Set<TAO_PG_MemberInfo>;
+using TAO_PG_MemberInfo_List = std::list<TAO_PG_MemberInfo>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
