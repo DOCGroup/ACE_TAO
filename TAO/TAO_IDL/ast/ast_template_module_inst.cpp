@@ -43,7 +43,6 @@ AST_Template_Module_Inst::dump (ACE_OSTREAM_TYPE &)
 void
 AST_Template_Module_Inst::destroy ()
 {
-  this->template_args_->destroy ();
   delete this->template_args_;
   this->template_args_ = nullptr;
 

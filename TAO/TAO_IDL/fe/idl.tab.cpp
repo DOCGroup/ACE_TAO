@@ -10684,7 +10684,7 @@ yyreduce:
             }
 
           delete (yyvsp[-2].annotations_val);
-          (yyvsp[0].alval)->enqueue_head ((yyvsp[-1].dcval));
+          (yyvsp[0].alval)->insert ((yyvsp[0].alval)->begin (), (yyvsp[-1].dcval));
           (yyval.alval) = (yyvsp[0].alval);
         }
 #line 10690 "fe/idl.tab.cpp"
@@ -10701,7 +10701,7 @@ yyreduce:
             }
 
           delete (yyvsp[-1].annotations_val);
-          (yyvsp[-3].alval)->enqueue_tail ((yyvsp[0].dcval));
+          (yyvsp[-3].alval)->push_back ((yyvsp[0].dcval));
           (yyval.alval) = (yyvsp[-3].alval);
         }
 #line 10707 "fe/idl.tab.cpp"

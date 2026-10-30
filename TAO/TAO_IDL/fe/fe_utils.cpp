@@ -47,32 +47,6 @@ FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
   return false;
 }
 
-void
-FE_Utils::T_ARGLIST::destroy ()
-{
-  AST_Decl **d = nullptr;
-
-  for (T_ARGLIST::ITERATOR i (this->begin ());
-       !i.done ();
-       i.advance ())
-    {
-      i.next (d);
-      /// This is a problem - nodes that aren't NT_const have
-      /// already been destroyed. Must find some other way of
-      /// ferreting out the NT_const arglist nodes.
-/*
-      // These were created on the fly and not part of any scope
-      // so we manage their lifetime here.
-      AST_Decl *tmp = *d;
-      if (tmp->node_type () == AST_Decl::NT_const)
-        {
-          tmp->destroy ();
-          delete tmp;
-          tmp = 0;
-        } */
-    }
-}
-
 /*
  * Convert a PredefinedType to an ExprType
  */

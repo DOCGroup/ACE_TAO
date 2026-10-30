@@ -49,17 +49,11 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
     }
 
   // If we have a connector within a templated module
-  if (! this->t_args_.is_empty ())
+  if (!this->t_args_.empty ())
     {
       // Generate all needed dds_traits
-      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
-          !i.done ();
-          i.advance ())
+      for (AST_Decl *d : this->t_args_)
         {
-          AST_Decl **item = nullptr;
-          i.next (item);
-          AST_Decl *d = *item;
-
           if (this->is_dds_type (node, d))
             {
               this->gen_dds_traits (d);
@@ -81,14 +75,8 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
       size_t slot = 1UL;
 
-      for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (this->t_args_);
-          !i.done ();
-          i.advance (), ++slot)
+      for (AST_Decl *d : this->t_args_)
         {
-          AST_Decl **item = nullptr;
-          i.next (item);
-          AST_Decl *d = *item;
-
           if (this->is_dds_type (node, d))
             {
               os_ << d->flat_name ()
@@ -146,6 +134,8 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
             {
               os_ << "," << be_nl;
             }
+
+          ++slot;
         }
 
       os_ << ">";

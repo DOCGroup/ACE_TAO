@@ -1,8 +1,6 @@
 #ifndef FE_UTILS_H
 #define FE_UTILS_H
 
-#include "ace/Unbounded_Queue.h"
-
 #include "ast_decl.h"
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
@@ -37,10 +35,7 @@ struct TAO_IDL_FE_Export FE_Utils
 
   static bool duplicate_param_id (T_PARAMLIST_INFO *params);
 
-  struct T_ARGLIST : ACE_Unbounded_Queue<AST_Decl *>
-  {
-    void destroy ();
-  };
+  using T_ARGLIST = std::vector<AST_Decl *>;
 
   /// Convert from a predefined type to an expression type.
   static AST_Expression::ExprType

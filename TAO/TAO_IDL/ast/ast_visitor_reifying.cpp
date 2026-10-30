@@ -640,11 +640,9 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
       /// name, which is what we want.
       if (name == node->local_name ()->get_string ())
         {
-          AST_Decl **ret_ptr = nullptr;
-
-          if (t_args->get (ret_ptr, i) == 0)
+          if (i < t_args->size ())
             {
-              AST_Decl *candidate = *ret_ptr;
+              AST_Decl *candidate = (*t_args)[i];
 
               return candidate->ast_accept (this);
             }

@@ -38,13 +38,13 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
 
   AST_Connector *base = node;
 
-  while (this->t_args_.is_empty () && base != nullptr)
+  while (this->t_args_.empty () && base != nullptr)
     {
       this->process_template_args (base);
       base = base->base_connector ();
     }
 
-  if (this->t_args_.is_empty ())
+  if (this->t_args_.empty ())
     {
       return false;
     }
@@ -144,10 +144,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
 
   /// We depend on the DDS datatype being the first template
   /// argument for now, this may change.
-  AST_Decl **datatype = nullptr;
-  int const status = this->t_args_.get (datatype, 0UL);
-
-  if (status != 0)
+  if (this->t_args_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("be_visitor_connector_dds_ex_base::")
@@ -157,7 +154,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
       return;
     }
 
-  this->dds_traits_name_ = (*datatype)->flat_name ();
+  this->dds_traits_name_ = this->t_args_.front ()->flat_name ();
   this->dds_traits_name_ += "_DDS_Traits";
 }
 
@@ -188,9 +185,18 @@ be_visitor_connector_dds_ex_base::match_template_args ()
         {
           if (t_param.name_ == ref_name)
             {
-              AST_Decl **d = nullptr;
-              this->t_inst_->template_args ()->get (d, slot);
-              this->t_args_.enqueue_tail (*d);
+              FE_Utils::T_ARGLIST const *template_args =
+                this->t_inst_->template_args ();
+              if (slot >= template_args->size ())
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("be_visitor_connector_dds_ex_base::")
+                              ACE_TEXT ("match_template_args - ")
+                              ACE_TEXT ("template arg not found\n ")));
+                  return;
+                }
+
+              this->t_args_.push_back ((*template_args)[slot]);
               break;
             }
 

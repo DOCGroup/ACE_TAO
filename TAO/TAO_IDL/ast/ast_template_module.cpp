@@ -49,14 +49,8 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 
   size_t slot = 0UL;
 
-  for (FE_Utils::T_ARGLIST::CONST_ITERATOR i (*args);
-       !i.done ();
-       i.advance (), ++slot)
+  for (AST_Decl *d : *args)
     {
-      AST_Decl **item = nullptr;
-      i.next (item);
-      AST_Decl *d = *item;
-
       if (d->node_type () == AST_Decl::NT_typedef)
         {
           AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
@@ -85,6 +79,8 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 
           return false;
         }
+
+      ++slot;
     }
 
   return true;

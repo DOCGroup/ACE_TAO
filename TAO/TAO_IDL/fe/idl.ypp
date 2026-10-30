@@ -7210,7 +7210,7 @@ at_least_one_actual_parameter
             }
 
           delete $1;
-          $3->enqueue_head ($2);
+          $3->insert ($3->begin (), $2);
           $<alval>$ = $3;
         }
         ;
@@ -7226,7 +7226,7 @@ actual_parameters
             }
 
           delete $3;
-          $1->enqueue_tail ($4);
+          $1->push_back ($4);
           $<alval>$ = $1;
         }
         | %empty
