@@ -50,6 +50,11 @@ template <class MUTEX>
 class ACE_Condition
 {
 public:
+  ACE_Condition (const ACE_Condition &) = delete;
+  ACE_Condition (ACE_Condition &&) = delete;
+  ACE_Condition &operator= (const ACE_Condition &) = delete;
+  ACE_Condition &operator= (ACE_Condition &&) = delete;
+
   /// Initialize the condition variable.
   ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
                  const ACE_TCHAR *name = nullptr, void *arg = nullptr);
@@ -110,10 +115,6 @@ protected:
 
   /// Reference to mutex lock.
   MUTEX &mutex_;
-
-private:
-  void operator= (const ACE_Condition<MUTEX> &) = delete;
-  ACE_Condition (const ACE_Condition<MUTEX> &) = delete;
 };
 
 /**

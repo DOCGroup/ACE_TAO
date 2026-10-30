@@ -51,6 +51,11 @@ template <>
 class ACE_Export ACE_Condition<ACE_Thread_Mutex>
 {
 public:
+  ACE_Condition (const ACE_Condition &) = delete;
+  ACE_Condition (ACE_Condition &&) = delete;
+  ACE_Condition &operator= (const ACE_Condition &) = delete;
+  ACE_Condition &operator= (ACE_Condition &&) = delete;
+
   /// Initialize the condition variable.
   ACE_Condition (ACE_Thread_Mutex &m,
                  const ACE_TCHAR *name = nullptr,
@@ -121,10 +126,6 @@ protected:
   /// that you don't have multiple threads simultaneously calling
   /// remove() on the same object, which is a bad idea anyway...
   bool removed_;
-
-private:
-  void operator= (const ACE_Condition<ACE_Thread_Mutex> &) = delete;
-  ACE_Condition (const ACE_Condition<ACE_Thread_Mutex> &) = delete;
 };
 
 using ACE_Condition_Thread_Mutex = ACE_Condition<ACE_Thread_Mutex>;

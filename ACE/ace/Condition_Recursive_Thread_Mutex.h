@@ -36,6 +36,11 @@ template<>
 class ACE_Export ACE_Condition<ACE_Recursive_Thread_Mutex>
 {
 public:
+  ACE_Condition (const ACE_Condition &) = delete;
+  ACE_Condition (ACE_Condition &&) = delete;
+  ACE_Condition &operator= (const ACE_Condition &) = delete;
+  ACE_Condition &operator= (ACE_Condition &&) = delete;
+
   /// Initialize the condition variable with a recursive mutex.
   ACE_Condition (ACE_Recursive_Thread_Mutex &m);
 
@@ -83,10 +88,6 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
-
-private:
-  void operator= (const ACE_Condition<ACE_Recursive_Thread_Mutex> &) = delete;
-  ACE_Condition (const ACE_Condition<ACE_Recursive_Thread_Mutex> &) = delete;
 
 private:
   /// A normal (i.e., non-recursive) condition variable.
