@@ -28,7 +28,6 @@
 #include "ace/Log_Msg.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)

@@ -25,8 +25,6 @@
 #include "idl_defines.h"
 #include "global_extern.h"
 
-#include <string_view>
-
 be_union::be_union (AST_ConcreteType *dt,
                     UTL_ScopedName *n,
                     bool local,

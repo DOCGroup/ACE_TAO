@@ -22,8 +22,6 @@
 #include "idl_defines.h"
 #include "global_extern.h"
 
-#include <string_view>
-
 be_structure::be_structure (UTL_ScopedName *n,
                             bool local,
                             bool abstract)

@@ -28,8 +28,6 @@
 #include "nr_extern.h"
 #include "global_extern.h"
 
-#include <string_view>
-
 #include "ace/Log_Msg.h"
 
 #include <string>

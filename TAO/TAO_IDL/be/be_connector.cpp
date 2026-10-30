@@ -5,6 +5,8 @@
 
 #include "utl_identifier.h"
 
+#include <string>
+
 be_connector::be_connector (
       UTL_ScopedName *n,
       AST_Connector *base_connector)
@@ -89,7 +91,7 @@ be_connector::check_ancestors ()
 
   while (base != nullptr)
     {
-      std::string_view const base_fname = base->full_name ();
+      std::string const base_fname = base->full_name ();
 
       if (base_fname == "CCM_DDS::DDS_Base")
         {
