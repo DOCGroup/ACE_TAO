@@ -100,8 +100,7 @@ fe_populate_global_scope ()
 
   /// Put this prefix in force while we're creating the
   /// CORBA module and its contents.
-  char *prefix = ACE::strnew ("omg.org");
-  idl_global->pragma_prefixes ().push (prefix);
+  idl_global->pragma_prefixes ().push_back ("omg.org");
 
   Identifier corba_id ("CORBA");
   UTL_ScopedName sn (&corba_id, nullptr);
@@ -258,9 +257,10 @@ fe_populate_global_scope ()
 
   m->fe_add_predefined_type (pdt);
 
-  char *trash = nullptr;
-  idl_global->pragma_prefixes ().pop (trash);
-  ACE::strdelete (trash);
+  if (!idl_global->pragma_prefixes ().empty ())
+    {
+      idl_global->pragma_prefixes ().pop_back ();
+    }
 }
 
 // Populate idl_global's hash map with upper case versions of
@@ -374,7 +374,7 @@ FE_init ()
   idl_global->preserve_cpp_keywords (false);
 
   // Put an empty prefix on the stack for the global scope.
-  idl_global->pragma_prefixes ().push (ACE::strnew (""));
+  idl_global->pragma_prefixes ().emplace_back ();
 }
 
 void

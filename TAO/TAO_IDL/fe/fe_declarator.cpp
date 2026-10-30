@@ -157,11 +157,10 @@ FE_Declarator::compose (AST_Decl *d)
       // The right way to do this is with a separate traversal
       // after the entire AST is built.
       /*
-      char *current_prefix = nullptr;
-      idl_global->pragma_prefixes ().top (current_prefix);
+      std::vector<std::string> const& prefixes =
+        idl_global->pragma_prefixes ();
 
-      if (current_prefix != 0
-          && ACE_OS::strcmp (current_prefix, d->prefix ()) != 0)
+      if (!prefixes.empty () && prefixes.back () != d->prefix ())
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,
                                       d);

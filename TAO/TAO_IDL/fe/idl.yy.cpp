@@ -3736,10 +3736,12 @@ idl_store_pragma (char *buf)
 
   if (ACE_OS::strncmp (buf + 8, "prefix", 6) == 0)
     {
-      char *new_prefix = idl_get_pragma_string (buf);
+      char *prefix_string = idl_get_pragma_string (buf);
 
-      if (new_prefix != nullptr)
+      if (prefix_string != nullptr)
         {
+          std::string const new_prefix (prefix_string);
+          delete [] prefix_string;
           unsigned long depth = idl_global->scopes ().depth ();
 
           // We replace the prefix only if there is a prefix already
@@ -3755,9 +3757,10 @@ idl_store_pragma (char *buf)
             {
               if (!entry->second.empty ())
                 {
-                  char *trash = nullptr;
-                  idl_global->pragma_prefixes ().pop (trash);
-                  delete [] trash;
+                  if (!idl_global->pragma_prefixes ().empty ())
+                    {
+                      idl_global->pragma_prefixes ().pop_back ();
+                    }
                 }
               else if (depth == 1)
                 {
@@ -3774,7 +3777,7 @@ idl_store_pragma (char *buf)
               ScopeAsDecl (top_scope)->prefix_scope (top_scope);
             }
 
-          idl_global->pragma_prefixes ().push (new_prefix);
+          idl_global->pragma_prefixes ().push_back (new_prefix);
 
           if (depth == 1)
             {

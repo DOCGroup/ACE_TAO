@@ -154,9 +154,11 @@ AST_Decl::AST_Decl (NodeType nt,
   this->compute_full_name (n);
   this->compute_full_name ();
 
-  char *prefix = nullptr;
-  idl_global->pragma_prefixes ().top (prefix);
-  this->prefix_ = prefix != nullptr ? prefix : "";
+  std::vector<std::string> const& prefixes = idl_global->pragma_prefixes ();
+  if (!prefixes.empty ())
+    {
+      this->prefix_ = prefixes.back ();
+    }
 
   if (n)
     {
@@ -193,9 +195,11 @@ AST_Decl::AST_Decl (
   this->compute_full_name (name);
   this->compute_full_name ();
 
-  char *prefix = nullptr;
-  idl_global->pragma_prefixes ().top (prefix);
-  this->prefix_ = prefix ? prefix : "";
+  std::vector<std::string> const& prefixes = idl_global->pragma_prefixes ();
+  if (!prefixes.empty ())
+    {
+      this->prefix_ = prefixes.back ();
+    }
 
   if (name)
     {

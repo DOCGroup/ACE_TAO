@@ -518,7 +518,7 @@ public:
   idl_keywords ();
   // Accessor for the IDL keyword container.
 
-  ACE_Unbounded_Stack<char *> & pragma_prefixes ();
+  std::vector<std::string> &pragma_prefixes ();
   // Accessor for the pragma prefix container.
 
   void update_prefix (std::string const& filename);
@@ -948,7 +948,7 @@ private:
   std::unordered_set<std::string> idl_keywords_;
   // Container for all the IDL keywords so local names can be checked.
 
-  ACE_Unbounded_Stack<char *> pragma_prefixes_;
+  std::vector<std::string> pragma_prefixes_;
   // Container for all the #pragma prefix declarations.
 
   bool preserve_cpp_keywords_ {true};

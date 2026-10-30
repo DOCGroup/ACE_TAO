@@ -647,15 +647,7 @@ IDL_GlobalData::destroy ()
   this->pd_stripped_filename.clear ();
   this->pd_idl_src_file.clear ();
 
-  size_t size = this->pragma_prefixes ().size  ();
-  char *trash = nullptr;
-
-  for (size_t i = 0; i < size; ++i)
-    {
-      this->pragma_prefixes ().pop (trash);
-      delete [] trash;
-      trash = nullptr;
-    }
+  this->pragma_prefixes_.clear ();
 
   this->pd_include_file_names_.clear ();
   this->include_file_seen_count_.clear ();
@@ -697,7 +689,7 @@ IDL_GlobalData::idl_keywords ()
   return this->idl_keywords_;
 }
 
-ACE_Unbounded_Stack<char *> &
+std::vector<std::string> &
 IDL_GlobalData::pragma_prefixes ()
 {
   return this->pragma_prefixes_;
@@ -768,15 +760,16 @@ IDL_GlobalData::update_prefix (std::string const& filename)
           if (prefix_entry != this->file_prefixes_.end ()
               && !prefix_entry->second.empty ())
             {
-              char *trash = nullptr;
-              this->pragma_prefixes_.pop (trash);
-              delete [] trash;
+              if (!this->pragma_prefixes_.empty ())
+                {
+                  this->pragma_prefixes_.pop_back ();
+                }
             }
         }
     }
   else
     {
-      this->pragma_prefixes_.push (ACE::strnew (""));
+      this->pragma_prefixes_.emplace_back ();
     }
 }
 

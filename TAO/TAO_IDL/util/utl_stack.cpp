@@ -129,9 +129,10 @@ UTL_ScopeStack::pop ()
   // it goes away with the scope.
   if (current != nullptr && current->has_prefix ())
     {
-      char *trash = nullptr;
-      idl_global->pragma_prefixes ().pop (trash);
-      delete [] trash;
+      if (!idl_global->pragma_prefixes ().empty ())
+        {
+          idl_global->pragma_prefixes ().pop_back ();
+        }
     }
 
   --this->pd_stack_top;
