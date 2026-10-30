@@ -210,9 +210,10 @@ private:
    */
   long id_counter_;
 
-  // = Don't allow these operations for now.
-  ACE_Timer_List_T (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &) = delete;
-  void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &) = delete;
+  ACE_Timer_List_T (ACE_Timer_List_T const &) = delete;
+  ACE_Timer_List_T (ACE_Timer_List_T &&) = delete;
+  ACE_Timer_List_T &operator= (ACE_Timer_List_T const &) = delete;
+  ACE_Timer_List_T &operator= (ACE_Timer_List_T &&) = delete;
 };
 
 #include "ace/Timer_List_T.cpp"

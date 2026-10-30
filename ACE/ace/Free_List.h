@@ -130,9 +130,10 @@ protected:
   ACE_LOCK mutex_;
 
 private:
-  // = Don't allow these operations for now.
-  ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
-  void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
+  ACE_Locked_Free_List (ACE_Locked_Free_List const &) = delete;
+  ACE_Locked_Free_List (ACE_Locked_Free_List &&) = delete;
+  ACE_Locked_Free_List &operator= (ACE_Locked_Free_List const &) = delete;
+  ACE_Locked_Free_List &operator= (ACE_Locked_Free_List &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
