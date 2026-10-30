@@ -17,8 +17,7 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "ace/RB_Tree.h"
-#include "ace/Null_Mutex.h"
+#include <set>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,10 +26,7 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree_Iterator
 {
 public:
-  using Implementation = ACE_RB_Tree_Iterator<PROXY *,
-                                               int,
-                                               ACE_Less_Than<PROXY *>,
-                                               ACE_Null_Mutex>;
+  using Implementation = typename std::set<PROXY *>::iterator;
 
   explicit TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
 
@@ -46,7 +42,7 @@ private:
 
 // ****************************************************************
 
-/// Concrete Proxy collection based on ACE_RB_Tree
+/// Concrete Proxy collection based on std::set
 /**
  * The Event Service Framework provides several alternatives for the
  * underlying proxy collections.
@@ -59,7 +55,7 @@ class TAO_ESF_Proxy_RB_Tree
 {
 public:
   /// A typedef for the underlying implementaiton class
-  using Implementation = ACE_RB_Tree<PROXY *, int, ACE_Less_Than<PROXY *>, ACE_Null_Mutex>;
+  using Implementation = std::set<PROXY *>;
 
   /// A typedef for the underlying iterator
   using Iterator = TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>;

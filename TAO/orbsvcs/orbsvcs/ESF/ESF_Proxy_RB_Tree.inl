@@ -40,7 +40,7 @@ TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator++ (int)
 template<class PROXY> ACE_INLINE PROXY*
 TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator *()
 {
-  return (*this->impl_).key ();
+  return *this->impl_;
 }
 
 // ****************************************************************
@@ -60,7 +60,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::end ()
 template<class PROXY> ACE_INLINE size_t
 TAO_ESF_Proxy_RB_Tree<PROXY>::size () const
 {
-  return this->impl_.current_size ();
+  return this->impl_.size ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
