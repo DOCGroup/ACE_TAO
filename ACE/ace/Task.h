@@ -64,6 +64,11 @@ namespace ACE_Task_Flags
 class ACE_Export ACE_Task_Base : public ACE_Service_Object
 {
 public:
+  ACE_Task_Base (ACE_Task_Base const &) = delete;
+  ACE_Task_Base (ACE_Task_Base &&) = delete;
+  ACE_Task_Base &operator= (ACE_Task_Base const &) = delete;
+  ACE_Task_Base &operator= (ACE_Task_Base &&) = delete;
+
   /// Constructor.
   ACE_Task_Base (ACE_Thread_Manager * = 0);
 
@@ -281,9 +286,6 @@ protected:
 
   /// Holds the thread ID of the last thread to exit svc() in this object.
   ACE_thread_t  last_thread_id_;
-private:
-  ACE_Task_Base &operator= (const ACE_Task_Base &) = delete;
-  ACE_Task_Base (const ACE_Task_Base &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

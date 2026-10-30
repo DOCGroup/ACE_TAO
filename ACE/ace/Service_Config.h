@@ -704,12 +704,13 @@ private:
 class ACE_Export ACE_Service_Config_Guard
 {
 public:
+  ACE_Service_Config_Guard (ACE_Service_Config_Guard const &) = delete;
+  ACE_Service_Config_Guard (ACE_Service_Config_Guard &&) = delete;
+  ACE_Service_Config_Guard &operator= (ACE_Service_Config_Guard const &) = delete;
+  ACE_Service_Config_Guard &operator= (ACE_Service_Config_Guard &&) = delete;
+
   ACE_Service_Config_Guard (ACE_Service_Gestalt* psg);
   ~ACE_Service_Config_Guard ();
-
-private:
-  ACE_Service_Config_Guard(const ACE_Service_Config_Guard&) = delete;
-  ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&) = delete;
 
 private:
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> saved_;
