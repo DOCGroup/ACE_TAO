@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 
+#include <vector>
+
 class UTL_Scope;
 class UTL_IdList;
 class AST_Decl;
@@ -80,14 +82,14 @@ class TAO_IDL_FE_Export UTL_ScopeStack
 {
 public:
   UTL_ScopeStack ();
-  ~UTL_ScopeStack ();
+  ~UTL_ScopeStack () = default;
   UTL_ScopeStack (UTL_ScopeStack const&) = delete;
   UTL_ScopeStack (UTL_ScopeStack&&) = delete;
   UTL_ScopeStack& operator= (UTL_ScopeStack const&) = delete;
   UTL_ScopeStack& operator= (UTL_ScopeStack&&) = delete;
 
-  /// The initial capacity and how much to increment the capacity when needed.
-  static constexpr size_t increments = 64;
+  /// The initial capacity reserved for scope stack entries.
+  static constexpr std::size_t increments = 64;
 
   // Return top element.
   UTL_Scope *top () const;
@@ -121,13 +123,7 @@ public:
 
 private:
   // Store scopes stack
-  UTL_Scope **pd_stack_data {};
-
-  // How many allocated?
-  unsigned long pd_stack_data_nalloced {increments};
-
-  // How many used?
-  unsigned long pd_stack_top {};
+  std::vector<UTL_Scope *> pd_stack_data;
 
   // Friend active iterator class for UTL_ScopeStack.
   friend class UTL_ScopeStackActiveIterator;
