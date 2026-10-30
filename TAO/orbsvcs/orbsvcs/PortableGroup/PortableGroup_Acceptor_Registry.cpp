@@ -9,20 +9,17 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Leader_Follower.h"
 #include "tao/SystemException.h"
+#include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry ()
 {
   // Free the memory for the endpoints.
-  Entry *entry = nullptr;
-  Acceptor_Registry_Iterator iter (this->registry_);
-
-  while (iter.next (entry))
+  for (Entry &entry : this->registry_)
     {
-      delete entry->endpoint;
-      delete entry->acceptor;
-      iter.advance ();
+      delete entry.endpoint;
+      delete entry.acceptor;
     }
 }
 
@@ -112,8 +109,13 @@ TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
       tmp_entry.endpoint = nc_profile->endpoint ()->duplicate ();
       tmp_entry.cnt = 1;
 
-      if (this->registry_.enqueue_tail (tmp_entry) == -1)
+      try
         {
+          this->registry_.push_back (tmp_entry);
+        }
+      catch (std::bad_alloc const &)
+        {
+          delete tmp_entry.endpoint;
           delete acceptor;
 
           if (TAO_debug_level > 0)
@@ -124,10 +126,10 @@ TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
                         buffer,
                         ""));
 
-          throw CORBA::BAD_PARAM (
+          throw CORBA::NO_MEMORY (
             CORBA::SystemException::_tao_minor_code (
               TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-              EINVAL),
+              ENOMEM),
             CORBA::COMPLETED_NO);
         }
     }
@@ -151,21 +153,20 @@ int
 TAO_PortableGroup_Acceptor_Registry::find (TAO_Profile const *profile,
                                            Entry *&entry)
 {
-  Acceptor_Registry_Iterator iter (this->registry_);
-
-  while (iter.next (entry))
+  for (Entry &current : this->registry_)
     {
       // Since the endpoint routine is nonconst, need to
       // cast away the constness even though we're not
       // changing anything.
       TAO_Profile * const nc_profile = const_cast<TAO_Profile *> (profile);
-      if (entry->endpoint->is_equivalent (nc_profile->endpoint ()))
-        return 1;
+      if (current.endpoint->is_equivalent (nc_profile->endpoint ()))
+        {
+          entry = &current;
+          return 1;
+        }
+    }
 
-      iter.advance ();
-   }
-
-   return 0;
+  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

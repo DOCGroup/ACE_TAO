@@ -20,11 +20,11 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
 
-#include "ace/Vector_T.h"
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 #include <cstring>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -396,7 +396,7 @@ TAO_IIOP_Endpoint::add_local_endpoint (TAO_IIOP_Endpoint *ep,
 
 // local helper function for TAO_IIOP_Endpoint::find_preferred_interfaces
 static void
-TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
+TAO_IIOP_Endpoint_get_ip_interfaces (std::vector<ACE_CString> &local_ips)
 {
   ACE_INET_Addr* tmp = nullptr;
   size_t cnt = 0u;
@@ -422,7 +422,7 @@ TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
 static void
 TAO_IIOP_Endpoint_none_duplicate_insert (
   const ACE_CString &value,
-  ACE_Vector<ACE_CString> &vector)
+  std::vector<ACE_CString> &vector)
 {
   bool found= false;
   for (size_t x= 0u; x < vector.size (); ++x)
@@ -444,7 +444,7 @@ void
 TAO_IIOP_Endpoint::find_preferred_interfaces (
   const ACE_CString &host,
   const ACE_CString &csvPreferred,
-  ACE_Vector<ACE_CString> &preferred)
+  std::vector<ACE_CString> &preferred)
 {
   // When no preferred interfaces directives are given we can directly return
   if(csvPreferred.length() == 0)
@@ -452,7 +452,7 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
       return;
     }
 
-  ACE_Vector<ACE_CString> local_ips;
+  std::vector<ACE_CString> local_ips;
   TAO_IIOP_Endpoint_get_ip_interfaces (local_ips);
   if (local_ips.size () == 0)
     {
@@ -536,7 +536,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
                                          bool enforce,
                                          TAO_IIOP_Profile &profile)
 {
-  ACE_Vector<ACE_CString> preferred;
+  std::vector<ACE_CString> preferred;
   find_preferred_interfaces(this->host_.in(), csv, preferred);
   CORBA::ULong count = static_cast<CORBA::ULong> (preferred.size());
   size_t i = 0;

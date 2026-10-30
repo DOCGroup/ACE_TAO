@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Unbounded_Queue.h"
+#include <deque>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -74,8 +74,7 @@ public:
   /// Close all open acceptors.
   int close_all ();
 
-  using Acceptor_Registry = ACE_Unbounded_Queue<Entry>;
-  using Acceptor_Registry_Iterator = ACE_Unbounded_Queue_Iterator<Entry>;
+  using Acceptor_Registry = std::deque<Entry>;
 
 protected:
   /// Helper function to open a group acceptor.

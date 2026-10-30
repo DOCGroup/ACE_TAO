@@ -3,13 +3,13 @@
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Vector_T.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/POAManagerC.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h" // operator == on CosNaming::Name
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -475,7 +475,7 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
 
   ////////////////////////////////////////////
   // a vector of roles that need to be deleted.
-  ACE_Vector<ACE_CString> emptyRoles;
+  std::vector<ACE_CString> emptyRoles;
 
   // iterate through the registery
   for (RegistryType_Iterator it = this->registry_.begin();

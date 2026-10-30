@@ -40,20 +40,6 @@ namespace TAO_PG
     return *this;
   }
 
-  ACE_INLINE
-  bool
-  Properties_Encoder::NamedValue::operator == (Properties_Encoder::NamedValue const & rhs) const
-  {
-    return this->name_ == rhs.name_;
-  }
-
-  ACE_INLINE
-  bool
-  Properties_Encoder::NamedValue::operator != (Properties_Encoder::NamedValue const & rhs) const
-  {
-    return this->name_ != rhs.name_;
-  }
-
 } //namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

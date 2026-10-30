@@ -22,8 +22,8 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/PortableGroup/portablegroup_export.h"
 
-#include "ace/Vector_T.h"
 #include "ace/SString.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,18 +50,17 @@ namespace TAO_PG
       NamedValue (ACE_CString const & name, PortableGroup::Value const & value);
       NamedValue (NamedValue const & rhs);
       NamedValue & operator = (NamedValue const & rhs);
-      /// Meaningless method to keep ACE_Vector happy
-      bool operator == (NamedValue const & rhs) const;
-      /// Meaningless method to keep ACE_Vector happy
-      bool operator != (NamedValue const & rhs) const;
     };
-    using NamedValueVec = ACE_Vector<NamedValue, 10>;
+    using NamedValueVec = std::vector<NamedValue>;
 
   public:
     /**
      * Construct an empty set of properties.
      */
-    Properties_Encoder () = default;
+    Properties_Encoder ()
+    {
+      values_.reserve (10);
+    }
 
     /// standard destructor
     ~Properties_Encoder () = default;

@@ -110,7 +110,7 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
       // Since we have been told to match some targetNetwork=localNetwork listener interface
       // strings, attempt to match the actual targetHost and our actual network interface cards
       // to see how many joins we need to attempt.
-      ACE_Vector<ACE_CString> preferred;
+      std::vector<ACE_CString> preferred;
       TAO_IIOP_Endpoint::find_preferred_interfaces (
         target_multicast_group,
         this->listener_interfaces_,

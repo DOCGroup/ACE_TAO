@@ -28,7 +28,7 @@
 #include "tao/Endpoint.h"
 
 #include "ace/INET_Addr.h"
-#include "ace/Vector_T.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -146,7 +146,7 @@ public:
   /// matches the host from our endpoint.
   static void find_preferred_interfaces (const ACE_CString& host,
                                          const ACE_CString& csvPreferred,
-                                         ACE_Vector<ACE_CString>& preferred);
+                                         std::vector<ACE_CString>& preferred);
 
 private:
   TAO_IIOP_Endpoint *next_filtered_i (TAO_IIOP_Endpoint *root,

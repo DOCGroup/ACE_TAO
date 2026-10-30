@@ -23,6 +23,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Refcountable_T.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -140,7 +141,7 @@ private:
   TAO_SYNCH_MUTEX recv_lock_;
 
   /// Complete packets.
-  using Packets_Queue = ACE_Unbounded_Queue<TAO_PG::UIPMC_Recv_Packet *>;
+  using Packets_Queue = std::deque<TAO_PG::UIPMC_Recv_Packet *>;
   Packets_Queue complete_;
 
   /// A lock for access synchronization to complete queue.

@@ -11,6 +11,7 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Resume_Handle.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,13 +34,13 @@ TAO_UIPMC_Mcast_Transport::~TAO_UIPMC_Mcast_Transport ()
   this->cleanup_packets (false);
 
   // Remove any unprocessed completed messages
-  if (!this->complete_.is_empty ())
+  if (!this->complete_.empty ())
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, complete_guard, this->complete_lock_);
-      while (!this->complete_.is_empty ())
+      while (!this->complete_.empty ())
         {
-          TAO_PG::UIPMC_Recv_Packet *packet = nullptr;
-          this->complete_.dequeue_head (packet);
+          TAO_PG::UIPMC_Recv_Packet *packet = this->complete_.front ();
+          this->complete_.pop_front ();
           delete packet;
         }
     }
@@ -380,7 +381,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 
               // If there are no completed message ahead of us AND
               // we only want a single message, just return it.
-              if (this->complete_.is_empty () && !eager_dequeue)
+              if (this->complete_.empty () && !eager_dequeue)
                 {
                   if (TAO_debug_level >= 9)
                     {
@@ -396,7 +397,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                                 guard2,
                                 this->complete_lock_,
                                 packet);
-              if (this->complete_.is_empty () && !eager_dequeue)
+              if (this->complete_.empty () && !eager_dequeue)
                 {
                   // Another thread dequeued the waiting MIOP message before we got
                   // the lock, simply return our single message, don't bother queueing
@@ -421,7 +422,9 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                 }
 
               // Add it to the complete queue.
-              this->complete_.enqueue_tail (packet);
+              std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> packet_guard (packet);
+              this->complete_.push_back (packet);
+              packet_guard.release ();
 
               // Stop attempting to queue more messages if we are not in eager mode.
               if (!eager_dequeue)
@@ -433,21 +436,14 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
 
   // Ok we have received as many packets as we could, now if we have
   // any completed packets queued up, return the first to the caller.
-  if (this->complete_.is_empty ())
+  if (this->complete_.empty ())
     return nullptr;
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, complete_guard, this->complete_lock_, nullptr);
-  if (this->complete_.is_empty ())
+  if (this->complete_.empty ())
     return nullptr; // Another thread got here first, not a problem.
 
-  TAO_PG::UIPMC_Recv_Packet *packet = nullptr;
-  if (this->complete_.dequeue_head (packet) == -1)
-    {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - TAO_UIPMC_Mcast_Transport[%B]::recv_all, ")
-                  ACE_TEXT ("unable to dequeue completed message\n"),
-                  this->id ()));
-      return nullptr;
-    }
+  TAO_PG::UIPMC_Recv_Packet *packet = this->complete_.front ();
+  this->complete_.pop_front ();
 
   if (TAO_debug_level >= 9)
     {
@@ -460,7 +456,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
   // If there is another message waiting to be processed (in addition
   // to the one we have just taken off), notify another thread (if
   // available) so this can also be processed in parrellel.
-  if (!this->complete_.is_empty ())
+  if (!this->complete_.empty ())
     {
       int const retval = this->notify_reactor_now ();
       if (retval == 1)
