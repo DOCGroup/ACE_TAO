@@ -19,7 +19,6 @@
 
 #include <optional>
 #include <string>
-#include <string_view>
 
 class be_interface;
 class be_valuetype;
@@ -58,9 +57,9 @@ public:
     COREDX
   };
 
-  inline static constexpr std::string_view core_versioned_ns_begin =
+  inline static std::string const core_versioned_ns_begin =
     "\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n";
-  inline static constexpr std::string_view core_versioned_ns_end =
+  inline static std::string const core_versioned_ns_end =
     "\nTAO_END_VERSIONED_NAMESPACE_DECL\n";
 
   BE_GlobalData ();

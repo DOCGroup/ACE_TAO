@@ -25,7 +25,7 @@
 #include "global_extern.h"
 #include "idl_defines.h"
 
-#include <string_view>
+#include <string>
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
@@ -80,7 +80,7 @@ be_change_idl_file_extension (std::string const& idl_file,
   // before giving up.
   std::string::size_type base = std::string::npos;
 
-  static constexpr std::string_view extensions[] = {
+  static std::string const extensions[] = {
     ".idl",
     ".pidl",
     ".IDL",
@@ -2587,19 +2587,19 @@ BE_GlobalData::parse_args (long &i, char **av)
                         ACE_TEXT ("no selection for -H option\n")));
             idl_global->parse_args_exit (1);
           }
-        else if (std::string_view (av[i + 1]) == "dynamic_hash")
+        else if (std::string (av[i + 1]) == "dynamic_hash")
           {
             be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
           }
-        else if (std::string_view (av[i + 1]) == "perfect_hash")
+        else if (std::string (av[i + 1]) == "perfect_hash")
           {
             be_global->lookup_strategy (BE_GlobalData::TAO_PERFECT_HASH);
           }
-        else if (std::string_view (av[i + 1]) == "binary_search")
+        else if (std::string (av[i + 1]) == "binary_search")
           {
             be_global->lookup_strategy (BE_GlobalData::TAO_BINARY_SEARCH);
           }
-        else if (std::string_view (av[i + 1]) == "linear_search")
+        else if (std::string (av[i + 1]) == "linear_search")
           {
             be_global->lookup_strategy (BE_GlobalData::TAO_LINEAR_SEARCH);
           }
@@ -3163,7 +3163,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'I')
           {
-            size_t const options = std::string_view (av[i]).size () - 3;
+            size_t const options = std::string (av[i]).size () - 3;
             size_t j;
             size_t k = i;
             // Generate implementation files.
