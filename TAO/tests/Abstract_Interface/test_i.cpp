@@ -3,7 +3,7 @@
 #include "ace/OS_NS_string.h"
 
 char *
-foo_i::foo_op (const char * inarg)
+foo_i::foo_op (char const *inarg)
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
@@ -20,7 +20,7 @@ foo_i::foo_op (const char * inarg)
 }
 
 char *
-foo_i::base_op (const char * inarg)
+foo_i::base_op (char const *inarg)
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
@@ -51,7 +51,7 @@ passer_i::shutdown ()
 void
 passer_i::pass_ops (base_out outarg)
 {
-  foo_i *servant = 0;
+  foo_i *servant = nullptr;
   ACE_NEW (servant,
            foo_i);
 
@@ -75,21 +75,21 @@ passer_i::pass_state (base_out outarg)
   StringNode_var sn;
   ACE_NEW (sn.inout (),
            OBV_StringNode);
-  sn->name ((const char *) "RootNode");
+  sn->name ("RootNode");
   tc->root (sn.in ());
 
   // Create the left leaf.
   StringNode_var l_dummy;
   ACE_NEW (l_dummy.inout (),
            OBV_StringNode);
-  l_dummy->name ((const char *) "LeftNode");
+  l_dummy->name ("LeftNode");
   sn->left (l_dummy.in ());
 
   // Create the right leaf.
   StringNode_var r_dummy;
   ACE_NEW (r_dummy.inout (),
            OBV_StringNode);
-  r_dummy->name ((const char *) "RightNode");
+  r_dummy->name ("RightNode");
   sn->right (r_dummy.in ());
 
   outarg = tc._retn ();
