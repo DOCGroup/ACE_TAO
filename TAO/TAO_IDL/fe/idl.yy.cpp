@@ -3634,7 +3634,7 @@ idl_parse_line_and_file (char *buf)
 
       h[i] = '\0';
       std::string tmp (h);
-      idl_global->update_prefix (tmp.data ());
+      idl_global->update_prefix (tmp);
       idl_global->set_filename (tmp);
     }
 
@@ -3745,13 +3745,15 @@ idl_store_pragma (char *buf)
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
           std::string ext_id (idl_global->filename ());
-          ACE_Hash_Map_Entry<char *, char *> *entry = nullptr;
-          int const status =
-            idl_global->file_prefixes ().find (ext_id.data (), entry);
+          IDL_GlobalData::File_Prefix_Map &file_prefixes =
+            idl_global->file_prefixes ();
+          IDL_GlobalData::File_Prefix_Map::iterator const entry =
+            file_prefixes.find (ext_id);
+          bool const found = entry != file_prefixes.end ();
 
-          if (status == 0)
+          if (found)
             {
-              if (ACE_OS::strcmp (entry->int_id_, "") != 0)
+              if (!entry->second.empty ())
                 {
                   char *trash = nullptr;
                   idl_global->pragma_prefixes ().pop (trash);
@@ -3760,11 +3762,7 @@ idl_store_pragma (char *buf)
               else if (depth == 1)
                 {
                   // Remove the default "" and bind the new prefix.
-                  ACE::strdelete (entry->ext_id_);
-                  ACE::strdelete (entry->int_id_);
-                  (void) idl_global->file_prefixes ().unbind (entry);
-                  (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id.c_str ()),
-                                                            ACE::strnew (new_prefix));
+                  entry->second = new_prefix;
                 }
             }
 
@@ -3789,10 +3787,9 @@ idl_store_pragma (char *buf)
               top_scope->has_prefix (true);
             }
 
-          if (status != 0)
+          if (!found)
             {
-              (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id.c_str ()),
-                                                        ACE::strnew (new_prefix));
+              file_prefixes.emplace (ext_id, new_prefix);
             }
         }
     }

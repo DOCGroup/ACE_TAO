@@ -67,10 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // May of them could be forward declared..
 #include "ace/Functor_String.h"
-#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers_T.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Null_Mutex.h"
 
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
@@ -523,7 +521,7 @@ public:
   ACE_Unbounded_Stack<char *> & pragma_prefixes ();
   // Accessor for the pragma prefix container.
 
-  void update_prefix (char *filename);
+  void update_prefix (std::string const& filename);
   // Do repo id prefix bookkeeping when the file changes.
 
   long seen_include_file_before (std::string const& filename);
@@ -597,8 +595,9 @@ public:
   std::deque<AST_Interface *> & mixed_parentage_interfaces ();
   // Accessor for the member
 
-  ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
-  file_prefixes ();
+  using File_Prefix_Map = std::unordered_map<std::string, std::string>;
+
+  File_Prefix_Map &file_prefixes ();
   // Accessor for the IDL file prefix container.
 
   bool pass_orb_idl () const;
@@ -961,7 +960,7 @@ private:
   std::vector<std::string> rel_include_paths_;
   // Used by backends with the -r option.
 
-  ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> file_prefixes_;
+  File_Prefix_Map file_prefixes_;
   // Associates a prefix with a file.
 
   bool pass_orb_idl_ {};

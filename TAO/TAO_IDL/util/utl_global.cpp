@@ -704,7 +704,7 @@ IDL_GlobalData::pragma_prefixes ()
 }
 
 void
-IDL_GlobalData::update_prefix (char *filename)
+IDL_GlobalData::update_prefix (std::string const& filename)
 {
   // If we are just starting up and processing the temporary filename,
   // there are no prefix issues to deal with yet.
@@ -714,7 +714,7 @@ IDL_GlobalData::update_prefix (char *filename)
     }
 
   std::string const& current_filename = this->pd_filename;
-  std::string const next_filename (filename);
+  std::string const& next_filename = filename;
 
   // We have to do this check because some preprocessors (gcc 3.2
   // on RedHat Linux 7.1, for one) output the same filename
@@ -729,17 +729,15 @@ IDL_GlobalData::update_prefix (char *filename)
 
   std::string const& main_filename = this->pd_main_filename;
 
-  char *prefix = nullptr;
-  int status = this->file_prefixes_.find (filename, prefix);
+  File_Prefix_Map::iterator entry = this->file_prefixes_.find (filename);
 
-  if (status == 0)
+  if (entry != this->file_prefixes_.end ())
     {
-      this->pd_root->prefix (prefix);
+      this->pd_root->prefix (entry->second.c_str ());
     }
   else
     {
-      prefix = ACE::strnew ("");
-      (void) this->file_prefixes_.bind (ACE::strnew (filename), prefix);
+      this->file_prefixes_.emplace (filename, std::string {});
       this->pd_root->prefix ("");
     }
 
@@ -760,15 +758,15 @@ IDL_GlobalData::update_prefix (char *filename)
       if (!this->pd_in_main_file)
         {
           std::string current_filename (this->pd_filename);
-          status =
-            this->file_prefixes_.find (current_filename.data (),
-                                       prefix);
+          File_Prefix_Map::const_iterator const prefix_entry =
+            this->file_prefixes_.find (current_filename);
 
           // This function is called just before we transition to a
           // new file at global scope. If there is a non-null prefix
           // stored in the table under our not-yet-changed filename,
           // pop it.
-          if (status == 0 && prefix != nullptr && prefix[0] != '\0')
+          if (prefix_entry != this->file_prefixes_.end ()
+              && !prefix_entry->second.empty ())
             {
               char *trash = nullptr;
               this->pragma_prefixes_.pop (trash);
@@ -993,7 +991,7 @@ IDL_GlobalData::mixed_parentage_interfaces ()
   return this->mixed_parentage_interfaces_;
 }
 
-ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex> &
+IDL_GlobalData::File_Prefix_Map &
 IDL_GlobalData::file_prefixes ()
 {
   return this->file_prefixes_;
@@ -1190,18 +1188,7 @@ IDL_GlobalData::fini ()
   this->pd_include_file_names_.clear ();
   this->include_file_seen_count_.clear ();
 
-  ACE_Hash_Map_Entry<char *, char *> *entry = nullptr;
-
-  for (ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex> hiter (
-           this->file_prefixes_
-         );
-       !hiter.done ();
-       hiter.advance ())
-    {
-      hiter.next (entry);
-      ACE::strdelete (entry->ext_id_);
-      ACE::strdelete (entry->int_id_);
-    }
+  this->file_prefixes_.clear ();
 
   for (std::pair<std::string const,
                  std::unique_ptr<DCPS_Data_Type_Info>> const& dcps_entry :
