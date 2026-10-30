@@ -6,6 +6,7 @@
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1702,8 +1703,8 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
 
 void
 TAO_ValueDef_i::value_contents (
-    ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-    ACE_Unbounded_Queue<ACE_TString> &path_queue,
+    std::deque<CORBA::DefinitionKind> &kind_queue,
+    std::deque<ACE_TString> &path_queue,
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited
   )
@@ -1741,9 +1742,9 @@ TAO_ValueDef_i::value_contents (
                                                              section_name)
                   == 0)
             {
-              kind_queue.enqueue_tail (CORBA::dk_ValueMember);
+              kind_queue.push_back (CORBA::dk_ValueMember);
 
-              path_queue.enqueue_tail (
+              path_queue.push_back (
                   path + "\\members\\" + section_name.c_str ()
                 );
             }

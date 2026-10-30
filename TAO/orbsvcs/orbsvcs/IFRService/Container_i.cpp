@@ -8,6 +8,7 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "ace/SString.h"
 #include <memory>
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -466,8 +467,8 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
       return retval._retn ();
     }
 
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   // Definitions
 
@@ -510,7 +511,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
               if (limit_type == CORBA::dk_all
                   || limit_type == def_kind)
                 {
-                  kind_queue.enqueue_tail (def_kind);
+                  kind_queue.push_back (def_kind);
 
                   ACE_TString id;
                   this->repo_->config ()->get_string_value (defn_key,
@@ -524,7 +525,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                                               path
                                             );
 
-                  path_queue.enqueue_tail (path);
+                  path_queue.push_back (path);
                 }
             }
         }
@@ -570,10 +571,12 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
   for (CORBA::ULong j = 0; j < size; ++j)
     {
       CORBA::DefinitionKind next_kind = CORBA::dk_none;
-      kind_queue.dequeue_head (next_kind);
+      next_kind = kind_queue.front ();
+      kind_queue.pop_front ();
 
       ACE_TString next_path;
-      path_queue.dequeue_head (next_path);
+      next_path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (next_kind,
@@ -611,8 +614,8 @@ TAO_Container_i::lookup_name_i (char const *search_name,
                                 CORBA::DefinitionKind limit_type,
                                 CORBA::Boolean exclude_inherited)
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   this->lookup_name_recursive (kind_queue,
                                path_queue,
@@ -634,10 +637,12 @@ TAO_Container_i::lookup_name_i (char const *search_name,
   for (CORBA::ULong i = 0; i < size; ++i)
     {
       CORBA::DefinitionKind next_kind = CORBA::dk_none;
-      kind_queue.dequeue_head (next_kind);
+      next_kind = kind_queue.front ();
+      kind_queue.pop_front ();
 
       ACE_TString next_path;
-      path_queue.dequeue_head (next_path);
+      next_path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (next_kind,
@@ -1792,8 +1797,8 @@ TAO_Container_i::tmp_name_holder (char const *name)
 
 void
 TAO_Container_i::lookup_name_recursive (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
       char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
@@ -1851,9 +1856,9 @@ TAO_Container_i::lookup_name_recursive (
 
               if (ACE_OS::strcmp (name.c_str (), search_name) == 0)
                 {
-                  kind_queue.enqueue_tail (def_kind);
+                  kind_queue.push_back (def_kind);
 
-                  path_queue.enqueue_tail (path);
+                  path_queue.push_back (path);
                 }
             }
 
@@ -1905,8 +1910,8 @@ TAO_Container_i::lookup_name_recursive (
 
 void
 TAO_Container_i:: lookup_attr (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
       char const *search_name,
       CORBA::Boolean exclude_inherited
     )
@@ -1941,7 +1946,7 @@ TAO_Container_i:: lookup_attr (
 
           if (name == search_name)
             {
-              kind_queue.enqueue_tail (CORBA::dk_Attribute);
+              kind_queue.push_back (CORBA::dk_Attribute);
 
               ACE_TString id;
               this->repo_->config ()->get_string_value (member_key,
@@ -1955,7 +1960,7 @@ TAO_Container_i:: lookup_attr (
                                           path
                                         );
 
-              path_queue.enqueue_tail (path);
+              path_queue.push_back (path);
             }
         }
     }
@@ -2007,8 +2012,8 @@ TAO_Container_i:: lookup_attr (
 
 void
 TAO_Container_i::lookup_op (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
       char const *search_name,
       CORBA::Boolean exclude_inherited
     )
@@ -2043,7 +2048,7 @@ TAO_Container_i::lookup_op (
 
           if (name == search_name)
             {
-              kind_queue.enqueue_tail (CORBA::dk_Operation);
+              kind_queue.push_back (CORBA::dk_Operation);
 
               ACE_TString id;
               this->repo_->config ()->get_string_value (member_key,
@@ -2057,7 +2062,7 @@ TAO_Container_i::lookup_op (
                                           path
                                         );
 
-              path_queue.enqueue_tail (path);
+              path_queue.push_back (path);
             }
         }
     }

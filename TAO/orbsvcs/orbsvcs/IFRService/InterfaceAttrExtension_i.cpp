@@ -7,6 +7,7 @@
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
 #include "ace/SString.h"
+#include <deque>
 
 // =====================================================================
 
@@ -65,7 +66,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
 
   CORBA::ULong i = 0;
   CORBA::ULong j = 0;
-  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+  std::deque<ACE_Configuration_Section_Key> key_queue;
 
   // Store our section key for later restoration after we have
   // traversed entries for inherited interfaces.
@@ -106,7 +107,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
 
           if (status == 0)
             {
-              key_queue.enqueue_tail (op_key);
+              key_queue.push_back (op_key);
             }
         }
     }
@@ -117,7 +118,8 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   for (i = 0; i < size; ++i)
     {
       ACE_Configuration_Section_Key key;
-      key_queue.dequeue_head (key);
+      key = key_queue.front ();
+      key_queue.pop_front ();
 
       TAO_OperationDef_i op (this->repo_);
       op.section_key (key);
@@ -164,7 +166,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
 
           if (status == 0)
             {
-              key_queue.enqueue_tail (attr_key);
+              key_queue.push_back (attr_key);
             }
         }
     }
@@ -175,7 +177,8 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   for (i = 0; i < size; ++i)
     {
       ACE_Configuration_Section_Key key;
-      key_queue.dequeue_head (key);
+      key = key_queue.front ();
+      key_queue.pop_front ();
 
       TAO_ExtAttributeDef_i attr (this->repo_);
       attr.section_key (key);

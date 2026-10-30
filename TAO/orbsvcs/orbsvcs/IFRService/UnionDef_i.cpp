@@ -8,6 +8,7 @@
 
 #include <memory>
 #include "ace/SString.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -192,7 +193,7 @@ TAO_UnionDef_i::members ()
 CORBA::UnionMemberSeq *
 TAO_UnionDef_i::members_i ()
 {
-  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+  std::deque<ACE_Configuration_Section_Key> key_queue;
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (this->section_key_,
@@ -229,7 +230,7 @@ TAO_UnionDef_i::members_i ()
                                                    0)
                == 0)
             {
-              key_queue.enqueue_tail (member_key);
+              key_queue.push_back (member_key);
             }
         }
     }
@@ -254,7 +255,8 @@ TAO_UnionDef_i::members_i ()
 
   for (CORBA::ULong k = 0; k < size; ++k)
     {
-      key_queue.dequeue_head (next_key);
+      next_key = key_queue.front ();
+      key_queue.pop_front ();
 
       this->repo_->config ()->get_string_value (next_key,
                                                 "name",

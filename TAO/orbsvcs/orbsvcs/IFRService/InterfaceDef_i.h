@@ -120,8 +120,8 @@ public:
 
   /// Gathers the attributes and operations of all the ancestors.
   void interface_contents (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
 
@@ -132,19 +132,19 @@ public:
   /// Depth-first traversal of the inheritance tree to get all the
   /// attributes.
   void inherited_attributes (
-      ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue);
+      std::deque<ACE_Configuration_Section_Key> &key_queue);
 
   /// Depth-first traversal of the inheritance tree to get all the
   /// operations.
   void inherited_operations (
-      ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue);
+      std::deque<ACE_Configuration_Section_Key> &key_queue);
 
 private:
   /// Depth-first traversal of the inheritance tree to get all
   /// the base interfaces.
   void base_interfaces_recursive (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue);
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue);
 
   /// When creating a new attribute, check for a clash with an inherited
   /// attribute name.

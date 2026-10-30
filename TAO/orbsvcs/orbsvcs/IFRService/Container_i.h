@@ -17,6 +17,7 @@
 
 #include "orbsvcs/IFRService/IRObject_i.h"
 #include "orbsvcs/IFRService/ifr_service_export.h"
+#include <deque>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -308,21 +309,21 @@ protected:
       CORBA::Any const &value);
 
   void lookup_attr (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
       char const *search_name,
       CORBA::Boolean exclude_inherited);
 
   void lookup_op (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
       char const *search_name,
       CORBA::Boolean exclude_inherited);
 
 private:
   void lookup_name_recursive (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
       char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,

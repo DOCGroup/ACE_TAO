@@ -188,8 +188,8 @@ public:
 
   /// Gathers the members of all the ancestors.
   void value_contents (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited);
 };

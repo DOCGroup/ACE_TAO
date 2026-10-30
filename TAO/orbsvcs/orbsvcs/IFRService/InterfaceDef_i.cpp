@@ -6,6 +6,7 @@
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -176,8 +177,8 @@ TAO_InterfaceDef_i::base_interfaces ()
 CORBA::InterfaceDefSeq *
 TAO_InterfaceDef_i::base_interfaces_i ()
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   this->base_interfaces_recursive (kind_queue,
                                    path_queue);
@@ -194,11 +195,11 @@ TAO_InterfaceDef_i::base_interfaces_i ()
 
   for (CORBA::ULong i = 0; i < size; ++i)
     {
-      CORBA::DefinitionKind def_kind;
-      kind_queue.dequeue_head (def_kind);
+      kind_queue.pop_front ();
 
       ACE_TString path;
-      path_queue.dequeue_head (path);
+      path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::path_to_ir_object (path,
@@ -395,7 +396,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
 
   CORBA::ULong i = 0;
   CORBA::ULong j = 0;
-  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+  std::deque<ACE_Configuration_Section_Key> key_queue;
 
   // Store our section key for later restoration after we have
   // traversed entries for inherited interfaces.
@@ -434,7 +435,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
 
           if (status == 0)
             {
-              key_queue.enqueue_tail (op_key);
+              key_queue.push_back (op_key);
             }
         }
     }
@@ -445,7 +446,8 @@ TAO_InterfaceDef_i::describe_interface_i ()
   for (i = 0; i < size; ++i)
     {
       ACE_Configuration_Section_Key key;
-      key_queue.dequeue_head (key);
+      key = key_queue.front ();
+      key_queue.pop_front ();
 
       TAO_OperationDef_i op (this->repo_);
       op.section_key (key);
@@ -492,7 +494,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
 
           if (status == 0)
             {
-              key_queue.enqueue_tail (attr_key);
+              key_queue.push_back (attr_key);
             }
         }
     }
@@ -503,7 +505,8 @@ TAO_InterfaceDef_i::describe_interface_i ()
   for (i = 0; i < size; ++i)
     {
       ACE_Configuration_Section_Key key;
-      key_queue.dequeue_head (key);
+      key = key_queue.front ();
+      key_queue.pop_front ();
 
       TAO_AttributeDef_i attr (this->repo_);
       attr.section_key (key);
@@ -822,8 +825,8 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
 
 void
 TAO_InterfaceDef_i::interface_contents (
-    ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-    ACE_Unbounded_Queue<ACE_TString> &path_queue,
+    std::deque<CORBA::DefinitionKind> &kind_queue,
+    std::deque<ACE_TString> &path_queue,
     CORBA::DefinitionKind limit_type,
     CORBA::Boolean exclude_inherited
   )
@@ -861,9 +864,9 @@ TAO_InterfaceDef_i::interface_contents (
                                                              section_name)
                   == 0)
             {
-              kind_queue.enqueue_tail (CORBA::dk_Attribute);
+              kind_queue.push_back (CORBA::dk_Attribute);
 
-              path_queue.enqueue_tail (
+              path_queue.push_back (
                   path + "\\attrs\\" + section_name.c_str ()
                 );
             }
@@ -891,9 +894,9 @@ TAO_InterfaceDef_i::interface_contents (
                                                              section_name)
                   == 0)
             {
-              kind_queue.enqueue_tail (CORBA::dk_Operation);
+              kind_queue.push_back (CORBA::dk_Operation);
 
-              path_queue.enqueue_tail (
+              path_queue.push_back (
                   path + "\\ops\\" + section_name.c_str ()
                 );
             }
@@ -965,8 +968,8 @@ TAO_InterfaceDef_i::name_clash (char const *name)
 
 void
 TAO_InterfaceDef_i::base_interfaces_recursive (
-    ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-    ACE_Unbounded_Queue<ACE_TString> &path_queue
+    std::deque<CORBA::DefinitionKind> &kind_queue,
+    std::deque<ACE_TString> &path_queue
   )
 {
   ACE_Configuration_Section_Key inherited_key;
@@ -1013,7 +1016,7 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
           tmp.base_interfaces_recursive (kind_queue,
                                          path_queue);
 
-          path_queue.enqueue_tail (inherited_path);
+          path_queue.push_back (inherited_path);
 
           this->repo_->config ()->get_integer_value (base_key,
                                                      "def_kind",
@@ -1021,18 +1024,18 @@ TAO_InterfaceDef_i::base_interfaces_recursive (
 
           def_kind = static_cast<CORBA::DefinitionKind> (kind);
 
-          kind_queue.enqueue_tail (def_kind);
+          kind_queue.push_back (def_kind);
         }
     }
 }
 
 void
 TAO_InterfaceDef_i::inherited_attributes (
-    ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
+    std::deque<ACE_Configuration_Section_Key> &key_queue
   )
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   this->base_interfaces_recursive (kind_queue,
                                    path_queue);
@@ -1045,7 +1048,8 @@ TAO_InterfaceDef_i::inherited_attributes (
 
   for (size_t i = 0; i < size; ++i)
     {
-      path_queue.dequeue_head (path_name);
+      path_name = path_queue.front ();
+      path_queue.pop_front ();
 
       status =
         this->repo_->config ()->expand_path (this->repo_->root_key (),
@@ -1072,7 +1076,7 @@ TAO_InterfaceDef_i::inherited_attributes (
                                                     0,
                                                     attr_key);
 
-              key_queue.enqueue_tail (attr_key);
+              key_queue.push_back (attr_key);
             }
         }
     }
@@ -1080,11 +1084,11 @@ TAO_InterfaceDef_i::inherited_attributes (
 
 void
 TAO_InterfaceDef_i::inherited_operations (
-    ACE_Unbounded_Queue<ACE_Configuration_Section_Key> &key_queue
+    std::deque<ACE_Configuration_Section_Key> &key_queue
   )
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   this->base_interfaces_recursive (kind_queue,
                                    path_queue);
@@ -1097,7 +1101,8 @@ TAO_InterfaceDef_i::inherited_operations (
 
   for (size_t i = 0; i < size; ++i)
     {
-      path_queue.dequeue_head (path_name);
+      path_name = path_queue.front ();
+      path_queue.pop_front ();
 
       status =
         this->repo_->config ()->expand_path (this->repo_->root_key (),
@@ -1124,7 +1129,7 @@ TAO_InterfaceDef_i::inherited_operations (
                                                     0,
                                                     op_key);
 
-              key_queue.enqueue_tail (op_key);
+              key_queue.push_back (op_key);
             }
         }
     }
@@ -1134,7 +1139,7 @@ void
 TAO_InterfaceDef_i::check_inherited (char const *name,
                                      CORBA::DefinitionKind kind)
 {
-  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+  std::deque<ACE_Configuration_Section_Key> key_queue;
 
   switch (kind)
   {
@@ -1154,7 +1159,8 @@ TAO_InterfaceDef_i::check_inherited (char const *name,
 
   for (u_int i = 0; i < size; ++i)
     {
-      key_queue.dequeue_head (inherited_key);
+      inherited_key = key_queue.front ();
+      key_queue.pop_front ();
 
       this->repo_->config ()->get_string_value (inherited_key,
                                                 "name",
