@@ -24,9 +24,7 @@
 #include "tao/Policy_ForwardC.h"
 #include "tao/TAO_Export.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-template <class T> class ACE_Array_Base;
-ACE_END_VERSIONED_NAMESPACE_DECL
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +40,7 @@ namespace PortableInterceptor
 namespace TAO
 {
   using ObjectReferenceTemplate_Array =
-    ACE_Array_Base< ::PortableInterceptor::ObjectReferenceTemplate*>;
+    std::vector< ::PortableInterceptor::ObjectReferenceTemplate*>;
 }
 
 class TAO_Root_POA;

@@ -336,7 +336,7 @@ TAO_Root_POA::complete_destruction_i ()
           // Add it to the sequence of object reference templates, we
           // just notify for ourselves that we are now non_existent,
           // our childs will do it for themselves.
-          my_array_obj_ref_template.size (1);
+          my_array_obj_ref_template.resize (1);
           my_array_obj_ref_template[0] = ort;
         }
 
@@ -832,7 +832,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
           // Add it to the sequence of object reference templates that
           // will be destroyed.
-          array_obj_ref_template.size (1);
+          array_obj_ref_template.resize (1);
 
           array_obj_ref_template[0] = ort;
         }
@@ -899,7 +899,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
           // Add it to the sequence of object reference templates, we
           // just notify for ourselves that we are now non_existent,
           // our childs will do it for themselves.
-          my_array_obj_ref_template.size (1);
+          my_array_obj_ref_template.resize (1);
           my_array_obj_ref_template[0] = ort;
         }
 
