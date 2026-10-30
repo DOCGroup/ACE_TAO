@@ -35,7 +35,7 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  std::string_view const macro = this->ctx_->export_macro ();
+  std::string const macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

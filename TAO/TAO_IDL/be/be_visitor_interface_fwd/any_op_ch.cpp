@@ -41,7 +41,7 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  std::string_view macro = this->ctx_->export_macro ();
+  std::string macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

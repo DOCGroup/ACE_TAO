@@ -24,7 +24,6 @@
 #include "be_codegen.h"
 
 #include <string>
-#include <string_view>
 
 class TAO_OutStream;
 class be_decl;
@@ -135,10 +134,10 @@ public:
   void append_port_prefix (std::string const& suffix);
 
   /// return the export macro currently in force
-  std::string_view export_macro () const;
+  std::string export_macro () const;
 
   /// if anyop export macro is empty, check stub.
-  std::string_view non_null_export_macro () const;
+  std::string const& non_null_export_macro () const;
 
 private:
   /// code generation state

@@ -28,7 +28,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  std::string_view const macro = this->ctx_->export_macro ();
+  std::string const macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

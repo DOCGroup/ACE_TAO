@@ -29,11 +29,7 @@
 
 #include <string>
 
-#include <string_view>
-
 #include "ace/Log_Msg.h"
-
-#include <string>
 
 be_sequence::be_sequence (AST_Expression *v,
                           AST_Type *t,
@@ -511,7 +507,7 @@ be_sequence::instance_name () const
 
 int
 be_sequence::gen_base_class_name (TAO_OutStream *os,
-                                  std::string_view linebreak,
+                                  std::string const& linebreak,
                                   AST_Decl *ctx_scope)
 {
   be_type *elem = dynamic_cast<be_type*> (this->base_type ());
@@ -731,7 +727,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                                     -1);
                 }
 
-              std::string_view tag;
+              std::string tag;
               if (base_type->node_type () == AST_Decl::NT_pre_defined)
                 {
                   be_predefined_type *const predefined_type =

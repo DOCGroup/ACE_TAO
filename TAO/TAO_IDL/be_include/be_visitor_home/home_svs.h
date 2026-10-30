@@ -13,7 +13,7 @@
 #ifndef _BE_HOME_HOME_SVS_H_
 #define _BE_HOME_HOME_SVS_H_
 
-#include <string_view>
+#include <string>
 
 /**
  * @class be_visitor_home_svs
@@ -51,7 +51,7 @@ private:
   be_home *node_ {};
   AST_Component *comp_ {};
   TAO_OutStream &os_;
-  std::string_view export_macro_;
+  std::string export_macro_;
   bool for_finder_ {};
 };
 

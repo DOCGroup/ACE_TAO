@@ -23,8 +23,6 @@
 #include "utl_identifier.h"
 #include "nr_extern.h"
 
-#include <string_view>
-
 be_visitor_component_scope::be_visitor_component_scope (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
@@ -238,10 +236,10 @@ be_visitor_component_scope::gen_svnt_entrypoint_decl ()
 void
 be_visitor_component_scope::gen_svnt_entrypoint_defn ()
 {
-  std::string_view const sname =
+  std::string const& sname =
     ScopeAsDecl (node_->defined_in ())->full_name ();
-  std::string_view const lname = node_->local_name ();
-  std::string_view const global = sname.empty () ? "" : "::";
+  std::string const& lname = node_->local_name ();
+  std::string const global = sname.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_

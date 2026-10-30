@@ -235,7 +235,7 @@ be_visitor_context::append_port_prefix (std::string const& suffix)
   this->port_prefix_.append (suffix);
 }
 
-std::string_view
+std::string
 be_visitor_context::export_macro () const
 {
   switch (this->state_)
@@ -260,10 +260,10 @@ be_visitor_context::export_macro () const
     }
 }
 
-std::string_view
+std::string const&
 be_visitor_context::non_null_export_macro () const
 {
-  const std::string_view anyop_export = be_global->anyop_export_macro ();
+  std::string const& anyop_export = be_global->anyop_export_macro ();
 
   return (anyop_export.empty ()
           ? be_global->stub_export_macro ()

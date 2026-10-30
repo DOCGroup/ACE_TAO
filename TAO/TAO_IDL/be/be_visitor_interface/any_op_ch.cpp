@@ -31,7 +31,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  std::string_view macro = this->ctx_->export_macro ();
+  std::string macro = this->ctx_->export_macro ();
 
   *os << be_nl_2;
 

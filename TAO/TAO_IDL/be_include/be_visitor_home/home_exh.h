@@ -14,7 +14,7 @@
 #ifndef _BE_HOME_HOME_EXH_H_
 #define _BE_HOME_HOME_EXH_H_
 
-#include <string_view>
+#include <string>
 
 /**
  * @class be_visitor_home_exh
@@ -56,7 +56,7 @@ private:
   be_home *node_ {};
   AST_Component *comp_ {};
   TAO_OutStream &os_;
-  std::string_view export_macro_;
+  std::string export_macro_;
 };
 
 #endif /* _BE_HOME_HOME_EXH_H_ */

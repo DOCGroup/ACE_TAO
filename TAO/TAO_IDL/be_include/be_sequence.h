@@ -93,7 +93,7 @@ public:
   /// Common code for generating the name and parameters of our
   /// template sequence base class.
   int gen_base_class_name (TAO_OutStream *os,
-                           std::string_view linebreak,
+                           std::string const& linebreak,
                            AST_Decl *elem_scope);
 
   /// Accessors for the member.
