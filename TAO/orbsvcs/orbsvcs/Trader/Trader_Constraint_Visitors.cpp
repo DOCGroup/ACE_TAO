@@ -42,7 +42,7 @@ visit_property (TAO_Property_Constraint* literal)
 
       if (value != nullptr)
         {
-          this->queue_.enqueue_head (TAO_Literal_Constraint (value));
+          this->queue_.push_front (TAO_Literal_Constraint (value));
           return_value = 0;
         }
     }

@@ -1392,7 +1392,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
       for (CORBA::ULong i = 0; i < length; i++)
         {
           if (this->policy_ == CosTrading::Lookup::all)
-            prop_queue.enqueue_tail (&s_props[i]);
+            prop_queue.push_back (&s_props[i]);
           else
             {
               const char* p_name = s_props[i].name;
@@ -1400,7 +1400,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
 
               // Save those property that match.
               if (this->props_.find (prop_name) == 0)
-                prop_queue.enqueue_tail (&s_props[i]);
+                prop_queue.push_back (&s_props[i]);
             }
         }
 
@@ -1408,14 +1408,9 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
       // sequence.
       length = static_cast<CORBA::ULong> (prop_queue.size ());
       d_props.length (length);
-      for (Prop_Queue::ITERATOR prop_iter (prop_queue);
-           ! prop_iter.done ();
-           prop_iter.advance (), elem++)
+      for (CosTrading::Property * const prop_ptr : prop_queue)
         {
-          CosTrading::Property** prop_ptr = nullptr;
-
-          prop_iter.next (prop_ptr);
-          d_props[elem] = **prop_ptr;
+          d_props[elem++] = *prop_ptr;
         }
     }
   else if (this->policy_ == CosTrading::Lookup::all)

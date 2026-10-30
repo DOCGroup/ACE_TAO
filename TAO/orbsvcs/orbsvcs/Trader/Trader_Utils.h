@@ -16,6 +16,8 @@
 
 #include "orbsvcs/Trader/Trader.h"
 
+#include <vector>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -704,7 +706,7 @@ public:
                      CosTrading::Offer& destination);
 
 private:
-  using Prop_Queue = ACE_Unbounded_Queue<CosTrading::Property*>;
+  using Prop_Queue = std::vector<CosTrading::Property*>;
 
   TAO_String_Set props_;
   CosTrading::Lookup::HowManyProps policy_;

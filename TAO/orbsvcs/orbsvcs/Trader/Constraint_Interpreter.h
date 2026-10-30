@@ -19,6 +19,8 @@
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
 
+#include <deque>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Constraint_Evaluator;
@@ -131,7 +133,7 @@ public:
     CosTrading::Offer* offer_;
   };
 
-  using Ordered_Offers = ACE_Unbounded_Queue<Preference_Info>;
+  using Ordered_Offers = std::deque<Preference_Info>;
 
 private:
   TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;

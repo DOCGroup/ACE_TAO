@@ -8,6 +8,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -25,13 +27,9 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup ()
 {
   ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
-  for (Request_Ids::ITERATOR riter (this->request_ids_);
-       ! riter.done ();
-       riter.advance ())
+  for (CosTrading::Admin::OctetSeq const * old_seq : this->request_ids_)
     {
-      const CosTrading::Admin::OctetSeq** old_seq = nullptr;
-      riter.next (old_seq);
-      delete *old_seq;
+      delete old_seq;
     }
 }
 
@@ -752,14 +750,9 @@ seen_request_id (TAO_Policies& policies,
 
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 1);
 
-  for (Request_Ids::ITERATOR riter (this->request_ids_);
-       ! riter.done ();
-       riter.advance ())
+  for (CosTrading::Admin::OctetSeq const * old_seq : this->request_ids_)
     {
-      const CosTrading::Admin::OctetSeq** old_seq = nullptr;
-      riter.next (old_seq);
-
-      if (**old_seq == *seq)
+      if (*old_seq == *seq)
         {
           return_value = 1;
           break;
@@ -768,14 +761,23 @@ seen_request_id (TAO_Policies& policies,
 
   if (! return_value)
     {
-      if (this->request_ids_.size () == IDS_SAVED)
+      try
         {
-          const CosTrading::Admin::OctetSeq* octet_seq = nullptr;
-          this->request_ids_.dequeue_head (octet_seq);
-          delete octet_seq;
+          this->request_ids_.push_back (seq);
+        }
+      catch (std::bad_alloc const&)
+        {
+          delete seq;
+          throw CORBA::NO_MEMORY ();
         }
 
-      this->request_ids_.enqueue_tail (seq);
+      if (this->request_ids_.size () > IDS_SAVED)
+        {
+          CosTrading::Admin::OctetSeq const * octet_seq =
+            this->request_ids_.front ();
+          this->request_ids_.pop_front ();
+          delete octet_seq;
+        }
     }
 
   return return_value;

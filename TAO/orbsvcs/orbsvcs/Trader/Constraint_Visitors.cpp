@@ -13,35 +13,50 @@ TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue ()
 {
 }
 
+bool
+TAO_Constraint_Evaluator::Operand_Queue::empty () const
+{
+  return this->operands_.empty ();
+}
+
+void
+TAO_Constraint_Evaluator::Operand_Queue::clear ()
+{
+  this->operands_.clear ();
+}
+
+void
+TAO_Constraint_Evaluator::Operand_Queue::push_front (
+  TAO_Literal_Constraint const &operand)
+{
+  this->operands_.push_front (operand);
+}
+
 TAO_Literal_Constraint&
 TAO_Constraint_Evaluator::Operand_Queue::get_left_operand ()
 {
-  TAO_Literal_Constraint* left_operand = nullptr;
-  this->get (left_operand, 1);
-  return *left_operand;
+  return this->operands_[1];
 }
 
 TAO_Literal_Constraint&
 TAO_Constraint_Evaluator::Operand_Queue::get_right_operand ()
 {
-  TAO_Literal_Constraint* right_operand = nullptr;
-  this->get (right_operand);
-  return *right_operand;
+  return this->operands_.front ();
 }
 
 TAO_Literal_Constraint&
 TAO_Constraint_Evaluator::Operand_Queue::get_operand ()
 {
-  TAO_Literal_Constraint* operand = nullptr;
-  this->get (operand);
-  return *operand;
+  return this->operands_.front ();
 }
 
 void
 TAO_Constraint_Evaluator::Operand_Queue::dequeue_operand ()
 {
-  TAO_Literal_Constraint operand;
-  this->dequeue_head (operand);
+  if (! this->operands_.empty ())
+    {
+      this->operands_.pop_front ();
+    }
 }
 
 TAO_Constraint_Evaluator::TAO_Constraint_Evaluator ()
@@ -53,13 +68,13 @@ CORBA::Boolean
 TAO_Constraint_Evaluator::evaluate_constraint (TAO_Constraint* root)
 {
   CORBA::Boolean result = false;
-  this->queue_.reset ();
+  this->queue_.clear ();
 
   // Evaluate the offer according to the constraints in root_;
   if (root != nullptr)
     {
       if ((root->accept (this) == 0) &&
-          (! this->queue_.is_empty ()))
+          (! this->queue_.empty ()))
         {
           result = (CORBA::Boolean) this->queue_.get_operand();
           this->queue_.dequeue_operand ();
@@ -76,14 +91,14 @@ evaluate_preference (TAO_Constraint* root,
                     TAO_Literal_Constraint& result)
 {
   int return_value = -1;
-  while (! this->queue_.is_empty ())
+  while (! this->queue_.empty ())
     this->queue_.dequeue_operand ();
 
   // Evaluate the offer according to the constraints in root_;
   if (root != nullptr)
     {
       if ((root->accept (this) == 0) &&
-          (! this->queue_.is_empty ()))
+          (! this->queue_.empty ()))
         {
           result = this->queue_.get_operand ();
           this->queue_.dequeue_operand ();
@@ -126,7 +141,7 @@ int
 TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint *)
 {
   TAO_Literal_Constraint random (static_cast<CORBA::LongLong> (ACE_OS::rand ()));
-  this->queue_.enqueue_head (random);
+  this->queue_.push_front (random);
   return 0;
 }
 
@@ -134,7 +149,7 @@ int
 TAO_Constraint_Evaluator::visit_first (TAO_Noop_Constraint *)
 {
   TAO_Literal_Constraint first (static_cast<CORBA::LongLong> (0));
-  this->queue_.enqueue_head (first);
+  this->queue_.push_front (first);
   return 0;
 }
 
@@ -169,7 +184,7 @@ visit_and (TAO_Binary_Constraint* boolean_and)
     }
 
   if (return_value != -1)
-    this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+    this->queue_.push_front (TAO_Literal_Constraint (result));
 
   return return_value;
 }
@@ -204,7 +219,7 @@ visit_or (TAO_Binary_Constraint* boolean_or)
     }
 
   if (return_value != -1)
-    this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+    this->queue_.push_front (TAO_Literal_Constraint (result));
 
   return return_value;
 }
@@ -222,7 +237,7 @@ visit_not (TAO_Unary_Constraint* unary_not)
     {
       CORBA::Boolean result = ! (CORBA::Boolean)this->queue_.get_operand ();
       this->queue_.dequeue_operand ();
-      this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+      this->queue_.push_front (TAO_Literal_Constraint (result));
 
       return_value = 0;
     }
@@ -243,7 +258,7 @@ visit_exist (TAO_Unary_Constraint* unary_exist)
   CORBA::Boolean result =
     (CORBA::Boolean) (this->props_.find (property_name) == 0);
 
-  this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+  this->queue_.push_front (TAO_Literal_Constraint (result));
   return 0;
 }
 
@@ -258,7 +273,7 @@ visit_unary_minus (TAO_Unary_Constraint* unary_minus)
     {
       TAO_Literal_Constraint result = - this->queue_.get_operand ();
       this->queue_.dequeue_operand ();
-      this->queue_.enqueue_head (result);
+      this->queue_.push_front (result);
 
       return_value = 0;
     }
@@ -295,7 +310,7 @@ TAO_Constraint_Evaluator::do_the_op (int operation)
 
   this->queue_.dequeue_operand ();
   this->queue_.dequeue_operand ();
-  this->queue_.enqueue_head (result);
+  this->queue_.push_front (result);
 }
 
 int
@@ -373,7 +388,7 @@ visit_twiddle (TAO_Binary_Constraint* binary_twiddle)
 
           this->queue_.dequeue_operand ();
           this->queue_.dequeue_operand ();
-          this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+          this->queue_.push_front (TAO_Literal_Constraint (result));
           return_value = 0;
         }
       else
@@ -407,7 +422,7 @@ visit_in(TAO_Binary_Constraint* binary_in)
 
               this->queue_.dequeue_operand ();
               this->queue_.dequeue_operand ();
-              this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+              this->queue_.push_front (TAO_Literal_Constraint (result));
               return_value = 0;
             }
           else
@@ -464,7 +479,7 @@ int
 TAO_Constraint_Evaluator::
 visit_literal (TAO_Literal_Constraint* literal)
 {
-  this->queue_.enqueue_head (*literal);
+  this->queue_.push_front (*literal);
   return 0;
 }
 
