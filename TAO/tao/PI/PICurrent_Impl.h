@@ -25,7 +25,8 @@
 
 #include "tao/PI/PI_includeC.h"
 #include "tao/AnyTypeCode/Any.h"
-#include "ace/Array_Base.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,7 +85,7 @@ namespace TAO
     void set_callback_for_impending_change (PICurrent_Impl *p);
 
     /// Typedef for the underyling "slot table."
-    using Table = ACE_Array_Base<CORBA::Any>;
+    using Table = std::vector<CORBA::Any>;
 
     /// Return a reference to the slot table currently associated
     /// with this PICurrent_Impl object.
@@ -106,7 +107,7 @@ namespace TAO
     PICurrent_Impl *pop_;
     PICurrent_Impl *push_ {};
 
-    /// Array of CORBA::Anys that is the underlying "slot table."
+    /// CORBA::Any values in the underlying "slot table."
     Table slot_table_;
 
     /// Access to logical copy from a PICurrent_Impl in another

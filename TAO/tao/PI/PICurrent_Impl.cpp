@@ -13,6 +13,8 @@
 #include "tao/debug.h"
 #include "ace/CORBA_macros.h"
 
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Any *
@@ -80,9 +82,17 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
   // If the slot table array isn't large enough, then increase its
   // size.  We're guaranteed not to exceed the number of allocated
   // slots for the reason stated above.
-  if (identifier >= this->slot_table_.size ()
-      && this->slot_table_.size (identifier + 1) != 0)
-    throw ::CORBA::INTERNAL ();
+  if (identifier >= this->slot_table_.size ())
+    {
+      try
+        {
+          this->slot_table_.resize (identifier + 1);
+        }
+      catch (std::bad_alloc const &)
+        {
+          throw ::CORBA::INTERNAL ();
+        }
+    }
 
   this->slot_table_[identifier] = CORBA::Any (data);
 }
