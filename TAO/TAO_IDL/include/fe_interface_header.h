@@ -69,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_typedef.h"
 
+#include <vector>
+
 class UTL_NameList;
 class AST_Interface;
 
@@ -145,12 +147,8 @@ protected:
   bool is_local_ {};
   bool is_abstract_ {};
 
-  AST_Type **iseen_ {};
-  AST_Interface **iseen_flat_ {};
-  long iallocated_ {};
-  long iused_ {};
-  long iallocated_flat_ {};
-  long iused_flat_ {};
+  std::vector<AST_Type *> iseen_;
+  std::vector<AST_Interface *> iseen_flat_;
 };
 
 #endif           // _FE_INTERFACE_HEADER_FE_INTERFACE_HH
