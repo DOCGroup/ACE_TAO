@@ -23,7 +23,6 @@
 #include "tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,7 +51,6 @@ namespace TAO
       /// Constructor.
       TP_Corba_Request(const PortableServer::ObjectId& object_id,
                        PortableServer::POA_ptr         poa,
-                       const char*                     operation,
                        PortableServer::Servant         servant,
                        TP_Servant_State*               servant_state,
                        TAO_ServerRequest&              server_request);
@@ -72,9 +70,6 @@ namespace TAO
 
       /// The POA.
       PortableServer::POA_var poa_;
-
-      /// The name of the IDL operation.
-      ACE_CString operation_;
 
       /// The TAO_ServerRequest object wrapper.
       FW_Server_Request_Wrapper server_request_;

@@ -77,7 +77,7 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i
                              (TAO_ServerRequest&              server_request,
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              const char*,
                               PortableServer::Servant         servant)
 {
   TP_Servant_State::HandleType servant_state =
@@ -100,7 +100,6 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i
                             new TP_Remote_Request(server_request,
                                                   object_id,
                                                   poa,
-                                                  operation,
                                                   servant,
                                                   servant_state.in());
 
@@ -123,7 +122,7 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
                              (TAO_ServerRequest&              server_request,
                               const PortableServer::ObjectId& object_id,
                               PortableServer::POA_ptr         poa,
-                              const char*                     operation,
+                              const char*,
                               PortableServer::Servant         servant)
 {
   TP_Servant_State::HandleType servant_state =
@@ -144,7 +143,6 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
                                                      (server_request,
                                                       object_id,
                                                       poa,
-                                                      operation,
                                                       servant,
                                                       servant_state.in());
 
@@ -157,7 +155,6 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
       synch_request = new TP_Collocated_Synch_Request(server_request,
                                                       object_id,
                                                       poa,
-                                                      operation,
                                                       servant,
                                                       servant_state.in());
 
@@ -171,7 +168,6 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
       request = new TP_Collocated_Asynch_Request(server_request,
                                                  object_id,
                                                  poa,
-                                                 operation,
                                                  servant,
                                                  servant_state.in());
     }
