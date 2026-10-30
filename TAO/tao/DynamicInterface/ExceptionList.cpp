@@ -2,6 +2,8 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/SystemException.h"
 
+#include <new>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/DynamicInterface/ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
@@ -20,44 +22,50 @@ CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
 
 CORBA::ExceptionList::~ExceptionList ()
 {
-  for (CORBA::ULong i = 0; i < this->count (); ++i)
+  for (CORBA::TypeCode_ptr tc : this->tc_list_)
     {
-      CORBA::TypeCode_ptr *tc = nullptr;
-
-      if (this->tc_list_.get (tc, i) == -1)
-        {
-          return;
-        }
-
-      ::CORBA::release (*tc);
+      ::CORBA::release (tc);
     }
 }
 
 void
 CORBA::ExceptionList::add (CORBA::TypeCode_ptr tc)
 {
-  this->tc_list_.enqueue_tail (CORBA::TypeCode::_duplicate (tc));
+  CORBA::TypeCode_ptr duplicate = CORBA::TypeCode::_duplicate (tc);
+  try
+    {
+      this->tc_list_.push_back (duplicate);
+    }
+  catch (std::bad_alloc const&)
+    {
+      ::CORBA::release (duplicate);
+      throw CORBA::NO_MEMORY ();
+    }
 }
 
 void
 CORBA::ExceptionList::add_consume (CORBA::TypeCode_ptr tc)
 {
-  this->tc_list_.enqueue_tail (tc);
+  try
+    {
+      this->tc_list_.push_back (tc);
+    }
+  catch (std::bad_alloc const&)
+    {
+      ::CORBA::release (tc);
+      throw CORBA::NO_MEMORY ();
+    }
 }
 
 CORBA::TypeCode_ptr
 CORBA::ExceptionList::item (CORBA::ULong slot)
 {
-  CORBA::TypeCode_ptr *tc = nullptr;
-
-  if (this->tc_list_.get (tc, slot) == -1)
+  if (slot >= this->tc_list_.size ())
     {
       throw ::CORBA::TypeCode::Bounds ();
     }
-  else
-    {
-      return CORBA::TypeCode::_duplicate (*tc);
-    }
+
+  return CORBA::TypeCode::_duplicate (this->tc_list_[slot]);
 }
 
 void

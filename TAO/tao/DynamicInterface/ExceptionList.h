@@ -29,8 +29,8 @@
 #include "tao/default_environment.h"
 #include "tao/Pseudo_VarOut_T.h"
 
-#include "ace/Unbounded_Queue.h"
 #include <atomic>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -107,7 +107,7 @@ namespace CORBA
     std::atomic<uint32_t> refcount_ { 1 };
 
     /// Internal list of typecodes.
-    ACE_Unbounded_Queue<CORBA::TypeCode_ptr> tc_list_;
+    std::vector<CORBA::TypeCode_ptr> tc_list_;
   };
 }  // End CORBA namespace
 
