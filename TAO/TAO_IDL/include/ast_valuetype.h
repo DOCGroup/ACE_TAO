@@ -3,6 +3,8 @@
 
 #include "ast_interface.h"
 
+#include <vector>
+
 class TAO_IDL_FE_Export AST_ValueType
   : public virtual AST_Interface
 {
@@ -73,7 +75,7 @@ public:
   using FWD_TYPE = AST_ValueTypeFwd;
 
 protected:
-  AST_Type **pd_supports;
+  std::vector<AST_Type *> pd_supports;
   long pd_n_supports;
   AST_Type *pd_inherits_concrete;
   AST_Type *pd_supports_concrete;

@@ -180,11 +180,11 @@ protected:
   // Data.
 
   // Immediate ancestors.
-  AST_Type **pd_inherits;
+  std::vector<AST_Type *> pd_inherits;
   long pd_n_inherits;
 
   // All ancestors.
-  AST_Interface **pd_inherits_flat;
+  std::vector<AST_Interface *> pd_inherits_flat;
   long pd_n_inherits_flat;
 
   // Queue data structure needed for breadth-first traversal of

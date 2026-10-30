@@ -97,6 +97,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <memory>
 #include <string>
 
 #include "ace/streams.h"
@@ -118,11 +119,22 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     AST_Type (AST_Decl::NT_interface,
               n),
     UTL_Scope (AST_Decl::NT_interface),
-    pd_inherits (ih),
     pd_n_inherits (nih),
-    pd_inherits_flat (ih_flat),
     pd_n_inherits_flat (nih_flat)
 {
+  std::unique_ptr<AST_Type *[]> inherits_owner (ih);
+  std::unique_ptr<AST_Interface *[]> inherits_flat_owner (ih_flat);
+
+  if (nih > 0)
+    {
+      this->pd_inherits.assign (ih, ih + nih);
+    }
+
+  if (nih_flat > 0)
+    {
+      this->pd_inherits_flat.assign (ih_flat, ih_flat + nih_flat);
+    }
+
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
 
@@ -525,28 +537,10 @@ AST_Interface::redefine (AST_Interface *from)
   // Since 'this' will replace 'from' upon returning
   // from here, we have to update the scope now.
   this->pd_n_inherits = from->pd_n_inherits;
-  unsigned long i = 0;
-
-  unsigned long array_size =
-    static_cast<unsigned long> (from->pd_n_inherits);
-  ACE_NEW (this->pd_inherits,
-           AST_Type *[array_size]);
-
-  for (i = 0; i < array_size; ++i)
-    {
-      this->pd_inherits[i] = from->pd_inherits[i];
-    }
+  this->pd_inherits = from->pd_inherits;
 
   this->pd_n_inherits_flat = from->pd_n_inherits_flat;
-  array_size =
-    static_cast<unsigned long> (from->pd_n_inherits_flat);
-  ACE_NEW (this->pd_inherits_flat,
-           AST_Interface *[array_size]);
-
-  for (i = 0; i < array_size; ++i)
-    {
-      this->pd_inherits_flat[i] = from->pd_inherits_flat[i];
-    }
+  this->pd_inherits_flat = from->pd_inherits_flat;
 
   // We've already checked for inconsistent prefixes.
   this->prefix (from->prefix ());
@@ -565,7 +559,9 @@ AST_Interface::redefine (AST_Interface *from)
 AST_Type **
 AST_Interface::inherits () const
 {
-  return this->pd_inherits;
+  return this->pd_inherits.empty ()
+    ? nullptr
+    : const_cast<AST_Type **> (this->pd_inherits.data ());
 }
 
 long
@@ -577,7 +573,9 @@ AST_Interface::n_inherits () const
 AST_Interface **
 AST_Interface::inherits_flat () const
 {
-  return this->pd_inherits_flat;
+  return this->pd_inherits_flat.empty ()
+    ? nullptr
+    : const_cast<AST_Interface **> (this->pd_inherits_flat.data ());
 }
 
 long
@@ -1021,12 +1019,10 @@ AST_Interface::destroy ()
   // iterating over null pointers the 2nd time.
   this->param_holders_.clear ();
 
-  delete [] this->pd_inherits;
-  this->pd_inherits = nullptr;
+  this->pd_inherits.clear ();
   this->pd_n_inherits = 0;
 
-  delete [] this->pd_inherits_flat;
-  this->pd_inherits_flat = nullptr;
+  this->pd_inherits_flat.clear ();
   this->pd_n_inherits_flat = 0;
 
   this->UTL_Scope::destroy ();

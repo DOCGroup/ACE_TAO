@@ -14,6 +14,7 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <memory>
 #include <string>
 
 #include "ace/streams.h"
@@ -47,13 +48,19 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                    n_inherits_flat,
                    false,
                    abstract),
-    pd_supports (supports),
     pd_n_supports (n_supports),
     pd_inherits_concrete (inherits_concrete),
     pd_supports_concrete (supports_concrete),
     pd_truncatable (truncatable),
     pd_custom (custom)
 {
+  std::unique_ptr<AST_Type *[]> supports_owner (supports);
+
+  if (n_supports > 0)
+    {
+      this->pd_supports.assign (supports, supports + n_supports);
+    }
+
   // Enqueue the param holders (if any) for later destruction.
   // By the time our destroy() is called, it will be too late
   // to iterate over pd_inherits.
@@ -204,7 +211,9 @@ AST_ValueType::redefine (AST_Interface *from)
 AST_Type **
 AST_ValueType::supports () const
 {
-  return this->pd_supports;
+  return this->pd_supports.empty ()
+    ? nullptr
+    : const_cast<AST_Type **> (this->pd_supports.data ());
 }
 
 long
@@ -399,8 +408,7 @@ AST_ValueType::destroy ()
 {
   this->AST_Interface::destroy ();
 
-  delete [] this->pd_supports;
-  this->pd_supports = nullptr;
+  this->pd_supports.clear ();
   this->pd_n_supports = 0;
 }
 
@@ -480,8 +488,8 @@ AST_ValueType::fe_add_factory (AST_Factory *f)
 }
 
 bool
-AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
-                                              const AST_ValueType *pk_base) const
+AST_ValueType::derived_from_primary_key_base (AST_ValueType const *node,
+                                              AST_ValueType const *pk_base) const
 {
   if (nullptr == node)
     {
@@ -500,7 +508,7 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
       return true;
     }
 
-  AST_Type **v = node->pd_inherits;
+  AST_Type **v = node->inherits ();
 
   for (long i = 0; i < node->pd_n_inherits; ++i)
     {
