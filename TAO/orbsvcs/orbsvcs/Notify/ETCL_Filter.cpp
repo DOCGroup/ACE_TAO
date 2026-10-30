@@ -4,6 +4,7 @@
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 #include <memory>
+#include <vector>
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -274,7 +275,7 @@ TAO_Notify_ETCL_Filter::modify_constraints (
     }
 
   // Remove previous entries and save them in case we need to reinstate them.
-  ACE_Array<TAO_Notify_Constraint_Expr*> constr_saved (modify_list.length ());
+  std::vector<TAO_Notify_Constraint_Expr*> constr_saved (modify_list.length (), nullptr);
   TAO_Notify_Constraint_Expr* constr_expr = nullptr;
 
   for (index = 0; index < modify_list.length (); ++index)
@@ -319,7 +320,7 @@ TAO_Notify_ETCL_Filter::modify_constraints (
     }
 
   // Delete the old constraints.
-  for (index = 0; index < constr_saved.max_size (); ++index)
+  for (index = 0; index < constr_saved.size (); ++index)
     {
       delete constr_saved[index];
     }
