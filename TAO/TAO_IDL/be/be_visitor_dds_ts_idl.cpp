@@ -25,8 +25,6 @@
 #include "utl_string.h"
 #include "utl_identifier.h"
 
-#include <string_view>
-
 be_visitor_dds_ts_idl::be_visitor_dds_ts_idl (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx)

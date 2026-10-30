@@ -13,6 +13,8 @@
 #include "be_visitor_typecode/typecode_decl.h"
 #include "global_extern.h"
 
+#include <string>
+
 // ********************************************************************
 // Visitor implementation for the Native type
 // This one for the client header file
@@ -36,7 +38,7 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   TAO_INSERT_COMMENT (os);
 
-  std::string_view const node_name = node->full_name ();
+  std::string const node_name = node->full_name ();
 
   if (node_name == "PortableServer::ServantLocator::Cookie")
     {
@@ -67,7 +69,7 @@ be_visitor_native_ch::visit_native (be_native *node)
         {
           return -1;
         }
-      std::string_view const sample_name =
+      std::string const sample_name =
         node_name.substr (0, node_name_length - 3);
 
       *os << be_nl_2

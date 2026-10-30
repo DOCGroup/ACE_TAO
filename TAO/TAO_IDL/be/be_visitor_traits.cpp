@@ -40,7 +40,6 @@
 #include "ace/Log_Msg.h"
 
 #include <string>
-#include <string_view>
 
 be_visitor_traits::be_visitor_traits (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -119,7 +118,7 @@ be_visitor_traits::visit_interface (be_interface *node)
     {
       os->gen_ifdef_macro (node->flat_name (), "traits", false);
 
-      std::string_view const fname = node->full_name ();
+      std::string const fname = node->full_name ();
 
       *os << be_nl_2
           << "template<>" << be_nl
