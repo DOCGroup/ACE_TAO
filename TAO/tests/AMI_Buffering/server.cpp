@@ -75,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      AMI_Buffering *AMI_buffering_impl;
+      AMI_Buffering *AMI_buffering_impl = nullptr;
       ACE_NEW_RETURN (AMI_buffering_impl,
                       AMI_Buffering (orb.in (),
                                         admin.in ()),
@@ -113,7 +113,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in server:");
       return 1;

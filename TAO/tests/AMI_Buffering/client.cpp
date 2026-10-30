@@ -6,32 +6,32 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *server_ior = ACE_TEXT("file://server.ior");
-const ACE_TCHAR *admin_ior = ACE_TEXT("file://admin.ior");
+ACE_TCHAR const *server_ior = ACE_TEXT("file://server.ior");
+ACE_TCHAR const *admin_ior = ACE_TEXT("file://admin.ior");
 int iterations = 20;
 
-int run_message_count_test = 0;
-int run_timeout_test = 0;
-int run_timeout_reactive_test = 0;
-int run_buffer_size_test = 0;
+bool run_message_count_test = false;
+bool run_timeout_test = false;
+bool run_timeout_reactive_test = false;
+bool run_buffer_size_test = false;
 
-const int PAYLOAD_LENGTH = 1024;
-const int BUFFERED_MESSAGES_COUNT = 10;
-const unsigned int TIMEOUT_MILLISECONDS = 50;
-const int BUFFER_SIZE = 10 * PAYLOAD_LENGTH;
+int constexpr PAYLOAD_LENGTH = 1024;
+int constexpr BUFFERED_MESSAGES_COUNT = 10;
+unsigned int constexpr TIMEOUT_MILLISECONDS = 50;
+int constexpr BUFFER_SIZE = 10 * PAYLOAD_LENGTH;
 
 /// Allow a larger timeout to occur due to scheduler differences
-const unsigned int TIMEOUT_TOLERANCE = 4 * TIMEOUT_MILLISECONDS;
+unsigned int constexpr TIMEOUT_TOLERANCE = 4 * TIMEOUT_MILLISECONDS;
 
 /// Check that no more than 10% of the messages are not sent.
-const double LIVENESS_TOLERANCE = 0.9;
+double constexpr LIVENESS_TOLERANCE = 0.9;
 
 /// Limit the depth of the liveness test, avoid blowing up the stack
 /// on the server
-const int LIVENESS_MAX_DEPTH = 256;
+int constexpr LIVENESS_MAX_DEPTH = 256;
 
 /// Factor in GIOP overhead in the buffer size test
-const double GIOP_OVERHEAD = 0.9;
+double constexpr GIOP_OVERHEAD = 0.9;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -55,19 +55,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'c':
-        run_message_count_test = 1;
+        run_message_count_test = true;
         break;
 
       case 't':
-        run_timeout_test = 1;
+        run_timeout_test = true;
         break;
 
       case 'b':
-        run_buffer_size_test = 1;
+        run_buffer_size_test = true;
         break;
 
       case 'r':
-        run_timeout_reactive_test = 1;
+        run_timeout_reactive_test = true;
         break;
 
       case '?':
@@ -227,7 +227,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client:");
       return 1;
@@ -238,7 +238,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 int
 configure_policies (CORBA::ORB_ptr orb,
-                    const TAO::BufferingConstraint &buffering_constraint,
+                    TAO::BufferingConstraint const &buffering_constraint,
                     Test::AMI_Buffering_ptr ami_buffering,
                     Test::AMI_Buffering_out flusher)
 {
@@ -401,7 +401,7 @@ run_message_count (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = 0;
+  Reply_Handler *reply_handler_impl = nullptr;
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
@@ -512,7 +512,7 @@ run_timeout (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = 0;
+  Reply_Handler *reply_handler_impl = nullptr;
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
@@ -631,7 +631,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = 0;
+  Reply_Handler *reply_handler_impl = nullptr;
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
