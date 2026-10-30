@@ -12,7 +12,7 @@
 
 #include "attribute.h"
 
-#include <string_view>
+#include <string>
 
 be_visitor_attribute_ccm_init::be_visitor_attribute_ccm_init (
     be_visitor_context *ctx)
@@ -210,7 +210,7 @@ be_visitor_attribute_ccm_init::emit_init_block ()
 
 void
 be_visitor_attribute_ccm_init::emit_error (
-  std::string_view corba_kind)
+  std::string const& corba_kind)
 {
   this->open_if_block ();
 
