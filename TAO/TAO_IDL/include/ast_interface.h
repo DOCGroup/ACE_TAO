@@ -72,6 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_type.h"
 #include "utl_scope.h"
 
+#include <deque>
+
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
@@ -105,8 +107,8 @@ public:
 
   long n_inherits_flat () const;
 
-  ACE_Unbounded_Queue<AST_Type *> &get_insert_queue ();
-  ACE_Unbounded_Queue<AST_Type *> &get_del_queue ();
+  std::deque<AST_Type *> &get_insert_queue ();
+  std::deque<AST_Type *> &get_del_queue ();
 
   AST_Operation *be_add_operation (AST_Operation *);
 
@@ -186,7 +188,7 @@ protected:
 
   // Queue data structure needed for breadth-first traversal of
   // inheritance tree.
-  ACE_Unbounded_Queue<AST_Type *> insert_queue;
+  std::deque<AST_Type *> insert_queue;
 
   // For a special case of a deeply nested inheritance graph and one specific
   // way of inheritance in which a node that was already visited,
@@ -197,7 +199,7 @@ protected:
   // parent turns out to be a child of the first .
 
   // Queue of dequeued nodes to be searched for the above case.
-  ACE_Unbounded_Queue<AST_Type *> del_queue;
+  std::deque<AST_Type *> del_queue;
 
   // Are we the equivalent interface of a home?
   bool home_equiv_ {};

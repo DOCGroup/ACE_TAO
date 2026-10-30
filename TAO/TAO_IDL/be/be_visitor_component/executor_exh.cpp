@@ -180,9 +180,9 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   // The overload of traverse_inheritance_graph() used here
   // doesn't automatically prime the queues.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
-  node->get_insert_queue ().enqueue_tail (node_);
+  node->get_insert_queue ().clear ();
+  node->get_del_queue ().clear ();
+  node->get_insert_queue ().push_back (node_);
 
   be_visitor_executor_private_exh v (this->ctx_);
   v.node (node);
@@ -216,9 +216,9 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   // The overload of traverse_inheritance_graph() used here
   // doesn't automatically prime the queues.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
-  node->get_insert_queue ().enqueue_tail (node_);
+  node->get_insert_queue ().clear ();
+  node->get_del_queue ().clear ();
+  node->get_insert_queue ().push_back (node_);
 
   be_visitor_executor_private_exh v_f (this->ctx_);
   v_f.node (node);

@@ -119,9 +119,9 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 
       /// The overload of traverse_inheritance_graph() used here
       /// doesn't automatically prime the queues.
-      intf->get_insert_queue ().reset ();
-      intf->get_del_queue ().reset ();
-      intf->get_insert_queue ().enqueue_tail (intf);
+      intf->get_insert_queue ().clear ();
+      intf->get_del_queue ().clear ();
+      intf->get_insert_queue ().push_back (intf);
 
       Component_Exec_Op_Attr_Generator op_attr_gen (this);
 

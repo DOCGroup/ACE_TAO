@@ -154,9 +154,9 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  this->node_->get_insert_queue ().reset ();
-  this->node_->get_del_queue ().reset ();
-  this->node_->get_insert_queue ().enqueue_tail (node);
+  this->node_->get_insert_queue ().clear ();
+  this->node_->get_del_queue ().clear ();
+  this->node_->get_insert_queue ().push_back (node);
 
   Component_Op_Attr_Generator op_attr_gen (this);
 
@@ -1124,9 +1124,9 @@ be_visitor_attr_set::visit_component_scope (be_component *node)
 
     /// This overload of traverse_inheritance_graph() used here
     /// doesn't automatically prime the queues.
-    node->get_insert_queue ().reset ();
-    node->get_del_queue ().reset ();
-    node->get_insert_queue ().enqueue_tail (node);
+    node->get_insert_queue ().clear ();
+    node->get_del_queue ().clear ();
+    node->get_insert_queue ().push_back (node);
 
     Component_Op_Attr_Generator component_inher (this);
 

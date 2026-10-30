@@ -720,17 +720,11 @@ be_interface::gen_operation_table (std::string const& flat_name,
             << "_operations [] = {" << be_idt_nl;
 
         // Make sure the queues are empty.
-        this->insert_queue.reset ();
-        this->del_queue.reset ();
+        this->insert_queue.clear ();
+        this->del_queue.clear ();
 
         // Insert ourselves in the queue.
-        if (insert_queue.enqueue_tail (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%N:%l) be_interface::gen_operation_table - "
-                               "error generating entries\n"),
-                              -1);
-          }
+        insert_queue.push_back (this);
 
         // Traverse the graph.
         TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
@@ -935,17 +929,11 @@ be_interface::gen_operation_table (std::string const& flat_name,
         this->gen_gperf_input_header (os);
 
         // Make sure the queues are empty.
-        this->insert_queue.reset ();
-        this->del_queue.reset ();
+        this->insert_queue.clear ();
+        this->del_queue.clear ();
 
         // Insert ourselves in the queue.
-        if (insert_queue.enqueue_tail (this) == -1)
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%N:%l) be_interface::gen_operation_table - "
-                               "error generating entries\n"),
-                              -1);
-          }
+        insert_queue.push_back (this);
 
         // Traverse the graph.
         TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
@@ -1078,17 +1066,11 @@ int
 be_interface::convert_parent_ops (be_visitor *visitor)
 {
   // Make sure the queues are empty.
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
+  this->insert_queue.clear ();
+  this->del_queue.clear ();
 
   // Insert ourselves in the queue.
-  if (insert_queue.enqueue_tail (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) be_interface::convert_parent_ops - "
-                          "error generating entries\n"),
-                        -1);
-    }
+  insert_queue.push_back (this);
 
   // Traverse the graph.
   Pure_Virtual_Regenerator worker (visitor);
@@ -1495,17 +1477,11 @@ be_interface::traverse_inheritance_graph (
   bool add_ccm_object)
 {
   // Make sure the queues are empty.
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
+  this->insert_queue.clear ();
+  this->del_queue.clear ();
 
   // Insert ourselves in the queue.
-  if (insert_queue.enqueue_tail (this) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::traverse_inheritance_graph"
-                         " - error generating entries\n"),
-                        -1);
-    }
+  insert_queue.push_back (this);
 
   be_code_emitter_wrapper wrapper (gen);
 
@@ -1525,16 +1501,10 @@ be_interface::traverse_inheritance_graph (
 {
   AST_Type *intf = nullptr;  // element inside the queue
 
-  if (!this->insert_queue.is_empty ())
+  if (!this->insert_queue.empty ())
     {
-      // Dequeue the element at the head of the queue.
-      if (this->insert_queue.dequeue_head (intf) != 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_interface::traverse_graph - "
-                             "dequeue_head failed\n"),
-                            -1);
-        }
+      intf = this->insert_queue.front ();
+      this->insert_queue.pop_front ();
 
       AST_Decl::NodeType nt = intf->node_type ();
 
@@ -1561,7 +1531,7 @@ be_interface::traverse_inheritance_graph (
     }
 
   // Do until queue is empty.
-  while (!this->insert_queue.is_empty ())
+  while (!this->insert_queue.empty ())
     {
       // Use breadth-first strategy i.e., first generate entries for ourselves,
       // followed by nodes that we immediately inherit from, and so on. In the
@@ -1569,23 +1539,11 @@ be_interface::traverse_inheritance_graph (
       // than once. Such a case may arise due to multiple inheritance forming
       // a diamond-like inheritance graph.
 
-      // Dequeue the element at the head of the queue.
-      if (this->insert_queue.dequeue_head (intf))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_interface::traverse_graph - "
-                             "dequeue_head failed\n"),
-                            -1);
-        }
+      intf = this->insert_queue.front ();
+      this->insert_queue.pop_front ();
 
       // Insert the dequeued element in the del_queue.
-      if (this->del_queue.enqueue_tail (intf) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_interface::traverse_graph - "
-                             "enqueue_head failed\n"),
-                            -1);
-        }
+      this->del_queue.push_back (intf);
 
       be_interface *bi = dynamic_cast<be_interface*> (intf);
 

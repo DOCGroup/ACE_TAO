@@ -225,17 +225,11 @@ be_visitor_amh_interface_ss::generate_copy_ctor (be_interface *node,
                                                  TAO_OutStream *os)
 {
   // Make sure the queues are empty.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
+  node->get_insert_queue ().clear ();
+  node->get_del_queue ().clear ();
 
   // Insert ourselves in the queue.
-  if (node->get_insert_queue ().enqueue_tail (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::generate_copy_ctor - "
-                         "error generating entries\n"),
-                        -1);
-    }
+  node->get_insert_queue ().push_back (node);
 
   TAO_IDL_Copy_Ctor_Worker worker;
   return node->traverse_inheritance_graph (worker, os);

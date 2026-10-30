@@ -152,9 +152,9 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   /// The overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
-  node->get_insert_queue ().enqueue_tail (this->node_);
+  node->get_insert_queue ().clear ();
+  node->get_del_queue ().clear ();
+  node->get_insert_queue ().push_back (this->node_);
 
   be_visitor_executor_exs_attr_init ai_visitor (this->ctx_);
   ai_visitor.node (node);
@@ -227,9 +227,9 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   /// The overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
-  node->get_insert_queue ().enqueue_tail (node_);
+  node->get_insert_queue ().clear ();
+  node->get_del_queue ().clear ();
+  node->get_insert_queue ().push_back (node_);
 
   Component_Exec_Op_Attr_Generator op_attr_gen (this);
 

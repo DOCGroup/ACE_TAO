@@ -489,52 +489,27 @@ AST_Interface::insert_non_dup (AST_Type *t,
 
   std::string const& full_name = t->full_name ();
 
-  // Initialize an iterator to search the queue for duplicates.
-  for (ACE_Unbounded_Queue_Iterator<AST_Type *> q_iter (
-           this->insert_queue
-         );
-       !q_iter.done ();
-       (void) q_iter.advance ())
+  // Search the queue for duplicates.
+  for (AST_Type *queued_type : this->insert_queue)
     {
-      // Queue element.
-      AST_Type **temp = nullptr;
-
-      (void) q_iter.next (temp);
-
-      if (full_name == (*temp)->full_name ())
+      if (full_name == queued_type->full_name ())
         {
           // We exist in this queue and cannot be inserted.
           return 0;
         }
     }
 
-  // Initialize an iterator to search the del_queue for duplicates.
-  for (ACE_Unbounded_Queue_Iterator<AST_Type *> del_q_iter (
-           this->del_queue
-         );
-       !del_q_iter.done ();
-       (void) del_q_iter.advance ())
+  // Search the del_queue for duplicates.
+  for (AST_Type *queued_type : this->del_queue)
     {
-      // Queue element.
-      AST_Type **temp = nullptr;
-
-      (void) del_q_iter.next (temp);
-
-      if (full_name == (*temp)->full_name ())
+      if (full_name == queued_type->full_name ())
         {
           // We exist in this del_queue and cannot be inserted.
           return 0;
         }
     }
 
-  // Insert the parent in the queue.
-  if (this->insert_queue.enqueue_tail (t) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_interface::insert_non_dup - "
-                        "enqueue failed\n"),
-                        0);
-    }
+  this->insert_queue.push_back (t);
 
   return 1;
 }
@@ -611,13 +586,13 @@ AST_Interface::n_inherits_flat () const
   return pd_n_inherits_flat;
 }
 
-ACE_Unbounded_Queue<AST_Type *> &
+std::deque<AST_Type *> &
 AST_Interface::get_insert_queue ()
 {
   return this->insert_queue;
 }
 
-ACE_Unbounded_Queue<AST_Type *> &
+std::deque<AST_Type *> &
 AST_Interface::get_del_queue ()
 {
   return this->del_queue;
@@ -626,26 +601,17 @@ AST_Interface::get_del_queue ()
 bool
 AST_Interface::redef_clash ()
 {
-  this->insert_queue.reset ();
+  this->insert_queue.clear ();
   this->redef_clash_populate_r (this);
 
-  AST_Type **group1_member = nullptr;
-  AST_Type **group2_member = nullptr;
   AST_Decl *group1_member_item = nullptr;
   AST_Decl *group2_member_item = nullptr;
 
-  int i = 1;
-
   // Now compare all pairs.
-  for (ACE_Unbounded_Queue_Iterator<AST_Type *> group1_iter (
-           this->insert_queue
-         );
-       !group1_iter.done ();
-       (void) group1_iter.advance (), ++i)
+  for (std::size_t i = 0; i < this->insert_queue.size (); ++i)
     {
-      // Queue element.
-      (void) group1_iter.next (group1_member);
-      UTL_Scope *s = DeclAsScope (*group1_member);
+      AST_Type *group1_member = this->insert_queue[i];
+      UTL_Scope *s = DeclAsScope (group1_member);
 
       if (s != nullptr)
         {
@@ -668,28 +634,10 @@ AST_Interface::redef_clash ()
                 }
 
               Identifier *pid1 = group1_member_item->local_name ();
-              int j = 0;
-
-              for (ACE_Unbounded_Queue_Iterator<AST_Type *> group2_iter (
-                     this->insert_queue);
-                   !group2_iter.done ();
-                   (void) group2_iter.advance ())
+              for (std::size_t j = i + 1; j < this->insert_queue.size (); ++j)
                 {
-                  // Since group1 and group2 are the same list, we can start this
-                  // iterator from where the outer one is.
-                  while (j++ < i)
-                    {
-                      group2_iter.advance ();
-                    }
-
-                  if (group2_iter.done ())
-                    {
-                      break;
-                    }
-
-                  // Queue element.
-                  (void) group2_iter.next (group2_member);
-                  UTL_Scope *ss = DeclAsScope (*group2_member);
+                  AST_Type *group2_member = this->insert_queue[j];
+                  UTL_Scope *ss = DeclAsScope (group2_member);
 
                   if (ss != nullptr)
                     {
@@ -720,8 +668,8 @@ AST_Interface::redef_clash ()
                             {
                               idl_global->err ()->error3 (
                                 UTL_Error::EIDL_REDEF,
-                                *group1_member,
-                                *group2_member,
+                                group1_member,
+                                group2_member,
                                 group2_member_item);
 
                               return true;
@@ -732,7 +680,7 @@ AST_Interface::redef_clash ()
                                 {
                                   idl_global->err ()->error3 (
                                     UTL_Error::EIDL_NAME_CASE_ERROR,
-                                    *group1_member,
+                                    group1_member,
                                     group1_member_item,
                                     group2_member_item);
 
@@ -742,7 +690,7 @@ AST_Interface::redef_clash ()
                                 {
                                   idl_global->err ()->warning3 (
                                     UTL_Error::EIDL_NAME_CASE_WARNING,
-                                    *group1_member,
+                                    group1_member,
                                     group1_member_item,
                                     group2_member_item);
                                 }

@@ -342,9 +342,9 @@ be_visitor_home_svs::gen_servant_class ()
           be_interface *bi =
             dynamic_cast<be_interface*> (h->inherits ()[i]);
 
-          bi->get_insert_queue ().reset ();
-          bi->get_del_queue ().reset ();
-          bi->get_insert_queue ().enqueue_tail (bi);
+          bi->get_insert_queue ().clear ();
+          bi->get_del_queue ().clear ();
+          bi->get_insert_queue ().push_back (bi);
 
           Home_Op_Attr_Generator op_attr_gen (this);
 

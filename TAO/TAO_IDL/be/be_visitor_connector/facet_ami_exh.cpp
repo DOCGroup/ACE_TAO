@@ -317,9 +317,9 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
 
      /// The overload of traverse_inheritance_graph() used here
      /// doesn't automatically prime the queues.
-     sync_iface->get_insert_queue ().reset ();
-     sync_iface->get_del_queue ().reset ();
-     sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
+     sync_iface->get_insert_queue ().clear ();
+     sync_iface->get_del_queue ().clear ();
+     sync_iface->get_insert_queue ().push_back (sync_iface);
 
 
      Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);

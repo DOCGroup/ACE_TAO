@@ -82,9 +82,9 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
 
       /// The overload of traverse_inheritance_graph() used here
       /// doesn't automatically prime the queues.
-      op_scope->get_insert_queue ().reset ();
-      op_scope->get_del_queue ().reset ();
-      op_scope->get_insert_queue ().enqueue_tail (op_scope);
+      op_scope->get_insert_queue ().clear ();
+      op_scope->get_del_queue ().clear ();
+      op_scope->get_insert_queue ().push_back (op_scope);
 
       be_facet_op_attr_defn_helper helper (op_scope);
 

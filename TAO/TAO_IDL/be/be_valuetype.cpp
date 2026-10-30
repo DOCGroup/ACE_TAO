@@ -681,8 +681,8 @@ be_valuetype::traverse_supports_list_graphs (
     }
 
   // Make sure the queues are empty.
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
+  this->insert_queue.clear ();
+  this->del_queue.clear ();
 
   be_interface *supported_interface = nullptr;
 
@@ -704,14 +704,7 @@ be_valuetype::traverse_supports_list_graphs (
         dynamic_cast<be_interface*> (this->pd_supports[i]);
 
       // Insert a supported interface in the queue.
-      if (this->insert_queue.enqueue_tail (supported_interface) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_valuetype::")
-                             ACE_TEXT ("traverse_supports_list_graphs - ")
-                             ACE_TEXT ("error generating entries\n")),
-                            -1);
-        }
+      this->insert_queue.push_back (supported_interface);
     }
 
   be_code_emitter_wrapper wrapper (gen);
@@ -736,18 +729,11 @@ be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
     dynamic_cast<be_interface*> (supported);
 
   // Make sure the queues are empty.
-  this->insert_queue.reset ();
-  this->del_queue.reset ();
+  this->insert_queue.clear ();
+  this->del_queue.clear ();
 
   // Insert the supported concrete interface in the queue.
-  if (this->insert_queue.enqueue_tail (concrete) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_valuetype::")
-                         ACE_TEXT ("traverse_concrete_inheritance_graph - ")
-                         ACE_TEXT ("error generating entries\n")),
-                        -1);
-    }
+  this->insert_queue.push_back (concrete);
 
   be_code_emitter_wrapper wrapper (gen);
 
