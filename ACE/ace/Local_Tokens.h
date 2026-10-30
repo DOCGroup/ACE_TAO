@@ -210,6 +210,11 @@ using ACE_TPQ_ENTRY = ACE_TSS<ACE_TPQ_Entry>;
 class ACE_Export ACE_TSS_TPQ_Entry : public ACE_TPQ_ENTRY
 {
 public:
+  ACE_TSS_TPQ_Entry (ACE_TSS_TPQ_Entry const &) = delete;
+  ACE_TSS_TPQ_Entry (ACE_TSS_TPQ_Entry &&) = delete;
+  ACE_TSS_TPQ_Entry &operator= (ACE_TSS_TPQ_Entry const &) = delete;
+  ACE_TSS_TPQ_Entry &operator= (ACE_TSS_TPQ_Entry &&) = delete;
+
   /// These are passed to the constructor of ACE_TPQ_Entry in
   /// make_TSS_TYPE
   ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
@@ -235,9 +240,6 @@ public:
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
-  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &) = delete;
-  void operator= (const ACE_TSS_TPQ_Entry &) = delete;
-
   // = These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
 

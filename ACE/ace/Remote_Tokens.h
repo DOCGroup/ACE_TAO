@@ -274,6 +274,11 @@ protected:
 class ACE_Export ACE_TSS_Connection : public ACE_TSS<ACE_SOCK_Stream>
 {
 public:
+  ACE_TSS_Connection (ACE_TSS_Connection const &) = delete;
+  ACE_TSS_Connection (ACE_TSS_Connection &&) = delete;
+  ACE_TSS_Connection &operator= (ACE_TSS_Connection const &) = delete;
+  ACE_TSS_Connection &operator= (ACE_TSS_Connection &&) = delete;
+
   // Necessary to make some compilers work...
   ACE_TSS_Connection ();
   ~ACE_TSS_Connection ();
@@ -298,10 +303,6 @@ protected:
   /// The address of the Token Server used by all instances of
   /// Token_Proxy.
   static ACE_INET_Addr server_address_;
-
-private:
-  ACE_TSS_Connection (const ACE_TSS_Connection &) = delete;
-  void operator= (const ACE_TSS_Connection &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
