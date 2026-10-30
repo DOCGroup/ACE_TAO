@@ -3,6 +3,7 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
 #include "ace/Reverse_Lock_T.h"
+#include <new>
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.inl"
@@ -138,8 +139,15 @@ TAO_CEC_ProxyPullSupplier::push (CORBA::Any const &event)
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
 
-  // Ignore errors
-  (void) this->queue_.enqueue_tail (event);
+  try
+    {
+      this->queue_.push_back (event);
+    }
+  catch (std::bad_alloc const &)
+    {
+      // Ignore allocation failure, matching the previous queue behavior.
+      return;
+    }
 
   this->wait_not_empty_.signal ();
 }
@@ -151,15 +159,13 @@ TAO_CEC_ProxyPullSupplier::pull ()
     throw CosEventComm::Disconnected ();
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, nullptr);
-  while (this->queue_.is_empty ())
+  while (this->queue_.empty ())
     {
       this->wait_not_empty_.wait ();
     }
   CORBA::Any any;
-  if (this->queue_.dequeue_head (any) != 0)
-    {
-      throw CORBA::INTERNAL ();
-    }
+  any = this->queue_.front ();
+  this->queue_.pop_front ();
   return new CORBA::Any (any);
 }
 
@@ -172,16 +178,14 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, queue_lock_, nullptr);
   CORBA::Any any;
-  if (this->queue_.is_empty ())
+  if (this->queue_.empty ())
     {
       any <<= CORBA::Long(0);
       return new CORBA::Any (any);
     }
 
-  if (this->queue_.dequeue_head (any) != 0)
-    {
-      throw CORBA::INTERNAL ();
-    }
+  any = this->queue_.front ();
+  this->queue_.pop_front ();
   has_event = true;
   return new CORBA::Any (any);
 }

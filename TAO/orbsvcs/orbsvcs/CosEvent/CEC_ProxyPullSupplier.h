@@ -20,9 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Queue.h"
 #include "ace/Condition_Thread_Mutex.h"
-#include "ace/Unbounded_Queue.h"
+#include <deque>
 
 #include "orbsvcs/CosEvent/event_serv_export.h"
 
@@ -157,7 +156,7 @@ private:
   /// Use a message queue to pass the
   TAO_SYNCH_MUTEX queue_lock_;
   TAO_SYNCH_CONDITION wait_not_empty_;
-  ACE_Unbounded_Queue<CORBA::Any> queue_;
+  std::deque<CORBA::Any> queue_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
