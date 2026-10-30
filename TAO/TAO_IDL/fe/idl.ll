@@ -550,7 +550,8 @@ idl_parse_line_and_file (char *buf)
   bool in_main_file = false;
 
   bool is_real_filename =
-    fname->compare (*idl_global->real_filename ())
+    UTL_String::compare (fname->get_string (),
+                         idl_global->real_filename ()->get_string ())
     || same_file (fname->get_string ().c_str (),
                   idl_global->real_filename ()->get_string ().c_str ());
 
@@ -559,7 +560,8 @@ idl_parse_line_and_file (char *buf)
   if (!is_real_filename)
     {
       is_main_filename =
-        fname->compare (*idl_global->main_filename ())
+        UTL_String::compare (fname->get_string (),
+                            idl_global->main_filename ()->get_string ())
         || same_file (fname->get_string ().c_str (),
                       idl_global->main_filename ()->get_string ().c_str ());
     }

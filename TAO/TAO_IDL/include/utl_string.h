@@ -111,12 +111,6 @@ public:
   }
   // Get contents of utl_string as a standard string.
 
-  bool compare (UTL_String const& s) const;
-  // Compare two UTL_String values.
-
-  bool compare_quiet (UTL_String const& s) const;
-  // Like compare without error or warning message output.
-
   static bool strcmp_caseless (
     std::string_view lhs,
     std::string_view rhs,
