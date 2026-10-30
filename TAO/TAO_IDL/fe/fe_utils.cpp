@@ -529,16 +529,12 @@ FE_Utils::open_included_file (std::string_view filename,
       IDL_GlobalData::Include_Path_Info *path_info = nullptr;
       (void) i.next (path_info);
 
-      if (path_info->path_)
-        {
-          std::string const complete_filename =
-            *path_info->path_ + the_file;
+      std::string const complete_filename = path_info->path_ + the_file;
 
-          f = ACE_OS::fopen (complete_filename.c_str (), "r");
+      f = ACE_OS::fopen (complete_filename.c_str (), "r");
 
-          if (f != nullptr)
-            directory = *path_info->path_;
-        }
+      if (f != nullptr)
+        directory = path_info->path_;
     }
 
   return f;
@@ -546,7 +542,7 @@ FE_Utils::open_included_file (std::string_view filename,
 
 bool
 FE_Utils::is_include_file_found (std::string &inc_file,
-                                 UTL_String * idl_file_name)
+                                 std::string const& idl_file_name)
 {
   char abspath[MAXPATHLEN] = "";
   char *full_path = nullptr;
@@ -562,7 +558,7 @@ FE_Utils::is_include_file_found (std::string &inc_file,
     }
 
   inc_file += ACE_DIRECTORY_SEPARATOR_STR_A;
-  inc_file += idl_file_name->get_string ();
+  inc_file += idl_file_name;
   full_path =
     ACE_OS::realpath (inc_file.c_str (), abspath);
 
@@ -606,11 +602,9 @@ FE_Utils::validate_included_idl_files ()
   std::vector<std::string> &pre_preproc_includes =
     idl_global->included_idl_files ();
 
-  size_t n_post_preproc_includes =
-    idl_global->n_include_file_names ();
-
-  UTL_String **post_preproc_includes =
+  std::vector<std::string> const& post_preproc_includes =
     idl_global->include_file_names ();
+  size_t const n_post_preproc_includes = post_preproc_includes.size ();
 
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
@@ -626,7 +620,7 @@ FE_Utils::validate_included_idl_files ()
 
   for (size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
-      std::string const post_tmp (post_preproc_includes [i]->get_string ());
+      std::string const& post_tmp = post_preproc_includes[i];
       full_path = ACE_OS::realpath (post_tmp.c_str (), post_abspath);
 
       if (full_path)
@@ -652,7 +646,7 @@ FE_Utils::validate_included_idl_files ()
                         iter.advance ())
                 {
                   iter.next (path_info);
-                  std::string pre_partial = path_info->path_.value_or ("");
+                  std::string pre_partial = path_info->path_;
 
                   // If the include path has literal "s (because of an include
                   // of a Windows path with spaces), we must remove them here.
@@ -705,7 +699,7 @@ FE_Utils::validate_included_idl_files ()
 }
 
 bool
-FE_Utils::validate_orb_include (UTL_String * idl_file_name)
+FE_Utils::validate_orb_include (std::string const& idl_file_name)
 {
   std::string foundpath;
 
@@ -729,7 +723,7 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
       IDL_GlobalData::Include_Path_Info *path_info = nullptr;
       iter.next (path_info);
 
-      std::string partial = path_info->path_.value_or ("");
+      std::string partial = path_info->path_;
 
       // We don't need to check anything if the file is already
       // found and the folder where are currently checking is

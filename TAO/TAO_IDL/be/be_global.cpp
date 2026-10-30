@@ -62,19 +62,19 @@ BE_GlobalData::changing_standard_include_files ()
 
 /************ Helper functions **************/
 static std::string
-be_change_idl_file_extension (UTL_String* idl_file,
+be_change_idl_file_extension (std::string const& idl_file,
                               std::string const& new_extension,
                               bool base_name_only = false,
                               bool for_anyop = false,
                               bool for_skel = false,
                               bool for_exec = false)
 {
-  if (idl_file == nullptr)
+  if (idl_file.empty ())
     {
       return {};
     }
 
-  std::string const& input = idl_file->get_string ();
+  std::string const& input = idl_file;
 
   // Get the base part of the filename, we try several extensions
   // before giving up.
@@ -136,11 +136,11 @@ be_change_idl_file_extension (UTL_String* idl_file,
 }
 
 std::string
-BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
+BE_GlobalData::be_get_client_hdr (std::string const& idl_file_name,
                                   bool base_name_only)
 {
   // User-defined file extensions don't apply to .pidl files.
-  std::string const& fn = idl_file_name->get_string ();
+  std::string const& fn = idl_file_name;
   bool orb_file = fn.size () >= 5
     && (fn.compare (fn.size () - 5, 5, ".pidl") == 0
         || fn.compare (fn.size () - 5, 5, ".PIDL") == 0);
@@ -159,14 +159,14 @@ BE_GlobalData::be_get_client_hdr (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_client_stub (UTL_String *idl_file_name)
+BE_GlobalData::be_get_client_stub (std::string const& idl_file_name)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->client_stub_ending ());
 }
 
 std::string
-BE_GlobalData::be_get_client_inline (UTL_String *idl_file_name,
+BE_GlobalData::be_get_client_inline (std::string const& idl_file_name,
                                      bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -175,11 +175,11 @@ BE_GlobalData::be_get_client_inline (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
+BE_GlobalData::be_get_server_hdr (std::string const& idl_file_name,
                                   bool base_name_only)
 {
   // User-defined file extensions don't apply to .pidl files.
-  std::string const& fn = idl_file_name->get_string ();
+  std::string const& fn = idl_file_name;
   bool orb_file = fn.size () >= 5
     && (fn.compare (fn.size () - 5, 5, ".pidl") == 0
         || fn.compare (fn.size () - 5, 5, ".PIDL") == 0);
@@ -200,11 +200,11 @@ BE_GlobalData::be_get_server_hdr (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_svnt_template_hdr (UTL_String *idl_file_name,
+BE_GlobalData::be_get_svnt_template_hdr (std::string const& idl_file_name,
                                         bool base_name_only)
 {
   // User-defined file extensions don't apply to .pidl files.
-  std::string const& fn = idl_file_name->get_string ();
+  std::string const& fn = idl_file_name;
   bool orb_file = fn.size () >= 5
     && (fn.compare (fn.size () - 5, 5, ".pidl") == 0
         || fn.compare (fn.size () - 5, 5, ".PIDL") == 0);
@@ -225,7 +225,7 @@ BE_GlobalData::be_get_svnt_template_hdr (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_implementation_hdr (UTL_String *idl_file_name,
+BE_GlobalData::be_get_implementation_hdr (std::string const& idl_file_name,
                                           bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -234,7 +234,7 @@ BE_GlobalData::be_get_implementation_hdr (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_implementation_skel (UTL_String *idl_file_name,
+BE_GlobalData::be_get_implementation_skel (std::string const& idl_file_name,
                                            bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -243,7 +243,7 @@ BE_GlobalData::be_get_implementation_skel (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_server_template_hdr (UTL_String *idl_file_name,
+BE_GlobalData::be_get_server_template_hdr (std::string const& idl_file_name,
                                            bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -254,7 +254,7 @@ BE_GlobalData::be_get_server_template_hdr (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_server_skeleton (UTL_String *idl_file_name)
+BE_GlobalData::be_get_server_skeleton (std::string const& idl_file_name)
 {
   return be_change_idl_file_extension (idl_file_name,
                                        be_global->server_skeleton_ending (),
@@ -264,7 +264,7 @@ BE_GlobalData::be_get_server_skeleton (UTL_String *idl_file_name)
 }
 
 std::string
-BE_GlobalData::be_get_server_template_skeleton (UTL_String *idl_file_name,
+BE_GlobalData::be_get_server_template_skeleton (std::string const& idl_file_name,
                                                 bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -275,7 +275,7 @@ BE_GlobalData::be_get_server_template_skeleton (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
+BE_GlobalData::be_get_anyop_header (std::string const& idl_file_name,
                                     bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -285,7 +285,7 @@ BE_GlobalData::be_get_anyop_header (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
+BE_GlobalData::be_get_anyop_source (std::string const& idl_file_name,
                                     bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -295,7 +295,7 @@ BE_GlobalData::be_get_anyop_source (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_ciao_svnt_header (UTL_String *idl_file_name,
+BE_GlobalData::be_get_ciao_svnt_header (std::string const& idl_file_name,
                                         bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -304,7 +304,7 @@ BE_GlobalData::be_get_ciao_svnt_header (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_ciao_svnt_template_header (UTL_String *idl_file_name,
+BE_GlobalData::be_get_ciao_svnt_template_header (std::string const& idl_file_name,
                                                 bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -314,7 +314,7 @@ BE_GlobalData::be_get_ciao_svnt_template_header (UTL_String *idl_file_name,
 
 
 std::string
-BE_GlobalData::be_get_ciao_svnt_source (UTL_String *idl_file_name,
+BE_GlobalData::be_get_ciao_svnt_source (std::string const& idl_file_name,
                                         bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -323,7 +323,7 @@ BE_GlobalData::be_get_ciao_svnt_source (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_ciao_svnt_template_source (UTL_String *idl_file_name,
+BE_GlobalData::be_get_ciao_svnt_template_source (std::string const& idl_file_name,
                                                 bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -332,7 +332,7 @@ BE_GlobalData::be_get_ciao_svnt_template_source (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_ciao_exec_header (UTL_String *idl_file_name,
+BE_GlobalData::be_get_ciao_exec_header (std::string const& idl_file_name,
                                         bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -344,7 +344,7 @@ BE_GlobalData::be_get_ciao_exec_header (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_ciao_exec_source (UTL_String *idl_file_name,
+BE_GlobalData::be_get_ciao_exec_source (std::string const& idl_file_name,
                                         bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -357,7 +357,7 @@ BE_GlobalData::be_get_ciao_exec_source (UTL_String *idl_file_name,
 
 std::string
 BE_GlobalData::be_get_ciao_exec_stub_header (
-  UTL_String *idl_file_name,
+  std::string const& idl_file_name,
   bool base_name_only)
 {
   return
@@ -369,7 +369,7 @@ BE_GlobalData::be_get_ciao_exec_stub_header (
 
 std::string
 BE_GlobalData::be_get_ciao_exec_idl (
-  UTL_String *idl_file_name,
+  std::string const& idl_file_name,
   bool base_name_only)
 {
   return
@@ -380,7 +380,7 @@ BE_GlobalData::be_get_ciao_exec_idl (
 }
 
 std::string
-BE_GlobalData::be_get_ciao_conn_header (UTL_String *idl_file_name,
+BE_GlobalData::be_get_ciao_conn_header (std::string const& idl_file_name,
                                         bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -389,7 +389,7 @@ BE_GlobalData::be_get_ciao_conn_header (UTL_String *idl_file_name,
 }
 
 std::string
-BE_GlobalData::be_get_ciao_conn_source (UTL_String *idl_file_name,
+BE_GlobalData::be_get_ciao_conn_source (std::string const& idl_file_name,
                                         bool base_name_only)
 {
   return be_change_idl_file_extension (idl_file_name,
@@ -399,7 +399,7 @@ BE_GlobalData::be_get_ciao_conn_source (UTL_String *idl_file_name,
 
 std::string
 BE_GlobalData::be_get_dds_typesupport_header (
-  UTL_String *idl_file_name,
+  std::string const& idl_file_name,
   bool base_name_only)
 {
   return
@@ -411,7 +411,7 @@ BE_GlobalData::be_get_dds_typesupport_header (
 
 std::string
 BE_GlobalData::be_get_ciao_ami_conn_idl (
-  UTL_String *idl_file_name,
+  std::string const& idl_file_name,
   bool base_name_only)
 {
   return
@@ -423,7 +423,7 @@ BE_GlobalData::be_get_ciao_ami_conn_idl (
 
 std::string
 BE_GlobalData::be_get_ciao_ami_conn_impl_hdr (
-  UTL_String *idl_file_name,
+  std::string const& idl_file_name,
   bool base_name_only)
 {
   return
@@ -435,7 +435,7 @@ BE_GlobalData::be_get_ciao_ami_conn_impl_hdr (
 
 std::string
 BE_GlobalData::be_get_ciao_ami_conn_impl_src (
-  UTL_String *idl_file_name,
+  std::string const& idl_file_name,
   bool base_name_only)
 {
   return
@@ -1740,7 +1740,7 @@ BE_GlobalData::lookup_strategy () const
 }
 
 void
-BE_GlobalData::dds_impl (std::string_view val)
+BE_GlobalData::dds_impl (std::string const& val)
 {
   if (val == "ndds")
     {

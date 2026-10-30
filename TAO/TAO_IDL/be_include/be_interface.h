@@ -87,16 +87,16 @@ public:
   virtual std::string_view server_enclosing_scope () const;
 
   /// Retrieve skeleton name.
-  std::string relative_skel_name (std::string_view skel_name) const;
+  std::string relative_skel_name (std::string const& skel_name) const;
 
   /// Build up the skeleton name.
-  std::string compute_full_skel_name (std::string_view prefix) const;
+  std::string compute_full_skel_name (std::string const& prefix) const;
 
   /// Compute the collocation names.
   void compute_coll_names (int type) const;
 
-  static std::string relative_name (std::string_view localname,
-                                    std::string_view othername);
+  static std::string relative_name (std::string const& localname,
+                                    std::string const& othername);
 
   /// Call the default constructors of all the base classes.
   virtual void gen_def_ctors (TAO_OutStream* os);

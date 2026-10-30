@@ -146,10 +146,10 @@ AST_Decl::AST_Decl (NodeType nt,
     in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
-  UTL_String *fn = idl_global->filename ();
-  if (fn != nullptr)
+  std::string const& fn = idl_global->filename ();
+  if (!fn.empty ())
     {
-      this->pd_file_name = fn->get_string ();
+      this->pd_file_name = fn;
     }
 
   this->compute_full_name (n);
@@ -185,10 +185,10 @@ AST_Decl::AST_Decl (
     in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
-  UTL_String *fn = idl_global->filename ();
-  if (fn != nullptr)
+  std::string const& fn = idl_global->filename ();
+  if (!fn.empty ())
     {
-      this->pd_file_name = fn->get_string ();
+      this->pd_file_name = fn;
     }
 
   this->compute_full_name (name);

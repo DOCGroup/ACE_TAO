@@ -516,7 +516,7 @@ AST_Structure::redefine (AST_Structure *from)
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
-  this->set_file_name (idl_global->filename ()->get_string ());
+  this->set_file_name (idl_global->filename ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
   this->fields_ = from->fields_;

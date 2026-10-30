@@ -941,8 +941,7 @@ DRV_get_orb_idl_includes ()
     {
       // Fall back on $TAO_ROOT/tao/orb.idl if orb.idl is not in the
       // include path.
-      std::optional<std::string_view> const tao_root = idl_global->tao_root ();
-      std::string orb_idl_path (tao_root ? *tao_root : "");
+      std::string orb_idl_path (idl_global->tao_root ());
       orb_idl_path += '/';
       orb_idl_path += orb_idl;
 
@@ -1085,8 +1084,8 @@ DRV_pre_proc (char const *myfile)
       throw Bailout ();
     }
 
-  std::optional<std::string_view> const temp_dir = idl_global->temp_dir ();
-  if (!temp_dir)
+  std::string const& temp_dir = idl_global->temp_dir ();
+  if (temp_dir.empty ())
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: temporary directory is not set\n",
@@ -1095,7 +1094,7 @@ DRV_pre_proc (char const *myfile)
       throw Bailout ();
     }
 
-  char const *tmpdir = temp_dir->data ();
+  char const *tmpdir = temp_dir.c_str ();
   static constexpr char temp_file_extension[] = ".cpp";
 
   static constexpr char tao_idlf_template[] = "tao-idlf_XXXXXX";
@@ -1193,24 +1192,10 @@ DRV_pre_proc (char const *myfile)
     }
   ACE_OS::fclose (file);
 
-  UTL_String *utl_string = nullptr;
-
-  ACE_NEW (utl_string,
-           UTL_String (myfile));
-
-  idl_global->set_main_filename (utl_string);
-
-  UTL_String *stripped_tmp = nullptr;
-  ACE_NEW (stripped_tmp,
-           UTL_String (std::string (DRV_stripped_name (myfile))));
-
-  idl_global->set_stripped_filename (stripped_tmp);
-
-  UTL_String *real_tmp = nullptr;
-  ACE_NEW (real_tmp,
-           UTL_String (input_file));
-
-  idl_global->set_real_filename (real_tmp);
+  idl_global->set_main_filename (myfile);
+  std::string const stripped_filename (DRV_stripped_name (myfile));
+  idl_global->set_stripped_filename (stripped_filename);
+  idl_global->set_real_filename (input_file);
 
   // We use ACE instead of the (low level) fork facilities, this also
   // works on NT.

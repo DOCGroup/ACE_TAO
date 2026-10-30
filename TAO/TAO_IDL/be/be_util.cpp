@@ -313,7 +313,7 @@ be_util::prep_be_arg (std::string const& s)
         }
       else if (argument.substr (0, dds_impl.size ()) == dds_impl)
         {
-          std::string_view const val = argument.substr (dds_impl.size ());
+          std::string const val = argument.substr (dds_impl.size ());
           be_global->dds_impl (val);
         }
       else if (argument.substr (0, no_fixed_err.size ()) == no_fixed_err)

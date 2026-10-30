@@ -96,7 +96,7 @@ struct TAO_IDL_FE_Export FE_Utils
 
   static bool
   is_include_file_found (std::string &inc_file,
-                         UTL_String * idl_file_name);
+                         std::string const& idl_file_name);
 
   /// Validate the included idl files, somefiles might have been
   /// ignored by the preprocessor.
@@ -105,7 +105,7 @@ struct TAO_IDL_FE_Export FE_Utils
 
   /// Check if included file is in TAO specific include dirs.
   static bool
-  validate_orb_include (UTL_String *);
+  validate_orb_include (std::string const& idl_file_name);
 
   /// Strips _cxx_ prefix for use in port names.
   static void

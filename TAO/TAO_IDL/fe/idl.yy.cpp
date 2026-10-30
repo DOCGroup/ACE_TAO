@@ -3557,7 +3557,6 @@ idl_parse_line_and_file (char *buf)
 {
   char *r = buf;
   char *h = nullptr;
-  UTL_String *nm = nullptr;
 
   // Skip initial '#'.
   if (*r != '#')
@@ -3610,8 +3609,6 @@ idl_parse_line_and_file (char *buf)
     }
 
   *r = 0;
-  UTL_String *tmp = nullptr;
-
   if (*h == '\0')
     {
       ACE_ERROR ((LM_ERROR,
@@ -3636,30 +3633,25 @@ idl_parse_line_and_file (char *buf)
         }
 
       h[i] = '\0';
-      ACE_NEW (tmp,
-               UTL_String (h));
-      idl_global->update_prefix (tmp->get_string ().data ());
+      std::string tmp (h);
+      idl_global->update_prefix (tmp.data ());
       idl_global->set_filename (tmp);
     }
 
-  UTL_String *fname = idl_global->filename ();
+  std::string const& fname = idl_global->filename ();
   bool in_main_file = false;
 
   bool is_real_filename =
-    UTL_String::compare (fname->get_string (),
-                         idl_global->real_filename ()->get_string ())
-    || same_file (fname->get_string ().c_str (),
-                  idl_global->real_filename ()->get_string ().c_str ());
+    UTL_String::compare (fname, idl_global->real_filename ())
+    || same_file (fname.c_str (), idl_global->real_filename ().c_str ());
 
   bool is_main_filename = false;
 
   if (!is_real_filename)
     {
       is_main_filename =
-        UTL_String::compare (fname->get_string (),
-                            idl_global->main_filename ()->get_string ())
-        || same_file (fname->get_string ().c_str (),
-                      idl_global->main_filename ()->get_string ().c_str ());
+        UTL_String::compare (fname, idl_global->main_filename ())
+        || same_file (fname.c_str (), idl_global->main_filename ().c_str ());
     }
 
   if (is_real_filename || is_main_filename)
@@ -3673,9 +3665,8 @@ idl_parse_line_and_file (char *buf)
   // by the preprocessor.
   if (!(idl_global->in_main_file ()) && idl_global->import ())
     {
-      ACE_NEW (nm,
-               UTL_String (
-                 FE_Utils::stripped_preproc_include (fname->get_string ().c_str ())));
+      std::string const nm =
+        FE_Utils::stripped_preproc_include (fname.c_str ());
 
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
@@ -3753,10 +3744,10 @@ idl_store_pragma (char *buf)
 
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
-          char *ext_id = idl_global->filename ()->get_string ().data ();
+          std::string ext_id (idl_global->filename ());
           ACE_Hash_Map_Entry<char *, char *> *entry = nullptr;
           int const status =
-            idl_global->file_prefixes ().find (ext_id, entry);
+            idl_global->file_prefixes ().find (ext_id.data (), entry);
 
           if (status == 0)
             {
@@ -3772,7 +3763,7 @@ idl_store_pragma (char *buf)
                   ACE::strdelete (entry->ext_id_);
                   ACE::strdelete (entry->int_id_);
                   (void) idl_global->file_prefixes ().unbind (entry);
-                  (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+                  (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id.c_str ()),
                                                             ACE::strnew (new_prefix));
                 }
             }
@@ -3800,7 +3791,7 @@ idl_store_pragma (char *buf)
 
           if (status != 0)
             {
-              (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id),
+              (void) idl_global->file_prefixes ().bind (ACE::strnew (ext_id.c_str ()),
                                                         ACE::strnew (new_prefix));
             }
         }

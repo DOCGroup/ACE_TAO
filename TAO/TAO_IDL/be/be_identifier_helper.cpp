@@ -93,7 +93,7 @@ IdentifierHelper::original_local_name (Identifier const *local_name)
 
       unsigned int len =
         static_cast<unsigned int> (lname.size () - 5);
-      std::string_view const keyword = lname.substr (5);
+      std::string const keyword = lname.substr (5);
 
       const TAO_IDL_CPP_Keyword_Entry *entry =
         cpp_key_tbl.lookup (keyword.data (), len);
@@ -102,7 +102,7 @@ IdentifierHelper::original_local_name (Identifier const *local_name)
         {
           // Remove _cxx_ and assign to the Identifier variable.
           ACE_NEW_RETURN (id,
-                          Identifier (std::string (keyword)),
+                          Identifier (keyword),
                           nullptr);
         }
     }

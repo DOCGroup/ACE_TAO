@@ -269,10 +269,7 @@ get_filename (AST_Decl *node = nullptr)
       return node->file_name ();
     }
 
-  UTL_String * const filename = idl_global->filename ();
-  return filename != nullptr
-    ? std::string_view (filename->get_string ())
-    : std::string_view {};
+  return idl_global->filename ();
 }
 
 /**
@@ -740,7 +737,7 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
 {
   idl_error_header (EIDL_SYNTAX_ERROR,
                     idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
+                    idl_global->filename ());
   ACE_ERROR ((LM_ERROR,
               "%C\n",
               parse_state_to_error_message (ps).data ()));
@@ -1479,8 +1476,7 @@ void
 UTL_Error::scope_masking_error (AST_Decl *masked,
                                 AST_Decl *masking)
 {
-  std::string_view const this_file =
-    idl_global->filename ()->get_string ();
+  std::string_view const this_file = idl_global->filename ();
   std::string_view const masked_file = masked->file_name ();
   std::string_view const masking_file = masking->file_name ();
   std::string const masked_file_string (masked_file);

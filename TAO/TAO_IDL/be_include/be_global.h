@@ -159,105 +159,105 @@ public:
   // name with output dir path, is useful, when I want just the
   // base name to use in #include's etc.
   static std::string be_get_client_hdr (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_client_stub (
-    UTL_String *idl_file_name);
+    std::string const& idl_file_name);
 
   static std::string be_get_client_inline (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_server_hdr (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_svnt_template_hdr (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_implementation_hdr (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_implementation_skel (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_server_template_hdr (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_server_skeleton (
-    UTL_String *idl_file_name);
+    std::string const& idl_file_name);
 
   static std::string be_get_server_template_skeleton (
-      UTL_String *idl_file_name,
+      std::string const& idl_file_name,
       bool base_name_only = false);
 
   static std::string be_get_anyop_header (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_anyop_source (
-    UTL_String *idl_file_name,
+      std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_svnt_header (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_svnt_template_header (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_svnt_source (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_svnt_template_source (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_exec_header (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_exec_source (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_exec_stub_header (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_exec_idl (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_conn_header (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_conn_source (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_dds_typesupport_header (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_ami_conn_idl (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_ami_conn_impl_hdr (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   static std::string be_get_ciao_ami_conn_impl_src (
-    UTL_String *idl_file_name,
+    std::string const& idl_file_name,
     bool base_name_only = false);
 
   /// Returns the macro name for exporting server side classes in Win32
@@ -811,7 +811,7 @@ public:
   LOOKUP_STRATEGY lookup_strategy () const;
 
   /// Set the DDS implementation.
-  void dds_impl (std::string_view val);
+  void dds_impl (std::string const& val);
 
   /// Return the enumerated value for the DDS implementation.
   /// Default is NDDS.

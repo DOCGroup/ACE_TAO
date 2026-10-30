@@ -709,7 +709,7 @@ UTL_ScopedName *
 ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
 {
   AST_Decl *tmp = d;
-  std::string_view const name = d->full_name ();
+  std::string const& name = d->full_name ();
 
   while (tmp != nullptr)
     {
@@ -719,7 +719,7 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
 
           size_t const start = name.find (head) + 2;
 
-          std::string_view const tail = name.substr (start + head.length ());
+          std::string const tail = name.substr (start + head.length ());
 
           return FE_Utils::string_to_scoped_name (tail);
         }

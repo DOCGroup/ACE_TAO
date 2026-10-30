@@ -364,10 +364,6 @@ FE_init ()
   idl_global->set_err (FE_new_UTL_Error ());
   idl_global->set_err_count (0);
   idl_global->set_indent (FE_new_UTL_Indenter ());
-  idl_global->set_filename (nullptr);
-  idl_global->set_main_filename (nullptr);
-  idl_global->set_real_filename (nullptr);
-  idl_global->set_stripped_filename (nullptr);
   idl_global->set_import (true);
   idl_global->set_in_main_file (false);
   idl_global->set_lineno (-1);
@@ -375,8 +371,6 @@ FE_init ()
 
   idl_global->set_local_escapes ({});
   idl_global->set_compile_flags (0);
-  idl_global->set_include_file_names (nullptr);
-  idl_global->set_n_include_file_names (0);
   idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
   idl_global->preserve_cpp_keywords (false);
 
@@ -489,7 +483,7 @@ FE_get_cpp_loc_from_env ()
       return env_preprocessor;
     }
 
-  return std::string (idl_global->cpp_location_or_empty ());
+  return idl_global->cpp_location ();
 }
 
 std::optional<std::string>

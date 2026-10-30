@@ -110,7 +110,7 @@ TAO_CodeGen::start_client_header (const std::string &fname)
   // Generate the #ident string, if any.
   this->gen_ident_string (this->client_header_);
 
-  std::string const& filename = idl_global->filename ()->get_string ();
+  std::string const& filename = idl_global->filename ();
   bool const got_pidl = filename.size () >= 5
     && filename.substr (filename.size () - 5) == ".pidl";
 
@@ -222,12 +222,9 @@ TAO_CodeGen::start_client_header (const std::string &fname)
         {
           std::string const &idl_name = idl_global->included_idl_files ()[j];
 
-          // Make a String out of it.
-          UTL_String idl_name_str (idl_name);
-
           // Get the clnt header from the IDL file name.
           std::string const client_hdr =
-            BE_GlobalData::be_get_client_hdr (&idl_name_str,
+            BE_GlobalData::be_get_client_hdr (idl_name,
                                               true);
 
           // Sanity check and then print.
@@ -247,12 +244,9 @@ TAO_CodeGen::start_client_header (const std::string &fname)
 
   for (std::string const &idl_name : idl_global->ciao_ami_idl_fnames ())
     {
-      // Make a String out of it.
-      UTL_String idl_name_str (idl_name);
-
       // Get the clnt header from the IDL file name.
       std::string const client_hdr =
-        BE_GlobalData::be_get_client_hdr (&idl_name_str,
+        BE_GlobalData::be_get_client_hdr (idl_name,
                                           true);
 
       // Sanity check and then print.
@@ -445,11 +439,8 @@ TAO_CodeGen::start_server_header (const std::string &fname)
     {
       std::string const &idl_name = idl_global->included_idl_files ()[j];
 
-      // String'ifying the name.
-      UTL_String idl_name_str (idl_name);
-
       std::string const server_hdr =
-        BE_GlobalData::be_get_server_hdr (&idl_name_str, true);
+        BE_GlobalData::be_get_server_hdr (idl_name, true);
 
       *this->server_header_ << "\n#include \"" << server_hdr << "\"";
     }
@@ -746,7 +737,7 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
   *this->anyop_header_ << "\n#include \"tao/AnyTypeCode/Any.h\"\n";
 
   std::string tao_prefix;
-  std::string const& filename = idl_global->filename ()->get_string ();
+  std::string const& filename = idl_global->filename ();
   bool const got_tao_pidl = filename.size () >= 5
     && filename.substr (filename.size () - 5) == ".pidl";
 
@@ -806,11 +797,8 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
           // C.h file
           if (got_pidl)
             {
-              // Make a String out of it.
-              UTL_String idl_name_str (idl_name);
-
               std::string const anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
+                BE_GlobalData::be_get_anyop_header (idl_name, true);
 
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
@@ -2429,11 +2417,8 @@ TAO_CodeGen::gen_stub_hdr_includes ()
           // the *A.h include from the AnyTypeCode library.
           if (got_pidl)
             {
-              // Make a String out of it.
-              UTL_String idl_name_str (idl_name);
-
               std::string const anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
+                BE_GlobalData::be_get_anyop_header (idl_name, true);
 
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
@@ -3287,7 +3272,7 @@ TAO_CodeGen::gen_exec_idl_includes ()
     {
       this->gen_standard_include (
         this->ciao_exec_idl_,
-        idl_global->stripped_filename ()->get_string ());
+        idl_global->stripped_filename ());
     }
 
   for (std::string const &path_tmp : idl_global->ciao_lem_file_names ())
@@ -3393,9 +3378,8 @@ TAO_CodeGen::gen_conn_hdr_includes ()
           continue;
         }
 
-      UTL_String str (idl_name);
-
-      this->gen_standard_include (this->ciao_conn_header_, BE_GlobalData::be_get_server_hdr (&str, true));
+      this->gen_standard_include (this->ciao_conn_header_,
+                                  BE_GlobalData::be_get_server_hdr (idl_name, true));
 
     }
 
@@ -3429,7 +3413,7 @@ TAO_CodeGen::gen_ami_conn_idl_includes ()
 
   this->gen_standard_include (
     this->ciao_ami_conn_idl_,
-    idl_global->stripped_filename ()->get_string ());
+    idl_global->stripped_filename ());
 }
 
 void

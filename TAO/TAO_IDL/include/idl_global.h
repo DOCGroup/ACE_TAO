@@ -94,7 +94,6 @@ class AST_Component;
 class AST_Uses;
 class AST_Generator;
 class UTL_Error;
-class UTL_String;
 class UTL_Indenter;
 
 /**
@@ -353,21 +352,17 @@ public:
   long             lineno () const;         // Where in file?
   void             set_lineno (long);           // Set it
 
-  UTL_String       *filename () const;      // What file?
-  void             set_filename (UTL_String *); // Set it
+  std::string const& filename () const;      // What file?
+  void set_filename (std::string const& filename);
 
-  UTL_String       *main_filename () const; // What's the main
-                                                // file name?
-  void             set_main_filename (UTL_String *);
-                                                // Set it
+  std::string const& main_filename () const; // What's the main file name?
+  void set_main_filename (std::string const& filename);
 
-  UTL_String       *real_filename () const; // What's the real
-                                                // file name?
-  void             set_real_filename (UTL_String *);
-                                                // Set it
+  std::string const& real_filename () const; // What's the real file name?
+  void set_real_filename (std::string const& filename);
 
-  UTL_String       *stripped_filename () const; // Stripped filename
-  void             set_stripped_filename (UTL_String *);  // Set it
+  std::string const& stripped_filename () const; // Stripped filename
+  void set_stripped_filename (std::string const& filename);
 
   bool             imported () const;       // Are we imported?
   bool             import () const;         // Is import on?
@@ -380,8 +375,7 @@ public:
   void set_prog_name (std::string const& name);
   void clear_prog_name ();
 
-  std::optional<std::string_view> cpp_location () const;
-  std::string_view cpp_location_or_empty () const;
+  std::string const& cpp_location () const;
   void set_cpp_location (std::string const& location);
 
   long             compile_flags () const;  // What flags are on?
@@ -394,13 +388,11 @@ public:
   UTL_Indenter     *indent () const;        // Get indenter
   void             set_indent (UTL_Indenter *); // Set it
 
-  void             store_include_file_name (UTL_String *);
+  void store_include_file_name (std::string const& filename);
 
-  UTL_String       **include_file_names () const; // Array of file names
-  void             set_include_file_names (UTL_String **); // Set it
+  std::vector<std::string> const& include_file_names () const;
 
-  unsigned long    n_include_file_names () const; // How many
-  void             set_n_include_file_names (unsigned long n);
+  size_t n_include_file_names () const;
 
   void             reset_flag_seen ();
 
@@ -463,10 +455,10 @@ public:
   ParseState parse_state ();       // What state we're in
   void set_parse_state (ParseState s); // Set it
 
-  UTL_String *idl_src_file ();
+  std::string const& idl_src_file () const;
   // Returns the IDL source file being compiled.
 
-  void idl_src_file (UTL_String *);
+  void idl_src_file (std::string const& filename);
   // Set the source IDL file that is being parsed.
 
   void temp_dir (std::string const& s);
@@ -474,7 +466,7 @@ public:
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
 
-  std::optional<std::string_view> temp_dir () const;
+  std::string const& temp_dir () const;
   // Get the directory where the IDL compiler can keep all its temp
   // files. By default, IDL compiler looks for TEMP env variable and
   // if it is not set,  "/tmp/" is assigned.
@@ -482,14 +474,13 @@ public:
   void tao_root (std::string const& s);
   // Set the path of TAO_ROOT.
 
-  std::optional<std::string_view> tao_root () const;
-  std::string_view tao_root_or_empty () const;
+  std::string const& tao_root () const;
   // Get the path for TAO_ROOT.
 
   void gperf_path (std::string const& s);
   // Set the path for the perfect hashing program (GPERF).
 
-  std::optional<std::string_view> gperf_path () const;
+  std::string const& gperf_path () const;
   // Get the path for the perfect hashing program (GPERF).
 
   void ident_string (std::string const& s);
@@ -548,7 +539,7 @@ public:
   // keywords e.g. delete, operator etc. with _cxx_ prefix.
   // Is set by the IFR Service.
 
-  void add_include_path (char const *s, bool is_system);
+  void add_include_path (std::string const& path, bool is_system);
   // Add another path to 'include_paths_'. is_system is true for TAO/CIAO
   // specific paths and false for paths provided by user.
 
@@ -673,7 +664,7 @@ public:
 
   struct Include_Path_Info
   {
-    std::optional<std::string> path_;
+    std::string path_;
     bool is_system_;
   };
 
@@ -907,37 +898,36 @@ private:
   UTL_Error                  *pd_err {};              // Error object
   int                        pd_err_count {};         // Count of errors
   long                       pd_lineno {};            // What line #
-  UTL_String                 *pd_filename {};          // What file
-  UTL_String                 *pd_main_filename {};     // What main filename
-  UTL_String                 *pd_real_filename {};     // What real filename
-  UTL_String                 *pd_stripped_filename {}; // Stripped filename
+  std::string                pd_filename;          // What file
+  std::string                pd_main_filename;     // What main filename
+  std::string                pd_real_filename;     // What real filename
+  std::string                pd_stripped_filename; // Stripped filename
   bool                       pd_import {};             // Is import on?
   bool                       pd_in_main_file {};       // Are we in it?
   std::string pd_prog_name {};
-  std::optional<std::string> pd_cpp_location {};
+  std::string pd_cpp_location;
   long                       pd_compile_flags {};      // Compile flags
   std::string                 pd_local_escapes {};     // Trapdoor argument
   UTL_Indenter               *pd_indent {};            // Indent object
                                                      // as it's being built
-  UTL_String                 **pd_include_file_names {}; // Array of file names.
-  unsigned long              pd_n_include_file_names {}; // How many.
-  unsigned long              pd_n_alloced_file_names {}; // How many alloced.
+  std::vector<std::string> pd_include_file_names_;
+  std::vector<long> include_file_seen_count_;
 
   std::vector<std::string> included_idl_files_;
   // IDL files that are "#include'd.
 
   ParseState                pd_parse_state {PS_NoState}; // Parse state we're in.
 
-  UTL_String                *pd_idl_src_file {};    // IDL source file.
+  std::string                pd_idl_src_file;    // IDL source file.
 
-  std::optional<std::string> tao_root_;
+  std::string tao_root_;
   // Needed if orb.idl is included.
 
-  std::optional<std::string> gperf_path_;
+  std::string gperf_path_;
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
 
-  std::optional<std::string> temp_dir_;
+  std::string temp_dir_;
   // Temp directory where which we can rewsolve in drv_preproc.cpp by
   // checking for  TEMP env variable otherwise we assign to /tmp/.
 

@@ -150,14 +150,14 @@ be_interface::local_coll_name (int type) const
 }
 
 std::string
-be_interface::relative_skel_name (std::string_view skel_name) const
+be_interface::relative_skel_name (std::string const& skel_name) const
 {
-  return be_interface::relative_name (this->full_skel_name (),
+  return be_interface::relative_name (std::string (this->full_skel_name ()),
                                       skel_name);
 }
 
 std::string
-be_interface::compute_full_skel_name (std::string_view prefix) const
+be_interface::compute_full_skel_name (std::string const& prefix) const
 {
   std::string skel_name (prefix);
   bool first = true;
@@ -264,8 +264,8 @@ be_interface::compute_coll_names (int type) const
 }
 
 std::string
-be_interface::relative_name (std::string_view localname,
-                             std::string_view othername)
+be_interface::relative_name (std::string const& localname,
+                             std::string const& othername)
 {
   // Some compilers do not like generating a fully scoped name for a
   // type that was defined in the same enclosing scope in which it was
@@ -279,23 +279,23 @@ be_interface::relative_name (std::string_view localname,
 
   // Thus we need some sort of relative name to be generated.
 
-  std::string_view def_curr = localname;
-  std::string_view use_curr = othername;
+  std::string def_curr = localname;
+  std::string use_curr = othername;
 
   while (!def_curr.empty () && !use_curr.empty ())
     {
       size_t const def_separator = def_curr.find ("::");
       size_t const use_separator = use_curr.find ("::");
-      std::string_view const def_component = def_curr.substr (0, def_separator);
-      std::string_view const use_component = use_curr.substr (0, use_separator);
+      std::string const def_component = def_curr.substr (0, def_separator);
+      std::string const use_component = use_curr.substr (0, use_separator);
 
       if (def_component == use_component)
         {
-          def_curr = (def_separator == std::string_view::npos
-                      ? std::string_view ()
+          def_curr = (def_separator == std::string::npos
+                      ? std::string ()
                       : def_curr.substr (def_separator + 2));
-          use_curr = (use_separator == std::string_view::npos
-                      ? std::string_view ()
+          use_curr = (use_separator == std::string::npos
+                      ? std::string ()
                       : use_curr.substr (use_separator + 2));
         }
       else
@@ -304,7 +304,7 @@ be_interface::relative_name (std::string_view localname,
         }
     }
 
-  return std::string (def_curr);
+  return def_curr;
 }
 
 
@@ -883,7 +883,7 @@ be_interface::gen_operation_table (std::string_view flat_name,
         unsigned int seed =
           (static_cast<unsigned int> (ACE_OS::time())
            + static_cast<unsigned int> (ACE_OS::getpid ()));
-        std::string_view const temp_dir = idl_global->temp_dir ().value ();
+        std::string const& temp_dir = idl_global->temp_dir ();
         std::string temp_file (temp_dir);
         temp_file += std::to_string (ACE_OS::rand_r (&seed));
         temp_file += '.';
@@ -1849,7 +1849,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT ("-Z TAO_%s_Perfect_Hash_OpTable")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-N lookup"),
-                                    idl_global->gperf_path ().value ().data (),
+                                    idl_global->gperf_path ().c_str (),
                                     flat_name.c_str ());
       break;
 
@@ -1872,7 +1872,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT ("-Z TAO_%s_Binary_Search_OpTable")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-N lookup"),
-                                    idl_global->gperf_path ().value ().data (),
+                                    idl_global->gperf_path ().c_str (),
                                     flat_name.c_str ());
       break;
 
@@ -1895,7 +1895,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT ("-Z TAO_%s_Linear_Search_OpTable")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-N lookup"),
-                                    idl_global->gperf_path ().value ().data (),
+                                    idl_global->gperf_path ().c_str (),
                                     flat_name.c_str ());
       break;
 

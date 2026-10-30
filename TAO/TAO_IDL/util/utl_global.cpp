@@ -89,13 +89,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <string_view>
 #include <utility>
 
-// Define an increment for the size of the array used to store names of
-// included files.
-#undef INCREMENT
-#define INCREMENT 64
-
-static long *pSeenOnce = nullptr;
-
 IDL_GlobalData::IDL_GlobalData ()
 {
   // Path for the perfect hash generator(gperf) program.
@@ -115,7 +108,7 @@ IDL_GlobalData::IDL_GlobalData ()
 #if defined (ACE_GPERF)
       // The actual gperf program must be included in the definition of
       // ACE_GPERF, not just the directory in which it is located.
-      this->gperf_path_.emplace (ACE_GPERF);
+      this->gperf_path_ = ACE_GPERF;
 #endif
     }
   else
@@ -299,62 +292,42 @@ IDL_GlobalData::set_lineno (long n)
 }
 
 // Get or set file name being read now
-UTL_String *
+std::string const&
 IDL_GlobalData::filename () const
 {
   return this->pd_filename;
 }
 
 void
-IDL_GlobalData::set_filename (UTL_String *s)
+IDL_GlobalData::set_filename (std::string const& filename)
 {
-  if (this->pd_filename != nullptr)
-    {
-      this->pd_filename->destroy ();
-      delete this->pd_filename;
-      this->pd_filename = nullptr;
-    }
-
-  this->pd_filename = s;
+  this->pd_filename = filename;
 }
 
 // Get or set main file name
-UTL_String *
+std::string const&
 IDL_GlobalData::main_filename () const
 {
   return this->pd_main_filename;
 }
 
 void
-IDL_GlobalData::set_main_filename (UTL_String *n)
+IDL_GlobalData::set_main_filename (std::string const& filename)
 {
-  if (this->pd_main_filename != nullptr)
-    {
-      this->pd_main_filename->destroy ();
-      delete this->pd_main_filename;
-      this->pd_main_filename = nullptr;
-    }
-  this->pd_main_filename = n;
+  this->pd_main_filename = filename;
 }
 
 // Get or set real file name
-UTL_String *
+std::string const&
 IDL_GlobalData::real_filename () const
 {
   return this->pd_real_filename;
 }
 
 void
-IDL_GlobalData::set_real_filename (UTL_String *n)
+IDL_GlobalData::set_real_filename (std::string const& filename)
 {
-  if (this->pd_real_filename != nullptr)
-    {
-      this->pd_real_filename->destroy ();
-      delete this->pd_real_filename;
-      this->pd_real_filename = nullptr;
-    }
-
-  this->pd_real_filename = n;
+  this->pd_real_filename = filename;
 }
 
 // Get or set indicator whether import is on
@@ -390,21 +363,16 @@ IDL_GlobalData::set_in_main_file (bool is_in)
 }
 
 // Get or set stripped file name
-UTL_String *
+std::string const&
 IDL_GlobalData::stripped_filename () const
 {
   return this->pd_stripped_filename;
 }
 
 void
-IDL_GlobalData::set_stripped_filename (UTL_String *nm)
+IDL_GlobalData::set_stripped_filename (std::string const& filename)
 {
-  if (this->pd_stripped_filename != nullptr)
-    {
-      delete this->pd_stripped_filename;
-    }
-
-  this->pd_stripped_filename = nm;
+  this->pd_stripped_filename = filename;
 }
 
 // Get or set cache value for argv[0]
@@ -427,23 +395,10 @@ IDL_GlobalData::clear_prog_name ()
 }
 
 // Get or set location to find C preprocessor
-std::optional<std::string_view>
+std::string const&
 IDL_GlobalData::cpp_location () const
 {
-  if (this->pd_cpp_location)
-    {
-      return *this->pd_cpp_location;
-    }
-
-  return std::nullopt;
-}
-
-std::string_view
-IDL_GlobalData::cpp_location_or_empty () const
-{
-  return this->pd_cpp_location
-    ? std::string_view (*this->pd_cpp_location)
-    : std::string_view {};
+  return this->pd_cpp_location;
 }
 
 void
@@ -512,14 +467,11 @@ IDL_GlobalData::set_indent (UTL_Indenter *i)
 long
 IDL_GlobalData::seen_include_file_before (std::string_view filename)
 {
-  for (unsigned long i = 0; i < this->pd_n_include_file_names; ++i)
+  for (size_t i = 0; i < this->pd_include_file_names_.size (); ++i)
     {
-      std::string_view const include_name =
-        this->pd_include_file_names[i]->get_string ();
-
-      if (filename == include_name)
+      if (filename == this->pd_include_file_names_[i])
         {
-          return ++pSeenOnce[i];
+          return ++this->include_file_seen_count_[i];
         }
     }
 
@@ -528,79 +480,28 @@ IDL_GlobalData::seen_include_file_before (std::string_view filename)
 
 // Store the name of an #include file.
 void
-IDL_GlobalData::store_include_file_name (UTL_String *n)
+IDL_GlobalData::store_include_file_name (std::string const& filename)
 {
   // Check if we need to store it at all or whether we've seen it already.
-  if (this->seen_include_file_before (
-        n->get_string ()))
+  if (this->seen_include_file_before (filename))
     {
-      n->destroy ();
-      delete n; // Don't keep filenames we don't store!
       return;
     }
 
-  // OK, need to store. Make sure there's space for one more string
-  if (this->pd_n_include_file_names == this->pd_n_alloced_file_names)
-    {
-      // Allocating more space.
-      if (this->pd_n_alloced_file_names == 0)
-        {
-          this->pd_n_alloced_file_names = INCREMENT;
-          ACE_NEW (this->pd_include_file_names,
-                   UTL_String *[this->pd_n_alloced_file_names]);
-          ACE_NEW (pSeenOnce,
-                   long [this->pd_n_alloced_file_names]);
-        }
-      else
-        {
-          UTL_String    **o_include_file_names=   this->pd_include_file_names;
-          unsigned long   o_n_alloced_file_names= this->pd_n_alloced_file_names;
-          long           *o_pSeenOnce=            pSeenOnce;
-
-          this->pd_n_alloced_file_names += INCREMENT;
-          ACE_NEW (this->pd_include_file_names,
-                   UTL_String *[this->pd_n_alloced_file_names]);
-          ACE_NEW (pSeenOnce,
-                   long [this->pd_n_alloced_file_names]);
-
-          for (unsigned long i = 0; i < o_n_alloced_file_names; ++i)
-            {
-              this->pd_include_file_names[i] = o_include_file_names[i];
-              pSeenOnce[i]= o_pSeenOnce[i];
-            }
-
-          delete [] o_include_file_names;
-          delete [] o_pSeenOnce;
-        }
-    }
-
-  // Store it.
-  pSeenOnce[this->pd_n_include_file_names] = 1;
-  this->pd_include_file_names[this->pd_n_include_file_names++] = n;
+  this->pd_include_file_names_.push_back (filename);
+  this->include_file_seen_count_.push_back (1);
 }
 
-void
-IDL_GlobalData::set_include_file_names (UTL_String **ns)
-{
-  this->pd_include_file_names = ns;
-}
-
-UTL_String **
+std::vector<std::string> const&
 IDL_GlobalData::include_file_names () const
 {
-  return this->pd_include_file_names;
+  return this->pd_include_file_names_;
 }
 
-void
-IDL_GlobalData::set_n_include_file_names (unsigned long n)
-{
-  pd_n_include_file_names = n;
-}
-
-unsigned long
+size_t
 IDL_GlobalData::n_include_file_names () const
 {
-  return pd_n_include_file_names;
+  return this->pd_include_file_names_.size ();
 }
 
 // Access methods to deal with other IDL files included in the main
@@ -646,70 +547,60 @@ IDL_GlobalData::parse_state ()
 }
 
 // returns the IDL source file being copiled
-UTL_String* IDL_GlobalData::idl_src_file ()
+std::string const& IDL_GlobalData::idl_src_file () const
 {
   return this->pd_idl_src_file;
 }
 
 // set the source IDL file that is being parsed
-void IDL_GlobalData::idl_src_file (UTL_String *s)
+void IDL_GlobalData::idl_src_file (std::string const& filename)
 {
-  this->pd_idl_src_file = s;
+  this->pd_idl_src_file = filename;
 }
 
 void
 IDL_GlobalData::temp_dir (std::string const& s)
 {
-  this->temp_dir_.emplace (s);
+  this->temp_dir_ = s;
 
   size_t const separator_length = sizeof (ACE_DIRECTORY_SEPARATOR_STR_A) - 1u;
-  if (this->temp_dir_->size () <= separator_length
-      || this->temp_dir_->compare (this->temp_dir_->size () - separator_length,
+  if (this->temp_dir_.size () <= separator_length
+      || this->temp_dir_.compare (this->temp_dir_.size () - separator_length,
                                    separator_length,
                                    ACE_DIRECTORY_SEPARATOR_STR_A) != 0)
     {
-      this->temp_dir_->append (ACE_DIRECTORY_SEPARATOR_STR_A);
+      this->temp_dir_.append (ACE_DIRECTORY_SEPARATOR_STR_A);
     }
 }
 
-std::optional<std::string_view>
+std::string const&
 IDL_GlobalData::temp_dir () const
 {
-  return this->temp_dir_ ? std::optional<std::string_view> (*this->temp_dir_)
-                         : std::nullopt;
+  return this->temp_dir_;
 }
 
 void
 IDL_GlobalData::tao_root (std::string const& s)
 {
-  this->tao_root_.emplace (s);
+  this->tao_root_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 IDL_GlobalData::tao_root () const
 {
-  return this->tao_root_ ? std::optional<std::string_view> (*this->tao_root_)
-                         : std::nullopt;
-}
-
-std::string_view
-IDL_GlobalData::tao_root_or_empty () const
-{
-  return this->tao_root_ ? std::string_view (*this->tao_root_)
-                         : std::string_view {};
+  return this->tao_root_;
 }
 
 void
 IDL_GlobalData::gperf_path (std::string const& s)
 {
-  this->gperf_path_.emplace (s);
+  this->gperf_path_ = s;
 }
 
-std::optional<std::string_view>
+std::string const&
 IDL_GlobalData::gperf_path () const
 {
-  return this->gperf_path_ ? std::optional<std::string_view> (*this->gperf_path_)
-                           : std::nullopt;
+  return this->gperf_path_;
 }
 
 void
@@ -751,40 +642,11 @@ IDL_GlobalData::nest_orb ()
 void
 IDL_GlobalData::destroy ()
 {
-  if (this->pd_filename != nullptr)
-    {
-      this->pd_filename->destroy ();
-      delete this->pd_filename;
-      this->pd_filename = nullptr;
-    }
-
-  if (this->pd_main_filename != nullptr)
-    {
-      this->pd_main_filename->destroy ();
-      delete this->pd_main_filename;
-      this->pd_main_filename = nullptr;
-    }
-
-  if (this->pd_real_filename != nullptr)
-    {
-      this->pd_real_filename->destroy ();
-      delete this->pd_real_filename;
-      this->pd_real_filename = nullptr;
-    }
-
-  if (this->pd_stripped_filename != nullptr)
-    {
-      this->pd_stripped_filename->destroy ();
-      delete this->pd_stripped_filename;
-      this->pd_stripped_filename = nullptr;
-    }
-
-  if (this->pd_idl_src_file != nullptr)
-    {
-      this->pd_idl_src_file->destroy ();
-      delete this->pd_idl_src_file;
-      this->pd_idl_src_file = nullptr;
-    }
+  this->pd_filename.clear ();
+  this->pd_main_filename.clear ();
+  this->pd_real_filename.clear ();
+  this->pd_stripped_filename.clear ();
+  this->pd_idl_src_file.clear ();
 
   size_t size = this->pragma_prefixes ().size  ();
   char *trash = nullptr;
@@ -796,16 +658,8 @@ IDL_GlobalData::destroy ()
       trash = nullptr;
     }
 
-  // Clean up each included file name - the array allocation itself
-  // gets cleaned up in fini().
-  for (unsigned long j = 0; j < this->pd_n_include_file_names; ++j)
-    {
-      this->pd_include_file_names[j]->destroy ();
-      delete this->pd_include_file_names[j];
-      this->pd_include_file_names[j] = nullptr;
-    }
-
-  this->pd_n_include_file_names = 0;
+  this->pd_include_file_names_.clear ();
+  this->include_file_seen_count_.clear ();
 
   this->included_idl_files_.clear ();
 
@@ -855,13 +709,12 @@ IDL_GlobalData::update_prefix (char *filename)
 {
   // If we are just starting up and processing the temporary filename,
   // there are no prefix issues to deal with yet.
-  if (this->pd_main_filename == nullptr || this->pd_filename == nullptr)
+  if (this->pd_main_filename.empty () || this->pd_filename.empty ())
     {
       return;
     }
 
-  std::string_view const current_filename =
-    this->pd_filename->get_string ();
+  std::string_view const current_filename = this->pd_filename;
   std::string_view const next_filename (filename);
 
   // We have to do this check because some preprocessors (gcc 3.2
@@ -875,8 +728,7 @@ IDL_GlobalData::update_prefix (char *filename)
       return;
     }
 
-  std::string_view const main_filename =
-    this->pd_main_filename->get_string ();
+  std::string_view const main_filename = this->pd_main_filename;
 
   char *prefix = nullptr;
   int status = this->file_prefixes_.find (filename, prefix);
@@ -908,8 +760,9 @@ IDL_GlobalData::update_prefix (char *filename)
     {
       if (!this->pd_in_main_file)
         {
+          std::string current_filename (this->pd_filename);
           status =
-            this->file_prefixes_.find (this->pd_filename->get_string ().data (),
+            this->file_prefixes_.find (current_filename.data (),
                                        prefix);
 
           // This function is called just before we transition to a
@@ -953,11 +806,9 @@ IDL_GlobalData::preserve_cpp_keywords (bool val)
 }
 
 void
-IDL_GlobalData::add_include_path (char const *s, bool is_system)
+IDL_GlobalData::add_include_path (std::string const& path, bool is_system)
 {
-  Include_Path_Info info = { s != nullptr ? std::optional<std::string> (s)
-                                          : std::nullopt,
-                             is_system };
+  Include_Path_Info info = { path, is_system };
   this->include_paths_.enqueue_tail (info);
 }
 
@@ -1217,7 +1068,7 @@ IDL_GlobalData::check_gperf ()
 {
   // If absolute path is not specified yet, let us call just
   // "gperf". Hopefully PATH is set up correctly to locate the gperf.
-  if (!this->gperf_path_)
+  if (this->gperf_path_.empty ())
     {
       // If ACE_GPERF is defined then use that gperf program instead of "gperf."
 #if defined (ACE_GPERF)
@@ -1234,14 +1085,14 @@ IDL_GlobalData::check_gperf ()
 
   // If ACE_GPERF is defined then use that gperf program instead of "gperf."
 #if defined (ACE_GPERF)
-  if (std::string_view (*this->gperf_path_) != ACE_GPERF)
+  if (this->gperf_path_ != ACE_GPERF)
 #else
-  if (std::string_view (*this->gperf_path_) != "ace_gperf")
+  if (this->gperf_path_ != "ace_gperf")
 #endif /* ACE_GPERF */
     {
       // It is absolute path. Check the existence, permissions and
       // the modes.
-      if (ACE_OS::access (this->gperf_path_->c_str (),
+      if (ACE_OS::access (this->gperf_path_.c_str (),
                           F_OK | X_OK) == -1)
         {
           // Problem with the file. No point in having the absolute
@@ -1264,7 +1115,7 @@ IDL_GlobalData::check_gperf ()
 
   // Set the command line for the gperf program.
   process_options.command_line (ACE_TEXT ("\"%s\" -V"),
-                                this->gperf_path_->c_str ());
+                                this->gperf_path_.c_str ());
 
   // Spawn a process for gperf.
   if (process.spawn (process_options) == -1)
@@ -1334,12 +1185,12 @@ IDL_GlobalData::fini ()
   delete this->pd_indent;
   this->pd_indent = nullptr;
   this->pd_local_escapes.clear ();
-  this->tao_root_.reset ();
-  this->gperf_path_.reset ();
-  this->temp_dir_.reset ();
+  this->tao_root_.clear ();
+  this->gperf_path_.clear ();
+  this->temp_dir_.clear ();
   this->ident_string_.clear ();
-  delete [] this->pd_include_file_names;
-  this->pd_include_file_names = nullptr;
+  this->pd_include_file_names_.clear ();
+  this->include_file_seen_count_.clear ();
 
   ACE_Hash_Map_Entry<char *, char *> *entry = nullptr;
 
@@ -1720,10 +1571,7 @@ namespace
   {
   public:
     explicit OldState (bool disable_output = false)
-        : old_filename_ (idl_global->filename ()
-                         ? new UTL_String (idl_global->filename ()->get_string ())
-                         : nullptr),
-          // need a copy because IDL_GlobalData::set_filename() destroys previous value
+        : old_filename_ (idl_global->filename ()),
           old_lineno_ (idl_global->lineno ()),
           old_idl_src_file_ (idl_global->idl_src_file ()),
           disable_output_ (disable_output),
@@ -1733,16 +1581,14 @@ namespace
         idl_global->in_eval_ = true;
 
         idl_global->set_lineno (1);
-        idl_global->set_filename (nullptr);
+        idl_global->set_filename ({});
 
         // Name this pseudo-file "builtin-N"
         static unsigned n = 1;
         std::string builtin_name ("builtin-");
         builtin_name += std::to_string (n++);
-        UTL_String pseudo_filename {std::move (builtin_name)};
-
-        idl_global->idl_src_file (new UTL_String (pseudo_filename.get_string ()));
-        idl_global->set_filename (new UTL_String (pseudo_filename.get_string ()));
+        idl_global->idl_src_file (builtin_name);
+        idl_global->set_filename (builtin_name);
 
         if (disable_output_)
           {
@@ -1757,8 +1603,6 @@ namespace
         idl_global->set_lineno (old_lineno_);
 
         idl_global->set_filename (old_filename_);
-        idl_global->idl_src_file ()->destroy ();
-        delete idl_global->idl_src_file ();
         idl_global->idl_src_file (old_idl_src_file_);
         idl_global->reset_flag_seen ();
 
@@ -1773,9 +1617,9 @@ namespace
       }
 
     private:
-      UTL_String *const old_filename_;
+      std::string const old_filename_;
       long const old_lineno_;
-      UTL_String *const old_idl_src_file_;
+      std::string const old_idl_src_file_;
       bool const disable_output_;
       std::streambuf *const default_streambuf_;
       unsigned long const flags_;

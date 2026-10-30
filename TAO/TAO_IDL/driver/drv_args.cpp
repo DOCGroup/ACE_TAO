@@ -490,7 +490,7 @@ DRV_parse_args (long ac, char **av)
   be_util::arg_post_proc ();
 
   // Make sure the output directory is valid.
-  if (!idl_global->temp_dir ())
+  if (idl_global->temp_dir ().empty ())
     {
       ACE_TCHAR tmpdir[MAXPATHLEN + 1];
 

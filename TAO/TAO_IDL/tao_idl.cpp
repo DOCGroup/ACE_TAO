@@ -134,10 +134,10 @@ void
 DRV_refresh ()
 {
   idl_global->set_err_count (0);
-  idl_global->set_filename (nullptr);
-  idl_global->set_main_filename (nullptr);
-  idl_global->set_real_filename (nullptr);
-  idl_global->set_stripped_filename (nullptr);
+  idl_global->set_filename ({});
+  idl_global->set_main_filename ({});
+  idl_global->set_real_filename ({});
+  idl_global->set_stripped_filename ({});
   idl_global->set_lineno (-1);
   idl_global->reset_flag_seen ();
 }
@@ -178,11 +178,7 @@ DRV_drive (char const *s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
-  UTL_String *utl_string = nullptr;
-  ACE_NEW (utl_string,
-           UTL_String (s));
-
-  idl_global->idl_src_file (utl_string);
+  idl_global->idl_src_file (s);
 
   // Pass through CPP.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
@@ -221,7 +217,7 @@ DRV_drive (char const *s)
       (idl_global->compile_flags () & IDL_CF_INFORMATIVE))
     {
       // Filename set by FE_yyparse(), so we output it immediately after.
-      std::string const filename (idl_global->filename ()->get_string ());
+      std::string const& filename = idl_global->filename ();
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("processing %C\n"),
                   filename.c_str ()));

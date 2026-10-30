@@ -134,7 +134,7 @@ AST_Expression::fill_definition_details ()
                           ? idl_global->scopes ().top ()
                           : nullptr ;
   this->pd_line = idl_global->lineno ();
-  this->pd_file_name = idl_global->filename ();
+  this->pd_file_name = new UTL_String (idl_global->filename ());
   enum_parent (nullptr);
 }
 
