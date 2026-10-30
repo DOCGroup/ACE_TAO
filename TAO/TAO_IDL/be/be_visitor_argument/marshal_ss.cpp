@@ -12,7 +12,6 @@
 
 #include "argument.h"
 
-#include <string_view>
 
 // ************************************************************************
 // Visitor to generate code for passing argument to the marshal/demarshal

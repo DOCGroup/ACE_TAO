@@ -11,8 +11,7 @@
 
 #include "argument.h"
 
-#include <string_view>
-#include "argument.h"
+#include <string>
 
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
@@ -29,7 +28,7 @@ int be_visitor_args::visit_argument (be_argument *)
 // is an alias, we use that name.
 std::string
 be_visitor_args::type_name (be_type *node,
-                            std::string_view suffix)
+                            std::string const& suffix)
 {
   be_type *bt = nullptr;
 
@@ -49,7 +48,7 @@ be_visitor_args::type_name (be_type *node,
 
   if (!suffix.empty ())
     {
-      name.append (suffix.data (), suffix.size ());
+      name.append (suffix);
     }
 
   return name;
@@ -101,8 +100,8 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  std::string_view var_call;
-  std::string_view any_deref;
+  std::string var_call;
+  std::string any_deref;
 
   AST_PredefinedType::PredefinedType pt = node->pt ();
   bool is_any = (pt == AST_PredefinedType::PT_any);
@@ -129,7 +128,7 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
       var_call = ".out ()";
     }
 
-  std::string_view const to_from = in_stream
+  std::string const to_from = in_stream
     ? "::ACE_InputCDR::to_"
     : "::ACE_OutputCDR::from_";
 
