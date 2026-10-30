@@ -25,14 +25,14 @@
 #include "tao/Cache_Entries_T.h"
 #include "tao/orbconf.h"
 
+#include <vector>
+
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Set;
-template <class T> class ACE_Unbounded_Set;
-template <class T> class ACE_Unbounded_Set_Iterator;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -51,7 +51,7 @@ namespace TAO
       TAO_CLIENT_ROLE = 2
     };
 
-  using Connection_Handler_Set = ACE_Unbounded_Set<TAO_Connection_Handler *>;
+  using Connection_Handler_Set = std::vector<TAO_Connection_Handler *>;
   /**
    * @brief The Transport Cache Manager for TAO
    *
