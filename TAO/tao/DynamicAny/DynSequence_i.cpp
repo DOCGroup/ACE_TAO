@@ -69,7 +69,7 @@ TAO_DynSequence_i::init (CORBA::Any const& any)
   cdr.read_ulong (length);
 
   // Resize the array.
-  this->da_members_.size (length);
+  TAO::resize_std_vector (this->da_members_, length);
 
   this->init_common ();
 
@@ -110,7 +110,7 @@ TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc)
     }
 
   // Empty sequence.
-  this->da_members_.size (0);
+  TAO::resize_std_vector (this->da_members_, 0);
 
   this->init_common ();
 
@@ -213,7 +213,7 @@ TAO_DynSequence_i::set_length (CORBA::ULong length)
   if (length > this->component_count_)
     {
       // Grow array first, then initialize new members.
-      this->da_members_.size (length);
+      TAO::resize_std_vector (this->da_members_, length);
 
       CORBA::TypeCode_var elemtype =
         stripped_tc->content_type ();
@@ -235,7 +235,7 @@ TAO_DynSequence_i::set_length (CORBA::ULong length)
           this->da_members_[j]->destroy ();
         }
 
-      this->da_members_.size (length);
+      TAO::resize_std_vector (this->da_members_, length);
     }
 
   // Now we can update component_count_.
@@ -305,7 +305,7 @@ TAO_DynSequence_i::set_elements (DynamicAny::AnySeq const& value)
   // If the array grows, we must do it now.
   if (length > this->component_count_)
     {
-      this->da_members_.size (length);
+      TAO::resize_std_vector (this->da_members_, length);
     }
 
   CORBA::TypeCode_var element_type = this->get_element_type ();
@@ -348,7 +348,7 @@ TAO_DynSequence_i::set_elements (DynamicAny::AnySeq const& value)
   // If the array shrinks, we must wait until now to do it.
   if (length < this->component_count_)
     {
-      this->da_members_.size (length);
+      TAO::resize_std_vector (this->da_members_, length);
     }
 
   // Now we can update component_count_.
@@ -407,7 +407,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
   // If the array grows, we must do it now.
   if (length > this->component_count_)
     {
-      this->da_members_.size (length);
+      TAO::resize_std_vector (this->da_members_, length);
     }
 
   CORBA::TypeCode_var element_type =
@@ -448,7 +448,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
   // If the array shrinks, we must wait until now to do it.
   if (length < this->component_count_)
     {
-      this->da_members_.size (length);
+      TAO::resize_std_vector (this->da_members_, length);
     }
 
   // Now we can update component_count_.
@@ -503,7 +503,7 @@ TAO_DynSequence_i::from_any (CORBA::Any const& any)
       // If the array grows, we must do it now.
       if (arg_length > this->component_count_)
         {
-          this->da_members_.size (arg_length);
+          TAO::resize_std_vector (this->da_members_, arg_length);
         }
 
       CORBA::TypeCode_var field_tc =
@@ -543,7 +543,7 @@ TAO_DynSequence_i::from_any (CORBA::Any const& any)
       // If the array shrinks, we must wait until now to do it.
       if (arg_length < this->component_count_)
         {
-          this->da_members_.size (arg_length);
+          TAO::resize_std_vector (this->da_members_, arg_length);
         }
 
       // Now we can update component_count_.

@@ -23,12 +23,34 @@
 
 #include "tao/AnyTypeCode/BasicTypeTraits.h"
 
+#include <new>
+#include <stdexcept>
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_DynCommon;
 
 namespace TAO
 {
+  template <typename T>
+  void
+  resize_std_vector (std::vector<T> &values, size_t new_size)
+  {
+    try
+      {
+        values.resize (new_size);
+      }
+    catch (std::bad_alloc const &)
+      {
+        throw CORBA::NO_MEMORY ();
+      }
+    catch (std::length_error const &)
+      {
+        throw CORBA::NO_MEMORY ();
+      }
+  }
+
   // Encapsulates common code for inserting and extracting basic
   // types, parameterized on the basic type.
   template<typename T>
