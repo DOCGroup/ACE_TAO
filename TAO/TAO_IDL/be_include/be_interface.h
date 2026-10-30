@@ -22,7 +22,6 @@
 #include "ast_interface.h"
 
 #include <string>
-#include <string_view>
 
 class TAO_OutStream;
 class TAO_IDL_Inheritance_Hierarchy_Worker;
@@ -61,30 +60,30 @@ public:
   std::string const& local_name () const;
 
   /// Retrieve the fully scoped skel class name.
-  std::string_view full_skel_name () const;
+  std::string const& full_skel_name () const;
 
   /// Retrieve the fully qualified collocated class name.
-  std::string_view full_coll_name (int) const;
+  std::string const& full_coll_name (int) const;
 
   /// Retrieve the fully qualified collocated class name.
-  std::string_view local_coll_name (int) const;
+  std::string const& local_coll_name (int) const;
 
   /// retrieve the name of the direct proxy implementation.
-  virtual std::string_view direct_proxy_impl_name () const;
+  virtual std::string const& direct_proxy_impl_name () const;
 
   /// retrieve the fully qualified name of the direct proxy
   /// implementation.
-  virtual std::string_view full_direct_proxy_impl_name () const;
+  virtual std::string const& full_direct_proxy_impl_name () const;
 
   /// Return the client scope that encloses the interface.
-  virtual std::string_view client_enclosing_scope () const;
+  virtual std::string const& client_enclosing_scope () const;
 
   /// Return the "flattened" scope that encloses
   /// the interface.
-  virtual std::string_view flat_client_enclosing_scope () const;
+  virtual std::string const& flat_client_enclosing_scope () const;
 
   /// Return the server scope that encloses the interface.
-  virtual std::string_view server_enclosing_scope () const;
+  virtual std::string const& server_enclosing_scope () const;
 
   /// Retrieve skeleton name.
   std::string relative_skel_name (std::string const& skel_name) const;
@@ -203,12 +202,12 @@ public:
                                   TAO_OutStream *os);
 
   /// Generate the operation table including entries for inherited interfaces.
-  int gen_operation_table (std::string_view flat_name,
-                           std::string_view skeleton_class_name);
+  int gen_operation_table (std::string const& flat_name,
+                           std::string const& skeleton_class_name);
 
   /// generate the operation table entries.
   int gen_optable_entries (be_interface *derived_interface,
-                           std::string_view full_skeleton_name,
+                           std::string const& full_skeleton_name,
                            TAO_OutStream *os);
 
   /// If we are local, regenerate non-local base class operations as
@@ -271,10 +270,10 @@ protected:
    * of "str" and "suffix" and using the
    * "separator" to concatenate the two.
    */
-  std::string create_with_prefix_suffix (std::string_view prefix,
-                                         std::string_view str,
-                                         std::string_view suffix,
-                                         std::string_view separator = "") const;
+  std::string create_with_prefix_suffix (std::string const& prefix,
+                                         std::string const& str,
+                                         std::string const& suffix,
+                                         std::string const& separator = "") const;
 
 protected:
   enum Suffix_Code
@@ -290,8 +289,8 @@ protected:
                   // with the user classes.
   };
 
-  inline static constexpr std::string_view suffix_table_[] = {"_Proxy_Impl"};
-  inline static constexpr std::string_view tag_table_[] = {"_Direct", "_TAO_"};
+  inline static constexpr char const* suffix_table_[] = {"_Proxy_Impl"};
+  inline static constexpr char const* tag_table_[] = {"_Direct", "_TAO_"};
 
   // Proxy Implementation names.
   mutable std::string direct_proxy_impl_name_;

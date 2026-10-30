@@ -39,8 +39,6 @@
 #include "idl_defines.h"
 #include "nr_extern.h"
 
-#include <string_view>
-
 #include "ace/Process.h"
 #include "ace/Lib_Find.h"
 #include "ace/OS_NS_time.h"
@@ -122,7 +120,7 @@ be_interface::local_name () const
   return this->AST_Decl::local_name ()->get_string ();
 }
 
-std::string_view
+std::string const&
 be_interface::full_skel_name () const
 {
   if (this->full_skel_name_.empty ())
@@ -133,7 +131,7 @@ be_interface::full_skel_name () const
   return this->full_skel_name_;
 }
 
-std::string_view
+std::string const&
 be_interface::full_coll_name (int type) const
 {
   this->compute_coll_names (type);
@@ -141,7 +139,7 @@ be_interface::full_coll_name (int type) const
   return this->full_coll_name_;
 }
 
-std::string_view
+std::string const&
 be_interface::local_coll_name (int type) const
 {
   this->compute_coll_names (type);
@@ -152,7 +150,7 @@ be_interface::local_coll_name (int type) const
 std::string
 be_interface::relative_skel_name (std::string const& skel_name) const
 {
-  return be_interface::relative_name (std::string (this->full_skel_name ()),
+  return be_interface::relative_name (this->full_skel_name (),
                                       skel_name);
 }
 
@@ -212,11 +210,11 @@ be_interface::compute_coll_names (int type) const
       this->local_coll_name_.clear ();
     }
 
-  static constexpr std::string_view collocated_names[] = {"_tao_thru_poa_collocated_",
-                                                           "_tao_direct_collocated_"};
-  static constexpr std::string_view poa = "POA_";
+  static constexpr char const* collocated_names[] = {"_tao_thru_poa_collocated_",
+                                                      "_tao_direct_collocated_"};
+  static constexpr char const* poa = "POA_";
 
-  std::string_view const collocated (collocated_names[type]);
+  char const* const collocated = collocated_names[type];
 
   // Only the first component get the "POA_" preffix.
   bool poa_added = false;
@@ -517,7 +515,7 @@ be_interface::gen_var_out_seq_decls ()
       return;
     }
 
-  std::string_view const lname = this->local_name ();
+  std::string const& lname = this->local_name ();
   TAO_OutStream *os = tao_cg->client_header ();
 
   TAO_INSERT_COMMENT (os);
@@ -587,18 +585,18 @@ class TAO_IDL_Gen_OpTable_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  TAO_IDL_Gen_OpTable_Worker (std::string_view skeleton_name);
+  TAO_IDL_Gen_OpTable_Worker (std::string const& skeleton_name);
 
   virtual int emit (be_interface *derived_interface,
                     TAO_OutStream *os,
                     be_interface *base_interface) override;
 
 private:
-  std::string_view skeleton_name_;
+  std::string skeleton_name_;
 };
 
 TAO_IDL_Gen_OpTable_Worker::TAO_IDL_Gen_OpTable_Worker (
-    std::string_view skeleton_name)
+    std::string const& skeleton_name)
   : skeleton_name_ (skeleton_name)
 {
 }
@@ -691,8 +689,8 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
 // =================================================================
 
 int
-be_interface::gen_operation_table (std::string_view flat_name,
-                                   std::string_view skeleton_class_name)
+be_interface::gen_operation_table (std::string const& flat_name,
+                                   std::string const& skeleton_class_name)
 {
   // TODO:
   // find another way to determine whether this is an AMH class
@@ -701,8 +699,7 @@ be_interface::gen_operation_table (std::string_view flat_name,
   // once for AMH and once the 'normal' way.
 
   bool amh = false;
-  if (std::string_view (skeleton_class_name).find ("AMH_")
-      != std::string_view::npos)
+  if (skeleton_class_name.find ("AMH_") != std::string::npos)
     {
       amh = true;
     }
@@ -1130,7 +1127,7 @@ be_interface::gen_gperf_input_header (TAO_OutStream *os)
 // table is being built.
 int
 be_interface::gen_optable_entries (be_interface *derived_interface,
-                                   std::string_view full_skeleton_name,
+                                   std::string const& full_skeleton_name,
                                    TAO_OutStream *os)
 {
   int const lookup_strategy =
@@ -1264,8 +1261,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               // we don't know whether this is an AMH class, we
               // need to check this, using the full_skeleton_name
               // TODO: find a more elegant solution for this
-              if (full_skeleton_name.find ("AMH_")
-                  != std::string_view::npos)
+              if (full_skeleton_name.find ("AMH_") != std::string::npos)
                 {
                   std::string name (d->full_name ());
                   std::string::size_type const last = name.rfind (':') - 1;
@@ -1785,7 +1781,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
   // Open the temp file.
   ACE_HANDLE input =
     ACE::open_temp_file (
-      ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ().data ()),
+      ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ().c_str ()),
       O_RDONLY);
 
   if (input == ACE_INVALID_HANDLE)
@@ -1795,7 +1791,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
         ACE_TEXT ("Error:%p:File open failed on ")
         ACE_TEXT ("gperf's temp input file %s\n"),
         "open_temp_file",
-        tao_cg->gperf_input_filename ().data ()),
+        tao_cg->gperf_input_filename ().c_str ()),
         -1);
     }
 
@@ -2522,7 +2518,7 @@ be_interface::is_ami4ccm_rh (bool val)
   this->is_ami4ccm_rh_ = val;
 }
 
-std::string_view
+std::string const&
 be_interface::direct_proxy_impl_name () const
 {
   if (this->direct_proxy_impl_name_.empty ())
@@ -2538,7 +2534,7 @@ be_interface::direct_proxy_impl_name () const
   return this->direct_proxy_impl_name_;
 }
 
-std::string_view
+std::string const&
 be_interface::full_direct_proxy_impl_name () const
 {
   if (this->full_direct_proxy_impl_name_.empty ())
@@ -2551,54 +2547,54 @@ be_interface::full_direct_proxy_impl_name () const
 }
 
 
-std::string_view
+std::string const&
 be_interface::client_enclosing_scope () const
 {
   if (!this->client_scope_computed_)
     {
-      std::string_view const full_name (this->full_name ());
-      std::string_view const name = this->local_name ();
+      std::string const& full_name = this->full_name ();
+      std::string const& name = this->local_name ();
 
       size_t const length = full_name.size () - name.size ();
-      this->client_scope_.assign (full_name.data (), length);
+      this->client_scope_ = full_name.substr (0, length);
       this->client_scope_computed_ = true;
     }
 
   return this->client_scope_;
 }
 
-std::string_view
+std::string const&
 be_interface::flat_client_enclosing_scope () const
 {
   if (!this->flat_client_scope_computed_)
     {
-      std::string_view const full_name = this->flat_name ();
+      std::string const& full_name = this->flat_name ();
       std::string const& name =
         this->original_local_name ()->get_string ();
 
       size_t offset = name.size ();
       size_t length = full_name.size () - offset;
 
-      this->flat_client_scope_.assign (full_name.data (), length);
+      this->flat_client_scope_ = full_name.substr (0, length);
       this->flat_client_scope_computed_ = true;
     }
 
   return this->flat_client_scope_;
 }
 
-std::string_view
+std::string const&
 be_interface::server_enclosing_scope () const
 {
   if (!this->server_scope_computed_)
     {
-      std::string_view const full_name =
+      std::string const& full_name =
         this->full_coll_name (be_interface::DIRECT);
 
-      std::string_view const name =
+      std::string const& name =
         this->local_coll_name (be_interface::DIRECT);
 
       size_t const length = full_name.size () - name.size ();
-      this->server_scope_.assign (full_name.data (), length);
+      this->server_scope_ = full_name.substr (0, length);
       this->server_scope_computed_ = true;
     }
 
@@ -2606,10 +2602,10 @@ be_interface::server_enclosing_scope () const
 }
 
 std::string
-be_interface::create_with_prefix_suffix (std::string_view prefix,
-                                         std::string_view str,
-                                         std::string_view suffix,
-                                         std::string_view separator) const
+be_interface::create_with_prefix_suffix (std::string const& prefix,
+                                         std::string const& str,
+                                         std::string const& suffix,
+                                         std::string const& separator) const
 {
   std::string result (prefix);
   result += str;

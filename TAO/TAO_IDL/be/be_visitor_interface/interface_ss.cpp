@@ -49,15 +49,11 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       return -1;
     }
-  std::string full_skel_name_holder =
+  std::string full_skel_name =
     this->generate_full_skel_name (node);
 
-  const char *full_skel_name = full_skel_name_holder.c_str ();
-
-  std::string flat_name_holder =
+  std::string flat_name =
     this->generate_flat_name (node);
-
-  const char *flat_name = flat_name_holder.c_str ();
 
   int status =
     node->gen_operation_table (flat_name,
@@ -93,17 +89,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
   // each case.
-  std::string_view local_name_prefix;
+  std::string local_name_prefix;
 
   if (!node->is_nested ())
     {
       local_name_prefix = "POA_";
     }
 
-  std::string node_local_name_holder =
-    this->generate_local_name (node);
-
-  const char *node_local_name = node_local_name_holder.c_str ();
+  std::string const node_local_name = this->generate_local_name (node);
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
