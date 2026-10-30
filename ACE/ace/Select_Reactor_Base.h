@@ -408,8 +408,8 @@ private:
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
 public:
-  typedef
-    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
+  using const_base_iterator =
+    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator;
 
   explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);

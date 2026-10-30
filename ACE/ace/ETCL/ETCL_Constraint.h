@@ -26,7 +26,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef unsigned long Literal_Type;
+using Literal_Type = unsigned long;
 
 class ETCL_Constraint_Visitor;
 
