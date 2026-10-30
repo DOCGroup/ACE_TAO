@@ -66,7 +66,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
 
 #include <string>
-#include <string_view>
 
 #include "TAO_IDL_FE_Export.h"
 

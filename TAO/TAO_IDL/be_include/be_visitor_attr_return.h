@@ -13,11 +13,8 @@
 #define BE_VISITOR_ATTR_RETURN_H
 
 #include <string>
-#include <string_view>
 
 #include "be_visitor_decl.h"
-
-#include <string>
 
 class TAO_OutStream;
 

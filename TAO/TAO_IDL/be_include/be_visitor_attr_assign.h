@@ -13,7 +13,6 @@
 #define BE_VISITOR_ATTR_ASSIGN_H
 
 #include <string>
-#include <string_view>
 
 #include "be_visitor_decl.h"
 
