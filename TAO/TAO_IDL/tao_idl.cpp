@@ -394,7 +394,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (idl_global->multi_file_input ())
         {
           output_file =
-            ACE_OS::fopen (idl_global->big_file_name ().data (), "w");
+            ACE_OS::fopen (idl_global->big_file_name ().c_str (), "w");
         }
 
       for (std::size_t i = 0; i < DRV_files.size (); ++i)
@@ -414,8 +414,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (idl_global->multi_file_input ())
         {
           ACE_OS::fclose (output_file);
-          DRV_drive (idl_global->big_file_name ().data ());
-          ACE_OS::unlink (idl_global->big_file_name ().data ());
+          DRV_drive (idl_global->big_file_name ().c_str ());
+          ACE_OS::unlink (idl_global->big_file_name ().c_str ());
         }
     }
   catch (Bailout const &bailout)

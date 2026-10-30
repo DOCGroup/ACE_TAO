@@ -119,8 +119,8 @@ Identifier::preprocess_and_replace_string (std::string const& s)
 
       shift = true;
       this->escaped_ = true;
-      std::string_view str (s);
-      constexpr std::string_view c_prefix ("_cxx_");
+      std::string str (s);
+      std::string const c_prefix ("_cxx_");
 
       if (str.find ("_tc_") == 0
           || str.find ("_tao_") == 0)
@@ -130,7 +130,7 @@ Identifier::preprocess_and_replace_string (std::string const& s)
       else if (str.find (c_prefix) == 0)
         {
           str = str.substr (c_prefix.size ());
-          constexpr std::string_view eh_suffix ("_excep");
+          std::string const eh_suffix ("_excep");
           // If we have an AMI exception holder suffix, strip it off.
           if (str.size () >= eh_suffix.size ()
               && str.find (eh_suffix) == str.size () - eh_suffix.size ())

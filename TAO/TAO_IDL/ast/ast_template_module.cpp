@@ -72,7 +72,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
       if (!this->match_one_param (param, d))
         {
           UTL_ScopedName *n = d->name ();
-          std::string_view s;
+          std::string s;
 
           if (!n)
             {

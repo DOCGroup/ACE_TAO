@@ -95,7 +95,7 @@ AST_Annotation_Appls::find (AST_Annotation_Decl *annotation)
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::find (std::string_view annotation)
+AST_Annotation_Appls::find (std::string const& annotation)
 {
   if (annotation.empty ())
     {

@@ -86,7 +86,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/streams.h"
 
 #include <string>
-#include <string_view>
 #include <utility>
 
 IDL_GlobalData::IDL_GlobalData ()
@@ -465,7 +464,7 @@ IDL_GlobalData::set_indent (UTL_Indenter *i)
 
 // Have we seen this #include file name before?
 long
-IDL_GlobalData::seen_include_file_before (std::string_view filename)
+IDL_GlobalData::seen_include_file_before (std::string const& filename)
 {
   for (size_t i = 0; i < this->pd_include_file_names_.size (); ++i)
     {
@@ -714,8 +713,8 @@ IDL_GlobalData::update_prefix (char *filename)
       return;
     }
 
-  std::string_view const current_filename = this->pd_filename;
-  std::string_view const next_filename (filename);
+  std::string const& current_filename = this->pd_filename;
+  std::string const next_filename (filename);
 
   // We have to do this check because some preprocessors (gcc 3.2
   // on RedHat Linux 7.1, for one) output the same filename
@@ -728,7 +727,7 @@ IDL_GlobalData::update_prefix (char *filename)
       return;
     }
 
-  std::string_view const main_filename = this->pd_main_filename;
+  std::string const& main_filename = this->pd_main_filename;
 
   char *prefix = nullptr;
   int status = this->file_prefixes_.find (filename, prefix);
@@ -769,7 +768,7 @@ IDL_GlobalData::update_prefix (char *filename)
           // new file at global scope. If there is a non-null prefix
           // stored in the table under our not-yet-changed filename,
           // pop it.
-          if (status == 0 && !std::string_view (prefix).empty ())
+          if (status == 0 && prefix != nullptr && prefix[0] != '\0')
             {
               char *trash = nullptr;
               this->pragma_prefixes_.pop (trash);
@@ -1252,11 +1251,10 @@ IDL_GlobalData::check_primary_keys ()
     }
 }
 
-std::optional<std::string_view>
+std::optional<std::string> const&
 IDL_GlobalData::recursion_start () const
 {
-  return this->recursion_start_ ? std::optional<std::string_view> (*this->recursion_start_)
-                                : std::nullopt;
+  return this->recursion_start_;
 }
 
 void
@@ -1285,10 +1283,11 @@ IDL_GlobalData::multi_file_input (bool val)
   this->multi_file_input_ = val;
 }
 
-std::string_view
+std::string const&
 IDL_GlobalData::big_file_name () const
 {
-  return "PICML_IDL_file_bag";
+  static std::string const name = "PICML_IDL_file_bag";
+  return name;
 }
 
 FE_Utils::T_PARAMLIST_INFO const *
@@ -1337,7 +1336,7 @@ IDL_GlobalData::set_dcps_sequence_type (std::string const& seq_type)
 }
 
 bool
-IDL_GlobalData::dcps_sequence_type_defined (std::string_view seq_type) const
+IDL_GlobalData::dcps_sequence_type_defined (std::string const& seq_type) const
 {
   for (std::string const &type_name : this->dcps_sequence_types_list_)
     {

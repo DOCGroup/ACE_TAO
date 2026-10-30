@@ -179,7 +179,7 @@ AST_Annotation_Appl::annotation_decl ()
 }
 
 AST_Annotation_Appl::Param *
-AST_Annotation_Appl::find_param (std::string_view name) const
+AST_Annotation_Appl::find_param (std::string const& name) const
 {
   if (params_)
     {

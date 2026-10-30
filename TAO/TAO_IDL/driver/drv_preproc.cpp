@@ -696,14 +696,14 @@ DRV_cpp_post_init ()
   // If first arg is non-zero, adds an include path and filename
   // for every IDL file found in all subdirectories. This is a
   // no-op for most backends.
-  std::optional<std::string_view> const recursion_start =
+  std::optional<std::string> const& recursion_start =
     idl_global->recursion_start ();
 
-  if (recursion_start && DRV_sweep_dirs (recursion_start->data (), "") == -1)
+  if (recursion_start && DRV_sweep_dirs (recursion_start->c_str (), "") == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "DRV_cpp_post_init: DRV_sweep_dirs (%C) failed\n",
-                  recursion_start->data ()));
+                  recursion_start->c_str ()));
 
       throw Bailout ();
     }

@@ -81,8 +81,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 bool
 UTL_String::strcmp_caseless (
-  std::string_view lhs,
-  std::string_view rhs,
+  std::string const& lhs,
+  std::string const& rhs,
   bool &mixed_case)
 {
   mixed_case = false;
@@ -153,7 +153,7 @@ UTL_String::compare_quiet (std::string const& lhs, std::string const& rhs)
 
 // Get canonical representation. This is the all upper case corresponding string.
 std::string
-UTL_String::get_canonical_rep (std::string_view str)
+UTL_String::get_canonical_rep (std::string const& str)
 {
   std::string result (str);
 

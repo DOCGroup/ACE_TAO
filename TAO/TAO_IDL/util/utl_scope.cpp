@@ -63,7 +63,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 #include <string>
-#include <string_view>
 
 #include "utl_scope.h"
 #include "utl_identifier.h"
@@ -108,8 +107,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "ast_generator.h"
 #include "ast_extern.h"
-
-#include <string_view>
 
 #include "fe_extern.h"
 #include "nr_extern.h"
@@ -1881,7 +1878,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
        i.next (param);
        i.advance (), ++index)
     {
-      if (std::string_view (param->name_) == name)
+      if (param->name_ == name)
         {
           /// If we are parsing this template module as a
           /// reference, the param holder we create must have
@@ -2213,7 +2210,7 @@ UTL_Scope::fe_add_annotation_member (AST_Annotation_Member * /*annotation_member
 }
 
 AST_Decl *
-UTL_Scope::lookup_by_name (std::string_view name)
+UTL_Scope::lookup_by_name (std::string const& name)
 {
   AST_Decl *node = nullptr;
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);

@@ -78,8 +78,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_Memory.h"
 
-#include <string_view>
-
 UTL_StrList::UTL_StrList (UTL_String *s,
                           UTL_StrList *cdr)
   : UTL_List(cdr),
@@ -188,7 +186,7 @@ UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
           first = second = false;
         }
 
-      std::string_view const s = i.item ()->get_string ();
+      std::string const& s = i.item ()->get_string ();
       o << s;
 
       if (first)

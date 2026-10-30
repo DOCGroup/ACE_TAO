@@ -431,7 +431,7 @@ public:
   void set_dcps_sequence_type (std::string const& seq_type);
 
   // BE calls to check whether pragma for this sequence has been set
-  bool dcps_sequence_type_defined (std::string_view seq_type) const;
+  bool dcps_sequence_type_defined (std::string const& seq_type) const;
 
   // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
   void dcps_gen_zero_copy_read (bool value);
@@ -522,7 +522,7 @@ public:
   void update_prefix (char *filename);
   // Do repo id prefix bookkeeping when the file changes.
 
-  long seen_include_file_before (std::string_view filename);
+  long seen_include_file_before (std::string const& filename);
   // Seen this include before?
 
   long last_seen_index () const;
@@ -624,7 +624,7 @@ public:
   // be sure that all forward declared stucts or unions that
   // might be used in such a valuetype are fully defined.
 
-  std::optional<std::string_view> recursion_start () const;
+  std::optional<std::string> const& recursion_start () const;
   void recursion_start (std::string const& val);
   // Accessors for the member.
 
@@ -632,7 +632,7 @@ public:
   void multi_file_input (bool val);
   // Accessors for the member.
 
-  std::string_view big_file_name () const;
+  std::string const& big_file_name () const;
   // Just get the const string.
 
   FE_Utils::T_PARAMLIST_INFO const *current_params () const;

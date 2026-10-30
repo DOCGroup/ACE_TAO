@@ -66,7 +66,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _STRING_STRING_HH
 
 #include <string>
-#include <string_view>
 
 #include "TAO_IDL_FE_Export.h"
 
@@ -112,8 +111,8 @@ public:
   // Get contents of utl_string as a standard string.
 
   static bool strcmp_caseless (
-    std::string_view lhs,
-    std::string_view rhs,
+    std::string const& lhs,
+    std::string const& rhs,
     bool &mixed_case);
   // Caseless string compare returns true if match, mixed_case is
   // true if match only true due to ignoring case differences.
@@ -124,7 +123,7 @@ public:
   static bool compare_quiet (std::string const& lhs, std::string const& rhs);
   // Like the above but without error or warning message output.
 
-  static std::string get_canonical_rep (std::string_view str);
+  static std::string get_canonical_rep (std::string const& str);
 
 private:
   // Data

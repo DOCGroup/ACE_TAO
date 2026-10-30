@@ -7,7 +7,7 @@
 
 #include "TAO_IDL_FE_Export.h"
 
-#include <string_view>
+#include <string>
 
 class AST_Annotation_Appl;
 class AST_Annotation_Decl;
@@ -70,7 +70,7 @@ public:
    * Same as find (AST_Annotation_Decl*) except do a look up of the
    * AST_Annotation_Decl first.
    */
-  AST_Annotation_Appl *find (std::string_view annotation);
+  AST_Annotation_Appl *find (std::string const& annotation);
 
 private:
   AST_Annotation_Appl_Ptrs vector_;

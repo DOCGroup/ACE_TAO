@@ -13,7 +13,7 @@
 #include "ace/Vector_T.h"
 
 #include <string>
-#include <string_view>
+#include <string>
 
 /**
  * Abstract Syntax Tree Node for an application of an annotation.
@@ -96,7 +96,7 @@ public:
    * Return the parameter with the specified name if it's in the stack else
    * returns 0.
    */
-  Param *find_param (std::string_view name) const;
+  Param *find_param (std::string const& name) const;
 
 private:
   /// Name of the Annotation as written
