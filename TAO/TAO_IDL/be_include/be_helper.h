@@ -129,7 +129,7 @@ public:
   virtual ~TAO_OutStream ();
 
   /// Open the underlying low-level handle for output.
-  int open (std::string_view fname,
+  int open (std::string const& fname,
             TAO_OutStream::STREAM_TYPE st = TAO_OutStream::TAO_CLI_HDR);
 
   /// Set the stream type
@@ -163,8 +163,8 @@ public:
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /// Generate a #if !defined, #defined macro
-  int gen_ifdef_macro (std::string_view flat_name,
-                       std::string_view suffix = {},
+  int gen_ifdef_macro (std::string const& flat_name,
+                       std::string const& suffix = {},
                        bool add_stream_type_suffix = true);
 
   /// Generate an endif statement
@@ -227,7 +227,7 @@ public:
 
 protected:
   void flush_pending_whitespace ();
-  void write_text (std::string_view text);
+  void write_text (std::string const& text);
 
   /// The underlying low-level I/O handle
   FILE *fp_ {};
