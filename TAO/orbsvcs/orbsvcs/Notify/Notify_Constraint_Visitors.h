@@ -15,8 +15,9 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Unbounded_Queue.h"
 #include "ace/Null_Mutex.h"
+
+#include <deque>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -152,7 +153,7 @@ protected:
   CORBA::Any remainder_of_body_;
 
   /// The result of a non_boolean operation.
-  ACE_Unbounded_Queue <TAO_ETCL_Literal_Constraint> queue_;
+  std::deque<TAO_ETCL_Literal_Constraint> queue_;
 
   /// Holder for a value found in the event fields filterable_data,
   /// variable_header or remainder_of_body.
