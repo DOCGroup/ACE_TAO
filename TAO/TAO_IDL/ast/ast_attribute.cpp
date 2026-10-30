@@ -123,22 +123,8 @@ AST_Attribute::ast_accept (ast_visitor *visitor)
 void
 AST_Attribute::destroy ()
 {
-  // No need to delete our exception lists, the
-  // destroy() method does it. The UTL_ExceptList
-  // destroy() method does NOT delete the contained
-  // exception nodes.
-
-  if (this->pd_get_exceptions != nullptr)
-    {
-      this->pd_get_exceptions->destroy ();
-      this->pd_get_exceptions = nullptr;
-    }
-
-  if (this->pd_set_exceptions != nullptr)
-    {
-      this->pd_set_exceptions->destroy ();
-      this->pd_set_exceptions = nullptr;
-    }
+  this->pd_get_exceptions.reset ();
+  this->pd_set_exceptions.reset ();
 
   this->AST_Field::destroy ();
 }
@@ -153,10 +139,10 @@ AST_Attribute::be_add_get_exceptions (UTL_ExceptList *t)
     }
   else
     {
-      this->pd_get_exceptions = t;
+      this->pd_get_exceptions.reset (t);
     }
 
-  return this->pd_get_exceptions;
+  return this->pd_get_exceptions.get ();
 }
 
 UTL_ExceptList *
@@ -169,10 +155,10 @@ AST_Attribute::be_add_set_exceptions (UTL_ExceptList *t)
     }
   else
     {
-      this->pd_set_exceptions = t;
+      this->pd_set_exceptions.reset (t);
     }
 
-  return this->pd_set_exceptions;
+  return this->pd_set_exceptions.get ();
 }
 
 // Data accessors.
@@ -186,13 +172,13 @@ AST_Attribute::readonly () const
 UTL_ExceptList *
 AST_Attribute::get_get_exceptions () const
 {
-  return this->pd_get_exceptions;
+  return this->pd_get_exceptions.get ();
 }
 
 UTL_ExceptList *
 AST_Attribute::get_set_exceptions () const
 {
-  return this->pd_set_exceptions;
+  return this->pd_set_exceptions.get ();
 }
 
 // NOTE: No attempt is made to ensure that exceptions are mentioned
@@ -204,7 +190,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
   AST_Type *fe = nullptr;
   AST_Decl *d = nullptr;
 
-  this->pd_get_exceptions = nullptr;
+  this->pd_get_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t);
        !nl_i.is_done ();
@@ -239,7 +225,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
 
       if (this->pd_get_exceptions == nullptr)
         {
-          this->pd_get_exceptions = el;
+          this->pd_get_exceptions.reset (el);
         }
       else
         {
@@ -259,7 +245,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
   AST_Type *fe = nullptr;
   AST_Decl *d = nullptr;
 
-  this->pd_set_exceptions = nullptr;
+  this->pd_set_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
@@ -292,7 +278,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
 
       if (this->pd_set_exceptions == nullptr)
         {
-          this->pd_set_exceptions = el;
+          this->pd_set_exceptions.reset (el);
         }
       else
         {

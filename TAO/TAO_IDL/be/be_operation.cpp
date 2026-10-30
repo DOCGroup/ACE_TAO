@@ -92,9 +92,10 @@ be_operation::be_insert_exception (AST_Exception *ex)
   UTL_ExceptList *new_list = nullptr;
   ACE_NEW_RETURN (new_list,
                   UTL_ExceptList (ex,
-                                  this->pd_exceptions),
+                                  this->pd_exceptions.get ()),
                   -1);
-  this->pd_exceptions = new_list;
+  this->pd_exceptions.release ();
+  this->pd_exceptions.reset (new_list);
   return 0;
 }
 

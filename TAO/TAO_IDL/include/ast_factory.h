@@ -71,8 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_decl.h"
 #include "utl_scope.h"
 #include "utl_scoped_name.h"
-
-class UTL_ExceptList;
+#include "utl_exceptlist.h"
 
 class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
@@ -113,7 +112,7 @@ public:
 protected:
   // Data.
 
-  UTL_ExceptList *pd_exceptions {};
+  UTL_ExceptList_Owner pd_exceptions;
   // Exceptions raised
 
   int pd_n_exceptions {};

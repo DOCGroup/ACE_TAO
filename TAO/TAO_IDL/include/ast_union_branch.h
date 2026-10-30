@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_field.h"
 #include "utl_scoped_name.h"
 
+#include <memory>
+
 class UTL_LabelList;
 class AST_Type;
 class AST_UnionLabel;
@@ -123,7 +125,7 @@ public:
 
 private:
   // list of labels.
-  UTL_LabelList *pd_ll;
+  std::unique_ptr<UTL_LabelList> pd_ll;
 };
 
 #endif           // _AST_UNION_BRANCH_AST_UNION_BRAN_HH

@@ -68,8 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_decl.h"
 #include "utl_scope.h"
 #include "utl_strlist.h"
+#include "utl_exceptlist.h"
 
-class UTL_ExceptList;
 class AST_Type;
 
 class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl,
@@ -162,7 +162,7 @@ protected:
   UTL_StrList pd_context;
   // Context
 
-  UTL_ExceptList *pd_exceptions;
+  UTL_ExceptList_Owner pd_exceptions;
   // Exceptions raised
 
   int argument_count_ {-1};

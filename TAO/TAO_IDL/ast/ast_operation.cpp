@@ -195,16 +195,7 @@ AST_Operation::has_native ()
 void
 AST_Operation::destroy ()
 {
-  // No need to delete our exception list, the
-  // destroy() method does it. The UTL_ExceptList
-  // destroy() method does NOT delete the contained
-  // exception nodes.
-
-  if (this->pd_exceptions != nullptr)
-    {
-      this->pd_exceptions->destroy ();
-      this->pd_exceptions = nullptr;
-    }
+  this->pd_exceptions.reset ();
 
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
@@ -220,10 +211,10 @@ AST_Operation::be_add_exceptions (UTL_ExceptList *t)
     }
   else
     {
-      this->pd_exceptions = t;
+      this->pd_exceptions.reset (t);
     }
 
-  return this->pd_exceptions;
+  return this->pd_exceptions.get ();
 }
 
 // Private operations.
@@ -313,7 +304,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
   AST_Type *fe = nullptr;
   AST_Decl *d = nullptr;
 
-  this->pd_exceptions = nullptr;
+  this->pd_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t); !nl_i.is_done (); nl_i.next ())
     {
@@ -404,10 +395,12 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 
       if (this->pd_exceptions == nullptr)
         {
-          ACE_NEW_RETURN (this->pd_exceptions,
+          UTL_ExceptList *exceptions = nullptr;
+          ACE_NEW_RETURN (exceptions,
                           UTL_ExceptList (fe,
                                           nullptr),
                           nullptr);
+          this->pd_exceptions.reset (exceptions);
         }
       else
         {
@@ -476,7 +469,7 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
       this->dump_i (o, " raises(");
 
       // Must advance the iterator explicity inside the loop.
-      for (UTL_ExceptlistActiveIterator ei (this->pd_exceptions);
+      for (UTL_ExceptlistActiveIterator ei (this->pd_exceptions.get ());
            !ei.is_done ();)
         {
           e = ei.item ();
@@ -541,7 +534,7 @@ AST_Operation::context () const
 UTL_ExceptList *
 AST_Operation::exceptions () const
 {
-  return this->pd_exceptions;
+  return this->pd_exceptions.get ();
 }
 
 bool
