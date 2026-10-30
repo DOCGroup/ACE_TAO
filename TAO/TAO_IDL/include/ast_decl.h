@@ -66,6 +66,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_DECL_AST_DECL_HH
 #define _AST_DECL_AST_DECL_HH
 
+#include <memory>
 #include <optional>
 #include <string>
 
@@ -455,12 +456,12 @@ private:
   std::string pd_file_name;
   // What file defined in.
 
-  UTL_ScopedName *pd_name {};
+  std::unique_ptr<UTL_ScopedName> pd_name;
 
-  Identifier *pd_local_name;
+  std::unique_ptr<Identifier> pd_local_name;
   // Name in scope.
 
-  Identifier *pd_original_local_name {};
+  std::unique_ptr<Identifier> pd_original_local_name;
   // _cxx_ removed if any.
 
   std::string full_name_;

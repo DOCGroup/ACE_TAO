@@ -219,22 +219,19 @@ AST_Decl::destroy ()
   if (this->pd_name)
     {
       this->pd_name->destroy ();
-      delete this->pd_name;
-      this->pd_name = nullptr;
+      this->pd_name.reset ();
     }
 
   if (this->pd_local_name)
     {
       this->pd_local_name->destroy ();
-      delete this->pd_local_name;
-      this->pd_local_name = nullptr;
+      this->pd_local_name.reset ();
     }
 
   if (this->pd_original_local_name)
     {
       this->pd_original_local_name->destroy ();
-      delete this->pd_original_local_name;
-      this->pd_original_local_name = nullptr;
+      this->pd_original_local_name.reset ();
     }
 
   if (this->last_referenced_as_)
@@ -285,12 +282,12 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
   // Global scope?
   if (!this->defined_in ())
     {
-      this->pd_name = (UTL_IdList *) n->copy ();
+      this->pd_name.reset (static_cast<UTL_IdList *> (n->copy ()));
       return;
     }
 
   // Initialize this name to 0.
-  this->pd_name = nullptr;
+  this->pd_name.reset ();
 
   // OK, not global. So copy name of containing scope, then
   // smash last cdr of copy with new component
@@ -301,7 +298,7 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
       cn = d->name ();
       if (cn)
         {
-          this->pd_name = (UTL_IdList *) cn->copy ();
+          this->pd_name.reset (static_cast<UTL_IdList *> (cn->copy ()));
         }
     }
 
@@ -316,8 +313,10 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
         }
       else
         {
-          ACE_NEW (this->pd_name,
+          UTL_ScopedName *scoped_name = nullptr;
+          ACE_NEW (scoped_name,
                    UTL_ScopedName (this->pd_local_name->copy (), nullptr));
+          this->pd_name.reset (scoped_name);
         }
     }
 }
@@ -394,7 +393,7 @@ AST_Decl::compute_full_name ()
   bool first = true;
   bool second = false;
 
-  for (UTL_IdListActiveIterator i (this->pd_name);
+  for (UTL_IdListActiveIterator i (this->pd_name.get ());
        !i.is_done ();
        i.next ())
     {
@@ -1059,7 +1058,7 @@ AST_Decl::set_file_name (std::string const& s)
 UTL_ScopedName *
 AST_Decl::name () const
 {
-  return this->pd_name;
+  return this->pd_name.get ();
 }
 
 // @@ Wherever compute_* are called, we should remember to delete them
@@ -1125,7 +1124,7 @@ AST_Decl::compute_name (std::string const& prefix,
 void
 AST_Decl::set_name (UTL_ScopedName *n)
 {
-  if (this->pd_name == n)
+  if (this->pd_name.get () == n)
     {
       return;
     }
@@ -1133,10 +1132,9 @@ AST_Decl::set_name (UTL_ScopedName *n)
   if (this->pd_name)
     {
       this->pd_name->destroy ();
-      delete this->pd_name;
     }
 
-  this->pd_name = n;
+  this->pd_name.reset (n);
   this->compute_full_name ();
 
   if (n)
@@ -1144,16 +1142,14 @@ AST_Decl::set_name (UTL_ScopedName *n)
       if (this->pd_local_name)
         {
           this->pd_local_name->destroy ();
-          delete this->pd_local_name;
         }
 
-      this->pd_local_name = n->last_component ()->copy ();
+      this->pd_local_name.reset (n->last_component ()->copy ());
 
       // The name without _cxx_ prefix removed, if there was any.
       if (this->pd_original_local_name)
         {
           this->pd_original_local_name->destroy ();
-          delete this->pd_original_local_name;
         }
 
       this->original_local_name (n->last_component ());
@@ -1167,19 +1163,23 @@ AST_Decl::set_name (UTL_ScopedName *n)
 Identifier *
 AST_Decl::local_name () const
 {
-  return this->pd_local_name;
+  return this->pd_local_name.get ();
 }
 
 void
 AST_Decl::local_name (Identifier *id)
 {
+  if (this->pd_local_name.get () == id)
+    {
+      return;
+    }
+
   if (this->pd_local_name)
     {
       this->pd_local_name->destroy ();
     }
 
-  delete this->pd_local_name;
-  this->pd_local_name = id;
+  this->pd_local_name.reset (id);
 }
 
 Identifier *
@@ -1214,19 +1214,19 @@ AST_Decl::original_local_name (Identifier *local_name)
   if (name.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
     {
       // Assign to the Identifier variable.
-      ACE_NEW (this->pd_original_local_name,
-               Identifier (name.substr (sizeof (cxx_prefix) - 1)));
+      this->pd_original_local_name = std::make_unique<Identifier> (
+        name.substr (sizeof (cxx_prefix) - 1));
     }
   else
     {
-      this->pd_original_local_name = local_name->copy ();
+      this->pd_original_local_name.reset (local_name->copy ());
     }
 }
 
 Identifier *
 AST_Decl::original_local_name () const
 {
-  return this->pd_original_local_name;
+  return this->pd_original_local_name.get ();
 }
 
 bool
