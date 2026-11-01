@@ -10,6 +10,12 @@
 #include "ace/OS_NS_unistd.h"
 #include "SPIPE-connector.h"
 
+static void
+end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 
 Peer_Handler::Peer_Handler (int iterations)
   : iterations_ (iterations)
@@ -127,7 +133,7 @@ Peer_Handler::display_menu ()
 
 IPC_Client::IPC_Client ()
   : iterations_ (0),
-    done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
+    done_handler_ (end_reactor_event_loop)
 {
   ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
