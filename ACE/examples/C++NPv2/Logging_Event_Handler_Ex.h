@@ -26,7 +26,7 @@ public:
   // 3600 seconds == one hour.
   enum { MAX_CLIENT_TIMEOUT = 3600 };
 
-  Logging_Event_Handler_Ex
+  explicit Logging_Event_Handler_Ex
     (ACE_Reactor *reactor,
      const ACE_Time_Value &max_client_timeout
        = ACE_Time_Value (MAX_CLIENT_TIMEOUT))
@@ -34,22 +34,22 @@ public:
       time_of_last_log_record_ (0),
       max_client_timeout_ (max_client_timeout) {}
 
-  virtual ~Logging_Event_Handler_Ex () {}
+  ~Logging_Event_Handler_Ex () override = default;
 
-  virtual int open (); // Activate the event handler.
+  int open () override; // Activate the event handler.
 
   // Called by a reactor when logging events arrive.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   // Called when a timeout expires to check if the client has
   // been idle for an excessive amount of time.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *act);
+  int handle_timeout (const ACE_Time_Value &tv,
+                      const void *act) override;
 
   // Called when this object is destroyed, e.g., when it's
   // removed from a reactor.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 };
 
 #endif /* _LOGGING_EVENT_HANDLER_EX_H */

@@ -27,7 +27,7 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
                                (i, char_argv.get (),
                                 ACE_Reactor::instance ()));
   for (i = 0; i < argc; ++i) ACE::strdelete (char_argv[i]);
-  return server_ == 0 ? -1 : 0;
+  return server_ == nullptr ? -1 : 0;
 }
 
 // NOTE! The (ACCEPTOR*) cast below is NOT technically necessary, but it
@@ -35,7 +35,7 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
 // handle_close().
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::fini ()
-{ ((ACCEPTOR*)server_)->handle_close (); server_ = 0; return 0; }
+{ ((ACCEPTOR*)server_)->handle_close (); server_ = nullptr; return 0; }
 
 
 template <class ACCEPTOR> int

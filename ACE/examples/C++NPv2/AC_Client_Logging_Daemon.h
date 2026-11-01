@@ -18,19 +18,19 @@ class AC_Output_Handler
 public:
   enum { QUEUE_MAX = sizeof (ACE_Log_Record) * ACE_IOV_MAX };
 
-  virtual int open (void *); // Initialization hook method.
+  int open (void *) override; // Initialization hook method.
 
   // Entry point into the <AC_Output_Handler>.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+  int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 protected:
   AC_CLD_Connector *connector_;
 
   // Handle disconnects from the logging server.
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   // Hook method forwards log records to server logging daemon.
-  virtual int svc ();
+  int svc () override;
 
   // Send the buffered log records using a gather-write operation.
   virtual int send (ACE_Message_Block *chunk[], size_t &count);
@@ -39,16 +39,16 @@ protected:
 class AC_Input_Handler
   : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> {
 public:
-  AC_Input_Handler (AC_Output_Handler *handler = 0)
+  explicit AC_Input_Handler (AC_Output_Handler *handler = nullptr)
     : output_handler_ (handler) {}
-  virtual int open (void *); // Initialization hook method.
-  virtual int close (u_long = 0); // Shutdown hook method.
+  int open (void *) override; // Initialization hook method.
+  int close (u_long = 0) override; // Shutdown hook method.
 
 protected:
   // Reactor hook methods.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 
   // Pointer to the output handler.
   AC_Output_Handler *output_handler_;

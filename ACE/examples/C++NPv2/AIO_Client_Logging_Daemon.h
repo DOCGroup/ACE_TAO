@@ -20,14 +20,19 @@ class AIO_CLD_Acceptor;
 
 class AIO_Input_Handler : public ACE_Service_Handler {
 public:
-  AIO_Input_Handler (AIO_CLD_Acceptor *acc = 0)
-    : acceptor_ (acc), mblk_ (0) {}
+  explicit AIO_Input_Handler (AIO_CLD_Acceptor *acc = nullptr)
+    : acceptor_ (acc), mblk_ (nullptr) {}
 
-  virtual ~AIO_Input_Handler ();
+  AIO_Input_Handler (const AIO_Input_Handler &) = delete;
+  AIO_Input_Handler (AIO_Input_Handler &&) = delete;
+  AIO_Input_Handler &operator= (const AIO_Input_Handler &) = delete;
+  AIO_Input_Handler &operator= (AIO_Input_Handler &&) = delete;
+
+  ~AIO_Input_Handler () override;
 
   // Called by ACE_Asynch_Acceptor when a client connects.
-  virtual void open (ACE_HANDLE new_handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE new_handle,
+             ACE_Message_Block &message_block) override;
 
 protected:
   enum { LOG_HEADER_SIZE = 8 };   // Length of CDR header
@@ -36,8 +41,7 @@ protected:
   ACE_Asynch_Read_Stream reader_; // Async read factory
 
   // Handle input from logging clients.
-  virtual void handle_read_stream
-    (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 };
 
 
@@ -45,20 +49,25 @@ class AIO_Output_Handler
   : public ACE_Task<ACE_NULL_SYNCH>,
     public ACE_Service_Handler {
 public:
-  AIO_Output_Handler () : can_write_ (0) {}
+  AIO_Output_Handler () : can_write_ (false) {}
 
-  virtual ~AIO_Output_Handler ();
+  AIO_Output_Handler (const AIO_Output_Handler &) = delete;
+  AIO_Output_Handler (AIO_Output_Handler &&) = delete;
+  AIO_Output_Handler &operator= (const AIO_Output_Handler &) = delete;
+  AIO_Output_Handler &operator= (AIO_Output_Handler &&) = delete;
+
+  ~AIO_Output_Handler () override;
 
   // Entry point into the <AIO_Output_Handler>.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+  int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
   // Hook method called when server connection is established.
-  virtual void open (ACE_HANDLE new_handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE new_handle,
+             ACE_Message_Block &message_block) override;
 
   // A trivial implementation that is needed to suppress compile
   // warnings/errors.
-  virtual int open (void *args)
+  int open (void *args) override
   {
     return ACE_Task<ACE_NULL_SYNCH>::open (args);
   }
@@ -66,18 +75,16 @@ public:
 protected:
   ACE_Asynch_Read_Stream  reader_;   // Detects connection loss
   ACE_Asynch_Write_Stream writer_;   // Sends to server
-  int can_write_;    // Safe to begin send a log record?
+  bool can_write_;   // Safe to begin send a log record?
 
   // Initiate the send of a log record
-  void start_write (ACE_Message_Block *mblk = 0);
+  void start_write (ACE_Message_Block *mblk = nullptr);
 
   // Handle disconnects from the logging server.
-  virtual void handle_read_stream
-    (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   // Handle completed write to logging server.
-  virtual void handle_write_stream
-    (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 };
 
 using OUTPUT_HANDLER = ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex>;
@@ -90,11 +97,16 @@ public:
 
   // Constructor.
   AIO_CLD_Connector ()
-    : retry_delay_ (INITIAL_RETRY_DELAY), ssl_ctx_ (0), ssl_ (0)
+    : retry_delay_ (INITIAL_RETRY_DELAY), ssl_ctx_ (nullptr), ssl_ (nullptr)
   { open (); }
 
+  AIO_CLD_Connector (const AIO_CLD_Connector &) = delete;
+  AIO_CLD_Connector (AIO_CLD_Connector &&) = delete;
+  AIO_CLD_Connector &operator= (const AIO_CLD_Connector &) = delete;
+  AIO_CLD_Connector &operator= (AIO_CLD_Connector &&) = delete;
+
   // Destructor frees the SSL resources.
-  virtual ~AIO_CLD_Connector () {
+  ~AIO_CLD_Connector () override {
     SSL_free (ssl_);
     SSL_CTX_free (ssl_ctx_);
     proactor ()->cancel_timer (*this);
@@ -102,20 +114,19 @@ public:
 
   // Hook method to detect failure and validate peer before
   // opening handler.
-  virtual int validate_connection
+  int validate_connection
     (const ACE_Asynch_Connect::Result& result,
-     const ACE_INET_Addr &remote, const ACE_INET_Addr& local);
+     const ACE_INET_Addr &remote, const ACE_INET_Addr& local) override;
 
   // Re-establish a connection to the logging server.
   int reconnect () { return connect (remote_addr_); }
 
 protected:
   // Hook method called on timer expiration - retry connect
-  virtual void handle_time_out
-    (const ACE_Time_Value&, const void *);
+  void handle_time_out (const ACE_Time_Value&, const void *) override;
 
   // Template method to create a new handler
-  virtual AIO_Output_Handler *make_handler ()
+  AIO_Output_Handler *make_handler () override
     { return OUTPUT_HANDLER::instance (); }
 
   // Address at which logging server listens for connections.

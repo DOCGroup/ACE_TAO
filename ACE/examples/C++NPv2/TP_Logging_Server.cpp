@@ -27,13 +27,13 @@ int TP_Logging_Handler::handle_input (ACE_HANDLE) {
 int
 TP_Logging_Handler::handle_close (ACE_HANDLE handle,
                                   ACE_Reactor_Mask) {
-  int close_now = 0;
+  bool close_now = false;
   if (handle != ACE_INVALID_HANDLE) {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
     if (queued_count_ == 0)
-      close_now = 1;
+      close_now = true;
     else
-      deferred_close_ = 1;
+      deferred_close_ = true;
   } else {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
     queued_count_--;

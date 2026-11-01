@@ -28,9 +28,9 @@ protected:
 public:
   TPC_Logging_Handler () : logging_handler_ (log_file_) {}
 
-  virtual int open (void *);
+  int open (void *) override;
 
-  virtual int svc () {
+  int svc () override {
     for (;;)
       switch (logging_handler_.log_record ()) {
       case -1: return -1; // Error.
@@ -59,26 +59,26 @@ public:
 
   // Constructor.
   TPC_Logging_Acceptor (ACE_Reactor *r)
-    : PARENT (r), ssl_ctx_ (0), ssl_ (0) {}
+    : PARENT (r), ssl_ctx_ (nullptr), ssl_ (nullptr) {}
 
   // Destructor frees the SSL resources.
-  virtual ~TPC_Logging_Acceptor () {
+  ~TPC_Logging_Acceptor () override {
     SSL_free (this->ssl_);
     SSL_CTX_free (this->ssl_ctx_);
   }
 
   // Initialize the acceptor instance.
-  virtual int open
+  int open
     (const ACE_SOCK_Acceptor::PEER_ADDR &local_addr,
      ACE_Reactor *reactor = ACE_Reactor::instance (),
-     int flags = 0, int use_select = 1, int reuse_addr = 1);
+     int flags = 0, int use_select = 1, int reuse_addr = 1) override;
 
-  virtual int handle_close
+  int handle_close
     (ACE_HANDLE = ACE_INVALID_HANDLE,
-     ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+     ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   // Connection establishment and authentication hook method.
-  virtual int accept_svc_handler (TPC_Logging_Handler *sh);
+  int accept_svc_handler (TPC_Logging_Handler *sh) override;
 };
 
 #endif /* _TPC_LOGGING_SERVER_H */

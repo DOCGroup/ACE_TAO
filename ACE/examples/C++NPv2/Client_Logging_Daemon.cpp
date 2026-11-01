@@ -45,9 +45,9 @@ public:
   virtual ACE_SOCK_Stream &peer () { return peer_; }
 
   // Reactor hook methods.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 
 protected:
   // Forward log records to the server logging daemon.
@@ -106,10 +106,10 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Reactor hook methods.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
-  virtual ACE_HANDLE get_handle () const;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
+  ACE_HANDLE get_handle () const override;
 
 protected:
   // Factory that passively connects <ACE_SOCK_Stream>s.
@@ -225,7 +225,7 @@ int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
     }
 
   while (iov_size > 0) {
-    chunk[--iov_size]->release (); chunk[iov_size] = 0;
+    chunk[--iov_size]->release (); chunk[iov_size] = nullptr;
   }
   count = iov_size;
   return result;
@@ -325,11 +325,11 @@ int CLD_Connector::reconnect () {
 
 class Client_Logging_Daemon : public ACE_Service_Object {
 public:
-  virtual ~Client_Logging_Daemon () = default;    // Turn off g++ warnings.
+  ~Client_Logging_Daemon () override = default;
 
   // Service Configurator hook methods.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
 #if 0
   // Implementing these methods is left as an exercise for the reader.
   virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;

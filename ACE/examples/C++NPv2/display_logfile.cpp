@@ -25,7 +25,7 @@ public:
   {
     this->open (name,
                 &task_, // Initialize writer-side task.
-                0,      // Ignore reader-side task.
+                nullptr, // Ignore reader-side task.
                 0,
                 ACE_Module<ACE_SYNCH>::M_DELETE_READER);
   }
@@ -48,7 +48,7 @@ public:
   Logrec_Reader (const ACE_TString &file): filename_ (file) {}
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *) {
+  int open (void *) override {
   //FUZZ: enable check_for_lack_ACE_OS
 
     ACE_FILE_Addr name (filename_.c_str ());
@@ -58,7 +58,7 @@ public:
     return activate ();
   }
 
-  virtual int svc () {
+  int svc () override {
     const size_t FileReadSize = 8 * 1024;
     ACE_Message_Block mblk (FileReadSize);
 
@@ -200,7 +200,7 @@ public:
   {
     this->open (ACE_TEXT ("Logrec Reader"),
                 &task_, // Initialize writer-side.
-                0,      // Ignore reader-side.
+                nullptr, // Ignore reader-side.
                 0,
                 ACE_Module<ACE_SYNCH>::M_DELETE_READER);
   }
@@ -213,17 +213,17 @@ class Logrec_Writer : public ACE_Task<ACE_SYNCH>
 public:
   //FUZZ: disable check_for_lack_ACE_OS
   // Initialization hook method.
-  virtual int open (void *) { return activate (); }
+  int open (void *) override { return activate (); }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int put (ACE_Message_Block *mblk, ACE_Time_Value *to)
+  int put (ACE_Message_Block *mblk, ACE_Time_Value *to) override
   { return putq (mblk, to); }
 
-  virtual int svc () {
-    int stop = 0;
-    for (ACE_Message_Block *mb = 0; !stop && getq (mb) != -1; ) {
+  int svc () override {
+    bool stop = false;
+    for (ACE_Message_Block *mb = nullptr; !stop && getq (mb) != -1; ) {
       if (mb->msg_type () == ACE_Message_Block::MB_STOP)
-        stop = 1;
+        stop = true;
       else
         ACE::write_n (ACE_STDOUT, mb);
       put_next (mb);
@@ -242,10 +242,10 @@ private:
   static FORMATTER format_; // Array of format static methods.
 
 public:
-  virtual int put (ACE_Message_Block *mblk, ACE_Time_Value *) {
+  int put (ACE_Message_Block *mblk, ACE_Time_Value *) override {
     if (mblk->msg_type () == Logrec_Reader::MB_CLIENT)
       for (ACE_Message_Block *temp = mblk;
-           temp != 0;
+           temp != nullptr;
            temp = temp->cont ()) {
         int mb_type =
           temp->msg_type () - ACE_Message_Block::MB_USER;
@@ -312,20 +312,20 @@ private:
   ACE_Lock_Adapter<ACE_SYNCH_MUTEX> lock_strategy_;
 
 public:
-  virtual int put (ACE_Message_Block *mblk,
-                   ACE_Time_Value *) {
+  int put (ACE_Message_Block *mblk,
+           ACE_Time_Value *) override {
     if (mblk->msg_type () != ACE_Message_Block::MB_STOP) {
       ACE_Message_Block *separator;
       ACE_NEW_RETURN
         (separator,
          ACE_Message_Block (ACE_OS::strlen ("|") + 1,
                             ACE_Message_Block::MB_DATA,
-                            0, 0, 0, &lock_strategy_),
+                            nullptr, nullptr, nullptr, &lock_strategy_),
          -1);
       separator->copy ("|");
 
-      ACE_Message_Block *dup = 0;
-      for (ACE_Message_Block *temp = mblk; temp != 0; ) {
+      ACE_Message_Block *dup = nullptr;
+      for (ACE_Message_Block *temp = mblk; temp != nullptr; ) {
         dup = separator->duplicate ();
         dup->cont (temp->cont ());
         temp->cont (dup);

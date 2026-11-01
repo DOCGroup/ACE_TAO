@@ -35,18 +35,18 @@ class AC_CLD_Acceptor
   : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR> {
 public:
   // Constructor.
-  AC_CLD_Acceptor (AC_Output_Handler *handler = nullptr)
+  explicit AC_CLD_Acceptor (AC_Output_Handler *handler = nullptr)
     : output_handler_ (handler), input_handler_ (handler) {}
 
 protected:
   using PARENT = ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR>;
 
   // <ACE_Acceptor> factory method.
-  virtual int make_svc_handler (AC_Input_Handler *&sh);
+  int make_svc_handler (AC_Input_Handler *&sh) override;
 
   // <ACE_Reactor> close hook method.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 
   // Pointer to the output handler.
   AC_Output_Handler *output_handler_;
@@ -61,19 +61,19 @@ public:
   using PARENT = ACE_Connector<AC_Output_Handler, ACE_SOCK_CONNECTOR>;
 
   // Constructor.
-  AC_CLD_Connector (AC_Output_Handler *handler = nullptr)
+  explicit AC_CLD_Connector (AC_Output_Handler *handler = nullptr)
     : handler_ (handler), ssl_ctx_ (nullptr), ssl_ (nullptr) {}
 
   // Destructor frees the SSL resources.
-  virtual ~AC_CLD_Connector () {
+  ~AC_CLD_Connector () override {
     SSL_free (ssl_);
     SSL_CTX_free (ssl_ctx_);
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Initialize the Connector.
-  virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
-                    int flags = 0);
+  int open (ACE_Reactor *r = ACE_Reactor::instance (),
+            int flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Re-establish a connection to the logging server.
@@ -81,20 +81,20 @@ public:
 
 protected:
   // Connection establishment and authentication hook method.
-  virtual int connect_svc_handler
+  int connect_svc_handler
     (AC_Output_Handler *&svc_handler,
      const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
      ACE_Time_Value *timeout,
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,
-     int reuse_addr, int flags, int perms);
+     int reuse_addr, int flags, int perms) override;
 
-  virtual int connect_svc_handler
+  int connect_svc_handler
     (AC_Output_Handler *&svc_handler,
      AC_Output_Handler *&sh_copy,
      const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
      ACE_Time_Value *timeout,
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,
-     int reuse_addr, int flags, int perms);
+     int reuse_addr, int flags, int perms) override;
 
   // Pointer to <AC_Output_Handler> we're connecting.
   AC_Output_Handler *handler_;
@@ -128,8 +128,8 @@ public:
       connector_ (&output_handler_) {}
 
   // Service Configurator hook methods.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
   //virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;
   //virtual int suspend ();
   //virtual int resume ();
@@ -272,7 +272,7 @@ int AC_Input_Handler::handle_input (ACE_HANDLE handle) {
     {
       if (output_handler_->put (mblk->cont ()) != -1)
         {
-          mblk->cont (0);
+          mblk->cont (nullptr);
           mblk->release ();
           return 0; // Success return.
         }
