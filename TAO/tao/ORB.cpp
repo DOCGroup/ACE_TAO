@@ -951,9 +951,9 @@ CORBA::ORB::resolve_initial_references (const char *name,
     CORBA::string_alloc (
       static_cast<CORBA::ULong> (std::strlen (name) + sizeof (ior_string)));
 
-  ACE_OS::strcpy (ior_env_var_name.inout (), name);
+  std::strcpy (ior_env_var_name.inout (), name);
 
-  ACE_OS::strcat (ior_env_var_name.inout (), ior_string);
+  std::strcat (ior_env_var_name.inout (), ior_string);
 
   ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name.in ());
 
@@ -1435,7 +1435,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
       // pair.
 
       // support limited oref ACE_OS::strcmp.
-      (void) ACE_OS::memset (buf, 0, sizeof (buf));
+      (void) std::memset (buf, 0, sizeof (buf));
 
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.write_octet (TAO_ENCAP_BYTE_ORDER);
@@ -1456,7 +1456,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
       CORBA::String_var string = cp;
 
-      ACE_OS::strcpy (cp, ior_prefix);
+      std::strcpy (cp, ior_prefix);
       cp += sizeof (ior_prefix) - 1;
 
       for (const ACE_Message_Block *i = cdr.begin (); i != nullptr; i = i->cont ())

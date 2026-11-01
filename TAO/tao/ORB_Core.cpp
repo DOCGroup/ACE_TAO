@@ -2866,12 +2866,12 @@ TAO_ORB_Core::resolve_rir (const char *name)
 
       // Check if the protocol is corbaloc: or mcast:.
       // If it is, set the object_key_delimiter.
-      if ((ACE_OS::strncmp (default_init_ref.in (),
-                            corbaloc_prefix,
-                            sizeof corbaloc_prefix -1) == 0) ||
-          (ACE_OS::strncmp (default_init_ref.in (),
-                            mcast_prefix,
-                            sizeof mcast_prefix -1) == 0))
+      if ((std::strncmp (default_init_ref.in (),
+                         corbaloc_prefix,
+                         sizeof corbaloc_prefix -1) == 0) ||
+          (std::strncmp (default_init_ref.in (),
+                         mcast_prefix,
+                         sizeof mcast_prefix -1) == 0))
         {
           object_key_delimiter = '/';
         }
