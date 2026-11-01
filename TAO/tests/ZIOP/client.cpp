@@ -6,6 +6,9 @@
 #include "TestCompressor/TestCompressor_Factory.h"
 
 #include "common.h"
+
+#include <cstring>
+
 static const ACE_TCHAR *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
 static ::Compression::CompressionManager_var compression_manager = 0;
 CORBA::ULong big_msg_size = 40000;
@@ -313,7 +316,7 @@ run_string_test (Test::Hello_ptr hello)
                                                     "This is a test string");
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
               the_string.in ()));
-  if (ACE_OS::strstr (the_string.in (), "Hello there") == 0)
+  if (std::strstr (the_string.in (), "Hello there") == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR : run_string_test, unexpected string received\n")),
