@@ -9,17 +9,22 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Leader_Follower.h"
 #include "tao/SystemException.h"
-#include <new>
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry ()
 {
   // Free the memory for the endpoints.
-  for (Entry &entry : this->registry_)
+  Entry *entry = nullptr;
+  Acceptor_Registry_Iterator iter (this->registry_);
+
+  while (iter.next (entry))
     {
-      delete entry.endpoint;
-      delete entry.acceptor;
+      delete entry->endpoint;
+      delete entry->acceptor;
+      iter.advance ();
     }
 }
 
@@ -65,7 +70,7 @@ TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
                                              TAO_ORB_Core &orb_core,
                                              TAO_ProtocolFactorySetItor &factory)
 {
-  TAO_Acceptor * const acceptor = (*factory)->factory ()->make_acceptor ();
+  std::unique_ptr<TAO_Acceptor> acceptor ((*factory)->factory ()->make_acceptor ());
 
   if (acceptor != nullptr)
     {
@@ -86,8 +91,6 @@ TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
                           buffer,
                           0) == -1)
         {
-          delete acceptor;
-
           if (TAO_debug_level > 0)
             ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) ")
@@ -105,19 +108,13 @@ TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
 
       // Add acceptor to list.
       Entry tmp_entry;
-      tmp_entry.acceptor = acceptor;
-      tmp_entry.endpoint = nc_profile->endpoint ()->duplicate ();
+      tmp_entry.acceptor = acceptor.get ();
+      std::unique_ptr<TAO_Endpoint> endpoint (nc_profile->endpoint ()->duplicate ());
+      tmp_entry.endpoint = endpoint.get ();
       tmp_entry.cnt = 1;
 
-      try
+      if (this->registry_.enqueue_tail (tmp_entry) == -1)
         {
-          this->registry_.push_back (tmp_entry);
-        }
-      catch (std::bad_alloc const &)
-        {
-          delete tmp_entry.endpoint;
-          delete acceptor;
-
           if (TAO_debug_level > 0)
             ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) ")
@@ -132,6 +129,9 @@ TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
               ENOMEM),
             CORBA::COMPLETED_NO);
         }
+
+      acceptor.release ();
+      endpoint.release ();
     }
   else
     {
@@ -153,17 +153,18 @@ int
 TAO_PortableGroup_Acceptor_Registry::find (TAO_Profile const *profile,
                                            Entry *&entry)
 {
-  for (Entry &current : this->registry_)
+  Acceptor_Registry_Iterator iter (this->registry_);
+
+  while (iter.next (entry))
     {
       // Since the endpoint routine is nonconst, need to
       // cast away the constness even though we're not
       // changing anything.
       TAO_Profile * const nc_profile = const_cast<TAO_Profile *> (profile);
-      if (current.endpoint->is_equivalent (nc_profile->endpoint ()))
-        {
-          entry = &current;
-          return 1;
-        }
+      if (entry->endpoint->is_equivalent (nc_profile->endpoint ()))
+        return 1;
+
+      iter.advance ();
     }
 
   return 0;

@@ -15,8 +15,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include <deque>
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -24,6 +22,8 @@
 #include "ace/CORBA_macros.h"
 
 #include "orbsvcs/PortableGroup/portablegroup_export.h"
+
+#include "ace/Unbounded_Queue.h"
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/Resource_Factory.h"
@@ -74,7 +74,8 @@ public:
   /// Close all open acceptors.
   int close_all ();
 
-  using Acceptor_Registry = std::deque<Entry>;
+  using Acceptor_Registry = ACE_Unbounded_Queue<Entry>;
+  using Acceptor_Registry_Iterator = ACE_Unbounded_Queue_Iterator<Entry>;
 
 protected:
   /// Helper function to open a group acceptor.
