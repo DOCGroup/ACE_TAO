@@ -16,7 +16,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_Name_Options *name_options = ns_ptr->name_options ();
 
-  const ACE_TCHAR *m_argv[] =
+  ACE_TCHAR const *m_argv[] =
   {
     ACE_TEXT("MyName"),
     ACE_TEXT("-cNODE_LOCAL") ,
@@ -25,7 +25,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 #else
     ACE_TEXT("-l/tmp/foobar.mine"),
 #endif /* ACE_WIN32 */
-    0
+    nullptr
   };
 
   int m_argc =

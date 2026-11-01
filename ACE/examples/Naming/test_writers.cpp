@@ -17,11 +17,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Name_Options *name_options =
     ns_ptr->name_options ();
 
-  const ACE_TCHAR *m_argv[] =
+  ACE_TCHAR const *m_argv[] =
   {
     ACE_TEXT("MyName"),
     ACE_TEXT("-cNODE_LOCAL"),
-    0
+    nullptr
   };
 
   int m_argc = sizeof (m_argv) / sizeof (ACE_TCHAR *) -1;

@@ -7,21 +7,21 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
-  const ACE_TCHAR *host = argc > 1 ? argv[1] : ACE_TEXT("-hlocalhost");
-  const ACE_TCHAR *port = argc > 2 ? argv[2] : ACE_TEXT("-p20012");
+  ACE_TCHAR const *host = argc > 1 ? argv[1] : ACE_TEXT("-hlocalhost");
+  ACE_TCHAR const *port = argc > 2 ? argv[2] : ACE_TEXT("-p20012");
 
   ACE_STATIC_SVC_REGISTER(ACE_Naming_Context);
 
   ACE_Naming_Context ns;
   ACE_Name_Options *name_options = ns.name_options ();
 
-  const ACE_TCHAR *m_argv[] =
+  ACE_TCHAR const *m_argv[] =
   {
     ACE_TEXT("MyName"),
     ACE_TEXT("-cNET_LOCAL"),
     host,
     port,
-    0
+    nullptr
   };
   int m_argc =
     sizeof (m_argv) / sizeof (ACE_TCHAR *) -1;
