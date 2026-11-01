@@ -12,18 +12,17 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/Atomic_Op.h"
 #include "ami_test_i.h"
 #include "tao/ORB_Core.h"
 
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int nthreads = 1;
 int niterations = 1;
-int debug = 1;
-int number_of_replies {};
+bool debug = true;
+ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> number_of_replies {};
 
-CORBA::Long in_number = 931232;
-char const *in_str = "Let's talk AMI.";
-int parameter_corruption {};
+bool parameter_corruption {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -35,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -112,7 +111,7 @@ public:
       if (result == 0)
         {
           ACE_ERROR ((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
-          parameter_corruption = 1;
+          parameter_corruption = true;
         }
 
       if (debug)
@@ -185,7 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
-      Handler *handler {};
+      Handler *handler = nullptr;
       ACE_NEW_RETURN (handler,
                       Handler,
                       1);
@@ -216,7 +215,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies));
+                      number_of_replies.value ()));
         }
 
       // ORB loop.
@@ -227,7 +226,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies));
+                      (nthreads * niterations) - number_of_replies.value ()));
         }
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
@@ -257,7 +256,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (ref_count > 1)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Refcount orb %d\n"), ref_count));
-          ++parameter_corruption;
+          parameter_corruption = true;
         }
       else
         {
@@ -265,7 +264,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (core != nullptr)
             {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Core <> null\n")));
-              ++parameter_corruption;
+              parameter_corruption = true;
             }
         }
       orb = CORBA::ORB::_nil ();
