@@ -18,16 +18,21 @@ public:
   test_i (CORBA::Short id,
           CORBA::ORB_ptr orb);
 
+  test_i (test_i const&) = delete;
+  test_i (test_i&&) = delete;
+  test_i& operator= (test_i const&) = delete;
+  test_i& operator= (test_i&&) = delete;
+
   /// A way to setup forwarding in case of direct collocation.
   void forward (CORBA::Object_ptr to,
                 CORBA::ULong request_pass_count);
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short collocated_call ();
+  CORBA::Short collocated_call () override;
 
 private:
   /// Id of this instance.
-  CORBA::Short id_;
+  CORBA::Short const id_;
 
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;

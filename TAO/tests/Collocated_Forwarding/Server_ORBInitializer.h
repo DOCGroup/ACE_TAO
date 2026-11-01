@@ -31,19 +31,24 @@ class Server_ORBInitializer :
 {
 public:
   /// Constructor.
-  Server_ORBInitializer (CORBA::ULong request_pass_count);
+  explicit Server_ORBInitializer (CORBA::ULong request_pass_count);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Server_ORBInitializer (Server_ORBInitializer const&) = delete;
+  Server_ORBInitializer (Server_ORBInitializer&&) = delete;
+  Server_ORBInitializer& operator= (Server_ORBInitializer const&) = delete;
+  Server_ORBInitializer& operator= (Server_ORBInitializer&&) = delete;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// Return the created server request interceptor.  Only valid after
   /// post_init(), i.e. ORB_init(), has been called.
-  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor ();
+  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor () const;
 
 private:
   /// How much requests to pass thru before forwarding.
-  CORBA::ULong request_pass_count_;
+  CORBA::ULong const request_pass_count_;
 
   /// Pointer to the server request interceptor.  ORB is responsible
   /// for storage.

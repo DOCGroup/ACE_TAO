@@ -23,7 +23,7 @@ Server_Request_Interceptor::forward (
         EINVAL),
       CORBA::COMPLETED_NO);
 
-  ACE_TCHAR *argv[] = {NULL};
+  ACE_TCHAR *argv[] = {nullptr};
   int   argc = 0;
 
   // Fetch the ORB having been initialized in main()

@@ -38,7 +38,7 @@ Server_ORBInitializer::post_init (
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr
-Server_ORBInitializer::server_interceptor ()
+Server_ORBInitializer::server_interceptor () const
 {
   return
     PortableInterceptor::ServerRequestInterceptor::_duplicate (

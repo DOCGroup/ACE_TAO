@@ -10,7 +10,7 @@
 #include "tao/IORManipulation/IORManipulation.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const CORBA::ULong passes_before_forward = 6;
+constexpr CORBA::ULong passes_before_forward = 6;
 
 bool direct_collocation = false;
 
@@ -39,7 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 void test_colocal (Collocated_ForwardRequestTest::test_ptr server)
 {
-  CORBA::ULong number = 0;
+  CORBA::ULong number {};
   for (int i = 1; i <= 10; ++i)
     {
       ACE_DEBUG ((LM_INFO,
@@ -60,11 +60,11 @@ void test_colocal (Collocated_ForwardRequestTest::test_ptr server)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      Server_ORBInitializer *temp_initializer = 0;
+      Server_ORBInitializer *temp_initializer = nullptr;
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer (passes_before_forward),
                       -1);  // No exceptions yet!
@@ -146,7 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
@@ -158,7 +158,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #else
 
 int
-ACE_TMAIN(int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }
