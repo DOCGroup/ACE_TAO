@@ -7,6 +7,8 @@
 
 #include "ace/Monitor_Point_Registry.h"
 
+#include <cstring>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -169,7 +171,7 @@ TAO_MonitorEventChannelFactory::create_named_channel (
    CosNotifyChannelAdmin::ChannelID_out id,
    char const *name)
 {
-  if (ACE_OS::strlen (name) == 0)
+  if (std::strlen (name) == 0)
     {
       throw NotifyMonitoringExt::NameMapError ();
     }

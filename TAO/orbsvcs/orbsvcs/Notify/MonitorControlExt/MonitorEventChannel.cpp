@@ -14,6 +14,8 @@
 #include "orbsvcs/Notify/ProxyConsumer.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 
+#include <cstring>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
@@ -218,7 +220,7 @@ public:
 
   bool execute (const char* command) override
   {
-    if (ACE_OS::strcmp (command, TAO_NS_CONTROL_SHUTDOWN) == 0)
+    if (std::strcmp (command, TAO_NS_CONTROL_SHUTDOWN) == 0)
       {
         this->ec_->destroy ();
       }
@@ -254,7 +256,7 @@ public:
 
     if (this->is_supplier_)
       {
-        if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIER) == 0)
+        if (std::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIER) == 0)
           {
             status = this->ec_->destroy_supplier (this->id_);
           }
@@ -266,7 +268,7 @@ public:
       }
     else
       {
-        if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMER) == 0)
+        if (std::strcmp (command, TAO_NS_CONTROL_REMOVE_CONSUMER) == 0)
           {
             status = this->ec_->destroy_consumer (this->id_);
           }

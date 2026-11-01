@@ -5,6 +5,8 @@
 #include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 
+#include <cstring>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -21,7 +23,7 @@ public:
   }
 
   bool execute (char const *command) override {
-    if (ACE_OS::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIERADMIN) == 0)
+    if (std::strcmp (command, TAO_NS_CONTROL_REMOVE_SUPPLIERADMIN) == 0)
       {
         CosNotifyChannelAdmin::SupplierAdmin_var admin =
           this->ec_->get_supplieradmin (this->id_);
