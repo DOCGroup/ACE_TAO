@@ -6,7 +6,7 @@
 #include <iostream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://Messenger.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -101,7 +101,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       messenger->send_message( client_uid );
     }
 
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       std::cerr << "Exception in MessengerClient: " << ex << std::endl;
       return 1;

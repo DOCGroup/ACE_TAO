@@ -2,10 +2,6 @@
 #include "ServerInterceptor.h"
 #include "ServerIORInterceptor.h"
 
-ServerInitializer::ServerInitializer ()
-{
-}
-
 void
 ServerInitializer::pre_init (
                              PortableInterceptor::ORBInitInfo_ptr)

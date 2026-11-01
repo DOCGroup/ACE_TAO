@@ -3,17 +3,7 @@
 #include <iostream>
 #include "Messenger_i.h"
 
-// Implementation skeleton constructor
-Messenger_i::Messenger_i ()
-{
-}
-
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-{
-}
-
-void Messenger_i::send_message (const CORBA::OctetSeq & user_name)
+void Messenger_i::send_message (CORBA::OctetSeq const& user_name)
 {
   try
     {

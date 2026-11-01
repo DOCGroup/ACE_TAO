@@ -1,11 +1,13 @@
 #include "ServerInterceptor.h"
 #include "tao/PI_Server/ServerRequestInfoA.h"
 #include "tao/OctetSeqC.h"
+
+#include <array>
 #include <iostream>
 
-const IOP::ServiceId service_id = 0xdeed;
-const CORBA::Long allowed_gid[4] = { 9006, 9007, 9008 };
-const char* restricted_interfaces[1] = {"IDL:Messenger:1.0"};
+constexpr IOP::ServiceId service_id = 0xdeed;
+constexpr std::array<CORBA::Long, 3> allowed_gids {9006, 9007, 9008};
+constexpr char const *restricted_interface = "IDL:Messenger:1.0";
 
 ServerInterceptor::ServerInterceptor (IOP::CodecFactory_var cf)
   : myname_ ("Server_Authentication_Interceptor")
@@ -21,10 +23,6 @@ ServerInterceptor::ServerInterceptor (IOP::CodecFactory_var cf)
 
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
-}
-
-ServerInterceptor::~ServerInterceptor ()
-{
 }
 
 char *
@@ -55,44 +53,45 @@ ServerInterceptor::receive_request (
   bool permission_granted = false;
   std::cout << "Calling receive_request()." << std::endl;
 
-  if (ri->target_is_a(restricted_interfaces[0])){
-    IOP::ServiceId id = service_id;
-    // Check that the request service context can be retrieved.
-    IOP::ServiceContext_var sc =
-      ri->get_request_service_context (id);
-    // need to construct an octet seq for decoding
-    CORBA::OctetSeq ocSeq = CORBA::OctetSeq(
-                                            sc->context_data.length(),
-                                            sc->context_data.length(),
-                                            sc->context_data.get_buffer(),
-                                            false);
+  if (ri->target_is_a (restricted_interface))
+    {
+      IOP::ServiceId const id = service_id;
+      // Check that the request service context can be retrieved.
+      IOP::ServiceContext_var sc = ri->get_request_service_context (id);
+      // Need to construct an octet sequence for decoding.
+      CORBA::OctetSeq ocSeq (sc->context_data.length (),
+                             sc->context_data.length (),
+                             sc->context_data.get_buffer (),
+                             false);
 
-    CORBA::Any gid_as_any;
-    gid_as_any = *codec->decode(ocSeq);
+      CORBA::Any gid_as_any;
+      gid_as_any = *codec->decode (ocSeq);
 
-    CORBA::Long gid;
-    if (gid_as_any >>= gid)
-      {
-        for (int i=0; i<3; ++i) {
-          if ( gid == allowed_gid[i] )
+      CORBA::Long gid;
+      if (gid_as_any >>= gid)
+        {
+          for (CORBA::Long const allowed_gid : allowed_gids)
             {
-              permission_granted = true;
+              if (gid == allowed_gid)
+                {
+                  permission_granted = true;
+                }
             }
         }
-      }
-    else
-      {
-        permission_granted = false;
-        std::cerr << "Could not extract GID from any." << std::endl;
-      }
-  }
+      else
+        {
+          std::cerr << "Could not extract GID from any." << std::endl;
+        }
+    }
 
-  if (permission_granted == true) {
-    std::cout << "Permission Granted " << std::endl;
-  }
-  else {
-    std::cout << "Permission Denied " << std::endl;
-  }
+  if (permission_granted)
+    {
+      std::cout << "Permission Granted " << std::endl;
+    }
+  else
+    {
+      std::cout << "Permission Denied " << std::endl;
+    }
 }
 
 void
