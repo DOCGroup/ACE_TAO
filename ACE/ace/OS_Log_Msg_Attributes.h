@@ -60,7 +60,7 @@ protected:
   unsigned long priority_mask_;
 
   /// Are we allowing tracing in this thread?
-  int tracing_enabled_;
+  bool tracing_enabled_;
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
