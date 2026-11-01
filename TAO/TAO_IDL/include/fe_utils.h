@@ -6,6 +6,7 @@
 #include "ast_predefined_type.h"
 #include "utl_strlist.h"
 
+#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -122,7 +123,7 @@ private:
   static bool
   check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                           std::string const &param_id,
-                          size_t index);
+                          std::size_t index);
 
   static AST_Template_Module *
   get_tm_container (AST_Decl *contained);

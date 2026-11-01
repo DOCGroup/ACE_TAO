@@ -33,11 +33,11 @@
 bool
 FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 {
-  for (size_t cur_pos = 0; cur_pos < params->size (); ++cur_pos)
+  for (std::size_t cur_pos = 0; cur_pos < params->size (); ++cur_pos)
     {
       FE_Utils::T_Param_Info const& this_one = (*params)[cur_pos];
 
-      for (size_t j = cur_pos + 1; j < params->size (); ++j)
+      for (std::size_t j = cur_pos + 1; j < params->size (); ++j)
         {
           if (this_one.name_ == (*params)[j].name_)
             {
@@ -428,7 +428,7 @@ FE_Utils::path_cmp (std::string const& s, std::string const& t)
   // spelled when created. This 'feature' was preventing the
   // validation of included IDL files, necessary before generating
   // the corresponding C++ includes.
-  size_t const common_length = s.size () < t.size () ? s.size () : t.size ();
+  std::size_t const common_length = s.size () < t.size () ? s.size () : t.size ();
   int const compare = common_length == 0
     ? 0
     : ACE_OS::strncasecmp (s.c_str (), t.c_str (), common_length);
@@ -448,7 +448,7 @@ FE_Utils::hasspace (std::string const& s)
 {
   // Windows can't have a space as the first or last character
   // but a unix filename can. Need to check all characters.
-  for (size_t i = 0u; i < s.size (); ++i)
+  for (std::size_t i = 0u; i < s.size (); ++i)
     {
       if (ACE_OS::ace_isspace (s [i]))
         {
@@ -465,8 +465,8 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
   std::string id;
   std::string retval;
   std::string const pattern ("sequence<");
-  size_t const len = pattern.length ();
-  for (size_t index = 0; index < list->size (); ++index)
+  std::size_t const len = pattern.length ();
+  for (std::size_t index = 0; index < list->size (); ++index)
     {
       FE_Utils::T_Param_Info const& param = (*list)[index];
 
@@ -576,7 +576,7 @@ FE_Utils::validate_included_idl_files ()
 
   std::vector<std::string> const& post_preproc_includes =
     idl_global->include_file_names ();
-  size_t const n_post_preproc_includes = post_preproc_includes.size ();
+  std::size_t const n_post_preproc_includes = post_preproc_includes.size ();
 
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
@@ -589,14 +589,14 @@ FE_Utils::validate_included_idl_files ()
   std::vector<std::string> ordered_include_files;
   ordered_include_files.reserve (pre_preproc_includes.size ());
 
-  for (size_t i = 0u; i < n_post_preproc_includes; ++i)
+  for (std::size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
       std::string const& post_tmp = post_preproc_includes[i];
       full_path = ACE_OS::realpath (post_tmp.c_str (), post_abspath);
 
       if (full_path)
         {
-          for (size_t j = 0u; j < pre_preproc_includes.size (); ++j)
+          for (std::size_t j = 0u; j < pre_preproc_includes.size (); ++j)
             {
               // Check this name with the name that we got from the
               // preprocessor.
@@ -885,9 +885,9 @@ FE_Utils::tmpl_mod_ref_check (AST_Decl *context,
 bool
 FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
                                   std::string const &param_id,
-                                  size_t index)
+                                  std::size_t index)
 {
-  for (size_t local_index = 0; local_index < index; ++local_index)
+  for (std::size_t local_index = 0; local_index < index; ++local_index)
     {
       if ((*list)[local_index].name_ == param_id)
         {
