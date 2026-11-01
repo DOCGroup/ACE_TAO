@@ -96,7 +96,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
 std::vector<std::basic_string<ACE_TCHAR>> DRV_arglist;
 
-static std::optional<std::basic_string<ACE_TCHAR>> output_arg_format;
+static std::basic_string<ACE_TCHAR> output_arg_format;
 static std::size_t output_arg_index = 0;
 
 constexpr ACE_TCHAR TCHAR_DIR_DOT[] = ACE_TEXT(".");
@@ -185,25 +185,25 @@ DRV_cpp_putarg (char const *str)
 void
 DRV_cpp_expand_output_arg (char const *filename)
 {
-  if (output_arg_format)
+  if (!output_arg_format.empty ())
     {
       std::basic_string<ACE_TCHAR> tchar_filename (
         ACE_TEXT_CHAR_TO_TCHAR (filename));
       std::basic_string<ACE_TCHAR> &output_arg =
         DRV_arglist[output_arg_index];
-      output_arg.resize (output_arg_format->size () + tchar_filename.size () + 1);
+      output_arg.resize (output_arg_format.size () + tchar_filename.size () + 1);
 
 #ifdef __GNUC__
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wformat-nonliteral"
 #endif
       ACE_OS::sprintf (output_arg.data (),
-                       output_arg_format->c_str (),
+                       output_arg_format.c_str (),
                        tchar_filename.c_str ());
 #ifdef __GNUC__
 #  pragma GCC diagnostic pop
 #endif
-      output_arg.resize (ACE_OS::strlen (output_arg.c_str ()));
+      output_arg.resize (std::char_traits<ACE_TCHAR>::length (output_arg.c_str ()));
     }
 }
 
@@ -270,7 +270,7 @@ void
 DRV_cpp_init ()
 {
   DRV_arglist.clear ();
-  output_arg_format.reset ();
+  output_arg_format.clear ();
   output_arg_index = 0;
 
   std::string const cpp_loc = FE_get_cpp_loc_from_env ();
@@ -390,7 +390,7 @@ DRV_cpp_init ()
       // Check for an argument that specifies
       // the preprocessor's output file.
       if (ACE_OS::strstr (platform_arglist[i], ACE_TEXT ("%s")) != nullptr
-          && !output_arg_format)
+          && output_arg_format.empty ())
         {
           output_arg_format = platform_arglist[i];
           output_arg_index = DRV_arglist.size ();
@@ -1281,7 +1281,7 @@ DRV_pre_proc (char const *myfile)
 
   ACE_HANDLE fd = ACE_INVALID_HANDLE;
 
-  if (!output_arg_format)
+  if (output_arg_format.empty ())
     {
       // If the following open() fails, then we're either being hit with a
       // symbolic link attack, or another process opened the file before
