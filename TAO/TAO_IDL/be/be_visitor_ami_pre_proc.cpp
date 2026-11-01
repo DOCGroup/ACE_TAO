@@ -32,9 +32,11 @@
 
 #include "nr_extern.h"
 #include "global_extern.h"
+#include "fe_utils.h"
 
 #include "ace/Log_Msg.h"
 
+#include <memory>
 #include <string>
 
 be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
@@ -273,10 +275,10 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
     reply_handler_local_name);
 
   long n_parents = 0;
-  AST_Type **p_intf =
+  std::unique_ptr<AST_Type *[]> p_intf =
     this->create_inheritance_list (node, n_parents);
 
-  if (p_intf == nullptr)
+  if (!p_intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                         "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
@@ -287,7 +289,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
   be_interface *reply_handler = nullptr;
   ACE_NEW_RETURN (reply_handler,
                   be_interface (reply_handler_name, // name
-                                p_intf,             // list of inherited
+                                p_intf.release (),  // list of inherited
                                 n_parents,          // number of inherited
                                 nullptr,                  // list of all ancestors
                                 0,                  // number of ancestors
@@ -811,10 +813,11 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           }
       }
 
-      AST_Decl **elements = nullptr;
-      ACE_NEW_RETURN (elements,
+      AST_Decl **raw_elements = nullptr;
+      ACE_NEW_RETURN (raw_elements,
                       AST_Decl *[number_of_elements],
                       -1);
+      std::unique_ptr<AST_Decl *[]> elements (raw_elements);
 
       {
         int position = 0;
@@ -837,8 +840,6 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
 
           if (!d)
             {
-              delete [] elements;
-              elements = nullptr;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "bad node in this scope\n"),
@@ -863,8 +864,6 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
           // Send the visitor.
           if (bd == nullptr ||  bd->accept (this) == -1)
             {
-              delete [] elements;
-              elements = nullptr;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
                                  "codegen for scope failed\n"),
@@ -872,8 +871,6 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
             }
         } // end of while loop
 
-      delete [] elements;
-      elements = nullptr;
     } // end of if
 
   return 0;
@@ -976,11 +973,11 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   return operation;
 }
 
-AST_Type **
+std::unique_ptr<AST_Type *[]>
 be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
                                                   long &n_rh_parents)
 {
-  AST_Type **retval = nullptr;
+  std::unique_ptr<AST_Type *[]> retval;
 
   long const n_parents = node->n_inherits ();
   AST_Type **parents = node->inherits ();
@@ -1002,18 +999,22 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
     {
       be_interface *inherit_intf = be_global->messaging_replyhandler ();
 
-      ACE_NEW_RETURN (retval,
+      AST_Type **raw_retval = nullptr;
+      ACE_NEW_RETURN (raw_retval,
                       AST_Type *[1],
                       nullptr);
+      retval.reset (raw_retval);
 
       retval[0] = inherit_intf;
       n_rh_parents = 1;
     }
   else
     {
-      ACE_NEW_RETURN (retval,
+      AST_Type **raw_retval = nullptr;
+      ACE_NEW_RETURN (raw_retval,
                       AST_Type *[n_rh_parents],
                       nullptr);
+      retval.reset (raw_retval);
 
       std::string prefix ("AMI_");
 
@@ -1033,15 +1034,15 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
           rh_local_name += parent->local_name ()->get_string ();
           rh_local_name += suffix;
 
-          UTL_ScopedName *rh_parent_name =
-            static_cast<UTL_ScopedName *> (parent->name ()->copy ());
+          FE_Utils::Scoped_Name_Owner rh_parent_name (
+            static_cast<UTL_ScopedName *> (parent->name ()->copy ()));
 
           rh_parent_name->last_component ()->replace_string (
                                                  rh_local_name
                                                );
 
           AST_Decl *d =
-            node->defined_in ()->lookup_by_name (rh_parent_name,
+            node->defined_in ()->lookup_by_name (rh_parent_name.get (),
                                                  true);
 
           if (d != nullptr)
@@ -1049,16 +1050,11 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
               retval[index] = dynamic_cast<AST_Interface*> (d);
               retval[index++]->set_prefix_with_typeprefix (parent->prefix ());
             }
-
-          rh_parent_name->destroy ();
-          delete rh_parent_name;
-          rh_parent_name = nullptr;
         }
 
       // Just a sanity check until we're sure this works in all use cases.
       if (n_rh_parents != index)
         {
-          delete [] retval;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "reply handler parent iteration mismatch\n"),
                             0);

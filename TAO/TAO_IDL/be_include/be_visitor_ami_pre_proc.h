@@ -18,6 +18,7 @@
 
 #include "be_visitor_scope.h"
 
+#include <memory>
 #include <string>
 
 class AST_Type;
@@ -91,8 +92,8 @@ private:
   be_operation *generate_set_operation (be_attribute *node);
 
   /// Create an inheritance list for the reply handler.
-  AST_Type **create_inheritance_list (be_interface *node,
-                                      long &n_parents);
+  std::unique_ptr<AST_Type *[]> create_inheritance_list (be_interface *node,
+                                                         long &n_parents);
 
   /// Generate an *A.idl file for AMI4CCM.
   int generate_ami4ccm_idl ();
