@@ -2,12 +2,14 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-int status {};
+#include <atomic>
+
+std::atomic_bool status {};
 
 class ORB_Task : public ACE_Task_Base
 {
 public:
-  ORB_Task (CORBA::ORB_ptr orb)
+  explicit ORB_Task (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
@@ -37,7 +39,7 @@ private:
 class Worker_Task : public ACE_Task_Base
 {
 public:
-  Worker_Task (CORBA::ORB_ptr orb)
+  explicit Worker_Task (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
@@ -73,7 +75,7 @@ public:
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("ERROR: Unexpected exception.\n")));
-        status = 1;
+        status = true;
       }
     return 0;
   }
@@ -124,5 +126,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return status;
+  return status.load () ? 1 : 0;
 }
