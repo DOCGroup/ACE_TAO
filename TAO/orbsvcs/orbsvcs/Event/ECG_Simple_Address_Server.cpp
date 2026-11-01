@@ -1,5 +1,7 @@
 #include "orbsvcs/Event/ECG_Simple_Address_Server.h"
 
+#include <cstring>
+
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_Simple_Address_Server.inl"
 #endif /* __ACE_INLINE__ */
@@ -38,7 +40,7 @@ TAO_ECG_Simple_Address_Server::get_address (RtecEventComm::EventHeader const &,
       RtecUDPAdmin::UDP_Addr_v6 v6;
       sockaddr_in6 *in6 =
         reinterpret_cast<sockaddr_in6 *>(this->addr_.get_addr());
-      ACE_OS::memcpy (v6.ipaddr,&in6->sin6_addr,16);
+      std::memcpy (v6.ipaddr, &in6->sin6_addr, 16);
       v6.port = this->addr_.get_port_number();
       addr.v6_addr (v6);
       return;

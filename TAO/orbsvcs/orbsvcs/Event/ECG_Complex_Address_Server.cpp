@@ -3,6 +3,8 @@
 #include "ace/SString.h"
 #include "ace/streams.h"
 
+#include <cstring>
+
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_Complex_Address_Server.inl"
 #endif /* __ACE_INLINE__ */
@@ -29,7 +31,7 @@ TAO_ECG_Complex_Address_Server::init (char const *arg)
     {
       // Extract lookup value (it is followed by '@').
       char const *location = nullptr;
-      location = ACE_OS::strchr (data, '@');
+      location = std::strchr (data, '@');
       if (!location)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -46,7 +48,7 @@ TAO_ECG_Complex_Address_Server::init (char const *arg)
       // Extract mcast address to be mapped to just extracted lookup
       // value.
       location = nullptr;
-      location = ACE_OS::strchr (data, ' ');
+      location = std::strchr (data, ' ');
       if (location)
         {
           len = location - data;
@@ -56,7 +58,7 @@ TAO_ECG_Complex_Address_Server::init (char const *arg)
       else
         {
           // This must be the last entry in the mapping.
-          len = ACE_OS::strlen (data);
+          len = std::strlen (data);
           mcast_string.set (data, len, true);
           data += len;
         }
@@ -74,7 +76,7 @@ TAO_ECG_Complex_Address_Server::add_entry (char const *key,
                                            char const *mcast_addr)
 {
   // Check whether this is the default mcast address.
-  if (ACE_OS::strlen (key) == 1
+  if (std::strlen (key) == 1
       && *key == '*')
     {
       if (this->default_addr_.set (mcast_addr) == -1)
@@ -170,7 +172,7 @@ TAO_ECG_Complex_Address_Server::get_address (
       RtecUDPAdmin::UDP_Addr_v6 v6;
       sockaddr_in6 *in6 =
         reinterpret_cast<sockaddr_in6 *>(src_addr.get_addr());
-      ACE_OS::memcpy (v6.ipaddr,&in6->sin6_addr,16);
+      std::memcpy (v6.ipaddr, &in6->sin6_addr, 16);
       v6.port = src_addr.get_port_number();
       addr.v6_addr (v6);
       return;
