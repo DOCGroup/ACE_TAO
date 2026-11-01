@@ -10,6 +10,8 @@
 # include "tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
@@ -313,7 +315,9 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   ACE_NEW_RETURN (cloned_op_name,
                   char[from_non_const->opname_len_ + 1],
                   false);
-  ACE_OS::strncpy(cloned_op_name, from_non_const->opname_, from_non_const->opname_len_);
+  std::strncpy (cloned_op_name,
+                from_non_const->opname_,
+                from_non_const->opname_len_);
   cloned_op_name[from_non_const->opname_len_] = '\0';
 
   // See if we can clone arguments.  If we can, the user compiled the
