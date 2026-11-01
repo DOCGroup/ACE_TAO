@@ -6,8 +6,8 @@
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 
+#include <cstring>
 #include <memory>
-#include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,7 +58,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
 
       // If the object type_id's differ then raise an exception.
       if (id.in () && iors[i]->_stubobj ()->type_id.in () &&
-          ACE_OS::strcmp (id.in (), iors[i]->_stubobj ()->type_id.in ()))
+          std::strcmp (id.in (), iors[i]->_stubobj ()->type_id.in ()))
         throw TAO_IOP::Invalid_IOR ();
 
       // append profiles
@@ -120,7 +120,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   CORBA::String_var id =
     CORBA::string_dup (group->_stubobj ()->type_id.in ());
   if (id.in () && ior2->_stubobj ()->type_id.in () &&
-      ACE_OS::strcmp (id.in (), ior2->_stubobj ()->type_id.in ()))
+      std::strcmp (id.in (), ior2->_stubobj ()->type_id.in ()))
     throw TAO_IOP::Invalid_IOR ();
 
   // Since we are removing from group ...
