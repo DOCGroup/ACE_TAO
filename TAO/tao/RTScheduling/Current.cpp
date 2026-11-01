@@ -7,7 +7,7 @@
 #include "tao/TSS_Resources.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -302,14 +302,14 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       //Generate GUID
       size_t temp = ++TAO_RTScheduler_Current::guid_counter;
       this->guid_.length (sizeof(size_t));
-      ACE_OS::memcpy (this->guid_.get_buffer (),
-                      &temp,
-                      sizeof(size_t));
+      std::memcpy (this->guid_.get_buffer (),
+                   &temp,
+                   sizeof(size_t));
 
       size_t guid;
-      ACE_OS::memcpy (&guid,
-                      this->guid_.get_buffer (),
-                      this->guid_.length ());
+      std::memcpy (&guid,
+                   this->guid_.get_buffer (),
+                   this->guid_.length ());
 
 
       // Inform the scheduler of the new scheduling segment.
@@ -645,9 +645,9 @@ void
 TAO_RTScheduler_Current_i::cancel_thread ()
 {
   size_t guid;
-  ACE_OS::memcpy (&guid,
-                  this->guid_.get_buffer (),
-                  this->guid_.length ());
+  std::memcpy (&guid,
+               this->guid_.get_buffer (),
+               this->guid_.length ());
 
   TAOLIB_DEBUG ((LM_DEBUG,
               "Distributable Thread - %d is cancelled\n",

@@ -8,7 +8,6 @@
 #include "tao/TSS_Resources.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
 
 #include <cstring>
 
@@ -42,14 +41,14 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           guid.length (sizeof(size_t));
 
           size_t temp = ++TAO_RTScheduler_Current::guid_counter;
-          ACE_OS::memcpy (guid.get_buffer (),
-                          &temp,
-                          sizeof(size_t));
+          std::memcpy (guid.get_buffer (),
+                       &temp,
+                       sizeof(size_t));
 
           size_t id;
-          ACE_OS::memcpy (&id,
-                          guid.get_buffer (),
-                          guid.length ());
+          std::memcpy (&id,
+                       guid.get_buffer (),
+                       guid.length ());
 
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -323,14 +322,14 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
     }
   RTScheduling::Current::IdType guid;
   guid.length (sizeof (size_t));
-  ACE_OS::memcpy (guid.get_buffer (),
-                  guid_var->get_buffer (),
-                  sizeof (size_t));
+  std::memcpy (guid.get_buffer (),
+               guid_var->get_buffer (),
+               sizeof (size_t));
 
   size_t id;
-  ACE_OS::memcpy (&id,
-                  guid.get_buffer (),
-                  guid.length ());
+  std::memcpy (&id,
+               guid.get_buffer (),
+               guid.length ());
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
