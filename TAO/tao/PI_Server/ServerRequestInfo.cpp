@@ -18,7 +18,7 @@
 #include "tao/PI/PICurrent_Impl.h"
 #include "tao/AnyTypeCode/ExceptionA.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 # if !defined (__ACE_INLINE__)
 #   include "tao/PI_Server/ServerRequestInfo.inl"
@@ -384,7 +384,7 @@ TAO::ServerRequestInfo::object_id ()
       CORBA::ULong const len = id.length ();
       obj_id->length (len);
       CORBA::Octet *buffer = obj_id->get_buffer ();
-      ACE_OS::memcpy (buffer, id.get_buffer (), len);
+      std::memcpy (buffer, id.get_buffer (), len);
 
       return obj_id._retn ();
     }
