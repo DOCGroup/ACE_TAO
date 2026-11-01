@@ -6,30 +6,34 @@
 
 #include "ace/Log_Msg.h"
 
-CORBA::WChar *
+#include <memory>
+
+using WString = std::unique_ptr<CORBA::WChar, decltype (&CORBA::wstring_free)>;
+
+WString
 gen_wstring (CORBA::ULong max_length)
 {
-  CORBA::ULong len = max_length;
-  CORBA::WChar *buf = CORBA::wstring_alloc (len);
-  CORBA::ULong i = 0;
-  CORBA::WChar limit =
+  CORBA::ULong const len = max_length;
+  WString buf (CORBA::wstring_alloc (len), &CORBA::wstring_free);
+  CORBA::ULong i {};
+  CORBA::WChar const limit =
     ACE_OutputCDR::wchar_maxbytes() == 1 ? ACE_OCTET_MAX : ACE_WCHAR_MAX;
   while (i < len)
     {
       CORBA::WChar wc = ACE_OS::rand () % limit;
       if (wc)
         {
-          buf[i] = wc;
+          buf.get ()[i] = wc;
           i++;
         }
     }
 
-  buf[i] = 0;
+  buf.get ()[i] = 0;
   return buf;
 }
 
 int
-verify_data (Foo::Bar *original, const Foo::Bar *extracted)
+verify_data (Foo::Bar const *original, Foo::Bar const *extracted)
 {
   if (!original || !extracted)
     return -1;
@@ -72,11 +76,11 @@ test_codec (IOP::Codec_ptr codec)
   // ----------------------------------------------------------
 
   // Test values to be placed in the test structure.
-  const CORBA::Long A = 1010;
-  const CORBA::Long B = -3427;
-  const CORBA::ULongLong C = ACE_UINT64_LITERAL (2001);
-  const CORBA::Char D[] = "I'm Batman.";
-  CORBA::WChar* E = gen_wstring (25);
+  constexpr CORBA::Long A = 1010;
+  constexpr CORBA::Long B = -3427;
+  constexpr CORBA::ULongLong C = ACE_UINT64_LITERAL (2001);
+  CORBA::Char const D[] = "I'm Batman.";
+  WString E = gen_wstring (25);
 
   // Create the structure to be encoded.
   Foo::Bar value;
@@ -84,9 +88,7 @@ test_codec (IOP::Codec_ptr codec)
   value.B = B;
   value.C = C;
   value.D = CORBA::string_dup (D);
-  value.E = CORBA::wstring_dup (E);
-
-  CORBA::wstring_free (E);
+  value.E = CORBA::wstring_dup (E.get ());
 
   CORBA::Any data;
   data <<= value;
@@ -95,7 +97,7 @@ test_codec (IOP::Codec_ptr codec)
 
   CORBA::OctetSeq_var encoded_data;
   CORBA::Any_var decoded_data;
-  const Foo::Bar *extracted_value = 0;
+  Foo::Bar const *extracted_value = nullptr;
 
   // Encode the structure into an octet sequence using the CDR
   // enscapsulation Codec.
@@ -171,7 +173,7 @@ test_codec (IOP::Codec_ptr codec)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int retval = 0;
   try
@@ -218,7 +220,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       retval = test_codec (codec.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Codec test:");
       return -1;
