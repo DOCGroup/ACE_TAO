@@ -252,10 +252,10 @@ TAO_Property_Evaluator::~TAO_Property_Evaluator ()
   delete [] this->dp_cache_;
 }
 
-int
+bool
 TAO_Property_Evaluator::is_dynamic_property (int index)
 {
-  int return_value = 0;
+  bool return_value = false;
   int num_properties = this->props_.length();
 
   // Ensure index is in bounds.
@@ -269,7 +269,7 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
       CORBA::Boolean equal = type->equal (CosTradingDynamic::_tc_DynamicProp);
 
       if (equal)
-        return_value = 1;
+        return_value = true;
     }
 
   return return_value;
@@ -390,11 +390,11 @@ TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
     }
 }
 
-int
+bool
 TAO_Property_Evaluator_By_Name::
 is_dynamic_property(const char* property_name)
 {
-  int predicate = 0;
+  bool predicate = false;
   int index = 0;
   CORBA::String_var prop_name (property_name);
 

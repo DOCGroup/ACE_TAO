@@ -41,10 +41,10 @@ TAO_Interpreter::build_tree (const char* constraints)
   return return_value;
 }
 
-int
+bool
 TAO_Interpreter::is_empty_string (const char* str)
 {
-  int return_value = 0;
+  bool return_value = false;
 
   if (str != nullptr)
     {
@@ -58,7 +58,7 @@ TAO_Interpreter::is_empty_string (const char* str)
         }
 
       if (str[i] == '\0')
-        return_value = 1;
+        return_value = true;
     }
 
   return return_value;

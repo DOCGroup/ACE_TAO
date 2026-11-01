@@ -58,7 +58,7 @@ public:
 
   /// Returns 1 if the property at index @a index is dynamic. Returns a
   /// 0 when the index is out of bounds.
-  int is_dynamic_property(int index);
+  bool is_dynamic_property(int index);
 
   /**
     * Returns value of the property whose index is @a index. If the
@@ -140,7 +140,7 @@ public:
    * defined and dynamic. If the property is undefined, this method
    * will throw a Property_Undefined exception with impunity.
    */
-  int is_dynamic_property(const char* property_name);
+  bool is_dynamic_property(const char* property_name);
 
   /**
     * This method is identical to its counterpart in
