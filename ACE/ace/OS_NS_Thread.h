@@ -858,7 +858,7 @@ public:
   static int release_key (ACE_thread_key_t key);
 
   /// Check a key for validity.
-  static int is_key (ACE_thread_key_t key);
+  static bool is_key (ACE_thread_key_t key);
 
   /// Returns the exit hook associated with the key.  Does _not_ check
   /// for a valid key.
@@ -1050,8 +1050,7 @@ public:
   int test_and_clear (const ACE_thread_key_t key);
 
   /// Return whether the specific key is marked as in use.
-  /// Returns 1 if the key is been marked, 0 if not.
-  int is_set (const ACE_thread_key_t key) const;
+  bool is_set (const ACE_thread_key_t key) const;
 
 private:
   /// For a given key, find the word and bit number that represent it.
