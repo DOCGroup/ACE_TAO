@@ -176,7 +176,7 @@ DRV_cleanup ()
 */
 
 void
-DRV_drive (char const *s)
+DRV_drive (std::string const& s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
@@ -188,7 +188,7 @@ DRV_drive (char const *s)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: preprocessing %C\n"),
                   idl_global->prog_name ().data (),
-                  s));
+                  s.c_str ()));
     }
 
   DRV_pre_proc (s);
@@ -206,7 +206,7 @@ DRV_drive (char const *s)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: parsing %C\n"),
                   idl_global->prog_name ().data (),
-                  s));
+                  s.c_str ()));
     }
 
   // Return value not used - error count stored in idl_global
@@ -409,14 +409,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
           else
             {
-              DRV_drive (DRV_files[i].c_str ());
+              DRV_drive (DRV_files[i]);
             }
         }
 
       if (idl_global->multi_file_input ())
         {
           ACE_OS::fclose (output_file);
-          DRV_drive (idl_global->big_file_name ().c_str ());
+          DRV_drive (idl_global->big_file_name ());
           ACE_OS::unlink (idl_global->big_file_name ().c_str ());
         }
     }

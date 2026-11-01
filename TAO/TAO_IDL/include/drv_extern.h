@@ -73,7 +73,7 @@ extern std::vector<std::string> DRV_files;
 
 extern void DRV_parse_args (long, char **);
 extern void DRV_usage ();
-extern void DRV_pre_proc (char const * myfile);
+extern void DRV_pre_proc (std::string const& myfile);
 extern void DRV_store_env_include_paths ();
 extern void DRV_cpp_init ();
 extern std::string& DRV_add_include_path (std::string&,

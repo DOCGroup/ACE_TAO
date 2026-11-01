@@ -971,16 +971,16 @@ DRV_get_orb_idl_includes ()
 static void
 DRV_copy_input (FILE *fin,
                 FILE *f,
-                char const *fn,
-                char const *orig_filename)
+                std::string const& fn,
+                std::string const& orig_filename)
 {
   if (f == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: cannot open temp file \"%C\" for copying from \"%C\": %m\n",
                   idl_global->prog_name ().data (),
-                  fn,
-                  orig_filename));
+                  fn.c_str (),
+                  orig_filename.c_str ()));
 
       throw Bailout ();
     }
@@ -997,12 +997,12 @@ DRV_copy_input (FILE *fin,
 #if !defined (ACE_WIN32)
   ACE_OS::fprintf (f,
                    "#line 1 \"%s\"\n",
-                   orig_filename);
+                   orig_filename.c_str ());
 #else
   // Convert single \ into double \ otherwise MSVC++ pre-processor
   // gets awfully confused.
   std::string escaped_filename;
-  std::string const filename (orig_filename);
+  std::string const& filename = orig_filename;
   escaped_filename.reserve (filename.size ());
 
   for (char const current_character : filename)
@@ -1053,18 +1053,18 @@ DRV_stripped_name (std::string const& filename)
 
 // Pass input through preprocessor.
 void
-DRV_pre_proc (char const *myfile)
+DRV_pre_proc (std::string const& myfile)
 {
   // Check to see that the file is a normal file. If we don't and the file is a
   // directory, then the copy would be blank and any error message later might
   // not be helpful.
   ACE_stat file_stat;
-  if (ACE_OS::stat (myfile, &file_stat) == -1)
+  if (ACE_OS::stat (myfile.c_str (), &file_stat) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: ERROR: Unable to open file (stat) \"%C\": %m\n",
                   idl_global->prog_name ().data (),
-                  myfile));
+                  myfile.c_str ()));
       throw Bailout ();
     }
   else if ((file_stat.st_mode & S_IFREG) != S_IFREG)
@@ -1072,7 +1072,7 @@ DRV_pre_proc (char const *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%C: ERROR: This is not a regular file: \"%C\"\n",
                   idl_global->prog_name ().data (),
-                  myfile));
+                  myfile.c_str ()));
       throw Bailout ();
     }
 
@@ -1152,13 +1152,13 @@ DRV_pre_proc (char const *myfile)
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
-  FILE * const file = ACE_OS::fopen (myfile, "r");
+  FILE * const file = ACE_OS::fopen (myfile.c_str (), "r");
   if (file == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: ERROR: Unable to open file (fopen) \"%C\": %m\n",
                   idl_global->prog_name ().data (),
-                  myfile));
+                  myfile.c_str ()));
       if (copy_input_file)
         {
           (void) ACE_OS::unlink (tmp_ifile.c_str ());
@@ -1171,7 +1171,7 @@ DRV_pre_proc (char const *myfile)
     {
       DRV_copy_input (file,
                       ACE_OS::fdopen (ti_fd, ACE_TEXT("w")),
-                      tmp_ifile.c_str (),
+                      tmp_ifile,
                       myfile);
     }
   else
