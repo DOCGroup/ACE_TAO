@@ -1172,7 +1172,7 @@ be_visitor_facet_executor_block::visit_provides (
   const char *port_name = prefix.c_str ();
 
   os_ << be_nl_2
-      << "if (ACE_OS::strcmp (name, \"" << port_name
+      << "if (std::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "return executor->get_" << port_name
@@ -1203,7 +1203,7 @@ be_visitor_connect_block::visit_uses (be_uses *node)
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl_2
-      << "if (ACE_OS::strcmp (name, \"" << port_name
+      << "if (std::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "::" << obj_name << "_var _ciao_conn =" << be_idt_nl
@@ -1247,7 +1247,7 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
   bool const is_multiple = node->is_multiple ();
 
   os_ << be_nl_2
-      << "if (ACE_OS::strcmp (name, \"" << port_name
+      << "if (std::strcmp (name, \"" << port_name
       << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "/// " << (is_multiple ? "Multiplex" : "Simplex")
@@ -1357,7 +1357,7 @@ be_visitor_subscribe_block::visit_publishes (
     node->local_name ()->get_string ();
 
   os_ << be_nl_2
-      << "if (ACE_OS::strcmp (publisher_name, \""
+      << "if (std::strcmp (publisher_name, \""
       << port_name << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "::" << obj_name << "Consumer_var sub =" << be_idt_nl
@@ -1388,7 +1388,7 @@ be_visitor_unsubscribe_block::visit_publishes (
     node->local_name ()->get_string ();
 
   os_ << be_nl_2
-      << "if (ACE_OS::strcmp (publisher_name, \""
+      << "if (std::strcmp (publisher_name, \""
       << port_name << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "return this->context_->unsubscribe_" << port_name
@@ -1462,7 +1462,7 @@ be_visitor_connect_consumer_block::visit_emits (
     node->local_name ()->get_string ();
 
   os_ << be_nl_2
-      << "if (ACE_OS::strcmp (emitter_name, \""
+      << "if (std::strcmp (emitter_name, \""
       << port_name << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "::" << obj_name
@@ -1495,7 +1495,7 @@ be_visitor_disconnect_consumer_block::visit_emits (
     node->local_name ()->get_string ();
 
   os_ << be_nl_2
-      << "if (ACE_OS::strcmp (source_name, \""
+      << "if (std::strcmp (source_name, \""
       << port_name << "\") == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "return this->context_->disconnect_" << port_name

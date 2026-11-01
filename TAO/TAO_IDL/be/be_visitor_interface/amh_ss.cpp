@@ -162,7 +162,7 @@ emit (be_interface * /* derived */,
   std::string const buf = base->compute_full_name ("AMH_", "");
   amh_name += buf;
 
-  *os << "if (ACE_OS::strcmp (logical_type_id, \""
+  *os << "if (std::strcmp (logical_type_id, \""
       << base->repoID () << "\") == 0)" << be_idt_nl
       << "return static_cast<"
       << amh_name << "*> (this);" << be_uidt_nl;
