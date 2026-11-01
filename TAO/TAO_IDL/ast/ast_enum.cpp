@@ -70,6 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
+#include <memory>
+
 AST_Decl::NodeType const
 AST_Enum::NT = AST_Decl::NT_enum;
 
@@ -236,14 +238,11 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = nullptr;
   AST_EnumVal *t1 = nullptr;
 
-  AST_Expression::AST_ExprValue *ev =
-    t->constant_value ()->coerce (AST_Expression::EV_ulong);
+  std::unique_ptr<AST_Expression::AST_ExprValue> ev (
+    t->constant_value ()->coerce (AST_Expression::EV_ulong));
 
   t1 = idl_global->gen ()->create_enum_val (ev->u.ulval,
                                             t->name ());
-
-  delete ev;
-  ev = nullptr;
 
   UTL_ScopedName *sn =
     munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),
