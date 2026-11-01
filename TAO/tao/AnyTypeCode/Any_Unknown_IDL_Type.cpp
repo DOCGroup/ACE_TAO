@@ -9,7 +9,8 @@
 #include "tao/debug.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -144,7 +145,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
   new_mb.rd_ptr (offset);
   new_mb.wr_ptr (offset + size);
 
-  ACE_OS::memcpy (new_mb.rd_ptr (), begin, size);
+  std::memcpy (new_mb.rd_ptr (), begin, size);
 
   this->cdr_.reset (&new_mb, cdr.byte_order ());
   this->cdr_.char_translator (cdr.char_translator ());
