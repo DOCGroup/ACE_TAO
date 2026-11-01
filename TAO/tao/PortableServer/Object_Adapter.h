@@ -241,7 +241,7 @@ public:
   class TAO_PortableServer_Export Active_Hint_Strategy : public Hint_Strategy
   {
   public:
-    Active_Hint_Strategy (CORBA::ULong map_size);
+    explicit Active_Hint_Strategy (CORBA::ULong map_size);
 
     ~Active_Hint_Strategy () override = default;
 

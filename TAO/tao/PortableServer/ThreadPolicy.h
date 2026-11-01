@@ -41,7 +41,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      ThreadPolicy (::PortableServer::ThreadPolicyValue value);
+      explicit ThreadPolicy (::PortableServer::ThreadPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

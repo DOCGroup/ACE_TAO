@@ -41,7 +41,7 @@ namespace TAO
       public virtual ::CORBA::LocalObject
     {
     public:
-      ServantRetentionPolicy (::PortableServer::ServantRetentionPolicyValue value);
+      explicit ServantRetentionPolicy (::PortableServer::ServantRetentionPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

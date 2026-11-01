@@ -41,7 +41,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      IdUniquenessPolicy (::PortableServer::IdUniquenessPolicyValue value);
+      explicit IdUniquenessPolicy (::PortableServer::IdUniquenessPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

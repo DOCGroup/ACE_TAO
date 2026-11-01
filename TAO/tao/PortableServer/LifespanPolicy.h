@@ -41,7 +41,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      LifespanPolicy (::PortableServer::LifespanPolicyValue value);
+      explicit LifespanPolicy (::PortableServer::LifespanPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 
