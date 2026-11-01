@@ -13,6 +13,8 @@
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynAny_i::~TAO_DynAny_i () = default;
@@ -457,7 +459,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
               }
           }
 
-        return ACE_OS::strcmp (rhs_v, lhs_v) == 0;
+        return std::strcmp (rhs_v, lhs_v) == 0;
       }
     case CORBA::tk_wstring:
       {

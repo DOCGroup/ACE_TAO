@@ -12,6 +12,8 @@
 
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynValue_i::TAO_DynValue_i (CORBA::Boolean allow_truncation)
@@ -563,7 +565,7 @@ TAO_DynValue_i::insert_val (CORBA::ValueBase *value)
       // have only a static _downcast() method, which
       // can't be used here, so if the repo ids don't
       // match, we're hosed.
-      if (ACE_OS::strcmp (value_id, my_id))
+      if (std::strcmp (value_id, my_id))
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }

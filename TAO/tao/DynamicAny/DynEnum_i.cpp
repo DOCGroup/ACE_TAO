@@ -8,6 +8,8 @@
 
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynEnum_i::TAO_DynEnum_i (CORBA::Boolean allow_truncation)
@@ -121,7 +123,7 @@ TAO_DynEnum_i::set_as_string (char const* value_as_string)
     {
       temp = ct.in ()->member_name (i);
 
-      if (!ACE_OS::strcmp (value_as_string, temp))
+      if (!std::strcmp (value_as_string, temp))
         {
           break;
         }

@@ -189,12 +189,12 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value)
         {
           const char *value_id = value->_interface_repository_id ();
 
-          if (ACE_OS::strcmp (value_id, "IDL:omg.org/CORBA/Object:1.0") != 0)
+          if (std::strcmp (value_id, "IDL:omg.org/CORBA/Object:1.0") != 0)
             {
               const char *my_id =
                 this->type_->id ();
 
-              if (ACE_OS::strcmp (value_id, my_id) != 0)
+              if (std::strcmp (value_id, my_id) != 0)
                 {
                   good_type = value->_is_a (my_id);
                 }
@@ -359,7 +359,7 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
           // repo ids don't match. Valuetypes have only
           // a static _downcast() method, which can't be used
           // here, so if the repo ids don't match, we're hosed.
-          if (ACE_OS::strcmp (value_id, my_id) != 0)
+          if (std::strcmp (value_id, my_id) != 0)
             {
               throw DynamicAny::DynAny::TypeMismatch ();
             }
@@ -845,14 +845,14 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
         {
           const char *value_id = value->_interface_repository_id ();
           int cmp =
-            ACE_OS::strcmp (value_id, "IDL:omg.org/CORBA/AbstractBase:1.0");
+            std::strcmp (value_id, "IDL:omg.org/CORBA/AbstractBase:1.0");
 
           if (cmp != 0)
             {
               const char *my_id =
                 this->type_->id ();
 
-              if (ACE_OS::strcmp (value_id, my_id) != 0)
+              if (std::strcmp (value_id, my_id) != 0)
                 {
                   // If 'value' is an objref, this will be a virtual
                   // call. If not, it will just compare to the repo id
