@@ -38,7 +38,7 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
   // Green Hills compiler gets confused when __stdcall is embedded in
   // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
   // instead.
-  typedef unsigned (__stdcall *ACE_WIN32THRFUNC_T)(void*);
+  using ACE_WIN32THRFUNC_T = unsigned (__stdcall *)(void*);
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       ::_beginthreadex (STACK, STACKSIZE, (ACE_WIN32THRFUNC_T) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
@@ -3338,15 +3338,15 @@ static ACE_thread_mutex_t integrity_task_args_lock;
 class ACE_Int178_Stack_Manager
 {
 private:
-  typedef Address Int178_Stack[ACE_INTEGRITY178B_DEFAULT_STACK_SIZE / sizeof (Address)];
-  typedef Int178_Stack Int178_Stack_Pool[NUM_DYNAMIC_THREADS];
+  using Int178_Stack = Address[ACE_INTEGRITY178B_DEFAULT_STACK_SIZE / sizeof (Address)];
+  using Int178_Stack_Pool = Int178_Stack[NUM_DYNAMIC_THREADS];
 
   struct StackInfo
   {
     ACE_hthread_t id {};
     bool occupied {};
   };
-  typedef StackInfo StackPoolInfo[NUM_DYNAMIC_THREADS];
+  using StackPoolInfo = StackInfo[NUM_DYNAMIC_THREADS];
 
 public:
   // Get an unoccupied stack and return its address.
@@ -3889,7 +3889,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
           if (kernelbase)
             {
-              typedef HRESULT (WINAPI *FnPtr) (HANDLE, PCWSTR);
+              using FnPtr = HRESULT (WINAPI *) (HANDLE, PCWSTR);
               FnPtr const SetThreadDescription = (FnPtr) GetProcAddress (kernelbase, "SetThreadDescription");
 
               if (SetThreadDescription)
