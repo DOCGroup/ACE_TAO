@@ -21,7 +21,7 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Pair_
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy)
 {
-  if (cleanup_strategy == 0)
+  if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
@@ -67,11 +67,11 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
                      key_to_remove,
                      value_to_remove);
 
-      // Simply verifying that the key is non-zero.
+      // Simply verifying that the key is non-null.
       // This is important for strategies where the minimum
       // entry cant be found due to constraints on the type of entry
       // to remove.
-      if (key_to_remove == 0)
+      if (key_to_remove == nullptr)
         return 0;
 
       if (this->cleanup_strategy_->cleanup (container,
@@ -119,7 +119,7 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy)
 {
-  if (cleanup_strategy == 0)
+  if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
@@ -167,11 +167,11 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
                      key_to_remove,
                      value_to_remove);
 
-      // Simply verifying that the key is non-zero.
+      // Simply verifying that the key is non-null.
       // This is important for strategies where the minimum
       // entry cant be found due to constraints on the type of entry
       // to remove.
-      if (key_to_remove == 0)
+      if (key_to_remove == nullptr)
         return 0;
 
       if (this->cleanup_strategy_->cleanup (container,
@@ -192,10 +192,10 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   ITERATOR end = container.end ();
   ITERATOR iter = container.begin ();
   ATTRIBUTES min = (*iter).int_id_.second;
-  key_to_remove = 0;
-  value_to_remove = 0;
+  key_to_remove = nullptr;
+  value_to_remove = nullptr;
   // Found the minimum entry to be purged?
-  int found = 0;
+  bool found = false;
 
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
@@ -209,12 +209,12 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
       if ((*iter).ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
           (*iter).ext_id_.recycle_state () == ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE)
         {
-          if (found == 0)
+          if (!found)
             {
               min = (*iter).int_id_.second;
               key_to_remove = &(*iter).ext_id_;
               value_to_remove = &(*iter).int_id_;
-              found = 1;
+              found = true;
             }
           else
             {
@@ -239,7 +239,7 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
     delete_cleanup_strategy_ (delete_cleanup_strategy),
     marked_as_closed_entries_ (0)
 {
-  if (cleanup_strategy == 0)
+  if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
@@ -290,11 +290,11 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
                      key_to_remove,
                      value_to_remove);
 
-      // Simply verifying that the key is non-zero.
+      // Simply verifying that the key is non-null.
       // This is important for strategies where the minimum
       // entry cant be found due to constraints on the type of entry
       // to remove.
-      if (key_to_remove == 0)
+      if (key_to_remove == nullptr)
         return 0;
 
       if (this->cleanup_strategy_->cleanup (container,
@@ -317,10 +317,10 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
   ITERATOR end = container.end ();
   ITERATOR iter = container.begin ();
   ATTRIBUTES min = (*iter).int_id_.second ();
-  key_to_remove = 0;
-  value_to_remove = 0;
+  key_to_remove = nullptr;
+  value_to_remove = nullptr;
   // Found the minimum entry to be purged?
-  int found = 0;
+  bool found = false;
 
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
@@ -334,12 +334,12 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
       if ((*iter).ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
           (*iter).ext_id_.recycle_state () == ACE_RECYCLABLE_PURGABLE_BUT_NOT_IDLE)
         {
-          if (found == 0)
+          if (!found)
             {
               min = (*iter).int_id_.second ();
               key_to_remove = &(*iter).ext_id_;
               value_to_remove = &(*iter).int_id_;
-              found = 1;
+              found = true;
             }
           else
             {
@@ -363,7 +363,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Ha
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy)
 {
-  if (cleanup_strategy == 0)
+  if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
@@ -438,7 +438,7 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimu
        ++iter)
     {
       if (min > (*iter).int_id_->caching_attributes () &&
-          (*iter).int_id_->active () != 1)
+          !(*iter).int_id_->active ())
         {
           // Ah! an item with lower ATTTRIBUTES...
           min = (*iter).int_id_->caching_attributes ();
@@ -456,7 +456,7 @@ ACE_Null_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Null_
   : cleanup_strategy_ (cleanup_strategy),
     delete_cleanup_strategy_ (delete_cleanup_strategy)
 {
-  if (cleanup_strategy == 0)
+  if (cleanup_strategy == nullptr)
     {
       ACE_NEW (this->cleanup_strategy_,
                CLEANUP_STRATEGY);
