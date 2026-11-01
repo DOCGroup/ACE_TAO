@@ -546,7 +546,7 @@ ACE_Mutex_Token::renew (ACE_TPQ_Entry *caller,
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
 
   // Verify that the caller is the owner.
-  if (this->is_owner (caller->client_id ()) == 0)
+  if (!this->is_owner (caller->client_id ()))
     {
       errno = EACCES;
       ACE_RETURN (-1);
@@ -627,13 +627,13 @@ ACE_Mutex_Token::owners (OWNER_STACK &stack,
   return 0;
 }
 
-int
+bool
 ACE_Mutex_Token::is_waiting_for (const ACE_TCHAR *id)
 {
   ACE_TRACE ("ACE_Mutex_Token::is_waiting_for");
   // If there is no owner, or <id> is the owner, return false.
   if ((this->owner () == nullptr) || this->is_owner (id))
-    return 0;
+    return false;
 
   // Step through each waiter looking for <id>.
   ACE_TPQ_Iterator iterator (waiters_);
@@ -643,22 +643,22 @@ ACE_Mutex_Token::is_waiting_for (const ACE_TCHAR *id)
        iterator.advance ())
     {
       if (temp->equal_client_id (id))
-        return 1;
+        return true;
     }
 
-  return 0;
+  return false;
 }
 
-int
+bool
 ACE_Mutex_Token::is_owner (const ACE_TCHAR *id)
 {
   ACE_TRACE ("ACE_Mutex_Token::is_owner");
   // If there is an owner, return whether it is <id>.
   if ((this->owner () != nullptr) &&
       this->owner ()->equal_client_id (id))
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 int
@@ -859,7 +859,7 @@ ACE_RW_Token::renew (ACE_TPQ_Entry *caller,
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
 
   // Werify that the caller is the owner
-  if (this->is_owner (caller->client_id ()) == 0)
+  if (!this->is_owner (caller->client_id ()))
     {
       errno = EACCES;
       ACE_RETURN (-1);
@@ -905,7 +905,7 @@ ACE_RW_Token::release (ACE_TPQ_Entry *caller)
 
   // Check for errors.
   if ((this->owner () == nullptr) ||
-      (this->is_owner (caller->client_id ()) == 0))
+      !this->is_owner (caller->client_id ()))
     {
       errno = EACCES;
       ACE_RETURN (-1);
@@ -1007,14 +1007,14 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
   return id_is_owner;
 }
 
-int
+bool
 ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
 {
   ACE_TRACE ("ACE_RW_Token::is_waiting_for");
   // If there is no owner, or <id> is the owner, return false.
   if ((this->owner () == nullptr) ||
       this->is_owner (id))
-    return 0;
+    return false;
 
   // Step through each waiter looking for <id>.
   ACE_TPQ_Iterator iterator (waiters_);
@@ -1024,19 +1024,19 @@ ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
        iterator.advance ())
     {
       if (temp->equal_client_id (id))
-        return 1;
+        return true;
     }
 
-  return 0;
+  return false;
 }
 
-int
+bool
 ACE_RW_Token::is_owner (const ACE_TCHAR *id)
 {
   ACE_TRACE ("ACE_RW_Token::is_owner");
   // If there is no owner, return false.
   if (this->owner () == nullptr)
-    return 0;
+    return false;
 
   // A writer owns us.
   if (this->owner ()->proxy ()->type () == ACE_RW_Token::WRITER)
@@ -1053,10 +1053,10 @@ ACE_RW_Token::is_owner (const ACE_TCHAR *id)
         break;
 
       if (temp->equal_client_id (id))
-        return 1;
+        return true;
     }
 
-  return 0;
+  return false;
 }
 
 void

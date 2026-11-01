@@ -168,14 +168,14 @@ public:
    * Template method for deciding whether to reissue accept.
    *
    * This hook method is called after each accept completes to decide if
-   * another accept should be initiated. If the method returns a non-zero
-   * value, another accept is initiated.
+   * another accept should be initiated. If the method returns true, another
+   * accept is initiated.
    *
    * The default implementation always returns the value passed as the
    * @c open() method's @a reissue_accept argument. That value can also
    * be changed using the @c reissue_accept() method.
    */
-  virtual int should_reissue_accept ();
+  virtual bool should_reissue_accept ();
 
   //
   // These are low level tweaking methods
@@ -197,11 +197,11 @@ public:
 
   /// Get flag that indicates if a new accept should be reissued when a accept
   /// completes.
-  virtual int reissue_accept () const;
+  virtual bool reissue_accept () const;
 
   /// Set flag that indicates if a new accept should be reissued when a accept
   /// completes.
-  virtual void reissue_accept (int new_value);
+  virtual void reissue_accept (bool new_value);
 
   /// Get bytes to be read with the <accept> call.
   virtual size_t bytes_to_read () const;
@@ -252,7 +252,7 @@ private:
 
   /// Flag that indicates if a new accept should be reissued when a
   /// accept completes.
-  int reissue_accept_;
+  bool reissue_accept_;
 
   /// Bytes to be read with the <accept> call.
   size_t bytes_to_read_;

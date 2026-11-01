@@ -28,7 +28,7 @@ ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor ()
     listen_handle_ (ACE_INVALID_HANDLE),
     pass_addresses_ (false),
     validate_new_connection_ (false),
-    reissue_accept_ (1),
+    reissue_accept_ (true),
     bytes_to_read_ (0)
 {
 }
@@ -470,14 +470,14 @@ ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (bool new_value)
   this->validate_new_connection_ = new_value;
 }
 
-template <class HANDLER> int
+template <class HANDLER> bool
 ACE_Asynch_Acceptor<HANDLER>::reissue_accept () const
 {
   return this->reissue_accept_;
 }
 
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::reissue_accept (int new_value)
+ACE_Asynch_Acceptor<HANDLER>::reissue_accept (bool new_value)
 {
   this->reissue_accept_ = new_value;
 }
@@ -494,7 +494,7 @@ ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (size_t new_value)
   this->bytes_to_read_ = new_value;
 }
 
-template <class HANDLER> int
+template <class HANDLER> bool
 ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept ()
 {
   return this->reissue_accept_;

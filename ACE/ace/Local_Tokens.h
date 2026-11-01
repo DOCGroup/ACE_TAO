@@ -407,11 +407,11 @@ public:
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
   virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id) = 0;
 
-  /// Returns 1 if @a id is waiting for this token.  0 otherwise.
-  virtual int is_waiting_for (const ACE_TCHAR *id) = 0;
+  /// Returns true if @a id is waiting for this token.
+  virtual bool is_waiting_for (const ACE_TCHAR *id) = 0;
 
-  /// Returns 1 if @a id is an owner of this token.  0 otherwise.
-  virtual int is_owner (const ACE_TCHAR *id) = 0;
+  /// Returns true if @a id is an owner of this token.
+  virtual bool is_owner (const ACE_TCHAR *id) = 0;
 
   /// Return the queue of waiters.
   virtual ACE_Token_Proxy_Queue *waiters ();
@@ -560,11 +560,11 @@ public:
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
   virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id);
 
-  /// Returns 1 if @a id is waiting for this token.  0 otherwise.
-  virtual int is_waiting_for (const ACE_TCHAR *id);
+  /// Returns true if @a id is waiting for this token.
+  virtual bool is_waiting_for (const ACE_TCHAR *id);
 
-  /// Returns 1 if @a id is an owner of this token.  0 otherwise.
-  virtual int is_owner (const ACE_TCHAR *id);
+  /// Returns true if @a id is an owner of this token.
+  virtual bool is_owner (const ACE_TCHAR *id);
 
 private:
   /// ACE_Mutex_Token used to lock internal data structures.
@@ -658,11 +658,11 @@ public:
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
   virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id);
 
-  /// Returns 1 if @a id is waiting for this token.  0 otherwise.
-  virtual int is_waiting_for (const ACE_TCHAR *id);
+  /// Returns true if @a id is waiting for this token.
+  virtual bool is_waiting_for (const ACE_TCHAR *id);
 
-  /// Returns 1 if @a id is an owner of this token.  0 otherwise.
-  virtual int is_owner (const ACE_TCHAR *id);
+  /// Returns true if @a id is an owner of this token.
+  virtual bool is_owner (const ACE_TCHAR *id);
 
 protected:
   /// The number of waiting writers.
