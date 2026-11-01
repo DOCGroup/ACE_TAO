@@ -13,7 +13,7 @@ Callback::are_you_there (CORBA::String_out answer)
 
   answer = CORBA::string_dup ("Yes, I am!");
 
-  return 1;
+  return true;
 }
 
 void

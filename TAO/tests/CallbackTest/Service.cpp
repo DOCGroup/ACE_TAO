@@ -7,7 +7,7 @@ Service::Service (CORBA::ORB_ptr orb)
 }
 
 void
-Service::dump_results ()
+Service::dump_results () const
 {
   if (this->test_count_ == 0)
     {
@@ -38,7 +38,7 @@ Service::run_test (Test::Callback_ptr callback)
     {
       callback->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       ACE_DEBUG ((LM_ERROR, "(%P|%t) - Service, client shutdown FAILED\n"));
     }
@@ -52,7 +52,7 @@ int
 Service::call_are_you_there (Test::Callback_ptr callback)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling are_you_there\n"));
-  const int iterations = 10;
+  int const iterations = 10;
 
   int exception_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -63,7 +63,7 @@ Service::call_are_you_there (Test::Callback_ptr callback)
         {
           (void) callback->are_you_there (out_str);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           exception_count++;
         }
@@ -77,7 +77,7 @@ int
 Service::call_test_oneway (Test::Callback_ptr callback)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling test_oneway\n"));
-  const int iterations = 10;
+  int const iterations = 10;
 
   int exception_count = 0;
   for (int i = 0; i != iterations; ++i)
@@ -86,7 +86,7 @@ Service::call_test_oneway (Test::Callback_ptr callback)
         {
           (void) callback->test_oneway ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           exception_count++;
         }

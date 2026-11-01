@@ -11,14 +11,19 @@ class Callback
 {
 public:
   /// Constructor
-  Callback (CORBA::ORB_ptr orb);
+  explicit Callback (CORBA::ORB_ptr orb);
+
+  Callback (Callback const&) = delete;
+  Callback (Callback&&) = delete;
+  Callback& operator= (Callback const&) = delete;
+  Callback& operator= (Callback&&) = delete;
 
   // = The skeleton methods
-  virtual CORBA::Boolean are_you_there (CORBA::String_out answer);
+  CORBA::Boolean are_you_there (CORBA::String_out answer) override;
 
-  virtual void test_oneway ();
+  void test_oneway () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 private:
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;

@@ -11,16 +11,21 @@ class Service
 {
 public:
   /// Constructor
-  Service (CORBA::ORB_ptr orb);
+  explicit Service (CORBA::ORB_ptr orb);
+
+  Service (Service const&) = delete;
+  Service (Service&&) = delete;
+  Service& operator= (Service const&) = delete;
+  Service& operator= (Service&&) = delete;
 
   /// Dump the results.
   /**
    * In case of failure this exposes any incomplete runs.
    */
-  void dump_results ();
+  void dump_results () const;
 
   // = The skeleton methods
-  virtual void run_test (Test::Callback_ptr callback);
+  void run_test (Test::Callback_ptr callback) override;
 
 private:
   /// Call the are_you_there callback multiple times.
