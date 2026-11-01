@@ -61,6 +61,11 @@ public:
 
   ~ACE_RLECompressor() override = default;
 
+  ACE_RLECompressor (ACE_RLECompressor const &) = delete;
+  ACE_RLECompressor (ACE_RLECompressor &&) = delete;
+  ACE_RLECompressor &operator= (ACE_RLECompressor const &) = delete;
+  ACE_RLECompressor &operator= (ACE_RLECompressor &&) = delete;
+
   /**
   * Compress the @a in_ptr buffer for @a in_len into the
   * @a dest_ptr buffer with a maximum @a max_out_len using
@@ -75,7 +80,7 @@ public:
   * for the possibility that a reduced compressed length
   * is not possible.
   */
-  ACE_UINT64 compress(const void *in_ptr,
+  ACE_UINT64 compress(void const *in_ptr,
                       ACE_UINT64 in_len,
                       void *out_ptr,
                       ACE_UINT64 max_out_len) override;
@@ -89,7 +94,7 @@ public:
   * otherwise the return value will indicate the resultant
   * @a out_ptr decompressed buffer length.
   */
-  ACE_UINT64 decompress(const void *in_ptr,
+  ACE_UINT64 decompress(void const *in_ptr,
                         ACE_UINT64 in_len,
                         void *out_ptr,
                         ACE_UINT64 max_out_len) override;

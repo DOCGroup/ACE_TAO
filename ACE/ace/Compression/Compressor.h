@@ -64,7 +64,7 @@ public:
     * for the possibility that a reduced compressed length
     * is not possible.
     */
-  virtual ACE_UINT64 compress(const void *in_ptr,
+  virtual ACE_UINT64 compress(void const *in_ptr,
                               ACE_UINT64 in_len,
                               void *out_ptr,
                               ACE_UINT64 max_out_len) = 0;
@@ -77,7 +77,7 @@ public:
     * otherwise the return value will indicate the resultant
     * @a out_ptr decompressed buffer length.
     */
-  virtual ACE_UINT64 decompress(const void *in_ptr,
+  virtual ACE_UINT64 decompress(void const *in_ptr,
                                 ACE_UINT64 in_len,
                                 void *out_ptr,
                                 ACE_UINT64 max_out_len) = 0;
@@ -121,8 +121,10 @@ private:
   ACE_UINT64          compressed_bytes_;
   ACE_UINT64          uncompressed_bytes_;
 
-  ACE_Compressor (const ACE_Compressor&) = delete;
-  ACE_Compressor& operator= (const ACE_Compressor&) = delete;
+  ACE_Compressor (ACE_Compressor const &) = delete;
+  ACE_Compressor (ACE_Compressor &&) = delete;
+  ACE_Compressor &operator= (ACE_Compressor const &) = delete;
+  ACE_Compressor &operator= (ACE_Compressor &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
