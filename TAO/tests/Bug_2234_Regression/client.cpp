@@ -4,7 +4,8 @@
 
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
@@ -83,13 +84,13 @@ ACE_TMAIN (
     ACE_DEBUG( (LM_INFO, ". String()          "));
     rS= foo->TestString( aS.in(), bS.out(), cS.inout());
     ACE_DEBUG( (LM_INFO, "a is %C, b is %C, c is %C, r is %C:  ", aS.in (), bS.in (), cS.in (), rS.in ()));
-    if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(aS.in(), "1"))) {
+    if ((0 != *aS.in()) && (0 != std::strcmp(aS.in(), "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
-    else if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(bS.in(), "2"))) {
+    else if ((0 != *aS.in()) && (0 != std::strcmp(bS.in(), "2"))) {
        ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
-    else if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(cS.in(), "4"))) {
+    else if ((0 != *aS.in()) && (0 != std::strcmp(cS.in(), "4"))) {
        ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
-    else if ((0 != *aS.in()) && (0 != ACE_OS::strcmp(rS.in(), "7"))) {
+    else if ((0 != *aS.in()) && (0 != std::strcmp(rS.in(), "7"))) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
        ACE_DEBUG( (LM_INFO, "OK\n"));
@@ -127,13 +128,13 @@ ACE_TMAIN (
     ACE_DEBUG( (LM_INFO, ". MyVarStruct()     "));
     rVS= foo->TestVarStruct( aVS.in(), bVS.out(), cVS.inout());
     ACE_DEBUG( (LM_INFO, "a is %C, b is %C, c is %C, r is %C:  ", aVS->val.in(), bVS->val.in (), cVS->val.in (), rVS->val.in ()));
-    if ((0 != *aVS->val) && (0 != ACE_OS::strcmp(aVS->val, "1"))) {
+    if ((0 != *aVS->val) && (0 != std::strcmp(aVS->val, "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
-    else if ((0 != *bVS->val) && (0 != ACE_OS::strcmp(bVS->val, "2"))) {
+    else if ((0 != *bVS->val) && (0 != std::strcmp(bVS->val, "2"))) {
        ACE_DEBUG( (LM_ERROR, "b is wrong\n")); testFailed= 1;}
-    else if ((0 != *cVS->val) && (0 != ACE_OS::strcmp(cVS->val, "4"))) {
+    else if ((0 != *cVS->val) && (0 != std::strcmp(cVS->val, "4"))) {
        ACE_DEBUG( (LM_ERROR, "c is wrong\n")); testFailed= 1;}
-    else if ((0 != *rVS->val) && (0 != ACE_OS::strcmp(rVS->val, "7"))) {
+    else if ((0 != *rVS->val) && (0 != std::strcmp(rVS->val, "7"))) {
        ACE_DEBUG( (LM_ERROR, "r is wrong\n")); testFailed= 1;}
     else
        ACE_DEBUG( (LM_INFO, "OK\n"));

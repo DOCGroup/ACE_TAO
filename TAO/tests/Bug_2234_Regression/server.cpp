@@ -19,6 +19,8 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/LocalObject.h"
 
+#include <cstring>
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
 
 int
@@ -98,12 +100,12 @@ public:
  )
   {
     ACE_DEBUG( (LM_INFO, ". in TestString\n"));
-    if (0 == a)
+    if (a == nullptr)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect nullptr string given for parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (1 != ACE_OS::strlen( a ))
+    if (1 != std::strlen (a))
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
@@ -113,12 +115,12 @@ public:
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (0 == c)
+    if (c == nullptr)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect nullptr string given for parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (1 != ACE_OS::strlen( c ))
+    if (1 != std::strlen (c))
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
@@ -181,12 +183,12 @@ public:
  )
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarStruct\n"));
-    if (0 == a.val.in())
+    if (a.val.in() == nullptr)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect nullptr string given for parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (1 != ACE_OS::strlen( a.val.in() ))
+    if (1 != std::strlen (a.val.in()))
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
@@ -196,12 +198,12 @@ public:
       ACE_DEBUG( (LM_INFO, "* Incorrect input value of parameter a\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (0 == c.val.in())
+    if (c.val.in() == nullptr)
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect nullptr string given for parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
-    if (1 != ACE_OS::strlen( c.val.in() ))
+    if (1 != std::strlen (c.val.in()))
     {
       ACE_DEBUG( (LM_INFO, "* Incorrect string length for parameter c\n"));
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
