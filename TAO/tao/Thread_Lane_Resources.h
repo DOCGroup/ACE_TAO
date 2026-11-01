@@ -146,7 +146,7 @@ public:
 
 private:
   /// Checks if the acceptor registry has been created.
-  int has_acceptor_registry_been_created () const;
+  bool has_acceptor_registry_been_created () const;
 
   /// Helper to get the resource factory in the ORB_Core
   TAO_Resource_Factory *resource_factory ();

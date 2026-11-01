@@ -54,7 +54,7 @@ TAO_Thread_Lane_Resources::transport_cache ()
   return *this->transport_cache_;
 }
 
-int
+bool
 TAO_Thread_Lane_Resources::has_acceptor_registry_been_created () const
 {
   return this->acceptor_registry_ != nullptr;
