@@ -27,16 +27,21 @@ public:
             CORBA::ULong no);
 
   ///Destructor
-  virtual ~Sender_i ();
+  ~Sender_i () override;
+
+  Sender_i (Sender_i const &) = delete;
+  Sender_i (Sender_i &&) = delete;
+  Sender_i &operator= (Sender_i const &) = delete;
+  Sender_i &operator= (Sender_i &&) = delete;
 
   // = The skeleton methods
-  virtual void active_objects (CORBA::Short ao);
+  void active_objects (CORBA::Short ao) override;
 
-  virtual void send_ready_message (Test::Receiver_ptr receiver);
+  void send_ready_message (Test::Receiver_ptr receiver) override;
 
-  virtual void ping ();
+  void ping () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Our local ORB ptr

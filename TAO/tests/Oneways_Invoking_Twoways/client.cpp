@@ -3,13 +3,13 @@
 #include "Server_Task.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -39,7 +39,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -57,10 +57,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get the sender reference..
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Sender_var sender =
-        Test::Sender::_narrow(tmp.in ());
+        Test::Sender::_narrow (tmp.in ());
 
       if (CORBA::is_nil (sender.in ()))
         {
@@ -70,14 +70,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Receiver_i *receiver_impl;
+      Receiver_i *receiver_impl {};
       ACE_NEW_RETURN (receiver_impl,
                       Receiver_i (orb.in (),
                                   sender.in (),
                                   10),
                       1);
 
-      PortableServer::ServantBase_var receiver_owner_transfer(receiver_impl);
+      PortableServer::ServantBase_var receiver_owner_transfer (receiver_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (receiver_impl);
@@ -129,7 +129,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

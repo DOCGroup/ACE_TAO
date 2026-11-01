@@ -5,12 +5,11 @@
 Client_Task::Client_Task (Test::Sender_ptr reply_gen,
                           Test::Receiver_ptr us,
                           ACE_Thread_Manager *thr_mgr,
-                           Receiver_i * receiver_impl)
+                          Receiver_i *receiver_impl)
   : ACE_Task_Base (thr_mgr)
   , sender_(Test::Sender::_duplicate (reply_gen))
   , us_ (Test::Receiver::_duplicate (us))
   , receiver_impl_ (receiver_impl)
-
 {
 }
 
@@ -34,7 +33,7 @@ Client_Task::svc ()
       while (this->receiver_impl_->no_calls_ < 10)
         ACE_OS::sleep (1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught Exception");
       return -1;
