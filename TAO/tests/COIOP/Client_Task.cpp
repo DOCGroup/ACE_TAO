@@ -3,7 +3,7 @@
 #include "tao/ORB_Core.h"
 #include "TestC.h"
 
-Client_Task::Client_Task (const ACE_TCHAR *ior,
+Client_Task::Client_Task (ACE_TCHAR const *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr,
                           CORBA::Boolean result)
@@ -23,7 +23,7 @@ Client_Task::svc ()
         this->corb_->string_to_object (input_);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -48,7 +48,7 @@ Client_Task::svc ()
 
       hello->shutdown ();
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const &ex)
     {
       if (!this->result_)
         {
@@ -61,7 +61,7 @@ Client_Task::svc ()
       ex._tao_print_exception ("Caught exception:");
       return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

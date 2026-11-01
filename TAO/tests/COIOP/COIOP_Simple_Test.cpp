@@ -13,7 +13,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -26,7 +26,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Hello *hello_impl = 0;
+      Hello *hello_impl = nullptr;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in (),
                              0),
@@ -34,7 +34,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Activating servant\n"));
 
-      PortableServer::ServantBase_var owner_transfer(hello_impl);
+      PortableServer::ServantBase_var owner_transfer (hello_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (hello_impl);
@@ -67,7 +67,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->string_to_object (ior.in ());
 
       Test::Hello_var hello_ref =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello_ref.in ()))
         {
@@ -87,7 +87,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions..
     }
