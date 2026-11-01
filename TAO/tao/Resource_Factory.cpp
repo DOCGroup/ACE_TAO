@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
+TAO_Protocol_Item::TAO_Protocol_Item (ACE_CString const &name)
   : name_ (name),
     factory_ (nullptr),
     factory_owner_ (0)

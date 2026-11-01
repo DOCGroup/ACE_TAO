@@ -55,7 +55,7 @@ class TAO_Export TAO_Protocol_Item
 public:
   /// Creator method, the protocol name can only be set when the
   /// object is created.
-  TAO_Protocol_Item (const ACE_CString &name);
+  explicit TAO_Protocol_Item (ACE_CString const &name);
 
   /// Destructor that deallocates the factory object if the
   /// Protocol_Item retains ownership.
