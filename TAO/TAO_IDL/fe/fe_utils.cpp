@@ -19,6 +19,8 @@
 #include "utl_identifier.h"
 #include "utl_string.h"
 
+#include <memory>
+#include <new>
 #include <string>
 #include <utility>
 #include <vector>
@@ -152,56 +154,73 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
 UTL_ScopedName *
 FE_Utils::string_to_scoped_name (std::string const& name)
 {
-  UTL_ScopedName *retval = nullptr;
-  Identifier *id = nullptr;
-  UTL_ScopedName *sn = nullptr;
-  std::string::size_type start = 0;
-
-  while (start < name.size ())
+  struct Scoped_Name_Deleter
+  {
+    void operator() (UTL_ScopedName *scoped_name) const
     {
-      // Skip a leading double colon.
-      if (name[start] == ':')
+      if (scoped_name != nullptr)
         {
-          start += name.size () - start > 1 ? 2 : 1;
-        }
-
-      // Find the next double colon (if any) and get the next
-      // name segment.
-      std::string::size_type const pos = name.find (':', start);
-      std::string const local_name = name.substr (start, pos - start);
-
-      // Construct a UTL_ScopedName segment.
-      ACE_NEW_RETURN (id,
-                      Identifier (local_name),
-                      nullptr);
-
-      ACE_NEW_RETURN (sn,
-                      UTL_ScopedName (id, nullptr),
-                      nullptr);
-
-      // Either make it the head of a new list or the tail of
-      // an existing one.
-      if (retval == nullptr)
-        {
-          retval = sn;
-        }
-      else
-        {
-          retval->nconc (sn);
-        }
-
-      // Update the working string.
-      if (pos == std::string::npos)
-        {
-          break;
-        }
-      else
-        {
-          start = pos;
+          scoped_name->destroy ();
         }
     }
+  };
 
-  return retval;
+  using Scoped_Name_Owner =
+    std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter>;
+
+  Scoped_Name_Owner retval;
+  std::string::size_type start = 0;
+
+  try
+    {
+      while (start < name.size ())
+        {
+          // Skip a leading double colon.
+          if (name[start] == ':')
+            {
+              start += name.size () - start > 1 ? 2 : 1;
+            }
+
+          // Find the next double colon (if any) and get the next
+          // name segment.
+          std::string::size_type const pos = name.find (':', start);
+          std::string const local_name = name.substr (start, pos - start);
+
+          std::unique_ptr<Identifier> id =
+            std::make_unique<Identifier> (local_name);
+          Scoped_Name_Owner sn (std::make_unique<UTL_ScopedName> (
+                                  id.get (), nullptr).release ());
+          id.release ();
+
+          // Either make it the head of a new list or the tail of
+          // an existing one.
+          if (!retval)
+            {
+              retval = std::move (sn);
+            }
+          else
+            {
+              retval->nconc (sn.get ());
+              sn.release ();
+            }
+
+          // Update the working string.
+          if (pos == std::string::npos)
+            {
+              break;
+            }
+          else
+            {
+              start = pos;
+            }
+        }
+    }
+  catch (std::bad_alloc const&)
+    {
+      return nullptr;
+    }
+
+  return retval.release ();
 }
 
 std::string
