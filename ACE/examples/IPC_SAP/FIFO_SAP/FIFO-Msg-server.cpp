@@ -20,7 +20,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   int band = 0;
   int n;
 
-  while ((n = server.recv (&band, &msg, (ACE_Str_Buf *) 0, &flags)) >= 0)
+  while ((n = server.recv (&band, &msg, nullptr, &flags)) >= 0)
     {
       if (msg.len == 0)
         break;

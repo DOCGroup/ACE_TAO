@@ -16,9 +16,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   char buf[BUFSIZ];
   ACE_Str_Buf msg (buf);
 
-  ACE_OS::srand (unsigned (ACE_OS::time (0)));
+  ACE_OS::srand (unsigned (ACE_OS::time (nullptr)));
 
-  while (ACE_OS::fgets (buf, sizeof buf, stdin) != 0)
+  while (ACE_OS::fgets (buf, sizeof buf, stdin) != nullptr)
     {
       msg.len = ACE_OS::strlen (buf) + 1;
       if (client.send (ACE_OS::rand () % 11, &msg) == -1)
