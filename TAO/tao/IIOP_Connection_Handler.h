@@ -64,7 +64,7 @@ public:
   TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Constructor.
-  TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
+  explicit TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
   ~TAO_IIOP_Connection_Handler ();
