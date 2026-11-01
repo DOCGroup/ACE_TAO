@@ -32,6 +32,7 @@
 #include "tao/PortableServer/Acceptor_Filter_Factory.h"
 #include "tao/PortableServer/Network_Priority_Hook.h"
 
+#include <cstring>
 #include <new>
 #include <stdexcept>
 
@@ -247,7 +248,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   // minimum POA builds, remove this code and remove the guards
   // in Object_Adapter.cpp when changing the default policy for the
   // RootPOA.
-  if (ACE_OS::strcmp (this->name_.c_str (), TAO_DEFAULT_ROOTPOA_NAME) == 0)
+  if (std::strcmp (this->name_.c_str (), TAO_DEFAULT_ROOTPOA_NAME) == 0)
     {
       this->cached_policies_.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
     }
@@ -1819,9 +1820,9 @@ TAO_Root_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
   // Check to see if the POA name is the first part of the id
   return
     this->name_.length () < id.length () &&
-    ACE_OS::strncmp (id_buffer,
-                     this->name_.c_str (),
-                     this->name_.length ()) == 0;
+    std::strncmp (id_buffer,
+                  this->name_.c_str (),
+                  this->name_.length ()) == 0;
 #else /* POA_NAME_IN_POA_GENERATED_ID */
 
   ACE_UNUSED_ARG (id);

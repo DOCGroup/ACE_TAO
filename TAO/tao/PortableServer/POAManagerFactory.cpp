@@ -2,10 +2,10 @@
 #include "tao/PortableServer/POAManagerFactory.h"
 #include "tao/PortableServer/POAManager.h"
 
-#include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
 #include <algorithm>
+#include <cstring>
 #include <new>
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -110,7 +110,7 @@ TAO_POAManager_Factory::find (const char * id)
     {
       CORBA::String_var poamanagerid = manager->get_id ();
 
-      if (ACE_OS::strcmp (id, poamanagerid.in()) == 0)
+      if (std::strcmp (id, poamanagerid.in()) == 0)
         {
           poamanager = PortableServer::POAManager::_duplicate (manager);
           break;

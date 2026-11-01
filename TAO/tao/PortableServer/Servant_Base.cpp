@@ -27,7 +27,7 @@
 #include "tao/Basic_Types.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Servant_Base.inl"
@@ -369,7 +369,7 @@ CORBA::Boolean
 TAO_ServantBase::_is_a (const char *logical_type_id)
 {
   static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
-  return ACE_OS::strcmp (logical_type_id, id) == 0;
+  return std::strcmp (logical_type_id, id) == 0;
 }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
