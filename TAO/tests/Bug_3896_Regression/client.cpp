@@ -6,7 +6,7 @@
 #include "tao/Messaging/Messaging.h"
 
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-bool shutdown_server = false;
+bool shutdown_server {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -40,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Client : public ACE_Task_Base
 {
 public:
-  Client (CORBA::ORB_ptr server);
+  explicit Client (CORBA::ORB_ptr server);
   Client (Client const &) = delete;
   Client (Client &&) = delete;
   Client &operator= (Client const &) = delete;
@@ -113,12 +113,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               the_string = hello->get_string ();
             }
-          catch (const CORBA::TIMEOUT&)
+            catch (CORBA::TIMEOUT const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) Error: got timeout\n"));
             }
-          catch (const CORBA::COMM_FAILURE&)
+            catch (CORBA::COMM_FAILURE const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) Ok: got comm exception\n"));
