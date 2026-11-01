@@ -328,9 +328,11 @@ be_visitor_dds_ts_idl::init_file ()
   std::string fname (fname_noext);
   fname += ".idl";
 
-  ACE_NEW_RETURN (this->os_ptr_,
+  TAO_OutStream *stream = nullptr;
+  ACE_NEW_RETURN (stream,
                   TAO_OutStream,
                   -1);
+  this->os_ptr_.reset (stream);
 
   int status = this->os_ptr_->open (fname);
 
@@ -363,6 +365,5 @@ be_visitor_dds_ts_idl::fini_file ()
                  << "#endif /* ifndef */\n"
                  << "\n";
 
-  delete this->os_ptr_;
-  this->os_ptr_ = nullptr;
+  this->os_ptr_.reset ();
 }

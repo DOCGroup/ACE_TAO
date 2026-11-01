@@ -17,6 +17,8 @@
 
 #include "be_visitor_scope.h"
 
+#include <memory>
+
 /**
  * @class be_visitor_dds_ts_idl
  *
@@ -50,7 +52,7 @@ private:
   void fini_file ();
 
 private:
-  TAO_OutStream *os_ptr_ {};
+  std::unique_ptr<TAO_OutStream> os_ptr_;
 };
 
 #endif /* _BE_VISITOR_DDS_TS_IDL_H_ */
