@@ -38,7 +38,7 @@ class Async_Timer_Handler : public ACE_Event_Handler
 public:
   /// Callback hook invoked by the <Timer_Queue>.
   virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+                              const void *arg) override;
 };
 
 /**
@@ -111,10 +111,10 @@ public:
   Async_Timer_Queue_Test_Driver ();
 
   /// Print menu of options.
-  virtual int display_menu ();
+  int display_menu () override;
 
   /// Initializes the driver's internal variables inherited from the parent
-  virtual int init ();
+  int init () override;
 };
 
 #endif /* _ASYNC_TIMER_QUEUE_TEST_H_ */

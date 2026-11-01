@@ -173,7 +173,7 @@ Input_Task::dump ()
               "begin dumping timer queue\n"));
 
   for (Timer_Heap_Iterator i (*this->queue_->timer_queue ());
-       i.item () != 0;
+       i.item () != nullptr;
        i.next ())
     i.item ()->dump ();
 

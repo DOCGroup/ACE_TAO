@@ -58,7 +58,7 @@ public:
               Thread_Timer_Queue_Test_Driver &timer_queue_driver);
 
   /// This method runs the event loop in the new thread.
-  virtual int svc ();
+  int svc () override;
 
   // = Some helper methods.
 
@@ -105,9 +105,9 @@ public:
   Thread_Timer_Queue_Test_Driver ();
   ~Thread_Timer_Queue_Test_Driver ();
 
-  virtual int display_menu ();
-  virtual int init ();
-  virtual int run_test ();
+  int display_menu () override;
+  int init () override;
+  int run_test () override;
 
 private:
   /// Subclassed from ACE_Task.
@@ -134,7 +134,7 @@ public:
 
   /// Call back hook.
   virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *arg);
+                              const void *arg) override;
 
 private:
   /// Store the expected time of expiration, it is used to print a nice

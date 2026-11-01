@@ -54,7 +54,7 @@ public:
 
   /// Hook method for the <ACE_Reactor> to call whenever there is input
   /// ready to be read.
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /**
    * returns the value for <done_> that indicates whether we are
@@ -118,17 +118,17 @@ public:
   virtual ~Reactor_Timer_Queue_Test_Driver ();
 
   /// Prints the menu of options.
-  virtual int display_menu ();
+  int display_menu () override;
 
   /**
    * Sets the timer queue that the REACTOR will use; registers the
    * stdin input handler with the REACTOR and sets the <Command>s that
    * the <Timer_Queue_Test_Driver> will execute().
    */
-  virtual int init ();
+  int init () override;
 
   /// Main entry point to the test driver implementation.
-  virtual int run_test ();
+  int run_test () override;
 
 private:
   /// This is the stdin handler.
@@ -146,7 +146,7 @@ public:
   /// Hook method that is called by the reactor when a timer expires.
   /// It prints the timer ID and the time it expired.
   virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *);
+                              const void *) override;
 
   /// Sets the timer id for this handler <tid_> to <tid>
   void set_timer_id (long tid);

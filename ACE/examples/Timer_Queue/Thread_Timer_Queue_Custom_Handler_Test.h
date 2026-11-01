@@ -57,7 +57,7 @@ public:
               Thread_Timer_Queue_Custom_Handler_Test &timer_queue_driver);
 
   /// This method runs the event loop in the new thread.
-  virtual int svc ();
+  int svc () override;
 
   // = Some helper methods.
 
@@ -104,9 +104,9 @@ public:
   Thread_Timer_Queue_Custom_Handler_Test ();
   ~Thread_Timer_Queue_Custom_Handler_Test ();
 
-  virtual int display_menu ();
-  virtual int init ();
-  virtual int run_test ();
+  int display_menu () override;
+  int init () override;
+  int run_test () override;
 
 private:
   /// Subclassed from ACE_Task.

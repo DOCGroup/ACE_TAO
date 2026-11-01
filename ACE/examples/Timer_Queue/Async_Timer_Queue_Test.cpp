@@ -77,7 +77,7 @@ Async_Timer_Queue::dump ()
   // signals cannot occur while it is running.
 
   for (ACE_Timer_Heap_Iterator iter (this->tq_.timer_queue ());
-       iter.item () != 0;
+       iter.item () != nullptr;
        iter.next ())
     iter.item ()->dump ();
 
@@ -98,7 +98,7 @@ Async_Timer_Queue::schedule (u_int microsecs)
 
   // Schedule the timer to run in the future.
   long tid = this->tq_.schedule(eh,
-                                0, // Note that our "magic cookie" ACT is always NULL.
+                                nullptr, // Note that our "magic cookie" ACT is always null.
                                 ACE_OS::gettimeofday () + tv);
 
   if (tid == -1)
