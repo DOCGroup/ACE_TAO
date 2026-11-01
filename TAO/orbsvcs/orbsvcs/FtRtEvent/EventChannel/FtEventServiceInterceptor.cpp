@@ -7,6 +7,8 @@
 #include "../Utils/Safe_InputCDR.h"
 #include "../Utils/Log.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
@@ -195,7 +197,7 @@ void
 FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::String_var operation = ri->operation ();
-  if (ACE_OS::strcmp(operation.in(), "push") == 0) {
+  if (std::strcmp (operation.in (), "push") == 0) {
     TAO_FTRTEC::Log(3, ACE_TEXT ("Received push command\n"));
     return;
   }

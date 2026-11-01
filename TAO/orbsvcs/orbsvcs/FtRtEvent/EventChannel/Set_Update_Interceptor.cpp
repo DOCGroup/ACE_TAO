@@ -5,6 +5,8 @@
 #include "orbsvcs/FTRTC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Set_Update_Interceptor::TAO_Set_Update_Interceptor ()
@@ -36,8 +38,8 @@ TAO_Set_Update_Interceptor::send_request (
 {
   CORBA::String_var operation = ri->operation ();
 
-  if (ACE_OS::strcmp(operation.in(), "set_update")==0 ||
-      ACE_OS::strcmp(operation.in(), "oneway_set_update") ==0)
+  if (std::strcmp (operation.in (), "set_update") == 0 ||
+      std::strcmp (operation.in (), "oneway_set_update") == 0)
     {
       CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri);
 

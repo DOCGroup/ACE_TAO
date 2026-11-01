@@ -1,6 +1,7 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
-#include <assert.h>
 #include <algorithm>
+#include <assert.h>
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl"
@@ -22,7 +23,7 @@ Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset::size_type size)
   , buffer_(new block[buffer_size_])
 {
 //FUZZ: enable check_for_lack_ACE_OS/
-  ACE_OS::memset(buffer_, 0, buffer_size_*BYTES_PER_BLOCK);
+  std::memset (buffer_, 0, buffer_size_ * BYTES_PER_BLOCK);
 }
 
 
@@ -89,7 +90,7 @@ void Dynamic_Bitset::resize(Dynamic_Bitset::size_type num_bits, bool value)
 
   if (len > this->buffer_size_) {
     Dynamic_Bitset tmp(num_bits);
-    ACE_OS::memcpy(tmp.buffer_, this->buffer_, this->buffer_size_*BYTES_PER_BLOCK);
+    std::memcpy (tmp.buffer_, this->buffer_, this->buffer_size_ * BYTES_PER_BLOCK);
     block mask = static_cast<block> (-1);
 
     size_type block_pos = this->bit_size_/BITS_PER_BLOCK;
