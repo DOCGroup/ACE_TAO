@@ -15,6 +15,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Reactor.h"
+#include "ace/Unbounded_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -24,8 +25,6 @@
 
 #include "tao/Cache_Entries_T.h"
 #include "tao/orbconf.h"
-
-#include <vector>
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
@@ -51,7 +50,7 @@ namespace TAO
       TAO_CLIENT_ROLE = 2
     };
 
-  using Connection_Handler_Set = std::vector<TAO_Connection_Handler *>;
+  using Connection_Handler_Set = ACE_Unbounded_Set<TAO_Connection_Handler *>;
   /**
    * @brief The Transport Cache Manager for TAO
    *

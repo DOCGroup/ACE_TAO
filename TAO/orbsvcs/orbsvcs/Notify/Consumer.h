@@ -24,8 +24,8 @@
 #include "orbsvcs/Notify/Timer.h"
 #include "ace/Event_Handler.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Unbounded_Queue.h"
 
-#include <deque>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -133,7 +133,7 @@ protected:
   /// the connected consumer or nil if there is none.
   virtual CORBA::Object_ptr get_consumer () = 0;
 
-  using Request_Queue = std::deque<TAO_Notify_Method_Request_Event_Queueable *>;
+  using Request_Queue = ACE_Unbounded_Queue<TAO_Notify_Method_Request_Event_Queueable *>;
 
   DispatchStatus dispatch_request (TAO_Notify_Method_Request_Event * request);
 

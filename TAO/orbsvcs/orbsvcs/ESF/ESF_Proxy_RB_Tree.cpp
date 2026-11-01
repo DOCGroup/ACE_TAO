@@ -3,8 +3,6 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
 
-#include <new>
-
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
@@ -14,16 +12,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<class PROXY> void
 TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy)
 {
-  try
+  int const r = this->impl_.bind (proxy, 1);
+  if (r == 0)
+    return;
+
+  if (r == 1)
     {
-      if (!this->impl_.insert (proxy).second)
-        {
-          // @@ Already there, throw some user exception..
-          proxy->_decr_refcnt ();
-        }
+      // @@ Already there, throw some user exception..
+      proxy->_decr_refcnt ();
     }
-  catch (std::bad_alloc const &)
+  if (r == -1)
     {
+      // @@ Cannot insert, running out of memory? throw some other
+      // user exception
       proxy->_decr_refcnt ();
     }
 }
@@ -31,17 +32,19 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::connected (PROXY *proxy)
 template<class PROXY> void
 TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy)
 {
-  try
+  int const r = this->impl_.rebind (proxy, 1);
+  if (r == 0)
+    return;
+
+  if (r == 1)
     {
-      if (!this->impl_.insert (proxy).second)
-        {
-          // Reference count is incremented by the callers to [re]connected.
-          // @@ Find out if the protocol could be simplified, and decoupling
-          //    increased.
-          proxy->_decr_refcnt ();
-        }
+      // Reference count is incremented by the callers to [re]connected.
+      // @@ Find out if the protocol could be simplified, and decoupling
+      //    increased.
+      proxy->_decr_refcnt ();
+      return;
     }
-  catch (std::bad_alloc const &)
+  if (r == -1)
     {
       proxy->_decr_refcnt ();
     }
@@ -50,14 +53,13 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy)
 template<class PROXY> void
 TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy)
 {
-  typename Implementation::iterator i = this->impl_.find (proxy);
-  if (i == this->impl_.end ())
+  int const r = this->impl_.unbind (proxy);
+  if (r != 0)
     {
       // @@ Cannot remove, throw some other
       // user exception
       return;
     }
-  this->impl_.erase (i);
   proxy->_decr_refcnt ();
 }
 

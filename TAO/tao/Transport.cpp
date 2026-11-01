@@ -34,10 +34,6 @@
 #include "ace/Truncate.h"
 #include <chrono>
 
-#include <algorithm>
-#include <new>
-#include <stdexcept>
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport.inl"
 #endif /* __ACE_INLINE__ */
@@ -237,24 +233,9 @@ TAO_Transport::~TAO_Transport ()
 void
 TAO_Transport::provide_handler (TAO::Connection_Handler_Set &handlers)
 {
-  TAO_Connection_Handler * const handler = this->connection_handler_i ();
-  if (std::find (handlers.begin (), handlers.end (), handler) != handlers.end ())
-    return;
-
-  try
-    {
-      handlers.push_back (handler);
-    }
-  catch (std::bad_alloc const &)
-    {
-      return;
-    }
-  catch (std::length_error const &)
-    {
-      return;
-    }
-
   (void) this->add_reference ();
+
+  handlers.insert (this->connection_handler_i ());
 }
 
 bool
@@ -264,24 +245,9 @@ TAO_Transport::provide_blockable_handler (TAO::Connection_Handler_Set &h)
       this->opening_connection_role_ == TAO::TAO_SERVER_ROLE)
     return false;
 
-  TAO_Connection_Handler * const handler = this->connection_handler_i ();
-  if (std::find (h.begin (), h.end (), handler) == h.end ())
-    {
-      try
-        {
-          h.push_back (handler);
-        }
-      catch (std::bad_alloc const &)
-        {
-          return false;
-        }
-      catch (std::length_error const &)
-        {
-          return false;
-        }
+  (void) this->add_reference ();
 
-      (void) this->add_reference ();
-    }
+  h.insert (this->connection_handler_i ());
 
   return true;
 }

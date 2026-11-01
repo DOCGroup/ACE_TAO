@@ -18,34 +18,35 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include <cstddef>
-#include <list>
+#include "ace/Unbounded_Set.h"
+#include "ace/Containers.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// A concrete proxy collection.
 /**
- * Uses a doubly linked list to keep iterators stable as proxies are added
- * or removed.
+ * Based on the ACE_Unbounded_Set<> collection, used a double
+ * linked list internally.
  */
 template<class PROXY>
 class TAO_ESF_Proxy_List
 {
 public:
-  /// The underlying implementation type.
-  using Implementation = std::list<PROXY *>;
+  /// A typedef for the underlying implementaiton class
+  using Implementation = ACE_Unbounded_Set<PROXY *>;
 
-  /// The underlying iterator type.
-  using Iterator = typename Implementation::iterator;
+  /// A typedef for the underlying iterator
+  using Iterator = ACE_Unbounded_Set_Iterator<PROXY *>;
 
   /// Constructor
   TAO_ESF_Proxy_List () = default;
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  Iterator begin ();
+  ACE_Unbounded_Set_Iterator<PROXY *> begin ();
 
   /// Return one past the last element in the collection
-  Iterator end ();
+  ACE_Unbounded_Set_Iterator<PROXY *> end ();
 
   /// Return the number of elements in the collection
   std::size_t size () const;
@@ -65,7 +66,7 @@ public:
 
 private:
   /// The underlying implementation object
-  Implementation impl_;
+  ACE_Unbounded_Set<PROXY *> impl_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

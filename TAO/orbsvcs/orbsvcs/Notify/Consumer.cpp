@@ -19,9 +19,6 @@
 
 #include "ace/Bound_Ptr.h"
 
-#include <new>
-#include <utility>
-
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
@@ -108,22 +105,14 @@ TAO_Notify_Consumer::enqueue_request (
     request
     ));
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
-  try
-    {
-      this->pending_events().push_back (queue_entry);
-    }
-  catch (const std::bad_alloc&)
-    {
-      queue_entry->release ();
-      throw CORBA::NO_MEMORY ();
-    }
+  this->pending_events().enqueue_tail (queue_entry);
 }
 
 bool
 TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * request)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock (), false);
-  if (! this->pending_events().empty ())
+  if (! this->pending_events().is_empty ())
     {
       if (DEBUG_LEVEL > 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -138,15 +127,7 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
                         TAO_Notify_Method_Request_Event_Queueable (*request,
                                                                    event),
                         CORBA::NO_MEMORY ());
-      try
-        {
-          this->pending_events().push_back (queue_entry);
-        }
-      catch (const std::bad_alloc&)
-        {
-          queue_entry->release ();
-          throw CORBA::NO_MEMORY ();
-        }
+      this->pending_events().enqueue_tail (queue_entry);
       this->schedule_timer (false);
       return true;
     }
@@ -165,15 +146,7 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
                         TAO_Notify_Method_Request_Event_Queueable (*request,
                                                                    event),
                         CORBA::NO_MEMORY ());
-      try
-        {
-          this->pending_events().push_back (queue_entry);
-        }
-      catch (const std::bad_alloc&)
-        {
-          queue_entry->release ();
-          throw CORBA::NO_MEMORY ();
-        }
+      this->pending_events().enqueue_tail (queue_entry);
       this->schedule_timer (false);
       return true;
     }
@@ -509,7 +482,7 @@ TAO_Notify_Consumer::dispatch_pending ()
   bool ok = true;
   while (ok
          && !this->proxy_supplier ()->has_shutdown ()
-         && !this->pending_events().empty ())
+         && !this->pending_events().is_empty ())
     {
       if (! dispatch_from_queue ( this->pending_events(), ace_mon))
         {
@@ -530,10 +503,8 @@ TAO_Notify_Consumer::dispatch_from_queue (
 // FUZZ: enable check_for_ACE_Guard
   bool result = true;
   TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
-  if (! requests.empty ())
+  if (requests.dequeue_head (request) == 0)
     {
-      request = requests.front ();
-      requests.pop_front ();
       ace_mon.release ();
       DispatchStatus status = this->dispatch_request (request);
       switch (status)
@@ -555,7 +526,7 @@ TAO_Notify_Consumer::dispatch_from_queue (
                           request->sequence ()
                           ));
             ace_mon.acquire ();
-            requests.push_front (request); // put the failed event back where it was
+            requests.enqueue_head (request); // put the failed event back where it was
             result = false;
             break;
           }
@@ -584,10 +555,8 @@ TAO_Notify_Consumer::dispatch_from_queue (
                           ));
             request->complete ();
             ace_mon.acquire ();
-            while (! requests.empty ())
+            while (requests.dequeue_head (request) == 0)
               {
-                request = requests.front ();
-                requests.pop_front ();
                 ace_mon.release ();
                 request->complete ();
                 ace_mon.acquire ();
@@ -747,10 +716,10 @@ TAO_Notify_Consumer::assume_pending_events (TAO_Notify_Consumer& rhs)
   // by the caller.
 
   // If the original consumer has pending events
-  if (!rhs.pending_events ().empty ())
+  if (!rhs.pending_events ().is_empty ())
     {
       // We will take them away and cancel it's timer
-      this->pending_events_ = std::move (rhs.pending_events_);
+      this->pending_events_.reset (rhs.pending_events_.release ());
       if (rhs.timer_.isSet ())
         {
           rhs.cancel_timer ();

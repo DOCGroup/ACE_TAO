@@ -9,9 +9,6 @@
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
 
-#include <algorithm>
-#include <new>
-#include <stdexcept>
 #include <vector>
 
 #if !defined (__ACE_INLINE__)
@@ -738,7 +735,7 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge ()
   {
-    using transport_set_type = std::vector<transport_type *>;
+    using transport_set_type = ACE_Unbounded_Set<transport_type *>;
     transport_set_type transports_to_be_closed;
 
     {
@@ -786,28 +783,7 @@ namespace TAO
                         transport->id ()));
                     }
 
-                  int insert_result = 0;
-                  if (std::find (transports_to_be_closed.begin (),
-                                 transports_to_be_closed.end (),
-                                 transport) != transports_to_be_closed.end ())
-                    insert_result = 1;
-                  else
-                    {
-                      try
-                        {
-                          transports_to_be_closed.push_back (transport);
-                        }
-                      catch (std::bad_alloc const &)
-                        {
-                          insert_result = -1;
-                        }
-                      catch (std::length_error const &)
-                        {
-                          insert_result = -1;
-                        }
-                    }
-
-                  if (insert_result != 0)
+                  if (transports_to_be_closed.insert_tail (transport) != 0)
                     {
                       if (TAO_debug_level > 0)
                         {
@@ -833,13 +809,14 @@ namespace TAO
     }
 
     // Now, without the lock held, lets go through and close all the transports.
-    if (!transports_to_be_closed.empty ())
+    if (!transports_to_be_closed.is_empty ())
       {
-        for (typename transport_set_type::iterator it = transports_to_be_closed.begin ();
-             it != transports_to_be_closed.end ();
-             ++it)
+        typename transport_set_type::iterator it (transports_to_be_closed);
+        while (! it.done ())
           {
             transport_type *transport = *it;
+
+            it.advance ();
 
             if (transport)
               {

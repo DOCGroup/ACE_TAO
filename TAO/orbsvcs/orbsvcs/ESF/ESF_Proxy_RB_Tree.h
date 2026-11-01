@@ -18,7 +18,8 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include <cstddef>
-#include <set>
+#include "ace/RB_Tree.h"
+#include "ace/Null_Mutex.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,7 +28,9 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree_Iterator
 {
 public:
-  using Implementation = typename std::set<PROXY *>::iterator;
+  using Implementation = ACE_RB_Tree_Iterator<PROXY *, int,
+                                                ACE_Less_Than<PROXY *>,
+                                                ACE_Null_Mutex>;
 
   explicit TAO_ESF_Proxy_RB_Tree_Iterator (Implementation const &i);
 
@@ -56,7 +59,7 @@ class TAO_ESF_Proxy_RB_Tree
 {
 public:
   /// An alias for the underlying implementation class
-  using Implementation = std::set<PROXY *>;
+  using Implementation = ACE_RB_Tree<PROXY *, int, ACE_Less_Than<PROXY *>, ACE_Null_Mutex>;
 
   /// An alias for the underlying iterator
   using Iterator = TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>;

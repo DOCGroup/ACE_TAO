@@ -121,10 +121,8 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
 
     CORBA::Long pos = 0;
     TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
-    while (pos < batch_size && ! requests.empty ())
+    while (pos < batch_size && requests.dequeue_head (request) == 0)
     {
-      request = requests.front ();
-      requests.pop_front ();
       if (DEBUG_LEVEL > 0)
       {
         ORBSVCS_DEBUG ( (LM_DEBUG,
@@ -137,7 +135,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
       ++pos;
 
       // note enqueue at head, use queue as stack.
-      completed.push_front (request);
+      completed.enqueue_head (request);
     }
     batch.length (pos);
     ACE_ASSERT (pos > 0);
@@ -152,10 +150,8 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     case DISPATCH_SUCCESS:
       {
         TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
-        while (! completed.empty ())
+        while (completed.dequeue_head (request) == 0)
         {
-          request = completed.front ();
-          completed.pop_front ();
           request->complete ();
           request->release ();
         }
@@ -168,17 +164,15 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     case DISPATCH_FAIL:
       {
         TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
-        while (! completed.empty ())
+        while (completed.dequeue_head (request) == 0)
         {
-          request = completed.front ();
-          completed.pop_front ();
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
               ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
                           static_cast <int> (this->proxy ()->id ()),
                           request->sequence ()));
-            requests.push_front (request);
+            requests.enqueue_head (request);
             result = false;
           }
           else
@@ -191,17 +185,15 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
             request->release ();
           }
         }
-        while (! requests.empty ())
+        while (requests.dequeue_head (request) == 0)
         {
-          request = requests.front ();
-          requests.pop_front ();
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
               ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
-            requests.push_front (request);
+            requests.enqueue_head (request);
             result = false;
           }
           else
@@ -231,17 +223,15 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
     case DISPATCH_DISCARD:
       {
         TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
-        while (! completed.empty ())
+        while (completed.dequeue_head (request) == 0)
         {
-          request = completed.front ();
-          completed.pop_front ();
           if (request->should_retry ())
           {
             if (DEBUG_LEVEL > 0)
               ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
                           static_cast<int> (this->proxy ()->id ()),
                           request->sequence ()));
-            requests.push_front (request);
+            requests.enqueue_head (request);
             result = false;
           }
           else
