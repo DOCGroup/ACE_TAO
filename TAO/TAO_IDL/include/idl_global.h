@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_utils.h"
 #include "idl_version.h"
 
+#include <cstddef>
 #include <deque>
 #include <memory>
 #include <optional>
@@ -391,7 +392,7 @@ public:
 
   std::vector<std::string> const& include_file_names () const;
 
-  size_t n_include_file_names () const;
+  std::size_t n_include_file_names () const;
 
   void             reset_flag_seen ();
 
@@ -452,7 +453,7 @@ public:
   std::vector<std::string> & included_idl_files ();
 
   // The number of currently availabe include files.
-  size_t n_included_idl_files ();
+  std::size_t n_included_idl_files ();
 
   ParseState parse_state ();       // What state we're in
   void set_parse_state (ParseState s); // Set it

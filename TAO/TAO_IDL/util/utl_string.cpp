@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_NS_ctype.h"
 
+#include <cstddef>
 #include <string>
 #include <utility>
 
@@ -88,7 +89,7 @@ UTL_String::strcmp_caseless (
       return false;
     }
 
-  for (size_t i = 0; i < lhs.size (); ++i)
+  for (std::size_t i = 0; i < lhs.size (); ++i)
     {
       if (lhs[i] != rhs[i])
         {
