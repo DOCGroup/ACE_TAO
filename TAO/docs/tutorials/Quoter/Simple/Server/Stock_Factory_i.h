@@ -8,7 +8,7 @@ class Quoter_Stock_Factory_i : public POA_Quoter::Stock_Factory {
 public:
   Quoter_Stock_Factory_i ();
 
-  Quoter::Stock_ptr get_stock (const char *symbol);
+  Quoter::Stock_ptr get_stock (char const* symbol);
 
 private:
   Quoter_Stock_i rhat_;

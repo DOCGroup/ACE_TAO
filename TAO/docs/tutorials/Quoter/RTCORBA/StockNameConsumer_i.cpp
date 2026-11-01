@@ -2,9 +2,11 @@
 #include "StockNameConsumer_i.h"
 #include "Broker_i.h"
 
+#include <cstring>
+
 // Implementation skeleton constructor
 Stock_StockNameConsumer_i::Stock_StockNameConsumer_i (Stock_StockBroker_i &context,
-                                                      const char *stock_name)
+                                                      char const* stock_name)
   : context_ (context),
     stock_name_ (stock_name)
 {
@@ -21,8 +23,8 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
        i < the_stockname->names ().length ();
        ++i)
     {
-      if (ACE_OS::strcmp (this->stock_name_.in (),
-                          the_stockname->names ()[i]) == 0)
+      if (std::strcmp (this->stock_name_.in (),
+                       the_stockname->names ()[i]) == 0)
         {
           // Get the quoter for the connection from the <context_>.
           ACE_DEBUG ((LM_DEBUG,

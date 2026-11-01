@@ -44,7 +44,7 @@ public:
    * @param stock_name The name of the stock that the parent StockBroker object need to listen to.
    */
   Stock_StockNameConsumer_i (Stock_StockBroker_i  &context,
-                             const char *stock_name);
+                                    char const* stock_name);
 
   /// Destructor.
   virtual ~Stock_StockNameConsumer_i ();
