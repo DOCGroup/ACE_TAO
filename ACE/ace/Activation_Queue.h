@@ -22,6 +22,7 @@
 
 #include "ace/Message_Queue.h"
 #include "ace/Condition_Thread_Mutex.h"
+#include <memory>
 
 /// Define to be compatible with the terminology in the POSA2 book!
 #define ACE_Activation_List ACE_Activation_Queue
@@ -141,10 +142,10 @@ protected:
   /// Stores the Method_Requests.
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 
-  /// Keeps track of whether we need to delete the queue.
-  bool delete_queue_;
-
 private:
+  /// Owns the queue when this class creates it internally.
+  std::unique_ptr<ACE_Message_Queue<ACE_SYNCH>> owned_queue_;
+
   /// Allocation strategy of the queue.
   ACE_Allocator *allocator_;
 

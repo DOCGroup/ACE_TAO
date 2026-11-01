@@ -19,8 +19,8 @@ ACE_Activation_Queue::dump () const
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("delete_queue_ = %d\n"),
-              this->delete_queue_));
+              ACE_TEXT ("owns_queue_ = %d\n"),
+              this->owned_queue_ != nullptr));
   ACELIB_DEBUG ((LM_INFO, ACE_TEXT ("queue_:\n")));
   if (this->queue_)
     this->queue_->dump();
@@ -34,8 +34,7 @@ ACE_Activation_Queue::dump () const
 ACE_Activation_Queue::ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue,
                                             ACE_Allocator *alloc,
                                             ACE_Allocator *db_alloc)
-  : delete_queue_ (false)
-  , allocator_(alloc)
+  : allocator_(alloc)
   , data_block_allocator_(db_alloc)
 {
   if (this->allocator_ == nullptr)
@@ -45,38 +44,22 @@ ACE_Activation_Queue::ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_qu
     this->queue_ = new_queue;
   else
     {
-      ACE_NEW (this->queue_,
+      ACE_Message_Queue<ACE_SYNCH> *queue = nullptr;
+      ACE_NEW (queue,
                ACE_Message_Queue<ACE_SYNCH>);
-      this->delete_queue_ = true;
+      this->owned_queue_.reset (queue);
+      this->queue_ = this->owned_queue_.get ();
     }
 }
 
 void
 ACE_Activation_Queue::queue (ACE_Message_Queue<ACE_SYNCH> *q)
 {
-  // Destroy the internal queue if one exist.
-  if (this->delete_queue_)
-    {
-      // Destroy the current queue.
-      delete this->queue_;
-
-      // Set the flag to false.  NOTE that the delete_queue_ flag is a
-      // flag used to only indicate whether or not if an internal
-      // ACE_Message_Queue has been created, therefore, it will not
-      // affect the user if the user decided to replace the queue with
-      // their own queue no matter how many time they call on this
-      // function.
-      this->delete_queue_ = false;
-    }
-
+  this->owned_queue_.reset ();
   queue_ = q;
 }
 
-ACE_Activation_Queue::~ACE_Activation_Queue ()
-{
-  if (this->delete_queue_)
-    delete this->queue_;
-}
+ACE_Activation_Queue::~ACE_Activation_Queue () = default;
 
 ACE_Method_Request *
 ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
