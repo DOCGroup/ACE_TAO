@@ -49,8 +49,13 @@ class ServerRequestInterceptor
 {
 public:
   /// Constructor.
-  ServerRequestInterceptor (const char * orb_id,
+  ServerRequestInterceptor (char const *orb_id,
                             PortableServer::Current_ptr poa_current);
+
+  ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;
+  ServerRequestInterceptor &operator= (ServerRequestInterceptor const &) = delete;
+  ServerRequestInterceptor (ServerRequestInterceptor &&) = delete;
+  ServerRequestInterceptor &operator= (ServerRequestInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -62,24 +67,21 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name ();
+  char *name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
   //@}
 
 private:

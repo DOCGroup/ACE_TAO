@@ -2,13 +2,13 @@
 
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -55,12 +55,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Boolean result =
         server->request_server ();
 
-      if (result == 0)
+      if (!result)
         ACE_DEBUG ((LM_DEBUG, "Successful invocation\n"));
 
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ORT test on client side :");
       return -1;
