@@ -17,9 +17,9 @@
 #include "ami_testS.h"
 
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-int shutdown_flag {};
-int debug {};
-int result {};
+bool shutdown_flag {};
+bool debug {};
+bool test_failed {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -31,13 +31,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
         break;
       case 'x':
-        shutdown_flag = 1;
+        shutdown_flag = true;
         break;
       case '?':
       default:
@@ -66,12 +66,12 @@ public:
   Handler &operator= (Handler const &) = delete;
   Handler &operator= (Handler &&) = delete;
 
-  void get_yadda (CORBA::Long result) override
+  void get_yadda (CORBA::Long value) override
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <get_yadda> called: result <%d>\n",
-                  result));
-      result = 1;
+                  value));
+      test_failed = true;
     };
 
   void get_yadda_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -91,14 +91,14 @@ public:
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.id not 42: %d\n",
                           ex.id));
-              result = 1;
+              test_failed = true;
             }
           if (ACE_OS::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.whatDidTheRightThing not ok: <%C>\n",
                           ex.whatDidTheRightThing.in ()));
-              result = 1;
+              test_failed = true;
             }
         }
       catch (CORBA::Exception const &ex)
@@ -113,7 +113,7 @@ public:
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <set_yadda> called:\n"));
-      result = 1;
+      test_failed = true;
     };
 
   void set_yadda_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -133,14 +133,14 @@ public:
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.id not 42: %d\n",
                           ex.id));
-              result = 1;
+              test_failed = true;
             }
           if (ACE_OS::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.whatDidTheRightThing not ok: <%C>\n",
                           ex.whatDidTheRightThing.in ()));
-              result = 1;
+              test_failed = true;
             }
         }
       catch (CORBA::Exception const &ex)
@@ -151,12 +151,12 @@ public:
         }
     };
 
-  void get_dadda (CORBA::Long result) override
+  void get_dadda (CORBA::Long value) override
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <get_dadda> called: result <%d>\n",
-                  result));
-      result = 1;
+                  value));
+      test_failed = true;
     };
 
   void get_dadda_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -176,14 +176,14 @@ public:
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.id not 42: %d\n",
                           ex.id));
-              result = 1;
+              test_failed = true;
             }
           if (ACE_OS::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.whatDidTheRightThing not ok: <%C>\n",
                           ex.whatDidTheRightThing.in ()));
-              result = 1;
+              test_failed = true;
             }
         }
       catch (CORBA::Exception const &ex)
@@ -287,5 +287,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return result;
+  return test_failed ? 1 : 0;
 }
