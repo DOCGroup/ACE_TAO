@@ -78,7 +78,7 @@ public:
 
   /// Initialize the op_handler.
   ACE_Event_Handler_T (T *op_handler,
-                       int delete_handler,
+                       bool delete_handler,
                        GET_HANDLE get_handle = nullptr,
                        IO_HANDLER input = nullptr,
                        CL_HANDLER close = nullptr,
@@ -159,7 +159,7 @@ protected:
 
   /// Keeps track of whether we need to delete the handler in the
   /// destructor.
-  int delete_handler_;
+  bool delete_handler_;
 
   // = Get/set underlying handle.
   SET_HANDLE set_handle_;
