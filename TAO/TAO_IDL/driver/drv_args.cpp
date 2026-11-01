@@ -176,7 +176,7 @@ DRV_usage ()
 void
 DRV_parse_args (long ac, char **av)
 {
-  char *s = nullptr;
+  std::string s;
   long i;
 
   // After -- process all arguments as files
@@ -330,7 +330,7 @@ DRV_parse_args (long ac, char **av)
                   s = av[i] + 2;
                 }
 
-              switch (*s)
+              switch (s.empty () ? '\0' : s[0])
                 {
                 default:
                   ACE_ERROR ((
@@ -341,16 +341,16 @@ DRV_parse_args (long ac, char **av)
                   return;
 
                 case 'p':
-                  if (*(s + 1) == ',')
+                  if (s.size () > 1 && s[1] == ',')
                     {
-                      DRV_prep_cpp_arg (s + 2);
+                      DRV_prep_cpp_arg (s.substr (2));
                     }
 
                   break;
                 case 'b':
-                  if (*(s + 1) == ',')
+                  if (s.size () > 1 && s[1] == ',')
                     {
-                      be_util::prep_be_arg (s + 2);
+                      be_util::prep_be_arg (s.substr (2));
                     }
 
                   break;
@@ -375,13 +375,14 @@ DRV_parse_args (long ac, char **av)
                   s = av[i] + 2;
                 }
 
-              switch (*s)
+              switch (s.empty () ? '\0' : s[0])
                 {
                   case 'p':
-                    if (*(s + 1) == ',')
+                    if (s.size () > 1 && s[1] == ',')
                       {
-                        idl_global->set_cpp_location (s + 2);
-                        DRV_cpp_new_location (s + 2);
+                        std::string const cpp_location = s.substr (2);
+                        idl_global->set_cpp_location (cpp_location);
+                        DRV_cpp_new_location (cpp_location);
                       }
                     else
                       {
@@ -400,7 +401,7 @@ DRV_parse_args (long ac, char **av)
                         LM_ERROR,
                         ACE_TEXT ("IDL: I dont' understand the use of")
                         ACE_TEXT (" %s with the '-Y' option\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (s)
+                        ACE_TEXT_CHAR_TO_TCHAR (s.c_str ())
                       ));
                     idl_global->parse_args_exit (1);
                     return;
