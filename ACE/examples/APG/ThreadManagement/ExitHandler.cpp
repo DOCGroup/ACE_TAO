@@ -17,7 +17,7 @@ public:
 class HA_CommandHandler : public ACE_Task_Base
 {
 public:
-  HA_CommandHandler(ExitHandler& eh) : eh_(eh)
+  explicit HA_CommandHandler (ExitHandler &eh) : eh_ (eh)
   { }
 
   int svc () override

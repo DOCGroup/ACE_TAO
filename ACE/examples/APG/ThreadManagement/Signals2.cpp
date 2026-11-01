@@ -28,7 +28,7 @@ public:
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
 
-    while (1)
+    while (true)
       {
         ACE_Message_Block* mb = nullptr;
         ACE_Time_Value tv (0, 1000);
@@ -73,7 +73,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_OS::sleep (1);      // Allow threads to start
 
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < 5; ++i)
     ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
   handler.wait ();
   return 0;

@@ -28,7 +28,7 @@ public:
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
 
-    while (1)
+    while (true)
       {
         ACE_Message_Block* mb = nullptr;
         ACE_Time_Value tv (0, 1000);

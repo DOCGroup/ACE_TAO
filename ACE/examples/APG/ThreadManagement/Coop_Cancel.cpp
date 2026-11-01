@@ -16,7 +16,7 @@ public:
 
     // Cache our ACE_Thread_Manager pointer.
     ACE_Thread_Manager *mgr = this->thr_mgr ();
-    while (1)
+    while (true)
       {
         if (mgr->testcancel (mgr->thr_self ()))
           return 0;

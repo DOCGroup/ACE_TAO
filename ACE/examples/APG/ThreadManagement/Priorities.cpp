@@ -10,7 +10,7 @@
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  HA_CommandHandler (const char *name) : name_ (name)
+  explicit HA_CommandHandler (char const *name) : name_ (name)
   { }
 
   int svc () override
@@ -44,7 +44,7 @@ public:
   }
 
 private:
-  const char *name_;
+  char const *name_;
 };
 // Listing 2
 
