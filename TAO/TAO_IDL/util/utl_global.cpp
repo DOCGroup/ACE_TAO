@@ -85,6 +85,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -1326,8 +1327,8 @@ IDL_GlobalData::add_dcps_data_type (std::string const& id)
       UTL_ScopedName* target =
         new UTL_ScopedName (new Identifier (""), t1);
 
-      std::unique_ptr<DCPS_Data_Type_Info> newinfo (
-        new DCPS_Data_Type_Info ());
+      std::unique_ptr<DCPS_Data_Type_Info> newinfo =
+        std::make_unique<DCPS_Data_Type_Info> ();
       newinfo->name_.reset (target);
 
       // Add the newly formed entry to the map.

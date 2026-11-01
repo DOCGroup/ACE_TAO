@@ -1677,9 +1677,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
 {
   if (!idl_global->indent ())
     {
-      UTL_Indenter *idnt = nullptr;
-      ACE_NEW (idnt, UTL_Indenter);
-      idl_global->set_indent (std::unique_ptr<UTL_Indenter> (idnt));
+      idl_global->set_indent (std::make_unique<UTL_Indenter> ());
     }
   idl_global->indent ()->increase ();
 
