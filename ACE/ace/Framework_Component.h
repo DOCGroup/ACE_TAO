@@ -65,9 +65,9 @@ public:
                            const ACE_TCHAR *dll_name = nullptr,
                            const ACE_TCHAR *name = nullptr);
 
-  ACE_Framework_Component (const ACE_Framework_Component &) = delete;
+  ACE_Framework_Component (ACE_Framework_Component const &) = delete;
   ACE_Framework_Component (ACE_Framework_Component &&) = delete;
-  ACE_Framework_Component &operator= (const ACE_Framework_Component &) = delete;
+  ACE_Framework_Component &operator= (ACE_Framework_Component const &) = delete;
   ACE_Framework_Component &operator= (ACE_Framework_Component &&) = delete;
 
   /// Close the contained singleton.
@@ -105,9 +105,9 @@ public:
 
   static constexpr int DEFAULT_SIZE = ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE;
 
-  ACE_Framework_Repository (const ACE_Framework_Repository &) = delete;
+  ACE_Framework_Repository (ACE_Framework_Repository const &) = delete;
   ACE_Framework_Repository (ACE_Framework_Repository &&) = delete;
-  ACE_Framework_Repository &operator= (const ACE_Framework_Repository &) = delete;
+  ACE_Framework_Repository &operator= (ACE_Framework_Repository const &) = delete;
   ACE_Framework_Repository &operator= (ACE_Framework_Repository &&) = delete;
 
   /// Close down the repository and free up dynamically allocated

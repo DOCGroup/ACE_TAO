@@ -48,9 +48,9 @@ public:
   /// Constructor that calls open().
   ACE_Env_Value (const ACE_TCHAR *varname, const T &vardefault);
 
-  ACE_Env_Value (const ACE_Env_Value &) = delete;
+  ACE_Env_Value (ACE_Env_Value const &) = delete;
   ACE_Env_Value (ACE_Env_Value &&) = delete;
-  ACE_Env_Value &operator= (const ACE_Env_Value &) = delete;
+  ACE_Env_Value &operator= (ACE_Env_Value const &) = delete;
   ACE_Env_Value &operator= (ACE_Env_Value &&) = delete;
 
   /// Destroy the value.

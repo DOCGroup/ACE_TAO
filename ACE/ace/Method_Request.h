@@ -79,10 +79,10 @@ public:
   virtual int call () = 0;
 
 private:
-  ACE_Method_Request (const ACE_Method_Request &) = delete;
-  void operator= (const ACE_Method_Request &) = delete;
+  ACE_Method_Request (ACE_Method_Request const &) = delete;
+  ACE_Method_Request &operator= (ACE_Method_Request const &) = delete;
   ACE_Method_Request (ACE_Method_Request &&) = delete;
-  void operator= (ACE_Method_Request &&) = delete;
+  ACE_Method_Request &operator= (ACE_Method_Request &&) = delete;
 
 protected:
   /// The priority of the request.

@@ -367,7 +367,9 @@ protected:
 
 private:
   ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &) = delete;
+  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream &&) = delete;
   ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream const &) = delete;
+  ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream &&) = delete;
 
 protected:
   /// Stream Type ST_CLIENT/ST_SERVER
