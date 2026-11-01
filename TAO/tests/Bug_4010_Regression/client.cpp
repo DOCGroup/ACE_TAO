@@ -7,7 +7,7 @@
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int iterations {3};
 int timeout {10};
-int process_result {1};
+bool process_failed {true};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -93,20 +93,19 @@ public:
     catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("Exception caught:");
-        process_result = 1;
+        process_failed = true;
         orb->shutdown ();
       }
 
     if (successful_connections == 2)
       {
-        process_result = 0;
+        process_failed = false;
         orb->shutdown ();
       }
 
     return 0;
   }
 
-protected:
 private:
   CORBA::ORB_var orb;
   int iterations_left;
@@ -138,6 +137,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return process_result;
+  return process_failed;
 }
 
