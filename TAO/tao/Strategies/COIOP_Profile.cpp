@@ -12,6 +12,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 static const char the_prefix[] = "niop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -206,7 +208,7 @@ TAO_COIOP_Profile::to_string () const
   const ACE_CString * uuidstr = this->endpoint_.uuid_.to_string ();
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::the_prefix) +
+                   std::strlen (::the_prefix) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
@@ -216,7 +218,7 @@ TAO_COIOP_Profile::to_string () const
                    1 /* colon separator */ +
                    5 /* port number */ +
                    1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
+                   std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 

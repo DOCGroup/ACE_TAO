@@ -194,7 +194,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   ACE_INET_Addr host_addr;
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
       char tmp_host [MAXHOSTNAMELEN + 1];
 
@@ -325,17 +325,17 @@ TAO_SHMIOP_Profile::to_string () const
 
   size_t buflen = (8 /* corbaloc */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::prefix_) +
+                   std::strlen (::prefix_) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
                    1 /* minor version */ +
                    1 /* `@' character */ +
-                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   std::strlen (this->endpoint_.host ()) +
                    1 /* colon separator */ +
                    5 /* port number */ +
                    1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
+                   std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast <CORBA::ULong> (buflen));
 

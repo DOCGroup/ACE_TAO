@@ -15,6 +15,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor ()
@@ -315,12 +317,12 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
 
   addr.set (rendezvous);
 
-  const size_t length = ACE_OS::strlen (addr.get_path_name ());
+  const size_t length = std::strlen (addr.get_path_name ());
 
   // Check if rendezvous point was truncated by ACE_UNIX_Addr since
   // most UNIX domain socket rendezvous points can only be less than
   // 108 characters long.
-  if (length < ACE_OS::strlen (rendezvous))
+  if (length < std::strlen (rendezvous))
     TAOLIB_DEBUG ((LM_WARNING,
                 "TAO (%P|%t) - UIOP rendezvous point was truncated to <%s>\n"
                 "since it was longer than %d characters long.\n",

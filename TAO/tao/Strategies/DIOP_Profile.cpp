@@ -242,7 +242,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   this->endpoint_.is_ipv6_decimal_ = ipv6_in_host;
 #endif /* ACE_HAS_IPV6 */
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
       ACE_INET_Addr host_addr;
 
@@ -370,9 +370,9 @@ TAO_DIOP_Profile::to_string () const
        8 /* "corbaloc" */ +
        1 /* colon separator */ +
        1 /* object key separator */ +
-       ACE_OS::strlen (key.in ()));
+       std::strlen (key.in ()));
   size_t pfx_len = (
-       ACE_OS::strlen (::the_prefix) /* "diop" */ +
+       std::strlen (::the_prefix) /* "diop" */ +
        1 /* colon separator */);
 
  TAO_DIOP_Endpoint const *endp = nullptr;
@@ -384,7 +384,7 @@ TAO_DIOP_Profile::to_string () const
           1 /* decimal point */ +
           1 /* minor version */ +
           1 /* `@' character */ +
-          ACE_OS::strlen (endp->host ()) +
+          std::strlen (endp->host ()) +
           1 /* colon separator */ +
           5 /* port number */ +
           1 /* comma */);
@@ -416,7 +416,7 @@ TAO_DIOP_Profile::to_string () const
               tmp = tmp.substr (0, pos + 1);
               tmp[pos] = '\0';
             }
-          ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
+          ACE_OS::sprintf (buf + std::strlen (buf),
                   "%s:%c.%c@[%s]:%d",
                   ::the_prefix,
                   digits [this->version_.major],
@@ -426,7 +426,7 @@ TAO_DIOP_Profile::to_string () const
         }
       else
 #endif
-      ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
+      ACE_OS::sprintf (buf + std::strlen (buf),
               "%s:%c.%c@%s:%d",
               ::the_prefix,
               digits [this->version_.major],
@@ -434,7 +434,7 @@ TAO_DIOP_Profile::to_string () const
               endp->host (),
               endp->port ());
   }
-  ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
+  ACE_OS::sprintf (buf + std::strlen (buf),
                    "%c%s",
                    this->object_key_delimiter_,
                    key.in ());

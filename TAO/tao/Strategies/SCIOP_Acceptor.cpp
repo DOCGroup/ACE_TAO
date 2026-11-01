@@ -186,7 +186,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // https://github.com/DOCGroup/bugzilla/issues/1220
       //
       if (endp->port() == this->addrs_[i].get_port_number()
-          && ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0)
+          && std::strcmp(endp->host(), this->hosts_[i]) == 0)
         return true;
     }
 

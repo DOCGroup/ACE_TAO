@@ -241,15 +241,15 @@ TAO_UIOP_Profile::to_string () const
 
   u_int buflen = (8 /* "corbaloc" */ +
                   1 /* colon separator */ +
-                  ACE_OS::strlen (::prefix_) +
+                  std::strlen (::prefix_) +
                   1 /* colon separator */ +
                   1 /* major version */ +
                   1 /* decimal point */ +
                   1 /* minor version */ +
                   1 /* `@' character */ +
-                  ACE_OS::strlen (this->endpoint_.rendezvous_point ()) +
+                  std::strlen (this->endpoint_.rendezvous_point ()) +
                   1 /* object key separator */ +
-                  ACE_OS::strlen (key.in ()));
+                  std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (buflen);
 

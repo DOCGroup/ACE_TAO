@@ -111,7 +111,7 @@ int
 TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
   size_t actual_len =
-    ACE_OS::strlen (this->host_.in ()) // chars in host name
+    std::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
     + std::strlen ("65536")         // max port
     + sizeof ('\0');
@@ -164,7 +164,7 @@ TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     return 0;
 
   return (this->port_ == endpoint->port_
-          && (ACE_OS::strcmp(this->host(), endpoint->host()) == 0));
+          && (std::strcmp(this->host(), endpoint->host()) == 0));
 }
 
 CORBA::ULong

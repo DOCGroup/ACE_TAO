@@ -112,9 +112,9 @@ int
 TAO_DIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
   size_t actual_len =
-    ACE_OS::strlen (this->host_.in ()) // chars in host name
+    std::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
+    + std::strlen ("65536")         // max port
     + sizeof ('\0');
 
 #if defined (ACE_HAS_IPV6)
@@ -180,7 +180,7 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     return 0;
 
   return (this->port () == endpoint->port ()
-          && ACE_OS::strcmp (this->host (), endpoint->host ()) == 0);
+          && std::strcmp (this->host (), endpoint->host ()) == 0);
 }
 
 CORBA::ULong
@@ -240,7 +240,7 @@ TAO_DIOP_Endpoint::object_addr_i () const
   if (!this->is_ipv6_decimal_)
     is_ipv4_decimal_ =
       ACE_OS::strspn (this->host_.in (), ".0123456789") ==
-      ACE_OS::strlen (this->host_.in ());
+      std::strlen (this->host_.in ());
 
   // If this is *not* an IPv4 decimal address at first try to
   // resolve the address as an IPv6 address; if that fails

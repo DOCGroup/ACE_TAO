@@ -86,7 +86,7 @@ TAO_DIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       // Skip if the host name
       if (i > 0
           && (this->addrs_[i].get_port_number () == this->addrs_[0].get_port_number ())
-          && ACE_OS::strcmp (this->hosts_[i], this->hosts_[0]) == 0)
+          && std::strcmp (this->hosts_[i], this->hosts_[0]) == 0)
         continue;
 
       TAO_DIOP_Profile *pfile = nullptr;
@@ -183,7 +183,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     {
       if (index > 0 &&
           this->addrs_[index].get_port_number () == this->addrs_[0].get_port_number () &&
-          ACE_OS::strcmp (this->hosts_[index], this->hosts_[0]) == 0)
+          std::strcmp (this->hosts_[index], this->hosts_[0]) == 0)
         continue;
 
       TAO_DIOP_Endpoint *endpoint = nullptr;
@@ -218,7 +218,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // https://github.com/DOCGroup/bugzilla/issues/1220
       //
       if (endp->port () == this->addrs_[i].get_port_number ()
-          && ACE_OS::strcmp (endp->host (), this->hosts_[i]) == 0)
+          && std::strcmp (endp->host (), this->hosts_[i]) == 0)
         return true;  // Collocated
     }
 

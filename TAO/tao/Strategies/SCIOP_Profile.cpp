@@ -11,6 +11,8 @@
 #include "tao/Strategies/sciop_endpointsC.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
+
 static const char prefix_[] = "sciop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -183,7 +185,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
 
   this->endpoint_.host_ = tmp._retn ();
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
       ACE_INET_Addr host_addr;
 
@@ -308,17 +310,17 @@ TAO_SCIOP_Profile::to_string () const
 
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::prefix_) +
+                   std::strlen (::prefix_) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
                    1 /* minor version */ +
                    1 /* `@' character */ +
-                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   std::strlen (this->endpoint_.host ()) +
                    1 /* colon separator */ +
                    5 /* port number */ +
                    1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
+                   std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 

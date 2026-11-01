@@ -3,6 +3,8 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 #if TAO_HAS_UIOP == 1
 
 #if !defined (__ACE_INLINE__)
@@ -27,7 +29,7 @@ TAO_UIOP_Endpoint::TAO_UIOP_Endpoint ()
 int
 TAO_UIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  if (length < (ACE_OS::strlen (this->rendezvous_point ()) + 1))
+  if (length < (std::strlen (this->rendezvous_point ()) + 1))
     return -1;
 
   ACE_OS::strcpy (buffer, this->rendezvous_point ());
@@ -63,8 +65,8 @@ TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   if (endpoint == nullptr)
     return 0;
 
-  return ACE_OS::strcmp (this->rendezvous_point (),
-                         endpoint->rendezvous_point ()) == 0;
+  return std::strcmp (this->rendezvous_point (),
+                      endpoint->rendezvous_point ()) == 0;
 }
 
 CORBA::ULong
