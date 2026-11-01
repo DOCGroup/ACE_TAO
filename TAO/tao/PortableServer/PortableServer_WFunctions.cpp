@@ -1,6 +1,6 @@
 #include "tao/PortableServer/PortableServer_WFunctions.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,7 +22,7 @@ namespace PortableServer
     CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
     // Copy contents
-    ACE_OS::memcpy (buffer, string, buffer_size);
+    std::memcpy (buffer, string, buffer_size);
 
     // Create a new ID
     PortableServer::ObjectId *id {};
@@ -52,7 +52,7 @@ namespace PortableServer
     CORBA::WChar* string = CORBA::wstring_alloc (string_length);
 
     // Copy the data
-    ACE_OS::memcpy (string,
+    std::memcpy (string,
                     id.get_buffer (),
                     id.length ());
 

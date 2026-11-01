@@ -12,6 +12,8 @@
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ORT_Adapter.h"
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
+
+#include <cstring>
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/AdapterActivatorC.h"
@@ -1646,7 +1648,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   else
     {
       // Get the size from the object key.
-      ACE_OS::memcpy (&poa_name_size,
+      std::memcpy (&poa_name_size,
                       key_data + starting_at,
                       sizeof (poa_name_size));
       poa_name_size = ACE_NTOHL (poa_name_size);
@@ -1671,7 +1673,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   // Reset <system_id>.
   system_id.length (system_id_size);
   CORBA::Octet * buf = system_id.get_buffer ();
-  ACE_OS::memcpy (buf, key_data + starting_at, system_id_size);
+  std::memcpy (buf, key_data + starting_at, system_id_size);
 
   // Success
   return 0;
@@ -1689,12 +1691,12 @@ TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
   CORBA::Octet *buffer = TAO::ObjectKey::allocbuf (buffer_size);
 
   // First copy the POA id into the key.
-  ACE_OS::memcpy (&buffer[0],
+  std::memcpy (&buffer[0],
                   this->id_.get_buffer (),
                   this->id_.length ());
 
   // Then copy the object id into the key.
-  ACE_OS::memcpy (&buffer[this->id_.length ()],
+  std::memcpy (&buffer[this->id_.length ()],
                   id.get_buffer (),
                   id.length ());
 
@@ -1766,7 +1768,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   CORBA::ULong starting_at = 0;
 
   // Add the object key prefix.
-  ACE_OS::memcpy (&buffer[starting_at],
+  std::memcpy (&buffer[starting_at],
                   &objectkey_prefix[0],
                   TAO_OBJECTKEY_PREFIX_SIZE);
 
@@ -1793,7 +1795,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   if (add_poa_name_length)
     {
       poa_name_length = ACE_HTONL (poa_name_length);
-      ACE_OS::memcpy (&buffer[starting_at],
+      std::memcpy (&buffer[starting_at],
                       &poa_name_length,
                       sizeof (poa_name_length));
       starting_at += sizeof (poa_name_length);
@@ -1802,7 +1804,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   // Put the POA name into the key (for non-root POAs).
   if (parent != nullptr)
     {
-      ACE_OS::memcpy (&buffer[starting_at],
+      std::memcpy (&buffer[starting_at],
                       this->system_name_->get_buffer (),
                       this->system_name_->length ());
       starting_at += this->system_name_->length ();
@@ -1851,12 +1853,12 @@ TAO_Root_POA::set_folded_name (TAO_Root_POA *parent)
 
   if (parent != nullptr)
     {
-      ACE_OS::memcpy (folded_name_buffer,
+      std::memcpy (folded_name_buffer,
                       parent->folded_name ().get_buffer (),
                       parent_length);
     }
 
-  ACE_OS::memcpy (&folded_name_buffer[parent_length],
+  std::memcpy (&folded_name_buffer[parent_length],
                   this->name_.c_str (),
                   this->name_.length ());
 

@@ -2,6 +2,8 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
+
+#include <cstring>
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Regular_POA.h"
 #include "tao/PortableServer/Creation_Time.h"
@@ -679,7 +681,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                               CORBA::Object_out forward_to)
 {
   if (key.length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
-      || ACE_OS::memcmp (key.get_buffer (),
+      || std::memcmp (key.get_buffer (),
                          &TAO_Root_POA::objectkey_prefix[0],
                          TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
@@ -889,7 +891,7 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
       TAO::ObjectKey_var objkey = profile->_key ();
 
       if (objkey->length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
-          || ACE_OS::memcmp (objkey->get_buffer (),
+          || std::memcmp (objkey->get_buffer (),
                              &TAO_Root_POA::objectkey_prefix[0],
                              TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         continue;
