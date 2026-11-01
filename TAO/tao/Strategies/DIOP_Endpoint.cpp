@@ -7,7 +7,6 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/DIOP_Endpoint.inl"
@@ -239,7 +238,7 @@ TAO_DIOP_Endpoint::object_addr_i () const
   bool is_ipv4_decimal_ = false;
   if (!this->is_ipv6_decimal_)
     is_ipv4_decimal_ =
-      ACE_OS::strspn (this->host_.in (), ".0123456789") ==
+      std::strspn (this->host_.in (), ".0123456789") ==
       std::strlen (this->host_.in ());
 
   // If this is *not* an IPv4 decimal address at first try to

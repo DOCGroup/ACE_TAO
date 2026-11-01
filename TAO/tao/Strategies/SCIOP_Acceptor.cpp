@@ -798,7 +798,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
                   char[hostnames_string_length],
                   -1);
   std::unique_ptr<char[]> hostnames_copy_auto(hostnames_copy);
-  ACE_OS::strncpy(hostnames_copy, hostnames, hostnames_string_length);
+  std::strncpy (hostnames_copy, hostnames, hostnames_string_length);
 
   // Count the number of hostnames separated by "+"
   size_t num_hostnames = 0;
@@ -824,7 +824,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
                   char[hostnames_string_length],
                   -1);
   hostnames_copy_auto.reset(hostnames_copy);
-  ACE_OS::strncpy(hostnames_copy, hostnames, hostnames_string_length);
+  std::strncpy (hostnames_copy, hostnames, hostnames_string_length);
 
   // Iterate over the hostnames and stuff them into the array
   size_t index = 0;

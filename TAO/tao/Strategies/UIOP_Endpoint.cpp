@@ -1,8 +1,6 @@
 #include "tao/Strategies/UIOP_Endpoint.h"
 #include "tao/Strategies/UIOP_Connection_Handler.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
-
 #include <cstring>
 
 #if TAO_HAS_UIOP == 1
@@ -32,7 +30,7 @@ TAO_UIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   if (length < (std::strlen (this->rendezvous_point ()) + 1))
     return -1;
 
-  ACE_OS::strcpy (buffer, this->rendezvous_point ());
+  std::strcpy (buffer, this->rendezvous_point ());
 
   return 0;
 }

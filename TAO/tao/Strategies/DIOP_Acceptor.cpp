@@ -10,7 +10,6 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/CDR.h"
 
-#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Strategies/DIOP_Acceptor.inl"
@@ -605,7 +604,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
             tmp_host[len] = '\0';
           }
         else
-          ACE_OS::strcpy (tmp_host, address);
+          std::strcpy (tmp_host, address);
       }
 
   if (!ipv6_in_host && !host_defaulted)

@@ -11,7 +11,6 @@
 #include "tao/debug.h"
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
 
@@ -147,7 +146,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
 
   CORBA::String_var rendezvous = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (rendezvous.inout (), start, length);
+  std::strncpy (rendezvous.inout (), start, length);
   rendezvous[length] = '\0';
 
   if (this->endpoint_.object_addr_.set (rendezvous.in ()) != 0)

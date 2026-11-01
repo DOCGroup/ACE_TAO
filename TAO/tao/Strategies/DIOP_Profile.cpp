@@ -10,7 +10,6 @@
 #include "tao/IIOP_EndpointsC.h"
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
 #include <cstring>
@@ -191,10 +190,10 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
+      std::strncpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
 
-      if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
+      if (std::strspn (tmp.in (), "1234567890") == length_port)
         {
           this->endpoint_.port_ =
             static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
@@ -230,11 +229,11 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_in_host)
-    ACE_OS::strncpy (tmp.inout (), ior + 1, length_host);
+    std::strncpy (tmp.inout (), ior + 1, length_host);
   else
 #endif /* ACE_HAS_IPV6 */
   // Skip the trailing '/'
-  ACE_OS::strncpy (tmp.inout (), ior, length_host);
+  std::strncpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
@@ -398,12 +397,12 @@ TAO_DIOP_Profile::to_string () const
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  ACE_OS::strcpy (buf, "corbaloc:");
+  std::strcpy (buf, "corbaloc:");
 
   for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
     {
       if (&this->endpoint_ != endp)
-      ACE_OS::strcat (buf, ",");
+      std::strcat (buf, ",");
 
 #if defined (ACE_HAS_IPV6)
       if (endp->is_ipv6_decimal_)

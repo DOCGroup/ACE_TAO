@@ -10,7 +10,6 @@
 #include "tao/IIOP_EndpointsC.h"
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
 #include <cstring>
@@ -158,10 +157,10 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   CORBA::String_var tmp = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (tmp.inout (), cp + 1, length);
+  std::strncpy (tmp.inout (), cp + 1, length);
   tmp[length] = '\0';
 
-  if (ACE_OS::strspn (tmp.in (), "1234567890") == length)
+  if (std::strspn (tmp.in (), "1234567890") == length)
     {
       this->endpoint_.port_ =
         static_cast <CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
@@ -187,7 +186,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   tmp = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (tmp.inout (), start, length);
+  std::strncpy (tmp.inout (), start, length);
   tmp[length] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
