@@ -13,20 +13,20 @@ namespace TAO
   template <typename InterceptorType, typename DetailsType>
   typename Interceptor_List<InterceptorType,DetailsType>::RegisteredInterceptor&
   Interceptor_List<InterceptorType,DetailsType>::registered_interceptor (
-    size_t index)
+    std::size_t index)
   {
     return this->interceptors_[index];
   }
 
   template <typename InterceptorType, typename DetailsType>
   typename Interceptor_List<InterceptorType,DetailsType>::InterceptorType_ptr_type
-  Interceptor_List<InterceptorType,DetailsType>::interceptor (size_t index)
+  Interceptor_List<InterceptorType,DetailsType>::interceptor (std::size_t index)
   {
     return this->interceptors_[index].interceptor_.in ();
   }
 
   template <typename InterceptorType, typename DetailsType>
-  size_t
+  std::size_t
   Interceptor_List<InterceptorType,DetailsType>::size () const
   {
     return this->interceptors_.size ();
@@ -39,7 +39,7 @@ namespace TAO
   {
     if (!CORBA::is_nil (interceptor))
       {
-        size_t const old_len = this->interceptors_.size ();
+        std::size_t const old_len = this->interceptors_.size ();
 
         // Don't bother checking the name for duplicates if no
         // interceptors have been registered.  This saves an
@@ -67,7 +67,7 @@ namespace TAO
 
                 // Prevent interceptors with the same name from being
                 // registered.  Anonymous interceptors are okay.
-                for (size_t i = 0; i < old_len; ++i)
+                for (std::size_t i = 0; i < old_len; ++i)
                   {
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
@@ -80,7 +80,7 @@ namespace TAO
               }
           }
 
-        size_t const new_len = old_len + 1;
+        std::size_t const new_len = old_len + 1;
         this->interceptors_.size (new_len);
 
         // Add the interceptor
@@ -108,7 +108,7 @@ namespace TAO
   {
     if (!CORBA::is_nil (interceptor))
       {
-        size_t const old_len = this->interceptors_.size ();
+        std::size_t const old_len = this->interceptors_.size ();
 
         // Don't bother checking the name for duplicates if no
         // interceptors have been registered.  This saves an
@@ -136,7 +136,7 @@ namespace TAO
 
                 // Prevent interceptors with the same name from being
                 // registered.  Anonymous interceptors are okay.
-                for (size_t i = 0; i < old_len; ++i)
+                for (std::size_t i = 0; i < old_len; ++i)
                   {
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
@@ -154,7 +154,7 @@ namespace TAO
         DetailsType details;
         details.apply_policies(policies);
 
-        size_t const new_len = old_len + 1;
+        std::size_t const new_len = old_len + 1;
         this->interceptors_.size (new_len);
 
         // Add the interceptor
@@ -183,10 +183,10 @@ namespace TAO
   {
     try
       {
-        size_t const len = this->interceptors_.size ();
-        size_t ilen = len;
+        std::size_t const len = this->interceptors_.size ();
+        std::size_t ilen = len;
 
-        for (size_t k = 0; k < len; ++k)
+        for (std::size_t k = 0; k < len; ++k)
           {
             // Destroy the interceptors in reverse order in case the
             // array list is only partially destroyed and another

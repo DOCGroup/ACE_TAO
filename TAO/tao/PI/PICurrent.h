@@ -28,6 +28,8 @@
 #include "tao/LocalObject.h"
 #include "ace/Array_Base.h"
 
+#include <cstddef>
+
 #if defined(_MSC_VER)
 # pragma warning(push)
 # pragma warning(disable:4250)
@@ -113,7 +115,7 @@ namespace TAO
     /// TSS slot assigned to PICurrent_Impl objects in the OrbCore.
     /// Allocated by the orb_core_.add_tss_cleanup_func() when our
     /// initialize() method is called.
-    size_t tss_slot_ {};
+    std::size_t tss_slot_ {};
 
     /// The number of allocated PICurrent slots end user wants. (0 is
     /// uninitialized or PICurrent is not used as no data is to be stored).

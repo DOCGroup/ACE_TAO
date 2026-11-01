@@ -30,7 +30,7 @@ namespace TAO
       {
         TAO_ClientRequestInfo ri (&invocation);
 
-        for (size_t i = 0 ; i < this->interceptor_list_.size (); ++i)
+        for (std::size_t i = 0; i < this->interceptor_list_.size (); ++i)
           {
             ClientRequestInterceptor_List::RegisteredInterceptor& registered =
               this->interceptor_list_.registered_interceptor (i);
@@ -67,8 +67,8 @@ namespace TAO
     TAO_ClientRequestInfo ri (&invocation);
 
     // Unwind the stack.
-    size_t const len = invocation.stack_size ();
-    for (size_t i = 0; i < len; ++i)
+    std::size_t const len = invocation.stack_size ();
+    for (std::size_t i = 0; i < len; ++i)
       {
         // Pop the interceptor off of the flow stack before it is
         // invoked.  This is necessary to prevent an interceptor already
@@ -108,8 +108,8 @@ namespace TAO
         TAO_ClientRequestInfo ri (&invocation);
 
         // Unwind the flow stack.
-        size_t const len = invocation.stack_size ();
-        for (size_t i = 0; i < len; ++i)
+        std::size_t const len = invocation.stack_size ();
+        for (std::size_t i = 0; i < len; ++i)
           {
             // Pop the interceptor off of the flow stack before it is
             // invoked.  This is necessary to prevent an interceptor
@@ -177,8 +177,8 @@ namespace TAO
         TAO_ClientRequestInfo ri (&invocation);
 
         // Unwind the stack.
-        size_t const len = invocation.stack_size ();
-        for (size_t i = 0; i < len; ++i)
+        std::size_t const len = invocation.stack_size ();
+        for (std::size_t i = 0; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
           // invoked.  This is necessary to prevent an interceptor

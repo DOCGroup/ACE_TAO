@@ -22,6 +22,8 @@
 
 #include "tao/orbconf.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
@@ -71,12 +73,12 @@ namespace TAO
     void destroy_interceptors ();
 
     /// Return the registered interceptor in sequence element @a index.
-    RegisteredInterceptor& registered_interceptor (size_t index);
+    RegisteredInterceptor& registered_interceptor (std::size_t index);
 
     /// Return the interceptor in sequence element @a index.
-    InterceptorType_ptr_type interceptor (size_t index);
+    InterceptorType_ptr_type interceptor (std::size_t index);
 
-    size_t size () const;
+    std::size_t size () const;
 
   private:
     Interceptor_List (Interceptor_List const &) = delete;
