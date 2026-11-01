@@ -13,10 +13,10 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Codeset_Translator_Base.h"
 
-#include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
 #include <cstddef>
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,7 +84,7 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
            i = i->cont ())
         {
           std::size_t const len = i->length ();
-          ACE_OS::memcpy (buf, i->rd_ptr (), len);
+          std::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }
 
@@ -108,7 +108,7 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (&mb);
 
-  ACE_OS::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+  std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
 
   std::size_t rd_pos = mb.rd_ptr () - mb.base ();
   std::size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
@@ -227,9 +227,9 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
            i = i->cont ())
         {
           std::size_t len = i->length ();
-          ACE_OS::memcpy (buf,
-                          i->rd_ptr (),
-                          len);
+          std::memcpy (buf,
+                       i->rd_ptr (),
+                       len);
           buf += len;
         }
 
@@ -252,9 +252,9 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (&mb);
 
-  ACE_OS::memcpy (mb.rd_ptr (),
-                  data.get_buffer (),
-                  data.length ());
+  std::memcpy (mb.rd_ptr (),
+               data.get_buffer (),
+               data.length ());
 
   // @todo How do we check for a type mismatch so that we can
   //       throw a IOP::Codec::TypeMismatch exception?
