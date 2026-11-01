@@ -18,6 +18,8 @@
 #include "orbsvcs/Naming/naming_serv_export.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Naming_Context_Impl;
@@ -46,7 +48,7 @@ class TAO_Naming_Serv_Export TAO_Naming_Context :
 {
 public:
   /// Constructor.  Initializes <impl_> with a concrete implementation.
-  TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
+  explicit TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
   /// Destructor.
   ~TAO_Naming_Context () override;
@@ -227,7 +229,13 @@ private:
 
 protected:
   /// A concrete implementor of the NamingContext functions.
-  TAO_Naming_Context_Impl *impl_;
+  std::unique_ptr<TAO_Naming_Context_Impl> impl_;
+
+private:
+  TAO_Naming_Context (TAO_Naming_Context const&) = delete;
+  TAO_Naming_Context& operator= (TAO_Naming_Context const&) = delete;
+  TAO_Naming_Context (TAO_Naming_Context&&) = delete;
+  TAO_Naming_Context& operator= (TAO_Naming_Context&&) = delete;
 };
 
 /**

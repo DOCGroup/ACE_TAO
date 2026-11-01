@@ -29,11 +29,7 @@ TAO_Storable_Naming_Context_Activator::TAO_Storable_Naming_Context_Activator (
 {
 }
 
-TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator ()
-{
-  delete persistence_factory_;
-  delete this->context_impl_factory_;
-}
+TAO_Storable_Naming_Context_Activator::~TAO_Storable_Naming_Context_Activator () = default;
 
 PortableServer::Servant
 TAO_Storable_Naming_Context_Activator::incarnate (
@@ -72,7 +68,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
     this->context_impl_factory_->create_naming_context_impl (orb_,
                                                              poa,
                                                              poa_id.in (),
-                                                             persistence_factory_);
+                                                             persistence_factory_.get ());
 
   // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
@@ -83,12 +79,11 @@ TAO_Storable_Naming_Context_Activator::incarnate (
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
 
+  // Transfer ownership to TAO_Naming_Context after it was constructed.
+  temp.release ();
+
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
-
-  // Release unique pointer, and start using reference counting to
-  // control our servant.
-  temp.release ();
 
   return context;
 }

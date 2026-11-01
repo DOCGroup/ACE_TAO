@@ -22,6 +22,8 @@
 
 #include "orbsvcs/Naming/naming_serv_export.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -81,10 +83,10 @@ private:
   CORBA::ORB_ptr orb_;
 
   /// The factory for constructing the persistence mechanism for the contexts
-  TAO::Storable_Factory *persistence_factory_;
+  std::unique_ptr<TAO::Storable_Factory> persistence_factory_;
 
   /// The factory for constructing naming contexts within the index
-  TAO_Storable_Naming_Context_Factory *context_impl_factory_;
+  std::unique_ptr<TAO_Storable_Naming_Context_Factory> context_impl_factory_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

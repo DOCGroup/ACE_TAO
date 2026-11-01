@@ -156,12 +156,12 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
 
+  // Transfer ownership to TAO_Naming_Context after it was constructed.
+  temp.release ();
+
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release unique pointer, and start using reference counting to
-  // control our servant.
-  temp.release ();
   PortableServer::ServantBase_var s = context;
 
   // Register the new context with the POA.

@@ -21,9 +21,7 @@ TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
 }
 
 TAO_Naming_Context::~TAO_Naming_Context ()
-{
-  delete impl_;
-}
+= default;
 
 PortableServer::POA_ptr
 TAO_Naming_Context::_default_POA (/*env*/)

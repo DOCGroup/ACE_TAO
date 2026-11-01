@@ -198,12 +198,12 @@ TAO_Persistent_Context_Index::recreate_all ()
                       TAO_Naming_Context (context_impl),
                       -1);
 
+      // Transfer ownership to TAO_Naming_Context after it was constructed.
+      temp.release ();
+
       // Let <implementation> know about it's <interface>.
       context_impl->interface (context);
 
-      // Release unique pointer and start using reference counting to
-      // control our servant.
-      temp.release ();
       PortableServer::ServantBase_var s = context;
 
       // Register with the POA.
