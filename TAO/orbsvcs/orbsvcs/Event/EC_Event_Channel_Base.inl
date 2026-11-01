@@ -28,7 +28,7 @@ TAO_EC_Event_Channel_Base::factory (TAO_EC_Factory* factory,
     delete this->factory_;
 
   this->factory_ = factory;
-  this->own_factory_ = own_factory;
+  this->own_factory_ = own_factory != 0;
 }
 
 ACE_INLINE TAO_EC_Dispatching*

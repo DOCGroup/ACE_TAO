@@ -283,7 +283,7 @@ protected:
   TAO_EC_Factory *factory_;
 
   /// Flag that indicates if we own the factory.
-  int own_factory_;
+  bool own_factory_;
 
   /// The dispatching "module"
   TAO_EC_Dispatching *dispatching_;
