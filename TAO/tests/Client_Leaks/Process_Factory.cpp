@@ -4,12 +4,12 @@
 
 Process_Factory::Process_Factory (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , shutdown_received_ (0)
+  , shutdown_received_ (false)
 {
 }
 
-int
-Process_Factory::shutdown_received ()
+bool
+Process_Factory::shutdown_received () const
 {
   return this->shutdown_received_;
 }
@@ -22,10 +22,10 @@ Process_Factory::create_new_process ()
                     Startup_Callback,
                     CORBA::NO_MEMORY ());
 
-  PortableServer::ServantBase_var owner_transfer(startup_callback_impl);
+  PortableServer::ServantBase_var owner_transfer (startup_callback_impl);
 
   CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references("RootPOA");
+    this->orb_->resolve_initial_references ("RootPOA");
 
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (poa_object.in ());
@@ -41,10 +41,10 @@ Process_Factory::create_new_process ()
   CORBA::String_var ior =
     this->orb_->object_to_string (startup_callback.in ());
 
-  const ACE_TCHAR* argv[3] = {
+  ACE_TCHAR const *argv[3] = {
     ACE_TEXT("child"),
     ACE_TEXT_CHAR_TO_TCHAR(ior.in ()),
-    0};
+    nullptr};
 
   ACE_Process_Options options;
 #if !defined(ACE_WIN32)
@@ -65,7 +65,7 @@ Process_Factory::create_new_process ()
       throw Test::Spawn_Failed ();
     }
 
-  int process_has_started = 0;
+  bool process_has_started = false;
   Test::Process_var the_process;
   for (int i = 0; i != 500 && !process_has_started; ++i)
     {
@@ -84,11 +84,11 @@ Process_Factory::create_new_process ()
         poa->servant_to_id (startup_callback_impl);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
-  if (process_has_started == 0)
+  if (!process_has_started)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Process_Factory::create_new_process, "
@@ -108,6 +108,6 @@ Process_Factory::noop ()
 void
 Process_Factory::shutdown ()
 {
-  this->shutdown_received_ = 1;
+  this->shutdown_received_ = true;
   this->orb_->shutdown (false);
 }

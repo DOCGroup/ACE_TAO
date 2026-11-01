@@ -1,7 +1,7 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int iterations = 100;
 int threads = 12;
 
@@ -87,7 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "ERROR: no calls were successful\n"));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

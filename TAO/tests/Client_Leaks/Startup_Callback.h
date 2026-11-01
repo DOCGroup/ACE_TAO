@@ -11,17 +11,22 @@ class Startup_Callback
 {
 public:
   /// Constructor
-  Startup_Callback ();
+  Startup_Callback () = default;
 
-  /// Return 1 if the process has started already
+  Startup_Callback (Startup_Callback const&) = delete;
+  Startup_Callback (Startup_Callback&&) = delete;
+  Startup_Callback& operator= (Startup_Callback const&) = delete;
+  Startup_Callback& operator= (Startup_Callback&&) = delete;
+
+  /// Return true if the process has started already
   /**
    * If the process has started then <the_process> returns the object
    * reference for the new process
    */
-  int process_has_started (Test::Process_out the_process);
+  bool process_has_started (Test::Process_out the_process);
 
   // = The skeleton methods
-  virtual void started (Test::Process_ptr the_process);
+  void started (Test::Process_ptr the_process) override;
 
 private:
   /// Synchronize changes to the internal data

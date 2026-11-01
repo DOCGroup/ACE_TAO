@@ -11,12 +11,17 @@ class Process
 {
 public:
   /// Constructor
-  Process (CORBA::ORB_ptr orb);
+  explicit Process (CORBA::ORB_ptr orb);
+
+  Process (Process const&) = delete;
+  Process (Process&&) = delete;
+  Process& operator= (Process const&) = delete;
+  Process& operator= (Process&&) = delete;
 
   // = The skeleton methods
-  virtual CORBA::Long get_process_id ();
+  CORBA::Long get_process_id () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

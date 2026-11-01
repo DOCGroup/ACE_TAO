@@ -2,7 +2,7 @@
 #include "ace/Get_Opt.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -32,7 +32,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -45,11 +45,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Process *process_impl = 0;
+      Process *process_impl = nullptr;
       ACE_NEW_RETURN (process_impl,
                       Process (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(process_impl);
+      PortableServer::ServantBase_var owner_transfer (process_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (process_impl);
@@ -70,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Do not print error messages, they only make the test output
       // confusing.

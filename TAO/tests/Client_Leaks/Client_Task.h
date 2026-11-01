@@ -18,11 +18,16 @@ public:
   Client_Task (Test::Process_Factory_ptr process_Factory,
                int iterations);
 
+  Client_Task (Client_Task const&) = delete;
+  Client_Task (Client_Task&&) = delete;
+  Client_Task& operator= (Client_Task const&) = delete;
+  Client_Task& operator= (Client_Task&&) = delete;
+
   /// Return the total number of successful calls
   int successful_calls () const;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Run one iteration of the test

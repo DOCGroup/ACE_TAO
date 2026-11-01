@@ -41,7 +41,7 @@ Client_Task::svc ()
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -64,7 +64,7 @@ Client_Task::validate_connection ()
           (void) this->process_factory_->noop ();
         }
     }
-  catch (const CORBA::TRANSIENT& )
+  catch (CORBA::TRANSIENT const&)
     {
       // Ignore transient exceptions
     }
@@ -84,12 +84,12 @@ Client_Task::one_iteration ()
 
       return 1;
     }
-  catch (const Test::Spawn_Failed& )
+  catch (Test::Spawn_Failed const&)
     {
       // Ignore this exception, it is usually caused by a transient
       // condition
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
