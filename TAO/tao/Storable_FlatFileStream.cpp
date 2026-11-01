@@ -731,7 +731,7 @@ TAO::Storable_FlatFileFactory::is_nfs (ACE_CString const &directory)
         }
       char *pos = rpath + rootlen;
       *pos++ = '/';
-      ACE_OS::strcpy (pos,directory.c_str());
+      std::strcpy (pos, directory.c_str ());
       dir = rpath;
     }
   size_t match = 0;
