@@ -101,8 +101,8 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
     opterr (report_errors),
     optarg (nullptr),
     optstring_ (nullptr),
-    long_only_ (long_only),
-    has_colon_ (0),
+    long_only_ (long_only != 0),
+    has_colon_ (false),
     last_option_ (nullptr),
     nextchar_ (nullptr),
     optopt_ (0),
@@ -133,7 +133,7 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
   // should return ':' if a parameter is missing for an option.
   // We use a loop here, since a combination of "{+|-}:" in any
   // order should be legal.
-  int done  = 0;
+  bool done = false;
   int offset = 0;
   while (!done)
     {
@@ -146,11 +146,11 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
           this->ordering_ = RETURN_IN_ORDER;
           break;
         case ':':
-          this->has_colon_ = 1;
+          this->has_colon_ = true;
           break;
         default:
           // Quit as soon as we see something else...
-          done = 1;
+          done = true;
           break;
         }
     }

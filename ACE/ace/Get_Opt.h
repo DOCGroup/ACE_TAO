@@ -438,12 +438,12 @@ private:
   ACE_TString *optstring_;
 
   /// Treat all options as long options.
-  int long_only_;
+  bool long_only_;
 
   /// Keeps track of whether or not a colon was passed in <optstring>.
   /// This is used to determine the return value when required
   /// arguments are missing.
-  int has_colon_;
+  bool has_colon_;
 
   /// This is the last option, short or long, that was processed.  This
   /// is handy to have in cases where the option passed was invalid.
