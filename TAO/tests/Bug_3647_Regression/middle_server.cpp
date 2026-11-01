@@ -10,8 +10,8 @@
 #include "ace/OS_NS_stdio.h"
 
 bool verbose = false;
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("middle.ior");
-const ACE_TCHAR *ior = ACE_TEXT ("file://backend.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("middle.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://backend.ior");
 Messaging::SyncScope scope = Messaging::SYNC_NONE;
 long timeout = 2;
 
@@ -35,9 +35,9 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vo:k:s:t:"));
-  int c;
+  int c {};
   ACE_TCHAR const *sname = ACE_TEXT("NONE");
-  ACE_TCHAR const *stimeout = 0;
+  ACE_TCHAR const *stimeout = nullptr;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -83,11 +83,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  if (stimeout != 0)
+  if (stimeout != nullptr)
     {
       ACE_TCHAR *end;
       long tmp = ACE_OS::strtol(stimeout, &end, 10);
-      if (end == 0 || *end != '\0')
+      if (end == nullptr || *end != '\0')
         {
           usage(argv[0], ACE_TEXT("Invalid timeout value"));
           return -1;
@@ -181,8 +181,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (middle.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                 "middle_server(%P|%t) - Cannot open output file "
                 "for writing IOR: %s\n",
@@ -202,7 +202,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG,
               "middle_server"));

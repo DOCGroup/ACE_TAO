@@ -2,19 +2,19 @@
 #include "Middle_Impl.h"
 
 Bug_3647_Regression::Middle_Impl::
-Middle_Impl(
+Middle_Impl (
     Backend_ptr backend,
     CORBA::ORB_ptr orb,
     bool verbose)
   : POA_Bug_3647_Regression::Middle()
-  , backend_(Bug_3647_Regression::Backend::_duplicate(backend))
-  , orb_(CORBA::ORB::_duplicate(orb))
+  , backend_ (Bug_3647_Regression::Backend::_duplicate (backend))
+  , orb_ (CORBA::ORB::_duplicate (orb))
   , verbose_(verbose)
 {
 }
 
 void Bug_3647_Regression::Middle_Impl::
-startup_test()
+startup_test ()
 {
   if (verbose_)
   {
@@ -38,7 +38,7 @@ startup_test()
 }
 
 void Bug_3647_Regression::Middle_Impl::
-ping()
+ping ()
 {
   if (verbose_)
   {
@@ -51,7 +51,7 @@ ping()
     p.length(1024);
     backend_->ping(p);
   }
-  catch(CORBA::TIMEOUT const & ex)
+  catch (CORBA::TIMEOUT const &ex)
   {
     if (verbose_)
     {
@@ -60,7 +60,7 @@ ping()
       ex._tao_print_exception ("Exception caught:");
     }
   }
-  catch(CORBA::Exception const & ex)
+  catch (CORBA::Exception const &ex)
   {
     ACE_DEBUG ((LM_INFO,
             "Middle_Impl::ping(%P|%t) - unexpected exception raised\n"));
@@ -70,7 +70,7 @@ ping()
 }
 
 void Bug_3647_Regression::Middle_Impl::
-shutdown()
+shutdown ()
 {
   if (verbose_)
   {

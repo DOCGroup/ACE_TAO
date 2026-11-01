@@ -3,15 +3,15 @@
 #include "ace/OS_NS_unistd.h"
 
 Bug_3647_Regression::Backend_Impl::
-Backend_Impl(CORBA::ORB_ptr orb, bool verbose)
+Backend_Impl (CORBA::ORB_ptr orb, bool verbose)
   : POA_Bug_3647_Regression::Backend()
-  , orb_(CORBA::ORB::_duplicate(orb))
+  , orb_ (CORBA::ORB::_duplicate (orb))
   , verbose_(verbose)
 {
 }
 
 void Bug_3647_Regression::Backend_Impl::
-startup_test()
+startup_test ()
 {
   if (verbose_)
   {
@@ -21,7 +21,7 @@ startup_test()
 }
 
 void Bug_3647_Regression::Backend_Impl::
-ping(Bug_3647_Regression::Payload const & p)
+ping (Bug_3647_Regression::Payload const &p)
 {
   if (verbose_)
   {
@@ -32,7 +32,7 @@ ping(Bug_3647_Regression::Payload const & p)
 }
 
 void Bug_3647_Regression::Backend_Impl::
-freeze(CORBA::ULong seconds)
+freeze (CORBA::ULong seconds)
 {
   if (verbose_)
   {
@@ -51,7 +51,7 @@ freeze(CORBA::ULong seconds)
 }
 
 void Bug_3647_Regression::Backend_Impl::
-shutdown()
+shutdown ()
 {
   if (verbose_)
   {
