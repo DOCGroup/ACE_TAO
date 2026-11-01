@@ -35,6 +35,8 @@
 
 #include "tao/PortableServer/PortableServer.h"
 
+#include <cstddef>
+
 // Object_Key
 #include "tao/Object_KeyC.h"
 
@@ -276,7 +278,7 @@ public:
 
   static CORBA::ULong name_separator_length ();
 
-  static constexpr size_t TAO_OBJECTKEY_PREFIX_SIZE = 4;
+  static constexpr std::size_t TAO_OBJECTKEY_PREFIX_SIZE = 4;
 
   static CORBA::Octet const objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
 

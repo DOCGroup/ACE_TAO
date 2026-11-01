@@ -1833,8 +1833,8 @@ TAO_Root_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 void
 TAO_Root_POA::set_folded_name (TAO_Root_POA *parent)
 {
-  size_t length = 0;
-  size_t parent_length = 0;
+  std::size_t length = 0;
+  std::size_t parent_length = 0;
 
   if (parent != nullptr)
     {
@@ -2093,7 +2093,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
   bool error = false;
 
   // Count the number of endpoints.
-  size_t const profile_count = acceptor_registry.endpoint_count ();
+  std::size_t const profile_count = acceptor_registry.endpoint_count ();
 
   // Create a profile container and have acceptor registries populate
   // it with profiles as appropriate.

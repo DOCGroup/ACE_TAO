@@ -23,6 +23,7 @@
 #include "tao/PortableServer/Servant_var.h"
 #include "tao/Abstract_Servant_Base.h"
 #include <atomic>
+#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -143,12 +144,12 @@ public:
   /// details.
   virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc,
-                     const size_t length = 0);
+                     std::size_t const length = 0);
 
   virtual int _find (const char *opname,
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy st,
-                     const size_t length = 0);
+                     std::size_t const length = 0);
 
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id () const = 0;
@@ -179,7 +180,7 @@ public:
                                      TAO::Argument ** args,
                                      int num_args,
                                      const char * op,
-                                     size_t op_len,
+                                     std::size_t op_len,
                                      TAO::Collocation_Strategy strategy);
 
 protected:

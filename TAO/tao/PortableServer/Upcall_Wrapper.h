@@ -24,6 +24,8 @@
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServantBase;
@@ -79,7 +81,7 @@ namespace TAO
      */
     void upcall (TAO_ServerRequest & server_request,
                  TAO::Argument * const args[],
-                 size_t nargs,
+                 std::size_t nargs,
                  TAO::Upcall_Command & command
 #if TAO_HAS_INTERCEPTORS == 1
                  , TAO::Portable_Server::Servant_Upcall *servant_upcall
@@ -96,7 +98,7 @@ namespace TAO
      */
     void pre_upcall (TAO_InputCDR & cdr,
                      TAO::Argument * const * args,
-                     size_t nargs);
+                     std::size_t nargs);
 
     /// Perform post-upcall operations.
     /**
@@ -105,7 +107,7 @@ namespace TAO
      */
     void post_upcall (TAO_ServerRequest& server_request,
                       TAO::Argument * const * args,
-                      size_t nargs);
+                      std::size_t nargs);
   };
 }  // End namespace TAO
 

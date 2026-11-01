@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "tao/PortableServer/Key_Adapters.h"
 
+#include <cstddef>
+
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Map_T.h"
@@ -10,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_Incremental_Key_Generator::operator() (PortableServer::ObjectId &id)
 {
-  size_t const cntr_size = sizeof this->counter_;
+  std::size_t const cntr_size = sizeof this->counter_;
   // Resize to accommodate the counter.
   id.length (cntr_size);
 
@@ -40,7 +42,7 @@ TAO_Ignore_Original_Key_Adapter::encode (PortableServer::ObjectId const &,
                                          PortableServer::ObjectId &modified_key)
 {
   // Size of active key.
-  size_t const active_key_size = active_key.size ();
+  std::size_t const active_key_size = active_key.size ();
 
   // Resize to accommodate both the original data and the new active key.
   modified_key.length (static_cast <CORBA::ULong> (active_key_size));
@@ -86,7 +88,7 @@ TAO_Preserve_Original_Key_Adapter::encode (PortableServer::ObjectId const &origi
                                            PortableServer::ObjectId &modified_key)
 {
   // Size of active key.
-  size_t const active_key_size = active_key.size ();
+  std::size_t const active_key_size = active_key.size ();
 
   // Resize to accommodate both the original data and the new active key.
   modified_key.length (static_cast <CORBA::ULong> (active_key_size)
@@ -120,7 +122,7 @@ TAO_Preserve_Original_Key_Adapter::decode (PortableServer::ObjectId const &modif
                                            PortableServer::ObjectId &original_key)
 {
   // Size of active key.
-  size_t const active_key_size = ACE_Active_Map_Manager_Key::size ();
+  std::size_t const active_key_size = ACE_Active_Map_Manager_Key::size ();
 
   // Smartly copy all the data; <original_key does not own the data>.
   original_key.replace (static_cast <CORBA::ULong>

@@ -414,7 +414,7 @@ TAO_ServantBase::_repository_id ()
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,
-                        const size_t length)
+                        std::size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc,
@@ -425,7 +425,7 @@ int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Collocated_Skeleton& skelfunc,
                         TAO::Collocation_Strategy st,
-                        const size_t length)
+                        std::size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc, st,
@@ -613,7 +613,7 @@ TAO_ServantBase::_collocated_dispatch (::CORBA::Object_ptr obj,
                                        TAO::Argument ** args,
                                        int num_args,
                                        const char * op,
-                                       size_t op_len,
+                                       std::size_t op_len,
                                        TAO::Collocation_Strategy strategy)
 {
   TAO::Direct_Collocation_Upcall_Wrapper collocation_upcall_wrapper;
