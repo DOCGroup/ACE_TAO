@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <cstddef>
 #include <optional>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "idl_defines.h"
@@ -189,21 +190,14 @@ DRV_cpp_expand_output_arg (char const *filename)
     {
       std::basic_string<ACE_TCHAR> tchar_filename (
         ACE_TEXT_CHAR_TO_TCHAR (filename));
-      std::basic_string<ACE_TCHAR> &output_arg =
-        DRV_arglist[output_arg_index];
-      output_arg.resize (output_arg_format.size () + tchar_filename.size () + 1);
+      std::basic_string<ACE_TCHAR> output_arg (output_arg_format);
+      std::size_t const placeholder = output_arg.find (ACE_TEXT ("%s"));
 
-#ifdef __GNUC__
-#  pragma GCC diagnostic push
-#  pragma GCC diagnostic ignored "-Wformat-nonliteral"
-#endif
-      ACE_OS::sprintf (output_arg.data (),
-                       output_arg_format.c_str (),
-                       tchar_filename.c_str ());
-#ifdef __GNUC__
-#  pragma GCC diagnostic pop
-#endif
-      output_arg.resize (std::char_traits<ACE_TCHAR>::length (output_arg.c_str ()));
+      if (placeholder != std::basic_string<ACE_TCHAR>::npos)
+        {
+          output_arg.replace (placeholder, 2, tchar_filename);
+          DRV_arglist[output_arg_index] = std::move (output_arg);
+        }
     }
 }
 
@@ -389,10 +383,11 @@ DRV_cpp_init ()
     {
       // Check for an argument that specifies
       // the preprocessor's output file.
-      if (ACE_OS::strstr (platform_arglist[i], ACE_TEXT ("%s")) != nullptr
+      std::basic_string<ACE_TCHAR> const platform_argument (platform_arglist[i]);
+      if (platform_argument.find (ACE_TEXT ("%s")) != std::basic_string<ACE_TCHAR>::npos
           && output_arg_format.empty ())
         {
-          output_arg_format = platform_arglist[i];
+          output_arg_format = platform_argument;
           output_arg_index = DRV_arglist.size ();
           DRV_cpp_putarg ("");
         }
