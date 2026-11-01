@@ -1,4 +1,6 @@
 // -*- C++ -*-
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE u_long
@@ -16,16 +18,16 @@ TAO_Notify_EventType::native () const
 ACE_INLINE bool
 TAO_Notify_EventType::domain_is_wildcard (const char* domain) const
 {
-  return (domain == nullptr || ACE_OS::strcmp (domain, "") == 0 ||
-          ACE_OS::strcmp (domain, "*") == 0);
+  return (domain == nullptr || std::strcmp (domain, "") == 0 ||
+          std::strcmp (domain, "*") == 0);
 }
 
 ACE_INLINE bool
 TAO_Notify_EventType::type_is_wildcard (const char* type) const
 {
-  return (type == nullptr || ACE_OS::strcmp (type, "") == 0 ||
-          ACE_OS::strcmp (type, "*") == 0 ||
-          ACE_OS::strcmp (type, "%ALL") == 0);
+  return (type == nullptr || std::strcmp (type, "") == 0 ||
+          std::strcmp (type, "*") == 0 ||
+          std::strcmp (type, "%ALL") == 0);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

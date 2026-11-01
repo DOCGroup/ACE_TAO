@@ -3,11 +3,13 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
 namespace
 {
   ACE_UINT64 string_to_uint64 (const char * s)
   {
-    size_t const len = ACE_OS::strlen (s);
+    size_t const len = std::strlen (s);
     if (len == 0)
       return 0;
     if (! ACE_OS::ace_isdigit(s[0]))

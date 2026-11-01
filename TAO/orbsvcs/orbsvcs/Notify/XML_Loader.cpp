@@ -11,6 +11,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -34,7 +36,7 @@ namespace {
     {
       ACE_CString name = ACE_TEXT_ALWAYS_CHAR(attrs->getQName (i));
       ACE_CString value = ACE_TEXT_ALWAYS_CHAR(attrs->getValue (i));
-      if (ACE_OS::strcmp (name.c_str (),
+      if (std::strcmp (name.c_str (),
                           TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
       {
         id = ACE_OS::atoi (value.c_str ());

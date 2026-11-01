@@ -4,6 +4,8 @@
 #include "orbsvcs/Notify/Properties.h"
 #include "tao/debug.h"
 
+#include <cstring>
+
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
@@ -79,9 +81,9 @@ CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
 {
   // @@: change to "ExTCL" later.
-  if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0 &&
-      ACE_OS::strcmp (constraint_grammar, "ETCL") != 0 &&
-      ACE_OS::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
+  if (std::strcmp (constraint_grammar, "TCL") != 0 &&
+      std::strcmp (constraint_grammar, "ETCL") != 0 &&
+      std::strcmp (constraint_grammar, "EXTENDED_TCL") != 0)
     throw CosNotifyFilter::InvalidGrammar ();
 
   TAO_Notify_Object::ID id = filter_ids_.id ();

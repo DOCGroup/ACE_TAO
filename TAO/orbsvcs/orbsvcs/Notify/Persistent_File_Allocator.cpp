@@ -2,7 +2,8 @@
 #include "orbsvcs/Notify/Persistent_File_Allocator.h"
 
 #include "tao/debug.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 #include <new>
 
@@ -27,7 +28,7 @@ Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
   , allocator_owns_(true)
 {
   ACE_NEW(this->data_, unsigned char[this->block_size_]);
-  ACE_OS::memset(this->data_, 0, this->block_size_);
+  std::memset(this->data_, 0, this->block_size_);
 }
 
 Persistent_Storage_Block::Persistent_Storage_Block(
@@ -40,7 +41,7 @@ Persistent_Storage_Block::Persistent_Storage_Block(
   , allocator_owns_(psb.allocator_owns_)
 {
   ACE_NEW(this->data_, unsigned char[this->block_size_]);
-  ACE_OS::memcpy(this->data_, psb.data(), this->block_size_);
+  std::memcpy(this->data_, psb.data(), this->block_size_);
 }
 
 Persistent_Storage_Block::~Persistent_Storage_Block()
@@ -250,7 +251,7 @@ Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
           cached = (queued_block->block_number() == psb->block_number());
         }
         if (cached)
-          ACE_OS::memcpy(psb->data(), queued_block->data(), this->block_size());
+          std::memcpy(psb->data(), queued_block->data(), this->block_size());
       }
     }
     if (!cached)

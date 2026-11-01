@@ -12,6 +12,8 @@
 #include "orbsvcs/Notify/EventChannel.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 #include "orbsvcs/Notify/Save_Persist_Worker_T.h"
+
+#include <cstring>
 #include "orbsvcs/Notify/Reconnect_Worker_T.h"
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/Supplier_Map.h"
@@ -167,7 +169,7 @@ TAO_Notify_Admin::load_attrs(TAO_Notify::NVPList const &attrs)
 
   if (attrs.find ("default", value))
     {
-      this->is_default_ = (ACE_OS::strcmp (value, "yes") == 0);
+      this->is_default_ = (std::strcmp (value, "yes") == 0);
     }
 }
 

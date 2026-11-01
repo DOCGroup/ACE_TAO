@@ -6,6 +6,8 @@
 #endif /* __ACE_INLINE__ */
 
 #include "tao/debug.h"
+
+#include <cstring>
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -128,7 +130,7 @@ TAO_Notify_POA_Helper::long_to_ObjectId (CORBA::Long id) const
   CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
   // Copy the contents
-  ACE_OS::memcpy (buffer, (char*)&id, buffer_size);
+  std::memcpy (buffer, (char*)&id, buffer_size);
 
   // @@ Pradeep: TAO guarantees that Long is 4 bytes wide, but the
   // standard only guarantees that it is at least 4 bytes wide. You

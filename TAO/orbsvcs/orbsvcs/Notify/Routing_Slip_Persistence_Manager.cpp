@@ -4,6 +4,8 @@
 #include "orbsvcs/Notify/Persistent_File_Allocator.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
@@ -539,7 +541,7 @@ Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
     {
       result = 0;
     }
-    ACE_OS::memcpy(psb.data() + offset_into_block, data, size_to_copy);
+    std::memcpy(psb.data() + offset_into_block, data, size_to_copy);
   }
   return result;
 }
@@ -661,7 +663,7 @@ Routing_Slip_Persistence_Manager::reload_chain(
     if (first_header.serial_number == expected_serial_number)
     {
       // We have to copy the first block because we cache it.
-      ACE_OS::memcpy(mbptr->wr_ptr(), first_block->data(),
+      std::memcpy(mbptr->wr_ptr(), first_block->data(),
         block_size);
       mbptr->rd_ptr(pos);
       mbptr->wr_ptr(pos + first_header.data_size);

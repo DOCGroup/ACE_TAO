@@ -10,6 +10,8 @@
 
 #include "orbsvcs/Notify/Topology_Saver.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventType
@@ -67,8 +69,8 @@ TAO_Notify_EventType::recompute_hash ()
   // values or something, but fix this code!
   //
   char buffer[BUFSIZ];
-  ACE_OS::strcpy (buffer, this->event_type_.domain_name.in ());
-  ACE_OS::strcat (buffer, this->event_type_.type_name.in ());
+  std::strcpy (buffer, this->event_type_.domain_name.in ());
+  std::strcat (buffer, this->event_type_.type_name.in ());
 
   this->hash_value_ =  ACE::hash_pjw (buffer);
 }
@@ -95,11 +97,11 @@ TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
 bool
 TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
 {
-  return (ACE_OS::strcmp (this->event_type_.domain_name,
+  return (std::strcmp (this->event_type_.domain_name,
                           event_type.event_type_.domain_name) == 0 ||
           this->domain_is_wildcard (this->event_type_.domain_name) ||
           this->domain_is_wildcard (event_type.event_type_.type_name)) &&
-         (ACE_OS::strcmp (this->event_type_.type_name,
+         (std::strcmp (this->event_type_.type_name,
                           event_type.event_type_.type_name) == 0 ||
           this->type_is_wildcard (this->event_type_.type_name)   ||
           this->type_is_wildcard (event_type.event_type_.type_name));

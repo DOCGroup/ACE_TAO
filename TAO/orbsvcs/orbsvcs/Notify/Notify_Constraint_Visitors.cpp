@@ -12,6 +12,8 @@
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/DynamicAny/DynAnyUtils_T.h"
 
+#include <cstring>
+
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
@@ -311,7 +313,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
               {
                 member_name = tc->member_name (i);
 
-                if (ACE_OS::strcmp (name, member_name) == 0)
+                if (std::strcmp (name, member_name) == 0)
                   {
                     break;
                   }
@@ -1117,7 +1119,7 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (ETCL_Binary_Expr *binary)
           TAO_ETCL_Literal_Constraint right;
           pop_queue_front (this->queue_, right);
           CORBA::Boolean result =
-            (ACE_OS::strstr ((const char *) right,
+            (std::strstr ((const char *) right,
                              (const char *) left) != nullptr);
           this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
           return_value = 0;
