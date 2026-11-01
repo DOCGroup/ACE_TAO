@@ -151,10 +151,10 @@ private:
   /// Allocation strategy of the message blocks.
   ACE_Allocator *data_block_allocator_;
 
-  void operator= (const ACE_Activation_Queue &) = delete;
-  ACE_Activation_Queue (const ACE_Activation_Queue &) = delete;
-  void operator= (ACE_Activation_Queue &&) = delete;
+  ACE_Activation_Queue (ACE_Activation_Queue const &) = delete;
+  ACE_Activation_Queue &operator= (ACE_Activation_Queue const &) = delete;
   ACE_Activation_Queue (ACE_Activation_Queue &&) = delete;
+  ACE_Activation_Queue &operator= (ACE_Activation_Queue &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

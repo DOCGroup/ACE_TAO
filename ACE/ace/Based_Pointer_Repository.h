@@ -68,8 +68,10 @@ private:
   ACE_Based_Pointer_Repository_Rep *rep_;
 
 private:
-  void operator= (const ACE_Based_Pointer_Repository &) = delete;
-  ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &) = delete;
+  ACE_Based_Pointer_Repository (ACE_Based_Pointer_Repository const &) = delete;
+  ACE_Based_Pointer_Repository (ACE_Based_Pointer_Repository &&) = delete;
+  ACE_Based_Pointer_Repository &operator= (ACE_Based_Pointer_Repository const &) = delete;
+  ACE_Based_Pointer_Repository &operator= (ACE_Based_Pointer_Repository &&) = delete;
 };
 
 // ----------------------------------

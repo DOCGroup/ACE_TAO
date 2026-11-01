@@ -84,9 +84,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Event_Handler_Handle_Timeout_Upcall (const ACE_Event_Handler_Handle_Timeout_Upcall &) = delete;
+  ACE_Event_Handler_Handle_Timeout_Upcall (ACE_Event_Handler_Handle_Timeout_Upcall const &) = delete;
   ACE_Event_Handler_Handle_Timeout_Upcall (ACE_Event_Handler_Handle_Timeout_Upcall &&) = delete;
-  ACE_Event_Handler_Handle_Timeout_Upcall &operator= (const ACE_Event_Handler_Handle_Timeout_Upcall &) = delete;
+  ACE_Event_Handler_Handle_Timeout_Upcall &operator= (ACE_Event_Handler_Handle_Timeout_Upcall const &) = delete;
   ACE_Event_Handler_Handle_Timeout_Upcall &operator= (ACE_Event_Handler_Handle_Timeout_Upcall &&) = delete;
 
   /// Flag indicating that reference counting is required for this

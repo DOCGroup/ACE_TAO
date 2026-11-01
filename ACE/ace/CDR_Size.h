@@ -129,10 +129,10 @@ public:
                size_t align);
 
 private:
-  ACE_SizeCDR (const ACE_SizeCDR&) = delete;
-  ACE_SizeCDR& operator= (const ACE_SizeCDR&) = delete;
-  ACE_SizeCDR (ACE_SizeCDR&&) = delete;
-  ACE_SizeCDR& operator= (ACE_SizeCDR&&) = delete;
+  ACE_SizeCDR (ACE_SizeCDR const &) = delete;
+  ACE_SizeCDR &operator= (ACE_SizeCDR const &) = delete;
+  ACE_SizeCDR (ACE_SizeCDR &&) = delete;
+  ACE_SizeCDR &operator= (ACE_SizeCDR &&) = delete;
 
   ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);

@@ -188,9 +188,11 @@ public:
 private:
   /// Copy Constructor should not be used.
   ACE_Arg_Shifter_T (ACE_Arg_Shifter_T const &) = delete;
+  ACE_Arg_Shifter_T (ACE_Arg_Shifter_T &&) = delete;
 
   /// Assignment '=' operator should not be used.
-  ACE_Arg_Shifter_T operator= (ACE_Arg_Shifter_T const &) = delete;
+  ACE_Arg_Shifter_T &operator= (ACE_Arg_Shifter_T const &) = delete;
+  ACE_Arg_Shifter_T &operator= (ACE_Arg_Shifter_T &&) = delete;
 
   /// Refactor the constructor logic.
   void init ();
