@@ -3,10 +3,12 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
+#include <array>
+#include <memory>
 
-const char *UPTIME = "uptime";
-const char *HUMIDITY = "humidity";
-const char *TEMPERATURE = "temperature";
+constexpr char UPTIME[] = "uptime";
+constexpr char HUMIDITY[] = "humidity";
+constexpr char TEMPERATURE[] = "temperature";
 
 void addCommand (iovec [], const char *)
 {}
@@ -22,15 +24,18 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ssize_t bc;
 
   // Listing 1 code/ch06
-  iovec send[4];
-  send[0].iov_base = const_cast<char *> ("up");
+  char up[] = "up";
+  char time[] = "time";
+  char newline[] = "\n";
+  std::array<iovec, 4> send {};
+  send[0].iov_base = up;
   send[0].iov_len  = 2;
-  send[1].iov_base = const_cast<char *> ("time");
+  send[1].iov_base = time;
   send[1].iov_len  = 4;
-  send[2].iov_base = const_cast<char *> ("\n");
+  send[2].iov_base = newline;
   send[2].iov_len  = 1;
 
-  peer.sendv (send, 3);
+  peer.sendv (send.data (), 3);
   // Listing 1
 
   //
@@ -39,21 +44,23 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // the query array from a set of global commands.
   //
   // Listing 2 code/ch06
-  iovec query[3];
-  addCommand (query, UPTIME);
-  addCommand (query, HUMIDITY);
-  addCommand (query, TEMPERATURE);
-  peer.sendv (query, 3);
+  std::array<iovec, 3> query {};
+  addCommand (query.data (), UPTIME);
+  addCommand (query.data (), HUMIDITY);
+  addCommand (query.data (), TEMPERATURE);
+  peer.sendv (query.data (), 3);
   // Listing 2
 
   // Listing 3 code/ch06
-  iovec receive[2];
-  receive[0].iov_base = new char [32];
+  std::array<char, 32> receive_buffer_0 {};
+  std::array<char, 64> receive_buffer_1 {};
+  std::array<iovec, 2> receive {};
+  receive[0].iov_base = receive_buffer_0.data ();
   receive[0].iov_len  = 32;
-  receive[1].iov_base = new char [64];
+  receive[1].iov_base = receive_buffer_1.data ();
   receive[1].iov_len  = 64;
 
-  bc = peer.recvv (receive, 2);
+  bc = peer.recvv (receive.data (), 2);
   // Listing 3
 
   // Listing 4 code/ch06
@@ -64,17 +71,15 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
         wc = static_cast<size_t> (bc);
       ACE_OS::write (ACE_STDOUT, receive[i].iov_base, wc);
       bc -= receive[i].iov_len;
-      delete []
-        (reinterpret_cast<char *> (receive[i].iov_base));
     }
   // Listing 4
 
   // Listing 5 code/ch06
   peer.send_n ("uptime\n", 7);
-  iovec response;
+  iovec response {};
   peer.recvv (&response);
-  ACE_OS::write (ACE_STDOUT, response.iov_base, response.iov_len);
-  delete [] reinterpret_cast<char *> (response.iov_base);
+  std::unique_ptr<char[]> response_buffer (static_cast<char *> (response.iov_base));
+  ACE_OS::write (ACE_STDOUT, response_buffer.get (), response.iov_len);
   // Listing 5
 
   peer.close ();

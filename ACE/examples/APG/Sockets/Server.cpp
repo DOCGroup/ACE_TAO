@@ -34,7 +34,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
    */
   //FUZZ: enable check_for_lack_ACE_OS
 
-  while (1)
+  while (true)
     {
       ACE_SOCK_Stream peer;
       ACE_INET_Addr peer_addr;
