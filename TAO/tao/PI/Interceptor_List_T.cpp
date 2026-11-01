@@ -72,7 +72,7 @@ namespace TAO
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
 
-                    if (ACE_OS::strcmp (existing_name.in (), name.in ()) == 0)
+                    if (std::strcmp (existing_name.in (), name.in ()) == 0)
                       {
                         throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
@@ -141,8 +141,8 @@ namespace TAO
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
 
-                    if (ACE_OS::strcmp (existing_name.in (),
-                                        name.in ()) == 0)
+                    if (std::strcmp (existing_name.in (),
+                                     name.in ()) == 0)
                       {
                         throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
