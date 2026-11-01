@@ -135,14 +135,15 @@ TAO_DynamicImplementation::_dispatch (
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = nullptr;
-  ACE_NEW (dsi_request,
+  CORBA::ServerRequest *dsi_request_ptr = nullptr;
+  ACE_NEW (dsi_request_ptr,
            CORBA::ServerRequest (request));
+  CORBA::ServerRequest_var dsi_request (dsi_request_ptr);
 
   try
     {
       // Delegate to user.
-      this->invoke (dsi_request);
+      this->invoke (dsi_request.in ());
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -168,8 +169,6 @@ TAO_DynamicImplementation::_dispatch (
             request.tao_send_reply_exception (ex);
         }
     }
-
-  ::CORBA::release (dsi_request);
 }
 
 CORBA::RepositoryId

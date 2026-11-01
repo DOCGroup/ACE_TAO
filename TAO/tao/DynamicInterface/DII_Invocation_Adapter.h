@@ -114,7 +114,6 @@ namespace TAO
 
     CORBA::Request *request_ {};
 
-    TAO::Exception_Data *ex_data_ {};
   private:
     DII_Invocation_Adapter () = delete;
     DII_Invocation_Adapter (DII_Invocation_Adapter const &) = delete;

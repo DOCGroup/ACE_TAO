@@ -22,8 +22,9 @@ CORBA::UnknownUserException::UnknownUserException (CORBA::Any &ex)
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
                          "UnknownUserException")
 {
-  ACE_NEW (this->exception_,
-           CORBA::Any (ex));
+  CORBA::Any *exception = nullptr;
+  ACE_NEW (exception, CORBA::Any (ex));
+  this->exception_.reset (exception);
 }
 
 CORBA::UnknownUserException::UnknownUserException (
@@ -32,14 +33,12 @@ CORBA::UnknownUserException::UnknownUserException (
   : CORBA::UserException (e._rep_id (),
                          e._name ())
 {
-  ACE_NEW (this->exception_,
-           CORBA::Any (*e.exception_));
+  CORBA::Any *exception = nullptr;
+  ACE_NEW (exception, CORBA::Any (*e.exception_));
+  this->exception_.reset (exception);
 }
 
-CORBA::UnknownUserException::~UnknownUserException ()
-{
-  delete this->exception_;
-}
+CORBA::UnknownUserException::~UnknownUserException () = default;
 
 CORBA::Any &
 CORBA::UnknownUserException::exception ()

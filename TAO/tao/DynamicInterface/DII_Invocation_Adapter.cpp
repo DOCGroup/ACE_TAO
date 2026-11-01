@@ -15,6 +15,7 @@
 #include "tao/operation_details.h"
 
 #include "ace/os_include/os_errno.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,10 +43,7 @@ namespace TAO
   {
   }
 
-  DII_Invocation_Adapter::~DII_Invocation_Adapter ()
-  {
-    delete[] ex_data_;
-  }
+  DII_Invocation_Adapter::~DII_Invocation_Adapter () = default;
 
   void
   DII_Invocation_Adapter::invoke (TAO::Exception_Data const* /*ex_data*/,
@@ -54,20 +52,22 @@ namespace TAO
     // Convert DII exception list to a form the invocation can use
     // to filter raised user exceptions.
     ex_count = this->exception_list_->count ();
-    ACE_NEW_THROW_EX (this->ex_data_,
+    TAO::Exception_Data *exception_data = nullptr;
+    ACE_NEW_THROW_EX (exception_data,
                       TAO::Exception_Data[ex_count],
                       CORBA::NO_MEMORY ());
+    std::unique_ptr<TAO::Exception_Data[]> ex_data (exception_data);
     for (unsigned long l=0; l<ex_count ;++l)
     {
       CORBA::TypeCode_var xtc = this->exception_list_->item (l);
-      this->ex_data_[l].id = xtc->id ();
-      this->ex_data_[l].alloc = nullptr;
+      ex_data[l].id = xtc->id ();
+      ex_data[l].alloc = nullptr;
 #if TAO_HAS_INTERCEPTORS == 1
-      this->ex_data_[l].tc_ptr = xtc.in ();
+      ex_data[l].tc_ptr = xtc.in ();
 #endif
     }
 
-    Invocation_Adapter::invoke (this->ex_data_, ex_count);
+    Invocation_Adapter::invoke (ex_data.get (), ex_count);
   }
 
   Invocation_Status
