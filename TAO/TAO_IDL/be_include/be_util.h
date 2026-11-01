@@ -64,9 +64,6 @@ public:
   static std::string const&
   get_output_path (bool for_anyop, bool for_skel, bool for_exec);
 
-  static const char *
-  get_complete_file_name (bool for_exec);
-
   /// Called from various places.
   static bool
   overwrite_ciao_exec_files ();
