@@ -1,5 +1,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
+#include <array>
 // Listing 0 code/ch10
 #include "ace/Process_Manager.h"
 
@@ -22,8 +23,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       options.command_line (ACE_TEXT ("%s a"), argv[0]);
 
       // Spawn two child processes.
-      pid_t pids[NCHILDREN];
-      pm->spawn_n (NCHILDREN, options, pids);
+      std::array<pid_t, NCHILDREN> pids {};
+      pm->spawn_n (NCHILDREN, options, pids.data ());
 
       // Destroy the first child.
       pm->terminate (pids[0]);

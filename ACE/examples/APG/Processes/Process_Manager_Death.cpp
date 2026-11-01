@@ -1,6 +1,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process_Manager.h"
 #include "ace/Reactor.h"
+#include <array>
 
 static constexpr int NCHILDREN = 2;
 
@@ -8,7 +9,7 @@ static constexpr int NCHILDREN = 2;
 class DeathHandler: public ACE_Event_Handler
 {
 public:
-  DeathHandler () : count_(0)
+  DeathHandler ()
   {
     ACE_TRACE ("DeathHandler::DeathHandler");
   }
@@ -29,7 +30,7 @@ public:
   }
 
 private:
-  int count_;
+  int count_ {};
 };
 // Listing 1
 // Listing 0 code/ch10
@@ -50,8 +51,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   options.command_line (ACE_TEXT ("%s a"), argv[0]);
 
   // Spawn two child processes.
-  pid_t pids[NCHILDREN];
-  pm.spawn_n (NCHILDREN, options, pids);
+  std::array<pid_t, NCHILDREN> pids {};
+  pm.spawn_n (NCHILDREN, options, pids.data ());
 
   // Register handler to be called when these processes exit.
   for (int i = 0; i < NCHILDREN; i++)

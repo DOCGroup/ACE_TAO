@@ -7,7 +7,7 @@
 class GResourceUser
 {
 public:
-  GResourceUser (ACE_Process_Mutex &mutex) : gmutex_(mutex)
+  explicit GResourceUser (ACE_Process_Mutex &mutex) : gmutex_(mutex)
   {
     ACE_TRACE ("GResourceUser::GResourceUser");
   }

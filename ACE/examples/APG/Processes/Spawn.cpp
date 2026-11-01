@@ -8,15 +8,16 @@
 #include "ace/OS_NS_pwd.h"
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
+#include <string>
 
 // Listing 1 code/ch10
 class Manager : public ACE_Process
 {
 public:
-  Manager (const ACE_TCHAR* program_name)
+  explicit Manager (ACE_TCHAR const *program_name)
+    : program_name_ (program_name)
   {
     ACE_TRACE ("Manager::Manager");
-    ACE_OS::strcpy (programName_, program_name);
   }
 
   int doWork ()
@@ -74,7 +75,7 @@ private:
   {
     ACE_TRACE ("Manager::prepare");
 
-    options.command_line (ACE_TEXT ("%s 1"), this->programName_);
+    options.command_line (ACE_TEXT ("%s 1"), this->program_name_.c_str ());
     if (this->setStdHandles (options) == -1 ||
         this->setEnvVariable (options) == -1)
       return -1;
@@ -120,7 +121,7 @@ private:
 
 private:
   ACE_HANDLE outputfd_;
-  ACE_TCHAR programName_[256];
+  std::basic_string<ACE_TCHAR> program_name_;
 };
 
 // Listing 4 code/ch10
