@@ -4,13 +4,13 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int status = 1;
+  bool failed {true};
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -20,11 +20,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      Hello *hello_impl = 0;
+      Hello *hello_impl = nullptr;
       ACE_NEW_RETURN (hello_impl,
                       Hello (),
                       1);
-      PortableServer::ServantBase_var owner_transfer(hello_impl);
+      PortableServer::ServantBase_var owner_transfer (hello_impl);
 
       Test::Hello_var hello = hello_impl->_this ();
 
@@ -35,15 +35,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const PortableServer::POA::WrongPolicy&)
+  catch (PortableServer::POA::WrongPolicy const &)
     {
       ACE_DEBUG ((LM_DEBUG, "This test passes.\n"));
-      status = 0;
+      failed = false;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
 
-  return status;
+  return failed;
 }
