@@ -5,7 +5,7 @@
 
 #include "tao/DynamicAny/DynSequence_i.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -383,7 +383,7 @@ visit_twiddle (TAO_Binary_Constraint* binary_twiddle)
           TAO_Literal_Constraint& right_operand = this->queue_.get_right_operand ();
 
           CORBA::Boolean result = (CORBA::Boolean)
-            (ACE_OS::strstr ((const char*)right_operand,
+            (std::strstr ((const char*)right_operand,
                              (const char*)left_operand) != 0);
 
           this->queue_.dequeue_operand ();
@@ -503,7 +503,7 @@ TAO_find_string (CosTradingSequences::StringSeq& sequence,
 
   for (int i = 0; i < length; i++)
     {
-      if (ACE_OS::strcmp (sequence[i], element) == 0)
+      if (std::strcmp (sequence[i], element) == 0)
         {
           return_value = 1;
           break;
@@ -767,7 +767,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   try
     {
       CORBA::String_var value = dyn_any.get_string ();
-      return_value = (ACE_OS::strcmp (value.in(), element) == 0);
+      return_value = (std::strcmp (value.in(), element) == 0);
     }
   catch (const CORBA::Exception&){}
   return return_value;

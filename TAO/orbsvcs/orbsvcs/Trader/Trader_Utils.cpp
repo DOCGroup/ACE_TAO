@@ -1,7 +1,6 @@
 #include "orbsvcs/Trader/Trader_Utils.h"
-#include "ace/OS_NS_string.h"
-
 #include <algorithm>
+#include <cstring>
 #include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -10,7 +9,7 @@ bool
 operator== (CORBA::String_var const & lhs,
             CORBA::String_var const & rhs)
 {
-  return (ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0);
+  return (std::strcmp (lhs.in (), rhs.in ()) == 0);
 }
 
 namespace
@@ -526,10 +525,10 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
   for (CORBA::ULong j = 0; j < policies.length (); j++)
     {
       char const* pol_name = (char const*) policies[j].name;
-      size_t const length = (pol_name == nullptr) ? 0 : ACE_OS::strlen (pol_name);
+      size_t const length = (pol_name == nullptr) ? 0 : std::strlen (pol_name);
       int index = -1;
 
-      if (length < ACE_OS::strlen (POLICY_NAMES[HOP_COUNT]))
+      if (length < std::strlen (POLICY_NAMES[HOP_COUNT]))
         throw CosTrading::Lookup::IllegalPolicyName (pol_name);
 
       switch (pol_name[0])
@@ -569,7 +568,7 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
 
       // Match the name of the policy, and insert its value into the
       // vector.
-      if (index == -1 || ACE_OS::strcmp (POLICY_NAMES[index], pol_name) != 0)
+      if (index == -1 || std::strcmp (POLICY_NAMES[index], pol_name) != 0)
         throw CosTrading::Lookup::IllegalPolicyName (pol_name);
       else if (this->policies_[index] != 0)
         throw CosTrading::DuplicatePolicyName (pol_name);
@@ -867,7 +866,7 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
 
   CORBA::ULong i = 0;
   for (i = 0; i < policy_seq.length (); i++)
-    if (ACE_OS::strcmp (policy_seq[i].name,
+    if (std::strcmp (policy_seq[i].name,
                         POLICY_NAMES[LINK_FOLLOW_RULE]) == 0)
       {
         policy_seq[i].value <<= follow_option;

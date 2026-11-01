@@ -1,6 +1,8 @@
 #include "orbsvcs/Trader/Interpreter.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
@@ -94,7 +96,7 @@ TAO_Lex_String_Input::reset (char* input_string)
   TAO_Lex_String_Input::string_ = input_string;
   TAO_Lex_String_Input::current_ = input_string;
   TAO_Lex_String_Input::end_ = input_string +
-    ACE_OS::strlen (TAO_Lex_String_Input::string_);
+    std::strlen (TAO_Lex_String_Input::string_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

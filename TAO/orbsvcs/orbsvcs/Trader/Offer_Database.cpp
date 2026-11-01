@@ -5,6 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
 #include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -281,7 +282,7 @@ TAO_Offer_Database<LOCK_TYPE>::
 generate_offer_id (const char *service_type_name, CORBA::ULong id)
 {
   // holds final id string.
-  size_t total_size = 16 + ACE_OS::strlen (service_type_name);
+  size_t total_size = 16 + std::strlen (service_type_name);
 
   // hold portions of id string.
   CosTrading::OfferId offer_id =

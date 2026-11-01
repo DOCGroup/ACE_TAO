@@ -8,6 +8,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
 #include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -292,7 +293,7 @@ lookup_all_subtypes (const char* type,
 
       for (CORBA::ULong j = 0; j < num_super_types; j++)
         {
-          if (ACE_OS::strcmp (type_struct->super_types[j], type) == 0)
+          if (std::strcmp (type_struct->super_types[j], type) == 0)
             {
               // Egads, a subtype! This type has the type passed
               // to query in its list of super_types.

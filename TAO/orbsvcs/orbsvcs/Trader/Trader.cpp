@@ -6,6 +6,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
 // The following #include is needed only for the instantiation pragmas.
 #include "orbsvcs/Trader/Trader_Interfaces.h"
 
@@ -79,7 +81,7 @@ TAO_Trader_Base::is_valid_property_name (const char* ident)
   if (ident == nullptr)
     return return_value;
 
-  size_t length = ACE_OS::strlen (ident);
+  size_t length = std::strlen (ident);
   if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
     {
       return_value = true;
@@ -109,7 +111,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   // Allow scoped identifiers
   CORBA::Boolean done = false;
   char const * pos =
-    ACE_OS::strstr (ident,
+    std::strstr (ident,
                     double_colon);
 
   do
@@ -121,7 +123,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
       }
 
     size_t length =
-      pos ? static_cast<size_t>(pos - ident) : ACE_OS::strlen (ident);
+      pos ? static_cast<size_t>(pos - ident) : std::strlen (ident);
 
     if (length >= 1 && ACE_OS::ace_isalpha (ident[0]))
       {
@@ -144,7 +146,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
       {
         // More identifiers
         ident = pos + 2;
-        pos = ACE_OS::strstr (ident, double_colon);
+        pos = std::strstr (ident, double_colon);
       }
     else
       {
