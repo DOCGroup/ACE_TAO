@@ -104,12 +104,12 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
   return 0;
 }
 
-be_visitor_union::BoolUnionBranch
+be_visitor_union::Bool_Union_Branch
 be_visitor_union::boolean_branch (be_union_branch *b)
 {
   be_union *u = dynamic_cast<be_union*> (b->defined_in ());
   if (!u || u->udisc_type () != AST_Expression::EV_bool)
-    return BUB_NONE;
+    return Bool_Union_Branch::None;
 
   bool br_d = false, br_t = false, br_f = false;
   for (unsigned long i = 0; i < b->label_list_length (); ++i)
@@ -119,7 +119,7 @@ be_visitor_union::boolean_branch (be_union_branch *b)
       (b->label (i)->label_val ()->ev ()->u.bval ? br_t : br_f) = true;
 
   if ((br_t && br_f) || (u->nfields () == 1 && br_d))
-    return BUB_UNCONDITIONAL;
+    return Bool_Union_Branch::Unconditional;
 
   bool has_other = false, other_val = false;
   for (unsigned int i = 0; br_d && i < u->nfields (); ++i)
@@ -137,7 +137,8 @@ be_visitor_union::boolean_branch (be_union_branch *b)
         }
     }
 
-  return (br_t || (has_other && !other_val)) ? BUB_TRUE : BUB_FALSE;
+  return (br_t || (has_other && !other_val))
+    ? Bool_Union_Branch::True : Bool_Union_Branch::False;
 }
 
 int
@@ -191,9 +192,9 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
     }
 
   this->latest_branch_ = boolean_branch (b);
-  if (this->latest_branch_ != BUB_NONE) {
-    if (this->latest_branch_ != BUB_UNCONDITIONAL) {
-      *os << "if (" << (this->latest_branch_ == BUB_TRUE ? "" : "!")
+  if (this->latest_branch_ != Bool_Union_Branch::None) {
+    if (this->latest_branch_ != Bool_Union_Branch::Unconditional) {
+      *os << "if (" << (this->latest_branch_ == Bool_Union_Branch::True ? "" : "!")
           << (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT ?
               "_tao_union._d ()" : "_tao_discriminant") << ")" << be_idt_nl
           << "{" << be_idt_nl;
@@ -251,14 +252,14 @@ be_visitor_union_cdr_op_cs::post_process (be_decl *bd)
 
   switch (this->latest_branch_)
     {
-    case BUB_NONE:
+    case Bool_Union_Branch::None:
       *os << be_uidt_nl << "}" << be_nl << "break;" << be_uidt;
       break;
-    case BUB_TRUE:
-    case BUB_FALSE:
+    case Bool_Union_Branch::True:
+    case Bool_Union_Branch::False:
       *os << be_uidt_nl << "}" << be_uidt_nl << be_nl;
       break;
-    case BUB_UNCONDITIONAL:
+    case Bool_Union_Branch::Unconditional:
       *os << be_nl;
     }
 

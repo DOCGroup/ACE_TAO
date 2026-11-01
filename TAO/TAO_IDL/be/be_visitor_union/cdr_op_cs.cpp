@@ -195,7 +195,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
                 dynamic_cast<be_union_branch*> (si.item ());
 
               if (branch != nullptr
-                  && boolean_branch (branch) == BUB_TRUE)
+                  && boolean_branch (branch) == Bool_Union_Branch::True)
                 {
                   true_branch = true;
                   break;

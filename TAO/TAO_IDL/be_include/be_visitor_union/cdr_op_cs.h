@@ -45,7 +45,7 @@ public:
   int post_process (be_decl *) override;
 
 private:
-  BoolUnionBranch latest_branch_;
+  Bool_Union_Branch latest_branch_ {Bool_Union_Branch::None};
 };
 
 #endif /* _BE_VISITOR_UNION_CDR_OP_CS_H_ */

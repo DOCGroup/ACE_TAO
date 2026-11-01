@@ -44,9 +44,9 @@ public:
   /// visit union_branch
   int visit_union_branch (be_union_branch *node) override;
 
-  enum BoolUnionBranch { BUB_NONE, BUB_UNCONDITIONAL, BUB_TRUE, BUB_FALSE };
+  enum class Bool_Union_Branch { None, Unconditional, True, False };
 
-  static BoolUnionBranch boolean_branch (be_union_branch *b);
+  static Bool_Union_Branch boolean_branch (be_union_branch *b);
 
   static int branch_index (be_union_branch *b);
 };
