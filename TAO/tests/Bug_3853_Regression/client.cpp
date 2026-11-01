@@ -10,11 +10,11 @@
 #include "ace/OS_NS_unistd.h"
 #include <iostream>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("client.ior");
-const ACE_TCHAR *server1_ior = ACE_TEXT("file://server1.ior");
-const ACE_TCHAR *server2_ior = ACE_TEXT("file://server2.ior");
-const ACE_TCHAR *server1_shutdown_ior = ACE_TEXT("file://server1_shutdown.ior");
-const ACE_TCHAR *server2_shutdown_ior = ACE_TEXT("file://server2_shutdown.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("client.ior");
+ACE_TCHAR const *server1_ior = ACE_TEXT("file://server1.ior");
+ACE_TCHAR const *server2_ior = ACE_TEXT("file://server2.ior");
+ACE_TCHAR const *server1_shutdown_ior = ACE_TEXT("file://server1_shutdown.ior");
+ACE_TCHAR const *server2_shutdown_ior = ACE_TEXT("file://server2_shutdown.ior");
 
 CORBA::ORB_var orb;
 Demo::HelloWorld_var server1_shutdownObj;
@@ -27,9 +27,14 @@ class ClientTask : public ACE_Task_Base
 {
 public:
   ClientTask () = default;
-  ~ ClientTask () = default;
+  ~ClientTask () override = default;
 
-  virtual int svc ()
+  ClientTask (ClientTask const &) = delete;
+  ClientTask (ClientTask &&) = delete;
+  ClientTask &operator= (ClientTask const &) = delete;
+  ClientTask &operator= (ClientTask &&) = delete;
+
+  int svc () override
   {
     CORBA::Object_var helloObj = orb->string_to_object(server1_ior);
 
@@ -43,7 +48,7 @@ public:
     else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ClientTask start.\n")));
-      int i = 0;
+      int i {};
       ACE_Time_Value due = ACE_OS::gettimeofday () + ACE_Time_Value (test_duration);
 
       while (ACE_OS::gettimeofday () < due)
@@ -52,7 +57,7 @@ public:
         {
           ++ i;
           ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)======client calling server1 sayHello %d\n"), i));
-          const char* pMsg = " server1 say Hello";
+          char const *pMsg = " server1 say Hello";
           hello->sayHello(pMsg);
           ACE_OS::sleep(2);
 
@@ -62,7 +67,7 @@ public:
             reconnected = true;
           }
         }
-        catch (const CORBA::TRANSIENT &)
+        catch (CORBA::TRANSIENT const &)
         {
           caught_exception = true;
           if (TAO_debug_level > 0) {
@@ -83,7 +88,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "t:");
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -176,7 +181,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
   }
-  catch (const CORBA::Exception &e)
+  catch (CORBA::Exception const &e)
   {
     std::cerr << "Unexpected exception: " << e << std::endl;
     return 1;

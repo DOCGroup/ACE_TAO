@@ -48,7 +48,7 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  char const *myname_;
+  char const *const myname_;
 };
 
 #if defined(_MSC_VER)

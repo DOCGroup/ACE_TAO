@@ -6,14 +6,14 @@
 #include <fstream>
 #include <iostream>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("");
-const ACE_TCHAR *shutdown_ior_output_file = ACE_TEXT("");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("");
+ACE_TCHAR const *shutdown_ior_output_file = ACE_TEXT("");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:s:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -82,7 +82,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               poa_manager.in (),
                               policies);
 
-    for (CORBA::ULong i = 0;
+    for (CORBA::ULong i {};
         i < policies.length ();
         ++i)
     {
@@ -93,7 +93,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Create object for shutdown commanded by client.
     {
         // create the object
-        Demo_HelloWorld_i * hello = new Demo_HelloWorld_i(orb.in());
+        Demo_HelloWorld_i *hello = new Demo_HelloWorld_i (orb.in ());
+        PortableServer::ServantBase_var owner_transfer (hello);
 
         // Get the Object ID.
         PortableServer::ObjectId_var oid =  PortableServer::string_to_ObjectId ("shutdown");
@@ -114,7 +115,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Create object to handle client sayHello requests.
     {
         // create the object
-        Demo_HelloWorld_i * hello = new Demo_HelloWorld_i(orb.in());
+        Demo_HelloWorld_i *hello = new Demo_HelloWorld_i (orb.in ());
+        PortableServer::ServantBase_var owner_transfer (hello);
 
         // Get the Object ID.
         PortableServer::ObjectId_var oid =  PortableServer::string_to_ObjectId ("hello");
@@ -141,7 +143,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     rootPOA->destroy (1, 1);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &e)
+  catch (CORBA::Exception const &e)
   {
     std::cerr << "Unexpected exception: " << e << std::endl;
     return 1;

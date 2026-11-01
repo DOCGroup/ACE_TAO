@@ -2,10 +2,10 @@
 #include "HelloC.h"
 #include "ace/Log_Msg.h"
 
-extern const ACE_TCHAR *server2_ior;
+extern ACE_TCHAR const *server2_ior;
 extern CORBA::ORB_var orb;
 
-int isRecursive = 0;
+int recursive_call_count {};
 extern Demo::HelloWorld_var server1_shutdownObj;
 
 Echo_Client_Request_Interceptor::
@@ -42,12 +42,12 @@ Echo_Client_Request_Interceptor::send_request (
   }
 
   //send to another
-  isRecursive ++ ;
-  if (isRecursive%2 == 1 )
+  ++recursive_call_count;
+  if (recursive_call_count % 2 == 1)
   {
-    if (isRecursive == 3) {
+    if (recursive_call_count == 3) {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Echo_Client_Request_Interceptor::send_request(%d) ")
-                            ACE_TEXT ("shutdown server 1 now. \n"), isRecursive));
+                            ACE_TEXT ("shutdown server 1 now. \n"), recursive_call_count));
       server1_shutdownObj->shutdown();
     }
 
@@ -57,12 +57,12 @@ Echo_Client_Request_Interceptor::send_request (
 
     if (CORBA::is_nil(hello.in ())) {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t)Echo_Client_Request_Interceptor::send_request(%d) ")
-                            ACE_TEXT ("hello reference is nil.\n"), isRecursive));
+                            ACE_TEXT ("hello reference is nil.\n"), recursive_call_count));
     }
     else {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Echo_Client_Request_Interceptor::send_request(%d) ")
-                            ACE_TEXT ("call server2 HelloWorld::sayHello() \n"), isRecursive));
-      const char* pMsg = " server2 say Hello";
+                            ACE_TEXT ("call server2 HelloWorld::sayHello() \n"), recursive_call_count));
+      char const *pMsg = " server2 say Hello";
       hello->sayHello(pMsg);
     }
   }
