@@ -9,11 +9,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <typename OBJ, typename ACE_Lock>
-TAO_Intrusive_Ref_Count_Object<OBJ,ACE_Lock>::~TAO_Intrusive_Ref_Count_Object()
-{
-  delete this->obj_;
-}
+template <typename OBJ, typename ACE_LOCK>
+TAO_Intrusive_Ref_Count_Object<OBJ, ACE_LOCK>::~TAO_Intrusive_Ref_Count_Object () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
