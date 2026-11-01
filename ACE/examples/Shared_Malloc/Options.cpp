@@ -17,73 +17,73 @@ Options::instance ()
 }
 
 const char *
-Options::program_name ()
+Options::program_name () const
 {
   return this->program_name_;
 }
 
 const char *
-Options::slave_name ()
+Options::slave_name () const
 {
   return this->slave_name_;
 }
 
-int
-Options::debug ()
+bool
+Options::debug () const
 {
   return this->debug_;
 }
 
-int
-Options::exec_slave ()
+bool
+Options::exec_slave () const
 {
   return this->exec_slave_;
 }
 
 size_t
-Options::iteration_count ()
+Options::iteration_count () const
 {
   return this->iteration_count_;
 }
 
-int
-Options::use_sbrk ()
+bool
+Options::use_sbrk () const
 {
   return this->use_sbrk_;
 }
 
 size_t
-Options::max_msg_size ()
+Options::max_msg_size () const
 {
   return this->max_msg_size_;
 }
 
 size_t
-Options::spawn_count ()
+Options::spawn_count () const
 {
   return this->spawn_count_;
 }
 
-int
-Options::spawn_threads ()
+bool
+Options::spawn_threads () const
 {
   return this->spawn_threads_;
 }
 
-int
-Options::use_mmap ()
+bool
+Options::use_mmap () const
 {
   return this->use_mmap_;
 }
 
-int
-Options::use_shmem ()
+bool
+Options::use_shmem () const
 {
   return this->use_shmem_;
 }
 
-int
-Options::child ()
+bool
+Options::child () const
 {
   return this->child_;
 }
@@ -113,16 +113,16 @@ Options::print_usage_and_die ()
 }
 
 Options::Options ()
-  : debug_ (0),
-    exec_slave_ (0),
+  : debug_ (false),
+    exec_slave_ (false),
     iteration_count_ (100),
-    use_sbrk_ (0),
-    use_shmem_ (0),
+    use_sbrk_ (false),
+    use_shmem_ (false),
     max_msg_size_ (127),
     spawn_count_ (1),
-    spawn_threads_ (1),
-    use_mmap_ (0),
-    child_ (0)
+    spawn_threads_ (true),
+    use_mmap_ (false),
+    child_ (false)
 {
   ACE_OS::strcpy (this->slave_name_, "slave");
 }
@@ -138,8 +138,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   // Put in a special-case check for child process.
   if (ACE_OS::strcmp (this->program_name_, slave_name_) == 0)
     {
-      this->child_ = 1;
-      this->use_mmap_ = 1;
+      this->child_ = true;
+      this->use_mmap_ = true;
     }
 
   for (int c;
@@ -149,33 +149,33 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
         case 'd':
-          this->debug_ = 1;
+          this->debug_ = true;
           break;
         case 'e':
-          this->exec_slave_ = 1;
+          this->exec_slave_ = true;
           break;
         case 'h':
           this->print_usage_and_die ();
           /* NOTREACHED */
           break;
         case 'l':
-          this->use_sbrk_ = 0;
+          this->use_sbrk_ = false;
           break;
         case 'L':
           this->max_msg_size_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'm':
-          this->use_mmap_ = 1;
+          this->use_mmap_ = true;
           break;
         case 'n':
           this->iteration_count_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'p': // Spawn processes rather than threads
-          this->spawn_threads_ = 0;
+          this->spawn_threads_ = false;
           break;
         case 's':
           // Use System V shared memory...
-          this->use_shmem_ = 1;
+          this->use_shmem_ = true;
           break;
         case 't':
           this->spawn_count_ = ACE_OS::atoi (get_opt.opt_arg ());
@@ -193,6 +193,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     }
 
   // Switch to using MMAP when the -p and -e options are enabled.
-  if (this->exec_slave_ == 1 && this->spawn_threads_ == 0)
-    this->use_mmap_ = 1;
+  if (this->exec_slave_ && !this->spawn_threads_)
+    this->use_mmap_ = true;
 }

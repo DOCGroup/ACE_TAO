@@ -24,6 +24,11 @@ private:
   Malloc ();
   // Ensure Singleton.
 
+  Malloc (const Malloc &) = delete;
+  Malloc (Malloc &&) = delete;
+  Malloc &operator= (const Malloc &) = delete;
+  Malloc &operator= (Malloc &&) = delete;
+
   static ACE_Allocator *instance_;
   // Malloc Singleton.
 };

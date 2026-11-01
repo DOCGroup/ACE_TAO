@@ -21,22 +21,27 @@ public:
   // Parse the arguments.
 
   // = Accessor methods.
-  const char *program_name ();
-  const char *slave_name ();
-  int debug ();
-  int exec_slave ();
-  size_t iteration_count ();
-  int use_sbrk ();
-  int use_shmem ();
-  size_t max_msg_size ();
-  size_t spawn_count ();
-  int spawn_threads ();
-  int use_mmap ();
-  int child ();
+  const char *program_name () const;
+  const char *slave_name () const;
+  bool debug () const;
+  bool exec_slave () const;
+  size_t iteration_count () const;
+  bool use_sbrk () const;
+  bool use_shmem () const;
+  size_t max_msg_size () const;
+  size_t spawn_count () const;
+  bool spawn_threads () const;
+  bool use_mmap () const;
+  bool child () const;
 
 private:
   Options ();
   // Ensure Singleton.
+
+  Options (const Options &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (const Options &) = delete;
+  Options &operator= (Options &&) = delete;
 
   static Options *instance_;
   // Singleton.
@@ -50,19 +55,19 @@ private:
   char slave_name_[MAXPATHLEN];
   // Name of slave process.
 
-  int debug_;
+  bool debug_;
   // Flag to indicate if we are debugging.
 
-  int exec_slave_;
+  bool exec_slave_;
   // Flag to indicate if we should exec after forking.
 
   size_t iteration_count_;
   // Number of iterations to call malloc_recurse().
 
-  int use_sbrk_;
+  bool use_sbrk_;
   // Should we use sbrk(2)?
 
-  int use_shmem_;
+  bool use_shmem_;
   // Should we use Shared Memory?
 
   size_t max_msg_size_;
@@ -71,13 +76,13 @@ private:
   size_t spawn_count_;
   // Number of threads.
 
-  int spawn_threads_;
+  bool spawn_threads_;
   // Spawn threads vs. processes.
 
-  int use_mmap_;
+  bool use_mmap_;
   // Use mmap() as the backing store.
 
-  int child_;
+  bool child_;
   // We're a child process.
 };
 
