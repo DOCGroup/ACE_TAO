@@ -14,6 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include <algorithm>
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -188,7 +189,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
            mb != nullptr;
            mb = mb->cont ())
         {
-          ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
+          std::memcpy (buf, mb->rd_ptr (), mb->length ());
           buf += mb->length ();
         }
 
@@ -291,7 +292,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
                i != nullptr;
                i = i->cont ())
             {
-              ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+              std::memcpy (buf, i->rd_ptr (), i->length ());
               buf += i->length ();
             }
 
@@ -342,7 +343,7 @@ TAO::SSLIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       if (iiop->port () == this->addrs_[i].get_port_number ()
-          && ACE_OS::strcmp (iiop->host (), this->hosts_[i]) == 0)
+          && std::strcmp (iiop->host (), this->hosts_[i]) == 0)
         return true;
     }
 
@@ -595,7 +596,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
                              value.c_str ()),
                             -1);
         }
-      else if (ACE_OS::strcmp (name.c_str (), "ssl_port") == 0)
+      else if (std::strcmp (name.c_str (), "ssl_port") == 0)
         {
           int ssl_port = ACE_OS::atoi (value.c_str ());
 

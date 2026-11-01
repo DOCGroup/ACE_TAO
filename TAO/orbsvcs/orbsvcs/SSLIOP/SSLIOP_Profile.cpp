@@ -1,7 +1,8 @@
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
 #include "orbsvcs/SSLIOP/ssl_endpointsC.h"
 #include "tao/CDR.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -245,7 +246,7 @@ TAO_SSLIOP_Profile::encode_endpoints ()
            iterator = iterator->cont ())
         {
           CORBA::ULong const i_length = static_cast<CORBA::ULong> (iterator->length ());
-          ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+          std::memcpy (buf, iterator->rd_ptr (), i_length);
 
           buf += i_length;
         }

@@ -9,6 +9,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cstring>
+
 #if defined (ACE_WIN32)
 # include <conio.h>
 #elif defined (ACE_HAS_TERMIOS)
@@ -128,7 +131,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
   int len = 0;
   if (the_passwd != nullptr)
     {
-      len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (passwd_str));
+      len = ACE_Utils::truncate_cast<int> (std::strlen (passwd_str));
     }
   else
     {
@@ -225,7 +228,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
                                                 (void *) passwd_str);
     }
 
-  ACE_OS::strncpy (buf, pem_passwd_.c_str(), len);
+  std::strncpy (buf, pem_passwd_.c_str (), len);
   buf[len] = 0;
   return len;
 }
@@ -647,7 +650,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       if (ssl_ctx->dh_params (dhparams_path.in(),
                               dhparams_type) != 0)
         {
-          if (ACE_OS::strcmp (dhparams_path.in(), certificate_path.in()))
+          if (std::strcmp (dhparams_path.in (), certificate_path.in ()))
             {
               // We only want to fail catastrophically if the user specified
               // a dh parameter file and we were unable to actually find it

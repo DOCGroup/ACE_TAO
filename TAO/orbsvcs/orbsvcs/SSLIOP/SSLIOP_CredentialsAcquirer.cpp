@@ -9,6 +9,8 @@
 
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
+
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
@@ -36,20 +38,20 @@ TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
 
   if (password != nullptr)
     {
-      pwlen = static_cast<int> (ACE_OS::strlen (password));
+      pwlen = static_cast<int> (std::strlen (password));
 
       int copy_len = pwlen + 1;  // Include the NULL terminator
 
       // Clear the portion of the buffer that exceeds the space that
       // will be occupied by the password.
       if (copy_len < size)
-        ACE_OS::memset (buf + copy_len, 0, size - copy_len);
+        std::memset (buf + copy_len, 0, size - copy_len);
 
       // Make sure we don't overflow the OpenSSL supplied buffer.
       // Truncate the password if necessary.
       copy_len = (copy_len > size) ? size : copy_len;
 
-      ACE_OS::memcpy (buf, password, copy_len);
+      std::memcpy (buf, password, copy_len);
 
       // NULL terminate the truncated password.
       if (copy_len > size)
