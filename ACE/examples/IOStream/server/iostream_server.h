@@ -29,13 +29,17 @@ class Handler : public ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_NULL_SYNCH>
 {
 public:
   Handler ();
-  ~Handler ();
+  Handler (const Handler &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (const Handler &) = delete;
+  Handler &operator= (Handler &&) = delete;
+  ~Handler () override;
 
   // = <Svc_Handler> hooks.
-  virtual int open (void *);
+  int open (void *) override;
 
   // = <Event_Handler> hooks.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 };
 
 #endif /* ACE_LACKS_ACE_IOSTREAM */
