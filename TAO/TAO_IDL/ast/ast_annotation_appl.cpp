@@ -3,13 +3,6 @@
 
 #include <memory>
 
-AST_Annotation_Appl::Param::Param ()
-  : id (nullptr),
-    expr (nullptr),
-    used (false)
-{
-}
-
 AST_Annotation_Appl::Param::~Param ()
 {
   if (id)

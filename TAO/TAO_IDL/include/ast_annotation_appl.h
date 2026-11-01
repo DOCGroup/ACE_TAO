@@ -27,11 +27,15 @@ public:
    */
   ///{
   struct Param {
-    Param ();
+    Param () = default;
     ~Param ();
-    Identifier *id;
-    AST_Expression *expr;
-    bool used;
+    Param (Param const &) = delete;
+    Param (Param &&) = delete;
+    Param &operator= (Param const &) = delete;
+    Param &operator= (Param &&) = delete;
+    Identifier *id {};
+    AST_Expression *expr {};
+    bool used {};
   };
   using Params = std::vector<Param *>;
   ///}
