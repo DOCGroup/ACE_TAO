@@ -15,7 +15,6 @@
 #include "tao/IIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 #include <cstring>
 #include <algorithm>
@@ -700,7 +699,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
           if (def_type)
             *def_type = AF_INET6;
 
-          ACE_OS::memcpy (tmp_host, address + 1, len);
+          std::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
         }
     }
@@ -716,11 +715,11 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
             if (len >= sizeof (tmp_host))
               return -1;
 
-            ACE_OS::memcpy (tmp_host, address, len);
+            std::memcpy (tmp_host, address, len);
             tmp_host[len] = '\0';
           }
         else
-          ACE_OS::strcpy (tmp_host, address);
+          std::strcpy (tmp_host, address);
       }
 
   if (!ipv6_in_host && !host_defaulted)
@@ -771,7 +770,7 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
           if (len >= sizeof (tmp_host))
             return -1;
 
-          ACE_OS::memcpy (tmp_host, address, len);
+          std::memcpy (tmp_host, address, len);
           tmp_host[len] = '\0';
         }
       specified_hostname = tmp_host;
@@ -988,7 +987,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
                   char *[this->endpoint_count_],
                   -1);
 
-  ACE_OS::memset (this->hosts_, 0, sizeof (char*) * this->endpoint_count_);
+  std::fill_n (this->hosts_, this->endpoint_count_, nullptr);
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
