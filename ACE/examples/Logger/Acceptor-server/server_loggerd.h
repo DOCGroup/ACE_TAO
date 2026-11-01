@@ -33,15 +33,19 @@ class Logging_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
   Logging_Handler ();
+  Logging_Handler (const Logging_Handler &) = delete;
+  Logging_Handler (Logging_Handler &&) = delete;
+  Logging_Handler &operator= (const Logging_Handler &) = delete;
+  Logging_Handler &operator= (Logging_Handler &&) = delete;
 
   // = Hooks for opening and closing handlers.
-  virtual int open (void *);
+  int open (void *) override;
 
 protected:
   // = Demultiplexing hooks.
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_input (ACE_HANDLE) override;
+  int handle_timeout (const ACE_Time_Value &tv,
+                      const void *arg) override;
 
 private:
   char peer_name_[MAXHOSTNAMELEN + 1];

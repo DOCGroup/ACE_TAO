@@ -35,6 +35,10 @@ class Logging_Handler : public ACE_Event_Handler
 {
 public:
   Logging_Handler () = default;
+  Logging_Handler (const Logging_Handler &) = delete;
+  Logging_Handler (Logging_Handler &&) = delete;
+  Logging_Handler &operator= (const Logging_Handler &) = delete;
+  Logging_Handler &operator= (Logging_Handler &&) = delete;
 
   // = Hooks for opening and closing handlers.
   virtual int open ();
@@ -53,7 +57,7 @@ protected:
 
   // = Really should be private...
   /// Ensure dynamic allocation.
-  virtual ~Logging_Handler ();
+  ~Logging_Handler () override;
 
 private:
   /// Host we are connected to.

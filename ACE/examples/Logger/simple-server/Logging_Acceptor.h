@@ -34,6 +34,10 @@ friend class Logging_Handler;
 public:
   /// Constructor.
   Logging_Acceptor () = default;
+  Logging_Acceptor (const Logging_Acceptor &) = delete;
+  Logging_Acceptor (Logging_Acceptor &&) = delete;
+  Logging_Acceptor &operator= (const Logging_Acceptor &) = delete;
+  Logging_Acceptor &operator= (Logging_Acceptor &&) = delete;
 
   /// Initialization.
   int open (const ACE_INET_Addr &a);

@@ -21,7 +21,7 @@ handler (int)
 }
 
 // It doesn't get anymore const than this....
-static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
+static constexpr u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

@@ -52,8 +52,8 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
   int const reset_new_handle = this->reactor ()->uses_event_associations ();
 
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
-                                   0, // remote address
-                                   0, // timeout
+                                   nullptr, // remote address
+                                   nullptr, // timeout
                                    1, // restart
                                    reset_new_handle  // reset new handler
                                    ) == -1
