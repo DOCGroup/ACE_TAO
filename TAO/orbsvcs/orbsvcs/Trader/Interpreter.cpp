@@ -1,5 +1,4 @@
 #include "orbsvcs/Trader/Interpreter.h"
-#include "ace/OS_NS_string.h"
 
 #include <cstring>
 
@@ -81,9 +80,9 @@ TAO_Lex_String_Input::copy_into (char* buf, int max_size)
 
   if (n > 0)
     {
-      ACE_OS::memcpy (buf,
-                      TAO_Lex_String_Input::current_,
-                      n);
+      std::memcpy (buf,
+                   TAO_Lex_String_Input::current_,
+                   n);
       TAO_Lex_String_Input::current_ += n;
     }
 

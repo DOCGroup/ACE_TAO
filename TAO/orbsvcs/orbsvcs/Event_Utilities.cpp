@@ -3,6 +3,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
@@ -131,7 +133,7 @@ ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscr
 void event_debug (const char* p,
                   const RtecEventComm::Event& event)
 {
-  size_t l = ACE_OS::strlen (p);
+  size_t l = std::strlen (p);
   ORBSVCS_DEBUG ((LM_DEBUG,
               "%*.*s - event.source: %d (0x%x)\n"
               "%*.*s   event.type: %d (0x%x)\n",
