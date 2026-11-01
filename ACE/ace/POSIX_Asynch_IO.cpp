@@ -32,7 +32,7 @@ ACE_POSIX_Asynch_Result::act () const
   return this->act_;
 }
 
-int
+bool
 ACE_POSIX_Asynch_Result::success () const
 {
   return this->success_;
@@ -114,7 +114,7 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
   : handler_proxy_ (handler_proxy),
     act_ (act),
     bytes_transferred_ (0),
-    success_ (0),
+    success_ (false),
     completion_key_ (nullptr),
     error_ (0)
 {

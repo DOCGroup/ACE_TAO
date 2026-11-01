@@ -24,7 +24,7 @@ ACE_Asynch_Result::act () const
   return this->implementation ()->act ();
 }
 
-int
+bool
 ACE_Asynch_Result::success () const
 {
   return this->implementation ()->success ();

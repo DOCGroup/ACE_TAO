@@ -28,7 +28,7 @@ ACE_WIN32_Asynch_Result::act () const
   return this->act_;
 }
 
-int
+bool
 ACE_WIN32_Asynch_Result::success () const
 {
   return this->success_;
@@ -117,7 +117,7 @@ ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result
     handler_proxy_ (handler_proxy),
     act_ (act),
     bytes_transferred_ (0),
-    success_ (0),
+    success_ (false),
     completion_key_ (0),
     error_ (0)
 {
@@ -306,7 +306,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Read_Stream_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
@@ -731,7 +731,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Write_Stream_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
@@ -1151,7 +1151,7 @@ ACE_WIN32_Asynch_Read_File_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Read_File_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
@@ -1550,7 +1550,7 @@ ACE_WIN32_Asynch_Write_File_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Write_File_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
@@ -1996,7 +1996,7 @@ ACE_WIN32_Asynch_Accept_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Accept_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
@@ -2280,7 +2280,7 @@ ACE_WIN32_Asynch_Connect_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Connect_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
@@ -2901,7 +2901,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Transmit_File_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
@@ -3147,7 +3147,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Read_Dgram_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
@@ -3483,7 +3483,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::act () const
   return ACE_WIN32_Asynch_Result::act ();
 }
 
-int
+bool
 ACE_WIN32_Asynch_Write_Dgram_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();

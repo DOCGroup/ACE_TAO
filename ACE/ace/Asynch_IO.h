@@ -108,7 +108,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This is the ACT associated with the handle on which the
