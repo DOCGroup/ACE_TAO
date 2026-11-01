@@ -12,6 +12,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <cstring>
+#include <memory>
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
@@ -74,7 +75,8 @@ namespace TAO_Notify
     if (result)
     {
       this->live_ = false;
-      std::unique_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
+      std::unique_ptr<ACEXML_FileCharStream> fstm =
+        std::make_unique<ACEXML_FileCharStream> ();
       // xml input source will take ownership
 
       if (fstm->open (this->file_name_.c_str ()) == 0)
@@ -124,7 +126,8 @@ namespace TAO_Notify
     ACE_ASSERT (root != nullptr);
     this->live_ = true;
 
-    std::unique_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
+    std::unique_ptr<ACEXML_FileCharStream> fstm =
+      std::make_unique<ACEXML_FileCharStream> ();
     // xml input source will take ownership
 
     if (fstm->open (this->file_name_.c_str ()) == 0)

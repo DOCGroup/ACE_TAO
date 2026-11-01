@@ -6,6 +6,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
+#include <memory>
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,13 +27,13 @@ namespace TAO_Notify
     XML_Saver *saver = nullptr;
 
     ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), nullptr);
+    std::unique_ptr<XML_Saver> saver_guard (saver);
 
-    if (! saver->open ( this->save_base_path_.c_str (), this->backup_count_))
+    if (! saver_guard->open (this->save_base_path_.c_str (), this->backup_count_))
     {
-      delete saver;
-      saver = nullptr;
+      return nullptr;
     }
-    return static_cast<Topology_Saver *> (saver);
+    return saver_guard.release ();
   }
 
   // virtual
@@ -39,14 +41,14 @@ namespace TAO_Notify
   XML_Topology_Factory::create_loader()
   {
     XML_Loader *loader = nullptr;
-    ACE_NEW_NORETURN(loader, XML_Loader);
+    ACE_NEW_RETURN (loader, XML_Loader, nullptr);
+    std::unique_ptr<XML_Loader> loader_guard (loader);
 
-    if (! loader->open(this->load_base_path_))
+    if (! loader_guard->open (this->load_base_path_))
     {
-      delete loader;
-      loader = nullptr;
+      return nullptr;
     }
-    return static_cast<Topology_Loader *> (loader);
+    return loader_guard.release ();
   }
 
   // virtual
