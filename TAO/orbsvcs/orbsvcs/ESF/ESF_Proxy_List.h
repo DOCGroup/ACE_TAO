@@ -32,10 +32,10 @@ template<class PROXY>
 class TAO_ESF_Proxy_List
 {
 public:
-  /// A typedef for the underlying implementaiton class
+  /// An alias for the underlying implementation class
   using Implementation = ACE_Unbounded_Set<PROXY *>;
 
-  /// A typedef for the underlying iterator
+  /// An alias for the underlying iterator
   using Iterator = ACE_Unbounded_Set_Iterator<PROXY *>;
 
   /// Constructor
@@ -43,10 +43,10 @@ public:
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  ACE_Unbounded_Set_Iterator<PROXY *> begin ();
+  Iterator begin ();
 
   /// Return one past the last element in the collection
-  ACE_Unbounded_Set_Iterator<PROXY *> end ();
+  Iterator end ();
 
   /// Return the number of elements in the collection
   std::size_t size () const;
