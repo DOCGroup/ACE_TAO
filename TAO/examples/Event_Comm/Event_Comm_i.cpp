@@ -92,7 +92,7 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   ACE_ASSERT (filtering_criteria != nullptr);
 
   // Check for wildcard case first.
-  if (ACE_OS::strcmp (filtering_criteria, "") == 0)
+  if (*filtering_criteria == '\0')
     ACE_ALLOCATOR (compile_buffer,
                    ACE_OS::strdup (""));
   else

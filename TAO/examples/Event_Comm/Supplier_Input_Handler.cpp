@@ -3,6 +3,8 @@
 #include "Supplier_Input_Handler.h"
 #include "tao/ORB_Core.h"
 
+#include <cstring>
+
 Supplier_Input_Handler::~Supplier_Input_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -65,7 +67,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
     }
   else
     {
-      size_t n = ACE_OS::strlen (buf);
+      size_t n = std::strlen (buf);
 
       // Null terminate the buffer, replacing the '\n' with '\0'.
       if (buf[n - 1] == '\n')
@@ -78,7 +80,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
     }
 
 
-  if (ACE_OS::strncmp (buf, "quit", 4) == 0)
+  if (std::strncmp (buf, "quit", 4) == 0)
     // Tell the main event loop to shutdown.
     this->notifier_->shutdown ();
   else

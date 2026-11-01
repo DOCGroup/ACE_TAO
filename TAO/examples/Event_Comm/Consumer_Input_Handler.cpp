@@ -3,6 +3,8 @@
 
 #include "tao/ORB_Core.h"
 
+#include <cstring>
+
 bool
 Consumer_Input_Handler::consumer_initiated_shutdown () const
 {
@@ -102,7 +104,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
 
   ACE_ASSERT (notifier != nullptr);
 
-  if (ACE_OS::strncmp (buf, "quit", 4) == 0)
+  if (std::strncmp (buf, "quit", 4) == 0)
     {
       // Consumer wants to shutdown.
       this->consumer_initiated_shutdown (true);
