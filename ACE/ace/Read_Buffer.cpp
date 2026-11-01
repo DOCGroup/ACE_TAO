@@ -99,7 +99,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 
   int c = EOF;
   size_t slot = 0;
-  int done = 0;
+  bool done = false;
 
   // Read in the file char by char
   while (slot < BUFSIZ)
@@ -113,7 +113,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           break;
         }
       else if (c == term)
-        done = 1;
+        done = true;
 
       // Check for possible substitutions.
       if (c == search)
