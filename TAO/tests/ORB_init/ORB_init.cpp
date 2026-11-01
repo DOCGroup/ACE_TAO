@@ -9,7 +9,7 @@
 // Do not attempt to narrow the object represented by this IOR, nor
 // should you modify the IOR unless you replace it with another
 // valid one!
-static const char IOR[] =
+static constexpr char IOR[] =
 "IOR:010000001600000049444c3a43756269745f466163746f72793a312e30000000010000000000000090000000010102cd14000000616e647572696c2e6563652e7563692e6564750057fecdcd2d00000014010f004e5550000000130000000001000000006368696c645f706f61000000000001000000666163746f7279cdcdcd03000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000004f41540400000001cd0000";
 
 int
@@ -19,7 +19,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      const char orbid[] = "mighty_orb";
+      constexpr char orbid[] = "mighty_orb";
 
       CORBA::ORB_ptr my_orb = CORBA::ORB::_nil();
 
@@ -150,7 +150,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       throw CORBA::INTERNAL ();
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& exc)
+  catch (CORBA::OBJECT_NOT_EXIST const &exc)
     {
       // Do something with the exception to make sure it actually
       // exists.  If it doesn't exist then there is something wrong
@@ -163,7 +163,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "This exception was expected.  It is safe to ignore it.\n",
                   exc._rep_id ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught unexpected exception:");
 
