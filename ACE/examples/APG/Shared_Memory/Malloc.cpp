@@ -1,5 +1,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 // Listing 1 code/ch17
 #include "ace/MMAP_Memory_Pool.h"
@@ -9,7 +10,7 @@
 using ALLOCATOR = ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 using MALLOC_LIFO_ITERATOR = ACE_Malloc_LIFO_Iterator<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 
-ALLOCATOR  *g_allocator;
+std::unique_ptr<ALLOCATOR> g_allocator;
 // Listing 1
 
 // Listing 2 code/ch17
@@ -88,9 +89,11 @@ int addRecords ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
-  ACE_NEW_RETURN (g_allocator,
+  ALLOCATOR *allocator = nullptr;
+  ACE_NEW_RETURN (allocator,
                   ALLOCATOR (BACKING_STORE),
                   -1);
+  g_allocator.reset (allocator);
   if (argc > 1)
     {
       showRecords ();
@@ -101,7 +104,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
     }
 
   g_allocator->sync ();
-  delete g_allocator;
+  g_allocator.reset ();
   return 0;
 }
 // Listing 4

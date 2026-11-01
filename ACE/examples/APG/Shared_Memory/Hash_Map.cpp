@@ -7,6 +7,7 @@
 #include "ace/PI_Malloc.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Process.h"
+#include <memory>
 
 #define BACKING_STORE "map.store"
 #define MAP_NAME "records.db"
@@ -26,7 +27,7 @@ HASH_MAP* smap (ALLOCATOR *shmem_allocator)
 {
   void *db = nullptr;
   if (shmem_allocator->find (MAP_NAME, db) == 0)
-    return (HASH_MAP *) db;
+    return static_cast<HASH_MAP *> (db);
   size_t hash_table_size = sizeof (HASH_MAP);
   void *hash_map = shmem_allocator->malloc (hash_table_size);
   if (hash_map == nullptr)
@@ -39,7 +40,7 @@ HASH_MAP* smap (ALLOCATOR *shmem_allocator)
       shmem_allocator->remove ();
       return nullptr;
     }
-  return (HASH_MAP*)hash_map;
+  return static_cast<HASH_MAP *> (hash_map);
 }
 // Listing 2
 // Listing 6 code/ch17
@@ -52,7 +53,7 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
               ACE_TEXT ("(%P|%t) Found %d records\n\n"),
               mapLength));
 
-  int *todelete = new int[mapLength];
+  std::unique_ptr<int[]> todelete = std::make_unique<int[]> (mapLength);
   int i = 0;
 
   for (HASH_MAP::iterator iter = map->begin ();
@@ -96,8 +97,6 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
                     j));
     }
 
-  delete [] todelete;
-
   return 0;
 }
 // Listing 6
@@ -137,18 +136,19 @@ int handle_child ()
 
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, coordMutex, -1);
 
-  ALLOCATOR * shmem_allocator = nullptr;
+  ALLOCATOR *allocator = nullptr;
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
 
-  ACE_NEW_RETURN (shmem_allocator,
+  ACE_NEW_RETURN (allocator,
                   ALLOCATOR (BACKING_STORE,
                              BACKING_STORE,
                              &options),
                   -1);
+  std::unique_ptr<ALLOCATOR> shmem_allocator (allocator);
 
-  HASH_MAP *map = smap (shmem_allocator);
+  HASH_MAP *map = smap (shmem_allocator.get ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Map has %d entries\n"),
@@ -157,9 +157,8 @@ int handle_child ()
               ACE_TEXT ("In child, map is located at %@\n"),
               map));
 
-  processRecords (map, shmem_allocator);
+  processRecords (map, shmem_allocator.get ());
   shmem_allocator->sync ();
-  delete shmem_allocator;
 
   return 0;
 }
@@ -169,17 +168,18 @@ int handle_parent (ACE_TCHAR *cmdLine)
 {
   ACE_TRACE ("handle_parent");
 
-  ALLOCATOR * shmem_allocator = nullptr;
+  ALLOCATOR *allocator = nullptr;
   ACE_MMAP_Memory_Pool_Options options
     (ACE_DEFAULT_BASE_ADDR,
      ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
 
   ACE_NEW_RETURN
-    (shmem_allocator,
+    (allocator,
      ALLOCATOR (BACKING_STORE, BACKING_STORE, &options),
      -1);
+  std::unique_ptr<ALLOCATOR> shmem_allocator (allocator);
 
-  HASH_MAP *map = smap (shmem_allocator);
+  HASH_MAP *map = smap (shmem_allocator.get ());
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
@@ -202,7 +202,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
     processa.spawn (poptions);
 
     // First append a few records.
-    addRecords (map, shmem_allocator);
+    addRecords (map, shmem_allocator.get ());
   }
 
 
@@ -211,7 +211,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
                       coordMutex, -1);
 
     // Add a few more records..
-    addRecords (map, shmem_allocator);
+    addRecords (map, shmem_allocator.get ());
 
     // Let's see what's left.
     ACE_DEBUG ((LM_DEBUG,
@@ -230,7 +230,6 @@ int handle_parent (ACE_TCHAR *cmdLine)
   // around anymore; it's now safe to remove it.
   // !!This will remove the backing store.!!
   shmem_allocator->remove ();
-  delete shmem_allocator;
   return 0;
 }
 

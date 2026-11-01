@@ -1,5 +1,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 // Listing 1 code/ch17
 #include "ace/MMAP_Memory_Pool.h"
@@ -11,7 +12,7 @@ using ALLOCATOR = ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Cont
 using MALLOC_LIFO_ITERATOR =
   ACE_Malloc_LIFO_Iterator_T<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block>;
 
-ALLOCATOR  *g_allocator;
+std::unique_ptr<ALLOCATOR> g_allocator;
 // Listing 1
 // Listing 2 code/ch17
 class Record
@@ -92,16 +93,18 @@ int addRecords ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
+  ALLOCATOR *allocator = nullptr;
   if (argc > 1)
     {
       ACE_MMAP_Memory_Pool_Options options
         (ACE_DEFAULT_BASE_ADDR,
          ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
-      ACE_NEW_RETURN (g_allocator,
+      ACE_NEW_RETURN (allocator,
                       ALLOCATOR (BACKING_STORE,
                                  BACKING_STORE,
                                  &options),
                       -1);
+      g_allocator.reset (allocator);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Mapped to base address %@\n"),
                   g_allocator->base_addr ()));
@@ -112,11 +115,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
     {
       ACE_MMAP_Memory_Pool_Options options
         (nullptr, ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
-      ACE_NEW_RETURN (g_allocator,
+      ACE_NEW_RETURN (allocator,
                       ALLOCATOR (BACKING_STORE,
                                  BACKING_STORE,
                                  &options),
                       -1);
+      g_allocator.reset (allocator);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Mapped to base address %@\n"),
@@ -126,7 +130,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
     }
 
   g_allocator->sync ();
-  delete g_allocator;
+  g_allocator.reset ();
   return 0;
 }
 // Listing 3
