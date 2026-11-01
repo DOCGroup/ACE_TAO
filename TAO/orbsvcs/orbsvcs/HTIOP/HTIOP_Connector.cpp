@@ -19,6 +19,8 @@
 #include "ace/Strategies_T.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
@@ -93,7 +95,7 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
    // remote ACE::HTBP::Addr.
    if (remote_address.get_type () != AF_INET &&
        (remote_address.get_htid() == 0 ||
-        ACE_OS::strlen(remote_address.get_htid()) == 0))
+        std::strlen (remote_address.get_htid ()) == 0))
      {
        if (TAO_debug_level > 0)
          {
@@ -367,9 +369,9 @@ TAO::HTIOP::Connector::check_prefix (const char *endpoint)
 
   const char *protocol[] = { "htiop" };
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t slot = std::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = ACE_OS::strlen (protocol[0]);
+  size_t len0 = std::strlen (protocol[0]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.

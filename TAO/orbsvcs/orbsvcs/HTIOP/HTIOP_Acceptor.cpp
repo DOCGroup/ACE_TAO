@@ -13,6 +13,8 @@
 #include "tao/CDR.h"
 #include "tao/Codeset_Manager.h"
 
+#include <algorithm>
+#include <cstring>
 #include <memory>
 
 #if !defined(__ACE_INLINE__)
@@ -231,12 +233,12 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
         {
           if (endp->port() == 0)
             {
-              return (ACE_OS::strcmp (endp->htid(),
+              return (std::strcmp (endp->htid(),
                                       this->addrs_[i].get_htid()) == 0);
             }
           else
             {
-              return (ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0);
+              return (std::strcmp (endp->host(), this->hosts_[i]) == 0);
             }
         }
     }
@@ -298,14 +300,14 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
   // @ Mostly the address is just a host:port but in case it is
   // host:port#token, remove the #token before this is processed
   // - priyanka
-  address = ACE_OS::strtok (const_cast<char *> (address), "#");
+  address = std::strtok (const_cast<char *> (address), "#");
 
   // In the common scenario, Acceptor is in the server that is
   // outside the firewall. It means the address that is sent to
   // us can be a ACE::HTBP::Outside_Addr which is of the form
   // host:port:token. The last :token has to be taken into
   // consideration.
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
+  const char *port_separator_loc = std::strchr (address, ':');
 
   const char *specified_hostname = nullptr;
   char tmp_host[MAXHOSTNAMELEN + 1];
@@ -353,7 +355,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
       // Extract out just the host part of the address.
       size_t len = port_separator_loc - address;
-      ACE_OS::memcpy (tmp_host, address, len);
+      std::memcpy (tmp_host, address, len);
       tmp_host[len] = '\0';
 
       specified_hostname = tmp_host;
@@ -448,8 +450,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                       char *[this->endpoint_count_],
                       -1);
 
-      ACE_OS::memset (this->hosts_, 0,
-                      sizeof (char*) * this->endpoint_count_);
+      std::fill_n (this->hosts_, this->endpoint_count_, nullptr);
 
       ACE::HTBP::ID_Requestor req(ht_env_);
       ACE_TCHAR *htid = req.get_HTID ();
@@ -692,7 +693,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
                   char *[this->endpoint_count_],
                   -1);
 
-  ACE_OS::memset (this->hosts_, 0, sizeof (char*) * this->endpoint_count_);
+  std::fill_n (this->hosts_, this->endpoint_count_, nullptr);
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
