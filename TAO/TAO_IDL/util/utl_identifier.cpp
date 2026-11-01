@@ -76,11 +76,7 @@ Identifier::Identifier (std::string const& s)
   preprocess_and_replace_string (s);
 }
 
-Identifier::Identifier (Identifier const &other)
-  : pv_string_ (other.pv_string_),
-    escaped_ (other.escaped ())
-{
-}
+Identifier::Identifier (Identifier const &) = default;
 
 Identifier::~Identifier () = default;
 
