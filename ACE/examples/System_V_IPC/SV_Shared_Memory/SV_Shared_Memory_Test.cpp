@@ -16,11 +16,12 @@ client ()
   if (shm_client.open_and_attach (SHM_KEY, SHMSZ) == -1)
     ACE_OS::perror ("open"), ACE_OS::exit (1);
 
-  for (char *s = (char *) shm_client.get_segment_ptr (); *s != '\0'; s++)
+  const char *s = static_cast<const char *> (shm_client.get_segment_ptr ());
+  for (; *s != '\0'; s++)
     putchar (*s);
 
   putchar ('\n');
-  *(char *) shm_client.get_segment_ptr () = '*';
+  *static_cast<char *> (shm_client.get_segment_ptr ()) = '*';
   ACE_OS::exit (0);
 }
 
@@ -32,14 +33,15 @@ server ()
   if (shm_server.open_and_attach (SHM_KEY, SHMSZ, ACE_SV_Shared_Memory::ACE_CREATE) == -1)
     ACE_OS::perror ("open"), ACE_OS::exit (1);
 
-  char *s = (char *) shm_server.get_segment_ptr ();
+  char *s = static_cast<char *> (shm_server.get_segment_ptr ());
 
   for (char c = 'a'; c <= 'z'; c++)
     *s++ = c;
 
   *s = '\0';
 
-  for (s = (char *) shm_server.get_segment_ptr (); *s != '*'; )
+  const char *read_s = static_cast<const char *> (shm_server.get_segment_ptr ());
+  for (; *read_s != '*'; )
     ACE_OS::sleep (1);
 
   if (shm_server.remove () < 0)
@@ -57,6 +59,7 @@ ACE_TMAIN(int, ACE_TCHAR *argv[])
     case 0:
       ACE_OS::sleep (1);
       client ();
+      return 0;
     default:
       server ();
     }
