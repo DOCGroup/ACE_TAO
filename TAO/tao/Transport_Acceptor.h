@@ -73,7 +73,7 @@ const CORBA::ULong TAO_ORB_TYPE = 0x54414f00U;
 class TAO_Export TAO_Acceptor
 {
 public:
-  TAO_Acceptor (CORBA::ULong tag);
+  explicit TAO_Acceptor (CORBA::ULong tag);
 
   /// Destructor
   virtual ~TAO_Acceptor ();

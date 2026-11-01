@@ -61,7 +61,7 @@ namespace TAO
 
   public:
     /// Ctor
-    Transport_Selection_Guard (TAO_Transport* t);
+    explicit Transport_Selection_Guard (TAO_Transport* t);
 
     /// Dtor
     ~Transport_Selection_Guard ();

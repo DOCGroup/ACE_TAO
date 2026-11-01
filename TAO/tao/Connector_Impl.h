@@ -73,7 +73,7 @@ class TAO_Connect_Concurrency_Strategy :
 {
 public:
   /// Constructor.
-  TAO_Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
+  explicit TAO_Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
 
 
   /// Activates the Svc_Handler, and if the right wait strategy is in

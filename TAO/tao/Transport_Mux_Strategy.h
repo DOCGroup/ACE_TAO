@@ -38,7 +38,7 @@ class TAO_Export TAO_Transport_Mux_Strategy
 {
 public:
   /// Base class constructor.
-  TAO_Transport_Mux_Strategy (TAO_Transport *transport);
+  explicit TAO_Transport_Mux_Strategy (TAO_Transport *transport);
 
   /// Base class destructor.
   virtual ~TAO_Transport_Mux_Strategy ();

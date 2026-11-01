@@ -51,7 +51,7 @@ class TAO_Export TAO_Incoming_Message_Queue
 {
 public:
   /// Constructor.
-  TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
+  explicit TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
   /// Destructor.
   ~TAO_Incoming_Message_Queue ();

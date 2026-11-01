@@ -100,7 +100,7 @@ class TAO_Export TAO_Pluggable_Reply_Params
 {
 public:
   /// Constructor.
-  TAO_Pluggable_Reply_Params (TAO_Transport *t);
+  explicit TAO_Pluggable_Reply_Params (TAO_Transport *t);
 
   /// The stream with the non-demarshaled reply. This stream will be
   /// passed up to the stubs to demarshal the parameter values.

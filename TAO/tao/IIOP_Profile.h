@@ -64,7 +64,7 @@ public:
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor, default.
-  TAO_IIOP_Profile (TAO_ORB_Core *orb_core);
+  explicit TAO_IIOP_Profile (TAO_ORB_Core *orb_core);
 
   /**
    * Add @a endp to this profile's list of endpoints (it is inserted
