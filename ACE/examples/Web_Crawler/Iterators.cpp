@@ -77,7 +77,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
 
 HTTP_Header_Iterator::HTTP_Header_Iterator (URL &url)
   : url_ (url),
-    end_of_header_ (0)
+    end_of_header_ (false)
 {
 }
 
@@ -103,7 +103,7 @@ HTTP_Header_Iterator::next (ACE_CString &line)
               if (this->url_.stream ().peek_char (1) == '\r'
                   && this->url_.stream ().peek_char (2) == '\n')
                 {
-                  this->end_of_header_ = 1;
+                  this->end_of_header_ = true;
                   // We're at the end of the header section.
                   this->url_.stream ().seek (3);
                 }
@@ -126,7 +126,7 @@ HTTP_Header_Iterator::next (ACE_CString &line)
                 {
                   // We're at the end of the header section.
                   this->url_.stream ().seek (1);
-                  this->end_of_header_ = 1;
+                  this->end_of_header_ = true;
                 }
 
               return 1;

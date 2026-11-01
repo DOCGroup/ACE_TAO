@@ -12,6 +12,8 @@
 #ifndef _WEB_CRAWLER_H
 #define _WEB_CRAWLER_H
 
+#include <memory>
+
 #include "URL_Addr.h"
 #include "HTTP_URL.h"
 
@@ -54,7 +56,7 @@ private:
    * perform various tasks.  Subclasses of <URL_Visitor_Factory>
    * determine what happens during a visitation.
    */
-  URL_Visitor_Factory *url_visitor_factory_;
+  std::unique_ptr<URL_Visitor_Factory> url_visitor_factory_;
 };
 
 #endif /* _WEB_CRAWLER_H */

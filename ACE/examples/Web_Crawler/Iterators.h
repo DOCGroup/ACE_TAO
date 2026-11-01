@@ -61,7 +61,7 @@ public:
    * memory-mapped file.  Returns 0 when all items have been seen,
    * else 1.
    */
-  virtual int next (ACE_CString &url);
+  int next (ACE_CString &url) override;
 
 private:
   /// HTTP URL that we're iterating over.
@@ -85,7 +85,7 @@ public:
    * memory-mapped file header.  Returns 0 when we've reached the end
    * of the header.  seen, else 1.
    */
-  virtual int next (ACE_CString &line);
+  int next (ACE_CString &line) override;
 
 private:
   /// HTTP URL that we're iterating over.
@@ -93,7 +93,7 @@ private:
 
   /// We've found the end of the header, which means this iterator is
   /// finished.
-  int end_of_header_;
+  bool end_of_header_ {};
 };
 
 /**
@@ -115,7 +115,7 @@ public:
    * <buffer.size> <= <BUFSIZ> .  Returns 0 when we've reached the end
    * of the header, else 1.
    */
-  virtual int next (ACE_CString &buffer);
+  int next (ACE_CString &buffer) override;
 
 private:
   /// HTTP URL that we're iterating over.

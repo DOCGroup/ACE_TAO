@@ -72,15 +72,14 @@ int
 Command_Processor::execute ()
 {
   Command *command;
-  while (this->url_queue_.is_empty () != 1)
+  while (!this->url_queue_.is_empty ())
     {
       if (this->url_queue_.dequeue_head (command) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "dequeue_head"),
                           -1);
-      URL_Command *url_command = dynamic_cast<URL_Command *> (command);
-      Auto_Destroyer<URL_Command> url_command_ptr (url_command);
-      if (url_command_ptr->execute () != 0)
+      Auto_Destroyer<Command> command_ptr (command);
+      if (command_ptr->execute () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "Couldnt execute command"),
                           -1);
@@ -92,23 +91,27 @@ int
 Command_Processor::insert (Command *command)
 {
   // According to the order specified the commands are removed from the queue.
-  if (this->url_queue_.is_full() != 1)
+  if (this->url_queue_.is_full ())
+    ACE_ERROR_RETURN ((LM_ERROR, "command queue is full\n"), -1);
+
+  const ACE_TCHAR *order = OPTIONS::instance ()->order ();
+  if (ACE_OS::strcmp (order, ACE_TEXT ("FIFO")) == 0)
     {
-      if (ACE_OS::strcmp (OPTIONS::instance ()->order (), ACE_TEXT ("FIFO")) == 0)
-        {
-          if (this->url_queue_.enqueue_tail (command) !=0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_tail")),
-                              - 1);
-        }
-      if (ACE_OS::strcmp (OPTIONS::instance ()->order (), ACE_TEXT ("LIFO")) == 0)
-        {
-          if (this->url_queue_.enqueue_head (command) !=0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_head")),
-                              - 1);
-        }
+      if (this->url_queue_.enqueue_tail (command) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_tail")),
+                          -1);
     }
+  else if (ACE_OS::strcmp (order, ACE_TEXT ("LIFO")) == 0)
+    {
+      if (this->url_queue_.enqueue_head (command) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_head")),
+                          -1);
+    }
+  else
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("invalid command queue order\n")), -1);
+
   return 0;
 }
 

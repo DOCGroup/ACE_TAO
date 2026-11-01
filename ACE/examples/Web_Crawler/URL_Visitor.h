@@ -72,7 +72,7 @@ public:
                                    URL_Iterator &);
 
   /// Perform the strategy for processing an HTTP header.
-  virtual int execute ();
+  int execute () override;
 };
 
 /**
@@ -96,7 +96,7 @@ public:
    * iterates over the HTML file and recursively visits embedded links
    * to process them, as well.
    */
-  virtual int execute ();
+  int execute () override;
 
 private:
   /// This is the context of the visit.
@@ -118,7 +118,7 @@ public:
                          URL_Iterator &);
 
   /// Perform the strategy for downloading a URL to a temporary file.
-  virtual int execute ();
+  int execute () override;
 };
 
 /**
@@ -168,19 +168,19 @@ public:
 
   // = Factory Methods.
   /// Factory Method that makes an <HTTP_Header_Iterator>.
-  virtual URL_Iterator *make_header_iterator ();
+  URL_Iterator *make_header_iterator () override;
 
   /// Factory Method that makes an <HTML_Body_Iterator>.
-  virtual URL_Iterator *make_body_iterator ();
+  URL_Iterator *make_body_iterator () override;
 
   /// Factory Method that makes the header processing strategy.
-  virtual URL_Processing_Strategy *make_header_strategy (URL_Iterator &);
+  URL_Processing_Strategy *make_header_strategy (URL_Iterator &) override;
 
   /// Factory Method that makes the body processing strategy .
-  virtual URL_Processing_Strategy *make_body_strategy (URL_Iterator &);
+  URL_Processing_Strategy *make_body_strategy (URL_Iterator &) override;
 
   /// Close down the resources.
-  virtual int destroy ();
+  int destroy () override;
 };
 
 /**
@@ -197,19 +197,19 @@ public:
 
   // = Factory Methods.
   /// Factory Method that makes an <HTTP_Header_Iterator>.
-  virtual URL_Iterator *make_header_iterator ();
+  URL_Iterator *make_header_iterator () override;
 
   /// Factory Method that makes an <HTML_Body_Iterator>.
-  virtual URL_Iterator *make_body_iterator ();
+  URL_Iterator *make_body_iterator () override;
 
   /// Factory Method that makes the header processing strategy.
-  virtual URL_Processing_Strategy *make_header_strategy (URL_Iterator &);
+  URL_Processing_Strategy *make_header_strategy (URL_Iterator &) override;
 
   /// Factory Method that makes the body processing strategy .
-  virtual URL_Processing_Strategy *make_body_strategy (URL_Iterator &);
+  URL_Processing_Strategy *make_body_strategy (URL_Iterator &) override;
 
   /// Close down the resources.
-  virtual int destroy ();
+  int destroy () override;
 
 private:
   /// Context of the visitor.
@@ -293,14 +293,14 @@ public:
    * is enabled then <visit> recursively checks each link embedded in
    * the HTML page.
    */
-  virtual int visit (HTTP_URL &http_url);
+  int visit (HTTP_URL &http_url) override;
 
   // @@
   // virtual int visit (FTP_URL &http_url);
 
   /// Cleanup the resources.
   URL_Validation_Visitor ();
-  virtual int destroy ();
+  int destroy () override;
 
   /// Returns a reference to the URL cache.
   URL_CACHE &url_cache ();
@@ -308,8 +308,8 @@ public:
 protected:
   /// Factory Method that makes a
   /// <URL_Validation_Visitation_Strategy_Factory>.
-  virtual ~URL_Validation_Visitor ();
-  virtual URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &);
+  ~URL_Validation_Visitor () override;
+  URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &) override;
 
   /// Cache the status of URLs we've already validated.
   URL_CACHE url_cache_;
@@ -347,17 +347,17 @@ public:
    * is enabled then <visit> recursively checks each link embedded in
    * the HTML page.
    */
-  virtual int visit (HTTP_URL &http_url);
+  int visit (HTTP_URL &http_url) override;
 
   // @@
   // virtual int visit (FTP_URL &http_url);
 
   /// Cleanup the resources.
-  virtual int destroy ();
+  int destroy () override;
 
 protected:
   /// Factory Method that makes a <URL_Download_Visitation_Strategy_Factory>.
-  URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &);
+  URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &) override;
 };
 
 /**
@@ -374,18 +374,28 @@ template <class T>
 class Auto_Destroyer
 {
 public:
-  Auto_Destroyer (T *t): t_ (t) {}
-  T *operator-> () { return this->t_; }
-  T *operator *() { return this->t_; }
+  explicit Auto_Destroyer (T *t): t_ (t) {}
+  Auto_Destroyer (const Auto_Destroyer &) = delete;
+  Auto_Destroyer (Auto_Destroyer &&) = delete;
+  Auto_Destroyer &operator= (const Auto_Destroyer &) = delete;
+  Auto_Destroyer &operator= (Auto_Destroyer &&) = delete;
+  T *operator-> () const { return this->t_; }
+  T *operator *() const { return this->t_; }
+  T *release ()
+  {
+    T *t = this->t_;
+    this->t_ = nullptr;
+    return t;
+  }
   void operator= (T *t)
   {
-    if (this->t_ != 0)
+    if (this->t_ != nullptr)
       this->t_->destroy ();
     this->t_ = t;
   }
   ~Auto_Destroyer ()
   {
-    if (this->t_ != 0)
+    if (this->t_ != nullptr)
       t_->destroy ();
   }
 private:
