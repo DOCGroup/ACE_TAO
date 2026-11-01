@@ -903,7 +903,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
   ACE_TRACE ("ACE_Fixed_Set<T>::ACE_Fixed_Set");
 
   for (size_t i = 0, j = 0; i < fs.max_size_ && j < this->cur_size_; ++i)
-    if (fs.search_structure_[i].is_free_ == 0)
+    if (!fs.search_structure_[i].is_free_)
       this->search_structure_[j++] = fs.search_structure_[i];
 }
 
@@ -917,7 +917,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
       this->cur_size_ = fs.cur_size_;
 
       for (size_t i = 0, j = 0; i < fs.max_size_ && j < this->cur_size_; ++i)
-        if (fs.search_structure_[i].is_free_ == 0)
+        if (!fs.search_structure_[i].is_free_)
           this->search_structure_[j++] = fs.search_structure_[i];
     }
 }
@@ -928,8 +928,6 @@ ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set ()
     max_size_ (ACE_SIZE)
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set");
-  for (size_t i = 0; i < this->max_size_; i++)
-    this->search_structure_[i].is_free_ = 1;
 }
 
 template <class T, size_t ACE_SIZE> int
@@ -938,7 +936,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::find (const T &item) const
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::find");
 
   for (size_t i = 0, j = 0; i < this->max_size_ && j < this->cur_size_; ++i)
-    if (this->search_structure_[i].is_free_ == 0)
+    if (!this->search_structure_[i].is_free_)
       {
         if (this->search_structure_[i].item_ == item)
           return 0;
@@ -961,7 +959,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
 
     // First, make sure we don't allow duplicates.
 
-    if (this->search_structure_[i].is_free_ == 0)
+    if (!this->search_structure_[i].is_free_)
       {
         if (this->search_structure_[i].item_ == item)
           return 1;
@@ -974,7 +972,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
   if (first_free > -1)
     {
       this->search_structure_[first_free].item_ = item;
-      this->search_structure_[first_free].is_free_ = 0;
+      this->search_structure_[first_free].is_free_ = false;
       this->cur_size_++;
       return 0;
     }
@@ -993,12 +991,12 @@ ACE_Fixed_Set<T, ACE_SIZE>::remove (const T &item)
   for (size_t i = 0, j = 0;
        i < this->max_size_ && j < this->cur_size_;
        ++i)
-    if (this->search_structure_[i].is_free_ == 0)
+    if (!this->search_structure_[i].is_free_)
       {
         if (this->search_structure_[i].item_ == item)
           {
             // Mark this entry as being free.
-            this->search_structure_[i].is_free_ = 1;
+            this->search_structure_[i].is_free_ = true;
 
             --this->cur_size_;
             return 0;
@@ -1041,7 +1039,7 @@ ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::advance ()
       for (++this->next_;
            static_cast<size_t> (this->next_) < this->s_.max_size_;
            ++this->next_)
-      if (this->s_.search_structure_[this->next_].is_free_ == 0)
+      if (!this->s_.search_structure_[this->next_].is_free_)
         {
           ++this->iterated_items_;
           return 1;
@@ -1079,7 +1077,7 @@ ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::next_i (T *&item)
   if (static_cast<size_t> (this->next_) < this->s_.max_size_)
     do
       {
-        if (this->s_.search_structure_[this->next_].is_free_ == 0)
+        if (!this->s_.search_structure_[this->next_].is_free_)
           {
             item = &this->s_.search_structure_[this->next_].item_;
             this->advance ();
@@ -1121,7 +1119,7 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::remove (T *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::remove");
 
-  if (this->s_.search_structure_[this->next_].is_free_ == 0)
+  if (!this->s_.search_structure_[this->next_].is_free_)
     {
       item = &this->s_.search_structure_[this->next_].item_;
       this->s_.remove (*item);
@@ -1137,7 +1135,7 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::operator* ()
 {
   T *retv = nullptr;
 
-  if (this->s_.search_structure_[this->next_].is_free_ == 0)
+  if (!this->s_.search_structure_[this->next_].is_free_)
     retv = &this->s_.search_structure_[this->next_].item_;
 
   ACE_ASSERT (retv != 0);
@@ -1176,7 +1174,7 @@ ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::operator* () const
 {
   const T *retv = nullptr;
 
-  if (this->s_.search_structure_[this->next_].is_free_ == 0)
+  if (!this->s_.search_structure_[this->next_].is_free_)
     retv = &this->s_.search_structure_[this->next_].item_;
 
   ACE_ASSERT (retv != 0);
@@ -1211,9 +1209,6 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set ()
 
   ACE_NEW (this->search_structure_,
            typename ACE_Bounded_Set<T>::Search_Structure[this->max_size_]);
-
-  for (size_t i = 0; i < this->max_size_; ++i)
-    this->search_structure_[i].is_free_ = 1;
 }
 
 template <class T> size_t
@@ -1267,9 +1262,6 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (size_t size)
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
   ACE_NEW (this->search_structure_,
            typename ACE_Bounded_Set<T>::Search_Structure[size]);
-
-  for (size_t i = 0; i < this->max_size_; i++)
-    this->search_structure_[i].is_free_ = 1;
 }
 
 template <class T> int
@@ -1279,7 +1271,7 @@ ACE_Bounded_Set<T>::find (const T &item) const
 
   for (size_t i = 0; i < this->cur_size_; i++)
     if (this->search_structure_[i].item_ == item
-        && this->search_structure_[i].is_free_ == 0)
+        && !this->search_structure_[i].is_free_)
       return 0;
 
   return -1;
@@ -1296,7 +1288,7 @@ ACE_Bounded_Set<T>::insert (const T &item)
     // First, make sure we don't allow duplicates.
 
     if (this->search_structure_[i].item_ == item
-        && this->search_structure_[i].is_free_ == 0)
+        && !this->search_structure_[i].is_free_)
       return 1;
     else if (this->search_structure_[i].is_free_ && first_free == -1)
       first_free = static_cast<int> (i);
@@ -1304,13 +1296,13 @@ ACE_Bounded_Set<T>::insert (const T &item)
   if (first_free > -1)   // If we found a free spot let's reuse it.
     {
       this->search_structure_[first_free].item_ = item;
-      this->search_structure_[first_free].is_free_ = 0;
+      this->search_structure_[first_free].is_free_ = false;
       return 0;
     }
   else if (i < this->max_size_) // Insert at the end of the active portion.
     {
       this->search_structure_[i].item_ = item;
-      this->search_structure_[i].is_free_ = 0;
+      this->search_structure_[i].is_free_ = false;
       this->cur_size_++;
       return 0;
     }
@@ -1329,7 +1321,7 @@ ACE_Bounded_Set<T>::remove (const T &item)
     if (this->search_structure_[i].item_ == item)
       {
         // Mark this entry as being free.
-        this->search_structure_[i].is_free_ = 1;
+        this->search_structure_[i].is_free_ = true;
 
         // If we just unbound the highest entry, then we need to
         // figure out where the next highest active entry is.

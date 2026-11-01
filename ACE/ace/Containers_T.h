@@ -1455,7 +1455,7 @@ private:
     T item_;
 
     /// Keeps track of whether this item is in use or not.
-    int is_free_;
+    bool is_free_ {true};
   } search_structure_[ACE_SIZE];
 
   /// Current size of the set.
@@ -1659,7 +1659,7 @@ private:
     T item_;
 
     /// Keeps track of whether this item is in use or not.
-    int is_free_;
+    bool is_free_ {true};
   };
 
   /// Holds the contents of the set.
