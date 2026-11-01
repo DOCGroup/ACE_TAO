@@ -27,9 +27,9 @@ public:
   Svc_Handler ();
   ~Svc_Handler ();
 
-  virtual int open (void *);
+  int open (void *) override;
 
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
   // This is called when asynchronous read from the socket complete
   // Handle data from the client.
 
@@ -45,10 +45,10 @@ public:
   ~IPC_Server ();
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialize the network server.
 
-  virtual int fini ();
+  int fini () override;
   // Close down the server.
 
   virtual int svc ();
@@ -68,7 +68,7 @@ private:
   // Keeps track of when we shut down due to receipt of the SIGINT
   // signal.
 
-  int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
   // Signal handler method.
 };
 

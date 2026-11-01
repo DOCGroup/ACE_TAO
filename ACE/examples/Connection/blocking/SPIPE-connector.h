@@ -19,21 +19,21 @@ class Peer_Handler : public ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>
 public:
   // = Initialization
 
-  Peer_Handler (int iterations = 0);
+  explicit Peer_Handler (int iterations = 0);
   // <iterations> is the number of buffers to send.  If <iterations>
   // == 0, then read from stdin.
 
   ~Peer_Handler ();
 
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
   // Activate the handler when connection is established.
 
   // = Demultiplexing hooks.
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
 private:
   void display_menu ();
@@ -50,16 +50,16 @@ public:
   ~IPC_Client ();
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialize the IPC client.
 
-  virtual int fini ();
+  int fini () override;
   // Destroy the IPC client.
 
   virtual int svc ();
   // Run the svc.
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   // Report connection errors.
 
 private:

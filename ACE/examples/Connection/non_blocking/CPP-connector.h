@@ -22,24 +22,24 @@ class Peer_Handler : public ACE_Svc_Handler<PEER_STREAM, ACE_SYNCH>
   //   This class uses a very clever state machine pattern to keep
   //   track of how it interacts with the user and the server.
 public:
-  Peer_Handler (ACE_Reactor *r = 0);
+  explicit Peer_Handler (ACE_Reactor *r = nullptr);
 
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
   // Activate the handler when connection is established.
 
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
   // Called on failed connection attempt.
 
   // = Demultiplexing hooks.
-  virtual int handle_output (ACE_HANDLE);
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask mask);
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
-  virtual int handle_timeout (const ACE_Time_Value &time,
-                              const void *);
+  int handle_output (ACE_HANDLE) override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE,
+                    ACE_Reactor_Mask mask) override;
+  int handle_signal (int signum,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
+  int handle_timeout (const ACE_Time_Value &time,
+                      const void *) override;
 protected:
   // = These methods implement the State pattern.
   int uninitialized ();
@@ -63,10 +63,10 @@ public:
   // Destructor.
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialize the IPC client.
 
-  virtual int fini ();
+  int fini () override;
   // Destroy the IPC client.
 
   virtual int svc ();
