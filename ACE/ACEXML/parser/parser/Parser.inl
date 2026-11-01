@@ -157,16 +157,16 @@ ACEXML_Parser::isPubidChar (const ACEXML_Char c) const
 }
 
 
-ACEXML_INLINE int
-ACEXML_Parser::is_whitespace (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::is_whitespace (ACEXML_Char const c) const
 {
   switch (c)
     {
       case '\x0A': case '\x20':
       case '\x09': case '\x0D':
-      return 1;
+      return true;
     default:
-      return 0;
+      return false;
     }
 }
 

@@ -477,9 +477,9 @@ protected:
   /**
    * Check if a character @a c is a whitespace.
    *
-   * @retval 1 if @a c is a valid white space character. 0 otherwise.
+   * @retval true if @a c is a valid white space character, false otherwise.
    */
-  int is_whitespace (const ACEXML_Char c) const;
+  bool is_whitespace (ACEXML_Char const c) const;
 
   /**
    * Check if a character @a c is a valid Char.
