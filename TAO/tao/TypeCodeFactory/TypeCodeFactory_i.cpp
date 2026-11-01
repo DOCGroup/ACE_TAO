@@ -32,6 +32,8 @@
 #include "ace/Value_Ptr.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -168,7 +170,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Is this a duplicate case label? If so, we have to adjust
           // the 'length' we encode - a member gets encoded only once.
-          if (ACE_OS::strcmp (member_name, members[i - 1].name) == 0)
+          if (std::strcmp (member_name, members[i - 1].name) == 0)
             {
               CORBA::Boolean const equiv =
                 member.type.in ()->equivalent (members[i - 1].type.in ());
@@ -284,8 +286,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Is this a duplicate case label? If so, skip it - a member
           // goes into the TypeCode only once.
-          if (ACE_OS::strcmp (member.name,
-                              members[index - 1].name) == 0)
+          if (std::strcmp (member.name,
+                           members[index - 1].name) == 0)
             {
               continue;
             }
@@ -1737,7 +1739,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                     char const * member_tc_id =
                       member_tc->id ();
 
-                    if (ACE_OS::strcmp (id, member_tc_id) == 0)
+                    if (std::strcmp (id, member_tc_id) == 0)
                       {
                         TAO::TypeCode::Indirected_Type * const rtc =
                           dynamic_cast<
@@ -1780,7 +1782,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                     char const * member_tc_id = member_tc->id ();
 
                     if (working_id != nullptr
-                        && ACE_OS::strcmp (working_id, member_tc_id) == 0)
+                        && std::strcmp (working_id, member_tc_id) == 0)
                       {
                         // We've found a recursion at a lower level but
                         // not the one we're looking for, so we must end
@@ -1832,7 +1834,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
         if (working_id != nullptr
             && content_tc_id != nullptr
-            && ACE_OS::strcmp (working_id, content_tc_id) == 0)
+            && std::strcmp (working_id, content_tc_id) == 0)
           {
             // We've found a recursion at a lower level but
             // not the one we're looking for, so we must
@@ -1842,7 +1844,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
        if (content_tc_kind == CORBA::TAO_TC_KIND_COUNT)
           {
-            if (ACE_OS::strcmp (id, content_tc_id) == 0)
+            if (std::strcmp (id, content_tc_id) == 0)
               {
                 TAO::TypeCode::Indirected_Type * const rtc =
                   dynamic_cast<TAO::TypeCode::Indirected_Type *>
