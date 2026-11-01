@@ -25,20 +25,20 @@ class Client :
   using super = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 public:
-  Client () : notifier_ (0, this, ACE_Event_Handler::WRITE_MASK)
+  Client () : notifier_ (nullptr, this, ACE_Event_Handler::WRITE_MASK)
       {}
 
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
 
   // Called when input is available from the client.
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   // Called when output is possible.
-  virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   // Called when a timer expires.
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
 
 private:
   enum { ITERATIONS = 5 };

@@ -21,17 +21,17 @@ class ClientService :
   using super = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 public:
-  int open (void * = 0);
+  int open (void * = nullptr) override;
 
   // Called when input is available from the client.
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   // Called when output is possible.
-  virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   // Called when this handler is removed from the ACE_Reactor.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 };
 // Listing 3
 
