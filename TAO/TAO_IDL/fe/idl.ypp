@@ -2630,9 +2630,8 @@ annotation_appl_params
         {
           AST_Annotation_Appl::Params *params = new AST_Annotation_Appl::Params;
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
-          param->id = 0;
-          param->expr = $1;
-          params->push_back (param);
+          param->expr.reset ($1);
+          params->emplace_back (param);
           $$ = params;
         }
         | named_annotation_appl_params
@@ -2649,7 +2648,7 @@ named_annotation_appl_params
         : named_annotation_appl_param more_named_annotation_appl_params
         {
           AST_Annotation_Appl::Params *params = $2;
-          params->insert (params->begin (), $1);
+          params->insert (params->begin (), std::unique_ptr<AST_Annotation_Appl::Param> ($1));
           $$ = params;
         }
 
@@ -2657,7 +2656,7 @@ more_named_annotation_appl_params
         : ',' named_annotation_appl_param more_named_annotation_appl_params
         {
           AST_Annotation_Appl::Params *params = $3;
-          params->insert (params->begin (), $2);
+          params->insert (params->begin (), std::unique_ptr<AST_Annotation_Appl::Param> ($2));
           $$ = params;
         }
         | %empty
@@ -2670,10 +2669,10 @@ named_annotation_appl_param
         : id '=' const_expr
         {
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
-          param->id = $1;
+          param->id.reset ($1);
           // Annotation Member Names Can't Clash with C++ keywords
-          FE_Utils::original_local_name (param->id);
-          param->expr = $3;
+          FE_Utils::original_local_name (param->id.get ());
+          param->expr.reset ($3);
           $$ = param;
         }
         ;

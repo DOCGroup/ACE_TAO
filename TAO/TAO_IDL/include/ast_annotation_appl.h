@@ -9,6 +9,7 @@
 #include "utl_identifier.h"
 #include "ast_expression.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -33,11 +34,11 @@ public:
     Param (Param &&) = delete;
     Param &operator= (Param const &) = delete;
     Param &operator= (Param &&) = delete;
-    Identifier *id {};
-    AST_Expression *expr {};
+    std::unique_ptr<Identifier> id;
+    std::unique_ptr<AST_Expression> expr;
     bool used {};
   };
-  using Params = std::vector<Param *>;
+  using Params = std::vector<std::unique_ptr<Param>>;
   ///}
 
   /// Delete Annotation Parameters

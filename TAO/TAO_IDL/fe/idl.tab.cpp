@@ -5338,9 +5338,8 @@ yyreduce:
         {
           AST_Annotation_Appl::Params *params = new AST_Annotation_Appl::Params;
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
-          param->id = 0;
-          param->expr = (yyvsp[0].exval);
-          params->push_back (param);
+          param->expr.reset ((yyvsp[0].exval));
+          params->emplace_back (param);
           (yyval.annotation_params_val) = params;
         }
 #line 5347 "fe/idl.tab.cpp"
@@ -5366,7 +5365,9 @@ yyreduce:
 #line 2650 "fe/idl.ypp"
         {
           AST_Annotation_Appl::Params *params = (yyvsp[0].annotation_params_val);
-          params->insert (params->begin (), (yyvsp[-1].annotation_param_val));
+          params->insert (params->begin (),
+                          std::unique_ptr<AST_Annotation_Appl::Param> (
+                            (yyvsp[-1].annotation_param_val)));
           (yyval.annotation_params_val) = params;
         }
 #line 5373 "fe/idl.tab.cpp"
@@ -5376,7 +5377,9 @@ yyreduce:
 #line 2658 "fe/idl.ypp"
         {
           AST_Annotation_Appl::Params *params = (yyvsp[0].annotation_params_val);
-          params->insert (params->begin (), (yyvsp[-1].annotation_param_val));
+          params->insert (params->begin (),
+                          std::unique_ptr<AST_Annotation_Appl::Param> (
+                            (yyvsp[-1].annotation_param_val)));
           (yyval.annotation_params_val) = params;
         }
 #line 5383 "fe/idl.tab.cpp"
@@ -5394,10 +5397,10 @@ yyreduce:
 #line 2671 "fe/idl.ypp"
         {
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
-          param->id = (yyvsp[-2].idval);
+          param->id.reset ((yyvsp[-2].idval));
           // Annotation Member Names Can't Clash with C++ keywords
-          FE_Utils::original_local_name (param->id);
-          param->expr = (yyvsp[0].exval);
+          FE_Utils::original_local_name (param->id.get ());
+          param->expr.reset ((yyvsp[0].exval));
           (yyval.annotation_param_val) = param;
         }
 #line 5404 "fe/idl.tab.cpp"

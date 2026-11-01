@@ -9,25 +9,16 @@ AST_Annotation_Appl::Param::~Param ()
     {
       id->destroy ();
     }
-  delete id;
   if (expr)
     {
       expr->destroy ();
     }
-  delete expr;
 }
 
 void
 AST_Annotation_Appl::delete_params (AST_Annotation_Appl::Params* params)
 {
-  if (params)
-    {
-      for (Param *param : *params)
-        {
-          delete param;
-        }
-      delete params;
-    }
+  delete params;
 }
 
 AST_Decl::NodeType const AST_Annotation_Appl::NT = AST_Decl::NT_annotation_appl;
@@ -58,7 +49,7 @@ void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
     {
       dump_i (o, "(");
       bool first = true;
-      for (Param *param : *params_)
+      for (std::unique_ptr<Param> const& param : *params_)
         {
           if (!first)
             {
@@ -117,11 +108,11 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
           if (param)
             {
               new_member->value (
-                std::make_unique<AST_Expression> (param->expr, member->expr_type ()));
+                std::make_unique<AST_Expression> (param->expr.get (), member->expr_type ()));
               if (new_member->invalid_value ())
               {
                 idl_global->err ()->invalid_annotation_param_type (
-                  this, member, param->expr);
+                  this, member, param->expr.get ());
                 return false;
               }
               param->used = true;
@@ -138,12 +129,12 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
   // Make sure all the parameters were used
   if (params_)
     {
-      for (Param *param : *params_)
+      for (std::unique_ptr<Param> const& param : *params_)
         {
           if (param && !param->used)
             {
               idl_global->err ()->invalid_annotation_param_error (
-                this, decl, param->id);
+                this, decl, param->id.get ());
               return false;
             }
         }
@@ -174,19 +165,19 @@ AST_Annotation_Appl::find_param (std::string const& name) const
       // Check for single nameless parameter
       if (params_->size () == 1)
         {
-          Param *top = params_->front ();
+          Param *top = params_->front ().get ();
           if (top && !top->id && top->expr)
             {
               // Don't reuse it if used
               return top->used ? nullptr : top;
             }
         }
-      for (Param *param : *params_)
+      for (std::unique_ptr<Param> const& param : *params_)
         {
           if (param && param->id
               && param->id->get_string () == name)
             {
-              return param;
+              return param.get ();
             }
         }
     }
