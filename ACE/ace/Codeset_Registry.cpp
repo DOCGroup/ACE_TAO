@@ -74,7 +74,7 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
   return 1;
 }
 
-int
+bool
 ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
                                        ACE_CDR::ULong other)
 {
@@ -89,13 +89,13 @@ ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
     }
 
   if (lhs == nullptr || rhs == nullptr)
-    return 0;
+    return false;
 
   for (ACE_CDR::UShort l = 0; l < lhs->num_sets_; l++)
     for (ACE_CDR::UShort r = 0; r < rhs->num_sets_; r++)
       if (rhs->char_sets_[r] == lhs->char_sets_[l])
-        return 1;
-  return 0;
+        return true;
+  return false;
 }
 
 ACE_CDR::Short
