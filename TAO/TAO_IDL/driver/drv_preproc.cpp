@@ -888,34 +888,25 @@ namespace
   // This method turns a line like '#include "a.idl"' into the
   // line '#include <a.idl>'
   void
-  DRV_convert_includes (char *buf)
+  DRV_convert_includes (std::string& line)
   {
-    char const *input = buf;
+    char const *input = line.c_str ();
 
     if (!DRV_find_include_filename (input) || '"' != *input)
       {
         return; // Only interested in #include "" type
       }
 
-    buf = const_cast<char *> (input);
+    std::string::size_type const open_quote_pos =
+      static_cast<std::string::size_type> (input - line.c_str ());
+    std::string::size_type const closing_quote_pos =
+      line.find_first_of ("\">", open_quote_pos + 1);
 
-    // Find the closing '"' character.
-    char *open_quote= buf;
-
-    while ('"' != *++buf && *buf != '\0')
-      {
-        if ('>' == *buf)
-          {
-            // Can't change to #include <> as it
-            // has a > character in the filename!
-            return;
-          }
-      }
-    if ('"' == *buf)
+    if (closing_quote_pos != std::string::npos && line[closing_quote_pos] == '"')
       {
         // Replace the quotes with angle brackets.
-        *open_quote = '<';
-        *buf = '>';
+        line[open_quote_pos] = '<';
+        line[closing_quote_pos] = '>';
       }
   }
 } // End of local/internal namespace
@@ -1022,7 +1013,7 @@ DRV_copy_input (FILE *fin,
 
   while (DRV_get_line (fin))
     {
-      DRV_convert_includes (drv_line.data ());
+      DRV_convert_includes (drv_line);
 
       // Print the line to the temporary file.
       ACE_OS::fprintf (f,
