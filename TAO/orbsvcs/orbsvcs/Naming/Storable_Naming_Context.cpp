@@ -9,6 +9,7 @@
 #include "tao/Storable_Factory.h"
 
 #include <memory>
+#include <cstring>
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -89,15 +90,15 @@ TAO_Storable_ExtId::operator= (TAO_Storable_ExtId const &rhs)
 bool
 TAO_Storable_ExtId::operator== (TAO_Storable_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (id_.in(), rhs.id_.in()) == 0)
-    && (ACE_OS::strcmp (kind_.in(), rhs.kind_.in()) == 0);
+  return (std::strcmp (id_.in(), rhs.id_.in()) == 0)
+    && (std::strcmp (kind_.in(), rhs.kind_.in()) == 0);
 }
 
 bool
 TAO_Storable_ExtId::operator!= (TAO_Storable_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (id_.in(), rhs.id_.in()) != 0)
-    || (ACE_OS::strcmp (kind_.in(), rhs.kind_.in()) != 0);
+  return (std::strcmp (id_.in(), rhs.id_.in()) != 0)
+    || (std::strcmp (kind_.in(), rhs.kind_.in()) != 0);
 }
 
 u_long

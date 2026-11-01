@@ -11,6 +11,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
@@ -352,7 +354,7 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
     char const *addr,
     char const *sn)
 {
-  size_t addr_len = ACE_OS::strlen (addr);
+  size_t addr_len = std::strlen (addr);
 
   // Check for invalid address
   if (addr_len == 0)
@@ -396,20 +398,20 @@ TAO_Naming_Context::to_url (char const *addr,
   char *str_url = CORBA::string_alloc (static_cast<CORBA::ULong> (no_char + sizeof (prefix)));
 
   // Copy 'prefix' to the return parameter.
-  char *dest = ACE_OS::strcpy (str_url , prefix);
+  char *dest = std::strcpy (str_url , prefix);
 
   /// move to end of dest string
-  dest += ACE_OS::strlen(dest);
+  dest += std::strlen(dest);
 
   // Concatenate the address
-  dest = ACE_OS::strcat (dest, addr);
+  dest = std::strcat (dest, addr);
 
   /// Concatenate the seperator between the addr and Name
-  dest += ACE_OS::strlen(dest);
-  dest = ACE_OS::strcat (dest, "#");
+  dest += std::strlen(dest);
+  dest = std::strcat (dest, "#");
 
   /// move to end of dest string
-  dest += ACE_OS::strlen(dest);
+  dest += std::strlen(dest);
 
   // Now append the stringified object name to the return variable.
   // The percent '%' character is used as an escape. If a character

@@ -19,6 +19,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 FT_Update_Replicant_i::FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner)
@@ -303,8 +305,8 @@ TAO_FT_Naming_Replication_Manager::send_context_update (ACE_CString const &name,
   for (CORBA::Long i = len -1; !found && i >= 0; i--)
     {
       if (this->to_send_[i]._d() == FT_Naming::ctx_name &&
-          ACE_OS::strcmp (this->to_send_[i].ctx().context_name,
-                          name.c_str()) == 0)
+          std::strcmp (this->to_send_[i].ctx().context_name,
+                       name.c_str()) == 0)
         {
           found = true;
           FT_Naming::ChangeType pending = this->to_send_[i].ctx().change_type;

@@ -9,6 +9,8 @@
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/nsconf.h"
+
+#include <cstring>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -581,8 +583,8 @@ TAO_Hash_Naming_Context::destroy ()
 int
 TAO_Hash_Naming_Context::root ()
 {
-  return (ACE_OS::strcmp (this->poa_id_.fast_rep (),
-                          TAO_ROOT_NAMING_CONTEXT) == 0);
+  return (std::strcmp (this->poa_id_.fast_rep (),
+                       TAO_ROOT_NAMING_CONTEXT) == 0);
 }
 
 int

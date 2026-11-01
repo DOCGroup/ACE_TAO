@@ -6,6 +6,8 @@
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "tao/Stub.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::FT_PG_Object_Group_Storable::FT_PG_Object_Group_Storable
@@ -122,7 +124,7 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
   char const *member_type_id = member->_stubobj ()->type_id.in ();
 
   if ((this->members_.current_size () == 0) &&
-      (ACE_OS::strcmp (this->type_id_, member_type_id) != 0) )
+      (std::strcmp (this->type_id_, member_type_id) != 0) )
     {
       try {
         this->type_id_ = member_type_id;

@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 
 #include <memory>
+#include <cstring>
 #include "ace/OS_NS_unistd.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -35,7 +36,7 @@ TAO_Persistent_Context_Index::bind (char const *poa_id,
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   // Allocate memory for items to be stored in the table.
-  size_t poa_id_len = ACE_OS::strlen (poa_id) + 1;
+  size_t poa_id_len = std::strlen (poa_id) + 1;
   size_t counter_len = sizeof (ACE_UINT32);
   char *ptr = (char *) this->allocator_->malloc (poa_id_len + counter_len);
 
@@ -47,7 +48,7 @@ TAO_Persistent_Context_Index::bind (char const *poa_id,
       counter = reinterpret_cast<ACE_UINT32 *> (ptr);
       *counter = 0;
       char * poa_id_ptr = ptr + counter_len;
-      ACE_OS::strcpy (poa_id_ptr, poa_id);
+      std::strcpy (poa_id_ptr, poa_id);
 
       TAO_Persistent_Index_ExtId name (poa_id_ptr);
       TAO_Persistent_Index_IntId entry (counter, hash_map);

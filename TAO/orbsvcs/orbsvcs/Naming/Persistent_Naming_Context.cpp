@@ -3,6 +3,7 @@
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -147,9 +148,9 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
 
   // Calculate and allocate the memory we need to store this name to
   // object binding.
-  size_t id_len = ACE_OS::strlen (id) + 1;
-  size_t kind_len = ACE_OS::strlen (kind) + 1;
-  size_t ref_len = ACE_OS::strlen (ref.in ()) + 1;
+  size_t id_len = std::strlen (id) + 1;
+  size_t kind_len = std::strlen (kind) + 1;
+  size_t ref_len = std::strlen (ref.in ()) + 1;
   size_t total_len = id_len + kind_len + ref_len;
   char *ptr = (char *) this->allocator_->malloc (total_len);
 
@@ -166,9 +167,9 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
       char * ref_ptr = ptr;
       char * id_ptr =  ptr + ref_len;
       char * kind_ptr = ptr + ref_len + id_len;
-      ACE_OS::strcpy (ref_ptr, ref.in ());
-      ACE_OS::strcpy (id_ptr, id);
-      ACE_OS::strcpy (kind_ptr, kind);
+      std::strcpy (ref_ptr, ref.in ());
+      std::strcpy (id_ptr, id);
+      std::strcpy (kind_ptr, kind);
 
       TAO_Persistent_ExtId new_name (id_ptr, kind_ptr);
       TAO_Persistent_IntId new_entry (ref_ptr, type);

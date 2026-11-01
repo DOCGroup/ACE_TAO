@@ -9,6 +9,8 @@
 #include "orbsvcs/Naming/Persistent_Entries.h"
 #include "ace/SString.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Persistent_IntId::TAO_Persistent_IntId ()
@@ -83,15 +85,15 @@ TAO_Persistent_ExtId::operator= (TAO_Persistent_ExtId const &rhs)
 bool
 TAO_Persistent_ExtId::operator== (TAO_Persistent_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (id_, rhs.id_) == 0)
-    && (ACE_OS::strcmp (kind_, rhs.kind_) == 0);
+  return (std::strcmp (id_, rhs.id_) == 0)
+    && (std::strcmp (kind_, rhs.kind_) == 0);
 }
 
 bool
 TAO_Persistent_ExtId::operator!= (TAO_Persistent_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (id_, rhs.id_) != 0)
-    || (ACE_OS::strcmp (kind_, rhs.kind_) != 0);
+  return (std::strcmp (id_, rhs.id_) != 0)
+    || (std::strcmp (kind_, rhs.kind_) != 0);
 }
 
 u_long
@@ -182,13 +184,13 @@ TAO_Persistent_Index_ExtId::operator= (TAO_Persistent_Index_ExtId const &rhs)
 bool
 TAO_Persistent_Index_ExtId::operator== (TAO_Persistent_Index_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (poa_id_, rhs.poa_id_) == 0);
+  return (std::strcmp (poa_id_, rhs.poa_id_) == 0);
 }
 
 bool
 TAO_Persistent_Index_ExtId::operator!= (TAO_Persistent_Index_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (poa_id_, rhs.poa_id_) != 0);
+  return (std::strcmp (poa_id_, rhs.poa_id_) != 0);
 }
 
 u_long
