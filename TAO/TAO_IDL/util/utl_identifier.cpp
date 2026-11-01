@@ -82,12 +82,6 @@ Identifier::~Identifier () = default;
 
 // Operations.
 
-std::string&
-Identifier::get_string ()
-{
-  return this->pv_string_;
-}
-
 std::string const&
 Identifier::get_string () const
 {
@@ -115,30 +109,33 @@ Identifier::preprocess_and_replace_string (std::string const& s)
 
       shift = true;
       this->escaped_ = true;
-      std::string str (s);
-      std::string const c_prefix ("_cxx_");
+      static constexpr char cxx_prefix[] = "_cxx_";
+      static constexpr char eh_suffix[] = "_excep";
 
-      if (str.find ("_tc_") == 0
-          || str.find ("_tao_") == 0)
+      if (s.compare (0, 4, "_tc_") == 0
+          || s.compare (0, 5, "_tao_") == 0)
         {
           shift = false;
         }
-      else if (str.find (c_prefix) == 0)
+      else if (s.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
         {
-          str = str.substr (c_prefix.size ());
-          std::string const eh_suffix ("_excep");
+          std::string::size_type const keyword_offset = sizeof (cxx_prefix) - 1;
+          std::string::size_type keyword_length = s.size () - keyword_offset;
+          std::string::size_type const suffix_length = sizeof (eh_suffix) - 1;
+
           // If we have an AMI exception holder suffix, strip it off.
-          if (str.size () >= eh_suffix.size ()
-              && str.find (eh_suffix) == str.size () - eh_suffix.size ())
+          if (keyword_length >= suffix_length
+              && s.compare (s.size () - suffix_length, suffix_length,
+                            eh_suffix) == 0)
             {
-              str = str.substr (0, str.size () - eh_suffix.size ());
+              keyword_length -= suffix_length;
             }
 
           TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
           unsigned int len =
-            static_cast<unsigned int> (str.size ());
+            static_cast<unsigned int> (keyword_length);
           TAO_IDL_CPP_Keyword_Entry const *entry =
-            cpp_key_tbl.lookup (str.data (), len);
+            cpp_key_tbl.lookup (s.data () + keyword_offset, len);
 
           if (entry != nullptr)
             {

@@ -91,7 +91,6 @@ public:
    * Get the underlying string.
    */
   ///{
-  std::string& get_string ();
   std::string const& get_string () const;
   ///}
 
