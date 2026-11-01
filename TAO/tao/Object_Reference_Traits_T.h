@@ -9,7 +9,6 @@
  * @author Carlos O'Ryan
  */
 #include "Object_Reference_Traits_Base_T.h"
-#include "ace/OS_NS_string.h"
 
 #include <algorithm>
 #include <functional>
@@ -31,7 +30,7 @@ struct object_reference_traits_decorator
   inline static void zero_range(
       object_type ** begin, object_type ** end)
   {
-    ACE_OS::memset (begin, 0, static_cast<size_t> (end - begin) * sizeof (object_type*));
+    std::fill (begin, end, nullptr);
   }
 
   inline static void initialize_range(
