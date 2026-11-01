@@ -49,7 +49,7 @@ struct TAO_IDL_BE_Export IdentifierHelper
 
   // Detects case-insensitive match with IDL keyword.
   static bool
-  is_idl_keyword (Identifier const *local_name);
+  is_idl_keyword (std::string const& local_name);
 
   // Preserves the 'escape' (leading underscore) in a
   // generated identifier if necessary.

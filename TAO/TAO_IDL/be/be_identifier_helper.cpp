@@ -173,11 +173,9 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
 }
 
 bool
-IdentifierHelper::is_idl_keyword (Identifier const *local_name)
+IdentifierHelper::is_idl_keyword (std::string const& local_name)
 {
-  std::string const& name =
-    local_name->get_string ();
-  std::string const ext_id = UTL_String::get_canonical_rep (name);
+  std::string const ext_id = UTL_String::get_canonical_rep (local_name);
 
   return idl_global->idl_keywords ().find (ext_id)
     != idl_global->idl_keywords ().end ();
@@ -188,7 +186,7 @@ IdentifierHelper::try_escape (Identifier * local_name)
 {
   std::string const& s_local_name = local_name->get_string ();
 
-  if (IdentifierHelper::is_idl_keyword (local_name))
+  if (IdentifierHelper::is_idl_keyword (s_local_name))
     {
       std::string retval ("_");
       retval += s_local_name;
