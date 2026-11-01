@@ -46,7 +46,7 @@ perform_invocation (Test::Hello_ptr hello,
 {
   // Execute more than once to help verify that mutable recursive
   // TypeCode state is managed correctly.
-  for (unsigned int n = 0; n < 2; ++n)
+  for (unsigned int n {}; n < 2; ++n)
     {
       CORBA::Any_var my_any =
         hello->get_any (the_any);
@@ -174,7 +174,7 @@ struct Caller : public std::function<void(T)>
   Caller (CORBA::ORB_ptr o, Test::Hello_ptr h)
     : orb (CORBA::ORB::_duplicate (o))
     , hello (Test::Hello::_duplicate (h))
-    , success (true)
+    , success {true}
   {
   }
 
@@ -186,7 +186,7 @@ struct Caller : public std::function<void(T)>
         f (orb.in (),
            hello.in ());
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("Exception thrown:");
 
