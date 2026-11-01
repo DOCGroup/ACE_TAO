@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "Grid_i.h"
 
+#include <cstring>
+
 // Some Windows compilers don't have min in std namespaces
 // moreover on Windows 'min' is a macro, so we have to avoid using it literally.
 CORBA::UShort
@@ -75,8 +77,9 @@ Grid_i::width (CORBA::Short x)
       GridArray array (allocate_array (x, this->height_));
       for (CORBA::Short ctr = 0; ctr < this->height_; ++ctr)
         {
-          ACE_OS::memcpy (array.get () + x * ctr, this->array_.get () + this->width_ * ctr,
-                          Grid_i::ushort_min (this->width_, x) * sizeof (CORBA::Long));
+          std::memcpy (array.get () + x * ctr,
+                       this->array_.get () + this->width_ * ctr,
+                       Grid_i::ushort_min (this->width_, x) * sizeof (CORBA::Long));
         }
       this->array_ = std::move(array);
       this->width_ = x;
@@ -91,8 +94,9 @@ Grid_i::height (CORBA::Short y)
       GridArray array (allocate_array (this->width_, y));
       for (CORBA::Short ctr = 0; ctr < Grid_i::ushort_min (this->height_, y); ++ctr)
         {
-          ACE_OS::memcpy (array.get () + this->width_ * ctr, this->array_.get () + this->width_ * ctr,
-                          this->width_ * sizeof (CORBA::Long));
+          std::memcpy (array.get () + this->width_ * ctr,
+                       this->array_.get () + this->width_ * ctr,
+                       this->width_ * sizeof (CORBA::Long));
         }
       this->array_ = std::move(array);
       this->height_ = y;
