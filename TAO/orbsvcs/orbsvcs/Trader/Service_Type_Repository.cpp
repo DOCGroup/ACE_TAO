@@ -12,8 +12,7 @@ TAO_Service_Type_Repository::TAO_Service_Type_Repository (ACE_Lock* lock)
   // If a lock wasn't provided, let's assume the user doesn't want any
   // kind of lock at all.
   if (this->lock_ == nullptr)
-    ACE_NEW (this->lock_,
-             ACE_Lock_Adapter<ACE_Null_Mutex>);
+    this->lock_ = std::make_unique<ACE_Lock_Adapter<ACE_Null_Mutex>> ();
 }
 
 TAO_Service_Type_Repository::~TAO_Service_Type_Repository ()
@@ -30,8 +29,6 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository ()
         delete type_info;
       }
   }
-
-  delete this->lock_;
 }
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber

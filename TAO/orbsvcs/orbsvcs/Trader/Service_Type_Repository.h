@@ -18,6 +18,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -251,7 +253,7 @@ private:
   TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository&&) = delete;
 
   /// Lock with which to serialize access to the service type map.
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
   /**
    * Stores information for each service type in the repository.  This

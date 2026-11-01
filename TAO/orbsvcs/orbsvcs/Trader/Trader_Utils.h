@@ -16,6 +16,7 @@
 
 #include "orbsvcs/Trader/Trader.h"
 
+#include <memory>
 #include <vector>
 
 #if defined(_MSC_VER)
@@ -100,7 +101,7 @@ protected:
    * cause seg faults, since the client wouldn't be able to tell
    * whether or not the return value should be freed.
    */
-  CORBA::Any** dp_cache_;
+  std::unique_ptr<CORBA::Any*[]> dp_cache_;
 
 private:
   TAO_Property_Evaluator (TAO_Property_Evaluator const&) = delete;

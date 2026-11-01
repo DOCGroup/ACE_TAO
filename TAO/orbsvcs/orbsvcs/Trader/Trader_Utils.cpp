@@ -219,13 +219,8 @@ TAO_Property_Evaluator(const CosTrading::PropertySeq& props,
                        CORBA::Boolean supports_dp)
   : props_ (props),
     supports_dp_ (supports_dp),
-    dp_cache_ (new CORBA::Any*[props.length ()])
+    dp_cache_ (std::make_unique<CORBA::Any*[]> (props.length ()))
 {
-  if (this->dp_cache_ != nullptr)
-    {
-      for (CORBA::ULong i = 0; i < this->props_.length (); i++)
-        this->dp_cache_[i] = nullptr;
-    }
 }
 
 
@@ -234,11 +229,8 @@ TAO_Property_Evaluator(CosTrading::Offer& offer,
                        CORBA::Boolean supports_dp)
   : props_ (offer.properties),
     supports_dp_ (supports_dp),
-    dp_cache_ (new CORBA::Any*[offer.properties.length ()])
+    dp_cache_ (std::make_unique<CORBA::Any*[]> (offer.properties.length ()))
 {
-  if (this->dp_cache_ != nullptr)
-    for (CORBA::ULong i = 0; i < this->props_.length (); i++)
-      this->dp_cache_[i] = nullptr;
 }
 
 TAO_Property_Evaluator::~TAO_Property_Evaluator ()
@@ -247,8 +239,6 @@ TAO_Property_Evaluator::~TAO_Property_Evaluator ()
   for (CORBA::ULong i = 0; i < this->props_.length (); i++)
     if (this->dp_cache_[i] != nullptr)
       delete this->dp_cache_[i];
-
-  delete [] this->dp_cache_;
 }
 
 bool
@@ -278,8 +268,7 @@ CORBA::Any*
 TAO_Property_Evaluator::property_value (int index)
 {
   CORBA::Any* prop_val = nullptr;
-  CORBA::Boolean in_cache =
-    this->dp_cache_ != nullptr && this->dp_cache_[index] != nullptr;
+  CORBA::Boolean in_cache = this->dp_cache_[index] != nullptr;
 
   int dynamic = this->is_dynamic_property (index);
 
@@ -317,8 +306,7 @@ TAO_Property_Evaluator::property_value (int index)
               // Retrieve the value of the dynamic property.
               prop_val = dp_eval->evalDP(name, type, info);
 
-              if (this->dp_cache_ != nullptr)
-                this->dp_cache_[index] = prop_val;
+              this->dp_cache_[index] = prop_val;
             }
           catch (const CORBA::SystemException&)
             {
