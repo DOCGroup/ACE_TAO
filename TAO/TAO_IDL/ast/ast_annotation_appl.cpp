@@ -38,7 +38,7 @@ AST_Annotation_Appl::AST_Annotation_Appl (
 
 AST_Annotation_Appl::~AST_Annotation_Appl ()
 {
-  delete_params (params_);
+  params_.reset ();
   AST_Structure::destroy ();
 }
 
@@ -148,7 +148,7 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
 AST_Annotation_Appl::Params *
 AST_Annotation_Appl::params ()
 {
-  return params_;
+  return params_.get ();
 }
 
 AST_Annotation_Decl *

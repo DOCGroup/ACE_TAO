@@ -104,7 +104,7 @@ private:
   std::string original_name_;
 
   /// Parameters List (Can be null)
-  Params *params_;
+  std::unique_ptr<Params> params_;
 
   /// The AST_Annotation_Decl (Possibly could be null)
   AST_Annotation_Decl *annotation_decl_ {};
