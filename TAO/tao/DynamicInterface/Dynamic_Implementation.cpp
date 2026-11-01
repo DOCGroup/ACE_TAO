@@ -10,7 +10,8 @@
 #include "tao/operation_details.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,7 +20,7 @@ TAO_DynamicImplementation::_is_a (char const *logical_type_id)
 {
   CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
 
-  return ACE_OS::strcmp (logical_type_id, id.in ()) == 0;
+  return std::strcmp (logical_type_id, id.in ()) == 0;
 }
 
 CORBA::Object_ptr

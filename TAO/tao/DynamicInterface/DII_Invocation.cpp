@@ -16,7 +16,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PI/RequestInfo_Util.h"
@@ -106,7 +106,7 @@ namespace TAO
 
           char const* xid = tc->id ();
 
-          if (ACE_OS::strcmp (buf.in (), xid) != 0)
+          if (std::strcmp (buf.in (), xid) != 0)
             {
               continue;
             }
