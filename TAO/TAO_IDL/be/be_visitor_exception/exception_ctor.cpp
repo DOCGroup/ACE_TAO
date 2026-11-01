@@ -262,7 +262,7 @@ be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
       bt = node;
     }
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_any)
     {

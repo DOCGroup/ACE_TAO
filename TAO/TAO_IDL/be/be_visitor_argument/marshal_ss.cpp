@@ -318,8 +318,8 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string const& lname =
     arg->local_name ()->get_string ();
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  bool wide =
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
+  bool const wide =
     (node->width () != sizeof (char));
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
@@ -511,7 +511,7 @@ be_visitor_args_marshal_ss::emit_common2 (be_type *node)
     dynamic_cast<be_argument*> (this->ctx_->node ());
   std::string const& lname =
     arg->local_name ()->get_string ();
-  AST_Type::SIZE_TYPE st = node->size_type ();
+  AST_Type::SIZE_TYPE const st = node->size_type ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {

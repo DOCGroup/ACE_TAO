@@ -48,7 +48,7 @@ be_visitor_component_scope::visit_extended_port (
   this->in_ext_port_ = true;
   this->ctx_->interface (this->node_);
 
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   /// Skip if we are defined inside a porttype.
@@ -59,7 +59,7 @@ be_visitor_component_scope::visit_extended_port (
       this->ctx_->append_port_prefix ("_");
     }
 
-  int status =
+  int const status =
     this->visit_porttype_scope (node->port_type ());
 
   if (status == -1)
@@ -81,7 +81,7 @@ int
 be_visitor_component_scope::visit_mirror_port (
   be_mirror_port *node)
 {
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   /// Skip if we are defined inside a porttype.
@@ -92,7 +92,7 @@ be_visitor_component_scope::visit_mirror_port (
       this->ctx_->append_port_prefix ("_");
     }
 
-  int status =
+  int const status =
     this->visit_porttype_scope_mirror (node->port_type ());
 
   if (status == -1)

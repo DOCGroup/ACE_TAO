@@ -108,7 +108,7 @@ AST_Exception::~AST_Exception () = default;
 bool
 AST_Exception::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = list.empty ();
+  bool const self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.

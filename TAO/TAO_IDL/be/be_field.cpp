@@ -31,7 +31,7 @@ be_field::be_field (AST_Type *ft,
              n)
 {
   // This covers valuetype fields as well, which is what we want.
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ft->unaliased_type ()->node_type ();
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)

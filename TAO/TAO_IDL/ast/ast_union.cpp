@@ -236,7 +236,7 @@ AST_Union::default_index ()
 bool
 AST_Union::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = list.empty ();
+  bool const self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.
@@ -882,7 +882,7 @@ AST_Union::compute_default_index ()
               for (std::size_t j = 0; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
-                  AST_UnionLabel::UnionLabel ulk = ub->label (j)->label_kind ();
+                  AST_UnionLabel::UnionLabel const ulk = ub->label (j)->label_kind ();
                   if (ulk == AST_UnionLabel::UL_default)
                     {
                       // Zero based indexing.

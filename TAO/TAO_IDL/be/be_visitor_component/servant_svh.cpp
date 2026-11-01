@@ -130,7 +130,7 @@ be_visitor_servant_svh::visit_connector (be_connector *node)
 int
 be_visitor_servant_svh::visit_attribute (be_attribute *node)
 {
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.
@@ -408,8 +408,8 @@ be_visitor_servant_svh::gen_non_type_specific ()
           << "get_all_receptacles ();";
     }
 
-  AST_Decl::NodeType nt = this->node_->node_type ();
-  bool is_connector = (nt == AST_Decl::NT_connector);
+  AST_Decl::NodeType const nt = this->node_->node_type ();
+  bool const is_connector = (nt == AST_Decl::NT_connector);
 
   if (!be_global->gen_lwccm () && !is_connector &&
       !be_global->gen_noeventccm ())

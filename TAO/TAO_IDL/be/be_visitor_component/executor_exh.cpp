@@ -31,7 +31,7 @@ be_visitor_executor_exh::~be_visitor_executor_exh () = default;
 int
 be_visitor_executor_exh::visit_attribute (be_attribute *node)
 {
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.

@@ -192,7 +192,7 @@ bool
 AST_Module::referenced (AST_Decl *e,
                         Identifier *id)
 {
-  bool refd = this->UTL_Scope::referenced (e, id);
+  bool const refd = this->UTL_Scope::referenced (e, id);
   if (refd)
     {
       return true;

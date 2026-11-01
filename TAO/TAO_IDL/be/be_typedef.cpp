@@ -38,7 +38,7 @@ be_typedef::be_typedef (AST_Type *bt,
              n)
 {
   AST_Type *pbt = this->primitive_base_type ();
-  AST_Decl::NodeType nt = pbt->node_type ();
+  AST_Decl::NodeType const nt = pbt->node_type ();
 
   if (nt == AST_Decl::NT_sequence)
     {

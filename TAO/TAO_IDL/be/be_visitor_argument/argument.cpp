@@ -81,15 +81,15 @@ int
 be_visitor_args::gen_pd_arg (be_predefined_type *node,
                              bool for_stub)
 {
-  TAO_CodeGen::CG_SUB_STATE ss = this->ctx_->sub_state ();
-  AST_Argument::Direction d = this->direction ();
+  TAO_CodeGen::CG_SUB_STATE const ss = this->ctx_->sub_state ();
+  AST_Argument::Direction const d = this->direction ();
 
-  bool in_arg = (d == AST_Argument::dir_IN);
-  bool out_arg = (d == AST_Argument::dir_OUT);
-  bool out_stream = (ss == TAO_CodeGen::TAO_CDR_OUTPUT);
-  bool in_stream = (ss == TAO_CodeGen::TAO_CDR_INPUT);
+  bool const in_arg = (d == AST_Argument::dir_IN);
+  bool const out_arg = (d == AST_Argument::dir_OUT);
+  bool const out_stream = (ss == TAO_CodeGen::TAO_CDR_OUTPUT);
+  bool const in_stream = (ss == TAO_CodeGen::TAO_CDR_INPUT);
 
-  bool skip = (in_arg && for_stub && in_stream)
+  bool const skip = (in_arg && for_stub && in_stream)
               || (in_arg && !for_stub && out_stream)
               || (out_arg && for_stub && out_stream)
               || (out_arg && !for_stub && in_stream);
@@ -103,8 +103,8 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
   std::string var_call;
   std::string any_deref;
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
-  bool is_any = (pt == AST_PredefinedType::PT_any);
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
+  bool const is_any = (pt == AST_PredefinedType::PT_any);
 
   if (for_stub)
     {

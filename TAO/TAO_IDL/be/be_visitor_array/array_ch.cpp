@@ -44,7 +44,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
                         -1);
     }
 
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   TAO_INSERT_COMMENT (os);
 

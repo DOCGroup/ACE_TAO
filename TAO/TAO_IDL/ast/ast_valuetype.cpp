@@ -53,7 +53,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     pd_truncatable (truncatable),
     pd_custom (custom)
 {
-  std::unique_ptr<AST_Type *[]> supports_owner (supports);
+  std::unique_ptr<AST_Type *[]> const supports_owner (supports);
 
   if (n_supports > 0)
     {
@@ -89,7 +89,7 @@ AST_ValueType::~AST_ValueType () = default;
 bool
 AST_ValueType::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = list.empty ();
+  bool const self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.

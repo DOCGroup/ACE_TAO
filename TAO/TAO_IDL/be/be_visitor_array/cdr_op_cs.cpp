@@ -52,7 +52,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   // If we contain an anonymous sequence,
   // generate code for the sequence here.
@@ -118,7 +118,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   // full_name with or without the underscore and use it later on.
   std::string fname;
 
-  bool use_underscore = (this->ctx_->tdef () == nullptr);
+  bool const use_underscore = (this->ctx_->tdef () == nullptr);
 
   if (!use_underscore)
     {
@@ -562,7 +562,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   std::size_t i;
   be_array *node =
     dynamic_cast<be_array*> (this->ctx_->node ());
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   if (node == nullptr)
     {
@@ -576,7 +576,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   // Initialize a boolean variable.
   *os << "CORBA::Boolean _tao_marshal_flag = true;" << be_nl;
 
-  std::size_t ndims = node->n_dims ();
+  std::size_t const ndims = node->n_dims ();
 
   // We get here if the "type" of individual elements of the array is not a
   // primitive type. In this case, we are left with no other alternative but to
@@ -717,7 +717,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                                         -1);
                     }
 
-                  AST_PredefinedType::PredefinedType pdt = pt->pt ();
+                  AST_PredefinedType::PredefinedType const pdt = pt->pt ();
 
                   if (pdt == AST_PredefinedType::PT_pseudo
                       || pdt == AST_PredefinedType::PT_object)
@@ -844,7 +844,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                                         -1);
                     }
 
-                  AST_PredefinedType::PredefinedType pdt = pt->pt ();
+                  AST_PredefinedType::PredefinedType const pdt = pt->pt ();
 
                   if (pdt == AST_PredefinedType::PT_pseudo
                       || pdt == AST_PredefinedType::PT_object)

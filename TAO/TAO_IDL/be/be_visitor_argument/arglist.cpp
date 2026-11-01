@@ -177,7 +177,7 @@ int be_visitor_args_arglist::visit_native (be_native *node)
 int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_any)
     {
@@ -214,7 +214,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
            || pt == AST_PredefinedType::PT_abstract)
     {
       // The only PT_pseudo that doesn't take a _ptr suffix.
-      bool is_tckind =
+      bool const is_tckind =
         (node->local_name ()->get_string () == "TCKind");
 
       switch (this->direction ())
@@ -343,8 +343,8 @@ int be_visitor_args_arglist::visit_map (be_map *node)
 int be_visitor_args_arglist::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  bool wide = (node->width () != sizeof (char));
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
+  bool const wide = (node->width () != sizeof (char));
 
   if (!wide && bound == 0 && be_global->alt_mapping ())
     {

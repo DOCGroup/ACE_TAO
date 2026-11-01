@@ -121,7 +121,7 @@ AST_Structure::~AST_Structure ()
 bool
 AST_Structure::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = list.empty ();
+  bool const self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.
@@ -436,7 +436,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
           return;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       // If this interface has been forward declared in a previous opening
       // of the module it's defined in, the lookup will find the
@@ -478,8 +478,8 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
           // All OK, do the redefinition.
           else
             {
-              AST_Decl::NodeType fd_nt = fd->node_type ();
-              AST_Decl::NodeType i_nt = i->node_type ();
+              AST_Decl::NodeType const fd_nt = fd->node_type ();
+              AST_Decl::NodeType const i_nt = i->node_type ();
 
               // Only redefinition of the same kind.
               if (i_nt != fd_nt)
@@ -589,7 +589,7 @@ bool AST_Structure::annotatable () const
 AST_Decl *
 AST_Structure::operator[] (std::size_t const index)
 {
-  std::size_t count = member_count_ <= 0 ? 0 : member_count_;
+  std::size_t const count = member_count_ <= 0 ? 0 : member_count_;
   if (index >= count)
     {
       return nullptr;

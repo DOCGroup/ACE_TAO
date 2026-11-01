@@ -176,7 +176,7 @@ be_visitor_any_extracted_type_decl::visit_sequence (be_sequence *node)
 int
 be_visitor_any_extracted_type_decl::visit_string (be_string *node)
 {
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
   os_ << "const " << node->full_name () << " " << tmp_name_ << " = nullptr;" << be_nl;
   if (node->width () == sizeof (char))
     os_ << "::CORBA::Any::to_string " << var_name_;
@@ -197,7 +197,7 @@ int
 be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  int status = node->primitive_base_type ()->accept (this);
+  int const status = node->primitive_base_type ()->accept (this);
 
   if (status == -1)
     {

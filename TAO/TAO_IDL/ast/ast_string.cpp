@@ -98,7 +98,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   Identifier *id = nullptr;
   UTL_ScopedName *new_name = nullptr;
   UTL_ScopedName *conc_name = nullptr;
-  bool narrow = this->width () == sizeof (char);
+  bool const narrow = this->width () == sizeof (char);
 
   ACE_NEW (id,
            Identifier (narrow ? "char *" : "WChar *"));
@@ -123,7 +123,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 
   this->set_name (new_name);
 
-  unsigned long bound = ms->ev ()->u.ulval;
+  unsigned long const bound = ms->ev ()->u.ulval;
 
   std::string namebuf ("CORBA_");
   if (wide != 1)

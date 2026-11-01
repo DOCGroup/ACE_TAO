@@ -185,7 +185,7 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
       bt = node;
     }
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   *os << "::" << bt->name ();
 

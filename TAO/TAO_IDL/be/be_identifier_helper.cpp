@@ -86,7 +86,7 @@ IdentifierHelper::original_local_name (std::string const& local_name)
     {
       TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
 
-      unsigned int len =
+      unsigned int const len =
         static_cast<unsigned int> (local_name.size () - 5);
       std::string const keyword = local_name.substr (5);
 

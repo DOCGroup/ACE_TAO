@@ -62,7 +62,7 @@ be_visitor_ami_pre_proc::visit_root (be_root *node)
     {
       /// Generate the *A.idl file containing AMI4CCM-related
       /// interfaces and connector.
-      int status = this->generate_ami4ccm_idl ();
+      int const status = this->generate_ami4ccm_idl ();
 
       if (status == -1)
         {
@@ -817,7 +817,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
       ACE_NEW_RETURN (raw_elements,
                       AST_Decl *[number_of_elements],
                       -1);
-      std::unique_ptr<AST_Decl *[]> elements (raw_elements);
+      std::unique_ptr<AST_Decl *[]> const elements (raw_elements);
 
       {
         int position = 0;
@@ -1016,9 +1016,9 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
                       nullptr);
       retval.reset (raw_retval);
 
-      std::string prefix ("AMI_");
+      std::string const prefix ("AMI_");
 
-      std::string suffix ("Handler");
+      std::string const suffix ("Handler");
       long index = 0;
 
       for (long j = 0; j < n_parents; ++j)
@@ -1083,7 +1083,7 @@ be_visitor_ami_pre_proc::generate_ami4ccm_idl ()
     }
 
   /// Open the *A.idl file and create the file stream.
-  int status =
+  int const status =
     tao_cg->start_ciao_ami_conn_idl (
       be_global->be_get_ciao_ami_conn_idl_fname ());
 

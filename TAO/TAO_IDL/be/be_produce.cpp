@@ -251,7 +251,7 @@ BE_produce ()
 
   if (be_global->gen_ciao_exec_impl ())
     {
-      bool  generate = be_util::overwrite_ciao_exec_files ();
+      bool  const generate = be_util::overwrite_ciao_exec_files ();
       if(generate)
         {
           ctx.state (TAO_CodeGen::TAO_ROOT_EXH);

@@ -196,11 +196,11 @@ be_visitor_home_ex_idl::visit_sequence (be_sequence *node)
 int
 be_visitor_home_ex_idl::visit_string (be_string *node)
 {
-  bool wide = node->width () > sizeof (char);
+  bool const wide = node->width () > sizeof (char);
 
   os_ << (wide ? "w" : "") << "string";
 
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
 
   if (bound > 0UL)
     {
@@ -245,7 +245,7 @@ be_visitor_home_ex_idl::gen_explicit ()
     }
   else
     {
-      std::string sname_str =
+      std::string const sname_str =
         IdentifierHelper::orig_sn (
           ScopeAsDecl (base->defined_in ())->name ());
 
@@ -275,7 +275,7 @@ be_visitor_home_ex_idl::gen_explicit ()
 void
 be_visitor_home_ex_idl::gen_derived ()
 {
-  std::string lname_str =
+  std::string const lname_str =
     IdentifierHelper::try_escape (
       node_->original_local_name ());
   std::string const& lname = lname_str;
@@ -323,13 +323,13 @@ be_visitor_home_ex_idl::gen_exception_list (
            ;)
         {
           AST_Type *ex = ei.item ();
-          std::string ex_name =
+          std::string const ex_name =
             IdentifierHelper::orig_sn (ex->name ());
 
           if (init_op)
             {
               /// These don't get passed on to the executor IDL.
-              bool init_match =
+              bool const init_match =
                 ex_name == "Components::CreateFailure"
                 || ex_name == "Components::FinderFailure";
 
@@ -360,11 +360,11 @@ be_visitor_home_ex_idl::gen_home_executor ()
   AST_Component *comp = node_->managed_component ();
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
 
-  std::string sname_str =
+  std::string const sname_str =
     IdentifierHelper::orig_sn (scope->name ());
   std::string const& sname = sname_str;
 
-  std::string lname_str =
+  std::string const lname_str =
     IdentifierHelper::try_escape (
       node_->original_local_name ());
   std::string const& lname = lname_str;

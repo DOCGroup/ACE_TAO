@@ -40,7 +40,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   //    need to fix that...
   // Generate the skeleton class name, use the AMH-node name as a
   // basis, this is AMH_<InterfaceName>ResponseHandler...
-  std::string rh_skel_prefix = "TAO_";
+  std::string const rh_skel_prefix = "TAO_";
 
   std::string const buf = node->compute_full_name (rh_skel_prefix, "");
   std::string rh_skel_full_scope_name ("POA_");

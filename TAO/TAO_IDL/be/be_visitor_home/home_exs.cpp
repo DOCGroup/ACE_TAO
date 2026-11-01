@@ -73,7 +73,7 @@ int
 be_visitor_home_exs::visit_factory (be_factory *node)
 {
   AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
-  std::string sname_str (scope->full_name ());
+  std::string const sname_str (scope->full_name ());
   std::string const& lname = comp_->local_name ()->get_string ();
   std::string const global = sname_str.empty () ? "" : "::";
 
@@ -153,7 +153,7 @@ be_visitor_home_exs::gen_exec_class ()
 
           Home_Exec_Op_Attr_Generator op_attr_gen (this);
 
-          int status =
+          int const status =
             bi->traverse_inheritance_graph (op_attr_gen,
                                             &os_,
                                             false,

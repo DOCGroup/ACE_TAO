@@ -100,7 +100,7 @@ void
 be_string::compute_tc_name ()
 {
   Identifier * id = nullptr;
-  ACE_CDR::ULong val = 0UL;
+  ACE_CDR::ULong const val = 0UL;
   AST_Expression zero (val);
 
   if (*this->max_size () == &zero)

@@ -108,7 +108,7 @@ AST_Argument::AST_Argument (Direction d,
     AST_Field (AST_Decl::NT_argument, ft, n),
     pd_direction (d)
 {
-  AST_Decl::NodeType fnt = ft->node_type ();
+  AST_Decl::NodeType const fnt = ft->node_type ();
 
   if (fnt == AST_Decl::NT_except)
     {

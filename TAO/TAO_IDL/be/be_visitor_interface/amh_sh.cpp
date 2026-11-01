@@ -68,7 +68,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   *os << "class " << be_global->skel_export_macro ()
       << " " << class_name << be_idt_nl << ": " << be_idt;
 
-  long n_parents = node->n_inherits ();
+  long const n_parents = node->n_inherits ();
 
   if (n_parents > 0)
     {

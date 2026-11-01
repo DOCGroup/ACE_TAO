@@ -40,7 +40,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
                         -1);
     }
 
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   if (nt == AST_Decl::NT_sequence)
     {
@@ -199,7 +199,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "_slice * _tao_slice)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
 
-  std::size_t ndims = node->n_dims ();
+  std::size_t const ndims = node->n_dims ();
   be_array *primitive_type = nullptr;
 
   if (bt->node_type () == AST_Decl::NT_typedef)

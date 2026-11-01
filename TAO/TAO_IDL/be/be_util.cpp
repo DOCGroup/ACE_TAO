@@ -82,7 +82,7 @@ be_util::gen_nested_namespace_end (TAO_OutStream *os,
 void
 be_util::gen_nesting_open (TAO_OutStream &os, AST_Decl *node)
 {
-  AST_Decl::NodeType nt = node->node_type ();
+  AST_Decl::NodeType const nt = node->node_type ();
 
   if (nt == AST_Decl::NT_root)
     {
@@ -96,7 +96,7 @@ be_util::gen_nesting_open (TAO_OutStream &os, AST_Decl *node)
 
   if (nt == AST_Decl::NT_module)
     {
-      std::string module_name (
+      std::string const module_name (
         IdentifierHelper::try_escape (
           node->original_local_name ()));
 

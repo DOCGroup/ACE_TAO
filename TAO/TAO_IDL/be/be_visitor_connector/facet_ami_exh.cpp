@@ -184,7 +184,7 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
   this->scope_name_ = scope->full_name ();
-  bool global = (scope->node_type () == AST_Decl::NT_root);
+  bool const global = (scope->node_type () == AST_Decl::NT_root);
   this->smart_scope_ = global ? "" : "::";
   this->iface_name_ = this->iface_->local_name ();
 
@@ -317,7 +317,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
 
 
      Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);
-     int status =
+     int const status =
          sync_iface->traverse_inheritance_graph(
              op_attr_gen,
              &os_,
@@ -354,7 +354,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
       << be_global->ciao_container_type () << "Context_ptr ctx);";
 
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
-  bool is_global =
+  bool const is_global =
    (s->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = is_global ? "" : "::";
 

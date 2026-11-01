@@ -30,7 +30,7 @@ be_visitor_executor_private_exh::visit_provides (be_provides *node)
 
   be_type *impl = node->provides_type ();
   AST_Decl *i_scope = ScopeAsDecl (impl->defined_in ());
-  bool is_global = (i_scope->node_type () == AST_Decl::NT_root);
+  bool const is_global = (i_scope->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = is_global ? "" : "::";
   std::string const scope_name (
     IdentifierHelper::orig_sn (i_scope->name (), false));
@@ -54,7 +54,7 @@ be_visitor_executor_private_exh::visit_attribute (be_attribute *node)
   if (!this->do_attribute_)
     return 0;
 
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.

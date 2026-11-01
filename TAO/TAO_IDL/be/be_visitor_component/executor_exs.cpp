@@ -22,7 +22,7 @@ be_visitor_executor_exs::be_visitor_executor_exs (
 int
 be_visitor_executor_exs::visit_operation (be_operation *node)
 {
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   // Components have implied IDL operations added to the AST, but
@@ -40,7 +40,7 @@ be_visitor_executor_exs::visit_operation (be_operation *node)
 int
 be_visitor_executor_exs::visit_attribute (be_attribute *node)
 {
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.

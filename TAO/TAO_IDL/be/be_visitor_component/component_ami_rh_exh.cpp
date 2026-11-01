@@ -48,7 +48,7 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
 
   Exec_ReplyHandler_Op_Attr_Generator op_attr_gen (this);
 
-  int status =
+  int const status =
     this->iface_->traverse_inheritance_graph (op_attr_gen,
                                               &os_,
                                               false,
@@ -103,11 +103,11 @@ be_visitor_component_ami_rh_exh::visit_operation (
       << "virtual void" << be_nl
       << node->local_name ()->get_string () << " (";
 
-  int count =
+  int const count =
     node->count_arguments_with_direction (
       AST_Argument::dir_INOUT | AST_Argument::dir_OUT);
 
-  bool vrt = node->void_return_type ();
+  bool const vrt = node->void_return_type ();
 
   if (count == 0 && vrt)
     {

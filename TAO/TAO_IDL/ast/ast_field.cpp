@@ -95,7 +95,7 @@ AST_Field::AST_Field (AST_Type *ft,
 {
   FE_Utils::tmpl_mod_ref_check (this, ft);
 
-  AST_Decl::NodeType fnt = ft->node_type ();
+  AST_Decl::NodeType const fnt = ft->node_type ();
 
   // In each of these cases, we are responsible for destroying
   // our ref_type_ member.
@@ -132,7 +132,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
     ref_type_ (ft),
     visibility_ (vis)
 {
-  AST_Decl::NodeType fnt = ft->node_type ();
+  AST_Decl::NodeType const fnt = ft->node_type ();
 
   // In each of these cases, we are responsible for destroying
   // our ref_type_ member.

@@ -209,7 +209,7 @@ int
 be_visitor_attr_return::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  int status = node->primitive_base_type ()->accept (this);
+  int const status = node->primitive_base_type ()->accept (this);
 
   if (status == -1)
     {

@@ -140,7 +140,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "{" << be_idt_nl;
   *os << "// Copy each individual element." << be_nl;
 
-  std::size_t ndims = node->n_dims ();
+  std::size_t const ndims = node->n_dims ();
 
   // Generate nested loops for as many dimensions as there are.
   for (i = 0; i < ndims; ++i)
@@ -260,7 +260,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   *os << be_uidt_nl << "}";
 
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   // If we contain an anonymous sequence,
   // generate code for the sequence here.

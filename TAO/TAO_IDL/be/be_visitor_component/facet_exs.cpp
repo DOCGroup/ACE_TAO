@@ -24,7 +24,7 @@ be_visitor_facet_exs::~be_visitor_facet_exs () = default;
 int
 be_visitor_facet_exs::visit_operation (be_operation *node)
 {
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   // Components have implied IDL operations added to the AST, but
@@ -84,7 +84,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
       << comment_end_border_;
 
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());
-  bool is_global = (c_scope->node_type () == AST_Decl::NT_root);
+  bool const is_global = (c_scope->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = is_global ? "" : "::";
 
   os_ << be_nl_2
@@ -125,7 +125,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 
       Component_Exec_Op_Attr_Generator op_attr_gen (this);
 
-      int status =
+      int const status =
         intf->traverse_inheritance_graph (op_attr_gen,
                                           &os_,
                                           false,

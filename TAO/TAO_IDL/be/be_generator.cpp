@@ -931,7 +931,7 @@ be_generator::create_wstring (AST_Expression *v)
                    : "wstring");
   UTL_ScopedName n (&id,
                     nullptr);
-  AST_Decl::NodeType nt = sizeof (ACE_CDR::WChar) == 1
+  AST_Decl::NodeType const nt = sizeof (ACE_CDR::WChar) == 1
                             ? AST_Decl::NT_string
                             : AST_Decl::NT_wstring;
 

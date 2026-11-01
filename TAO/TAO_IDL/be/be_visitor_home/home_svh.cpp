@@ -118,7 +118,7 @@ int
 be_visitor_home_svh::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
-  std::string sname_str (scope->full_name ());
+  std::string const sname_str (scope->full_name ());
 
   // No '_cxx_' prefix.
   std::string const& lname = node_->original_local_name ();
@@ -211,7 +211,7 @@ AST_Type *pk = node_->primary_key ();
           be_interface *bi =
             dynamic_cast<be_interface*> (h->inherits ()[i]);
 
-          int status =
+          int const status =
             bi->traverse_inheritance_graph (
               be_visitor_home_svh::op_attr_decl_helper,
               &os_);

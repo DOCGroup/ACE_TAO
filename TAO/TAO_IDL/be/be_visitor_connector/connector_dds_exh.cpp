@@ -178,7 +178,7 @@ be_visitor_connector_dds_exh::visit_mirror_port (
   /// Reuse the code in the base class to flip the
   /// facet/receptacle elements in the scope. We will end up
   /// in visit_provides() and visit_uses() below.
-  int status =
+  int const status =
     this->be_visitor_component_scope::visit_mirror_port (node);
 
   if (status != 0)
@@ -229,7 +229,7 @@ int
 be_visitor_connector_dds_exh::visit_attribute (
   be_attribute *node)
 {
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   /// We are interested in attributes in extended ports
@@ -257,7 +257,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
     (comp_scope->node_type () == AST_Decl::NT_root);
 
   UTL_ScopedName *dt_name = datatype->name ();
-  BE_GlobalData::DDS_IMPL the_dds_impl = be_global->dds_impl ();
+  BE_GlobalData::DDS_IMPL const the_dds_impl = be_global->dds_impl ();
 
   if (the_dds_impl != BE_GlobalData::DDS_NONE)
     {
@@ -337,7 +337,7 @@ be_visitor_connector_dds_exh::gen_connector_traits ()
   AST_Decl *comp_scope =
     ScopeAsDecl (this->node_->defined_in ());
 
-  bool global_comp =
+  bool const global_comp =
     (comp_scope->node_type () == AST_Decl::NT_root);
 
   os_ << be_nl_2
@@ -373,7 +373,7 @@ be_visitor_connector_dds_exh::gen_interface_connector_trait (
   if (!iface->dds_connector_traits_done ())
     {
       AST_Decl *scope = ScopeAsDecl (iface->defined_in ());
-      bool global = (scope->node_type () == AST_Decl::NT_root);
+      bool const global = (scope->node_type () == AST_Decl::NT_root);
       std::string const smart_scope = global ? "" : "::";
       std::string const lname = iface->local_name ();
 

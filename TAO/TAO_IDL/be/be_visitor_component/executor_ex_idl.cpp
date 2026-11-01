@@ -81,8 +81,8 @@ be_visitor_executor_ex_idl::visit_connector (be_connector *node)
 int
 be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
 {
-  AST_Decl::NodeType snt = this->node_->node_type ();
-  AST_Decl::NodeType ant =
+  AST_Decl::NodeType const snt = this->node_->node_type ();
+  AST_Decl::NodeType const ant =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   /// For now, we want porttype attributes generated only for
@@ -93,7 +93,7 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
       return 0;
     }
 
-  bool rd_only = node->readonly ();
+  bool const rd_only = node->readonly ();
 
   // Keep output statements separate because of side effects.
   // No need to check for anonymous array - anonymous types not
@@ -143,7 +143,7 @@ be_visitor_executor_ex_idl::visit_sequence (
 int
 be_visitor_executor_ex_idl::visit_string (be_string *node)
 {
-  bool wide =
+  bool const wide =
     node->width () > sizeof (char);
 
   os_ << (wide ? "w" : "") << "string";

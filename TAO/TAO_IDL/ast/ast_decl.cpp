@@ -911,7 +911,7 @@ AST_Decl::set_id_with_typeid (std::string const& value)
     {
     case AST_Decl::NT_field:
       {
-        AST_Decl::NodeType nt =
+        AST_Decl::NodeType const nt =
           ScopeAsDecl (this->defined_in ())->node_type ();
 
         if (   nt == AST_Decl::NT_valuetype

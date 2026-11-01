@@ -46,7 +46,7 @@ TAO_CodeGen::upcase (std::string const& str)
   upcase_str.reserve (str.size ());
 
   // Convert letters in str to upper case.
-  for (char c : str)
+  for (char const c : str)
     {
       if (std::isalpha (static_cast<unsigned char> (c)))
         {
@@ -71,7 +71,7 @@ TAO_CodeGen::downcase (std::string const& str)
   downcase_str.reserve (str.size ());
 
   // Convert letters in str to lower case.
-  for (char c : str)
+  for (char const c : str)
     {
       if (std::isalpha (static_cast<unsigned char> (c)))
         {
@@ -507,7 +507,7 @@ TAO_CodeGen::start_server_template_header (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->server_template_header_->open (
       fname,
       TAO_OutStream::TAO_SVR_TMPL_HDR);
@@ -919,7 +919,7 @@ TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_svnt_header_->open (fname,
                                    TAO_OutStream::CIAO_SVNT_HDR);
 
@@ -1015,7 +1015,7 @@ TAO_CodeGen::start_ciao_svnt_source (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_svnt_source_->open (fname,
                                    TAO_OutStream::CIAO_SVNT_IMPL);
 
@@ -1056,7 +1056,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_svnt_template_header_->open (fname,
                                             TAO_OutStream::CIAO_SVNT_T_HDR);
 
@@ -1134,7 +1134,7 @@ TAO_CodeGen::start_ciao_svnt_template_source (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_svnt_template_source_->open (fname,
                                             TAO_OutStream::CIAO_SVNT_T_IMPL);
 
@@ -1199,7 +1199,7 @@ TAO_CodeGen::start_ciao_exec_header (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
    this->ciao_exec_header_->open (fname,
                                   TAO_OutStream::CIAO_EXEC_HDR);
 
@@ -1252,7 +1252,7 @@ TAO_CodeGen::start_ciao_exec_source (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_exec_source_->open (fname,
                                    TAO_OutStream::CIAO_EXEC_IMPL);
   if (status == -1)
@@ -1294,7 +1294,7 @@ TAO_CodeGen::start_ciao_exec_idl (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_exec_idl_->open (fname,
                                 TAO_OutStream::CIAO_EXEC_IDL);
 
@@ -1337,7 +1337,7 @@ TAO_CodeGen::start_ciao_conn_header (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_conn_header_->open (fname,
                                    TAO_OutStream::CIAO_CONN_HDR);
 
@@ -1402,7 +1402,7 @@ TAO_CodeGen::start_ciao_conn_source (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_conn_source_->open (fname,
                                    TAO_OutStream::CIAO_CONN_IMPL);
 
@@ -1443,7 +1443,7 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_ami_conn_idl_->open (fname,
                                     TAO_OutStream::CIAO_AMI4CCM_CONN_IDL);
 

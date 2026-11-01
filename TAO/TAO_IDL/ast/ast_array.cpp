@@ -126,7 +126,7 @@ AST_Array::compute_dims (UTL_ExprList *ds,
       AST_Expression *orig = iter.item ();
       AST_Param_Holder *ph = orig->param_holder ();
 
-      AST_Expression::ExprType ex_type =
+      AST_Expression::ExprType const ex_type =
         (ph == nullptr ? orig->ev ()->et : ph->info ()->const_type_);
 
       AST_Expression *copy = nullptr;
@@ -222,7 +222,7 @@ AST_Array::set_base_type (AST_Type *nbt)
 
   this->pd_base_type = nbt;
   this->is_local_ = nbt->is_local ();
-  AST_Decl::NodeType bnt = nbt->node_type ();
+  AST_Decl::NodeType const bnt = nbt->node_type ();
 
   if (bnt == AST_Decl::NT_sequence
       || bnt == AST_Decl::NT_map

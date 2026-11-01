@@ -1503,7 +1503,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
                                    &parent_local_name);
   UTL_NameList parent_list (&parent_full_name,
                             nullptr);
-  FE_InterfaceHeader header (consumer_name,
+  FE_InterfaceHeader const header (consumer_name,
                              &parent_list,
                              false,
                              false,
@@ -1679,7 +1679,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                      nullptr);
   UTL_NameList parent_list (xplicit->name (),
                             &tail);
-  FE_InterfaceHeader header (nullptr,
+  FE_InterfaceHeader const header (nullptr,
                              &parent_list,
                              false,
                              false,
@@ -1800,7 +1800,7 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
                       nullptr);
     }
 
-  long n_supports = node->n_inherits ();
+  long const n_supports = node->n_inherits ();
   UTL_ScopedName *supported_name = nullptr;
   UTL_NameList *conc_value = nullptr;
 

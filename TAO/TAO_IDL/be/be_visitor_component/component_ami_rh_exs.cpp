@@ -44,7 +44,7 @@ be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)
       << "{" << be_nl
       << "}";
 
-  std::string port_pfix = this->ctx_->port_prefix ();
+  std::string const port_pfix = this->ctx_->port_prefix ();
   this->ctx_->port_prefix () = "";
 
   /// This overload of traverse_inheritance_graph() used here
@@ -55,7 +55,7 @@ be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)
 
   Exec_ReplyHandler_Op_Attr_Generator op_attr_gen (this);
 
-  int status =
+  int const status =
     this->iface_->traverse_inheritance_graph (op_attr_gen,
                                               &os_,
                                               false,
@@ -103,11 +103,11 @@ be_visitor_component_ami_rh_exs::visit_operation (
       << node->local_name ()->get_string ()
       << " (";
 
-  int count =
+  int const count =
     node->count_arguments_with_direction (
       AST_Argument::dir_INOUT | AST_Argument::dir_OUT);
 
-  bool vrt = node->void_return_type ();
+  bool const vrt = node->void_return_type ();
 
   if (count == 0 && vrt)
     {

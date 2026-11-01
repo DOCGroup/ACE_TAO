@@ -224,7 +224,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                             0);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
       int status = 0;
 
       if (nt == AST_Decl::NT_attr)
@@ -605,7 +605,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
         }
 
       be_decl *op = dynamic_cast<be_decl*> (d);
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt == AST_Decl::NT_attr)
         {

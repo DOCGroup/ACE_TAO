@@ -154,7 +154,7 @@ ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
                   UTL_ScopedName (node_id, nullptr),
                   -1);
 
-  FE_ComponentHeader header (local_name,
+  FE_ComponentHeader const header (local_name,
                              base_name,
                              supports_names,
                              false);
@@ -440,7 +440,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
                   UTL_ScopedName (node_id, nullptr),
                   -1);
 
-  FE_HomeHeader header (local_name,
+  FE_HomeHeader const header (local_name,
                         base_name,
                         supports_names,
                         managed_comp_name,
@@ -798,7 +798,7 @@ ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
 
   AST_ValueType *added_vtype = nullptr;
 
-  FE_OBVHeader header (local_name,
+  FE_OBVHeader const header (local_name,
                        parent_names,
                        supports_names,
                        (parent_names != nullptr
@@ -893,7 +893,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
                   UTL_ScopedName (node_id, nullptr),
                   -1);
 
-  FE_InterfaceHeader header (local_name,
+  FE_InterfaceHeader const header (local_name,
                              parent_names,
                              node->is_local (),
                              node->is_abstract (),
@@ -1064,7 +1064,7 @@ ast_visitor_tmpl_module_inst::visit_constant (AST_Constant *node)
     node->constant_value ()->param_holder ();
 
   AST_Expression *v = nullptr;
-  AST_Expression::ExprType et = node->et ();
+  AST_Expression::ExprType const et = node->et ();
 
   if (ph != nullptr)
     {

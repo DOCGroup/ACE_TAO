@@ -37,8 +37,8 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   AST_Decl::NodeType nt = AST_Decl::NT_pre_defined;
   AST_Decl *tdef = node->constant_value ()->get_tdef ();
   AST_Decl::NodeType bnt = AST_Decl::NT_pre_defined;
-  AST_Expression::ExprType etype = node->et ();
-  AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
+  AST_Expression::ExprType const etype = node->et ();
+  AST_Decl::NodeType const snt = node->defined_in ()->scope_node_type ();
 
   if (tdef != nullptr)
     {

@@ -200,7 +200,7 @@ be_visitor_exception_ctor_assign::visit_predefined_type (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   *os << be_nl;
 

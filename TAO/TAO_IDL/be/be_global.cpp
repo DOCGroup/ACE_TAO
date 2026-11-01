@@ -2661,7 +2661,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
-            std::string tmp (av[i + 1]);
+            std::string const tmp (av[i + 1]);
 #if defined (ACE_WIN32)
             // WIN32's CreateProcess needs the full executable name
             // when the gperf path is modified, but not for the default
@@ -2691,7 +2691,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
-            int result = ACE_OS::mkdir (av[i + 1]);
+            int const result = ACE_OS::mkdir (av[i + 1]);
 
             #if !defined (__BORLANDC__)
               if (result != 0 && errno != EEXIST)
@@ -2718,7 +2718,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             if (av[i][3] == '\0')
               {
                 idl_global->append_idl_flag (av[i + 1]);
-                int result = ACE_OS::mkdir (av[i + 1]);
+                int const result = ACE_OS::mkdir (av[i + 1]);
 
                 #if !defined (__BORLANDC__)
                   if (result != 0 && errno != EEXIST)
@@ -2757,7 +2757,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             if (av[i][3] == '\0')
               {
                 idl_global->append_idl_flag (av[i + 1]);
-                int result = ACE_OS::mkdir (av[i + 1]);
+                int const result = ACE_OS::mkdir (av[i + 1]);
 
                 #if !defined (__BORLANDC__)
                   if (result != 0 && errno != EEXIST)
@@ -2814,7 +2814,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             if (av[i][3] == '\0')
               {
                 idl_global->append_idl_flag (av[i + 1]);
-                int result = ACE_OS::mkdir (av[i + 1]);
+                int const result = ACE_OS::mkdir (av[i + 1]);
 
                 #if !defined (__BORLANDC__)
                   if (result != 0 && errno != EEXIST)
@@ -3166,7 +3166,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             std::size_t const options = std::strlen (av[i]) - 3;
             std::size_t j;
-            std::size_t k = i;
+            std::size_t const k = i;
             // Generate implementation files.
             be_global->gen_impl_files (true);
 
@@ -3393,7 +3393,7 @@ BE_GlobalData::parse_args (long &i, char **av)
       case 'T':
         if (av[i][2] == 'S')
           {
-            unsigned long ul = std::strtoul (av[i + 1], nullptr, 10);
+            unsigned long const ul = std::strtoul (av[i + 1], nullptr, 10);
             be_global->tab_size (ul);
             ++i;
           }

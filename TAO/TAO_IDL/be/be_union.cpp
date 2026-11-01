@@ -134,9 +134,9 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
       *os << "strm << ";
 
       be_type *ub_ft = dynamic_cast<be_type*> (ub->field_type ());
-      AST_Decl::NodeType ub_nt = ub_ft->node_type ();
+      AST_Decl::NodeType const ub_nt = ub_ft->node_type ();
       // catch anonymous Array member types
-      bool ub_use_underscore = ub_nt == AST_Decl::NT_array;
+      bool const ub_use_underscore = ub_nt == AST_Decl::NT_array;
 
       ub->gen_member_ostream_operator (os,
                                        instance_name,
@@ -193,8 +193,8 @@ be_union::gen_empty_default_label ()
       return true; // In reality this is an error.
     }
 
-  AST_Decl::NodeType nt = disc->node_type ();
-  ACE_UINT64 n_labels = this->nlabels ();
+  AST_Decl::NodeType const nt = disc->node_type ();
+  ACE_UINT64 const n_labels = this->nlabels ();
 
   if (nt == AST_Decl::NT_enum)
     {

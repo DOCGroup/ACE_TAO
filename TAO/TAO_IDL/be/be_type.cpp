@@ -234,7 +234,7 @@ be_type::gen_common_varout (TAO_OutStream *os)
 
   TAO_INSERT_COMMENT (os);
 
-  AST_Type::SIZE_TYPE st = this->size_type ();
+  AST_Type::SIZE_TYPE const st = this->size_type ();
 
   *os << be_nl_2
       << (this->node_type () == AST_Decl::NT_struct ? "struct "
@@ -301,7 +301,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
           << "using _out_type = " << this->local_name () << "_out;";
     }
 
-  bool gen_any_destructor =
+  bool const gen_any_destructor =
     be_global->any_support ()
     && (!this->is_local ()
         || be_global->gen_local_iface_anyops ());

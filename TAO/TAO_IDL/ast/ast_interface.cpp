@@ -121,8 +121,8 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     UTL_Scope (AST_Decl::NT_interface),
     pd_n_inherits (nih)
 {
-  std::unique_ptr<AST_Type *[]> inherits_owner (ih);
-  std::unique_ptr<AST_Interface *[]> inherits_flat_owner (ih_flat);
+  std::unique_ptr<AST_Type *[]> const inherits_owner (ih);
+  std::unique_ptr<AST_Interface *[]> const inherits_flat_owner (ih_flat);
 
   if (nih > 0)
     {
@@ -331,7 +331,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       AST_Interface *fd = dynamic_cast<AST_Interface *> (d);
       if (fd == nullptr)
         {
-          AST_Decl::NodeType nt = d->node_type ();
+          AST_Decl::NodeType const nt = d->node_type ();
 
           if (nt == AST_Decl::NT_struct_fwd || nt == AST_Decl::NT_union_fwd)
             {
@@ -356,8 +356,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           // All OK, do the redefinition.
           else
             {
-              AST_Decl::NodeType d_nt = d->node_type ();
-              AST_Decl::NodeType i_nt = i->node_type ();
+              AST_Decl::NodeType const d_nt = d->node_type ();
+              AST_Decl::NodeType const i_nt = i->node_type ();
 
               // Only redefinition of the same kind.
               if (i->is_local () != d->is_local ()
@@ -395,7 +395,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
       return;
     }
 
-  AST_Decl::NodeType nt = t->node_type ();
+  AST_Decl::NodeType const nt = t->node_type ();
   long n = 0;
 
   if (nt != AST_Decl::NT_param_holder)
@@ -403,7 +403,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
       AST_Interface *i = dynamic_cast<AST_Interface*> (t);
 
       AST_Type **parents = i->inherits ();
-      long n_parents = i->n_inherits ();
+      long const n_parents = i->n_inherits ();
 
       for (n = 0; n < n_parents; ++n)
         {
@@ -415,7 +415,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
     {
       AST_ValueType *v = dynamic_cast<AST_ValueType*> (t);
       AST_Type **supports = v->supports ();
-      std::size_t n_supports = v->n_supports ();
+      std::size_t const n_supports = v->n_supports ();
 
       for (std::size_t i = 0; i < n_supports; ++i)
         {
@@ -426,7 +426,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
     {
       AST_Component *c = dynamic_cast<AST_Component*> (t);
       AST_Type **supports = c->supports ();
-      long n_supports = c->n_supports ();
+      long const n_supports = c->n_supports ();
 
       for (n = 0; n < n_supports; ++n)
         {
@@ -607,7 +607,7 @@ AST_Interface::redef_clash ()
                group1_member_items.next ())
             {
               group1_member_item = group1_member_items.item ();
-              AST_Decl::NodeType nt1 =
+              AST_Decl::NodeType const nt1 =
                 group1_member_item->node_type ();
 
               // Only these member types may cause a clash because
@@ -635,7 +635,7 @@ AST_Interface::redef_clash ()
                           group2_member_item =
                             group2_member_items.item ();
 
-                          AST_Decl::NodeType nt2 =
+                          AST_Decl::NodeType const nt2 =
                             group2_member_item->node_type ();
 
                           // Only these member types may cause a clash
@@ -861,7 +861,7 @@ AST_Interface::has_mixed_parentage ()
       return 0;
     }
 
-  AST_Decl::NodeType nt = this->node_type ();
+  AST_Decl::NodeType const nt = this->node_type ();
 
   if (AST_Decl::NT_component == nt
       || AST_Decl::NT_home == nt

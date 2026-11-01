@@ -173,7 +173,7 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
       d = td->primitive_base_type ();
     }
 
-  AST_Decl::NodeType other_type = d->node_type ();
+  AST_Decl::NodeType const other_type = d->node_type ();
 
   if (other_type == AST_Decl::NT_const)
     {
@@ -181,7 +181,7 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
 
       AST_Expression *ex = c->constant_value ();
 
-      std::unique_ptr<AST_Expression::AST_ExprValue> ev (
+      std::unique_ptr<AST_Expression::AST_ExprValue> const ev (
         ex->check_and_coerce (param->const_type_,
                               param->enum_const_type_decl_));
 

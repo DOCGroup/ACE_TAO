@@ -319,7 +319,7 @@ int
 be_visitor_dds_ts_idl::init_file ()
 {
   /// Open an IDL file for writing.
-  std::string orig (
+  std::string const orig (
     idl_global->stripped_filename ());
 
   std::string fname_noext (orig.substr (0, orig.rfind ('.')));
@@ -334,7 +334,7 @@ be_visitor_dds_ts_idl::init_file ()
                   -1);
   this->os_ptr_.reset (stream);
 
-  int status = this->os_ptr_->open (fname);
+  int const status = this->os_ptr_->open (fname);
 
   if (status == -1)
     {

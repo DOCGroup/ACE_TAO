@@ -30,7 +30,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
   std::string const sname_str (scope->full_name ());
   std::string const& lname = node->local_name ();
   std::string const global = sname_str.empty () ? "" : "::";
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
 
   bool const is_connector = (nt == AST_Decl::NT_connector);
   bool no_events = false;
@@ -160,7 +160,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   Component_Op_Attr_Generator op_attr_gen (this);
 
-  int status =
+  int const status =
     this->node_->traverse_inheritance_graph (op_attr_gen,
                                              &os_,
                                              false,
@@ -214,7 +214,7 @@ be_visitor_servant_svs::visit_connector (be_connector *node)
 int
 be_visitor_servant_svs::visit_operation (be_operation *node)
 {
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   // Components have implied IDL operations added to the AST, but
@@ -233,7 +233,7 @@ be_visitor_servant_svs::visit_operation (be_operation *node)
 int
 be_visitor_servant_svs::visit_attribute (be_attribute *node)
 {
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.
@@ -700,7 +700,7 @@ be_visitor_servant_svs::gen_provides_top ()
 void
 be_visitor_servant_svs::gen_publishes_top ()
 {
-  std::size_t npubs = this->node_->n_publishes ();
+  std::size_t const npubs = this->node_->n_publishes ();
 
   if (npubs > 0UL)
     {
@@ -807,7 +807,7 @@ be_visitor_servant_svs::gen_publishes_top ()
 void
 be_visitor_servant_svs::gen_uses_top ()
 {
-  std::size_t nuses = this->node_->n_uses ();
+  std::size_t const nuses = this->node_->n_uses ();
 
   if (nuses > 0UL)
     {
@@ -1128,7 +1128,7 @@ be_visitor_attr_set::visit_component_scope (be_component *node)
 
     Component_Op_Attr_Generator component_inher (this);
 
-    int status =
+    int const status =
       node->traverse_inheritance_graph (component_inher,
                                         &os_,
                                         false,
@@ -1587,7 +1587,7 @@ Component_Op_Attr_Generator::emit (be_interface * /* derived_interface */,
                                    TAO_OutStream * /* os */,
                                    be_interface * base_interface)
 {
-  AST_Decl::NodeType nt = base_interface->node_type ();
+  AST_Decl::NodeType const nt = base_interface->node_type ();
 
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {

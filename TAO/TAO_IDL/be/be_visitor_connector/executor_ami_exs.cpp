@@ -134,7 +134,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       << "}";
 
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
-  bool is_global =
+  bool const is_global =
    (s->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = is_global ? "" : "::";
 
@@ -159,7 +159,7 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
 {
   AST_Type *t = node->provides_type ();
    AST_Decl *scope = ScopeAsDecl (t->defined_in ());
-  bool global = (scope->node_type () == AST_Decl::NT_root);
+  bool const global = (scope->node_type () == AST_Decl::NT_root);
   std::string const smart_scope = global ? "" : "::";
 
   os_ << be_nl_2

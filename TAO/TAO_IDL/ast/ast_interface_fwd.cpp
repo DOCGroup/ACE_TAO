@@ -109,7 +109,7 @@ AST_InterfaceFwd::is_local ()
 bool
 AST_InterfaceFwd::is_valuetype ()
 {
-  AST_Decl::NodeType nt = this->full_definition ()->node_type ();
+  AST_Decl::NodeType const nt = this->full_definition ()->node_type ();
   return nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype;
 }
 

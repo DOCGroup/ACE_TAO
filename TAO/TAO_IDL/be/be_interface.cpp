@@ -74,7 +74,7 @@ be_interface::be_interface (UTL_ScopedName *n,
     be_type (AST_Decl::NT_interface,
              n)
 {
-  AST_Decl::NodeType nt = this->node_type ();
+  AST_Decl::NodeType const nt = this->node_type ();
 
   if (this->imported ()
       || nt == AST_Decl::NT_valuetype
@@ -432,7 +432,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << be_uidt_nl
           << ": ";
 
-      bool the_check =
+      bool const the_check =
         (this->has_mixed_parentage_
          && !this->is_abstract_
          && this->pd_n_inherits > 0
@@ -522,9 +522,9 @@ be_interface::gen_var_out_seq_decls ()
   // execution of the IDL compiler) there is nothing
   // to tell the IDL compiler that this interface is in any
   // way special. All we can do is search for the prefix.
-  bool has_ami4ccm_prefix = (lname.find ("AMI4CCM_") == 0);
+  bool const has_ami4ccm_prefix = (lname.find ("AMI4CCM_") == 0);
 
-  bool already_ami =
+  bool const already_ami =
     (this->is_ami_rh ()
      || this->is_ami4ccm_rh ()
      || has_ami4ccm_prefix);
@@ -1499,7 +1499,7 @@ be_interface::traverse_inheritance_graph (
       intf = this->insert_queue.front ();
       this->insert_queue.pop_front ();
 
-      AST_Decl::NodeType nt = intf->node_type ();
+      AST_Decl::NodeType const nt = intf->node_type ();
 
       // If we are doing a home, we check for a parent.
       if (nt == AST_Decl::NT_home)
@@ -1728,7 +1728,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
   tao_cg->gperf_input_stream ()->file () = nullptr;
 
   // Open the temp file.
-  ACE_HANDLE input =
+  ACE_HANDLE const input =
     ACE::open_temp_file (
       ACE_TEXT_CHAR_TO_TCHAR (tao_cg->gperf_input_filename ().c_str ()),
       O_RDONLY);
@@ -1752,7 +1752,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
   // again with <ACE_OS::open> with WRITE + APPEND option.. After
   // this, remember to update the file offset to the correct location.
   std::string const skeleton_fname = be_global->be_get_server_skeleton_fname ();
-  ACE_HANDLE output =
+  ACE_HANDLE const output =
     ACE_OS::open (skeleton_fname.c_str (), O_WRONLY | O_APPEND);
 
   if (output == ACE_INVALID_HANDLE)
@@ -2030,7 +2030,7 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
     {
       // Get the next AST decl node
       AST_Decl *d = si.item ();
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt == AST_Decl::NT_op)
         {
@@ -2214,9 +2214,9 @@ void
 be_interface::gen_stub_inheritance (TAO_OutStream *os)
 {
   long i;
-  long nparents = this->n_inherits ();
+  long const nparents = this->n_inherits ();
   bool has_concrete_parent = false;
-  bool i_am_abs = this->is_abstract ();
+  bool const i_am_abs = this->is_abstract ();
 
   // If node interface inherits from other interfaces.
   if (nparents > 0)
@@ -2276,7 +2276,7 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
 void
 be_interface::gen_skel_inheritance (TAO_OutStream *os)
 {
-  long n_parents = this->n_inherits ();
+  long const n_parents = this->n_inherits ();
   AST_Type *parent = nullptr;
   AST_Type **parents = this->inherits ();
   bool has_concrete_parent = false;
@@ -2378,7 +2378,7 @@ Facet_Op_Attr_Helper::emit (be_interface * /*derived_interface */,
                             TAO_OutStream *,
                             be_interface *base_interface)
 {
-  AST_Decl::NodeType nt = base_interface->node_type ();
+  AST_Decl::NodeType const nt = base_interface->node_type ();
 
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {

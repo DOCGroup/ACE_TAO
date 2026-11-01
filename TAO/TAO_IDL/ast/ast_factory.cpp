@@ -226,7 +226,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except
           && nt != AST_Decl::NT_param_holder)

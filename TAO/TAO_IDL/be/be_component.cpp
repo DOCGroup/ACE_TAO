@@ -345,7 +345,6 @@ void
 be_component::mirror_scan (AST_PortType *pt)
 {
   AST_Uses *u = nullptr;
-  AST_Provides *p = nullptr;
   AST_Attribute *a = nullptr;
 
   for (UTL_ScopeActiveIterator i (pt, UTL_Scope::IK_decls);
@@ -358,8 +357,6 @@ be_component::mirror_scan (AST_PortType *pt)
         {
           case AST_Decl::NT_provides:
             ++this->n_uses_;
-            p = dynamic_cast<AST_Provides*> (d);
-
             continue;
           case AST_Decl::NT_uses:
             ++this->n_provides_;

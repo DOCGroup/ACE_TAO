@@ -140,7 +140,7 @@ be_visitor_home_exh::gen_exec_class ()
           be_interface *bi =
             dynamic_cast<be_interface*> (h->inherits ()[i]);
 
-          int status =
+          int const status =
             bi->traverse_inheritance_graph (
               be_visitor_home_exh::op_attr_decl_helper,
               &os_);

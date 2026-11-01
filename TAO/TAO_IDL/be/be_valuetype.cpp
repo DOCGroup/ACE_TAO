@@ -189,7 +189,7 @@ be_valuetype::determine_factory_style ()
     }
 
   // Check whether we have at least one operation or not.
-  bool have_operation = this->have_operation ();
+  bool const have_operation = this->have_operation ();
   bool have_factory = false;
 
   // Try only our own scope.
@@ -213,7 +213,7 @@ be_valuetype::determine_factory_style ()
                                 factory_style);
             }
 
-          AST_Decl::NodeType node_type = d->node_type ();
+          AST_Decl::NodeType const node_type = d->node_type ();
 
           if (node_type == AST_Decl::NT_factory)
             {
@@ -273,7 +273,7 @@ be_valuetype::have_operation ()
                                 0);
             }
 
-          AST_Decl::NodeType nt = d->node_type();
+          AST_Decl::NodeType const nt = d->node_type();
 
           if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
             {
@@ -287,7 +287,7 @@ be_valuetype::have_operation ()
     {
       // Now traverse inheritance tree.
       long i;  // loop index
-      long n_inherits = this->n_inherits ();
+      long const n_inherits = this->n_inherits ();
       AST_Type **inherits = this->inherits ();
 
       for (i = 0; i < n_inherits; ++i)
@@ -349,7 +349,7 @@ be_valuetype::have_supported_op (be_interface * node)
                             0);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       // Check the type of each element in the supported interface
       if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
@@ -363,7 +363,7 @@ be_valuetype::have_supported_op (be_interface * node)
     {
       // Now traverse inheritance tree.
       long i;  // loop index
-      long n_inherits = node->n_inherits ();
+      long const n_inherits = node->n_inherits ();
       AST_Type **inherits = node->inherits ();
 
       for (i = 0; i < n_inherits; ++i)
@@ -390,7 +390,7 @@ be_valuetype::have_supported_op (be_interface * node)
 bool
 be_valuetype::will_have_factory ()
 {
-  FactoryStyle fs = this->determine_factory_style ();
+  FactoryStyle const fs = this->determine_factory_style ();
 
   return (fs == FS_ABSTRACT_FACTORY || fs == FS_CONCRETE_FACTORY);
 }
@@ -642,7 +642,7 @@ be_valuetype::traverse_supports_list_graphs (
     bool use_concrete_paths
   )
 {
-  bool abstract_paths_only = use_abstract_paths && !use_concrete_paths;
+  bool const abstract_paths_only = use_abstract_paths && !use_concrete_paths;
 
   std::size_t const n_supports = this->n_supports ();
 

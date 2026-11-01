@@ -107,7 +107,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 {
   FE_Utils::tmpl_mod_ref_check (this, bt);
 
-  AST_Decl::NodeType bnt = bt->node_type ();
+  AST_Decl::NodeType const bnt = bt->node_type ();
 
   if (bnt == AST_Decl::NT_param_holder)
     {
@@ -134,7 +134,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
   // A sequence data type is always VARIABLE.
   this->size_type (AST_Type::VARIABLE);
 
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   bool const owns_base_type =
     nt == AST_Decl::NT_array

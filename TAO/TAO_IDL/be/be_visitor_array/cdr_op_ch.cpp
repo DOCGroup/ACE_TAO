@@ -34,7 +34,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_type *bt = dynamic_cast<be_type*> (node->base_type ());
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   // If the node is an array of anonymous sequence, we need to
   // generate the sequence's cdr operator declaration here.

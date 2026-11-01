@@ -35,8 +35,8 @@ be_visitor_attribute_ccm_init::visit_attribute (
 
   if (intf != nullptr)
     {
-      AST_Decl::NodeType snt = intf->node_type ();
-      AST_Decl::NodeType ant =
+      AST_Decl::NodeType const snt = intf->node_type ();
+      AST_Decl::NodeType const ant =
         ScopeAsDecl (node->defined_in ())->node_type ();
 
       if (snt == AST_Decl::NT_component
