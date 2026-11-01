@@ -15,11 +15,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCKING_MECHANISM>
-ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::~ACE_Lock_Adapter ()
-{
-  if (this->delete_lock_)
-    delete this->lock_;
-}
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::~ACE_Lock_Adapter () = default;
 
 // Explicitly destroy the lock.
 template <class ACE_LOCKING_MECHANISM> int

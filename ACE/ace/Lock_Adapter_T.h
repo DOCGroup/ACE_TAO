@@ -13,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Lock.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,6 +50,11 @@ public:
   /// Destructor. If @c lock_ was not passed in by the user, it will be
   /// deleted.
   ~ACE_Lock_Adapter () override;
+
+  ACE_Lock_Adapter (ACE_Lock_Adapter const &) = delete;
+  ACE_Lock_Adapter &operator= (ACE_Lock_Adapter const &) = delete;
+  ACE_Lock_Adapter (ACE_Lock_Adapter &&) = delete;
+  ACE_Lock_Adapter &operator= (ACE_Lock_Adapter &&) = delete;
 
   // = Lock accessors.
   /// Block the thread until the lock is acquired.
@@ -94,11 +100,10 @@ public:
 
 private:
   /// The concrete locking mechanism that all the methods delegate to.
-  ACE_LOCKING_MECHANISM *lock_;
+  std::unique_ptr<ACE_LOCKING_MECHANISM> owned_lock_;
 
-  /// This flag keep track of whether we are responsible for deleting
-  /// the lock
-  bool delete_lock_;
+  /// The lock to which all operations are delegated.
+  ACE_LOCKING_MECHANISM *lock_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
