@@ -8,6 +8,7 @@
 #include "ace/Signal.h"
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"
+#include <array>
 
 #if !defined(ACE_WIN32)
 
@@ -21,7 +22,7 @@ static const ACE_TCHAR *input_filename = ACE_TEXT ("/usr/dict/words");
 static const ACE_TCHAR *output_filename = ACE_TEXT ("/tmp/foo");
 
 // Check if removing output file upon completion...
-static int remove_output = 1;
+static bool remove_output = true;
 
 // Count of the number of iterations to run the tests.
 static int iteration_count = 100;
@@ -70,7 +71,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       output_filename = get_opt.opt_arg ();
       break;
     case 'r':
-      remove_output = 0;
+      remove_output = false;
       break;
     default:
       print_usage_and_die ();
@@ -78,10 +79,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
   }
 }
 
-// Vector of pointers to derived classes that inherit from IO_Test
+// Array of pointers to derived classes that inherit from IO_Test
 // base class.
 
-static IO_Test *test_vector[100];
+static std::array<IO_Test *, 7> test_vector {};
 
 static int
 run_tests (int iterations, FILE *input_fp, FILE *output_fp)
@@ -119,7 +120,7 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
                   -1);
   i++;
 
-  test_vector[i] = (IO_Test *) nullptr;
+  test_vector[i] = nullptr;
 
   for (i = 0; test_vector[i] != nullptr; i++)
     {
