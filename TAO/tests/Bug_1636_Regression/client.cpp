@@ -14,7 +14,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->resolve_initial_references ("DynAnyFactory");
 
     DynamicAny::DynAnyFactory_var daf =
-      DynamicAny::DynAnyFactory::_narrow (obj.in());
+      DynamicAny::DynAnyFactory::_narrow (obj.in ());
 
     UnionIecs::S_i_num s_num;
     s_num.type_num = UnionIecs::E_type_num_called_party_number;
@@ -30,7 +30,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     DynamicAny::DynAny_var dynany1 =
       daf->create_dyn_any_from_type_code (UnionIecs::_tc_S_num);
 
-    dynany1->from_any(MyAny1);
+    dynany1->from_any (MyAny1);
     CORBA::Any_var arg1 =
       dynany1->to_any ();
 
@@ -44,19 +44,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "calling from_any () and to_any () with empty union...\n" ));
     DynamicAny::DynAny_var dynany2 =
-      daf-> create_dyn_any_from_type_code (UnionIecs::_tc_S_num);
+      daf->create_dyn_any_from_type_code (UnionIecs::_tc_S_num);
 
     dynany2->from_any (MyAny2);
 
     CORBA::Any_var arg2 =
-      dynany2->to_any();
+      dynany2->to_any ();
 
     ACE_DEBUG ((LM_DEBUG,"...done.\nTest passed.\n"));
 
     // Finally destroy the ORB
     orb->destroy ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception - test failed:\n");
       return 1;

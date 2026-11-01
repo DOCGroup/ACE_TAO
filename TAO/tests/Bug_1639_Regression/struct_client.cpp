@@ -23,10 +23,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
     // Get reference to the DynAny Factory
-    CORBA::Object_var obj =  orb->resolve_initial_references("DynAnyFactory");
+    CORBA::Object_var obj = orb->resolve_initial_references ("DynAnyFactory");
 
     DynAnyFactory_var daf =
-      DynAnyFactory::_narrow(obj.in());
+      DynAnyFactory::_narrow (obj.in ());
 
     MyStruct my_struct;
     MyStructAlias my_struct_alias;
@@ -60,13 +60,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     cout << "Type Code of the union alias: " << tc_union_alias->kind() << endl;
 
     // equal returns true only when the TypeCodes are exactly the same.
-    if (tc_struct->equal(tc_struct_alias.in())) {
+    if (tc_struct->equal (tc_struct_alias.in ())) {
       cout << "Type Codes are identical" << endl;
     } else {
       cout << "Type Codes are different" << endl;
     }
     // equivalent returns true when the TypeCode is an alias
-    if (tc_struct->equivalent(tc_struct_alias.in())) {
+    if (tc_struct->equivalent (tc_struct_alias.in ())) {
       cout << "Type Codes are equivalent" << endl;
     } else {
       cout << "Type Codes are not equivalent" << endl;
@@ -76,13 +76,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     try {
       DynAny_var da_struct_alias = daf->create_dyn_any_from_type_code (tc_struct_alias.in());
-    } catch (const CORBA::UNKNOWN &) {
+    } catch (CORBA::UNKNOWN const &) {
       cout << "CORBA::UNKNOWN exception when calling create_dyn_any_from_type_code (tc_struct_alias)" << endl;
     }
 
     try {
       DynAny_var da_struct_alias = daf->create_dyn_any (any_struct_alias);
-    } catch (const CORBA::UNKNOWN &) {
+    } catch (CORBA::UNKNOWN const &) {
       cout << "CORBA::UNKNOWN exception when calling create_dyn_any (any_struct_alias)" << endl;
     }
 
@@ -90,19 +90,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     try {
       DynAny_var da_union_alias = daf->create_dyn_any_from_type_code (tc_union_alias.in());
-    } catch (const CORBA::UNKNOWN &) {
+    } catch (CORBA::UNKNOWN const &) {
       cout << "CORBA::UNKNOWN exception when calling create_dyn_any_from_type_code (tc_union_alias)" << endl;
     }
 
     try {
       DynAny_var da_union_alias = daf->create_dyn_any (any_union_alias);
-    } catch (const CORBA::UNKNOWN &) {
+    } catch (CORBA::UNKNOWN const &) {
       cout << "CORBA::UNKNOWN exception when calling create_dyn_any (any_union_alias)" << endl;
     }
 
   } // end try
 
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "Caught CORBA exception" << endl;
     return 1;
   }
