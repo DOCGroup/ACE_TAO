@@ -3,6 +3,7 @@
 #include "ace/SPIPE_Connector.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
+#include <memory>
 
 
 
@@ -10,15 +11,15 @@
 
 #include "shared.h"
 
-const int DEFAULT_SIZE = 8 * 1024;
-const int DEFAULT_COUNT = 100;
+constexpr int DEFAULT_SIZE = 8 * 1024;
+constexpr int DEFAULT_COUNT = 100;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int  size = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_SIZE;
   int  iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_COUNT;
-  char *buf = new char[size];
+  std::unique_ptr<char[]> buf = std::make_unique<char[]> (size);
 
   if (argc > 3)
     rendezvous = argv[3];
@@ -34,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     buf[i] = 'a';
 
   for (i = 0; i < iterations; i++)
-    if (cli_stream.send (buf, size) != size)
+    if (cli_stream.send (buf.get (), size) != size)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "putmsg"), -1);
 
   if (cli_stream.close () == -1)
