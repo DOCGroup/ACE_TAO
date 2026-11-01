@@ -16,6 +16,7 @@
 #include "tao/Profile.h"
 #include "tao/AnyTypeCode/ValueModifierC.h"
 #include <memory>
+#include <cstring>
 #include "ace/OS_NS_fcntl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -1367,7 +1368,7 @@ TAO_IFR_Service_Utils::oid_to_string (PortableServer::ObjectId &oid)
   CORBA::ULong length = oid.length ();
 
   // Copy the data.
-  ACE_OS::memcpy (oid_string,
+  std::memcpy (oid_string,
                   oid.get_buffer (),
                   length);
 

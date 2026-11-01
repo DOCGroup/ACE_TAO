@@ -13,6 +13,8 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/SString.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
@@ -55,8 +57,8 @@ TAO_Repository_i::lookup_id (char const *search_id)
 CORBA::Contained_ptr
 TAO_Repository_i::lookup_id_i (char const *search_id)
 {
-  if (ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
-      || ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
+  if (std::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
+      || std::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
     {
       return CORBA::Contained::_nil ();
     }

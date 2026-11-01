@@ -9,6 +9,7 @@
 #include "ace/SString.h"
 #include <memory>
 #include <deque>
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -195,7 +196,7 @@ TAO_Container_i::lookup_i (char const *search_name)
   CORBA::DefinitionKind def_kind = CORBA::dk_none;
 
 
-  if (ACE_OS::strncmp (search_name, "::", 2) == 0)
+  if (std::strncmp (search_name, "::", 2) == 0)
     {
       // We were given an absolute scoped name.
       work_string = search_name + 2;
@@ -1786,7 +1787,7 @@ TAO_Container_i::create_ext_value_i (
 int
 TAO_Container_i::same_as_tmp_name (char const *name)
 {
-  return ACE_OS::strcmp (TAO_Container_i::tmp_name_holder_, name) == 0;
+  return std::strcmp (TAO_Container_i::tmp_name_holder_, name) == 0;
 }
 
 void
@@ -1854,7 +1855,7 @@ TAO_Container_i::lookup_name_recursive (
                                                         "name",
                                                         name);
 
-              if (ACE_OS::strcmp (name.c_str (), search_name) == 0)
+              if (std::strcmp (name.c_str (), search_name) == 0)
                 {
                   kind_queue.push_back (def_kind);
 

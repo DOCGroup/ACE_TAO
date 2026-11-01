@@ -1,6 +1,8 @@
 #include "orbsvcs/IFRService/LocalInterfaceDef_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LocalInterfaceDef_i::TAO_LocalInterfaceDef_i (TAO_Repository_i *repo)
@@ -33,7 +35,7 @@ TAO_LocalInterfaceDef_i::is_a (char const *interface_id)
 CORBA::Boolean
 TAO_LocalInterfaceDef_i::is_a_i (char const *interface_id)
 {
-  if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/LocalBase:1.0") == 0)
+  if (std::strcmp (interface_id, "IDL:omg.org/CORBA/LocalBase:1.0") == 0)
     {
       return true;
     }

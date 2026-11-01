@@ -6,6 +6,8 @@
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
+
+#include <cstring>
 #include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -304,7 +306,7 @@ TAO_InterfaceDef_i::is_a (char const *interface_id)
 CORBA::Boolean
 TAO_InterfaceDef_i::is_a_i (char const *interface_id)
 {
-  if (ACE_OS::strcmp (interface_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
+  if (std::strcmp (interface_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
       return true;
     }
@@ -315,7 +317,7 @@ TAO_InterfaceDef_i::is_a_i (char const *interface_id)
                                             id);
 
   // Is it our type?
-  if (ACE_OS::strcmp (id.fast_rep (), interface_id) == 0)
+  if (std::strcmp (id.fast_rep (), interface_id) == 0)
     {
       return true;
     }

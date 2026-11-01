@@ -3,6 +3,8 @@
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "ace/SString.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char const *TAO_Contained_i::tmp_name_holder_ = nullptr;
@@ -460,7 +462,7 @@ TAO_Contained_i::contents_name_update (ACE_TString stem,
 int
 TAO_Contained_i::same_as_tmp_name (char const *name)
 {
-  return ACE_OS::strcmp (TAO_Contained_i::tmp_name_holder_, name) == 0;
+  return std::strcmp (TAO_Contained_i::tmp_name_holder_, name) == 0;
 }
 
 void

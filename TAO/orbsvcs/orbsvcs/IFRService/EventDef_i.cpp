@@ -1,6 +1,8 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/EventDef_i.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EventDef_i::TAO_EventDef_i (TAO_Repository_i *repo)
@@ -67,7 +69,7 @@ TAO_EventDef_i::is_a (char const *event_id)
 CORBA::Boolean
 TAO_EventDef_i::is_a_i (char const *event_id)
 {
-  if (ACE_OS::strcmp (event_id, "IDL:omg.org/CORBA/EventBase:1.0") == 0)
+  if (std::strcmp (event_id, "IDL:omg.org/CORBA/EventBase:1.0") == 0)
     {
       return true;
     }

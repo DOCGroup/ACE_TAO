@@ -6,6 +6,8 @@
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
+
+#include <cstring>
 #include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -713,7 +715,7 @@ TAO_ValueDef_i::is_a (char const *id)
 CORBA::Boolean
 TAO_ValueDef_i::is_a_i (char const *id)
 {
-  if (ACE_OS::strcmp (id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
+  if (std::strcmp (id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
     {
       return true;
     }
@@ -724,7 +726,7 @@ TAO_ValueDef_i::is_a_i (char const *id)
                                             holder);
 
   // Is it our type?
-  if (ACE_OS::strcmp (holder.fast_rep (), id) == 0)
+  if (std::strcmp (holder.fast_rep (), id) == 0)
     {
       return true;
     }
@@ -746,7 +748,7 @@ TAO_ValueDef_i::is_a_i (char const *id)
                                             holder);
 
       // Is it our concrete base type?
-      if (ACE_OS::strcmp (holder.fast_rep (), id) == 0)
+      if (std::strcmp (holder.fast_rep (), id) == 0)
         {
           return true;
         }
