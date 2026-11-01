@@ -16,6 +16,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (
@@ -41,7 +43,7 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
 
   // ----------------------------------------------------------------
 
-  TAO_OutputCDR cdr ((size_t) 0,            // size
+  TAO_OutputCDR cdr (static_cast<std::size_t> (0), // size
                      (int) TAO_ENCAP_BYTE_ORDER,
                      nullptr,               // buffer_allocator
                      nullptr,               // data_block_allocator
@@ -81,7 +83,7 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
            i != nullptr;
            i = i->cont ())
         {
-          size_t const len = i->length ();
+          std::size_t const len = i->length ();
           ACE_OS::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }
@@ -108,8 +110,8 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
 
   ACE_OS::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
 
-  size_t rd_pos = mb.rd_ptr () - mb.base ();
-  size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+  std::size_t rd_pos = mb.rd_ptr () - mb.base ();
+  std::size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
 
   TAO_InputCDR cdr (mb.data_block (),
                     ACE_Message_Block::DONT_DELETE,
@@ -158,7 +160,7 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
   this->check_type_for_encoding (data);
 
   // ----------------------------------------------------------------
-  TAO_OutputCDR cdr ((size_t) 0,            // size
+  TAO_OutputCDR cdr (static_cast<std::size_t> (0), // size
                      (int) TAO_ENCAP_BYTE_ORDER,
                      nullptr,               // buffer_allocator
                      nullptr,               // data_block_allocator
@@ -224,7 +226,7 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
            i != nullptr;
            i = i->cont ())
         {
-          size_t len = i->length ();
+          std::size_t len = i->length ();
           ACE_OS::memcpy (buf,
                           i->rd_ptr (),
                           len);
@@ -267,8 +269,8 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   //       rather than attempt to extract it from the CDR
   //       encapsulation.
 
-  size_t rd_pos = mb.rd_ptr () - mb.base ();
-  size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+  std::size_t rd_pos = mb.rd_ptr () - mb.base ();
+  std::size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
 
   TAO_InputCDR cdr (mb.data_block (),
                     ACE_Message_Block::DONT_DELETE,
