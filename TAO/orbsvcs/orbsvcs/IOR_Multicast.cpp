@@ -5,6 +5,8 @@
 #include "ace/SOCK_Connector.h"
 #include "orbsvcs/Log_Macros.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
@@ -54,7 +56,7 @@ TAO_IOR_Multicast::init (char const *ior,
                          TAO_Service_ID service_id)
 {
   // Look for a '@' incase a nic is specified.
-  char const *tmpnic = ACE_OS::strchr (mcast_addr, '@');
+  char const *tmpnic = std::strchr (mcast_addr, '@');
 
   CORBA::String_var actual_mcast_addr;
   CORBA::ULong length_addr;
@@ -65,9 +67,9 @@ TAO_IOR_Multicast::init (char const *ior,
       length_addr = static_cast<CORBA::ULong> (tmpnic - mcast_addr + 1);
       actual_mcast_addr = CORBA::string_alloc (length_addr);
 
-      ACE_OS::strncpy (actual_mcast_addr.inout (),
-                       mcast_addr,
-                       length_addr - 1);
+      std::strncpy (actual_mcast_addr.inout (),
+                    mcast_addr,
+                    length_addr - 1);
 
       actual_mcast_addr[length_addr - 1] = '\0';
 
@@ -77,7 +79,7 @@ TAO_IOR_Multicast::init (char const *ior,
   else
     {
       actual_mcast_addr =
-        CORBA::string_alloc (static_cast<CORBA::ULong> (ACE_OS::strlen (mcast_addr)));
+        CORBA::string_alloc (static_cast<CORBA::ULong> (std::strlen (mcast_addr)));
 
       actual_mcast_addr = mcast_addr;
     }
@@ -202,16 +204,11 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                   ACE_NTOHS (remote_port)));
     }
 
-  if (ACE_OS::strcmp (service_name,
-                      "NameService") != 0
-      && ACE_OS::strcmp (service_name,
-                         "TradingService") != 0
-      && ACE_OS::strcmp (service_name,
-                         "ImplRepoService") != 0
-      && ACE_OS::strcmp (service_name,
-                         "InterfaceRepository") != 0
-      && ACE_OS::strcmp (service_name,
-                         "MCASTServer") != 0)
+  if (std::strcmp (service_name, "NameService") != 0
+      && std::strcmp (service_name, "TradingService") != 0
+      && std::strcmp (service_name, "ImplRepoService") != 0
+      && std::strcmp (service_name, "InterfaceRepository") != 0
+      && std::strcmp (service_name, "MCASTServer") != 0)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
         "IOR_Multicast::connect() Unknown service requested.\n"),0);
