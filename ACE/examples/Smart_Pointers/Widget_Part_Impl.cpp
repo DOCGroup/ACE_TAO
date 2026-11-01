@@ -8,15 +8,14 @@
 //=============================================================================
 
 #include "Widget_Part_Impl.h"
-#include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Null_Mutex.h"
 
-Widget_Part_Impl::Widget_Part_Impl (Widget *owner, const char* name, int size)
+Widget_Part_Impl::Widget_Part_Impl (Widget *owner, char const *name, int size)
   : owner_ (owner),
-    name_ (ACE::strnew (name)),
+    name_ (name),
     size_ (size)
 {
   ACE_DEBUG ((LM_DEBUG, "Widget_Part_Impl constructor\n"));
@@ -26,12 +25,11 @@ Widget_Part_Impl::~Widget_Part_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Widget_Part_Impl destructor\n"));
 
-  delete [] name_;
 }
 
 void Widget_Part_Impl::print_info ()
 {
-  ACE_DEBUG ((LM_INFO, "Widget part: name=%s size=%d\n", name_, size_));
+  ACE_DEBUG ((LM_INFO, "Widget part: name=%s size=%d\n", name_.c_str (), size_));
 }
 
 void Widget_Part_Impl::remove_from_owner ()

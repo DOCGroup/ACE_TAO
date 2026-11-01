@@ -20,8 +20,15 @@
 class Widget
 {
 public:
+  Widget () = default;
+
   /// Destructor.
   virtual ~Widget ();
+
+  Widget (Widget const &) = delete;
+  Widget (Widget &&) = delete;
+  Widget &operator= (Widget const &) = delete;
+  Widget &operator= (Widget &&) = delete;
 
   /// Add a new part to the widget. The widget takes ownership of the part
   /// object.

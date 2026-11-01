@@ -13,7 +13,6 @@
 #include "Gadget_Factory.h"
 #include "Gadget_Part.h"
 #include "Gadget_Part_Factory.h"
-#include <memory>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

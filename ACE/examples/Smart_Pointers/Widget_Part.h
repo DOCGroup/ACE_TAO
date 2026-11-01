@@ -18,8 +18,15 @@
 class Widget_Part
 {
 public:
+  Widget_Part () = default;
+
   /// Destructor.
   virtual ~Widget_Part ();
+
+  Widget_Part (Widget_Part const &) = delete;
+  Widget_Part (Widget_Part &&) = delete;
+  Widget_Part &operator= (Widget_Part const &) = delete;
+  Widget_Part &operator= (Widget_Part &&) = delete;
 
   /// Ask the part to print information about itself.
   virtual void print_info () = 0;

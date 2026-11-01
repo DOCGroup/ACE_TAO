@@ -12,6 +12,7 @@
 
 #include "Widget_Part.h"
 #include "Widget.h"
+#include <string>
 
 /**
  * @class Widget_Part_Impl
@@ -22,23 +23,28 @@ class Widget_Part_Impl : public Widget_Part
 {
 public:
   /// Constructor.
-  Widget_Part_Impl (Widget *owner, const char* name, int size);
+  Widget_Part_Impl (Widget *owner, char const *name, int size);
 
   /// Destructor.
-  virtual ~Widget_Part_Impl ();
+  ~Widget_Part_Impl () override;
+
+  Widget_Part_Impl (Widget_Part_Impl const &) = delete;
+  Widget_Part_Impl (Widget_Part_Impl &&) = delete;
+  Widget_Part_Impl &operator= (Widget_Part_Impl const &) = delete;
+  Widget_Part_Impl &operator= (Widget_Part_Impl &&) = delete;
 
   /// Ask the part to print information about itself.
-  virtual void print_info ();
+  void print_info () override;
 
   /// Ask the part to remove itself from the widget that contains it.
-  virtual void remove_from_owner ();
+  void remove_from_owner () override;
 
 private:
   /// The widget that contains this part.
   Widget *owner_;
 
   /// The name of this part.
-  char *name_;
+  std::string name_;
 
   /// The size of this part.
   int size_;

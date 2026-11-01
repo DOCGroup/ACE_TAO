@@ -12,6 +12,7 @@
 
 #include "Gadget_Part.h"
 #include "Gadget.h"
+#include <string>
 
 /**
  * @class Gadget_Part_Impl
@@ -22,16 +23,21 @@ class Gadget_Part_Impl : public Gadget_Part
 {
 public:
   /// Constructor.
-  Gadget_Part_Impl (Gadget_ptr owner, const char* name, int size);
+  Gadget_Part_Impl (Gadget_ptr owner, char const *name, int size);
 
   /// Destructor.
-  virtual ~Gadget_Part_Impl ();
+  ~Gadget_Part_Impl () override;
+
+  Gadget_Part_Impl (Gadget_Part_Impl const &) = delete;
+  Gadget_Part_Impl (Gadget_Part_Impl &&) = delete;
+  Gadget_Part_Impl &operator= (Gadget_Part_Impl const &) = delete;
+  Gadget_Part_Impl &operator= (Gadget_Part_Impl &&) = delete;
 
   /// Ask the part to print information about itself.
-  virtual void print_info ();
+  void print_info () override;
 
   /// Ask the part to remove itself from the gadget that contains it.
-  virtual void remove_from_owner ();
+  void remove_from_owner () override;
 
 private:
   /// The gadget that contains this part.
@@ -53,7 +59,7 @@ private:
   Gadget_ptr owner_;
 
   /// The name of this part.
-  char *name_;
+  std::string name_;
 
   /// The size of this part.
   int size_;

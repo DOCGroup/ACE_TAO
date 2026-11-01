@@ -26,18 +26,23 @@ public:
   Gadget_Impl ();
 
   /// Destructor.
-  virtual ~Gadget_Impl ();
+  ~Gadget_Impl () override;
+
+  Gadget_Impl (Gadget_Impl const &) = delete;
+  Gadget_Impl (Gadget_Impl &&) = delete;
+  Gadget_Impl &operator= (Gadget_Impl const &) = delete;
+  Gadget_Impl &operator= (Gadget_Impl &&) = delete;
 
   /// Add a new part to the gadget. The gadget takes ownership of the part
   /// object.
-  virtual void add_part (Gadget_Part_var part);
+  void add_part (Gadget_Part_var part) override;
 
   /// Remove a random part from the gadget. Ownership of the part is returned
   /// to the caller.
-  virtual Gadget_Part_var remove_part ();
+  Gadget_Part_var remove_part () override;
 
   /// Ask the gadget to print information about the parts that it contains.
-  virtual void list_parts ();
+  void list_parts () override;
 
 private:
   /// The parts which make up this gadget. The set actually contains instances
