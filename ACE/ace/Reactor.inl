@@ -371,7 +371,7 @@ ACE_Reactor::handler (int signum,
   return this->implementation ()->handler (signum, event_handler);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Reactor::initialized ()
 {
   return this->implementation ()->initialized ();

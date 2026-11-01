@@ -571,7 +571,7 @@ protected:
 
   /// Check to see if the <Event_Handler> associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
-  int is_suspended_i (ACE_HANDLE handle) override;
+  bool is_suspended_i (ACE_HANDLE handle) override;
 
   /// Resume the <Event_Handler> associated with @a handle
   virtual int resume_i (ACE_HANDLE handle);

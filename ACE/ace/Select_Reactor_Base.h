@@ -491,8 +491,8 @@ protected:
   virtual void renew () = 0;
 
   /// Check to see if the Event_Handler associated with @a handle is
-  /// suspended. Returns 0 if not, 1 if so.
-  virtual int is_suspended_i (ACE_HANDLE handle) = 0;
+  /// suspended.
+  virtual bool is_suspended_i (ACE_HANDLE handle) = 0;
 
   /// When register/unregister occur, then we need to re-eval our
   /// wait/suspend/dispatch set.
