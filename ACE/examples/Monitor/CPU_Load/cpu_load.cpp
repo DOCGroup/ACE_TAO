@@ -12,7 +12,13 @@
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  Monitor_Checker () = default;
+  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker &&) = delete;
+  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker &&) = delete;
+
+  int svc () override
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
@@ -22,7 +28,7 @@ public:
     ACE::Monitor_Control::Monitor_Base *cpu_monitor =
       mgr->admin ().monitor_point ("OS/Processor/CPULoad");
 
-    if (cpu_monitor != 0)
+    if (cpu_monitor != nullptr)
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
@@ -59,7 +65,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// Set the timer for CPU load check at 2 sec.
   Monitor_Base *cpu_monitor =
-    create_os_monitor<CPU_LOAD_MONITOR> (0, ACE_Time_Value (2));
+    create_os_monitor<CPU_LOAD_MONITOR> (nullptr, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.

@@ -9,7 +9,13 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  Worker () = default;
+  Worker (const Worker &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (const Worker &) = delete;
+  Worker &operator= (Worker &&) = delete;
+
+  int svc () override
   {
     ACE_OS::sleep (5);
     return 0;
@@ -22,7 +28,13 @@ public:
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  Monitor_Checker () = default;
+  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker &&) = delete;
+  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker &&) = delete;
+
+  int svc () override
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
@@ -32,7 +44,7 @@ public:
     ACE::Monitor_Control::Monitor_Base *thread_monitor =
       mgr->admin ().monitor_point ("OS/System/NumThreads");
 
-    if (thread_monitor != 0)
+    if (thread_monitor != nullptr)
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
@@ -61,7 +73,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// Set the timer for # of threads check at 2 sec.
   Monitor_Base *num_threads_monitor =
-    create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (2));
+    create_os_monitor<NUM_THREADS_MONITOR> (nullptr, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.

@@ -14,7 +14,13 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  Monitor_Checker () = default;
+  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker &&) = delete;
+  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker &&) = delete;
+
+  int svc () override
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =
@@ -24,7 +30,7 @@ public:
     Monitor_Base *bytes_monitor =
       mgr->admin ().monitor_point ("OS/Network/BytesSent");
 
-    if (bytes_monitor != 0)
+    if (bytes_monitor != nullptr)
       {
         /// Query the monitor for its data every 2 seconds, and call the
         /// appropriate display function.
@@ -53,7 +59,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 
   /// Set the timer for # of threads check at 2 sec.
   Monitor_Base *monitor =
-    create_os_monitor<BYTES_SENT_MONITOR> (0, ACE_Time_Value (2));
+    create_os_monitor<BYTES_SENT_MONITOR> (nullptr, ACE_Time_Value (2));
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.

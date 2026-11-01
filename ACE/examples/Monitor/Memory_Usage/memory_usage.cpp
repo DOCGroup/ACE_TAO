@@ -12,6 +12,12 @@
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
+  Monitor_Checker () = default;
+  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker &&) = delete;
+  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker &&) = delete;
+
   int svc () override
   {
     /// Get an instance of the MC service singleton.
@@ -61,7 +67,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   Monitor_Checker monitor_checker;
   monitor_checker.activate ();
 
-  char * str_array[5] = {nullptr};
+  char * str_array[5] {};
 
   for (int i = 0; i < 10; ++i)
     {

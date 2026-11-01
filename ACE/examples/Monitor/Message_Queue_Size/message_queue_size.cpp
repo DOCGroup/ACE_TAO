@@ -15,10 +15,15 @@ private:
   void *addr_;
 
 public:
-  Monitor_Checker (void *addr)
+  explicit Monitor_Checker (void *addr)
     : addr_ (addr)
   {
   }
+
+  Monitor_Checker (const Monitor_Checker &) = delete;
+  Monitor_Checker (Monitor_Checker &&) = delete;
+  Monitor_Checker &operator= (const Monitor_Checker &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker &&) = delete;
 
   int svc () override
   {
