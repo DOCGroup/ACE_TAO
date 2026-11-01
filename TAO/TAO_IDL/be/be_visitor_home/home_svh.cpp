@@ -119,13 +119,12 @@ be_visitor_home_svh::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   std::string sname_str (scope->full_name ());
-  char const *sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
   std::string const& lname = node_->original_local_name ()->get_string ();
 
   std::string const& clname = comp_->local_name ()->get_string ();
-  char const *global = (sname_str == "" ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl
       << "class " << export_macro_ << " " << lname
@@ -134,7 +133,7 @@ be_visitor_home_svh::gen_servant_class ()
       << "::CIAO::"
       << "Home_Servant_Impl<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
-      << global << sname << "::CCM_" << lname << "," << be_nl
+      << global << sname_str << "::CCM_" << lname << "," << be_nl
       << clname << "_Servant," << be_nl
       << "::CIAO::" << be_global->ciao_container_type () << "_Container>"
       << be_uidt << be_uidt << be_uidt << be_uidt_nl
@@ -142,7 +141,7 @@ be_visitor_home_svh::gen_servant_class ()
       << "public:" << be_idt_nl;
 
   os_ << lname << "_Servant (" << be_idt_nl
-      << global << sname << "::CCM_" << lname << "_ptr exe," << be_nl
+      << global << sname_str << "::CCM_" << lname << "_ptr exe," << be_nl
       << "char const * ins_name," << be_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container_ptr c);" << be_uidt;

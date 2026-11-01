@@ -243,10 +243,9 @@ be_visitor_home_ex_idl::gen_explicit ()
         IdentifierHelper::orig_sn (
           ScopeAsDecl (base->defined_in ())->name ());
 
-      char const *sname = sname_str.c_str ();
-      char const *global = (sname_str.empty () ? "" : "::");
+      std::string const global = sname_str.empty () ? "" : "::";
 
-      os_ << global << sname << "::CCM_"
+      os_ << global << sname_str << "::CCM_"
           << IdentifierHelper::try_escape (base->local_name ())
           << "Explicit";
     }

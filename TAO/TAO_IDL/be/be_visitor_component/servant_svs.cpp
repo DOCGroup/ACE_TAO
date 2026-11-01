@@ -267,14 +267,13 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   std::string const obj_name = obj->full_name ();
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   std::string const sname_str (scope->full_name ());
-  char const * const sname = sname_str.c_str ();
 
   // Avoid '_cxx_' prefix.
   std::string const& lname =
     obj->original_local_name ()->get_string ();
 
-  char const * const global = (sname_str.empty () ? "" : "::");
-  char const * const prefix_connector = (sname_str.empty () ? "" : "_");
+  std::string const global = sname_str.empty () ? "" : "::";
+  std::string const prefix_connector = sname_str.empty () ? "" : "_";
 
   if (!be_global->gen_lwccm ())
     {
@@ -306,13 +305,13 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
         << "PortableServer::POA_var POA = cnt_safe->the_port_POA ();" << be_nl
         << "::CORBA::Object_var tmp =" << be_idt_nl
         << "this->get_facet_executor (\"" << port_name << "\");"<< be_uidt_nl << be_nl
-        << global << sname << "::CCM_" << lname << "_var tmp_var =" << be_idt_nl
-        << global << sname <<"::CCM_" << lname
+        << global << sname_str << "::CCM_" << lname << "_var tmp_var =" << be_idt_nl
+        << global << sname_str << "::CCM_" << lname
         << "::_narrow (tmp.in());" << be_uidt_nl << be_nl
         << "using " << lname << "_type = " << global << "CIAO_FACET" << prefix_connector
         << scope->flat_name () << "::" << obj->local_name () << "_Servant_T <" << be_idt_nl
-        << "POA_" << sname << global << obj->local_name ()
-        << "," << be_nl << global << sname <<"::CCM_" << lname << "," << be_nl
+        << "POA_" << sname_str << global << obj->local_name ()
+        << "," << be_nl << global << sname_str << "::CCM_" << lname << "," << be_nl
         << global << "Components::" << be_global->ciao_container_type ()
         << "Context>;" << be_uidt_nl << be_uidt_nl
         << lname << "_type *" << port_name << "_servant_impl = nullptr;" << be_nl
@@ -502,8 +501,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   std::string const comp_lname = node_->local_name ();
   std::string const comp_sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
-  char const * const comp_sname = comp_sname_str.c_str ();
-  char const * const global = (comp_sname_str.empty () ? "" : "::");
+  std::string const global = comp_sname_str.empty () ? "" : "::";
 
   std::string const& lname =
     obj->local_name ()->get_string ();
@@ -513,13 +511,13 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       << comp_lname << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant (" << be_idt << be_idt_nl
-      << global << comp_sname << "::CCM_" << comp_lname
+      << global << comp_sname_str << "::CCM_" << comp_lname
       << "_ptr executor," << be_nl
-      << global << comp_sname << "::CCM_" << comp_lname
+      << global << comp_sname_str << "::CCM_" << comp_lname
       << "_Context_ptr c)" << be_uidt_nl
-      << ": executor_ ( " << global << comp_sname << "::CCM_"
+      << ": executor_ ( " << global << comp_sname_str << "::CCM_"
       << comp_lname << "::_duplicate (executor))," << be_idt_nl
-      << "ctx_ ( " << global << comp_sname
+      << "ctx_ ( " << global << comp_sname_str
       << "::CCM_" << comp_lname
       << "_Context::_duplicate (c))" << be_uidt << be_uidt_nl
       << "{" << be_nl
@@ -656,7 +654,7 @@ be_visitor_servant_svs::gen_provides_top ()
 
   std::string const comp_sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
-  char const * const global = (comp_sname_str.empty () ? "" : "::");
+  std::string const global = comp_sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "/// CIAO-specific." << be_nl
@@ -1294,9 +1292,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
   os_ << be_nl_2;
 
   std::string const sname_str (comp_->full_name ());
-  char const * const sname = sname_str.c_str ();
-
-  char const * const global = (sname_str.empty () ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   if (!is_multiple)
     {
@@ -1307,7 +1303,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
     }
   else
     {
-      os_ << "::" << sname << global << port_name << "Connections_var ciao_"
+      os_ << "::" << sname_str << global << port_name << "Connections_var ciao_"
           << port_name << " =" << be_idt_nl
           << "this->context_->get_connections_"
           << port_name << " ();" << be_uidt_nl;
@@ -1323,7 +1319,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
     }
   else
     {
-      os_ << "::" << sname << global << port_name << "Connections> (" << be_idt_nl;
+      os_ << "::" << sname_str << global << port_name << "Connections> (" << be_idt_nl;
     }
 
   os_ << "\"" << port_name << "\"," << be_nl

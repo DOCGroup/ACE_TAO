@@ -29,13 +29,12 @@ be_visitor_servant_svh::visit_component (be_component *node)
 
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   std::string const sname_str (scope->full_name ());
-  char const * const sname = sname_str.c_str ();
 
   // No '_cxx_' prefix.
   std::string const& lname =
     node_->original_local_name ()->get_string ();
 
-  char const * const global = (sname_str.empty () ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
 // ::CIAO::Session_Context_Impl<
 //       ::Inherited::CCM_Base_comp_Context,
@@ -48,22 +47,22 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Servant_Impl_T<" << be_idt_nl
       << "::" << node_->full_skel_name () << "," << be_nl
-      << global << sname << "::CCM_" << lname << "," << be_nl
+      << global << sname_str << "::CCM_" << lname << "," << be_nl
       << lname << "_Context_T<" << be_idt_nl
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T<"
-      << be_idt_nl << global << sname << "::CCM_" << lname << "_Context," << be_nl
-      << global << sname << "::" << lname << "> > >"
+      << be_idt_nl << global << sname_str << "::CCM_" << lname << "_Context," << be_nl
+      << global << sname_str << "::" << lname << "> > >"
       << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
-  os_ << "using _exec_type = " << global << sname << "::CCM_" << lname
+  os_ << "using _exec_type = " << global << sname_str << "::CCM_" << lname
       << ";" << be_nl;
 
   os_ << be_nl
       << lname << "_Servant (" << be_idt_nl
-      << global << sname << "::CCM_"
+      << global << sname_str << "::CCM_"
       << lname << "_ptr executor," << be_nl
       << "::Components::CCMHome_ptr h," << be_nl
       << "const char * ins_name," << be_nl

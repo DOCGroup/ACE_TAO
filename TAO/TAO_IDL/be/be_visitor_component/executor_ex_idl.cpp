@@ -44,7 +44,7 @@ be_visitor_executor_ex_idl::visit_component (
     {
       std::string const sname_str (
         IdentifierHelper::orig_sn (
-          ScopeAsDecl (base->defined_in ())->name ()).c_str ());
+          ScopeAsDecl (base->defined_in ())->name ()));
 
       std::string const global = sname_str.empty () ? "" : "::";
 

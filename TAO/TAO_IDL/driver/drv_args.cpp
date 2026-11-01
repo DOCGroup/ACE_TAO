@@ -106,7 +106,7 @@ DRV_prep_cpp_arg (std::string const& input)
       newarg.append (input, start, pos - start);
     }
 
-  DRV_cpp_putarg (newarg.c_str ());
+  DRV_cpp_putarg (newarg);
 }
 
 // Print a usage message and exit.
@@ -278,7 +278,7 @@ DRV_parse_args (long ac, char **av)
                       std::string arg (av[i]);
                       arg += av[i + 1];
 
-                      DRV_cpp_putarg (arg.c_str ());
+                      DRV_cpp_putarg (arg);
                       idl_global->add_include_path (arg.substr (2), false);
                       ++i;
                     }
@@ -293,7 +293,7 @@ DRV_parse_args (long ac, char **av)
                   arg += av[i] + 2;
 
                   idl_global->add_include_path (arg.substr (2), false);
-                  DRV_cpp_putarg (arg.c_str ());
+                  DRV_cpp_putarg (arg);
                 }
 
               break;

@@ -85,9 +85,8 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
 {
   std::string const sname_str (
     ScopeAsDecl (node->defined_in ())->full_name ());
-  char const * const sname = sname_str.c_str ();
   std::string const& lname = node->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_
@@ -99,9 +98,9 @@ be_visitor_component_svs::gen_entrypoint (AST_Component *node)
       << "_Container_ptr c," << be_nl
       << "const char * ins_name)" << be_uidt_nl
       << "{" << be_idt_nl
-      << global << sname << "::CCM_" << lname
+      << global << sname_str << "::CCM_" << lname
       << "_var x =" << be_idt_nl
-      << global << sname << "::CCM_" << lname
+      << global << sname_str << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
       << "::PortableServer::Servant retval = nullptr;" << be_nl
       << "if (! ::CORBA::is_nil (x.in ()))" << be_idt_nl

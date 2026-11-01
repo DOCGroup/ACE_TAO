@@ -81,8 +81,8 @@ extern std::string& DRV_add_include_path (std::string&,
                                           std::string const& suffix,
                                           bool is_system);
 extern void DRV_cpp_post_init ();
-extern void DRV_cpp_putarg (char const * str);
-extern void DRV_cpp_new_location (char const * new_loc);
+extern void DRV_cpp_putarg (std::string const& str);
+extern void DRV_cpp_new_location (std::string const& new_loc);
 extern void DRV_get_orb_idl_includes ();
 
 // Not used by all backends.

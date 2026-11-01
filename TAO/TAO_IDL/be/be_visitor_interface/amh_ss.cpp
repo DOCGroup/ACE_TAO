@@ -57,9 +57,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
   non_amh_name += node->client_enclosing_scope ();
   non_amh_name += node->local_name ();
 
-  std::string full_skel_name_holder =
-    this->generate_full_skel_name (node);
-  const char *full_skel_name = full_skel_name_holder.c_str ();
+  std::string const full_skel_name = this->generate_full_skel_name (node);
 
   TAO_INSERT_COMMENT (os);
 
@@ -99,9 +97,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  std::string full_skel_name_holder =
-    this->generate_full_skel_name (node);
-  const char *full_skel_name = full_skel_name_holder.c_str ();
+  std::string const full_skel_name = this->generate_full_skel_name (node);
 
   TAO_INSERT_COMMENT (os);
 

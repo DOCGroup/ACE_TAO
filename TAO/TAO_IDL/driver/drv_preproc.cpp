@@ -135,14 +135,14 @@ DRV_append_version_component (std::string &version,
 
 // Push the new CPP location if we got a -Yp argument.
 void
-DRV_cpp_new_location (char const * new_loc)
+DRV_cpp_new_location (std::string const& new_loc)
 {
-  DRV_arglist[0] = ACE_TEXT_CHAR_TO_TCHAR (new_loc);
+  DRV_arglist[0] = ACE_TEXT_CHAR_TO_TCHAR (new_loc.c_str ());
 }
 
 // Push an argument into the DRV_arglist.
 void
-DRV_cpp_putarg (char const *str)
+DRV_cpp_putarg (std::string const& str)
 {
   if (DRV_arglist.size () >= DRV_MAX_ARGCOUNT)
     {
@@ -184,12 +184,12 @@ DRV_cpp_putarg (char const *str)
 
 // Expand the output argument with the given filename.
 void
-DRV_cpp_expand_output_arg (char const *filename)
+DRV_cpp_expand_output_arg (std::string const& filename)
 {
   if (!output_arg_format.empty ())
     {
       std::basic_string<ACE_TCHAR> tchar_filename (
-        ACE_TEXT_CHAR_TO_TCHAR (filename));
+        ACE_TEXT_CHAR_TO_TCHAR (filename.c_str ()));
       std::basic_string<ACE_TCHAR> output_arg (output_arg_format);
       std::size_t const placeholder = output_arg.find (ACE_TEXT ("%s"));
 
@@ -268,7 +268,7 @@ DRV_cpp_init ()
   output_arg_index = 0;
 
   std::string const cpp_loc = FE_get_cpp_loc_from_env ();
-  DRV_cpp_putarg (cpp_loc.c_str ());
+  DRV_cpp_putarg (cpp_loc);
 
   // Add an option to the IDL compiler to make the TAO version
   // available to the user. A XX.YY.ZZ release gets
@@ -278,7 +278,7 @@ DRV_cpp_init ()
   DRV_append_version_component (version_option, ACE_MINOR_VERSION);
   DRV_append_version_component (version_option, ACE_MICRO_VERSION);
 
-  DRV_cpp_putarg (version_option.c_str ());
+  DRV_cpp_putarg (version_option);
   DRV_cpp_putarg ("-I.");
 
 #if defined (ACE_CC_PREPROCESSOR_DIRECT_INPUT_ARGS)
@@ -460,7 +460,7 @@ DRV_sweep_dirs (char const *rel_path,
                 {
                   std::string incl_arg ("-I");
                   incl_arg += bname;
-                  DRV_cpp_putarg (incl_arg.c_str ());
+                  DRV_cpp_putarg (incl_arg);
                   idl_global->add_rel_include_path (bname);
                   char const * const full_path = ACE_OS::realpath ("", abspath);
 
@@ -585,7 +585,7 @@ DRV_add_include_path (std::string& include_path,
       include_option += '"';
     }
 
-  DRV_cpp_putarg (include_option.c_str ());
+  DRV_cpp_putarg (include_option);
 
   idl_global->add_include_path (include_path,
                                 is_system);
@@ -600,7 +600,7 @@ DRV_cpp_post_init ()
 {
   std::string idl_version_arg ("-D__TAO_IDL_IDL_VERSION=");
   idl_version_arg += idl_global->idl_version_.to_macro ();
-  DRV_cpp_putarg (idl_version_arg.c_str ());
+  DRV_cpp_putarg (idl_version_arg);
 
   DRV_cpp_putarg ("-D__TAO_IDL_FEATURES="
 #ifdef TAO_IDL_FEATURES
@@ -1092,19 +1092,18 @@ DRV_pre_proc (char const *myfile)
       throw Bailout ();
     }
 
-  char const *tmpdir = temp_dir.c_str ();
   static constexpr char temp_file_extension[] = ".cpp";
 
   static constexpr char tao_idlf_template[] = "tao-idlf_XXXXXX";
   static constexpr char tao_idli_template[] = "tao-idli_XXXXXX";
 
-  std::string tmp_file (tmpdir);
+  std::string tmp_file (temp_dir);
   tmp_file += tao_idlf_template;
 
   std::string tmp_ifile;
   if (copy_input_file)
     {
-      tmp_ifile = tmpdir;
+      tmp_ifile = temp_dir;
       tmp_ifile += tao_idli_template;
     }
 
@@ -1153,7 +1152,7 @@ DRV_pre_proc (char const *myfile)
 
   std::string const &t_file = copy_input_file ? tmp_cpp_file : tmp_file;
   std::string const &t_ifile = tmp_cpp_ifile;
-  char const * const input_file = copy_input_file ? t_ifile.c_str () : myfile;
+  std::string const input_file = copy_input_file ? t_ifile : myfile;
 
   ACE_OS::close (tf_fd);
 
@@ -1199,7 +1198,7 @@ DRV_pre_proc (char const *myfile)
   // works on NT.
   ACE_Process process;
 
-  DRV_cpp_expand_output_arg (t_file.c_str ());
+  DRV_cpp_expand_output_arg (t_file);
   DRV_cpp_putarg (input_file);
 
   std::vector<ACE_TCHAR const *> cpp_arglist;

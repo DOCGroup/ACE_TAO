@@ -74,9 +74,8 @@ be_visitor_home_exs::visit_factory (be_factory *node)
 {
   AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
   std::string sname_str (scope->full_name ());
-  char const *sname = sname_str.c_str ();
   std::string const& lname = comp_->local_name ()->get_string ();
-  char const *global = (sname_str == "" ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "::Components::EnterpriseComponent_ptr" << be_nl
@@ -98,7 +97,7 @@ be_visitor_home_exs::visit_factory (be_factory *node)
   os_ << be_nl
       << "{" << be_idt_nl
       << your_code_here_ << be_nl
-      << "return " << global << sname << "::CCM_"
+      << "return " << global << sname_str << "::CCM_"
       << lname << "::_nil ();" << be_uidt_nl
       << "}";
 

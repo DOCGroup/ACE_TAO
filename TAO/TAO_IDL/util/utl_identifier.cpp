@@ -211,10 +211,14 @@ Identifier::dump (ACE_OSTREAM_TYPE &o)
    * Annotation ids are prefixed with '@' to effectively create an alternative
    * namespace for them. This hides that hack from dumping.
    */
-  char const *value = this->pv_string_.c_str ();
-  o << (!this->pv_string_.empty () && this->pv_string_[0] == '@'
-        ? value + 1
-        : value);
+  if (!this->pv_string_.empty () && this->pv_string_[0] == '@')
+    {
+      o << this->pv_string_.substr (1);
+    }
+  else
+    {
+      o << this->pv_string_;
+    }
 }
 
 void
