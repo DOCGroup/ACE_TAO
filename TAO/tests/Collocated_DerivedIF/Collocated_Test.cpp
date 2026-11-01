@@ -5,8 +5,8 @@
 #include "ace/SString.h"
 #include "ace/Manual_Event.h"
 
-const ACE_TCHAR *output = ACE_TEXT("test.ior");
-const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *output = ACE_TEXT ("test.ior");
+ACE_TCHAR const *input = ACE_TEXT ("file://test.ior");
 // static int named_orbs = 0;
 ACE_CString server_orb;
 ACE_CString client_orb;
@@ -14,7 +14,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:n"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -97,7 +97,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           corb->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions..
     }

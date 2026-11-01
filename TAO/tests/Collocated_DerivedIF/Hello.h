@@ -12,13 +12,17 @@
   {
   public:
     /// Constructor
-    HelloAgain(CORBA::ORB_ptr orb,
-           ACE_thread_t thr_id);
+    HelloAgain (CORBA::ORB_ptr orb,
+                ACE_thread_t thr_id);
+    HelloAgain (HelloAgain const &) = delete;
+    HelloAgain (HelloAgain &&) = delete;
+    HelloAgain &operator= (HelloAgain const &) = delete;
+    HelloAgain &operator= (HelloAgain &&) = delete;
 
     // = The skeleton methods
-    virtual char * get_string_again ();
-    virtual char * get_string ();
-    virtual void shutdown ();
+    char *get_string_again () override;
+    char *get_string () override;
+    void shutdown () override;
 
 
   private:
