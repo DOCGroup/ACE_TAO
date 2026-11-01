@@ -13,21 +13,21 @@ class DataElement
 public:
   DataElement () : data_ (0) { count_++; }
 
-  DataElement (int data) : data_(data) { count_++; }
+  explicit DataElement (int data) : data_ (data) { count_++; }
 
-  DataElement (const DataElement& e)
+  DataElement (DataElement const &e)
   {
     data_ = e.getData ();
     count_++;
   }
 
-  DataElement & operator= (const DataElement& e)
+  DataElement &operator = (DataElement const &e)
   {
     data_ = e.getData ();
     return *this;
   }
 
-  bool operator== (const DataElement& e)
+  bool operator == (DataElement const &e) const
   { return this->data_ == e.data_; }
 
   ~DataElement () { count_--; }
@@ -40,11 +40,9 @@ public:
 
  private:
   int data_;
-  static int count_;
+  inline static int count_ {};
 };
 // Listing 1
-
-int DataElement::count_ = 0;
 
 #endif /*DATAELEMENT_H*/
 
