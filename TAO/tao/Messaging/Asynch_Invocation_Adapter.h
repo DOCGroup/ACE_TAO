@@ -25,6 +25,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
 
+#include <cstddef>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -63,7 +65,7 @@ namespace TAO
         Argument **args,
         int arg_number,
         const char *operation,
-        size_t op_len,
+        std::size_t op_len,
         int collocation_opportunity,
         TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION,
         bool has_in_args = true);

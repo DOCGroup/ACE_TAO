@@ -21,6 +21,8 @@
 
 #include "tao/TAO_Server_Request.h"
 
+#include <cstddef>
+
 void
 _is_a_amh_Upcall_Command::execute ()
 {
@@ -59,7 +61,7 @@ TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
       &_tao_repository_id
     };
 
-  static size_t const nargs = 2;
+  static std::size_t const nargs = 2;
 
   _is_a_amh_Upcall_Command command (
     servant,
@@ -110,7 +112,7 @@ void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_reque
       &retval
     };
 
-  static size_t const nargs = 1;
+  static std::size_t const nargs = 1;
 
   _non_existent_amh_Upcall_Command command (
     servant,
@@ -191,7 +193,7 @@ TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
       &retval
     };
 
-  static size_t const nargs = 1;
+  static std::size_t const nargs = 1;
 
   _get_component_amh_Upcall_Command command (
     servant,
@@ -242,7 +244,7 @@ TAO_AMH_Skeletons::_repository_id_amh_skel (TAO_ServerRequest & server_request,
       &retval
     };
 
-  static size_t const nargs = 1;
+  static std::size_t const nargs = 1;
 
   _repository_id_amh_Upcall_Command command (
     servant,
