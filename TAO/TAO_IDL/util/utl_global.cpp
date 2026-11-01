@@ -820,12 +820,9 @@ IDL_GlobalData::rel_include_paths () const
 }
 
 void
-IDL_GlobalData::add_ciao_lem_file_names (char const *s)
+IDL_GlobalData::add_ciao_lem_file_names (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->ciao_lem_file_names_.emplace_back (s);
-    }
+  this->ciao_lem_file_names_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -835,12 +832,9 @@ IDL_GlobalData::ciao_lem_file_names () const
 }
 
 void
-IDL_GlobalData::add_ciao_rti_ts_file_names (char const *s)
+IDL_GlobalData::add_ciao_rti_ts_file_names (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->ciao_rti_ts_file_names_.emplace_back (s);
-    }
+  this->ciao_rti_ts_file_names_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -850,12 +844,9 @@ IDL_GlobalData::ciao_rti_ts_file_names () const
 }
 
 void
-IDL_GlobalData::add_ciao_spl_ts_file_names (char const *s)
+IDL_GlobalData::add_ciao_spl_ts_file_names (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->ciao_spl_ts_file_names_.emplace_back (s);
-    }
+  this->ciao_spl_ts_file_names_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -865,12 +856,9 @@ IDL_GlobalData::ciao_spl_ts_file_names () const
 }
 
 void
-IDL_GlobalData::add_ciao_oci_ts_file_names (char const *s)
+IDL_GlobalData::add_ciao_oci_ts_file_names (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->ciao_oci_ts_file_names_.emplace_back (s);
-    }
+  this->ciao_oci_ts_file_names_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -880,12 +868,9 @@ IDL_GlobalData::ciao_oci_ts_file_names () const
 }
 
 void
-IDL_GlobalData::add_ciao_coredx_ts_file_names (char const *s)
+IDL_GlobalData::add_ciao_coredx_ts_file_names (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->ciao_coredx_ts_file_names_.emplace_back (s);
-    }
+  this->ciao_coredx_ts_file_names_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -895,12 +880,9 @@ IDL_GlobalData::ciao_coredx_ts_file_names () const
 }
 
 void
-IDL_GlobalData::add_ciao_ami_iface_names (char const *s)
+IDL_GlobalData::add_ciao_ami_iface_names (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->ciao_ami_iface_names_.emplace_back (s);
-    }
+  this->ciao_ami_iface_names_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -910,12 +892,9 @@ IDL_GlobalData::ciao_ami_iface_names () const
 }
 
 void
-IDL_GlobalData::add_ciao_ami_recep_names (char const *s)
+IDL_GlobalData::add_ciao_ami_recep_names (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->ciao_ami_recep_names_.emplace_back (s);
-    }
+  this->ciao_ami_recep_names_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -925,12 +904,9 @@ IDL_GlobalData::ciao_ami_recep_names () const
 }
 
 void
-IDL_GlobalData::add_included_ami_recep_names (char const *s)
+IDL_GlobalData::add_included_ami_recep_names (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->included_ami_recep_names_.emplace_back (s);
-    }
+  this->included_ami_recep_names_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -952,12 +928,9 @@ IDL_GlobalData::included_ami_receps_done (bool val)
 }
 
 void
-IDL_GlobalData::add_ciao_ami_idl_fnames (char const *s)
+IDL_GlobalData::add_ciao_ami_idl_fnames (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->ciao_ami_idl_fnames_.emplace_back (s);
-    }
+  this->ciao_ami_idl_fnames_.emplace_back (s);
 }
 
 std::vector<std::string> const &
@@ -967,12 +940,9 @@ IDL_GlobalData::ciao_ami_idl_fnames () const
 }
 
 void
-IDL_GlobalData::add_dds4ccm_impl_fnames (char const *s)
+IDL_GlobalData::add_dds4ccm_impl_fnames (std::string const& s)
 {
-  if (s != nullptr)
-    {
-      this->dds4ccm_impl_fnames_.emplace_back (s);
-    }
+  this->dds4ccm_impl_fnames_.emplace_back (s);
 }
 
 std::vector<std::string> const &

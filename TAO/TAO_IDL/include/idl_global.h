@@ -550,46 +550,46 @@ public:
   std::vector<std::string> const & rel_include_paths () const;
   // Accessor/mutator for the rel_include_paths_ member.
 
-  void add_ciao_lem_file_names (char const *s);
+  void add_ciao_lem_file_names (std::string const& s);
   std::vector<std::string> const & ciao_lem_file_names () const;
   // Accessor/mutator for the ciao_lem_file_names_ member.
 
-  void add_ciao_rti_ts_file_names (char const *s);
+  void add_ciao_rti_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_rti_ts_file_names () const;
   // Accessor/mutator for the ciao_rti_ts_file_names_ member.
 
-  void add_ciao_spl_ts_file_names (char const *s);
+  void add_ciao_spl_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_spl_ts_file_names () const;
   // Accessor/mutator for the ciao_spl_ts_file_names_ member.
 
-  void add_ciao_oci_ts_file_names (char const *s);
+  void add_ciao_oci_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_oci_ts_file_names () const;
   // Accessor/mutator for the ciao_oci_ts_file_names_ member.
 
-  void add_ciao_coredx_ts_file_names (char const *s);
+  void add_ciao_coredx_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_coredx_ts_file_names () const;
   // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
 
-  void add_ciao_ami_iface_names (char const *s);
+  void add_ciao_ami_iface_names (std::string const& s);
   std::vector<std::string> const & ciao_ami_iface_names () const;
   // Accessor/mutator for the ciao_ami_iface_names_ member.
 
-  void add_ciao_ami_recep_names (char const *s);
+  void add_ciao_ami_recep_names (std::string const& s);
   std::vector<std::string> const & ciao_ami_recep_names () const;
   // Accessor/mutator for the ciao_ami_recep_names_ member.
 
-  void add_included_ami_recep_names (char const *s);
+  void add_included_ami_recep_names (std::string const& s);
   std::vector<std::string> const & included_ami_recep_names () const;
   // Accessor/mutator for the included_ami_recep_names_ member.
 
   bool included_ami_receps_done () const;
   void included_ami_receps_done (bool val);
 
-  void add_ciao_ami_idl_fnames (char const *s);
+  void add_ciao_ami_idl_fnames (std::string const& s);
   std::vector<std::string> const & ciao_ami_idl_fnames () const;
   // Accessor/mutator for the included_ami_idl_fnames_ member.
 
-  void add_dds4ccm_impl_fnames (char const *s);
+  void add_dds4ccm_impl_fnames (std::string const& s);
   std::vector<std::string> const & dds4ccm_impl_fnames () const;
   // Accessor mutator for the dds4ccm_impl_fnames_ member.
 

@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <string>
 #include <cstring>
 #include <cstdlib>
+#include <optional>
 
 #include "global_extern.h"
 #include "nr_extern.h"
@@ -103,7 +104,7 @@ static ACE_CDR::LongLong    idl_atoi (char const *, long);
 static ACE_CDR::ULongLong   idl_atoui (char const *, long);
 static void                 idl_parse_line_and_file (char *);
 static void                 idl_store_pragma (char *);
-static char *               idl_get_pragma_string (char *);
+static std::optional<std::string> idl_get_pragma_string (char *);
 static bool                 idl_valid_version (char const *);
 static AST_Decl *           idl_find_node (char const *);
 
@@ -644,12 +645,11 @@ idl_store_pragma (char *buf)
 
   if (std::strncmp (buf + 8, "prefix", 6) == 0)
     {
-      char *prefix_string = idl_get_pragma_string (buf);
+      std::optional<std::string> prefix_string = idl_get_pragma_string (buf);
 
-      if (prefix_string != nullptr)
+      if (prefix_string)
         {
-          std::string const new_prefix (prefix_string);
-          delete [] prefix_string;
+          std::string const& new_prefix = *prefix_string;
           unsigned long depth = idl_global->scopes ().depth ();
 
           // We replace the prefix only if there is a prefix already
@@ -794,64 +794,59 @@ idl_store_pragma (char *buf)
           return;
         }
 
-      char *new_id = idl_get_pragma_string (buf);
+      std::optional<std::string> new_id = idl_get_pragma_string (buf);
 
-      if (new_id != nullptr)
+      if (new_id)
         {
           if (d->typeid_set ())
             {
               idl_global->err ()->id_reset_error (d->repoID (),
-                                                  new_id);
+                                                  *new_id);
               return;
             }
 
-          d->repoID (new_id);
+          d->repoID (*new_id);
           d->typeid_set (true);
         }
     }
   else if (std::strncmp (buf + 8, "DCPS_DATA_TYPE", 14) == 0)
     {
-      char *sample_type = idl_get_pragma_string (buf);
-      idl_global->add_dcps_data_type (sample_type);
-
-      // Delete sample_type since add_dcps_data_type() doesn't take its ownership.
-      delete [] sample_type;
+      std::optional<std::string> sample_type = idl_get_pragma_string (buf);
+      if (sample_type)
+        {
+          idl_global->add_dcps_data_type (*sample_type);
+        }
     }
   else if (std::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
     {
-      char *tmp = idl_get_pragma_string (buf);
-
-      // Split up data type and key strings
-      char *sample_type = tmp;
-
-      while (*tmp && !isspace (*tmp))
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
+      if (tmp)
         {
-          ++tmp;
+          // Split up data type and key strings.
+          size_t const separator = tmp->find_first_of (" \t\n\r\f\v");
+          std::string const sample_type = tmp->substr (0, separator);
+          size_t const key_start = tmp->find_first_not_of (" \t\n\r\f\v",
+                                                           separator);
+          std::string const key = key_start == std::string::npos
+            ? std::string ()
+            : tmp->substr (key_start);
+
+          if (!idl_global->add_dcps_data_key (sample_type, key))
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "DCPS_DATA_TYPE \"%C\" not found for key \"%C\"\n",
+                          sample_type.c_str (),
+                          key.c_str ()));
+            }
         }
-
-      while (isspace (*tmp))
-        {
-          *tmp = '\0';
-          tmp++;
-        }
-
-      char *key = tmp;
-
-      if (!idl_global->add_dcps_data_key (sample_type, key))
-        {
-          ACE_ERROR((LM_ERROR, "DCPS_DATA_TYPE \"%C\" not found for key \"%C\"\n",
-            sample_type, key));
-        }
-
-      // Delete sample_type since add_dcps_data_key() doesn't take its ownership.
-      delete [] sample_type;
     }
   else if (std::strncmp (buf + 8, "DCPS_DATA_SEQUENCE_TYPE", 23) == 0)
     {
-      char *seq_type = idl_get_pragma_string (buf);
-      idl_global->set_dcps_sequence_type (seq_type);
-
-      delete [] seq_type;
+      std::optional<std::string> seq_type = idl_get_pragma_string (buf);
+      if (seq_type)
+        {
+          idl_global->set_dcps_sequence_type (*seq_type);
+        }
     }
   else if (std::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
     {
@@ -863,102 +858,94 @@ idl_store_pragma (char *buf)
     }
   else if (std::strncmp (buf + 8, "ciao lem", 8) == 0)
     {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_lem_file_names (tmp);
-
-      // Delete tmp since add_ciao_lem_file_names() doesn't take its ownership.
-      delete [] tmp;
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
+      if (tmp)
+        {
+          idl_global->add_ciao_lem_file_names (*tmp);
+        }
     }
   else if (std::strncmp (buf + 8, "ndds typesupport", 16) == 0)
     {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_rti_ts_file_names (tmp);
-
-      // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
-      delete [] tmp;
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
+      if (tmp)
+        {
+          idl_global->add_ciao_rti_ts_file_names (*tmp);
+        }
     }
   else if (std::strncmp (buf + 8, "coredx typesupport", 18) == 0)
     {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_coredx_ts_file_names (tmp);
-
-      // Delete tmp since add_ciao_coredx_ts_file_names() doesn't take its ownership.
-      delete [] tmp;
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
+      if (tmp)
+        {
+          idl_global->add_ciao_coredx_ts_file_names (*tmp);
+        }
     }
   else if (std::strncmp (buf + 8, "opendds typesupport", 19) == 0)
     {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_oci_ts_file_names (tmp);
-
-      // Delete tmp since add_ciao_oci_ts_file_names() doesn't take its ownership.
-      delete [] tmp;
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
+      if (tmp)
+        {
+          idl_global->add_ciao_oci_ts_file_names (*tmp);
+        }
     }
   else if (std::strncmp (buf + 8, "splice typesupport", 18) == 0)
     {
-      char *tmp = idl_get_pragma_string (buf);
-      idl_global->add_ciao_spl_ts_file_names (tmp);
-
-      // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
-      delete [] tmp;
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
+      if (tmp)
+        {
+          idl_global->add_ciao_spl_ts_file_names (*tmp);
+        }
     }
   else if ((std::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0) ||
            (std::strncmp (buf + 8, "ami4ccm interface", 17) == 0))
     {
       if (idl_global->in_main_file ())
         {
-          char *tmp = idl_get_pragma_string (buf);
-          idl_global->add_ciao_ami_iface_names (tmp);
-
-          // Delete tmp since add_ciao_ami_iface_names() doesn't take its ownership.
-          delete [] tmp;
+          std::optional<std::string> tmp = idl_get_pragma_string (buf);
+          if (tmp)
+            {
+              idl_global->add_ciao_ami_iface_names (*tmp);
+            }
         }
     }
   else if ((std::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0) ||
            (std::strncmp (buf + 8, "ami4ccm receptacle", 18) == 0))
     {
-      char *tmp = idl_get_pragma_string (buf);
-
-      if (idl_global->in_main_file ())
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
+      if (tmp && idl_global->in_main_file ())
         {
-          idl_global->add_ciao_ami_recep_names (tmp);
+          idl_global->add_ciao_ami_recep_names (*tmp);
         }
-      else
+      else if (tmp)
         {
           /// This is intended for the executor IDL file,
           /// when a pragma is seen in the main file, but
           /// it will do no harm in other cases.
-          idl_global->add_included_ami_recep_names (tmp);
+          idl_global->add_included_ami_recep_names (*tmp);
         }
-
-      // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
-      delete [] tmp;
     }
   else if ((std::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0) ||
            (std::strncmp (buf + 8, "ami4ccm idl", 11) == 0))
     {
-      char *tmp = idl_get_pragma_string (buf);
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
 
       /// These pragmas are found in the file where the interface
       /// that has a AMI4CCM_* counterpart in the *A.idl file
       /// is declared. We add the filename to the list in all
       /// IDL files *except* the one where it is found, to
       /// eliminate a circular include of xxxC.h and xxxAC.h.
-      if (!idl_global->in_main_file ())
+      if (tmp && !idl_global->in_main_file ())
         {
-          idl_global->add_ciao_ami_idl_fnames (tmp);
+          idl_global->add_ciao_ami_idl_fnames (*tmp);
         }
-
-      // Delete tmp since add_ciao_ami_idl_fnames() doesn't take its ownership.
-      delete [] tmp;
     }
   else if (std::strncmp (buf + 8, "dds4ccm impl", 12) == 0)
     {
-      char *tmp = idl_get_pragma_string (buf);
-
-      idl_global->add_dds4ccm_impl_fnames (tmp);
-
-      // Delete tmp since add_dds4ccm_impl_fnames() doesn't take its ownership.
-      delete [] tmp;
+      std::optional<std::string> tmp = idl_get_pragma_string (buf);
+      if (tmp)
+        {
+          idl_global->add_dds4ccm_impl_fnames (*tmp);
+        }
     }
 }
 
@@ -1233,7 +1220,7 @@ idl_wchar_escape_reader (char *str)
   return out;
 }
 
-static char *
+static std::optional<std::string>
 idl_get_pragma_string (char *pragma)
 {
   // Get pointers to each end of the substring between the quotes.
@@ -1243,7 +1230,7 @@ idl_get_pragma_string (char *pragma)
     {
       idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return nullptr;
+      return {};
     }
 
   char const *start = firstquote + 1;
@@ -1253,22 +1240,10 @@ idl_get_pragma_string (char *pragma)
     {
       idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return nullptr;
+      return {};
     }
 
-  size_t const len = end - start;
-  char *retval {};
-
-  ACE_NEW_RETURN (retval,
-                  char[len + 1],
-                  nullptr);
-
-  std::strncpy (retval,
-                   start,
-                   len);
-
-  retval[len] = '\0';
-  return retval;
+  return std::string (start, end);
 }
 
 static bool
