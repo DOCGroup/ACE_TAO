@@ -278,8 +278,8 @@ public:
   /// Populates the passed in frame_info.
   void get_frame_info (TAO_AV_frame_info *frame_info);
 
-  /// Returns 1 if packet is valid and 0 if not.
-  int is_valid ();
+  /// Returns true if the packet is valid, otherwise returns false.
+  bool is_valid ();
 
   /// Returns the RTP version of the packet.
   unsigned int ver ();

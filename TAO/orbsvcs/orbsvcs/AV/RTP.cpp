@@ -258,7 +258,7 @@ RTP_Packet::get_frame_info (TAO_AV_frame_info *frame_info)
   frame_info->format = static_cast<CORBA::Octet> (this->pt());
 }
 
-int
+bool
 RTP_Packet::is_valid ()
 {
   // taken from RFC 1889 - Appendix A.1

@@ -332,8 +332,8 @@ TAO_FlowSpec_Entry::control_protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::is_multicast ()
+bool
+TAO_FlowSpec_Entry::is_multicast () const
 {
   return this->is_multicast_;
 }

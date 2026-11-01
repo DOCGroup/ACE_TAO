@@ -1490,8 +1490,8 @@ TAO_Base_StreamEndPoint::protocol_object_set ()
 }
 
 
-int
-TAO_Base_StreamEndPoint::is_protocol_object_set ()
+bool
+TAO_Base_StreamEndPoint::is_protocol_object_set () const
 {
   return this->protocol_object_set_;
 }

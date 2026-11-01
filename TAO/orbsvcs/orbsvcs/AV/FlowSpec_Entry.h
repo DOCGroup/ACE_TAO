@@ -192,7 +192,7 @@ public:
                      TAO_AV_Core::Flow_Component flow_component);
 
   /// returns true for a multicast address.
-  int is_multicast ();
+  bool is_multicast () const;
 
 protected:
   /// parses the flow protocol string with tokens separated by :

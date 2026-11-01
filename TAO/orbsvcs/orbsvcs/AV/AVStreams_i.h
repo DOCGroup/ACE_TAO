@@ -449,7 +449,7 @@ public:
   TAO_AV_QoS &qos ();
 
   void protocol_object_set ();
-  int is_protocol_object_set ();
+  bool is_protocol_object_set () const;
 
 protected:
   TAO_AV_QoS qos_;
