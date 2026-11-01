@@ -650,40 +650,6 @@ be_visitor_typecode_defn::visit_eventtype (be_eventtype * node)
   return this->visit_valuetype (node);
 }
 
-// post processing
-int
-be_visitor_typecode_defn::post_process (be_decl *)
-{
-  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN)
-    {
-      this->computed_scope_encap_len_ += this->computed_encap_len_;
-    }
-
-  return 0;
-}
-
-// scope stack routines
-int
-be_visitor_typecode_defn::push (ACE_CDR::Long val)
-{
-  if (this->index_ >= TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE)
-    {
-      return -1;
-    }
-
-  this->scope_stack_ [this->index_++] = val;  // Must post-increment
-                                              // to avoid buffer
-                                              // overrun.
-  return 0;
-}
-
-int
-be_visitor_typecode_defn::pop (ACE_CDR::Long &val)
-{
-  val = this->scope_stack_[this->index_--];  // Must post-increment!
-  return 0;
-}
-
 be_visitor_typecode_defn::QNode const *
 be_visitor_typecode_defn::queue_insert (
     std::vector<std::unique_ptr<be_visitor_typecode_defn::QNode>> &queue,

@@ -21,8 +21,6 @@
 #include <memory>
 #include <vector>
 
-constexpr unsigned long TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE = 1024;
-
 class AST_Structure;
 class be_interface_fwd;
 
@@ -57,12 +55,6 @@ public:
   int visit_union (be_union *node) override;
   int visit_valuetype (be_valuetype *node) override;
   int visit_eventtype (be_eventtype *node) override;
-
-  /// Processing for scopes.
-
-  /// do any processing after every element except the last one of the scope is
-  /// processed
-  int post_process (be_decl *) override;
 
   // Data structure for handling recursive and repeated typecodes.
 
@@ -112,32 +104,6 @@ protected:
 
   /// @c true if we are detecting recursion.
   bool recursion_detect_ {};
-
-private:
-  /// the tc size of the node under consideration
-  // ACE_CDR::Long computed_tc_size_;
-
-  /// the encap length of the node under consideration
-  ACE_CDR::Long computed_encap_len_ {};
-
-  /// the encap length of the scope of the node under consideration
-  ACE_CDR::Long computed_scope_encap_len_ {};
-
-  // the following are used for recursive and repeated typecodes
-
-  /// current computed length of the typecode
-  // ACE_CDR::Long tc_offset_;
-
-  /// stores scope lens during computation
-  ACE_CDR::Long scope_stack_ [TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE] {};
-
-  // scope related routines
-
-  unsigned long index_ {};
-
-  int push (ACE_CDR::Long);
-
-  int pop (ACE_CDR::Long &);
 
 protected:
   // queue related routines
