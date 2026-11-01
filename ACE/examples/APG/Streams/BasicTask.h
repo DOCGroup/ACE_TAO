@@ -11,10 +11,9 @@ class BasicTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   using inherited = ACE_Task<ACE_MT_SYNCH>;
 
-  BasicTask () : inherited()
-  { }
+  BasicTask () = default;
 
-  virtual int open (void * = 0)
+  int open (void * = nullptr) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("BasicTask::open() starting ")
@@ -35,9 +34,9 @@ public:
   // Listing 101
 
   // Listing 1020 code/ch18
-  virtual int svc ()
+  int svc () override
   {
-    for (ACE_Message_Block *message = 0; ; )
+    for (ACE_Message_Block *message = nullptr; ; )
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("BasicTask::svc() - ")
@@ -96,7 +95,7 @@ public:
   }
 
   // Listing 103 code/ch18
-  virtual int close (u_long flags)
+  int close (u_long flags) override
   {
     int rval = 0;
 

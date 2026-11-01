@@ -24,7 +24,7 @@ class AnswerCallDownstreamTask : public CommandTask
 public:
   AnswerCallDownstreamTask ();
 protected:
-  virtual int process (Command *command);
+  int process (Command *command) override;
 };
 // Listing 012
 // Listing 013 code/ch18
@@ -33,7 +33,7 @@ class AnswerCallUpstreamTask : public CommandTask
 public:
   AnswerCallUpstreamTask ();
 protected:
-  virtual int process (Command *command);
+  int process (Command *command) override;
 };
 // Listing 013
 
@@ -48,14 +48,14 @@ class RetrieveCallerIdDownstreamTask : public CommandTask
 public:
   RetrieveCallerIdDownstreamTask ();
 protected:
-  virtual int process (Command *command);
+  int process (Command *command) override;
 };
 class RetrieveCallerIdUpstreamTask : public CommandTask
 {
 public:
   RetrieveCallerIdUpstreamTask ();
 protected:
-  virtual int process (Command *command);
+  int process (Command *command) override;
 };
 // Listing 02
 
@@ -70,14 +70,14 @@ class PlayMessageDownstreamTask : public CommandTask
 public:
   PlayMessageDownstreamTask ();
 protected:
-  virtual int process (Command *command);
+  int process (Command *command) override;
 };
 class PlayMessageUpstreamTask : public CommandTask
 {
 public:
   PlayMessageUpstreamTask ();
 protected:
-  virtual int process (Command *command);
+  int process (Command *command) override;
 };
 // Listing 03
 
@@ -92,14 +92,14 @@ class RecordMessageDownstreamTask : public CommandTask
 public:
   RecordMessageDownstreamTask ();
 protected:
-  virtual int process (Command *command);
+  int process (Command *command) override;
 };
 class RecordMessageUpstreamTask : public CommandTask
 {
 public:
   RecordMessageUpstreamTask ();
 protected:
-  virtual int process (Command *command);
+  int process (Command *command) override;
 };
 // Listing 04
 

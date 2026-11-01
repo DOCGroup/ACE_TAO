@@ -26,9 +26,9 @@ public:
 
   int open (ACE_INET_Addr &addr);
 
-  ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   int accept (ACE_SOCK_Stream &peer);
 
@@ -37,17 +37,17 @@ public:
   // Open a listening socket on the port specified by argv.
   int init (int argc, ACE_TCHAR *argv[]);
 
-  ACE_Event_Handler *get_handler () const;
+  ACE_Event_Handler *get_handler () const override;
 
-  virtual RecordingDevice *wait_for_activity ();
+  RecordingDevice *wait_for_activity () override;
 
-  virtual int answer_call ();
+  int answer_call () override;
 
-  virtual CallerId *retrieve_callerId ();
+  CallerId *retrieve_callerId () override;
 
-  virtual int play_message (ACE_FILE_Addr &addr);
+  int play_message (ACE_FILE_Addr &addr) override;
 
-  virtual MessageType *record_message (ACE_FILE_Addr &addr);
+  MessageType *record_message (ACE_FILE_Addr &addr) override;
 
 private:
   ACE_SOCK_Acceptor acceptor_;
@@ -59,17 +59,17 @@ class TextListener : public RecordingDevice
 public:
   TextListener (TextListenerAcceptor *acceptor);
 
-  virtual const ACE_TCHAR *get_name () const;
+  const ACE_TCHAR *get_name () const override;
 
-  int answer_call ();
+  int answer_call () override;
 
-  CallerId *retrieve_callerId ();
+  CallerId *retrieve_callerId () override;
 
-  int play_message (ACE_FILE_Addr &addr);
+  int play_message (ACE_FILE_Addr &addr) override;
 
-  MessageType *record_message (ACE_FILE_Addr &addr);
+  MessageType *record_message (ACE_FILE_Addr &addr) override;
 
-  virtual void release ();
+  void release () override;
   // Listing 01
   // Listing 02 code/ch18
 private:

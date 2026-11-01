@@ -5,13 +5,13 @@
 // Listing 1 code/ch18
 class TheEndTask : public BasicTask {
 protected:
-  virtual int process (Message *)
+  int process (Message *) override
   {
     ACE_TRACE ("EndTask::process()");
     return 0;
   }
 
-  virtual int next_step (ACE_Message_Block *mb)
+  int next_step (ACE_Message_Block *mb) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TheEndTask::next_step() - ")

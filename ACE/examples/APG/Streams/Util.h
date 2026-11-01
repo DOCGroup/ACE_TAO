@@ -18,7 +18,7 @@ public:
   static ACE_FILE_IO *audio_to_text (ACE_FILE_Addr &, ACE_FILE_Addr &dest)
   {
     ACE_FILE_Connector connector;
-    ACE_FILE_IO *file = 0;
+    ACE_FILE_IO *file = nullptr;
     if (connector.connect (*file, dest) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -33,7 +33,7 @@ public:
   static ACE_FILE_IO *video_to_text (ACE_FILE_Addr &, ACE_FILE_Addr &dest)
   {
     ACE_FILE_Connector connector;
-    ACE_FILE_IO *file = 0;
+    ACE_FILE_IO *file = nullptr;
     if (connector.connect (*file, dest) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
