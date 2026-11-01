@@ -272,10 +272,8 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
 
   for (i = 0; i < ndims; ++i)
     {
-      char index[32];
-      ACE_OS::itoa (i, index, 10);
       instance_name += "[i";
-      instance_name += index;
+      instance_name += std::to_string (i);
       instance_name += "]";
     }
 
