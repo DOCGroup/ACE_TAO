@@ -4,20 +4,24 @@
 #include "ace/Task.h"
 #include "tao/Messaging/Messaging.h"
 
-static int quiet = 0;
+static bool quiet {};
 // The test is quiet...
 
-static const ACE_TCHAR *ior_file = ACE_TEXT ("test.ior");
+static ACE_TCHAR const *ior_file = ACE_TEXT ("test.ior");
 // File of file to which the ior is written
 
-static int number_of_threads = 1;
+static int number_of_threads {1};
 // Number of server threads.
 
 class Server_Task : public ACE_Task_Base
 {
 public:
-  Server_Task (CORBA::ORB_ptr orb);
-  int svc ();
+  explicit Server_Task (CORBA::ORB_ptr orb);
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
+  int svc () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -57,7 +61,7 @@ Server_Task::svc ()
 
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -74,7 +78,7 @@ write_ior_to_file (const char *ior)
                        ior_file),
                       -1);
 
-  int result = 0;
+  int result {};
 
   result = ACE_OS::fprintf (output_file,
                             "%s",
@@ -103,7 +107,7 @@ parse_args (int argc,
     switch (c)
       {
       case 'q':
-        quiet = 1;
+        quiet = true;
         break;
 
       case 't':
@@ -188,7 +192,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server::main");
       return -1;

@@ -3,7 +3,7 @@
 class server_i : public POA_server
 {
 public:
-  server_i (int quiet,
+  server_i (bool quiet,
             CORBA::ORB_ptr orb);
   server_i (server_i const &) = delete;
   server_i (server_i &&) = delete;
@@ -19,7 +19,7 @@ public:
 
   bool exception () const;
 private:
-  int quiet_;
+  bool quiet_;
   // Be quiet.
 
   client_var client_;
@@ -28,5 +28,5 @@ private:
   CORBA::ORB_var orb_;
   // Pointer to orb.
 
-  bool exception_;
+  bool exception_ {};
 };

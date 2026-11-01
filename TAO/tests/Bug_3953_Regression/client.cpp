@@ -5,13 +5,13 @@
 static ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 // Server IOR.
 
-static int shutdown_server {};
+static bool shutdown_server {};
 // Flag to tell server to shutdown.
 
-static CORBA::UShort call_count = 2;
+static CORBA::UShort call_count {2};
 // # of nested calls to be made.
 
-static int quiet {};
+static bool quiet {};
 // The test is quiet...
 
 class Client_Task
@@ -72,11 +72,11 @@ parse_args (int argc,
     switch (c)
       {
       case 'q':
-        quiet = 1;
+        quiet = true;
         break;
 
       case 'x':
-        shutdown_server = 1;
+        shutdown_server = true;
         break;
 
       case 'n':

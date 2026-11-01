@@ -1,10 +1,9 @@
 #include "server_i.h"
 
-server_i::server_i (int quiet,
+server_i::server_i (bool quiet,
                     CORBA::ORB_ptr orb)
   : quiet_ (quiet),
-    orb_ (CORBA::ORB::_duplicate (orb)),
-    exception_ (false)
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -39,7 +38,7 @@ server_i::ping (CORBA::UShort time_to_live)
           this->client_->ping (time_to_live);
         }
     }
-  catch (const CORBA::TIMEOUT&)
+  catch (CORBA::TIMEOUT const &)
     {
       this->exception_ = true;
       ACE_DEBUG ((LM_DEBUG,

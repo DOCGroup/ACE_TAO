@@ -1,6 +1,6 @@
 #include "client_i.h"
 
-client_i::client_i (int quiet,
+client_i::client_i (bool quiet,
                     server_ptr s)
   : quiet_ (quiet),
     server_ (server::_duplicate (s))
