@@ -196,7 +196,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::is_anything_left () const
 }
 
 template <typename CHAR_TYPE>
-int
+bool
 ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next () const
 {
   return this->is_anything_left () &&
@@ -204,7 +204,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next () const
 }
 
 template <typename CHAR_TYPE>
-int
+bool
 ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next () const
 {
   return this->is_anything_left ()

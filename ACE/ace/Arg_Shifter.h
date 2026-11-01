@@ -174,13 +174,13 @@ public:
   /// Returns the number of args left to see in the vector.
   int is_anything_left () const;
 
-  /// Returns 1 if there's a next item in the vector and it begins with
+  /// Returns true if there's a next item in the vector and it begins with
   /// '-'.
-  int is_option_next () const;
+  bool is_option_next () const;
 
-  /// Returns 1 if there's a next item in the vector and it doesn't
+  /// Returns true if there's a next item in the vector and it doesn't
   /// begin with '-'.
-  int is_parameter_next () const;
+  bool is_parameter_next () const;
 
   /// Returns the number of irrelevant args seen.
   int num_ignored_args () const;
