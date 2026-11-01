@@ -1087,7 +1087,7 @@ DRV_pre_proc (char const *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: temporary directory is not set\n",
-                  idl_global->prog_name ()));
+                  idl_global->prog_name ().c_str ()));
 
       throw Bailout ();
     }
@@ -1226,7 +1226,7 @@ DRV_pre_proc (char const *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%C: command line processing \"%s\" failed\n"),
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
 
       if (copy_input_file)
@@ -1318,7 +1318,7 @@ DRV_pre_proc (char const *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: spawn of \"%s\" failed\n",
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
 
 
@@ -1369,7 +1369,7 @@ DRV_pre_proc (char const *myfile)
           ACE_ERROR ((LM_ERROR,
                       "%C: preprocessor \"%s\" "
                       "returned with an error\n",
-                      idl_global->prog_name (),
+                      idl_global->prog_name ().c_str (),
                       DRV_arglist[0].c_str ()));
 
           (void) ACE_OS::unlink (t_file.c_str ());
@@ -1385,7 +1385,7 @@ DRV_pre_proc (char const *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%C: preprocessor \"%s\" appears "
                   "to have been interrupted\n",
-                  idl_global->prog_name (),
+                  idl_global->prog_name ().c_str (),
                   DRV_arglist[0].c_str ()));
 
       (void) ACE_OS::unlink (t_file.c_str ());
