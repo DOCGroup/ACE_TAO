@@ -388,9 +388,9 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
 
   CORBA::ValueFactory_var factory;
   CORBA::Boolean requires_truncation = false;
-  const size_t num_ids = ids.size ();
+  std::size_t const num_ids = ids.size ();
   const char *id = (num_ids) ? ids[0].c_str () : "{Null}";
-  for (size_t i = 0u; i < num_ids; ++i)
+  for (std::size_t i = 0u; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
   if (factory.in() != nullptr)
@@ -554,7 +554,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection_pre (TAO_InputCDR &strm,
       return false;
     }
 
-  size_t const buffer_size = -(offset) + sizeof (CORBA::Long);
+  std::size_t const buffer_size = -(offset) + sizeof (CORBA::Long);
   // Cribbed from tc_demarshal_indirection in Typecode_CDR_Extraction.cpp
   indirected_strm = TAO_InputCDR (strm.rd_ptr () + offset - sizeof (CORBA::Long),
     buffer_size,
@@ -1217,7 +1217,7 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
 {
   CORBA::ULong length = 0;
 
-  size_t buffer_size = strm.length();
+  std::size_t buffer_size = strm.length();
 
   if (!strm.read_ulong (length))
     {
@@ -1307,7 +1307,7 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
 {
   CORBA::ULong length = 0;
 
-  size_t buffer_size = strm.length();
+  std::size_t buffer_size = strm.length();
 
   if (!strm.read_ulong (length))
     {

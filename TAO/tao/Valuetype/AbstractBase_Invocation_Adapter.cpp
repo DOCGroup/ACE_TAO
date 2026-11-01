@@ -11,7 +11,7 @@ namespace TAO
       Argument **args,
       int arg_number,
       const char *operation,
-      size_t op_len,
+      std::size_t op_len,
       int collocation_opportunity,
       Invocation_Type type,
       Invocation_Mode mode,

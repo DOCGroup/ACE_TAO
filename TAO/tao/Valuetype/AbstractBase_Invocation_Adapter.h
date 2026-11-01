@@ -19,6 +19,8 @@
 
 #include "tao/Invocation_Adapter.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
@@ -48,7 +50,7 @@ namespace TAO
         Argument **args,
         int arg_number,
         const char *operation,
-        size_t op_len,
+        std::size_t op_len,
         int collocation_opportunity,
         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
