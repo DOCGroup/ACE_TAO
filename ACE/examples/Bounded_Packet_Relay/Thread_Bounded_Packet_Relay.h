@@ -75,12 +75,12 @@ public:
    * Turns logging on if u_long is non-zero, off if u_long is zero,
    * and does nothing if the pointer is null.
    */
-  virtual int modify_device_settings (void *logging);
+  int modify_device_settings (void *logging) override;
 
 protected:
   /// Creates a new message block, carrying data read from the
   /// underlying input device.
-  virtual ACE_Message_Block *create_input_message ();
+  ACE_Message_Block *create_input_message () override;
 
 private:
   /// Length of the buffer into which to "read".
@@ -116,19 +116,19 @@ public:
                       PRINT_MSGS_RCVD = 4};
 
   /// Default constructor.
-  Text_Output_Device_Wrapper (int logging = 0);
+  explicit Text_Output_Device_Wrapper (int logging = 0);
 
   // = Command Accessible Entry Points
 
   /// Consumes and possibly prints out the passed message.
-  virtual int write_output_message (void *message);
+  int write_output_message (void *message) override;
 
   /**
    * Modifies device settings based on passed pointer to a u_long.
    * Turns logging on if u_long is non-zero, off if u_long is zero,
    * and does nothing if the pointer is null.
    */
-  virtual int modify_device_settings (void *logging);
+  int modify_device_settings (void *logging) override;
 
 private:
   /// This value holds the logging level.
@@ -163,7 +163,7 @@ public:
   virtual ~User_Input_Task ();
 
   /// This method runs the event loop in the new thread.
-  virtual int svc ();
+  int svc () override;
 
   // = Some helper methods.
 
@@ -286,8 +286,8 @@ public:
   virtual ~Send_Handler ();
 
   /// Call back hook.
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                      const void *arg) override;
 
   /// Cancellation hook.
   virtual int cancelled ();
@@ -331,8 +331,8 @@ public:
   virtual ~Termination_Handler ();
 
   /// Call back hook.
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                      const void *arg) override;
 
   /// Cancellation hook.
   virtual int cancelled ();
@@ -360,19 +360,19 @@ public:
   using MYCOMMAND = ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION>;
 
   /// Constructor.
-  Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);
+  explicit Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);
 
   /// Destructor.
   virtual ~Thread_Bounded_Packet_Relay_Driver ();
 
   /// Displays the user menu.
-  virtual int display_menu ();
+  int display_menu () override;
 
   /// Initializes the driver.
-  virtual int init ();
+  int init () override;
 
   /// Run the driver.
-  virtual int run ();
+  int run () override;
 
 private:
   /// User input task, subclassed from ACE_Task.

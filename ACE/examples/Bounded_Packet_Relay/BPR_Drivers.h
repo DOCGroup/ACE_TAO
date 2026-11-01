@@ -72,7 +72,7 @@ public:
                         Output_Device_Wrapper_Base *output_wrapper);
 
   /// Destructor.
-  virtual ~Bounded_Packet_Relay ();
+  ~Bounded_Packet_Relay ();
 
   /// Requests output be sent to output device.
   int send_input ();
@@ -111,7 +111,7 @@ private:
   // = Concurrency Management.
 
   /// flag for whether or not a transmission is active
-  int is_active_;
+  bool is_active_;
 
   /// Thread manager for the input device task.
   ACE_Thread_Manager * input_task_mgr_;
@@ -138,7 +138,7 @@ private:
   // = Transmission Statistics
 
   /// Returns string corresponding to current status.
-  const char *status_msg ();
+  const char *status_msg () const;
 
   /// Number of transmissions sent.
   u_long transmission_number_;
@@ -183,7 +183,7 @@ class Input_Device_Wrapper_Base : public ACE_Task_Base
 {
 public:
   /// Constructor.
-  Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr);
+  explicit Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr);
 
   /// Destructor.
   virtual ~Input_Device_Wrapper_Base ();
@@ -206,7 +206,7 @@ public:
   int request_stop ();
 
   /// This method runs the input device loop in the new thread.
-  virtual int svc ();
+  int svc () override;
 
   /// Provides an abstract interface to allow modifying device
   /// settings.
@@ -235,7 +235,7 @@ protected:
 
   /// Flag to indicate whether or not input object is
   /// (and should remain) active.
-  int is_active_;
+  bool is_active_;
 
   /// Count of messages to send before stopping (-1 indicates the
   /// device should not stop).

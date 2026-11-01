@@ -25,15 +25,15 @@
 
 template <class TQ>
 Bounded_Packet_Relay_Driver<TQ>::Bounded_Packet_Relay_Driver ()
-  : packet_count_cmd_ (0),
-    arrival_period_cmd_ (0),
-    transmit_period_cmd_ (0),
-    duration_limit_cmd_ (0),
-    logging_level_cmd_ (0),
-    run_transmission_cmd_ (0),
-    cancel_transmission_cmd_ (0),
-    report_stats_cmd_ (0),
-    shutdown_cmd_ (0),
+  : packet_count_cmd_ (nullptr),
+    arrival_period_cmd_ (nullptr),
+    transmit_period_cmd_ (nullptr),
+    duration_limit_cmd_ (nullptr),
+    logging_level_cmd_ (nullptr),
+    run_transmission_cmd_ (nullptr),
+    cancel_transmission_cmd_ (nullptr),
+    report_stats_cmd_ (nullptr),
+    shutdown_cmd_ (nullptr),
     packet_count_ (1000),
     arrival_period_ (10000),
     send_period_ (10000),
@@ -83,7 +83,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
             // If there was not enough information on the line, ignore
             // option and try the next line.
             return 0;
-          if (packet_count_cmd_->execute ((void *) &count) == -1)
+          if (packet_count_cmd_->execute (&count) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "set packet count failed"),
@@ -100,7 +100,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
             // If there was not enough information on the line, ignore
             // option and try the next line.
             return 0;
-          if (arrival_period_cmd_->execute ((void *) &usec) == -1)
+          if (arrival_period_cmd_->execute (&usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "set arrival period failed"),
@@ -117,7 +117,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
             // If there was not enough information on the line, ignore
             // option and try the next line.
             return 0;
-          if (transmit_period_cmd_->execute ((void *) &usec) == -1)
+          if (transmit_period_cmd_->execute (&usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "set transmit period failed"),
@@ -134,7 +134,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
             // If there was not enough information on the line, ignore
             // option and try the next line.
             return 0;
-          if (duration_limit_cmd_->execute ((void *) &usec) == -1)
+          if (duration_limit_cmd_->execute (&usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "\nSet duration limit failed."),
@@ -155,7 +155,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
               return 0;
             }
 
-          if (logging_level_cmd_->execute ((void *) &level) == -1)
+          if (logging_level_cmd_->execute (&level) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "set logging level failed"),
@@ -163,16 +163,16 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
           break;
         }
       case 6: // Run one transmission.
-        return run_transmission_cmd_->execute (0);
+        return run_transmission_cmd_->execute (nullptr);
         /* NOTREACHED */
       case 7: // Cancel current transmission.
-        return cancel_transmission_cmd_->execute (0);
+        return cancel_transmission_cmd_->execute (nullptr);
         /* NOTREACHED */
       case 8: // Report statistics.
-        return report_stats_cmd_->execute (0);
+        return report_stats_cmd_->execute (nullptr);
         /* NOTREACHED */
       case 9: // Shut down the driver.
-        return shutdown_cmd_->execute (0);
+        return shutdown_cmd_->execute (nullptr);
         /* NOTREACHED */
       default:
         // Display an error message.

@@ -21,7 +21,7 @@ Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_
   : ACE_Task_Base (input_task_mgr),
     send_input_msg_cmd_ (nullptr),
     input_period_ (ACE_ONE_SECOND_IN_USECS),
-    is_active_ (0),
+    is_active_ (false),
     send_count_ (0)
 {
 }
@@ -68,7 +68,7 @@ Input_Device_Wrapper_Base::request_stop ()
 {
   if (is_active_)
     {
-      is_active_ = 0;
+      is_active_ = false;
       return 1;
     }
 
@@ -84,7 +84,7 @@ Input_Device_Wrapper_Base::svc ()
   ACE_Message_Block *message;
 
   // Set a flag to indicate we're active.
-  is_active_ = 1;
+  is_active_ = true;
 
   // Start with the total count of messages to send.
   for (current_count_ = send_count_;
@@ -98,7 +98,7 @@ Input_Device_Wrapper_Base::svc ()
         {
           if (is_active_)
             {
-              is_active_ = 0;
+              is_active_ = false;
               ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                                  "Failed to create input message object"),
                                  -1);
@@ -113,7 +113,7 @@ Input_Device_Wrapper_Base::svc ()
           delete message;
           if (is_active_)
             {
-              is_active_ = 0;
+              is_active_ = false;
               ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                                  "send message command object not instantiated"),
                                 -1);
@@ -123,12 +123,12 @@ Input_Device_Wrapper_Base::svc ()
         }
 
       // Send the input message.
-      if (send_input_msg_cmd_->execute ((void *) message) < 0)
+      if (send_input_msg_cmd_->execute (message) < 0)
         {
           delete message;
           if (is_active_)
             {
-              is_active_ = 0;
+              is_active_ = false;
               ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                                  "Failed executing send message command object"),
                                 -1);
@@ -147,7 +147,7 @@ Input_Device_Wrapper_Base::svc ()
       reactor_.run_event_loop (timeout);
     }
 
-  is_active_ = 0;
+  is_active_ = false;
 
   return 0;
 }
@@ -160,7 +160,7 @@ int
 Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
 {
   if (send_input_msg_cmd_)
-    return send_input_msg_cmd_->execute ((void *) amb);
+    return send_input_msg_cmd_->execute (amb);
   else
     {
       if (is_active_)
@@ -179,7 +179,7 @@ Output_Device_Wrapper_Base::~Output_Device_Wrapper_Base () = default;
 Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                                             Input_Device_Wrapper_Base *input_wrapper,
                                             Output_Device_Wrapper_Base *output_wrapper)
-  : is_active_ (0),
+  : is_active_ (false),
     input_task_mgr_ (input_task_mgr),
     input_wrapper_ (input_wrapper),
     output_wrapper_ (output_wrapper),
@@ -230,7 +230,7 @@ Bounded_Packet_Relay::send_input ()
 
   // If a message block was dequeued, send it to the output device.
 
-  if (output_wrapper_->write_output_message ((void *) item) < 0)
+  if (output_wrapper_->write_output_message (item) < 0)
     {
       if (is_active_)
         ACE_ERROR ((LM_ERROR,
@@ -261,7 +261,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     return 1;
 
   // Set transmission in progress flag true.
-  is_active_ = 1;
+  is_active_ = true;
 
   // Update statistics for a new transmission.
   ++transmission_number_;
@@ -279,21 +279,21 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     }
 
   // Initialize the output device.
-  if (output_wrapper_->modify_device_settings ((void *) &logging_level) < 0)
+  if (output_wrapper_->modify_device_settings (&logging_level) < 0)
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to initialize output device object"),
                         -1);
     }
   // Initialize the input device.
-  if (input_wrapper_->modify_device_settings ((void *) &logging_level) < 0)
+  if (input_wrapper_->modify_device_settings (&logging_level) < 0)
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to initialize output device object"),
                         -1);
@@ -302,7 +302,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to initialize input device object"),
                         -1);
@@ -311,7 +311,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to initialize input device object"),
                         -1);
@@ -321,7 +321,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to activate input device object"),
                         -1);
@@ -348,7 +348,7 @@ Bounded_Packet_Relay::end_transmission (Transmission_Status status)
     return 1;
 
   // Set transmission in progress flag false.
-  is_active_ = 0;
+  is_active_ = false;
 
   // Ask the the input thread to stop.
   if (input_wrapper_->request_stop () < 0)
@@ -485,7 +485,7 @@ Bounded_Packet_Relay::queue_lwm (ACE_UINT32 lwm)
 // Returns string corresponding to current status.
 
 const char *
-Bounded_Packet_Relay::status_msg ()
+Bounded_Packet_Relay::status_msg () const
 {
   const char *status_msg;
   switch (status_)
