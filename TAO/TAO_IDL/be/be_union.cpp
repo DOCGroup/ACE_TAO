@@ -120,9 +120,9 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 
       *os << be_nl;
 
-      unsigned long ll_len = ub->label_list_length ();
+      std::size_t const ll_len = ub->label_list_length ();
 
-      for (unsigned long j = 0; j < ll_len; ++j)
+      for (std::size_t j = 0; j < ll_len; ++j)
         {
           // Check if we are printing the default case.
           if (ub->label (j)->label_kind () == AST_UnionLabel::UL_default)

@@ -704,7 +704,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   AST_Expression *v = nullptr;
   UTL_ExprList *v_list = nullptr;
 
-  for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
+  for (std::size_t i = 0; i < node->n_dims (); ++i)
     {
       ACE_NEW_RETURN (v,
                       AST_Expression (node->dims ()[i].get (),

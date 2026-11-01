@@ -554,7 +554,7 @@ AST_Union::compute_default_value ()
       if (ub != nullptr)
         {
           // If the label is a case label, increment by 1.
-          for (unsigned long i = 0; i < ub->label_list_length (); ++i)
+          for (std::size_t i = 0; i < ub->label_list_length (); ++i)
             {
               if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                 {
@@ -731,7 +731,7 @@ AST_Union::compute_default_value ()
 
           if (ub != nullptr)
             {
-              for (unsigned long i = 0;
+              for (std::size_t i = 0;
                    i < ub->label_list_length () && !break_loop;
                    ++i)
                 {
@@ -911,7 +911,7 @@ AST_Union::compute_default_index ()
             {
               ub = dynamic_cast<AST_UnionBranch*> (d);
 
-              for (unsigned long j = 0; j < ub->label_list_length (); ++j)
+              for (std::size_t j = 0; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
                   AST_UnionLabel::UnionLabel ulk = ub->label (j)->label_kind ();

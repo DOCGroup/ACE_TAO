@@ -25,7 +25,7 @@ public:
 
   // Data Accessors.
   AST_Type **supports () const;
-  long n_supports () const;
+  std::size_t n_supports () const;
   AST_Type *inherits_concrete () const;
   AST_Type *supports_concrete () const;
   bool truncatable () const;
@@ -36,7 +36,7 @@ public:
 protected:
   // Supported interfaces.
   AST_Type **supports_ {};
-  long n_supports_ {};
+  std::size_t n_supports_ {};
 
   AST_Type *inherits_concrete_ {};
   AST_Type *supports_concrete_ {};

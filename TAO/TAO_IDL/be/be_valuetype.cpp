@@ -30,9 +30,9 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                             long n_inherits,
                             AST_Type *inherits_concrete,
                             AST_Interface **inherits_flat,
-                            long n_inherits_flat,
+                            std::size_t n_inherits_flat,
                             AST_Type **supports,
-                            long n_supports,
+                            std::size_t n_supports,
                             AST_Type *supports_concrete,
                             bool abstract,
                             bool truncatable,
@@ -91,7 +91,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
   // Always the case.
   this->has_constructor (true);
 
-  for (long i = 0; i < this->pd_n_supports; ++i)
+  for (std::size_t i = 0; i < this->n_supports (); ++i)
     {
       be_interface *intf =
         dynamic_cast<be_interface*> (this->pd_supports[i]);
@@ -673,7 +673,7 @@ be_valuetype::traverse_supports_list_graphs (
 {
   bool abstract_paths_only = use_abstract_paths && !use_concrete_paths;
 
-  long n_supports = this->n_supports ();
+  std::size_t const n_supports = this->n_supports ();
 
   if (n_supports == 0)
     {
@@ -686,7 +686,7 @@ be_valuetype::traverse_supports_list_graphs (
 
   be_interface *supported_interface = nullptr;
 
-  for (long i = 0; i < n_supports; ++i)
+  for (std::size_t i = 0; i < n_supports; ++i)
     {
       if (! use_abstract_paths
           && this->pd_supports[i]->is_abstract ())

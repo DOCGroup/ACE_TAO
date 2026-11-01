@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_NS_ctype.h"
 
+#include <cctype>
 #include <cstddef>
 #include <string>
 #include <utility>
@@ -150,13 +151,11 @@ UTL_String::compare_quiet (std::string const& lhs, std::string const& rhs)
 
 // Get canonical representation. This is the all upper case corresponding string.
 std::string
-UTL_String::get_canonical_rep (std::string const& str)
+UTL_String::get_canonical_rep (std::string result)
 {
-  std::string result (str);
-
   for (char &c : result)
     {
-      c = static_cast<char> (ACE_OS::ace_toupper (static_cast<unsigned char> (c)));
+      c = static_cast<char> (std::toupper (static_cast<unsigned char> (c)));
     }
 
   return result;

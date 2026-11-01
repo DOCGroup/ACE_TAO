@@ -21,7 +21,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Type **supports,
                     long n_supports,
                     AST_Interface **supports_flat,
-                    long n_supports_flat)
+                    std::size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_home,

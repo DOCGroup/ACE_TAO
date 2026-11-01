@@ -43,7 +43,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)
 
   AST_Interface **inh_flat = node->inherits_flat ();
 
-  for (long i = 0; i < node->n_inherits_flat (); ++i)
+  for (std::size_t i = 0; i < node->n_inherits_flat (); ++i)
     {
       be_interface *ancestor =
         dynamic_cast<be_interface*> (inh_flat[i]);

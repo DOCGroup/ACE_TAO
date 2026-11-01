@@ -94,10 +94,10 @@ public:
   UTL_LabelList *labels ();
   UTL_LabelList const *labels () const;
 
-  AST_UnionLabel *label (unsigned long index = 0);
-  AST_UnionLabel const *label (unsigned long index = 0) const;
+  AST_UnionLabel *label (std::size_t index = 0);
+  AST_UnionLabel const *label (std::size_t index = 0) const;
 
-  unsigned long label_list_length () const;
+  std::size_t label_list_length () const;
 
   // Called if our labels are enum values - adds them to the
   // enclosing scope's name_referenced list.

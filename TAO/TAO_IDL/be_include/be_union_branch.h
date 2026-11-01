@@ -33,7 +33,7 @@ public:
 
   /// Generate the label value (as in a switch/case statement).
   int gen_label_value (TAO_OutStream *os,
-                       unsigned long index = 0);
+                       std::size_t index = 0);
 
   /// Generate the default label value (as in a switch/case statement).
   int gen_default_label_value (TAO_OutStream *os,

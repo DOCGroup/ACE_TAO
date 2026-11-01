@@ -27,9 +27,9 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                               long n_inherits,
                               AST_Type *inherits_concrete,
                               AST_Interface **inherits_flat,
-                              long n_inherits_flat,
+                              std::size_t n_inherits_flat,
                               AST_Type **supports,
-                              long n_supports,
+                              std::size_t n_supports,
                               AST_Type *supports_concrete,
                               bool abstract,
                               bool truncatable,
@@ -48,7 +48,6 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                    n_inherits_flat,
                    false,
                    abstract),
-    pd_n_supports (n_supports),
     pd_inherits_concrete (inherits_concrete),
     pd_supports_concrete (supports_concrete),
     pd_truncatable (truncatable),
@@ -66,7 +65,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
   // to iterate over pd_inherits.
   // Also check for illegal template module scope reference,
   // as long as we're iterating.
-  for (long i = 0; i < n_supports; ++i)
+  for (std::size_t i = 0; i < n_supports; ++i)
     {
       if (supports[i]->node_type () == AST_Decl::NT_param_holder)
         {
@@ -216,10 +215,10 @@ AST_ValueType::supports () const
     : const_cast<AST_Type **> (this->pd_supports.data ());
 }
 
-long
+std::size_t
 AST_ValueType::n_supports () const
 {
-  return this->pd_n_supports;
+  return this->pd_supports.size ();
 }
 
 AST_Type *
@@ -260,7 +259,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
   AST_Decl *d = nullptr;
   AST_Decl *d_before = nullptr;
   AST_Type **is = nullptr;
-  long nis = -1;
+  std::size_t nis = 0;
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -409,7 +408,6 @@ AST_ValueType::destroy ()
   this->AST_Interface::destroy ();
 
   this->pd_supports.clear ();
-  this->pd_n_supports = 0;
 }
 
 void
@@ -446,15 +444,15 @@ AST_ValueType::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, "\n\n");
 
-  if (this->pd_n_supports > 0)
+  if (!this->pd_supports.empty ())
     {
       this->dump_i (o, "supports ");
 
-      for (long i = 0; i < this->pd_n_supports; ++i)
+      for (std::size_t i = 0; i < this->pd_supports.size (); ++i)
         {
           this->pd_supports[i]->local_name ()->dump (o);
 
-          if (i < this->pd_n_supports - 1)
+          if (i + 1 < this->pd_supports.size ())
             {
               this->dump_i (o, ", ");
             }

@@ -145,7 +145,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl ;
 
   std::string exception_data_arg = "0";
-  int excep_count = 0;
+  std::size_t excep_count = 0;
 
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())

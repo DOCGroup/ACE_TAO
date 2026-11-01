@@ -293,18 +293,18 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   // Namespace begin.
   this->gen_begin_NS_for_anon ();
 
-  ACE_CDR::ULong const ndims = node->n_dims ();
+  std::size_t const ndims = node->n_dims ();
 
-  for (ACE_CDR::ULong i = 0; i < ndims; ++i)
+  for (std::size_t i = 0; i < ndims; ++i)
     {
       os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *," << be_nl
          << "                        TAO::Null_RefCount_Policy>"
          << be_idt_nl
          << node->flat_name ();
 
-      ACE_CDR::ULong const inner_ndims = ndims - i - 1;
+      std::size_t const inner_ndims = ndims - i - 1;
 
-      for (ACE_CDR::ULong j = inner_ndims; j < ndims; ++j)
+      for (std::size_t j = inner_ndims; j < ndims; ++j)
         {
           os << "_" << node->dims ()[j]->ev ()->u.ulval;
         }

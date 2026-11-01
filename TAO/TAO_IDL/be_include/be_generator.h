@@ -93,7 +93,7 @@ public:
                                            AST_Type **ih,
                                            long nih,
                                            AST_Interface **ih_flat,
-                                           long nih_flat,
+                                           std::size_t nih_flat,
                                            bool is_local,
                                            bool is_abstract) override;
 
@@ -110,9 +110,9 @@ public:
                                            long n_inherits,
                                            AST_Type *inherits_concrete,
                                            AST_Interface **inherits_flat,
-                                           long n_inherits_flat,
+                                           std::size_t n_inherits_flat,
                                            AST_Type **supports_list,
-                                           long n_supports,
+                                           std::size_t n_supports,
                                            AST_Type *supports_concrete,
                                            bool is_abstract,
                                            bool is_truncatable,
@@ -126,9 +126,9 @@ public:
                                            long n_inherits,
                                            AST_Type *inherits_concrete,
                                            AST_Interface **inherits_flat,
-                                           long n_inherits_flat,
+                                           std::size_t n_inherits_flat,
                                            AST_Type **supports_list,
-                                           long n_supports,
+                                           std::size_t n_supports,
                                            AST_Type *supports_concrete,
                                            bool is_abstract,
                                            bool is_truncatable,
@@ -142,7 +142,7 @@ public:
                                            AST_Type **supports_list,
                                            long n_supports,
                                            AST_Interface **supports_flat,
-                                           long n_supports_flat) override;
+                                           std::size_t n_supports_flat) override;
 
   AST_ComponentFwd *create_component_fwd (UTL_ScopedName *n) override;
 
@@ -153,7 +153,7 @@ public:
                                  AST_Type **supports_list,
                                  long n_supports,
                                  AST_Interface **supports_flat,
-                                 long n_supports_flat) override;
+                                 std::size_t n_supports_flat) override;
 
   AST_Exception *create_exception (UTL_ScopedName *n,
                                            bool is_local,
@@ -245,7 +245,7 @@ public:
                                         UTL_ScopedName *n) override;
 
   AST_Array *create_array (UTL_ScopedName *n,
-                                   ACE_CDR::ULong ndims,
+                                   std::size_t ndims,
                                    UTL_ExprList *dims,
                                    bool is_local,
                                    bool is_abstract) override;

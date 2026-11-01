@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_type.h"
 #include "utl_scope.h"
 
+#include <cstddef>
 #include <deque>
 #include <vector>
 
@@ -87,7 +88,7 @@ public:
                  AST_Type **ih,
                  long nih,
                  AST_Interface **ih_flat,
-                 long nih_flat,
+                 std::size_t nih_flat,
                  bool local,
                  bool abstract);
 
@@ -106,7 +107,7 @@ public:
 
   AST_Interface **inherits_flat () const;
 
-  long n_inherits_flat () const;
+  std::size_t n_inherits_flat () const;
 
   std::deque<AST_Type *> &get_insert_queue ();
   std::deque<AST_Type *> &get_del_queue ();
@@ -185,7 +186,6 @@ protected:
 
   // All ancestors.
   std::vector<AST_Interface *> pd_inherits_flat;
-  long pd_n_inherits_flat;
 
   // Queue data structure needed for breadth-first traversal of
   // inheritance tree.

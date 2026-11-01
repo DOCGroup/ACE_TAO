@@ -51,7 +51,7 @@ FE_ComponentHeader::supports_flat () const
   return this->inherits_flat_;
 }
 
-long
+std::size_t
 FE_ComponentHeader::n_supports_flat () const
 {
   return this->n_inherits_flat_;
@@ -231,7 +231,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
           this->inherits_flat_[i] = this->iseen_flat_[i];
         }
 
-      this->n_inherits_flat_ = static_cast<long> (this->iseen_flat_.size ());
+      this->n_inherits_flat_ = this->iseen_flat_.size ();
     }
 
   // Then the list of immediate ancestors.

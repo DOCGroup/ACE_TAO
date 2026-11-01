@@ -200,7 +200,7 @@ AST_Generator::create_interface (UTL_ScopedName *n,
                                  AST_Type **inherits,
                                  long n_inherits,
                                  AST_Interface **inherits_flat,
-                                 long n_inherits_flat,
+                                 std::size_t n_inherits_flat,
                                  bool is_local,
                                  bool is_abstract)
 {
@@ -246,9 +246,9 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
                                  long n_inherits,
                                  AST_Type *inherits_concrete,
                                  AST_Interface **inherits_flat,
-                                 long n_inherits_flat,
+                                 std::size_t n_inherits_flat,
                                  AST_Type **supports_list,
-                                 long n_supports,
+                                 std::size_t n_supports,
                                  AST_Type *supports_concrete,
                                  bool is_abstract,
                                  bool is_truncatable,
@@ -313,9 +313,9 @@ AST_Generator::create_eventtype (UTL_ScopedName *n,
                                  long n_inherits,
                                  AST_Type *inherits_concrete,
                                  AST_Interface **inherits_flat,
-                                 long n_inherits_flat,
+                                 std::size_t n_inherits_flat,
                                  AST_Type **supports_list,
-                                 long n_supports,
+                                 std::size_t n_supports,
                                  AST_Type *supports_concrete,
                                  bool is_abstract,
                                  bool is_truncatable,
@@ -381,7 +381,7 @@ AST_Generator::create_component (UTL_ScopedName *n,
                                  AST_Type **supports_list,
                                  long n_supports,
                                  AST_Interface **supports_flat,
-                                 long n_supports_flat)
+                                 std::size_t n_supports_flat)
 {
   AST_Component *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -424,7 +424,7 @@ AST_Generator::create_home (UTL_ScopedName *n,
                             AST_Type **supports_list,
                             long n_supports,
                             AST_Interface **supports_flat,
-                            long n_supports_flat)
+                            std::size_t n_supports_flat)
 {
   AST_Home *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -834,7 +834,7 @@ AST_Generator::create_enum_val (ACE_CDR::ULong v,
 
 AST_Array *
 AST_Generator::create_array (UTL_ScopedName *n,
-                             ACE_CDR::ULong ndims,
+                             std::size_t ndims,
                              UTL_ExprList *dims,
                              bool is_local,
                              bool is_abstract)

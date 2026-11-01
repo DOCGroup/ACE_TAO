@@ -51,7 +51,7 @@ be_interface::be_interface (UTL_ScopedName *n,
                             AST_Type **ih,
                             long nih,
                             AST_Interface **ih_flat,
-                            long nih_flat,
+                            std::size_t nih_flat,
                             bool local,
                             bool abstract)
   : COMMON_Base (local,

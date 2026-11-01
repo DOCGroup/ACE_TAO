@@ -21,7 +21,7 @@ public:
             AST_Type **supports,
             long n_supports,
             AST_Interface **supports_flat,
-            long n_supports_flat);
+            std::size_t n_supports_flat);
 
   ~AST_Home () override;
 

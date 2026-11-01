@@ -82,7 +82,7 @@ AST_Decl::NodeType const
 AST_Array::NT = AST_Decl::NT_array;
 
 AST_Array::AST_Array (UTL_ScopedName *n,
-                      ACE_CDR::ULong nd,
+                      std::size_t nd,
                       UTL_ExprList *ds,
                       bool local,
                       bool abstract)
@@ -107,7 +107,7 @@ AST_Array::~AST_Array () = default;
 // Collect the array's owned dimension expressions.
 std::vector<std::unique_ptr<AST_Expression>>
 AST_Array::compute_dims (UTL_ExprList *ds,
-                         ACE_CDR::ULong nds)
+                         std::size_t nds)
 {
   if (ds == nullptr)
     {
@@ -119,7 +119,7 @@ AST_Array::compute_dims (UTL_ExprList *ds,
 
   UTL_ExprlistActiveIterator iter (ds);
 
-  for (ACE_CDR::ULong i = 0;
+  for (std::size_t i = 0;
        !iter.is_done () && i < nds;
        iter.next (), i++)
     {
@@ -153,7 +153,7 @@ AST_Array::dump (ACE_OSTREAM_TYPE &o)
 
   this->local_name ()->dump (o);
 
-  for (ACE_CDR::ULong i = 0; i < this->n_dims (); i++)
+  for (std::size_t i = 0; i < this->n_dims (); i++)
     {
       this->dump_i (o, "[");
 
@@ -192,10 +192,10 @@ AST_Array::compute_size_type ()
 }
 
 // Data accessors.
-ACE_CDR::ULong
+std::size_t
 AST_Array::n_dims () const
 {
-  return static_cast<ACE_CDR::ULong> (this->pd_dims.size ());
+  return this->pd_dims.size ();
 }
 
 std::vector<std::unique_ptr<AST_Expression>> const &

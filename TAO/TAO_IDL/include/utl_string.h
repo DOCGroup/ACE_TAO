@@ -89,7 +89,7 @@ public:
   static bool compare_quiet (std::string const& lhs, std::string const& rhs);
   // Like the above but without error or warning message output.
 
-  static std::string get_canonical_rep (std::string const& str);
+  static std::string get_canonical_rep (std::string str);
 };
 
 #endif           // _STRING_STRING_HH

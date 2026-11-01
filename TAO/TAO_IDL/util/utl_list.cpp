@@ -81,8 +81,8 @@ UTL_List::UTL_List (UTL_List *c)
 UTL_List::~UTL_List () = default;
 
 // Compute list length.
-ACE_CDR::Long
-UTL_List::list_length (ACE_CDR::Long n) const
+std::size_t
+UTL_List::list_length (std::size_t n) const
 {
   if (this->pd_cdr_data == nullptr)
     {
@@ -153,7 +153,7 @@ UTL_List::set_tail (UTL_List *l)
 }
 
 // Compute list length.
-ACE_CDR::Long
+std::size_t
 UTL_List::length () const
 {
   return list_length (1);

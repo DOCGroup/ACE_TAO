@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_typedef.h"
 
+#include <cstddef>
 #include <vector>
 
 class UTL_NameList;
@@ -97,7 +98,7 @@ public:
   AST_Type **inherits () const;
   long n_inherits () const;
   AST_Interface **inherits_flat () const;
-  long n_inherits_flat () const;
+  std::size_t n_inherits_flat () const;
 
   bool is_local () const;
   // See if we are a local interface.
@@ -142,7 +143,7 @@ protected:
 
   // Used for name clash checking.
   AST_Interface  **inherits_flat_ {};
-  long n_inherits_flat_ {};
+  std::size_t n_inherits_flat_ {};
 
   bool is_local_ {};
   bool is_abstract_ {};

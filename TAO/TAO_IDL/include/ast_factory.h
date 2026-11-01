@@ -73,6 +73,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scoped_name.h"
 #include "utl_exceptlist.h"
 
+#include <cstddef>
+
 class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
@@ -84,7 +86,7 @@ public:
   UTL_ExceptList *exceptions () const;
   // Return exception list.
 
-  int n_exceptions () const;
+  std::size_t n_exceptions () const;
   // Return exception count.
 
   virtual int argument_count ();
@@ -115,7 +117,7 @@ protected:
   UTL_ExceptList_Owner pd_exceptions;
   // Exceptions raised
 
-  int pd_n_exceptions {};
+  std::size_t pd_n_exceptions {};
   // Exception count.
 
   int argument_count_ {-1};

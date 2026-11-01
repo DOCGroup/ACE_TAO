@@ -42,7 +42,7 @@ namespace
                 continue;
               }
 
-            for (unsigned long j = 0; j < branch->label_list_length (); ++j)
+            for (std::size_t j = 0; j < branch->label_list_length (); ++j)
               {
                 AST_UnionLabel *label = branch->label (j);
 
@@ -98,7 +98,7 @@ namespace
           }
 
         bool generated_label = false;
-        for (unsigned long j = 0; j < branch->label_list_length (); ++j)
+        for (std::size_t j = 0; j < branch->label_list_length (); ++j)
           {
             if (branch->label (j)->label_kind () == AST_UnionLabel::UL_default)
               {

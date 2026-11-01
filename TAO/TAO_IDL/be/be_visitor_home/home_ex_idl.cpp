@@ -303,7 +303,7 @@ be_visitor_home_ex_idl::gen_exception_list (
   char const *prefix,
   bool init_op)
 {
-  ACE_CDR::Long cutoff = (init_op ? 1 : 0);
+  std::size_t const cutoff = init_op ? 1 : 0;
 
   if (exceptions != nullptr && exceptions->length () > cutoff)
     {

@@ -85,7 +85,7 @@ FE_OBVHeader::supports () const
   return this->supports_;
 }
 
-long
+std::size_t
 FE_OBVHeader::n_supports () const
 {
   return this->n_supports_;
@@ -167,7 +167,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       return;
     }
 
-  long length = supports->length ();
+  std::size_t const length = supports->length ();
   this->n_supports_ = length;
 
   ACE_NEW (this->supports_,
@@ -177,7 +177,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
   UTL_ScopedName *item = nullptr;
   AST_Interface *iface = nullptr;
   AST_Type *t = nullptr;
-  int i = 0;
+  std::size_t i = 0;
 
   for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
     {
@@ -316,7 +316,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
           return true;
         }
 
-      for (long j = 0; j < d->n_inherits_flat (); ++j)
+      for (std::size_t j = 0; j < d->n_inherits_flat (); ++j)
         {
           ancestor = d->inherits_flat ()[j];
 

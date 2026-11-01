@@ -458,7 +458,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
                         -1);
     }
 
-  unsigned long const ndims = array->n_dims ();
+  std::size_t const ndims = array->n_dims ();
 
   // Generate a product of all the dimensions. This will be the total length
   // of the "unfolded" single dimensional array.
@@ -559,7 +559,7 @@ int
 be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  ACE_CDR::ULong i;
+  std::size_t i;
   be_array *node =
     dynamic_cast<be_array*> (this->ctx_->node ());
   AST_Decl::NodeType nt = bt->node_type ();
@@ -576,7 +576,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   // Initialize a boolean variable.
   *os << "CORBA::Boolean _tao_marshal_flag = true;" << be_nl;
 
-  ACE_CDR::ULong ndims = node->n_dims ();
+  std::size_t ndims = node->n_dims ();
 
   // We get here if the "type" of individual elements of the array is not a
   // primitive type. In this case, we are left with no other alternative but to

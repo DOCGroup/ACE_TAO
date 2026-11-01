@@ -353,7 +353,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   AST_Expression *v = nullptr;
   UTL_ExprList *v_list = nullptr;
 
-  for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
+  for (std::size_t i = 0; i < node->n_dims (); ++i)
     {
       AST_Param_Holder *ph = node->dims ()[i]->param_holder ();
 

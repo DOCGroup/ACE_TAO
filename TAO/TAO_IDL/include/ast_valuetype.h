@@ -18,9 +18,9 @@ public:
                  long n_inherits,
                  AST_Type *inherits_concrete,
                  AST_Interface **inherits_flat,
-                 long n_inherits_flat,
+                 std::size_t n_inherits_flat,
                  AST_Type **supports,
-                 long n_supports,
+                 std::size_t n_supports,
                  AST_Type *supports_concrete,
                  bool abstract,
                  bool truncatable,
@@ -36,7 +36,7 @@ public:
 
   AST_Type **supports () const;
 
-  long n_supports () const;
+  std::size_t n_supports () const;
 
   AST_Type *inherits_concrete () const;
 
@@ -76,7 +76,6 @@ public:
 
 protected:
   std::vector<AST_Type *> pd_supports;
-  long pd_n_supports;
   AST_Type *pd_inherits_concrete;
   AST_Type *pd_supports_concrete;
 

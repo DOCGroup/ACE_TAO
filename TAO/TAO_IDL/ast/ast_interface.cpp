@@ -109,7 +109,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
                               AST_Type **ih,
                               long nih,
                               AST_Interface **ih_flat,
-                              long nih_flat,
+                              std::size_t nih_flat,
                               bool local,
                               bool abstract)
   : COMMON_Base (local,
@@ -119,8 +119,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     AST_Type (AST_Decl::NT_interface,
               n),
     UTL_Scope (AST_Decl::NT_interface),
-    pd_n_inherits (nih),
-    pd_n_inherits_flat (nih_flat)
+    pd_n_inherits (nih)
 {
   std::unique_ptr<AST_Type *[]> inherits_owner (ih);
   std::unique_ptr<AST_Interface *[]> inherits_flat_owner (ih_flat);
@@ -427,11 +426,11 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
     {
       AST_ValueType *v = dynamic_cast<AST_ValueType*> (t);
       AST_Type **supports = v->supports ();
-      long n_supports = v->n_supports ();
+      std::size_t n_supports = v->n_supports ();
 
-      for (n = 0; n < n_supports; ++n)
+      for (std::size_t i = 0; i < n_supports; ++i)
         {
-          this->redef_clash_populate_r (supports[n]);
+          this->redef_clash_populate_r (supports[i]);
         }
     }
   else if (nt == AST_Decl::NT_component)
@@ -539,7 +538,6 @@ AST_Interface::redefine (AST_Interface *from)
   this->pd_n_inherits = from->pd_n_inherits;
   this->pd_inherits = from->pd_inherits;
 
-  this->pd_n_inherits_flat = from->pd_n_inherits_flat;
   this->pd_inherits_flat = from->pd_inherits_flat;
 
   // We've already checked for inconsistent prefixes.
@@ -578,10 +576,10 @@ AST_Interface::inherits_flat () const
     : const_cast<AST_Interface **> (this->pd_inherits_flat.data ());
 }
 
-long
+std::size_t
 AST_Interface::n_inherits_flat () const
 {
-  return pd_n_inherits_flat;
+  return this->pd_inherits_flat.size ();
 }
 
 std::deque<AST_Type *> &
@@ -711,7 +709,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
   AST_Decl *d = nullptr;
   AST_Decl *d_before = nullptr;
   AST_Type **is = nullptr;
-  long nis = -1;
+  std::size_t nis {};
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -826,7 +824,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
   Identifier *id = d->local_name ();
   AST_Decl *prev = nullptr;
   AST_Decl::NodeType nt = NT_root;
-  long nis = -1;
+  std::size_t nis = 0;
   AST_Interface **is = nullptr;
 
   if (this->idl_keyword_clash (id) != 0)
@@ -1023,7 +1021,6 @@ AST_Interface::destroy ()
   this->pd_n_inherits = 0;
 
   this->pd_inherits_flat.clear ();
-  this->pd_n_inherits_flat = 0;
 
   this->UTL_Scope::destroy ();
   this->AST_Type::destroy ();

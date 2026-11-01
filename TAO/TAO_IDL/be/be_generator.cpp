@@ -206,7 +206,7 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 AST_Type **ih,
                                 long nih,
                                 AST_Interface **ih_flat,
-                                long nih_flat,
+                                std::size_t nih_flat,
                                 bool l,
                                 bool a)
 {
@@ -275,9 +275,9 @@ be_generator::create_valuetype (UTL_ScopedName *n,
                                 long n_inherits,
                                 AST_Type *inherits_concrete,
                                 AST_Interface **inherits_flat,
-                                long n_inherits_flat,
+                                std::size_t n_inherits_flat,
                                 AST_Type **supports_list,
-                                long n_supports,
+                                std::size_t n_supports,
                                 AST_Type *supports_concrete,
                                 bool is_abstract,
                                 bool is_truncatable,
@@ -335,9 +335,9 @@ be_generator::create_eventtype (UTL_ScopedName *n,
                                 long n_inherits,
                                 AST_Type *inherits_concrete,
                                 AST_Interface **inherits_flat,
-                                long n_inherits_flat,
+                                std::size_t n_inherits_flat,
                                 AST_Type **supports_list,
-                                long n_supports,
+                                std::size_t n_supports,
                                 AST_Type *supports_concrete,
                                 bool is_abstract,
                                 bool is_truncatable,
@@ -395,7 +395,7 @@ be_generator::create_component (UTL_ScopedName *n,
                                 AST_Type **supports_list,
                                 long n_supports,
                                 AST_Interface **supports_flat,
-                                long n_supports_flat)
+                                std::size_t n_supports_flat)
 {
   be_component *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -438,7 +438,7 @@ be_generator::create_home (UTL_ScopedName *n,
                            AST_Type **supports_list,
                            long n_supports,
                            AST_Interface **supports_flat,
-                           long n_supports_flat)
+                           std::size_t n_supports_flat)
 {
   be_home *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -848,7 +848,7 @@ be_generator::create_enum_val (ACE_CDR::ULong v,
 
 AST_Array *
 be_generator::create_array (UTL_ScopedName *n,
-                            ACE_CDR::ULong ndims,
+                            std::size_t ndims,
                             UTL_ExprList *dims,
                             bool is_local,
                             bool is_abstract)

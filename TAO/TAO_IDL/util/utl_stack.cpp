@@ -152,10 +152,10 @@ UTL_ScopeStack::clear ()
 }
 
 // How deep is the stack?
-unsigned long
+std::size_t
 UTL_ScopeStack::depth () const
 {
-  return static_cast<unsigned long> (this->pd_stack_data.size ());
+  return this->pd_stack_data.size ();
 }
 
 // Return (top - 1) element on stack.

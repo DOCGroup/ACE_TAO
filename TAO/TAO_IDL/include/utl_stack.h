@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 
+#include <cstddef>
 #include <vector>
 
 class UTL_Scope;
@@ -104,7 +105,7 @@ public:
   UTL_ScopeStack *push (UTL_Scope *el);
 
   // How deep is the stack now?
-  unsigned long depth () const;
+  std::size_t depth () const;
 
   // Return bottom element.
   UTL_Scope *bottom () const;

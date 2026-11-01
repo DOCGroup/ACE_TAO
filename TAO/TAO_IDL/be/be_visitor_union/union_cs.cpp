@@ -130,7 +130,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
           be_union_branch *branch =
             dynamic_cast<be_union_branch*> (default_si.item ());
 
-          for (unsigned long i = 0;
+          for (std::size_t i = 0;
                branch != nullptr && i < branch->label_list_length ();
                ++i)
             {

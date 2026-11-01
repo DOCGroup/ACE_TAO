@@ -27,7 +27,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  ACE_CDR::ULong i;
+  std::size_t i;
   this->ctx_->node (node);
 
   // Retrieve the type.
@@ -140,7 +140,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "{" << be_idt_nl;
   *os << "// Copy each individual element." << be_nl;
 
-  ACE_CDR::ULong ndims = node->n_dims ();
+  std::size_t ndims = node->n_dims ();
 
   // Generate nested loops for as many dimensions as there are.
   for (i = 0; i < ndims; ++i)

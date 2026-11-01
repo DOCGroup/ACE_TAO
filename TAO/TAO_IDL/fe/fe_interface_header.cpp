@@ -212,9 +212,9 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
 
       // Add i's parents to the flat list.
       AST_Interface **parents = iface->inherits_flat ();
-      long num_parents = iface->n_inherits_flat ();
+      std::size_t const num_parents = iface->n_inherits_flat ();
 
-      for (long j = 0; j < num_parents; ++j)
+      for (std::size_t j = 0; j < num_parents; ++j)
         {
           AST_Interface *tmp =
             dynamic_cast<AST_Interface*> (parents[j]);
@@ -479,7 +479,7 @@ FE_InterfaceHeader::install_in_header ()
           this->inherits_flat_[i] = this->iseen_flat_[i];
         }
 
-      this->n_inherits_flat_ = static_cast<long> (this->iseen_flat_.size ());
+      this->n_inherits_flat_ = this->iseen_flat_.size ();
     }
 
   // Then the list of immediate ancestors.
@@ -523,7 +523,7 @@ FE_InterfaceHeader::inherits_flat () const
   return this->inherits_flat_;
 }
 
-long
+std::size_t
 FE_InterfaceHeader::n_inherits_flat () const
 {
   return this->n_inherits_flat_;

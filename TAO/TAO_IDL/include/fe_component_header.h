@@ -30,7 +30,7 @@ public:
   AST_Type **supports () const;
   long n_supports () const;
   AST_Interface **supports_flat () const;
-  long n_supports_flat () const;
+  std::size_t n_supports_flat () const;
 
 protected:
   void compile_inheritance (UTL_ScopedName *base_component);

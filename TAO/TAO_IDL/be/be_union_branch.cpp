@@ -41,7 +41,7 @@ be_union_branch::be_union_branch (UTL_LabelList *ll,
 }
 
 int
-be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
+be_union_branch::gen_label_value (TAO_OutStream *os, std::size_t index)
 {
   AST_Expression *e = this->label (index)->label_val ();
 

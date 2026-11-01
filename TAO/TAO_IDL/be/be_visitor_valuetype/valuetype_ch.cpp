@@ -13,6 +13,8 @@
 
 #include "valuetype.h"
 
+#include <cstddef>
+
 // ******************************************************
 // Valuetype visitor for client header
 // ******************************************************
@@ -152,7 +154,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate the supported interfaces.
-  for (i = 0; i < node->n_supports (); ++i)
+  for (std::size_t i = 0; i < node->n_supports (); ++i)
     {
       *os << "," << be_nl
           << "public virtual ::"

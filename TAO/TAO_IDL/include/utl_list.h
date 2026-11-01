@@ -77,6 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/CDR_Base.h"
 
+#include <cstddef>
+
 // Forward declare active iterator for UTL_List.
 class  UTL_ListActiveIterator;
 
@@ -106,7 +108,7 @@ public:
   void set_tail (UTL_List *l);
 
   // How long is this list?
-  ACE_CDR::Long length () const;
+  std::size_t length () const;
 
   // Cleanup.
   virtual void destroy ();
@@ -116,7 +118,7 @@ private:
   UTL_List *pd_cdr_data;
 
   // Operations
-  ACE_CDR::Long list_length (ACE_CDR::Long n) const;
+  std::size_t list_length (std::size_t n) const;
 
   // Friend class.
   friend class UTL_ListActiveIterator;

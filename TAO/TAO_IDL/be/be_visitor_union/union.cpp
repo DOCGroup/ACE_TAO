@@ -112,7 +112,7 @@ be_visitor_union::boolean_branch (be_union_branch *b)
     return Bool_Union_Branch::None;
 
   bool br_d = false, br_t = false, br_f = false;
-  for (unsigned long i = 0; i < b->label_list_length (); ++i)
+  for (std::size_t i = 0; i < b->label_list_length (); ++i)
     if (b->label (i)->label_kind () == AST_UnionLabel::UL_default)
       br_d = true;
     else
@@ -129,7 +129,7 @@ be_visitor_union::boolean_branch (be_union_branch *b)
       if (f != b)
         {
           AST_UnionBranch *other = dynamic_cast<AST_UnionBranch*> (f);
-          for (unsigned long j = 0; j < other->label_list_length (); ++j)
+          for (std::size_t j = 0; j < other->label_list_length (); ++j)
             {
               has_other = true;
               other_val = other->label (j)->label_val ()->ev ()->u.bval;
@@ -204,7 +204,7 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
 
   *os << be_nl;
 
-  for (unsigned long i = 0; i < b->label_list_length (); ++i)
+  for (std::size_t i = 0; i < b->label_list_length (); ++i)
     {
       // check if we are printing the default case
       if (b->label (i)->label_kind () == AST_UnionLabel::UL_default)

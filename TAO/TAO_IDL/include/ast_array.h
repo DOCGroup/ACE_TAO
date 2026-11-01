@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_concrete_type.h"
 
+#include <cstddef>
 #include <memory>
 #include <vector>
 
@@ -83,7 +84,7 @@ class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:
   AST_Array (UTL_ScopedName *n,
-             ACE_CDR::ULong ndims,
+             std::size_t ndims,
              UTL_ExprList *dims,
              bool local,
              bool abstract);
@@ -96,7 +97,7 @@ public:
 
   // Data Accessors.
 
-  ACE_CDR::ULong n_dims () const;
+  std::size_t n_dims () const;
 
   std::vector<std::unique_ptr<AST_Expression>> const &dims () const;
 
@@ -144,7 +145,7 @@ private:
   // Compute how many dimensions.
   std::vector<std::unique_ptr<AST_Expression>> compute_dims (
     UTL_ExprList *dims,
-    ACE_CDR::ULong ndims);
+    std::size_t ndims);
 
   /**
    * Annotations on the base type
