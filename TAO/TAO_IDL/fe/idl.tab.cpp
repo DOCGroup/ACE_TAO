@@ -4575,7 +4575,7 @@ yyreduce:
                       && et != param_holder->info ()->const_type_)
                     {
                       idl_global->err ()->mismatched_template_param (
-                        param_holder->info ()->name_.c_str ());
+                        param_holder->info ()->name_);
                     }
                   else
                     {
@@ -7573,7 +7573,7 @@ yyreduce:
                   if (et != AST_Expression::EV_ulong)
                     {
                       idl_global->err ()->mismatched_template_param (
-                        param_holder->info ()->name_.c_str ());
+                        param_holder->info ()->name_);
 
                       delete ev;
                       ev = 0;
@@ -9085,7 +9085,7 @@ yyreduce:
                        && nt != AST_Decl::NT_interface)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -9214,7 +9214,7 @@ yyreduce:
                        && nt != AST_Decl::NT_interface)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -9345,7 +9345,7 @@ yyreduce:
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -9421,7 +9421,7 @@ yyreduce:
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -9494,7 +9494,7 @@ yyreduce:
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -10331,7 +10331,7 @@ yyreduce:
               delete (yyvsp[0].plval);
               (yyvsp[0].plval) = 0;
 
-              idl_global->err ()->mismatch_seq_of_param (bad_id.c_str ());
+              idl_global->err ()->mismatch_seq_of_param (bad_id);
               return 1;
             }
 

@@ -245,7 +245,7 @@ AST_Template_Module::match_param_by_type (
     }
 
   idl_global->err ()->mismatched_template_param (
-    param->name_.c_str ());
+    param->name_);
 
   return false;
 }

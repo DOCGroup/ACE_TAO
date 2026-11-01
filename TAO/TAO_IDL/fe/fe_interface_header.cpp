@@ -360,7 +360,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           if (!ok_param)
             {
               idl_global->err ()->mismatched_template_param (
-                ph->info ()->name_.c_str ());
+                ph->info ()->name_);
 
               break;
             }

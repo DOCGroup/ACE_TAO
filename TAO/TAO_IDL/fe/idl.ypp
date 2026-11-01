@@ -1948,7 +1948,7 @@ const_dcl :
                       && et != param_holder->info ()->const_type_)
                     {
                       idl_global->err ()->mismatched_template_param (
-                        param_holder->info ()->name_.c_str ());
+                        param_holder->info ()->name_);
                     }
                   else
                     {
@@ -4561,7 +4561,7 @@ array_dim :
                   if (et != AST_Expression::EV_ulong)
                     {
                       idl_global->err ()->mismatched_template_param (
-                        param_holder->info ()->name_.c_str ());
+                        param_holder->info ()->name_);
 
                       delete ev;
                       ev = 0;
@@ -5804,7 +5804,7 @@ provides_decl : IDL_PROVIDES interface_type id
                        && nt != AST_Decl::NT_interface)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -5926,7 +5926,7 @@ uses_decl : uses_opt_multiple interface_type id
                        && nt != AST_Decl::NT_interface)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -6050,7 +6050,7 @@ emits_decl
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -6125,7 +6125,7 @@ publishes_decl
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -6197,7 +6197,7 @@ consumes_decl
                        && nt != AST_Decl::NT_eventtype)
                       {
                         idl_global->err ()->mismatched_template_param (
-                          ph->info ()->name_.c_str ());
+                          ph->info ()->name_);
 
                         so_far_so_good = false;
                       }
@@ -6897,7 +6897,7 @@ at_least_one_formal_parameter
               delete $2;
               $2 = 0;
 
-              idl_global->err ()->mismatch_seq_of_param (bad_id.c_str ());
+              idl_global->err ()->mismatch_seq_of_param (bad_id);
               return 1;
             }
 

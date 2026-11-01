@@ -31,9 +31,9 @@ be_visitor_executor_private_exh::visit_provides (be_provides *node)
   be_type *impl = node->provides_type ();
   AST_Decl *i_scope = ScopeAsDecl (impl->defined_in ());
   bool is_global = (i_scope->node_type () == AST_Decl::NT_root);
-  const char *smart_scope = (is_global ? "" : "::");
+  std::string const smart_scope = is_global ? "" : "::";
   std::string const scope_name (
-    IdentifierHelper::orig_sn (i_scope->name (), false).c_str ());
+    IdentifierHelper::orig_sn (i_scope->name (), false));
 
   os_ << be_nl_2;
   os_ << "/// Object reference to " << this->ctx_->port_prefix ()

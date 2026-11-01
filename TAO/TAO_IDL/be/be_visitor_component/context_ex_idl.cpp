@@ -46,7 +46,7 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
         ScopeAsDecl (base->defined_in ());
 
       std::string const sname_str (
-        IdentifierHelper::orig_sn (scope->name ()).c_str ());
+        IdentifierHelper::orig_sn (scope->name ()));
       std::string const& lname =
         base->original_local_name ()->get_string ();
 
@@ -90,7 +90,7 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
 
   std::string port_name (this->ctx_->port_prefix ());
   port_name += node->local_name ()->get_string ();
-  const char *lname = port_name.c_str ();
+  std::string const& lname = port_name;
 
   // Note that we don't strip off the possible '_cxx_' when
   // adding the 'Connections' suffix. The front end will

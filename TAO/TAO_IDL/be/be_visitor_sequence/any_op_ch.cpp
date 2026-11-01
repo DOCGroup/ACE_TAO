@@ -69,7 +69,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   *os << macro
       << " void"
       << " operator<<= (::CORBA::Any &, ::"
-      << name.c_str ()
+      << name
       << " const &); // copying version" << be_nl;
 
   if (!alt)
@@ -84,7 +84,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   *os << macro
       << " ::CORBA::Boolean"
       << " operator>>= (::CORBA::Any const &, ::"
-      << name.c_str ()
+          << name
       << " const *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;

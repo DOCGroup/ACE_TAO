@@ -416,7 +416,7 @@ private:
   void gen_stub_arg_file_includes (TAO_OutStream * stream);
   void gen_skel_arg_file_includes (TAO_OutStream * stream);
   void gen_cond_file_include (bool condition_green,
-                              const char *filepath,
+                              std::string const& filepath,
                               TAO_OutStream *stream);
   void gen_typecode_includes (TAO_OutStream * stream);
 
@@ -435,7 +435,6 @@ private:
 
   void gen_export_file (std::string const& filename,
                         std::string const& macro,
-                        const char *msg,
                         bool for_skel = false);
 
   void make_rand_extension (std::string &name);

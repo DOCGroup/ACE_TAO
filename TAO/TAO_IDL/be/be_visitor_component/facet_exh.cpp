@@ -37,11 +37,11 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
 
   std::string lname_str (this->ctx_->port_prefix ());
   lname_str += node->original_local_name ()->get_string ();
-  const char *lname = lname_str.c_str ();
+  std::string const& lname = lname_str;
 
   AST_Decl *s = ScopeAsDecl (impl->defined_in ());
   std::string const sname_str (
-    IdentifierHelper::orig_sn (s->name (), false).c_str ());
+    IdentifierHelper::orig_sn (s->name (), false));
   std::string const global = sname_str.empty () ? "" : "::";
 
   AST_Decl *c_scope = ScopeAsDecl (this->node_->defined_in ());

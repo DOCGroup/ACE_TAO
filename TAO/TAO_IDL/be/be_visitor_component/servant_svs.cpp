@@ -261,7 +261,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
 
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   AST_Type *obj = node->provides_type ();
   std::string const obj_name = obj->full_name ();
@@ -351,7 +351,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
 
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
@@ -1169,7 +1169,7 @@ be_visitor_facet_executor_block::visit_provides (
 {
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   os_ << be_nl_2
       << "if (std::strcmp (name, \"" << port_name
@@ -1197,7 +1197,7 @@ be_visitor_connect_block::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();
@@ -1242,7 +1242,7 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   bool const is_multiple = node->is_multiple ();
 
@@ -1286,7 +1286,7 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   AST_Type *obj = node->uses_type ();
   bool const is_multiple = node->is_multiple ();
@@ -1558,7 +1558,7 @@ be_visitor_populate_port_tables::visit_provides (
 
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   os_ << be_nl
       << "this->setup_"

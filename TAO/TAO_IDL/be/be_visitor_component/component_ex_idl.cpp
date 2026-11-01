@@ -60,7 +60,7 @@ be_visitor_component_ex_idl::visit_component (
   AST_Decl *scope = ScopeAsDecl (node->defined_in ());
 
   std::string const sname_str (
-    IdentifierHelper::orig_sn (scope->name ()).c_str ());
+    IdentifierHelper::orig_sn (scope->name ()));
   std::string const& lname =
     node->original_local_name ()->get_string ();
 

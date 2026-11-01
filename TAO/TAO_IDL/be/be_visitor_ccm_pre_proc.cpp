@@ -816,7 +816,7 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
       push_op->set_name (op_full_name);
       std::string arg_string ("the_");
       arg_string += node->local_name ();
-      Identifier arg_id (arg_string.c_str ());
+      Identifier arg_id (arg_string);
       UTL_ScopedName arg_name (&arg_id,
                                nullptr);
       be_argument *arg = nullptr;

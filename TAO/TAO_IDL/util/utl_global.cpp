@@ -728,7 +728,7 @@ IDL_GlobalData::update_prefix (std::string const& filename)
 
   if (entry != this->file_prefixes_.end ())
     {
-      this->pd_root->prefix (entry->second.c_str ());
+      this->pd_root->prefix (entry->second);
     }
   else
     {

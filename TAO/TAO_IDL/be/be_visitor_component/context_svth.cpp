@@ -147,7 +147,7 @@ be_visitor_context_svth::visit_uses (be_uses *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   std::string const obj_name = node->uses_type ()->full_name ();
   bool const is_multiple = node->is_multiple ();

@@ -51,16 +51,13 @@ public:
   bool opt_accessor ();
 
   /// Generate the helper functions definition.
-  virtual int gen_helper_header (char *local_name = nullptr,
-                                 char *full_name = nullptr);
+  virtual int gen_helper_header ();
 
   /// Generate the helper functions inline implementation.
-  virtual int gen_helper_inline (char *local_name = nullptr,
-                                 char *full_name = nullptr);
+  virtual int gen_helper_inline ();
 
   /// Generate the helper functions implementation.
-  virtual int gen_helper_stubs (char *local_name = nullptr,
-                                char *full_name = nullptr);
+  virtual int gen_helper_stubs ();
 
   /// Overridden from class be_type.
   void gen_ostream_operator (TAO_OutStream *os,

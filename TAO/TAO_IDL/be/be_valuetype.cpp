@@ -438,7 +438,7 @@ be_valuetype::is_amh_excep_holder (bool val)
 }
 
 int
-be_valuetype::gen_helper_header (char *, char *)
+be_valuetype::gen_helper_header ()
 {
   TAO_OutStream *os = tao_cg->client_header ();
 
@@ -463,7 +463,7 @@ be_valuetype::gen_helper_header (char *, char *)
 }
 
 int
-be_valuetype::gen_helper_inline (char *, char *)
+be_valuetype::gen_helper_inline ()
 {
   TAO_OutStream *os = tao_cg->client_inline ();
 
@@ -492,7 +492,7 @@ be_valuetype::gen_helper_inline (char *, char *)
 
 
 int
-be_valuetype::gen_helper_stubs (char *, char *)
+be_valuetype::gen_helper_stubs ()
 {
   TAO_OutStream *os = tao_cg->client_stubs ();
 

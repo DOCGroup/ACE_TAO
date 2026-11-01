@@ -167,7 +167,7 @@ be_visitor_executor_ex_idl::visit_provides (
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
 
   std::string const sname_str (
-    IdentifierHelper::orig_sn (scope->name ()).c_str ());
+    IdentifierHelper::orig_sn (scope->name ()));
   std::string const& lname =
     impl->original_local_name ()->get_string ();
 
@@ -175,7 +175,7 @@ be_visitor_executor_ex_idl::visit_provides (
 
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   os_ << be_nl
       << global << sname_str << "::CCM_" << lname << " get_"

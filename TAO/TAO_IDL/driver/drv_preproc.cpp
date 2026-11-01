@@ -366,7 +366,7 @@ DRV_cpp_init ()
             }
         }
 
-      idl_global->tao_root (include_path1.c_str ());
+      idl_global->tao_root (include_path1);
     }
   else
     {
@@ -587,7 +587,7 @@ DRV_add_include_path (std::string& include_path,
 
   DRV_cpp_putarg (include_option.c_str ());
 
-  idl_global->add_include_path (include_path.c_str (),
+  idl_global->add_include_path (include_path,
                                 is_system);
 
   return include_path;
@@ -864,7 +864,7 @@ namespace
       {
         if (idl_global->pass_orb_idl ())
           {
-            idl_global->add_to_included_idl_files (incl_file.c_str ());
+            idl_global->add_to_included_idl_files (incl_file);
           }
         else
           {
@@ -883,11 +883,11 @@ namespace
         std::string fixed_name ("tao/");
         fixed_name += incl_file;
 
-        idl_global->add_to_included_idl_files (fixed_name.c_str ());
+        idl_global->add_to_included_idl_files (fixed_name);
       }
     else
       {
-        idl_global->add_to_included_idl_files (incl_file.c_str ());
+        idl_global->add_to_included_idl_files (incl_file);
       }
   }
 

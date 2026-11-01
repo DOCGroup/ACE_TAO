@@ -280,7 +280,7 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   be_type *impl = node->provides_type ();
 

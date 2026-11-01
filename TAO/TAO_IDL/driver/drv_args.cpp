@@ -279,7 +279,7 @@ DRV_parse_args (long ac, char **av)
                       arg += av[i + 1];
 
                       DRV_cpp_putarg (arg.c_str ());
-                      idl_global->add_include_path (arg.c_str () + 2, false);
+                      idl_global->add_include_path (arg.substr (2), false);
                       ++i;
                     }
                   else
@@ -292,7 +292,7 @@ DRV_parse_args (long ac, char **av)
                   std::string arg (av[i], 2);
                   arg += av[i] + 2;
 
-                  idl_global->add_include_path (arg.c_str () + 2, false);
+                  idl_global->add_include_path (arg.substr (2), false);
                   DRV_cpp_putarg (arg.c_str ());
                 }
 

@@ -327,7 +327,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
 {
   std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   be_type *obj = node->provides_type ();
   std::string const& iname =
@@ -335,15 +335,13 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
 
   AST_Decl *scope = ScopeAsDecl (obj->defined_in ());
   std::string const sname_str (scope->full_name ());
-  char const * const sname = sname_str.c_str ();
-  char const * const global = (sname_str.empty () ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   std::string lname_str (this->ctx_->port_prefix ());
   lname_str += node->original_local_name ()->get_string ();
-  const char *lname = lname_str.c_str ();
 
   os_ << be_nl_2
-      << global << sname << "::CCM_"
+      << global << sname_str << "::CCM_"
       << iname << "_ptr" << be_nl
       << node_->local_name () << "_exec_i::get_"
       << port_name << " ()" << be_nl
@@ -351,17 +349,17 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
       << "if (::CORBA::is_nil (this->ciao_" << port_name
       << "_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << lname << "_exec_i *tmp {};" << be_nl
+      << lname_str << "_exec_i *tmp {};" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "tmp," << be_nl
-      << lname << "_exec_i (" << be_idt_nl
+      << lname_str << "_exec_i (" << be_idt_nl
       << "this->ciao_context_.in ())," << be_nl
-      << global << sname << "::CCM_" << iname << "::_nil ());"
+      << global << sname_str << "::CCM_" << iname << "::_nil ());"
       << be_uidt << be_nl_2
       << "this->ciao_" << port_name << "_ = tmp;" << be_uidt << be_uidt_nl
       << "}" << be_uidt << be_nl_2
       << "return" << be_idt_nl
-      << global << sname << "::CCM_" << iname
+      << global << sname_str << "::CCM_" << iname
       << "::_duplicate (" << be_idt_nl
       << "this->ciao_" << port_name << "_.in ());"
       << be_uidt << be_uidt << be_uidt_nl

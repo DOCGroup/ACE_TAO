@@ -467,7 +467,7 @@ FE_store_env_include_paths ()
 
   for (std::string const &path : list)
     {
-      idl_global->add_include_path (path.c_str (), false);
+      idl_global->add_include_path (path, false);
     }
 }
 

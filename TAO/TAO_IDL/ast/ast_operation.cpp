@@ -333,7 +333,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
                   && nt != AST_Decl::NT_type)
                 {
                   idl_global->err ()->mismatched_template_param (
-                    ph->info ()->name_.c_str ());
+                    ph->info ()->name_);
                 }
 
               break;

@@ -244,7 +244,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
               && nt != AST_Decl::NT_interface)
             {
               idl_global->err ()->mismatched_template_param (
-                ph->info ()->name_.c_str ());
+                ph->info ()->name_);
 
               continue;
             }

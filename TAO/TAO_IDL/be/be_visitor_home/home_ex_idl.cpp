@@ -271,7 +271,7 @@ be_visitor_home_ex_idl::gen_derived ()
 {
   std::string lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
-  char const *lname = lname_str.c_str ();
+  std::string const& lname = lname_str;
 
   os_ << be_nl_2
       << "local interface CCM_" << lname << be_nl
@@ -355,13 +355,13 @@ be_visitor_home_ex_idl::gen_home_executor ()
 
   std::string sname_str =
     IdentifierHelper::orig_sn (scope->name ());
-  char const *sname = sname_str.c_str ();
+  std::string const& sname = sname_str;
 
   std::string lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
-  char const *lname = lname_str.c_str ();
+  std::string const& lname = lname_str;
 
-  char const *global = (sname_str.empty () ? "" : "::");
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "module CIAO_" << comp->flat_name () << "_Impl" << be_nl

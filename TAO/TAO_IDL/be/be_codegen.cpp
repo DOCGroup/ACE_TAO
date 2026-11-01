@@ -1959,8 +1959,7 @@ TAO_CodeGen::gen_export_files ()
         ? be_global->stub_export_include () : be_global->stub_export_file ();
       this->gen_export_file (
         filename,
-        be_global->stub_export_macro (),
-        "stub");
+        be_global->stub_export_macro ());
     }
 
   if (be_global->gen_skel_export_hdr_file ()
@@ -1971,7 +1970,6 @@ TAO_CodeGen::gen_export_files ()
         be_global->skel_export_file ().empty ()
           ? be_global->skel_export_include () : be_global->skel_export_file (),
         be_global->skel_export_macro (),
-        "skel",
         true);
     }
 
@@ -1981,8 +1979,7 @@ TAO_CodeGen::gen_export_files ()
     {
       this->gen_export_file (
         be_global->svnt_export_include (),
-        be_global->svnt_export_macro (),
-        "svnt");
+        be_global->svnt_export_macro ());
     }
 
   if (be_global->gen_exec_export_hdr_file ()
@@ -1991,8 +1988,7 @@ TAO_CodeGen::gen_export_files ()
     {
       this->gen_export_file (
         be_global->exec_export_include (),
-        be_global->exec_export_macro (),
-        "exec");
+        be_global->exec_export_macro ());
     }
 
   if (be_global->gen_conn_export_hdr_file ()
@@ -2001,15 +1997,13 @@ TAO_CodeGen::gen_export_files ()
     {
       this->gen_export_file (
         be_global->conn_export_include (),
-        be_global->conn_export_macro (),
-        "conn");
+        be_global->conn_export_macro ());
     }
 }
 
 void
 TAO_CodeGen::gen_export_file (std::string const& filename,
                               std::string const& macro,
-                              const char *,
                               bool for_skel)
 {
   // Svnt export macro may correctly default to skel export macro,
@@ -3045,7 +3039,7 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 
 void
 TAO_CodeGen::gen_cond_file_include (bool condition_green,
-                                    const char *filepath,
+                                    std::string const& filepath,
                                     TAO_OutStream *stream)
 {
   if (condition_green)
