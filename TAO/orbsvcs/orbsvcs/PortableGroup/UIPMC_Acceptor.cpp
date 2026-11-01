@@ -138,7 +138,7 @@ TAO_UIPMC_Acceptor::open (
             port_separator_loc = nullptr;
           // Extract out just the host part of the address.
           size_t const len = cp_pos - (address + 1);
-          ACE_OS::memcpy (tmp_host, address + 1, len);
+          std::memcpy (tmp_host, address + 1, len);
           tmp_host[len] = '\0';
         }
     }
@@ -147,7 +147,7 @@ TAO_UIPMC_Acceptor::open (
     {
       // Extract out just the host part of the address.
       size_t len = port_separator_loc - address;
-      ACE_OS::memcpy (tmp_host, address, len);
+      std::memcpy (tmp_host, address, len);
       tmp_host[len] = '\0';
     }
 

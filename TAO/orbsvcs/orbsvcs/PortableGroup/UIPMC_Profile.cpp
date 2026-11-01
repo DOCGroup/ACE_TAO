@@ -281,7 +281,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
         }
     }
 
-  if (ACE_OS::strspn (string, "0123456789") !=
+  if (std::strspn (string, "0123456789") !=
       static_cast<size_t> (pos - string))
     {
       // Throw an exception if it's not a proper number
@@ -317,7 +317,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
             CORBA::COMPLETED_NO);
         }
 
-      if (ACE_OS::strspn (string, "0123456789") !=
+      if (std::strspn (string, "0123456789") !=
           static_cast<size_t> (pos - string))
         {
           // Throw an exception if it's not a proper number
@@ -404,7 +404,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
     }
 
   size_t mcast_addr_len = mcast_addr.length ();
-  if (ACE_OS::strspn (mcast_addr.c_str (),
+  if (std::strspn (mcast_addr.c_str (),
                       ".:0123456789ABCDEFabcdef") != mcast_addr_len)
     {
       // Throw an exception if it's not a proper IPv4/IPv6 address
@@ -433,7 +433,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   static const char port_chars[] =
     "-0123456789ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   size_t port_len = std::strlen (string);
-  if (ACE_OS::strspn (string, port_chars) != port_len)
+  if (std::strspn (string, port_chars) != port_len)
     {
       // Throw an exception if it's not a proper port
       throw CORBA::INV_OBJREF (
@@ -624,7 +624,7 @@ TAO_UIPMC_Profile::create_tagged_profile ()
            i != encap.end ();
            i = i->next ())
         {
-          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
+          std::memcpy (buffer, i->rd_ptr (), i->length ());
           buffer += i->length ();
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
@@ -707,7 +707,7 @@ TAO_UIPMC_Profile::update_cached_group_component ()
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+      std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
     }

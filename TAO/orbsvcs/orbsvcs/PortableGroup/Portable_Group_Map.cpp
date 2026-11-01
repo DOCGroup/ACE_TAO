@@ -3,6 +3,8 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Destructor.
@@ -129,7 +131,7 @@ TAO_GroupId_Hash::operator () (PortableGroup::TagGroupTaggedComponent const *id)
 {
   u_long hash =
     ACE::hash_pjw (static_cast<char const *> (id->group_domain_id),
-                   ACE_OS::strlen (static_cast<char const *> (id->group_domain_id)));
+                   std::strlen (static_cast<char const *> (id->group_domain_id)));
 
   // Mix the object_group_id into the hash.
   hash += static_cast<u_long> (id->object_group_id);
@@ -144,7 +146,7 @@ TAO_GroupId_Equal_To::operator () (
   PortableGroup::TagGroupTaggedComponent const *rhs) const
 {
   return
-    ACE_OS::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0
+    std::strcmp (lhs->group_domain_id, rhs->group_domain_id) == 0
     && lhs->object_group_id == rhs->object_group_id
     && lhs->object_group_ref_version == rhs->object_group_ref_version;
 }

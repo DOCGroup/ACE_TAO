@@ -11,6 +11,8 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Resume_Handle.h"
+
+#include <cstring>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -302,7 +304,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
       char * const aligned_buf = ACE_ptr_align_binary (buf, ACE_CDR::MAX_ALIGNMENT);
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-      (void) ACE_OS::memset (buf, '\0', sizeof buf);
+      (void) std::memset (buf, '\0', sizeof buf);
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       while (true)

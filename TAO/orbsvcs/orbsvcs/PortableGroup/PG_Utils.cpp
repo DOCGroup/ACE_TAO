@@ -6,7 +6,8 @@
 #include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,7 +53,7 @@ namespace TAO
          i != nullptr;
          i = i->cont ())
       {
-        ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+        std::memcpy (buf, i->rd_ptr (), i->length ());
         buf += i->length ();
       }
     IOP::TaggedComponent const &tmp_tc = tagged_components;

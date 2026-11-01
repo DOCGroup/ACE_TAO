@@ -13,6 +13,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Vector_T.h"
 
+#include <cstring>
+
 
 #define TODO int todo;
 
@@ -116,7 +118,7 @@ dump_ior (const char * base,
   ACE_OS::sprintf(filename, "%s_%lu.%s", base, version, ext );
 
   FILE * iorfile = ACE_OS::fopen(filename, "w");
-  ACE_OS::fwrite (iogr, 1, ACE_OS::strlen(iogr), iorfile);
+  ACE_OS::fwrite (iogr, 1, std::strlen (iogr), iorfile);
   ACE_OS::fclose (iorfile);
 }
 #endif  // may want this again someday

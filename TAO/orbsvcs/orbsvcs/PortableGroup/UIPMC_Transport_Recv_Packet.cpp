@@ -4,6 +4,8 @@
 
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
@@ -48,7 +50,7 @@ namespace TAO_PG
     ACE_NEW_RETURN (new_data.buf,
                     char[len],
                     -1);
-    ACE_OS::memcpy (new_data.buf, data, len);
+    std::memcpy (new_data.buf, data, len);
     new_data.len = len;
 
     if (is_last)
@@ -118,7 +120,7 @@ namespace TAO_PG
         Fragment f = { 0, 0 };
         this->fragments_.find (id, f);
 
-        ACE_OS::memcpy (buf, f.buf, f.len);
+        std::memcpy (buf, f.buf, f.len);
         buf += f.len;
       }
   }
