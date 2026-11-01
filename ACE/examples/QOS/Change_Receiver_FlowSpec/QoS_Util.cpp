@@ -12,22 +12,12 @@ QoS_Util::QoS_Util (int argc,
                     ACE_TCHAR *argv[])
   : argc_ (argc),
     argv_ (argv),
+    mult_session_addr_ (std::make_unique<ACE_INET_Addr> (ACE_DEFAULT_MULTICAST_PORT)),
+    dest_addr_ (std::make_unique<ACE_INET_Addr> (ACE_DEFAULT_SERVER_PORT)),
     source_port_ (SENDER_PORT),
     protocol_ (IPPROTO_UDP),
-    multicast_flag_ (0)
+    multicast_flag_ (false)
 {
-  ACE_NEW (this->mult_session_addr_,
-           ACE_INET_Addr (ACE_DEFAULT_MULTICAST_PORT));
-
-  ACE_NEW (this->dest_addr_,
-           ACE_INET_Addr (ACE_DEFAULT_SERVER_PORT));
-}
-
-// destructor.
-QoS_Util::~QoS_Util ()
-{
-  delete this->mult_session_addr_;
-  delete this->dest_addr_;
 }
 
 int
@@ -40,7 +30,7 @@ QoS_Util::parse_args ()
     switch (c)
       {
       case 'm': // multicast session address.
-        this->multicast_flag_ = 1;
+        this->multicast_flag_ = true;
         this->mult_session_addr_->set (get_opts.opt_arg ());
         break;
       case 'n': // to be used by Senders only to specify the destination.
@@ -78,9 +68,8 @@ QoS_Util::parse_args ()
 
   // If multicast address is specified then ignore the unicast sender
   // destination address and force the protocol to be UDP.
-  if (this->multicast_flag_ == 1)
+  if (this->multicast_flag_)
     {
-      this->dest_addr_ = this->mult_session_addr_;
       this->protocol_ = IPPROTO_UDP;
     }
 
@@ -91,13 +80,13 @@ QoS_Util::parse_args ()
 ACE_INET_Addr *
 QoS_Util::mult_session_addr () const
 {
-  return this->mult_session_addr_;
+  return this->mult_session_addr_.get ();
 }
 
 ACE_INET_Addr *
 QoS_Util::dest_addr () const
 {
-  return this->dest_addr_;
+  return this->multicast_flag_ ? this->mult_session_addr_.get () : this->dest_addr_.get ();
 }
 
 u_short
@@ -112,7 +101,7 @@ QoS_Util::protocol () const
   return this->protocol_;
 }
 
-int
+bool
 QoS_Util::multicast_flag () const
 {
   return this->multicast_flag_;
