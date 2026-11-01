@@ -26,7 +26,6 @@
 #include "orbsvcs/Sched/sched_export.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include <deque>
-#include <vector>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -477,7 +476,7 @@ private:
   LOCK lock_;
 
   /// Collection of known tasks.
-  std::vector<RT_Info *> rt_info_entries_;
+  ACE_Unbounded_Set <RT_Info *> rt_info_entries_;
 
   /// The number of task handles dispensed so far.
   u_int handles_ {};

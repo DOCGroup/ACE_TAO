@@ -19,8 +19,6 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
-#include <vector>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -102,7 +100,7 @@ private:
   int increasing_priority_;
 
   /// Collection of known tasks.
-  std::vector<RT_Info **> task_entries_;
+  ACE_Unbounded_Set <RT_Info **> task_entries_;
 
   /// dispatchin configuration info
   Config_Info config_info_;

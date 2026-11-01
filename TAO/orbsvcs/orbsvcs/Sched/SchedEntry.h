@@ -18,8 +18,6 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/Containers.h"
 
-#include <vector>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
@@ -176,10 +174,10 @@ public:
   bool has_unresolved_local_dependencies () const;
 
   // Gets the set of links to Task Entries which this entry calls.
-  std::vector<Task_Entry_Link *> & calls ();
+  ACE_Unbounded_Set <Task_Entry_Link *> & calls ();
 
   // Gets the set of links to Task Entries which call this entry.
-  std::vector<Task_Entry_Link *> & callers ();
+  ACE_Unbounded_Set <Task_Entry_Link *> & callers ();
 
   // Gets the set of arrivals in the effective period.
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> &dispatches ();
@@ -278,10 +276,10 @@ private:
   bool has_unresolved_local_dependencies_ {};
 
   // Set of links to Task Entries which this entry calls.
-  std::vector<Task_Entry_Link *> calls_;
+  ACE_Unbounded_Set <Task_Entry_Link *> calls_;
 
   // Set of links to Task Entries which call this entry.
-  std::vector<Task_Entry_Link *> callers_;
+  ACE_Unbounded_Set <Task_Entry_Link *> callers_;
 };
 
 

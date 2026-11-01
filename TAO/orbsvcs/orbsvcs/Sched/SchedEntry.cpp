@@ -13,8 +13,6 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
-#include <algorithm>
-
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
@@ -30,15 +28,17 @@ Task_Entry::~Task_Entry ()
     }
 
   // Iterate through the "calls" set of Task Entry Links and free each one
-  for (Task_Entry_Link * const link : calls_)
+  Task_Entry_Link **link;
+  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (calls_);
+  while (iter.next (link) != 0)
   {
-    if (link != nullptr)
+    iter.advance ();
+    if (link != nullptr && *link != nullptr)
     {
       // remove the link object pointer from the calling entry's
       // "callers" set and destroy the link object
-      std::vector<Task_Entry_Link *> &callers = link->called ().callers_;
-      callers.erase (std::remove (callers.begin (), callers.end (), link), callers.end ());
-      delete link;
+      (*link)->called ().callers_.remove (*link);
+      delete *link;
     }
   }
 }
@@ -130,9 +130,13 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
 {
   // Iterate over the set of dependencies, ensuring none of them has
   // the given dependency type.
-  for (Task_Entry_Link * const link : callers_)
+  for (ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
+       ! iter.done ();
+       iter.advance ())
     {
-      if (link == nullptr || link->dependency_type () == dt)
+      Task_Entry_Link **link;
+      if (iter.next (link) == 0 || link == nullptr || *link == nullptr ||
+          (*link)->dependency_type () == dt)
         return -1;
     }
 
@@ -153,18 +157,21 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
 
   // Iterate over the set of dependencies, merging dispatches of the
   // callers over the enclosing frame size.
-  for (Task_Entry_Link * const link : callers_)
+  for (ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
+       ! iter.done ();
+       iter.advance ())
     {
-      if (link == nullptr)
+      Task_Entry_Link **link;
+      if (iter.next (link) == 0 || link == nullptr || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given
-      if (link->dependency_type () == dt)
+      if ((*link)->dependency_type () == dt)
         {
           // Check for and warn about unresolved remote dependencies
           // in the ONE_WAY call graph.
-          if (link->dependency_type () == RtecBase::ONE_WAY_CALL
-              && link->caller ().has_unresolved_remote_dependencies ()
+          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
+              && (*link)->caller ().has_unresolved_remote_dependencies ()
               && ! this->has_unresolved_remote_dependencies ())
             {
               // Propagate the unresolved remote dependency flag, and
@@ -186,8 +193,8 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
 
           // Check for and warn about unresolved local dependencies in
           // the ONE_WAY call graph.
-          if (link->dependency_type () == RtecBase::ONE_WAY_CALL
-              && link->caller ().has_unresolved_local_dependencies ()
+          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
+              && (*link)->caller ().has_unresolved_local_dependencies ()
               && ! this->has_unresolved_local_dependencies ())
             {
               // Propagate the unresolved local dependency flag, and
@@ -211,9 +218,9 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
           if (merge_frames (dispatch_entries,
                             *this,
                             dispatches_,
-                            link->caller ().dispatches_, effective_period_,
-                            link->caller ().effective_period_,
-                            link->number_of_calls ()) < 0)
+                            (*link)->caller ().dispatches_, effective_period_,
+                            (*link)->caller ().effective_period_,
+                            (*link)->number_of_calls ()) < 0)
             return -1;
         }
     }
@@ -242,18 +249,22 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
 
   u_long frame_size = 1;
 
-  for (Task_Entry_Link * const link : callers_)
+  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> dep_iter (callers_);
+  for (dep_iter.first ();
+       dep_iter.done () == 0;
+       dep_iter.advance ())
     {
-      if (link == nullptr)
+      Task_Entry_Link **link;
+      if (dep_iter.next (link) == 0 || link == nullptr || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given.
-      if (link->dependency_type () == dt)
+      if ((*link)->dependency_type () == dt)
         {
           // Check for and warn about unresolved remote dependencies
           // in the ONE_WAY call graph.
-          if (link->dependency_type () == RtecBase::ONE_WAY_CALL
-              && link->caller ().has_unresolved_remote_dependencies ()
+          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
+              && (*link)->caller ().has_unresolved_remote_dependencies ()
               && ! this->has_unresolved_remote_dependencies ())
             {
               // Propagate the unresolved remote dependency flag, and
@@ -275,8 +286,8 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
 
           // Check for and warn about unresolved local dependencies in
           // the ONE_WAY call graph.
-          if (link->dependency_type () == RtecBase::ONE_WAY_CALL
-              && link->caller ().has_unresolved_local_dependencies ()
+          if ((*link)->dependency_type () == RtecBase::ONE_WAY_CALL
+              && (*link)->caller ().has_unresolved_local_dependencies ()
               && ! this->has_unresolved_local_dependencies ())
             {
               // Propagate the unresolved local dependency flag, and
@@ -296,7 +307,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
             }
 
           frame_size = ACE::minimum_frame_size (frame_size,
-                                                link->caller ().effective_period_);
+                                                (*link)->caller ().effective_period_);
         }
     }
 
@@ -317,20 +328,23 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
   // type, create a Dispatch_Proxy_Iterator for the caller's dispatch
   // set, using the caller's period, the total frame size, and the
   // number of calls: if any of the sets is empty, just return 0;
-  for (Task_Entry_Link * const link : callers_)
+  for (dep_iter.first ();
+       dep_iter.done () == 0;
+       dep_iter.advance ())
     {
-      if (link == nullptr)
+      Task_Entry_Link **link;
+      if (dep_iter.next (link) == 0 || link == nullptr || *link == nullptr)
         return -1;
 
       // The link matches the dependency type given.
-      if (link->dependency_type () == dt)
+      if ((*link)->dependency_type () == dt)
         {
           Dispatch_Proxy_Iterator *proxy_ptr;
           ACE_NEW_RETURN (proxy_ptr,
-                          Dispatch_Proxy_Iterator (link->caller ().dispatches_,
-                                                   link->caller ().effective_period_,
+                          Dispatch_Proxy_Iterator ((*link)->caller ().dispatches_,
+                                                   (*link)->caller ().effective_period_,
                                                    frame_size,
-                                                   link->number_of_calls ()),
+                                                   (*link)->number_of_calls ()),
                           -1);
 
           // If there are no entries in the virtual set, we're done.
