@@ -26,6 +26,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Lock.h"
 #include "tao/ORB_Core.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,7 +57,7 @@ public:
   CORBA::Long initialize_collocated_object (TAO_Stub *stub) override;
 
 protected:
-  static ACE_Lock * create_lock (TAO_SYNCH_MUTEX &l);
+  static std::unique_ptr<ACE_Lock> create_lock (TAO_SYNCH_MUTEX &l);
 
   /// Helper method to find an object bound in the table.
   bool find_object (TAO::ObjectKey &key,
@@ -70,7 +71,7 @@ protected:
 
   bool closed_ {true};
   TAO_SYNCH_MUTEX thread_lock_;
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
 private:
   TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
