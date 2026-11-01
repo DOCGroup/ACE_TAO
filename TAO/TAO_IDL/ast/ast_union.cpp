@@ -236,7 +236,7 @@ AST_Union::default_index ()
 bool
 AST_Union::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = (list.size () == 0);
+  bool self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.

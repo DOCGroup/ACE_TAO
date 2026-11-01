@@ -625,7 +625,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
 
   FE_Utils::T_PARAMLIST_INFO const& t_params =
     *this->ctx_->template_params ();
-  for (size_t i = 0; i < t_params.size (); ++i)
+  for (std::size_t i = 0; i < t_params.size (); ++i)
     {
       FE_Utils::T_Param_Info const& item = t_params[i];
 
@@ -707,7 +707,7 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
         {
           std::string const& head (tmp->local_name ()->get_string ());
 
-          size_t const start = name.find (head) + 2;
+          std::size_t const start = name.find (head) + 2;
 
           std::string const tail = name.substr (start + head.length ());
 

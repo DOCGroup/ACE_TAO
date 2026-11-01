@@ -77,6 +77,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_concrete_type.h"
 #include "utl_scope.h"
+
+#include <cstddef>
 #include <vector>
 
 
@@ -160,7 +162,7 @@ public:
 
   /// Easy Member Access
   ///{
-  virtual AST_Decl *operator[] (size_t const index);
+  virtual AST_Decl *operator[] (std::size_t const index);
   virtual AST_Decl *operator[] (std::string const& name);
   ///}
 

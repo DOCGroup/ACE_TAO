@@ -7,6 +7,7 @@
 
 #include "TAO_IDL_FE_Export.h"
 
+#include <cstddef>
 #include <string>
 
 class AST_Annotation_Appl;
@@ -45,7 +46,7 @@ public:
   void add (AST_Annotation_Appls const &other);
 
   bool empty () const;
-  size_t size () const;
+  std::size_t size () const;
 
   /// Iterate through vector_
   ///{
@@ -58,7 +59,7 @@ public:
   /**
    * Direct access to the AST_Annotation_Appl pointers by index.
    */
-  AST_Annotation_Appl *operator[] (size_t index);
+  AST_Annotation_Appl *operator[] (std::size_t index);
 
   /**
    * Return last AST_Annotation_Appl that applies the AST_Annotation_Decl

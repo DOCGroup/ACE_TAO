@@ -43,7 +43,7 @@ AST_Annotation_Appls::empty () const
   return !vector_.size ();
 }
 
-size_t
+std::size_t
 AST_Annotation_Appls::size () const
 {
   return vector_.size ();
@@ -74,7 +74,7 @@ AST_Annotation_Appls::end () const
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::operator[] (size_t index)
+AST_Annotation_Appls::operator[] (std::size_t index)
 {
   return vector_[index].get ();
 }

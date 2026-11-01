@@ -155,7 +155,7 @@ AST_Sequence::~AST_Sequence () = default;
 bool
 AST_Sequence::in_recursion (std::vector<AST_Type *> &list)
 {
-  if (list.size () == 0) // only structs, unions and valuetypes can be recursive
+  if (list.empty ()) // only structs, unions and valuetypes can be recursive
     return false;
 
   list.push_back (this);

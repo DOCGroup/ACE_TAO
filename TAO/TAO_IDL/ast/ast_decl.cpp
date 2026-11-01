@@ -823,8 +823,8 @@ AST_Decl::version () const
 
       // All forms of repo id should contain two colons, the
       // version coming after the second one.
-      size_t const tail1 = repo_id.find (':');
-      size_t tail2 = std::string::npos;
+      std::size_t const tail1 = repo_id.find (':');
+      std::size_t tail2 = std::string::npos;
 
       if (tail1 != std::string::npos)
         {

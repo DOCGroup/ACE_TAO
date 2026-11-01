@@ -121,7 +121,7 @@ AST_Structure::~AST_Structure ()
 bool
 AST_Structure::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = (list.size () == 0);
+  bool self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.
@@ -587,14 +587,14 @@ bool AST_Structure::annotatable () const
 }
 
 AST_Decl *
-AST_Structure::operator[] (const size_t index)
+AST_Structure::operator[] (std::size_t const index)
 {
-  size_t count = member_count_ <= 0 ? 0 : member_count_;
+  std::size_t count = member_count_ <= 0 ? 0 : member_count_;
   if (index >= count)
     {
       return nullptr;
     }
-  size_t i = 0;
+  std::size_t i = 0;
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
