@@ -5144,7 +5144,7 @@ yyreduce:
             }
 
           FE_Declarator *declarator = new FE_Declarator (
-            scoped_name, FE_Declarator::FD_simple, 0);
+            scoped_name, FE_Declarator::Declarator_Type::Simple, 0);
           AST_Annotation_Member *member = idl_global->gen ()->
             create_annotation_member (
               type, declarator->compose (type_obj), declarator->name ());
@@ -5709,7 +5709,7 @@ yyreduce:
                           1);
           ACE_NEW_RETURN ((yyval.deval),
                           FE_Declarator (sn,
-                                         FE_Declarator::FD_simple,
+                                         FE_Declarator::Declarator_Type::Simple,
                                          0),
                           1);
         }
@@ -5728,7 +5728,7 @@ yyreduce:
                           1);
           ACE_NEW_RETURN ((yyval.deval),
                           FE_Declarator (sn,
-                                         FE_Declarator::FD_complex,
+                                         FE_Declarator::Declarator_Type::Complex,
                                          (yyvsp[0].dcval)),
                           1);
         }

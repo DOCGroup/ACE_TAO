@@ -74,17 +74,17 @@ class TAO_IDL_FE_Export FE_Declarator
 {
 public:
   // Enum to denote types of declarators.
-  enum DeclaratorType
+  enum class Declarator_Type
   {
-    FD_simple,  // Simple declarator
-    FD_complex  // Complex declarator (complex_part field used)
+    Simple,  // Simple declarator
+    Complex  // Complex declarator (complex_part field used)
   };
 
   // Operations.
 
   // Constructor and destructor.
   FE_Declarator (UTL_ScopedName *n,
-                 DeclaratorType dt,
+                 Declarator_Type dt,
                  AST_Decl *cp);
   FE_Declarator (FE_Declarator const &) = delete;
   FE_Declarator (FE_Declarator &&) = delete;
@@ -95,7 +95,7 @@ public:
   // Data Accessors.
   AST_Decl *complex_part () const;
   UTL_ScopedName *name () const;
-  DeclaratorType decl_type () const;
+  Declarator_Type decl_type () const;
 
   // Other Operations.
 
@@ -108,7 +108,7 @@ private:
   // Data.
   AST_Decl *pd_complex_part;       // If a complex declarator
   UTL_ScopedName *pd_name;         // The name if complex
-  DeclaratorType pd_decl_type;     // Whether complex or simple
+  Declarator_Type pd_decl_type;     // Whether complex or simple
 };
 
 #endif           // _FE_DECLARATOR_FE_DECLARATOR_HH

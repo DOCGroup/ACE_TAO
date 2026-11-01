@@ -74,7 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/config-all.h"
 
 FE_Declarator::FE_Declarator (UTL_ScopedName *n,
-                              DeclaratorType dt,
+                              Declarator_Type dt,
                               AST_Decl *cp)
  : pd_complex_part (cp),
    pd_name (n),
@@ -170,7 +170,8 @@ FE_Declarator::compose (AST_Decl *d)
       */
     }
 
-  if (this->pd_decl_type == FD_simple || this->pd_complex_part == nullptr)
+  if (this->pd_decl_type == Declarator_Type::Simple
+      || this->pd_complex_part == nullptr)
     {
       return ct;
     }
@@ -221,7 +222,7 @@ FE_Declarator::name () const
   return this->pd_name;
 }
 
-FE_Declarator::DeclaratorType
+FE_Declarator::Declarator_Type
 FE_Declarator::decl_type () const
 {
   return this->pd_decl_type;
