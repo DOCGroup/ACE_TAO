@@ -51,7 +51,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
   else if (primary_key != nullptr)
     {
       // If we are here, it's a param holder and we must destroy it.
-      this->owns_primary_key_ = true;
+      this->owned_primary_key_.reset (primary_key);
     }
 }
 
@@ -200,10 +200,10 @@ void
 AST_Home::destroy ()
 {
   // If it's a param holder, it was created on the fly.
-  if (owns_primary_key_)
+  if (this->owned_primary_key_ != nullptr)
     {
-      this->pd_primary_key->destroy ();
-      delete this->pd_primary_key;
+      this->owned_primary_key_->destroy ();
+      this->owned_primary_key_.reset ();
       this->pd_primary_key = nullptr;
     }
 

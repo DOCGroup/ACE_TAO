@@ -3,6 +3,8 @@
 
 #include "ast_interface.h"
 
+#include <memory>
+
 class AST_Home;
 class AST_Component;
 class AST_ValueType;
@@ -76,7 +78,7 @@ private:
   AST_Home *pd_base_home;
   AST_Component *pd_managed_component;
   AST_Type *pd_primary_key;
-  bool owns_primary_key_ {};
+  std::unique_ptr<AST_Type> owned_primary_key_;
 };
 
 #endif // _AST_HOME_AST_HOME_HH
