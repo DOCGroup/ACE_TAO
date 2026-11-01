@@ -11,15 +11,20 @@
 class MyMain
 {
 public:
-  MyMain (int argc, ACE_TCHAR* argv[]);
+  MyMain (int argc, ACE_TCHAR *argv[]);
   ~MyMain ();
+
+  MyMain (MyMain const &) = delete;
+  MyMain &operator= (MyMain const &) = delete;
+  MyMain (MyMain &&) = delete;
+  MyMain &operator= (MyMain &&) = delete;
 
   void run ();
 
 private:
   void print_usage ();
-  bool init_server (const ACE_TCHAR* args);
-  bool init_client (const ACE_TCHAR* args);
+  bool init_server (ACE_TCHAR const *args);
+  bool init_client (ACE_TCHAR const *args);
 
   std::unique_ptr<Server_Task> server_task_;
   std::unique_ptr<Client_Task> client_task_;
@@ -31,7 +36,7 @@ private:
 void MyMain::print_usage ()
 {}
 
-bool MyMain::init_server (const ACE_TCHAR* args)
+bool MyMain::init_server (ACE_TCHAR const *args)
 {
   std::string my_args (ACE_TEXT_ALWAYS_CHAR (args));
   // main thread and extra thread for backdoor operations
@@ -70,7 +75,7 @@ bool MyMain::init_server (const ACE_TCHAR* args)
   return true;
 }
 
-bool MyMain::init_client (const ACE_TCHAR* args)
+bool MyMain::init_client (ACE_TCHAR const *args)
 {
   std::string my_args (ACE_TEXT_ALWAYS_CHAR (args));
   int thread_pool = 1;
@@ -84,7 +89,7 @@ bool MyMain::init_client (const ACE_TCHAR* args)
   return true;
 }
 
-MyMain::MyMain (int argc, ACE_TCHAR* argv[])
+MyMain::MyMain (int argc, ACE_TCHAR *argv[])
   : s_init_ (false)
   , shutdown_ (false)
 {
@@ -99,13 +104,13 @@ MyMain::MyMain (int argc, ACE_TCHAR* argv[])
 
     if (ACE_OS::strcasecmp (argv[p], ACE_TEXT ("-s")) == 0)
     {
-      const ACE_TCHAR* s_args = (((p + 1) <= argc) ? argv[p + 1] : 0);
+      ACE_TCHAR const *s_args = (((p + 1) <= argc) ? argv[p + 1] : nullptr);
       s_init_ = this->init_server (s_args);
       p++;
     }
     else if (ACE_OS::strcasecmp (argv[p], ACE_TEXT ("-c")) == 0)
     {
-      const ACE_TCHAR* s_args = (((p + 1) <= argc) ? argv[p + 1] : 0);
+      ACE_TCHAR const *s_args = (((p + 1) <= argc) ? argv[p + 1] : nullptr);
       if (s_init_)
       {
         this->init_client (s_args);
@@ -138,7 +143,7 @@ MyMain::~MyMain ()
   }
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   MyMain my_main (argc, argv);
 

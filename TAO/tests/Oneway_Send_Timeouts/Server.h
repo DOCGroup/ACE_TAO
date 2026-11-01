@@ -14,8 +14,13 @@
 class Server
 {
 public:
-  Server (int argc, ACE_TCHAR* argv[]);
+  Server (int argc, ACE_TCHAR *argv[]);
   ~Server ();
+
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
 
   bool run (bool management);
   void shutdown ();
@@ -23,7 +28,7 @@ public:
   bool init_;
 
 private:
-  bool parse_args (int argc, ACE_TCHAR* argv[]);
+  bool parse_args (int argc, ACE_TCHAR *argv[]);
 
   CORBA::ORB_var orb_;
   CORBA::ORB_var management_orb_;

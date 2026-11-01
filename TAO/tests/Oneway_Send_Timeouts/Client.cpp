@@ -10,7 +10,7 @@
 #include "Client.h"
 #include "TestC.h"
 
-Client::Client (int argc, ACE_TCHAR* argv[])
+Client::Client (int argc, ACE_TCHAR *argv[])
   : init_ (false), one_way_test_ (false)
 {
   if (this->init (argc, argv)) {
@@ -30,7 +30,7 @@ Client::~Client ()
 }
 
 bool
-Client::init (int argc, ACE_TCHAR* argv[])
+Client::init (int argc, ACE_TCHAR *argv[])
 {
   try {
     orb_ = CORBA::ORB_init (argc, argv, "Client");
@@ -132,7 +132,7 @@ Client::init (int argc, ACE_TCHAR* argv[])
     policy_list[1]->destroy ();
     policy_list.length(0);
   }
-  catch( CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex) {
     ACE_ERROR ((LM_ERROR, "(%P|%t) Client::Init> Caught CORBA::Exception %s"
                 , ex._info().c_str()));
     return false;
@@ -142,10 +142,10 @@ Client::init (int argc, ACE_TCHAR* argv[])
 }
 
 bool
-Client::parse_args (int argc, ACE_TCHAR* argv[])
+Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:k:1::f:"), 0);
-  int c;
+  int c {};
   std::string test_ior;
   std::string back_ior;
   std::string flush_strategy ("lf");
@@ -178,13 +178,13 @@ Client::parse_args (int argc, ACE_TCHAR* argv[])
   management_ = Test::_narrow (obj.in ());
 
   if (ACE_OS::strcasecmp ("lf", flush_strategy.c_str()) == 0) {
-    flush_strategy_ = LF;
+    flush_strategy_ = Flushing_Strategy::LF;
   }
   else if (ACE_OS::strcasecmp ("blocking", flush_strategy.c_str()) == 0) {
-    flush_strategy_ = BLOCKING;
+    flush_strategy_ = Flushing_Strategy::BLOCKING;
   }
   else if (ACE_OS::strcasecmp ("reactive", flush_strategy.c_str()) == 0) {
-    flush_strategy_ = REACTIVE;
+    flush_strategy_ = Flushing_Strategy::REACTIVE;
   }
 
   return true;
@@ -220,14 +220,14 @@ Client::run ()
 
       test_obj_->shutdown ();
     }
-    catch( CORBA::Exception& ex) {
+    catch (CORBA::Exception const &ex) {
       management_->unsleep (); // remote side could be asleep
       ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test logic CORBA::Exception %s"
                   , ex._info().c_str()));
       status = false;
     }
   }
-  catch( CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex) {
     ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test shutdown CORBA::Exception %s"
                 , ex._info().c_str()));
     status = false;
@@ -241,7 +241,7 @@ Client::test_oneway_timeout (bool flood)
 {
   bool status = true;
 
-  std::unique_ptr<char[]> tmp (new char [6000000]);
+  std::unique_ptr<char[]> tmp = std::make_unique<char[]> (6000000);
   char* msg = tmp.get();
 
   ACE_OS::memset (msg,'A',5999999);
@@ -260,7 +260,7 @@ Client::test_oneway_timeout (bool flood)
     ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
     test_obj_none_timeout_->dummy_one_way (msg);
 
-    if (flood && flush_strategy_ == BLOCKING) {
+    if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       // block flushing gives a oneway SYNCH_WITH_TRANSPORT semantics
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_NONE.\n"));
     }
@@ -268,8 +268,8 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_NONE\n"));
     }
   }
-  catch (const CORBA::TIMEOUT&) {
-    if (flood && flush_strategy_ == BLOCKING) {
+  catch (CORBA::TIMEOUT const &) {
+    if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected a timeout was received for SYNC_NONE.\n"));
     }
     else {
@@ -294,7 +294,7 @@ Client::test_oneway_timeout (bool flood)
         With flooding=0 we simple re-establish connection. This trick is performed at beginning
         of every test for flush_strategy == BLOCKING.
      */
-    if (flush_strategy_ == BLOCKING) {
+    if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
         management_->unsleep ();
         test_obj_->sleep (0, 0); // rebuild connection and put server thread to sleep
@@ -307,15 +307,15 @@ Client::test_oneway_timeout (bool flood)
 
     test_obj_eager_timeout_->dummy_one_way (msg);
 
-    if (flood && flush_strategy_ == BLOCKING) {
+    if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_EAGER_BUFFERING\n"));
     }
     else {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_EAGER_BUFFERING\n"));
     }
   }
-  catch (const CORBA::TIMEOUT&) {
-    if (flood && flush_strategy_ == BLOCKING) {
+  catch (CORBA::TIMEOUT const &) {
+    if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected a timeout was received for SYNC_EAGER_BUFFERING\n"));
     }
     else {
@@ -330,7 +330,7 @@ Client::test_oneway_timeout (bool flood)
     std::string scope_name ("SYNC_DELAYED_BUFFERING");
     ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
 
-    if (flush_strategy_ == BLOCKING) {
+    if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
         management_->unsleep ();
         test_obj_->sleep (0, 0);
@@ -342,7 +342,7 @@ Client::test_oneway_timeout (bool flood)
 
     test_obj_delayed_timeout_->dummy_one_way (msg);
 
-    if (flood && flush_strategy_ == BLOCKING) {
+    if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_DELAYED_BUFFERING\n"));
     }
     else {
@@ -350,8 +350,8 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_DELAYED_BUFFERING\n"));
     }
   }
-  catch (const CORBA::TIMEOUT&) {
-    if (flood && flush_strategy_ == BLOCKING) {
+  catch (CORBA::TIMEOUT const &) {
+    if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected timeout received for SYNC_DELAYED_BUFFERING\n"));
     }
     else {
@@ -372,7 +372,7 @@ Client::test_oneway_timeout (bool flood)
     std::string scope_name ("SYNC_WITH_TRANSPORT");
     ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
 
-    if (flush_strategy_ == BLOCKING) {
+    if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
         management_->unsleep ();
         test_obj_->sleep (0, 0);
@@ -394,7 +394,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_TRANSPORT\n"));
     }
   }
-  catch (const CORBA::TIMEOUT&) {
+  catch (CORBA::TIMEOUT const &) {
     if (flood) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_TRANSPORT\n"));
     }
@@ -410,7 +410,7 @@ Client::test_oneway_timeout (bool flood)
     std::string scope_name ("SYNC_WITH_SERVER");
     ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
 
-    if (flush_strategy_ == BLOCKING) {
+    if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
         management_->unsleep ();
         test_obj_->sleep (0, 0);
@@ -431,7 +431,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_SERVER\n"));
     }
   }
-  catch (const CORBA::TIMEOUT&) {
+  catch (CORBA::TIMEOUT const &) {
     if (flood) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_SERVER\n"));
     }
@@ -448,7 +448,7 @@ Client::test_oneway_timeout (bool flood)
     std::string scope_name ("SYNC_WITH_TARGET");
     ACE_OS::strncpy (msg, scope_name.c_str(), scope_name.length());
 
-    if (flush_strategy_ == BLOCKING) {
+    if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
         management_->unsleep ();
         test_obj_->sleep (0, 0);
@@ -469,7 +469,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_TARGET\n"));
     }
   }
-  catch (const CORBA::TIMEOUT&) {
+  catch (CORBA::TIMEOUT const &) {
     if (flood) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_TARGET\n"));
     }
@@ -488,7 +488,7 @@ Client::test_oneway_timeout (bool flood)
 }
 
 bool
-Client::flood_connection (ACE_Time_Value& tv)
+Client::flood_connection (ACE_Time_Value &tv)
 {
   // Block flushing currently blocks even on SYNC_DELAYED_BUFFERING
   //  so we can't use it to flood connections.
@@ -513,7 +513,7 @@ Client::flood_connection (ACE_Time_Value& tv)
   policy_list[0]->destroy ();
   policy_list.length(0);
 
-  std::unique_ptr<char[]> tmp (new char [2000000]);
+  std::unique_ptr<char[]> tmp = std::make_unique<char[]> (2000000);
   char* msg = tmp.get();
 
   ACE_OS::memset (msg,'A',1999999);
@@ -529,7 +529,7 @@ Client::flood_connection (ACE_Time_Value& tv)
       don't attempt to flood (unless BLOCK flush accepts SYNC_WITH_TRANSPORT
       semantics).
    */
-  if (flush_strategy_ != BLOCKING)
+  if (flush_strategy_ != Flushing_Strategy::BLOCKING)
     {
       mod_test_obj->dummy_one_way (msg);
 
