@@ -13,6 +13,12 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
+static void
+end_event_loop_handler (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 int
 Handler::open (void *)
 {
@@ -77,7 +83,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   ACE_Service_Config daemon;
 
   // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+  ACE_Sig_Adapter sa (end_event_loop_handler);
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
