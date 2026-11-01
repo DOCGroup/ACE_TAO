@@ -87,9 +87,9 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
       CORBA::Octet *buffer =
         CORBA::OctetSeq::allocbuf (username_size + 1);
 
-      ACE_OS::memcpy (buffer,
-                      username,
-                      username_size + 1);
+      std::memcpy (buffer,
+                   username,
+                   username_size + 1);
 
       req_principal.replace (username_size + 1,
                              username_size + 1,

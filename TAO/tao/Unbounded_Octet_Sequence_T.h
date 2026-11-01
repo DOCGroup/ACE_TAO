@@ -10,7 +10,8 @@
 #include "tao/orbconf.h"
 
 #include "tao/Unbounded_Value_Sequence_T.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 
@@ -214,7 +215,7 @@ public:
       (len == rhs.length()
        && (len == 0
            ? true
-           : ACE_OS::memcmp(&lhs[0], &rhs[0], len) == 0));
+           : std::memcmp (&lhs[0], &rhs[0], len) == 0));
   }
 
   inline bool operator!= (const unbounded_value_sequence & rhs) const
@@ -267,18 +268,18 @@ public:
     tmp.length_ = rhs.length_;
     if (rhs.mb_ == nullptr)
       {
-        ACE_OS::memcpy (tmp.buffer_,
-                        rhs.buffer_,
-                        rhs.length_);
+        std::memcpy (tmp.buffer_,
+                     rhs.buffer_,
+                     rhs.length_);
       }
     else
       {
         size_t offset = 0;
         for (const ACE_Message_Block *i = rhs.mb_; i != nullptr; i = i->cont ())
           {
-            ACE_OS::memcpy (tmp.buffer_ + offset,
-                            i->rd_ptr (),
-                            i->length ());
+            std::memcpy (tmp.buffer_ + offset,
+                         i->rd_ptr (),
+                         i->length ());
 
             offset += i->length ();
           }
@@ -336,7 +337,7 @@ operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CO
 
   const CORBA::Octet * rhs_buff = rhs.get_buffer ();
   const CORBA::Octet * lhs_buff = lhs.get_buffer ();
-  const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
+  const bool result = (std::memcmp (lhs_buff, rhs_buff, rlen) == 0);
 
   return result;
 }
