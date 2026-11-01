@@ -4,14 +4,14 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
-#define SHMSZ 27
+static constexpr int SHMSZ = 27;
 ACE_TCHAR shm_key[] = ACE_TEXT ("/tmp/fooXXXXXX");
 
 static void
 client ()
 {
-  ACE_Shared_Memory *shm_client = new ACE_Shared_Memory_MM (shm_key);
-  char *shm = (char *) shm_client->malloc ();
+  ACE_Shared_Memory_MM shm_client (shm_key);
+  char *shm = static_cast<char *> (shm_client.malloc ());
 
   for (char *s = shm; *s != '\0'; s++)
     putchar (*s);
@@ -23,8 +23,8 @@ client ()
 static void
 server ()
 {
-  ACE_Shared_Memory *shm_server = new ACE_Shared_Memory_MM (shm_key, SHMSZ);
-  char *shm = (char *) shm_server->malloc ();
+  ACE_Shared_Memory_MM shm_server (shm_key, SHMSZ);
+  char *shm = static_cast<char *> (shm_server.malloc ());
   char *s   = shm;
 
   for (char c = 'a'; c <= 'z'; c++)
@@ -36,7 +36,7 @@ server ()
   while (*shm != '*')
     ACE_OS::sleep (1);
 
-  if (shm_server->remove () < 0)
+  if (shm_server.remove () < 0)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("remove")));
   ACE_OS::unlink (shm_key);
 }

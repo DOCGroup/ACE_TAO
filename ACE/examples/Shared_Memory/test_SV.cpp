@@ -2,14 +2,14 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
-#define SHMSZ 27
-#define SHM_KEY (key_t) 5678
+static constexpr int SHMSZ = 27;
+static constexpr key_t SHM_KEY = 5678;
 
 static void
 client ()
 {
   ACE_Shared_Memory_SV shm_client (SHM_KEY, SHMSZ);
-  char *shm = (char *) shm_client.malloc ();
+  char *shm = static_cast<char *> (shm_client.malloc ());
 
   for (char *s = shm; *s != '\0'; s++)
     putchar (*s);
@@ -24,7 +24,7 @@ server ()
   ACE_Shared_Memory_SV shm_server (SHM_KEY,
                                    SHMSZ,
                                    ACE_Shared_Memory_SV::ACE_CREATE);
-  char *shm = (char *) shm_server.malloc ();
+  char *shm = static_cast<char *> (shm_server.malloc ());
   char *s   = shm;
 
   for (char c = 'a'; c <= 'z'; c++)
