@@ -15,15 +15,16 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future_Set)
 
 template <class T>
 ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
-  : delete_queue_ (false)
 {
   if (new_queue)
     this->future_notification_queue_ = new_queue;
   else
     {
-      ACE_NEW (this->future_notification_queue_,
+      ACE_Message_Queue<ACE_SYNCH> *queue = nullptr;
+      ACE_NEW (queue,
                ACE_Message_Queue<ACE_SYNCH>);
-      this->delete_queue_ = true;
+      this->owned_future_notification_queue_.reset (queue);
+      this->future_notification_queue_ = this->owned_future_notification_queue_.get ();
     }
 }
 
@@ -45,9 +46,6 @@ ACE_Future_Set<T>::~ACE_Future_Set ()
       future_holder->item_.detach (this);
       delete future_holder;
     }
-
-  if (this->delete_queue_)
-    delete this->future_notification_queue_;
 }
 
 template <class T> int

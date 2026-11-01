@@ -17,6 +17,7 @@
 #include "ace/Future.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -118,10 +119,10 @@ private:
 
   /// Message queue for notifying the reader thread of <ACE_Futures> which
   /// have been written to by client's writer thread.
-  ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_;
+  std::unique_ptr<ACE_Message_Queue<ACE_SYNCH>> owned_future_notification_queue_;
 
-  /// Keeps track of whether we need to delete the message queue.
-  bool delete_queue_;
+  /// Message queue used for notifications; owned if the unique pointer is set.
+  ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
