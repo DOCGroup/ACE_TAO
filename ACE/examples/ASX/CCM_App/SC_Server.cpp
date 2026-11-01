@@ -8,6 +8,11 @@
 #include "ace/Reactor.h"
 #include "ace/Sig_Adapter.h"
 
+static void end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -51,7 +56,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config loggerd;
   Event_Handler handler;
-  ACE_Sig_Adapter shutdown_handler ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+  ACE_Sig_Adapter shutdown_handler (end_reactor_event_loop);
 
   if (ACE_Event_Handler::register_stdin_handler (&handler,
                                                  ACE_Reactor::instance (),
