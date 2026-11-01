@@ -3,11 +3,11 @@
 
 #include "ace/Log_Msg.h"
 
-const char *ior =
+char const * const ior =
   "corbaloc:iiop:192.3.47/10007/RandomObject";
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -20,14 +20,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // First connection happens here..
       test::_narrow (tmp.in ());
     }
-  catch (const CORBA::TRANSIENT& )
+  catch (CORBA::TRANSIENT const&)
     {
       // This exception is correct.
       ACE_DEBUG ((LM_DEBUG,
                   "_narrow() to non-existent object failed correctly.  Test succeeded.\n"));
       return 0;
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const& ex)
     {
       ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
     }
