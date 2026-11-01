@@ -8,6 +8,8 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_FtRt
 {
@@ -162,7 +164,7 @@ UUID::create (unsigned char *buffer)
   buffer[8] = (unsigned char) ((clockSequence >> 8) & 0x1f);
   buffer[9] = (unsigned char) (clockSequence & 0x1f);
 
-  ACE_OS::memcpy(buffer + 10, &node, 6);
+  std::memcpy (buffer + 10, &node, 6);
 }
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
