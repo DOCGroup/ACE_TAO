@@ -2,7 +2,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -31,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = 0;
   try
@@ -41,9 +41,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior);
 
-      Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var hello = Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -62,19 +62,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_OS::sleep (1);
           hello->shutdown ();
         }
-      catch (const CORBA::TRANSIENT& )
+      catch (CORBA::TRANSIENT const&)
         {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected transient\n"));
           result = 1;
         }
-      catch (const CORBA::COMM_FAILURE& )
+      catch (CORBA::COMM_FAILURE const&)
         {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected comm failure\n"));
         }
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       result = 100;
