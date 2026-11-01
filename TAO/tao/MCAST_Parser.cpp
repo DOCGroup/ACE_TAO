@@ -27,9 +27,9 @@ TAO_MCAST_Parser::~TAO_MCAST_Parser () = default;
 bool
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 {
-  return (ACE_OS::strncmp (ior_string,
-                           ::mcast_prefix,
-                           sizeof (::mcast_prefix) - 1) == 0);
+  return (std::strncmp (ior_string,
+                        ::mcast_prefix,
+                        sizeof (::mcast_prefix) - 1) == 0);
 }
 
 CORBA::Object_ptr
