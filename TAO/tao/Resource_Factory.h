@@ -63,29 +63,29 @@ public:
 
   /// Return a reference to the character representation of the protocol
   /// factories name.
-  const ACE_CString &protocol_name ();
+  const ACE_CString &protocol_name () const;
 
   /// Return a pointer to the protocol factory.
-  TAO_Protocol_Factory *factory ();
+  TAO_Protocol_Factory *factory () const;
 
   /// Set the factory pointer's value.
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
-  TAO_Protocol_Item (const TAO_Protocol_Item&) = delete;
-  void operator= (const TAO_Protocol_Item&) = delete;
-  TAO_Protocol_Item (TAO_Protocol_Item&&) = delete;
-  void operator= (TAO_Protocol_Item&&) = delete;
+  TAO_Protocol_Item (TAO_Protocol_Item const &) = delete;
+  TAO_Protocol_Item &operator= (TAO_Protocol_Item const &) = delete;
+  TAO_Protocol_Item (TAO_Protocol_Item &&) = delete;
+  TAO_Protocol_Item &operator= (TAO_Protocol_Item &&) = delete;
 
 private:
   /// Protocol factory name.
   ACE_CString name_;
 
   /// Pointer to factory object.
-  TAO_Protocol_Factory *factory_;
+  TAO_Protocol_Factory *factory_ {};
 
   /// Whether we own (and therefore have to delete) the factory object.
-  int factory_owner_;
+  bool factory_owner_ {};
 };
 
 // typedefs for containers containing the list of loaded protocol

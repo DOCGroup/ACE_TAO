@@ -6,26 +6,24 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Protocol_Item::TAO_Protocol_Item (ACE_CString const &name)
-  : name_ (name),
-    factory_ (nullptr),
-    factory_owner_ (0)
+  : name_ (name)
 {
 }
 
 TAO_Protocol_Item::~TAO_Protocol_Item ()
 {
-  if (this->factory_owner_ == 1)
+  if (this->factory_owner_)
     delete this->factory_;
 }
 
 const ACE_CString &
-TAO_Protocol_Item::protocol_name ()
+TAO_Protocol_Item::protocol_name () const
 {
   return this->name_;
 }
 
 TAO_Protocol_Factory *
-TAO_Protocol_Item::factory ()
+TAO_Protocol_Item::factory () const
 {
   return this->factory_;
 }
@@ -35,7 +33,7 @@ TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
                             int owner)
 {
   this->factory_ = factory;
-  this->factory_owner_ = owner;
+  this->factory_owner_ = owner == 1;
 }
 
 // **********************************************************************
