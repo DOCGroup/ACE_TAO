@@ -29,28 +29,28 @@ class Logger : public ACE_Log_Msg_Callback
 public:
   // Constructor sets whether we're testing "recursive" callback
   // logging!
-  Logger (int be_recursive = 1);
+  explicit Logger (bool be_recursive = true);
 
   /// Logging callback hook.
   void log (ACE_Log_Record &log_record) override;
 
-  void verbose (int be_verbose);
+  void verbose (bool be_verbose);
 
 private:
   /// Flag for testing verbose logging.
-  int verbose_logging_;
+  bool verbose_logging_ = false;
 
   /// Flag for testing recursive callback logging.
-  int recursive_;
+  bool recursive_;
 };
 
 void
-Logger::verbose (int be_verbose)
+Logger::verbose (bool be_verbose)
 {
   this->verbose_logging_ = be_verbose;
 }
 
-Logger::Logger (int be_recursive)
+Logger::Logger (bool be_recursive)
   : recursive_ (be_recursive)
 {
 }
@@ -58,12 +58,12 @@ Logger::Logger (int be_recursive)
 void
 Logger::log (ACE_Log_Record &log_record)
 {
-  int use_log_msg = 0;
+  bool use_log_msg = false;
 
   if (this->recursive_)
     {
-      this->recursive_ = 0;
-      use_log_msg = 1;
+      this->recursive_ = false;
+      use_log_msg = true;
     }
 
   if (!this->verbose_logging_)
@@ -97,7 +97,7 @@ Logger::log (ACE_Log_Record &log_record)
 
   // Cleanup on the way out.
   if (use_log_msg)
-    this->recursive_ = 1;
+    this->recursive_ = true;
 }
 
 int
@@ -122,7 +122,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Create a callback object and make it "verbose".
   Logger logger;
-  logger.verbose (1);
+  logger.verbose (true);
 
   // Set the callback object.
   ACE_LOG_MSG->msg_callback (&logger);
@@ -145,7 +145,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               "(%t) sixth message\n"));
 
-  logger.verbose (0);
+  logger.verbose (false);
 
   // This message should show up via the Logger callback (not
   // verbosely).
