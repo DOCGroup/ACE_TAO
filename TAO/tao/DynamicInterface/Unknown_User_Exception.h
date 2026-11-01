@@ -48,7 +48,7 @@ namespace CORBA
     UnknownUserException ();
 
     /// Constructor.
-    UnknownUserException (CORBA::Any& exception);
+    explicit UnknownUserException (CORBA::Any& exception);
 
     /// Copy constructor.
     UnknownUserException (UnknownUserException const& e);

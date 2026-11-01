@@ -142,7 +142,7 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder
 {
 public:
   using _var_type = TAO_AMH_DSI_Exception_Holder_var;
-  TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
+  explicit TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
   ~TAO_AMH_DSI_Exception_Holder () override;
   ::CORBA::ValueBase *_copy_value () override;
@@ -207,7 +207,7 @@ public:
   using _ptr_type = TAO_AMH_DSI_Response_Handler_ptr;
   using _var_type = TAO_AMH_DSI_Response_Handler_var;
 
-  TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
+  explicit TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
   ~TAO_AMH_DSI_Response_Handler () override;
 
   virtual void invoke_reply (CORBA::NVList_ptr args,

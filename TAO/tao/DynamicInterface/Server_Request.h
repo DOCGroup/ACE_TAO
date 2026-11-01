@@ -55,7 +55,7 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    ServerRequest (TAO_ServerRequest &orb_server_request);
+    explicit ServerRequest (TAO_ServerRequest &orb_server_request);
 
     /// Destructor.
     ~ServerRequest ();
