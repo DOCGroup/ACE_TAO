@@ -12,6 +12,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
@@ -587,9 +589,9 @@ void
 TAO_Hash_LogRecordStore::check_grammar (char const *grammar)
 {
   // Verify grammar
-  if (ACE_OS::strcmp (grammar, "TCL") != 0 &&
-      ACE_OS::strcmp (grammar, "ETCL") != 0 &&
-      ACE_OS::strcmp (grammar, "EXTENDED_TCL") != 0)
+  if (std::strcmp (grammar, "TCL") != 0 &&
+      std::strcmp (grammar, "ETCL") != 0 &&
+      std::strcmp (grammar, "EXTENDED_TCL") != 0)
     throw DsLogAdmin::InvalidGrammar ();
 }
 

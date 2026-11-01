@@ -14,6 +14,7 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
+#include <cstring>
 #include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -243,7 +244,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                   {
                     member_name = tc->member_name (i);
 
-                    if (ACE_OS::strcmp (name, member_name) == 0)
+                    if (std::strcmp (name, member_name) == 0)
                       {
                         break;
                       }
@@ -915,7 +916,7 @@ TAO_Log_Constraint_Visitor::visit_twiddle (
           TAO_ETCL_Literal_Constraint right;
           pop_queue_front (this->queue_, right);
           CORBA::Boolean result =
-            (ACE_OS::strstr (static_cast<char const *> (left),
+            (std::strstr (static_cast<char const *> (left),
                              static_cast<char const *> (right)) != nullptr);
           this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
           return_value = 0;
