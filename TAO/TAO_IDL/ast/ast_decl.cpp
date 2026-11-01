@@ -877,15 +877,6 @@ AST_Decl::version (std::string const& value)
     }
 }
 
-void
-AST_Decl::version (char *value)
-{
-  // The checked-in generated lexer still passes an owned C string.
-  std::string version_value (value);
-  delete [] value;
-  this->version (version_value);
-}
-
 bool
 AST_Decl::anonymous () const
 {

@@ -266,7 +266,6 @@ public:
 
   std::string const& version () const;
   void version (std::string const& value);
-  void version (char *value);
   // Accessors for the version_ member.
 
   bool anonymous () const;
