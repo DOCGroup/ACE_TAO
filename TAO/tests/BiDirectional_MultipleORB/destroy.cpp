@@ -19,8 +19,8 @@
 int
 test_with_bidir_poa (int argc,
                      ACE_TCHAR **argv,
-                     const char *orb_name,
-                     int destroy_orb)
+                     char const *orb_name,
+                     bool destroy_orb)
 {
   try
     {
@@ -72,7 +72,7 @@ test_with_bidir_poa (int argc,
           orb->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised");
     }
@@ -87,10 +87,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   for (int i=0; i<10; i++)
   {
-    result = test_with_bidir_poa (argc, argv, "poa_1", 1);
+    result = test_with_bidir_poa (argc, argv, "poa_1", true);
     ACE_ASSERT (result == 0);
 
-    result = test_with_bidir_poa (argc, argv, "poa_2", 1);
+    result = test_with_bidir_poa (argc, argv, "poa_2", true);
     ACE_ASSERT (result == 0);
   }
   ACE_DEBUG ((LM_DEBUG, "Completed OK\n"));
