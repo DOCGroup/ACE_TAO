@@ -133,12 +133,13 @@ class TAO_ESF_RefCountedRef
 public:
   explicit TAO_ESF_RefCountedRef (COUNTED *counted);
   ~TAO_ESF_RefCountedRef ();
-private:
+
   TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef const &) = delete;
   TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef &&) = delete;
-  TAO_ESF_RefCountedRef& operator= (TAO_ESF_RefCountedRef const &) = delete;
-  TAO_ESF_RefCountedRef& operator= (TAO_ESF_RefCountedRef &&) = delete;
+  TAO_ESF_RefCountedRef &operator= (TAO_ESF_RefCountedRef const &) = delete;
+  TAO_ESF_RefCountedRef &operator= (TAO_ESF_RefCountedRef &&) = delete;
 
+private:
   COUNTED *counted_;
 };
 

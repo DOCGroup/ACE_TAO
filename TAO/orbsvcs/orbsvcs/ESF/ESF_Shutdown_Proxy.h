@@ -27,6 +27,11 @@ class TAO_ESF_Shutdown_Proxy : public TAO_ESF_Worker<PROXY>
 public:
   TAO_ESF_Shutdown_Proxy () = default;
 
+  TAO_ESF_Shutdown_Proxy (TAO_ESF_Shutdown_Proxy const &) = delete;
+  TAO_ESF_Shutdown_Proxy (TAO_ESF_Shutdown_Proxy &&) = delete;
+  TAO_ESF_Shutdown_Proxy &operator= (TAO_ESF_Shutdown_Proxy const &) = delete;
+  TAO_ESF_Shutdown_Proxy &operator= (TAO_ESF_Shutdown_Proxy &&) = delete;
+
   void work (PROXY *proxy) override;
 };
 

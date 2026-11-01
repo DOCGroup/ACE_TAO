@@ -62,6 +62,11 @@ public:
   /// destructor
   ~TAO_ESF_Peer_Admin () override = default;
 
+  TAO_ESF_Peer_Admin (TAO_ESF_Peer_Admin const &) = delete;
+  TAO_ESF_Peer_Admin (TAO_ESF_Peer_Admin &&) = delete;
+  TAO_ESF_Peer_Admin &operator= (TAO_ESF_Peer_Admin const &) = delete;
+  TAO_ESF_Peer_Admin &operator= (TAO_ESF_Peer_Admin &&) = delete;
+
   /**
    * A <peer> has connected, this is invoked when the peer's client
    * has invoked the connect_xxx_yyy() method.
