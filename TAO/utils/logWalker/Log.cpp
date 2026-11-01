@@ -8,21 +8,11 @@
 
 #include "ace/Mem_Map.h"
 
+#include <memory>
+
 Log::Log (Session &session)
   : session_ (session),
-    dump_target_ (0),
-    history_ (),
-    timestamp_ (),
-    time_ (0,0),
-    line_ (0),
-    info_ (0),
-    offset_ (0),
-    hostproc_ (0),
-    thr_ (0)
-{
-}
-
-Log::~Log ()
+    time_ (0, 0)
 {
 }
 
@@ -51,21 +41,19 @@ Log::process_file (const ACE_TCHAR *filename, const char *alias)
   size_t linelen = 0;
   char *text;
   size_t maxline = 1000;
-  char *buffer = new char[maxline];
+  std::unique_ptr<char[]> buffer = std::make_unique<char[]> (maxline);
   this->offset_ = 1;
   while ((text = ACE_OS::strchr(base,'\n')) != 0)
     {
       linelen = text - base;
       if (linelen >= maxline)
         {
-          delete [] buffer;
-          buffer = 0;
           maxline = linelen + 100;
-          buffer = new char[maxline];
+          buffer = std::make_unique<char[]> (maxline);
         }
-      ACE_OS::strncpy(buffer,base,linelen);
-      buffer[linelen] = 0;
-      this->line_ = buffer;
+      ACE_OS::strncpy (buffer.get (), base, linelen);
+      buffer[linelen] = '\0';
+      this->line_ = buffer.get ();
       if (linelen > 0)
         this->parse_line ();
       base = text+1;
@@ -74,8 +62,6 @@ Log::process_file (const ACE_TCHAR *filename, const char *alias)
       if (remainder < 1)
         break;
     }
-
-  delete [] buffer;
 
   mapped_file.close();
 
