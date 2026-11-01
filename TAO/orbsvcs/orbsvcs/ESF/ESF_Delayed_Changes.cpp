@@ -19,6 +19,22 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace
+{
+  template <typename COMMAND, typename... ARGS>
+  std::unique_ptr<ACE_Command_Base> make_esf_command (ARGS &&... args)
+  {
+    try
+      {
+        return std::make_unique<COMMAND> (std::forward<ARGS> (args)...);
+      }
+    catch (std::bad_alloc const &)
+      {
+        throw CORBA::NO_MEMORY ();
+      }
+  }
+}
+
 // ****************************************************************
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
@@ -94,12 +110,12 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> int
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     execute_delayed_operations ()
 {
-  while (!this->command_queue_.empty ())
+  while (!this->command_queue_.is_empty ())
     {
-      std::unique_ptr<ACE_Command_Base> command =
-        std::move (this->command_queue_.front ());
-      this->command_queue_.pop_front ();
-      command->execute ();
+      ACE_Command_Base *command = nullptr;
+      this->command_queue_.dequeue_head (command);
+      std::unique_ptr<ACE_Command_Base> command_guard (command);
+      command_guard->execute ();
     }
   return 0;
 }
@@ -111,25 +127,23 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
   ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
 
-  proxy->_incr_refcnt ();
   if (this->busy_count_ == 0)
     {
       // We can add the object immediately
+      proxy->_incr_refcnt ();
       this->connected_i (proxy);
     }
   else
     {
-      try
-        {
-          std::unique_ptr<ACE_Command_Base> command =
-            std::make_unique<Connected_Command> (this, proxy);
-          this->command_queue_.push_back (std::move (command));
-        }
-      catch (std::bad_alloc const &)
+      std::unique_ptr<ACE_Command_Base> command =
+        make_esf_command<Connected_Command> (this, proxy);
+      proxy->_incr_refcnt ();
+      if (this->command_queue_.enqueue_tail (command.get ()) == -1)
         {
           proxy->_decr_refcnt ();
           throw CORBA::NO_MEMORY ();
         }
+      command.release ();
       this->write_delay_count_++;
     }
 }
@@ -141,25 +155,23 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
   ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());
 
-  proxy->_incr_refcnt ();
   if (this->busy_count_ == 0)
     {
       // We can reconnect the object immediately
+      proxy->_incr_refcnt ();
       this->reconnected_i (proxy);
     }
   else
     {
-      try
-        {
-          std::unique_ptr<ACE_Command_Base> command =
-            std::make_unique<Reconnected_Command> (this, proxy);
-          this->command_queue_.push_back (std::move (command));
-        }
-      catch (std::bad_alloc const &)
+      std::unique_ptr<ACE_Command_Base> command =
+        make_esf_command<Reconnected_Command> (this, proxy);
+      proxy->_incr_refcnt ();
+      if (this->command_queue_.enqueue_tail (command.get ()) == -1)
         {
           proxy->_decr_refcnt ();
           throw CORBA::NO_MEMORY ();
         }
+      command.release ();
       this->write_delay_count_++;
     }
 }
@@ -178,16 +190,13 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
     }
   else
     {
-      try
-        {
-          std::unique_ptr<ACE_Command_Base> command =
-            std::make_unique<Disconnected_Command> (this, proxy);
-          this->command_queue_.push_back (std::move (command));
-        }
-      catch (std::bad_alloc const &)
+      std::unique_ptr<ACE_Command_Base> command =
+        make_esf_command<Disconnected_Command> (this, proxy);
+      if (this->command_queue_.enqueue_tail (command.get ()) == -1)
         {
           throw CORBA::NO_MEMORY ();
         }
+      command.release ();
       this->write_delay_count_++;
     }
 }
@@ -205,16 +214,13 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::shutdown ()
     }
   else
     {
-      try
-        {
-          std::unique_ptr<ACE_Command_Base> command =
-            std::make_unique<Shutdown_Command> (this);
-          this->command_queue_.push_back (std::move (command));
-        }
-      catch (std::bad_alloc const &)
+      std::unique_ptr<ACE_Command_Base> command =
+        make_esf_command<Shutdown_Command> (this);
+      if (this->command_queue_.enqueue_tail (command.get ()) == -1)
         {
           throw CORBA::NO_MEMORY ();
         }
+      command.release ();
       this->write_delay_count_++;
     }
 }
