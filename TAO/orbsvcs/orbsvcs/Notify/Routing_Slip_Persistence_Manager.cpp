@@ -5,6 +5,7 @@
 #include "ace/Truncate.h"
 
 #include <cstring>
+#include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,10 +28,6 @@ Routing_Slip_Persistence_Manager::~Routing_Slip_Persistence_Manager()
   this->first_event_block_ = nullptr;
   delete this->first_routing_slip_block_;
   this->first_routing_slip_block_ = nullptr;
-  delete this->event_mb_;
-  this->event_mb_ = nullptr;
-  delete this->routing_slip_mb_;
-  this->routing_slip_mb_ = nullptr;
 }
 
 void
@@ -86,10 +83,8 @@ Routing_Slip_Persistence_Manager::reload(
   bool result = false;
   if (this->event_mb_ != nullptr && this->routing_slip_mb_ != nullptr)
   {
-    event = this->event_mb_;
-    this->event_mb_ = nullptr;
-    routing_slip = this->routing_slip_mb_;
-    this->routing_slip_mb_ = nullptr;
+    event = this->event_mb_.release ();
+    routing_slip = this->routing_slip_mb_.release ();
     result = true;
   }
   else
@@ -119,15 +114,16 @@ Routing_Slip_Persistence_Manager::load(
 
   this->serial_number_ = expected_serial_number;
 
-  ACE_NEW_NORETURN(this->routing_slip_mb_, ACE_Message_Block(block_size));
-  ACE_NEW_NORETURN(this->event_mb_, ACE_Message_Block(block_size));
+  this->routing_slip_mb_.reset (
+    new (std::nothrow) ACE_Message_Block (block_size));
+  this->event_mb_.reset (new (std::nothrow) ACE_Message_Block (block_size));
   if (this->event_mb_ != nullptr && this->routing_slip_mb_ != nullptr)
   {
     if (this->reload_chain(
           this->first_routing_slip_block_,
           this->routing_slip_header_,
           this->allocated_routing_slip_blocks_,
-          this->routing_slip_mb_,
+          this->routing_slip_mb_.get (),
           expected_serial_number))
     {
       if (this->routing_slip_header_.event_block != 0)
@@ -138,7 +134,7 @@ Routing_Slip_Persistence_Manager::load(
           this->first_event_block_,
           this->event_header_,
           this->allocated_event_blocks_,
-          this->event_mb_,
+          this->event_mb_.get (),
           0);
       }
       else if (block_number == ROUTING_SLIP_ROOT_BLOCK_NUMBER)
@@ -157,10 +153,8 @@ Routing_Slip_Persistence_Manager::load(
   }
   if (! result)
   {
-    delete this->routing_slip_mb_;
-    this->routing_slip_mb_ = nullptr;
-    delete this->event_mb_;
-    this->event_mb_ = nullptr;
+    this->routing_slip_mb_.reset ();
+    this->event_mb_.reset ();
   }
   return result;
 }
