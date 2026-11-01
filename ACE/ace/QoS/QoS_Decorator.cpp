@@ -6,10 +6,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_QOS_DECORATOR)
 
 // Constructor.
-ACE_QoS_Decorator_Base::ACE_QoS_Decorator_Base ()
-{}
-
-// Constructor.
 ACE_QoS_Decorator_Base::ACE_QoS_Decorator_Base (ACE_Event_Handler
                                                 *event_handler)
   : event_handler_ (event_handler)
@@ -17,9 +13,7 @@ ACE_QoS_Decorator_Base::ACE_QoS_Decorator_Base (ACE_Event_Handler
 }
 
 // Destructor.
-ACE_QoS_Decorator_Base::~ACE_QoS_Decorator_Base ()
-{
-}
+ACE_QoS_Decorator_Base::~ACE_QoS_Decorator_Base () = default;
 
 // Forward the call to ACE_Event_Handler component.
 ACE_HANDLE
@@ -43,29 +37,25 @@ ACE_QoS_Decorator_Base::handle_qos (ACE_HANDLE fd)
 }
 
 // Constructor.
-ACE_QoS_Decorator::ACE_QoS_Decorator ()
-{}
-
-// Constructor.
 ACE_QoS_Decorator::ACE_QoS_Decorator (ACE_Event_Handler *event_handler,
                                       ACE_QoS_Session *qos_session,
                                       ACE_Reactor *reactor)
   : qos_session_ (qos_session),
     reactor_ (reactor)
 {
-  ACE_NEW (this->decorator_base_,
+  ACE_QoS_Decorator_Base *decorator_base = nullptr;
+  ACE_NEW (decorator_base,
            ACE_QoS_Decorator_Base (event_handler));
+  this->decorator_base_.reset (decorator_base);
 
-  ACE_NEW (this->qos_event_handler_,
-           ACE_QoS_Event_Handler (this->decorator_base_));
+  ACE_QoS_Event_Handler *qos_event_handler = nullptr;
+  ACE_NEW (qos_event_handler,
+           ACE_QoS_Event_Handler (this->decorator_base_.get ()));
+  this->qos_event_handler_.reset (qos_event_handler);
 }
 
 // Destructor.
-ACE_QoS_Decorator::~ACE_QoS_Decorator ()
-{
-  delete this->decorator_base_;
-  delete this->qos_event_handler_;
-}
+ACE_QoS_Decorator::~ACE_QoS_Decorator () = default;
 
 // Implements the undecorated functionality. This is sufficient for
 // GQoS. RAPI needs additional QoS decoration. This is done by the
@@ -106,15 +96,10 @@ ACE_QoS_Decorator::init ()
   this->qos_event_handler_->qos_session (this->qos_session_);
 
   // Register the QoS Event Handler with the Reactor.
-  return this->reactor_->register_handler (this->qos_event_handler_,
+  return this->reactor_->register_handler (this->qos_event_handler_.get (),
                                            ACE_Event_Handler::READ_MASK);
 #endif
   return 0;
-}
-
-// Constructor.
-ACE_QoS_Event_Handler::ACE_QoS_Event_Handler ()
-{
 }
 
 // Constructor.
@@ -125,9 +110,7 @@ ACE_QoS_Event_Handler::ACE_QoS_Event_Handler (ACE_QoS_Decorator_Base
 }
 
 // Destructor.
-ACE_QoS_Event_Handler::~ACE_QoS_Event_Handler ()
-{
-}
+ACE_QoS_Event_Handler::~ACE_QoS_Event_Handler () = default;
 
 // Set the QoS session.
 void
