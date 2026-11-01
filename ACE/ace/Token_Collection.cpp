@@ -60,7 +60,7 @@ ACE_Token_Collection::is_member (const ACE_TCHAR *token_name)
   return collection_.find (name, temp) == -1 ? 0 : temp;
 }
 
-int
+bool
 ACE_Token_Collection::is_member (const ACE_Token_Proxy &token)
 {
   ACE_TRACE ("ACE_Token_Collection::is_member");

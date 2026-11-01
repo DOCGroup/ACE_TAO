@@ -95,10 +95,9 @@ public:
 
   /**
    * Is the specified token in the collection?
-   * 1, yes.
-   * 0, no.
+   * Returns true when the specified token is in the collection.
    */
-  int is_member (const ACE_Token_Proxy &token);
+  bool is_member (const ACE_Token_Proxy &token);
 
 // = Collective operation semantics.
 

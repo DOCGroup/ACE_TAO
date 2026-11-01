@@ -894,13 +894,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
     {
       if ((ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK)
            || ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-          && this->wait_set_.rd_mask_.is_set (handle) == 0)
+          && !this->wait_set_.rd_mask_.is_set (handle))
         return -1;
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK)
-          && this->wait_set_.wr_mask_.is_set (handle) == 0)
+          && !this->wait_set_.wr_mask_.is_set (handle))
         return -1;
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK)
-          && this->wait_set_.ex_mask_.is_set (handle) == 0)
+          && !this->wait_set_.ex_mask_.is_set (handle))
         return -1;
     }
 

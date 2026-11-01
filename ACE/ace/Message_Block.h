@@ -252,7 +252,7 @@ public:
   void msg_type (ACE_Message_Type type);
 
   /// Find out what type of message this is.
-  int is_data_msg () const;
+  bool is_data_msg () const;
 
   /// Find out what class of message this is (there are two classes,
   /// @c normal messages and @c high-priority messages).
