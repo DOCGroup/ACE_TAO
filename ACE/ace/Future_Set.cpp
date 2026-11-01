@@ -48,7 +48,7 @@ ACE_Future_Set<T>::~ACE_Future_Set ()
     }
 }
 
-template <class T> int
+template <class T> bool
 ACE_Future_Set<T>::is_empty () const
 {
   return (((ACE_Future_Set<T>*)this)->future_map_.current_size () == 0 );

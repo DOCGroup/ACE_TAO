@@ -120,11 +120,11 @@ public:
   /// Get the current number of method objects in the queue.
   size_t method_count () const;
 
-  /// Returns 1 if the queue is empty, 0 otherwise.
-  int is_empty () const;
+  /// Returns true if the queue is empty, false otherwise.
+  bool is_empty () const;
 
-  /// Returns 1 if the queue is full, 0 otherwise.
-  int is_full () const;
+  /// Returns true if the queue is full, false otherwise.
+  bool is_full () const;
 
   /// Dump the state of an request.
   void dump () const;

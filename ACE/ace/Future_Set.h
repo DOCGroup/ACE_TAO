@@ -55,8 +55,8 @@ public:
   ~ACE_Future_Set ();
 
   /**
-   * Return 1 if their are no ACE_Future objects left on its queue and
-   * 0 otherwise.
+   * Return true if there are no ACE_Future objects left on its queue and
+   * false otherwise.
    *
    * When an ACE_Future_Set has no ACE_Future>subjects to observe it is
    * empty. The ACE_Future_Set is in the empty state when either the caller(s)
@@ -64,7 +64,7 @@ public:
    * ACE_Future_Set via the ACE_Future_Set::next_readable() method,
    * or when the ACE_Future_Set has not been assigned any subjects.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
   /**
    * Enqueus the given ACE_Future into this objects queue when it is
