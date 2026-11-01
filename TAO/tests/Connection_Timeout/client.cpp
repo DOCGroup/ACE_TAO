@@ -4,11 +4,11 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
-const ACE_TCHAR *ior =
+ACE_TCHAR const *ior =
   ACE_TEXT("corbaloc:iiop:192.3.47/10007/RandomObject");
 
 ACE_Profile_Timer profile_timer;
-TimeBase::TimeT timeout_period = 1000000;
+constexpr TimeBase::TimeT timeout_period = 1000000;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -46,7 +46,7 @@ test_timeout (CORBA::Object_ptr object)
     {
       // First connection happens here..
       Test::Hello_var hello =
-        Test::Hello::_narrow(object);
+        Test::Hello::_narrow (object);
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -64,13 +64,13 @@ test_timeout (CORBA::Object_ptr object)
 
       hello->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Stop the timer
       profile_timer.stop ();
 
       // Get the elampsed time
-      ACE_Profile_Timer::ACE_Elapsed_Time el;
+      ACE_Profile_Timer::ACE_Elapsed_Time el {};
       profile_timer.elapsed_time (el);
 
       // Give a 30% error margin for handling exceptions etc. It is a
@@ -94,7 +94,7 @@ test_timeout (CORBA::Object_ptr object)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int retval = 1;
 
@@ -107,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("PolicyCurrent");
@@ -138,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
