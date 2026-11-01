@@ -5,6 +5,7 @@
 #include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
 
 int
@@ -16,7 +17,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        argv[0]),
                       1);
 
-  ACE_TCHAR *readback = new ACE_TCHAR[ACE_OS::strlen (argv[1]) + 1];
+  ssize_t len =
+    ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (argv[2]) + 1);
+  std::unique_ptr<ACE_TCHAR[]> readback =
+    std::make_unique<ACE_TCHAR[]> (ACE_OS::strlen (argv[2]) + 1);
 
   ACE_FILE_Info fileinfo;
   ACE_FILE_IO cli_file;
@@ -33,9 +37,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        "connect",
                        argv[1]),
                       -1);
-
-  ssize_t len =
-    ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (argv[2]) + 1);
 
   if (cli_file.send (argv[2], len) != len)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -71,14 +72,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        "%p\n",
                        "seek"),
                       1);
-  if (cli_file.recv (readback, len) != len)
+  if (cli_file.recv (readback.get (), len) != len)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "recv"),
                       1);
 
   ACE_OS::printf ("read back :%s\n",
-                  ACE_TEXT_ALWAYS_CHAR (readback));
+                  ACE_TEXT_ALWAYS_CHAR (readback.get ()));
 
   if (cli_file.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
