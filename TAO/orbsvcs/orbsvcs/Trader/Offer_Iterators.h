@@ -46,9 +46,9 @@ class TAO_Offer_Iterator
   //   interface.
   // END SPEC
 public:
-  TAO_Offer_Iterator (const TAO_Property_Filter& property_filter);
+  explicit TAO_Offer_Iterator (TAO_Property_Filter const& property_filter);
 
-  ~TAO_Offer_Iterator () override;
+  ~TAO_Offer_Iterator () override = default;
 
   /**
    * BEGIN SPEC
@@ -119,9 +119,9 @@ class TAO_Query_Only_Offer_Iterator
   //
 {
 public:
-  TAO_Query_Only_Offer_Iterator (const TAO_Property_Filter& pfilter);
+  explicit TAO_Query_Only_Offer_Iterator (TAO_Property_Filter const& pfilter);
 
-  ~TAO_Query_Only_Offer_Iterator () override;
+  ~TAO_Query_Only_Offer_Iterator () override = default;
 
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
@@ -170,7 +170,7 @@ class TAO_Offer_Iterator_Collection :
 public:
   // = Constructors.
 
-  TAO_Offer_Iterator_Collection ();
+  TAO_Offer_Iterator_Collection () = default;
 
   ~TAO_Offer_Iterator_Collection () override;
 
@@ -221,9 +221,9 @@ class TAO_Offer_Id_Iterator :
 {
  public:
   /// No op constructor
-  TAO_Offer_Id_Iterator();
+  TAO_Offer_Id_Iterator () = default;
 
-  ~TAO_Offer_Id_Iterator () override;
+  ~TAO_Offer_Id_Iterator () override = default;
 
   /**
    * The max_left operation returns the number of offer identifiers

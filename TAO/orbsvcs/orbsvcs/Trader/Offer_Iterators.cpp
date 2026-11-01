@@ -2,12 +2,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Offer_Iterator::TAO_Offer_Iterator (const TAO_Property_Filter& pfilter)
+TAO_Offer_Iterator::TAO_Offer_Iterator (TAO_Property_Filter const& pfilter)
   : pfilter_ (pfilter)
-{
-}
-
-TAO_Offer_Iterator::~TAO_Offer_Iterator ()
 {
 }
 
@@ -26,18 +22,14 @@ TAO_Offer_Iterator::destroy ()
 }
 
 TAO_Query_Only_Offer_Iterator::
-TAO_Query_Only_Offer_Iterator(const TAO_Property_Filter& pfilter)
+TAO_Query_Only_Offer_Iterator (TAO_Property_Filter const& pfilter)
   : TAO_Offer_Iterator (pfilter)
-{
-}
-
-TAO_Query_Only_Offer_Iterator::~TAO_Query_Only_Offer_Iterator()
 {
 }
 
 void
 TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
-                                          const CosTrading::Offer* offer)
+                                          CosTrading::Offer const* offer)
 {
   this->offers_.push_back (const_cast<CosTrading::Offer*> (offer));
   CORBA::string_free (offer_id);
@@ -68,10 +60,6 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
     }
 
   return offers_in_sequence != 0;
-}
-
-TAO_Offer_Iterator_Collection::TAO_Offer_Iterator_Collection ()
-{
 }
 
 TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection ()
@@ -180,12 +168,6 @@ TAO_Offer_Iterator_Collection::max_left ()
 {
   throw CosTrading::UnknownMaxLeft();
 }
-
-TAO_Offer_Id_Iterator::TAO_Offer_Id_Iterator ()
-{
-}
-
-TAO_Offer_Id_Iterator::~TAO_Offer_Id_Iterator () = default;
 
 CORBA::ULong
 TAO_Offer_Id_Iterator::max_left ()
