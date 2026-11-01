@@ -33,7 +33,7 @@ Hello::get_string ()
                       "(%P|%t) OK: A remote call has been made \n"));
         }
       else if (this->orb_->orb_core ()->optimize_collocation_objects () &&
-               this->orb_->orb_core ()->use_global_collocation () == 0)
+               !this->orb_->orb_core ()->use_global_collocation ())
         {
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();

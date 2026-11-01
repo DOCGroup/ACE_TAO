@@ -4,7 +4,7 @@
 
 #include "ace/Manual_Event.h"
 
-Server_Task::Server_Task (const ACE_TCHAR *output,
+Server_Task::Server_Task (ACE_TCHAR const *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
@@ -21,7 +21,7 @@ Server_Task::svc ()
  try
    {
      CORBA::Object_var poa_object =
-       this->sorb_->resolve_initial_references("RootPOA");
+       this->sorb_->resolve_initial_references ("RootPOA");
 
      PortableServer::POA_var root_poa =
        PortableServer::POA::_narrow (poa_object.in ());
@@ -40,7 +40,7 @@ Server_Task::svc ()
                             ACE_Thread::self ()),
                      1);
 
-     PortableServer::ServantBase_var owner_transfer(hello_impl);
+     PortableServer::ServantBase_var owner_transfer (hello_impl);
 
      PortableServer::ObjectId_var id =
        root_poa->activate_object (hello_impl);
@@ -54,9 +54,9 @@ Server_Task::svc ()
        this->sorb_->object_to_string (hello.in ());
 
      // Output the IOR to the <this->output_>
-     FILE *output_file= ACE_OS::fopen (this->output_,
+     FILE *output_file = ACE_OS::fopen (this->output_,
                                        "w");
-     if (output_file == 0)
+     if (output_file == nullptr)
        ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot open output file for writing IOR: %s",
                           this->output_),
@@ -74,7 +74,7 @@ Server_Task::svc ()
 
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
    }
- catch (const CORBA::Exception& ex)
+ catch (CORBA::Exception const& ex)
    {
      ex._tao_print_exception ("Exception caught:");
      return 1;
