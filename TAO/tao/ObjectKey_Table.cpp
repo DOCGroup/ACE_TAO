@@ -6,6 +6,8 @@
 # include "tao/ObjectKey_Table.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
@@ -25,7 +27,7 @@ TAO::Less_Than_ObjectKey::operator () (TAO::ObjectKey const &lhs,
 
   CORBA::Octet const * const rhs_buff = rhs.get_buffer ();
   CORBA::Octet const * const lhs_buff = lhs.get_buffer ();
-  bool const result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) < 0);
+  bool const result = (std::memcmp (lhs_buff, rhs_buff, rlen) < 0);
 
   return result;
 }
