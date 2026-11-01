@@ -21,7 +21,7 @@ namespace
     // Search for "corbaloc:" alone, without the protocol.  This code
     // should be protocol neutral.
     const char corbaloc[] = "corbaloc:";
-    char *pos = ACE_OS::strstr (ior, corbaloc);
+    char *pos = std::strstr (ior, corbaloc);
     pos = std::strchr (pos + sizeof (corbaloc), ':');
     pos = std::strchr (pos + 1, delimiter);
 
