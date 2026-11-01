@@ -15,10 +15,7 @@
 
 TAO::Storable_File_Guard::
 Storable_File_Guard (bool redundant, bool use_backup)
-  : fl_(nullptr)
-  , redundant_(redundant)
-  , closed_(1)
-  , rwflags_(0)
+  : redundant_(redundant)
   , use_backup_(use_backup)
 {
 }
@@ -98,7 +95,7 @@ TAO::Storable_File_Guard::reload ()
 
       // now that the file is successfully opened and locked it must be
       // unlocked/closed before we leave this class
-      closed_ = 0;
+      closed_ = false;
 
       if ( ! (rwflags_ & mode_create) )
         {
@@ -127,7 +124,7 @@ TAO::Storable_File_Guard::reload ()
 
       // now that the file is successfully opened
       // unlocked/closed before we leave this class
-      closed_ = 0;
+      closed_ = false;
 
       if (file_has_data && ! this->is_loaded_from_stream ())
         {
@@ -185,7 +182,7 @@ TAO::Storable_File_Guard::release ()
           fl_->funlock (0, 0, 0);
         }
       fl_->close ();
-      closed_ = 1;
+      closed_ = true;
     }
 
 }

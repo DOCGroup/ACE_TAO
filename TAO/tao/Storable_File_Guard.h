@@ -99,7 +99,7 @@ namespace TAO
     virtual Storable_Base * create_stream (const char * mode) = 0;
 
     /// The pointer to the actual file I/O (bridge pattern)
-    Storable_Base *fl_;
+    Storable_Base *fl_ {};
 
   private:
     // Return 0 if successful.
@@ -108,10 +108,10 @@ namespace TAO
     bool redundant_;
 
     /// A flag to keep us from trying to close things more than once.
-    int closed_;
+    bool closed_ {true};
 
     /// The flags that we were opened with
-    int rwflags_;
+    int rwflags_ {};
 
     /// A flag indicating if backup/restore should be performed
     bool use_backup_;
