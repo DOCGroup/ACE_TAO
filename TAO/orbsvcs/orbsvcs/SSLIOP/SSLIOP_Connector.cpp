@@ -16,6 +16,7 @@
 #include "tao/Transport_Connector.h"
 #include "tao/Blocked_Connect_Strategy.h"
 #include "tao/Wait_Strategy.h"
+#include <cstring>
 #include "tao/Profile_Transport_Resolver.h"
 #include <memory>
 #include "ace/os_include/os_netdb.h"
@@ -272,8 +273,8 @@ TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
    }
 
    // Determine the (first in a list of possibly > 1) endpoint address
-   char const *comma_pos = ACE_OS::strchr (endpoint,',');
-   char const *slash_pos = ACE_OS::strchr (endpoint,'/');
+   char const *comma_pos = std::strchr (endpoint,',');
+   char const *slash_pos = std::strchr (endpoint,'/');
    if (comma_pos == nullptr && slash_pos == nullptr)
    {
        if (TAO_debug_level)
@@ -283,7 +284,7 @@ TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
                         ACE_TEXT("supplied string contains no comma or slash: %s\n"),
                         endpoint));
        }
-       len = ACE_OS::strlen (endpoint);
+       len = std::strlen (endpoint);
    }
    else if (comma_pos == nullptr || comma_pos > slash_pos)
    {
@@ -318,17 +319,17 @@ TAO::SSLIOP::Connector::check_prefix (char const *endpoint)
 
   char const *protocol[] = { "ssliop", "sslioploc" };
 
-  size_t first_slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t first_slot = std::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
+  size_t len0 = std::strlen (protocol[0]);
+  size_t len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
-  if (first_slot == len0 && ACE_OS::strncmp (endpoint, protocol[0], len0) == 0)
+  if (first_slot == len0 && std::strncmp (endpoint, protocol[0], len0) == 0)
     return 0;
 
-  if (first_slot == len1 && ACE_OS::strncmp (endpoint, protocol[1], len1) == 0)
+  if (first_slot == len1 && std::strncmp (endpoint, protocol[1], len1) == 0)
     return 0;
 
   // Failure: not an SSLIOP IOR

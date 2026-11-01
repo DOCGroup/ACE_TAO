@@ -17,6 +17,8 @@
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Transport::Transport (
@@ -287,7 +289,7 @@ TAO::SSLIOP::Transport::get_listen_point (
   // remove the scopeid from the information being sent.
   char const *cp_scope = nullptr;
   if (local_addr.get_type () == PF_INET6 &&
-        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != nullptr)
+        (cp_scope = std::strchr (local_interface.in (), '%')) != nullptr)
     {
       CORBA::ULong len = cp_scope - local_interface.in ();
       local_interface[len] = '\0';

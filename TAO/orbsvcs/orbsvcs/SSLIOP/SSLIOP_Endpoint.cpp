@@ -3,10 +3,11 @@
 #include "tao/IIOP_Endpoint.h"
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
 #include "tao/debug.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Endpoint.inl"
@@ -104,9 +105,9 @@ int
 TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
   size_t actual_len =
-    ACE_OS::strlen (this->iiop_endpoint_->host ()) // chars in host name
+    std::strlen (this->iiop_endpoint_->host ()) // chars in host name
     + sizeof (':')                                 // delimiter
-    + ACE_OS::strlen ("65536")                     // max port
+    + std::strlen ("65536")                        // max port
     + sizeof ('\0');
 
   if (length < actual_len)
@@ -160,8 +161,8 @@ TAO_SSLIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
   if (this->iiop_endpoint () == nullptr || endpoint->iiop_endpoint () == nullptr)
     return false;
 
-  if (ACE_OS::strcmp (this->iiop_endpoint ()->host (),
-                      endpoint->iiop_endpoint ()->host ()) != 0)
+  if (std::strcmp (this->iiop_endpoint ()->host (),
+                   endpoint->iiop_endpoint ()->host ()) != 0)
     return false;
 
   return true;
@@ -328,8 +329,8 @@ TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint
   if (this->iiop_endpoint() == nullptr || endpoint->iiop_endpoint() == nullptr)
     return false;
 
-  if ((ACE_OS::strcmp (this->iiop_endpoint()->host (),
-                       endpoint->iiop_endpoint()->host ()) != 0))
+  if ((std::strcmp (this->iiop_endpoint()->host (),
+                    endpoint->iiop_endpoint()->host ()) != 0))
     return false;
 
   return true;
