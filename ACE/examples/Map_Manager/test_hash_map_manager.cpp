@@ -7,7 +7,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_assert.h"
 
-const int MAX_KEY_LEN = 1000;
+constexpr int MAX_KEY_LEN = 1000;
 
 using MAP_MANAGER = ACE_Hash_Map_Manager<ACE_TString, ACE_TString, ACE_SYNCH_RW_MUTEX>;
 
@@ -39,7 +39,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       MAP_MANAGER::ITERATOR iterator (hash);
 
-      for (MAP_MANAGER::ENTRY *entry = 0;
+      for (MAP_MANAGER::ENTRY *entry {};
            iterator.next (entry) != 0;
            iterator.advance ())
         ACE_DEBUG ((LM_DEBUG, "%s %s\n",
