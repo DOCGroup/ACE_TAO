@@ -399,21 +399,14 @@ DRV_cpp_init ()
 }
 
 int
-DRV_sweep_dirs (char const *rel_path,
-                char const *base_path)
+DRV_sweep_dirs (std::string const& rel_path,
+                std::string const& base_path)
 {
-  // Zero rel_path means we're not using this option, and
-  // so we become a no-op.
-  if (rel_path == nullptr)
-    {
-      return 0;
-    }
-
-  if (ACE_OS::chdir (rel_path) == -1)
+  if (ACE_OS::chdir (rel_path.c_str ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DRV_sweep_dirs: chdir %C failed\n",
-                         rel_path),
+                         rel_path.c_str ()),
                         -1);
     }
 
@@ -476,12 +469,12 @@ DRV_sweep_dirs (char const *rel_path,
               std::string fname (bname);
               fname += "/";
               fname += lname;
-              DRV_push_file (fname.c_str ());
+              DRV_push_file (fname);
             }
 
           break;
         case S_IFDIR: // Subdirectory.
-          DRV_sweep_dirs (lname.c_str (), bname.c_str ());
+          DRV_sweep_dirs (lname, bname);
           break;
         case S_IFLNK: // Either a file link or directory link.
         default: // Some other type of file (PIPE/FIFO/device).
@@ -495,7 +488,7 @@ DRV_sweep_dirs (char const *rel_path,
       ACE_ERROR_RETURN ((LM_ERROR,
                          "DRV_sweep_dirs: chdir "
                          ".. (from %C) failed\n",
-                         rel_path),
+                         rel_path.c_str ()),
                         -1);
     }
 
@@ -698,7 +691,7 @@ DRV_cpp_post_init ()
   std::optional<std::string> const& recursion_start =
     idl_global->recursion_start ();
 
-  if (recursion_start && DRV_sweep_dirs (recursion_start->c_str (), "") == -1)
+  if (recursion_start && DRV_sweep_dirs (*recursion_start, {}) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "DRV_cpp_post_init: DRV_sweep_dirs (%C) failed\n",
@@ -820,8 +813,9 @@ namespace
   // "#include's in the stubs and
   // skeletons.
   void
-  DRV_check_for_include (char const *buf)
+  DRV_check_for_include (std::string const& line)
   {
+    char const *buf = line.c_str ();
     if (!DRV_find_include_filename (buf))
       {
         return;
@@ -967,7 +961,7 @@ DRV_get_orb_idl_includes ()
     {
       // Find the included .pidl files in orb.idl and add them to the
       // included IDL file list.
-      DRV_check_for_include (drv_line.c_str ());
+      DRV_check_for_include (drv_line);
     }
 
   ACE_OS::fclose (fp);
@@ -1039,7 +1033,7 @@ DRV_copy_input (FILE *fin,
       // ...". If so, we would like to separate the "file name" and
       // keep that in the idl_global. We need them to produce
       // "#include's in the stubs and skeletons.
-      DRV_check_for_include (drv_line.c_str ());
+      DRV_check_for_include (drv_line);
     }
 
   // Close the temporary file.
@@ -1184,7 +1178,7 @@ DRV_pre_proc (char const *myfile)
     {
       while (DRV_get_line (file))
         {
-          DRV_check_for_include (drv_line.c_str ());
+          DRV_check_for_include (drv_line);
         }
     }
   ACE_OS::fclose (file);

@@ -86,6 +86,6 @@ extern void DRV_cpp_new_location (std::string const& new_loc);
 extern void DRV_get_orb_idl_includes ();
 
 // Not used by all backends.
-extern void DRV_push_file (char const * s);
+extern void DRV_push_file (std::string const& s);
 
 #endif           // _DRV_EXTERN_DRV_EXTERN_HH

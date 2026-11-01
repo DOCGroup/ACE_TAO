@@ -86,7 +86,7 @@ void process_long_option(long ac, char **av, long &i);
 
 // Push a file into the list of files to be processed
 void
-DRV_push_file (char const *s)
+DRV_push_file (std::string const& s)
 {
   DRV_files.emplace_back (s);
 }
