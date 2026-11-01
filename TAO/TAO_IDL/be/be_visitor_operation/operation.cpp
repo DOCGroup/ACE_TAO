@@ -51,17 +51,17 @@ be_visitor_operation::void_return_type (be_type *bt)
   return 0;
 }
 
-int
+bool
 be_visitor_operation::has_param_type (be_operation *node,
                                       AST_Argument::Direction dir)
 {
-  return (node->count_arguments_with_direction (dir) != 0);
+  return node->count_arguments_with_direction (dir) != 0;
 }
 
-int
+bool
 be_visitor_operation::is_amh_exception_holder (be_interface *node)
 {
-  int is_an_amh_exception_holder = 0;
+  bool is_an_amh_exception_holder = false;
 
   if (node->local_name ().substr (0, 4) == "AMH_")
     {
@@ -72,7 +72,7 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
           && full_name.substr (last_E) == "ExceptionHolder")
         {
           //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder\n"));
-          is_an_amh_exception_holder = 1;
+          is_an_amh_exception_holder = true;
         }
     }
 

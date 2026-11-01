@@ -70,7 +70,7 @@ public:
   int visit_typedef (be_typedef *node) override;
 
  protected:
-    int is_amh_rh_node (be_interface *node);
+    bool is_amh_rh_node (be_interface *node);
 
     static void add_abstract_op_args (AST_Operation *old_op,
                                       be_operation &new_op);

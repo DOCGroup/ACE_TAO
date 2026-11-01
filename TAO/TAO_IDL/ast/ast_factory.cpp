@@ -117,7 +117,7 @@ AST_Factory::argument_count ()
 }
 
 // Return if any argument or the return type is a <native> type.
-int
+bool
 AST_Factory::has_native ()
 {
   this->compute_argument_attr ();
@@ -188,7 +188,7 @@ AST_Factory::compute_argument_attr ()
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
-                  this->has_native_ = 1;
+                  this->has_native_ = true;
                 }
             }
         }

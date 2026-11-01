@@ -184,7 +184,7 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
 
 
 // Return if any argument or the return type is a <native> type.
-int
+bool
 AST_Operation::has_native ()
 {
   this->compute_argument_attr ();
@@ -262,7 +262,7 @@ AST_Operation::compute_argument_attr ()
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
-                  this->has_native_ = 1;
+                  this->has_native_ = true;
                 }
             }
         }
@@ -272,7 +272,7 @@ AST_Operation::compute_argument_attr ()
 
   if (type->node_type () == AST_Decl::NT_native)
     {
-      this->has_native_ = 1;
+      this->has_native_ = true;
     }
 
   return 0;

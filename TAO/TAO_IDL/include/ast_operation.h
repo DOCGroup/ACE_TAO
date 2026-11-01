@@ -129,7 +129,7 @@ public:
    */
   int count_arguments_with_direction (int direction_mask);
 
-  virtual int has_native ();
+  virtual bool has_native ();
   // Any of the arguments or the return value is a <native> type.
   // This is important because in that case no code should be
   // generated for the stubs.
@@ -171,7 +171,7 @@ protected:
   bool has_in_arguments_ {};
   // True if any arguments are IN or INOUT
 
-  int has_native_ {};
+  bool has_native_ {};
   // Is any argument of type native.
 
   // Operations.

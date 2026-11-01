@@ -107,7 +107,7 @@ be_visitor_interface::visit_scope (be_scope *node)
   return 0;
 }
 
-int
+bool
 be_visitor_interface::is_amh_rh_node (be_interface *node)
 {
    //If, is implied-IDL
@@ -117,11 +117,11 @@ be_visitor_interface::is_amh_rh_node (be_interface *node)
       if (node->local_name ().substr (0, 3) == "AMH")
         {
           // then it is an AMH node.
-          return 1;
+          return true;
         }
     }
 
-  return 0;
+  return false;
 }
 
 void

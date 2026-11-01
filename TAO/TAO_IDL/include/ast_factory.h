@@ -90,7 +90,7 @@ public:
   virtual int argument_count ();
   // Return the count of members.
 
-  virtual int has_native ();
+  virtual bool has_native ();
   // Any of the arguments or the return value is a <native> type.
   // This is important because in that case no code should be
   // generated for the stubs.
@@ -121,7 +121,7 @@ protected:
   int argument_count_ {-1};
   // Number of arguments.
 
-  int has_native_ {};
+  bool has_native_ {};
   // Is any argument of type native.
 
 private:

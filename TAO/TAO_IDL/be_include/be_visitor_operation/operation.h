@@ -46,12 +46,11 @@ public:
   virtual int void_return_type (be_type *);
 
   /// does any of the argument node have the specified direction
-  virtual int has_param_type (be_operation *,
-                              AST_Argument::Direction);
+  virtual bool has_param_type (be_operation *,
+                               AST_Argument::Direction);
 
   /// Special generation of throw_spec if it is an AMH ExceptionHolder
-  /// 0:false, 1:true
-  virtual int is_amh_exception_holder (be_interface *node);
+  virtual bool is_amh_exception_holder (be_interface *node);
 
   /// helper that generates code for raising an exception
   virtual int gen_raise_exception (std::string const& exception_name,
