@@ -14,7 +14,7 @@ class ServerInterceptor
   ServerInterceptor &operator= (ServerInterceptor const &) = delete;
   ServerInterceptor &operator= (ServerInterceptor &&) = delete;
 
-  ServerInterceptor (IOP::CodecFactory_var);
+  explicit ServerInterceptor (IOP::CodecFactory_var);
 
   ~ServerInterceptor () override = default;
 

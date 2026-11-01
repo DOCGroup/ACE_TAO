@@ -16,7 +16,7 @@ class ClientInterceptor:
   ClientInterceptor &operator= (ClientInterceptor const &) = delete;
   ClientInterceptor &operator= (ClientInterceptor &&) = delete;
 
-  ClientInterceptor (IOP::CodecFactory_var) ;
+  explicit ClientInterceptor (IOP::CodecFactory_var);
 
   ~ClientInterceptor () override = default;
 
