@@ -10,6 +10,8 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -120,7 +122,7 @@ CORBA::AbstractBase::_is_a (const char *type_id)
         }
     }
 
-  return (ACE_OS::strcmp (type_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0);
+  return (std::strcmp (type_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0);
 }
 
 const char *

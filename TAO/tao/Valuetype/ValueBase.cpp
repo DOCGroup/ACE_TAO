@@ -13,7 +13,7 @@
 #include "tao/debug.h"
 #include "tao/SystemException.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/ValueBase.inl"
@@ -528,7 +528,7 @@ CORBA::ValueBase::_tao_validate_box_type (TAO_InputCDR &strm,
           return false;
         }
 
-      if (!ACE_OS::strcmp (id.c_str(), repo_id_expected))
+      if (!std::strcmp (id.c_str(), repo_id_expected))
       {  // Repository ids matched as expected
         return true;
       }
@@ -1264,7 +1264,7 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
         pos, mapped_id.c_str ()));
     }
 
-    if (ACE_OS::strcmp (mapped_id.c_str (), id.c_str ()) != 0)
+    if (std::strcmp (mapped_id.c_str (), id.c_str ()) != 0)
       {
         if (TAO_debug_level > 0)
           {
@@ -1353,7 +1353,7 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
         ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %@=%C\n"),
         pos, mapped_url.c_str ()));
     }
-    if (ACE_OS::strcmp (mapped_url.c_str (), codebase_url.c_str ()) != 0)
+    if (std::strcmp (mapped_url.c_str (), codebase_url.c_str ()) != 0)
       {
         if (TAO_debug_level > 0)
           {
