@@ -1,5 +1,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
+#include <memory>
 
 void foo ();
 
@@ -13,9 +14,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
      thing after the singleton has been created:
   */
   // Listing 2 code/ch03
-  ACE_OSTREAM_TYPE *output =
-    (ACE_OSTREAM_TYPE *) new ofstream ("ostream.output.test");
-  ACE_LOG_MSG->msg_ostream (output, 1);
+  std::unique_ptr<ofstream> output = std::make_unique<ofstream> ("ostream.output.test");
+  ACE_LOG_MSG->msg_ostream (output.get (), 1);
+  output.release ();
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
   // Listing 2

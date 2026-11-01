@@ -1,5 +1,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/streams.h"
+#include <memory>
 
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
@@ -8,8 +9,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
 
   ACE_TRACE ("main");
 
-  ACE_OSTREAM_TYPE *output =
-        (ACE_OSTREAM_TYPE *) new ofstream ("ostream.output.test");
+  std::unique_ptr<ofstream> output = std::make_unique<ofstream> ("ostream.output.test");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%IThis will go to STDERR\n")));
 
@@ -19,14 +19,14 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
   ACE_DEBUG
     ((LM_DEBUG, ACE_TEXT ("%IThis goes to STDERR & syslog\n")));
 
-  ACE_LOG_MSG->msg_ostream (output, 0);
+  ACE_LOG_MSG->msg_ostream (output.get (), 0);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%IThis will go to STDERR, ")
               ACE_TEXT ("syslog & an ostream\n")));
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
-  delete output;
+  output.reset ();
 
   return 0;
 }

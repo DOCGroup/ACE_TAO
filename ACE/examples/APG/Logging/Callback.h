@@ -9,7 +9,8 @@
 class Callback : public ACE_Log_Msg_Callback
 {
 public:
-  void log (ACE_Log_Record &log_record) {
+  void log (ACE_Log_Record &log_record) override
+  {
 #  if defined (ACE_LACKS_IOSTREAM_TOTALLY)
     log_record.print (ACE_TEXT (""), 0, stderr);
     log_record.print (ACE_TEXT (""), ACE_Log_Msg::VERBOSE, stderr);

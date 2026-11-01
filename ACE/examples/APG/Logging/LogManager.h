@@ -3,6 +3,7 @@
 #include "ace/Singleton.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
+#include <memory>
 
 #ifndef LOG_MANAGER_H
 #define LOG_MANAGER_H
@@ -11,8 +12,12 @@
 class LogManager
 {
 public:
-  LogManager ();
-  ~LogManager ();
+  LogManager () = default;
+  ~LogManager () = default;
+  LogManager (const LogManager &) = delete;
+  LogManager (LogManager &&) = delete;
+  LogManager &operator= (const LogManager &) = delete;
+  LogManager &operator= (LogManager &&) = delete;
 
   void redirectToDaemon
     (const ACE_TCHAR *prog_name = ACE_TEXT (""));
@@ -26,24 +31,13 @@ public:
 
   // Exclude 1
 private:
-  ofstream *log_stream_;
-  ACE_OSTREAM_TYPE *output_stream_;
+  std::unique_ptr<ofstream> log_stream_;
+  ACE_OSTREAM_TYPE *output_stream_ {};
   // Exclude 1
 };
 // Listing 1
 
 // Listing 2 code/ch03
-LogManager::LogManager ()
-  : log_stream_ (0), output_stream_ (0)
-{ }
-
-LogManager::~LogManager ()
-{
-  if (log_stream_)
-    log_stream_->close ();
-  delete log_stream_;
-}
-
 void LogManager::redirectToSyslog (const ACE_TCHAR *prog_name)
 {
   ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::SYSLOG, prog_name);
@@ -66,9 +60,9 @@ void LogManager::redirectToOStream (ACE_OSTREAM_TYPE *output)
 
 void LogManager::redirectToFile (const char *filename)
 {
-  log_stream_ = new ofstream ();
+  log_stream_ = std::make_unique<ofstream> ();
   log_stream_->open (filename, ios::out | ios::app);
-  this->redirectToOStream ((ACE_OSTREAM_TYPE *)log_stream_);
+  this->redirectToOStream (log_stream_.get ());
 }
 
 void LogManager::redirectToStderr ()
@@ -83,7 +77,7 @@ LogManager::redirectToCallback (ACE_Log_Msg_Callback * callback)
 {
   ACE_Log_Msg_Callback *previous =
     ACE_LOG_MSG->msg_callback (callback);
-  if (callback == 0)
+  if (callback == nullptr)
     ACE_LOG_MSG->clr_flags (ACE_Log_Msg::MSG_CALLBACK);
   else
     ACE_LOG_MSG->set_flags (ACE_Log_Msg::MSG_CALLBACK);
