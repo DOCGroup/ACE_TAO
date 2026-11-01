@@ -706,66 +706,48 @@ idl_store_pragma (char *buf)
     }
   else if (std::strncmp (buf + 8, "version", 7) == 0)
     {
-      char *tmp = buf + 16;
-
-      while (*tmp == ' ' || *tmp == '\t')
-        {
-          ++tmp;
-        }
-
-      char *number = std::strchr (tmp, ' ');
-
-      if (number == nullptr)
-        {
-          number = std::strchr (tmp, '\t');
-        }
+      std::string pragma_value (buf + 16);
+      size_t const name_start = pragma_value.find_first_not_of (" \t");
+      pragma_value.erase (0, name_start);
+      size_t const separator = pragma_value.find_first_of (" \t");
 
       // Most likely this means there is only a version number
       // without an identifier to apply it to.
-      if (number == nullptr)
+      if (separator == std::string::npos)
         {
           char const *msg = "no identifier or scoped name";
           idl_global->err ()->version_syntax_error (msg);
           return;
         }
 
-      // Used later to trim the type string.
-      ptrdiff_t const cutoff = number - tmp;
-
-      while (*number == ' ' || *number == '\t')
-        {
-          ++number;
-        }
-
-      size_t len = std::strlen (number);
+      std::string const scoped_name (pragma_value.substr (0, separator));
+      size_t const version_start = pragma_value.find_first_not_of (" \t",
+                                                                   separator);
+      std::string version = version_start == std::string::npos
+        ? std::string ()
+        : pragma_value.substr (version_start);
 
       // For some reason, the SunCC preprocessor adds a trailing space, which
       // messes with idl_valid_version() below, so we check and remove.
-      while (len != 0 && number[len - 1] == ' ')
+      while (!version.empty () && version.back () == ' ')
         {
-          number[len - 1] = '\0';
-          len = std::strlen (number);
+          version.pop_back ();
         }
 
-      // Trim the type string after trimming the number string.
-      tmp[cutoff] = '\0';
-
-      // This call adds a proper null terminator to tmp, so no need to
-      // do it here.
-      AST_Decl *d = idl_find_node (tmp);
+      AST_Decl *d = idl_find_node (scoped_name.c_str ());
 
       if (d == nullptr)
         {
           return;
         }
 
-      if (!idl_valid_version (number))
+      if (!idl_valid_version (version.c_str ()))
         {
-          idl_global->err ()->version_number_error (number);
+          idl_global->err ()->version_number_error (version.c_str ());
           return;
         }
 
-      d->version (std::string (number));
+      d->version (version);
     }
   else if (std::strncmp (buf + 8, "ident", 5) == 0)
     {
