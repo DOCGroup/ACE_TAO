@@ -17,9 +17,11 @@
 
 #include <cstddef>
 #include <deque>
+#include <memory>
 #include <optional>
 #include <string>
 
+class AST_Decl;
 class be_interface;
 class be_valuetype;
 class be_module;
@@ -27,6 +29,11 @@ class be_interface;
 class be_interface_fwd;
 class AST_PredefinedType;
 class AST_Generator;
+
+struct BE_AST_Decl_Deleter
+{
+  void operator() (AST_Decl *decl) const;
+};
 
 // Defines a class containing all back end global data.
 
@@ -1223,13 +1230,13 @@ private:
   be_interface *ccmobject_ {};
 
   /// Storage for the messaging exceptions holder's virtual scope.
-  be_module *messaging_ {};
+  std::unique_ptr<be_module, BE_AST_Decl_Deleter> messaging_;
 
   /// Storage for exception holders' base class node.
-  be_valuetype *messaging_exceptionholder_ {};
+  std::unique_ptr<be_valuetype, BE_AST_Decl_Deleter> messaging_exceptionholder_;
 
   /// Storage for the reply handlers' base class node.
-  be_interface *messaging_replyhandler_ {};
+  std::unique_ptr<be_interface, BE_AST_Decl_Deleter> messaging_replyhandler_;
 
   /// Separate files for generated Any operators?
   bool gen_anyop_files_ {};

@@ -36,6 +36,16 @@
 
 TAO_IDL_BE_Export BE_GlobalData *be_global = nullptr;
 
+void
+BE_AST_Decl_Deleter::operator() (AST_Decl *decl) const
+{
+  if (decl != nullptr)
+    {
+      decl->destroy ();
+      delete decl;
+    }
+}
+
 BE_GlobalData::BE_GlobalData ()
   : core_versioning_begin_ (core_versioned_ns_begin),
     core_versioning_end_ (core_versioned_ns_end),
@@ -1837,26 +1847,9 @@ BE_GlobalData::destroy ()
   this->anyop_output_dir_.clear ();
   this->exec_output_dir_.clear ();
 
-  if (nullptr != this->messaging_)
-    {
-      this->messaging_->destroy ();
-      delete this->messaging_;
-      this->messaging_ = nullptr;
-    }
-
-  if (nullptr != this->messaging_exceptionholder_)
-    {
-      this->messaging_exceptionholder_->destroy ();
-      delete this->messaging_exceptionholder_;
-      this->messaging_exceptionholder_ = nullptr;
-    }
-
-  if (nullptr != this->messaging_replyhandler_)
-    {
-      this->messaging_replyhandler_->destroy ();
-      delete this->messaging_replyhandler_;
-      this->messaging_replyhandler_ = nullptr;
-    }
+  this->messaging_.reset ();
+  this->messaging_exceptionholder_.reset ();
+  this->messaging_replyhandler_.reset ();
 
   if (nullptr != tao_cg)
     {
@@ -1937,14 +1930,16 @@ BE_GlobalData::messaging ()
                                       nullptr),
                       nullptr);
 
-      ACE_NEW_RETURN (this->messaging_,
+      be_module *messaging = nullptr;
+      ACE_NEW_RETURN (messaging,
                       be_module (sn),
                       nullptr);
+      this->messaging_.reset (messaging);
 
       this->messaging_->set_name (sn);
     }
 
-  return this->messaging_;
+  return this->messaging_.get ();
 }
 
 be_valuetype *
@@ -1980,7 +1975,8 @@ BE_GlobalData::messaging_exceptionholder ()
 
       full_name->nconc (local_name);
 
-      ACE_NEW_RETURN (this->messaging_exceptionholder_,
+      be_valuetype *exceptionholder = nullptr;
+      ACE_NEW_RETURN (exceptionholder,
                       be_valuetype (full_name,
                                     nullptr,
                                     0,
@@ -1994,6 +1990,7 @@ BE_GlobalData::messaging_exceptionholder ()
                                     0,
                                     0),
                       nullptr);
+      this->messaging_exceptionholder_.reset (exceptionholder);
 
       this->messaging_exceptionholder_->set_name (full_name);
 
@@ -2009,7 +2006,7 @@ BE_GlobalData::messaging_exceptionholder ()
       this->messaging_exceptionholder_->set_defined_in (msg);
     }
 
-  return this->messaging_exceptionholder_;
+  return this->messaging_exceptionholder_.get ();
 }
 
 be_interface *
@@ -2047,7 +2044,8 @@ BE_GlobalData::messaging_replyhandler ()
 
       full_name->nconc (local_name);
 
-      ACE_NEW_RETURN (this->messaging_replyhandler_,
+      be_interface *replyhandler = nullptr;
+      ACE_NEW_RETURN (replyhandler,
                       be_interface (full_name,
                                     nullptr,  // inherited interfaces
                                     0,  // number of inherited interfaces
@@ -2056,6 +2054,7 @@ BE_GlobalData::messaging_replyhandler ()
                                     0,  // not local
                                     0), // not abstract
                       nullptr);
+      this->messaging_replyhandler_.reset (replyhandler);
 
       this->messaging_replyhandler_->set_name (full_name);
       this->messaging_replyhandler_->set_prefix_with_typeprefix ("omg.org");
@@ -2067,7 +2066,7 @@ BE_GlobalData::messaging_replyhandler ()
       this->messaging_replyhandler_->set_defined_in (msg);
     }
 
-  return this->messaging_replyhandler_;
+  return this->messaging_replyhandler_.get ();
 }
 
 bool
