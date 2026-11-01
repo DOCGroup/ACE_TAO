@@ -463,35 +463,6 @@ be_valuetype::gen_helper_header ()
 }
 
 int
-be_valuetype::gen_helper_inline ()
-{
-  TAO_OutStream *os = tao_cg->client_inline ();
-
-  // There is a problem, here. Looks like the if defined __ACE_INLINE
-  // is not getting generated... Actually this is a much bigger
-  // problem. Just hacking  it up for the timebeing..
-
-  TAO_INSERT_COMMENT (os);
-
-  *os << "#if defined (__ACE_INLINE__)" << be_nl_2
-      << be_global->core_versioning_begin () << be_nl
-      << "namespace CORBA" << be_nl
-      << "{"
-      << be_idt_nl
-      << "extern " << be_global->stub_export_macro () << " void add_ref ("
-      << this->full_name () << " *);" << be_nl
-      << "extern " << be_global->stub_export_macro () << " void remove_ref ("
-      << this->full_name () << " *);"
-      <<  be_uidt_nl
-      << "}" << be_nl_2
-      << be_global->core_versioning_end () << be_nl
-      << "#endif /*__ACE_INLINE__*/";
-
-  return 0;
-}
-
-
-int
 be_valuetype::gen_helper_stubs ()
 {
   TAO_OutStream *os = tao_cg->client_stubs ();
@@ -712,43 +683,4 @@ be_valuetype::traverse_supports_list_graphs (
   return this->traverse_inheritance_graph (wrapper,
                                            os,
                                            abstract_paths_only);
-}
-
-int
-be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
-                                                   TAO_OutStream *os)
-{
-  AST_Type *supported = this->supports_concrete ();
-
-  if (supported == nullptr)
-    {
-      return 0;
-    }
-
-  be_interface *concrete =
-    dynamic_cast<be_interface*> (supported);
-
-  // Make sure the queues are empty.
-  this->insert_queue.clear ();
-  this->del_queue.clear ();
-
-  // Insert the supported concrete interface in the queue.
-  this->insert_queue.push_back (concrete);
-
-  be_code_emitter_wrapper wrapper (gen);
-
-  return this->traverse_inheritance_graph (wrapper,
-                                           os);
-}
-
-int
-be_valuetype::abstract_supports_helper (be_interface *,
-                                        be_interface *base,
-                                        TAO_OutStream *os)
-{
-  *os << "," << be_nl
-      << "public virtual "
-      << base->name ();
-
-  return 0;
 }

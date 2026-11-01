@@ -35,9 +35,6 @@ public:
   /// Generate the typecode description.
   virtual int gen_typecode ();
 
-  /// Return typecode size.
-  virtual long tc_size ();
-
   /// Cleanup.
   void destroy () override;
 

@@ -213,19 +213,6 @@ be_map::create_name (be_typedef *node)
   return 0;
 }
 
-// Add this be_sequence to the locally defined types in this scope
-AST_Map *
-be_map::fe_add_map (AST_Map *t)
-{
-  if (t == nullptr)
-    {
-      return nullptr;
-    }
-
-  this->add_to_local_types (t);
-  return t;
-}
-
 // Overridden method
 be_decl *
 be_map::decl ()

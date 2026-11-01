@@ -64,9 +64,6 @@ public:
   /// the typedef node, else we generate a name for ourselves.
   int create_name (be_typedef *node);
 
-  // Scope management functions.
-  virtual AST_Map *fe_add_map (AST_Map *);
-
   /// Overridden method on the be_scope class.
   be_decl *decl () override;
 

@@ -41,9 +41,6 @@ public:
   /// Destructor.
   ~be_scope () override;
 
-  /// To access the protected base class method fe_add_field.
-  AST_Field *be_add_field (AST_Field *f);
-
   /// Overridden in be_operation and be_factory.
   virtual AST_Argument *be_add_argument (AST_Argument *arg);
 

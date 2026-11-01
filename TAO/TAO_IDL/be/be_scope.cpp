@@ -28,14 +28,6 @@ be_scope::be_scope (AST_Decl::NodeType type)
 
 be_scope::~be_scope () = default;
 
-// Code generation methods.
-
-AST_Field *
-be_scope::be_add_field (AST_Field *f)
-{
-  return this->fe_add_field (f);
-}
-
 AST_Argument *
 be_scope::be_add_argument (AST_Argument *)
 {

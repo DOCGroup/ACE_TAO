@@ -73,26 +73,6 @@ be_union::redefine (AST_Structure *from)
   AST_Union::redefine (from);
 }
 
-bool
-be_union::has_duplicate_case_labels ()
-{
-  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      AST_Decl *d = si.item ();
-      AST_UnionBranch *ub =
-        dynamic_cast<AST_UnionBranch*> (d);
-
-      if (ub->label_list_length () > 1)
-        {
-          return true;
-        }
-    }
-
-  return false;
-}
-
 void
 be_union::gen_ostream_operator (TAO_OutStream *os,
                                 bool /*use_underscore*/)

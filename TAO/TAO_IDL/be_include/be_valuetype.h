@@ -53,9 +53,6 @@ public:
   /// Generate the helper functions definition.
   virtual int gen_helper_header ();
 
-  /// Generate the helper functions inline implementation.
-  virtual int gen_helper_inline ();
-
   /// Generate the helper functions implementation.
   virtual int gen_helper_stubs ();
 
@@ -86,13 +83,6 @@ public:
       bool use_concrete_paths = true
     );
 
-  /// Load the insert queue with the concrete interface we support, and
-  /// call the generic version of traverse_inheritance_graph().
-  int traverse_concrete_inheritance_graph (
-      tao_code_emitter gen,
-      TAO_OutStream *os
-    );
-
   /// Do we support at least one abstract interface?
   bool supports_abstract () const;
 
@@ -109,12 +99,6 @@ public:
   ACE_CDR::ULong data_members_count (
       AST_Field::Visibility vis = AST_Field::vis_NA
     );
-
-  /// Helper method passed to the template method to generate code for
-  /// adding abstract supported interfaces to the inheritance list.
-  static int abstract_supports_helper (be_interface *node,
-                                       be_interface *base,
-                                       TAO_OutStream *os);
 
   /// Accessor to the member.
   std::string const& fwd_helper_name () const;

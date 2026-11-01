@@ -34,9 +34,6 @@ public:
   /// Catch BE-specific member values before delegating to the base class.
   void redefine (AST_Structure *from) override;
 
-  /// Do we have at least one member with multiple case labels?
-  virtual bool has_duplicate_case_labels ();
-
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
                                      bool use_underscore) override;

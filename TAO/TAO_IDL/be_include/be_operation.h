@@ -46,9 +46,6 @@ public:
   /// Add an argument to the scope.
   AST_Argument *be_add_argument (AST_Argument *arg) override;
 
-  /// Insert an exception at the head of the list.
-  int be_insert_exception (AST_Exception *ex);
-
   bool is_sendc_ami () const;
   void is_sendc_ami (bool val);
 
