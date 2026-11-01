@@ -25,6 +25,7 @@
 #include "global_extern.h"
 #include "idl_defines.h"
 
+#include <cstdlib>
 #include <string>
 
 #include "ace/ACE.h"
@@ -3392,7 +3393,7 @@ BE_GlobalData::parse_args (long &i, char **av)
       case 'T':
         if (av[i][2] == 'S')
           {
-            unsigned long ul = ACE_OS::strtoul (av[i + 1], nullptr, 10);
+            unsigned long ul = std::strtoul (av[i + 1], nullptr, 10);
             be_global->tab_size (ul);
             ++i;
           }
