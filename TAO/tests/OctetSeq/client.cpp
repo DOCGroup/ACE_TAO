@@ -9,13 +9,13 @@
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 unsigned int seed = 0;
-int verbose = 0;
+bool verbose = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vk:i:s:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'v':
-        verbose = 1;
+        verbose = true;
         break;
 
      case '?':
@@ -92,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (seed == 0)
         {
-          seed = static_cast<unsigned int> (ACE_OS::time (0));
+          seed = static_cast<unsigned int> (ACE_OS::time (nullptr));
           ACE_DEBUG ((LM_DEBUG, "Seed value is %d\n", seed));
         }
 
@@ -147,7 +147,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "CRC mismatch for element %d\n", idx));
             }
-          else if (verbose == 1)
+          else if (verbose)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "CRC <%u> matched for element %d\n",
@@ -160,7 +160,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep(1);
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

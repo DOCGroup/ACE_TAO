@@ -20,9 +20,11 @@
 #include "testC.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 static int
 test_write_octet (TAO_OutputCDR &cdr,
-                  char* /* buf */,
+                  char * /* buf */,
                   size_t bufsize)
 {
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -42,7 +44,7 @@ test_write_octet (TAO_OutputCDR &cdr,
 
 static int
 test_read_octet (TAO_InputCDR &cdr,
-                 char* /* buf */,
+                 char * /* buf */,
                  size_t /* bufsize */)
 {
   Test::OctetSeq os;
@@ -54,7 +56,7 @@ test_read_octet (TAO_InputCDR &cdr,
 
 static int
 test_write_char (TAO_OutputCDR &cdr,
-                 char* buf,
+                 char *buf,
                  size_t bufsize)
 {
   Test::CharSeq cs (bufsize, bufsize, buf);
@@ -66,7 +68,7 @@ test_write_char (TAO_OutputCDR &cdr,
 
 static int
 test_read_char (TAO_InputCDR &cdr,
-                char* /* buf */,
+                char * /* buf */,
                 size_t /* bufsize */)
 {
   Test::CharSeq cs;
@@ -76,18 +78,14 @@ test_read_char (TAO_InputCDR &cdr,
   return 0;
 }
 
-typedef
-int (*Writer)(TAO_OutputCDR& cdr,
-              char* buf, size_t bufsize);
-typedef
-int (*Reader)(TAO_InputCDR& cdr,
-              char* buf, size_t bufsize);
+using Writer = int (*) (TAO_OutputCDR &cdr, char *buf, size_t bufsize);
+using Reader = int (*) (TAO_InputCDR &cdr, char *buf, size_t bufsize);
 
 int
-run (char* buf, size_t bufsize,
+run (char *buf, size_t bufsize,
      size_t n, size_t lo, size_t s,
-     int quiet,
-     const ACE_TCHAR* name,
+     bool quiet,
+     ACE_TCHAR const *name,
      Writer writer, Reader reader)
 {
   size_t count = 0;
@@ -135,7 +133,7 @@ run (char* buf, size_t bufsize,
       count++;
       sum_read += read_average;
       sum_write += write_average;
-      if (quiet == 0)
+      if (!quiet)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "%s: %d %.3f %.3f\n",
@@ -164,10 +162,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int hi = 65536;
       int s = 32;
 
-      int quiet = 0;
+      bool quiet = false;
 
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("qn:l:h:s:"));
-      int opt;
+      int opt {};
 
       while ((opt = get_opt ()) != EOF)
         {
@@ -186,7 +184,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               s = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 'q':
-              quiet = 1;
+              quiet = true;
               break;
 
             case '?':
@@ -216,25 +214,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   lo, hi, s, n));
 
       // Create a "big" buffer and fill it up.
-      char* buf = new char[hi];
+      std::unique_ptr<char[]> buf = std::make_unique<char[]> (hi);
       CORBA::Long l = 0xdeadbeef;
       for (int i = 0; i < hi / (int) sizeof (l); ++i)
         {
-          ACE_OS::memcpy (buf + sizeof (l) * i, &l, sizeof (l));
+          ACE_OS::memcpy (buf.get () + sizeof (l) * i, &l, sizeof (l));
         }
 
-      if (run (buf, hi,
+      if (run (buf.get (), hi,
                n, lo, s, quiet,
                ACE_TEXT ("OCTET"), test_write_octet, test_read_octet) != 0)
         return 1;
 
-      if (run (buf, hi,
+      if (run (buf.get (), hi,
                n, lo, s, quiet,
                ACE_TEXT ("CHAR"), test_write_char, test_read_char) != 0)
         return 1;
-      delete[] buf;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("OctetSeq");
     }

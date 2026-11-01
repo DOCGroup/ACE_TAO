@@ -28,17 +28,22 @@ public:
   /// dtor
   ~Database_i ();
 
+  Database_i (Database_i const &) = delete;
+  Database_i &operator= (Database_i const &) = delete;
+  Database_i (Database_i &&) = delete;
+  Database_i &operator= (Database_i &&) = delete;
+
   // = The Simple_Server methods.
   void set (Test::Index i,
-            const Test::OctetSeq& seq,
+            Test::OctetSeq const &seq,
             CORBA::Double verification_token,
-            CORBA::Double_out returned_token);
+            CORBA::Double_out returned_token) override;
 
-  Test::OctetSeq* get (Test::Index i);
+  Test::OctetSeq* get (Test::Index i) override;
 
-  CORBA::ULong get_crc (Test::Index i);
+  CORBA::ULong get_crc (Test::Index i) override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB pointer
