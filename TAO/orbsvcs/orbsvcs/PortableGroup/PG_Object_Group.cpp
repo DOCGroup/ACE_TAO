@@ -879,7 +879,7 @@ TAO::PG_Object_Group::minimum_populate ()
     }
 }
 
-int
+bool
 TAO::PG_Object_Group::has_member_at (PortableGroup::Location const & location)
 {
   return (0 == this->members_.find (location));

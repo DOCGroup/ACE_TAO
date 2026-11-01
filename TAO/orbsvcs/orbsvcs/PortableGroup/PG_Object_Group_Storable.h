@@ -120,7 +120,7 @@ namespace TAO
 
     void minimum_populate () override;
 
-    int has_member_at (PortableGroup::Location const & location) override;
+    bool has_member_at (PortableGroup::Location const & location) override;
 
     void distribute (int value) override;
 

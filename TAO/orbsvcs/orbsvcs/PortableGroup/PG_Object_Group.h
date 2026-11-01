@@ -252,7 +252,7 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    virtual int has_member_at (PortableGroup::Location const & location);
+    virtual bool has_member_at (PortableGroup::Location const & location);
 
 
     /**

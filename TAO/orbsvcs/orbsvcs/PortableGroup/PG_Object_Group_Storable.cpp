@@ -401,7 +401,7 @@ TAO::PG_Object_Group_Storable::minimum_populate ()
   this->write (fg.peer ());
 }
 
-int
+bool
 TAO::PG_Object_Group_Storable::has_member_at (
   PortableGroup::Location const &location)
 {
