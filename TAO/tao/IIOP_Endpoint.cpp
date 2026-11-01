@@ -185,7 +185,7 @@ int
 TAO_IIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
   size_t actual_len =
-    ACE_OS::strlen (this->host_.in ()) // chars in host name
+    std::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
     + std::strlen ("65536")         // max port
     + sizeof ('\0');
@@ -540,7 +540,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
   find_preferred_interfaces(this->host_.in(), csv, preferred);
   CORBA::ULong count = static_cast<CORBA::ULong> (preferred.size());
   size_t i = 0;
-  while (i < count && ACE_OS::strstr (preferred[i].c_str(), "if=") != nullptr)
+  while (i < count && std::strstr (preferred[i].c_str(), "if=") != nullptr)
     {
       // For now we disregard these with IIOP
       ++i;
@@ -552,7 +552,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
     TAO_IIOP_Endpoint* ep = this;
     for (++i; i < count; ++i)
     {
-      if (ACE_OS::strstr (preferred[i].c_str(), "if=") == nullptr)
+      if (std::strstr (preferred[i].c_str(), "if=") == nullptr)
         ep = add_local_endpoint (ep, preferred[i].c_str(), profile);
     }
 
@@ -580,7 +580,7 @@ TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     return false;
 
   return (this->port_ == endpoint->port_
-          && (ACE_OS::strcmp (this->host (), endpoint->host ()) == 0));
+          && (std::strcmp (this->host (), endpoint->host ()) == 0));
 }
 
 CORBA::ULong

@@ -268,7 +268,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
   this->endpoint_.is_ipv6_decimal_ = ipv6_in_host;
 #endif /* ACE_HAS_IPV6 */
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
       ACE_INET_Addr host_addr;
 

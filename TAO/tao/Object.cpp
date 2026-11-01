@@ -21,8 +21,9 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.inl"
@@ -219,8 +220,8 @@ CORBA::Object::_is_a (char const *type_id)
     }
 
   if (this->_stubobj ()->type_id.in () != nullptr
-      && ACE_OS::strcmp (type_id,
-                         this->_stubobj ()->type_id.in ()) == 0)
+      && std::strcmp (type_id,
+                      this->_stubobj ()->type_id.in ()) == 0)
     return true;
 
   return this->proxy_broker ()->_is_a (this, type_id);

@@ -17,6 +17,8 @@
 #include "ace/streams.h"
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/SystemException.inl"
 #endif /* __ACE_INLINE__ */
@@ -950,7 +952,7 @@ TAO::create_system_exception (const char *id)
 {
   for (CORBA::ULong i = 0; i < array_sz; ++i)
     {
-      if (ACE_OS::strcmp (id, repo_id_array[i]) == 0)
+      if (std::strcmp (id, repo_id_array[i]) == 0)
         return (*(excp_array[i])) ();
     }
 

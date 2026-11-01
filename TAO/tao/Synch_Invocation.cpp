@@ -21,8 +21,9 @@
 #endif /*TAO_HAS_INTERCEPTORS */
 
 #include <memory>
-#include "ace/OS_NS_string.h"
 #include "tao/ORB_Time_Policy.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Synch_Invocation.inl"
@@ -35,27 +36,27 @@ namespace
   int
   excep_for_type (const char *tid)
   {
-    if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+    if (std::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       {
         return TAO::FOE_TRANSIENT;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
       {
         return TAO::FOE_COMM_FAILURE;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
       {
         return TAO::FOE_OBJECT_NOT_EXIST;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
       {
         return TAO::FOE_INV_OBJREF;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
       {
         return TAO::FOE_OBJ_ADAPTER;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
       {
         return TAO::FOE_NO_RESPONSE;
       }

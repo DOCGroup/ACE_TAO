@@ -7,7 +7,8 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/SString.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -144,7 +145,7 @@ TAO::ORB_Table::not_default (char const * orb_id)
   // anything.
   if (this->first_orb_ != nullptr)
     {
-      if (ACE_OS::strcmp (this->first_orb_->orbid (), orb_id) != 0)
+      if (std::strcmp (this->first_orb_->orbid (), orb_id) != 0)
         {
           // There is another default ORB. No need to change anything
           return;

@@ -812,9 +812,9 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
 
   static char const mcast_prefix[] = "mcast://:::";
 
-  if ((ACE_OS::strncmp (default_init_ref.in (),
-                        mcast_prefix,
-                        sizeof (mcast_prefix) - 1) == 0))
+  if ((std::strncmp (default_init_ref.in (),
+                     mcast_prefix,
+                     sizeof (mcast_prefix) - 1) == 0))
     {
       // First, determine if the port was supplied on the command line
       unsigned short port =
@@ -860,56 +860,56 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   CORBA::Object_var result;
 
-  if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
+  if (std::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
     {
       result = this->orb_core ()->root_poa ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
+  else if (std::strcmp (name, TAO_OBJID_POACURRENT) == 0)
     {
       result = this->orb_core ()->resolve_poa_current ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
+  else if (std::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
     {
       result = this->resolve_policy_manager ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
+  else if (std::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
     {
       result = this->resolve_policy_current ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
+  else if (std::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
     {
       result = this->orb_core ()->resolve_ior_manipulation ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_IORTABLE) == 0)
+  else if (std::strcmp (name, TAO_OBJID_IORTABLE) == 0)
     {
       result = this->orb_core ()->resolve_ior_table ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_ASYNCIORTABLE) == 0)
+  else if (std::strcmp (name, TAO_OBJID_ASYNCIORTABLE) == 0)
     {
       result = this->orb_core ()->resolve_async_ior_table ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
+  else if (std::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
     {
       result = this->orb_core ()->resolve_dynanyfactory ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
+  else if (std::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
     {
       result = this->orb_core ()->resolve_typecodefactory ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_CODECFACTORY) == 0)
+  else if (std::strcmp (name, TAO_OBJID_CODECFACTORY) == 0)
     {
       result = this->orb_core ()->resolve_codecfactory ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_COMPRESSIONMANAGER) == 0)
+  else if (std::strcmp (name, TAO_OBJID_COMPRESSIONMANAGER) == 0)
     {
       result = this->orb_core ()->resolve_compression_manager ();
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_MONITOR) == 0)
+  else if (std::strcmp (name, TAO_OBJID_MONITOR) == 0)
     {
       result = this->orb_core ()->resolve_monitor ();
     }
 #if TAO_HAS_INTERCEPTORS == 1
-  else if (ACE_OS::strcmp (name, TAO_OBJID_PICurrent) == 0)
+  else if (std::strcmp (name, TAO_OBJID_PICurrent) == 0)
     {
       result = this->orb_core ()->resolve_picurrent ();
     }
@@ -957,7 +957,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name.in ());
 
-  if (ACE_OS::strcmp (service_ior.c_str (), "") != 0)
+  if (std::strcmp (service_ior.c_str (), "") != 0)
     {
       result = this->string_to_object (service_ior.c_str());
 
@@ -971,19 +971,19 @@ CORBA::ORB::resolve_initial_references (const char *name,
   // Set the timeout value.
   this->set_timeout (timeout);
 
-  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
+  if (std::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     {
       this->resolve_service (TAO::MCAST_NAMESERVICE);
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
+  else if (std::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     {
       this->resolve_service (TAO::MCAST_TRADINGSERVICE);
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
+  else if (std::strcmp (name, TAO_OBJID_IMPLREPOSERVICE) == 0)
     {
       this->resolve_service (TAO::MCAST_IMPLREPOSERVICE);
     }
-  else if (ACE_OS::strcmp (name, TAO_OBJID_INTERFACEREP) == 0)
+  else if (std::strcmp (name, TAO_OBJID_INTERFACEREP) == 0)
     {
       this->resolve_service (TAO::MCAST_INTERFACEREPOSERVICE);
     }
@@ -1543,7 +1543,7 @@ CORBA::ORB::string_to_object (const char *str)
       return ior_parser->parse_string (str, this);
     }
 
-  if (ACE_OS::strncmp (str, ior_prefix, sizeof ior_prefix - 1) == 0)
+  if (std::strncmp (str, ior_prefix, sizeof ior_prefix - 1) == 0)
     return this->ior_string_to_object (str + sizeof ior_prefix - 1);
   else
     return this->url_ior_string_to_object (str);
