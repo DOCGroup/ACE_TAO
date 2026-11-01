@@ -2,6 +2,8 @@
 #include "Client_Task.h"
 #include "TestC.h"
 
+#include <cstring>
+
 Client_Task::Client_Task (ACE_TCHAR const *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)
@@ -36,7 +38,7 @@ Client_Task::svc ()
       CORBA::String_var the_string =
         hello->get_string ();
 
-      if (ACE_OS::strcmp (the_string.in (), "Hello there!") != 0)
+      if (std::strcmp (the_string.in (), "Hello there!") != 0)
         {
           ACE_ERROR ((LM_ERROR, "(%P|%t) - Error, incorrect string returned <%C>\n",
                       the_string.in ()));
