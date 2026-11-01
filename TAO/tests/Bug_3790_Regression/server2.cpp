@@ -46,7 +46,7 @@ class Task
     public virtual CORBA::LocalObject
 {
 public:
-  Task (CORBA::ORB_ptr orb);
+  explicit Task (CORBA::ORB_ptr orb);
   Task (Task const &) = delete;
   Task (Task &&) = delete;
   Task &operator= (Task const &) = delete;
