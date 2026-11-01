@@ -21,8 +21,8 @@ ACEXML_Exception::~ACEXML_Exception()
 {
 }
 
-int
-ACEXML_Exception::is_a (const ACEXML_Char *name)
+bool
+ACEXML_Exception::is_a (ACEXML_Char const *name)
 {
   return ACE_OS::strcmp (ACEXML_Exception::exception_name_, name) == 0;
 }

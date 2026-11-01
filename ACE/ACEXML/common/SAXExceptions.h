@@ -59,7 +59,7 @@ public:
 
   virtual ACEXML_Exception *duplicate () const;
 
-  virtual int is_a (const ACEXML_Char *name);
+  bool is_a (ACEXML_Char const *name) override;
 
   virtual void print () const;
 
@@ -104,7 +104,7 @@ public:
 
   virtual ACEXML_Exception *duplicate () const;
 
-  virtual int is_a (const ACEXML_Char *name);
+  bool is_a (ACEXML_Char const *name) override;
 
   virtual void print () const;
 
@@ -146,7 +146,7 @@ public:
 
   virtual ACEXML_Exception *duplicate () const;
 
-  virtual int is_a (const ACEXML_Char *name);
+  bool is_a (ACEXML_Char const *name) override;
 
   virtual void print () const;
 
@@ -188,7 +188,7 @@ public:
 
   virtual ACEXML_Exception *duplicate () const;
 
-  virtual int is_a (const ACEXML_Char *name);
+  bool is_a (ACEXML_Char const *name) override;
 
   virtual void print () const;
 
