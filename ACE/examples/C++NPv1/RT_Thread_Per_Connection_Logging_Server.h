@@ -13,8 +13,8 @@ class RT_Thread_Per_Connection_Logging_Server :
   public Thread_Per_Connection_Logging_Server
 {
 protected:
-  virtual int open (u_short port);
-  virtual int handle_data (ACE_SOCK_Stream * = 0);
+  int open (u_short port) override;
+  int handle_data (ACE_SOCK_Stream * = nullptr) override;
 };
 
 #endif /* _RT_THREAD_PER_CONNECTION_LOGGING_SERVER_H */

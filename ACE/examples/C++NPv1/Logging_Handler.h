@@ -21,7 +21,7 @@ protected:
 
 public:
   // Initialization and termination methods.
-  Logging_Handler (ACE_FILE_IO &log_file): log_file_ (log_file) {}
+  explicit Logging_Handler (ACE_FILE_IO &log_file): log_file_ (log_file) {}
   Logging_Handler (ACE_FILE_IO &log_file,
                    ACE_HANDLE handle): log_file_ (log_file)
   { logging_peer_.set_handle (handle); }

@@ -20,11 +20,11 @@ public:
   Logging_Process (const char *prog_name,
                    const ACE_SOCK_Stream &logging_peer);
 
-  virtual int prepare (ACE_Process_Options &options);
-  virtual void unmanage ();
+  int prepare (ACE_Process_Options &options) override;
+  void unmanage () override;
 
 private:
-  Logging_Process (); // Force desired constructor to be used.
+  Logging_Process () = delete;
 
   char prog_name_[MAXPATHLEN + 1];
   ACE_SOCK_Stream logging_peer_;
@@ -37,14 +37,14 @@ protected:
   char prog_name_[MAXPATHLEN + 1];
 
 protected:
-  virtual int handle_connections ();
-  virtual int handle_data (ACE_SOCK_Stream *client = 0);
+  int handle_connections () override;
+  int handle_data (ACE_SOCK_Stream *client = nullptr) override;
 
   int run_master (int argc, char *argv[]);
   int run_worker (int argc, char *argv[]);
 
 public:
-  virtual int run (int argc, char *argv[]);
+  int run (int argc, char *argv[]) override;
 };
 
 #endif /* _PROCESS_PER_CONNECTION_LOGGING_SERVER_H */

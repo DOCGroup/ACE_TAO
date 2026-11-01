@@ -12,7 +12,7 @@ class Thread_Per_Connection_Logging_Server : public Logging_Server
 {
 private:
   struct Thread_Args {
-    Thread_Args (Thread_Per_Connection_Logging_Server *lsp) : this_ (lsp) {}
+    explicit Thread_Args (Thread_Per_Connection_Logging_Server *lsp) : this_ (lsp) {}
 
     Thread_Per_Connection_Logging_Server *this_;
     ACE_SOCK_Stream logging_peer_;
@@ -22,14 +22,14 @@ private:
   static ACE_THR_FUNC_RETURN run_svc (void *arg);
 
 protected:
-  virtual int handle_connections ();
-  virtual int handle_data (ACE_SOCK_Stream * = 0);
+  int handle_connections () override;
+  int handle_data (ACE_SOCK_Stream * = nullptr) override;
 
 public:
   // Template Method that runs logging server's event loop. Need to
   // reimplement this here because the threads spawned from handle_connections
   // call handle_data; therefore, this method must not.
-  virtual int run (int argc, char *argv[]) {
+  int run (int argc, char *argv[]) override {
     if (open (argc > 1 ? atoi (argv[1]) : 0) == -1)
       return -1;
 

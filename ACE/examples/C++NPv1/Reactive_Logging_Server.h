@@ -25,28 +25,28 @@ protected:
   // Keep track of handles marked as active by <select>.
   ACE_Handle_Set active_handles_;
 
-  virtual int open (u_short logger_port) {
+  int open (u_short logger_port) override {
     Iterative_Logging_Server::open (logger_port);
     master_handle_set_.set_bit (acceptor ().get_handle ());
     acceptor ().enable (ACE_NONBLOCK);
     return 0;
   }
 
-  virtual int wait_for_multiple_events () {
+  int wait_for_multiple_events () override {
     active_handles_ = master_handle_set_;
     int width = ACE_Utils::truncate_cast<int> ((intptr_t)active_handles_.max_set ()) + 1;
     if (select (width,
                 active_handles_.fdset (),
-                0,        // no write_fds
-                0,        // no except_fds
-                0) == -1) // no timeout
+                nullptr,  // no write_fds
+                nullptr,  // no except_fds
+                nullptr) == -1) // no timeout
       return -1;
     active_handles_.sync
       ((ACE_HANDLE) ((intptr_t) active_handles_.max_set () + 1));
     return 0;
   }
 
-  virtual int handle_connections () {
+  int handle_connections () override {
     if (active_handles_.is_set (acceptor ().get_handle ())) {
       while (acceptor ().accept (logging_handler ().peer ()) == 0)
         master_handle_set_.set_bit
@@ -58,7 +58,7 @@ protected:
     return 0;
   }
 
-  virtual int handle_data (ACE_SOCK_Stream *) {
+  int handle_data (ACE_SOCK_Stream *) override {
     ACE_Handle_Set_Iterator peer_iterator (active_handles_);
 
     for (ACE_HANDLE handle;

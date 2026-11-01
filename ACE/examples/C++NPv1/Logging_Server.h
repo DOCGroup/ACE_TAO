@@ -24,10 +24,10 @@ protected:
   virtual int open (u_short port = 0);
   virtual int wait_for_multiple_events () { return 0; }
   virtual int handle_connections () = 0;
-  virtual int handle_data (ACE_SOCK_Stream * = 0) = 0;
+  virtual int handle_data (ACE_SOCK_Stream * = nullptr) = 0;
 
   // The following helper method can be used by the hook methods.
-  int make_log_file (ACE_FILE_IO &, ACE_SOCK_Stream * = 0);
+  int make_log_file (ACE_FILE_IO &, ACE_SOCK_Stream * = nullptr);
 
   // Close the socket endpoint.
   virtual ~Logging_Server () { acceptor_.close (); }
