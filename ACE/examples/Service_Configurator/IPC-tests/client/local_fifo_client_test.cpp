@@ -10,10 +10,10 @@
 #include "ace/OS_NS_stropts.h"
 
 // Name of the program.
-static ACE_TCHAR *program_name;
+static ACE_TCHAR *program_name = nullptr;
 
 // debug state on or off
-static int debug = 0;
+static bool debug = false;
 
 static const ACE_TCHAR *rendezvous_fifo = ACE_TEXT("/tmp/foo_fifo");
 
@@ -41,7 +41,7 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
     switch (c)
     {
     case 'd':
-      debug = 1;
+      debug = true;
       break;
     case 'f':
       rendezvous_fifo = get_opt.opt_arg ();

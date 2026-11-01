@@ -24,9 +24,9 @@ public:
   ~Handle_Thr_Acceptor ();
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
 
 private:
   ACE_Thread_Manager thr_mgr_;
@@ -46,15 +46,15 @@ class CLI_Stream : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_MT_SYNCH>
   //   thread and handles connections from remote TCP/IP connections.
 {
 public:
-  CLI_Stream (ACE_Thread_Manager * = 0);
+  explicit CLI_Stream (ACE_Thread_Manager * = nullptr);
 
-  virtual int open (void *);
+  int open (void *) override;
   // Open the service.
 
-  virtual int close (u_long);
+  int close (u_long) override;
   // Close down the service.
 
-  virtual int svc ();
+  int svc () override;
   // Execute the service.
 
 protected:

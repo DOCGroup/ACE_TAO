@@ -31,7 +31,7 @@ Handle_L_FIFO::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy (buf, rendezvous_fifo);
   ACE_OS::strcat (buf, ACE_TEXT(" # tests local ACE_FIFO\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     {
       return -1;
     }

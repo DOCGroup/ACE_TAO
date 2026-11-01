@@ -9,10 +9,10 @@
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
-static ACE_TCHAR *program_name;
+static ACE_TCHAR *program_name = nullptr;
 
 // debug state on or off
-static int debug = 0;
+static bool debug = false;
 
 static const ACE_TCHAR *rendezvous_spipe = ACE_TEXT ("/tmp/foo_spipe");
 
@@ -38,7 +38,7 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
     switch (c)
     {
     case 'd':
-      debug = 1;
+      debug = true;
       break;
     case 'r':
       rendezvous_spipe = get_opt.opt_arg ();
@@ -85,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   ACE_Str_Buf msg (cp, int (mmap.size ()));
 
-  if (spipe.send ((ACE_Str_Buf *) 0, &msg) == -1)
+  if (spipe.send (nullptr, &msg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("send")),

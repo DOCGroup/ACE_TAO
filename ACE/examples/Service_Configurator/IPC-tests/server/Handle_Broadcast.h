@@ -22,15 +22,15 @@ class ACE_Svc_Export Handle_Broadcast : public ACE_Service_Object, public ACE_SO
 public:
   Handle_Broadcast ();
   ~Handle_Broadcast ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
 
 private:
   int open (const ACE_INET_Addr &r, int async = 0);
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;
 
   static unsigned short DEFAULT_PORT;
 };

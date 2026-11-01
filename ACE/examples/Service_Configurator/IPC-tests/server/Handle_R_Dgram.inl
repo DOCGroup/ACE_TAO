@@ -32,7 +32,7 @@ Handle_R_Dgram::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::sprintf (buf, ACE_TEXT ("%d/"), sa.get_port_number ());
   ACE_OS::strcat (buf, ACE_TEXT ("udp # tests remote dgram\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, buf, length);

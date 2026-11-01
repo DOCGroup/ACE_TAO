@@ -12,7 +12,7 @@
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 // Name of the program.
-static ACE_TCHAR *program_name;
+static ACE_TCHAR *program_name = nullptr;
 
 // Name of rendezvous point.
 static const ACE_TCHAR *rendezvous = ACE_TEXT ("/tmp/foo_pipe");

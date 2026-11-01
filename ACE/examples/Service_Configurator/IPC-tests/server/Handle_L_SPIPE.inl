@@ -37,7 +37,7 @@ Handle_L_SPIPE::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy (buf, sa.get_path_name ());
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local STREAM pipe\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, buf, length);
@@ -109,7 +109,7 @@ Handle_L_SPIPE::handle_input (int)
                   sa.get_path_name (), sa.group_id (), sa.user_id ()));
     }
 
-  while (new_spipe.recv ((ACE_Str_Buf *) 0, &msg, &flags) >= 0)
+  while (new_spipe.recv (nullptr, &msg, &flags) >= 0)
     if (msg.len != 0)
       ACE_OS::write (ACE_STDOUT, (const char *) msg.buf, (int) msg.len);
     else

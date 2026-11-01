@@ -12,7 +12,7 @@
 #if defined (ACE_HAS_TLI)
 
 // Name of the program.
-static const ACE_TCHAR *program_name;
+static const ACE_TCHAR *program_name = nullptr;
 
 // Port number to use.
 static u_short port_number = ACE_DEFAULT_THR_PORT;
