@@ -141,7 +141,7 @@ be_type::nested_sp_type_name (be_decl *use_scope,
     ? defining_scope->decl () : nullptr;
 
   std::string full_name = defining_decl != nullptr
-    ? std::string (defining_decl->full_name ()) : "";
+    ? defining_decl->full_name () : "";
   full_name.append ("::TAO_");
   full_name.append (this->flat_name ());
 

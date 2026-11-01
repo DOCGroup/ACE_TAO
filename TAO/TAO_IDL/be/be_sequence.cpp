@@ -841,7 +841,7 @@ be_sequence::smart_fwd_helper_name (AST_Decl *ctx_scope,
       return retval;
     }
 
-  return std::string (elem->fwd_helper_name ());
+  return elem->fwd_helper_name ();
 }
 
 void

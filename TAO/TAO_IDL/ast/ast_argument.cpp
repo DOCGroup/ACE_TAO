@@ -80,7 +80,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Static functions.
 
-// Convert an enum Direction value to a char *.
+// Convert an enum Direction value to a string.
 static std::string
 direction_to_string (AST_Argument::Direction d)
 {

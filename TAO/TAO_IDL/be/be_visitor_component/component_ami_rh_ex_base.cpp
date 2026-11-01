@@ -54,7 +54,7 @@ be_visitor_component_ami_rh_ex_base::init ()
   base += this->iface_->original_local_name ()->get_string ();
   base += "ReplyHandler";
 
-  this->base_class_name_ = std::string (scope->full_name ());
+  this->base_class_name_ = scope->full_name ();
   this->base_class_name_ += smart_scope;
   this->base_class_name_ += "CCM_";
   this->base_class_name_ += base;

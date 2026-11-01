@@ -24,7 +24,7 @@ BE_GlobalData::destroy ()
 std::string
 BE_GlobalData::spawn_options ()
 {
-  return std::string (idl_global->idl_flags ());
+  return idl_global->idl_flags ();
 }
 
 void

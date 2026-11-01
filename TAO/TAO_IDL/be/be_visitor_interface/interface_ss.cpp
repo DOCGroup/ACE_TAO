@@ -423,17 +423,17 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 std::string
 be_visitor_interface_ss::generate_flat_name (be_interface *node)
 {
-  return std::string (node->flat_name ());
+  return node->flat_name ();
 }
 
 std::string
 be_visitor_interface_ss::generate_local_name (be_interface *node)
 {
-  return std::string (node->local_name ());
+  return node->local_name ();
 }
 
 std::string
 be_visitor_interface_ss::generate_full_skel_name  (be_interface *node)
 {
-  return std::string (node->full_skel_name ());
+  return node->full_skel_name ();
 }

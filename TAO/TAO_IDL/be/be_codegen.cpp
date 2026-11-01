@@ -2474,7 +2474,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   if (!be_global->versioning_include ().empty ())
     {
       this->gen_standard_include (this->client_header_,
-                                  std::string (be_global->versioning_include ()),
+                                  be_global->versioning_include (),
                                   true);
     }
 

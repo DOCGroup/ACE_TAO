@@ -26,6 +26,7 @@
 #include "idl_defines.h"
 
 #include <cstdlib>
+#include <cstring>
 #include <string>
 
 #include "ace/ACE.h"
@@ -1384,7 +1385,7 @@ BE_GlobalData::ciao_container_type () const
 void
 BE_GlobalData::output_dir (std::string const& s)
 {
-  this->output_dir_ = std::string (s);
+  this->output_dir_ = s;
 }
 
 std::string const&
@@ -1407,7 +1408,7 @@ BE_GlobalData::overwrite_not_exec (bool val)
 void
 BE_GlobalData::skel_output_dir (std::string const& s)
 {
-  this->skel_output_dir_ = std::string (s);
+  this->skel_output_dir_ = s;
 }
 
 std::string const&
@@ -1419,7 +1420,7 @@ BE_GlobalData::skel_output_dir () const
 void
 BE_GlobalData::stub_include_dir (std::string const& s)
 {
-  this->stub_include_dir_ = std::string (s);
+  this->stub_include_dir_ = s;
 }
 
 std::string const&
@@ -1431,7 +1432,7 @@ BE_GlobalData::stub_include_dir () const
 void
 BE_GlobalData::anyop_output_dir (std::string const& s)
 {
-  this->anyop_output_dir_ = std::string (s);
+  this->anyop_output_dir_ = s;
 }
 
 std::string const&
@@ -1443,7 +1444,7 @@ BE_GlobalData::anyop_output_dir () const
 void
 BE_GlobalData::exec_output_dir (std::string const& s)
 {
-  this->exec_output_dir_ = std::string (s);
+  this->exec_output_dir_ = s;
 }
 
 std::string const&
@@ -2432,7 +2433,7 @@ BE_GlobalData::tab_size (unsigned long val)
 std::string
 BE_GlobalData::spawn_options () const
 {
-  return std::string (idl_global->idl_flags ());
+  return idl_global->idl_flags ();
 }
 
 void
@@ -2588,19 +2589,19 @@ BE_GlobalData::parse_args (long &i, char **av)
                         ACE_TEXT ("no selection for -H option\n")));
             idl_global->parse_args_exit (1);
           }
-        else if (std::string (av[i + 1]) == "dynamic_hash")
+        else if (std::strcmp (av[i + 1], "dynamic_hash") == 0)
           {
             be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
           }
-        else if (std::string (av[i + 1]) == "perfect_hash")
+        else if (std::strcmp (av[i + 1], "perfect_hash") == 0)
           {
             be_global->lookup_strategy (BE_GlobalData::TAO_PERFECT_HASH);
           }
-        else if (std::string (av[i + 1]) == "binary_search")
+        else if (std::strcmp (av[i + 1], "binary_search") == 0)
           {
             be_global->lookup_strategy (BE_GlobalData::TAO_BINARY_SEARCH);
           }
-        else if (std::string (av[i + 1]) == "linear_search")
+        else if (std::strcmp (av[i + 1], "linear_search") == 0)
           {
             be_global->lookup_strategy (BE_GlobalData::TAO_LINEAR_SEARCH);
           }
@@ -3164,7 +3165,7 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'I')
           {
-            std::size_t const options = std::string (av[i]).size () - 3;
+            std::size_t const options = std::strlen (av[i]) - 3;
             std::size_t j;
             std::size_t k = i;
             // Generate implementation files.
