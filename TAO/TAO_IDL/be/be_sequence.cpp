@@ -27,6 +27,7 @@
 #include "nr_extern.h"
 #include "global_extern.h"
 
+#include <cstdio>
 #include <string>
 
 #include "ace/Log_Msg.h"
@@ -795,11 +796,12 @@ be_sequence::compute_tc_name ()
            UTL_ScopedName (tao_id,
                            nullptr));
 
-  char bound[30] = { 0 };
+  char bound[30] {};
 
-  ACE_OS::sprintf (bound,
-                   "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-                   this->max_size ()->ev ()->u.ulval);
+  std::snprintf (bound,
+                 sizeof (bound),
+                 "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
+                 this->max_size ()->ev ()->u.ulval);
 
   std::string local_tc_name ("tc_");
   local_tc_name += this->flat_name ();
