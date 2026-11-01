@@ -49,7 +49,7 @@ namespace TAO
 
     /// Ctor
 
-    IIOP_Current_Impl::IIOP_Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id)
+    IIOP_Current_Impl::IIOP_Current_Impl (TAO_ORB_Core* core, std::size_t tss_slot_id)
       : Current_Impl (core, tss_slot_id)
     {
     }

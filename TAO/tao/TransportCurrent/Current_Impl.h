@@ -12,6 +12,8 @@
 #include "tao/TransportCurrent/TCC.h"
 #include "tao/LocalObject.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
@@ -38,7 +40,7 @@ namespace TAO
       {
       public:
         /// Constructor.
-        Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id);
+        Current_Impl (TAO_ORB_Core* core, std::size_t tss_slot_id);
 
         /**
          * These are methods exposed by the
@@ -89,7 +91,7 @@ namespace TAO
         TAO_ORB_Core* core_;
 
         // The ORB's TSS slot id for the Transport ptr
-        size_t tss_slot_id_;
+        std::size_t tss_slot_id_;
       };
   }
 

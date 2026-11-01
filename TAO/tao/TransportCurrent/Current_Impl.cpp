@@ -21,7 +21,7 @@ namespace TAO
   namespace Transport
   {
     /// ctor
-    Current_Impl::Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id)
+    Current_Impl::Current_Impl (TAO_ORB_Core* core, std::size_t tss_slot_id)
       : core_ (core)
       , tss_slot_id_ (tss_slot_id)
     {

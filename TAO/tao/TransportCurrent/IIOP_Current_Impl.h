@@ -22,6 +22,8 @@
 #include "tao/TransportCurrent/TC_IIOPC.h"
 #include "tao/TransportCurrent/Current_Impl.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Transport;
@@ -46,7 +48,7 @@ namespace TAO
     {
     public:
       /// Constructor.
-      IIOP_Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id);
+      IIOP_Current_Impl (TAO_ORB_Core* core, std::size_t tss_slot_id);
 
       //@{
       ::CORBA::Long id () override;
