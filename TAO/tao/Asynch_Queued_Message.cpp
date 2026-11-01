@@ -4,12 +4,13 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Malloc_Base.h"
 #include "ace/High_Res_Timer.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,9 +37,9 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
        i != nullptr;
        i = i->cont ())
     {
-      ACE_OS::memcpy (this->buffer_ + copy_offset,
-                      i->rd_ptr (),
-                      i->length ());
+      std::memcpy (this->buffer_ + copy_offset,
+                   i->rd_ptr (),
+                   i->length ());
       copy_offset += i->length ();
     }
 }
@@ -125,9 +126,9 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                   char[sz],
                   nullptr);
 
-  ACE_OS::memcpy (buf,
-                  this->buffer_ + this->offset_,
-                  sz);
+  std::memcpy (buf,
+               this->buffer_ + this->offset_,
+               sz);
 
   TAO_Asynch_Queued_Message *qm = nullptr;
 

@@ -6,6 +6,8 @@
 
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/CDR.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -76,9 +78,9 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
 #if defined (TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS)
   // Zero out the buffer if we allocated the buffer.
   if (size == 0)
-    (void) ACE_OS::memset (this->current()->wr_ptr(),
-                           0,
-                           this->current()->space());
+    (void) std::memset (this->current()->wr_ptr(),
+                        0,
+                        this->current()->space());
 #endif /* TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS */
 }
 

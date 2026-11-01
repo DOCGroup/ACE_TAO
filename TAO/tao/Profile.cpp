@@ -11,8 +11,9 @@
 #include "tao/Endpoint.h"
 
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Profile.inl"
@@ -124,9 +125,9 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
 
 #if defined (TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS)
   // Support limited oref ACE_OS::strcmp
-  (void) ACE_OS::memset (encap.current()->wr_ptr (),
-                         0,
-                         encap.current()->space ());
+  (void) std::memset (encap.current()->wr_ptr (),
+                      0,
+                      encap.current()->space ());
 #endif /* TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS */
 
   // Create the profile body
@@ -281,7 +282,7 @@ TAO_Profile::create_tagged_profile ()
            i != encap.end ();
            i = i->next ())
         {
-          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
+          std::memcpy (buffer, i->rd_ptr (), i->length ());
           buffer += i->length ();
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
@@ -307,7 +308,7 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
        iterator = iterator->cont ())
     {
       size_t const i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+      std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
     }
@@ -366,7 +367,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
            iterator != nullptr;
            iterator = iterator->cont ())
         {
-          ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+          std::memcpy (buf, iterator->rd_ptr (), iterator->length ());
           buf += iterator->length ();
         }
     }
@@ -394,7 +395,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
        iterator = iterator->cont ())
     {
       size_t const i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+      std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
     }

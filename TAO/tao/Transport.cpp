@@ -32,6 +32,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 #include <chrono>
 
 #if !defined (__ACE_INLINE__)
@@ -2121,9 +2123,9 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   char buf [TAO_MAXBUFSIZE + ACE_CDR::MAX_ALIGNMENT];
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  (void) ACE_OS::memset (buf,
-                         '\0',
-                         sizeof buf);
+  (void) std::memset (buf,
+                      '\0',
+                      sizeof buf);
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // Create a data block
