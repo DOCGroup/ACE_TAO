@@ -21,8 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
-
-#include <vector>
+#include "ace/Array_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -72,7 +71,7 @@ public:
   void *lane_;
 
   /// Generic container for thread-specific objects.
-  std::vector<void *> ts_objects_;
+  ACE_Array_Base<void *> ts_objects_;
 
   // Set to true by the wait_on_lf_no_nested_upcall wait strategy
   // @CJC@  maybe we should use allocate_tss_slot_id() instead?

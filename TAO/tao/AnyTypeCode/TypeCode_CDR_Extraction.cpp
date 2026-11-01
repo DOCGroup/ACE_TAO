@@ -23,8 +23,6 @@
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
 
-#include <new>
-#include <stdexcept>
 #include <vector>
 
 #include "tao/CDR.h"
@@ -65,16 +63,9 @@ namespace
   {
     // Since we created a new tc, add it to the list.
     size_t const old_size = infos.size ();
-    try
+    if (infos.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
       {
-        infos.push_back (TAO::TypeCodeFactory::TC_Info {});
-      }
-    catch (std::bad_alloc const &)
-      {
-        return false;
-      }
-    catch (std::length_error const &)
-      {
+        // Can't increase the list size.
         return false;
       }
 
@@ -88,7 +79,7 @@ namespace
       }
     catch (...)
       {
-        infos.pop_back ();
+        infos.size (old_size);
         return false;
       }
     return true;
@@ -173,25 +164,15 @@ namespace
             // We have a matching id, so store the TypeCode in the out
             // list and then compare the others.
             size_t const old_size = tcs.size ();
-            try
-              {
-                tcs.push_back (TAO::TypeCodeFactory::TC_Info {});
-              }
-            catch (std::bad_alloc const &)
-              {
-                return false;
-              }
-            catch (std::length_error const &)
-              {
-                return false;
-              }
+            if (tcs.size (old_size + 1) == -1)  // Incremental growth -- *sigh*
+              return false;
 
             TAO::TypeCodeFactory::TC_Info & new_info = tcs[old_size];
             new_info.type = info.type;
           }
       }
 
-    return !tcs.empty ();
+    return (tcs.size () > 0);
   }
 
   // For TC_Info_List whose elements are duplicated prior to addition,
@@ -1524,7 +1505,7 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
     return false;
   }
 
-  if (indirect_infos.empty ()) {
+  if (indirect_infos.size () == 0) {
     cleanup_tc_info_list(direct_infos);
     return true;
   }

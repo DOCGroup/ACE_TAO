@@ -15,7 +15,7 @@
 #define TAO_ACCEPTOR_REGISTRY_H
 
 #include /**/ "ace/pre.h"
-#include <vector>
+#include "ace/Unbounded_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,7 +41,7 @@ class TAO_MProfile;
 class TAO_Protocol_Factory;
 class TAO_Protocol_Item;
 
-using TAO_ProtocolFactorySetItor = std::vector<TAO_Protocol_Item *>::iterator;
+using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item *>;
 
 using TAO_AcceptorSetIterator = TAO_Acceptor**;
 
@@ -136,7 +136,10 @@ private:
 
 private:
   /// List of acceptors that are currently open.
-  std::vector<TAO_Acceptor*> acceptors_;
+  TAO_Acceptor **acceptors_ {};
+
+  /// Number of acceptors that are currently open.
+  size_t size_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
