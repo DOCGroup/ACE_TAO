@@ -52,7 +52,7 @@ be_visitor_context_svts::visit_component (be_component *node)
   if (base)
     {
       std::string const& lbase_name =
-        base->original_local_name ()->get_string ();
+        base->original_local_name ();
 
       os_ << global << "CIAO_" << base->flat_name ()
           << "_Impl::" << lbase_name << "_Context_T<CONTAINER_TYPE, BASE>";

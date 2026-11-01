@@ -121,7 +121,7 @@ be_visitor_home_svh::gen_servant_class ()
   std::string sname_str (scope->full_name ());
 
   // No '_cxx_' prefix.
-  std::string const& lname = node_->original_local_name ()->get_string ();
+  std::string const& lname = node_->original_local_name ();
 
   std::string const& clname = comp_->local_name ()->get_string ();
   std::string const global = sname_str.empty () ? "" : "::";

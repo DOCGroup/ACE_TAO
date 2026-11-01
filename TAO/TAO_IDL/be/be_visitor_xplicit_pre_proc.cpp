@@ -71,7 +71,7 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   UTL_ScopedName *explicit_name =
     this->create_scoped_name (
       "",
-      node->original_local_name ()->get_string (),
+      node->original_local_name (),
       "Explicit",
       m);
 

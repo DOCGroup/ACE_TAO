@@ -51,7 +51,7 @@ be_visitor_component_ami_rh_ex_base::init ()
   std::string const smart_scope = global ? "" : "::";
 
   std::string base ("AMI4CCM_");
-  base += this->iface_->original_local_name ()->get_string ();
+  base += this->iface_->original_local_name ();
   base += "ReplyHandler";
 
   this->base_class_name_ = scope->full_name ();
@@ -61,7 +61,7 @@ be_visitor_component_ami_rh_ex_base::init ()
 
   this->class_name_ = base;
   this->class_name_ += '_';
-  this->class_name_ += this->port_->original_local_name ()->get_string ();
+  this->class_name_ += this->port_->original_local_name ();
   this->class_name_ += "_i";
 }
 

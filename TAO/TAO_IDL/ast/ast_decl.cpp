@@ -163,7 +163,7 @@ AST_Decl::AST_Decl (NodeType nt,
   if (n)
     {
       // The function body creates its own copy.
-      this->original_local_name (n->last_component ());
+      this->original_local_name (n->last_component ()->get_string ());
     }
 
   this->compute_repoID ();
@@ -204,7 +204,7 @@ AST_Decl::AST_Decl (
   if (name)
     {
       // The function body creates its own copy.
-      this->original_local_name (name->last_component ());
+      this->original_local_name (name->last_component ()->get_string ());
     }
 
   this->compute_repoID ();
@@ -228,11 +228,7 @@ AST_Decl::destroy ()
       this->pd_local_name.reset ();
     }
 
-  if (this->pd_original_local_name)
-    {
-      this->pd_original_local_name->destroy ();
-      this->pd_original_local_name.reset ();
-    }
+  this->pd_original_local_name.clear ();
 
   if (this->last_referenced_as_)
     {
@@ -1136,12 +1132,7 @@ AST_Decl::set_name (UTL_ScopedName *n)
       this->pd_local_name.reset (n->last_component ()->copy ());
 
       // The name without _cxx_ prefix removed, if there was any.
-      if (this->pd_original_local_name)
-        {
-          this->pd_original_local_name->destroy ();
-        }
-
-      this->original_local_name (n->last_component ());
+      this->original_local_name (n->last_component ()->get_string ());
 
       // The flattened name and repo ID will be recomputed on demand.
       this->flat_name_.clear ();
@@ -1195,27 +1186,25 @@ AST_Decl::compute_local_name (std::string const& prefix,
 // operation remotely, we should be sending only the name with out
 // "_cxx_" prefix.
 void
-AST_Decl::original_local_name (Identifier *local_name)
+AST_Decl::original_local_name (std::string const& local_name)
 {
   // Remove _cxx_ if it is present.
-  std::string const& name (local_name->get_string ());
   static constexpr char cxx_prefix[] = "_cxx_";
-  if (name.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
+  if (local_name.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
     {
-      // Assign to the Identifier variable.
-      this->pd_original_local_name = std::make_unique<Identifier> (
-        name.substr (sizeof (cxx_prefix) - 1));
+      this->pd_original_local_name =
+        local_name.substr (sizeof (cxx_prefix) - 1);
     }
   else
     {
-      this->pd_original_local_name.reset (local_name->copy ());
+      this->pd_original_local_name = local_name;
     }
 }
 
-Identifier *
+std::string const&
 AST_Decl::original_local_name () const
 {
-  return this->pd_original_local_name.get ();
+  return this->pd_original_local_name;
 }
 
 bool

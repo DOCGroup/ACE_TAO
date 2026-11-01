@@ -270,7 +270,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
 
   // Avoid '_cxx_' prefix.
   std::string const& lname =
-    obj->original_local_name ()->get_string ();
+    obj->original_local_name ();
 
   std::string const global = sname_str.empty () ? "" : "::";
   std::string const prefix_connector = sname_str.empty () ? "" : "_";

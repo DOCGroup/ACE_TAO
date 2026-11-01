@@ -58,7 +58,7 @@ be_visitor_executor_exh::visit_component (be_component *node)
 
   // No _cxx_ prefix.
   std::string const& lname =
-    node->original_local_name ()->get_string ();
+    node->original_local_name ();
 
   std::string const global = sname_str.empty () ? "" : "::";
 
@@ -289,7 +289,7 @@ be_visitor_executor_exh::visit_provides (be_provides *node)
 
   // No '_cxx_' prefix.
   std::string const& lname =
-    impl->original_local_name ()->get_string ();
+    impl->original_local_name ();
 
   std::string const global = sname_str.empty () ? "" : "::";
 

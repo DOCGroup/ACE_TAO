@@ -288,8 +288,8 @@ public:
   // prefix to the all the reserved keywords. But when we invoke the
   // operation remotely, we should be sending only the name with out
   // "_cxx_" prefix.
-  Identifier *original_local_name () const;
-  void original_local_name (Identifier *);
+  std::string const& original_local_name () const;
+  void original_local_name (std::string const&);
 
   // To be overridden by the subclasses interface, struct, union, and
   // the corresponding forward declaration classes.
@@ -461,7 +461,7 @@ private:
   std::unique_ptr<Identifier> pd_local_name;
   // Name in scope.
 
-  std::unique_ptr<Identifier> pd_original_local_name;
+  std::string pd_original_local_name;
   // _cxx_ removed if any.
 
   std::string full_name_;

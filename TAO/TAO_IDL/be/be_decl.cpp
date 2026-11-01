@@ -119,7 +119,7 @@ be_decl::compute_flat_name (std::string const& prefix,
 
       // Prefix.
       // Local name. Leave out _cxx_ prefix, if any.
-      result_str.append (this->original_local_name ()->get_string ());
+      result_str.append (this->original_local_name ());
 
       // Suffix.
       result_str.append (suffix);
@@ -152,7 +152,7 @@ be_decl::compute_flat_name (std::string const& prefix,
       result_str.append (prefix);
 
       // Local name. Leave out _cxx_ prefix, if any.
-      result_str.append (this->original_local_name ()->get_string ());
+      result_str.append (this->original_local_name ());
 
       // Suffix.
       result_str.append (suffix);

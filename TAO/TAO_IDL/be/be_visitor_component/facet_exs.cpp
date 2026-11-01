@@ -74,7 +74,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   be_type *impl = node->provides_type ();
 
   std::string lname_str (this->ctx_->port_prefix ());
-  lname_str += node->original_local_name ()->get_string ();
+  lname_str += node->original_local_name ();
   std::string const& lname = lname_str;
 
   os_ << be_nl_2

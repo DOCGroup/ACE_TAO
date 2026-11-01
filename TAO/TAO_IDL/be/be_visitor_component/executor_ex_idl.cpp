@@ -32,7 +32,7 @@ be_visitor_executor_ex_idl::visit_component (
 
   os_ << be_nl
       << "local interface CCM_"
-      << node->original_local_name ()->get_string ()
+      << node->original_local_name ()
       << be_idt_nl
       << ": ";
 
@@ -49,7 +49,7 @@ be_visitor_executor_ex_idl::visit_component (
       std::string const global = sname_str.empty () ? "" : "::";
 
       os_ << global << sname_str << "::CCM_"
-          << base->original_local_name ()->get_string ();
+          << base->original_local_name ();
     }
 
   this->gen_supported ();
@@ -106,7 +106,7 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
   os_ << IdentifierHelper::type_name (ft, this);
   os_ << " " << this->ctx_->port_prefix ()
      << IdentifierHelper::try_escape (
-          node->original_local_name ()->get_string ());
+          node->original_local_name ());
 
   this->gen_exception_list (node->get_get_exceptions (),
                            rd_only ? "" : "get");
@@ -170,7 +170,7 @@ be_visitor_executor_ex_idl::visit_provides (
   std::string const sname_str (
     IdentifierHelper::orig_sn (scope->name ()));
   std::string const& lname =
-    impl->original_local_name ()->get_string ();
+    impl->original_local_name ();
 
   std::string const global = sname_str.empty () ? "" : "::";
 

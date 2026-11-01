@@ -98,7 +98,7 @@ be_util::gen_nesting_open (TAO_OutStream &os, AST_Decl *node)
     {
       std::string module_name (
         IdentifierHelper::try_escape (
-          node->original_local_name ()->get_string ()));
+          node->original_local_name ()));
 
       os << be_nl
          << "module " << module_name << be_nl

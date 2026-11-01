@@ -32,7 +32,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
 
   // No '_cxx_' prefix.
   std::string const& lname =
-    node_->original_local_name ()->get_string ();
+    node_->original_local_name ();
 
   std::string const global = sname_str.empty () ? "" : "::";
 

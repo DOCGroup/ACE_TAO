@@ -63,7 +63,7 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
   // Generate the operation name
   os_ << be_nl
       << this->ctx_->port_prefix ()
-      << this->scope_->original_local_name ()->get_string ()
+      << this->scope_->original_local_name ()
       << this->class_extension_ << "::"
       << node->local_name ();
 

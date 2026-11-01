@@ -29,7 +29,7 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
 
   os_ << be_nl_2
       << "local interface CCM_"
-      << node->original_local_name ()->get_string ()
+      << node->original_local_name ()
       << "_Context" << be_idt_nl
       << ": ";
 
@@ -48,7 +48,7 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
       std::string const sname_str (
         IdentifierHelper::orig_sn (scope->name ()));
       std::string const& lname =
-        base->original_local_name ()->get_string ();
+        base->original_local_name ();
 
       std::string const global = sname_str.empty () ? "" : "::";
 

@@ -2148,7 +2148,7 @@ be_interface::gen_facet_idl (TAO_OutStream &os)
 
   os << be_nl
      << "local interface CCM_"
-     << this->original_local_name ()->get_string ()
+     << this->original_local_name ()
      << " : ::"
      << IdentifierHelper::orig_sn (this->name ())
      << be_nl
@@ -2526,7 +2526,7 @@ be_interface::flat_client_enclosing_scope () const
     {
       std::string const& full_name = this->flat_name ();
       std::string const& name =
-        this->original_local_name ()->get_string ();
+        this->original_local_name ();
 
       std::size_t offset = name.size ();
       std::size_t length = full_name.size () - offset;

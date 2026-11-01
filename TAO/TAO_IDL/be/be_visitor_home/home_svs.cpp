@@ -104,7 +104,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
 
   os_ << be_nl_2
       << "::" << c->name () << "_ptr" << be_nl
-      << node_->original_local_name ()->get_string ()
+      << node_->original_local_name ()
       << "_Servant::" << node->local_name ();
 
   be_visitor_operation_arglist al_visitor (this->ctx_);
@@ -206,7 +206,7 @@ be_visitor_home_svs::gen_servant_class ()
   std::string const& sname = scope->full_name ();
 
   // Avoid '_cxx_' prefix.
-  std::string const& lname = node_->original_local_name ()->get_string ();
+  std::string const& lname = node_->original_local_name ();
 
   std::string const& clname = comp_->local_name ()->get_string ();
   std::string const global = sname.empty () ? "" : "::";
@@ -380,7 +380,7 @@ be_visitor_home_svs::gen_entrypoint ()
     ScopeAsDecl (node_->defined_in ())->full_name ();
 
   // Avoid _cxx_ prefix.
-  std::string const& lname = node_->original_local_name ()->get_string ();
+  std::string const& lname = node_->original_local_name ();
 
   std::string const global = sname.empty () ? "" : "::";
 
