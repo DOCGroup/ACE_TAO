@@ -287,7 +287,7 @@ private:
   : public ACE_Intrusive_List_Node<Deferred_Event>
   {
   public:
-    Deferred_Event (ACE_Event_Handler* h);
+    explicit Deferred_Event (ACE_Event_Handler* h);
 
     ACE_Event_Handler* handler () const;
   private:
@@ -303,7 +303,7 @@ class TAO_Export TAO_LF_Client_Thread_Helper
 {
 public:
   /// Constructor
-  TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  explicit TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower);
 
   /// Destructor
   ~TAO_LF_Client_Thread_Helper ();
@@ -317,7 +317,7 @@ class TAO_Export TAO_LF_Client_Leader_Thread_Helper
 {
 public:
   /// Constructor
-  TAO_LF_Client_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  explicit TAO_LF_Client_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
 
   /// Destructor
   ~TAO_LF_Client_Leader_Thread_Helper ();
