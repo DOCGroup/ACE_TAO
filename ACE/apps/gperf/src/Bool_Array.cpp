@@ -24,8 +24,8 @@
  */
 
 #include "Bool_Array.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+#include <algorithm>
 
 // Prints out debugging diagnostics.
 
@@ -57,9 +57,7 @@ Bool_Array::open (u_long s)
                   u_long[s],
                   -1);
 
-  ACE_OS::memset (storage_array_,
-                  0,
-                  s * sizeof *storage_array_);
+  std::fill_n (storage_array_, s, 0UL);
 
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
@@ -91,9 +89,7 @@ Bool_Array::reset ()
                     "(re-initializing bool_array)..."));
 
       this->generation_number_ = 1;
-      ACE_OS::memset (storage_array_,
-                      0,
-                      size_ * sizeof *storage_array_);
+      std::fill_n (storage_array_, size_, 0UL);
       if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
