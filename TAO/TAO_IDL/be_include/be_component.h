@@ -48,13 +48,13 @@ public:
   /// Visiting.
   int accept (be_visitor *visitor) override;
 
-  ACE_CDR::ULong n_provides () const;
-  ACE_CDR::ULong n_remote_provides () const;
-  ACE_CDR::ULong n_uses () const;
+  std::size_t n_provides () const;
+  std::size_t n_remote_provides () const;
+  std::size_t n_uses () const;
   bool has_uses_multiple () const;
-  ACE_CDR::ULong n_publishes () const;
-  ACE_CDR::ULong n_consumes () const;
-  ACE_CDR::ULong n_emits () const;
+  std::size_t n_publishes () const;
+  std::size_t n_consumes () const;
+  std::size_t n_emits () const;
 
   /// Update the has_* members.
   void scan (UTL_Scope *s);
@@ -74,14 +74,13 @@ private:
 
 private:
   /// Used by visitors to reduce footprint.
-  ACE_CDR::ULong n_provides_ {};
-  ACE_CDR::ULong n_remote_provides_ {};
-  ACE_CDR::ULong n_uses_ {};
-  ACE_CDR::ULong n_remote_uses_ {};
+  std::size_t n_provides_ {};
+  std::size_t n_remote_provides_ {};
+  std::size_t n_uses_ {};
   bool has_uses_multiple_ {};
-  ACE_CDR::ULong n_publishes_ {};
-  ACE_CDR::ULong n_consumes_ {};
-  ACE_CDR::ULong n_emits_ {};
+  std::size_t n_publishes_ {};
+  std::size_t n_consumes_ {};
+  std::size_t n_emits_ {};
 };
 
 #endif  // if !defined

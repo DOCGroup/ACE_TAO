@@ -109,7 +109,6 @@ public:
                         AST_Interface *ix = nullptr);
 
   // Allows adding a valuetype at a later point.
-  int be_add_valuetype (AST_ValueType *v);
 
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.

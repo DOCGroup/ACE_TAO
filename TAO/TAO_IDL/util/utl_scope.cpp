@@ -2063,20 +2063,6 @@ UTL_ScopeActiveIterator::is_done ()
     }
 }
 
-// What kind of iterator is this?
-UTL_Scope::ScopeIterationKind
-UTL_ScopeActiveIterator::iteration_kind () const
-{
-  return this->ik;
-}
-
-// And where are we in the iteration?
-UTL_Scope::ScopeIterationKind
-UTL_ScopeActiveIterator::iteration_stage () const
-{
-  return this->stage;
-}
-
 AST_Annotation_Decl *
 UTL_Scope::fe_add_annotation_decl (AST_Annotation_Decl * /*annotation_decl*/)
 {

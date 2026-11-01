@@ -69,7 +69,6 @@ public:
   /**
    * Get name of the annotation as written by the user
    */
-  std::string const& original_name () const;
 
   /**
    * Apply a Annotation Declaration to this Application. This will either fully

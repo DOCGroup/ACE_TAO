@@ -221,9 +221,3 @@ FE_Declarator::name () const
 {
   return this->pd_name;
 }
-
-FE_Declarator::Declarator_Type
-FE_Declarator::decl_type () const
-{
-  return this->pd_decl_type;
-}

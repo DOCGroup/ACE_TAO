@@ -114,13 +114,6 @@ AST_InterfaceFwd::is_valuetype ()
 }
 
 bool
-AST_InterfaceFwd::is_abstract_valuetype ()
-{
-  return (this->full_definition ()->is_abstract ()
-          && this->is_valuetype ());
-}
-
-bool
 AST_InterfaceFwd::full_def_seen ()
 {
   UTL_Scope *s = this->defined_in ();

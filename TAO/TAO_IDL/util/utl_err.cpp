@@ -799,47 +799,6 @@ UTL_Error::error3 (UTL_Error::ErrorCode c,
 }
 
 void
-UTL_Error::warning0 (UTL_Error::ErrorCode c)
-{
-  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
-    {
-      idl_warning_header (c);
-      ACE_ERROR ((LM_WARNING,
-                  "\n"));
-    }
-}
-
-void
-UTL_Error::warning1 (UTL_Error::ErrorCode c,
-                     AST_Decl *d)
-{
-  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
-    {
-      idl_warning_header (c);
-      d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_WARNING,
-                  "\n"));
-    }
-}
-
-void
-UTL_Error::warning2 (UTL_Error::ErrorCode c,
-                     AST_Decl *d1,
-                     AST_Decl *d2)
-{
-  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
-    {
-      idl_warning_header (c);
-      d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_WARNING,
-                  ", "));
-      d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_WARNING,
-                  "\n"));
-    }
-}
-
-void
 UTL_Error::warning3 (UTL_Error::ErrorCode c,
                      AST_Decl *d1,
                      AST_Decl *d2,
@@ -1019,22 +978,6 @@ UTL_Error::abstract_inheritance_error (UTL_ScopedName *v,
               "\n"));
 }
 
-// Report illegal support of non-abstract interface.
-void
-UTL_Error::abstract_support_error (UTL_ScopedName *v,
-                                   UTL_ScopedName *i)
-{
-  idl_error_header (EIDL_CANT_SUPPORT);
-  ACE_ERROR ((LM_ERROR,
-              " valuetype "));
-  v->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              " attempts to support more than one concrete type: "));
-  i->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
-}
-
 // Report illegal component or home support of local interface.
 void
 UTL_Error::unconstrained_interface_expected (UTL_ScopedName *c,
@@ -1153,18 +1096,6 @@ UTL_Error::valuetype_expected (AST_Decl *d)
               "\n"));
 }
 
-// Report a situation where a concrete value type was expected but we got
-// something else instead. This most likely is a case where a valuetype
-// inherits from something other than a concrete valuetype.
-void
-UTL_Error::concrete_valuetype_expected (AST_Decl *d)
-{
-  idl_error_header (EIDL_CONCRETE_VT_EXPECTED);
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
-}
-
 // Report a situation where an abstract type was expected but we got
 // something else instead. This is the case in an inheritance
 // list where a concrete type appears after an abstract type, or
@@ -1189,20 +1120,6 @@ UTL_Error::eventtype_expected (AST_Decl *d)
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
-}
-
-// Report a situation where a valuetype used as a primary key for a
-// component home does not inherit directly or indirectly from
-// Components::primaryKeyBase.
-void
-UTL_Error::primary_key_error (AST_Decl *d)
-{
-  idl_error_header (EIDL_PRIMARY_KEY_ERROR);
-  ACE_ERROR ((LM_ERROR,
-              "primary key "));
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              "does not have Components::primaryKeyBase as an ancestor\n"));
 }
 
 // Report a situation where an enumerator was expected but we
@@ -1389,25 +1306,6 @@ UTL_Error::fixed_unsupported (AST_Fixed *d)
 }
 
 void
-UTL_Error::back_end (long lineno,
-                     std::string const& s)
-{
-  idl_error_header (EIDL_BACK_END,
-                    lineno,
-                    s);
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
-}
-
-void
-UTL_Error::illegal_infix ()
-{
-  idl_error_header (EIDL_ILLEGAL_INFIX);
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
-}
-
-void
 UTL_Error::local_remote_mismatch (AST_Decl *l,
                                   UTL_Scope *s)
 {
@@ -1419,15 +1317,6 @@ UTL_Error::local_remote_mismatch (AST_Decl *l,
   ACE_ERROR ((LM_ERROR,
               " used in remote operation "));
   r->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-  ACE_ERROR ((LM_ERROR,
-              "\n"));
-}
-
-void
-UTL_Error::ignore_idl3_error (AST_Decl *d)
-{
-  idl_error_header (EIDL_IGNORE_IDL3_ERROR, d);
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -1663,33 +1552,4 @@ UTL_Error::annotation_param_missing_error (
   ACE_ERROR ((LM_ERROR,
     ACE_TEXT (" needs to be defined because it does not have a default value!\n"),
     filename.c_str (), get_lineno (member)));
-}
-
-void
-UTL_Error::direct_error (
-  std::string const& reason, std::string const& filename, long lineno,
-  UTL_Error::ErrorCode error_code)
-{
-  idl_error_header (error_code, lineno, filename);
-  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason.c_str ()));
-}
-
-void
-UTL_Error::direct_warning (
-  std::string const& reason, std::string const& filename, long lineno,
-  UTL_Error::ErrorCode error_code)
-{
-  if (idl_global->print_warnings ())
-    {
-      idl_warning_header (error_code, lineno, filename);
-      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason.c_str ()));
-    }
-}
-
-void UTL_Error::reset_last_error_and_warning ()
-{
-  last_error = EIDL_OK;
-  last_error_lineno = -1;
-  last_warning = EIDL_OK;
-  last_warning_lineno = -1;
 }

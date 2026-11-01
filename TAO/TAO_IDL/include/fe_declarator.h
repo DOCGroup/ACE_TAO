@@ -95,7 +95,6 @@ public:
   // Data Accessors.
   AST_Decl *complex_part () const;
   UTL_ScopedName *name () const;
-  Declarator_Type decl_type () const;
 
   // Other Operations.
 

@@ -96,7 +96,7 @@ public:
   // Data Accessors.
   UTL_ScopedName *name () const;
   AST_Type **inherits () const;
-  long n_inherits () const;
+  std::size_t n_inherits () const;
   AST_Interface **inherits_flat () const;
   std::size_t n_inherits_flat () const;
 
@@ -139,7 +139,7 @@ protected:
 
   // Inherited interfaces.
   AST_Type **inherits_ {};
-  long n_inherits_ {};
+  std::size_t n_inherits_ {};
 
   // Used for name clash checking.
   AST_Interface  **inherits_flat_ {};

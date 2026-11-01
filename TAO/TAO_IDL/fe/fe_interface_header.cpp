@@ -211,7 +211,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
         }
 
       // Add i's parents to the flat list.
-      AST_Interface **parents = iface->inherits_flat ();
+      AST_Interface **const parents = iface->inherits_flat ();
       std::size_t const num_parents = iface->n_inherits_flat ();
 
       for (std::size_t j = 0; j < num_parents; ++j)
@@ -352,7 +352,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
           nt = ph->info ()->type_;
 
-          bool ok_param =
+          bool const ok_param =
             nt == AST_Decl::NT_type
             || (nt == AST_Decl::NT_interface && !for_valuetype)
             || (nt == AST_Decl::NT_valuetype && for_valuetype);
@@ -387,7 +387,7 @@ FE_InterfaceHeader::check_inherit (AST_Interface *i,
 {
   // We use the narrow instead of node_type() here so we can get a
   // match with both valuetypes and eventtypes.
-  bool is_valuetype = (dynamic_cast<AST_ValueType*> (i) != nullptr);
+  bool const is_valuetype = (dynamic_cast<AST_ValueType*> (i) != nullptr);
 
   if (
       // Non-local interfaces may not inherit from local ones.
@@ -493,7 +493,7 @@ FE_InterfaceHeader::install_in_header ()
           this->inherits_[i] = this->iseen_[i];
         }
 
-      this->n_inherits_ = static_cast<long> (this->iseen_.size ());
+      this->n_inherits_ = this->iseen_.size ();
     }
 }
 
@@ -511,7 +511,7 @@ FE_InterfaceHeader::inherits () const
   return this->inherits_;
 }
 
-long
+std::size_t
 FE_InterfaceHeader::n_inherits () const
 {
   return this->n_inherits_;

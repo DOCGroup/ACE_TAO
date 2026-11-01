@@ -28,7 +28,7 @@ public:
   // Data Accessors.
   AST_Component *base_component () const;
   AST_Type **supports () const;
-  long n_supports () const;
+  std::size_t n_supports () const;
   AST_Interface **supports_flat () const;
   std::size_t n_supports_flat () const;
 

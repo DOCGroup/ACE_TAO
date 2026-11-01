@@ -348,7 +348,7 @@ protected:
 
 protected:
   /// Number of static skeletons in the operation table.
-  int skel_count_ {};
+  std::size_t skel_count_ {};
 
   /// Am I directly or indirectly involved in a multiple inheritance. If the
   /// value is -1 => not computed yet.

@@ -299,7 +299,7 @@ int
 be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
                                              be_visitor_context &ctx)
 {
-  int n_processed = 0;
+  std::size_t n_processed = 0;
   TAO_OutStream *os = ctx.stream ();
   this->elem_number_ = 0;
 

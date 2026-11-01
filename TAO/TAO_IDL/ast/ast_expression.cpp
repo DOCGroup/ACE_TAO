@@ -2933,49 +2933,16 @@ AST_Expression::v1 () const
   return this->pd_v1.get ();
 }
 
-void
-AST_Expression::set_v1 (AST_Expression *e)
-{
-  if (this->pd_v1.get () != e)
-    {
-      this->pd_v1.reset (e);
-    }
-}
-
 AST_Expression *
 AST_Expression::v2 () const
 {
   return this->pd_v2.get ();
 }
 
-void
-AST_Expression::set_v2 (AST_Expression *e)
-{
-  if (this->pd_v2.get () != e)
-    {
-      this->pd_v2.reset (e);
-    }
-}
-
 UTL_ScopedName *
 AST_Expression::n () const
 {
   return this->pd_n.get ();
-}
-
-void
-AST_Expression::set_n (UTL_ScopedName *new_n)
-{
-  if (this->pd_n.get () == new_n)
-    {
-      return;
-    }
-
-  if (this->pd_n != nullptr)
-    {
-      this->pd_n->destroy ();
-    }
-  this->pd_n.reset (new_n);
 }
 
 std::string

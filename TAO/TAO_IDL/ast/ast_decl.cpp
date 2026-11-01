@@ -1162,24 +1162,6 @@ AST_Decl::local_name (Identifier *id)
   this->pd_local_name.reset (id);
 }
 
-Identifier *
-AST_Decl::compute_local_name (std::string const& prefix,
-                              std::string const& suffix) const
-{
-  // Init the result with prefix.
-  std::string result_str (prefix);
-  result_str.append (this->local_name ()->get_string ());
-  result_str.append (suffix);
-
-  // Identifier for the resulting local name.
-  Identifier *result_id = nullptr;
-  ACE_NEW_RETURN (result_id,
-                  Identifier (result_str),
-                  nullptr);
-
-  return result_id;
-}
-
 // If there is _cxx_ in the beginning, we will remove that and keep
 // a copy of the original name. TAO IDL's front end adds _cxx_
 // prefix to the all the reserved keywords. But when we invoke the
@@ -1321,34 +1303,6 @@ void
 AST_Decl::contains_wstring (int val)
 {
   this->contains_wstring_ = val;
-}
-
-bool
-AST_Decl::masking_checks (AST_Decl *mod)
-{
-  if (!this->pd_local_name->case_compare (mod->local_name ()))
-    {
-      return true;
-    }
-
-  AST_Module *me_mod = dynamic_cast<AST_Module*> (this);
-
-  if (me_mod != nullptr)
-    {
-      AST_Module *po_mod = dynamic_cast<AST_Module*> (mod);
-      if (po_mod)
-        {
-          while (!!(po_mod = po_mod->previous_opening ()))
-            {
-              if (po_mod == me_mod)
-                {
-                  return true;
-                }
-            }
-        }
-    }
-
-  return false;
 }
 
 bool

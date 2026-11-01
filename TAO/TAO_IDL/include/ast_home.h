@@ -52,7 +52,6 @@ public:
 
   AST_Type *primary_key () const;
 
-  void transfer_scope_elements (AST_Interface *dst);
 
   // Cleanup function.
   void destroy () override;

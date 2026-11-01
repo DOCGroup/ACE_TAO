@@ -250,20 +250,3 @@ AST_Component::fe_add_mirror_port (AST_Mirror_Port *p)
   return dynamic_cast<AST_Mirror_Port*> (this->fe_add_ref_decl (p));
 }
 
-int
-AST_Component::be_add_uses (AST_Uses *i,
-                            AST_Uses *ix)
-{
-  // Add it to scope.
-  this->add_to_scope (i,
-                      ix);
-
-  // Add it to set of locally referenced symbols.
-  this->add_to_referenced (i,
-                           false,
-                           i->local_name (),
-                           ix);
-
-  return 0;
-}
-

@@ -139,7 +139,7 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
           idl_global->err ()->valuetype_expected (this->inherits_[0]);
         }
 
-      for (long i = 1; i < this->n_inherits_; ++i)
+      for (std::size_t i = 1; i < this->n_inherits_; ++i)
         {
           t = this->inherits_[i];
 
@@ -301,7 +301,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
   AST_Type *concrete = nullptr;
   AST_Interface *ancestor = nullptr;
 
-  for (long i = 0; i < this->n_inherits_; ++i)
+  for (std::size_t i = 0; i < this->n_inherits_; ++i)
     {
       vt = dynamic_cast<AST_ValueType*> (this->inherits_[i]);
       concrete = vt->supports_concrete ();

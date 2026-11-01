@@ -663,7 +663,7 @@ be_visitor_valuetype::visit_field (be_field *)
 int
 be_visitor_valuetype::gen_pd (be_valuetype *node)
 {
-  int n_processed = 0;
+  std::size_t n_processed = 0;
   this->elem_number_ = 0;
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);

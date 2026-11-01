@@ -700,7 +700,7 @@ be_visitor_servant_svs::gen_provides_top ()
 void
 be_visitor_servant_svs::gen_publishes_top ()
 {
-  ACE_CDR::ULong npubs = this->node_->n_publishes ();
+  std::size_t npubs = this->node_->n_publishes ();
 
   if (npubs > 0UL)
     {
@@ -807,7 +807,7 @@ be_visitor_servant_svs::gen_publishes_top ()
 void
 be_visitor_servant_svs::gen_uses_top ()
 {
-  ACE_CDR::ULong nuses = this->node_->n_uses ();
+  std::size_t nuses = this->node_->n_uses ();
 
   if (nuses > 0UL)
     {

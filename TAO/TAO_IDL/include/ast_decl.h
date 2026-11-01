@@ -248,9 +248,6 @@ public:
   Identifier *local_name () const;
   void local_name (Identifier *id);
 
-  Identifier *compute_local_name (std::string const& prefix,
-                                  std::string const& sufix) const;
-  // Apply prefix and suffix to the local name and return.
 
   virtual std::string const& full_name () const;
   // Return the stringified full name.
@@ -325,10 +322,6 @@ public:
   virtual int contains_wstring ();
   void contains_wstring (int val);
 
-  // Additional checks when we think we have caught an IDL
-  // masking scope error in a lookup, which starts simply with
-  // a comparison of names in a scope masking queue.
-  bool masking_checks (AST_Decl *mod);
 
   // Accessors for the member.
   bool in_tmpl_mod_not_aliased () const;

@@ -167,7 +167,6 @@ private:
   // Operations.
 
   // Look up a branch by node pointer.
-  AST_UnionBranch *lookup_branch (AST_UnionBranch *branch);
 
   // Look up the branch with the "default" label.
   AST_UnionBranch *lookup_default ();

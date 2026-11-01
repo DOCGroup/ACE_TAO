@@ -56,12 +56,6 @@ public:
   // Cleanup function.
   void destroy () override;
 
-  // Allows adding an uses to a later point
-  // The port i is inserted after port ix, if
-  // ix is not null.
-  int be_add_uses (AST_Uses *i,
-                   AST_Uses *ix = nullptr);
-
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &) override;
 

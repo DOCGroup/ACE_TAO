@@ -103,7 +103,6 @@ public:
 
   bool is_local () override;
   virtual bool is_valuetype ();
-  virtual bool is_abstract_valuetype ();
 
   bool full_def_seen ();
 

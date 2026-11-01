@@ -155,17 +155,6 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
 
 AST_Interface::~AST_Interface () = default;
 
-void
-AST_Interface::be_replace_operation (AST_Decl *old_op,
-                                     AST_Decl *new_op)
-{
-  this->replace_scope (old_op,
-                       new_op);
-
-  this->replace_referenced (old_op,
-                            new_op);
-}
-
 AST_Operation *
 AST_Interface::be_add_operation (AST_Operation *op)
 {

@@ -473,38 +473,6 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
   return nullptr;
 }
 
-// Look up a branch by value. This is the top level branch label resolution
-// entry point. It dispatches to the right lookup function depending on the
-// union discriminator type.
-AST_UnionBranch *
-AST_Union::lookup_branch (AST_UnionBranch *branch)
-{
-  AST_UnionLabel *label = nullptr;
-
-  if (branch != nullptr)
-    {
-      label = branch->label ();
-    }
-
-  if (label != nullptr)
-    {
-      if (label->label_kind () == AST_UnionLabel::UL_default)
-        {
-          return this->lookup_default ();
-        }
-
-      if (this->pd_udisc_type == AST_Expression::EV_enum)
-        {
-          // CONVENTION: indicates enum discriminant.
-          return this->lookup_enum (branch);
-        }
-
-      return this->lookup_label (branch);
-    }
-
-  return nullptr;
-}
-
 // Return the default value.
 int
 AST_Union::default_value (AST_Union::DefaultValue &dv)

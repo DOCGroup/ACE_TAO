@@ -185,30 +185,10 @@ public:
                AST_Decl *t3);
 
   // Report warnings with varying numbers of arguments
-  void warning0 (ErrorCode e);
-  void warning1 (ErrorCode e,
-                 AST_Decl *t);
-  void warning2 (ErrorCode e,
-                 AST_Decl *t1,
-                 AST_Decl *t2);
   void warning3 (ErrorCode e,
                  AST_Decl *t1,
                  AST_Decl *t2,
                  AST_Decl *t3);
-
-  /**
-   * Report an error that can be out of context of IDL parsing.
-   */
-  void direct_error (
-    std::string const& reason, std::string const& filename, long lineno,
-    ErrorCode error_code = EIDL_MISC);
-
-  /**
-   * Report an warning that can be out of context of IDL parsing.
-   */
-  void direct_warning (
-    std::string const& reason, std::string const& filename, long lineno,
-    ErrorCode error_code = EIDL_MISC);
 
   // Report a syntax error in IDL input
   void syntax_error (IDL_GlobalData::ParseState ps);
@@ -275,10 +255,6 @@ public:
   void abstract_inheritance_error (UTL_ScopedName *v,
                                    UTL_ScopedName *i);
 
-  // Report an attempt to support more then one concrete type.
-  void abstract_support_error (UTL_ScopedName *v,
-                               UTL_ScopedName *i);
-
   // Report a situation where a non-local interface was expected but we got
   // something else instead. This most likely is a case in a supports
   // or inheritance list.
@@ -322,11 +298,6 @@ public:
   // key, emits, publishes or consumes declaration.
   void valuetype_expected (AST_Decl *d);
 
-  // Report a situation where a concrete value type was expected but we got
-  // something else instead. This most likely is a case where a valuetype
-  // inherits from something other than a concrete valuetype.
-  void concrete_valuetype_expected (AST_Decl *d);
-
   // Report a situation where an abstract type was expected but we got
   // something else instead. This is the case in an inheritance
   // list where a concrete type appears after an abstract type, or
@@ -337,11 +308,6 @@ public:
   // something else instead. This is the case in an 'emits', 'publishes',
   // or 'consumes' declaration in a component and it's not an event type.
   void eventtype_expected (AST_Decl *d);
-
-  // Report a situation where a valuetype used as a primary key for a
-  // component home does not inherit directly or indirectly from
-  // Components::primaryKeyBase.
-  void primary_key_error (AST_Decl *d);
 
   // Report a situation where an enumerator was expected but we got
   // something else instead. This occurs when a union with an enum
@@ -377,20 +343,9 @@ public:
   // Fixed data type is not supported
   void fixed_unsupported (AST_Fixed *f);
 
-  // Report back-end error
-  void back_end (long lineno,
-                 std::string const& s);
-
-  // Report illegal infix operator error (they can be used
-  // only with integer, floating point or fixed point expressions.
-  void illegal_infix ();
-
   // Report local type used in remote operation.
   void local_remote_mismatch (AST_Decl *l,
                               UTL_Scope *s);
-
-  // Improper use of -Sm option.
-  void ignore_idl3_error (AST_Decl *d);
 
   // Valuetype violates a spec-defined constraint on a
   // valuetype used as a primary key.
@@ -469,8 +424,6 @@ public:
   void annotation_param_missing_error (
     AST_Annotation_Appl *appl, AST_Annotation_Member *member);
 
-  /// Reset recent warning and error information
-  void reset_last_error_and_warning ();
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

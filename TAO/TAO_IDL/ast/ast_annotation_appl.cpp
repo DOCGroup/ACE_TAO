@@ -77,11 +77,6 @@ void AST_Annotation_Appl::destroy ()
 {
 }
 
-std::string const& AST_Annotation_Appl::original_name () const
-{
-  return original_name_;
-}
-
 bool
 AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
 {

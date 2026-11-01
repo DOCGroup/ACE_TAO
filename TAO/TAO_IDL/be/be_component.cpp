@@ -96,19 +96,19 @@ be_component::accept (be_visitor *visitor)
             : visitor->visit_component (this));
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_provides () const
 {
   return this->n_provides_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_remote_provides () const
 {
   return this->n_remote_provides_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_uses () const
 {
   return this->n_uses_;
@@ -120,19 +120,19 @@ be_component::has_uses_multiple () const
   return this->has_uses_multiple_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_publishes () const
 {
   return this->n_publishes_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_consumes () const
 {
   return this->n_consumes_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_emits () const
 {
   return this->n_emits_;
@@ -179,11 +179,6 @@ be_component::scan (UTL_Scope *s)
             if (u->is_multiple ())
               {
                 this->has_uses_multiple_ = true;
-              }
-
-            if (!u->uses_type ()->is_local ())
-              {
-                ++this->n_remote_uses_;
               }
 
             continue;
@@ -364,11 +359,6 @@ be_component::mirror_scan (AST_PortType *pt)
           case AST_Decl::NT_provides:
             ++this->n_uses_;
             p = dynamic_cast<AST_Provides*> (d);
-
-            if (!p->provides_type ()->is_local ())
-              {
-                ++this->n_remote_uses_;
-              }
 
             continue;
           case AST_Decl::NT_uses:

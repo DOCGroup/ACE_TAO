@@ -39,7 +39,7 @@ FE_ComponentHeader::supports () const
   return this->inherits_;
 }
 
-long
+std::size_t
 FE_ComponentHeader::n_supports () const
 {
   return this->n_inherits_;
@@ -245,7 +245,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
           this->inherits_[i] = this->iseen_[i];
         }
 
-      this->n_inherits_ = static_cast<long> (this->iseen_.size ());
+      this->n_inherits_ = this->iseen_.size ();
     }
 }
 

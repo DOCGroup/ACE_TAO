@@ -262,13 +262,10 @@ public:
   void set_ev (AST_ExprValue *new_ev);
 
   AST_Expression *v1 () const;
-  void set_v1 (AST_Expression *e);
 
   AST_Expression *v2 () const;
-  void set_v2 (AST_Expression *e);
 
   UTL_ScopedName *n () const;
-  void set_n (UTL_ScopedName *new_n);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
