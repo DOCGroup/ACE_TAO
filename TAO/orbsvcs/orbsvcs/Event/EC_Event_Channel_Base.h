@@ -63,11 +63,11 @@ public:
   // the user should be able to set any values she wants.
 
   /// Can consumers or suppliers invoke connect_push_* multiple times?
-  int consumer_reconnect;
-  int supplier_reconnect;
+  bool consumer_reconnect;
+  bool supplier_reconnect;
 
   /**
-   * It not zero the event channel will send disconnect callbacks when
+   * If true, the event channel sends disconnect callbacks when
    * a disconnect method is called on a Proxy.  In other words, if a
    * consumer calls disconnect_push_supplier() on its proxy the EC
    * will invoke disconnect_push_consumer() on the consumer.  A
@@ -75,7 +75,7 @@ public:
    * It is a matter of debate what the spec requires for the regular
    * event service.
    */
-  int disconnect_callbacks;
+  bool disconnect_callbacks;
 
   /**
    * The scheduling service that we will use with this event channel.
@@ -201,14 +201,14 @@ public:
   // at construction time.
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect () const;
+  bool consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect () const;
+  bool supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks () const;
+  bool disconnect_callbacks () const;
 
   /// Obtain the scheduler, the user must release
   CORBA::Object_ptr scheduler ();
@@ -232,8 +232,8 @@ public:
   virtual void
       remove_observer (RtecEventChannelAdmin::Observer_Handle);
 
-  /// Return 1 if the event channel is already destroyed.
-  int destroyed ();
+  /// Return true if the event channel is already destroyed.
+  bool destroyed ();
 
 protected:
   /**
@@ -313,13 +313,13 @@ protected:
   TAO_EC_Scheduling_Strategy *scheduling_strategy_;
 
   /// Consumer reconnection flags
-  int consumer_reconnect_;
+  bool consumer_reconnect_;
 
   /// Supplier reconnection flags
-  int supplier_reconnect_;
+  bool supplier_reconnect_;
 
-  /// If not zero we send callbacks when a proxy is disconnected
-  int disconnect_callbacks_;
+  /// Whether callbacks are sent when a proxy is disconnected
+  bool disconnect_callbacks_;
 
   /// Strategies to disconnect misbehaving or destroyed consumers
   TAO_EC_ConsumerControl *consumer_control_;

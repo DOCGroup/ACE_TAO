@@ -169,19 +169,19 @@ TAO_EC_Event_Channel_Base::destroy_supplier_lock (ACE_Lock* x)
   this->factory_->destroy_supplier_lock (x);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_EC_Event_Channel_Base::consumer_reconnect () const
 {
   return this->consumer_reconnect_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_EC_Event_Channel_Base::supplier_reconnect () const
 {
   return this->supplier_reconnect_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_EC_Event_Channel_Base::disconnect_callbacks () const
 {
   return this->disconnect_callbacks_;
@@ -193,11 +193,11 @@ TAO_EC_Event_Channel_Base::scheduler ()
   return CORBA::Object::_duplicate (this->scheduler_.in ());
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_EC_Event_Channel_Base::destroyed ()
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return (this->status_ == Status::destroyed);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, false);
+  return this->status_ == Status::destroyed;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
