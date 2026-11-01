@@ -4423,20 +4423,17 @@ idl_valid_version (char const *s)
 static AST_Decl *
 idl_find_node (char const *s)
 {
-  UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
+  FE_Utils::Scoped_Name_Owner node = FE_Utils::string_to_scoped_name_owner (s);
   AST_Decl * d = nullptr;
 
   if (node != nullptr)
     {
-      d = idl_global->scopes ().top_non_null ()->lookup_by_name (node);
+      d = idl_global->scopes ().top_non_null ()->lookup_by_name (node.get ());
 
       if (d == nullptr)
         {
-          idl_global->err ()->lookup_error (node);
+          idl_global->err ()->lookup_error (node.get ());
         }
-
-      node->destroy ();
-      delete node;
     }
 
   return d;

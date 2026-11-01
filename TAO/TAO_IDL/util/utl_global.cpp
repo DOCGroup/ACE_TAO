@@ -1320,28 +1320,15 @@ IDL_GlobalData::add_dcps_data_type (std::string const& id)
     {
       // No existing entry, add one.
 
-      struct Scoped_Name_Deleter
-      {
-        void operator() (UTL_ScopedName *name) const
-        {
-          if (name != nullptr)
-            {
-              name->destroy ();
-              delete name;
-            }
-        }
-      };
-
-      using Scoped_Name_Owner =
-        std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter>;
-
-      Scoped_Name_Owner t1 (FE_Utils::string_to_scoped_name (type_name));
+      FE_Utils::Scoped_Name_Owner t1 =
+        FE_Utils::string_to_scoped_name_owner (type_name);
       std::unique_ptr<Identifier> root_identifier =
         std::make_unique<Identifier> ("");
 
       // Chained with null Identifier required!!
-      Scoped_Name_Owner target (std::make_unique<UTL_ScopedName> (
-                                  root_identifier.get (), t1.get ()).release ());
+      FE_Utils::Scoped_Name_Owner target (
+        std::make_unique<UTL_ScopedName> (
+          root_identifier.get (), t1.get ()).release ());
       root_identifier.release ();
       t1.release ();
 

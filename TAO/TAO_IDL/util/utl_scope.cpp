@@ -2093,10 +2093,7 @@ UTL_Scope::fe_add_annotation_member (AST_Annotation_Member * /*annotation_member
 AST_Decl *
 UTL_Scope::lookup_by_name (std::string const& name)
 {
-  AST_Decl *node = nullptr;
-  UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
-  node = lookup_by_name (scoped_name);
-  scoped_name->destroy ();
-  delete scoped_name;
-  return node;
+  FE_Utils::Scoped_Name_Owner scoped_name =
+    FE_Utils::string_to_scoped_name_owner (name);
+  return lookup_by_name (scoped_name.get ());
 }
