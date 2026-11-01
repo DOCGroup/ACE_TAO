@@ -27,7 +27,7 @@ public:
   void set (PTimerQueue *timer_queue);
 
 private:
-  PTimerQueue *timer_queue_;
+  PTimerQueue *timer_queue_ {};
   ACE_Event timer_;
 };
 

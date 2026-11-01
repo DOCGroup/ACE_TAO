@@ -27,7 +27,7 @@ public:
   void set (ACE_Timer_Queue *timer_queue);
 
 private:
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
   ACE_Event timer_;
 };
 

@@ -2,11 +2,6 @@
 #include "CB.h"
 #include "TimerDispatcher.h"
 
-CB::CB () : count_(0)
-{
-  ACE_TRACE ("CB::CB");
-}
-
 // Listing 1 code/ch20
 int CB::handle_timeout (const ACE_Time_Value &,
                         const void *arg)
@@ -54,7 +49,7 @@ CB::setID (long timerID)
 }
 
 long
-CB::getID ()
+CB::getID () const
 {
   ACE_TRACE ("CB::getID");
   return timerID_;

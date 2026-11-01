@@ -2,11 +2,6 @@
 #include "PCB.h"
 #include "PTimerDispatcher.h"
 
-PCB::PCB() : count_(0)
-{
-  ACE_TRACE ("PCB::PCB");
-}
-
 PCB::~PCB() = default;
 
 int PCB::handleEvent (const void *arg)

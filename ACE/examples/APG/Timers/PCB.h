@@ -6,7 +6,7 @@
 class PCB
 {
 public:
-  PCB ();
+  PCB () = default;
   virtual ~PCB ();
 
   // Set/get the timer id that is being handled by this instance.
@@ -19,8 +19,8 @@ public:
   virtual int handleClose ();
 
 private:
-  long timerID_;
-  int count_;
+  long timerID_ {};
+  int count_ {};
 };
 // Listing 1
 

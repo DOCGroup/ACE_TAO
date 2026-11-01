@@ -11,10 +11,10 @@ using ActiveTimer = ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
 class CB : public ACE_Event_Handler
 {
 public:
-  CB (int id) : id_(id) { }
+  explicit CB (int id) : id_ (id) { }
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                      const void *arg) override
   {
     ACE_TRACE ("CB::handle_timeout");
 
