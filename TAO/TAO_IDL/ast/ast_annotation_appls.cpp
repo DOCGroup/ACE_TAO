@@ -40,7 +40,7 @@ AST_Annotation_Appls::add (AST_Annotation_Appls const &other)
 bool
 AST_Annotation_Appls::empty () const
 {
-  return !vector_.size ();
+  return vector_.empty ();
 }
 
 std::size_t

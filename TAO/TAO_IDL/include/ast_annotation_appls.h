@@ -3,12 +3,12 @@
 
 #include "ace/Bound_Ptr.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Vector_T.h"
 
 #include "TAO_IDL_FE_Export.h"
 
 #include <cstddef>
 #include <string>
+#include <vector>
 
 class AST_Annotation_Appl;
 class AST_Annotation_Decl;
@@ -23,7 +23,7 @@ public:
 //FUZZ: disable check_for_ACE_SYNCH_MUTEX
   using AST_Annotation_Appl_Ptr = ACE_Strong_Bound_Ptr<AST_Annotation_Appl, ACE_SYNCH_MUTEX>;
 //FUZZ: enable check_for_ACE_SYNCH_MUTEX
-  using AST_Annotation_Appl_Ptrs = ACE_Vector<AST_Annotation_Appl_Ptr>;
+  using AST_Annotation_Appl_Ptrs = std::vector<AST_Annotation_Appl_Ptr>;
   using iterator = AST_Annotation_Appl_Ptrs::iterator;
   using const_iterator = AST_Annotation_Appl_Ptrs::const_iterator;
 

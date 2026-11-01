@@ -14,11 +14,10 @@
 
 ast_visitor_context::ast_visitor_context () = default;
 
-ast_visitor_context::ast_visitor_context (const ast_visitor_context &ctx)
-  : template_params_ (ctx.template_params_),
-    template_args_ (ctx.template_args_)
-{
-}
+ast_visitor_context::ast_visitor_context (ast_visitor_context const &) = default;
+
+ast_visitor_context &
+ast_visitor_context::operator= (ast_visitor_context const &) = default;
 
 ast_visitor_context::~ast_visitor_context () = default;
 

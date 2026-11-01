@@ -45,13 +45,17 @@ public:
   be_visitor_context ();
 
   /// default constructor
-  be_visitor_context (const be_visitor_context &ctx);
+  be_visitor_context (be_visitor_context const& ctx);
+
+  be_visitor_context (be_visitor_context &&) = delete;
 
   /// destructor
   ~be_visitor_context ();
 
   /// assignment operator
-  be_visitor_context &operator= (const be_visitor_context &ctx);
+  be_visitor_context &operator= (be_visitor_context const& ctx);
+
+  be_visitor_context &operator= (be_visitor_context &&) = delete;
 
   // =helpers
 

@@ -15,53 +15,14 @@
 #include "be_extern.h"
 #include "be_helper.h"
 
-be_visitor_context::be_visitor_context ()
-  : ast_visitor_context ()
-{
-}
+be_visitor_context::be_visitor_context () = default;
 
-be_visitor_context::be_visitor_context (const be_visitor_context &ctx)
-  : ast_visitor_context (ctx),
-    state_ (ctx.state_),
-    sub_state_ (ctx.sub_state_),
-    os_ (ctx.os_),
-    scope_ (ctx.scope_),
-    node_ (ctx.node_),
-    alias_ (ctx.alias_),
-    tdef_ (ctx.tdef_),
-    attr_ (ctx.attr_),
-    exception_ (ctx.exception_),
-    comma_ (ctx.comma_),
-    interface_ (ctx.interface_),
-    port_prefix_ (ctx.port_prefix_)
-{
-}
+be_visitor_context::be_visitor_context (be_visitor_context const&) = default;
 
 be_visitor_context &
-be_visitor_context::operator= (const be_visitor_context &ctx)
-{
-  this->state_ = ctx.state_;
-  this->sub_state_ = ctx.sub_state_;
-  this->os_ = ctx.os_;
-  this->scope_ = ctx.scope_;
-  this->node_ = ctx.node_;
-  this->alias_ = ctx.alias_;
-  this->tdef_ = ctx.tdef_;
-  this->attr_ = ctx.attr_;
-  this->exception_ = ctx.exception_;
-  this->comma_ = ctx.comma_;
-  this->interface_ = ctx.interface_;
-  this->template_args_ = ctx.template_args_;
-  this->template_params_ = ctx.template_params_;
-  this->port_prefix_ = ctx.port_prefix_;
+be_visitor_context::operator= (be_visitor_context const&) = default;
 
-  return *this;
-}
-
-be_visitor_context::~be_visitor_context ()
-{
-  // We do not own anything.
-}
+be_visitor_context::~be_visitor_context () = default;
 
 //= helpers
 

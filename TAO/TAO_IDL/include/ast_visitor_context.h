@@ -27,6 +27,11 @@ public:
 
   ast_visitor_context (ast_visitor_context const &ctx);
 
+  ast_visitor_context &operator= (ast_visitor_context const &ctx);
+
+  ast_visitor_context (ast_visitor_context &&) = delete;
+  ast_visitor_context &operator= (ast_visitor_context &&) = delete;
+
   ~ast_visitor_context ();
 
   // Accessors/mutators for template-related storage.
