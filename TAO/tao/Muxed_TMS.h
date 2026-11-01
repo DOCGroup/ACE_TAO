@@ -22,6 +22,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class X> class ACE_Intrusive_Auto_Ptr;
@@ -73,11 +74,13 @@ public:
 
 private:
   TAO_Muxed_TMS (TAO_Muxed_TMS const &) = delete;
+  TAO_Muxed_TMS (TAO_Muxed_TMS &&) = delete;
   TAO_Muxed_TMS &operator= (TAO_Muxed_TMS const &) = delete;
+  TAO_Muxed_TMS &operator= (TAO_Muxed_TMS &&) = delete;
 
 private:
   /// Lock to protect the state of the object
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
   /// Used to generate a different request_id on each call to
   /// request_id().
