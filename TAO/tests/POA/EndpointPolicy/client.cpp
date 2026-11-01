@@ -1,14 +1,14 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-int bad_ior = 0;
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+bool bad_ior = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:b"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -18,7 +18,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'b':
-        bad_ior = 1;
+        bad_ior = true;
         break;
 
       case '?':
@@ -49,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       tmp = orb->string_to_object (ior);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -60,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "client: Invocation expecting to %s\n",
                   (bad_ior ? ACE_TEXT ("fail") : ACE_TEXT ("work"))));
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -83,7 +83,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       hello->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       if (!bad_ior)
         {
