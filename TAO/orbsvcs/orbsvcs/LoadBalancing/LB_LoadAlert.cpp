@@ -6,13 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_LoadAlert::TAO_LB_LoadAlert ()
-  : alerted_ (false),
-    lock_ ()
-{
-}
-
-TAO_LB_LoadAlert::~TAO_LB_LoadAlert () = default;
+TAO_LB_LoadAlert::TAO_LB_LoadAlert () = default;
 
 void
 TAO_LB_LoadAlert::enable_alert ()

@@ -52,7 +52,6 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
     built_in_balancing_strategy_name_ (1),
     custom_balancing_strategy_name_ (1),
     validate_condition_ (validate_lock_),
-    shutdown_ (false),
     ping_timeout_ (ping_timeout * 10000),
     ping_interval_ (ping_interval)
 {

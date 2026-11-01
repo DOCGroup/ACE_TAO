@@ -410,7 +410,7 @@ private:
   TAO_SYNCH_MUTEX validate_lock_;
   TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
 
-  bool shutdown_;
+  bool shutdown_ {};
 
   /// Short timeout for non_exist call. defaults to 1 second
   TimeBase::TimeT ping_timeout_;
