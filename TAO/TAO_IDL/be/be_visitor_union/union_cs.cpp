@@ -316,7 +316,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
   if (be_global->tc_support ())
     {
       ctx = *this->ctx_;
-      // ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       TAO::be_visitor_union_typecode tc_visitor (&ctx);
 
       if (tc_visitor.visit_union (node) == -1)

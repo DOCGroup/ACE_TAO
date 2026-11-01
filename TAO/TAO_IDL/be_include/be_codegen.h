@@ -182,15 +182,7 @@ public:
       TAO_CDR_SCOPE,
 
       // These are for typecode generation.
-      TAO_TC_DEFN_TYPECODE,                   // top level typecode
       TAO_TC_DEFN_TYPECODE_NESTED,            // nested tc
-
-      TAO_TC_DEFN_ENCAPSULATION,              // encapsulation
-
-      TAO_TC_DEFN_SCOPE,                      // scope
-      TAO_TC_DEFN_TC_SIZE,                    // tc size computation
-      TAO_TC_DEFN_ENCAP_LEN,                  // encap size computation
-      TAO_TC_DEFN_SCOPE_LEN,                  // scope size computation
 
       // Means we are generating the copy constructor
       TAO_UNION_COPY_CONSTRUCTOR,

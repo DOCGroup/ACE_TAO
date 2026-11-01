@@ -35,7 +35,6 @@ be_visitor_enum_cs::visit_enum (be_enum *node)
   if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
-      // ctx.sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE);
       TAO::be_visitor_enum_typecode visitor (&ctx);
 
       if (visitor.visit_enum (node) == -1)
