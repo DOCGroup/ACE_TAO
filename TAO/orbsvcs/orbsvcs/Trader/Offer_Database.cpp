@@ -344,10 +344,10 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::get_id ()
     : nullptr;
 }
 
-template <class LOCK_TYPE> int
+template <class LOCK_TYPE> bool
 TAO_Service_Offer_Iterator<LOCK_TYPE>::has_more_offers ()
 {
-  return (this->offer_iter_ != nullptr) ? ! this->offer_iter_->done () : 0;
+  return (this->offer_iter_ != nullptr) ? ! this->offer_iter_->done () : false;
 }
 
 

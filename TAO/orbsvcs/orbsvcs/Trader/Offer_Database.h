@@ -155,8 +155,8 @@ public:
   /// Release all the locks acquired.
   ~TAO_Service_Offer_Iterator ();
 
-  /// Returns 1 if there are more offers, 0 otherwise.
-  int has_more_offers ();
+  /// Returns true if there are more offers, otherwise returns false.
+  bool has_more_offers ();
 
   /// Get the id for the current offer.
   CosTrading::OfferId get_id ();
