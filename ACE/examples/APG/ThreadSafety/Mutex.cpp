@@ -11,7 +11,7 @@ public:
 
   virtual ~LogMessage () = default;
 
-  virtual int priority ()
+  virtual int priority () const
   {
     return NORMAL;
   }
@@ -19,7 +19,7 @@ public:
 
 class CriticalLogMessage : public LogMessage
 {
-  int priority () override
+  int priority () const override
   {
     return LogMessage::CRITICAL;
   }

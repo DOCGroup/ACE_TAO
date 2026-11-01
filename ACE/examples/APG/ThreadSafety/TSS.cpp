@@ -9,7 +9,7 @@
 void*
 ClientContext::get_attribute (const char *name)
 {
-  void * value = 0;
+  void *value = nullptr;
   attributeMap_.find (name, value);
   return value;
 }
@@ -24,7 +24,7 @@ ClientContext::set_attribute (const char *name, void *value)
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int svc ()
+  int svc () override
   {
     ACE_thread_t tid = this->thr_mgr ()->thr_self ();
     // Set our identifier in TSS.

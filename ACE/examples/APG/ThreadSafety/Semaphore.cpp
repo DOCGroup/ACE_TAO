@@ -12,7 +12,7 @@ public:
   enum { N_THREADS = 5 };
 
   Consumer (ACE_Semaphore& psema, ACE_Semaphore& csema)
-    : psema_(psema), csema_(csema), exit_condition_(0)
+    : psema_ (psema), csema_ (csema), exit_condition_ (false)
   { }
 
   int svc () override
@@ -50,12 +50,12 @@ public:
   void shutdown ()
   {
   //FUZZ: enable check_for_lack_ACE_OS
-    exit_condition_ = 1;
+    exit_condition_ = true;
     this->msg_queue ()->deactivate ();
     csema_.release (N_THREADS);
   }
 
-  int is_closed ()
+  bool is_closed () const
   {
     return exit_condition_;
   }
@@ -63,7 +63,7 @@ public:
 private:
   ACE_Semaphore& psema_;
   ACE_Semaphore& csema_;
-  int exit_condition_;
+  bool exit_condition_;
 };
 // Listing 2
 // Listing 1 code/ch14
