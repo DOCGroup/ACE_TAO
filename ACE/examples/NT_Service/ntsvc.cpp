@@ -43,7 +43,7 @@ Service::handle_control (DWORD control_code)
 
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("Service control stop requested\n")));
-      stop_ = 1;
+      stop_ = true;
       reactor ()->notify (this,
                           ACE_Event_Handler::EXCEPT_MASK);
     }
@@ -64,8 +64,8 @@ Service::handle_exception (ACE_HANDLE)
 // Beep every two seconds.  This is what this NT service does...
 
 int
-Service::handle_timeout (const ACE_Time_Value &tv,
-                         const void *)
+Service::handle_timeout (ACE_Time_Value const &tv,
+                         void const *)
 {
   ACE_UNUSED_ARG (tv);
   MessageBeep (MB_OK);
@@ -90,7 +90,7 @@ Service::svc ()
   if (report_status (SERVICE_RUNNING) == 0)
     reactor ()->owner (ACE_Thread::self ());
 
-  this->stop_ = 0;
+  this->stop_ = false;
 
   // Schedule a timer every two seconds.
   ACE_Time_Value tv (2, 0);
