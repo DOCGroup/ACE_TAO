@@ -6,7 +6,7 @@
 class MySignalHandler : public ACE_Event_Handler
 {
 public:
-  MySignalHandler (int signum) : signum_(signum)
+  explicit MySignalHandler (int signum) : signum_ (signum)
   { }
 
   ~MySignalHandler () override = default;

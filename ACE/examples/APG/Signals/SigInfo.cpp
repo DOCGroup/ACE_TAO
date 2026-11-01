@@ -11,11 +11,12 @@
 class MySignalHandler : public ACE_Event_Handler
 {
 public:
-  MySignalHandler () : ACE_Event_Handler()
-  { }
+  MySignalHandler () = default;
 
   // Listing A code/ch11
-  int handle_signal (int signum, siginfo_t * siginfo = nullptr, ucontext_t * = nullptr) override
+  int handle_signal (int signum,
+                     siginfo_t *siginfo = nullptr,
+                     ucontext_t * = nullptr) override
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("Received signal [%S]\n"),
                 signum));
