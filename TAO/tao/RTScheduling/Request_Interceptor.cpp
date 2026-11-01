@@ -10,6 +10,8 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const IOP::ServiceId
@@ -192,7 +194,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
-      if (ACE_OS::strstr (id, "CORBA::THREAD_CANCELLED") == nullptr)
+      if (std::strstr (id, "CORBA::THREAD_CANCELLED") == nullptr)
         {
           // Perform the necessary cleanup as the
           // thread was cancelled.
