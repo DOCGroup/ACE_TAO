@@ -65,10 +65,10 @@ class Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_NULL_SYNCH>
 
 public:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = nullptr);
+  int open (void * = nullptr) override;
   // Generic initialization method.
 
-  virtual int close (u_long);
+  int close (u_long) override;
   // Close down and delete this.
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -86,7 +86,7 @@ protected:
   // Hook method called by the <svc> template method to do the actual
   // protocol.  Must be overridden by the subclass.
 
-  virtual int svc ();
+  int svc () override;
   // Template method entry point into the handler task.
 
   virtual void print_results ();
