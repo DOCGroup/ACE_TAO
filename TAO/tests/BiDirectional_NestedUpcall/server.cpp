@@ -4,7 +4,7 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = 0;
+ACE_TCHAR const *ior_output_file = nullptr;
 int no_iterations = 10;
 
 int
@@ -89,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Simple_Server_i *server_impl = 0;
+      Simple_Server_i *server_impl = nullptr;
 
       ACE_NEW_THROW_EX (server_impl,
                         Simple_Server_i (orb.in (),
@@ -112,10 +112,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
           FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
@@ -131,7 +131,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
