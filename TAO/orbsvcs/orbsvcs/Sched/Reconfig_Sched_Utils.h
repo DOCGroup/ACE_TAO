@@ -476,12 +476,12 @@ public:
   static int comp_entry_finish_times (void const *first, void const *second);
 
   /// Determines whether or not an entry is critical, based on
-  /// operation characteristics.  returns 1 if critical, 0 if not
-  static int is_critical (TAO_Reconfig_Scheduler_Entry &rse);
+  /// operation characteristics.
+  static bool is_critical (TAO_Reconfig_Scheduler_Entry &rse);
 
   /// Determines whether or not a tuple is critical, based on operation
-  /// characteristics.  returns 1 if critical, 0 if not
-  static int is_critical (TAO_RT_Info_Tuple &t);
+  /// characteristics.
+  static bool is_critical (TAO_RT_Info_Tuple &t);
 
   /// Compares two entries by subpriority alone.  Returns -1 if the
   /// first one is higher, 0 if they're the same, and 1 if the second one is higher.

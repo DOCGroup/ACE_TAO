@@ -947,25 +947,23 @@ TAO_Reconfig_Sched_Strategy_Base::comp_entry_finish_times (void const *first, vo
 // Determines whether or not an entry is critical, based on operation characteristics.
 // returns 1 if critical, 0 if not
 
-int
+bool
 TAO_Reconfig_Sched_Strategy_Base::is_critical (TAO_Reconfig_Scheduler_Entry &rse)
 {
   // Look at the underlying RT_Info's criticality field.
-  return (rse.actual_rt_info ()->criticality == RtecScheduler::HIGH_CRITICALITY ||
-          rse.actual_rt_info ()->criticality == RtecScheduler::VERY_HIGH_CRITICALITY)
-         ? 1 : 0;
+  return rse.actual_rt_info ()->criticality == RtecScheduler::HIGH_CRITICALITY ||
+         rse.actual_rt_info ()->criticality == RtecScheduler::VERY_HIGH_CRITICALITY;
 }
 
 // Determines whether or not a tuple is critical, based on operation
 // characteristics.  returns 1 if critical, 0 if not
 
-int
+bool
 TAO_Reconfig_Sched_Strategy_Base::is_critical (TAO_RT_Info_Tuple &t)
 {
   // Look at the underlying RT_Info's criticality field.
-  return (t.criticality == RtecScheduler::HIGH_CRITICALITY ||
-          t.criticality == RtecScheduler::VERY_HIGH_CRITICALITY)
-         ? 1 : 0;
+  return t.criticality == RtecScheduler::HIGH_CRITICALITY ||
+         t.criticality == RtecScheduler::VERY_HIGH_CRITICALITY;
 }
 
 
