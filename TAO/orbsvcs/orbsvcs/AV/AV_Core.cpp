@@ -11,6 +11,8 @@
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/default_resource.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 #include "orbsvcs/AV/QoS_UDP.h"
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
@@ -559,7 +561,7 @@ TAO_AV_Core::get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
        begin != end;
        ++begin)
     {
-      if (ACE_OS::strcmp ((*begin)->flowname (),flowname) == 0)
+      if (std::strcmp ((*begin)->flowname (),flowname) == 0)
         return (*begin);
     }
   return nullptr;
@@ -577,7 +579,7 @@ TAO_AV_Core::get_acceptor (char const *flowname)
 
       for (;acceptor != end; ++acceptor)
         {
-          if (ACE_OS::strcmp ((*acceptor)->flowname (),flowname) == 0)
+          if (std::strcmp ((*acceptor)->flowname (),flowname) == 0)
             return *acceptor;
         }
     }
@@ -600,7 +602,7 @@ TAO_AV_Core::remove_acceptor (char const *flowname)
 
       for (;acceptor != end; ++acceptor)
         {
-          if (ACE_OS::strcmp ((*acceptor)->flowname (),flowname) == 0)
+          if (std::strcmp ((*acceptor)->flowname (),flowname) == 0)
             {
               this->acceptor_registry_->close (*acceptor);
               return 0;
@@ -624,7 +626,7 @@ TAO_AV_Core::get_connector (char const *flowname)
 
   for (;connector != end; ++connector)
     {
-      if (ACE_OS::strcmp ((*connector)->flowname (),flowname) == 0)
+      if (std::strcmp ((*connector)->flowname (),flowname) == 0)
         return *connector;
     }
   return nullptr;
@@ -640,7 +642,7 @@ TAO_AV_Core::remove_connector (char const *flowname)
 
   for (;connector != end; ++connector)
     {
-      if (ACE_OS::strcmp ((*connector)->flowname (),flowname) == 0)
+      if (std::strcmp ((*connector)->flowname (),flowname) == 0)
         {
           this->connector_registry_->close (*connector);
           return 0;

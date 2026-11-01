@@ -7,6 +7,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/UDP.inl"
 #endif /* __ACE_INLINE__ */
@@ -95,7 +97,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
   int dscp_flag=0;
   for(i=0; i < qos.QoSParams.length(); i++)
     {
-      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
+      if( std::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
           qos.QoSParams[i].property_value >>= dscp;
           dscp_flag=1;
@@ -108,7 +110,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
             }
         }
 
-      if( ACE_OS::strcmp( qos.QoSParams[i].property_name.in(), "ECN") == 0)
+      if( std::strcmp( qos.QoSParams[i].property_name.in(), "ECN") == 0)
         {
           qos.QoSParams[i].property_value >>= ecn;
           // ECN value can only occupy bits 6 and 7 of the

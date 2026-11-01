@@ -11,6 +11,8 @@
 
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/FlowSpec_Entry.inl"
 #endif /* __ACE_INLINE__ */
@@ -169,7 +171,7 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
 
   if (address == nullptr)
     return 0;
-  if (ACE_OS::strcmp (address,"") == 0)
+  if (std::strcmp (address,"") == 0)
     return 0;
   TAO_Tokenizer protocol_tokenizer (address,'=');
 
