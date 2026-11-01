@@ -11,13 +11,17 @@ class Blocking_Sync_None
 {
 public:
   /// Constructor
-  Blocking_Sync_None (CORBA::ORB_ptr orb);
+  explicit Blocking_Sync_None (CORBA::ORB_ptr orb);
+  Blocking_Sync_None (Blocking_Sync_None const &) = delete;
+  Blocking_Sync_None (Blocking_Sync_None &&) = delete;
+  Blocking_Sync_None &operator= (Blocking_Sync_None const &) = delete;
+  Blocking_Sync_None &operator= (Blocking_Sync_None &&) = delete;
 
   // = The skeleton methods
-  virtual void slow_operation (const Test::Payload &the_payload,
-                               CORBA::ULong sleep_microseconds);
+  void slow_operation (Test::Payload const &the_payload,
+                       CORBA::ULong sleep_microseconds) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to shutdown the application.

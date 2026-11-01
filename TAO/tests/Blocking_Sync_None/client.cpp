@@ -4,7 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_time.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int iterations = 1000;
 
 int
@@ -84,9 +84,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       policies[0]->destroy ();
 
-      const int payload_length = 65536;
-      const unsigned int sleep_milliseconds = 20;
-      const unsigned int sleep_microseconds = sleep_milliseconds * 1000;
+      int const payload_length = 65536;
+      unsigned int const sleep_milliseconds = 20;
+      unsigned int const sleep_microseconds = sleep_milliseconds * 1000;
 
       Test::Payload payload(payload_length);
       payload.length (payload_length);
@@ -128,7 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       blocked_calls));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
