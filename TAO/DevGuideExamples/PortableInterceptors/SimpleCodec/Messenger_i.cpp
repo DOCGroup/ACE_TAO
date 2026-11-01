@@ -3,22 +3,12 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include <iostream>
 
-// Implementation skeleton constructor
-Messenger_i::Messenger_i ()
-{
-}
-
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-{
-}
-
-void Messenger_i::send_message (const CORBA::OctetSeq & user_name)
+void Messenger_i::send_message (CORBA::OctetSeq const& user_name)
 {
   try
     {
       int argc = 0;
-      char **argv = 0;
+      char **argv = nullptr;
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 

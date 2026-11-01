@@ -3,7 +3,7 @@
 #include "tao/PI/ClientRequestInfo.h"
 #include <iostream>
 
-const CORBA::ULong service_ctx_id = 0xdeed;
+constexpr CORBA::ULong service_ctx_id = 0xdeed;
 
 ClientInterceptor::
 ClientInterceptor (IOP::CodecFactory_var cf)
@@ -20,10 +20,6 @@ ClientInterceptor (IOP::CodecFactory_var cf)
 
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
-}
-
-ClientInterceptor::~ClientInterceptor ()
-{
 }
 
 char *
@@ -56,7 +52,7 @@ ClientInterceptor::send_request (
   IOP::ServiceContext sc;
   sc.context_id = service_ctx_id;
 
-  const CORBA::Long gid = 9007;
+  constexpr CORBA::Long gid = 9007;
   std::cout << "GID: " << gid << std::endl;
 
   CORBA::Any gid_as_any;
