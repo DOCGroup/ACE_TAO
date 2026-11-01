@@ -13,6 +13,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_sys_socket.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -318,7 +319,7 @@ TAO_UIPMC_Connector::check_prefix (char const *endpoint)
   static constexpr char protocol[] = "miop";
   size_t const len = sizeof (protocol) - 1;
 
-  char const * const separator = ACE_OS::strchr (endpoint, ':');
+  char const * const separator = std::strchr (endpoint, ':');
   if (separator == nullptr)
     return -1;
 

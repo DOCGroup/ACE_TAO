@@ -61,7 +61,7 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
   this->object_addr_.get_host_addr (tmp, sizeof tmp);
 
   size_t actual_len =
-    ACE_OS::strlen (tmp) // chars in host name
+    std::strlen (tmp) // chars in host name
     + sizeof (':')       // delimiter
     + 5u                 // max port
     + sizeof ('\0');
@@ -156,7 +156,7 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
   while (i < count)
     {
 #if defined (ACE_HAS_IPV6)
-      if (ACE_OS::strstr (preferred[i].c_str(), "if=") != nullptr
+      if (std::strstr (preferred[i].c_str(), "if=") != nullptr
             && this->object_addr_.get_type () == AF_INET6)
         {
           latest->preferred_if_ = CORBA::string_dup (preferred[i].c_str() + 3);

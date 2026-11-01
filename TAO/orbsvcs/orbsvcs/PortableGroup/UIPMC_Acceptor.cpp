@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/PortableGroup/UIPMC_Acceptor.inl"
@@ -104,7 +105,7 @@ TAO_UIPMC_Acceptor::open (
 
   ACE_INET_Addr addr;
 
-  char const *port_separator_loc = ACE_OS::strchr (address, ':');
+  char const *port_separator_loc = std::strchr (address, ':');
   char const *specified_hostname = nullptr;
   char tmp_host[MAXHOSTNAMELEN + 1];
 
@@ -120,7 +121,7 @@ TAO_UIPMC_Acceptor::open (
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      char const *cp_pos = ACE_OS::strchr(address, ']');
+      char const *cp_pos = std::strchr(address, ']');
       if (cp_pos == nullptr)
         {
           // No valid IPv6 address specified.

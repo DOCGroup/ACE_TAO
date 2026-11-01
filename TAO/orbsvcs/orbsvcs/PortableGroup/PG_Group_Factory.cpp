@@ -23,6 +23,7 @@
 
 #include <ace/SString.h>
 
+#include <cstring>
 #include <set>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -237,7 +238,7 @@ int TAO::PG_Group_Factory::find_group_with_name (char const * target_group_name,
     // If the group has the group name in the property
     //
     char const * const a_group_name = a_group->get_name ();
-    if (a_group_name != nullptr && ACE_OS::strcmp (target_group_name, a_group_name) == 0)
+    if (a_group_name != nullptr && std::strcmp (target_group_name, a_group_name) == 0)
       { // This is the group we were looking for
         group_target = a_group;
         result = 1;

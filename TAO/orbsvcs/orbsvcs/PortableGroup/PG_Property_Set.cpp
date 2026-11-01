@@ -14,6 +14,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "tao/debug.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -286,7 +287,7 @@ int TAO_PG::test_encode_decode ()
   const char * stringResult = "";
   if (find (decoder, testStringKey, stringResult))
   {
-    if (0 != ACE_OS::strcmp (testString, stringResult))
+    if (0 != std::strcmp (testString, stringResult))
     {
       ORBSVCS_ERROR ( (LM_ERROR,
         "%n\n%T: %s = \"%s\" expecting \"%s\"\n",

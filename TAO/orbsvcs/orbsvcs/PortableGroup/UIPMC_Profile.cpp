@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 #include "tao/target_specification.h"
 #include "ace/OS_NS_ctype.h"
+#include <cstring>
 
 #include "orbsvcs/miopC.h"
 #include "orbsvcs/PortableGroupC.h"
@@ -233,7 +234,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   // The Domain ID is terminated with a '-'.
 
   // Look for the group domain delimitor.
-  char const *pos = ACE_OS::strchr (string, '-');
+  char const *pos = std::strchr (string, '-');
 
   if (pos == 0)
     {
@@ -254,7 +255,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
 
   // Skip past the last '-'.
   string = pos + 1;
-  pos = ACE_OS::strchr (string, '-');
+  pos = std::strchr (string, '-');
 
   bool parse_group_ref_version_flag = false;
 
@@ -267,7 +268,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   else
     {
       // Look for a slash as the separator.
-      pos = ACE_OS::strchr (string, '/');
+      pos = std::strchr (string, '/');
 
       if (pos == 0)
         {
@@ -304,7 +305,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
     {
       // Try to find the group version.  It is terminated by a '/'.
       string = pos + 1;
-      pos = ACE_OS::strchr (string, '/');
+      pos = std::strchr (string, '/');
       if (pos == 0)
         {
           // The group version was expected but not found,
@@ -337,7 +338,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   // Parse the group multicast address.
   // The multicast address is terminated by a ':'.
   string = pos + 1;
-  pos = ACE_OS::strrchr (string, ':');
+  pos = std::strrchr (string, ':');
 
   if (pos == 0)
     {
@@ -370,7 +371,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      pos = ACE_OS::strchr (string, ']');
+      pos = std::strchr (string, ']');
       if (pos == 0)
         {
           // No valid IPv6 address specified.
@@ -431,7 +432,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
   // Port can have name thus letters and '-' are allowed.
   static const char port_chars[] =
     "-0123456789ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  size_t port_len = ACE_OS::strlen (string);
+  size_t port_len = std::strlen (string);
   if (ACE_OS::strspn (string, port_chars) != port_len)
     {
       // Throw an exception if it's not a proper port
@@ -522,7 +523,7 @@ TAO_UIPMC_Profile::to_string () const
 
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::the_prefix) + /* "miop" */
+                   std::strlen (::the_prefix) + /* "miop" */
                    1 /* colon separator */ +
                    1 /* miop major version */ +
                    1 /* decimal point */ +
@@ -563,7 +564,7 @@ TAO_UIPMC_Profile::to_string () const
 
   if (this->has_ref_version_)
     {
-      ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+      ACE_OS::sprintf (&buf[std::strlen (buf)],
                        "-" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        this->ref_version_);
     }
@@ -571,14 +572,14 @@ TAO_UIPMC_Profile::to_string () const
 #if defined (ACE_HAS_IPV6)
   if (this->endpoint_.object_addr ().get_type () == AF_INET6)
     {
-      ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+      ACE_OS::sprintf (&buf[std::strlen (buf)],
                        "/[%s]:%d",
                        this->endpoint_.host (),
                        this->endpoint_.port ());
     }
   else
 #endif /* ACE_HAS_IPV6 */
-  ACE_OS::sprintf (&buf[ACE_OS::strlen (buf)],
+  ACE_OS::sprintf (&buf[std::strlen (buf)],
                    "/%s:%d",
                    this->endpoint_.host (),
                    this->endpoint_.port ());
