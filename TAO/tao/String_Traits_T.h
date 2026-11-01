@@ -9,8 +9,6 @@
  */
 
 #include "String_Traits_Base_T.h"
-#include "ace/OS_NS_string.h"
-
 #include <algorithm>
 #include <functional>
 
@@ -29,7 +27,7 @@ struct string_traits_decorator
   inline static void zero_range(
       char_type ** begin, char_type ** end)
   {
-    ACE_OS::memset (begin, 0, static_cast<size_t> (end - begin) * sizeof (char_type*));
+    std::fill (begin, end, nullptr);
   }
 
   inline static void initialize_range(
@@ -62,7 +60,7 @@ struct string_traits_decorator
 
   inline static char_type const * initialize_if_zero(char_type * & element)
   {
-    if (element == 0)
+    if (element == nullptr)
     {
       element = derived::default_initializer();
     }
