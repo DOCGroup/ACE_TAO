@@ -351,6 +351,21 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
 void
 FE_Utils::create_implied_ami_uses_stuff ()
 {
+  struct Scoped_Name_Deleter
+  {
+    void operator() (UTL_ScopedName *scoped_name) const
+    {
+      if (scoped_name != nullptr)
+        {
+          scoped_name->destroy ();
+          delete scoped_name;
+        }
+    }
+  };
+
+  using Scoped_Name_Owner =
+    std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter>;
+
   if (idl_global->included_ami_receps_done ())
     {
       return;
@@ -358,26 +373,17 @@ FE_Utils::create_implied_ami_uses_stuff ()
 
   for (std::string const &item : idl_global->included_ami_recep_names ())
     {
-      UTL_ScopedName *sn =
-        FE_Utils::string_to_scoped_name (item);
+      Scoped_Name_Owner sn (FE_Utils::string_to_scoped_name (item));
 
       AST_Decl *d =
-        idl_global->root ()->lookup_by_name (sn, true);
+        idl_global->root ()->lookup_by_name (sn.get (), true);
 
       if (d == nullptr)
         {
-          idl_global->err ()->lookup_error (sn);
-
-          sn->destroy ();
-          delete sn;
-          sn = nullptr;
+          idl_global->err ()->lookup_error (sn.get ());
 
           continue;
         }
-
-      sn->destroy ();
-      delete sn;
-      sn = nullptr;
 
       AST_Uses *u = dynamic_cast<AST_Uses*> (d);
 
