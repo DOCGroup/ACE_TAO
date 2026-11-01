@@ -91,7 +91,7 @@ private:
 
   /// Flag indicating that reference counting is required for this
   /// event handler upcall.
-  int requires_reference_counting_ {0};
+  bool requires_reference_counting_ {false};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
