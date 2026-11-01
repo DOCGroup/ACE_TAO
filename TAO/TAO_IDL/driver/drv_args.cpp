@@ -492,50 +492,50 @@ DRV_parse_args (long ac, char **av)
   // Make sure the output directory is valid.
   if (idl_global->temp_dir ().empty ())
     {
-      ACE_TCHAR tmpdir[MAXPATHLEN + 1];
+      std::basic_string<ACE_TCHAR> tmpdir (MAXPATHLEN + 1, ACE_TCHAR {});
 
-      if (ACE::get_temp_dir (tmpdir, MAXPATHLEN) == -1)
+      if (ACE::get_temp_dir (tmpdir.data (), MAXPATHLEN) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Temporary path too long, ")
                       ACE_TEXT ("defaulting to current directory\n")));
 
-          ACE_OS::strcpy (tmpdir, ACE_TEXT ("."));
+          tmpdir = ACE_TEXT (".");
         }
 
 #if defined(ACE_MVS)
-      if (ACE_OS::access (tmpdir, F_OK) == -1
-          || ACE_OS::access (tmpdir, R_OK) == -1
-          || ACE_OS::access (tmpdir, W_OK) == -1)
+      if (ACE_OS::access (tmpdir.c_str (), F_OK) == -1
+          || ACE_OS::access (tmpdir.c_str (), R_OK) == -1
+          || ACE_OS::access (tmpdir.c_str (), W_OK) == -1)
 #else
-      if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
+      if (ACE_OS::access (tmpdir.c_str (), F_OK | R_OK | W_OK) == -1)
 #endif /* ACE_MVS */
         {
           ACE_ERROR ((
               LM_ERROR,
               ACE_TEXT ("Can't access temporary directory (%s),")
               ACE_TEXT (" using current directory for temp files.\n"),
-              tmpdir
+              tmpdir.c_str ()
             ));
 
-          ACE_OS::strcpy (tmpdir, ACE_TEXT ("."));
+          tmpdir = ACE_TEXT (".");
 #if defined(ACE_MVS)
-          if (ACE_OS::access (tmpdir, F_OK) == -1
-              || ACE_OS::access (tmpdir, R_OK) == -1
-              || ACE_OS::access (tmpdir, W_OK) == -1)
+          if (ACE_OS::access (tmpdir.c_str (), F_OK) == -1
+              || ACE_OS::access (tmpdir.c_str (), R_OK) == -1
+              || ACE_OS::access (tmpdir.c_str (), W_OK) == -1)
 #else
-          if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
+          if (ACE_OS::access (tmpdir.c_str (), F_OK | R_OK | W_OK) == -1)
 #endif /* ACE_MVS */
             {
               ACE_ERROR ((LM_ERROR,
                           "Error: Can't access temporary directory %s\n",
-                          tmpdir));
+                          tmpdir.c_str ()));
 
               throw Bailout ();
             }
         }
 
-      idl_global->temp_dir (ACE_TEXT_ALWAYS_CHAR (tmpdir));
+      idl_global->temp_dir (ACE_TEXT_ALWAYS_CHAR (tmpdir.c_str ()));
     }
 
   DRV_cpp_post_init ();
