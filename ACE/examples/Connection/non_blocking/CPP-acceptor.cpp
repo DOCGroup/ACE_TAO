@@ -7,9 +7,15 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
 
+[[maybe_unused]] static void
+end_server_reactor_event_loop (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 template <typename PEER_STREAM>
 Svc_Handler<PEER_STREAM>::Svc_Handler (ACE_Reactor *r)
-  : SVC_HANDLER (0, 0, r)
+  : SVC_HANDLER (nullptr, nullptr, r)
 {
 }
 
@@ -117,7 +123,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
   if (this->inherited::open (this->server_addr_,
                              use_reactor
                              ? ACE_Reactor::instance ()
-                             : 0) == -1)
+                             : nullptr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
@@ -146,7 +152,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::IPC_Server ()
-  : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
+  : done_handler_ (end_server_reactor_event_loop)
 {
 }
 
@@ -192,7 +198,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc ()
 
   // Performs the iterative server activities.
 
-  while (ACE_Reactor::event_loop_done () == 0)
+  while (!ACE_Reactor::event_loop_done ())
     {
       SVC_HANDLER sh (this->reactor ());
 
@@ -201,9 +207,9 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc ()
       // EINTR).
 
       if (this->accept (&sh,
-                        0,
+                        nullptr,
                         this->options_,
-                        0) == -1)
+                        false) == -1)
         {
           if (errno == EWOULDBLOCK
               && this->reactor ())

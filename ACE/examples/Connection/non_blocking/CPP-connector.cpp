@@ -6,6 +6,12 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
 
+[[maybe_unused]] static void
+end_client_reactor_event_loop (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 template <typename PEER_STREAM>
 Peer_Handler<PEER_STREAM>::Peer_Handler (ACE_Reactor *r)
   : action_ (&Peer_Handler<PEER_STREAM>::uninitialized)
@@ -212,7 +218,7 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::fini ()
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
 IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::IPC_Client ()
-  : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
+  : done_handler_ (end_client_reactor_event_loop)
 {
 }
 
