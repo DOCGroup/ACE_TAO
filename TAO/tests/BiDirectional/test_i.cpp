@@ -32,7 +32,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback
 {
   if (do_callback)
     {
-      this->flag_ = 1;
+      this->flag_ = true;
     }
 
   return 0;
@@ -68,7 +68,7 @@ Simple_Server_i::call_client ()
         }
 
       this->callback_->shutdown ();
-      this->flag_ = 0;
+      this->flag_ = false;
 
       return 1;
     }
