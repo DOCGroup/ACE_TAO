@@ -675,16 +675,16 @@ public:
   std::vector<Include_Path_Info> const& include_paths () const;
   // Accessor for the member.
 
-  enum ANON_TYPE_DIAGNOSTIC
+  enum class Anon_Type_Diagnostic
   {
-    ANON_TYPE_ERROR,
-    ANON_TYPE_WARNING,
-    ANON_TYPE_SILENT
+    Error,
+    Warning,
+    Silent
   };
   // Determines which type of diagnostic to emit, if any, upon
   // detecting the presence of an anonymous IDL construct.
 
-  void anon_type_diagnostic (ANON_TYPE_DIAGNOSTIC val);
+  void anon_type_diagnostic (Anon_Type_Diagnostic val);
   // Mutator for the member.
 
   /// Has anon_type_diagnostic () been called?
@@ -1059,7 +1059,7 @@ private:
   /// For quick access.
   AST_Module *corba_module_ {};
 
-  ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_ {ANON_TYPE_ERROR};
+  Anon_Type_Diagnostic anon_type_diagnostic_ {Anon_Type_Diagnostic::Error};
   bool explicit_anon_type_diagnostic_ {};
 
   /// Flag set in parser so we can decide whether to emit

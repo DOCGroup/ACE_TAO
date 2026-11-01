@@ -127,11 +127,11 @@ IDL_GlobalData::IDL_GlobalData ()
     }
 
 #if defined (IDL_ANON_ERROR)
-  anon_type_diagnostic (ANON_TYPE_ERROR);
+  anon_type_diagnostic (Anon_Type_Diagnostic::Error);
 #elif defined (IDL_ANON_WARNING)
-  anon_type_diagnostic (ANON_TYPE_WARNING);
+  anon_type_diagnostic (Anon_Type_Diagnostic::Warning);
 #elif defined (IDL_ANON_SILENT)
-  anon_type_diagnostic (ANON_TYPE_SILENT);
+  anon_type_diagnostic (Anon_Type_Diagnostic::Silent);
 #endif
 
   // Reset the flags that are scoped to the current input file.
@@ -1388,7 +1388,7 @@ IDL_GlobalData::include_paths () const
 
 void
 IDL_GlobalData::anon_type_diagnostic (
-  IDL_GlobalData::ANON_TYPE_DIAGNOSTIC val)
+IDL_GlobalData::Anon_Type_Diagnostic val)
 {
   anon_type_diagnostic_ = val;
   explicit_anon_type_diagnostic_ = true;
@@ -1406,7 +1406,7 @@ IDL_GlobalData::anon_error () const
   if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
     return false;
   }
-  return anon_type_diagnostic_ == ANON_TYPE_ERROR;
+  return anon_type_diagnostic_ == Anon_Type_Diagnostic::Error;
 }
 
 bool
@@ -1415,7 +1415,7 @@ IDL_GlobalData::anon_warning () const
   if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
     return false;
   }
-  return anon_type_diagnostic_ == ANON_TYPE_WARNING;
+  return anon_type_diagnostic_ == Anon_Type_Diagnostic::Warning;
 }
 
 bool
@@ -1424,7 +1424,7 @@ IDL_GlobalData::anon_silent () const
   if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
     return true;
   }
-  return anon_type_diagnostic_ == ANON_TYPE_SILENT;
+  return anon_type_diagnostic_ == Anon_Type_Diagnostic::Silent;
 }
 
 bool

@@ -234,17 +234,17 @@ DRV_parse_args (long ac, char **av)
               if (av[i][2] == 'e')
                 {
                   idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_ERROR);
+                    IDL_GlobalData::Anon_Type_Diagnostic::Error);
                 }
               else if (av[i][2] == 'w')
                 {
                   idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_WARNING);
+                    IDL_GlobalData::Anon_Type_Diagnostic::Warning);
                 }
               else if (av[i][2] == 's')
                 {
                   idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_SILENT);
+                    IDL_GlobalData::Anon_Type_Diagnostic::Silent);
                 }
               else
                 {
