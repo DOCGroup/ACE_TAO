@@ -841,7 +841,7 @@ class ACE_TSS_Keys;
 class ACE_Export ACE_TSS_Emulation
 {
 public:
-  typedef void (*ACE_TSS_DESTRUCTOR)(void *value);
+  using ACE_TSS_DESTRUCTOR = void (*)(void *value);
 
   /// Maximum number of TSS keys allowed over the life of the program.
   static constexpr int ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS;
@@ -983,11 +983,11 @@ class ACE_TSS_Info
 {
 public:
   /// Declare pointer to function to destroy tss object.
-  typedef void (*Destructor)(void *);
+  using Destructor = void (*)(void *);
 
   /// Constructor
   ACE_TSS_Info (ACE_thread_key_t key,
-                Destructor dest = 0);
+                Destructor dest = nullptr);
 
   /// Default constructor
   ACE_TSS_Info ();

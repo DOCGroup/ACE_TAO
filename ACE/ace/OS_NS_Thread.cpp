@@ -555,8 +555,8 @@ private:
 
 private:
   // Array of <ACE_TSS_Info> objects.
-  typedef ACE_TSS_Info ACE_TSS_TABLE[ACE_DEFAULT_THREAD_KEYS];
-  typedef ACE_TSS_Info *ACE_TSS_TABLE_ITERATOR;
+  using ACE_TSS_TABLE = ACE_TSS_Info[ACE_DEFAULT_THREAD_KEYS];
+  using ACE_TSS_TABLE_ITERATOR = ACE_TSS_Info *;
 
   /// Table of <ACE_TSS_Info>'s.
   ACE_TSS_TABLE table_;
