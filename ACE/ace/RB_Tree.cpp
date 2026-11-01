@@ -74,7 +74,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_T
 
   for (iter.first ();
 
-       iter.is_done () == 0; iter.next ())
+       !iter.is_done (); iter.next ())
     insert_i (*(iter.key ()),
               *(iter.item ()));
 }
@@ -124,7 +124,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tr
       ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
 
       for (iter.first ();
-           iter.is_done () == 0;
+           !iter.is_done ();
            iter.next ())
         insert_i (*(iter.key ()),
                   *(iter.item ()));

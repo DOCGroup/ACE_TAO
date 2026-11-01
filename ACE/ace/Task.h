@@ -223,10 +223,10 @@ public:
   void thr_mgr (ACE_Thread_Manager *);
 
   /// True if queue is a reader, else false.
-  int is_reader () const;
+  bool is_reader () const;
 
   /// True if queue is a writer, else false.
-  int is_writer () const;
+  bool is_writer () const;
 
   /**
    * Returns the number of threads currently running within a task.
