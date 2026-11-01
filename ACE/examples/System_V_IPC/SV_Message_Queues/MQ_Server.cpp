@@ -31,7 +31,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Message_Block recv_msg (SRV_ID);
   Message_Block send_msg (0,
                           pid,
-                          ACE_OS::cuserid (static_cast<char *> (0)),
+                          ACE_OS::cuserid (static_cast<char *> (nullptr)),
                           "I received your message.");
 
   // Register a signal handler.

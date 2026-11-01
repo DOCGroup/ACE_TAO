@@ -19,7 +19,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_SV_Message_Queue msgque (SRV_KEY);
   Message_Block send_msg (SRV_ID,
                           pid,
-                          ACE_OS::cuserid (static_cast<char *> (0)),
+                          ACE_OS::cuserid (static_cast<char *> (nullptr)),
                           "did you get this?");
   Message_Block recv_msg (pid);
 
