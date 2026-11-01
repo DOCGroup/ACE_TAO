@@ -240,9 +240,9 @@ AST_Union::in_recursion (std::vector<AST_Type *> &list)
 
   // We should calculate this only once. If it has already been
   // done, just return it.
-  if (self_test && this->in_recursion_ != -1)
+  if (self_test && this->in_recursion_ != Recursion_State::unknown)
     {
-      return (this->in_recursion_ == 1);
+      return this->in_recursion_ == Recursion_State::recursive;
     }
 
   if (list.size () > 1)
@@ -296,7 +296,7 @@ AST_Union::in_recursion (std::vector<AST_Type *> &list)
           if (type->in_recursion (list))
             {
               if (self_test)
-                this->in_recursion_ = 1;
+                this->in_recursion_ = Recursion_State::recursive;
               idl_global->recursive_type_seen_ = true;
               return true;
             }
@@ -305,7 +305,7 @@ AST_Union::in_recursion (std::vector<AST_Type *> &list)
 
   // Not in recursion.
   if (self_test)
-    this->in_recursion_ = false;
+    this->in_recursion_ = Recursion_State::not_recursive;
   return false;
 }
 

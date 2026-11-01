@@ -142,6 +142,13 @@ public:
   void destroy () override;
 
 protected:
+  enum class Recursion_State
+  {
+    unknown,
+    not_recursive,
+    recursive
+  };
+
   // Determine our size type and set it if it is unknown.
   virtual int compute_size_type ();
 
@@ -171,7 +178,7 @@ protected:
   bool has_constructor_ {};
 
   // Storage once the value has been computed.
-  long in_recursion_ {-1};
+  Recursion_State in_recursion_ {Recursion_State::unknown};
 
   // Node-specific flag to abort recursion in legal_for_primary_key().
   mutable bool recursing_in_legal_pk_ {};
