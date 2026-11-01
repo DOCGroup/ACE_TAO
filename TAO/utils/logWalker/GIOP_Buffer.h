@@ -39,7 +39,7 @@ public:
   GIOP_Buffer (const char *text,
                size_t offset,
                Thread *thread,
-               Invocation *owner = 0);
+               Invocation *owner = nullptr);
   GIOP_Buffer ();
   ~GIOP_Buffer ();
 

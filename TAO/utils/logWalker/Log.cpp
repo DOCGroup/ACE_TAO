@@ -263,7 +263,7 @@ Log::parse_dump_giop_msg_i ()
     }
     case 0: // sending request
       this->thr_->enter_wait(pp);
-      this->thr_->push_invocation (0);
+      this->thr_->push_invocation (nullptr);
       // fall through.
     case 3: { // receiving reply
       Invocation *inv = pp->find_invocation(rid, this->thr_->active_handle());
@@ -914,7 +914,7 @@ Log::parse_notify_object_i ()
       std::sprintf (note, "Destroyed notify object %lx", objid);
 #if 0
       NotifyObject notobj = this->hostproc_->find_notify_obj (objid);
-      if (notobj == 0)
+      if (notobj == nullptr)
         {
           ACE_ERROR ((LM_ERROR, "%d: could not find notify object %lx\n", this->offset_, objid));
         }
@@ -931,7 +931,7 @@ Log::parse_notify_object_i ()
       std::sprintf (note, "increment reference notify object %lx, count now %d", objid, count);
 #if 0
       NotifyObject notobj = this->hostproc_->find_notify_obj (objid);
-      if (notobj == 0)
+      if (notobj == nullptr)
         {
           notobj = new NotifyObject (objid, this->offset_, this->timestamp_);
           this->hostproc_->add_notify_obj (notobj);
@@ -946,7 +946,7 @@ Log::parse_notify_object_i ()
       std::sprintf (note, "decrement reference notify object %lx, count now %d", objid, count);
 #if 0
       NotifyObject notobj = this->hostproc_->find_notify_obj (objid);
-      if (notobj == 0)
+      if (notobj == nullptr)
         {
           ACE_ERROR ((LM_ERROR, "%d: could not find notify object %x\n", this->offset_, objid));
         }

@@ -14,10 +14,10 @@ Thread::Thread (long tid, const char *alias, size_t offset)
     server_encounters_ (0),
     nested_ (0),
     pending_(),
-    incoming_(0),
+    incoming_ (nullptr),
     new_connection_(),
-    giop_target_(0),
-    target_dup_(0),
+    giop_target_ (nullptr),
+    target_dup_ (nullptr),
     current_invocation_ (),
     active_handle_ (0),
     first_line_ (offset),
@@ -187,30 +187,30 @@ Thread::set_dup (Thread *other, bool set_other)
 void
 Thread::clear_dup ()
 {
-  this->target_dup_ = 0;
+  this->target_dup_ = nullptr;
 }
 
 bool
 Thread::has_dup ()
 {
-  return this->target_dup_ != 0;
+  return this->target_dup_ != nullptr;
 }
 
 void
 Thread::swap_target ()
 {
-  if (target_dup_ != 0 && target_dup_->giop_target() != 0)
+  if (target_dup_ != nullptr && target_dup_->giop_target() != nullptr)
     {
       this->giop_target_->swap (target_dup_->giop_target());
       this->target_dup_->clear_dup ();
-      this->target_dup_ = 0;
+      this->target_dup_ = nullptr;
     }
   else
     {
-      if (target_dup_ == 0)
-        ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_ == 0\n"));
+      if (target_dup_ == nullptr)
+        ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_ == nullptr\n"));
       else
-        ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_.id = %d, giop_target == 0\n", target_dup_->id()));
+        ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_.id = %d, giop_target == nullptr\n", target_dup_->id()));
     }
 }
 
@@ -224,10 +224,10 @@ void
 Thread::set_giop_target (GIOP_Buffer *buffer)
 {
   this->giop_target_ = buffer;
-  if (this->target_dup_ != 0)
+  if (this->target_dup_ != nullptr)
     {
       this->target_dup_->clear_dup();
-      this->target_dup_ = 0;
+      this->target_dup_ = nullptr;
     }
 }
 
@@ -288,7 +288,7 @@ Thread::get_summary (long &sent_reqs,
        !i.done();
        i.advance())
     {
-      Invocation *inv = 0;
+      Invocation *inv = nullptr;
       i.next(inv);
       if (inv->sent_request())
         {
@@ -315,7 +315,7 @@ Thread::dump_invocations (ostream &strm)
        !i.done();
        i.advance())
     {
-      Invocation *inv = 0;
+      Invocation *inv = nullptr;
       i.next(inv);
       size_t level = 0;
 
@@ -351,7 +351,7 @@ Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
        !i.done();
        i.advance())
     {
-      Invocation *inv = 0;
+      Invocation *inv = nullptr;
       i.next(inv);
       size_t level = nested_queue.size();
 
@@ -392,7 +392,7 @@ Thread::count_nesting ()
        !i.done();
        i.advance())
     {
-      Invocation *inv = 0;
+      Invocation *inv = nullptr;
       i.next(inv);
       size_t level = 0;
       while (!nested.empty ())

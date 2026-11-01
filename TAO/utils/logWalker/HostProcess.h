@@ -113,8 +113,8 @@ public:
 private:
   void iterate_peers (int group,
                       int operation,
-                      ostream *strm = 0,
-                      Session * session = 0);
+                      ostream *strm = nullptr,
+                      Session *session = nullptr);
 
   long pid_;
   ACE_CString logfile_name_;
