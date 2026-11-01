@@ -78,7 +78,7 @@ public:
   int create_profile (TAO::ObjectKey const &object_key,
                       TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,

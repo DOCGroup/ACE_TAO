@@ -2201,7 +2201,7 @@ TAO_ORB_Core::is_collocation_enabled (TAO_ORB_Core *orb_core,
   return true;
 }
 
-int
+bool
 TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 {
   // @@ Lots of issues arise when dealing with collocation.  What about

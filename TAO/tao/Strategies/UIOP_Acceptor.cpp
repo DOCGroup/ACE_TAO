@@ -144,7 +144,7 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     }
 }
 
-int
+bool
 TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_UIOP_Endpoint *endp =
@@ -152,12 +152,12 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
   // For UNIX Files this is relatively cheap.
   ACE_UNIX_Addr address;
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
-    return 0;
+    return false;
 
   return endp->object_addr () == address;
 }

@@ -373,7 +373,7 @@ TAO_Thread_Lane::wait ()
   this->dynamic_threads_.wait ();
 }
 
-int
+bool
 TAO_Thread_Lane::is_collocated (TAO_MProfile const &mprofile)
 {
   return this->resources_.is_collocated (mprofile);
@@ -623,7 +623,7 @@ TAO_Thread_Pool::wait ()
     this->lanes_[i]->wait ();
 }
 
-int
+bool
 TAO_Thread_Pool::is_collocated (TAO_MProfile const &mprofile)
 {
   // Finalize all the lanes.
@@ -631,14 +631,14 @@ TAO_Thread_Pool::is_collocated (TAO_MProfile const &mprofile)
        i != this->number_of_lanes_;
        ++i)
     {
-      int result =
+      bool const result =
         this->lanes_[i]->is_collocated (mprofile);
 
       if (result)
         return result;
     }
 
-  return 0;
+  return false;
 }
 
 int
@@ -718,7 +718,7 @@ TAO_Thread_Pool_Manager::wait ()
     (*iterator).int_id_->wait ();
 }
 
-int
+bool
 TAO_Thread_Pool_Manager::is_collocated (TAO_MProfile const &mprofile)
 {
   // Finalize all the pools.
@@ -726,13 +726,13 @@ TAO_Thread_Pool_Manager::is_collocated (TAO_MProfile const &mprofile)
        iterator != this->thread_pools_.end ();
        ++iterator)
     {
-      int const result = (*iterator).int_id_->is_collocated (mprofile);
+      bool const result = (*iterator).int_id_->is_collocated (mprofile);
 
       if (result)
         return result;
     }
 
-  return 0;
+  return false;
 }
 
 RTCORBA::ThreadpoolId

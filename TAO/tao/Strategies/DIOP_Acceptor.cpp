@@ -199,7 +199,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   return 0;
 }
 
-int
+bool
 TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_DIOP_Endpoint *endp =
@@ -207,7 +207,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     {
@@ -219,10 +219,10 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       //
       if (endp->port () == this->addrs_[i].get_port_number ()
           && ACE_OS::strcmp (endp->host (), this->hosts_[i]) == 0)
-        return 1;  // Collocated
+        return true;  // Collocated
     }
 
-  return 0;  // Not collocated
+  return false;  // Not collocated
 }
 
 int

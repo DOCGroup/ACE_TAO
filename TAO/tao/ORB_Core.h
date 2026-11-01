@@ -349,7 +349,7 @@ public:
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
-  int is_collocated (const TAO_MProfile& mprofile);
+  bool is_collocated (const TAO_MProfile& mprofile);
 
   /// This allocator is always TSS and has no locks. It is intended
   /// for allocating the ACE_Data_Blocks used in *outgoing* CDR

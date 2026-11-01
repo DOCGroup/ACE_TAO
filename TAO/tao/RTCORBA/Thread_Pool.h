@@ -160,7 +160,7 @@ public:
   void wait ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (TAO_MProfile const &mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Create the static threads - only called once.
   int create_static_threads ();
@@ -310,7 +310,7 @@ public:
   void shutting_down ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (TAO_MProfile const &mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Create the static threads - only called once.
   int create_static_threads ();
@@ -378,7 +378,7 @@ public:
   void wait ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (TAO_MProfile const &mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Create a threadpool without lanes.
   RTCORBA::ThreadpoolId

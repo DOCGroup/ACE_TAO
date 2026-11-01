@@ -209,7 +209,7 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   return 0;
 }
 
-int
+bool
 TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO::HTIOP::Endpoint *endp =
@@ -217,7 +217,7 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     {
@@ -241,7 +241,7 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
         }
     }
 
-  return 0;
+  return false;
 }
 
 int

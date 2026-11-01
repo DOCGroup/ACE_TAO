@@ -54,7 +54,7 @@ TAO_UIPMC_Acceptor::create_profile (
   return 0;
 }
 
-int
+bool
 TAO_UIPMC_Acceptor::is_collocated (TAO_Endpoint const *)
 {
   // @@ Not clear how
@@ -62,7 +62,7 @@ TAO_UIPMC_Acceptor::is_collocated (TAO_Endpoint const *)
   // be collocated, but we still need to send the request out on
   // the network to see if there are any other servants in the
   // group.
-  return 0;  // Not collocated
+  return false;  // Not collocated
 }
 
 int

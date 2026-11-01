@@ -137,7 +137,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     }
 }
 
-int
+bool
 TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_SHMIOP_Endpoint *endp =
@@ -145,10 +145,10 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
   if (endp->port () != this->address_.get_port_number ())
-    return 0;
+    return false;
 
   return this->address_.same_host (endp->object_addr ());
 }

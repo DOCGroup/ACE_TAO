@@ -327,7 +327,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
   return 0;
 }
 
-int
+bool
 TAO::SSLIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 {
   TAO_SSLIOP_Endpoint const *endp =
@@ -335,7 +335,7 @@ TAO::SSLIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
   TAO_IIOP_Endpoint const *iiop = endp->iiop_endpoint ();
 
@@ -343,10 +343,10 @@ TAO::SSLIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
     {
       if (iiop->port () == this->addrs_[i].get_port_number ()
           && ACE_OS::strcmp (iiop->host (), this->hosts_[i]) == 0)
-        return 1;
+        return true;
     }
 
-  return 0;
+  return false;
 }
 
 int

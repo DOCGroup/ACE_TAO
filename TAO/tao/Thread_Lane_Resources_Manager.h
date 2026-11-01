@@ -58,7 +58,7 @@ public:
   virtual void close_all_transports () = 0;
 
   /// Does @a mprofile belong to us?
-  virtual int is_collocated (TAO_MProfile const &mprofile) = 0;
+  virtual bool is_collocated (TAO_MProfile const &mprofile) = 0;
 
   /// @name Accessors
   // @{

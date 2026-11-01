@@ -117,8 +117,8 @@ public:
                               TAO_MProfile &mprofile,
                               CORBA::Short priority) = 0;
 
-  /// Return 1 if the @a endpoint has the same address as the acceptor.
-  virtual int is_collocated (const TAO_Endpoint *endpoint) = 0;
+  /// Return true if the @a endpoint has the same address as the acceptor.
+  virtual bool is_collocated (const TAO_Endpoint *endpoint) = 0;
 
   /**
    * Returns the number of endpoints this acceptor is listening on.  This
