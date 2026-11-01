@@ -10,6 +10,8 @@
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 #include "tao/Messaging_PolicyValueC.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -138,7 +140,7 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
              iterator != nullptr;
              iterator = iterator->cont ())
           {
-            ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+            std::memcpy (buf, iterator->rd_ptr (), iterator->length ());
             buf += iterator->length ();
           }
           ++i;
@@ -166,7 +168,7 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
              iterator != nullptr;
              iterator = iterator->cont ())
           {
-            ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+            std::memcpy (buf, iterator->rd_ptr (), iterator->length ());
             buf += iterator->length ();
           }
           ++i;
