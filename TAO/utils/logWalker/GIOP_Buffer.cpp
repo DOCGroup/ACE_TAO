@@ -1,6 +1,8 @@
 #include "GIOP_Buffer.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+
+#include <cstdlib>
+#include <cstring>
 
 static const char *size_leadin_1_5 = "GIOP v1."; //"x msg, ";
 static size_t leadin_len_1_5 = 15;
@@ -8,14 +10,14 @@ static const char *size_leadin_1_6 = "GIOP message v1."; //2, ";
 static size_t leadin_len_1_6 = 19;
 
 
-const char *GIOP_Buffer::size_leadin = 0;
+const char *GIOP_Buffer::size_leadin = nullptr;
 size_t GIOP_Buffer::leadin_len = 0;
 const size_t GIOP_Buffer::giop_header_len = 12;
 
 void
 GIOP_Buffer::init_leadin (int version)
 {
-  if (size_leadin == 0)
+  if (size_leadin == nullptr)
     {
       if (version == 150)
         {
@@ -166,17 +168,17 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     payload_start_ (0),
     payload_size_ (0)
 {
-  const char *size_str = ACE_OS::strstr(text, size_leadin);
-  if (size_str != 0)
+  const char *size_str = std::strstr (text, size_leadin);
+  if (size_str != nullptr)
     {
       size_str += leadin_len; //ACE_OS::strlen (size_leadin);
       //      size_str += 3;
-      this->expected_size_ = ACE_OS::strtol(size_str, 0, 10);
-      const char *id = ACE_OS::strchr(size_str, '[') + 1;
-      this->expected_req_id_ = ACE_OS::strtol(id, 0, 10);
+      this->expected_size_ = std::strtol (size_str, nullptr, 10);
+      const char *id = std::strchr (size_str, '[') + 1;
+      this->expected_req_id_ = std::strtol (id, nullptr, 10);
     }
-  this->sending_ = ACE_OS::strstr(text,"send") ? 0 : 1;
-  this->expected_type_ = ACE_OS::strstr(text,"Request") ? 0 : 1;
+  this->sending_ = std::strstr (text, "send") ? 0 : 1;
+  this->expected_type_ = std::strstr (text, "Request") ? 0 : 1;
 }
 
 void
@@ -196,21 +198,21 @@ GIOP_Buffer::init_buf (const char *text, size_t offset)
 {
   // GIOP message -  HEXDUMP
   this->log_offset_ = offset;
-  const char * size_str = ACE_OS::strstr (text,"HEXDUMP ") + 8;
-  this->buffer_size_ = ACE_OS::strtol (size_str, 0, 10);
+  const char *size_str = std::strstr (text, "HEXDUMP ") + 8;
+  this->buffer_size_ = std::strtol (size_str, nullptr, 10);
   this->payload_size_ = this->buffer_size_ - 12;
-  size_str =  ACE_OS::strstr (text,"showing first ");
-  if (size_str != 0)
+  size_str = std::strstr (text, "showing first ");
+  if (size_str != nullptr)
     {
       size_str += 14;
-      this->buffer_size_ = ACE_OS::strtol (size_str, 0, 10);
+      this->buffer_size_ = std::strtol (size_str, nullptr, 10);
     }
   if (this->octets_ != 0)
     {
       delete [] this->octets_;
     }
   this->octets_ = new char [this->buffer_size_];
-  ACE_OS::memset (this->octets_, 0, this->buffer_size_);
+  std::memset (this->octets_, 0, this->buffer_size_);
   this->wr_pos_ = this->octets_;
 }
 

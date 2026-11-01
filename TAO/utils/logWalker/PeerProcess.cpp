@@ -1,12 +1,12 @@
 #include "PeerProcess.h"
 #include "PeerObject.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
 #include "Invocation.h"
 #include "HostProcess.h"
 #include "Thread.h"
 #include "Session.h"
+
+#include <cstdio>
 
 Endpoint::Endpoint ()
   : addr_ (),
@@ -109,7 +109,7 @@ PeerProcess::nextIdent(bool is_server)
 {
   static int count = 0;
   char *ident = new char[15];
-  ACE_OS::sprintf (ident,"%s_%d", (is_server ? "server" : "client"), count++);
+  std::sprintf (ident, "%s_%d", (is_server ? "server" : "client"), count++);
   return ident;
 }
 
@@ -255,7 +255,7 @@ PeerProcess::id () const
 void
 PeerProcess::split_filename (char *buffer, size_t len) const
 {
-  ACE_OS::snprintf (buffer, len, "%s.txt", this->ident_);
+  std::snprintf (buffer, len, "%s.txt", this->ident_);
 }
 
 PeerObject *
@@ -268,7 +268,7 @@ PeerProcess::object_for (const char *oid, size_t len)
     {
       long index = static_cast<long>(objects_.current_size());
       char alias[20];
-      ACE_OS::sprintf (alias, "obj_%ld", index);
+      std::sprintf (alias, "obj_%ld", index);
       po = new PeerObject(index, alias, this);
       objects_.bind(key, po);
       object_by_index_.bind (index, po);

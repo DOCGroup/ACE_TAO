@@ -6,9 +6,11 @@
 #include "HostProcess.h"
 #include "Thread.h"
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/Log_Msg.h"
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 Invocation::Invocation (PeerProcess *peer, Thread *thr, size_t rid)
   :req_octets_(0),
@@ -36,9 +38,9 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
 {
   if (GIOP_Buffer::size_leadin == 0)
     GIOP_Buffer::init_leadin (Session::tao_version());
-  const char *size_str = ACE_OS::strstr(text, GIOP_Buffer::size_leadin);
-  const char *id = size_str == 0 ? 0 : ACE_OS::strchr(size_str, '[');
-  if (size_str == 0 || id == 0)
+  const char *size_str = std::strstr (text, GIOP_Buffer::size_leadin);
+  const char *id = size_str == nullptr ? nullptr : std::strchr (size_str, '[');
+  if (size_str == nullptr || id == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "Not a request preamble line %d:\n '%s'\n",offset,
@@ -46,7 +48,7 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
       return false;
   }
 
-  if( ACE_OS::strstr(text,"Request") == 0)
+  if (std::strstr (text, "Request") == nullptr)
     this->repl_octets_ = new GIOP_Buffer(text, offset, thread, this);
   else
     this->req_octets_  = new GIOP_Buffer(text, offset, thread, this);
@@ -241,7 +243,7 @@ Invocation::dump_rel_time (ostream &strm, const ACE_Time_Value &tv, const ACE_Ti
   int subsec = (int)(reltime.usec()/1000);
 
   char buffer[20];
-  ACE_OS::snprintf (buffer, 20, "%d:%02d:%02d.%03d",
+  std::snprintf (buffer, 20, "%d:%02d:%02d.%03d",
               hours, min, sec, subsec);
 
   strm << buffer << ' ';
@@ -468,7 +470,7 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
   if (this->repl_octets_ != 0 && this->repl_octets_->has_octets())
     rstat = this->repl_octets_->reply_status();
   int opid = 0;
-  if (ACE_OS::strcmp (opname, "_is_a") == 0)
+  if (std::strcmp (opname, "_is_a") == 0)
     {
       opid = 1;
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
@@ -486,12 +488,12 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
           strm << "expected type parse failed";
         }
     }
-  else if (ACE_OS::strcmp (opname, "_get_MyID") == 0)
+  else if (std::strcmp (opname, "_get_MyID") == 0)
     {
       opid = 2;
     }
-  else if (ACE_OS::strcmp (opname, "resolve_str") == 0 ||
-           ACE_OS::strcmp (opname, "get_object_group_ref_from_name") == 0)
+  else if (std::strcmp (opname, "resolve_str") == 0 ||
+           std::strcmp (opname, "get_object_group_ref_from_name") == 0)
     {
       opid = 3;
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
@@ -505,10 +507,10 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
           strm << "name (len = " << len << ") " << cdr.rd_ptr();
         }
     }
-  else if (ACE_OS::strcmp (opname, "resolve") == 0 ||
-           ACE_OS::strcmp (opname, "bind") == 0 ||
-           ACE_OS::strcmp (opname, "rebind") == 0 ||
-           ACE_OS::strcmp (opname, "bind_new_context") == 0
+  else if (std::strcmp (opname, "resolve") == 0 ||
+           std::strcmp (opname, "bind") == 0 ||
+           std::strcmp (opname, "rebind") == 0 ||
+           std::strcmp (opname, "bind_new_context") == 0
            )
     {
       opid = 3;
@@ -548,17 +550,17 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
             }
         }
     }
-  else if (ACE_OS::strcmp (opname, "register_activator") == 0 ||
-           ACE_OS::strcmp (opname, "unregister_activator") == 0 ||
-           ACE_OS::strcmp (opname, "notify_child_death") == 0 ||
-           ACE_OS::strcmp (opname, "start_server") == 0 ||
-           ACE_OS::strcmp (opname, "wait_for_startup") == 0 ||
-           ACE_OS::strcmp (opname, "activate_server") == 0 ||
-           ACE_OS::strcmp (opname, "add_or_update_server") == 0 ||
-           ACE_OS::strcmp (opname, "shutdown_server") == 0 ||
-           ACE_OS::strcmp (opname, "server_is_running") == 0 ||
-           ACE_OS::strcmp (opname, "server_is_shutting_down") == 0 ||
-           ACE_OS::strcmp (opname, "find") == 0)
+  else if (std::strcmp (opname, "register_activator") == 0 ||
+           std::strcmp (opname, "unregister_activator") == 0 ||
+           std::strcmp (opname, "notify_child_death") == 0 ||
+           std::strcmp (opname, "start_server") == 0 ||
+           std::strcmp (opname, "wait_for_startup") == 0 ||
+           std::strcmp (opname, "activate_server") == 0 ||
+           std::strcmp (opname, "add_or_update_server") == 0 ||
+           std::strcmp (opname, "shutdown_server") == 0 ||
+           std::strcmp (opname, "server_is_running") == 0 ||
+           std::strcmp (opname, "server_is_shutting_down") == 0 ||
+           std::strcmp (opname, "find") == 0)
     {
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();
       ACE_InputCDR cdr (giop_cdr.rd_ptr(),
@@ -570,9 +572,9 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
           this->new_line (strm, indent, 8, true, false);
           if (this->repl_octets_ == 0)
             strm << "<nrf> ";
-          else if (ACE_OS::strcmp (opname, "server_is_running") == 0)
+          else if (std::strcmp (opname, "server_is_running") == 0)
             strm << "<sir> ";
-          else if (ACE_OS::strcmp (opname, "server_is_shutting_down") == 0)
+          else if (std::strcmp (opname, "server_is_shutting_down") == 0)
             strm << "<ssd> ";
           strm << "name ( len = " << len << ") " << cdr.rd_ptr();
         }

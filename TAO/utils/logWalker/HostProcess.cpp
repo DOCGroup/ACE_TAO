@@ -4,7 +4,7 @@
 #include "Thread.h"
 #include "Session.h"
 
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 PeerNode::PeerNode (long h, PeerProcess *p)
   :handle_ (h),
@@ -69,8 +69,8 @@ HostProcess::find_thread (long tid, size_t offset)
         return thr;
     }
   char alias[20];
-  ACE_OS::snprintf (alias, 20, "Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
-                   this->threads_.size() + 1);
+  std::snprintf (alias, 20, "Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
+                 this->threads_.size() + 1);
   thr = new Thread (tid, alias, offset);
   threads_.insert_tail (thr);
   return thr;

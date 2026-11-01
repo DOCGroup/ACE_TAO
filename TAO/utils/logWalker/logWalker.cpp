@@ -20,13 +20,15 @@
 #include "Session.h"
 #include "Log.h"
 
+#include <cstring>
+
 ACE_TCHAR *outfile = 0;
 
 void
 parse_filename (Session &session, char * buffer)
 {
   Log log(session);
-  if (ACE_OS::strchr(buffer,'=') == 0)
+  if (std::strchr (buffer, '=') == nullptr)
     {
       log.process_file (ACE_TEXT_CHAR_TO_TCHAR(buffer));
     }

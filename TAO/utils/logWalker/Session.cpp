@@ -6,6 +6,8 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_sys_stat.h"
 
+#include <cstring>
+
 long
 Session::tao_version_ = 220;
 
@@ -73,8 +75,8 @@ Session::add_process (HostProcess *proc)
 void
 Session::alternate_address (const char *addrspec)
 {
-  const char *equal = ACE_OS::strchr(addrspec,'=');
-  if (equal == 0)
+  const char *equal = std::strchr (addrspec, '=');
+  if (equal == nullptr)
    return;
   ACE_CString name (addrspec,(equal - addrspec));
   ACE_CString value (equal+1);
@@ -97,8 +99,8 @@ Session::is_equivalent (const ACE_CString &primary,
 void
 Session::default_service (const char *addrspec)
 {
-   const char *equal = ACE_OS::strchr(addrspec,'=');
-  if (equal == 0)
+   const char *equal = std::strchr (addrspec, '=');
+  if (equal == nullptr)
     return;
   ACE_CString name (addrspec,(equal - addrspec));
   Endpoint ep (equal+1);
