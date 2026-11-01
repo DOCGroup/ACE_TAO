@@ -299,22 +299,22 @@ IpAddress::~IpAddress()
 }
 
 // assumes member data is word aligned to avoid sigbus
-int IpAddress::is_loopback() const
+bool IpAddress::is_loopback() const
 {
  if (valid()) {
    u_long *pl = (u_long *)&address_buffer;
-   return (*pl == INADDR_LOOPBACK);
+   return ACE_NTOHL (*pl) == INADDR_LOOPBACK;
  }
-  return 0;
+  return false;
 }
 
-int IpAddress::is_multicast() const
+bool IpAddress::is_multicast() const
 {
  if (valid()) {
    u_long *pl = (u_long *)&address_buffer;
-   return (IN_MULTICAST(*pl));
+   return IN_MULTICAST (ACE_NTOHL (*pl));
  }
-  return 0;
+  return false;
 }
 
 // Private addressess not are not assignable in the Internet, they are
@@ -325,18 +325,18 @@ int IpAddress::is_multicast() const
 // but don't expect SNMP based networks to handle cross-NAT address spaces.
 // assumes storage in network byte order  mrm@cisco.com 7/28/97
 
-int IpAddress::is_private() const
+bool IpAddress::is_private() const
 {
  if (valid()) {
    if (address_buffer[0] == 10)
-     return 1;
+     return true;
    if (address_buffer[0] == 172 && address_buffer[1] == 16)
-     return 1;
+     return true;
    if (address_buffer[0] == 192 && address_buffer[1] == 168  &&
       address_buffer[2] == 0)
-     return 1;
+     return true;
  }
-  return 0;
+  return false;
 }
 
 
@@ -347,13 +347,13 @@ void IpAddress::to_octet(OctetStr& octet) const
 }
 
 
-int IpAddress::is_broadcast() const
+bool IpAddress::is_broadcast() const
 {
  if (valid()) {
    u_long *pl = (u_long *)&address_buffer;
-   return ( (*pl) & INADDR_BROADCAST);
+   return ACE_NTOHL (*pl) == INADDR_BROADCAST;
  }
-  return 0;
+  return false;
 }
 
 //-----[ IP Address general = operator ]-------------------------------

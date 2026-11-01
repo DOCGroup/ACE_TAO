@@ -248,16 +248,16 @@ public:
   virtual SmiUINT32 get_syntax();
 
   /// is this the loopback address? 127.0.0.1/loopback/1.0.0.127.in-addr.arpa
-  int is_loopback() const;
+  bool is_loopback() const;
 
   /// determine if this is a multicast address
-  int is_multicast() const;
+  bool is_multicast() const;
 
   /// determine if this a broadcast address
-  int is_broadcast() const;
+  bool is_broadcast() const;
 
   /// per RFC 1597,  private addresses are:: 10, 172.16, and 192.168.0
-  int is_private() const;
+  bool is_private() const;
 
   /// convert address into octet string format in network byte order
   virtual void to_octet(OctetStr& octet) const;
