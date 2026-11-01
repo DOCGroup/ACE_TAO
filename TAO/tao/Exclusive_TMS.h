@@ -65,13 +65,19 @@ public:
   bool has_request () override;
   //@}
 
+private:
+  TAO_Exclusive_TMS (TAO_Exclusive_TMS const &) = delete;
+  TAO_Exclusive_TMS (TAO_Exclusive_TMS &&) = delete;
+  TAO_Exclusive_TMS &operator= (TAO_Exclusive_TMS const &) = delete;
+  TAO_Exclusive_TMS &operator= (TAO_Exclusive_TMS &&) = delete;
+
 protected:
   /// Used to generate a different request_id on each call to
   /// request_id().
-  CORBA::ULong request_id_generator_;
+  CORBA::ULong request_id_generator_ {};
 
   /// Request id for the current request.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Reply Dispatcher corresponding to the request. If this is zero we don't
   /// have a reply, if it not zero we have one

@@ -84,7 +84,7 @@ private:
 
   /// Used to generate a different request_id on each call to
   /// request_id().
-  CORBA::ULong request_id_generator_;
+  CORBA::ULong request_id_generator_ {};
 
   /// Keep track of the orb core pointer. We need to this to create the
   /// Reply Dispatchers.

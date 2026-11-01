@@ -12,7 +12,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport)
     , lock_ (transport->orb_core ()->client_factory ()->create_transport_mux_strategy_lock ())
-    , request_id_generator_ (0)
     , orb_core_ (transport->orb_core ())
     , dispatcher_table_ (this->orb_core_->client_factory ()->reply_dispatcher_table_size ())
 {
