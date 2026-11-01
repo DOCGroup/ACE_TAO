@@ -18,19 +18,24 @@ public:
   // No-op constructor (required by the <ACE_Connector>).
   Event_Transceiver ();
 
+  Event_Transceiver (const Event_Transceiver &) = delete;
+  Event_Transceiver (Event_Transceiver &&) = delete;
+  Event_Transceiver &operator= (const Event_Transceiver &) = delete;
+  Event_Transceiver &operator= (Event_Transceiver &&) = delete;
+
   // = Svc_Handler hook called by the <ACE_Connector>.
   // Initialize the transceiver when we are connected.
-  virtual int open (void *);
+  int open (void *) override;
 
   // = Demultplexing hooks from the <ACE_Reactor>.
   // Receive data from STDIN or socket.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   // Close down via SIGINT.
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
   // Close down the event loop.
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
 private:
   // Reads data from socket and writes to ACE_STDOUT.
