@@ -17,7 +17,7 @@
 #include "ace/Task.h"
 
 ACE_TCHAR const *ior_output_file {};
-int nthreads = 5;
+int const nthreads = 5;
 
 /**
  * Run a server thread
@@ -28,7 +28,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   // ctor
-  Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr orb);
   Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;
   Worker &operator= (Worker const &) = delete;
@@ -162,7 +162,7 @@ Worker::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;

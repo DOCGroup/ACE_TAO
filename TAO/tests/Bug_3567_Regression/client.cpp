@@ -16,12 +16,12 @@
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int nthreads = 5;
 int niterations = 10;
-int debug {};
+bool debug {};
 ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> number_of_replies {};
 
-CORBA::Long in_number = 931232;
-char const *in_str = "Let's talk AMI.";
-int parameter_corruption {};
+CORBA::Long const in_number = 931232;
+char const *const in_str = "Let's talk AMI.";
+bool parameter_corruption {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -68,7 +68,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr orb);
   Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;
   Worker &operator= (Worker const &) = delete;
@@ -101,7 +101,7 @@ public:
   Client &operator= (Client const &) = delete;
   Client &operator= (Client &&) = delete;
   /// dtor
-  ~Client ();
+  ~Client () override = default;
 
   /// The thread entry point.
   int svc () override;
@@ -120,9 +120,7 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler ()
-  {
-  }
+  Handler () = default;
   Handler (Handler const &) = delete;
   Handler (Handler &&) = delete;
   Handler &operator= (Handler const &) = delete;
@@ -139,7 +137,7 @@ public:
       if (result == 0)
         {
           ACE_ERROR ((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
-          parameter_corruption = 1;
+          parameter_corruption = true;
         }
 
       if (debug)
@@ -193,9 +191,7 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     }
-  ~Handler ()
-  {
-  }
+  ~Handler () override = default;
 
   void inout_arg_test (char const *) override
   {
@@ -332,10 +328,6 @@ Client::Client (A::AMI_Test_ptr server,
 {
 }
 
-Client::~Client ()
-{
-}
-
 int
 Client::svc ()
 {
@@ -352,7 +344,7 @@ Client::svc ()
                       niterations));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

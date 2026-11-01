@@ -24,10 +24,10 @@ class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
   /// ctor
-  AMI_Test_i (CORBA::ORB_ptr orb,
-              CORBA::Long in_l = 0,
-              char const *in_str = nullptr,
-              bool check_params = false);
+  explicit AMI_Test_i (CORBA::ORB_ptr orb,
+                       CORBA::Long in_l = 0,
+                       char const *in_str = nullptr,
+                       bool check_params = false);
   AMI_Test_i (AMI_Test_i const &) = delete;
   AMI_Test_i (AMI_Test_i &&) = delete;
   AMI_Test_i &operator= (AMI_Test_i const &) = delete;
