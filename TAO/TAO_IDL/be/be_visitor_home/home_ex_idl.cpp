@@ -63,7 +63,8 @@ be_visitor_home_ex_idl::visit_attribute (be_attribute *node)
 
    os_ << IdentifierHelper::type_name (ft, this);
    os_ << " "
-       << IdentifierHelper::try_escape (node->original_local_name ());
+       << IdentifierHelper::try_escape (
+            node->original_local_name ()->get_string ());
 
    this->gen_exception_list (node->get_get_exceptions (),
                              rd_only ? "" : "get");
@@ -91,7 +92,8 @@ be_visitor_home_ex_idl::visit_operation (be_operation *node)
   os_ << IdentifierHelper::type_name (rt, this);
 
   os_ << " "
-      << IdentifierHelper::try_escape (node->original_local_name ())
+      << IdentifierHelper::try_escape (
+           node->original_local_name ()->get_string ())
       << " (" << be_idt << be_idt;
 
   if (this->visit_scope (node) == -1)
@@ -137,7 +139,8 @@ be_visitor_home_ex_idl::visit_argument (be_argument *node)
 
   os_ << IdentifierHelper::type_name (ft, this)
       << " "
-      << IdentifierHelper::try_escape (node->original_local_name ())
+      << IdentifierHelper::try_escape (
+           node->original_local_name ()->get_string ())
       << (this->last_node (node) ? "" : ",");
 
   return 0;
@@ -148,7 +151,8 @@ be_visitor_home_ex_idl::visit_factory (be_factory *node)
 {
   os_ << be_nl
       << "::Components::EnterpriseComponent "
-      << IdentifierHelper::try_escape (node->original_local_name ())
+      << IdentifierHelper::try_escape (
+           node->original_local_name ()->get_string ())
       << " (" << be_idt << be_idt;
 
   if (this->visit_scope (node) == -1)
@@ -211,7 +215,8 @@ be_visitor_home_ex_idl::gen_implicit ()
 {
   os_ << be_nl
       << "local interface CCM_"
-      << IdentifierHelper::try_escape (node_->original_local_name ())
+      << IdentifierHelper::try_escape (
+           node_->original_local_name ()->get_string ())
       << "Implicit" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent create ()" << be_idt_nl
@@ -225,7 +230,8 @@ be_visitor_home_ex_idl::gen_explicit ()
 {
   os_ << be_nl_2
       << "local interface CCM_"
-      << IdentifierHelper::try_escape (node_->original_local_name ())
+      << IdentifierHelper::try_escape (
+           node_->original_local_name ()->get_string ())
       << "Explicit" << be_idt_nl
       << ": ";
 
@@ -246,7 +252,8 @@ be_visitor_home_ex_idl::gen_explicit ()
       std::string const global = sname_str.empty () ? "" : "::";
 
       os_ << global << sname_str << "::CCM_"
-          << IdentifierHelper::try_escape (base->local_name ())
+          << IdentifierHelper::try_escape (
+               base->local_name ()->get_string ())
           << "Explicit";
     }
 
@@ -269,7 +276,8 @@ void
 be_visitor_home_ex_idl::gen_derived ()
 {
   std::string lname_str =
-    IdentifierHelper::try_escape (node_->original_local_name ());
+    IdentifierHelper::try_escape (
+      node_->original_local_name ()->get_string ());
   std::string const& lname = lname_str;
 
   os_ << be_nl_2
@@ -357,7 +365,8 @@ be_visitor_home_ex_idl::gen_home_executor ()
   std::string const& sname = sname_str;
 
   std::string lname_str =
-    IdentifierHelper::try_escape (node_->original_local_name ());
+    IdentifierHelper::try_escape (
+      node_->original_local_name ()->get_string ());
   std::string const& lname = lname_str;
 
   std::string const global = sname_str.empty () ? "" : "::";

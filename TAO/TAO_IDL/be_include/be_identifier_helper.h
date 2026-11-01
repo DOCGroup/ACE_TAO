@@ -24,7 +24,6 @@
 
 #include "TAO_IDL_BE_Export.h"
 
-class Identifier;
 class be_type;
 class be_visitor;
 
@@ -39,8 +38,8 @@ struct TAO_IDL_BE_Export IdentifierHelper
   static std::string
   type_name (be_type *t, be_visitor *visitor);
 
-  static Identifier *
-  original_local_name (Identifier const *local_name);
+  static std::string
+  original_local_name (std::string const& local_name);
 
   // Removes '_cxx_ from segments of a scoped name, and optionally
   // de-escape the last segment, if it's to be appended to.
@@ -54,7 +53,7 @@ struct TAO_IDL_BE_Export IdentifierHelper
   // Preserves the 'escape' (leading underscore) in a
   // generated identifier if necessary.
   static std::string
-  try_escape (Identifier * local_name);
+  try_escape (std::string const& local_name);
 };
 
 #endif /* BE_IDENTIFIER_HELPER_H */

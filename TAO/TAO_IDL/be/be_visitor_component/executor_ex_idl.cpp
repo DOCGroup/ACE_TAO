@@ -105,7 +105,8 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
 
   os_ << IdentifierHelper::type_name (ft, this);
   os_ << " " << this->ctx_->port_prefix ()
-     << IdentifierHelper::try_escape (node->original_local_name ());
+     << IdentifierHelper::try_escape (
+          node->original_local_name ()->get_string ());
 
   this->gen_exception_list (node->get_get_exceptions (),
                            rd_only ? "" : "get");

@@ -2,7 +2,6 @@
 #include "be_identifier_helper.h"
 #include "be_type.h"
 
-#include "utl_identifier.h"
 #include "utl_string.h"
 #include "fe_private.h"
 #include "global_extern.h"
@@ -76,43 +75,31 @@ IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
     }
 }
 
-Identifier *
-IdentifierHelper::original_local_name (Identifier const *local_name)
+std::string
+IdentifierHelper::original_local_name (std::string const& local_name)
 {
-  Identifier * id = nullptr;
-  std::string const& lname =
-    local_name->get_string ();
-
   // Remove _cxx_ if:
   // 1. it occurs and
   // 2. it occurs at the beginning of the string and
   // 3. the rest of the string is a C++ keyword
-  if (lname.substr (0, 5) == "_cxx_")
+  if (local_name.compare (0, 5, "_cxx_") == 0)
     {
       TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
 
       unsigned int len =
-        static_cast<unsigned int> (lname.size () - 5);
-      std::string const keyword = lname.substr (5);
+        static_cast<unsigned int> (local_name.size () - 5);
+      std::string const keyword = local_name.substr (5);
 
       const TAO_IDL_CPP_Keyword_Entry *entry =
         cpp_key_tbl.lookup (keyword.data (), len);
 
       if (entry != nullptr)
         {
-          // Remove _cxx_ and assign to the Identifier variable.
-          ACE_NEW_RETURN (id,
-                          Identifier (keyword),
-                          nullptr);
+          return keyword;
         }
     }
 
-  if (id == nullptr)
-    {
-      id = local_name->copy ();
-    }
-
-  return id;
+  return local_name;
 }
 
 std::string
@@ -121,7 +108,6 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
   std::string retval;
   bool first = true;
   bool second = false;
-  Identifier *id = nullptr;
 
   for (UTL_IdListActiveIterator i (sn); !i.is_done ();)
     {
@@ -134,10 +120,10 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
           first = second = false;
         }
 
-      id =
+      std::string const id =
         for_idl
-          ? IdentifierHelper::original_local_name (i.item ())
-          : i.item ()->copy ();
+          ? IdentifierHelper::original_local_name (i.item ()->get_string ())
+          : i.item ()->get_string ();
 
       i.next ();
 
@@ -148,12 +134,12 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
         }
       else
         {
-          retval += id->get_string ();
+          retval += id;
         }
 
-       if (first)
+      if (first)
         {
-          if (!id->get_string ().empty ())
+          if (!id.empty ())
             {
               // Does not start with a "".
               first = false;
@@ -163,10 +149,6 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
               second = true;
             }
         }
-
-      id->destroy ();
-      delete id;
-      id = nullptr;
     }
 
   return retval;
@@ -182,18 +164,16 @@ IdentifierHelper::is_idl_keyword (std::string const& local_name)
 }
 
 std::string
-IdentifierHelper::try_escape (Identifier * local_name)
+IdentifierHelper::try_escape (std::string const& local_name)
 {
-  std::string const& s_local_name = local_name->get_string ();
-
-  if (IdentifierHelper::is_idl_keyword (s_local_name))
+  if (IdentifierHelper::is_idl_keyword (local_name))
     {
       std::string retval ("_");
-      retval += s_local_name;
+      retval += local_name;
       return retval;
     }
   else
     {
-      return s_local_name;
+      return local_name;
     }
 }
