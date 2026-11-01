@@ -40,7 +40,7 @@ test_write (TAO_OutputCDR &cdr, int n)
 static int
 test_read (TAO_InputCDR &cdr, int n)
 {
-  CORBA::Long xl;
+  CORBA::Long xl {};
 
   for (int i = 0; i < n; ++i)
     {

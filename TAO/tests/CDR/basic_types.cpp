@@ -96,8 +96,8 @@ test_boolean_holder ()
 static int
 test_sargument_initialization ()
 {
-  typedef TAO::SArg_Traits<ACE_InputCDR::to_boolean> Boolean_Traits;
-  typedef TAO::SArg_Traits<CORBA::Long> Long_Traits;
+  using Boolean_Traits = TAO::SArg_Traits<ACE_InputCDR::to_boolean>;
+  using Long_Traits = TAO::SArg_Traits<CORBA::Long>;
 
   Boolean_Traits::ret_val boolean_ret;
   Boolean_Traits::out_arg_val boolean_out;
@@ -121,13 +121,11 @@ struct CDR_Test_Types
   CORBA::Octet o;
   CORBA::Short s;
   CORBA::Long l;
-  const char* str;
+  char const *str;
   CORBA::Double d;
   CORBA::Any any;
 
-  enum {
-    ARRAY_SIZE = 10
-  };
+  static constexpr int ARRAY_SIZE = 10;
 
   CORBA::Short a[ARRAY_SIZE];
 };
@@ -145,7 +143,7 @@ CDR_Test_Types::CDR_Test_Types ()
 }
 
 static int
-test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
+test_put (TAO_OutputCDR &cdr, CDR_Test_Types const& test_types)
 {
   for (int i = 0; i < n; ++i)
     {
@@ -192,7 +190,7 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
 }
 
 static int
-test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
+test_get (TAO_InputCDR &cdr, CDR_Test_Types const& test_types)
 {
   CORBA::Octet xo;
   CORBA::Short xs;
@@ -360,7 +358,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Basic_Types");
       return 1;

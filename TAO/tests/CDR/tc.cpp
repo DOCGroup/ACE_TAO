@@ -28,7 +28,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      static const CORBA::TypeCode_ptr tcs[]=
+      static CORBA::TypeCode_ptr const tcs[] =
       {
         CORBA::_tc_null,
         CORBA::_tc_void,
@@ -88,14 +88,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::TypeCode::_tc_BadKind
       };
 
-      static int n = sizeof (tcs) / sizeof (tcs[0]);
-
-      for (const CORBA::TypeCode_ptr *i = tcs;
-           i != tcs + n;
-           ++i)
+      for (CORBA::TypeCode_ptr const tc : tcs)
         {
-          CORBA::TypeCode_ptr tc = *i;
-
           CORBA::TCKind k = tc->kind ();
 
           switch (k)
@@ -107,11 +101,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             case CORBA::tk_alias:
             case CORBA::tk_except:
               {
-                const char *id = tc->id ();
+                char const *id = tc->id ();
 
-                const char *name = tc->name ();
+                char const *name = tc->name ();
 
-                CORBA::ULong length = 0;
+                CORBA::ULong length {};
 
                 if (TAO_debug_level > 0)
                   {
@@ -121,8 +115,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 " KIND = %d%$"
                                 " LENGTH = %d"
                                 "%}%}\n",
-                                (id?id:"empty ID"),
-                                (name?name:"empty name"),
+                                (id ? id : "empty ID"),
+                                (name ? name : "empty name"),
                                 k,
                                 length));
                   }
@@ -139,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("TC");
       return 1;

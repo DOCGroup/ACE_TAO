@@ -21,7 +21,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-#define DEFAULT_BUFFER_SIZE 512
+#include <memory>
+#include <new>
+#include <vector>
+
+constexpr int default_buffer_size = 512;
 
 /**
  * @class Application_Simulator
@@ -39,8 +43,10 @@ public:
   Application_Simulator (int max_fragments,
                     int max_fragment_size);
 
-  /// Destructor, releases any memory left behind.
-  ~Application_Simulator ();
+  Application_Simulator (Application_Simulator const&) = delete;
+  Application_Simulator (Application_Simulator&&) = delete;
+  Application_Simulator& operator= (Application_Simulator const&) = delete;
+  Application_Simulator& operator= (Application_Simulator&&) = delete;
 
   /**
    * Simulate an upcall. The class allocates some memory and then
@@ -51,7 +57,7 @@ public:
 
 private:
   /// The allocated buffers.
-  char** buffers_;
+  std::vector<std::unique_ptr<char[]>> buffers_;
 
   /// The size of the <buffers_> array.
   int max_fragments_;
@@ -145,11 +151,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Application_Simulator simulator (max_fragments,
                                       max_fragment_size);
-      char* argument_buffer;
-      ACE_NEW_RETURN (argument_buffer, char[max_argument_size], 1);
+      std::unique_ptr<char[]> argument_buffer (
+        new (std::nothrow) char[max_argument_size]);
+      if (!argument_buffer)
+        return 1;
 
-      int* argument_sizes;
-      ACE_NEW_RETURN (argument_sizes, int[max_arguments], 1);
+      std::unique_ptr<int[]> argument_sizes (new (std::nothrow) int[max_arguments]);
+      if (!argument_sizes)
+        return 1;
 
       int n = ACE_OS::rand_r (&seed) % max_arguments + 1;
       for (int k = 0; k < n; ++k)
@@ -165,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               cdr_encoding.start_incr ();
 
-              char buffer[DEFAULT_BUFFER_SIZE];
+              char buffer[default_buffer_size];
               ACE_OutputCDR cdr (buffer, sizeof(buffer),
                                 TAO_ENCAP_BYTE_ORDER,
                                 buffer_allocator,
@@ -173,7 +182,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
               for (int k = 0; k < n; ++k)
                 {
-                  cdr.write_char_array (argument_buffer,
+                  cdr.write_char_array (argument_buffer.get (),
                                         argument_sizes[k]);
                 }
 
@@ -193,7 +202,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             i, average);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught unexpected CORBA exception:");
 
@@ -204,46 +213,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 Application_Simulator::Application_Simulator (int max_fragments,
                                     int max_fragment_size)
-  :  max_fragments_ (max_fragments),
+  :  buffers_ (max_fragments),
+     max_fragments_ (max_fragments),
      max_fragment_size_ (max_fragment_size)
 {
-  ACE_NEW (buffers_, char*[this->max_fragments_]);
-  for (char** i = this->buffers_;
-       i != this->buffers_ + this->max_fragments_;
-       ++i)
-    *i = 0;
-}
-
-Application_Simulator::~Application_Simulator ()
-{
-  for (char** i = this->buffers_;
-       i != this->buffers_ + this->max_fragments_;
-       ++i)
-    {
-      if (*i != 0)
-        {
-          delete[] *i;
-          *i = 0;
-        }
-    }
-  delete[] this->buffers_;
-  this->buffers_ = 0;
 }
 
 void
 Application_Simulator::upcall (unsigned int* seed)
 {
-  for (char** i = this->buffers_;
-       i != this->buffers_ + this->max_fragments_;
-       ++i)
+  for (int i = 0; i < this->max_fragments_; ++i)
     {
-      if (*i != 0)
+      std::unique_ptr<char[]> &buffer = this->buffers_[i];
+      if (buffer)
         {
           if (ACE_OS::rand_r (seed) % 10000 < 5000)
-            {
-              delete[] *i;
-              *i = 0;
-            }
+            buffer.reset ();
         }
       else
         {
@@ -251,7 +236,9 @@ Application_Simulator::upcall (unsigned int* seed)
             {
               int size = ACE_OS::rand_r (seed) %
                 this->max_fragment_size_ + 1;
-              ACE_NEW (*i, char[size]);
+              buffer.reset (new (std::nothrow) char[size]);
+              if (!buffer)
+                return;
             }
         }
     }

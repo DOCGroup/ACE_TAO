@@ -35,7 +35,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       TAO_InputCDR input (cdr);
 
-      CORBA::ULong len;
+      CORBA::ULong len {};
 
       input.read_ulong (len);
 
@@ -52,7 +52,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       mb.wr_ptr (len);
       input.read_char_array (mb.rd_ptr (), len);
 
-      CORBA::Double read_dbl;
+      CORBA::Double read_dbl {};
       if (input.read_double (read_dbl) == 0)
         ACE_DEBUG ((LM_DEBUG, "Failure reading double...\n"));
 
@@ -63,7 +63,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                       "ERROR: mismatched doubles,"
                       " got %f, expected %f\n",
                       read_dbl, dbl));
-          for (const ACE_Message_Block *j = cdr.begin ();
+          for (ACE_Message_Block const *j = cdr.begin ();
                j != cdr.end ();
                j = j->cont ())
             {
