@@ -38,10 +38,10 @@ peer1 (void *)
     ACE_ERROR ((LM_ERROR,
                 "(%t) peer1 ACE_UPIPE_Connector failed\n"));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (20),
-                  0);
+                  nullptr);
 
   mb->copy ("hello", 6);
 
@@ -97,8 +97,8 @@ peer2 (void *)
   ACE_UPIPE_Stream s_stream;
 
   // Spawn a peer1 thread.
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (peer1),
-                                              (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (peer1,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -112,7 +112,7 @@ peer2 (void *)
     ACE_ERROR ((LM_ERROR,
                 "(%t) ACE_UPIPE_Acceptor.accept failed\n"));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   if (s_stream.recv (mb) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -154,8 +154,8 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Spawn a peer2 thread.
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (peer2),
-                                              (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (peer2,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

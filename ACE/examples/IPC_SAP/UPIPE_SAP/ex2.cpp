@@ -30,7 +30,7 @@ supplier (void *)
 
   ACE_UPIPE_Addr c_addr (ACE_TEXT("pattern"));
 
-  std::unique_ptr<char[]> mybuf (new char[size]);
+  std::unique_ptr<char[]> mybuf (std::make_unique<char[]> (size));
 
   for (int i = 0; i < size; i++)
     mybuf[i] = 'a';
@@ -48,7 +48,7 @@ supplier (void *)
   // Test asynchronicity (the "acausal principle" ;-)).
   s_stream.enable (ACE_SIGIO);
 
-  ACE_Message_Block *mb_p;
+  ACE_Message_Block *mb_p = nullptr;
 
   for (int j = 0; j < iterations; j++)
     {
@@ -103,8 +103,8 @@ consumer (void *)
               "(%t) consumer spawning the supplier thread\n"));
 
   // Spawn the supplier thread.
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier),
-                                              (void *) nullptr,
+  if (ACE_Thread_Manager::instance ()->spawn (supplier,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -149,8 +149,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : 16;
 
   // Spawn the two threads.
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer),
-                                              (void *) nullptr,
+  if (ACE_Thread_Manager::instance ()->spawn (consumer,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
