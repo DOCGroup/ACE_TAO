@@ -205,17 +205,14 @@ be_visitor_facet_ami_exh::init (bool for_impl)
 
   /// Look up the AMI_xxxCallback class (see comment above)
   /// so we can traverse its inheritance graph below.
-  UTL_ScopedName *sn =
-    FE_Utils::string_to_scoped_name (this->handler_str_);
-  AST_Decl *d = s->lookup_by_name (sn, true, false);
+  FE_Utils::Scoped_Name_Owner sn =
+    FE_Utils::string_to_scoped_name_owner (this->handler_str_);
+  AST_Decl *d = s->lookup_by_name (sn.get (), true, false);
+  sn.reset ();
   this->callback_iface_ = dynamic_cast<be_interface*> (d);
 
   if (this->callback_iface_ == nullptr)
     this->sync_  = true;
-
-  sn->destroy ();
-  delete sn;
-  sn = nullptr;
 }
 
 int
@@ -304,13 +301,10 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
   if (this->sync_)
    {
      UTL_Scope *ss = this->iface_->defined_in();
-     UTL_ScopedName *sn =
-     FE_Utils::string_to_scoped_name (handler_str);
-     AST_Decl *d = ss->lookup_by_name (sn, true);
-
-     sn->destroy ();
-     delete sn;
-     sn = nullptr;
+     FE_Utils::Scoped_Name_Owner sn =
+       FE_Utils::string_to_scoped_name_owner (handler_str);
+     AST_Decl *d = ss->lookup_by_name (sn.get (), true);
+     sn.reset ();
 
      be_interface *sync_iface =
      dynamic_cast<be_interface*> (d);

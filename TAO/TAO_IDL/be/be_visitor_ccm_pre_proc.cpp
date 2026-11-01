@@ -1838,28 +1838,22 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses ()
 
   for (std::string const &item : ccm_ami_receps)
     {
-      UTL_ScopedName *sn =
-        FE_Utils::string_to_scoped_name (item);
+      FE_Utils::Scoped_Name_Owner sn =
+        FE_Utils::string_to_scoped_name_owner (item);
 
       UTL_Scope *s =
         idl_global->scopes ().top_non_null ();
 
-      AST_Decl *d = s->lookup_by_name (sn, true);
+      AST_Decl *d = s->lookup_by_name (sn.get (), true);
 
       if (d == nullptr)
         {
-          idl_global->err ()->lookup_error (sn);
-
-          sn->destroy ();
-          delete sn;
-          sn = nullptr;
+          idl_global->err ()->lookup_error (sn.get ());
 
           continue;
         }
 
-      sn->destroy ();
-      delete sn;
-      sn = nullptr;
+      sn.reset ();
 
       be_uses *u = dynamic_cast<be_uses*> (d);
 

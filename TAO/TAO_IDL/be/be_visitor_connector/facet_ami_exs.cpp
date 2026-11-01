@@ -218,14 +218,10 @@ be_visitor_facet_ami_exs::init ()
   handler_str += remove_ami4ccm_prefix (iface_name);
   handler_str += "Handler";
 
-  UTL_ScopedName *sn =
-    FE_Utils::string_to_scoped_name (handler_str);
-  AST_Decl *d = s->lookup_by_name (sn, true);
-
-  sn->destroy ();
-  delete sn;
-  sn = nullptr;
-
+  FE_Utils::Scoped_Name_Owner sn =
+    FE_Utils::string_to_scoped_name_owner (handler_str);
+  AST_Decl *d = s->lookup_by_name (sn.get (), true);
+  sn.reset ();
 
   be_interface *callback_iface =
     dynamic_cast<be_interface*> (d);
@@ -288,14 +284,10 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
   handler_str += remove_ami4ccm_prefix (iface_name);
   handler_str += "Handler";
 
-  UTL_ScopedName *sn =
-    FE_Utils::string_to_scoped_name (handler_str);
-  AST_Decl *d = s->lookup_by_name (sn, true);
-
-  sn->destroy ();
-  delete sn;
-  sn = nullptr;
-
+  FE_Utils::Scoped_Name_Owner sn =
+    FE_Utils::string_to_scoped_name_owner (handler_str);
+  AST_Decl *d = s->lookup_by_name (sn.get (), true);
+  sn.reset ();
 
   be_interface *callback_iface =
     dynamic_cast<be_interface*> (d);
@@ -353,13 +345,10 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
     handler_str += iface_name;
 
     UTL_Scope *ss = this->iface_->defined_in();
-    UTL_ScopedName *sn =
-       FE_Utils::string_to_scoped_name (handler_str);
-    AST_Decl *d = ss->lookup_by_name (sn, true);
-
-    sn->destroy ();
-    delete sn;
-    sn = nullptr;
+    FE_Utils::Scoped_Name_Owner sn =
+      FE_Utils::string_to_scoped_name_owner (handler_str);
+    AST_Decl *d = ss->lookup_by_name (sn.get (), true);
+    sn.reset ();
 
     be_interface *sync_iface =
        dynamic_cast<be_interface*> (d);

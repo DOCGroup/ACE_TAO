@@ -151,24 +151,25 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
     }
 }
 
+void
+FE_Utils::Scoped_Name_Deleter::operator() (UTL_ScopedName *scoped_name) const
+{
+  if (scoped_name != nullptr)
+    {
+      scoped_name->destroy ();
+      delete scoped_name;
+    }
+}
+
+FE_Utils::Scoped_Name_Owner
+FE_Utils::string_to_scoped_name_owner (std::string const& name)
+{
+  return Scoped_Name_Owner (FE_Utils::string_to_scoped_name (name));
+}
+
 UTL_ScopedName *
 FE_Utils::string_to_scoped_name (std::string const& name)
 {
-  struct Scoped_Name_Deleter
-  {
-    void operator() (UTL_ScopedName *scoped_name) const
-    {
-      if (scoped_name != nullptr)
-        {
-          scoped_name->destroy ();
-          delete scoped_name;
-        }
-    }
-  };
-
-  using Scoped_Name_Owner =
-    std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter>;
-
   Scoped_Name_Owner retval;
   std::string::size_type start = 0;
 
