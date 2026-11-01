@@ -24,6 +24,7 @@
 #include "tao/String_Traits_Base_T.h"
 
 #include <algorithm>
+#include <cstring>
 #include <functional>
 
 /****************************************************************/
@@ -136,7 +137,7 @@ private:
 
 inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
 {
-  return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
+  return std::strcmp (lhs.in (), rhs.in ()) < 0;
 }
 
 inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)
