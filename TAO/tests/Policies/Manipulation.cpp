@@ -54,7 +54,12 @@ public:
                 int niterations);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
+
+  Manipulation (Manipulation const&) = delete;
+  Manipulation (Manipulation&&) = delete;
+  Manipulation& operator= (Manipulation const&) = delete;
+  Manipulation& operator= (Manipulation&&) = delete;
 
 private:
   void perform_iteration (unsigned int *seed,
@@ -112,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -142,19 +147,19 @@ Manipulation::perform_iteration (unsigned int *seed,
     {
       int r = ACE_OS::rand_r (seed);
 
-      const int ADD_OBJECT_POLICY  = 0;
-      const int ADD_CURRENT_POLICY = 1;
-      const int ADD_MANAGER_POLICY = 2;
+      int const ADD_OBJECT_POLICY  = 0;
+      int const ADD_CURRENT_POLICY = 1;
+      int const ADD_MANAGER_POLICY = 2;
 
-      const int SET_OBJECT_POLICY  = 3;
-      const int SET_CURRENT_POLICY = 4;
-      const int SET_MANAGER_POLICY = 5;
+      int const SET_OBJECT_POLICY  = 3;
+      int const SET_CURRENT_POLICY = 4;
+      int const SET_MANAGER_POLICY = 5;
 
-      const int SAVE_CURRENT_POLICIES    = 6;
-      const int RESTORE_CURRENT_POLICIES = 7;
-      const int SAVE_MANAGER_POLICIES    = 8;
+      int const SAVE_CURRENT_POLICIES    = 6;
+      int const RESTORE_CURRENT_POLICIES = 7;
+      int const SAVE_MANAGER_POLICIES    = 8;
       // const int RESTORE_MANAGER_POLICIES = 9;
-      const int LAST_OPERATION   = 10;
+      int const LAST_OPERATION   = 10;
       int operation = r % LAST_OPERATION;
 
       if (operation == ADD_OBJECT_POLICY
@@ -246,7 +251,7 @@ Manipulation::perform_iteration (unsigned int *seed,
         }
       else if (operation == RESTORE_CURRENT_POLICIES)
         {
-          if (policies.ptr () != 0)
+          if (policies.ptr () != nullptr)
             {
               policy_current->set_policy_overrides (policies.in (),
                                                     CORBA::SET_OVERRIDE);
@@ -254,7 +259,7 @@ Manipulation::perform_iteration (unsigned int *seed,
         }
       else // operation == RESTORE_MANAGER_POLICIES)
         {
-          if (policies.ptr () != 0)
+          if (policies.ptr () != nullptr)
             {
               policy_manager->set_policy_overrides (policies.in (),
                                                     CORBA::SET_OVERRIDE);
@@ -296,7 +301,7 @@ Manipulation::svc ()
                                    policy_current.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Manipulation: exception raised");
     }
