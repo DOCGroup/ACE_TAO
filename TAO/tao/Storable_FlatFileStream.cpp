@@ -24,6 +24,7 @@
 #include <mntent.h>
 #endif /* ACE_HAS_MNTENT */
 
+#include <cstring>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -177,14 +178,14 @@ TAO::Storable_FlatFileStream::open()
   // For now, three flags exist "r", "w",  and "c"
   int flags = 0;
   const char *fdmode = nullptr;
-  if( ACE_OS::strchr(mode_.c_str(), 'r') )
-    if( ACE_OS::strchr(mode_.c_str(), 'w') )
+  if( std::strchr(mode_.c_str(), 'r') )
+    if( std::strchr(mode_.c_str(), 'w') )
       flags = O_RDWR, fdmode = "w+";
     else
       flags = O_RDONLY, fdmode = "r";
   else
     flags = O_WRONLY, fdmode = "w";
-  if( ACE_OS::strchr(mode_.c_str(), 'c') )
+  if( std::strchr(mode_.c_str(), 'c') )
     flags |= O_CREAT;
 
 #ifndef ACE_WIN32
@@ -252,7 +253,7 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (len);
 #else
-  bool shared = ACE_OS::strcmp(mode_.c_str(), "r") == 0;
+  bool shared = std::strcmp(mode_.c_str(), "r") == 0;
   result = -1;
   bool retry = false;
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
@@ -635,7 +636,7 @@ TAO::Storable_FlatFileStream::restore_backup ()
   if (ACE_OS::access (backup_name.c_str (), F_OK))
     return -1;
 
-  if (ACE_OS::strchr (this->mode_.c_str(),'w') == nullptr)
+  if (std::strchr (this->mode_.c_str(),'w') == nullptr)
     {
       this->mode_ += 'w';
     }
@@ -716,7 +717,7 @@ TAO::Storable_FlatFileFactory::is_nfs (ACE_CString const &directory)
             }
           return ret;
         }
-      size_t rootlen = ACE_OS::strlen(rpath);
+      size_t rootlen = std::strlen(rpath);
       if ((rootlen + directory.length() +1) > PATH_MAX)
         {
           if (TAO_debug_level > 0)
@@ -734,7 +735,7 @@ TAO::Storable_FlatFileFactory::is_nfs (ACE_CString const &directory)
       dir = rpath;
     }
   size_t match = 0;
-  size_t dirlen = ACE_OS::strlen(dir);
+  size_t dirlen = std::strlen(dir);
   struct mntent *ent = nullptr;
   const char *fname = "/etc/mtab";
   FILE *mt = ::setmntent(fname,"r");
@@ -751,13 +752,13 @@ TAO::Storable_FlatFileFactory::is_nfs (ACE_CString const &directory)
     }
   while ((ent = ::getmntent(mt)) != nullptr)
     {
-      size_t len = ACE_OS::strlen(ent->mnt_dir);
+      size_t len = std::strlen(ent->mnt_dir);
 
       if (len > dirlen || len < match)
         {
           continue;
         }
-      if (len >= match &&ACE_OS::strstr (dir, ent->mnt_dir) == dir)
+      if (len >= match && std::strstr (dir, ent->mnt_dir) == dir)
         {
           match = len;
           ret = (ACE_OS::strcasecmp (ent->mnt_type, "nfs") == 0);

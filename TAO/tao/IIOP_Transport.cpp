@@ -17,6 +17,8 @@
 
 #include "ace/OS_NS_sys_sendfile.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
@@ -393,7 +395,7 @@ TAO_IIOP_Transport::get_listen_point (
       // remove the scopeid from the information being sent.
       char const *cp_scope = nullptr;
       if (endpoint_addr[index].get_type () == PF_INET6 &&
-          (cp_scope = ACE_OS::strchr (interface_name.in (), '%')) != nullptr)
+          (cp_scope = std::strchr (interface_name.in (), '%')) != nullptr)
         {
           CORBA::ULong len = cp_scope - interface_name.in ();
           interface_name[len] = '\0';

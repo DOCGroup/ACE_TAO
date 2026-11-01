@@ -117,15 +117,15 @@ TAO_HTTP_Reader::receive_reply ()
   if (peer ().recv_n (buf, MTU, nullptr, &num_recvd) >= 0)
     {
       //Make sure that response type is 200 OK
-      if (ACE_OS::strstr (buf,"200 OK") == nullptr)
+      if (std::strstr (buf,"200 OK") == nullptr)
         TAOLIB_ERROR_RETURN ((LM_ERROR,
                             "TAO (%P|%t) - HTTP_Reader::receive_reply, Response is not 200 OK\n" ), -1);
 
       // Search for the header termination string "\r\n\r\n", or "\n\n". If
       // found, move past it to get to the data portion.
-      if ((buf_ptr = ACE_OS::strstr (buf,"\r\n\r\n")) != nullptr)
+      if ((buf_ptr = std::strstr (buf,"\r\n\r\n")) != nullptr)
         buf_ptr += 4;
-      else if ((buf_ptr = ACE_OS::strstr (buf, "\n\n")) != nullptr)     //for compatibility with JAWS
+      else if ((buf_ptr = std::strstr (buf, "\n\n")) != nullptr)     //for compatibility with JAWS
         buf_ptr += 2;
       else
         buf_ptr = buf;
