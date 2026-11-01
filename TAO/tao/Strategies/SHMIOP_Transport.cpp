@@ -14,6 +14,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport () = default;
@@ -118,9 +120,9 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  (void) ACE_OS::memset (buf,
-                         '\0',
-                         sizeof buf);
+  (void) std::memset (buf,
+                      '\0',
+                      sizeof buf);
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // Create a data block

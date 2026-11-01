@@ -298,7 +298,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   ACE_NEW_RETURN(tmp_host, char[hostname_length + 1], -1);
   tmp_host_auto.reset(tmp_host);
-  ACE_OS::memcpy (tmp_host, address, hostname_length);
+  std::memcpy (tmp_host, address, hostname_length);
   tmp_host[hostname_length] = '\0';
 
   // There may be multiple hostnames.  Parse them.
@@ -737,7 +737,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
                   char *[this->endpoint_count_],
                   -1);
 
-  ACE_OS::memset (this->hosts_, 0, sizeof (char*) * this->endpoint_count_);
+  std::fill_n (this->hosts_, this->endpoint_count_, nullptr);
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate

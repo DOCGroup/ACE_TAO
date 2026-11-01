@@ -315,7 +315,7 @@ TAO_COIOP_Profile::encode_endpoints ()
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+      std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
     }
