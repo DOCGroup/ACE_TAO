@@ -18,9 +18,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE>
-ACE_Cleanup_Adapter<TYPE>::~ACE_Cleanup_Adapter ()
-{
-}
+ACE_Cleanup_Adapter<TYPE>::~ACE_Cleanup_Adapter () = default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

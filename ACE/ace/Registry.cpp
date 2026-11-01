@@ -841,9 +841,7 @@ ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State ()
 {
 }
 
-ACE_Registry::Binding_Iterator::Iteration_State::~Iteration_State ()
-{
-}
+ACE_Registry::Binding_Iterator::Iteration_State::~Iteration_State () = default;
 
 // Next entry
 int

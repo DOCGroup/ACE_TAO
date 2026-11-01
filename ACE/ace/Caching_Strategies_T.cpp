@@ -15,9 +15,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
-ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::~ACE_Caching_Strategy ()
-{
-}
+ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::~ACE_Caching_Strategy () = default;
 
 //////////////////////////////////////////////////////////////////////////////////
 

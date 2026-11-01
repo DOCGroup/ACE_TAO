@@ -781,9 +781,7 @@ ACE_WIN32_Wakeup_Completion::ACE_WIN32_Wakeup_Completion
 {
 }
 
-ACE_WIN32_Wakeup_Completion::~ACE_WIN32_Wakeup_Completion ()
-{
-}
+ACE_WIN32_Wakeup_Completion::~ACE_WIN32_Wakeup_Completion () = default;
 
 void
 ACE_WIN32_Wakeup_Completion::complete (size_t       /* bytes_transferred */,

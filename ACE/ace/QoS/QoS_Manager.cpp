@@ -9,8 +9,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_QOS_MANAGER)
 ACE_QoS_Manager::ACE_QoS_Manager ()
 {}
 
-ACE_QoS_Manager::~ACE_QoS_Manager ()
-{}
+ACE_QoS_Manager::~ACE_QoS_Manager () = default;
 
 // Adds the given session to the list of session objects joined by
 // this socket.

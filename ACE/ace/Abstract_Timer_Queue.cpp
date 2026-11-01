@@ -14,10 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // implementation.  Most people know this, but sometimes we all
 // forget, and we might be tempted to remove this code.
 template<typename TYPE>
-ACE_Abstract_Timer_Queue<TYPE>::
-~ACE_Abstract_Timer_Queue ()
-{
-}
+ACE_Abstract_Timer_Queue<TYPE>::~ACE_Abstract_Timer_Queue () = default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

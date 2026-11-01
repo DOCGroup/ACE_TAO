@@ -34,9 +34,7 @@ ACE_UTF32_Encoding_Converter::ACE_UTF32_Encoding_Converter (bool swap)
 {
 }
 
-ACE_UTF32_Encoding_Converter::~ACE_UTF32_Encoding_Converter ()
-{
-}
+ACE_UTF32_Encoding_Converter::~ACE_UTF32_Encoding_Converter () = default;
 
 ACE_UTF32_Encoding_Converter::Result
 ACE_UTF32_Encoding_Converter::to_utf8 (const void* source,

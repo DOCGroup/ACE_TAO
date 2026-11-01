@@ -858,9 +858,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE,FUNCTOR,ACE_LOCK,TIME_POLICY>::ACE_Timer_Wheel_I
 * Destructor, at this level does nothing.
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Wheel_Iterator_T<TYPE,FUNCTOR,ACE_LOCK,TIME_POLICY>::~ACE_Timer_Wheel_Iterator_T ()
-{
-}
+ACE_Timer_Wheel_Iterator_T<TYPE,FUNCTOR,ACE_LOCK,TIME_POLICY>::~ACE_Timer_Wheel_Iterator_T () = default;
 
 
 /**

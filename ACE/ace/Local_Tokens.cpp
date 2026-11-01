@@ -1522,15 +1522,11 @@ ACE_Local_Mutex::create_token (const ACE_TCHAR *name)
   return temp;
 }
 
-ACE_Local_Mutex::~ACE_Local_Mutex ()
-{
-}
+ACE_Local_Mutex::~ACE_Local_Mutex () = default;
 
 // ************************************************************
 
-ACE_Local_RLock::~ACE_Local_RLock ()
-{
-}
+ACE_Local_RLock::~ACE_Local_RLock () = default;
 
 ACE_Tokens *
 ACE_Local_RLock::create_token (const ACE_TCHAR *name)
@@ -1562,9 +1558,7 @@ ACE_Local_RLock::clone () const
 
 // ************************************************************
 
-ACE_Local_WLock::~ACE_Local_WLock ()
-{
-}
+ACE_Local_WLock::~ACE_Local_WLock () = default;
 
 ACE_Tokens *
 ACE_Local_WLock::create_token (const ACE_TCHAR *name)
