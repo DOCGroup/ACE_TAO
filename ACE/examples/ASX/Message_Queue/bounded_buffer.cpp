@@ -25,9 +25,9 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
   for (int n; ; )
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
-      ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ), 0);
+      ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ), ACE_THR_FUNC_RETURN_NULL);
 
       n = ACE_OS::read (ACE_STDIN, mb->wr_ptr (), mb->size ());
 
@@ -53,7 +53,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
         }
     }
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // The consumer dequeues a message from the ACE_Message_Queue, writes
@@ -70,7 +70,7 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 
   for (;;)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       ACE_Time_Value timeout (ACE_OS::time (0) + 4, 0); // Wait for upto 4 seconds
 
@@ -95,7 +95,7 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
                 "(%t) %p\n%a",
                 "timed out waiting for message",
                 1));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Spawn off two threads that copy stdin to stdout.
@@ -108,7 +108,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (producer),
-       (void *) &msg_queue,
+       static_cast<void *> (&msg_queue),
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

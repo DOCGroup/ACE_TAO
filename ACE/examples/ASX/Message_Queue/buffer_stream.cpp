@@ -29,12 +29,12 @@ class Common_Task : public MT_Task
   //   Methods that are common to the producer and consumer.
 {
 public:
-  Common_Task () {}
+  Common_Task () = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // ACE_Task hooks
-  virtual int open (void * = 0);
-  virtual int close (u_long = 0);
+  int open (void * = nullptr) override;
+  int close (u_long = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 };
 
@@ -43,10 +43,10 @@ public:
 class Producer : public Common_Task
 {
 public:
-  Producer () {}
+  Producer () = default;
 
   // Read data from stdin and pass to consumer.
-  virtual int svc ();
+  int svc () override;
 };
 
 class Consumer : public Common_Task
@@ -54,14 +54,14 @@ class Consumer : public Common_Task
   //    Define the Consumer interface.
 {
 public:
-  Consumer () {}
+  Consumer () = default;
 
-  virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb,
+           ACE_Time_Value *tv = nullptr) override;
   // Enqueue the message on the ACE_Message_Queue for subsequent
   // handling in the svc() method.
 
-  virtual int svc ();
+  int svc () override;
   // Receive message from producer and print to stdout.
 
 private:
@@ -76,8 +76,8 @@ class Filter : public MT_Task
 public:
   Filter (): count_ (1) {}
 
-  virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb,
+           ACE_Time_Value *tv = nullptr) override;
   // Change the size of the message before passing it downstream.
 
 private:
@@ -128,7 +128,7 @@ Producer::svc ()
       // Allocate a new message (add one to avoid nasty boundary
       // conditions).
 
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ + 1),
@@ -190,7 +190,7 @@ Consumer::svc ()
 
   for (;;)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       // Wait for upto 4 seconds.
       this->timeout_.sec (ACE_OS::time (0) + 4);
@@ -260,9 +260,9 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   // This Stream controls hierachically-related active objects.
   MT_Stream stream;
 
-  MT_Module *pm = 0;
-  MT_Module *fm = 0;
-  MT_Module *cm = 0;
+  MT_Module *pm = nullptr;
+  MT_Module *fm = nullptr;
+  MT_Module *cm = nullptr;
 
   ACE_NEW_RETURN (cm,
                   MT_Module (ACE_TEXT ("Consumer"),

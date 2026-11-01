@@ -17,7 +17,7 @@
 static ACE_Thread_Manager thr_mgr;
 
 // Make the queue be capable of being *very* large.
-static const long max_queue = LONG_MAX;
+static constexpr long max_queue = LONG_MAX;
 
 // The consumer dequeues a message from the ACE_Message_Queue, writes
 // the message to the stderr stream, and deletes the message.  The
@@ -79,7 +79,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
           // Send a 0-sized shutdown message to the other thread and
           // exit.
 
-          ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), nullptr);
+          ACE_NEW_RETURN (mb, ACE_Message_Block ((size_t) 0), ACE_THR_FUNC_RETURN_NULL);
 
           if (msg_queue->enqueue_tail (mb) == -1)
             ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
@@ -96,7 +96,7 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
                           ACE_Message_Block::MB_DATA,
                           nullptr,
                           buffer),
-                          nullptr);
+                          ACE_THR_FUNC_RETURN_NULL);
           mb->msg_priority (ACE_Utils::truncate_cast<unsigned long> (rb.size ()));
           mb->wr_ptr (rb.size ());
 
@@ -126,7 +126,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Message queue.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
-  if (thr_mgr.spawn (ACE_THR_FUNC (producer), (void *) &msg_queue,
+  if (thr_mgr.spawn (ACE_THR_FUNC (producer), static_cast<void *> (&msg_queue),
                          THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
