@@ -46,10 +46,10 @@ class TAO_Export TAO_Queued_Data
 {
 public:
   /// Default Constructor
-  TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
+  explicit TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
 
   /// Constructor.
-  TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);
+  explicit TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
   TAO_Queued_Data (TAO_Queued_Data const &qd);

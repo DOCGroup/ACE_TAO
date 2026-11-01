@@ -136,7 +136,7 @@ namespace TAO
   class TAO_Export Storable_Exception
   {
   public:
-    Storable_Exception (ACE_CString const &file_name);
+    explicit Storable_Exception (ACE_CString const &file_name);
 
     virtual ~Storable_Exception ();
 

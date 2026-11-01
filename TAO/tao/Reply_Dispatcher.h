@@ -56,7 +56,7 @@ class TAO_Export TAO_Reply_Dispatcher
 {
 public:
   /// Constructor.
-  TAO_Reply_Dispatcher (ACE_Allocator *allocator = nullptr);
+  explicit TAO_Reply_Dispatcher (ACE_Allocator *allocator = nullptr);
 
   /// Destructor.
   virtual ~TAO_Reply_Dispatcher ();
