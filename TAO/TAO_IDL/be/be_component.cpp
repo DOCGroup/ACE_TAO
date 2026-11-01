@@ -96,18 +96,6 @@ be_component::accept (be_visitor *visitor)
             : visitor->visit_component (this));
 }
 
-AST_Structure *
-be_component::be_add_structure (AST_Structure *t)
-{
-  return this->fe_add_structure (t);
-}
-
-AST_Typedef *
-be_component::be_add_typedef (AST_Typedef *t)
-{
-  return this->fe_add_typedef (t);
-}
-
 ACE_CDR::ULong
 be_component::n_provides () const
 {
@@ -124,12 +112,6 @@ ACE_CDR::ULong
 be_component::n_uses () const
 {
   return this->n_uses_;
-}
-
-ACE_CDR::ULong
-be_component::n_remote_uses () const
-{
-  return this->n_remote_uses_;
 }
 
 bool

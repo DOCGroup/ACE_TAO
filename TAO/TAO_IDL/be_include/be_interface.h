@@ -78,15 +78,8 @@ public:
   /// Return the client scope that encloses the interface.
   virtual std::string const& client_enclosing_scope () const;
 
-  /// Return the "flattened" scope that encloses
-  /// the interface.
-  virtual std::string const& flat_client_enclosing_scope () const;
-
   /// Return the server scope that encloses the interface.
   virtual std::string const& server_enclosing_scope () const;
-
-  /// Retrieve skeleton name.
-  std::string relative_skel_name (std::string const& skel_name) const;
 
   /// Build up the skeleton name.
   std::string compute_full_skel_name (std::string const& prefix) const;
@@ -299,9 +292,6 @@ protected:
 
   mutable std::string client_scope_;
   mutable bool client_scope_computed_ {};
-  mutable std::string flat_client_scope_;
-  mutable bool flat_client_scope_computed_ {};
-
   mutable std::string server_scope_;
   mutable bool server_scope_computed_ {};
 

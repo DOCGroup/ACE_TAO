@@ -54,8 +54,6 @@ public:
   void node (be_component *c);
 
 protected:
-  void gen_svnt_entrypoint_decl ();
-  void gen_svnt_entrypoint_defn ();
   void gen_exec_entrypoint_decl ();
   void gen_exec_entrypoint_defn ();
 

@@ -127,9 +127,6 @@ be_home::destroy ()
   this->client_scope_.clear ();
   this->client_scope_computed_ = false;
 
-  this->flat_client_scope_.clear ();
-  this->flat_client_scope_computed_ = false;
-
   this->server_scope_.clear ();
   this->server_scope_computed_ = false;
 

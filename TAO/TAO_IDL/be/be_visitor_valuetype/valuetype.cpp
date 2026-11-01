@@ -820,65 +820,6 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
     }
 }
 
-// Generate the _init definition.
-int
-be_visitor_valuetype::gen_init_defn (be_valuetype *node)
-{
-  if (node->is_abstract ())
-    {
-      return 0;
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  TAO_INSERT_COMMENT (os);
-
-  *os << "class " << be_global->stub_export_macro ()
-      << " " << node->local_name ()
-      << "_init : public ::CORBA::ValueFactoryBase" << be_nl;
-
-  // Generate the body.
-  *os << "{" << be_nl
-      << "public:" << be_idt_nl
-      << "virtual ~" << node->local_name () << "_init ();" << be_nl;
-
-  *os << "virtual char const * tao_repository_id ();\n" << be_nl;
-  *os << "// create () goes here" << be_nl;
-  *os << be_uidt_nl << "};" << be_nl;
-
-  return 0;
-}
-
-int
-be_visitor_valuetype::gen_init_impl (be_valuetype *node)
-{
-  if (node->is_abstract ())
-    {
-      return 0;
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-  os->indent ();
-
-  std::string fname (node->full_name ());
-  fname += "_init";
-  std::string lname (node->local_name ());
-  lname += "_init";
-
-  // Destructor.
-  *os << fname << "::~" << lname << " ()" << be_nl
-      << "{" << be_nl << "}\n\n";
-
-  *os << "char const *" << be_nl
-      << fname << "::tao_repository_id ()" << be_nl
-      << "{" << be_idt_nl
-      <<   "return " << node->local_name ()
-      <<                "::_tao_obv_static_repository_id ();"
-      << be_uidt_nl << "}\n\n";
-
-  return 0;
-}
-
 bool
 be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
 {

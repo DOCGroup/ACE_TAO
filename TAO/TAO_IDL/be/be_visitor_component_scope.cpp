@@ -219,60 +219,6 @@ be_visitor_component_scope::node (be_component *c)
 }
 
 void
-be_visitor_component_scope::gen_svnt_entrypoint_decl ()
-{
-  os_ << be_nl_2
-      << "extern \"C\" " << export_macro_
-      << " ::PortableServer::Servant" << be_nl
-      << "create_" << node_->flat_name ()
-      << "_Servant (" << be_idt_nl
-      << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::"
-      << be_global->ciao_container_type ()
-      << "_Container_ptr c," << be_nl
-      << "const char * ins_name);" << be_uidt;
-}
-
-void
-be_visitor_component_scope::gen_svnt_entrypoint_defn ()
-{
-  std::string const& sname =
-    ScopeAsDecl (node_->defined_in ())->full_name ();
-  std::string const& lname = node_->local_name ();
-  std::string const global = sname.empty () ? "" : "::";
-
-  os_ << be_nl_2
-      << "extern \"C\" " << export_macro_
-      << " ::PortableServer::Servant" << be_nl
-      << "create_" << node_->flat_name ()
-      << "_Servant (" << be_idt_nl
-      << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Container_ptr c," << be_nl
-      << "const char * ins_name)" << be_uidt_nl
-      << "{" << be_idt_nl
-      << global << sname << "::CCM_" << lname
-      << "_var x =" << be_idt_nl
-      << global << sname << "::CCM_" << lname
-      << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "if (::CORBA::is_nil (x.in ()))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return nullptr;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "::PortableServer::Servant retval = nullptr;" << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                " << lname << "_Servant (" << be_idt_nl
-      << "                x.in ()," << be_nl
-      << "                ::Components::CCMHome::_nil ()," << be_nl
-      << "                ins_name," << be_nl
-      << "                0," << be_nl
-      << "                c)," << be_uidt_nl
-      << "                nullptr);" << be_nl_2
-      << "return retval;" << be_uidt_nl
-      << "}";
-}
-
-void
 be_visitor_component_scope::gen_exec_entrypoint_decl ()
 {
   os_ << be_nl_2

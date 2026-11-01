@@ -29,19 +29,6 @@ protected:
   void this_method (be_interface *node) override;
 
 private:
-  /// Create an AMH node 'on the fly' from the
-  /// original interface node
-  be_interface* create_amh_class (std::string name);
-
-  /// Add attributes and operations from original-interface
-  /// into the newly created AMH-node
-  int add_original_members (be_interface *node,
-                            be_interface *amh_node);
-
-  /// For every operation in the original-interface, create
-  /// an AMH-operation and add it to the newly created AMH-node
-  int add_amh_operation (be_operation *orig_operation,
-                         be_interface *amh_node);
 };
 
 #endif /* AMH_SH_H_ */

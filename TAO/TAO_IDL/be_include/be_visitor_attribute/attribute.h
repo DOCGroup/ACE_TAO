@@ -46,7 +46,6 @@ public:
 
   void for_facets (bool val);
   void op_scope (be_decl *node);
-  void exec_class_extension (std::string const& extension);
 
 private:
   bool for_facets_ {};

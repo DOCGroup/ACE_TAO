@@ -417,9 +417,3 @@ be_visitor_attribute::op_scope (be_decl *node)
 {
   this->op_scope_ = node;
 }
-
-void
-be_visitor_attribute::exec_class_extension (std::string const& extension)
-{
-  this->exec_class_extension_ = extension;
-}

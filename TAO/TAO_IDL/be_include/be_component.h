@@ -48,15 +48,9 @@ public:
   /// Visiting.
   int accept (be_visitor *visitor) override;
 
-  // Need for public access to fe_add_structure and fe_add_typedef,
-  // used to add implied IDL nodes created for 'uses multiple' declarations.
-  AST_Structure *be_add_structure (AST_Structure *t);
-  AST_Typedef *be_add_typedef (AST_Typedef *t);
-
   ACE_CDR::ULong n_provides () const;
   ACE_CDR::ULong n_remote_provides () const;
   ACE_CDR::ULong n_uses () const;
-  ACE_CDR::ULong n_remote_uses () const;
   bool has_uses_multiple () const;
   ACE_CDR::ULong n_publishes () const;
   ACE_CDR::ULong n_consumes () const;

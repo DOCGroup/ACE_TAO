@@ -59,7 +59,6 @@ be_visitor_union_branch_cdr_op_cs::visit_union_branch (be_union_branch *node)
 
   return 0;
 }
-
 int
 be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 {
@@ -169,7 +168,6 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 
   return 0;
 }
-
 int
 be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
 {
@@ -1025,48 +1023,6 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
                          "visit_union - "
                          "bad sub state\n"),
                         -1);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_union_branch_cdr_op_cs::explicit_default ()
-{
-  be_union *bu =
-    dynamic_cast<be_union*> (this->ctx_->scope ()->decl ());
-  int def_index = bu->default_index ();
-
-  if (def_index != -1)
-    {
-      be_union_branch *ub =
-        dynamic_cast<be_union_branch*> (this->ctx_->node ());
-
-      int i {};
-
-      // Instantiate a scope iterator.
-      for (UTL_ScopeActiveIterator si (bu, UTL_Scope::IK_decls);
-           !si.is_done ();
-           si.next ())
-        {
-          be_union_branch *bub = nullptr; // union branch node
-
-          AST_Decl *d = si.item ();
-
-          if (!d->imported ())
-            {
-              bub = dynamic_cast<be_union_branch*> (d);
-            }
-
-          if (bub == ub)
-            {
-              return (i == def_index);
-            }
-          else
-            {
-              ++i;
-            }
-        }
     }
 
   return 0;

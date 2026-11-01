@@ -150,13 +150,6 @@ be_interface::local_coll_name (int type) const
 }
 
 std::string
-be_interface::relative_skel_name (std::string const& skel_name) const
-{
-  return be_interface::relative_name (this->full_skel_name (),
-                                      skel_name);
-}
-
-std::string
 be_interface::compute_full_skel_name (std::string const& prefix) const
 {
   std::string skel_name (prefix);
@@ -2098,9 +2091,6 @@ be_interface::destroy ()
   this->client_scope_.clear ();
   this->client_scope_computed_ = false;
 
-  this->flat_client_scope_.clear ();
-  this->flat_client_scope_computed_ = false;
-
   this->server_scope_.clear ();
   this->server_scope_computed_ = false;
 
@@ -2517,25 +2507,6 @@ be_interface::client_enclosing_scope () const
     }
 
   return this->client_scope_;
-}
-
-std::string const&
-be_interface::flat_client_enclosing_scope () const
-{
-  if (!this->flat_client_scope_computed_)
-    {
-      std::string const& full_name = this->flat_name ();
-      std::string const& name =
-        this->original_local_name ();
-
-      std::size_t offset = name.size ();
-      std::size_t length = full_name.size () - offset;
-
-      this->flat_client_scope_ = full_name.substr (0, length);
-      this->flat_client_scope_computed_ = true;
-    }
-
-  return this->flat_client_scope_;
 }
 
 std::string const&

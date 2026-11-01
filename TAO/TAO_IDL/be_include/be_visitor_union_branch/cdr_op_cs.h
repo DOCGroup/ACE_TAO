@@ -54,9 +54,6 @@ public:
   int visit_typedef (be_typedef *node) override;
   int visit_union (be_union *node) override;
 
-  /// extra code generation for an explicit default case
-  virtual int explicit_default ();
-
  private:
   int emit_valuetype_common (be_type *node);
 };

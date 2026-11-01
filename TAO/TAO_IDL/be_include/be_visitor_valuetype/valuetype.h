@@ -84,12 +84,6 @@ public:
   /// private data for field
   int gen_field_pd (be_field *node);
 
-  /// generate the _init class definition
-  virtual int gen_init_defn (be_valuetype *node);
-
-  /// generate the _init implementation
-  virtual int gen_init_impl (be_valuetype *node);
-
   /// Recursively generate args for the initializing constuctor.
   void gen_obv_init_constructor_args (be_valuetype *node,
                                       unsigned long &index);

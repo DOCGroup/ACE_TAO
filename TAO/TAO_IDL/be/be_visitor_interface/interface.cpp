@@ -124,28 +124,6 @@ be_visitor_interface::is_amh_rh_node (be_interface *node)
   return false;
 }
 
-void
-be_visitor_interface::add_abstract_op_args (AST_Operation *old_op,
-                                            be_operation &new_op)
-{
-  AST_Decl *d = nullptr;
-
-  for (UTL_ScopeActiveIterator si (old_op, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      d = si.item ();
-      new_op.add_to_scope (d);
-    }
-
-  UTL_ExceptList *excep_list = old_op->exceptions ();
-
-  if (nullptr != excep_list)
-    {
-      new_op.be_add_exceptions (excep_list->copy ());
-    }
-}
-
 // All common visit methods for interface visitor.
 
 int

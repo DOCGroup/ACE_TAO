@@ -38,8 +38,6 @@ protected:
   int generate_proxy_classes (be_interface *node) override;
 //   virtual int generate_downcast_implementation (be_interface *node,
 //                                                 TAO_OutStream *os);
-  virtual int generate_copy_ctor (be_interface *node,
-                                  TAO_OutStream *os);
   std::string generate_flat_name (be_interface *node) override;
   std::string generate_local_name (be_interface *node) override;
   std::string generate_full_skel_name (be_interface *node) override;
