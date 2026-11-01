@@ -18,12 +18,12 @@ class Request_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
     // = TITLE
     //   This class is the Svc_Handler used by <Acceptor>.
   public:
-    Request_Handler (ACE_Thread_Manager *tm = 0);
+    Request_Handler (ACE_Thread_Manager *tm = nullptr);
     // The default constructor makes sure the right reactor is used.
 
   protected:
-    virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-    virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
+    int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+    int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0) override;
 
   private:
     size_t  nr_msgs_rcvd_;

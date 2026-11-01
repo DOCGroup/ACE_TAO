@@ -57,7 +57,7 @@ class Manager : public ACE_Task<ACE_MT_SYNCH>
 public:
   enum {POOL_SIZE = 5, MAX_TIMEOUT = 5};
 
-  Manager () : shutdown_(0)
+  Manager () : shutdown_ (false)
   {
     ACE_TRACE ("Manager::Manager");
   }
@@ -94,15 +94,15 @@ public:
   }
 
 private:
-  int done ();
+  bool done () const;
 
-  int shutdown_;
+  bool shutdown_;
 };
 // Listing 1
 
-int Manager::done ()
+bool Manager::done () const
 {
-  return (shutdown_ == 1);
+  return shutdown_;
 }
 
 

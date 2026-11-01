@@ -89,8 +89,8 @@ public:
 class Worker: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Worker (IManager *manager)
-    : manager_(manager), queue_ (msg_queue ())
+  explicit Worker (IManager *manager)
+    : manager_ (manager), queue_ (msg_queue ())
   { }
 
   int perform (ACE_Method_Request *req)
@@ -141,7 +141,7 @@ public:
   enum {POOL_SIZE = 5, MAX_TIMEOUT = 5};
 
   Manager ()
-    : shutdown_(0), workers_lock_(), workers_cond_(workers_lock_)
+    : shutdown_ (false), workers_lock_ (), workers_cond_ (workers_lock_)
   {
     ACE_TRACE ("Manager");
   }
@@ -227,9 +227,9 @@ private:
     return 0;
   }
 
-  int done ()
+  bool done () const
   {
-    return (shutdown_ == 1);
+    return shutdown_;
   }
 
   ACE_thread_t thread_id (Worker *worker)
@@ -238,7 +238,7 @@ private:
   }
 
 private:
-  int shutdown_;
+  bool shutdown_;
   ACE_Thread_Mutex workers_lock_;
   ACE_Condition<ACE_Thread_Mutex> workers_cond_;
   ACE_Unbounded_Queue<Worker* > workers_;
@@ -277,7 +277,7 @@ Manager::shut_down ()
     }
   while (iter.advance ());
 
-  shutdown_ = 1;
+  shutdown_ = true;
 
   return 0;
 }

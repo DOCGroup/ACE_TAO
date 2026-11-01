@@ -26,15 +26,15 @@ public:
 class Worker : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Worker (IManager *manager) : manager_(manager) { }
+  explicit Worker (IManager *manager) : manager_ (manager) { }
 
-  virtual int svc ()
+  int svc () override
   {
     ACE_Thread_ID id;
     thread_id_ = id;
     while (1)
       {
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         if (this->getq (mb) == -1)
           ACE_ERROR_BREAK
             ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
@@ -55,7 +55,7 @@ public:
   }
   // Listing 2
 
-  const ACE_Thread_ID& thread_id ()
+  const ACE_Thread_ID &thread_id () const
   {
     return this->thread_id_;
   }
@@ -88,12 +88,12 @@ public:
   enum {POOL_SIZE = 5, MAX_TIMEOUT = 5};
 
   Manager ()
-    : shutdown_(0), workers_lock_(), workers_cond_(workers_lock_)
+    : shutdown_ (false), workers_lock_ (), workers_cond_ (workers_lock_)
   {
     ACE_TRACE ("Manager::Manager");
   }
 
-  int svc ()
+  int svc () override
   {
     ACE_TRACE ("Manager::svc");
 
@@ -104,9 +104,9 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
-        tv += ACE_OS::time (0);
+        tv += ACE_OS::time (nullptr);
 
         // Get a message request.
         if (this->getq (mb, &tv) < 0)
@@ -116,7 +116,7 @@ public:
           }
 
         // Choose a worker.
-        Worker *worker = 0;
+        Worker *worker = nullptr;
         {
           ACE_GUARD_RETURN (ACE_Thread_Mutex,
                             worker_mon, this->workers_lock_, -1);
@@ -136,9 +136,9 @@ public:
 
   int shut_down ();
 
-  const ACE_Thread_ID& thread_id (Worker *worker);
+  const ACE_Thread_ID &thread_id (Worker *worker) const;
 
-  virtual int return_to_work (Worker *worker)
+  int return_to_work (Worker *worker) override
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex,
                       worker_mon, this->workers_lock_, -1);
@@ -159,7 +159,7 @@ private:
                       -1);
     for (int i = 0; i < POOL_SIZE; i++)
       {
-        Worker *worker = 0;
+        Worker *worker = nullptr;
         ACE_NEW_RETURN (worker, Worker (this), -1);
         this->workers_.enqueue_tail (worker);
         worker->activate ();
@@ -168,19 +168,19 @@ private:
     return 0;
   }
 
-  int done ();
+  bool done () const;
 
 private:
-  int shutdown_;
+  bool shutdown_;
   ACE_Thread_Mutex workers_lock_;
   ACE_Condition<ACE_Thread_Mutex> workers_cond_;
   ACE_Unbounded_Queue<Worker* > workers_;
 };
 // Listing 1
 
-int Manager::done ()
+bool Manager::done () const
 {
-  return (shutdown_ == 1);
+  return shutdown_;
 }
 
 int
@@ -189,7 +189,7 @@ Manager::shut_down ()
   ACE_TRACE ("Manager::shut_down");
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
     this->workers_.begin ();
-  Worker **worker_ptr = 0;
+  Worker **worker_ptr = nullptr;
   do
     {
       iter.next (worker_ptr);
@@ -202,7 +202,7 @@ Manager::shut_down ()
                  buf));
 
       // Send the hangup message.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       ACE_NEW_RETURN
         (mb,
          ACE_Message_Block(0,
@@ -221,13 +221,13 @@ Manager::shut_down ()
     }
   while (iter.advance ());
 
-  shutdown_ = 1;
+  shutdown_ = true;
 
   return 0;
 }
 
-const ACE_Thread_ID&
-Manager::thread_id (Worker *worker)
+const ACE_Thread_ID &
+Manager::thread_id (Worker *worker) const
 {
   return worker->thread_id ();
 }
@@ -241,7 +241,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   for (int i = 0; i < 30; i++)
     {
       ACE_NEW_RETURN

@@ -44,7 +44,7 @@ private:
 class LF_ThreadPool : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  LF_ThreadPool () : shutdown_(0), current_leader_(0)
+  LF_ThreadPool () : shutdown_ (false), current_leader_ (0)
   {
     ACE_TRACE ("LF_ThreadPool::TP");
   }
@@ -53,7 +53,7 @@ public:
 
   void shut_down ()
   {
-    shutdown_ = 1;
+    shutdown_ = true;
   }
 
 private:
@@ -63,7 +63,7 @@ private:
 
   int elect_new_leader ();
 
-  int leader_active ()
+  bool leader_active () const
   {
     ACE_TRACE ("LF_ThreadPool::leader_active");
     return this->current_leader_ != 0;
@@ -77,13 +77,13 @@ private:
 
   void process_message (ACE_Message_Block *mb);
 
-  int done ()
+  bool done () const
   {
-    return (shutdown_ == 1);
+    return shutdown_;
   }
 
 private:
-  int shutdown_;
+  bool shutdown_;
   ACE_thread_t current_leader_;
   ACE_Thread_Mutex leader_lock_;
   ACE_Unbounded_Queue<Follower*> followers_;
