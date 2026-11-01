@@ -148,11 +148,11 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
-  int is_empty () const;
+  /// Returns true if the container is empty, otherwise returns false.
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
-  int is_full () const;
+  /// Returns true if the container is full, otherwise returns false.
+  bool is_full () const;
 
   // = Classic unordered set operations.
 

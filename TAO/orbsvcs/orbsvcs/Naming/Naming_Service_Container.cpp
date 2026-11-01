@@ -365,14 +365,14 @@ ACE_Unbounded_List_Iterator<T>::operator!= (ACE_Unbounded_List_Iterator<T> const
 
 // ---
 
-template <class T> int
+template <class T> bool
 ACE_Unbounded_List<T>::is_empty () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_empty");
   return this->head_ == this->head_->next_;
 }
 
-template <class T>  int
+template <class T> bool
 ACE_Unbounded_List<T>::is_full () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_full");
