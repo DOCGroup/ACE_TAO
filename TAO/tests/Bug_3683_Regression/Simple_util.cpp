@@ -20,12 +20,6 @@ Server<Servant>::Server ()
   this->servant_ = tmp;
 }
 
-// Destructor.
-template <class Servant>
-Server<Servant>::~Server ()
-{
-}
-
 // Parse the command-line arguments and set options.
 template <class Servant> int
 Server<Servant>::parse_args ()
@@ -83,7 +77,7 @@ Server<Servant>::test_for_ins (char const *ior)
 
       adapter->bind (ACE_TEXT_ALWAYS_CHAR (this->ins_), ior);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ERROR: test_for_ins failed\n");
       return -1;
@@ -134,12 +128,12 @@ Server<Servant>::init (char const *servant_name,
                   ACE_TEXT ("The IOR is: <%C>\n"),
                   str.in ()));
 
-      if (this->ins_ && this->test_for_ins (str.in ()) != 0)
+      if (this->ins_ != nullptr && this->test_for_ins (str.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("test_for_ins (): failed\n")),
                           -1);
 
-      if (this->ior_output_file_)
+      if (this->ior_output_file_ != nullptr)
         {
           FILE *fh = ACE_OS::fopen (this->ior_output_file_, "w");
           if (fh == nullptr)
@@ -152,7 +146,7 @@ Server<Servant>::init (char const *servant_name,
           ACE_OS::fclose (fh);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\tException in activation of POA");
       return -1;
@@ -173,17 +167,9 @@ Server<Servant>::run ()
   return 0;
 }
 
-// Constructor.
-template <class ServerInterface>
-Client<ServerInterface>::Client ()
-  : ior_ ("")
-{
-  //no-op
-}
-
 // Reads the Server ior from a file
 template <class ServerInterface> int
-Client<ServerInterface>::read_ior (ACE_TCHAR *filename)
+Client<ServerInterface>::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
   ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
@@ -241,7 +227,7 @@ Client<ServerInterface>::parse_args ()
                             -1);
         break;
       case 'x': // read the flag for shutting down
-        this->do_shutdown_ = 1;
+        this->do_shutdown_ = true;
         break;
       case 'h':  // display help for use of the client.
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -306,7 +292,7 @@ Client<ServerInterface>::init (char const *,
                            ACE_TEXT ("no ior or naming options  specified\n")),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_i::init");
       return -1;
@@ -315,18 +301,11 @@ Client<ServerInterface>::init (char const *,
   return 0;
 }
 
-template <class ServerInterface> int
-Client<ServerInterface>::do_shutdown ()
+template <class ServerInterface> bool
+Client<ServerInterface>::do_shutdown () const
 {
   // Returns the shutdwon flag
   return this->do_shutdown_;
-}
-
-template <class ServerInterface> void
-Client<ServerInterface>::do_shutdown (int flag)
-{
-  // Fills the flag
-  this->do_shutdown_ = flag;
 }
 
 #endif /* SIMPLE_UTIL_C */

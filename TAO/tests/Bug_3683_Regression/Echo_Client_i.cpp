@@ -64,10 +64,10 @@ Echo_Client_i::run (char const *name,
                   ACE_TEXT ("\nString echoed by client has len %B\n"),
                   ACE_OS::strlen (s.in ())));
 
-      if (client_.do_shutdown () == 1)
+      if (client_.do_shutdown ())
         client_->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\n Exception in RMI");
       return -1;
