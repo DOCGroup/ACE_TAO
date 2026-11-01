@@ -13,7 +13,7 @@
 
 using ATOMIC_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
-static int zero = 0;
+static constexpr int zero = 0;
 static ATOMIC_INT task_count (zero);
 static ATOMIC_INT max_count (zero);
 static ATOMIC_INT wait_count (zero);
@@ -21,7 +21,7 @@ static ATOMIC_INT wait_count (zero);
 static int n_threads = 0;
 
 // Default number of tasks.
-static const int default_threads = ACE_DEFAULT_THREADS;
+static constexpr int default_threads = ACE_DEFAULT_THREADS;
 
 // Default number of times to run the test.
 static constexpr int default_iterations = 1000;
@@ -29,12 +29,19 @@ static constexpr int default_iterations = 1000;
 class Task_Test : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  Task_Test () = default;
+
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *args = 0);
-  virtual int close (u_long flags = 0);
+  int open (void *args = nullptr) override;
+  int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc ();
+  int svc () override;
+
+  Task_Test (Task_Test const &) = delete;
+  Task_Test (Task_Test &&) = delete;
+  Task_Test &operator= (Task_Test const &) = delete;
+  Task_Test &operator= (Task_Test &&) = delete;
 
 private:
   static ACE_Thread_Mutex lock_;

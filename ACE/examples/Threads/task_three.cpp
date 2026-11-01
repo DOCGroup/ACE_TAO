@@ -24,8 +24,8 @@
 
 #if defined (ACE_HAS_THREADS)
 
-static ACE_OSTREAM_TYPE *out_stream = 0;
-static sig_atomic_t done = 0;
+static ACE_OSTREAM_TYPE *out_stream {};
+static sig_atomic_t done {};
 static constexpr size_t NUM_INVOCATIONS = 100;
 static constexpr size_t TASK_COUNT = 130;
 
@@ -33,16 +33,21 @@ class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Test_Task ();
-  ~Test_Task ();
+  ~Test_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *args = 0);
-  virtual int close (u_long flags = 0);
+  int open (void *args = nullptr) override;
+  int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc ();
+  int svc () override;
 
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
+
+  Test_Task (Test_Task const &) = delete;
+  Test_Task (Test_Task &&) = delete;
+  Test_Task &operator= (Test_Task const &) = delete;
+  Test_Task &operator= (Test_Task &&) = delete;
 
   ACE_Reactor *r_;
   size_t handled_;

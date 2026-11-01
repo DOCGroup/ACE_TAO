@@ -20,7 +20,12 @@ public:
                 int n_threads,
                 int n_iterations);
 
-  virtual int svc ();
+  int svc () override;
+
+  Barrier_Task (Barrier_Task const &) = delete;
+  Barrier_Task (Barrier_Task &&) = delete;
+  Barrier_Task &operator= (Barrier_Task const &) = delete;
+  Barrier_Task &operator= (Barrier_Task &&) = delete;
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
 

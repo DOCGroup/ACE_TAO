@@ -11,8 +11,13 @@
 class My_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  My_Task (int n);
-  virtual int svc ();
+  explicit My_Task (int n);
+  int svc () override;
+
+  My_Task (My_Task const &) = delete;
+  My_Task (My_Task &&) = delete;
+  My_Task &operator= (My_Task const &) = delete;
+  My_Task &operator= (My_Task &&) = delete;
 
   static void sleep_hook (void *);
 

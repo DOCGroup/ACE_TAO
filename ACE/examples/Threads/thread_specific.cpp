@@ -39,7 +39,7 @@ worker (void *c)
   intptr_t count = reinterpret_cast<intptr_t> (c);
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
-  int *ip = 0;
+  int *ip {};
 
   // Make one key that will be available when the thread exits so that
   // we'll have something to cleanup!
@@ -88,7 +88,7 @@ worker (void *c)
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
 
-        if (ACE_Thread::setspecific (key, (void *) 0) == -1)
+        if (ACE_Thread::setspecific (key, nullptr) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
@@ -102,7 +102,7 @@ worker (void *c)
                     "ACE_Thread::keyfree"));
 
       // Cause an error.
-      ACE_OS::read (ACE_INVALID_HANDLE, 0, 0);
+      ACE_OS::read (ACE_INVALID_HANDLE, nullptr, 0);
 
       // The following two lines set the thread-specific state.
       tss_error->error (errno);
@@ -153,7 +153,7 @@ worker (void *c)
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));
 
-        if (ACE_Thread::setspecific (key, (void *) 0) == -1)
+        if (ACE_Thread::setspecific (key, nullptr) == -1)
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
                       "ACE_Thread::setspecific"));

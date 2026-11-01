@@ -29,20 +29,25 @@
 class ExitHandler : public ACE_Event_Handler
 {
 public:
-  ExitHandler (const char *name);
+  explicit ExitHandler (char const *name);
 
   /// Called when object is removed from the <ACE_Reactor>.
-  virtual ~ExitHandler ();
-  virtual int handle_exit (ACE_Process *proc);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  ~ExitHandler () override;
+  int handle_exit (ACE_Process *proc) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
+
+  ExitHandler (ExitHandler const &) = delete;
+  ExitHandler (ExitHandler &&) = delete;
+  ExitHandler &operator= (ExitHandler const &) = delete;
+  ExitHandler &operator= (ExitHandler &&) = delete;
 private:
-  const char *name_;
+  char const *name_;
 };
 
-ExitHandler::ExitHandler (const char *name)
+ExitHandler::ExitHandler (char const *name)
   : ACE_Event_Handler (),
     name_ (name)
 {
@@ -67,8 +72,8 @@ ExitHandler::handle_exit (ACE_Process *proc)
 }
 
 int
-ExitHandler::handle_timeout(const ACE_Time_Value &,
-                            const void *)
+ExitHandler::handle_timeout (ACE_Time_Value const &,
+                             void const *)
 {
   static int tick_tock = 0;
 
@@ -256,7 +261,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 #endif /* ACE_WIN32 */
 
-  ExitHandler *main_thread_work = 0;
+  ExitHandler *main_thread_work {};
   ACE_NEW_RETURN (main_thread_work,
                   ExitHandler ("main thread worker"),
                   1);
