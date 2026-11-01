@@ -65,7 +65,7 @@ Consumer_Router::svc ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) starting svc in Consumer_Router\n")));
 
-  for (ACE_Message_Block *mb = 0;
+  for (ACE_Message_Block *mb = nullptr;
        this->getq (mb) >= 0;
        )
     {
@@ -146,7 +146,7 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
                    ACE_TEXT ("tcp"),
                    ACE_TEXT ("# consumer router"),
                    this->is_reader () ? ACE_TEXT ("reader") : ACE_TEXT ("writer"));
-  if (*strp == 0 && (*strp = ACE_OS::strdup (module_name)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, module_name, length);

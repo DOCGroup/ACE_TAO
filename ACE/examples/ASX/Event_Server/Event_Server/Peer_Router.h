@@ -26,17 +26,21 @@ class Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
   //     Receive input from a Peer and forward to the appropriate
   //     <Peer_Router> (i.e., <Consumer_Router> or <Supplier_Router>).
 public:
-  Peer_Handler (Peer_Router_Context * = 0);
+  explicit Peer_Handler (Peer_Router_Context * = nullptr);
+  Peer_Handler (const Peer_Handler &) = delete;
+  Peer_Handler (Peer_Handler &&) = delete;
+  Peer_Handler &operator= (const Peer_Handler &) = delete;
+  Peer_Handler &operator= (Peer_Handler &&) = delete;
   // Initialization method.
 
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
   // Called by the ACE_Acceptor::handle_input() to activate this
   // object.
 
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
   // Receive input from a peer.
 
-  virtual int put (ACE_Message_Block *, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *, ACE_Time_Value *tv = nullptr) override;
   // Send output to a peer.  Note that this implementation "blocks" if
   // flow control occurs.  This is undesirable for "real"
   // applications.  The best way around this is to make the
@@ -59,7 +63,7 @@ class Peer_Router_Context : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
   //     This class also serves as an <ACE_Acceptor>, which creates
   //     <Peer_Handlers> when Peers connect.
 public:
-  Peer_Router_Context (u_short port);
+  explicit Peer_Router_Context (u_short port);
   // Constructor.
 
   virtual int unbind_peer (ROUTING_KEY);
@@ -76,7 +80,7 @@ public:
   // selective, i.e., it would actually do "routing" based on
   // addressing information passed in the <ACE_Message_Block>.
 
-  int make_svc_handler (Peer_Handler *&sh);
+  int make_svc_handler (Peer_Handler *&sh) override;
   // Factory Method that creates a new <Peer_Handler> for each
   // connection.  This method overrides the default behavior in
   // <ACE_Acceptor>.
@@ -112,6 +116,11 @@ private:
   friend class Friend_Of_Peer_Router_Context;
   // Declare a friend class to avoid compiler warnings because the
   // destructor is private.
+
+  Peer_Router_Context (const Peer_Router_Context &) = delete;
+  Peer_Router_Context (Peer_Router_Context &&) = delete;
+  Peer_Router_Context &operator= (const Peer_Router_Context &) = delete;
+  Peer_Router_Context &operator= (Peer_Router_Context &&) = delete;
 };
 
 class Peer_Router : public ACE_Task<ACE_SYNCH>
@@ -145,8 +154,10 @@ private:
   // e.g., in the <Consumer_Router> and <Supplier_Router> Modules.
 
   // = Prevent copies and pass-by-value.
-  Peer_Router (const Peer_Router &);
-  void operator= (const Peer_Router &);
+  Peer_Router (const Peer_Router &) = delete;
+  Peer_Router (Peer_Router &&) = delete;
+  Peer_Router &operator= (const Peer_Router &) = delete;
+  Peer_Router &operator= (Peer_Router &&) = delete;
 };
 
 #endif /* _PEER_ROUTER_H */

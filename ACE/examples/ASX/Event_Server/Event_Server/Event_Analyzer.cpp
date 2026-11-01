@@ -21,7 +21,7 @@ Event_Analyzer::close (u_long)
 int
 Event_Analyzer::control (ACE_Message_Block *mb)
 {
-  ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
+  ACE_IO_Cntl_Msg *ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd;
 
   switch (cmd = ioc->cmd ())
@@ -70,7 +70,7 @@ Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
 {
   const ACE_TCHAR *module_name = this->name ();
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (module_name)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, module_name, length);

@@ -14,6 +14,11 @@
 using MT_Stream = ACE_Stream<ACE_SYNCH>;
 using MT_Module = ACE_Module<ACE_SYNCH>;
 
+static void end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 
 class Event_Server : public ACE_Sig_Adapter
 {
@@ -41,7 +46,7 @@ public:
   // Run the event-loop for the event server.
 
 private:
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
   // Hook method called back when a user types something into the
   // STDIN in order to shut down the program.
 
@@ -60,7 +65,7 @@ private:
 };
 
 Event_Server::Event_Server ()
-  : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
+  : ACE_Sig_Adapter (end_reactor_event_loop)
   // Shutdown the <ACE_Reactor>'s event loop when a SIGINT is
   // received.
 {

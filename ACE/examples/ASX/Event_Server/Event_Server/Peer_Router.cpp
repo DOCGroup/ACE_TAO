@@ -270,7 +270,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
   ACE_Message_Block *hb = new ACE_Message_Block (sizeof (ROUTING_KEY),
                                                  ACE_Message_Block::MB_PROTO, db);
   // Check for memory failures.
-  if (hb == 0)
+  if (hb == nullptr)
     {
       db->release ();
       errno = ENOMEM;
@@ -349,7 +349,7 @@ Peer_Router::context () const
 int
 Peer_Router::control (ACE_Message_Block *mb)
 {
-  ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
+  ACE_IO_Cntl_Msg *ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds command;
 
   switch (command = ioc->cmd ())

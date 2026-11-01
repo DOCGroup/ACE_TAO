@@ -42,28 +42,28 @@ class Supplier_Router : public Peer_Router
   //     the <ACE_Stream> apparatus.  Therefore, we can put them in
   //     the protected section.
 public:
-  Supplier_Router (Peer_Router_Context *prc);
+  explicit Supplier_Router (Peer_Router_Context *prc);
   // Initialization method.
 
 protected:
   // = ACE_Task hooks.
 
-  virtual int open (void *a = 0);
+  int open (void *a = nullptr) override;
   // Called by the Stream to initialize the router.
 
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
   // Called by the Stream to shutdown the router.
 
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
   // Called by the <SUPPLIER_HANDLER> to pass a message to the Router.
   // The Router queues up this message, which is then processed in the
   // <svc> method in a separate thread.
 
-  virtual int svc ();
+  int svc () override;
   // Runs in a separate thread to dequeue messages and pass them up
   // the stream.
 
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
   // Dynamic linking hook.
 };
 

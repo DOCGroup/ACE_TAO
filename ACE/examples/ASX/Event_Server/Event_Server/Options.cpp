@@ -9,16 +9,11 @@
 #include "Options.h"
 
 
-/* static */
-Options *Options::instance_ = nullptr;
-
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == nullptr)
-    Options::instance_ = new Options;
-
-  return Options::instance_;
+  static Options instance;
+  return &instance;
 }
 
 Options::Options ()
@@ -29,14 +24,12 @@ Options::Options ()
     message_size_ (128),
     initial_queue_length_ (0),
     iterations_ (100000),
-    debugging_ (0),
-    verbosity_ (0),
+    debugging_ (false),
+    verbosity_ (false),
     consumer_port_ (ACE_DEFAULT_SERVER_PORT),
     supplier_port_ (ACE_DEFAULT_SERVER_PORT + 1)
 {
 }
-
-Options::~Options () = default;
 
 void Options::print_results ()
 {
@@ -118,7 +111,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->consumer_port (ACE_OS::atoi (get_opt.opt_arg ()));
         break;
       case 'd':
-        this->debugging_ = 1;
+        this->debugging_ = true;
         break;
       case 'H':
         this->high_water_mark (ACE_OS::atoi (get_opt.opt_arg ()));
@@ -153,7 +146,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->thr_count (ACE_OS::atoi (get_opt.opt_arg ()));
         break;
       case 'v':
-        this->verbosity_ = 1;
+        this->verbosity_ = true;
         break;
       default:
         ACE_OS::fprintf (stderr, "%s\n"

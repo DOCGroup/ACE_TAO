@@ -62,10 +62,10 @@ public:
   u_short consumer_port ();
 
   // Enabled if we're in debugging mode.
-  int debug ();
+  bool debug ();
 
   // Enabled if we're in verbose mode.
-  int verbose ();
+  bool verbose ();
 
   // Print the results to the STDERR.
   void print_results ();
@@ -73,7 +73,11 @@ public:
 private:
   // = Ensure we're a Singleton.
   Options ();
-  ~Options ();
+  ~Options () = default;
+  Options (const Options &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (const Options &) = delete;
+  Options &operator= (Options &&) = delete;
 
   ACE_Profile_Timer itimer_;
   // Time the process.
@@ -99,10 +103,10 @@ private:
   size_t iterations_;
   // Number of iterations to run the test program.
 
-  int debugging_;
+  bool debugging_;
   // Extra debugging info.
 
-  int verbosity_;
+  bool verbosity_;
   // Extra verbose messages.
 
   u_short consumer_port_;
@@ -111,8 +115,6 @@ private:
   u_short supplier_port_;
   // Port that the Supplier_Router is using.
 
-  static Options *instance_;
-  // Static Singleton.
 };
 
 #include "Options.inl"
