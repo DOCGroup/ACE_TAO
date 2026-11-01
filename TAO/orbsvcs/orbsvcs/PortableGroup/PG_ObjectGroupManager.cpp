@@ -7,42 +7,10 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-#include <algorithm>
 #include <memory>
-#include <new>
 #include "ace/Reverse_Lock_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace
-{
-  int insert_member_info (TAO_PG_MemberInfo_List & member_infos,
-                          TAO_PG_MemberInfo const & member_info)
-  {
-    try
-      {
-        member_infos.push_back (member_info);
-      }
-    catch (std::bad_alloc const &)
-      {
-        return -1;
-      }
-
-    return 0;
-  }
-
-  bool remove_member_info (TAO_PG_MemberInfo_List & member_infos,
-                           TAO_PG_MemberInfo const & member_info)
-  {
-    TAO_PG_MemberInfo_List::iterator const position =
-      std::find (member_infos.begin (), member_infos.end (), member_info);
-    if (position == member_infos.end ())
-      return false;
-
-    member_infos.erase (position);
-    return true;
-  }
-}
 
 TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager ()
   : object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
@@ -218,7 +186,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
 
   // Don't bother checking for duplicates since a check is already
   // performed when binding to the location map above.
-  if (insert_member_info (group_entry->member_infos, member_info) != 0)
+  if (group_entry->member_infos.insert_tail (member_info) != 0)
     throw PortableGroup::ObjectNotAdded ();
 
   return PortableGroup::ObjectGroup::_duplicate (object_group);
@@ -249,11 +217,11 @@ TAO_PG_ObjectGroupManager::remove_member (
   // remove the element from the array and resize the array.
   this->remove_entry_from_groups (to_be_removed, groups);
 
-  TAO_PG_MemberInfo_List & member_infos = group_entry->member_infos;
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
-  TAO_PG_MemberInfo_List::iterator end = member_infos.end ();
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-  for (TAO_PG_MemberInfo_List::iterator iter = member_infos.begin ();
+  for (TAO_PG_MemberInfo_Set::iterator iter = member_infos.begin ();
        iter != end;
        ++iter)
     {
@@ -280,7 +248,7 @@ TAO_PG_ObjectGroupManager::remove_member (
                                                      the_location);
             }
 
-          if (remove_member_info (member_infos, info))
+          if (member_infos.remove (info) == 0)
             {
               if (this->generic_factory_ != nullptr)
                 {
@@ -321,12 +289,12 @@ TAO_PG_ObjectGroupManager::locations_of_members (
 
   PortableGroup::Locations_var locations = temp;
 
-  TAO_PG_MemberInfo_List & member_infos = group_entry->member_infos;
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
   CORBA::ULong loc {};
-  TAO_PG_MemberInfo_List::iterator end = member_infos.end ();
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-  for (TAO_PG_MemberInfo_List::iterator i = member_infos.begin ();
+  for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
        i != end;
        ++i)
   {
@@ -439,15 +407,15 @@ TAO_PG_ObjectGroupManager::get_member_ref (
   if (this->location_map_.find (loc, groups) == 0
       && this->member_already_present (*groups, group_entry))
     {
-      TAO_PG_MemberInfo_List & member_infos = group_entry->member_infos;
+      TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
-      TAO_PG_MemberInfo_List::iterator end = member_infos.end ();
+      TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
       // @todo If the object group contains a large number of members,
       //       this loop could take a while.  Explore potentially
       //       faster containers for the list of PG_MemberInfos in the
       //       future.
-      for (TAO_PG_MemberInfo_List::iterator i = member_infos.begin ();
+      for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
            i != end;
            ++i)
         if ((*i).location == loc)
@@ -799,11 +767,11 @@ TAO_PG_ObjectGroupManager::remove_group_from_location_map (
 {
   // Get the locations from this group entry and for each location
   // remove that group from the location_map_ entry for that location.
-  TAO_PG_MemberInfo_List & member_infos = group_entry->member_infos;
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
-  TAO_PG_MemberInfo_List::iterator end = member_infos.end ();
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-  for (TAO_PG_MemberInfo_List::iterator info = member_infos.begin ();
+  for (TAO_PG_MemberInfo_Set::iterator info = member_infos.begin ();
        info != end;
        ++info)
   {
@@ -872,11 +840,11 @@ TAO_PG_ObjectGroupManager::member_count (
     throw PortableGroup::ObjectGroupNotFound ();
 
   int count {};
-  TAO_PG_MemberInfo_List & member_infos = group_entry->member_infos;
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
-  TAO_PG_MemberInfo_List::iterator end = member_infos.end ();
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-  for (TAO_PG_MemberInfo_List::iterator i = member_infos.begin ();
+  for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
        i != end;
        ++i)
   {
@@ -901,11 +869,11 @@ TAO_PG_ObjectGroupManager::is_alive (
   if (this->object_group_map_.find (oid, group_entry) != 0)
     throw PortableGroup::ObjectGroupNotFound ();
 
-  TAO_PG_MemberInfo_List & member_infos = group_entry->member_infos;
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
-  TAO_PG_MemberInfo_List::iterator end = member_infos.end ();
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-  for (TAO_PG_MemberInfo_List::iterator i = member_infos.begin ();
+  for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
        i != end;
        ++i)
   {
@@ -921,16 +889,16 @@ TAO_PG_ObjectGroupManager::is_alive (
 
 void TAO_PG_ObjectGroupManager::remove_inactive_members ()
 {
-  TAO_PG_MemberInfo_List inactive_members;
+  TAO_PG_MemberInfo_Set inactive_members;
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
     inactive_members = this->inactive_members_;
-    this->inactive_members_.clear ();
+    this->inactive_members_.reset ();
   }
 
-  TAO_PG_MemberInfo_List::iterator end = inactive_members.end ();
-  for (TAO_PG_MemberInfo_List::iterator i = inactive_members.begin ();
+  TAO_PG_MemberInfo_Set::iterator end = inactive_members.end ();
+  for (TAO_PG_MemberInfo_Set::iterator i = inactive_members.begin ();
     i != end;
     ++i)
   {
@@ -938,27 +906,27 @@ void TAO_PG_ObjectGroupManager::remove_inactive_members ()
   }
 }
 
-TAO_PG_MemberInfo_List
+TAO_PG_MemberInfo_Set
 TAO_PG_ObjectGroupManager::get_members (bool is_alive)
 {
-  TAO_PG_MemberInfo_List members;
+  TAO_PG_MemberInfo_Set members;
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, TAO_PG_MemberInfo_List());
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, TAO_PG_MemberInfo_Set());
 
     for (TAO_PG_ObjectGroup_Map::iterator j = this->object_group_map_.begin ();
       j != this->object_group_map_.end ();
       ++j)
     {
-      TAO_PG_MemberInfo_List & member_infos = j->int_id_->member_infos;
-      TAO_PG_MemberInfo_List::iterator end = member_infos.end ();
+      TAO_PG_MemberInfo_Set & member_infos = j->int_id_->member_infos;
+      TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
 
-      for (TAO_PG_MemberInfo_List::iterator i = member_infos.begin ();
+      for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
         i != end;
         ++i)
       {
         if ((*i).is_alive == is_alive)
         {
-          if (insert_member_info (members, *i) != 0)
+          if (members.insert_tail (*i) != 0)
           {
             throw CORBA::INTERNAL ();
           }
@@ -979,18 +947,18 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
       ACE_TEXT ("(%P|%t)TAO_PG_ObjectGroupManager::validate_members start\n")));
 
   /// Get list of active member info.
-  TAO_PG_MemberInfo_List active_members = this->get_members (true);
+  TAO_PG_MemberInfo_Set active_members = this->get_members (true);
 
   /// Ping each member in the list and add ping failed member to
   /// inactive member list.
-  TAO_PG_MemberInfo_List inactive_members;
-  for (TAO_PG_MemberInfo_List::iterator j = active_members.begin ();
+  TAO_PG_MemberInfo_Set inactive_members;
+  for (TAO_PG_MemberInfo_Set::iterator j = active_members.begin ();
       j != active_members.end ();
       ++j)
   {
     if (! this->ping (orb, (*j).member, timeout))
     {
-      if (insert_member_info (inactive_members, *j) != 0)
+      if (inactive_members.insert_tail (*j) != 0)
       {
         throw CORBA::INTERNAL ();
       }
@@ -999,15 +967,15 @@ TAO_PG_ObjectGroupManager::validate_members (CORBA::ORB_ptr orb,
   /// Mark the members as inactive in internal group maps.
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-    for (TAO_PG_MemberInfo_List::iterator i = inactive_members.begin ();
+    for (TAO_PG_MemberInfo_Set::iterator i = inactive_members.begin ();
       i != inactive_members.end ();
       ++i)
     {
       TAO_PG_ObjectGroup_Map_Entry * group_entry =
         this->get_group_entry ((*i).group.in ());
 
-      TAO_PG_MemberInfo_List & members = group_entry->member_infos;
-      for (TAO_PG_MemberInfo_List::iterator j = members.begin ();
+      TAO_PG_MemberInfo_Set & members = group_entry->member_infos;
+      for (TAO_PG_MemberInfo_Set::iterator j = members.begin ();
         j != members.end ();
         ++j)
       {

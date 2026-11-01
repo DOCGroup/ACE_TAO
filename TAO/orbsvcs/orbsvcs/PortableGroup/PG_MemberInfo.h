@@ -22,7 +22,7 @@
 
 #include "orbsvcs/PortableGroupC.h"
 
-#include <list>
+#include "ace/Unbounded_Set.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,7 +56,7 @@ struct TAO_PG_MemberInfo
   bool operator== (TAO_PG_MemberInfo const & rhs) const;
 };
 
-using TAO_PG_MemberInfo_List = std::list<TAO_PG_MemberInfo>;
+using TAO_PG_MemberInfo_Set = ACE_Unbounded_Set<TAO_PG_MemberInfo>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
