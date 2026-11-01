@@ -169,7 +169,7 @@ protected:
                ACE_TString &line);
 
   /// Is a valid entry
-  int is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
+  bool is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
 
   /// Reset the set of capabilities
   void resetcaps ();

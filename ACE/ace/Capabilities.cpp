@@ -187,7 +187,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
   return 0;
 }
 
-int
+bool
 ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
 {
   for (;;)
@@ -207,7 +207,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
 
       // We have found the required entry?
       if (ACE_OS::strcmp (nextname.c_str (), name) == 0)
-        return 1;
+        return true;
 
       // Skip puntuaction char if neccesary.
       if (*line == ACE_TEXT ('|') || *line == ACE_TEXT (','))
@@ -219,7 +219,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
           break;
         }
     }
-  return 0;
+  return false;
 }
 
 int
@@ -279,7 +279,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
   return 0;
 }
 
-static int
+static bool
 is_empty (const ACE_TCHAR *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
@@ -288,7 +288,7 @@ is_empty (const ACE_TCHAR *line)
   return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
 }
 
-static int
+static bool
 is_line (const ACE_TCHAR *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
