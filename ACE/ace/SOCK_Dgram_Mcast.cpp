@@ -60,7 +60,7 @@ public:
         }
     }
     // op== for ip_mreq structs.
-    static int is_equal (const ip_mreq &m1, const ip_mreq &m2)
+    static bool is_equal (const ip_mreq &m1, const ip_mreq &m2)
       {
         return m1.IMR_MULTIADDR.s_addr == m2.IMR_MULTIADDR.s_addr
           && m1.imr_interface.s_addr == m2.imr_interface.s_addr;

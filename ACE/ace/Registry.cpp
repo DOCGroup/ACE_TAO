@@ -1099,16 +1099,14 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
 
 /// Check if @a machine_name is the local host
 /* static */
-int
+bool
 ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
 {
   ACE_TCHAR local_host[MAXHOSTNAMELEN];
-  int result = ACE_OS::hostname (local_host, sizeof local_host / sizeof (ACE_TCHAR));
-  if (result == 0)
-    result = !ACE_OS::strcmp (local_host, machine_name);
-  else
-    result = 0;
-  return result;
+  if (ACE_OS::hostname (local_host, sizeof local_host / sizeof (ACE_TCHAR)) == 0)
+    return ACE_OS::strcmp (local_host, machine_name) == 0;
+
+  return false;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
