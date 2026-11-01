@@ -12,7 +12,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Example for a long option without a corresponding short option.
   // Just put some context here so the following compiles and runs.
-  static const ACE_TCHAR options[] = ACE_TEXT (":f:");
+  static constexpr ACE_TCHAR options[] = ACE_TEXT (":f:");
   ACE_Get_Opt cmd_opts (argc, argv, options);
 
   // Listing 1 code/ch04

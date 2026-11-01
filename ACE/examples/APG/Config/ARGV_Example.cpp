@@ -13,8 +13,8 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  static const ACE_TCHAR options[] = ACE_TEXT (":f:h:");
-  static const ACE_TCHAR cmdline[] =
+  static constexpr ACE_TCHAR options[] = ACE_TEXT (":f:h:");
+  static constexpr ACE_TCHAR cmdline[] =
     ACE_TEXT ("-f /home/managed.cfg -h $HOSTNAME");
   ACE_ARGV cmdline_args (cmdline);
   ACE_Get_Opt cmd_opts (cmdline_args.argc (),

@@ -28,7 +28,7 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
   // and print the names.
 
   // Listing 1 code/ch04
-  static const ACE_TCHAR options[] = ACE_TEXT (":f:");
+  static constexpr ACE_TCHAR options[] = ACE_TEXT (":f:");
   ACE_Get_Opt cmd_opts (argc, argv, options);
   if (cmd_opts.long_option
       (ACE_TEXT ("config"), 'f', ACE_Get_Opt::ARG_REQUIRED) == -1)
