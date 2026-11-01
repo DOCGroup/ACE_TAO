@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 #include <string>
+#include <cstring>
+#include <cstdlib>
 
 #include "global_extern.h"
 #include "nr_extern.h"
@@ -249,7 +251,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
 
       entry =
         cpp_key_tbl.lookup (tmp,
-                            static_cast<unsigned int> (ACE_OS::strlen (tmp)));
+                            static_cast<unsigned int> (std::strlen (tmp)));
     }
 
   if (entry)
@@ -306,7 +308,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
 (\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3})*\"[ \t]*)+ {
                   /* Skip the quotes */
                   char * const tmp = ace_yytext;
-                  for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
+                  for (size_t i = std::strlen (tmp); i-- != 0; )
                     {
                       if (isspace (tmp[i]))
                         {
@@ -317,7 +319,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
                           break;
                         }
                     }
-                  tmp[ACE_OS::strlen (tmp) - 1] = '\0';
+                  tmp[std::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.sval,
                                   std::string (tmp + 1),
                                   IDL_STRING_LITERAL);
@@ -326,7 +328,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
 (L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
                   char * const tmp = ace_yytext;
-                  for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
+                  for (size_t i = std::strlen (tmp); i-- != 0; )
                     {
                       if (isspace (tmp[i]))
                         {
@@ -337,7 +339,7 @@ map IDL4_KEYWORD(IDL_MAP); REJECT;
                           break;
                         }
                     }
-                  tmp[ACE_OS::strlen (tmp) - 1] = '\0';
+                  tmp[std::strlen (tmp) - 1] = '\0';
                   ACE_NEW_RETURN (tao_yylval.wsval,
                                   std::string (tmp + 2),
                                   IDL_WSTRING_LITERAL);
@@ -477,7 +479,7 @@ idl_parse_line_and_file (char *buf)
   // Check to see if we're running under the screwy Microsoft scheme
   // of putting #line num instead of #num.
 
-  if (ACE_OS::strncmp (r, "line", 4) == 0)
+  if (std::strncmp (r, "line", 4) == 0)
     {
       r += 5;
     }
@@ -628,19 +630,19 @@ idl_store_pragma (char *buf)
   sp -= crunched;
   *sp = '\0';
 
-  if (ACE_OS::strstr (buf + 8, "import") != nullptr)
+  if (std::strstr (buf + 8, "import") != nullptr)
     {
       idl_global->set_import (true);
       return;
     }
 
-  if (ACE_OS::strstr (buf + 8, "include") != nullptr)
+  if (std::strstr (buf + 8, "include") != nullptr)
     {
       idl_global->set_import (false);
       return;
     }
 
-  if (ACE_OS::strncmp (buf + 8, "prefix", 6) == 0)
+  if (std::strncmp (buf + 8, "prefix", 6) == 0)
     {
       char *prefix_string = idl_get_pragma_string (buf);
 
@@ -702,7 +704,7 @@ idl_store_pragma (char *buf)
             }
         }
     }
-  else if (ACE_OS::strncmp (buf + 8, "version", 7) == 0)
+  else if (std::strncmp (buf + 8, "version", 7) == 0)
     {
       char *tmp = buf + 16;
 
@@ -711,11 +713,11 @@ idl_store_pragma (char *buf)
           ++tmp;
         }
 
-      char *number = ACE_OS::strchr (tmp, ' ');
+      char *number = std::strchr (tmp, ' ');
 
       if (number == nullptr)
         {
-          number = ACE_OS::strchr (tmp, '\t');
+          number = std::strchr (tmp, '\t');
         }
 
       // Most likely this means there is only a version number
@@ -735,14 +737,14 @@ idl_store_pragma (char *buf)
           ++number;
         }
 
-      size_t len = ACE_OS::strlen (number);
+      size_t len = std::strlen (number);
 
       // For some reason, the SunCC preprocessor adds a trailing space, which
       // messes with idl_valid_version() below, so we check and remove.
       while (len != 0 && number[len - 1] == ' ')
         {
           number[len - 1] = '\0';
-          len = ACE_OS::strlen (number);
+          len = std::strlen (number);
         }
 
       // Trim the type string after trimming the number string.
@@ -765,11 +767,11 @@ idl_store_pragma (char *buf)
 
       d->version (std::string (number));
     }
-  else if (ACE_OS::strncmp (buf + 8, "ident", 5) == 0)
+  else if (std::strncmp (buf + 8, "ident", 5) == 0)
     {
       idl_global->ident_string (buf + 8);
     }
-  else if (ACE_OS::strncmp (buf + 8, "ID", 2) == 0)
+  else if (std::strncmp (buf + 8, "ID", 2) == 0)
     {
       char *tmp = buf + 11;
 
@@ -807,7 +809,7 @@ idl_store_pragma (char *buf)
           d->typeid_set (true);
         }
     }
-  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_TYPE", 14) == 0)
+  else if (std::strncmp (buf + 8, "DCPS_DATA_TYPE", 14) == 0)
     {
       char *sample_type = idl_get_pragma_string (buf);
       idl_global->add_dcps_data_type (sample_type);
@@ -815,7 +817,7 @@ idl_store_pragma (char *buf)
       // Delete sample_type since add_dcps_data_type() doesn't take its ownership.
       delete [] sample_type;
     }
-  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
+  else if (std::strncmp (buf + 8, "DCPS_DATA_KEY", 13) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
 
@@ -844,22 +846,22 @@ idl_store_pragma (char *buf)
       // Delete sample_type since add_dcps_data_key() doesn't take its ownership.
       delete [] sample_type;
     }
-  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_SEQUENCE_TYPE", 23) == 0)
+  else if (std::strncmp (buf + 8, "DCPS_DATA_SEQUENCE_TYPE", 23) == 0)
     {
       char *seq_type = idl_get_pragma_string (buf);
       idl_global->set_dcps_sequence_type (seq_type);
 
       delete [] seq_type;
     }
-  else if (ACE_OS::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
+  else if (std::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
     {
       idl_global->dcps_support_zero_copy_read (true);
     }
-  else if (ACE_OS::strncmp (buf + 8, "DCPS_GEN_ZERO_COPY_READ", 23) == 0)
+  else if (std::strncmp (buf + 8, "DCPS_GEN_ZERO_COPY_READ", 23) == 0)
     {
       idl_global->dcps_gen_zero_copy_read (true);
     }
-  else if (ACE_OS::strncmp (buf + 8, "ciao lem", 8) == 0)
+  else if (std::strncmp (buf + 8, "ciao lem", 8) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_lem_file_names (tmp);
@@ -867,7 +869,7 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_lem_file_names() doesn't take its ownership.
       delete [] tmp;
     }
-  else if (ACE_OS::strncmp (buf + 8, "ndds typesupport", 16) == 0)
+  else if (std::strncmp (buf + 8, "ndds typesupport", 16) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_rti_ts_file_names (tmp);
@@ -875,7 +877,7 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
-  else if (ACE_OS::strncmp (buf + 8, "coredx typesupport", 18) == 0)
+  else if (std::strncmp (buf + 8, "coredx typesupport", 18) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_coredx_ts_file_names (tmp);
@@ -883,7 +885,7 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_coredx_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
-  else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
+  else if (std::strncmp (buf + 8, "opendds typesupport", 19) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_oci_ts_file_names (tmp);
@@ -891,7 +893,7 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_oci_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
-  else if (ACE_OS::strncmp (buf + 8, "splice typesupport", 18) == 0)
+  else if (std::strncmp (buf + 8, "splice typesupport", 18) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
       idl_global->add_ciao_spl_ts_file_names (tmp);
@@ -899,8 +901,8 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
-  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0) ||
-           (ACE_OS::strncmp (buf + 8, "ami4ccm interface", 17) == 0))
+  else if ((std::strncmp (buf + 8, "ciao ami4ccm interface", 22) == 0) ||
+           (std::strncmp (buf + 8, "ami4ccm interface", 17) == 0))
     {
       if (idl_global->in_main_file ())
         {
@@ -911,8 +913,8 @@ idl_store_pragma (char *buf)
           delete [] tmp;
         }
     }
-  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0) ||
-           (ACE_OS::strncmp (buf + 8, "ami4ccm receptacle", 18) == 0))
+  else if ((std::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0) ||
+           (std::strncmp (buf + 8, "ami4ccm receptacle", 18) == 0))
     {
       char *tmp = idl_get_pragma_string (buf);
 
@@ -931,8 +933,8 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_spl_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
-  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0) ||
-           (ACE_OS::strncmp (buf + 8, "ami4ccm idl", 11) == 0))
+  else if ((std::strncmp (buf + 8, "ciao ami4ccm idl", 16) == 0) ||
+           (std::strncmp (buf + 8, "ami4ccm idl", 11) == 0))
     {
       char *tmp = idl_get_pragma_string (buf);
 
@@ -949,7 +951,7 @@ idl_store_pragma (char *buf)
       // Delete tmp since add_ciao_ami_idl_fnames() doesn't take its ownership.
       delete [] tmp;
     }
-  else if (ACE_OS::strncmp (buf + 8, "dds4ccm impl", 12) == 0)
+  else if (std::strncmp (buf + 8, "dds4ccm impl", 12) == 0)
     {
       char *tmp = idl_get_pragma_string (buf);
 
@@ -1235,7 +1237,7 @@ static char *
 idl_get_pragma_string (char *pragma)
 {
   // Get pointers to each end of the substring between the quotes.
-  char const *firstquote = ACE_OS::strchr (pragma, '"');
+  char const *firstquote = std::strchr (pragma, '"');
 
   if (!firstquote)
     {
@@ -1245,7 +1247,7 @@ idl_get_pragma_string (char *pragma)
     }
 
   char const *start = firstquote + 1;
-  char const *end = ACE_OS::strchr (start, '"');
+  char const *end = std::strchr (start, '"');
 
   if (!end)
     {
@@ -1261,7 +1263,7 @@ idl_get_pragma_string (char *pragma)
                   char[len + 1],
                   nullptr);
 
-  ACE_OS::strncpy (retval,
+  std::strncpy (retval,
                    start,
                    len);
 
@@ -1278,7 +1280,7 @@ idl_valid_version (char const *s)
       return false;
     }
 
-  char const *minor = ACE_OS::strchr (s, '.');
+  char const *minor = std::strchr (s, '.');
   int i;
 
   if (minor == nullptr)
@@ -1314,8 +1316,8 @@ idl_valid_version (char const *s)
     }
 
   // Major and minor version numbers must be unsigned shorts.
-  if (ACE_OS::atoi (minor + 1) > ACE_UINT16_MAX
-      || ACE_OS::atoi (s) > ACE_UINT16_MAX)
+  if (std::atoi (minor + 1) > ACE_UINT16_MAX
+      || std::atoi (s) > ACE_UINT16_MAX)
     {
       return false;
     }

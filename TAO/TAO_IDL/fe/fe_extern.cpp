@@ -76,6 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
+
 extern int tao_yyparse ();
 
 #ifdef USE_MCPP_BUFFER_LEXING
@@ -116,7 +118,7 @@ void
 FE_set_yyin (char * f)
 {
   tao_preproc_buffer = f;
-  tao_preproc_buffer_length = ACE_OS::strlen (f);
+  tao_preproc_buffer_length = std::strlen (f);
 }
 #else
 void

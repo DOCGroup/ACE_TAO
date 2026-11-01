@@ -1,6 +1,9 @@
 1i\
 #include "fe_private.h"\
-#include "ace/OS_NS_string.h"\
+#include <cstring>\
 
 s/,}/,0}/g
-s/\*str == \*s && !ACE_OS::strncmp/len == static_cast<unsigned int> (ACE_OS::strlen (s)) \&\& *str == *s \&\& !ACE_OS::strncmp/g
+s/\*str == \*s && !ACE_OS::strncmp/len == std::strlen (s) \&\& *str == *s \&\& !std::strncmp/g
+s/ \&\& !std::strncmp/ \&\&\
+              !std::strncmp/g
+s/return 0;/return nullptr;/g
