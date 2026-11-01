@@ -38,7 +38,7 @@ CORBA::string_dup (const char *str)
   if (copy)
     {
       // The memcpy() assumes that the destination is a valid buffer.
-      ACE_OS::memcpy (copy, str, len + 1);
+      std::memcpy (copy, str, len + 1);
     }
 
   return copy;
