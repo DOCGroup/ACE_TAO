@@ -7,7 +7,7 @@
 
 #if defined (ACE_HAS_ATM)
 
-#define MAX_LEAVES  32
+constexpr int MAX_LEAVES = 32;
 
 /* ACE_ATM Client */
 
@@ -38,7 +38,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for ( int i = 0; i < num_leaves; i++ )
   {
     hosts[ i ].set( argv[ i*2 + 4 ],
-                    ( argv[ i*2 + 5 ] != 0 )
+                    ( argv[ i*2 + 5 ] != nullptr )
                       ? ACE_OS::atoi( argv[ i*2 + 5 ]) : ACE_ATM_Addr::DEFAULT_SELECTOR );
     ACE_OS::printf( "ATM_Client: leaf: %s (%s), sel: %d\n",
                     argv[ i*2 + 4 ],
