@@ -466,7 +466,7 @@ TAO_Stub::set_policy_overrides (CORBA::PolicyList const &policies,
                                 CORBA::SetOverrideType set_add)
 {
   // Notice the use of an explicit constructor....
-  std::unique_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
+  std::unique_ptr<TAO_Policy_Set> policy_manager = std::make_unique<TAO_Policy_Set> (TAO_POLICY_OBJECT_SCOPE);
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
