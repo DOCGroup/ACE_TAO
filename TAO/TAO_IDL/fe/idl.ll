@@ -464,61 +464,60 @@ same_file (char const *path1, char const *path2)
 static void
 idl_parse_line_and_file (char *buf)
 {
-  char *r = buf;
-  char *h = nullptr;
-
-  // Skip initial '#'.
-  if (*r != '#')
+  std::string const line (buf);
+  if (line.empty () || line[0] != '#')
     {
       return;
     }
-  else
-    {
-      ++r;
-    }
+
+  size_t position = 1;
 
   // Check to see if we're running under the screwy Microsoft scheme
   // of putting #line num instead of #num.
-
-  if (std::strncmp (r, "line", 4) == 0)
+  if (line.compare (position, 4, "line") == 0)
     {
-      r += 5;
-    }
-
-  // Find line number.
-  while (isspace (*r))
-    {
-      ++r;
-    }
-
-  h = r;
-
-  for (; isdigit (*r); ++r)
-    {
-      continue;
-    }
-
-  *r++ = 0;
-  idl_global->set_lineno ((long) idl_atoui (h, 10));
-
-  // Find file name, if present.
-  for (; *r != '"'; ++r)
-    {
-      if (*r == '\n' || *r == '\0')
+      position += 5;
+      if (position > line.size ())
         {
           return;
         }
     }
 
-  h = ++r;
-
-  for (; *r != '"'; ++r)
+  // Find line number.
+  while (position < line.size ()
+         && isspace (static_cast<unsigned char> (line[position])))
     {
-      continue;
+      ++position;
     }
 
-  *r = 0;
-  if (*h == '\0')
+  size_t const line_number_start = position;
+
+  while (position < line.size ()
+         && isdigit (static_cast<unsigned char> (line[position])))
+    {
+      ++position;
+    }
+
+  std::string const line_number = line.substr (line_number_start,
+                                               position - line_number_start);
+  idl_global->set_lineno (static_cast<long> (idl_atoui (line_number.c_str (), 10)));
+
+  // Find file name, if present.
+  size_t const filename_start = line.find ('"', position);
+  if (filename_start == std::string::npos)
+    {
+      return;
+    }
+
+  size_t const filename_end = line.find ('"', filename_start + 1);
+  if (filename_end == std::string::npos)
+    {
+      return;
+    }
+
+  std::string const filename = line.substr (filename_start + 1,
+                                            filename_end - filename_start - 1);
+  if (filename.empty ())
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("IDL: No input files\n")));
@@ -527,24 +526,22 @@ idl_parse_line_and_file (char *buf)
     }
   else
     {
-      long i;
-      long j;
-
       // Put Microsoft-style pathnames into a canonical form.
-      for (i = 0, j = 0; h[j] != '\0'; i++, j++)
+      std::string canonical_filename;
+      canonical_filename.reserve (filename.size ());
+      for (size_t i = 0; i < filename.size (); ++i)
         {
-          if (h[j] == '\\' && h[j + 1] == '\\')
+          canonical_filename += filename[i];
+          if (filename[i] == '\\'
+              && i + 1 < filename.size ()
+              && filename[i + 1] == '\\')
             {
-              j++;
+              ++i;
             }
-
-            h[i] = h[j];
         }
 
-      h[i] = '\0';
-      std::string tmp (h);
-      idl_global->update_prefix (tmp);
-      idl_global->set_filename (tmp);
+      idl_global->update_prefix (canonical_filename);
+      idl_global->set_filename (canonical_filename);
     }
 
   std::string const& fname = idl_global->filename ();
