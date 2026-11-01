@@ -161,6 +161,7 @@ FE_Utils::string_to_scoped_name (std::string const& name)
       if (scoped_name != nullptr)
         {
           scoped_name->destroy ();
+          delete scoped_name;
         }
     }
   };

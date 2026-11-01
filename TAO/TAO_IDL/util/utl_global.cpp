@@ -1327,6 +1327,7 @@ IDL_GlobalData::add_dcps_data_type (std::string const& id)
           if (name != nullptr)
             {
               name->destroy ();
+              delete name;
             }
         }
       };
