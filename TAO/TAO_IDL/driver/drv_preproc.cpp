@@ -412,7 +412,10 @@ DRV_sweep_dirs (std::string const& rel_path,
 
   ACE_Dirent dir (TCHAR_DIR_DOT);
   std::string bname (base_path);
-  bname += (bname.length () > 0 ? "/" : "");
+  if (!bname.empty ())
+    {
+      bname += "/";
+    }
   bname += rel_path;
   bool include_added = false;
   char abspath[MAXPATHLEN] = {};
