@@ -36,7 +36,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int result;
-  u_long current_counter = 0;
+  u_long current_counter {};
 
   // initialize name
   setup_names ();
@@ -90,9 +90,9 @@ update_counter (HKEY predefined,
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Contexts::bind/resolve_context failed"), -1);
 
   // Counter
-  u_long counter = 0;
+  u_long counter {};
   // Represent counter as an ACE_Registry::Object
-  ACE_Registry::Object object ((void *) &counter,
+  ACE_Registry::Object object (static_cast<void *> (&counter),
                                sizeof counter,
                                REG_DWORD);
   // Find counter
