@@ -16,15 +16,15 @@ class Server_Service : public SVC_HANDLER
   //     client and writes the data to its stdout.
 {
 public:
-  Server_Service (ACE_Thread_Manager * = 0) {}
+  explicit Server_Service (ACE_Thread_Manager * = nullptr) {}
 
-  virtual int open (void *)
+  int open (void *) override
     {
       ACE_TRACE ("Server_Service::open");
       return 0;
     }
 
-  virtual int svc ()
+  int svc () override
     {
       ACE_TRACE ("Server_Service::svc");
 
@@ -45,19 +45,19 @@ class Client_Service : public SVC_HANDLER
   //     stdin and forward the data to its server.
 {
 public:
-  Client_Service (ACE_Thread_Manager *thr_mgr = 0)
+  explicit Client_Service (ACE_Thread_Manager *thr_mgr = nullptr)
     : SVC_HANDLER (thr_mgr)
     {
       ACE_TRACE ("Client_Service::Client_Service");
     }
 
-  virtual int open (void *)
+  int open (void *) override
     {
       ACE_TRACE ("Client_Service::open");
       return this->activate (THR_DETACHED | THR_NEW_LWP);
     }
 
-  virtual int svc ()
+  int svc () override
     {
       ACE_TRACE ("Client_Service::svc");
       char buf[BUFSIZ];

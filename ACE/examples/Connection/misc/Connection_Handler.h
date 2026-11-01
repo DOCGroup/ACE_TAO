@@ -10,28 +10,28 @@ class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNC
 {
 public:
   // Initialize the <Connection_Handler> and make it an Active Object.
-  virtual int open (void *);
+  int open (void *) override;
 
   // Terminate the <Connection_Handler>.
-  virtual int close (u_long);
+  int close (u_long) override;
 
   // Run the <Connection_Handler>'s main event loop.
-  virtual int svc ();
+  int svc () override;
 
 protected:
   // Signal the Active Object to stop when called.
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE,
+                    ACE_Reactor_Mask) override;
 
   // Handle input from the client.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   // Handle timeouts.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                      const void *arg) override;
 
   // Handle signal.
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
   // Keeps track of whether we're done.
   sig_atomic_t finished_;

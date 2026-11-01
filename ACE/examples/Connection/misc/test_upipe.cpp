@@ -63,7 +63,7 @@ class Client : public ACE_Connector <Client_Service, ACE_UPIPE_CONNECTOR>
   //     Defines the interface for a factory that connects
   //     a Client_Service with a Server.
 public:
-  Client (ACE_Thread_Manager *thr_mgr)
+  explicit Client (ACE_Thread_Manager *thr_mgr)
     : thr_mgr_ (thr_mgr)
     {
       ACE_TRACE ("Client::Client");
