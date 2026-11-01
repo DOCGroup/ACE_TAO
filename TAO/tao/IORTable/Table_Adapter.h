@@ -33,7 +33,7 @@ class TAO_IORTable_Export TAO_Table_Adapter : public TAO_Adapter
 {
 public:
   /// Constructor
-  TAO_Table_Adapter (TAO_ORB_Core &orb_core);
+  explicit TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
   /// Destructor
   ~TAO_Table_Adapter () override;
