@@ -14,6 +14,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler_T.h"
 #include "orbsvcs/Time_Utilities.h"
+
+#include <algorithm>
 #include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -392,17 +394,13 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close ()
   // Zero out the scheduling entry pointer array but do not deallocate it.
   if (entry_ptr_array_size_ > 0)
     {
-      ACE_OS::memset (this->entry_ptr_array_, 0,
-                      sizeof (TAO_Reconfig_Scheduler_Entry *)
-                      * this->entry_ptr_array_size_);
+      std::fill_n (this->entry_ptr_array_, this->entry_ptr_array_size_, nullptr);
     }
 
   // Zero out the scheduling entry pointer array but do not deallocate it.
   if (tuple_ptr_array_size_ > 0)
     {
-      ACE_OS::memset (this->tuple_ptr_array_, 0,
-                      sizeof (TAO_RT_Info_Tuple *)
-                      * this->tuple_ptr_array_size_);
+      std::fill_n (this->tuple_ptr_array_, this->tuple_ptr_array_size_, nullptr);
     }
 
   // Finally, reset the entry counts and start over with the lowest
@@ -805,9 +803,7 @@ replace_seq (RtecScheduler::RT_Info_Set const & infos)
     }
 
   // Zero out the tuple pointer array, set count to zero
-  ACE_OS::memset (this->tuple_ptr_array_, 0,
-                  sizeof (TAO_RT_Info_Tuple *)
-                  * this->tuple_ptr_array_size_);
+  std::fill_n (this->tuple_ptr_array_, this->tuple_ptr_array_size_, nullptr);
   this->rt_info_tuple_count_ = 0;
 
   for (u_int i = 0; i < infos.length (); ++i)
@@ -2578,9 +2574,7 @@ refresh_tuple_ptr_array_i ()
 #endif /* SCHEDULER_LOGGING */
 
   // Zero out the tuple pointer array, set count to zero
-  ACE_OS::memset (this->tuple_ptr_array_, 0,
-                  sizeof (TAO_RT_Info_Tuple *)
-                  * this->tuple_ptr_array_size_);
+  std::fill_n (this->tuple_ptr_array_, this->tuple_ptr_array_size_, nullptr);
   this->rt_info_tuple_count_ = 0;
 
   for (int i = 0; i < this->rt_info_count_; ++i)
@@ -2776,16 +2770,12 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
                 ARRAY_ELEMENT_TYPE * [new_size],
                 CORBA::NO_MEMORY ());
 
-      ACE_OS::memset (new_array, 0,
-                      sizeof (ARRAY_ELEMENT_TYPE *) *
-                      new_size);
+      std::fill_n (new_array, new_size, nullptr);
 
       if (current_ptr_array_size > 0)
         {
           // Copy in the previous array.
-          ACE_OS::memcpy (new_array, current_ptr_array,
-                          sizeof (ARRAY_ELEMENT_TYPE *) *
-                            current_ptr_array_size);
+          std::copy_n (current_ptr_array, current_ptr_array_size, new_array);
 
           // Free the old array and swap to point to the new one.
           delete [] current_ptr_array;

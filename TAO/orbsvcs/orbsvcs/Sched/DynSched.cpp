@@ -14,6 +14,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Null_Mutex.h"
 
+#include <algorithm>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Sched/DynSched.inl"
 #endif /* __ACE_INLINE__ */
@@ -1639,8 +1641,7 @@ ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_
   ACE_NEW_RETURN (ordered_thread_dispatch_entries_,
                   Dispatch_Entry * [threads_],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
-  ACE_OS::memset (ordered_thread_dispatch_entries_, 0,
-                  sizeof (Dispatch_Entry *) * threads_);
+  std::fill_n (ordered_thread_dispatch_entries_, threads_, nullptr);
 
 
   // copy pointers to the thread delineators from the set to the array
@@ -1680,8 +1681,7 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
   ACE_NEW_RETURN (ordered_dispatch_entries_,
                   Dispatch_Entry * [dispatch_entry_count_],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
-  ACE_OS::memset (ordered_dispatch_entries_, 0,
-                  sizeof (Dispatch_Entry *) * dispatch_entry_count_);
+  std::fill_n (ordered_dispatch_entries_, dispatch_entry_count_, nullptr);
 
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
   for (u_int i = 0; i < dispatch_entry_count_; ++i, iter.advance ())
