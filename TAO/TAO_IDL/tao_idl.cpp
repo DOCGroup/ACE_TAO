@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "utl_identifier.h"
 
+#include <cstdio>
 #include <memory>
 #include <string>
 
@@ -403,9 +404,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           if (idl_global->multi_file_input ())
             {
-              ACE_OS::fprintf (output_file,
-                               "#include \"%s\"\n",
-                               DRV_files[i].c_str ());
+              std::fprintf (output_file,
+                            "#include \"%s\"\n",
+                            DRV_files[i].c_str ());
             }
           else
             {

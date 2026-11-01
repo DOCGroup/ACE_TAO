@@ -19,6 +19,7 @@
 #include "ace/OS_NS_stdio.h"
 
 #include <cstddef>
+#include <cstdio>
 #include <string>
 #include <type_traits>
 
@@ -180,9 +181,9 @@ public:
   operator << (std::size_t const num)
   {
     this->flush_pending_whitespace ();
-    ACE_OS::fprintf (this->fp_,
-                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
-                     num);
+    std::fprintf (this->fp_,
+                  ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
+                  num);
 
     return *this;
   }

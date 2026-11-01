@@ -20,6 +20,7 @@
 #include "../../tao/Version.h"
 
 #include <cctype>
+#include <cstdio>
 
 static std::string const copyright =
 "// -*- C++ -*-\n"
@@ -112,7 +113,7 @@ TAO_OutStream::open (std::string const& fname,
       if (st != TAO_OutStream::TAO_GPERF_INPUT)
         {
           ACE_OS::fwrite (copyright.data (), 1, copyright.size (), this->fp_);
-          ACE_OS::fprintf (this->fp_, "\n");
+          std::fprintf (this->fp_, "\n");
         }
 
       return 0;
@@ -264,7 +265,7 @@ int
 TAO_OutStream::nl ()
 {
   this->pending_whitespace_.clear ();
-  ACE_OS::fprintf (this->fp_, "\n");
+  std::fprintf (this->fp_, "\n");
   this->indent ();
   return 0;
 }
@@ -380,9 +381,9 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::UShort num)
 {
   this->flush_pending_whitespace ();
-  ACE_OS::fprintf (this->fp_,
-                   "%hu",
-                   num);
+  std::fprintf (this->fp_,
+                "%hu",
+                num);
 
   return *this;
 }
@@ -391,9 +392,9 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::Short num)
 {
   this->flush_pending_whitespace ();
-  ACE_OS::fprintf (this->fp_,
-                   "%hd",
-                   num);
+  std::fprintf (this->fp_,
+                "%hd",
+                num);
 
   return *this;
 }
@@ -402,9 +403,9 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULong num)
 {
   this->flush_pending_whitespace ();
-  ACE_OS::fprintf (this->fp_,
-                   "%lu",
-                   (unsigned long) num);
+  std::fprintf (this->fp_,
+                "%lu",
+                (unsigned long) num);
 
   return *this;
 }
@@ -413,9 +414,9 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::Long num)
 {
   this->flush_pending_whitespace ();
-  ACE_OS::fprintf (this->fp_,
-                   "%ld",
-                   (long) num);
+  std::fprintf (this->fp_,
+                "%ld",
+                (long) num);
 
   return *this;
 }
@@ -424,9 +425,9 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
 {
   this->flush_pending_whitespace ();
-  ACE_OS::fprintf (this->fp_,
-                   ACE_UINT64_FORMAT_SPECIFIER_ASCII,
-                   num);
+  std::fprintf (this->fp_,
+                ACE_UINT64_FORMAT_SPECIFIER_ASCII,
+                num);
 
   return *this;
 }
@@ -435,9 +436,9 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
 {
   this->flush_pending_whitespace ();
-  ACE_OS::fprintf (this->fp_,
-                   ACE_INT64_FORMAT_SPECIFIER_ASCII,
-                   num);
+  std::fprintf (this->fp_,
+                ACE_INT64_FORMAT_SPECIFIER_ASCII,
+                num);
 
   return *this;
 }
@@ -446,8 +447,8 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL&)
 {
   this->pending_whitespace_.clear ();
-  ACE_OS::fprintf (this->fp_ ,
-                   "\n");
+  std::fprintf (this->fp_ ,
+                "\n");
   this->indent ();
 
   return *this;
@@ -457,10 +458,10 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL_2&)
 {
   this->pending_whitespace_.clear ();
-  ACE_OS::fprintf (this->fp_ ,
-                   "\n");
-  ACE_OS::fprintf (this->fp_ ,
-                   "\n");
+  std::fprintf (this->fp_ ,
+                "\n");
+  std::fprintf (this->fp_ ,
+                "\n");
   this->indent ();
   return *this;
 }

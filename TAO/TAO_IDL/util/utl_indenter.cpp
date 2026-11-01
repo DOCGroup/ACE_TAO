@@ -71,6 +71,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+#include <cstdio>
+
 // Reset indentation level.
 void
 UTL_Indenter::reset ()
@@ -111,8 +113,8 @@ UTL_Indenter::skip_to (FILE *fp)
 {
   for (long i = 0; i < this->pd_indent_level; ++i)
     {
-      ACE_OS::fprintf (fp,
-                       "  ");
+      std::fprintf (fp,
+                    "  ");
     }
 }
 

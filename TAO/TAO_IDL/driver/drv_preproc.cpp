@@ -65,6 +65,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Pass an IDL file through the C preprocessor
 
 #include <cstddef>
+#include <cstdio>
 #include <optional>
 #include <string>
 #include <utility>
@@ -989,9 +990,9 @@ DRV_copy_input (FILE *fin,
     }
 
 #if !defined (ACE_WIN32)
-  ACE_OS::fprintf (f,
-                   "#line 1 \"%s\"\n",
-                   orig_filename.c_str ());
+  std::fprintf (f,
+                "#line 1 \"%s\"\n",
+                orig_filename.c_str ());
 #else
   // Convert single \ into double \ otherwise MSVC++ pre-processor
   // gets awfully confused.
@@ -1009,9 +1010,9 @@ DRV_copy_input (FILE *fin,
       escaped_filename.push_back (current_character);
     }
 
-  ACE_OS::fprintf (f,
-                   "#line 1 \"%s\"\n",
-                   escaped_filename.c_str ());
+  std::fprintf (f,
+                "#line 1 \"%s\"\n",
+                escaped_filename.c_str ());
 #endif /* ! ACE_WIN32 */
 
   while (DRV_get_line (fin))
@@ -1019,9 +1020,9 @@ DRV_copy_input (FILE *fin,
       DRV_convert_includes (drv_line);
 
       // Print the line to the temporary file.
-      ACE_OS::fprintf (f,
-                       "%s\n",
-                       drv_line.c_str ());
+      std::fprintf (f,
+                    "%s\n",
+                    drv_line.c_str ());
 
       // We really need to know whether this line is a "#include
       // ...". If so, we would like to separate the "file name" and
