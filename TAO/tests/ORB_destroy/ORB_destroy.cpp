@@ -18,9 +18,9 @@
 int
 test_with_regular_poa_manager (int argc,
                                ACE_TCHAR **argv,
-                               const char *orb_name,
-                               int destroy_orb,
-                               int destroy_poa)
+                               char const *orb_name,
+                               bool destroy_orb,
+                               bool destroy_poa)
 {
   try
     {
@@ -48,7 +48,7 @@ test_with_regular_poa_manager (int argc,
           orb->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised");
     }
@@ -59,10 +59,10 @@ test_with_regular_poa_manager (int argc,
 int
 test_with_funky_poa_manager (int argc,
                              ACE_TCHAR **argv,
-                             const char *orb_name,
-                             int destroy_orb,
-                             int destroy_poa,
-                             int funky_poa_manager)
+                             char const *orb_name,
+                             bool destroy_orb,
+                             bool destroy_poa,
+                             bool funky_poa_manager)
 {
   try
     {
@@ -93,7 +93,7 @@ test_with_funky_poa_manager (int argc,
           orb->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised");
     }
@@ -108,62 +108,62 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   result = test_with_regular_poa_manager (argc, argv,
                                           "destroy_nothing_with_poa_manager",
-                                          0, 0);
+                                          false, false);
   ACE_ASSERT (result == 0);
 
   result = test_with_regular_poa_manager (argc, argv,
                                           "destroy_poa_with_poa_manager",
-                                          0, 1);
+                                          false, true);
   ACE_ASSERT (result == 0);
 
   result = test_with_regular_poa_manager (argc, argv,
                                           "destroy_orb_with_poa_manager",
-                                          1, 0);
+                                          true, false);
   ACE_ASSERT (result == 0);
 
   result = test_with_regular_poa_manager (argc, argv,
                                           "destroy_poa_and_orb_with_poa_manager",
-                                          1, 1);
+                                          true, true);
   ACE_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_nothing_without_poa_manager",
-                                          0, 0, 0);
+                                          false, false, false);
   ACE_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_poa_without_poa_manager",
-                                          0, 1, 0);
+                                          false, true, false);
   ACE_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_orb_without_poa_manager",
-                                          1, 0, 0);
+                                          true, false, false);
   ACE_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_poa_and_orb_without_poa_manager",
-                                          1, 1, 0);
+                                          true, true, false);
   ACE_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_nothing_with_funky_poa_manager",
-                                          0, 0, 1);
+                                          false, false, true);
   ACE_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_poa_with_funky_poa_manager",
-                                          0, 1, 1);
+                                          false, true, true);
   ACE_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_orb_with_funky_poa_manager",
-                                          1, 0, 1);
+                                          true, false, true);
   ACE_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_poa_and_orb_with_funky_poa_manager",
-                                          1, 1, 1);
+                                          true, true, true);
   ACE_ASSERT (result == 0);
 
   return result;
