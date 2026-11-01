@@ -6,27 +6,29 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
 #include <array>
+#include <string>
 #include <vector>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
   constexpr size_t extra_argc = 4;
 
   try
     {
-      std::array<ACE_TCHAR *, extra_argc> extra {};
-      std::array<ACE_TCHAR *, extra_argc> second_extra {};
-      extra[0] = ACE::strnew (ACE_TEXT ("-ORBGestalt"));
-      extra[1] = ACE::strnew (ACE_TEXT ("Local"));
-      extra[2] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
-      extra[3] = ACE::strnew (ACE_TEXT ("static Client_Strategy_Factory '-ORBReplyDispatcherTableSize 333'"));
-
-      second_extra[0] = ACE::strnew (ACE_TEXT ("-ORBGestalt"));
-      second_extra[1] = ACE::strnew (ACE_TEXT ("Local"));
-      second_extra[2] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
-      second_extra[3] = ACE::strnew (ACE_TEXT ("static Client_Strategy_Factory '-ORBReplyDispatcherTableSize 666'"));
+      std::array<std::basic_string<ACE_TCHAR>, extra_argc> extra {
+        ACE_TEXT ("-ORBGestalt"),
+        ACE_TEXT ("Local"),
+        ACE_TEXT ("-ORBSvcConfDirective"),
+        ACE_TEXT ("static Client_Strategy_Factory '-ORBReplyDispatcherTableSize 333'")
+      };
+      std::array<std::basic_string<ACE_TCHAR>, extra_argc> second_extra {
+        ACE_TEXT ("-ORBGestalt"),
+        ACE_TEXT ("Local"),
+        ACE_TEXT ("-ORBSvcConfDirective"),
+        ACE_TEXT ("static Client_Strategy_Factory '-ORBReplyDispatcherTableSize 666'")
+      };
 
       std::vector<ACE_TCHAR *> largv (argc + extra_argc);
       for (int i = 0; i < argc; ++i)
@@ -38,11 +40,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (size_t i = 0; i < extra_argc; ++i)
         {
-          largv[argc+i] = extra[i];
+          largv[argc+i] = extra[i].data ();
         }
       for (size_t i = 0; i < extra_argc; ++i)
         {
-          second_largv[argc+i] = second_extra[i];
+          second_largv[argc+i] = second_extra[i].data ();
         }
 
       int largc = argc + extra_argc;
@@ -68,10 +70,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       second_orb->destroy ();
       second_orb = CORBA::ORB::_nil ();
 
-      for (ACE_TCHAR *arg : extra)
-        ACE::strdelete (arg);
-      for (ACE_TCHAR *arg : second_extra)
-        ACE::strdelete (arg);
     }
   catch (CORBA::Exception const &ex)
     {
