@@ -21,7 +21,8 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -963,7 +964,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
    * @todo We need a strategy factory.  This is just too messy.
    */
 
-  if (ACE_OS::strcmp (info->name.in (), "RoundRobin") == 0)
+  if (std::strcmp (info->name.in (), "RoundRobin") == 0)
     {
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -988,7 +989,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
       return CosLoadBalancing::Strategy::_duplicate (this->round_robin_.in ());
     }
 
-  else if (ACE_OS::strcmp (info->name.in (), "Random") == 0)
+  else if (std::strcmp (info->name.in (), "Random") == 0)
     {
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -1013,7 +1014,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
       return CosLoadBalancing::Strategy::_duplicate (this->random_.in ());
     }
 
-  else if (ACE_OS::strcmp (info->name.in (), "LeastLoaded") == 0)
+  else if (std::strcmp (info->name.in (), "LeastLoaded") == 0)
     {
       // If no LeastLoaded properties have been set, just use the
       // default/cached LeastLoaded instance.  Otherwise create and
@@ -1059,7 +1060,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
           return ll_servant->_this ();
         }
     }
-  else if (ACE_OS::strcmp (info->name.in (), "LoadMinimum") == 0)
+  else if (std::strcmp (info->name.in (), "LoadMinimum") == 0)
     {
       if (info->props.length () == 0)
         {
@@ -1100,7 +1101,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
           return lm_servant->_this ();
         }
     }
-  else if (ACE_OS::strcmp (info->name.in (), "LoadAverage") == 0)
+  else if (std::strcmp (info->name.in (), "LoadAverage") == 0)
     {
       if (info->props.length () == 0)
         {

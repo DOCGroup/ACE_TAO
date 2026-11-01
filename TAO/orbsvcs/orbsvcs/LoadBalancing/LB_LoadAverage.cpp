@@ -9,7 +9,7 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LoadAverage.inl"
@@ -333,7 +333,7 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
-      if (ACE_OS::strcmp (property.nam[0].id.in (),
+      if (std::strcmp (property.nam[0].id.in (),
                           "org.omg.CosLoadBalancing.Strategy.LoadAverage.Tolerance") == 0)
         {
           this->extract_float_property (property,
@@ -344,7 +344,7 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
             throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LoadAverage.Dampening") == 0)
         {
           this->extract_float_property (property,
@@ -355,7 +355,7 @@ TAO_LB_LoadAverage::init (PortableGroup::Properties const & props)
             throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LoadAverage.PerBalanceLoad") == 0)
         {
           this->extract_float_property (property,

@@ -5,6 +5,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -210,7 +211,7 @@ TAO_LB_ObjectReferenceFactory::load_managed_object (char const * repository_id,
 
   CORBA::ULong const len = this->repository_ids_.length ();
   for (i = 0; i < len; ++i)
-    if (ACE_OS::strcmp (this->repository_ids_[i], repository_id) == 0)
+    if (std::strcmp (this->repository_ids_[i], repository_id) == 0)
       return true;
 
   return false;

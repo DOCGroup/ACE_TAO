@@ -7,6 +7,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 double calc_cpu_loading ()
@@ -36,7 +38,7 @@ double calc_cpu_loading ()
 
     if (item == nullptr || arg == nullptr)
             continue;
-    if (item[0] == 'c' && ACE_OS::strlen (item) == 3)
+    if (item[0] == 'c' && std::strlen (item) == 3)
     {
       sscanf (arg, "%lu %lu %lu %lu", &user, &nice, &sys, &idle);
       break;

@@ -2,7 +2,7 @@
 #include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
 #include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,9 +35,9 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
     {
       CORBA::String_var op = ri->operation ();
 
-      if (ACE_OS::strcmp (op.in (), "_get_loads") == 0        // LoadMonitor
-          || ACE_OS::strcmp (op.in (), "disable_alert") == 0  // LoadAlert
-          || ACE_OS::strcmp (op.in (), "enable_alert") == 0)  // LoadAlert
+      if (std::strcmp (op.in (), "_get_loads") == 0        // LoadMonitor
+          || std::strcmp (op.in (), "disable_alert") == 0  // LoadAlert
+          || std::strcmp (op.in (), "enable_alert") == 0)  // LoadAlert
         return;  // Do not redirect.
 
 #if 0

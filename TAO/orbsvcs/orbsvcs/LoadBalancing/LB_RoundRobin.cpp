@@ -6,6 +6,8 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_RoundRobin::TAO_LB_RoundRobin (PortableServer::POA_ptr poa)
@@ -109,7 +111,7 @@ TAO_LB_RoundRobin::next_member (
       {
         for (CORBA::ULong j = 0; j < len && !found; ++j)
         {
-          if (ACE_OS::strcmp (this->last_locations_[k][0].id.in (),
+          if (std::strcmp (this->last_locations_[k][0].id.in (),
                               locations[j][0].id.in ()) == 0)
           {
             if (k == i)
