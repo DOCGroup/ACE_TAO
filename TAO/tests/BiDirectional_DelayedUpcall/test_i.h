@@ -27,12 +27,16 @@ class Callback_i : public virtual POA_Callback
 public:
   /// ctor
   Callback_i (CORBA::ORB_ptr orb, Simple_Server_ptr srv);
+  Callback_i (Callback_i const &) = delete;
+  Callback_i (Callback_i &&) = delete;
+  Callback_i &operator= (Callback_i const &) = delete;
+  Callback_i &operator= (Callback_i &&) = delete;
 
   /// Safe way to shutdown
-  void shutdown ();
+  void shutdown () override;
 
   /// The callback method
-  void callback_method ();
+  void callback_method () override;
 
 private:
   /// The orb
@@ -53,16 +57,20 @@ class Simple_Server_i : public virtual POA_Simple_Server, public virtual ACE_Eve
 public:
   /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
   // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Boolean do_callback);
+  CORBA::Long test_method (CORBA::Boolean do_callback) override;
 
-  void callback_object (Callback_ptr callback);
+  void callback_object (Callback_ptr callback) override;
 
-  void shutdown ();
+  void shutdown () override;
 
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = 0);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
 
 private:
   /// The ORB

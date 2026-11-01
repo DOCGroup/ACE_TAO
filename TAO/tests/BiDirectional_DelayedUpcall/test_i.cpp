@@ -30,8 +30,8 @@ Callback_i::callback_method ()
 // ****************************************************************
 
 int
-Simple_Server_i::handle_timeout (const ACE_Time_Value &,
-                                 const void *)
+Simple_Server_i::handle_timeout (ACE_Time_Value const &,
+                                 void const *)
 {
   if (TAO_debug_level > 0)
   ACE_DEBUG ((LM_DEBUG,
@@ -68,7 +68,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback)
                   ACE_TEXT ("Scheduling for callback\n")));
 
       if (this->orb_->orb_core ()->reactor ()->schedule_timer (this,
-                                                               0,
+                                                               nullptr,
                                                                ACE_Time_Value (1)) == -1)
         {
           ACE_ERROR ((LM_ERROR,

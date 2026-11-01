@@ -9,7 +9,7 @@ ACE_INLINE
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,
                                   int no_iterations)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
-     callback_ (0),
+     callback_ (nullptr),
      no_iterations_ (no_iterations)
 {
 }

@@ -4,11 +4,7 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-
-void do_nothing ()
-{
-}
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -103,7 +99,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Callback_i *callback_impl = 0;
+      Callback_i *callback_impl = nullptr;
       ACE_NEW_THROW_EX (callback_impl,
                         Callback_i (orb.in (), server.in ()),
                         CORBA::NO_MEMORY ());
