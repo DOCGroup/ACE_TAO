@@ -3,6 +3,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
+#include <string>
 #include <vector>
 
 ACE_TCHAR const *log_file_;
@@ -102,7 +103,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result {};
-  int const extra_argc = 25;
+  constexpr int extra_argc = 25;
 
   try
     {
@@ -121,48 +122,46 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("Start ORB_init with ORBVerboseLogging=%d\n"),
                       verbose));
 
-          std::vector<ACE_TCHAR *> extra (extra_argc);
-          extra[0] = ACE::strnew (ACE_TEXT ("-ORBCDRTradeoff"));
-          extra[1] = ACE::strnew (ACE_TEXT ("2048"));
-          extra[2] = ACE::strnew (ACE_TEXT ("-ORBCollocation"));
-          extra[3] = ACE::strnew (ACE_TEXT ("per-orb"));
-          extra[4] = ACE::strnew (ACE_TEXT ("-ORBDebug"));
-          extra[5] = ACE::strnew (ACE_TEXT ("-ORBDebugLevel"));
-          extra[6] = ACE::strnew (ACE_TEXT ("10"));
-          extra[7] = ACE::strnew (ACE_TEXT ("-ORBDefaultInitRef"));
-          extra[8] = ACE::strnew (ACE_TEXT ("corbaloc::localhost:4177"));
-          extra[9] = ACE::strnew (ACE_TEXT ("-ORBDottedDecimalAddresses"));
-          extra[10] = ACE::strnew (ACE_TEXT ("1"));
-          extra[11] = ACE::strnew (ACE_TEXT ("-ORBId"));
-          extra[12] = ACE::strnew (ACE_TEXT ("Client"));
-          extra[13] = ACE::strnew (ACE_TEXT ("-ORBListenEndpoints"));
-          extra[14] = ACE::strnew (ACE_TEXT ("iiop://:4178"));
-          extra[15] = ACE::strnew (ACE_TEXT ("-ORBLogFile"));
-          ACE_NEW_RETURN (extra[16],
-                          ACE_TCHAR[ACE_OS::strlen(log_file_) + 1],
-                          -1);
-          ACE_OS::sprintf (extra[16], ACE_TEXT("%s"), log_file_);
-          extra[17] = ACE::strnew (ACE_TEXT ("-ORBNegotiateCodesets"));
-          extra[18] = ACE::strnew (ACE_TEXT ("0"));
-          extra[19] = ACE::strnew (ACE_TEXT ("-ORBNodelay"));
-          extra[20] = ACE::strnew (ACE_TEXT ("1"));
-          extra[21] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
-          extra[22] = ACE::strnew (ACE_TEXT ("\"static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'\""));
-          extra[23] = ACE::strnew (ACE_TEXT ("-ORBVerboseLogging"));
-          ACE_NEW_RETURN (extra[24],
-                          ACE_TCHAR[2],
-                          -1);
-          ACE_OS::sprintf (extra[24], ACE_TEXT ("%d"), verbose);
+          std::vector<std::basic_string<ACE_TCHAR>> extra;
+          extra.reserve (extra_argc);
+          extra.emplace_back (ACE_TEXT ("-ORBCDRTradeoff"));
+          extra.emplace_back (ACE_TEXT ("2048"));
+          extra.emplace_back (ACE_TEXT ("-ORBCollocation"));
+          extra.emplace_back (ACE_TEXT ("per-orb"));
+          extra.emplace_back (ACE_TEXT ("-ORBDebug"));
+          extra.emplace_back (ACE_TEXT ("-ORBDebugLevel"));
+          extra.emplace_back (ACE_TEXT ("10"));
+          extra.emplace_back (ACE_TEXT ("-ORBDefaultInitRef"));
+          extra.emplace_back (ACE_TEXT ("corbaloc::localhost:4177"));
+          extra.emplace_back (ACE_TEXT ("-ORBDottedDecimalAddresses"));
+          extra.emplace_back (ACE_TEXT ("1"));
+          extra.emplace_back (ACE_TEXT ("-ORBId"));
+          extra.emplace_back (ACE_TEXT ("Client"));
+          extra.emplace_back (ACE_TEXT ("-ORBListenEndpoints"));
+          extra.emplace_back (ACE_TEXT ("iiop://:4178"));
+          extra.emplace_back (ACE_TEXT ("-ORBLogFile"));
+          extra.emplace_back (log_file_);
+          extra.emplace_back (ACE_TEXT ("-ORBNegotiateCodesets"));
+          extra.emplace_back (ACE_TEXT ("0"));
+          extra.emplace_back (ACE_TEXT ("-ORBNodelay"));
+          extra.emplace_back (ACE_TEXT ("1"));
+          extra.emplace_back (ACE_TEXT ("-ORBSvcConfDirective"));
+          extra.emplace_back (ACE_TEXT ("\"static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'\""));
+          extra.emplace_back (ACE_TEXT ("-ORBVerboseLogging"));
+          ACE_TCHAR verbose_arg[16];
+          ACE_OS::sprintf (verbose_arg, ACE_TEXT ("%d"), verbose);
+          extra.emplace_back (verbose_arg);
 
-          std::vector<ACE_TCHAR *> largv (argc + extra_argc);
+          std::vector<ACE_TCHAR *> largv;
+          largv.reserve (argc + extra_argc);
           for (int i = 0; i < argc; ++i)
-            largv[i] = argv[i];
+            largv.push_back (argv[i]);
 
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server adding args: ")));
-          for (int i = 0; i < extra_argc; ++i)
+          for (std::basic_string<ACE_TCHAR> &arg : extra)
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s "), extra[i]));
-              largv[argc+i] = extra[i];
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s "), arg.c_str ()));
+              largv.push_back (arg.data ());
             }
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
@@ -185,8 +184,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           orb = CORBA::ORB::_nil ();
           ACE_LOG_MSG->restart ();
 
-          for (int i = 0; i < extra_argc; ++i)
-            ACE::strdelete (extra[i]);
         }
     }
   catch (CORBA::Exception const &ex)
