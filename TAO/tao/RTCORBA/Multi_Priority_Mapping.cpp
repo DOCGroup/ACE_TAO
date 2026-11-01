@@ -76,7 +76,7 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                     " corba priority %d out of range [%d,%d]\n",
                     corba_priority, RTCORBA::minPriority, this->base_corba_priority_));
      }
-     return 0;
+     return false;
   }
 
   if (corba_priority == base_corba_priority_)
@@ -129,7 +129,7 @@ TAO_Multi_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
      }
   }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -147,7 +147,7 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
                     " priority %d out of range [%d,%d]\n",
                     native_priority, this->min_, this->base_corba_priority_));
      }
-     return 0;
+     return false;
   }
 
   if (native_priority == base_native_priority_)
@@ -225,7 +225,7 @@ TAO_Multi_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
      }
   }
 
-  return 1;
+  return true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
