@@ -6,6 +6,8 @@
 #include "tao/debug.h"
 #include "orbsvcs/CosEvent/CEC_TypedEvent.h"
 
+#include <cstring>
+
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/CosEvent/CEC_DynamicImplementation.inl"
 #endif /* __ACE_INLINE__ */
@@ -17,7 +19,7 @@ void
 TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
 {
   // Trap the _is_a request
-  if (ACE_OS::strcmp ("_is_a", request->operation () ) == 0)
+  if (std::strcmp ("_is_a", request->operation () ) == 0)
     {
       this->is_a (request);
     }
@@ -112,8 +114,8 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
     }
 
   CORBA::Boolean result = false;
-  if (ACE_OS::strcmp (value, this->repository_id_) == 0
-      || ACE_OS::strcmp (value, object_id) == 0)
+  if (std::strcmp (value, this->repository_id_) == 0
+      || std::strcmp (value, object_id) == 0)
     {
       result = true;
     }
@@ -129,7 +131,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
                           this->typed_event_channel_->base_interfaces (base) ));
             }
 
-          if (ACE_OS::strcmp (value, this->typed_event_channel_->base_interfaces (base) ) == 0)
+          if (std::strcmp (value, this->typed_event_channel_->base_interfaces (base) ) == 0)
             {
               result = true;
             }
