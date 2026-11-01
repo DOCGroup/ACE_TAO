@@ -19,13 +19,17 @@
 class Test_i : public POA_Test
 {
 public:
-  Test_i (CORBA::ORB_ptr orb);
+  explicit Test_i (CORBA::ORB_ptr orb);
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i &operator= (Test_i &&) = delete;
 
-  CORBA::Short method  (CORBA::Short boo);
+  CORBA::Short method (CORBA::Short boo) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void shutdown  ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -53,13 +57,13 @@ Test_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-static const ACE_TCHAR *ior_output_file = 0;
+static ACE_TCHAR const *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -109,19 +113,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
 
-      Test_var Test_object =
+      Test_var test_object =
         Test::_narrow (object_act.in ());
 
       CORBA::String_var ior =
-        orb->object_to_string (Test_object.in ());
+        orb->object_to_string (test_object.in ());
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
           FILE *output_file =
             ACE_OS::fopen (ior_output_file, "w");
 
-          if (output_file == 0)
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
@@ -143,7 +147,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in setting up server");
       return 1;
