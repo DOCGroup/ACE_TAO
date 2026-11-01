@@ -27,7 +27,7 @@ class Magazine
 {
 public:
   /// No-op virtual destructor.
-  virtual ~Magazine () {};
+  virtual ~Magazine () = default;
 
   /// This method gives the title of the magazine.
   virtual void title () = 0;
