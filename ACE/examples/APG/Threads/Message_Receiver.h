@@ -24,16 +24,13 @@ struct DeviceCommandHeader
 class HA_Device_Repository
 {
 public:
-  HA_Device_Repository ();
+  HA_Device_Repository () = default;
 
   int update_device (int device_id, char *commands);
 
 private:
-  ACE_Task_Base *owner_;
+  ACE_Task_Base *owner_ {};
 };
-
-HA_Device_Repository::HA_Device_Repository ()
-{ }
 
 int
 HA_Device_Repository::update_device (int, char *)
@@ -44,10 +41,10 @@ HA_Device_Repository::update_device (int, char *)
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  HA_CommandHandler (HA_Device_Repository &rep) : rep_(rep)
+  explicit HA_CommandHandler (HA_Device_Repository &rep) : rep_ (rep)
   { }
 
-  virtual int svc();
+  int svc () override;
 
 private:
   HA_Device_Repository &rep_;
@@ -57,20 +54,20 @@ class Message_Receiver :
   public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
 public:
-  Message_Receiver () : handler_(0)
+  Message_Receiver () : handler_ (nullptr)
   {
     ACE_ASSERT(0);
   }
 
-  Message_Receiver (HA_CommandHandler *ch) : handler_(ch)
+  explicit Message_Receiver (HA_CommandHandler *ch) : handler_ (ch)
   { }
 
   ACE_Message_Block *shut_down_message ();
 
-  virtual int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK)
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override
   {
     this->peer ().close ();
     delete this;

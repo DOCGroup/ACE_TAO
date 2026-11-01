@@ -9,16 +9,16 @@
 class HA_Device_Repository
 {
 public:
-  HA_Device_Repository() : owner_(0)
+  HA_Device_Repository () : owner_ (nullptr)
   { }
 
-  int is_free ()
-    { return (this->owner_ == 0); }
+  bool is_free () const
+    { return this->owner_ == nullptr; }
 
-  int is_owner (ACE_Task_Base* tb)
-    { return (this->owner_ == tb); }
+  bool is_owner (ACE_Task_Base *tb) const
+    { return this->owner_ == tb; }
 
-  ACE_Task_Base *get_owner ()
+  ACE_Task_Base *get_owner () const
     { return this->owner_; }
 
   void set_owner (ACE_Task_Base *owner)
@@ -36,13 +36,13 @@ class HA_CommandHandler : public ACE_Task_Base
 public:
   enum {NUM_USES = 10};
 
-  HA_CommandHandler (HA_Device_Repository& rep,
+  HA_CommandHandler (HA_Device_Repository &rep,
                      ACE_Condition<ACE_Thread_Mutex> &wait,
-                     ACE_Thread_Mutex& mutex)
-    : rep_(rep), waitCond_(wait), mutex_(mutex)
+                     ACE_Thread_Mutex &mutex)
+    : rep_ (rep), waitCond_ (wait), mutex_ (mutex)
   { }
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   HA_Device_Repository &rep_;

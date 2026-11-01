@@ -11,7 +11,7 @@ HA_CommandHandler::svc ()
 {
   while(1)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       if (this->getq (mb) == -1)
         break;
       if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
@@ -45,9 +45,9 @@ HA_CommandHandler::svc ()
 ACE_Message_Block *
 Message_Receiver::shut_down_message ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN
-    (mb, ACE_Message_Block (0, ACE_Message_Block::MB_HANGUP), 0);
+    (mb, ACE_Message_Block (0, ACE_Message_Block::MB_HANGUP), nullptr);
   return mb;
 }
 // Listing 4
@@ -96,7 +96,7 @@ Message_Receiver::handle_input (ACE_HANDLE)
       return -1;
     }
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN
     (mb, ACE_Message_Block (dch.length_ + sizeof dch), -1);
   // Copy the header.
@@ -124,11 +124,11 @@ static void report_usage (int argc, ACE_TCHAR *argv[])
 class Acceptor : public ACE_Acceptor<Message_Receiver, ACE_SOCK_ACCEPTOR>
 {
 public:
-  Acceptor(HA_CommandHandler *handler) : handler_(handler)
+  explicit Acceptor (HA_CommandHandler *handler) : handler_ (handler)
   { }
 
 protected:
-  virtual int make_svc_handler (Message_Receiver *&mr)
+  int make_svc_handler (Message_Receiver *&mr) override
   {
     ACE_NEW_RETURN (mr, Message_Receiver (handler_), -1);
     return 0;
