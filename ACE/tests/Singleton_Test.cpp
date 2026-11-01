@@ -12,6 +12,38 @@
 
 #include "test_config.h"
 #include "ace/Singleton.h"
+#include <type_traits>
+
+using Singleton = ACE_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>;
+using Unmanaged_Singleton = ACE_Unmanaged_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>;
+using TSS_Singleton = ACE_TSS_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>;
+using Unmanaged_TSS_Singleton = ACE_Unmanaged_TSS_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>;
+using DLL_Singleton = ACE_DLL_Singleton_T<int, ACE_SYNCH_RECURSIVE_MUTEX>;
+
+static_assert (!std::is_copy_constructible<Singleton>::value);
+static_assert (!std::is_move_constructible<Singleton>::value);
+static_assert (!std::is_copy_assignable<Singleton>::value);
+static_assert (!std::is_move_assignable<Singleton>::value);
+
+static_assert (!std::is_copy_constructible<Unmanaged_Singleton>::value);
+static_assert (!std::is_move_constructible<Unmanaged_Singleton>::value);
+static_assert (!std::is_copy_assignable<Unmanaged_Singleton>::value);
+static_assert (!std::is_move_assignable<Unmanaged_Singleton>::value);
+
+static_assert (!std::is_copy_constructible<TSS_Singleton>::value);
+static_assert (!std::is_move_constructible<TSS_Singleton>::value);
+static_assert (!std::is_copy_assignable<TSS_Singleton>::value);
+static_assert (!std::is_move_assignable<TSS_Singleton>::value);
+
+static_assert (!std::is_copy_constructible<Unmanaged_TSS_Singleton>::value);
+static_assert (!std::is_move_constructible<Unmanaged_TSS_Singleton>::value);
+static_assert (!std::is_copy_assignable<Unmanaged_TSS_Singleton>::value);
+static_assert (!std::is_move_assignable<Unmanaged_TSS_Singleton>::value);
+
+static_assert (!std::is_copy_constructible<DLL_Singleton>::value);
+static_assert (!std::is_move_constructible<DLL_Singleton>::value);
+static_assert (!std::is_copy_assignable<DLL_Singleton>::value);
+static_assert (!std::is_move_assignable<DLL_Singleton>::value);
 
 
 int
