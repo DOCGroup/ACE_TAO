@@ -11,11 +11,16 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
+  test_i (test_i const&) = delete;
+  test_i (test_i&&) = delete;
+  test_i& operator= (test_i const&) = delete;
+  test_i& operator= (test_i&&) = delete;
+
   void set_other (test_ptr test);
 
-  void method ();
+  void method () override;
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   CORBA::ORB_var orb_;
 
@@ -49,7 +54,7 @@ test_i::set_other (test_ptr test)
 void
 test_i::method ()
 {
-  if (this->other_.in () != test::_nil ())
+  if (!CORBA::is_nil (this->other_.in ()))
     {
       this->other_->method ();
     }
@@ -62,7 +67,7 @@ test_i::method ()
       TAO::Portable_Server::POA_Current_Impl &tao_poa_current_implementation =
         *tao_poa_current.implementation ();
 
-      const char *upcall = 0;
+      char const *upcall = nullptr;
       if (tao_poa_current_implementation.previous ())
         upcall = "collocated";
       else
@@ -90,9 +95,14 @@ test_i::_default_POA ()
 class Task : public ACE_Task_Base
 {
 public:
-  Task (CORBA::ORB_ptr orb);
+  explicit Task (CORBA::ORB_ptr orb);
 
-  int svc ();
+  Task (Task const&) = delete;
+  Task (Task&&) = delete;
+  Task& operator= (Task const&) = delete;
+  Task& operator= (Task&&) = delete;
+
+  int svc () override;
 
   CORBA::ORB_var orb_;
 };
@@ -109,7 +119,7 @@ Task::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
@@ -117,7 +127,7 @@ Task::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -255,7 +265,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ASSERT (result != -1);
       ACE_UNUSED_ARG (result);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
