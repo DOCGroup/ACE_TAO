@@ -9,6 +9,8 @@
 
 #include "tao/CDR.h"
 
+#include <cstddef>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynValueBox_i::TAO_DynValueBox_i (CORBA::Boolean allow_truncation)
@@ -276,7 +278,7 @@ TAO_DynValueBox_i::set_from_any (CORBA::Any const& any)
 
   while (true)
     {
-      TAO_InputCDR indrected_strm ((size_t) 0);
+      TAO_InputCDR indrected_strm (static_cast<std::size_t> (0));
       CORBA::Boolean is_indirected= false;
       CORBA::Boolean is_null_object= false;
 

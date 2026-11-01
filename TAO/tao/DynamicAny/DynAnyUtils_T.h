@@ -23,6 +23,7 @@
 
 #include "tao/AnyTypeCode/BasicTypeTraits.h"
 
+#include <cstddef>
 #include <new>
 #include <stdexcept>
 #include <vector>
@@ -35,7 +36,7 @@ namespace TAO
 {
   template <typename T>
   void
-  resize_std_vector (std::vector<T> &values, size_t new_size)
+  resize_std_vector (std::vector<T> &values, std::size_t new_size)
   {
     try
       {
