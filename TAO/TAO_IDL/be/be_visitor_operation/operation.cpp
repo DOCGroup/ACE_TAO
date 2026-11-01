@@ -67,7 +67,7 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
     {
       //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder\n"));
       std::string const& full_name = node->full_name ();
-      size_t const last_E = full_name.rfind ('E');
+      std::size_t const last_E = full_name.rfind ('E');
       if (last_E != std::string::npos
           && full_name.substr (last_E) == "ExceptionHolder")
         {

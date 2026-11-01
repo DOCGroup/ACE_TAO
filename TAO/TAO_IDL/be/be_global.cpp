@@ -49,12 +49,12 @@ BE_GlobalData::~BE_GlobalData () = default;
 // generated with ""s or <>s respectively, for the standard include
 // files (e.g. tao/corba.h)
 void
-BE_GlobalData::changing_standard_include_files (size_t changing)
+BE_GlobalData::changing_standard_include_files (std::size_t changing)
 {
   this->changing_standard_include_files_ = changing;
 }
 
-size_t
+std::size_t
 BE_GlobalData::changing_standard_include_files ()
 {
   return this->changing_standard_include_files_;
@@ -87,9 +87,9 @@ be_change_idl_file_extension (std::string const& idl_file,
     ".PIDL"
   };
 
-  constexpr size_t nextensions = sizeof (extensions) / sizeof (extensions[0]);
+  constexpr std::size_t nextensions = sizeof (extensions) / sizeof (extensions[0]);
 
-  for (size_t k = 0; k < nextensions; ++k)
+  for (std::size_t k = 0; k < nextensions; ++k)
     {
       base = input.find (extensions[k]);
 
@@ -3163,9 +3163,9 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (av[i][2] == 'I')
           {
-            size_t const options = std::string (av[i]).size () - 3;
-            size_t j;
-            size_t k = i;
+            std::size_t const options = std::string (av[i]).size () - 3;
+            std::size_t j;
+            std::size_t k = i;
             // Generate implementation files.
             be_global->gen_impl_files (true);
 

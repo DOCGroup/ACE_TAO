@@ -235,11 +235,11 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  size_t const count =
+  std::size_t const count =
     node->data_members_count (AST_Field::vis_PUBLIC)
     + node->data_members_count (AST_Field::vis_PRIVATE);
 
-  size_t i = 0;
+  std::size_t i = 0;
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();

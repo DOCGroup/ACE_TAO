@@ -73,7 +73,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       os_ << "CCM_" << this->node_->flat_name ()
           << "_Traits," << be_nl;
 
-      size_t slot = 1UL;
+      std::size_t slot = 1;
 
       for (AST_Decl *d : this->t_args_)
         {

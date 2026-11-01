@@ -206,11 +206,11 @@ TAO_OutStream::flush_pending_whitespace ()
 void
 TAO_OutStream::write_text (std::string const& text)
 {
-  size_t position = 0;
+  std::size_t position = 0;
 
   while (position < text.size ())
     {
-      size_t const whitespace = text.find_first_of (" \t\r\n", position);
+      std::size_t const whitespace = text.find_first_of (" \t\r\n", position);
 
       if (whitespace != position)
         {

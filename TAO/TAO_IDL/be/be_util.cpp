@@ -159,7 +159,7 @@ be_util::prep_be_arg (std::string const& s)
   std::string remaining (s);
   while (!remaining.empty ())
     {
-      size_t const comma = remaining.find (',');
+      std::size_t const comma = remaining.find (',');
       std::string const argument (remaining.substr (0, comma));
       remaining = comma == std::string::npos
         ? std::string {}

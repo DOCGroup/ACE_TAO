@@ -118,7 +118,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   //    original interface
   // 4) The implied valuetype ends in ExceptionHolder
   std::string const& node_name = node->full_name ();
-  size_t const last_underbar = node_name.rfind ('_');
+  std::size_t const last_underbar = node_name.rfind ('_');
 
   if (last_underbar != std::string::npos
       && node_name.substr (last_underbar) == "_excep")
@@ -139,7 +139,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
                   && vt->original_interface () == intf->original_interface ())
                 {
                   std::string const& vt_name = vt->full_name ();
-                  size_t const last_E = vt_name.rfind ('E');
+                  std::size_t const last_E = vt_name.rfind ('E');
 
                   if (last_E != std::string::npos
                       && vt_name.substr (last_E) == "ExceptionHolder")

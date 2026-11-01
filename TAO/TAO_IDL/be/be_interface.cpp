@@ -284,8 +284,8 @@ be_interface::relative_name (std::string const& localname,
 
   while (!def_curr.empty () && !use_curr.empty ())
     {
-      size_t const def_separator = def_curr.find ("::");
-      size_t const use_separator = use_curr.find ("::");
+      std::size_t const def_separator = def_curr.find ("::");
+      std::size_t const use_separator = use_curr.find ("::");
       std::string const def_component = def_curr.substr (0, def_separator);
       std::string const use_component = use_curr.substr (0, use_separator);
 
@@ -362,7 +362,7 @@ be_interface::redefine (AST_Interface *from)
       // replace each interface that has been forward
       // declared, since the pointer existing in the queue
       // will be deleted after redefine() returns.
-      for (size_t slot = 0; slot < q.size (); ++slot)
+      for (std::size_t slot = 0; slot < q.size (); ++slot)
         {
           if (q[slot] == bi)
             {
@@ -884,7 +884,7 @@ be_interface::gen_operation_table (std::string const& flat_name,
         // QNX can't handle individual file names (path components)
         // longer than 48 characters.
 #if defined(__QNX__)
-        size_t const temp_dir_len = temp_dir.size ();
+        std::size_t const temp_dir_len = temp_dir.size ();
 
         if (temp_file.size () > temp_dir_len + 47)
           {
@@ -2511,7 +2511,7 @@ be_interface::client_enclosing_scope () const
       std::string const& full_name = this->full_name ();
       std::string const& name = this->local_name ();
 
-      size_t const length = full_name.size () - name.size ();
+      std::size_t const length = full_name.size () - name.size ();
       this->client_scope_ = full_name.substr (0, length);
       this->client_scope_computed_ = true;
     }
@@ -2528,8 +2528,8 @@ be_interface::flat_client_enclosing_scope () const
       std::string const& name =
         this->original_local_name ()->get_string ();
 
-      size_t offset = name.size ();
-      size_t length = full_name.size () - offset;
+      std::size_t offset = name.size ();
+      std::size_t length = full_name.size () - offset;
 
       this->flat_client_scope_ = full_name.substr (0, length);
       this->flat_client_scope_computed_ = true;
@@ -2549,7 +2549,7 @@ be_interface::server_enclosing_scope () const
       std::string const& name =
         this->local_coll_name (be_interface::DIRECT);
 
-      size_t const length = full_name.size () - name.size ();
+      std::size_t const length = full_name.size () - name.size ();
       this->server_scope_ = full_name.substr (0, length);
       this->server_scope_computed_ = true;
     }

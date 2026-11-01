@@ -15,6 +15,7 @@
 
 #include "TAO_IDL_BE_Export.h"
 
+#include <cstddef>
 #include <deque>
 #include <optional>
 #include <string>
@@ -70,8 +71,8 @@ public:
   // To switch between changing or non-changing standard include
   // files (e.g. tao/corba.h)  so that #include statements can be
   // generated with ""s or <>s respectively.
-  void changing_standard_include_files (size_t changing);
-  size_t changing_standard_include_files ();
+  void changing_standard_include_files (std::size_t changing);
+  std::size_t changing_standard_include_files ();
 
   // Helper functions that generate the file names for the C++ mapping
   // generated code.
@@ -955,7 +956,7 @@ private:
    * files (e.g. tao/corba.h)  so that #include statements can be
    * generated with ""s or <>s respectively.
    */
-  size_t changing_standard_include_files_ {1};
+  std::size_t changing_standard_include_files_ {1};
 
   // Macros and includes used to export classes from generated code.
   std::string skel_export_macro_;

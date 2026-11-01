@@ -65,8 +65,8 @@ TAO::be_visitor_enum_typecode::visit_members (be_enum * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  size_t const count = node->member_count ();
-  size_t n = 0;
+  std::size_t const count = node->member_count ();
+  std::size_t n = 0;
 
   for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
        !i.is_done ();

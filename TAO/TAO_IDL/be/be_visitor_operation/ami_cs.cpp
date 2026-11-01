@@ -179,7 +179,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   /// The sendc_* operation makes the invocation with the
   /// original operation name.
-  static constexpr size_t sendc_prefix_length = sizeof ("sendc_") - 1;
+  static constexpr std::size_t sendc_prefix_length = sizeof ("sendc_") - 1;
   std::string const lname = base.substr (sendc_prefix_length);
 
   std::string opname (node->is_attr_op () ? "_" : "");

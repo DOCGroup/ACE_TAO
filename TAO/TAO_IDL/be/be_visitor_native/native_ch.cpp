@@ -62,8 +62,8 @@ be_visitor_native_ch::visit_native (be_native *node)
       // DDS/DCPS zero-copy read sequence type support.
 
       // strip  the "Seq" ending to get the sample's name
-      constexpr size_t max_name_length = 2000;
-      size_t const node_name_length = node_name.size ();
+      constexpr std::size_t max_name_length = 2000;
+      std::size_t const node_name_length = node_name.size ();
       if (node_name_length >= max_name_length ||
           node_name_length <= 3)
         {

@@ -18,6 +18,7 @@
 
 #include "ace/OS_NS_stdio.h"
 
+#include <cstddef>
 #include <string>
 #include <type_traits>
 
@@ -170,13 +171,13 @@ public:
   int gen_endif ();
 
   // =overloaded operators
-  // Avoid duplication for the underlying type of size_t
+  // Avoid duplication for the underlying type of std::size_t
   template <typename Dummy = TAO_OutStream &>
   typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
-                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
-                          !std::is_same<ACE_CDR::ULong, size_t>::value,
+                          !std::is_same<ACE_CDR::ULongLong, std::size_t>::value &&
+                          !std::is_same<ACE_CDR::ULong, std::size_t>::value,
                           TAO_OutStream &>::type
-  operator << (const size_t num)
+  operator << (std::size_t const num)
   {
     this->flush_pending_whitespace ();
     ACE_OS::fprintf (this->fp_,
