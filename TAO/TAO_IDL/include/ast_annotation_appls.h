@@ -60,19 +60,19 @@ public:
   /**
    * Direct access to the AST_Annotation_Appl pointers by index.
    */
-  AST_Annotation_Appl *operator[] (std::size_t index);
+  AST_Annotation_Appl *operator[] (std::size_t index) const;
 
   /**
    * Return last AST_Annotation_Appl that applies the AST_Annotation_Decl
    * or return nullptr if there are none that do.
    */
-  AST_Annotation_Appl *find (AST_Annotation_Decl *annotation);
+  AST_Annotation_Appl *find (AST_Annotation_Decl *annotation) const;
 
   /**
    * Same as find (AST_Annotation_Decl*) except do a look up of the
    * AST_Annotation_Decl first.
    */
-  AST_Annotation_Appl *find (std::string const& annotation);
+  AST_Annotation_Appl *find (std::string const& annotation) const;
 
 private:
   AST_Annotation_Appl_Ptrs vector_;

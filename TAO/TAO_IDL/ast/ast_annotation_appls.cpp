@@ -8,8 +8,8 @@
 AST_Annotation_Appls::AST_Annotation_Appls () = default;
 
 AST_Annotation_Appls::AST_Annotation_Appls (AST_Annotation_Appls const &other)
+  : vector_ (other.vector_)
 {
-  *this = other;
 }
 
 AST_Annotation_Appls::~AST_Annotation_Appls () = default;
@@ -17,8 +17,11 @@ AST_Annotation_Appls::~AST_Annotation_Appls () = default;
 AST_Annotation_Appls &
 AST_Annotation_Appls::operator= (AST_Annotation_Appls const &other)
 {
-  vector_.clear ();
-  add (other);
+  if (this != &other)
+    {
+      vector_ = other.vector_;
+    }
+
   return *this;
 }
 
@@ -31,9 +34,14 @@ AST_Annotation_Appls::add (AST_Annotation_Appl *appl)
 void
 AST_Annotation_Appls::add (AST_Annotation_Appls const &other)
 {
-  for (const_iterator i = other.begin (); i != other.end (); ++i)
+  if (this == &other)
     {
-      vector_.push_back (*i);
+      AST_Annotation_Appl_Ptrs const original (vector_);
+      vector_.insert (vector_.end (), original.begin (), original.end ());
+    }
+  else
+    {
+      vector_.insert (vector_.end (), other.vector_.begin (), other.vector_.end ());
     }
 }
 
@@ -74,18 +82,18 @@ AST_Annotation_Appls::end () const
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::operator[] (std::size_t index)
+AST_Annotation_Appls::operator[] (std::size_t index) const
 {
   return vector_[index].get ();
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::find (AST_Annotation_Decl *annotation)
+AST_Annotation_Appls::find (AST_Annotation_Decl *annotation) const
 {
   AST_Annotation_Appl *result = nullptr;
-  for (iterator i = begin (); i != end (); ++i)
+  for (AST_Annotation_Appl_Ptr const& appl_ptr : vector_)
     {
-      AST_Annotation_Appl *appl = i->get ();
+      AST_Annotation_Appl *appl = appl_ptr.get ();
       if (appl && appl->annotation_decl () == annotation)
         {
           result = appl;
@@ -95,7 +103,7 @@ AST_Annotation_Appls::find (AST_Annotation_Decl *annotation)
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::find (std::string const& annotation)
+AST_Annotation_Appls::find (std::string const& annotation) const
 {
   if (annotation.empty ())
     {
