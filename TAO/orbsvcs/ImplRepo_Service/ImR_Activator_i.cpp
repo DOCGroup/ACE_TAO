@@ -13,6 +13,8 @@
 
 #include "ace/os_include/os_netdb.h"
 
+#include <cstring>
+
 static const char *unique_prefix = "\001\002\003\004";
 static size_t unique_prefix_len = 4;
 
@@ -477,7 +479,7 @@ ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
            iter != process_map_.end ();
            iter++)
         {
-          if (ACE_OS::strcmp (name, iter->item ().c_str()) == 0)
+          if (std::strcmp (name, iter->item ().c_str ()) == 0)
             {
               pid = iter->key ();
               break;
@@ -502,8 +504,8 @@ ImR_Activator_i::start_server(const char* name,
                               const ImplementationRepository::EnvironmentList & env)
 {
   bool unique = false;
-  if (ACE_OS::strlen (name) > unique_prefix_len &&
-      ACE_OS::strncmp (name, unique_prefix, unique_prefix_len) == 0)
+  if (std::strlen (name) > unique_prefix_len &&
+      std::strncmp (name, unique_prefix, unique_prefix_len) == 0)
     {
       unique = true;
       name += unique_prefix_len;
@@ -530,7 +532,7 @@ ImR_Activator_i::start_server(const char* name,
       throw ImplementationRepository::CannotActivate(CORBA::string_dup (reason));
     }
 
-  size_t const cmdline_buf_len = ACE_OS::strlen(cmdline);
+  size_t const cmdline_buf_len = std::strlen (cmdline);
   if (debug_ > 0)
     ORBSVCS_DEBUG((LM_DEBUG,
                    "(%P|%t) ImR Activator: command line len <%d> <%C> directory <%C>\n",

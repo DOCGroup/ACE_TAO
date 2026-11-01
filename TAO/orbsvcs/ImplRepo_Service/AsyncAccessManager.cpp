@@ -5,6 +5,8 @@
 #include "UpdateableServerInfo.h"
 #include "orbsvcs/Log_Macros.h"
 
+#include <cstring>
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
@@ -73,7 +75,7 @@ AsyncAccessManager::is_running () const
 bool
 AsyncAccessManager::has_server (const char *s) const
 {
-  return ACE_OS::strcmp (this->info_->ping_id (), s) == 0;
+  return std::strcmp (this->info_->ping_id (), s) == 0;
 }
 
 void
@@ -875,7 +877,7 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
                           ACE_TEXT ("(%P|%t) ActivatorReceiver(%@)::start_server_excep, reason <%C>\n"),
                           this, ca.reason.in ()));
         }
-      if (ACE_OS::strstr (ca.reason.in(),"pid:") == ca.reason.in())
+      if (std::strstr (ca.reason.in (), "pid:") == ca.reason.in ())
         {
           int const pid = ACE_OS::atoi (ca.reason.in()+4);
           this->aam_->activator_replied_start_running (true, pid);

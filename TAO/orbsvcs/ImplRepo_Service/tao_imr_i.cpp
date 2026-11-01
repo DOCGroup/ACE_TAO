@@ -12,6 +12,8 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 TAO_IMR_i::TAO_IMR_i ()
   : argc_ (0),
     argv_ (nullptr),
@@ -216,7 +218,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   ORBSVCS_DEBUG ((LM_DEBUG, "  Activator: %C\n", info.startup.activator.in ()));
 
   ORBSVCS_DEBUG ((LM_DEBUG, "  Command Line: "));
-  if (ACE_OS::strlen(info.startup.command_line.in ()) <= ACE_MAXLOGMSGLEN)
+  if (std::strlen (info.startup.command_line.in ()) <= ACE_MAXLOGMSGLEN)
     {
        ORBSVCS_DEBUG ((LM_DEBUG, "%C", info.startup.command_line.in ()));
     }
@@ -226,7 +228,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
        while (*cl)
          {
             char tmp = 0;
-            size_t len = ACE_OS::strlen(cl);
+            size_t len = std::strlen (cl);
             if (len > ACE_MAXLOGMSGLEN)
               {
                  len = ACE_MAXLOGMSGLEN;
@@ -252,7 +254,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   if (info.startup.activation == ImplementationRepository::PER_CLIENT)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "  No running info available for PER_CLIENT mode\n"));
-  else if (ACE_OS::strlen (info.partial_ior.in ()) > 0)
+  else if (std::strlen (info.partial_ior.in ()) > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "  Running at endpoint: %C\n",
                 info.partial_ior.in ()));
@@ -504,7 +506,7 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
           while (c2 != 0)
             {
               num++;
-              c2 = ACE_OS::strchr (c2, ',');
+              c2 = std::strchr (c2, ',');
               if (c2 != 0)
                 c2++;
             }
@@ -512,7 +514,7 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
           this->peers_.length (num);
           while (last < num)
             {
-              if ((c2 = ACE_OS::strchr (arg, ',')) != 0)
+              if ((c2 = std::strchr (arg, ',')) != 0)
                 *c2 = 0;
               this->peers_[last++] = CORBA::string_dup (arg);
               if (c2 != 0)
@@ -972,7 +974,7 @@ TAO_IMR_Op_IOR::run ()
       // Search for "corbaloc:" alone, without the protocol.  This code
       // should be protocol neutral.
       const char corbaloc[] = "corbaloc:";
-      char *pos = ACE_OS::strstr (imr_str.inout (), corbaloc);
+      char *pos = std::strstr (imr_str.inout (), corbaloc);
 
       if (pos == 0)
       {
@@ -980,8 +982,8 @@ TAO_IMR_Op_IOR::run ()
       }
       else
       {
-        pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
-        pos = ACE_OS::strchr (pos + 1,
+        pos = std::strchr (pos + sizeof (corbaloc), ':');
+        pos = std::strchr (pos + 1,
           this->imr_->_stubobj ()->profile_in_use ()->object_key_delimiter ());
 
         if (pos)
@@ -997,7 +999,7 @@ TAO_IMR_Op_IOR::run ()
 
       // Add the key
       const char jacorb[] = "JACORB:";
-      const char *posjacorb = ACE_OS::strstr (server_name_.c_str (), jacorb);
+      const char *posjacorb = std::strstr (server_name_.c_str (), jacorb);
       if (posjacorb)
       {
         ior += posjacorb + sizeof(jacorb) - 1;
@@ -1172,7 +1174,7 @@ TAO_IMR_Op_List::run ()
           ImplementationRepository::ServerInformation_var si;
 
           this->imr_->find (this->server_name_.c_str (), si);
-          if (ACE_OS::strlen (si->server.in()) > 0)
+          if (std::strlen (si->server.in ()) > 0)
             {
               this->verbose_server_information_ = true;
               this->display_server_information (si.in ());
