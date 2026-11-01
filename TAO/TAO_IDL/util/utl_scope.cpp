@@ -203,8 +203,7 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
     }
 
   // Convert the identifier string into canonical (uppercase) form.
-  std::string ext_id (e->get_string ());
-  ext_id = UTL_String::get_canonical_rep (ext_id);
+  std::string const ext_id = UTL_String::get_canonical_rep (e->get_string ());
   if (idl_global->idl_keywords ().find (ext_id)
       != idl_global->idl_keywords ().end ())
     {
