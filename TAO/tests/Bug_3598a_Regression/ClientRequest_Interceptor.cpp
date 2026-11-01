@@ -76,5 +76,5 @@
     ACE_DEBUG ((LM_DEBUG,
                "ClientRequest_Interceptor::receive_exception called for operation: %C - test has succeeded...\n",
                 op.in ()));
-    success_flag_ = 1;
+    success_flag_ = true;
   }

@@ -80,7 +80,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::String_var the_string =
           hello->get_string ();
       }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
       {
         call_failed = true;
       }

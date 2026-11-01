@@ -55,7 +55,7 @@ static CORBA::Boolean success_flag_;
 
 private:
 /// Name of the interceptor
-  char const *name_;
+  char const *const name_;
 };
 #if defined(_MSC_VER)
 #pragma warning(pop)
