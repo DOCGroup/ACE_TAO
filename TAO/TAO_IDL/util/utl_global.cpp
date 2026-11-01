@@ -805,12 +805,9 @@ IDL_GlobalData::add_include_path (std::string const& path, bool is_system)
 }
 
 void
-IDL_GlobalData::add_rel_include_path (char const *s)
+IDL_GlobalData::add_rel_include_path (std::string const& path)
 {
-  if (s != nullptr)
-    {
-      this->rel_include_paths_.emplace_back (s);
-    }
+  this->rel_include_paths_.push_back (path);
 }
 
 std::vector<std::string> const &

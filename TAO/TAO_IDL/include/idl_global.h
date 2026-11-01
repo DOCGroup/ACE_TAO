@@ -546,7 +546,7 @@ public:
   // Add another path to 'include_paths_'. is_system is true for TAO/CIAO
   // specific paths and false for paths provided by user.
 
-  void add_rel_include_path (char const *s);
+  void add_rel_include_path (std::string const& path);
   std::vector<std::string> const & rel_include_paths () const;
   // Accessor/mutator for the rel_include_paths_ member.
 

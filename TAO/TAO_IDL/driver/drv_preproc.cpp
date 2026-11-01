@@ -461,7 +461,7 @@ DRV_sweep_dirs (char const *rel_path,
                   std::string incl_arg ("-I");
                   incl_arg += bname;
                   DRV_cpp_putarg (incl_arg.c_str ());
-                  idl_global->add_rel_include_path (bname.c_str ());
+                  idl_global->add_rel_include_path (bname);
                   char const * const full_path = ACE_OS::realpath ("", abspath);
 
                   if (full_path != nullptr)
