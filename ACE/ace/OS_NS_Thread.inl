@@ -106,7 +106,7 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
 
 /*****************************************************************************/
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_OS::thr_equal (ACE_thread_t t1, ACE_thread_t t2)
 {
 #if defined (ACE_HAS_PTHREADS)
@@ -606,7 +606,7 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
 
 #    if !defined (ACE_NDEBUG)
   if (m->nesting_level_ == 0
-      || ACE_OS::thr_equal (ACE_OS::thr_self (), m->owner_id_) == 0)
+      || !ACE_OS::thr_equal (ACE_OS::thr_self (), m->owner_id_))
     {
       ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
       errno = EINVAL;
@@ -772,7 +772,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
       m->owner_id_ = t_id;
       // If we already own the lock, then increment the nesting level
       // and return.
-    else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+    else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
     {
           // Wait until the nesting level has dropped to zero, at
           // which point we can acquire the lock.
@@ -824,7 +824,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
         m->owner_id_ = t_id;
       // If we already own the lock, then increment the nesting level
       // and return.
-      else if (ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+      else if (!ACE_OS::thr_equal (t_id, m->owner_id_))
         {
           // Wait until the nesting level has dropped to zero, at
           // which point we can acquire the lock.
@@ -940,7 +940,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
   {
 #    if !defined (ACE_NDEBUG)
       if (m->nesting_level_ == 0
-          || ACE_OS::thr_equal (t_id, m->owner_id_) == 0)
+          || !ACE_OS::thr_equal (t_id, m->owner_id_))
 {
   errno = EINVAL;
   result = -1;

@@ -1639,7 +1639,7 @@ namespace ACE_OS {
                   const char **thr_name = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_equal (ACE_thread_t t1, ACE_thread_t t2);
+  bool thr_equal (ACE_thread_t t1, ACE_thread_t t2);
 
   extern ACE_Export
   void thr_exit (ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL);
