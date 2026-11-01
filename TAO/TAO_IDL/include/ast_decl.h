@@ -69,13 +69,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <memory>
 #include <optional>
 #include <string>
+#include <vector>
 
 #include "utl_scoped_name.h"
 #include "ast_annotation_appls.h"
 
 #include "ace/os_include/sys/os_types.h"
+#include "ace/Log_Msg.h"
 #include "ace/SString.h"
-#include "ace/Vector_T.h"
 
 class Identifier;
 class UTL_Scope;
@@ -496,6 +497,6 @@ private:
 
 };
 
-using AST_Decls = ACE_Vector<AST_Decl*>;
+using AST_Decls = std::vector<AST_Decl*>;
 
 #endif           // _AST_DECL_AST_DECL_HH

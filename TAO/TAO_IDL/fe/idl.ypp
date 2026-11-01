@@ -1496,9 +1496,9 @@ value_elements
           AST_Decls *&decls = $3;
           if (decls)
             {
-              for (size_t i = 0; i < decls->size (); i++)
+              for (AST_Decl *decl : *decls)
                 {
-                  (*decls)[i]->annotation_appls (*annotations);
+                  decl->annotation_appls (*annotations);
                 }
             }
           else
@@ -1521,7 +1521,7 @@ value_element
         | export
         {
           AST_Decl *&node = $1;
-          AST_Decls *value = 0;
+          AST_Decls *value = nullptr;
           if (node)
             {
               value = new AST_Decls;
@@ -1532,7 +1532,7 @@ value_element
         | init_decl
         {
           AST_Decl *&node = $1;
-          AST_Decls *value = 0;
+          AST_Decls *value = nullptr;
           if (node)
             {
               value = new AST_Decls;
@@ -1565,9 +1565,9 @@ state_member
           if (decls_ptr)
             {
               AST_Decls &decls = *decls_ptr;
-              for (size_t i = 0; i < decls.size (); i++)
+              for (AST_Decl *decl : decls)
                 {
-                  AST_Field *field = dynamic_cast<AST_Field *> (decls[i]);
+                  AST_Field *field = dynamic_cast<AST_Field *> (decl);
                   if (field)
                     {
                       field->visibility (visibility);
@@ -2796,7 +2796,6 @@ type_declarator :
                 }
 
               // This FE_Declarator class isn't destroyed with the AST.
-              decls->destroy ();
               delete decls;
               $3 = decls = 0;
             }
@@ -3221,9 +3220,9 @@ member
           AST_Decls *members = $2;
           if (annotations && members)
             {
-              for (size_t i = 0; i < members->size (); i++)
+              for (AST_Decl *member : *members)
                 {
-                  (*members)[i]->annotation_appls (*annotations);
+                  member->annotation_appls (*annotations);
                 }
             }
           delete annotations;
@@ -3246,7 +3245,7 @@ member_i :
           FE_Declarator *d = 0;
           AST_Field *f = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsCompleted);
-          AST_Decls *members = 0;
+          AST_Decls *members = nullptr;
 
           /*
            * Check for illegal recursive use of type.

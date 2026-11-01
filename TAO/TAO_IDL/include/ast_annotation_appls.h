@@ -3,6 +3,7 @@
 
 #include "ace/Bound_Ptr.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 #include "TAO_IDL_FE_Export.h"
 
