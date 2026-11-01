@@ -13,10 +13,9 @@ class HA_ControllerAgent
 {
   // Proxy to the HA_Controller that is on the network.
 public:
-  HA_ControllerAgent ()
+  HA_ControllerAgent () : status_result_ (1)
   {
     ACE_TRACE("HA_ControllerAgent::HA_ControllerAgent");
-    status_result_ = 1;
   }
 
   int status_update ()
@@ -44,9 +43,9 @@ private:
 class StatusUpdate : public ACE_Method_Request
 {
 public:
-  StatusUpdate (HA_ControllerAgent& controller,
-                ACE_Future<int>& returnVal)
-    : controller_(controller), returnVal_(returnVal)
+  StatusUpdate (HA_ControllerAgent &controller,
+                ACE_Future<int> &returnVal)
+    : controller_ (controller), returnVal_ (returnVal)
   {
     ACE_TRACE ("StatusUpdate::StatusUpdate");
   }
@@ -80,6 +79,11 @@ public:
 class Scheduler : public ACE_Task_Base
 {
 public:
+  Scheduler (Scheduler const &) = delete;
+  Scheduler &operator = (Scheduler const &) = delete;
+  Scheduler (Scheduler &&) = delete;
+  Scheduler &operator = (Scheduler &&) = delete;
+
   Scheduler ()
   {
     ACE_TRACE ("Scheduler::Scheduler");
@@ -118,6 +122,12 @@ class HA_ControllerAgentProxy
 {
   // This acts as a Proxy to the controller impl object.
 public:
+  HA_ControllerAgentProxy () = default;
+  HA_ControllerAgentProxy (HA_ControllerAgentProxy const &) = delete;
+  HA_ControllerAgentProxy &operator = (HA_ControllerAgentProxy const &) = delete;
+  HA_ControllerAgentProxy (HA_ControllerAgentProxy &&) = delete;
+  HA_ControllerAgentProxy &operator = (HA_ControllerAgentProxy &&) = delete;
+
   ACE_Future<int> status_update ()
   {
     ACE_TRACE("HA_ControllerAgentProxy::status_update");
