@@ -5,6 +5,8 @@
 #include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -652,38 +654,38 @@ TAO_SFP_Base::peek_message_type (TAO_AV_Transport *transport,
   ssize_t n =transport->recv (peek_buffer,
                               peek_len,
                               MSG_PEEK);
-  ACE_OS::strncpy (magic_number,
-                   peek_buffer,
-                   TAO_SFP_MAGIC_NUMBER_LEN);
+  std::strncpy (magic_number,
+                peek_buffer,
+                TAO_SFP_MAGIC_NUMBER_LEN);
   magic_number [TAO_SFP_MAGIC_NUMBER_LEN] = 0;
   if (n == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),-1);
   else if (n==0)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),-1);
 
-  if (ACE_OS::strcmp (magic_number,TAO_SFP_START_MAGIC_NUMBER) == 0)
+  if (std::strcmp (magic_number,TAO_SFP_START_MAGIC_NUMBER) == 0)
     {
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)Start message received\n"));
       msg_type = flowProtocol::Start_Msg;
     }
-  else if (ACE_OS::strcmp (magic_number,TAO_SFP_STARTREPLY_MAGIC_NUMBER) == 0)
+  else if (std::strcmp (magic_number,TAO_SFP_STARTREPLY_MAGIC_NUMBER) == 0)
     {
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)StartReply message received\n"));
       msg_type = flowProtocol::StartReply_Msg;
     }
-  else if (ACE_OS::strcmp (magic_number,TAO_SFP_MAGIC_NUMBER) == 0)
+  else if (std::strcmp (magic_number,TAO_SFP_MAGIC_NUMBER) == 0)
     {
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t) frameHeader received\n"));
       //      msg_type = flowProtocol::SimpleFrame;
       msg_type = (flowProtocol::MsgType)peek_buffer [TAO_SFP_MESSAGE_TYPE_OFFSET];
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"Message Type = %d\n",msg_type));
     }
-  else if (ACE_OS::strcmp (magic_number,TAO_SFP_FRAGMENT_MAGIC_NUMBER) == 0)
+  else if (std::strcmp (magic_number,TAO_SFP_FRAGMENT_MAGIC_NUMBER) == 0)
     {
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t) fragment Header received\n"));
       msg_type = flowProtocol::Fragment_Msg;
     }
-  else if (ACE_OS::strcmp (magic_number,TAO_SFP_CREDIT_MAGIC_NUMBER) == 0)
+  else if (std::strcmp (magic_number,TAO_SFP_CREDIT_MAGIC_NUMBER) == 0)
     {
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t) credit message received\n"));
       msg_type = flowProtocol::Credit_Msg;

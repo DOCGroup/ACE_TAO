@@ -10,6 +10,8 @@
 
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
@@ -210,61 +212,61 @@ TAO_AV_UDP_QoS_Flow_Handler::translate (CosPropertyService::Properties &qos_para
        i < qos_params.length ();
        i++)
     {
-      if (ACE_OS::strcmp (qos_params [i].property_name, "Service_Type") == 0)
+      if (std::strcmp (qos_params [i].property_name, "Service_Type") == 0)
         {
           CORBA::Short type;
           qos_params [i].property_value >>= type;
           ace_flow_spec->service_type (type);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
         {
           CORBA::ULong tok_rate;
           qos_params [i].property_value >>= tok_rate;
           ace_flow_spec->token_rate (tok_rate);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Bucket_Size") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Token_Bucket_Size") == 0)
         {
           CORBA::ULong tok_buck_size;
           qos_params [i].property_value >>= tok_buck_size;
           ace_flow_spec->token_bucket_size (tok_buck_size);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)
         {
           CORBA::ULong peak_bw;
           qos_params [i].property_value >>= peak_bw;
           ace_flow_spec->peak_bandwidth (peak_bw);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Latency") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Latency") == 0)
         {
           CORBA::ULong lat;
           qos_params [i].property_value >>= lat;
           ace_flow_spec->latency (lat);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
         {
           CORBA::ULong delay_var;
           qos_params [i].property_value >>= delay_var;
           ace_flow_spec->delay_variation (delay_var);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Max_SDU_Size") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Max_SDU_Size") == 0)
         {
           CORBA::ULong max_sdu;
           qos_params [i].property_value >>= max_sdu;
           ace_flow_spec->max_sdu_size (max_sdu);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Minimum_Policed_Size") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Minimum_Policed_Size") == 0)
         {
           CORBA::ULong min_pol_size;
           qos_params [i].property_value >>= min_pol_size;
           ace_flow_spec->minimum_policed_size (min_pol_size);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "TTL") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "TTL") == 0)
         {
           CORBA::ULong ttl;
           qos_params [i].property_value >>= ttl;
           ace_flow_spec->ttl (ttl);
         }
-      else if (ACE_OS::strcmp (qos_params [i].property_name, "Priority") == 0)
+      else if (std::strcmp (qos_params [i].property_name, "Priority") == 0)
         {
           CORBA::ULong priority;
           qos_params [i].property_value >>= priority;

@@ -4,6 +4,8 @@
 #include "orbsvcs/AV/RTP.h"
 #include "tao/debug.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
@@ -248,7 +250,7 @@ RTCP_Channel_In::getRRBlock()
                   RR_Block,
                   0);
 
-  ACE_OS::memset(local_block_ptr, 0, sizeof(RR_Block));
+  std::memset(local_block_ptr, 0, sizeof(RR_Block));
 
   // Set the ssrc of the source this report is for.
   local_block_ptr->ssrc_ = this->remote_ssrc_;

@@ -14,6 +14,8 @@
 #include "orbsvcs/AV/MCast.h"
 #include "orbsvcs/AV/RTCP.h"
 
+#include <cstring>
+
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -1404,9 +1406,9 @@ TAO_MCastConfigIf::set_dev_params (char const *flowName,
 int
 TAO_MCastConfigIf::in_flowSpec (AVStreams::flowSpec const &flow_spec, char const *flow_name)
 {
-  size_t len = ACE_OS::strlen (flow_name);
+  size_t len = std::strlen (flow_name);
   for (CORBA::ULong i = 0; i < flow_spec.length (); i++)
-    if (ACE_OS::strncmp (flow_spec[i], flow_name, len) == 0)
+    if (std::strncmp (flow_spec[i], flow_name, len) == 0)
       {
         return 1;
       }
@@ -1603,7 +1605,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           for (u_int i=0;i<peer_protocols.length ();i++)
             {
               for (u_int j=0;j<this->protocols_.length ();j++)
-                if (ACE_OS::strcmp (peer_protocols [i],
+                if (std::strcmp (peer_protocols [i],
                                     this->protocols_[j]) == 0)
                   {
                     // we'll agree upon the first protocol that matches.
@@ -1755,7 +1757,7 @@ TAO_StreamEndPoint::stop (AVStreams::flowSpec const &flow_spec)
             {
               TAO_Forward_FlowSpec_Entry entry;
               entry.parse (flow_spec[i]);
-              if (ACE_OS::strcmp ((*begin)->flowname (), entry.flowname ()) == 0)
+              if (std::strcmp ((*begin)->flowname (), entry.flowname ()) == 0)
                {
                  TAO_FlowSpec_Entry *entry = *begin;
                  //                  (*begin)->protocol_object ()->stop ();
@@ -1803,7 +1805,7 @@ TAO_StreamEndPoint::start (AVStreams::flowSpec const &flow_spec)
                forward_begin != end; ++forward_begin)
             {
               TAO_FlowSpec_Entry *entry = *forward_begin;
-              if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
+              if (std::strcmp (entry->flowname (), flow_spec [i]) == 0)
                 {
                   //                  entry->protocol_object ()->start ();
                   if (entry->handler () != nullptr)
@@ -1822,7 +1824,7 @@ TAO_StreamEndPoint::start (AVStreams::flowSpec const &flow_spec)
                reverse_begin != end; ++reverse_begin)
             {
               TAO_FlowSpec_Entry *entry = *reverse_begin;
-              if (ACE_OS::strcmp (entry->flowname (), flow_spec [i]) == 0)
+              if (std::strcmp (entry->flowname (), flow_spec [i]) == 0)
                 {
                   //                  entry->protocol_object ()->start ();
                   if (entry->handler () != nullptr)
@@ -1922,7 +1924,7 @@ TAO_StreamEndPoint::destroy (AVStreams::flowSpec const &flow_spec)
               {
                 TAO_FlowSpec_Entry *entry = *begin;
                 TAO_Tokenizer flow_name (flow_spec [i], '\\');
-                if (ACE_OS::strcmp (entry->flowname (), flow_name[0]) == 0)
+                if (std::strcmp (entry->flowname (), flow_name[0]) == 0)
                   {
                     if (entry->protocol_object ())
                       {
@@ -1939,7 +1941,7 @@ TAO_StreamEndPoint::destroy (AVStreams::flowSpec const &flow_spec)
               {
                 TAO_FlowSpec_Entry *entry = *begin;
                 TAO_Tokenizer flow_name (flow_spec [i], '\\');
-                if (ACE_OS::strcmp (entry->flowname (), flow_name[0]) == 0)
+                if (std::strcmp (entry->flowname (), flow_name[0]) == 0)
                   {
                     if (entry->protocol_object ())
                       {
@@ -2187,7 +2189,7 @@ TAO_StreamEndPoint::set_FPStatus (AVStreams::flowSpec const &/*the_spec*/,
                                   char const *fp_name,
                                   CORBA::Any const &fp_settings)
 {
-  if (ACE_OS::strcmp (fp_name, "SFP1.0") != 0)
+  if (std::strcmp (fp_name, "SFP1.0") != 0)
     return;
   fp_settings >>= this->sfp_status_;
   // @@Naga: We should call set_FPStatus on all the protocol objects.
@@ -2304,7 +2306,7 @@ TAO_StreamEndPoint::remove_fep (char const *flow_name)
       AVStreams::flowSpec new_flows (this->flows_.length ());
       new_flows.length(this->flows_.length ());
       for (u_int i=0, j=0 ; i <this->flows_.length (); i++)
-        if (ACE_OS::strcmp (flow_name, this->flows_[i]) != 0)
+        if (std::strcmp (flow_name, this->flows_[i]) != 0)
           new_flows[j++] = this->flows_[i];
 
       CORBA::Any flows;
@@ -2489,7 +2491,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                           this->streamctrl_->set_flow_connection (forward_entry->flowname (),
                                                                   flow_connection.in ());
                         }
-                      if (ACE_OS::strcmp (forward_entry->flow_protocol_str (), "") != 0)
+                      if (std::strcmp (forward_entry->flow_protocol_str (), "") != 0)
                         {
                           CORBA::Any fp_settings;
                           flow_connection->use_flow_protocol (forward_entry->flow_protocol_str (),
@@ -3310,7 +3312,7 @@ TAO_MMDevice::remove_fdev (char const *flow_name)
 
       AVStreams::flowSpec new_flows (this->flows_.length ());
       for (u_int i=0, j=0 ; i <this->flows_.length (); i++)
-        if (ACE_OS::strcmp (flow_name, this->flows_[i]) != 0)
+        if (std::strcmp (flow_name, this->flows_[i]) != 0)
           new_flows[j++] = this->flows_[i];
 
       CORBA::Any flows;
@@ -3581,7 +3583,7 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
                                      flow_producer,
                                      this->fp_name_.inout ());
 
-      if (ACE_OS::strcmp (consumer_address, "") == 0)
+      if (std::strcmp (consumer_address, "") == 0)
         {
           // Consumer is not willing to listen, so try the producer.
           consumer_address = flow_producer->go_to_listen (the_qos,
@@ -3662,7 +3664,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
             }
           else
             {
-              ACE_OS::strcpy (mcast_address, this->producer_address_.in ());
+              std::strcpy (mcast_address, this->producer_address_.in ());
             }
           char *address = flow_producer->connect_mcast (the_qos,
                                                         met_qos,
@@ -4045,7 +4047,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
       format_ptr = peer_fep->get_property_value ("Format");
       format_ptr.in () >>= temp_format;
       peer_format = CORBA::string_dup (temp_format);
-      if (ACE_OS::strcmp (my_format.in (),
+      if (std::strcmp (my_format.in (),
                           peer_format.in ()) != 0)
         return 0;
 
@@ -4075,7 +4077,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
               CORBA::String_var peer_protocol_string;
               my_protocol_string = CORBA::string_dup (my_protocol_spec[i]);
               peer_protocol_string = CORBA::string_dup (peer_protocol_spec[j]);
-              if (ACE_OS::strcmp (my_protocol_string.in (), peer_protocol_string.in ()) == 0)
+              if (std::strcmp (my_protocol_string.in (), peer_protocol_string.in ()) == 0)
                 {
                   protocol_match = 1;
                   break;
@@ -4129,10 +4131,10 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
   switch (role)
     {
     case TAO_FlowSpec_Entry::TAO_AV_PRODUCER:
-      ACE_OS::strcpy (direction, "IN");
+      std::strcpy (direction, "IN");
       break;
     case TAO_FlowSpec_Entry::TAO_AV_CONSUMER:
-      ACE_OS::strcpy (direction, "OUT");
+      std::strcpy (direction, "OUT");
       break;
     default:
       break;
@@ -4158,7 +4160,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
           CORBA::String_var peer_protocol_string;
           my_protocol_string = CORBA::string_dup (my_protocol_spec[i]);
           peer_protocol_string = CORBA::string_dup (peer_protocol_spec[j]);
-          if (ACE_OS::strcmp (my_protocol_string.in (), peer_protocol_string.in ()) == 0)
+          if (std::strcmp (my_protocol_string.in (), peer_protocol_string.in ()) == 0)
             {
               listen_protocol = my_protocol_string;
               protocol_match = 1;
@@ -4172,7 +4174,9 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_FlowEndPoint::go_to_listen failed: no protoocol match\n"), 0);
 
   for (u_int j=0;j<this->protocol_addresses_.length ();j++)
-    if (ACE_OS::strncmp (this->protocol_addresses_ [j], listen_protocol.in (), ACE_OS::strlen (listen_protocol.in ())) == 0)
+    if (std::strncmp (this->protocol_addresses_ [j],
+                      listen_protocol.in (),
+                      std::strlen (listen_protocol.in ())) == 0)
       {
         // Now listen on that protocol.
         TAO_Forward_FlowSpec_Entry *entry;
@@ -4213,10 +4217,10 @@ TAO_FlowEndPoint::connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
   switch (role)
     {
     case TAO_FlowSpec_Entry::TAO_AV_PRODUCER:
-      ACE_OS::strcpy (direction, "IN");
+      std::strcpy (direction, "IN");
       break;
     case TAO_FlowSpec_Entry::TAO_AV_CONSUMER:
-      ACE_OS::strcpy (direction, "OUT");
+      std::strcpy (direction, "OUT");
       break;
     default:
       break;

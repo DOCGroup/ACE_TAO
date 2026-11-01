@@ -46,6 +46,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -660,7 +662,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
 
   sdes.add_item (my_ssrc,
                  RTCP_SDES_CNAME,
-                 static_cast<unsigned char> (ACE_OS::strlen(this->output_.cname())),
+                 static_cast<unsigned char> (std::strlen(this->output_.cname())),
                  this->output_.cname());
   if (bye)
     {
@@ -692,13 +694,13 @@ TAO_AV_RTCP_Callback::send_report (int bye)
 
   ACE_Message_Block mb (cp_length + sdes_length + bye_length);
 
-  ACE_OS::memcpy (mb.wr_ptr (), cp_ptr, cp_length);
+  std::memcpy (mb.wr_ptr (), cp_ptr, cp_length);
   mb.wr_ptr (cp_length);
-  ACE_OS::memcpy (mb.wr_ptr (), sdes_ptr, sdes_length);
+  std::memcpy (mb.wr_ptr (), sdes_ptr, sdes_length);
   mb.wr_ptr (sdes_length);
   if (bye_length)
     {
-      ACE_OS::memcpy (mb.wr_ptr (), bye_ptr, bye_length);
+      std::memcpy (mb.wr_ptr (), bye_ptr, bye_length);
       mb.wr_ptr (bye_length);
     }
 
