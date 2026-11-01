@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include <vector>
+#include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -84,8 +84,10 @@ namespace TAO
     Interceptor_List (Interceptor_List &&) = delete;
     Interceptor_List &operator= (Interceptor_List &&) = delete;
 
-    /// Registered interceptors.
-    std::vector<RegisteredInterceptor> interceptors_;
+    using RegisteredArray = ACE_Array_Base<RegisteredInterceptor>;
+
+    /// Dynamic array of registered interceptors.
+    RegisteredArray interceptors_;
   };
 }
 

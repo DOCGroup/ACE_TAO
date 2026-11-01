@@ -6,8 +6,6 @@
 #include "ace/Log_Msg.h"
 #include <cstring>
 
-#include <new>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -82,14 +80,8 @@ namespace TAO
               }
           }
 
-        try
-          {
-            this->interceptors_.emplace_back ();
-          }
-        catch (std::bad_alloc const &)
-          {
-            throw CORBA::NO_MEMORY ();
-          }
+        size_t const new_len = old_len + 1;
+        this->interceptors_.size (new_len);
 
         // Add the interceptor
         this->interceptors_[old_len].interceptor_ =
@@ -162,14 +154,8 @@ namespace TAO
         DetailsType details;
         details.apply_policies(policies);
 
-        try
-          {
-            this->interceptors_.emplace_back ();
-          }
-        catch (std::bad_alloc const &)
-          {
-            throw CORBA::NO_MEMORY ();
-          }
+        size_t const new_len = old_len + 1;
+        this->interceptors_.size (new_len);
 
         // Add the interceptor
         this->interceptors_[old_len].interceptor_ =
@@ -195,23 +181,30 @@ namespace TAO
   Interceptor_List<InterceptorType,DetailsType>::destroy_interceptors (
     void)
   {
-    size_t destroyed_count = 0;
-
     try
       {
         size_t const len = this->interceptors_.size ();
-        for (; destroyed_count < len; ++destroyed_count)
-          {
-            this->interceptor (destroyed_count)->destroy ();
-          }
+        size_t ilen = len;
 
-        this->interceptors_.clear ();
+        for (size_t k = 0; k < len; ++k)
+          {
+            // Destroy the interceptors in reverse order in case the
+            // array list is only partially destroyed and another
+            // invocation occurs afterwards.
+            --ilen;
+
+            this->interceptor (k)->destroy ();
+
+            // Since Interceptor::destroy() can throw an exception,
+            // decrease the size of the interceptor array incrementally
+            // since some interceptors may not have been destroyed yet.
+            // Note that this size reduction is fast since no memory is
+            // actually deallocated.
+            this->interceptors_.size (ilen);
+          }
       }
     catch (...)
       {
-        this->interceptors_.erase (this->interceptors_.begin (),
-                                   this->interceptors_.begin () + destroyed_count);
-
         // Exceptions should not be propagated beyond this call.
         if (TAO_debug_level > 3)
           {

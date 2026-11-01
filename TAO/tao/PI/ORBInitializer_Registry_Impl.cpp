@@ -97,14 +97,9 @@ TAO::ORBInitializer_Registry::register_orb_initializer (
                  this->lock_);
 
       size_t const cur_len = this->initializers_.size ();
-      try
-        {
-          this->initializers_.emplace_back ();
-        }
-      catch (std::bad_alloc const &)
-        {
-          throw ::CORBA::INTERNAL ();
-        }
+      size_t const new_len = cur_len + 1;
+      if (this->initializers_.size (new_len) != 0)
+        throw ::CORBA::INTERNAL ();
 
       // Add the given ORBInitializer to the sequence.
       if (TAO_debug_level > 8)
