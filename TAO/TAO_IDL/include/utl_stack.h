@@ -148,8 +148,8 @@ private:
   // On what to iterate?
   UTL_ScopeStack &source;
 
-  // Where are we in iteration?
-  long il;
+  // How many elements remain to be visited?
+  std::size_t remaining;
 };
 
 #endif           // _UTL_STACK_UTL_STACK_HH

@@ -205,7 +205,7 @@ UTL_ScopeStack::lookup_by_name (
 
 UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
   : source (s),
-    il (static_cast<long> (s.pd_stack_data.size ()) - 1)
+    remaining (s.pd_stack_data.size ())
 {
 }
 
@@ -213,16 +213,19 @@ UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
 void
 UTL_ScopeStackActiveIterator::next ()
 {
-  il--;
+  if (this->remaining > 0)
+    {
+      --this->remaining;
+    }
 }
 
 // Get current item.
 UTL_Scope *
 UTL_ScopeStackActiveIterator::item () const
 {
-  if (this->il >= 0)
+  if (this->remaining > 0)
     {
-      return this->source.pd_stack_data[static_cast<std::size_t> (il)];
+      return this->source.pd_stack_data[this->remaining - 1];
     }
 
   return nullptr;
@@ -232,10 +235,5 @@ UTL_ScopeStackActiveIterator::item () const
 bool
 UTL_ScopeStackActiveIterator::is_done () const
 {
-  if (this->il >= 0)
-    {
-      return false;
-    }
-
-  return true;
+  return this->remaining == 0;
 }
