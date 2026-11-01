@@ -11,7 +11,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -36,8 +37,8 @@ CosProperty_Hash_Key::CosProperty_Hash_Key (CosProperty_Hash_Key const & src)
 bool
 CosProperty_Hash_Key::operator == (CosProperty_Hash_Key const & hash_key) const
 {
-  return (ACE_OS::strcmp (this->pname_,
-                          hash_key.pname_) == 0);
+  return (std::strcmp (this->pname_,
+                       hash_key.pname_) == 0);
 }
 
 u_long
@@ -492,8 +493,8 @@ TAO_PropertySet::is_property_allowed (char const *property_name) const
   for (CORBA::ULong ni = 0;
        ni < this->allowed_property_names_.length ();
        ni++)
-    if (ACE_OS::strcmp (this->allowed_property_names_[ni].in (),
-                        property_name) == 0)
+    if (std::strcmp (this->allowed_property_names_[ni].in (),
+                     property_name) == 0)
       return true;
 
   // Name not found in the sequence.
