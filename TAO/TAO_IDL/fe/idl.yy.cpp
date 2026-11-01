@@ -3847,14 +3847,9 @@ idl_store_pragma (char *buf)
     }
   else if (std::strncmp (buf + 8, "ID", 2) == 0)
     {
-      char *tmp = buf + 11;
-
-      while (*tmp == ' ')
-        {
-          ++tmp;
-        }
-
-      std::string work (tmp);
+      std::string work (buf + 11);
+      size_t const name_start = work.find_first_not_of (' ');
+      work.erase (0, name_start);
       size_t const end = work.find (' ');
       if (end != std::string::npos)
         {
