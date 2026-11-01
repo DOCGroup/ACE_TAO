@@ -30,8 +30,8 @@ public:
   int dequeue (ACE_TLI_Request *&ptr);
   int remove (int sequence_number);
 
-  int is_empty () const;
-  int is_full () const;
+  bool is_empty () const;
+  bool is_full () const;
 
   ACE_TLI_Request *alloc ();
   void    free (ACE_TLI_Request *node);
@@ -61,14 +61,14 @@ ACE_TLI_Request_Queue::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-int
+bool
 ACE_TLI_Request_Queue::is_empty () const
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::is_empty");
   return this->current_count_ == 0;
 }
 
-int
+bool
 ACE_TLI_Request_Queue::is_full () const
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::is_full");

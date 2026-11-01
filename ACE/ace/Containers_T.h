@@ -133,17 +133,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if the stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs constant time check to determine if the stack is at capacity.
    */
-  int is_full () const;
+  bool is_full () const;
 
   /// The number of items in the stack.
   /**
@@ -258,17 +258,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to see if stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs constant time check to see if stack is full.
    */
-  int is_full () const;
+  bool is_full () const;
 
   /// The number of items in the stack.
   /**
@@ -429,17 +429,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Constant time check to see if the stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Always resturns 0 since the stack is unbounded.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Auxiliary methods (not strictly part of the Stack ADT).
 
@@ -849,17 +849,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, 0 otherwise.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if the list is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// The list is unbounded, so this always returns 0.
+  /// The list is unbounded, so this always returns false.
   /**
-   * Since the list is unbounded, the method simply returns 0.
+   * Since the list is unbounded, the method simply returns false.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic queue operations.
 
@@ -1399,17 +1399,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if a set is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs a constant time check to see if the set is full.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic unordered set operations.
 
@@ -1599,19 +1599,19 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * A constant time check is performed to determine if the Bounded_Set is
    * empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs a constant time check to determine if the Bounded_Set is at
    * capacity.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic unordered set operations.
 
@@ -1801,11 +1801,11 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Constant time check to determine if the set is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
   /// Size of the set.
   /**

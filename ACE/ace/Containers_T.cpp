@@ -709,16 +709,16 @@ ACE_Double_Linked_List<T>::~ACE_Double_Linked_List ()
   this->head_ = 0;
 }
 
-template <class T> int
+template <class T> bool
 ACE_Double_Linked_List<T>::is_empty () const
 {
-  return this->size () ? 0 : 1;
+  return this->size () == 0;
 }
 
-template <class T> int
+template <class T> bool
 ACE_Double_Linked_List<T>::is_full () const
 {
-  return 0;                     // We have no bound.
+  return false;                 // We have no bound.
 }
 
 template <class T> T *
