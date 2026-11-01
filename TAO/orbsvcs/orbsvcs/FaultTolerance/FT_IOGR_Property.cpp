@@ -8,8 +8,10 @@
 #include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 
-#include <memory>
 #include "tao/debug.h"
+
+#include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/FaultTolerance/FT_IOGR_Property.inl"
@@ -214,7 +216,7 @@ TAO_FT_IOGR_Property::set_primary (
        mb != nullptr;
        mb = mb->cont ())
     {
-      ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
+      std::memcpy (buf, mb->rd_ptr (), mb->length ());
       buf += mb->length ();
     }
 
@@ -271,7 +273,7 @@ TAO_FT_IOGR_Property::encode_properties (
        i != nullptr;
        i = i->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      std::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 

@@ -14,6 +14,8 @@
 #include "ace/Lock.h"
 #include "ace/Synch_Traits.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -186,17 +188,17 @@ namespace TAO
 
     // If it is COMPLETED_MAYBE, then we will throw a COMPLETED_NO,
     // which the ORB should understand
-    if (ACE_OS::strcmp (rep_id.in (),
+    if (std::strcmp (rep_id.in (),
                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       throw CORBA::TRANSIENT (min, CORBA::COMPLETED_NO);
-    else if (ACE_OS::strcmp (rep_id.in (),
+    else if (std::strcmp (rep_id.in (),
                                   "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
       throw CORBA::COMM_FAILURE (min, CORBA::COMPLETED_NO);
-    else if (ACE_OS::strcmp (rep_id.in (),
+    else if (std::strcmp (rep_id.in (),
                                     "IDL:omg.org/CORBA/NO_REPONSE:1.0") == 0)
       throw CORBA::NO_RESPONSE (min, CORBA::COMPLETED_NO);
 
-    else if (ACE_OS::strcmp (rep_id.in (),
+    else if (std::strcmp (rep_id.in (),
                                     "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
     throw CORBA::OBJ_ADAPTER (min, CORBA::COMPLETED_NO);
     cout << "Didnt throw exception " << endl;
@@ -220,7 +222,7 @@ namespace TAO
           // We send the whole tagged component as a service context.
           sc.context_data.length (tp->component_data.length ());
           CORBA::Octet *sc_buf = sc.context_data.get_buffer ();
-          ACE_OS::memcpy (sc_buf, tp->component_data.get_buffer (), tp->component_data.length ());
+          std::memcpy (sc_buf, tp->component_data.get_buffer (), tp->component_data.length ());
         }
       else
         {
@@ -255,7 +257,7 @@ namespace TAO
             i != nullptr;
             i = i->cont ())
           {
-            ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+            std::memcpy (buf, i->rd_ptr (), i->length ());
             buf += i->length ();
           }
         }
@@ -329,7 +331,7 @@ namespace TAO
         i != nullptr;
         i = i->cont ())
       {
-        ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+        std::memcpy (buf, i->rd_ptr (), i->length ());
         buf += i->length ();
       }
 

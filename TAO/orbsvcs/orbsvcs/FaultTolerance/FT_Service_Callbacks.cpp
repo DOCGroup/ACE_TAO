@@ -13,6 +13,8 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *)
@@ -124,7 +126,7 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* const this_p
           that_cdr >> that_group_component;
 
           // check if domain id and group id are the same
-          if ((ACE_OS::strcmp (this_group_component.group_domain_id,
+          if ((std::strcmp (this_group_component.group_domain_id,
                                that_group_component.group_domain_id) == 0) &&
               (this_group_component.object_group_id ==
                that_group_component.object_group_id))

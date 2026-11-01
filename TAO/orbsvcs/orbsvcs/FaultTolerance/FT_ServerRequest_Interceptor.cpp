@@ -6,7 +6,8 @@
 #include "tao/CDR.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "orbsvcs/Log_Macros.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,7 +60,7 @@ namespace TAO
     CORBA::String_var op =
       ri->operation ();
 
-    if (ACE_OS::strcmp (op.in (),
+    if (std::strcmp (op.in (),
                         "tao_update_object_group") == 0)
     {
       this->update_iogr (ri);
