@@ -22,7 +22,7 @@
 ACE_THR_FUNC_RETURN threadFunc(void *arg) {
     ACE_TRACE("threadFunc(void *)");
 
-    ACE_Reactor *reactor = (ACE_Reactor *) arg;
+    ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
     reactor->run_reactor_event_loop();
 
     return ACE_THR_FUNC_RETURN_NULL;

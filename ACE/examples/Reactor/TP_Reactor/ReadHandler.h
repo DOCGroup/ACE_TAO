@@ -67,19 +67,19 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * Provides the handle of mStream;
          */
-        virtual ACE_HANDLE get_handle() const;
+        ACE_HANDLE get_handle() const override;
 
         /**
          * Handles the data excahnge between client and server. On the first
          * invocation, mData is allocated to the requested size and on the
          * second invocation, that buffer is filled with the client's data.
          */
-        virtual int handle_input(ACE_HANDLE = ACE_INVALID_HANDLE);
+        int handle_input(ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
         /**
          * Deletes this instance of the read handler.
          */
-        virtual int handle_close(ACE_HANDLE, ACE_Reactor_Mask);
+        int handle_close(ACE_HANDLE, ACE_Reactor_Mask) override;
         // @}
 };
 

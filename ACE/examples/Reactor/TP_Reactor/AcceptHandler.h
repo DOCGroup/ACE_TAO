@@ -30,7 +30,7 @@ class AcceptHandler : public ACE_Event_Handler {
         /**
          * @param reactor The reactor which will use this accept handler.
          */
-        AcceptHandler(ACE_Reactor *reactor = 0);
+        explicit AcceptHandler(ACE_Reactor *reactor = nullptr);
 
         /**
          * The destructor exists for tracing purposes.
@@ -51,18 +51,18 @@ class AcceptHandler : public ACE_Event_Handler {
         /**
          * Provides the handle of mAcceptor.
          */
-        virtual ACE_HANDLE get_handle() const;
+        ACE_HANDLE get_handle() const override;
 
         /**
          * Create a read handler for the new connection and register that
          * handler with the reactor.
          */
-        virtual int handle_input(ACE_HANDLE = ACE_INVALID_HANDLE);
+        int handle_input(ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
         /**
          * Close the listening socket.
          */
-        virtual int handle_close(ACE_HANDLE, ACE_Reactor_Mask);
+        int handle_close(ACE_HANDLE, ACE_Reactor_Mask) override;
         // @}
 };
 
