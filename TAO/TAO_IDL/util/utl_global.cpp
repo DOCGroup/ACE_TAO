@@ -1320,30 +1320,46 @@ IDL_GlobalData::add_dcps_data_type (std::string const& id)
     {
       // No existing entry, add one.
 
-      UTL_ScopedName* t1 =
-        FE_Utils::string_to_scoped_name (type_name);
+      struct Scoped_Name_Deleter
+      {
+        void operator() (UTL_ScopedName *name) const
+        {
+          if (name != nullptr)
+            {
+              name->destroy ();
+            }
+        }
+      };
+
+      using Scoped_Name_Owner =
+        std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter>;
+
+      Scoped_Name_Owner t1 (FE_Utils::string_to_scoped_name (type_name));
+      std::unique_ptr<Identifier> root_identifier =
+        std::make_unique<Identifier> ("");
 
       // Chained with null Identifier required!!
-      UTL_ScopedName* target =
-        new UTL_ScopedName (new Identifier (""), t1);
+      Scoped_Name_Owner target (std::make_unique<UTL_ScopedName> (
+                                  root_identifier.get (), t1.get ()).release ());
+      root_identifier.release ();
+      t1.release ();
 
       std::unique_ptr<DCPS_Data_Type_Info> newinfo =
         std::make_unique<DCPS_Data_Type_Info> ();
-      newinfo->name_.reset (target);
 
       // Add the newly formed entry to the map.
       std::pair<DCPS_Type_Info_Map::iterator, bool> const result =
         this->dcps_type_info_map_.try_emplace (type_name, std::move (newinfo));
       if (!result.second)
         {
-          newinfo->name_->destroy ();
-          newinfo->name_.reset ();
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Unable to insert type into ")
                       ACE_TEXT ("DCPS type container: %s.\n"),
                       type_name.c_str ()));
           return;
         }
+
+      result.first->second->name_.reset (target.release ());
     }
   else
     {
