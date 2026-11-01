@@ -11,7 +11,7 @@ class BoundSequences
 {
 public:
   /// Constructor
-  BoundSequences (CORBA::ORB_ptr orb);
+  explicit BoundSequences (CORBA::ORB_ptr orb);
   BoundSequences (BoundSequences const &) = delete;
   BoundSequences (BoundSequences &&) = delete;
   BoundSequences &operator= (BoundSequences const &) = delete;

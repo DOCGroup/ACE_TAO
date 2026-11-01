@@ -30,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int error {};
+  bool error {};
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -60,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "Client - **FAILED** Incorrectly set length to %u\n",
                       Seq.length ()));
-          error= 1;
+          error = true;
         }
       catch (::CORBA::BAD_PARAM const &)
         {
@@ -69,13 +69,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (::CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Client - **FAILED** Incorrectly threw");
-          error= 1;
+          error = true;
         }
       catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Client - **FAILED** Incorrectly threw something else\n"));
-          error= 1;
+          error = true;
         }
 
       ////////////////////////////////////////////
@@ -87,18 +87,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ((10 == Seq.length ()) ? "C" : "**** Inc"),
                       Seq.length ()));
           if (10 != Seq.length ())
-            error= 1;
+            error = true;
         }
       catch (::CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Client - **FAILED** Incorrectly threw");
-          error= 1;
+          error = true;
         }
       catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Client - **FAILED** Incorrectly threw something else\n"));
-          error= 1;
+          error = true;
         }
 
       //////////////////////////////////////////
@@ -112,13 +112,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (::CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Client - **FAILED** Incorrectly threw");
-          error= 1;
+          error = true;
         }
       catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Client - **FAILED** Incorrectly threw something else\n"));
-          error= 1;
+          error = true;
         }
 
       ////////////////////////////////////////////
@@ -130,7 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if defined (TAO_CHECKED_SEQUENCE_INDEXING) && (TAO_CHECKED_SEQUENCE_INDEXING == 1)
           ACE_DEBUG ((LM_DEBUG,
                       "Client - **** Incorrectly allowed access to [10]\n"));
-          error= 1;
+          error = true;
         }
       catch (::CORBA::BAD_PARAM const &)
         {
@@ -142,13 +142,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (::CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Client - **FAILED** Incorrectly threw");
-          error= 1;
+          error = true;
         }
       catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Client - **FAILED** Incorrectly threw something else\n"));
-          error= 1;
+          error = true;
         }
 
       ////////////////////////////////////////////
@@ -163,7 +163,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           "Client - **FAILED** Sent %u longs but "
                           "server received %u longs\n",
                           Seq.length(), result));
-              error= 1;
+              error = true;
             }
           else
             ACE_DEBUG ((LM_DEBUG,
@@ -173,13 +173,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (::CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Client - **FAILED** Incorrectly threw");
-          error= 1;
+          error = true;
         }
       catch (...)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Client - **FAILED** Incorrectly threw something else\n"));
-          error= 1;
+          error = true;
         }
 
       ////////////////////////////////////////////
@@ -192,7 +192,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client - Exception caught:");
-      error= 1;
+      error = true;
     }
 
   return error;
