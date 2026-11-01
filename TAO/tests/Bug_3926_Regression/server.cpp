@@ -4,13 +4,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_file = 0;
+ACE_TCHAR const *ior_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return -1;
 
       // Servant
-      test_i *servant = 0;
+      test_i *servant = nullptr;
       ACE_NEW_RETURN (servant,
                       test_i (0, orb.in ()),
                       -1);
@@ -77,8 +77,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // IOR
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("SERVER: Cannot open output file <%s> ")
                            ACE_TEXT ("for writting IOR: %C"),
@@ -97,7 +97,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("SERVER: Event loop finished.\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

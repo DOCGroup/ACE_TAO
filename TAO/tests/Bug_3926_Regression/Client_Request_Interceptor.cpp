@@ -5,11 +5,11 @@
 #include "ace/Log_Msg.h"
 
 Client_Request_Interceptor::Client_Request_Interceptor (
-  const char *orb_id,
-  const char *forward_str)
+  char const *orb_id,
+  char const *forward_str)
   : orb_id_ (CORBA::string_dup (orb_id)),
     orb_ (),
-    request_count_ (0),
+    request_count_ {},
     forward_str_ (CORBA::string_dup (forward_str))
 {
 }
@@ -48,8 +48,8 @@ Client_Request_Interceptor::send_request (
     {
       if (CORBA::is_nil (this->orb_.in ()))
         {
-          int argc = 0;
-          char **const argv= 0;
+          int argc {};
+          char **argv {};
           this->orb_ = CORBA::ORB_init (argc,
                                         argv,
                                         this->orb_id_.in ());

@@ -7,13 +7,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
-const ACE_TCHAR *ior = 0;
+ACE_TCHAR const *ior {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -35,8 +35,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
-
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -74,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      for (int i = 1; i <= 3; ++i)
+      for (int i {1}; i <= 3; ++i)
         {
           ACE_DEBUG ((LM_INFO,
                       ACE_TEXT ("CLIENT: Issuing request %d.\n"),
@@ -92,11 +90,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
     }
 
-  return status;
+  return 0;
 }
