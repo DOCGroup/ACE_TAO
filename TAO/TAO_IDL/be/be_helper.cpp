@@ -17,8 +17,9 @@
 #include "utl_identifier.h"
 #include "utl_idlist.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_ctype.h"
 #include "../../tao/Version.h"
+
+#include <cctype>
 
 static std::string const copyright =
 "// -*- C++ -*-\n"
@@ -637,9 +638,9 @@ TAO_OutStream::print (AST_Expression *expr)
 
       // This handles hex and octal escape sequences
       // that would print out as weird characters.
-      else if (ACE_OS::ace_isprint (ev->u.cval))
+      else if (std::isprint (static_cast<unsigned char> (ev->u.cval)))
         this->TAO_OutStream::print ("'%c'", ev->u.cval);
-      else if (ACE_OS::ace_iscntrl (ev->u.cval))
+      else if (std::iscntrl (static_cast<unsigned char> (ev->u.cval)))
         switch (ev->u.cval)
           {
             case '\n':

@@ -67,8 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "utl_err.h"
 
-#include "ace/OS_NS_ctype.h"
-
 #include <cctype>
 #include <cstddef>
 #include <string>
@@ -94,7 +92,8 @@ UTL_String::strcmp_caseless (
     {
       if (lhs[i] != rhs[i])
         {
-          if (ACE_OS::ace_toupper (lhs[i]) != ACE_OS::ace_toupper (rhs[i]))
+          if (std::toupper (static_cast<unsigned char> (lhs[i]))
+              != std::toupper (static_cast<unsigned char> (rhs[i])))
             {
               return false;
             }

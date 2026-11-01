@@ -23,8 +23,9 @@
 // version check code.
 #include "../../tao/Version.h"
 
-#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cctype>
 #include <random>
 
 TAO_CodeGen * tao_cg = nullptr;
@@ -47,9 +48,10 @@ TAO_CodeGen::upcase (std::string const& str)
   // Convert letters in str to upper case.
   for (char c : str)
     {
-      if (ACE_OS::ace_isalpha (c))
+      if (std::isalpha (static_cast<unsigned char> (c)))
         {
-          upcase_str.push_back (static_cast<char> (ACE_OS::ace_toupper (c)));
+          upcase_str.push_back (
+            static_cast<char> (std::toupper (static_cast<unsigned char> (c))));
         }
       else
         {
@@ -71,9 +73,10 @@ TAO_CodeGen::downcase (std::string const& str)
   // Convert letters in str to lower case.
   for (char c : str)
     {
-      if (ACE_OS::ace_isalpha (c))
+      if (std::isalpha (static_cast<unsigned char> (c)))
         {
-          downcase_str.push_back (static_cast<char> (ACE_OS::ace_tolower (c)));
+          downcase_str.push_back (
+            static_cast<char> (std::tolower (static_cast<unsigned char> (c))));
         }
       else
         {
@@ -1680,11 +1683,12 @@ TAO_CodeGen::end_implementation_header (const std::string &fname)
   // Convert letters in fname to upper case.
   for (std::size_t i = 0; i < length; ++i)
     {
-      if (ACE_OS::ace_isalpha (fname [i]))
+      if (std::isalpha (static_cast<unsigned char> (fname [i])))
         {
-          macro_name.push_back (static_cast<char> (ACE_OS::ace_toupper (fname [i])));
+          macro_name.push_back (static_cast<char> (
+            std::toupper (static_cast<unsigned char> (fname [i]))));
         }
-      else if (ACE_OS::ace_isdigit (fname [i]))
+      else if (std::isdigit (static_cast<unsigned char> (fname [i])))
         {
           macro_name.push_back (fname [i]);
         }
@@ -2170,11 +2174,12 @@ TAO_CodeGen::gen_ifndef_string (std::string const& fname,
   // Convert letters in fname to upper case.
   for (std::size_t i = 0; i < length; ++i)
     {
-      if (ACE_OS::ace_isalpha (fname [i]))
+      if (std::isalpha (static_cast<unsigned char> (fname [i])))
         {
-          macro_name.push_back (static_cast<char> (ACE_OS::ace_toupper (fname [i])));
+          macro_name.push_back (static_cast<char> (
+            std::toupper (static_cast<unsigned char> (fname [i]))));
         }
-      else if (ACE_OS::ace_isdigit (fname [i]))
+      else if (std::isdigit (static_cast<unsigned char> (fname [i])))
         {
           macro_name.push_back (fname [i]);
         }

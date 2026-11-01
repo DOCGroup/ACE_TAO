@@ -19,6 +19,7 @@
 #include "utl_identifier.h"
 #include "utl_string.h"
 
+#include <cctype>
 #include <memory>
 #include <new>
 #include <string>
@@ -26,7 +27,6 @@
 #include <vector>
 
 #include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -442,7 +442,7 @@ FE_Utils::hasspace (std::string const& s)
   // but a unix filename can. Need to check all characters.
   for (std::size_t i = 0u; i < s.size (); ++i)
     {
-      if (ACE_OS::ace_isspace (s [i]))
+      if (std::isspace (static_cast<unsigned char> (s [i])))
         {
           return true;
         }
