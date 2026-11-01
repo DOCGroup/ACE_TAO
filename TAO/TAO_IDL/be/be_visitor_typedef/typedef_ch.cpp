@@ -393,7 +393,7 @@ be_visitor_typedef_ch::visit_string (be_string *node)
 
   TAO_INSERT_COMMENT (os);
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << "using " << tdef->nested_type_name (scope) << " = char *;" << be_nl;
       // Typedef the _var and _out types.

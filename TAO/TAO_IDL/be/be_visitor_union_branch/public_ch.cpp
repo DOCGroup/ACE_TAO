@@ -605,7 +605,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
   TAO_INSERT_COMMENT (os);
 
   // Three methods to set the string value
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << be_nl_2
           << "void " << ub->local_name () << " (char *);" << be_nl;

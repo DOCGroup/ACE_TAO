@@ -143,7 +143,7 @@ int
 be_visitor_executor_ex_idl::visit_string (be_string *node)
 {
   bool wide =
-    static_cast<std::size_t> (node->width ()) > sizeof (char);
+    node->width () > sizeof (char);
 
   os_ << (wide ? "w" : "") << "string";
 

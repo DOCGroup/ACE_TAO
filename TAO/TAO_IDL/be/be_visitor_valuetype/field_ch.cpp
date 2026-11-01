@@ -596,7 +596,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
   TAO_INSERT_COMMENT (os);
 
   // Three methods to set the string value.
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << pre_op ()
           << "void " << ub->local_name () << " (char *val)"

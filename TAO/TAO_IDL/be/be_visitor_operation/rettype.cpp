@@ -158,7 +158,7 @@ int
 be_visitor_operation_rettype::visit_string (be_string *node)
 {
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  bool wide = (node->width () != (long) sizeof (char));
+  bool wide = (node->width () != sizeof (char));
 
   if (wide)
     {

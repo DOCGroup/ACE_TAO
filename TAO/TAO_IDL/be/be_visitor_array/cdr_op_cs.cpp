@@ -659,7 +659,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
           *os << "_tao_marshal_flag = (strm >> ";
           if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
             {
-              if (str->width () == (long) sizeof (char))
+              if (str->width () == sizeof (char))
                 {
                   *os << "ACE_InputCDR::to_string (_tao_array ";
                 }
@@ -786,7 +786,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
           *os << "_tao_marshal_flag = (strm << ";
           if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
             {
-              if (str->width () == (long) sizeof (char))
+              if (str->width () == sizeof (char))
                 {
                   *os << "ACE_OutputCDR::from_string (_tao_array ";
                 }

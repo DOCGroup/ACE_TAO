@@ -310,7 +310,7 @@ int be_visitor_args_vardecl_ss::visit_string (
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      if (node->width () == (long) sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "::CORBA::String_var "
               << arg->local_name () << ";";
@@ -323,7 +323,7 @@ int be_visitor_args_vardecl_ss::visit_string (
 
       break;
     case AST_Argument::dir_OUT:
-      if (node->width () == (long )sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "::CORBA::String_var "
               << arg->local_name () << ";";

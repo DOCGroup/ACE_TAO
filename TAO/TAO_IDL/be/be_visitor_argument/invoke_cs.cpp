@@ -352,7 +352,7 @@ int be_visitor_args_invoke_cs::visit_string (be_string *node)
             case AST_Argument::dir_IN:
               break;
             case AST_Argument::dir_INOUT:
-              if (node->width () == (long) sizeof (char))
+              if (node->width () == sizeof (char))
                 {
                   *os << "::ACE_InputCDR::to_string (";
                 }
@@ -365,7 +365,7 @@ int be_visitor_args_invoke_cs::visit_string (be_string *node)
                   << node->max_size ()->ev ()->u.ulval << ")";
               break;
             case AST_Argument::dir_OUT:
-              if (node->width () == (long) sizeof (char))
+              if (node->width () == sizeof (char))
                 {
                   *os << "::ACE_InputCDR::to_string (";
                 }

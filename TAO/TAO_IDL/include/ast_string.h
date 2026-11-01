@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_concrete_type.h"
 #include "utl_scoped_name.h"
 
+#include <cstddef>
 #include <memory>
 
 class AST_Expression;
@@ -81,7 +82,7 @@ public:
   AST_String (AST_Decl::NodeType nt,
               UTL_ScopedName *n,
               AST_Expression *max_size,
-              long wide = 1);
+              std::size_t wide = 1);
 
   ~AST_String () override;
   AST_String (AST_String const &) = delete;
@@ -91,7 +92,7 @@ public:
 
   // Data Accessors.
   AST_Expression *max_size () const;
-  long width () const;
+  std::size_t width () const;
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -110,7 +111,7 @@ private:
   std::unique_ptr<AST_Expression> pd_max_size;
   // String maximum size.
 
-  long pd_width;
+  std::size_t pd_width;
   // Width of string.
 };
 

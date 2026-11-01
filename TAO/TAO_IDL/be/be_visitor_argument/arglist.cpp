@@ -344,7 +344,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  bool wide = (node->width () != (long) sizeof (char));
+  bool wide = (node->width () != sizeof (char));
 
   if (!wide && bound == 0 && be_global->alt_mapping ())
     {
@@ -361,7 +361,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       return 0;
     }
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       switch (this->direction ())
         {

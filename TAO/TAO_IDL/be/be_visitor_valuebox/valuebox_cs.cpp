@@ -273,7 +273,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   if (str != nullptr &&
       str->max_size ()->ev ()->u.ulval != 0)
     {
-      if (str->width () == (long) sizeof (char))
+      if (str->width () == sizeof (char))
         {
           *os << "::ACE_InputCDR::to_string "
               << "(vb_object->_pd_value, "
@@ -633,7 +633,7 @@ be_visitor_valuebox_cs::visit_string (be_string *str)
 
   if (str->max_size ()->ev ()->u.ulval != 0)
     {
-      if (str->width () == (long) sizeof (char))
+      if (str->width () == sizeof (char))
         {
           os << "::ACE_OutputCDR::from_string "
              << "(this->_pd_value, "

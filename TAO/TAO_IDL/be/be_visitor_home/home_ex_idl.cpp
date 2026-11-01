@@ -192,7 +192,7 @@ be_visitor_home_ex_idl::visit_sequence (be_sequence *node)
 int
 be_visitor_home_ex_idl::visit_string (be_string *node)
 {
-  bool wide = static_cast<std::size_t> (node->width ()) > sizeof (char);
+  bool wide = node->width () > sizeof (char);
 
   os_ << (wide ? "w" : "") << "string";
 

@@ -320,7 +320,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
     arg->local_name ()->get_string ();
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
   bool wide =
-    (node->width () != static_cast<long> (sizeof (char)));
+    (node->width () != sizeof (char));
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {

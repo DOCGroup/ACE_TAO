@@ -750,7 +750,7 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *str)
     case TAO_CodeGen::TAO_CDR_INPUT:
       if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
         {
-          if (str->width () == (long) sizeof (char))
+          if (str->width () == sizeof (char))
             {
               *os << "(strm >> ACE_InputCDR::to_string (_tao_aggregate."
                   << f->local_name () << ".out (), "
@@ -772,7 +772,7 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *str)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
         {
-          if (str->width () == (long) sizeof (char))
+          if (str->width () == sizeof (char))
             {
               *os << "(strm << ACE_OutputCDR::from_string (_tao_aggregate."
                   << f->local_name () << ".in (), "

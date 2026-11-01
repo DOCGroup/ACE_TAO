@@ -283,7 +283,7 @@ be_visitor_exception_ctor_assign::visit_string (be_string *node)
 
   if (this->ctx_->exception ()) // Special constructor.
     {
-      if (node->width () == (long) sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "this->" << bd->local_name ()
               << " = ::CORBA::string_dup (_tao_"
@@ -298,7 +298,7 @@ be_visitor_exception_ctor_assign::visit_string (be_string *node)
     }
   else
     {
-      if (node->width () == (long) sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "this->" << bd->local_name ()
               << " = ::CORBA::string_dup (_tao_excp."

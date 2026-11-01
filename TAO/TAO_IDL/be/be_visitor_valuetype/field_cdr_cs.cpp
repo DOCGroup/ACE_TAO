@@ -659,7 +659,7 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
     case TAO_CodeGen::TAO_CDR_INPUT:
       if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
         {
-          if (str->width () == (long) sizeof (char))
+          if (str->width () == sizeof (char))
             {
               *os << "(strm >> ACE_InputCDR::to_string ("
                   << this->pre_ << f->local_name () << this->post_
@@ -681,7 +681,7 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
         {
-          if (str->width () == (long) sizeof (char))
+          if (str->width () == sizeof (char))
             {
               *os << "(strm << ACE_OutputCDR::from_string ("
                   <<  this->pre_ << f->local_name () << this->post_

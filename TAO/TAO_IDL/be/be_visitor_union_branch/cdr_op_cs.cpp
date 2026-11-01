@@ -778,7 +778,7 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      if (node->width () == (long) sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "::CORBA::String_var _tao_union_tmp;" << be_nl;
         }
@@ -789,7 +789,7 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
 
       if (node->max_size ()->ev ()->u.ulval != 0)
         {
-          if (node->width () == (long) sizeof (char))
+          if (node->width () == sizeof (char))
             {
               *os << "result = strm >> ACE_InputCDR::to_string ("
                   << "_tao_union_tmp.out (), "
@@ -821,7 +821,7 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (node->max_size ()->ev ()->u.ulval != 0)
         {
-          if (node->width () == (long) sizeof (char))
+          if (node->width () == sizeof (char))
             {
               *os << "result = strm << ACE_OutputCDR::from_string ("
                   << "_tao_union." << f->local_name () << " (), "

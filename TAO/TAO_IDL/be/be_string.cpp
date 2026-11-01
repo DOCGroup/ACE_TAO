@@ -23,7 +23,7 @@
 be_string::be_string (AST_Decl::NodeType nt,
                       UTL_ScopedName * n,
                       AST_Expression * v,
-                      long width)
+                      std::size_t width)
   : COMMON_Base (),
     AST_Decl (nt,
               n,
