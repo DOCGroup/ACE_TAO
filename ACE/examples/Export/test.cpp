@@ -4,7 +4,7 @@
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int failure_count = 0;
+  int failure_count {};
   test_class my_test_class;
 
   // Tet out the export of a class.  I don't see

@@ -7,7 +7,7 @@
 #include "ace/Singleton.h"
 #include "ace/Null_Mutex.h"
 
-#define RETVAL 42
+constexpr int RETVAL = 42;
 
 // To expose a function outside of a DLL, use the *_Export
 // at the beginning of the function declaration.
