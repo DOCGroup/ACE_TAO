@@ -9,6 +9,8 @@
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Creation_Time.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Security::SecurityManager::SecurityManager (/* unknown */)
@@ -97,11 +99,11 @@ TAO::Security::AccessDecision::ReferenceKeyType::operator==
 
   if (olen == other.oid_->length() &&
       alen == other.adapter_id_->length())
-    return (ACE_OS::memcmp (this->oid_->get_buffer(),
+    return (std::memcmp (this->oid_->get_buffer(),
                             other.oid_->get_buffer(),olen) == 0 &&
-            ACE_OS::memcmp (this->adapter_id_->get_buffer(),
+            std::memcmp (this->adapter_id_->get_buffer(),
                             other.adapter_id_->get_buffer(),alen) == 0 &&
-            ACE_OS::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
+            std::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
   return false;
 }
 
