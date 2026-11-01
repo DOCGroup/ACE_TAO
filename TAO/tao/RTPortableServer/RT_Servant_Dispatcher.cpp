@@ -20,7 +20,8 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -137,8 +138,8 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
       if (TAO_debug_level > 0)
         {
           if (thread_pool == nullptr)
-            ACE_OS::strcpy (thread_pool_id,
-                            "default thread pool");
+            std::strcpy (thread_pool_id,
+                         "default thread pool");
           else
             ACE_OS::sprintf (thread_pool_id,
                              "thread pool %d",
