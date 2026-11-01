@@ -3743,7 +3743,7 @@ idl_store_pragma (char *buf)
       if (prefix_string)
         {
           std::string const& new_prefix = *prefix_string;
-          unsigned long depth = idl_global->scopes ().depth ();
+          std::size_t depth = idl_global->scopes ().depth ();
 
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
