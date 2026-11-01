@@ -11,7 +11,7 @@ void Temperature_Monitor2::record_temperature (float temp)
 {
   Name_Binding_Ptr current
     (this->naming_context_.fetch ("current"));
-  if (current.get ())
+  if (current)
     {
       this->naming_context_.rebind ("previous",
                                     current->value ());
@@ -33,7 +33,7 @@ void Temperature_Monitor2::record_history (float temp)
 
   Name_Binding_Ptr counter
     (this->shared_context_.fetch ("counter"));
-  int counterValue = counter.get () ? counter->int_value () : 0;
+  int counterValue = counter ? counter->int_value () : 0;
 
   char name[BUFSIZ];
   ACE_OS::sprintf (name, "history[%d]", counterValue);
@@ -53,7 +53,7 @@ void Temperature_Monitor2::reset_device (Name_Binding_Ptr &resetCount)
 {
   int number_of_resets = 1;
 
-  if (resetCount.get ())
+  if (resetCount)
     {
       number_of_resets = resetCount->int_value () + 1;
 
@@ -92,7 +92,7 @@ void Temperature_Monitor2::record_failure ()
   int lastFailureTime;
   int lastResetTime = 0;
 
-  if (lastFailure.get ())
+  if (lastFailure)
     {
       lastFailureTime = lastFailure->int_value ();
     }
@@ -104,7 +104,7 @@ void Temperature_Monitor2::record_failure ()
       lastResetTime = now;
     }
 
-  if (lastReset.get ())
+  if (lastReset)
     {
       lastResetTime = lastReset->int_value ();
     }
@@ -119,7 +119,8 @@ void Temperature_Monitor2::record_failure ()
 
 void Temperature_Monitor2::monitor ()
 {
-  this->thermometer_ = new Thermometer (this->opt_.thermometer_address ());
+  this->thermometer_ =
+    std::make_unique<Thermometer> (this->opt_.thermometer_address ());
 
   for (;;)
     {
@@ -139,5 +140,4 @@ void Temperature_Monitor2::monitor ()
       ACE_OS::sleep (this->opt_.poll_interval ());
     }
 
-  ACE_NOTREACHED (delete this->thermometer_;)
 }

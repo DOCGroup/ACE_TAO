@@ -19,7 +19,7 @@ void Temperature_Monitor::record_temperature (float temp)
 {
   Name_Binding_Ptr current
     (this->naming_context_.fetch ("current"));
-  if (current.get())
+  if (current)
     {
       this->naming_context_.rebind ("previous",
                                     current->value ());
@@ -48,7 +48,7 @@ void Temperature_Monitor::record_failure ()
 // Listing 42 code/ch21
   int now = (int) ACE_OS::time ();
   int lastResetTime;
-  if (lastReset.get ())
+  if (lastReset)
     {
       lastResetTime = lastReset->int_value ();
     }
@@ -72,7 +72,7 @@ void
 Temperature_Monitor::reset_device (Name_Binding_Ptr &resetCount)
 {
   int number_of_resets = 1;
-  if (resetCount.get ())
+  if (resetCount)
     {
       number_of_resets = resetCount->int_value () + 1;
       if (number_of_resets > this->opt_.excessive_resets ())
@@ -106,7 +106,7 @@ Temperature_Monitor::reset_device (Name_Binding_Ptr &resetCount)
 void Temperature_Monitor::monitor ()
 {
   this->thermometer_ =
-    new Thermometer (this->opt_.thermometer_address ());
+    std::make_unique<Thermometer> (this->opt_.thermometer_address ());
 
   for(;;)
     {
@@ -126,6 +126,5 @@ void Temperature_Monitor::monitor ()
       ACE_OS::sleep (this->opt_.poll_interval ());
     }
 
-  ACE_NOTREACHED (delete this->thermometer_;)
 }
 // Listing 2

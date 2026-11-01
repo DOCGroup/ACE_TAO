@@ -13,7 +13,7 @@
 class Graphable_Element : public Name_Binding
 {
 public:
-  Graphable_Element (ACE_Name_Binding *entry)
+  explicit Graphable_Element (ACE_Name_Binding *entry)
     : Name_Binding(entry)
   {
     sscanf (this->value (), "%d|%f", &this->when_, &this->temp_);
@@ -26,7 +26,7 @@ public:
     return this->when_;
   }
 
-  inline float temp ()
+  inline float temp () const
   {
     return this->temp_;
   }

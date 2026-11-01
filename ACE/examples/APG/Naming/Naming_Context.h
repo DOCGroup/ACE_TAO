@@ -5,6 +5,7 @@
 #include "ace/Naming_Context.h"
 #include "ace/OS_NS_stdio.h"
 #include "Name_Binding.h"
+#include <memory>
 
 // Listing 1 code/ch21
 class Naming_Context : public ACE_Naming_Context
@@ -43,24 +44,22 @@ public:
   // Listing 1
 
   // Listing 2 code/ch21
-  Name_Binding *fetch (const char *name)
+  Name_Binding_Ptr fetch (char const *name)
   {
     ACE_NS_WString value;
-    char *type = 0;
+    char *type = nullptr;
 
-    if (this->resolve (name, value, type) != 0 ||
-        value.length () < 1)
+    int const status = this->resolve (name, value, type);
+    std::unique_ptr<char[]> type_owner (type);
+
+    if (status != 0 || value.length () < 1)
       {
-        return 0;
+        return nullptr;
       }
 
-    Name_Binding *rval =
-      new Name_Binding (ACE_NS_WString (name),
-                        value,
-                        type);
-    delete [] type;
-
-    return rval;
+    return std::make_unique<Name_Binding> (ACE_NS_WString (name),
+                                           value,
+                                           type_owner.get ());
   }
 // Listing 2
 };

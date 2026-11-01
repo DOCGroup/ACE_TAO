@@ -4,10 +4,16 @@
 #include "Thermometer.h"
 #include "Temperature_Monitor_Options.h"
 #include "Naming_Context.h"
+#include <memory>
 
 class Temperature_Monitor
   {
   public:
+    Temperature_Monitor (Temperature_Monitor const &) = delete;
+    Temperature_Monitor &operator = (Temperature_Monitor const &) = delete;
+    Temperature_Monitor (Temperature_Monitor &&) = delete;
+    Temperature_Monitor &operator = (Temperature_Monitor &&) = delete;
+
     Temperature_Monitor( Temperature_Monitor_Options & opt,
                          Naming_Context & naming_context );
 
@@ -19,7 +25,7 @@ class Temperature_Monitor
     void reset_device(Name_Binding_Ptr & resetCount);
 
   private:
-    Thermometer * thermometer_;
+    std::unique_ptr<Thermometer> thermometer_;
     Temperature_Monitor_Options & opt_;
     Naming_Context & naming_context_;
   };

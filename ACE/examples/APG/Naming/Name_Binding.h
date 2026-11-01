@@ -7,50 +7,53 @@
 #include "ace/Name_Space.h"
 #include <memory>
 
+struct Name_Binding_Type_Deleter
+{
+  void operator () (char *type) const
+  {
+    ACE_OS::free (type);
+  }
+};
+
 // Listing 1 code/ch21
 class Name_Binding
 {
 public:
-  Name_Binding (ACE_Name_Binding *entry)
-  {
-    this->name_ = entry->name_.char_rep ();
-    this->value_ = entry->value_.char_rep ();
-    this->type_ = ACE_OS::strdup (entry->type_);
-  }
+  explicit Name_Binding (ACE_Name_Binding *entry)
+    : name_ (entry->name_.char_rep ()),
+      value_ (entry->value_.char_rep ()),
+      type_ (ACE_OS::strdup (entry->type_))
+  { }
 
-  Name_Binding (const ACE_NS_WString &n,
-                const ACE_NS_WString &v,
-                const char *t)
-  {
-    this->name_ = n.char_rep ();
-    this->value_ = v.char_rep ();
-    this->type_ = ACE_OS::strdup (t);
-  }
+  Name_Binding (ACE_NS_WString const &n,
+                ACE_NS_WString const &v,
+                char const *t)
+    : name_ (n.char_rep ()), value_ (v.char_rep ()), type_ (ACE_OS::strdup (t))
+  { }
 
-  ~Name_Binding ()
-  {
-    delete[] this->name_;
-    delete[] this->value_;
-    ACE_OS::free (const_cast<char*> (this->type_));
-    this->type_ = 0;
-  }
+  ~Name_Binding () = default;
 
-  char *name ()
-  { return this->name_; }
+  Name_Binding (Name_Binding const &) = delete;
+  Name_Binding &operator = (Name_Binding const &) = delete;
+  Name_Binding (Name_Binding &&) = delete;
+  Name_Binding &operator = (Name_Binding &&) = delete;
 
-  char *value ()
-  { return this->value_; }
+  char *name () const
+  { return this->name_.get (); }
 
-  const char *type ()
-  { return this->type_; }
+  char *value () const
+  { return this->value_.get (); }
 
-  int int_value ()
+  char const *type () const
+  { return this->type_.get (); }
+
+  int int_value () const
   { return ACE_OS::atoi (this->value ()); }
 
 private:
-  char *name_;
-  char *value_;
-  char *type_;
+  std::unique_ptr<char[]> name_;
+  std::unique_ptr<char[]> value_;
+  std::unique_ptr<char, Name_Binding_Type_Deleter> type_;
 };
 
 using Name_Binding_Ptr = std::unique_ptr<Name_Binding>;
