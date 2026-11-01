@@ -739,7 +739,7 @@ ACEXML_Parser::parse_element (int is_root)
                 return;
               }
             this->xml_namespace_.processName(startname, ns_uri,
-                                             ns_lname, 0);
+                                             ns_lname, false);
             this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
                                   ns_uri, 1);
             this->content_handler_->startElement(ns_uri, ns_lname,
@@ -755,7 +755,7 @@ ACEXML_Parser::parse_element (int is_root)
             return;
           case '>':
             this->xml_namespace_.processName (startname, ns_uri,
-                                              ns_lname, 0);
+                                              ns_lname, false);
             this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
                                   ns_uri, 1);
             this->content_handler_->startElement(ns_uri, ns_lname, startname,
@@ -825,7 +825,7 @@ ACEXML_Parser::parse_element (int is_root)
             else
               {
                 const ACEXML_Char *uri, *lName;
-                this->xml_namespace_.processName (attname, uri, lName, 1);
+                this->xml_namespace_.processName (attname, uri, lName, true);
                 if (attributes.addAttribute (uri, lName, attname,
                                              default_attribute_type,
                                              attvalue) == -1)

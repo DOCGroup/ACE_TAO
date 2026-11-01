@@ -197,10 +197,10 @@ ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
 }
 
 int
-ACEXML_NamespaceSupport::processName (const ACEXML_Char *qName,
-                                      const ACEXML_Char *&uri,
-                                      const ACEXML_Char *&name,
-                                      int is_attribute) const
+ACEXML_NamespaceSupport::processName (ACEXML_Char const *qName,
+                                      ACEXML_Char const *&uri,
+                                      ACEXML_Char const *&name,
+                                      bool is_attribute) const
 {
   int qlen = static_cast<int> (ACE_OS::strlen (qName));
   int len = -1;

@@ -196,10 +196,10 @@ public:
    * @a is_attribute specifies whether the name is an attribute or not.
    *    Attributes have different scoping rules from elements.
    */
-  int processName (const ACEXML_Char *qName,
-                   const ACEXML_Char *&uri,
-                   const ACEXML_Char *&name,
-                   int is_attribute) const;
+  int processName (ACEXML_Char const *qName,
+                   ACEXML_Char const *&uri,
+                   ACEXML_Char const *&name,
+                   bool is_attribute) const;
 
   /**
    * Start a new Namespace context.  Prefixes defined in previous

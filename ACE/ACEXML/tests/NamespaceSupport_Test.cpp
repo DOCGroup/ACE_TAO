@@ -22,7 +22,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   const ACEXML_Char *n1 = ACE_TEXT ("p");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("*** Checking processName:\n")));
-  if (xmlns.processName (n1, uri, lName, 0) != 0)
+  if (xmlns.processName (n1, uri, lName, false) != 0)
     ACE_DEBUG ((LM_ERROR,
                 ACE_TEXT ("Fail to resolve namespace name %s\n"),
                 n1));
@@ -32,7 +32,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                 uri, lName, n1));
 
   const ACEXML_Char *n2 = ACE_TEXT ("dc:title");
-  if (xmlns.processName(n2, uri, lName, 0) != 0)
+  if (xmlns.processName(n2, uri, lName, false) != 0)
     ACE_DEBUG ((LM_ERROR,
                 ACE_TEXT ("Fail to resolve namespace name %S\n"),
                 n2));
@@ -42,7 +42,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                 uri, lName, n2));
 
   const ACEXML_Char *n3 = ACE_TEXT ("xml:title");
-  if (xmlns.processName(n3, uri, lName, 0) != 0)
+  if (xmlns.processName(n3, uri, lName, false) != 0)
     ACE_DEBUG ((LM_ERROR,
                 ACE_TEXT ("Fail to resolve namespace name %S\n"),
                 n3));
