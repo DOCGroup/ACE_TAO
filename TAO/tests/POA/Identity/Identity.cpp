@@ -494,7 +494,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters
         = TAO_ORB_Core_instance ()->server_factory ()->active_object_map_creation_parameters ();
 
-      int perform_deactivation_test = creation_parameters.allow_reactivation_of_system_ids_;
+      bool perform_deactivation_test = creation_parameters.allow_reactivation_of_system_ids_;
 
       PortableServer::POA_var first_poa;
       PortableServer::POA_var second_poa;
