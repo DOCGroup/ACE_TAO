@@ -25,11 +25,11 @@ class ClientHandler :
 class HASTATUS_Export HA_Status : public ACE_Service_Object
 {
   public:
-    virtual int init (int argc, ACE_TCHAR *argv[]);
+    int init (int argc, ACE_TCHAR *argv[]) override;
 
-    virtual int fini ();
+    int fini () override;
 
-    virtual int info (ACE_TCHAR **str, size_t len) const;
+    int info (ACE_TCHAR **str, size_t len) const override;
 
   private:
     ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR> acceptor_;
