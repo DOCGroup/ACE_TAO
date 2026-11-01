@@ -12,7 +12,7 @@ using CONSUMER_FACTORY = Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>;
 int
 Consumer_Handler::open (void *a)
 {
-  CONSUMER_FACTORY *af = (CONSUMER_FACTORY *) a;
+  CONSUMER_FACTORY *af = static_cast<CONSUMER_FACTORY *> (a);
   this->router_task_ = af->router ();
   return this->Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>::open (a);
 }

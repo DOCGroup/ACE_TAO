@@ -12,7 +12,7 @@ using SUPPLIER_FACTORY = Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>;
 int
 Supplier_Handler::open (void *a)
 {
-  SUPPLIER_FACTORY *af = (SUPPLIER_FACTORY *) a;
+  SUPPLIER_FACTORY *af = static_cast<SUPPLIER_FACTORY *> (a);
   this->router_task_ = af->router ();
   return this->Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>::open (a);
 }

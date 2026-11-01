@@ -19,16 +19,14 @@ Options::Options ()
       message_size_ (128),
       initial_queue_length_ (0),
       iterations_ (100000),
-      debugging_ (0),
-      verbosity_ (0),
+      debugging_ (false),
+      verbosity_ (false),
       consumer_port_ (ACE_TEXT ("-p 10000")),
       supplier_port_ (ACE_TEXT ("-p 10001")),
       consumer_file_ (ACE_TEXT ("-f/tmp/conupipe")),
       supplier_file_ (ACE_TEXT ("-f/tmp/supupipe"))
 {
 }
-
-Options::~Options () = default;
 
 void Options::print_results ()
 {
@@ -111,7 +109,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->consumer_port (getopt.opt_arg ());
         break;
       case 'd':
-        this->debugging_ = 1;
+        this->debugging_ = true;
         break;
       case 'H':
         this->high_water_mark (ACE_OS::atoi (getopt.opt_arg ()));
@@ -149,7 +147,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->thr_count (ACE_OS::atoi (getopt.opt_arg ()));
         break;
       case 'v':
-        this->verbosity_ = 1;
+        this->verbosity_ = true;
         break;
       default:
         ACE_OS::fprintf (stderr, "%s\n"

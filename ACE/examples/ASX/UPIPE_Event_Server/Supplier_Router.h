@@ -31,24 +31,24 @@ class Supplier_Handler
   : public Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>
 {
 public:
-  Supplier_Handler (ACE_Thread_Manager *tm = 0);
-  virtual int open (void *);
+  explicit Supplier_Handler (ACE_Thread_Manager *tm = nullptr);
+  int open (void *) override;
 };
 
 class Supplier_Router : public SUPPLIER_ROUTER
 {
 public:
-  Supplier_Router (ACE_Thread_Manager *);
+  explicit Supplier_Router (ACE_Thread_Manager *);
 
 protected:
   // ACE_Task hooks..
-  virtual int open (void *a = 0);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc ();
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
 
   // Dynamic linking hooks inherited from Peer_Router.
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
 };
 
 #endif /* ACE_HAS_THREADS */

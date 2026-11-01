@@ -18,7 +18,11 @@ class Options
 {
 public:
   Options ();
-  ~Options ();
+  ~Options () = default;
+  Options (const Options &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (const Options &) = delete;
+  Options &operator= (Options &&) = delete;
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
   void   stop_timer ();
@@ -57,8 +61,8 @@ public:
   void   consumer_file (const ACE_TCHAR *file);
   const ACE_TCHAR  *consumer_file ();
 
-  int    debug ();
-  int    verbose ();
+  bool   debug ();
+  bool   verbose ();
 
   void   print_results ();
 
@@ -71,8 +75,8 @@ private:
   size_t        message_size_;          // Size of a message.
   size_t        initial_queue_length_;  // Initial number of items in the queue.
   size_t        iterations_;            // Number of iterations to run the test program.
-  int           debugging_;             // Extra debugging info.
-  int           verbosity_;             // Extra verbose messages.
+  bool          debugging_;             // Extra debugging info.
+  bool          verbosity_;             // Extra verbose messages.
   const ACE_TCHAR *consumer_port_;      // Port that the Consumer_Router is using.
   const ACE_TCHAR *supplier_port_;      // Port that the Supplier_Router is using.
   const ACE_TCHAR *consumer_file_;      // file that the Consumer_Router is using.

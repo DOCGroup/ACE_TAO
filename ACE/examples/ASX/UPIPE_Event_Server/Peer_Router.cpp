@@ -50,7 +50,7 @@ Acceptor_Factory<PH, PK>::Acceptor_Factory (Peer_Router<PH, PK> *pr)
 }
 
 template <class PH, class PK> Peer_Router<PH, PK> *
-Acceptor_Factory<PH, PK>::router ()
+Acceptor_Factory<PH, PK>::router () const
 {
   return this->pr_;
 }
@@ -186,7 +186,7 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
   int bytes      = 0;
   int iterations = 0;
   ACE_Message_Block *data_block = mb->cont ();
-  for (ACE_Map_Entry<PK, PH *> *ss = 0;
+  for (ACE_Map_Entry<PK, PH *> *ss = nullptr;
        map_iter.next (ss) != 0;
        map_iter.advance ())
     {
@@ -202,13 +202,10 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
   return bytes == 0 ? 0 : bytes / iterations;
 }
 
-template <class PH, class PK>
-Peer_Router<PH, PK>::~Peer_Router () = default;
-
 template <class PH, class PK> int
 Peer_Router<PH, PK>::fini ()
 {
-  delete this->acceptor_;
+  this->acceptor_.reset ();
   return 0;
 }
 
@@ -239,14 +236,14 @@ Peer_Router<PH, PK>::unbind_peer (PK key)
 template <class PH, class PK> int
 Peer_Router<PH, PK>::bind_peer (PK key, Peer_Handler<Peer_Router<PH, PK>, PK> *ph)
 {
-  PH *peer_handler = (PH *) ph;
+  PH *peer_handler = static_cast<PH *> (ph);
   return this->peer_map_.bind (key, peer_handler);
 }
 
 template <class PH, class PK> int
 Peer_Router<PH, PK>::init (int argc, ACE_TCHAR *argv[])
 {
-  this->acceptor_ = new Acceptor_Factory <PH, PK> (this);
+  this->acceptor_ = std::make_unique<Acceptor_Factory <PH, PK>> (this);
 
   if (this->acceptor_->init (argc, argv) == -1
       || this->peer_map_.open () == -1)

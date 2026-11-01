@@ -22,6 +22,11 @@
 using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;
 using MT_Module = ACE_Module<ACE_MT_SYNCH>;
 
+static void end_event_loop_handler (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 // Handle SIGINT and terminate the entire application.
 
 class Quit_Handler : public ACE_Sig_Adapter
@@ -32,7 +37,7 @@ public:
 };
 
 Quit_Handler::Quit_Handler ()
-  : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
+  : ACE_Sig_Adapter (end_event_loop_handler)
 {
   // Register to trap input from the user.
   if (ACE_Event_Handler::register_stdin_handler (this,
@@ -62,7 +67,7 @@ consumer (void *)
   ACE_UPIPE_Stream c_stream;
   ACE_UPIPE_Addr c_addr (ACE_TEXT ("/tmp/conupipe"));
 
-  int verb = options.verbose ();
+  bool verb = options.verbose ();
   int msiz = ACE_Utils::truncate_cast<int> (options.message_size ());
   time_t secs, par1, par2;
   time_t currsec;
@@ -77,15 +82,15 @@ consumer (void *)
   else
     cout << "consumer :we're connected" << endl;
 
-  ACE_Message_Block *mb_p;
+  ACE_Message_Block *mb_p = nullptr;
 
-  int done = 0;
+  bool done = false;
   int cnt = 0;
   ACE_OS::time (&currsec);
 
   par1 = currsec;
 
-  while (done == 0 && (c_stream.recv (mb_p) != -1))
+  while (!done && (c_stream.recv (mb_p) != -1))
     {
       if (mb_p->length () > 1)
         {
@@ -104,7 +109,7 @@ consumer (void *)
                   << (char) * (mb_p->rd_ptr ()) << endl;
             }
           c_stream.close ();
-          done = 1;
+          done = true;
         }
     }
 
@@ -123,7 +128,7 @@ consumer (void *)
 
     ACE_OS::sleep (2);
     cout << "consumer terminating " << endl;
-    return nullptr;
+    return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static void *
@@ -134,7 +139,7 @@ supplier (void *dummy)
   ACE_UPIPE_Connector con;
 
   int iter = ACE_Utils::truncate_cast<int> (options.iterations ());
-  int verb = options.verbose ();
+  bool verb = options.verbose ();
   int msiz = ACE_Utils::truncate_cast<int> (options.message_size ());
   cout << "supplier starting connect" << endl;
 
@@ -142,14 +147,13 @@ supplier (void *dummy)
     ACE_DEBUG ((LM_INFO, " (%t) connect failed\n"));
 
   cout << "supplier : we're connected" << endl;
-  int      n;
-  n = 0;
+  int n = 0;
   ACE_Message_Block * mb_p;
 
   while (n < iter)
     {
       mb_p = new ACE_Message_Block (msiz);
-      ACE_OS::strcpy (mb_p->rd_ptr (), (char *) dummy);
+      ACE_OS::strcpy (mb_p->rd_ptr (), static_cast<char *> (dummy));
       mb_p->length (msiz);
       if (verb)
         cout << "supplier sending 1 message_block" << endl;
@@ -186,7 +190,7 @@ supplier (void *dummy)
 
   ACE_OS::sleep (2);
   cout << "supplier terminating" << endl;
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -243,12 +247,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("push (setting high watermark)")), -1);
 
   // spawn the two threads.
+  char supplier_message[] = "hello";
 
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer), (void *) nullptr,
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer), nullptr,
                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 
-  else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier), (void *) "hello",
+  else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier), supplier_message,
                                                   THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 

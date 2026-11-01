@@ -150,13 +150,13 @@ Options::t_flags ()
   return this->t_flags_;
 }
 
-inline int
+inline bool
 Options::debug ()
 {
   return this->debugging_;
 }
 
-inline int
+inline bool
 Options::verbose ()
 {
   return this->verbosity_;
