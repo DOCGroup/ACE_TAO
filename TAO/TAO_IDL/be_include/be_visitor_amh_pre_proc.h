@@ -90,12 +90,6 @@ private:
                               be_valuetype *excep_holder,
                               Operation_Kind operation_kind);
 
-  /// Concatenate 3 strings into one.
-  int generate_name (std::string &destination,
-                     char const *prefix,
-                     char const *middle_name,
-                     char const *suffix);
-
   /// Generate a get operation out of the attribute.
   be_operation *generate_get_operation (be_attribute *node);
 

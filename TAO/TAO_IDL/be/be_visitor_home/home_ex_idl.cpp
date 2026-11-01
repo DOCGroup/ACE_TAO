@@ -308,7 +308,7 @@ be_visitor_home_ex_idl::gen_supported ()
 void
 be_visitor_home_ex_idl::gen_exception_list (
   UTL_ExceptList *exceptions,
-  char const *prefix,
+  std::string const& prefix,
   bool init_op)
 {
   std::size_t const cutoff = init_op ? 1 : 0;

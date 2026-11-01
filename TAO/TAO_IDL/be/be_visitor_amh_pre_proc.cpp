@@ -722,21 +722,6 @@ be_visitor_amh_pre_proc::create_raise_operation (
   return 0;
 }
 
-
-int
-be_visitor_amh_pre_proc::generate_name (std::string &destination,
-                                        char const *prefix,
-                                        char const *middle_name,
-                                        char const *suffix)
-{
-  destination.assign (prefix);
-  destination += middle_name;
-  destination += suffix;
-
-  return 0;
-}
-
-
 be_operation *
 be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 {

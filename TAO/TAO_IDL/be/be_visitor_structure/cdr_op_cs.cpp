@@ -11,6 +11,8 @@
 
 #include "structure.h"
 
+#include <string>
+
 be_visitor_structure_cdr_op_cs::be_visitor_structure_cdr_op_cs (
     be_visitor_context *ctx)
   : be_visitor_structure (ctx)
@@ -50,8 +52,8 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
   bool const empty = node->nfields () == 0;
-  char const *const strm = empty ? "" : "strm";
-  char const *const tao_aggregate = empty ? "" : "_tao_aggregate";
+  std::string const strm = empty ? "" : "strm";
+  std::string const tao_aggregate = empty ? "" : "_tao_aggregate";
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &" << strm << "," << be_nl
       << node->name () << " const &" << tao_aggregate << ")" << be_uidt

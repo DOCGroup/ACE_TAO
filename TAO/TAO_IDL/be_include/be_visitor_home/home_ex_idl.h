@@ -14,6 +14,8 @@
 #ifndef _BE_HOME_HOME_EX_IDL_H_
 #define _BE_HOME_HOME_EX_IDL_H_
 
+#include <string>
+
 /**
  * @class be_visitor_home_ex_idl
  *
@@ -54,7 +56,7 @@ private:
   void gen_supported ();
 
   void gen_exception_list (UTL_ExceptList *exceptions,
-                           char const *prefix = "",
+                           std::string const& prefix = "",
                            bool init_op = false);
 
   void gen_home_executor ();
