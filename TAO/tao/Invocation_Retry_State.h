@@ -33,7 +33,7 @@ namespace TAO
   public:
     explicit Invocation_Retry_State (TAO_Stub &stub);
 
-    ~Invocation_Retry_State ();
+    ~Invocation_Retry_State () = default;
 
     /**
      * Answer if any profile forward on exception limit
@@ -47,7 +47,7 @@ namespace TAO
      * @return false if forward on exception is not
      * being used or the limit has been reached.
      */
-    bool forward_on_exception_increment (const int ef);
+    bool forward_on_exception_increment (int const ef);
 
     /**
      * Attempt to increment the count of retries
@@ -86,9 +86,9 @@ namespace TAO
 
     using Ex_Count_Map = ACE_Array_Map<int, int>;
     Ex_Count_Map ex_count_map_;
-    int forward_on_reply_closed_count_;
+    int forward_on_reply_closed_count_ {};
     Invocation_Retry_Params retry_params_;
-    bool forward_on_exception_limit_used_;
+    bool forward_on_exception_limit_used_ {};
   };
 }
 
