@@ -167,7 +167,7 @@ public:
   ///}
 
 protected:
-  friend int tao_yyparse ();
+  friend class tao_yy::parser;
   // Scope Management Protocol.
 
   AST_Union *fe_add_union (AST_Union *u) override;

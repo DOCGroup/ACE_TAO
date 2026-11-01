@@ -111,7 +111,7 @@ public:
   bool annotatable () const override { return true; }
 
 private:
-  friend int tao_yyparse ();
+  friend class tao_yy::parser;
 
   unsigned long pd_enum_counter {};
   // Value for next enumerator.

@@ -94,7 +94,7 @@ public:
 
 private:
   friend class FE_Declarator;
-  friend int tao_yyparse ();
+  friend class tao_yy::parser;
 
   // Add protocol.
 

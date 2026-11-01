@@ -122,7 +122,7 @@ private:
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse ();
+  friend class tao_yy::parser;
   virtual UTL_NameList *fe_add_get_exceptions (UTL_NameList *e);
   virtual UTL_NameList *fe_add_set_exceptions (UTL_NameList *e);
 };

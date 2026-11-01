@@ -68,7 +68,7 @@ public:
 private:
   // Scope Management Protocol.
 
-  friend int tao_yyparse ();
+  friend class tao_yy::parser;
   friend class ast_visitor_tmpl_module_inst;
 
   AST_Factory *fe_add_factory (AST_Factory *f) override;

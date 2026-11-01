@@ -181,7 +181,7 @@ protected:
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse ();
+  friend class tao_yy::parser;
   AST_Argument *fe_add_argument (AST_Argument *a) override;
   void fe_add_context (UTL_StrList context) override;
   UTL_NameList *fe_add_exceptions (UTL_NameList *e) override;

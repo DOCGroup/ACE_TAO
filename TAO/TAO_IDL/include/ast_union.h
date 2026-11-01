@@ -180,7 +180,7 @@ private:
   // check for duplicate enum labels.
   AST_UnionBranch *lookup_enum (AST_UnionBranch *b);
 
-  friend int tao_yyparse ();
+  friend class tao_yy::parser;
   friend class ast_visitor_tmpl_module_inst;
 
   // Scope Management Protocol.

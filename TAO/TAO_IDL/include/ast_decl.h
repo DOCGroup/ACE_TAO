@@ -82,6 +82,8 @@ class Identifier;
 class UTL_Scope;
 class ast_visitor;
 
+namespace tao_yy { class parser; }
+
 /**
  * This class is needed (only for g++) to get around a bug in g++ which
  * causes virtual operations to not be looked up correctly if an operation

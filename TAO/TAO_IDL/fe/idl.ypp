@@ -69,6 +69,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 /* Declarations */
 
+%skeleton "lalr1.cc"
+%define api.namespace {tao_yy}
+%define api.parser.class {parser}
+
 %{
 #include <utl_identifier.h>
 #include <utl_err.h>
@@ -142,7 +146,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <utility>
 
 void tao_yyerror (const char *);
-int tao_yylex (void);
 extern "C" int tao_yywrap (void);
 
 extern char tao_yytext[];
@@ -169,6 +172,10 @@ bool stack_based_lookup_for_primary_expr = false;
 #include <string>
 #include <utility>
 #include <utl_strlist.h>
+}
+
+%code {
+int tao_yylex (tao_yy::parser::semantic_type *);
 }
 
 /*
@@ -7461,3 +7468,18 @@ tao_yyerror (const char *msg)
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
+
+void tao_yy::parser::error (std::string const& msg)
+{
+  tao_yyerror (msg.c_str ());
+}
+
+int tao_yydebug = 0;
+
+int
+tao_yyparse ()
+{
+  tao_yy::parser parser;
+  parser.set_debug_level (tao_yydebug);
+  return parser.parse ();
+}

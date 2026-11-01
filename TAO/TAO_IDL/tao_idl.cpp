@@ -236,7 +236,7 @@ DRV_drive (std::string const& s)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("%C: %C: found %d error%s\n"),
                   idl_global->prog_name ().data (),
-                  s,
+                  s.c_str (),
                   idl_global->err_count (),
                   (idl_global->err_count () > 1
                     ? ACE_TEXT ("s")
@@ -253,7 +253,7 @@ DRV_drive (std::string const& s)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: dump %C\n"),
                   idl_global->prog_name ().data (),
-                  s));
+                  s.c_str ()));
     }
 
   if (idl_global->compile_flags () & IDL_CF_DUMP_AST)
@@ -276,7 +276,7 @@ DRV_drive (std::string const& s)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: BE processing on %C\n"),
                   idl_global->prog_name ().data (),
-                  s));
+                  s.c_str ()));
     }
 
   // Make sure all forward declared structs and unions are defined
