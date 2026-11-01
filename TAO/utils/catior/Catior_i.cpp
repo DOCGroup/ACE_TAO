@@ -32,6 +32,8 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Log_Msg.h"
 
+#include <cstring>
+
 Catior_i::Catior_i()
  : trace_depth_(0),
    buffer_()
@@ -134,7 +136,7 @@ Catior_i::catiiop (char* string)
   // Pull off the "hostname:port/" part of the objref Get host and
   // port.
   CORBA::UShort port_number;
-  char *cp = ACE_OS::strchr (string, ':');
+  char *cp = std::strchr (string, ':');
 
   if (cp == 0)
     {
@@ -152,7 +154,7 @@ Catior_i::catiiop (char* string)
   *cp = 0;
   ++string;
 
-  cp = ACE_OS::strchr ((char *) string, '/');
+  cp = std::strchr (string, '/');
 
   if (cp == 0)
     {
@@ -184,7 +186,7 @@ Catior_i::catior (char const * str)
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
 
-  ACE_Message_Block mb (ACE_OS::strlen (str)  / 2 + 1
+  ACE_Message_Block mb (std::strlen (str)  / 2 + 1
                         + ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (&mb);
 
@@ -363,7 +365,7 @@ Catior_i::catpoop (char* string)
   //              "\nPerhaps we've found some POOP\n"));
   string += 2;
 
-  char *cp = ACE_OS::strchr (string, ':');
+  char *cp = std::strchr (string, ':');
 
   if (cp == 0)
     {
@@ -388,7 +390,7 @@ Catior_i::catpoop (char* string)
   CORBA::string_free (hostname);
 
   //  read the server name
-  cp = ACE_OS::strchr (string, ':');
+  cp = std::strchr (string, ':');
 
   char* server_name = CORBA::string_alloc (1 +
     ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
@@ -408,7 +410,7 @@ Catior_i::catpoop (char* string)
   CORBA::string_free (server_name);
 
   // Read the Orbix specific marker.
-  cp = ACE_OS::strchr (string, ':');
+  cp = std::strchr (string, ':');
 
   char* marker = CORBA::string_alloc (1 +
     ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
@@ -426,7 +428,7 @@ Catior_i::catpoop (char* string)
   buffer_ += "\n";
   CORBA::string_free (marker);
 
-  cp = ACE_OS::strchr (string, ':');
+  cp = std::strchr (string, ':');
 
   // Read the IR_host.
   char* IR_host = CORBA::string_alloc (1 +
@@ -446,7 +448,7 @@ Catior_i::catpoop (char* string)
   CORBA::string_free (IR_host);
 
   // Read the IR_server
-  cp = ACE_OS::strchr (string, ':');
+  cp = std::strchr (string, ':');
 
   char* IR_server = CORBA::string_alloc (1 +
     ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
