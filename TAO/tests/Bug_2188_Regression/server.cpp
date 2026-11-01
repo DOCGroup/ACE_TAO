@@ -2,7 +2,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("broken.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("broken.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -55,8 +55,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      ArrayTest_i *target_servant;
-      ACE_NEW_RETURN (target_servant,ArrayTest_i,1);
+      ArrayTest_i *target_servant = nullptr;
+      ACE_NEW_RETURN (target_servant, ArrayTest_i, 1);
 
       PortableServer::ServantBase_var owner_transfer(target_servant);
 
@@ -68,8 +68,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ArrayTest_var atobj =
         ArrayTest::_narrow (object.in ());
 
-      ServerAdmin_i *servant;
-      ACE_NEW_RETURN (servant, ServerAdmin_i(atobj.in()),1);
+      ServerAdmin_i *servant = nullptr;
+      ACE_NEW_RETURN (servant, ServerAdmin_i (atobj.in ()), 1);
 
       // safely releases previous reference and takes ownership of this one.
       owner_transfer = servant;
@@ -82,8 +82,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (saobj.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -101,7 +101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

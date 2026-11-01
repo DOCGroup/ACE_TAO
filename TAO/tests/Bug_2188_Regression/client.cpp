@@ -1,7 +1,7 @@
 #include "brokenC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://broken.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://broken.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -58,13 +58,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ArrayTest_var atobj = saobj->target();
 
       CharArray_var char_array = CharArray_alloc();
-      for (int i = 0; i < 10; i++)
-        char_array.inout ()[i] = (char)('a' + i);
+      for (int i = 0; i < 10; ++i)
+        char_array.inout ()[i] = static_cast<CORBA::Char> ('a' + i);
       atobj->a_charArray (char_array.in ());
 
       ACE_DEBUG ((LM_DEBUG, "a_charArray worked OK.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
