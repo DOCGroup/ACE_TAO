@@ -38,7 +38,7 @@ static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #endif /* ACE_WIN32 */
 
 static ACE_TCHAR *fname = nullptr;   // File you want to view.
-static int use_named_pipe = 0; // Do we want to use named pipe?
+static bool use_named_pipe = false; // Do we want to use named pipe?
 
 static void
 usage ()
@@ -60,13 +60,13 @@ parse_args (int argc, ACE_TCHAR **argv)
       {
       case 'n': // We want to use named pipe.
 #if !defined (ACE_WIN32)
-        use_named_pipe = 1;
+        use_named_pipe = true;
 #else
         ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
 #endif /* !ACE_WIN32 */
         break;
       case 'u':  // Use unnamed pipe.
-        use_named_pipe = 0;
+        use_named_pipe = false;
         break;
       default:  // What are you talking about?
         usage ();

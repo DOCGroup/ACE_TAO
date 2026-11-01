@@ -41,13 +41,13 @@ const ACE_TCHAR *SLEEP_PATH = ACE_TEXT ("sleep");
 static const ACE_TCHAR *executable = EXEC_NAME;
 static ACE_TCHAR *print_file = nullptr;
 static ACE_TCHAR *environment_string = nullptr;
-static int get_env = 0;
-static int run_date = 0;
-static int run_ls = 0;
-static int run_all = 0;
-static int run_setenv = 0;
-static int run_tokenizer = 0;
-static int run_wait = 0;
+static bool get_env = false;
+static bool run_date = false;
+static bool run_ls = false;
+static bool run_all = false;
+static bool run_setenv = false;
+static bool run_tokenizer = false;
+static bool run_wait = false;
 
 // Parse the command-line arguments and set options.
 static int
@@ -61,19 +61,19 @@ parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 't':
-        run_tokenizer = 1;
+        run_tokenizer = true;
         break;
       case 's':
-        run_setenv = 1;
+        run_setenv = true;
         break;
       case 'a':
-        run_all = 1;
+        run_all = true;
         break;
       case 'd':
-        run_date = 1;
+        run_date = true;
         break;
       case 'l':
-        run_ls = 1;
+        run_ls = true;
         break;
       case 'x':
         executable = get_opt.opt_arg ();
@@ -85,10 +85,10 @@ parse_args (int argc, ACE_TCHAR **argv)
         environment_string = get_opt.opt_arg ();
         break;
       case 'g':
-        get_env = 1;
+        get_env = true;
         break;
       case 'w':
-        run_wait = 1;
+        run_wait = true;
         break;
       case 'u':
       default:
