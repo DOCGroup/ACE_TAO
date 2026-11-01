@@ -46,7 +46,7 @@ private:
 
 // ****************************************************************
 
-/// Concrete Proxy collection based on std::set
+/// Concrete Proxy collection based on ACE_RB_Tree
 /**
  * The Event Service Framework provides several alternatives for the
  * underlying proxy collections.
