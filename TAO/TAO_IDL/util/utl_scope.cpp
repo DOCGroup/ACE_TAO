@@ -902,23 +902,23 @@ UTL_Scope::lookup_pseudo (Identifier *e)
   if (UTL_String::strcmp_caseless (name, "TypeCode", mixed_case)
       || UTL_String::strcmp_caseless (name, "TCKind", mixed_case))
     {
-      this->which_pseudo_ = PSEUDO_TYPECODE;
+      this->which_pseudo_ = Which_Pseudo::TypeCode;
       start_scope = this;
       seen = &idl_global->typecode_seen_;
     }
   else if (UTL_String::strcmp_caseless (name, "Object", mixed_case))
     {
-      this->which_pseudo_ = PSEUDO_OBJECT;
+      this->which_pseudo_ = Which_Pseudo::Object;
       seen = &idl_global->base_object_seen_;
     }
   else if (UTL_String::strcmp_caseless (name, "ValueBase", mixed_case))
     {
-      this->which_pseudo_ = PSEUDO_VALUEBASE;
+      this->which_pseudo_ = Which_Pseudo::ValueBase;
       seen = &idl_global->valuebase_seen_;
     }
   else if (UTL_String::strcmp_caseless (name, "AbstractBase", mixed_case))
     {
-      this->which_pseudo_ = PSEUDO_ABSTRACTBASE;
+      this->which_pseudo_ = Which_Pseudo::AbstractBase;
       seen = &idl_global->abstractbase_seen_;
     }
   else
@@ -945,7 +945,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
         }
     }
 
-  if (this->which_pseudo_ == PSEUDO_TYPECODE)
+  if (this->which_pseudo_ == Which_Pseudo::TypeCode)
     {
       AST_Decl *d = this->look_in_prev_mods_local (e);
 

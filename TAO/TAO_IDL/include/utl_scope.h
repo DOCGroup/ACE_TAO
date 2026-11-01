@@ -315,15 +315,15 @@ protected:
 
   // Used in lookup of various CORBA pseudo objects, which also
   // determines generation of specific #include headers.
-  enum WHICH_PSEUDO
+  enum class Which_Pseudo
   {
-    PSEUDO_TYPECODE,
-    PSEUDO_OBJECT,
-    PSEUDO_VALUEBASE,
-    PSEUDO_ABSTRACTBASE
+    TypeCode,
+    Object,
+    ValueBase,
+    AbstractBase
   };
 
-  WHICH_PSEUDO which_pseudo_ {PSEUDO_ABSTRACTBASE};
+  Which_Pseudo which_pseudo_ {Which_Pseudo::AbstractBase};
 
 public:
   /// Scope Management Protocol.
