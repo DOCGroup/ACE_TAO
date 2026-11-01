@@ -4,11 +4,11 @@
 #include "PMC_Ruser.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstdlib>
+#include <cstring>
 
 // This function is pretty much a no-op that just sets up the
 // appropriate lookup function to use.
@@ -82,7 +82,7 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   Drwho_Node *np = this->get_drwho_node (ACE::strnnew (current_node->get_login_name (),
                                                        MAXUSERIDNAMELEN),
                                          prp->drwho_list_);
-  int length = ACE_OS::strlen (prp->get_host ());
+  int length = std::strlen (prp->get_host ());
 
   np->set_real_name (ACE::strnew (current_node->get_real_name ()));
 
@@ -106,10 +106,10 @@ PMC_Ruser::handle_protocol_entries (const char *cp,
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
 
   protocol_record.set_host (host_name);
-  current_node->set_inactive_count (ACE_OS::atoi (cp));
-  current_node->set_active_count (ACE_OS::atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
-  current_node->set_login_name (cp = ACE_OS::strchr (cp, ' ') + 1);
-  current_node->set_real_name (cp = ACE_OS::strchr (cp, '\0') + 1);
+  current_node->set_inactive_count (std::atoi (cp));
+  current_node->set_active_count (std::atoi (cp = std::strchr (cp, ' ') + 1));
+  current_node->set_login_name (cp = std::strchr (cp, ' ') + 1);
+  current_node->set_real_name (cp = std::strchr (cp, '\0') + 1);
 
   this->insert_protocol_info (protocol_record);
 

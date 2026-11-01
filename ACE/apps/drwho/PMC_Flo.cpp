@@ -7,6 +7,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
+#include <cstdio>
+#include <cstring>
 
 // This function "encodes" a list of friends by putting the userid's
 // in a contiguous block.  This block can then be transmitted over to
@@ -31,7 +33,7 @@ PMC_Flo::encode (char *packet, int &packet_length)
   SET_PACKET_TYPE (packet, Options::PROTO_FLO);
   char *buf_ptr = SKIP_PACKET_TYPE (packet);
 
-  ACE_OS::sprintf (buf_ptr,
+  std::sprintf (buf_ptr,
                    "%d",
                    this->friend_count ());
 
@@ -103,7 +105,7 @@ Protocol_Record *
 PMC_Flo::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Client::insert_protocol_info (protocol_record);
-  int length = ACE_OS::strlen (prp->get_real ());
+  int length = std::strlen (prp->get_real ());
 
   if (length > this->max_key_length)
     this->max_key_length = length;

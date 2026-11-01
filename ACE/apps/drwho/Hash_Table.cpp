@@ -2,7 +2,7 @@
 #include "Hash_Table.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+#include <algorithm>
 
 Hash_Table::Hash_Table ()
   : current_ptr (0),
@@ -11,9 +11,7 @@ Hash_Table::Hash_Table ()
 {
   ACE_NEW (this->hash_table,
            Protocol_Record *[this->hash_table_size]);
-  ACE_OS::memset (this->hash_table,
-                  0,
-                  this->hash_table_size * sizeof *this->hash_table);
+  std::fill_n (this->hash_table, this->hash_table_size, nullptr);
 }
 
 // Iterate through the hash table returning one node at a time...

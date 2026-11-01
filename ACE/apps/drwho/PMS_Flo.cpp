@@ -7,6 +7,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
+#include <cstdio>
+#include <cstring>
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on
@@ -23,10 +25,10 @@ PMS_Flo::encode (char *packet, int &packet_length)
   Protocol_Record *prp;
   char *buf_ptr = packet;
 
-  ACE_OS::sprintf (buf_ptr,
+  std::sprintf (buf_ptr,
                    "Users   %d",
                    this->get_total_users ());
-  buf_ptr += ACE_OS::strlen (buf_ptr) + 1;
+  buf_ptr += std::strlen (buf_ptr) + 1;
 
   // We only send back info on friends that we actually see logged in.
 

@@ -3,8 +3,8 @@
 #include "PM_Client.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdlib.h"
+#include <cstdlib>
+#include <cstring>
 
 // This function is used to merge the LOGIN_NAME from server HOST_NAME
 // into the userids kept on the client's side.  Note that we must
@@ -119,9 +119,9 @@ PM_Client::handle_protocol_entries (const char *cp,
 
   protocol_record.set_login (login_name);
   protocol_record.set_real (real_name);
-  current_node->set_inactive_count (ACE_OS::atoi (cp));
-  current_node->set_active_count (ACE_OS::atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
-  current_node->set_host_name (cp = ACE_OS::strchr (cp, ' ') + 1);
+  current_node->set_inactive_count (std::atoi (cp));
+  current_node->set_active_count (std::atoi (cp = std::strchr (cp, ' ') + 1));
+  current_node->set_host_name (cp = std::strchr (cp, ' ') + 1);
 
   this->insert_protocol_info (protocol_record);
 

@@ -4,6 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 BS_Client::BS_Client ()
 {
@@ -62,8 +63,8 @@ BS_Client::insert (const char *key_name, int)
     {
       int mid   = (lo + hi) / 2;
       Protocol_Record *prp = sorted_buffer[mid];
-      int cmp = ACE_OS::strcmp (key_name,
-                                prp->get_login ());
+      int cmp = std::strcmp (key_name,
+                             prp->get_login ());
       if (cmp == 0)
         return prp;
       else if (cmp < 0)

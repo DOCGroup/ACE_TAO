@@ -1,8 +1,8 @@
 #include "BS_Server.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstdlib>
+#include <cstring>
 
 // This constructor takes a message of sorted login names and loads up
 // the symbol table on the server's side.  It assumes that the number
@@ -14,7 +14,7 @@ BS_Server::BS_Server (const char *packet)
 {
   const char *buf_ptr = packet + MAXUSERIDNAMELEN;
 
-  this->count_ = ACE_OS::atoi (packet);
+  this->count_ = std::atoi (packet);
   this->buffer_ = buf_ptr;
 
   ACE_NEW (this->protocol_record_,
@@ -59,7 +59,7 @@ BS_Server::insert (const char *key_name, int max_len)
   Protocol_Record **buffer = this->sorted_record_;
 
   // First check the cache...
-  if (ACE_OS::strncmp (last_lookup, key_name, max_len) == 0)
+  if (std::strncmp (last_lookup, key_name, max_len) == 0)
     {
       if (result == 0)
         return 0;
@@ -67,7 +67,7 @@ BS_Server::insert (const char *key_name, int max_len)
   else
     {
       // Store this away in the cache for the next iteration.
-      ACE_OS::strncpy (last_lookup, key_name, max_len);
+      std::strncpy (last_lookup, key_name, max_len);
 
       int hi = this->count_ - 1;
       int lo = 0;
@@ -77,9 +77,9 @@ BS_Server::insert (const char *key_name, int max_len)
         {
           mid = (hi + lo + 1) / 2;
 
-          cmp = ACE_OS::strncmp (key_name,
-                                 buffer[mid]->get_login (),
-                                 max_len);
+          cmp = std::strncmp (key_name,
+                              buffer[mid]->get_login (),
+                              max_len);
           if (cmp < 0)
             hi = mid - 1;
           else
@@ -88,7 +88,7 @@ BS_Server::insert (const char *key_name, int max_len)
 
       // This line is very subtle... ;-)
       if (!(cmp == 0
-            || ACE_OS::strncmp (key_name, buffer[--mid]->get_login (), max_len) == 0))
+            || std::strncmp (key_name, buffer[--mid]->get_login (), max_len) == 0))
         {
           result = 0;
           return 0;

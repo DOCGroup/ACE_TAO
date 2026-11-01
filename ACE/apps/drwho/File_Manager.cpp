@@ -1,8 +1,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_pwd.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "File_Manager.h"
+#include <cstring>
+#include <string>
 
 File_Manager::File_Manager ()
   : number_of_friends (0),
@@ -84,7 +85,7 @@ File_Manager::open_passwd_file ()
        (pwent = ACE_OS::getpwent ()) != 0; )
     if (*pwent->pw_gecos != '\0')
       {
-        char *cp = ACE_OS::strchr (pwent->pw_gecos, ',');
+        char *cp = std::strchr (pwent->pw_gecos, ',');
 
         if (cp != 0)
           *cp = '\0';
@@ -116,25 +117,24 @@ File_Manager::open_passwd_file ()
 int
 File_Manager::open_friends_file (const char *filename)
 {
-  char directory[MAXPATHLEN];
-  const char *pathname = directory;
+  std::string directory;
+  const char *pathname = filename;
 
   // See if we've got a filename or a pathname (i.e., directory/filename).
 
-  if (ACE_OS::strrchr (filename, '/') != 0)
+  if (std::strrchr (filename, '/') != nullptr)
     // We've got a complete pathname.
     pathname = filename;
   else
     {
-      directory[0] = '\0';
-
       const char *home = ACE_OS::getenv ("HOME");
-      if (home != 0)
+      if (home != nullptr)
         {
-          ACE_OS::strcat (directory, home);
-          ACE_OS::strcat (directory, "/");
+          directory = home;
+          directory += '/';
         }
-      ACE_OS::strcat (directory, filename);
+      directory += filename;
+      pathname = directory.c_str ();
     }
 
   // Do the mmap'ing.
