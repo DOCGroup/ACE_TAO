@@ -25,8 +25,9 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+
+#include <cstring>
 
 constexpr char usage [] =
 "[[-?]\n"
@@ -131,7 +132,7 @@ Logging_Supplier::load_schedule_data
               // If there is anything besides whitespace in the line
               // read, scan its fields into the scheduling data
               // structure.
-              if (ACE_OS::strlen (temp) > 0)
+              if (std::strlen (temp) > 0)
                 {
                   ACE_NEW (data, Schedule_Viewer_Data);
                   scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
@@ -196,7 +197,7 @@ Logging_Supplier::load_schedule_data
         break;
       }
 
-      ACE_OS::strncpy (data->operation_name,
+      std::strncpy (data->operation_name,
                        oper_name,
                        BUFSIZ-1);
 
@@ -244,13 +245,13 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 
     if (sched_data != nullptr && *sched_data != nullptr)
     {
-      if ((ACE_OS::strcmp((*sched_data)->operation_name, "high_20") == 0) ||
-           (ACE_OS::strcmp((*sched_data)->operation_name, "low_20") == 0)  ||
-           (ACE_OS::strcmp((*sched_data)->operation_name, "high_1") == 0)  ||
-           (ACE_OS::strcmp((*sched_data)->operation_name, "low_1") == 0))
+      if ((std::strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+           (std::strcmp((*sched_data)->operation_name, "low_20") == 0)  ||
+           (std::strcmp((*sched_data)->operation_name, "high_1") == 0)  ||
+           (std::strcmp((*sched_data)->operation_name, "low_1") == 0))
       {
-        if ((ACE_OS::strcmp((*sched_data)->operation_name, "high_20") == 0) ||
-            (ACE_OS::strcmp((*sched_data)->operation_name, "high_1") == 0))
+        if ((std::strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+            (std::strcmp((*sched_data)->operation_name, "high_1") == 0))
           {
             navigation_.criticality = 1;
           }
@@ -259,8 +260,8 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
             navigation_.criticality = 0;
           }
 
-        if ((ACE_OS::strcmp((*sched_data)->operation_name, "high_20") == 0) ||
-            (ACE_OS::strcmp((*sched_data)->operation_name, "low_20") == 0))
+        if ((std::strcmp((*sched_data)->operation_name, "high_20") == 0) ||
+            (std::strcmp((*sched_data)->operation_name, "low_20") == 0))
           {
             navigation_.deadline_time = TWENTY_HZ_PERIOD;
           }
@@ -290,13 +291,13 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 
         data <<= navigation_;
       }
-      else if ((ACE_OS::strcmp((*sched_data)->operation_name, "high_10") == 0) ||
-               (ACE_OS::strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
-                (ACE_OS::strcmp((*sched_data)->operation_name, "high_5") == 0)  ||
-                (ACE_OS::strcmp((*sched_data)->operation_name, "low_5") == 0))
+      else if ((std::strcmp((*sched_data)->operation_name, "high_10") == 0) ||
+               (std::strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
+                (std::strcmp((*sched_data)->operation_name, "high_5") == 0)  ||
+                (std::strcmp((*sched_data)->operation_name, "low_5") == 0))
       {
-        if ((ACE_OS::strcmp((*sched_data)->operation_name, "high_10") == 0) ||
-            (ACE_OS::strcmp((*sched_data)->operation_name, "high_5") == 0))
+        if ((std::strcmp((*sched_data)->operation_name, "high_10") == 0) ||
+            (std::strcmp((*sched_data)->operation_name, "high_5") == 0))
           {
             weapons_.criticality = 1;
           }
@@ -305,8 +306,8 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
             weapons_.criticality = 0;
           }
 
-        if ((ACE_OS::strcmp((*sched_data)->operation_name, "high_10") == 0) ||
-            (ACE_OS::strcmp((*sched_data)->operation_name, "low_10") == 0))
+        if ((std::strcmp((*sched_data)->operation_name, "high_10") == 0) ||
+            (std::strcmp((*sched_data)->operation_name, "low_10") == 0))
           {
             weapons_.deadline_time = TEN_HZ_PERIOD;
           }
@@ -318,19 +319,19 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
 
         weapons_.number_of_weapons = 2;
         weapons_.weapon1_identifier = CORBA::string_alloc (30);
-        ACE_OS::strcpy (weapons_.weapon1_identifier.inout (),"Photon Torpedoes");
+        std::strcpy (weapons_.weapon1_identifier.inout (),"Photon Torpedoes");
         weapons_.weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
         weapons_.weapon2_identifier = CORBA::string_alloc (30);
-        ACE_OS::strcpy (weapons_.weapon2_identifier.inout (),"Quantum Torpedoes");
+        std::strcpy (weapons_.weapon2_identifier.inout (),"Quantum Torpedoes");
         weapons_.weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
         weapons_.weapon3_identifier = CORBA::string_alloc (1);
-        ACE_OS::strcpy (weapons_.weapon3_identifier.inout (), "");
+        std::strcpy (weapons_.weapon3_identifier.inout (), "");
         weapons_.weapon3_status = 0;
         weapons_.weapon4_identifier = CORBA::string_alloc (1);
-        ACE_OS::strcpy (weapons_.weapon4_identifier.inout (), "");
+        std::strcpy (weapons_.weapon4_identifier.inout (), "");
         weapons_.weapon4_status = 0;
         weapons_.weapon5_identifier = CORBA::string_alloc (1);
-        ACE_OS::strcpy (weapons_.weapon5_identifier.inout (), "");
+        std::strcpy (weapons_.weapon5_identifier.inout (), "");
         weapons_.weapon5_status = 0;
         weapons_.utilization =       0.0;
         weapons_.overhead =          0.0;
@@ -407,7 +408,7 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
         case 'f':
           this->input_file_name_ = get_opt.opt_arg ();
 
-          if (!this->input_file_name_ || ACE_OS::strlen (this->input_file_name_) > 0)
+          if (!this->input_file_name_ || std::strlen (this->input_file_name_) > 0)
             ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
           else
             {
@@ -421,7 +422,7 @@ Logging_Supplier::get_options (int argc, ACE_TCHAR *argv [])
         case 'd':
           this->schedule_file_name_ = get_opt.opt_arg ();
 
-          if (!this->schedule_file_name_ || ACE_OS::strlen (this->schedule_file_name_) > 0)
+          if (!this->schedule_file_name_ || std::strlen (this->schedule_file_name_) > 0)
             ACE_DEBUG ((LM_DEBUG,"Dumping file!\n"));
           else
             {

@@ -29,6 +29,8 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
 //FUZZ: disable check_for_lack_ACE_OS
 constexpr char usage [] =
 "[[-?]\n"
@@ -738,7 +740,7 @@ DualEC_Supplier::load_schedule_data ()
               // If there is anything besides whitespace in the line
               // read, scan its fields into the scheduling data
               // structure.
-              if (ACE_OS::strlen (temp) > 0)
+              if (std::strlen (temp) > 0)
                 {
                   scan_count = sscanf (temp, "%s %lf %lf %lu %lu %lu %lu",
                                        data.operation_name,
@@ -757,8 +759,8 @@ DualEC_Supplier::load_schedule_data ()
                     }
 
 
-                  if ((ACE_OS::strcmp(data.operation_name, "high_20") == 0) ||
-                      (ACE_OS::strcmp(data.operation_name, "low_20") == 0))
+                  if ((std::strcmp(data.operation_name, "high_20") == 0) ||
+                      (std::strcmp(data.operation_name, "low_20") == 0))
                     {
                       ACE_NEW (weap, Weapons);
                       if (weap == nullptr)
@@ -773,19 +775,19 @@ DualEC_Supplier::load_schedule_data ()
                       weap->deadline_time = TWENTY_HZ_PERIOD;
                       weap->number_of_weapons = 2;
                       weap->weapon1_identifier = CORBA::string_alloc (30);
-                      ACE_OS::strcpy (weap->weapon1_identifier.inout (),"Photon Torpedoes");
+                      std::strcpy (weap->weapon1_identifier.inout (),"Photon Torpedoes");
                       weap->weapon1_status =(ACE_OS::rand() % 4) == 0 ? 0 : 1 ;
                       weap->weapon2_identifier = CORBA::string_alloc (30);
-                      ACE_OS::strcpy (weap->weapon2_identifier.inout (),"Quantum Torpedoes");
+                      std::strcpy (weap->weapon2_identifier.inout (),"Quantum Torpedoes");
                       weap->weapon2_status = (ACE_OS::rand() % 4) == 0 ? 0 : 1;
                       weap->weapon3_identifier = CORBA::string_alloc (1);
-                      ACE_OS::strcpy (weap->weapon3_identifier.inout (), "");
+                      std::strcpy (weap->weapon3_identifier.inout (), "");
                       weap->weapon3_status = 0;
                       weap->weapon4_identifier = CORBA::string_alloc (1);
-                      ACE_OS::strcpy (weap->weapon4_identifier.inout (), "");
+                      std::strcpy (weap->weapon4_identifier.inout (), "");
                       weap->weapon4_status = 0;
                       weap->weapon5_identifier = CORBA::string_alloc (1);
-                      ACE_OS::strcpy (weap->weapon5_identifier.inout (), "");
+                      std::strcpy (weap->weapon5_identifier.inout (), "");
                       weap->weapon5_status = 0;
                       weap->utilization =       0.0;
                       weap->overhead =          0.0;
@@ -861,7 +863,7 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
         case 'f':
           this->input_file_name_ = get_opt.opt_arg ();
 
-          if (!this->input_file_name_ || ACE_OS::strlen (this->input_file_name_) > 0)
+          if (!this->input_file_name_ || std::strlen (this->input_file_name_) > 0)
             ACE_DEBUG ((LM_DEBUG,"Reading file!\n"));
           else
             {
