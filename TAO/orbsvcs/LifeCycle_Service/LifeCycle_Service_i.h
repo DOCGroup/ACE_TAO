@@ -47,7 +47,7 @@ public:
   void register_factory (char const * name,
                          char const * location,
                          char const * description,
-                         CORBA::Object_ptr object);
+                         CORBA::Object_ptr object) override;
 
   // Registers a factory with specified properties
 
