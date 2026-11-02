@@ -32,24 +32,24 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
 
   try
     {
-      TimeBase::TimeT lb1 =
+      TimeBase::TimeT const lb1 =
         this->time_interval ().lower_bound;
 
-      TimeBase::TimeT up1 =
+      TimeBase::TimeT const up1 =
         this->time_interval ().upper_bound;
 
       TimeBase::TimeT tmp1 = uto->time ();
 
       TimeBase::TimeT tmp2 = uto->inaccuracy ();
 
-      TimeBase::TimeT lb2 = tmp1 - tmp2;
+      TimeBase::TimeT const lb2 = tmp1 - tmp2;
 
 
       tmp1 = uto->time ();
 
       tmp2 = uto->inaccuracy ();
 
-      TimeBase::TimeT up2 = tmp1 + tmp2;
+      TimeBase::TimeT const up2 = tmp1 + tmp2;
 
       if (lb1 == lb2 && up1 == up2)
         {
@@ -141,16 +141,16 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 {
   TAO_TIO * tio_i = nullptr;
 
-  TimeBase::TimeT lb1 =
+  TimeBase::TimeT const lb1 =
     this->time_interval ().lower_bound;
 
-  TimeBase::TimeT up1 =
+  TimeBase::TimeT const up1 =
     this->time_interval ().upper_bound;
 
-  TimeBase::TimeT lb2 =
+  TimeBase::TimeT const lb2 =
     tio->time_interval ().lower_bound;
 
-  TimeBase::TimeT up2 =
+  TimeBase::TimeT const up2 =
     tio->time_interval ().upper_bound;
 
   if (lb1 == lb2 && up1 == up2)

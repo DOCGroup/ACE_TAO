@@ -76,12 +76,12 @@ CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
                        CosTime::UTO_ptr uto)
 {
-  TimeBase::TimeT uto_time = uto->time ();
+  TimeBase::TimeT const uto_time = uto->time ();
 
-  TimeBase::InaccuracyT this_inaccuracy =
+  TimeBase::InaccuracyT const this_inaccuracy =
     this->inaccuracy ();
 
-  TimeBase::InaccuracyT uto_inaccuracy =
+  TimeBase::InaccuracyT const uto_inaccuracy =
     uto->inaccuracy ();
 
   if (comparison_type == CosTime::MidC)
@@ -138,7 +138,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 
   try
     {
-      TimeBase::TimeT uto_time = uto->time ();
+      TimeBase::TimeT const uto_time = uto->time ();
 
       if (this->time () > uto_time)
         {
@@ -174,13 +174,13 @@ TAO_UTO::interval ()
 
   try
     {
-      TimeBase::TimeT this_inaccuracy =
+      TimeBase::TimeT const this_inaccuracy =
           this->inaccuracy ();
 
-      TimeBase::TimeT lower =
+      TimeBase::TimeT const lower =
         this->time () - this_inaccuracy;
 
-      TimeBase::TimeT upper =
+      TimeBase::TimeT const upper =
         this->time () + this_inaccuracy;
 
       ACE_NEW_THROW_EX (tio,

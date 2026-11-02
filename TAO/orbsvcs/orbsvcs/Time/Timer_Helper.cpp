@@ -31,7 +31,7 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
       for (CosTime::TimeService_var const & server : this->clerk_->server_)
         {
           // This is a remote call.
-          CosTime::UTO_var UTO_server =
+          CosTime::UTO_var const UTO_server =
             server->universal_time ();
 
           if (TAO_debug_level > 0)
@@ -46,7 +46,7 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
                         (UTO_server->utc_time ()).inacchi,
                         (UTO_server->utc_time ()).tdf));
 
-          CORBA::ULongLong curr_server_time =
+          CORBA::ULongLong const curr_server_time =
             UTO_server->time ();
 
           sum += curr_server_time;
@@ -76,8 +76,8 @@ Timer_Helper::handle_timeout (ACE_Time_Value const &,
       // to minutes.
 
       ACE_OS::tzset ();
-      long arg = ACE_OS::timezone () / 60;
-      CORBA::Short goodarg = static_cast<CORBA::Short> (arg);
+      long const arg = ACE_OS::timezone () / 60;
+      CORBA::Short const goodarg = static_cast<CORBA::Short> (arg);
       clerk_->time_displacement_factor (goodarg);
 
       // Set the inaccuracy.
