@@ -91,7 +91,7 @@ namespace TAO
     protected:
       // = The TAO_Connector methods, please check the documentation on
       // Transport_Connector.h
-      int set_validate_endpoint (TAO_Endpoint *ep);
+      int set_validate_endpoint (TAO_Endpoint *ep) override;
 
       TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                       TAO_Transport_Descriptor_Interface &desc,

@@ -102,8 +102,8 @@ namespace TAO
       ///Set the Diff-Serv codepoint if the Policy dicates the setting of
       ///Network Priority This method is a no-op, but implemented to
       ///satisfy the base class interface.
-      int set_dscp_codepoint (CORBA::Boolean set_network_priority);
-      int set_dscp_codepoint (CORBA::Long dscp);
+      int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
+      int set_dscp_codepoint (CORBA::Long dscp) override;
 
 
       //@{
