@@ -158,6 +158,10 @@ public:
   // Constructor(s).
   UTL_Scope ();
   explicit UTL_Scope (AST_Decl::NodeType nt);
+  UTL_Scope (UTL_Scope const&) = delete;
+  UTL_Scope (UTL_Scope&&) = delete;
+  UTL_Scope& operator= (UTL_Scope const&) = delete;
+  UTL_Scope& operator= (UTL_Scope&&) = delete;
 
   // Destructor.
   ~UTL_Scope () override;
