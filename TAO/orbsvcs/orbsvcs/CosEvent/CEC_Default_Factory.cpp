@@ -370,7 +370,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
-                          unsigned long timeout_ = ACE_OS::strtoul(opt, nullptr, 10);
+                          unsigned long const timeout_ = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_control_timeout_.usec(timeout_);
               arg_shifter.consume_arg ();
             }
@@ -384,7 +384,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
-                          unsigned long timeout_ = ACE_OS::strtoul(opt, nullptr, 10);
+                          unsigned long const timeout_ = ACE_OS::strtoul(opt, nullptr, 10);
               this->supplier_control_timeout_.usec(timeout_);
               arg_shifter.consume_arg ();
             }
@@ -397,7 +397,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
-              unsigned long timeout = ACE_OS::strtoul (opt, nullptr, 10);
+              unsigned long const timeout = ACE_OS::strtoul (opt, nullptr, 10);
               this->consumer_timeout_.usec (timeout);
               arg_shifter.consume_arg ();
             }
@@ -410,7 +410,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
-              unsigned long timeout = ACE_OS::strtoul (opt, nullptr, 10);
+              unsigned long const timeout = ACE_OS::strtoul (opt, nullptr, 10);
               this->supplier_timeout_.usec (timeout);
               arg_shifter.consume_arg ();
             }
@@ -499,10 +499,10 @@ TAO_CEC_Default_Factory::create_pulling_strategy (TAO_CEC_EventChannel *ec)
     {
       int argc {};
       ACE_TCHAR **argv = nullptr;
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
 
-      ACE_Time_Value rate (0, this->reactive_pulling_period_);
+      ACE_Time_Value const rate (0, this->reactive_pulling_period_);
       return new TAO_CEC_Reactive_Pulling_Strategy (
                                  rate, this->supplier_control_timeout_,
                                  ec, orb.in ());
@@ -576,7 +576,7 @@ TAO_CEC_ProxyPushSupplier*
 TAO_CEC_Default_Factory::create_proxy_push_supplier (TAO_CEC_EventChannel *ec)
 {
   TAO_CEC_ProxyPushSupplier *created = nullptr;
-  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+  ACE_Time_Value const timeout = this->consumer_control_ ? this->consumer_timeout_
     : ACE_Time_Value::zero;
   ACE_NEW_RETURN (created, TAO_CEC_ProxyPushSupplier (ec, timeout), nullptr);
   return created;
@@ -587,7 +587,7 @@ TAO_CEC_ProxyPushSupplier*
 TAO_CEC_Default_Factory::create_proxy_push_supplier (TAO_CEC_TypedEventChannel *ec)
 {
   TAO_CEC_ProxyPushSupplier *created = nullptr;
-  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+  ACE_Time_Value const timeout = this->consumer_control_ ? this->consumer_timeout_
     : ACE_Time_Value::zero;
   ACE_NEW_RETURN (created, TAO_CEC_ProxyPushSupplier (ec, timeout), nullptr);
   return created;
@@ -604,7 +604,7 @@ TAO_CEC_ProxyPullSupplier*
 TAO_CEC_Default_Factory::create_proxy_pull_supplier (TAO_CEC_EventChannel *ec)
 {
   TAO_CEC_ProxyPullSupplier *created {};
-  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+  ACE_Time_Value const timeout = this->consumer_control_ ? this->consumer_timeout_
     : ACE_Time_Value::zero;
   ACE_NEW_RETURN (created, TAO_CEC_ProxyPullSupplier (ec, timeout), nullptr);
   return created;
@@ -620,7 +620,7 @@ TAO_CEC_ProxyPushConsumer*
 TAO_CEC_Default_Factory::create_proxy_push_consumer (TAO_CEC_EventChannel *ec)
 {
   TAO_CEC_ProxyPushConsumer *created = nullptr;
-  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+  ACE_Time_Value const timeout = this->supplier_control_ ? this->supplier_timeout_
     : ACE_Time_Value::zero;
   ACE_NEW_RETURN (created, TAO_CEC_ProxyPushConsumer (ec, timeout), nullptr);
   return created;
@@ -631,7 +631,7 @@ TAO_CEC_TypedProxyPushConsumer*
 TAO_CEC_Default_Factory::create_proxy_push_consumer (TAO_CEC_TypedEventChannel *ec)
 {
   TAO_CEC_TypedProxyPushConsumer *created = nullptr;
-  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+  ACE_Time_Value const timeout = this->supplier_control_ ? this->supplier_timeout_
     : ACE_Time_Value::zero;
   ACE_NEW_RETURN (created, TAO_CEC_TypedProxyPushConsumer (ec, timeout), nullptr);
   return created;
@@ -1295,10 +1295,10 @@ TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_EventChannel* ec)
     {
       int argc {};
       ACE_TCHAR **argv = nullptr;
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
 
-      ACE_Time_Value rate (0, this->consumer_control_period_);
+      ACE_Time_Value const rate (0, this->consumer_control_period_);
       return new TAO_CEC_Reactive_ConsumerControl (
                                  rate, this->consumer_control_timeout_,
                                  this->proxy_disconnect_retries_,
@@ -1345,10 +1345,10 @@ TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_EventChannel* ec)
     {
       int argc {};
       ACE_TCHAR **argv = nullptr;
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
 
-      ACE_Time_Value rate (0, this->supplier_control_period_);
+      ACE_Time_Value const rate (0, this->supplier_control_period_);
       return new TAO_CEC_Reactive_SupplierControl (
                                  rate, this->supplier_control_timeout_,
                                  this->proxy_disconnect_retries_,
@@ -1392,7 +1392,7 @@ CORBA::Policy_ptr TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
   //get the existing orb
   int fake_argc {};
   ACE_TCHAR **fake_argv = nullptr;
-  CORBA::ORB_var orb = CORBA::ORB_init (fake_argc, fake_argv, this->orbid_);
+  CORBA::ORB_var const orb = CORBA::ORB_init (fake_argc, fake_argv, this->orbid_);
 
   CORBA::Any value;
   TimeBase::TimeT timet;

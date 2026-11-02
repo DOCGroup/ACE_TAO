@@ -50,7 +50,7 @@ TAO_CEC_DynamicImplementationServer::invoke (CORBA::ServerRequest_ptr request)
           request->arguments (list);
 
           // Populate the TypedEvent with the list and operation name.
-          TAO_CEC_TypedEvent typed_event (list, request->operation () );
+          TAO_CEC_TypedEvent const typed_event (list, request->operation () );
 
           // Pass the TypedEvent to the TypedProxyPushConsumer
           this->typed_pp_consumer_->invoke (typed_event);
@@ -121,7 +121,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
     }
   else
     {
-      CORBA::ULong num = this->typed_event_channel_->number_of_base_interfaces ();
+      CORBA::ULong const num = this->typed_event_channel_->number_of_base_interfaces ();
       for (CORBA::ULong base=0; base<num; base++)
         {
           if (TAO_debug_level >= 10)
@@ -146,7 +146,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
     }
 
   CORBA::Any result_any;
-  CORBA::Any::from_boolean from_boolean (result);
+  CORBA::Any::from_boolean const from_boolean (result);
   result_any <<= from_boolean;
 
   request->set_result (result_any);
