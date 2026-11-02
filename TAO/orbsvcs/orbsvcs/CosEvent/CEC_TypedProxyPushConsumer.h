@@ -24,6 +24,8 @@
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "orbsvcs/CosEvent/event_serv_export.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_CEC_TypedEvent;
@@ -125,7 +127,7 @@ private:
   CosEventComm::PushSupplier_var nopolicy_typed_supplier_;
 
   /// The DSI impl
-  TAO_CEC_DynamicImplementationServer* dsi_impl_ {};
+  std::unique_ptr<TAO_CEC_DynamicImplementationServer> dsi_impl_;
 
   /// The DSI Portable Server OID
   PortableServer::ObjectId_var oid_;

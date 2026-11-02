@@ -35,16 +35,16 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
                   ACE_TEXT ("***** Initializing the DSI for the new TypedProxyPushConsumer *****\n")));
     }
 
-  this->dsi_impl_ = new
-    TAO_CEC_DynamicImplementationServer (this->default_POA_.in(),
-                                         this,
-                                         this->typed_event_channel_);
+  this->dsi_impl_ = std::make_unique<TAO_CEC_DynamicImplementationServer> (
+    this->default_POA_.in (),
+    this,
+    this->typed_event_channel_);
 
   try{
     // tempporary fix, should put this into some init function.
 
     this->oid_ =
-      this->default_POA_->activate_object (this->dsi_impl_);
+      this->default_POA_->activate_object (this->dsi_impl_.get ());
   }
   catch (...){
   }
@@ -59,7 +59,7 @@ TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer ()
   catch (...){
   }
 
-  delete dsi_impl_;
+  this->dsi_impl_.reset ();
 
   this->typed_event_channel_->get_servant_retry_map ().unbind (this);
   this->typed_event_channel_->destroy_consumer_lock (this->lock_);
