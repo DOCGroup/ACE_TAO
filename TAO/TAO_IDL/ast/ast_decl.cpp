@@ -81,6 +81,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <ast_annotation_appl.h>
 #include <utl_indenter.h>
 
+#include <memory>
 #include <utility>
 
 // FUZZ: disable check_for_streams_include
@@ -552,8 +553,8 @@ AST_Decl::compute_flat_name () const
 
       // Print the identifier, leaving out
       // _cxx_ prefix, if any.
-      Identifier *tmp = j.item ()->copy ();
-      FE_Utils::original_local_name (tmp);
+      std::unique_ptr<Identifier> const tmp (j.item ()->copy ());
+      FE_Utils::original_local_name (tmp.get ());
       std::string const& item_name (tmp->get_string ());
       flat_name.append (item_name);
 
@@ -570,8 +571,6 @@ AST_Decl::compute_flat_name () const
             }
         }
 
-      tmp->destroy ();
-      delete tmp;
     }
 
   this->flat_name_ = flat_name;
