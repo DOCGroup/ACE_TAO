@@ -487,7 +487,7 @@ FE_get_cpp_loc_from_env ()
   return idl_global->cpp_location ();
 }
 
-std::optional<std::string>
+std::string
 FE_get_cpp_args_from_env ()
 {
   // Added some customizable preprocessor options
@@ -497,8 +497,8 @@ FE_get_cpp_args_from_env ()
   char const * const env_args = args1;
   if (env_args != nullptr)
     {
-      return std::string (env_args);
+      return env_args;
     }
 
-  return std::nullopt;
+  return {};
 }

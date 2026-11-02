@@ -294,11 +294,11 @@ DRV_cpp_init ()
     }
 #endif
 
-  std::optional<std::string> const env_cpp_args =
+  std::string const env_cpp_args =
     FE_get_cpp_args_from_env ();
   std::string platform_cpp_args;
 
-  if (!env_cpp_args.has_value ())
+  if (env_cpp_args.empty ())
     {
       // If no cpp flag was defined by the user, we define some
       // platform specific flags here.
@@ -371,7 +371,7 @@ DRV_cpp_init ()
     }
   else
     {
-      platform_cpp_args = *env_cpp_args;
+      platform_cpp_args = env_cpp_args;
     }
 
   // Add any flags in platform_cpp_args to cpp's DRV_arglist.

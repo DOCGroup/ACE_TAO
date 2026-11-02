@@ -67,7 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 
-#include <optional>
 #include <string>
 #include <vector>
 
@@ -78,7 +77,7 @@ TAO_IDL_FE_Export void FE_populate ();
 TAO_IDL_FE_Export void FE_extract_env_include_paths (std::vector<std::string> &list);
 TAO_IDL_FE_Export void FE_store_env_include_paths ();
 TAO_IDL_FE_Export std::string FE_get_cpp_loc_from_env ();
-TAO_IDL_FE_Export std::optional<std::string> FE_get_cpp_args_from_env ();
+TAO_IDL_FE_Export std::string FE_get_cpp_args_from_env ();
 
 TAO_IDL_FE_Export int
 FE_yyparse ();
