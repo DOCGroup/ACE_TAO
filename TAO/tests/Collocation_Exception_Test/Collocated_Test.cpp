@@ -5,18 +5,17 @@
 #include "ace/SString.h"
 #include "ace/Manual_Event.h"
 
-const ACE_TCHAR *output = ACE_TEXT("test.ior");
-const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
-const char *mode = "SYNC_NONE";
+ACE_TCHAR const *output = ACE_TEXT ("test.ior");
+ACE_TCHAR const *input = ACE_TEXT ("file://test.ior");
 
-// static int named_orbs = 0;
 ACE_CString server_orb;
 ACE_CString client_orb;
+
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:n:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -28,7 +27,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         input = get_opts.opt_arg ();
         break;
       case 'n':
-        // named_orbs = 1;
         server_orb.set ("server_orb");
         client_orb.set ("client_orb");
         break;
@@ -42,7 +40,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc,
                   argv) == -1)
@@ -91,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions..
     }
