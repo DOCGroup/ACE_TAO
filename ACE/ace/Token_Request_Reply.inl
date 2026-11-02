@@ -2,6 +2,7 @@
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #include "ace/Truncate.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -132,12 +133,12 @@ ACE_Token_Request::token_name (const ACE_TCHAR *token_name,
   client_id_  = &this->token_name_[token_name_length + 1]; // Add 1 for ':';
   client_id_[-1] = ACE_TEXT (':'); // Insert the ':' before this->clientId_.
 
-  (void) ACE_OS::memcpy (this->token_name_,
-                         token_name,
-                         token_name_length * sizeof (ACE_TCHAR));
-  (void) ACE_OS::memcpy (this->client_id_,
-                         client_id,
-                         client_id_length * sizeof (ACE_TCHAR));
+  (void) std::memcpy (this->token_name_,
+                      token_name,
+                      token_name_length * sizeof (ACE_TCHAR));
+  (void) std::memcpy (this->client_id_,
+                      client_id,
+                      client_id_length * sizeof (ACE_TCHAR));
 
   // Fixed length header size
   size_t len = ACE_TOKEN_REQUEST_HEADER_SIZE;

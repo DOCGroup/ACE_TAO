@@ -20,6 +20,7 @@
 #endif
 #include <memory>
 #include <algorithm>
+#include <cstring>
 
 #if defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
 #  include <map>
@@ -359,7 +360,7 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
   ACE_OS_TRACE ("ACE_TSS_Ref::operator==");
 
 #ifdef ACE_THREAD_T_IS_A_STRUCT
-  return 0 == ACE_OS::memcmp (&this->tid_, &info.tid_, sizeof tid_);
+  return 0 == std::memcmp (&this->tid_, &info.tid_, sizeof tid_);
 #else
   return this->tid_ == info.tid_;
 #endif
@@ -1871,7 +1872,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
        *   when calling this routine.
        * Tests shows this to be necessary.
        */
-      ACE_OS::memset (m, 0, sizeof (*m));
+      std::memset (m, 0, sizeof (*m));
 #   endif
       if (ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
         result = 0;
@@ -3674,7 +3675,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
         {
           struct sched_param sparam;
-          ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
+          std::memset (&sparam, 0, sizeof sparam);
 
 #     if defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS)
           /* For MIT pthreads... */
@@ -4843,7 +4844,7 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
 {
   char indouble   = 0;
   size_t previous = 0;
-  size_t length   = ACE_OS::strlen (string);
+  size_t length   = std::strlen (string);
 
   if (length > 0)
     {
@@ -4871,7 +4872,7 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
             {
               // The next character is automatically skipped because
               // of the memmove().
-              ACE_OS::memmove (string + i, string + i + 1, length);
+              std::memmove (string + i, string + i + 1, length);
               --length;
             }
           else if (!indouble &&

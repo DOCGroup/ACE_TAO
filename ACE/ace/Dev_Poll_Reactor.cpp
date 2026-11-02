@@ -36,6 +36,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Functor_T.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -683,7 +684,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
     return -1;
 
 #ifdef ACE_HAS_EVENT_POLL
-  ACE_OS::memset (&this->event_, 0, sizeof (this->event_));
+  std::memset (&this->event_, 0, sizeof (this->event_));
   this->event_.data.fd = ACE_INVALID_HANDLE;
 #endif /* ACE_HAS_EVENT_POLL */
 
@@ -835,7 +836,7 @@ ACE_Dev_Poll_Reactor::close ()
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-  ACE_OS::memset (&this->event_, 0, sizeof (this->event_));
+  std::memset (&this->event_, 0, sizeof (this->event_));
   this->event_.data.fd = ACE_INVALID_HANDLE;
 
 #else
@@ -1442,7 +1443,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      Event_Tuple *info = this->handler_rep_.find (handle);
 
      struct epoll_event epev;
-     ACE_OS::memset (&epev, 0, sizeof (epev));
+     std::memset (&epev, 0, sizeof (epev));
      static constexpr int op = EPOLL_CTL_ADD;
 
      epev.data.fd = handle;
@@ -1782,7 +1783,7 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
 #if defined (ACE_HAS_EVENT_POLL)
 
   struct epoll_event epev;
-  ACE_OS::memset (&epev, 0, sizeof (epev));
+  std::memset (&epev, 0, sizeof (epev));
   static constexpr int op = EPOLL_CTL_DEL;
 
   epev.events  = 0;
@@ -1899,7 +1900,7 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
 #if defined (ACE_HAS_EVENT_POLL)
 
   struct epoll_event epev;
-  ACE_OS::memset (&epev, 0, sizeof (epev));
+  std::memset (&epev, 0, sizeof (epev));
   int op = EPOLL_CTL_ADD;
   if (info->controlled)
     op = EPOLL_CTL_MOD;
@@ -2338,7 +2339,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
 #if defined (ACE_HAS_EVENT_POLL)
 
       struct epoll_event epev;
-      ACE_OS::memset (&epev, 0, sizeof (epev));
+      std::memset (&epev, 0, sizeof (epev));
       int op;
 
       // ACE_Event_Handler::NULL_MASK ???
