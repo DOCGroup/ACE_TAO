@@ -66,6 +66,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 
 #include "ast_type.h"
+#include <memory>
+
 class AST_Interface;
 
 // Representation of a forward interface declaration.
@@ -129,11 +131,11 @@ private:
   AST_Interface *pd_full_definition;
   // The interface this is a forward declaration of.
 
+  std::unique_ptr<AST_Interface> owned_full_definition_;
+  // The owned dummy interface, while this forward declaration owns it.
+
   bool is_defined_ {};
   // Checking the member above isn't good enough.
-
-  /// True if we own pd_full_definition, which would be true if it's a dummy.
-  bool has_ownership_ {true};
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

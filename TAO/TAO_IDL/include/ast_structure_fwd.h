@@ -2,6 +2,8 @@
 #define _AST_STRUCTURE_FWD_AST_STRUCTURE_FWD_HH
 
 #include "ast_type.h"
+#include <memory>
+
 class AST_Structure;
 
 // Representation of a forward structure declaration.
@@ -46,6 +48,9 @@ public:
 private:
   AST_Structure *pd_full_definition;
   // The structure this is a forward declaration of.
+
+  std::unique_ptr<AST_Structure> owned_full_definition_;
+  // The owned dummy structure, while this forward declaration owns it.
 
   bool is_defined_ {};
   // Checking the member above isn't good enough.

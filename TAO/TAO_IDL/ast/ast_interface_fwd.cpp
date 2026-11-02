@@ -83,13 +83,13 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
     AST_Decl (AST_Decl::NT_interface_fwd,
               n),
     AST_Type (AST_Decl::NT_interface_fwd,
-              n)
+              n),
+    pd_full_definition (dummy),
+    owned_full_definition_ (dummy)
 {
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations
   // will fail.
-  this->pd_full_definition = dummy;
-
   if (! dummy->is_local ())
     {
       idl_global->non_local_fwd_iface_seen_ = true;
@@ -196,13 +196,12 @@ AST_InterfaceFwd::full_definition ()
 void
 AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 {
-  if (pd_full_definition && has_ownership_)
+  if (this->owned_full_definition_ != nullptr)
     {
-      pd_full_definition->destroy ();
-      delete pd_full_definition;
+      this->owned_full_definition_->destroy ();
+      this->owned_full_definition_.reset ();
     }
-  pd_full_definition = nfd;
-  has_ownership_ = false;
+  this->pd_full_definition = nfd;
 }
 
 bool
@@ -257,13 +256,13 @@ AST_InterfaceFwd::set_as_defined ()
 void
 AST_InterfaceFwd::disown_full_definition ()
 {
-  has_ownership_ = false;
+  this->owned_full_definition_.release ();
 }
 
 void
 AST_InterfaceFwd::destroy ()
 {
-  if (has_ownership_)
+  if (this->owned_full_definition_ != nullptr)
     {
       set_full_definition (nullptr);
     }
