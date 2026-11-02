@@ -11,7 +11,8 @@
 
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -154,7 +155,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
       if (this->max_size_ > 0)
         {
-          ACE_OS::memcpy (temp,
+          std::memcpy (temp,
                           this->timeprobes_,
                           this->max_size_ * sizeof (ACE_timeprobe_t));
 

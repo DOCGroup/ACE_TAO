@@ -2,7 +2,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UPIPE_Stream.inl"
@@ -130,7 +130,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
           {
             // The remaining data is not enough.
 
-            ACE_OS::memcpy ((void *) &buffer[bytes_read],
+            std::memcpy ((void *) &buffer[bytes_read],
                             this->mb_last_->rd_ptr (),
                             this_len);
             bytes_read += this_len;
@@ -141,7 +141,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
           {
             // The remaining data is at least enough.  If there's
             // more, we'll get it the next time through.
-            ACE_OS::memcpy (&buffer[bytes_read],
+            std::memcpy (&buffer[bytes_read],
                             this->mb_last_->rd_ptr (),
                             n);
             bytes_read += n;
