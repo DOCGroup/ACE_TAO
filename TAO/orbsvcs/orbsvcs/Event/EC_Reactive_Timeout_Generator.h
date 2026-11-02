@@ -47,11 +47,11 @@ public:
   // = The TAO_EC_Timeout_Generator methods.
   void activate () override;
   void shutdown () override;
-  virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
-                              const ACE_Time_Value& delta,
-                              const ACE_Time_Value& interval);
-  virtual int cancel_timer (const TAO_EC_QOS_Info& info,
-                            int id);
+  int schedule_timer (TAO_EC_Timeout_Filter* filter,
+                      const ACE_Time_Value& delta,
+                      const ACE_Time_Value& interval) override;
+  int cancel_timer (const TAO_EC_QOS_Info& info,
+                    int id) override;
 
 private:
   /// The reactor

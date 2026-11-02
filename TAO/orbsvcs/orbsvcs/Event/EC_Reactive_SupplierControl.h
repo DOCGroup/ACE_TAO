@@ -60,8 +60,8 @@ public:
   explicit TAO_EC_SupplierControl_Adapter (TAO_EC_Reactive_SupplierControl *adaptee);
 
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              void const *arg = nullptr);
+  int handle_timeout (const ACE_Time_Value &tv,
+                      void const *arg = nullptr) override;
 
 private:
   /// The adapted object
@@ -97,8 +97,8 @@ public:
   int activate () override;
   int shutdown () override;
   void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy) override;
-  virtual void system_exception (TAO_EC_ProxyPushConsumer *proxy,
-                                 CORBA::SystemException &);
+  void system_exception (TAO_EC_ProxyPushConsumer *proxy,
+                         CORBA::SystemException &) override;
 
 private:
   /// Check if the suppliers still exists.  It is a helper method for

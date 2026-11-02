@@ -41,24 +41,23 @@ public:
   virtual ~TAO_EC_Default_ProxyPushSupplier () = default;
 
   void activate (
-     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
+    RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) override;
 
   /// IDL methods.
-  virtual void connect_push_consumer (
-                RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier ();
-  virtual void suspend_connection ();
-  virtual void resume_connection ();
+  void connect_push_consumer (
+    RtecEventComm::PushConsumer_ptr push_consumer,
+    const RtecEventChannelAdmin::ConsumerQOS &qos) override;
+  void disconnect_push_supplier () override;
+  void suspend_connection () override;
+  void resume_connection () override;
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA ();
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 private:
-  virtual PortableServer::ObjectId
-            object_id ();
+  PortableServer::ObjectId object_id () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

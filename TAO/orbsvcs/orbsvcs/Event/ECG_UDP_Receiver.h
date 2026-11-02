@@ -161,12 +161,12 @@ public:
   /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
   /// if nil Address Server was specified in init ().
   void get_addr (RtecEventComm::EventHeader const &header,
-                 RtecUDPAdmin::UDP_Addr_out addr);
+                 RtecUDPAdmin::UDP_Addr_out addr) override;
 
   /// Call the RtecUDPAdmin::AddrServer::get_address.  Throws exception
   /// if nil Address Server was specified in init ().
   void get_address (RtecEventComm::EventHeader const &header,
-                    RtecUDPAdmin::UDP_Address_out addr);
+                    RtecUDPAdmin::UDP_Address_out addr) override;
 
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if

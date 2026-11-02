@@ -38,10 +38,10 @@ public:
   ACE_PushConsumer_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void push (const RtecEventComm::EventSet& events);
+  void push (const RtecEventComm::EventSet& events) override;
 
   /// Forwards to target_.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
 private:
   TARGET *target_;
@@ -64,7 +64,7 @@ public:
   ACE_PushSupplier_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 private:
   TARGET *target_;

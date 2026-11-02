@@ -34,9 +34,9 @@ public:
        map in the dispatcher class. */
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
-                RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  void connect_push_consumer (
+    RtecEventComm::PushConsumer_ptr push_consumer,
+    const RtecEventChannelAdmin::ConsumerQOS &qos) override;
 
   void disconnect_push_supplier () override;
 

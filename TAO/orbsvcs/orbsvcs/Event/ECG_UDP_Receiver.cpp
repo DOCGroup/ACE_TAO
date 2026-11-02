@@ -157,7 +157,7 @@ TAO_ECG_UDP_Receiver::shutdown ()
 class TAO_ECG_Event_CDR_Decoder: public TAO_ECG_CDR_Processor
 {
 public:
-  virtual int decode (TAO_InputCDR &cdr);
+  int decode (TAO_InputCDR &cdr) override;
 
   RtecEventComm::EventSet events;
 };
