@@ -36,6 +36,7 @@
 #include "utl_labellist.h"
 #include "utl_exprlist.h"
 #include "utl_exceptlist.h"
+#include "ast_expression.h"
 
 #include "fe_obv_header.h"
 #include "fe_utils.h"
@@ -54,6 +55,30 @@ namespace
         {
           name_list->destroy ();
           delete name_list;
+        }
+    }
+  };
+
+  struct AST_Expression_Deleter
+  {
+    void operator() (AST_Expression *expression) const
+    {
+      if (expression != nullptr)
+        {
+          expression->destroy ();
+          delete expression;
+        }
+    }
+  };
+
+  struct UTL_ExprList_Deleter
+  {
+    void operator() (UTL_ExprList *expression_list) const
+    {
+      if (expression_list != nullptr)
+        {
+          expression_list->destroy ();
+          delete expression_list;
         }
     }
   };
@@ -715,28 +740,31 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
 
   this->ref_type_ = tmp;
 
-  AST_Expression *v = nullptr;
-  UTL_ExprList *v_list = nullptr;
+  std::unique_ptr<UTL_ExprList, UTL_ExprList_Deleter> v_list;
 
   for (std::size_t i = 0; i < node->n_dims (); ++i)
     {
+      AST_Expression *v = nullptr;
       ACE_NEW_RETURN (v,
                       AST_Expression (node->dims ()[i].get (),
                                       AST_Expression::EV_ulong),
                       -1);
+      std::unique_ptr<AST_Expression, AST_Expression_Deleter> v_owner (v);
 
       UTL_ExprList *el = nullptr;
       ACE_NEW_RETURN (el,
-                      UTL_ExprList (v, nullptr),
+                      UTL_ExprList (v_owner.get (), nullptr),
                       -1);
+      v_owner.release ();
+      std::unique_ptr<UTL_ExprList, UTL_ExprList_Deleter> el_owner (el);
 
       if (v_list == nullptr)
         {
-          v_list = el;
+          v_list.reset (el_owner.release ());
         }
       else
         {
-          v_list->nconc (el);
+          v_list->nconc (el_owner.release ());
         }
     }
 
@@ -746,7 +774,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   ACE_NEW_RETURN (added_array,
                   be_array (&sn,
                             node->n_dims (),
-                            v_list,
+                            v_list.get (),
                             false,
                             false),
                   -1);
@@ -754,12 +782,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
-  if (v_list != nullptr)
-    {
-      v_list->destroy ();
-      delete v_list;
-      v_list = nullptr;
-    }
+  v_list.reset ();
 
   AST_Type *base_type =
     dynamic_cast<AST_Type*> (this->type_holder_);
