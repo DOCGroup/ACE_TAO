@@ -130,7 +130,7 @@ TAO::Out_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr)
 {
   CORBA::Boolean const demarshalled = cdr >> this->x_;
-  if (this->x_ != 0 && ACE_OS::strlen (this->x_) > BOUND)
+  if (this->x_ != nullptr && ACE_OS::strlen (this->x_) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
