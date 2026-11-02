@@ -24,6 +24,8 @@
 
 #include "ace/Configuration.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Configuration;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -85,10 +87,10 @@ protected:
   PortableServer::POA_ptr repo_poa_ {};
 
   /// Event handler that responds to multicast requests.
-  TAO_IOR_Multicast *ior_multicast_ {};
+  std::unique_ptr<TAO_IOR_Multicast> ior_multicast_;
 
   /// Database for the IFR.
-  ACE_Configuration *config_ {};
+  std::unique_ptr<ACE_Configuration> config_;
 
   /// Interface Repository's IOR.
   CORBA::String_var ifr_ior_;

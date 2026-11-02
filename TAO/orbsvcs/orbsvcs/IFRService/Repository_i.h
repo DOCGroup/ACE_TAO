@@ -31,6 +31,8 @@
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/CORBA_String.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class IFR_Servant_Factory;
@@ -77,6 +79,11 @@ public:
                     ACE_Configuration *config);
 
   ~TAO_Repository_i () override;
+
+  TAO_Repository_i (TAO_Repository_i const&) = delete;
+  TAO_Repository_i& operator= (TAO_Repository_i const&) = delete;
+  TAO_Repository_i (TAO_Repository_i&&) = delete;
+  TAO_Repository_i& operator= (TAO_Repository_i&&) = delete;
 
   /// Accessor for the readonly attribute.
   CORBA::DefinitionKind def_kind () override;
@@ -252,7 +259,7 @@ protected:
   CORBA::String_var extension_;
 
   /// Lock.
-  ACE_Lock *lock_ {};
+  std::unique_ptr<ACE_Lock> lock_;
 
   // Define a POA for each IR Object type, and a corresponding
   // default servant.

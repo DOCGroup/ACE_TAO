@@ -15,8 +15,10 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/AnyTypeCode/ValueModifierC.h"
-#include <memory>
 #include <cstring>
+#include <memory>
+#include <string>
+#include <utility>
 #include "ace/OS_NS_fcntl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -28,24 +30,21 @@ TAO_IFR_Server::TAO_IFR_Server () = default;
 TAO_IFR_Server::~TAO_IFR_Server ()
 {
   // Get reactor instance from TAO.
-  ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+  ACE_Reactor *const reactor = this->orb_->orb_core ()->reactor ();
 
   if (this->ior_multicast_ != nullptr)
-  {
-    // Remove event handler for the ior multicast.
-    if (reactor->remove_handler (this->ior_multicast_,
-                                 ACE_Event_Handler::READ_MASK)
-         == -1)
-      {
-        ORBSVCS_DEBUG ((
-            LM_DEBUG,
-            ACE_TEXT ("Interface Repository: cannot remove handler\n")
-          ));
-      }
-  }
-
-  delete this->config_;
-  delete this->ior_multicast_;
+    {
+      // Remove event handler for the ior multicast.
+      if (reactor->remove_handler (this->ior_multicast_.get (),
+                                   ACE_Event_Handler::READ_MASK)
+           == -1)
+        {
+          ORBSVCS_DEBUG ((
+              LM_DEBUG,
+              ACE_TEXT ("Interface Repository: cannot remove handler\n")
+            ));
+        }
+    }
 }
 
 int
@@ -213,15 +212,17 @@ TAO_IFR_Server::open_config ()
   if (OPTIONS::instance ()->using_registry ())
     {
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
-      HKEY root =
+      HKEY const root =
         ACE_Configuration_Win32Registry::resolve_key (
             HKEY_LOCAL_MACHINE,
             "Software\\TAO\\IFR"
           );
 
-      ACE_NEW_THROW_EX (this->config_,
+      ACE_Configuration_Win32Registry *registry = nullptr;
+      ACE_NEW_THROW_EX (registry,
                         ACE_Configuration_Win32Registry (root),
                         CORBA::NO_MEMORY ());
+      this->config_.reset (registry);
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 
       return 0;
@@ -232,16 +233,14 @@ TAO_IFR_Server::open_config ()
       ACE_NEW_THROW_EX (heap,
                         ACE_Configuration_Heap,
                         CORBA::NO_MEMORY ());
+      std::unique_ptr<ACE_Configuration_Heap> heap_guard (heap);
 
       if (OPTIONS::instance ()->persistent ())
         {
-          char const *filename = OPTIONS::instance ()->persistent_file ();
+          char const *const filename = OPTIONS::instance ()->persistent_file ();
 
-          if (heap->open (filename))
+          if (heap_guard->open (filename))
             {
-              delete heap;
-              heap = nullptr;
-
               ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("Error:: Opening persistent heap file '%s'\n"),
@@ -253,10 +252,10 @@ TAO_IFR_Server::open_config ()
         }
       else
         {
-          heap->open ();
+          heap_guard->open ();
         }
 
-      this->config_ = heap;
+      this->config_ = std::move (heap_guard);
 
       return 0;
     }
@@ -271,7 +270,7 @@ TAO_IFR_Server::create_repository ()
       TAO_ComponentRepository_i (
           this->orb_.in (),
           this->root_poa_,
-          this->config_
+          this->config_.get ()
         ),
       CORBA::NO_MEMORY ()
     );
@@ -372,12 +371,14 @@ TAO_IFR_Server::init_multicast_server ()
 {
 #if defined (ACE_HAS_IP_MULTICAST)
   // Get reactor instance from TAO.
-  ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+  ACE_Reactor *const reactor = this->orb_->orb_core ()->reactor ();
 
   // See if the -ORBMulticastDiscoveryEndpoint option was specified.
-  ACE_CString mde (
-      TAO_ORB_Core_instance ()->orb_params ()->mcast_discovery_endpoint ()
-    );
+  char const *const multicast_discovery_endpoint =
+    TAO_ORB_Core_instance ()->orb_params ()->mcast_discovery_endpoint ();
+  std::string const mde (multicast_discovery_endpoint == nullptr
+                           ? ""
+                           : multicast_discovery_endpoint);
 
   // First, see if the user has given us a multicast port number
   // on the command-line;
@@ -389,7 +390,7 @@ TAO_IFR_Server::init_multicast_server ()
   if (port == 0)
     {
       // Check environment var. for multicast port.
-      char const *port_number =
+      char const *const port_number =
         ACE_OS::getenv ("InterfaceRepoServicePort");
 
       if (port_number != nullptr)
@@ -403,11 +404,13 @@ TAO_IFR_Server::init_multicast_server ()
 
   // Instantiate a handler which will handle client requests for
   // the IFR ior, received on the multicast port.
-  ACE_NEW_THROW_EX (this->ior_multicast_,
+  TAO_IOR_Multicast *ior_multicast = nullptr;
+  ACE_NEW_THROW_EX (ior_multicast,
                     TAO_IOR_Multicast (),
                     CORBA::NO_MEMORY ());
+  this->ior_multicast_.reset (ior_multicast);
 
-  if (mde.length () != 0)
+  if (!mde.empty ())
     {
       if (this->ior_multicast_->init (this->ifr_ior_.in (),
                                       mde.c_str (),
@@ -442,7 +445,7 @@ TAO_IFR_Server::init_multicast_server ()
     }
 
   // Register event handler for the ior multicast.
-  if (reactor->register_handler (this->ior_multicast_,
+  if (reactor->register_handler (this->ior_multicast_.get (),
                                  ACE_Event_Handler::READ_MASK)
        == -1)
     {

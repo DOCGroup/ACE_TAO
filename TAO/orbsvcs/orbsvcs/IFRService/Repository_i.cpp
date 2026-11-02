@@ -29,10 +29,7 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
 {
 }
 
-TAO_Repository_i::~TAO_Repository_i ()
-{
-  delete this->lock_;
-}
+TAO_Repository_i::~TAO_Repository_i () = default;
 
 CORBA::DefinitionKind
 TAO_Repository_i::def_kind ()
@@ -467,18 +464,20 @@ TAO_Repository_i::repo_init (CORBA::Repository_ptr repo_ref,
   this->repo_poa_ = repo_poa;
 
   // Create the appropriate lock.
+  ACE_Lock *lock = nullptr;
   if (OPTIONS::instance ()->enable_locking ())
     {
-      ACE_NEW_THROW_EX (this->lock_,
+      ACE_NEW_THROW_EX (lock,
                         ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
                         CORBA::NO_MEMORY ());
     }
   else
     {
-      ACE_NEW_THROW_EX (this->lock_,
+      ACE_NEW_THROW_EX (lock,
                         ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
                         CORBA::NO_MEMORY ());
     }
+  this->lock_.reset (lock);
 
   // Resolve and narrow the TypeCodeFactory.
   CORBA::Object_var object =
