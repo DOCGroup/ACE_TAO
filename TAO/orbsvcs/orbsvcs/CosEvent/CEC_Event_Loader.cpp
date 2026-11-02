@@ -38,7 +38,7 @@ TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
       this->orb_=
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         this->create_object (this->orb_.in (), argc, argv);
 
       if (CORBA::is_nil (obj.in() ))
@@ -160,11 +160,11 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       // ***************************************************************
 
       // POA initialization and activation ...
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
@@ -193,12 +193,12 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       this->ec_impl_->activate ();
 
-      CosEventChannelAdmin::EventChannel_var event_channel =
+      CosEventChannelAdmin::EventChannel_var const event_channel =
         this->ec_impl_->_this ();
 
       if (ior_file != nullptr)
         {
-          CORBA::String_var ior =
+          CORBA::String_var const ior =
             orb->object_to_string (event_channel.in ());
 
           FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
@@ -227,7 +227,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       if (this->bind_to_naming_service_)
         {
-          CORBA::Object_var obj =
+          CORBA::Object_var const obj =
             orb->resolve_initial_references ("NameService");
 
           this->naming_context_ =
@@ -421,10 +421,10 @@ TAO_CEC_Event_Loader::fini ()
           this->ec_impl_->destroy ();
 
           // Deactivate the EC
-          PortableServer::POA_var poa =
+          PortableServer::POA_var const poa =
             this->ec_impl_->_default_POA ();
 
-          PortableServer::ObjectId_var id =
+          PortableServer::ObjectId_var const id =
             poa->servant_to_id (this->ec_impl_.get ());
 
           poa->deactivate_object (id.in ());
