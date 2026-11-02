@@ -9,13 +9,13 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Log_Msg.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+static ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -84,7 +84,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("server exception"));
       return 1;
