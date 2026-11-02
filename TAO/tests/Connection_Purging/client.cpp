@@ -3,13 +3,13 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("server.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -32,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -42,24 +42,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      int done = 0;
+      bool done = false;
       test_var holder;
-      for(int i = 0; !done; i++)
+      for (int i = 0; !done; ++i)
         {
           ACE_TCHAR number[64];
-          ACE_TString iorfile(ior);
+          ACE_TString iorfile (ior);
 
           ACE_OS::sprintf (number, ACE_TEXT(".%d"), i);
           iorfile += number;
 
-          if (ACE_OS::access(iorfile.c_str (), R_OK) == 0)
+          if (ACE_OS::access (iorfile.c_str (), R_OK) == 0)
             {
-              iorfile = ACE_TEXT("file://") + iorfile;
+              iorfile = ACE_TEXT ("file://") + iorfile;
               CORBA::Object_var tmp =
-                orb->string_to_object(iorfile.c_str ());
+                orb->string_to_object (iorfile.c_str ());
 
               test_var test =
-                test::_narrow(tmp.in ());
+                test::_narrow (tmp.in ());
 
               if (CORBA::is_nil (test.in ()))
                 {
@@ -83,7 +83,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 {               // This will test the LRU strategy
                                 // This transport should be the 6th one
                                 // removed.
-                  if (!CORBA::is_nil(holder.in ()))
+                  if (!CORBA::is_nil (holder.in ()))
                     {
                       holder->send_stuff ("Some stuff to send");
                     }
@@ -91,7 +91,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
           else
             {
-              done = 1;
+              done = true;
             }
         }
 
@@ -99,7 +99,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -2,13 +2,13 @@
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -31,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -39,7 +39,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -59,7 +59,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (test_impl,
                       test_i (),
                       1);
-      PortableServer::ServantBase_var owner_transfer(test_impl);
+      PortableServer::ServantBase_var owner_transfer (test_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (test_impl);
@@ -73,8 +73,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (test.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -87,13 +87,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
-      delete test_impl;
-
       root_poa->destroy (true, true);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
