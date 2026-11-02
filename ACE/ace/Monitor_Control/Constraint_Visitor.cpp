@@ -5,7 +5,7 @@
 #include "ace/ETCL/ETCL_y.h"
 #include "ace/ETCL/ETCL_Constraint.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,7 +51,7 @@ namespace ACE
     {
       /// TODO - check for strings related to other identifiers
       /// relevant in MonitorControl, for example the data timestamp.
-      if (ACE_OS::strcmp (ident->value (), "value") == 0)
+      if (std::strcmp (ident->value (), "value") == 0)
         {
           this->queue_.enqueue_head (
             ETCL_Literal_Constraint (this->data_.value_));

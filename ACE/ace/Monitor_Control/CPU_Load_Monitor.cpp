@@ -9,6 +9,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -118,8 +120,8 @@ namespace ACE
           return;
         }
 
-      char *item = nullptr;
-      char *arg = nullptr;
+      char const *item = nullptr;
+      char const *arg = nullptr;
 
       while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != nullptr)
         {
@@ -131,7 +133,7 @@ namespace ACE
               continue;
             }
 
-          if (ACE_OS::strcmp (item, "cpu") == 0)
+          if (std::strcmp (item, "cpu") == 0)
             {
               sscanf (arg,
                       "%lu %lu %lu %lu",
