@@ -166,19 +166,6 @@ private:
 
   // Operations.
 
-  // Look up a branch by node pointer.
-
-  // Look up the branch with the "default" label.
-  AST_UnionBranch *lookup_default ();
-
-  // Look up a branch given a branch with a label. This is used to
-  // check for duplicate labels.
-  AST_UnionBranch *lookup_label (AST_UnionBranch *b);
-
-  // Look up a union branch given an enumerator. This is used to
-  // check for duplicate enum labels.
-  AST_UnionBranch *lookup_enum (AST_UnionBranch *b);
-
   friend class tao_yy::parser;
   friend class ast_visitor_tmpl_module_inst;
 
