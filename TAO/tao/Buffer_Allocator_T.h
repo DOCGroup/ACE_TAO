@@ -39,8 +39,8 @@ namespace TAO
       using ALLOC_TYPE = alloc_type;
       explicit TAO_Buffer_Allocator (alloc_type *allocator);
 
-      virtual handler_type *allocate ();
-      virtual void release (handler_type *ptr);
+      handler_type *allocate () override;
+      void release (handler_type *ptr) override;
     private:
       alloc_type* allocator_;
   };
