@@ -3,10 +3,10 @@
 #include "tao/ORB_Table.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 
-  Hello::Hello (CORBA::ORB_ptr orb,
+Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))
-    , thr_id_ (thrid)
+  , thr_id_ (thrid)
 {
 }
 
@@ -20,7 +20,7 @@ Hello::get_string ()
   ACE_Thread_ID self_ID;
   // Thread ID from Server
   ACE_Thread_ID this_ID;
-  this_ID.id(this->thr_id_);
+  this_ID.id (this->thr_id_);
 
   // Servant Thread ID same as Thread ID server, so a remote call,
   // in case of a collocation the servant runs in calling thread (Client)
