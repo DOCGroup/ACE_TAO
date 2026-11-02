@@ -18,8 +18,6 @@ be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
 {
 }
 
-be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss () = default;
-
 int
 be_visitor_amh_interface_ss::visit_operation (be_operation *node)
 {
@@ -135,17 +133,12 @@ class TAO_IDL_Downcast_Implementation_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  TAO_IDL_Downcast_Implementation_Worker ();
+  TAO_IDL_Downcast_Implementation_Worker () = default;
 
-  virtual int emit (be_interface *base,
-                    TAO_OutStream *os,
-                    be_interface *derived) override;
+  int emit (be_interface *base,
+            TAO_OutStream *os,
+            be_interface *derived) override;
 };
-
-TAO_IDL_Downcast_Implementation_Worker::
-TAO_IDL_Downcast_Implementation_Worker ()
-{
-}
 
 int
 TAO_IDL_Downcast_Implementation_Worker::
@@ -172,14 +165,12 @@ class TAO_IDL_Copy_Ctor_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  TAO_IDL_Copy_Ctor_Worker ();
+  TAO_IDL_Copy_Ctor_Worker () = default;
 
-  virtual int emit (be_interface *base,
-                    TAO_OutStream *os,
-                    be_interface *derived) override;
+  int emit (be_interface *base,
+            TAO_OutStream *os,
+            be_interface *derived) override;
 };
-
-TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker () = default;
 
 int
 TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,

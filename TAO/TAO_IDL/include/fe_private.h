@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 
+#include <cstddef>
+
 // Define an entry for the C++ keyword and its mapping.
 struct TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Entry
 {
@@ -81,11 +83,11 @@ struct TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Entry
 class TAO_IDL_FE_Export TAO_IDL_CPP_Keyword_Table
 {
 private:
-  unsigned int hash (char const *str,
-                     unsigned int len);
+  std::size_t hash (char const *str,
+                    std::size_t len);
 public:
   TAO_IDL_CPP_Keyword_Entry const *lookup (char const *str,
-                                           unsigned int len);
+                                           std::size_t len);
 };
 
 #endif /* _FE_FE_HH */

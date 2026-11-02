@@ -7,23 +7,12 @@
 
 AST_Annotation_Appls::AST_Annotation_Appls () = default;
 
-AST_Annotation_Appls::AST_Annotation_Appls (AST_Annotation_Appls const &other)
-  : vector_ (other.vector_)
-{
-}
+AST_Annotation_Appls::AST_Annotation_Appls (AST_Annotation_Appls const &other) = default;
 
 AST_Annotation_Appls::~AST_Annotation_Appls () = default;
 
 AST_Annotation_Appls &
-AST_Annotation_Appls::operator= (AST_Annotation_Appls const &other)
-{
-  if (this != &other)
-    {
-      vector_ = other.vector_;
-    }
-
-  return *this;
-}
+AST_Annotation_Appls::operator= (AST_Annotation_Appls const &other) = default;
 
 void
 AST_Annotation_Appls::add (AST_Annotation_Appl *appl)

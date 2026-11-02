@@ -580,9 +580,9 @@ class TAO_IDL_Gen_OpTable_Worker
 public:
   TAO_IDL_Gen_OpTable_Worker (std::string const& skeleton_name);
 
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *os,
-                    be_interface *base_interface) override;
+  int emit (be_interface *derived_interface,
+            TAO_OutStream *os,
+            be_interface *base_interface) override;
 
 private:
   std::string skeleton_name_;
@@ -615,9 +615,9 @@ class Pure_Virtual_Regenerator
 public:
   Pure_Virtual_Regenerator (be_visitor *visitor);
 
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *os,
-                    be_interface *base_interface) override;
+  int emit (be_interface *derived_interface,
+            TAO_OutStream *os,
+            be_interface *base_interface) override;
 
 private:
   be_visitor *visitor_;
@@ -2367,9 +2367,9 @@ class Facet_Op_Attr_Helper
 public:
   Facet_Op_Attr_Helper (be_visitor *visitor);
 
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *os,
-                    be_interface *base_interface) override;
+  int emit (be_interface *derived_interface,
+            TAO_OutStream *os,
+            be_interface *base_interface) override;
 
 private:
   be_visitor *visitor_;

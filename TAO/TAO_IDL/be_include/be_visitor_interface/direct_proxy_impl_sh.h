@@ -26,7 +26,7 @@ public:
   // -- Ctor/Dtor Decl. --
   explicit be_visitor_interface_direct_proxy_impl_sh (be_visitor_context *ctx);
 
-  ~be_visitor_interface_direct_proxy_impl_sh () override;
+  ~be_visitor_interface_direct_proxy_impl_sh () override = default;
   be_visitor_interface_direct_proxy_impl_sh (be_visitor_interface_direct_proxy_impl_sh const &) = delete;
   be_visitor_interface_direct_proxy_impl_sh (be_visitor_interface_direct_proxy_impl_sh &&) = delete;
   be_visitor_interface_direct_proxy_impl_sh &operator= (be_visitor_interface_direct_proxy_impl_sh const &) = delete;

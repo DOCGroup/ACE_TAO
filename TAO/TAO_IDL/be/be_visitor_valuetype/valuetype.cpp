@@ -663,7 +663,6 @@ be_visitor_valuetype::visit_field (be_field *)
 int
 be_visitor_valuetype::gen_pd (be_valuetype *node)
 {
-  std::size_t n_processed = 0;
   this->elem_number_ = 0;
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
@@ -687,8 +686,6 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
         {
           continue;
         }
-
-      ++n_processed;
 
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
