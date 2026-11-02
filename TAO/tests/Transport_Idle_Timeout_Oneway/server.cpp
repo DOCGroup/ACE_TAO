@@ -8,13 +8,13 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager_T.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+static ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     {
       switch (c)
@@ -34,7 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static size_t
 cache_size (CORBA::ORB_ptr orb)
 {
-  TAO_ORB_Core *core = orb->orb_core ();
+  TAO_ORB_Core * const core = orb->orb_core ();
   return core->lane_resources ().transport_cache ().current_size ();
 }
 
@@ -76,7 +76,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Do not start the idle observation window until the oneway has run.
       // Also fail if no request arrives; an initially empty cache is not a pass.
-      const auto deadline = std::chrono::steady_clock::now () + std::chrono::seconds (30);
+      std::chrono::steady_clock::time_point const deadline =
+        std::chrono::steady_clock::now () + std::chrono::seconds (30);
       while (!impl->request_received () && std::chrono::steady_clock::now () < deadline)
         {
           ACE_Time_Value slice (0, 50000);
@@ -110,7 +111,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const & ex)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server caught CORBA exception %C\n"),

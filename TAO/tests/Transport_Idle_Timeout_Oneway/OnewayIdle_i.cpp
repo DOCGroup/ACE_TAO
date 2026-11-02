@@ -9,7 +9,7 @@ namespace
   size_t
   cache_size (CORBA::ORB_ptr orb)
   {
-    TAO_ORB_Core *core = orb->orb_core ();
+    TAO_ORB_Core * const core = orb->orb_core ();
     return core->lane_resources ().transport_cache ().current_size ();
   }
 }

@@ -5,13 +5,13 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager_T.h"
 
-static const char *ior = nullptr;
+static char const *ior = nullptr;
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     {
       switch (c)
@@ -36,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static size_t
 cache_size (CORBA::ORB_ptr orb)
 {
-  TAO_ORB_Core *core = orb->orb_core ();
+  TAO_ORB_Core * const core = orb->orb_core ();
   return core->lane_resources ().transport_cache ().current_size ();
 }
 
@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const & ex)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) client caught CORBA exception %C\n"),
