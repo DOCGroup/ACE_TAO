@@ -32,10 +32,10 @@ public:
   static int static_init ();
 
   /// Create ACE_SSL_Context singleton.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Do cleanup of SSL library.
-  virtual int fini ();
+  int fini () override;
 };
 
 static int ACE_Force_ACE_SSL_Initializer = ACE_SSL_Initializer::static_init ();

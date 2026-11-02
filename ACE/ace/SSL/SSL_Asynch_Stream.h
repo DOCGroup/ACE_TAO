@@ -118,9 +118,9 @@ public:
     ACE_SSL_Asynch_Result (ACE_Handler &handler);
 
     void complete (size_t bytes_transferred,
-                   int    success,
-                   const  void * completion_key,
-                   u_long error);
+                   int success,
+                   const void *completion_key,
+                   u_long error) override;
 };
 
 
@@ -176,7 +176,7 @@ public:
                          ACE_SSL_Context * context = nullptr);
 
   /// Destructor
-  virtual ~ACE_SSL_Asynch_Stream ();
+  ~ACE_SSL_Asynch_Stream () override;
 
   int cancel ();
 
@@ -276,23 +276,21 @@ public:
 protected:
   /// Virtual from ACE_Asynch_Operation. Since this class is essentially an
   /// implementation class, simply return 0.
-  virtual ACE_Asynch_Operation_Impl *implementation () const { return nullptr; }
+  ACE_Asynch_Operation_Impl *implementation () const override { return nullptr; }
 
   /// virtual from ACE_Handler
 
   /// This method is called when BIO write request is completed. It
   /// processes the IO completion and calls do_SSL_state_machine().
-  virtual void handle_write_stream
-               (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
   /// This method is called when BIO read request is completed. It
   /// processes the IO completion and calls do_SSL_state_machine().
-  virtual void handle_read_stream
-               (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This method is called when all SSL sessions are closed and no
   /// more pending AIOs exist.  It also calls users handle_wakeup().
-  virtual void handle_wakeup ();
+  void handle_wakeup () override;
 
   /**
    * This method will be called after a successful SSL handshake indicating
