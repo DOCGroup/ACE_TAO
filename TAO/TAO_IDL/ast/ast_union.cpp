@@ -906,7 +906,68 @@ AST_Union::compute_default_index ()
 AST_UnionBranch *
 AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 {
-  return dynamic_cast<AST_UnionBranch*> (this->fe_add_ref_decl (t));
+  AST_UnionBranch *branch =
+    dynamic_cast<AST_UnionBranch*> (this->fe_add_ref_decl (t));
+
+  if (branch == nullptr)
+    {
+      return nullptr;
+    }
+
+  bool duplicate_label = false;
+
+  for (std::size_t i = 0;
+       i < branch->label_list_length () && !duplicate_label;
+       ++i)
+    {
+      AST_UnionLabel *label = branch->label (i);
+
+      for (UTL_ScopeActiveIterator iter (this, UTL_Scope::IK_decls);
+           !iter.is_done () && !duplicate_label;
+           iter.next ())
+        {
+          AST_UnionBranch *other_branch =
+            dynamic_cast<AST_UnionBranch*> (iter.item ());
+
+          if (other_branch == nullptr)
+            {
+              continue;
+            }
+
+          std::size_t const other_label_count = other_branch == branch
+            ? i
+            : other_branch->label_list_length ();
+
+          for (std::size_t j = 0; j < other_label_count; ++j)
+            {
+              AST_UnionLabel *other_label = other_branch->label (j);
+              bool const both_default =
+                label->label_kind () == AST_UnionLabel::UL_default
+                && other_label->label_kind () == AST_UnionLabel::UL_default;
+              bool const same_value =
+                label->label_kind () == AST_UnionLabel::UL_label
+                && other_label->label_kind () == AST_UnionLabel::UL_label
+                && label->label_val () != nullptr
+                && other_label->label_val () != nullptr
+                && label->label_val ()->compare (other_label->label_val ());
+
+              if (both_default || same_value)
+                {
+                  duplicate_label = true;
+                  break;
+                }
+            }
+        }
+    }
+
+  if (duplicate_label)
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
+                                  this,
+                                  branch);
+    }
+
+  return branch;
 }
 
 AST_Union *

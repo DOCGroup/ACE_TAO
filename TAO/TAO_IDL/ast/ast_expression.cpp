@@ -2610,11 +2610,6 @@ AST_Expression::operator== (AST_Expression *vc)
 bool
 AST_Expression::compare (AST_Expression *vc)
 {
-  if (this->pd_ec != vc->ec ())
-    {
-      return false;
-    }
-
   this->evaluate (EK_const);
   vc->evaluate (EK_const);
 
@@ -2649,7 +2644,7 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_octet:
       return this->pd_ev->u.oval == vc->ev ()->u.oval;
     case EV_bool:
-      return this->pd_ev->u.lval == vc->ev ()->u.lval;
+      return this->pd_ev->u.bval == vc->ev ()->u.bval;
     case EV_string:
       return pd_ev->strval == vc->ev ()->strval;
     case EV_wstring:

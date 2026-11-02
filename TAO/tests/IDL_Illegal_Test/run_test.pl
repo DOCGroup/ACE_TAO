@@ -22,7 +22,7 @@ open (STDERR, ">&STDOUT");
 
 foreach my $idl_file ("invalid_scoping1.idl", "invalid_scoping2.idl",
                       "keyword_case_diff.idl", "exception_misuse1.idl",
-                      "exception_misuse2.idl") {
+                      "exception_misuse2.idl", "duplicate_boolean_union.idl") {
     my $input_file = $target->LocalFile ($idl_file);
     my $process = $target->CreateProcess ($tao_idl, $input_file);
     my $result = $process->SpawnWaitKill ($target->ProcessStartWaitInterval());
