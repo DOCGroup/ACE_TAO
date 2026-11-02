@@ -60,7 +60,7 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
     char const *uses_interface)
 {
   // Register the consumer uses_interface with the EC
-  int result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface);
+  int const result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface);
 
   if (result == -1)
     {

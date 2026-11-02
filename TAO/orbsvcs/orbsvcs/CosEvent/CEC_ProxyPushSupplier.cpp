@@ -326,11 +326,11 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
         // declared and obtained before the Guard to avoid deadlock during the
         // _is_a (during _narrow) and get_typed_consumer invocations.
         // They are eventually assigned onto this object inside the Guard.
-        CosTypedEventComm::TypedPushConsumer_var local_typed_consumer =
+        CosTypedEventComm::TypedPushConsumer_var const local_typed_consumer =
           CosTypedEventComm::TypedPushConsumer::_narrow (push_consumer);
 
         // Obtain the typed object interface from the consumer
-        CORBA::Object_var local_typed_consumer_obj =
+        CORBA::Object_var const local_typed_consumer_obj =
           CORBA::Object::_duplicate (local_typed_consumer->get_typed_consumer () );
 
         {

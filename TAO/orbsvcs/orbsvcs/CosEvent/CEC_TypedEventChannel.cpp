@@ -102,15 +102,15 @@ TAO_CEC_TypedEventChannel::shutdown ()
   this->supplier_control_->shutdown ();
   this->consumer_control_->shutdown ();
 
-  PortableServer::POA_var typed_consumer_poa =
+  PortableServer::POA_var const typed_consumer_poa =
     this->typed_consumer_admin_->_default_POA ();
-  PortableServer::ObjectId_var typed_consumer_id =
+  PortableServer::ObjectId_var const typed_consumer_id =
     typed_consumer_poa->servant_to_id (this->typed_consumer_admin_);
   typed_consumer_poa->deactivate_object (typed_consumer_id.in ());
 
-  PortableServer::POA_var typed_supplier_poa =
+  PortableServer::POA_var const typed_supplier_poa =
     this->typed_supplier_admin_->_default_POA ();
-  PortableServer::ObjectId_var typed_supplier_id =
+  PortableServer::ObjectId_var const typed_supplier_id =
     typed_supplier_poa->servant_to_id (this->typed_supplier_admin_);
   typed_supplier_poa->deactivate_object (typed_supplier_id.in ());
 
@@ -252,7 +252,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
         this->interface_repository_->lookup_id (interface_);
 
       // Narrow the interface
-      CORBA::InterfaceDef_var intface =
+      CORBA::InterfaceDef_var const intface =
         CORBA::InterfaceDef::_narrow (contained.in ());
 
       if (CORBA::is_nil (intface.in () ))
@@ -297,7 +297,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
                 }
 
               // Obtain the parameters
-              CORBA::ULong num_params = fid->operations[oper].parameters.length();
+              CORBA::ULong const num_params = fid->operations[oper].parameters.length();
               TAO_CEC_Operation_Params *oper_params = new TAO_CEC_Operation_Params (num_params);
 
               for (CORBA::ULong param=0; param<num_params; param++)
@@ -334,7 +334,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
                               oper_params->num_params_ ));
                 }
 
-              int result = insert_into_ifr_cache (fid->operations[oper].name.in(), oper_params);
+              int const result = insert_into_ifr_cache (fid->operations[oper].name.in(), oper_params);
               if (result != 0)
                 {
                   if (TAO_debug_level >= 10)

@@ -656,7 +656,7 @@ TAO_CEC_ProxyPullConsumer*
 TAO_CEC_Default_Factory::create_proxy_pull_consumer (TAO_CEC_EventChannel *ec)
 {
   TAO_CEC_ProxyPullConsumer *created {};
-  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+  ACE_Time_Value const timeout = this->supplier_control_ ? this->supplier_timeout_
     : ACE_Time_Value::zero;
   ACE_NEW_RETURN (created, TAO_CEC_ProxyPullConsumer (ec, timeout), nullptr);
   return created;
@@ -1317,10 +1317,10 @@ TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_TypedEventChannel* ec)
     {
       int argc {};
       ACE_TCHAR **argv = nullptr;
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
 
-      ACE_Time_Value rate (0, this->consumer_control_period_);
+      ACE_Time_Value const rate (0, this->consumer_control_period_);
       return new TAO_CEC_Reactive_ConsumerControl (
                                  rate, this->consumer_control_timeout_,
                                  this->proxy_disconnect_retries_,
@@ -1367,10 +1367,10 @@ TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_TypedEventChannel* ec)
     {
       int argc {};
       ACE_TCHAR **argv = nullptr;
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_);
 
-      ACE_Time_Value rate (0, this->supplier_control_period_);
+      ACE_Time_Value const rate (0, this->supplier_control_period_);
       return new TAO_CEC_Reactive_SupplierControl (
                                  rate, this->supplier_control_timeout_,
                                  this->proxy_disconnect_retries_,

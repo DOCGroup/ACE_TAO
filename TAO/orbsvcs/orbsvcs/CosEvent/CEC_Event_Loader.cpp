@@ -265,7 +265,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
           CORBA::Repository_var interface_repository;
 
-          CORBA::Object_var ifr_obj_var =
+          CORBA::Object_var const ifr_obj_var =
             orb->resolve_initial_references ("InterfaceRepository");
 
           if (CORBA::is_nil(ifr_obj_var.in () ))
@@ -323,12 +323,12 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
           this->typed_ec_impl_->activate ();
 
-          CosTypedEventChannelAdmin::TypedEventChannel_var event_channel =
+          CosTypedEventChannelAdmin::TypedEventChannel_var const event_channel =
             this->typed_ec_impl_->_this ();
 
           if (ior_file != nullptr)
             {
-              CORBA::String_var ior =
+              CORBA::String_var const ior =
                 orb->object_to_string (event_channel.in ());
 
               FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
@@ -357,7 +357,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
           if (this->bind_to_naming_service_)
             {
-              CORBA::Object_var obj =
+              CORBA::Object_var const obj =
                 orb->resolve_initial_references ("NameService");
 
               this->naming_context_ =
@@ -406,10 +406,10 @@ TAO_CEC_Event_Loader::fini ()
 
           // Deactivate the Typed EC
           // This will raise an exception if destroy == 1
-          PortableServer::POA_var t_poa =
+          PortableServer::POA_var const t_poa =
           this->typed_ec_impl_->_default_POA ();
 
-          PortableServer::ObjectId_var t_id =
+          PortableServer::ObjectId_var const t_id =
           t_poa->servant_to_id (this->typed_ec_impl_.get ());
 
           t_poa->deactivate_object (t_id.in ());
