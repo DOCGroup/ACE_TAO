@@ -340,18 +340,21 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  bool const is_loc = node->is_local ();
+  if (!node->is_abstract ())
+    {
+      bool const is_loc = node->is_local ();
 
-  *os << be_nl_2
-      << "::CORBA::Boolean" << be_nl
-      << node->name () << "::marshal (TAO_OutputCDR &"
-      << (is_loc ? " /* " : "") << "cdr"
-      << (is_loc ? " */" : "") << ")" << be_nl
-      << "{" << be_idt_nl
-      << "return "
-      << (is_loc ? "false" : "(cdr << this)")
-      << ";" << be_uidt_nl
-      << "}";
+      *os << be_nl_2
+          << "::CORBA::Boolean" << be_nl
+          << node->name () << "::marshal (TAO_OutputCDR &"
+          << (is_loc ? " /* " : "") << "cdr"
+          << (is_loc ? " */" : "") << ")" << be_nl
+          << "{" << be_idt_nl
+          << "return "
+          << (is_loc ? "false" : "(cdr << this)")
+          << ";" << be_uidt_nl
+          << "}";
+    }
 
   if (! node->is_abstract ())
     {

@@ -10,6 +10,7 @@
 //=============================================================================
 
 #include "operation.h"
+#include "be_interface.h"
 
 // ******************************************************
 // Primary visitor for "operation" in client header.
@@ -26,6 +27,10 @@ int
 be_visitor_operation_ch::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+
+  bool const inherited_operation =
+    this->ctx_->interface () != nullptr
+    && this->ctx_->interface () != node->defined_in ();
 
   this->ctx_->node (node);
 
@@ -57,7 +62,10 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
                  << "/// @return value of " << node->local_name() << " attribute" << be_nl;
         }
     }
-  *os << "virtual ";
+  if (!inherited_operation)
+    {
+      *os << "virtual ";
+    }
 
   // Grab the right visitor to generate the return type.
   be_visitor_context ctx (*this->ctx_);

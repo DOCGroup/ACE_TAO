@@ -26,6 +26,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       return 0;
     }
 
+  be_interface *const previous_interface = this->ctx_->interface ();
+  this->ctx_->interface (node);
+
   // This will be a no-op if it has already been done by a forward
   // declaration.
   node->gen_var_out_seq_decls ();
@@ -156,10 +159,13 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << be_nl << "static const char* _desc_interface_name ();";
     }
 
-  // The virtual marshal method, to prevent marshal of local interfaces.
-  *os << be_nl
-      << "::CORBA::Boolean marshal "
-      << "(TAO_OutputCDR &cdr) override;";
+  // The marshal method is not part of the abstract interface mapping.
+  if (!node->is_abstract ())
+    {
+      *os << be_nl
+          << "::CORBA::Boolean marshal "
+          << "(TAO_OutputCDR &cdr) override;";
+    }
 
   // If we are generating CORBA Policy we need to add some more methods
   if (node->full_name () == "CORBA::Policy")
@@ -301,6 +307,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   node->cli_hdr_gen (true);
+  this->ctx_->interface (previous_interface);
   return 0;
 }
 
