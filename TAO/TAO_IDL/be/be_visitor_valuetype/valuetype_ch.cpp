@@ -68,7 +68,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   long i;  // loop index
   be_valuetype *inherited = nullptr;
   long n_inherits = node->n_inherits ();
-  int inherits_eventtype = 0;
+  bool inherits_eventtype = false;
 
   if (n_inherits > 0)
     {
@@ -79,7 +79,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
           if (inherited->node_type () == AST_Decl::NT_eventtype)
             {
-              inherits_eventtype = 1;
+              inherits_eventtype = true;
             }
 
           if (i > 0)
@@ -138,7 +138,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
   else if (node->node_type () == AST_Decl::NT_eventtype)
     {
-      if (inherits_eventtype == 0)
+      if (!inherits_eventtype)
         {
           if (n_inherits > 0)
             {

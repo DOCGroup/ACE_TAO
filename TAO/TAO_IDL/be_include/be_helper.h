@@ -43,26 +43,26 @@ struct TAO_NL_2
  * Operates like a manipulator, increasing the indentation level.
  *
  * Increase the indentation level, if the "do_now" parameter is
- * not zero then the <indent> method is called on the stream.
+ * true then the <indent> method is called on the stream.
  */
 struct TAO_INDENT
 {
-  explicit TAO_INDENT (int do_now = 0);
+  explicit TAO_INDENT (bool do_now = false);
 
-  const int do_now_;
+  bool const do_now_;
 };
 
 /**
  * Operates like a manipulator, decreasing the indentation level.
  *
  * Decrease the indentation level, if the "do_now" parameter is
- * not zero then the <indent> method is called on the stream.
+ * true then the <indent> method is called on the stream.
  */
 struct TAO_UNINDENT
 {
-  explicit TAO_UNINDENT (int do_now = 0);
+  explicit TAO_UNINDENT (bool do_now = false);
 
-  const int do_now_;
+  bool const do_now_;
 };
 
 extern const TAO_NL be_nl;
@@ -76,10 +76,10 @@ extern const TAO_UNINDENT be_uidt_nl;
 // conditionally output a newline and some form of "ACE_CHECK".
 struct TAO_ACE_CHECK
 {
-  TAO_ACE_CHECK (const char *retval = nullptr,
+  TAO_ACE_CHECK (char const *retval = nullptr,
                  bool do_return = false);
 
-  const char *retval_;
+  char const *retval_;
   bool do_return_ {};
 };
 
@@ -128,6 +128,10 @@ public:
   TAO_OutStream ();
 
   virtual ~TAO_OutStream ();
+  TAO_OutStream (TAO_OutStream const &) = delete;
+  TAO_OutStream (TAO_OutStream &&) = delete;
+  TAO_OutStream &operator= (TAO_OutStream const &) = delete;
+  TAO_OutStream &operator= (TAO_OutStream &&) = delete;
 
   /// Open the underlying low-level handle for output.
   int open (std::string const& fname,
@@ -144,11 +148,11 @@ public:
 
   /// Increment the indentation level and by default actually indent the output
   /// accordingly
-  int incr_indent (unsigned short flag = 1);
+  int incr_indent (bool flag = true);
 
   /// Decrease the indentation level and by default actually indent the output
   /// accordingly
-  int decr_indent (unsigned short flag = 1);
+  int decr_indent (bool flag = true);
 
   /// Reset indentation level to 0
   int reset ();

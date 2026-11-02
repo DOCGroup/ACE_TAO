@@ -108,7 +108,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  int is_an_exception_reply = 0;
+  bool is_an_exception_reply = false;
 
   // Find out if the operation is one of the *_excep() operations, the
   // conditions are:
@@ -144,7 +144,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
                   if (last_E != std::string::npos
                       && vt_name.substr (last_E) == "ExceptionHolder")
                     {
-                      is_an_exception_reply = 1;
+                      is_an_exception_reply = true;
                     }
                 }
             }

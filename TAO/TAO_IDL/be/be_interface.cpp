@@ -387,7 +387,7 @@ be_interface::gen_def_ctors_helper (be_interface* node,
                                     be_interface* base,
                                     TAO_OutStream *os)
 {
-  static int first = 0;
+  static bool first = false;
 
   if (node != base)
     {
@@ -396,7 +396,7 @@ be_interface::gen_def_ctors_helper (be_interface* node,
           *os << be_global->impl_class_prefix () << base->flat_name ()
               << be_global->impl_class_suffix () << " ()";
 
-          first = 0;
+          first = false;
         }
       else
         {
@@ -408,7 +408,7 @@ be_interface::gen_def_ctors_helper (be_interface* node,
   else
     {
       *os << ":";
-      first = 1;
+      first = true;
     }
 
    return 1;

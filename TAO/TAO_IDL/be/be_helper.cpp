@@ -57,22 +57,22 @@ TAO_NL_2::TAO_NL_2 ()
   ACE_UNUSED_ARG (copyright);
 }
 
-TAO_INDENT::TAO_INDENT (int do_now)
-  :  do_now_ (do_now)
+TAO_INDENT::TAO_INDENT (bool do_now)
+  : do_now_ (do_now)
 {
 }
 
-TAO_UNINDENT::TAO_UNINDENT (int do_now)
-  :  do_now_ (do_now)
+TAO_UNINDENT::TAO_UNINDENT (bool do_now)
+  : do_now_ (do_now)
 {
 }
 
-const TAO_NL be_nl;
-const TAO_NL_2 be_nl_2;
-const TAO_INDENT be_idt;
-const TAO_INDENT be_idt_nl (1);
-const TAO_UNINDENT be_uidt;
-const TAO_UNINDENT be_uidt_nl (1);
+TAO_NL const be_nl;
+TAO_NL_2 const be_nl_2;
+TAO_INDENT const be_idt;
+TAO_INDENT const be_idt_nl (true);
+TAO_UNINDENT const be_uidt;
+TAO_UNINDENT const be_uidt_nl (true);
 
 // Methods of the TAO_OutStream class.
 
@@ -151,11 +151,11 @@ TAO_OutStream::file ()
 }
 
 int
-TAO_OutStream::incr_indent (unsigned short flag)
+TAO_OutStream::incr_indent (bool flag)
 {
   ++indent_level_;
 
-  if (flag != 0)
+  if (flag)
     {
       return this->indent ();
     }
@@ -168,7 +168,7 @@ TAO_OutStream::incr_indent (unsigned short flag)
 
 // Indentation
 int
-TAO_OutStream::decr_indent (unsigned short flag)
+TAO_OutStream::decr_indent (bool flag)
 {
   --this->indent_level_;
   // Just in case somebody gets "unindent happy".
@@ -177,7 +177,7 @@ TAO_OutStream::decr_indent (unsigned short flag)
       // ACE_DEBUG ((LM_DEBUG, "negative indentation?\n"));
       this->indent_level_ = 0;
     }
-  if (flag != 0)
+  if (flag)
     {
       return this->indent ();
     }
@@ -493,7 +493,7 @@ TAO_OutStream::operator<< (const TAO_NL_2&)
 TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_INDENT& i)
 {
-  this->incr_indent (0);
+  this->incr_indent (false);
 
   if (i.do_now_)
     {
@@ -506,7 +506,7 @@ TAO_OutStream::operator<< (const TAO_INDENT& i)
 TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_UNINDENT& i)
 {
-  this->decr_indent (0);
+  this->decr_indent (false);
 
   if (i.do_now_)
     {
