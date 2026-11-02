@@ -10,8 +10,24 @@
 //=============================================================================
 
 #include "attribute.h"
+#include "fe_utils.h"
 
+#include <memory>
 #include <string>
+
+namespace
+{
+  struct AST_Decl_Destroyer
+  {
+    void operator() (AST_Decl *decl) const
+    {
+      if (decl != nullptr)
+        {
+          decl->destroy ();
+        }
+    }
+  };
+}
 
 // Attribute gets mapped to one or possibly two operations based on whether
 // it is readonly or not. The two operations "get" and "set" the value of the
@@ -60,15 +76,19 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   ACE_NEW_RETURN (op_id,
                   Identifier (op_name),
                   -1);
+  std::unique_ptr<Identifier> op_id_owner (op_id);
 
   UTL_ScopedName *op_ln = nullptr;
   ACE_NEW_RETURN (op_ln,
-                  UTL_ScopedName (op_id, nullptr),
+                  UTL_ScopedName (op_id_owner.get (), nullptr),
                   -1);
+  op_id_owner.release ();
+  FE_Utils::Scoped_Name_Owner op_ln_owner (op_ln);
 
-  UTL_ScopedName *op_sn =
-    static_cast<UTL_ScopedName *> (d->name ()->copy ());
-  op_sn->nconc (op_ln);
+  FE_Utils::Scoped_Name_Owner op_sn (
+    static_cast<UTL_ScopedName *> (d->name ()->copy ()));
+  op_sn->nconc (op_ln_owner.get ());
+  op_ln_owner.release ();
 
   // first the "get" operation
   be_operation get_op (node->field_type (),
@@ -76,9 +96,11 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                        nullptr,
                        node->is_local (),
                        node->is_abstract ());
+  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> get_op_owner (&get_op);
 
   get_op.set_defined_in (s);
-  get_op.set_name (op_sn);
+  get_op.set_name (op_sn.get ());
+  op_sn.release ();
   UTL_ExceptList *get_exceptions = node->get_get_exceptions ();
 
   if (nullptr != get_exceptions)
@@ -200,13 +222,11 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ROOT_CNS:
       break;
     default:
-      get_op.destroy ();
       return 0;
     }
 
   if (status == -1)
     {
-      get_op.destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -217,7 +237,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Do nothing for readonly attributes.
   if (node->readonly ())
     {
-      get_op.destroy ();
       return 0;
     }
 
@@ -231,14 +250,19 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // The return type  is "void".
   be_predefined_type rt (AST_PredefinedType::PT_void,
                          &sn);
+  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> rt_owner (&rt);
 
   // Argument type is the same as the attribute type.
   AST_Argument *arg =
     idl_global->gen ()->create_argument (AST_Argument::dir_IN,
                                          node->field_type (),
                                          node->name ());
+  std::unique_ptr<AST_Argument, AST_Decl_Destroyer> arg_owner (arg);
 
-  arg->set_name ((UTL_IdList *) node->name ()->copy ());
+  FE_Utils::Scoped_Name_Owner arg_name (
+    static_cast<UTL_ScopedName *> (node->name ()->copy ()));
+  arg->set_name (arg_name.get ());
+  arg_name.release ();
 
   // Create the operation.
   be_operation set_op (&rt,
@@ -246,9 +270,17 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                        nullptr,
                        node->is_local (),
                        node->is_abstract ());
+  std::unique_ptr<AST_Decl, AST_Decl_Destroyer> set_op_owner (&set_op);
   set_op.set_defined_in (node->defined_in ());
-  set_op.set_name (static_cast<UTL_ScopedName *> (op_sn->copy ()));
-  set_op.be_add_argument (arg);
+  FE_Utils::Scoped_Name_Owner set_op_name (
+    static_cast<UTL_ScopedName *> (get_op.name ()->copy ()));
+  set_op.set_name (set_op_name.get ());
+  set_op_name.release ();
+  if (set_op.be_add_argument (arg_owner.get ()) == nullptr)
+    {
+      return -1;
+    }
+  arg_owner.release ();
 
   UTL_ExceptList *set_exceptions = node->get_set_exceptions ();
 
@@ -372,8 +404,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       break;
     default:
       // Error.
-      set_op.destroy ();
-      rt.destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -383,16 +413,10 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   if (status == 0)
     {
-      get_op.destroy ();
-      set_op.destroy ();
-      rt.destroy ();
       return 0;
     }
   else if (status == -1)
     {
-      get_op.destroy ();
-      set_op.destroy ();
-      rt.destroy ();
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -400,9 +424,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                         -1);
     }
 
-  get_op.destroy ();
-  set_op.destroy ();
-  rt.destroy ();
   return 0;
 }
 
