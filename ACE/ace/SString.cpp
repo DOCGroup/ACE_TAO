@@ -1,8 +1,9 @@
 #include "ace/Malloc_T.h"
 #include "ace/OS_Memory.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Numeric_Limits.h"
+
+#include <cstring>
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
@@ -120,7 +121,7 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
   if (s == nullptr)
     return;
 
-  this->len_ = this->buf_len_ = ACE_OS::strlen (s);
+  this->len_ = this->buf_len_ = std::strlen (s);
 
   if (this->buf_len_ == 0)
     return;
@@ -185,9 +186,7 @@ ACE_SString::ACE_SString (const ACE_SString &s)
     this->allocator_ = ACE_Allocator::instance ();
 
   this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
-  ACE_OS::memcpy ((void *) this->rep_,
-                  (const void *) s.rep_,
-                  this->len_);
+  std::memcpy (this->rep_, s.rep_, this->len_);
   this->rep_[this->len_] = '\0';
 }
 
@@ -220,7 +219,7 @@ ACE_SString::rep (char *s)
   if (s == nullptr)
     this->len_ = 0;
   else
-    this->len_ = ACE_OS::strlen (s);
+    this->len_ = std::strlen (s);
 }
 
 // Constructor that actually copies memory.
@@ -242,9 +241,9 @@ ACE_SString::ACE_SString (const char *s,
     }
   else
     {
-      this->len_ = ACE_OS::strlen (s);
+      this->len_ = std::strlen (s);
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::strcpy (this->rep_, s);
+      std::strcpy (this->rep_, s);
     }
 }
 
@@ -285,7 +284,7 @@ ACE_SString::ACE_SString (const char *s,
     {
       this->len_ = len;
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::memcpy (this->rep_, s, len);
+      std::memcpy (this->rep_, s, len);
       this->rep_[len] = '\0'; // Make sure to NUL terminate this!
     }
 }
@@ -307,7 +306,7 @@ ACE_SString::operator= (const ACE_SString &s)
           this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
         }
       this->len_ = s.len_;
-      ACE_OS::strcpy (this->rep_, s.rep_);
+      std::strcpy (this->rep_, s.rep_);
     }
 
   return *this;
