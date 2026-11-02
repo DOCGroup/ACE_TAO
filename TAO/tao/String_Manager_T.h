@@ -115,14 +115,14 @@ public:
   /// for out parameter.
   inline character_type *&out () {
     s_traits::release (this->ptr_);
-    this->ptr_ = 0;
+    this->ptr_ = nullptr;
     return this->ptr_;
   }
 
   /// For string of return type.
   inline character_type *_retn () {
     character_type *temp = this->ptr_;
-    this->ptr_ = 0;
+    this->ptr_ = nullptr;
     return temp;
   }
 
