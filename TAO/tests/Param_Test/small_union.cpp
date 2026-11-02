@@ -27,7 +27,7 @@ Test_Small_Union::Test_Small_Union ()
 Test_Small_Union::~Test_Small_Union ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -47,7 +47,7 @@ Test_Small_Union::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Small_Union *tmp = 0;
+  const Param_Test::Small_Union *tmp = nullptr;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Small_Union (*tmp);
 

@@ -29,7 +29,7 @@ Test_Struct_Sequence::Test_Struct_Sequence ()
 Test_Struct_Sequence::~Test_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -51,7 +51,7 @@ Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::StructSeq *tmp = 0;
+  const Param_Test::StructSeq *tmp = nullptr;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::StructSeq (*tmp);
 
@@ -225,7 +225,7 @@ Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence ()
 Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -247,7 +247,7 @@ Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::PathSpec *tmp = 0;
+  const Param_Test::PathSpec *tmp = nullptr;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::PathSpec (*tmp);
 

@@ -29,7 +29,7 @@ Test_Exception::Test_Exception ()
 Test_Exception::~Test_Exception ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -68,8 +68,8 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   catch (CORBA::UnknownUserException& user_ex)
     {
-      const Param_Test::Ooops* oops = 0;
-      const Param_Test::BadBoy* bad_boy = 0;
+      const Param_Test::Ooops* oops = nullptr;
+      const Param_Test::BadBoy* bad_boy = nullptr;
 
       if (user_ex.exception () >>= oops)
         {

@@ -16,7 +16,7 @@
 #include "ace/OS_NS_stdio.h"
 
 // Parses the command line arguments and returns an error status.
-static FILE *ior_output_file = 0;
+static FILE *ior_output_file = nullptr;
 static const ACE_TCHAR *ior_output_filename = ACE_TEXT("test.ior");
 
 static int
@@ -50,7 +50,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  Param_Test_i *param_test = 0;
+  Param_Test_i *param_test = nullptr;
 
   try
     {
@@ -124,7 +124,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ior_output_file = ACE_OS::fopen (ior_output_filename, "w");
 
-      if (ior_output_file == 0)
+      if (ior_output_file == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",

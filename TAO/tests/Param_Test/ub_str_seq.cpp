@@ -29,7 +29,7 @@ Test_String_Sequence::Test_String_Sequence ()
 Test_String_Sequence::~Test_String_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -49,7 +49,7 @@ Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::StringSeq *tmp = 0;
+  const CORBA::StringSeq *tmp = nullptr;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::StringSeq (*tmp);
 
@@ -122,7 +122,7 @@ Test_String_Sequence::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_String_Sequence::check_validity ()
 {
-  CORBA::Boolean flag = 0;
+  CORBA::Boolean flag = false;
   if ((this->in_->length () == this->inout_->length ()) &&
       (this->in_->length () == this->out_->length ()) &&
       (this->in_->length () == this->ret_->length ()))
@@ -135,7 +135,7 @@ Test_String_Sequence::check_validity ()
               ACE_OS::strcmp(this->in_[i], this->out_[i]) ||
               ACE_OS::strcmp(this->in_[i], this->ret_[i]))
             // not equal
-            flag = 0;
+            flag = false;
         }
     }
   return flag;

@@ -35,7 +35,7 @@ Test_Complex_Any::Test_Complex_Any ()
 Test_Complex_Any::~Test_Complex_Any ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -174,8 +174,8 @@ Test_Complex_Any::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Complex_Any::check_validity ()
 {
-  const CORBA::AnySeq *level2_in_seq = 0;
-  const CORBA::AnySeq *level2_test_seq = 0;
+  const CORBA::AnySeq *level2_in_seq = nullptr;
+  const CORBA::AnySeq *level2_test_seq = nullptr;
 
   if (!(this->in_ >>= level2_in_seq))
     return 0;
@@ -215,8 +215,8 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
 
   for (CORBA::ULong i = 0; i < level2_in_seq->length (); i++)
     {
-      const CORBA::AnySeq *level3_in_seq = 0;
-      const CORBA::AnySeq *level3_test_seq = 0;
+      const CORBA::AnySeq *level3_in_seq = nullptr;
+      const CORBA::AnySeq *level3_test_seq = nullptr;
 
       if (!((*level2_in_seq)[i] >>= level3_in_seq))
         return 0;
@@ -232,8 +232,8 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
 
       for (CORBA::ULong j = 0; j < level3_in_seq->length (); j ++)
         {
-          const Param_Test::level4 *level4_in_struct = 0;
-          const Param_Test::level4 *level4_test_struct = 0;
+          const Param_Test::level4 *level4_in_struct = nullptr;
+          const Param_Test::level4 *level4_test_struct = nullptr;
 
           if (!((*level3_in_seq)[j] >>= level4_in_struct))
             return 0;
@@ -263,8 +263,8 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           if (!((*level6_test_any) >>= level7_test_any))
             return 0;
 
-          const Param_Test::level8 *level8_in_struct = 0;
-          const Param_Test::level8 *level8_test_struct = 0;
+          const Param_Test::level8 *level8_in_struct = nullptr;
+          const Param_Test::level8 *level8_test_struct = nullptr;
 
           if (!((*level7_in_any) >>= level8_in_struct))
             return 0;

@@ -27,7 +27,7 @@ Test_Var_Array::Test_Var_Array ()
 Test_Var_Array::~Test_Var_Array ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *

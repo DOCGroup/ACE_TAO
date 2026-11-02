@@ -29,7 +29,7 @@ Test_Bounded_Short_Sequence::Test_Bounded_Short_Sequence ()
 Test_Bounded_Short_Sequence::~Test_Bounded_Short_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -48,7 +48,7 @@ Test_Bounded_Short_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Bounded_Short_Seq *tmp = 0;
+  const Param_Test::Bounded_Short_Seq *tmp = nullptr;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_Short_Seq (*tmp);
 
@@ -128,7 +128,7 @@ Test_Bounded_Short_Sequence::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Bounded_Short_Sequence::check_validity ()
 {
-  CORBA::Boolean flag = 0;
+  CORBA::Boolean flag = false;
   if ((this->in_->length () == this->inout_->length ()) &&
       (this->in_->length () == this->out_->length ()) &&
       (this->in_->length () == this->ret_->length ()))
@@ -141,7 +141,7 @@ Test_Bounded_Short_Sequence::check_validity ()
               this->in_[i] != this->out_[i] ||
               this->in_[i] != this->ret_[i])
             // not equal
-            flag = 0;
+            flag = false;
         }
     }
   return flag;

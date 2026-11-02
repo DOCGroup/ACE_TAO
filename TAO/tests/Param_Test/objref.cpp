@@ -25,7 +25,7 @@ Test_ObjRef::Test_ObjRef ()
 Test_ObjRef::~Test_ObjRef ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -217,10 +217,10 @@ Test_ObjRef::print_values ()
   Coffee::Desc_var inout_desc;
   Coffee::Desc_var out_desc;
   Coffee::Desc_var ret_desc;
-  const char *in = 0;
-  const char *out = 0;
-  const char *inout = 0;
-  const char *ret = 0;
+  const char *in = nullptr;
+  const char *out = nullptr;
+  const char *inout = nullptr;
+  const char *ret = nullptr;
   try
     {
       if (!CORBA::is_nil (this->in_.in ()))

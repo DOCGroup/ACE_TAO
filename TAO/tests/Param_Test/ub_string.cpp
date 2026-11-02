@@ -19,10 +19,10 @@
 
 Test_Unbounded_String::Test_Unbounded_String ()
   : opname_ (CORBA::string_dup ("test_unbounded_string")),
-    in_ (0),
-    inout_ (0),
-    out_ (0),
-    ret_ (0)
+    in_ (nullptr),
+    inout_ (nullptr),
+    out_ (nullptr),
+    ret_ (nullptr)
 {
 }
 
@@ -33,11 +33,11 @@ Test_Unbounded_String::~Test_Unbounded_String ()
   CORBA::string_free (this->inout_);
   CORBA::string_free (this->out_);
   CORBA::string_free (this->ret_);
-  this->opname_ = 0;
-  this->in_ = 0;
-  this->inout_ = 0;
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->opname_ = nullptr;
+  this->in_ = nullptr;
+  this->inout_ = nullptr;
+  this->out_ = nullptr;
+  this->ret_ = nullptr;
 }
 
 const char *
@@ -86,10 +86,10 @@ Test_Unbounded_String::init_parameters (Param_Test_ptr)
   CORBA::string_free (this->inout_);
   CORBA::string_free (this->out_);
   CORBA::string_free (this->ret_);
-  this->in_ = 0;
-  this->inout_ = 0;
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->in_ = nullptr;
+  this->inout_ = nullptr;
+  this->out_ = nullptr;
+  this->ret_ = nullptr;
 
   this->in_ = gen->gen_string ();
   this->inout_ = CORBA::string_dup (this->in_);
@@ -103,9 +103,9 @@ Test_Unbounded_String::reset_parameters ()
   CORBA::string_free (this->inout_);
   CORBA::string_free (this->out_);
   CORBA::string_free (this->ret_);
-  this->inout_ = 0;
-  this->out_ = 0;
-  this->ret_ = 0;
+  this->inout_ = nullptr;
+  this->out_ = nullptr;
+  this->ret_ = nullptr;
 
   this->inout_ = CORBA::string_dup (this->in_);
   return 0;

@@ -33,7 +33,7 @@ Test_AnySeq::Test_AnySeq ()
 Test_AnySeq::~Test_AnySeq ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -53,7 +53,7 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::AnySeq* tmp = 0;
+  const CORBA::AnySeq* tmp = nullptr;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::AnySeq (*tmp);
 

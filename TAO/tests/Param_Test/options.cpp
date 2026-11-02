@@ -186,7 +186,7 @@ Options::read_ior (ACE_TCHAR *filename)
   ACE_Read_Buffer ior_buffer (f_handle, true);
   this->ior_ = ior_buffer.read ();
 
-  if (this->ior_.in () == 0)
+  if (this->ior_.in () == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);

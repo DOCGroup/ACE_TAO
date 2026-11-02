@@ -25,7 +25,7 @@ Test_Fixed_Struct::Test_Fixed_Struct ()
 Test_Fixed_Struct::~Test_Fixed_Struct ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -44,7 +44,7 @@ Test_Fixed_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Fixed_Struct *tmp = 0;
+  const Param_Test::Fixed_Struct *tmp = nullptr;
   req->return_value () >>= tmp;
   this->ret_ = *tmp;
 

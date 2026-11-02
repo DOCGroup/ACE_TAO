@@ -26,7 +26,7 @@ Test_Fixed_Array::Test_Fixed_Array ()
 Test_Fixed_Array::~Test_Fixed_Array ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
