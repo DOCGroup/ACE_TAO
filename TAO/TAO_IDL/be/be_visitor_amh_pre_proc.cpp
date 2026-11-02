@@ -19,6 +19,7 @@
 #include "be_valuetype.h"
 #include "be_attribute.h"
 #include "be_operation.h"
+#include "be_global.h"
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "be_extern.h"
@@ -27,6 +28,7 @@
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
 #include <string>
 
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
@@ -314,18 +316,15 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
   )
 {
   // Temporarily generate the get operation.
-  be_operation *get_operation = this->generate_get_operation (node);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const get_operation (
+    this->generate_get_operation (node));
 
-  this->visit_operation (get_operation);
+  this->visit_operation (get_operation.get ());
 
   int status =
-    this->create_response_handler_operation (get_operation,
+    this->create_response_handler_operation (get_operation.get (),
                                              response_handler,
                                              exception_holder);
-
-  get_operation->destroy ();
-  delete get_operation;
-  get_operation = nullptr;
 
   if (status == -1)
     {
@@ -338,18 +337,15 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
     }
 
   // Temporarily generate the set operation.
-  be_operation *set_operation = this->generate_set_operation (node);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const set_operation (
+    this->generate_set_operation (node));
 
-  this->visit_operation (set_operation);
+  this->visit_operation (set_operation.get ());
 
   status =
-    this->create_response_handler_operation (set_operation,
+    this->create_response_handler_operation (set_operation.get (),
                                              response_handler,
                                              exception_holder);
-
-  set_operation->destroy ();
-  delete set_operation;
-  set_operation = nullptr;
 
   return status;
 }
