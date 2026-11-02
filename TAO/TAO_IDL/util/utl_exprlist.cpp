@@ -80,17 +80,29 @@ UTL_ExprList::UTL_ExprList (AST_Expression *s,
 {
 }
 
+UTL_ExprList::~UTL_ExprList () = default;
+
+void
+UTL_ExprList::Expression_Deleter::operator() (AST_Expression *expression) const
+{
+  if (expression != nullptr)
+    {
+      expression->destroy ();
+      delete expression;
+    }
+}
+
 // Get list item.
 AST_Expression *
 UTL_ExprList::head ()
 {
-  return this->pd_car_data;
+  return this->pd_car_data.get ();
 }
 
 AST_Expression const *
 UTL_ExprList::head () const
 {
-  return this->pd_car_data;
+  return this->pd_car_data.get ();
 }
 
 void
@@ -98,9 +110,7 @@ UTL_ExprList::destroy ()
 {
   if (this->pd_car_data != nullptr)
     {
-      this->pd_car_data->destroy ();
-      delete this->pd_car_data;
-      this->pd_car_data = nullptr;
+      this->pd_car_data.reset ();
     }
 
   this->UTL_List::destroy ();
