@@ -5,8 +5,8 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  Client_ORBInitializer* initializer1 = 0;
-  Client_ORBInitializer* initializer2 = 0;
+  Client_ORBInitializer *initializer1 = nullptr;
+  Client_ORBInitializer *initializer2 = nullptr;
   bool caught_exception = false;
 
   ACE_NEW_RETURN (initializer1,
@@ -33,7 +33,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initializer1 throws this exception and we should get it here
       caught_exception = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception in client:");
       return 1;
@@ -41,31 +41,31 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // Only the pre init for initializer 1 must be called, other initializers
   // shouldn't be caught
-  if (initializer1->pre_init_called != true)
+  if (!initializer1->pre_init_called)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Pre init not called for 1\n"),
                         -1);
     }
-  if (initializer2->pre_init_called != false)
+  if (initializer2->pre_init_called)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Pre init called for 2\n"),
                         -1);
     }
-  if (initializer1->post_init_called != false)
+  if (initializer1->post_init_called)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Post init not called for 1\n"),
                         -1);
     }
-  if (initializer2->post_init_called != false)
+  if (initializer2->post_init_called)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Post init not called for 1\n"),
                         -1);
     }
-  if (caught_exception != true)
+  if (!caught_exception)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Excep not caught\n"),
