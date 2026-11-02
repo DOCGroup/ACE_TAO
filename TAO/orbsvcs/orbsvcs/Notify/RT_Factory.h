@@ -39,7 +39,7 @@ public:
   using TAO_Notify_Default_Factory::create;
 
   /// Create StructuredProxyPushSupplier
-  virtual void create (TAO_Notify_StructuredProxyPushSupplier*& proxy);
+  void create (TAO_Notify_StructuredProxyPushSupplier*& proxy) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -116,7 +116,7 @@ public:
   void at_front_of_persist_queue ();
 
   /// \brief The persistent storage has completed the last request.
-  virtual void persist_complete ();
+  void persist_complete () override;
 
   /////////////////////////////////////////////////////
   // \brief Access the event associated with this routing slip

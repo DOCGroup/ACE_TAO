@@ -162,8 +162,8 @@ protected:
     TAO_Notify_Method_Request_Event * request);
 
   // Dispatch updates
-  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed);
+  void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
+                           const CosNotification::EventTypeSeq& removed) override;
 
   /// Get the shared Proxy Lock
   TAO_SYNCH_MUTEX* proxy_lock ();

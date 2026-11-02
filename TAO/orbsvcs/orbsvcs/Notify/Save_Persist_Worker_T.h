@@ -40,7 +40,7 @@ namespace TAO_Notify
     Save_Persist_Worker(Topology_Saver& saver, bool want_all_children);
 
     // override virtual ESF_Worker method
-    virtual void work (TOPOOBJ* o);
+    void work (TOPOOBJ* o) override;
 
   private:
     Topology_Saver& saver_;

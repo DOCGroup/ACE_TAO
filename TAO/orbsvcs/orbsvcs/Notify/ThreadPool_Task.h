@@ -84,7 +84,7 @@ protected:
 
 private:
   /// Release
-  virtual void release ();
+  void release () override;
 
   /// The buffering strategy to use.
   std::unique_ptr<TAO_Notify_Buffering_Strategy> buffering_strategy_;

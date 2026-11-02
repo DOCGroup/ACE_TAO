@@ -75,7 +75,7 @@ public:
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
 
 protected:
   friend class TAO_Notify_Constraint_Interpreter;

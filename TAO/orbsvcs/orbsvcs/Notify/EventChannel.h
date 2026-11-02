@@ -109,12 +109,12 @@ public:
   void destroy () override;
 
   /// This is public to allow TAO_MonitorConsumerAdmin access.
-  virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
-    get_consumeradmin (CosNotifyChannelAdmin::AdminID id);
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr
+    get_consumeradmin (CosNotifyChannelAdmin::AdminID id) override;
 
   /// This is public to allow TAO_MonitorSupplierAdmin access.
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
-    get_supplieradmin (CosNotifyChannelAdmin::AdminID id);
+  CosNotifyChannelAdmin::SupplierAdmin_ptr
+    get_supplieradmin (CosNotifyChannelAdmin::AdminID id) override;
 
   TAO_Notify_FilterFactory* default_filter_factory_servant () const;
 

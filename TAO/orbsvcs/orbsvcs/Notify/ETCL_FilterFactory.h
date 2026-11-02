@@ -81,8 +81,8 @@ public:
   TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter) override;
   CosNotifyFilter::Filter_ptr get_filter (TAO_Notify_Object::ID const &id) override;
 
-  virtual CosNotifyFilter::FilterID get_filterid (CosNotifyFilter::Filter_ptr filter);
-  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID id);
+  CosNotifyFilter::FilterID get_filterid (CosNotifyFilter::Filter_ptr filter) override;
+  CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID id) override;
 
 
 protected:
