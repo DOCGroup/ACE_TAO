@@ -440,24 +440,24 @@ protected:
   /// Check if the guarded object is current with the last
   /// update which could have been performed independently of
   /// the owner of this object.
-  virtual bool object_obsolete ();
+  bool object_obsolete () override;
 
   /// Mark the object as current with respect to the
   /// file to which it was persisted.
-  virtual void mark_object_current ();
+  void mark_object_current () override;
 
   /// Mark the time at which the object was modified and
-  virtual void set_object_last_changed (time_t const &time);
+  void set_object_last_changed (time_t const &time) override;
 
   /// Get the time which the object was last written to the
   /// file.
-  virtual time_t get_object_last_changed ();
+  time_t get_object_last_changed () override;
 
-  virtual int load_from_stream ();
+  int load_from_stream () override;
 
-  virtual bool is_loaded_from_stream ();
+  bool is_loaded_from_stream () override;
 
-  virtual TAO::Storable_Base * create_stream (char const *mode);
+  TAO::Storable_Base * create_stream (char const *mode) override;
 
 private:
   /// Default constructor
