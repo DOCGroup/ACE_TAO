@@ -65,10 +65,10 @@ ACEXML_AttributesImpl::isDuplicate (const ACEXML_Char *uri,
     {
       if (ACE_OS::strcmp (this->attrs_[i].localName(), localName) == 0)
         {
-          if (qName != 0 && this->attrs_[i].qName() != 0
+          if (qName != nullptr && this->attrs_[i].qName() != nullptr
               && ACE_OS::strcmp (this->attrs_[i].qName(), qName) == 0)
             {
-              if (uri != 0 && this->attrs_[i].uri() != 0
+              if (uri != nullptr && this->attrs_[i].uri() != nullptr
                   && ACE_OS::strcmp (this->attrs_[i].uri(), uri) == 0)
                 return 1;
             }
@@ -125,7 +125,7 @@ ACEXML_AttributesImpl::getLocalName (size_t index)
 {
   if (index < this->attrs_.size ())
     return this->attrs_[index].localName ();
-  return 0;
+  return nullptr;
 }
 
 
@@ -134,7 +134,7 @@ ACEXML_AttributesImpl::getQName (size_t index)
 {
   if (index < this->attrs_.size ())
     return this->attrs_[index].qName ();
-  return 0;
+  return nullptr;
 }
 
 const ACEXML_Char *
@@ -142,7 +142,7 @@ ACEXML_AttributesImpl::getType (size_t index)
 {
   if (index < this->attrs_.size ())
     return this->attrs_[index].type ();
-  return 0;
+  return nullptr;
 }
 
 
@@ -153,7 +153,7 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *qName)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
       return this->attrs_[i].type ();
 
-  return 0;
+  return nullptr;
 }
 
 const ACEXML_Char *
@@ -165,7 +165,7 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *uri,
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
       return this->attrs_[i].type ();
 
-  return 0;
+  return nullptr;
 }
 
 
@@ -174,7 +174,7 @@ ACEXML_AttributesImpl::getURI (size_t index)
 {
   if (index < this->attrs_.size ())
     return this->attrs_[index].uri ();
-  return 0;
+  return nullptr;
 }
 
 
@@ -183,7 +183,7 @@ ACEXML_AttributesImpl::getValue (size_t index)
 {
   if (index < this->attrs_.size ())
     return this->attrs_[index].value ();
-  return 0;
+  return nullptr;
 }
 
 const ACEXML_Char *
@@ -193,7 +193,7 @@ ACEXML_AttributesImpl::getValue (const ACEXML_Char *qName)
     if (ACE_OS::strcmp (qName, this->attrs_[i].qName ()) == 0)
       return this->attrs_[i].value ();
 
-  return 0;
+  return nullptr;
 }
 
 const ACEXML_Char *
@@ -205,7 +205,7 @@ ACEXML_AttributesImpl::getValue (const ACEXML_Char *uri,
         ACE_OS::strcmp (localPart, this->attrs_[i].localName ()) == 0)
       return this->attrs_[i].value ();
 
-  return 0;
+  return nullptr;
 }
 
 int

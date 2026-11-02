@@ -7,8 +7,8 @@
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_LocatorImpl::ACEXML_LocatorImpl ()
-  : publicId_ (0),
-    systemId_ (0),
+  : publicId_ (nullptr),
+    systemId_ (nullptr),
     lineNumber_ (1),
     columnNumber_ (0)
 {
@@ -16,8 +16,8 @@ ACEXML_LocatorImpl::ACEXML_LocatorImpl ()
 
 ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Char* systemId,
                                         const ACEXML_Char* publicId)
-  : publicId_ (publicId ? ACE::strnew (publicId) : 0),
-    systemId_ (systemId ? ACE::strnew (systemId) : 0),
+  : publicId_ (publicId ? ACE::strnew (publicId) : nullptr),
+    systemId_ (systemId ? ACE::strnew (systemId) : nullptr),
     lineNumber_ (1),
     columnNumber_ (0)
 {
@@ -25,8 +25,8 @@ ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Char* systemId,
 
 
 ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Locator& locator)
-  : publicId_ (locator.getPublicId() ? ACE::strnew(locator.getPublicId ()): 0),
-    systemId_ (locator.getSystemId() ? ACE::strnew(locator.getSystemId ()): 0),
+  : publicId_ (locator.getPublicId() ? ACE::strnew(locator.getPublicId ()): nullptr),
+    systemId_ (locator.getSystemId() ? ACE::strnew(locator.getSystemId ()): nullptr),
     lineNumber_ (locator.getLineNumber ()),
     columnNumber_ (locator.getColumnNumber ())
 {
@@ -41,9 +41,9 @@ void
 ACEXML_LocatorImpl::reset ()
 {
   delete[] this->publicId_;
-  this->publicId_ = 0;
+  this->publicId_ = nullptr;
   delete[] this->systemId_;
-  this->systemId_ = 0;
+  this->systemId_ = nullptr;
   this->columnNumber_ = 0;
   this->lineNumber_ = 1;
 }

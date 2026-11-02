@@ -10,7 +10,7 @@
 #endif /* ACE_USES_WCHAR */
 
 ACEXML_FileCharStream::ACEXML_FileCharStream ()
-  : filename_ (0), encoding_ (0), size_ (0), infile_ (0),
+  : filename_ (nullptr), encoding_ (nullptr), size_ (0), infile_ (nullptr),
     close_infile_ (true), peek_ (0)
 {
 }
@@ -24,13 +24,13 @@ int
 ACEXML_FileCharStream::use_stream_i (FILE* open_file, const ACEXML_Char *name)
 {
   delete[] this->filename_;
-  this->filename_ = 0;
+  this->filename_ = nullptr;
 
   delete[] this->encoding_;
-  this->encoding_ = 0;
+  this->encoding_ = nullptr;
 
   this->infile_ = open_file;
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 
   ACE_stat statbuf;
@@ -45,7 +45,7 @@ ACEXML_FileCharStream::use_stream_i (FILE* open_file, const ACEXML_Char *name)
 int
 ACEXML_FileCharStream::use_stream (FILE* open_file, const ACEXML_Char *name)
 {
-  if (open_file != 0)
+  if (open_file != nullptr)
     ACE_OS::rewind(open_file);
 
   this->close_infile_ = false;
@@ -62,7 +62,7 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
 int
 ACEXML_FileCharStream::determine_encoding ()
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 
   char input[4];
@@ -107,7 +107,7 @@ ACEXML_FileCharStream::determine_encoding ()
 void
 ACEXML_FileCharStream::rewind()
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return;
   ACE_OS::rewind (this->infile_);
   this->determine_encoding();
@@ -116,7 +116,7 @@ ACEXML_FileCharStream::rewind()
 int
 ACEXML_FileCharStream::available ()
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 
   long curr;
@@ -128,18 +128,18 @@ ACEXML_FileCharStream::available ()
 int
 ACEXML_FileCharStream::close ()
 {
-  if (this->infile_ != 0)
+  if (this->infile_ != nullptr)
     {
       if (this->close_infile_)
         {
           ACE_OS::fclose (this->infile_);
         }
-      this->infile_ = 0;
+      this->infile_ = nullptr;
     }
   delete[] this->filename_;
-  this->filename_ = 0;
+  this->filename_ = nullptr;
   delete[] this->encoding_;
-  this->encoding_ = 0;
+  this->encoding_ = nullptr;
   this->size_ = 0;
   this->peek_ = 0;
   return 0;
@@ -157,7 +157,7 @@ int
 ACEXML_FileCharStream::read (ACEXML_Char *str,
                              size_t len)
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 
   return static_cast<int> (ACE_OS::fread (str, sizeof (ACEXML_Char), len, this->infile_));
@@ -166,7 +166,7 @@ ACEXML_FileCharStream::read (ACEXML_Char *str,
 int
 ACEXML_FileCharStream::get (ACEXML_Char& ch)
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 #if defined (ACE_USES_WCHAR)
   return this->get_i (ch);
@@ -179,7 +179,7 @@ ACEXML_FileCharStream::get (ACEXML_Char& ch)
 int
 ACEXML_FileCharStream::peek ()
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 #if defined (ACE_USES_WCHAR)
   return this->peek_i();

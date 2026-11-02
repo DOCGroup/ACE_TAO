@@ -5,7 +5,7 @@
 
 
 ACEXML_ZipCharStream::ACEXML_ZipCharStream ()
-  : filename_ (0), encoding_ (0), size_ (0), infile_ (0), pos_ (0),
+  : filename_ (nullptr), encoding_ (nullptr), size_ (0), infile_ (nullptr), pos_ (0),
     limit_ (0)
 {
 }
@@ -19,13 +19,13 @@ int
 ACEXML_ZipCharStream::open (const ACEXML_Char *name)
 {
   delete[] this->filename_;
-  this->filename_ = 0;
+  this->filename_ = nullptr;
 
   delete[] this->encoding_;
-  this->encoding_ = 0;
+  this->encoding_ = nullptr;
 
   this->infile_ = zzip_fopen (name, ACE_TEXT ("r"));
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 
   this->filename_ = ACE::strnew (ACE::basename (name));
@@ -35,7 +35,7 @@ ACEXML_ZipCharStream::open (const ACEXML_Char *name)
 int
 ACEXML_ZipCharStream::determine_encoding ()
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
   char input[4];
   int i = 0;
@@ -75,7 +75,7 @@ ACEXML_ZipCharStream::determine_encoding ()
 void
 ACEXML_ZipCharStream::rewind()
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return;
   zzip_rewind (this->infile_);
   this->determine_encoding();
@@ -84,7 +84,7 @@ ACEXML_ZipCharStream::rewind()
 int
 ACEXML_ZipCharStream::available ()
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
   long curr;
   if ((curr = zzip_tell (this->infile_)) < 0)
@@ -95,15 +95,15 @@ ACEXML_ZipCharStream::available ()
 int
 ACEXML_ZipCharStream::close ()
 {
-  if (this->infile_ != 0)
+  if (this->infile_ != nullptr)
     {
       zzip_close (this->infile_);
-      this->infile_ = 0;
+      this->infile_ = nullptr;
     }
   delete[] this->filename_;
-  this->filename_ = 0;
+  this->filename_ = nullptr;
   delete[] this->encoding_;
-  this->encoding_ = 0;
+  this->encoding_ = nullptr;
   this->size_ = 0;
   this->pos_ = 0;
   this->limit_ = 0;
@@ -114,7 +114,7 @@ ACEXML_ZipCharStream::close ()
 int
 ACEXML_ZipCharStream::getchar_i (char& ch)
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 
   if (this->pos_ < this->limit_)
@@ -133,7 +133,7 @@ ACEXML_ZipCharStream::getchar_i (char& ch)
 int
 ACEXML_ZipCharStream::peekchar_i (ACE_OFF_T offset)
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 
   if (offset > (ACE_OFF_T) sizeof (this->buf_))
@@ -155,7 +155,7 @@ ACEXML_ZipCharStream::peekchar_i (ACE_OFF_T offset)
 int
 ACEXML_ZipCharStream::read (ACEXML_Char *str, size_t len)
 {
-  if (this->infile_ == 0)
+  if (this->infile_ == nullptr)
     return -1;
 
   size_t i = 0;
