@@ -117,9 +117,6 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to an ostream.
 
-  virtual void destroy ();
-  // Cleanup function.
-
   bool operator== (Identifier const &other) const;
 
   Identifier &operator= (Identifier const &other);

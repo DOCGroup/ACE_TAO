@@ -223,11 +223,7 @@ AST_Decl::destroy ()
       this->pd_name.reset ();
     }
 
-  if (this->pd_local_name)
-    {
-      this->pd_local_name->destroy ();
-      this->pd_local_name.reset ();
-    }
+  this->pd_local_name.reset ();
 
   this->pd_original_local_name.clear ();
 
@@ -1123,11 +1119,6 @@ AST_Decl::set_name (UTL_ScopedName *n)
 
   if (n)
     {
-      if (this->pd_local_name)
-        {
-          this->pd_local_name->destroy ();
-        }
-
       this->pd_local_name.reset (n->last_component ()->copy ());
 
       // The name without _cxx_ prefix removed, if there was any.
@@ -1151,11 +1142,6 @@ AST_Decl::local_name (Identifier *id)
   if (this->pd_local_name.get () == id)
     {
       return;
-    }
-
-  if (this->pd_local_name)
-    {
-      this->pd_local_name->destroy ();
     }
 
   this->pd_local_name.reset (id);

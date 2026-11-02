@@ -525,9 +525,6 @@ AST_ValueType::lookup_primary_key_base () const
       AST_Decl *d =
         const_cast<AST_ValueType *> (this)->lookup_by_name (&pk_name, true);
 
-      local_id.destroy ();
-      scope_name.destroy ();
-
       if (d == nullptr)
         {
           idl_global->err ()->lookup_error (&pk_name);

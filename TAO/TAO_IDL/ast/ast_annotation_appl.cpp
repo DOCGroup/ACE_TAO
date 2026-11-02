@@ -5,10 +5,6 @@
 
 AST_Annotation_Appl::Param::~Param ()
 {
-  if (id)
-    {
-      id->destroy ();
-    }
   if (expr)
     {
       expr->destroy ();

@@ -268,7 +268,6 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   AST_Structure *connection =
     idl_global->gen ()->create_structure (&sn, false, false);
 
-  struct_id.destroy ();
 
   /// If the field type is a param holder, we want
   /// to use the lookup to create a fresh one,
@@ -286,7 +285,6 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                       &object_name,
                                       AST_Field::vis_NA);
   (void) DeclAsScope (connection)->fe_add_field (object_field);
-  object_id.destroy ();
 
   Identifier local_id ("Cookie");
   UTL_ScopedName local_name (&local_id,
@@ -296,8 +294,6 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                               &local_name);
 
   d = c->lookup_by_name (&scoped_name, true);
-  local_id.destroy ();
-  module_id.destroy ();
 
   if (d == nullptr)
     {
@@ -316,7 +312,6 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                       &cookie_name,
                                       AST_Field::vis_NA);
   (void) DeclAsScope (connection)->fe_add_field (cookie_field);
-  cookie_id.destroy ();
 
   (void) c->fe_add_structure (connection);
 
@@ -341,7 +336,6 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
                                         &seq_name,
                                         false,
                                         false);
-  seq_id.destroy ();
 
   (void) c->fe_add_typedef (connections);
 

@@ -278,7 +278,6 @@ UTL_IdList::destroy ()
 {
   if (this->pd_car_data != nullptr)
     {
-      this->pd_car_data->destroy ();
       delete this->pd_car_data;
       this->pd_car_data = nullptr;
     }

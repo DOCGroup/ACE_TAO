@@ -38,7 +38,7 @@ class be_visitor_ccm_pre_proc : public be_visitor_component_scope
 public:
   explicit be_visitor_ccm_pre_proc (be_visitor_context *ctx);
 
-  ~be_visitor_ccm_pre_proc () override;
+  ~be_visitor_ccm_pre_proc () override = default;
 
   int visit_root (be_root *node) override;
   int visit_module (be_module *node) override;

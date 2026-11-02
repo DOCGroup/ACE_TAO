@@ -138,8 +138,6 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
       std::string const local_name (lname.substr (0, lname.size () - 8));
       Identifier local_id (local_name);
       AST_Decl *d = s->lookup_by_name_local (&local_id, false);
-      local_id.destroy ();
-
       if (nullptr != d)
         {
           return 0;

@@ -816,7 +816,6 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       // its field type if it is anonymous - we don't want that.
       arg.be_decl::destroy ();
       arg.AST_Decl::destroy ();
-      id.destroy ();
     }
 }
 

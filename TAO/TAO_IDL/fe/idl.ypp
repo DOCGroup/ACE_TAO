@@ -180,6 +180,8 @@ int tao_yylex (tao_yy::parser::semantic_type *);
 
 /*
  * Declare the type of values in the grammar
+ * The Bison semantic union stores raw pointers; grammar actions own and
+ * release these values explicitly.
  */
 
 %union {
@@ -1398,7 +1400,6 @@ value_forward_decl :
               (void) s->fe_add_valuetype_fwd (f);
             }
 
-          $2->destroy ();
           delete $2;
           $2 = 0;
         }
@@ -1422,7 +1423,6 @@ value_forward_decl :
               (void) s->fe_add_valuetype_fwd (f);
             }
 
-          $1->destroy ();
           delete $1;
           $1 = 0;
 
@@ -1488,7 +1488,6 @@ value_box_decl
                 }
             }
 
-          $1->destroy ();
           delete $1;
           $1 = 0;
 
@@ -1816,7 +1815,6 @@ interface_forward :
 
               s->add_to_scope (pdt);
 
-              $1->destroy ();
               delete $1;
               $1 = 0;
 
@@ -1838,7 +1836,6 @@ interface_forward :
               (void) s->fe_add_interface_fwd (f);
             }
 
-          $1->destroy ();
           delete $1;
           $1 = 0;
         }
@@ -1865,7 +1862,6 @@ interface_forward :
               (void) s->fe_add_interface_fwd (f);
             }
 
-          $2->destroy ();
           delete $2;
           $2 = 0;
         }
@@ -1892,7 +1888,6 @@ interface_forward :
               (void) s->fe_add_interface_fwd (f);
             }
 
-          $2->destroy ();
           delete $2;
           $2 = 0;
 
@@ -1969,7 +1964,6 @@ const_dcl :
               result = 0;
             }
 
-          $5->destroy ();
           delete $5;
           $5 = 0;
         }
@@ -2408,7 +2402,6 @@ annotation_dcl
         {
           Identifier *id = $2;
           idl_global->scopes ().pop ();
-          id->destroy ();
           delete id;
 
           $$ = 0;
@@ -3171,7 +3164,6 @@ struct_type
            */
           idl_global->scopes ().push (d);
 
-          $1->destroy ();
           delete $1;
           $1 = 0;
         }
@@ -3417,7 +3409,6 @@ union_type
            */
           idl_global->scopes ().push (top);
 
-          $1->destroy ();
           delete $1;
           $1 = 0;
 
@@ -3778,7 +3769,6 @@ struct_forward_type
               (void) s->fe_add_structure_fwd (d);
             }
 
-          $1->destroy ();
           delete $1;
           $1 = 0;
 
@@ -3803,7 +3793,6 @@ union_forward_type
               (void) s->fe_add_union_fwd (u);
             }
 
-          $1->destroy ();
           delete $1;
           $1 = 0;
         }
@@ -3841,7 +3830,6 @@ enum_type :
            */
           idl_global->scopes ().push (e);
 
-          $3->destroy ();
           delete $3;
           $3 = 0;
         }
@@ -4770,7 +4758,6 @@ exception :
            */
           idl_global->scopes ().push (exception);
 
-          id->destroy ();
           delete id;
           id = 0;
 
@@ -5559,7 +5546,6 @@ component_forward_decl :
               (void) s->fe_add_component_fwd (f);
             }
 
-          $2->destroy ();
           delete $2;
           $2 = 0;
 
@@ -5860,7 +5846,6 @@ provides_decl : IDL_PROVIDES interface_type id
           delete $2;
           $2 = 0;
 
-          $3->destroy ();
           delete $3;
           $3 = 0;
 
@@ -5996,7 +5981,6 @@ uses_decl : uses_opt_multiple interface_type id
           delete $2;
           $2 = 0;
 
-          $3->destroy ();
           delete $3;
           $3 = 0;
 
@@ -6091,7 +6075,6 @@ emits_decl
           delete $2;
           $2 = 0;
 
-          $3->destroy ();
           delete $3;
           $3 = 0;
 
@@ -6163,7 +6146,6 @@ publishes_decl
           delete $2;
           $2 = 0;
 
-          $3->destroy ();
           delete $3;
           $3 = 0;
 
@@ -6238,7 +6220,6 @@ consumes_decl
           delete $2;
           $2 = 0;
 
-          $3->destroy ();
           delete $3;
           $3 = 0;
 
@@ -6451,7 +6432,6 @@ factory_decl :
           AST_Factory *f = idl_global->gen ()->create_factory (&n);
           (void) s->fe_add_factory (f);
 
-          $2->destroy ();
           delete $2;
           $2 = 0;
 
@@ -6504,7 +6484,6 @@ finder_decl :
           (void) s->fe_add_finder (f);
 
 
-          $2->destroy ();
           delete $2;
           $2 = 0;
 
@@ -6569,7 +6548,6 @@ event_concrete_forward_decl :
               (void) s->fe_add_valuetype_fwd (f);
             }
 
-          $2->destroy ();
           delete $2;
           $2 = 0;
 
@@ -6599,7 +6577,6 @@ event_abs_forward_decl :
               (void) s->fe_add_valuetype_fwd (f);
             }
 
-          $3->destroy ();
           delete $3;
           $3 = 0;
 
@@ -6649,7 +6626,6 @@ event_abs_decl :
            */
           idl_global->scopes ().push (e);
 
-          $1->destroy ();
           delete $1;
           $1 = 0;
         }

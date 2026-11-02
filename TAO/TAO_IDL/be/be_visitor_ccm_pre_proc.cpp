@@ -85,11 +85,6 @@ be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
 {
 }
 
-be_visitor_ccm_pre_proc::~be_visitor_ccm_pre_proc ()
-{
-  this->module_id_.destroy ();
-}
-
 int
 be_visitor_ccm_pre_proc::visit_root (be_root *node)
 {
@@ -554,7 +549,6 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
                                node->uses_type (),
                                &arg_name),
                   -1);
-  arg_id.destroy ();
   op->be_add_argument (arg);
 
   UTL_ExceptList *tail = nullptr;
@@ -689,7 +683,6 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
                                node->uses_type (),
                                &arg_name),
                   -1);
-  arg_id.destroy ();
   op->be_add_argument (arg);
   UTL_ExceptList *tail = nullptr;
   ACE_NEW_RETURN (tail,
@@ -746,7 +739,6 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
                                this->cookie_,
                                &arg_name),
                   -1);
-  arg_id.destroy ();
   op->be_add_argument (arg);
   UTL_ExceptList *disconnect_multiple = nullptr;
   ACE_NEW_RETURN (disconnect_multiple,
@@ -791,7 +783,6 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
   AST_Decl *d = comp_->lookup_by_name (&connections_name,
                                        true);
   be_typedef *td = dynamic_cast<be_typedef*> (d);
-  connections_id.destroy ();
 
   be_operation *op = nullptr;
   ACE_NEW_RETURN (op,
@@ -849,7 +840,6 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
                                    node,
                                    &arg_name),
                       -1);
-      arg_id.destroy ();
       push_op->be_add_argument (arg);
 
       if (nullptr == consumer->be_add_operation (push_op))
@@ -1182,7 +1172,6 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                                    pk,
                                    &arg_name),
                       -1);
-      arg_id.destroy ();
       op->be_add_argument (arg);
 
       UTL_ExceptList *tail = nullptr;
@@ -1239,7 +1228,6 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                                pk,
                                &arg_name),
                   -1);
-  arg_id.destroy ();
   op->be_add_argument (arg);
 
   UTL_ExceptList *tail = nullptr;
@@ -1303,7 +1291,6 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                                pk,
                                &arg_name),
                   -1);
-  arg_id.destroy ();
   op->be_add_argument (arg);
 
   UTL_ExceptList *tail = nullptr;
@@ -1366,7 +1353,6 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
                                node->managed_component (),
                                &arg_name),
                   -1);
-  arg_id.destroy ();
   op->be_add_argument (arg);
   op->set_defined_in (implicit);
   op->set_imported (node->imported ());
@@ -1408,7 +1394,6 @@ be_visitor_ccm_pre_proc::lookup_cookie ()
       AST_Decl *d =
         idl_global->root ()->lookup_by_name (&cookie_name,
                                              true);
-      local_id.destroy ();
 
       if (d == nullptr)
         {
@@ -1485,7 +1470,6 @@ be_visitor_ccm_pre_proc::lookup_one_exception (std::string const& name,
   AST_Decl *d =
     idl_global->root ()->lookup_by_name (&scoped_name,
                                          true);
-  id.destroy ();
 
   if (d == nullptr)
     {
@@ -1552,7 +1536,6 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
                                 false,
                                 false),
                   -1);
-  parent_id.destroy ();
 
   // Back to reality.
   idl_global->scopes ().pop ();
@@ -1587,7 +1570,6 @@ be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
   Identifier rettype_id (rettype_string);
   AST_Decl *d =
     impl->defined_in ()->lookup_by_name_local (&rettype_id, false);
-  rettype_id.destroy ();
 
   if (d == nullptr)
     {

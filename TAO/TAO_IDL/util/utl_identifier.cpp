@@ -218,11 +218,6 @@ Identifier::dump (ACE_OSTREAM_TYPE &o)
     }
 }
 
-void
-Identifier::destroy ()
-{
-}
-
 bool
 Identifier::operator== (Identifier const &other) const
 {
