@@ -74,6 +74,12 @@ BE_GlobalData::destroy ()
 {
 }
 
+void
+BE_GlobalData::gen_source_info (bool)
+{
+  // The shared IDL driver uses this hook, but the IFR backend emits no source.
+}
+
 char const *
 BE_GlobalData::filename () const
 {

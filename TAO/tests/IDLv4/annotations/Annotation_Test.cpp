@@ -39,7 +39,10 @@ Annotation_Test::~Annotation_Test ()
         ACE_TEXT ("Annotation Test: %C: PASSED\n"), name_.c_str ()));
     }
 
-  idl_global->err ()->reset_last_error_and_warning ();
+  idl_global->err ()->last_error = UTL_Error::EIDL_OK;
+  idl_global->err ()->last_error_lineno = -1;
+  idl_global->err ()->last_warning = UTL_Error::EIDL_OK;
+  idl_global->err ()->last_warning_lineno = -1;
 }
 
 void

@@ -9,6 +9,11 @@ public:
 
   void destroy ();
 
+  void gen_source_info (bool value)
+  {
+    this->gen_source_info_ = value;
+  }
+
   /**
    * Spawn Command Line Options
    */
@@ -18,6 +23,9 @@ public:
    * Parse an argument that the frontend did not recognize.
    */
   void parse_args (long &i, char **av);
+
+private:
+  bool gen_source_info_ {};
 };
 
 #endif

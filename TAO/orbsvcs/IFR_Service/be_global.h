@@ -85,6 +85,8 @@ public:
   /// Parse an argument that might affect the backend.
   void parse_args (long &i, char **av);
 
+  void gen_source_info (bool val);
+
 private:
   /// Are we removing IR objects from the repository?
   bool removing_ {};
