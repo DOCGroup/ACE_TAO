@@ -12,9 +12,7 @@ Current_Test_Impl::Current_Test_Impl (CORBA::ORB_ptr orb,
 {
 }
 
-Current_Test_Impl::~Current_Test_Impl ()
-{
-}
+Current_Test_Impl::~Current_Test_Impl () = default;
 
 ::CORBA::Long
 Current_Test_Impl::self_test ()
@@ -39,15 +37,15 @@ Current_Test_Impl::test_transport_current ()
 
   if (TAO_debug_level >= 1)
     {
-      ::CORBA::Long id = tc->id ();
+      ::CORBA::Long const id = tc->id ();
 
-      ::TAO::CounterT bs = tc->bytes_sent ();
+      ::TAO::CounterT const bs = tc->bytes_sent ();
 
-      ::TAO::CounterT br = tc->bytes_received ();
+      ::TAO::CounterT const br = tc->bytes_received ();
 
-      ::TAO::CounterT rs = tc->messages_sent ();
+      ::TAO::CounterT const rs = tc->messages_sent ();
 
-      ::TAO::CounterT rr = tc->messages_received ();
+      ::TAO::CounterT const rr = tc->messages_received ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Current_Test_Impl (%P|%t) Transport [%q] - Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
@@ -72,12 +70,12 @@ Current_Test_Impl::invoked_by_client ()
     {
       this->invoked_by_client_i ();
     }
-  catch (const TAO::Transport::NoContext&)
+  catch (TAO::Transport::NoContext const &)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server - Caught a Transport::NoContext exception\n")));
     }
-  catch (const CORBA::SystemException&)
+  catch (CORBA::SystemException const &)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server - Caught a CORBA::SystemException exception\n")));
