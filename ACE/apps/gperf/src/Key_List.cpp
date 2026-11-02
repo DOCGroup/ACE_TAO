@@ -1587,7 +1587,7 @@ Key_List::output_lookup_function ()
       int pointer_and_type_enabled = option[POINTER] && option[TYPE];
 
       ACE_OS::printf ("          int slot = lookup[key];\n\n"
-              "          if (slot >= 0 && slot < WORDLIST_SIZE)\n");
+              "          if (slot >= 0 && slot < static_cast<int> (WORDLIST_SIZE))\n");
       if (option[OPTIMIZE])
         ACE_OS::printf ("            return %swordlist[slot]%s;\n",
                         pointer_and_type_enabled ? generated_address_prefix () : "",
@@ -1609,7 +1609,7 @@ Key_List::output_lookup_function ()
                   pointer_and_type_enabled ? generated_address_prefix () : "",
                   pointer_and_type_enabled ? "wordlist[slot]" : "s",
                   pointer_and_type_enabled ? generated_address_suffix () : "");
-          ACE_OS::printf ("          else if (slot < 0 && slot >= -MAX_HASH_VALUE)\n"
+          ACE_OS::printf ("          else if (slot < 0 && slot >= -static_cast<int> (MAX_HASH_VALUE))\n"
                   "            return %s;\n", generated_null_pointer ());
         }
       ACE_OS::printf ("          else\n            {\n"

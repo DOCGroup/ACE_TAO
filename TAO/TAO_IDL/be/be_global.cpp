@@ -25,6 +25,7 @@
 #include "global_extern.h"
 #include "idl_defines.h"
 
+#include <cctype>
 #include <cstdlib>
 #include <cstring>
 #include <string>
@@ -3220,7 +3221,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                   {
                     be_global->gen_impl_debug_info (true);
                   }
-                else if (ACE_OS::ace_isalpha (av[k][j + 3] ))
+                else if (std::isalpha (static_cast<unsigned char> (av[k][j + 3])))
                   {
                     ACE_ERROR ((
                         LM_ERROR,
