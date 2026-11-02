@@ -7,7 +7,7 @@
 
 namespace Test
 {
-  Client_Request_Interceptor::Client_Request_Interceptor (const char *orb_id,
+  Client_Request_Interceptor::Client_Request_Interceptor (char const *orb_id,
                                                           TEST test)
     : orb_id_ (CORBA::string_dup (orb_id))
     , request_count_ (0)
@@ -29,7 +29,7 @@ namespace Test
   }
 
   void
-  Client_Request_Interceptor::test_transport_current (const ACE_TCHAR* amethod)
+  Client_Request_Interceptor::test_transport_current (ACE_TCHAR const *amethod)
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("CRI    (%P|%t) Test accessing Transport Current from %s\n"),
@@ -38,7 +38,7 @@ namespace Test
     ++this->request_count_;
 
     int tmp = 0;
-    ACE_TCHAR **argv = 0;
+    ACE_TCHAR **argv = nullptr;
     CORBA::ORB_var orb = CORBA::ORB_init (tmp,
                                           argv,
                                           orb_id_.in ());

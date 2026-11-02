@@ -33,7 +33,7 @@ namespace Test
   /// A metod doing the actual testing, so we could change it for the
   /// different traits implementations
 
-  typedef int (*TEST) (CORBA::ORB_ptr);
+  using TEST = int (*) (CORBA::ORB_ptr);
 
   /**
    * @class Server_Request_Interceptor
@@ -47,12 +47,17 @@ namespace Test
   {
   public:
     /// Constructor.
-    Server_Request_Interceptor (const char*orb_id, TEST test);
+    Server_Request_Interceptor (char const *orb_id, TEST test);
 
     /// Destructor.
-    virtual ~Server_Request_Interceptor ();
+    ~Server_Request_Interceptor () override;
 
-    virtual void test_transport_current (const ACE_TCHAR* amethod);
+    Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
+    Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
+    Server_Request_Interceptor &operator= (Server_Request_Interceptor const &) = delete;
+    Server_Request_Interceptor &operator= (Server_Request_Interceptor &&) = delete;
+
+    virtual void test_transport_current (ACE_TCHAR const *amethod);
 
     /// Coherency test
     virtual bool self_test ();
@@ -67,19 +72,19 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name ();
+    char * name () override;
 
-    virtual void destroy ();
+    void destroy () override;
 
-    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri);
+    void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-    virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+    void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+    void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+    void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+    void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
     //@}
 
   protected:

@@ -31,21 +31,26 @@ public:
   Current_Test_Impl (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa, int do_collocated_calls = 1);
 
   /// Destructor.
-  ~Current_Test_Impl ();
+  ~Current_Test_Impl () override;
+
+  Current_Test_Impl (Current_Test_Impl const &) = delete;
+  Current_Test_Impl (Current_Test_Impl &&) = delete;
+  Current_Test_Impl &operator= (Current_Test_Impl const &) = delete;
+  Current_Test_Impl &operator= (Current_Test_Impl &&) = delete;
 
   /// Main servant test method.
-  virtual void invoked_by_client ();
+  void invoked_by_client () override;
 
   /// No-op method used so that a client request interceptor will be
   /// invoked when invoking this method from the above invoke_me()
   /// method.  Say that 10 times fast. :-)
-  virtual void invoked_during_upcall ();
+  void invoked_during_upcall () override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
   // A self-test for coherency
-  virtual ::CORBA::Long self_test ();
+  ::CORBA::Long self_test () override;
 
 public:
   /// Reports if unexpected errors have been encountered for the
