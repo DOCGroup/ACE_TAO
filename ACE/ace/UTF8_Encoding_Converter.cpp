@@ -1,5 +1,7 @@
 #include "ace/UTF8_Encoding_Converter.h"
 
+#include <cstring>
+
 #if defined (ACE_USES_WCHAR)
 #include "ace/UTF16_Encoding_Converter.h"
 #include "ace/UTF32_Encoding_Converter.h"
@@ -39,7 +41,7 @@ ACE_UTF8_Encoding_Converter::to_utf8 (const void* source,
 {
   if (target_size >= source_size)
     {
-      ACE_OS::memcpy (target, source, source_size);
+      std::memcpy (target, source, source_size);
       return CONVERSION_OK;
     }
 

@@ -3,7 +3,8 @@
 
 #include "ace/Obstack_T.h"
 #include "ace/Malloc_Base.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -75,9 +76,9 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
       if (temp->cur_ != temp->block_)
         {
           size_t datasize = temp->cur_ - temp->block_;
-          ACE_OS::memcpy (this->curr_->block_,
-                          temp->block_,
-                          datasize);
+          std::memcpy (this->curr_->block_,
+                       temp->block_,
+                       datasize);
           this->curr_->cur_ = this->curr_->block_ + datasize;
           // Reset the old chunk.
           temp->cur_ = temp->block_;
@@ -162,7 +163,7 @@ ACE_Obstack_T<ACE_CHAR_T>::copy (const ACE_CHAR_T *s,
     return 0;
 
   size_t tsize = len * sizeof (ACE_CHAR_T);
-  ACE_OS::memcpy (this->curr_->cur_, s, tsize);
+  std::memcpy (this->curr_->cur_, s, tsize);
   this->curr_->cur_ += tsize ;
   return this->freeze ();
 }

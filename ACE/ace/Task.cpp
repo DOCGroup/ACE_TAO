@@ -5,7 +5,7 @@
 #include "ace/Task.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,7 +19,7 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
 #endif /* !ACE_THREAD_T_IS_A_STRUCT */
 {
 #if defined (ACE_THREAD_T_IS_A_STRUCT)
-   ACE_OS::memset( &this->last_thread_id_, '\0', sizeof( this->last_thread_id_ ));
+  std::memset (&this->last_thread_id_, 0, sizeof (this->last_thread_id_));
 #endif /* ACE_THREAD_T_IS_A_STRUCT */
 }
 
@@ -191,7 +191,7 @@ ACE_Task_Base::activate (long flags,
     this->grp_id_ = grp_spawned;
 
 #if defined (ACE_THREAD_T_IS_A_STRUCT)
-  ACE_OS::memcpy( &this->last_thread_id_, '\0', sizeof(this->last_thread_id_));
+  std::memset (&this->last_thread_id_, 0, sizeof (this->last_thread_id_));
 #else
   this->last_thread_id_ = 0;    // Reset to prevent inadvertant match on ID
 #endif /* ACE_THREAD_T_IS_A_STRUCT */
