@@ -25,7 +25,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Netlink_Addr)
 
 int ACE_Netlink_Addr::set (const ACE_Netlink_Addr &sa)
 {
-  ACE_OS::memset ((void *) &this->nl_,0,sizeof this->nl_);
+  std::memset (&this->nl_, 0, sizeof this->nl_);
   this->nl_.nl_family = AF_NETLINK;
   this->base_set (sa.get_type (), sa.get_size ());
   return 0;
@@ -41,7 +41,7 @@ ACE_Netlink_Addr::ACE_Netlink_Addr (const ACE_Netlink_Addr &sa)
 
 int ACE_Netlink_Addr::set (const sockaddr_nl *un, int len)
 {
-  (void) ACE_OS::memcpy ((void *) &this->nl_,un,len);
+  (void) std::memcpy (&this->nl_, un, len);
   return 0;
 }
 
