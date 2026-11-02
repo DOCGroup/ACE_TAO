@@ -72,10 +72,10 @@ public:
   ETCL_Literal_Constraint (const ETCL_Literal_Constraint& lit);
 
   /// Destructor.
-  virtual ~ETCL_Literal_Constraint();
+  ~ETCL_Literal_Constraint() override;
 
   /// Visitor accept method.
-  virtual int accept (ETCL_Constraint_Visitor* visitor);
+  int accept (ETCL_Constraint_Visitor* visitor) override;
 
   Literal_Type expr_type () const;
 
