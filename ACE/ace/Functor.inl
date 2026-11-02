@@ -1,5 +1,7 @@
 // -*- C++ -*-
 
+#include <cstring>
+
 //=============================================================================
 /**
  *  @file    Functor.inl
@@ -163,13 +165,13 @@ ACE_Hash<void *>::operator () (const void *t) const
 ACE_INLINE int
 ACE_Equal_To<const char *>::operator () (const char *lhs, const char *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !std::strcmp (lhs, rhs);
 }
 
 ACE_INLINE int
 ACE_Equal_To<char *>::operator () (const char *lhs, const char *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !std::strcmp (lhs, rhs);
 }
 
 ACE_INLINE int
@@ -206,13 +208,13 @@ ACE_Equal_To<ACE_UINT64>::operator () (const ACE_UINT64 lhs, const ACE_UINT64 rh
 ACE_INLINE int
 ACE_Less_Than<const char *>::operator () (const char *lhs, const char *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (std::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 ACE_INLINE int
 ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (std::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 

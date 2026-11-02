@@ -9,6 +9,8 @@
 # include "ace/os_include/os_signal.h"
 #endif
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Doesn't need a macro since it *never* returns!
@@ -295,14 +297,14 @@ ACE_OS::putenv (const char *string)
   ACE_OS_TRACE ("ACE_OS::putenv");
 #if defined (ACE_LACKS_PUTENV) && defined (ACE_HAS_SETENV)
   int result = 0;
-  char *sp = ACE_OS::strchr (const_cast <char *> (string), '=');
+  const char *const sp = std::strchr (string, '=');
   if (sp)
     {
       char *stmp = ACE_OS::strdup (string);
       if (stmp)
         {
           stmp[sp - string] = '\0';
-          result = ACE_OS::setenv (stmp, sp+sizeof (char), 1);
+          result = ACE_OS::setenv (stmp, sp + 1, 1);
           ACE_OS::free (stmp);
         }
       else
