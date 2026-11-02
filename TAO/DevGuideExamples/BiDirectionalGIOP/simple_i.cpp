@@ -12,7 +12,7 @@ Simple_i::Simple_i (CORBA::ORB_ptr orb, int callback_count)
 : orb_(CORBA::ORB::_duplicate(orb))
 , ready_for_callback_(0)
 , callback_count_(callback_count)
-, callback_(0)
+, callback_ (nullptr)
 {
 }
 

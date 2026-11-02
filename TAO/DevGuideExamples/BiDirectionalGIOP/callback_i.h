@@ -6,13 +6,18 @@
 class  Callback_i : public virtual POA_Callback
 {
 public:
-  Callback_i (CORBA::ORB_ptr orb);
+  explicit Callback_i (CORBA::ORB_ptr orb);
 
-  virtual ~Callback_i () = default;
+  ~Callback_i () override = default;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual void callback_method ();
+  void callback_method () override;
+
+  Callback_i (Callback_i const &) = delete;
+  Callback_i (Callback_i &&) = delete;
+  Callback_i &operator= (Callback_i const &) = delete;
+  Callback_i &operator= (Callback_i &&) = delete;
 
 private:
   CORBA::ORB_var orb_;
