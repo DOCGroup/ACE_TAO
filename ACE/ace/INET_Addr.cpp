@@ -223,13 +223,13 @@ ACE_INET_Addr::string_to_addr (const char s[], int address_family)
                         -1);
   ip_addr = ip_buf;
   // We use strrchr because of IPv6 addresses.
-  char *port_p = ACE_OS::strrchr (ip_addr, ':');
+  char *port_p = std::strrchr (ip_addr, ':');
 #if defined (ACE_HAS_IPV6)
   // Check for extended IPv6 format : '[' <ipv6 address> ']' ':' <port>
   if (ip_addr[0] == '[')
     {
       // find closing bracket
-      char *cp_pos = ACE_OS::strchr (ip_addr, ']');
+      char *cp_pos = std::strchr (ip_addr, ']');
       // check for port separator after closing bracket
       // if not found leave it, error will come later
       if (cp_pos)
@@ -507,11 +507,11 @@ ACE_INET_Addr::set (const char port_name[],
     }
 
   int address_family = PF_UNSPEC;
-  if (ACE_OS::strcmp(protocol, "tcp") == 0)
+  if (std::strcmp (protocol, "tcp") == 0)
     address_family = AF_INET;
 
 #  if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strcmp (protocol, "tcp6") == 0)
+  if (std::strcmp (protocol, "tcp6") == 0)
     address_family = AF_INET6;
 #  endif /* ACE_HAS_IPV6 */
 
@@ -807,7 +807,7 @@ ACE_INET_Addr::get_host_name () const
 
   static char name[MAXHOSTNAMELEN + 1];
   if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
-    ACE_OS::strcpy (name, "<unknown>");
+    std::strcpy (name, "<unknown>");
   return name;
 }
 
@@ -1046,9 +1046,9 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
           char scope_buf[32];
           ACE_OS::snprintf (scope_buf, 32, "%%%u",
                             this->inet_addr_.in6_.sin6_scope_id);
-          if ((ACE_OS::strlen (ch)+ACE_OS::strlen (scope_buf)) < (size_t)size)
+          if ((std::strlen (ch) + std::strlen (scope_buf)) < static_cast<size_t> (size))
             {
-              ACE_OS::strcat (dst, scope_buf);
+              std::strcat (dst, scope_buf);
             }
         }
 #endif
