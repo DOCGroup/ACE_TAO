@@ -9,9 +9,10 @@
 # include "ace/POSIX_Proactor.h"
 #endif  /* ACE_WIN32 */
 
-#include "ace/OS_NS_string.h"
 #include "ace/Proactor.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "SSL_Asynch_Stream.inl"
@@ -827,7 +828,7 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
           cur_len = len;
         }
 
-      ACE_OS::memcpy (buf, rd_ptr, cur_len);
+      std::memcpy (buf, rd_ptr, cur_len);
 
       this->bio_inp_msg_.rd_ptr (cur_len); // go ahead
 

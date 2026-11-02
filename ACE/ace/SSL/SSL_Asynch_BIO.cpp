@@ -4,8 +4,9 @@
 #if OPENSSL_VERSION_NUMBER > 0x0090581fL && (defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS)))
 
 #include "SSL_Asynch_Stream.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_ASYNCH_BIO_WRITE_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_write)
@@ -269,7 +270,7 @@ ACE_ASYNCH_BIO_CTRL_NAME (BIO * pBIO, int cmd, long num, void *ptr)
 int
 ACE_ASYNCH_BIO_PUTS_NAME (BIO *pBIO, const char *str)
 {
-  size_t const n = ACE_OS::strlen (str);
+  size_t const n = std::strlen (str);
 
   return ACE_ASYNCH_BIO_WRITE_NAME (pBIO,
                                     str,
