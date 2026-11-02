@@ -110,7 +110,7 @@ ACEXML_DefaultHandler::resolveEntity (const ACEXML_Char *,
                                       const ACEXML_Char * )
 {
   // No-op.
-  return 0;
+  return nullptr;
 }
 
   // Methods inherited from ACEXML_ErrorHandler.
