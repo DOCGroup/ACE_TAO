@@ -3,12 +3,6 @@
 #include "MessengerC.h"
 #include <iostream>
 
-ClientInitializer::ClientInitializer ()
- : slot_ (0),
-   current_ (PortableInterceptor::Current::_nil())
-{
-}
-
 void
 ClientInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
@@ -18,25 +12,26 @@ void
 ClientInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
   // resolve Messenger object
-  CORBA::Object_var obj = info->resolve_initial_references( "Messenger" );
-  Messenger_var messenger = Messenger::_narrow( obj.in() );
-  if( CORBA::is_nil( messenger.in() ) ) {
+  CORBA::Object_var obj = info->resolve_initial_references ("Messenger");
+  Messenger_var messenger = Messenger::_narrow (obj.in ());
+  if (CORBA::is_nil (messenger.in ()))
+  {
     std::cerr << "Not a Messenger reference" << std::endl;
-    ACE_ASSERT(false);
+    ACE_ASSERT (false);
   }
 
   // allocate slot
-  slot_ = info->allocate_slot_id();
+  slot_ = info->allocate_slot_id ();
 
   // get PICurrent
-  CORBA::Object_var current_obj = info->resolve_initial_references("PICurrent");
+  CORBA::Object_var current_obj = info->resolve_initial_references ("PICurrent");
 
   current_ =
-    PortableInterceptor::Current::_narrow(current_obj.in());
+    PortableInterceptor::Current::_narrow (current_obj.in ());
 
   // Create and register the request interceptors.
   PortableInterceptor::ClientRequestInterceptor_var ci =
-      new ClientInterceptor(messenger, current_.in(), slot_);
+      new ClientInterceptor (messenger.in (), current_.in (), slot_);
   info->add_client_request_interceptor (ci.in());
 }
 
@@ -45,9 +40,9 @@ ClientInitializer::set_slot_data ()
 {
   // Set the recursion flag
   CORBA::Any flag;
-  CORBA::Boolean x = false;
-  flag <<= CORBA::Any::from_boolean(x);
-  current_->set_slot(slot_, flag);
+  CORBA::Boolean const x = false;
+  flag <<= CORBA::Any::from_boolean (x);
+  current_->set_slot (slot_, flag);
 
   // Now that we're done with the PICurrent, we will release
   // our reference to it.

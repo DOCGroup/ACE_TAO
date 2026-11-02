@@ -7,28 +7,33 @@
 class ServerInterceptor
 : public PortableInterceptor::ServerRequestInterceptor
 {
- public:
+public:
   ServerInterceptor ();
 
-  ~ServerInterceptor ();
+  ~ServerInterceptor () override = default;
 
-  virtual char * name ();
+  char *name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-                                                 PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+    PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
- private:
-  const char *myname_;
+  ServerInterceptor (ServerInterceptor const &) = delete;
+  ServerInterceptor (ServerInterceptor &&) = delete;
+  ServerInterceptor &operator= (ServerInterceptor const &) = delete;
+  ServerInterceptor &operator= (ServerInterceptor &&) = delete;
+
+private:
+  char const *myname_;
 };
 
 #endif

@@ -11,21 +11,10 @@
 #include "ace/OS_NS_time.h"
 #include <iostream>
 
-// Implementation skeleton constructor
-Messenger_i::Messenger_i ()
-{
-}
-
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-{
-}
-
-CORBA::Boolean Messenger_i::send_message (
-                                          const char * user_name,
-                                          const char * subject,
-                                          char *& message)
-
+CORBA::Boolean
+Messenger_i::send_message (char const *user_name,
+                           char const *subject,
+                           char *&message)
 {
   //Add your implementation here
   std::cerr << "Message from: " << user_name << std::endl;
@@ -34,14 +23,14 @@ CORBA::Boolean Messenger_i::send_message (
   return true;
 }
 
-char * Messenger_i::get_time ()
+char *
+Messenger_i::get_time ()
 {
-  time_t thetime;
-  struct tm * timeinfo = 0;
+  time_t thetime = 0;
 
-  ACE_OS::time(&thetime);
-  timeinfo = ACE_OS::localtime(&thetime);
-  char *timestring = CORBA::string_dup(ACE_OS::asctime(timeinfo));
+  ACE_OS::time (&thetime);
+  struct tm *timeinfo = ACE_OS::localtime (&thetime);
+  char *timestring = CORBA::string_dup (ACE_OS::asctime (timeinfo));
 
   return timestring;
 }
