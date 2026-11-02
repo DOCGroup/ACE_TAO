@@ -14,7 +14,7 @@ public:
   IFR_Service_Shutdown_Functor &operator= (IFR_Service_Shutdown_Functor const &) = delete;
   IFR_Service_Shutdown_Functor &operator= (IFR_Service_Shutdown_Functor &&) = delete;
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 private:
   IFR_Service & ifr_;
 };
