@@ -50,6 +50,25 @@
 
 #include "nr_extern.h"
 
+#include <memory>
+
+namespace
+{
+  struct UTL_NameList_Deleter
+  {
+    void operator() (UTL_NameList *list) const
+    {
+      if (list != nullptr)
+        {
+          list->destroy ();
+          delete list;
+        }
+    }
+  };
+
+  using UTL_NameList_Owner = std::unique_ptr<UTL_NameList, UTL_NameList_Deleter>;
+}
+
 ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
       ast_visitor_context *ctx,
       bool ref_only)
@@ -140,8 +159,7 @@ ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
       base_name = parent->name ();
     }
 
-  UTL_NameList *supports_names =
-    this->create_name_list (node->supports ());
+  UTL_NameList_Owner supports_names (this->create_name_list (node->supports ()));
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
@@ -155,7 +173,7 @@ ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
 
   FE_ComponentHeader const header (local_name,
                              base_name,
-                             supports_names,
+                             supports_names.get (),
                              false);
 
   AST_Component *added_comp =
@@ -166,12 +184,7 @@ ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
                                           header.supports_flat (),
                                           header.n_supports_flat ());
 
-  if (supports_names != nullptr)
-    {
-      supports_names->destroy ();
-      delete supports_names;
-      supports_names = nullptr;
-    }
+  supports_names.reset ();
 
   idl_global->scopes ().top ()->add_to_scope (added_comp);
 
@@ -407,8 +420,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
       base_name = parent->name ();
     }
 
-  UTL_NameList *supports_names =
-    this->create_name_list (node->supports ());
+  UTL_NameList_Owner supports_names (this->create_name_list (node->supports ()));
 
   UTL_ScopedName *managed_comp_name = nullptr;
 
@@ -440,7 +452,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
 
   FE_HomeHeader const header (local_name,
                         base_name,
-                        supports_names,
+                        supports_names.get (),
                         managed_comp_name,
                         p_key_name);
 
@@ -454,12 +466,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
                                      header.supports_flat (),
                                      header.n_supports_flat ());
 
-  if (supports_names != nullptr)
-    {
-      supports_names->destroy ();
-      delete supports_names;
-      supports_names = nullptr;
-    }
+  supports_names.reset ();
 
   idl_global->scopes ().top ()->add_to_scope (added_home);
 
@@ -776,11 +783,9 @@ ast_visitor_tmpl_module_inst::visit_eventtype (AST_EventType *node)
 int
 ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
 {
-  UTL_NameList *parent_names =
-    this->create_name_list (node->inherits ());
+  UTL_NameList_Owner parent_names (this->create_name_list (node->inherits ()));
 
-  UTL_NameList *supports_names =
-    this->create_name_list (node->supports ());
+  UTL_NameList_Owner supports_names (this->create_name_list (node->supports ()));
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
@@ -795,8 +800,8 @@ ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
   AST_ValueType *added_vtype = nullptr;
 
   FE_OBVHeader const header (local_name,
-                       parent_names,
-                       supports_names,
+                       parent_names.get (),
+                       supports_names.get (),
                        (parent_names != nullptr
                           ? parent_names->truncatable ()
                           : false),
@@ -835,19 +840,8 @@ ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
                                               false);
     }
 
-  if (parent_names != nullptr)
-    {
-      parent_names->destroy ();
-      delete parent_names;
-      parent_names = nullptr;
-    }
-
-  if (supports_names != nullptr)
-    {
-      supports_names->destroy ();
-      delete supports_names;
-      supports_names = nullptr;
-    }
+  parent_names.reset ();
+  supports_names.reset ();
 
   idl_global->scopes ().top ()->add_to_scope (added_vtype);
 
@@ -875,8 +869,7 @@ ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
 int
 ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
 {
-  UTL_NameList *parent_names =
-    this->create_name_list (node->inherits ());
+  UTL_NameList_Owner parent_names (this->create_name_list (node->inherits ()));
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
@@ -889,7 +882,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
                   -1);
 
   FE_InterfaceHeader const header (local_name,
-                             parent_names,
+                             parent_names.get (),
                              node->is_local (),
                              node->is_abstract (),
                              true);
@@ -903,12 +896,7 @@ ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
                                           header.is_local (),
                                           header.is_abstract ());
 
-  if (parent_names != nullptr)
-    {
-      parent_names->destroy ();
-      delete parent_names;
-      parent_names = nullptr;
-    }
+  parent_names.reset ();
 
   idl_global->scopes ().top ()->add_to_scope (added_iface);
 
@@ -1290,7 +1278,7 @@ ast_visitor_tmpl_module_inst::reify_exception_list (
 UTL_NameList *
 ast_visitor_tmpl_module_inst::create_name_list (AST_Type_List const& list)
 {
-  UTL_NameList *retval = nullptr;
+  UTL_NameList_Owner retval;
 
   for (AST_Type *type : list)
     {
@@ -1307,7 +1295,7 @@ ast_visitor_tmpl_module_inst::create_name_list (AST_Type_List const& list)
 
       if (retval == nullptr)
         {
-          retval = name_item;
+          retval.reset (name_item);
         }
       else
         {
@@ -1315,6 +1303,6 @@ ast_visitor_tmpl_module_inst::create_name_list (AST_Type_List const& list)
         }
     }
 
-  return retval;
+  return retval.release ();
 }
 
