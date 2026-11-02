@@ -72,6 +72,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   AST_Decl *d = ScopeAsDecl (s);
   std::string op_name (this->ctx_->port_prefix ());
   op_name += node->local_name ()->get_string ();
+  // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
   Identifier *op_id = nullptr;
   ACE_NEW_RETURN (op_id,
                   Identifier (op_name),

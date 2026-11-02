@@ -411,6 +411,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   // Create the operation
   be_operation *op = nullptr;
+  // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
@@ -571,6 +572,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
   FE_Utils::Scoped_Name_Owner op_name (
     static_cast<UTL_ScopedName *> (reply_handler->name ()->copy ()));
 
+  // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
   Identifier *id = nullptr;
   UTL_ScopedName *sn = nullptr;
   ACE_NEW_RETURN (id,
@@ -730,6 +732,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
     }
 
   // Create the return type, which is "void".
+  // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
   Identifier *id = nullptr;
 
   // Create the argument.
