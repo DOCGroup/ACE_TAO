@@ -5,8 +5,9 @@
 #include "ace/Log_Category.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Numeric_Limits.h"
+
+#include <cstring>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -569,7 +570,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
              ACE_Timer_Node_T<TYPE> *[new_size]);
 #endif  /* ACE_HAS_ALLOC_HOOKS */
 
-  ACE_OS::memcpy (new_heap,
+  std::memcpy (new_heap,
                   this->heap_,
                   this->max_size_ * sizeof *new_heap);
 
@@ -593,7 +594,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
            ssize_t[new_size]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  ACE_OS::memcpy (new_timer_ids,
+  std::memcpy (new_timer_ids,
                   this->timer_ids_,
                   this->max_size_ * sizeof (ssize_t));
 

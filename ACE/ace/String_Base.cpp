@@ -7,6 +7,8 @@
 #include "ace/OS_NS_string.h"
 #include <algorithm>
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/String_Base.inl"
 #endif /* __ACE_INLINE__ */
@@ -141,7 +143,7 @@ ACE_String_Base<ACE_CHAR_T>::set (const ACE_CHAR_T *s,
       this->buf_len_ = new_buf_len;
       this->release_ = true;
       this->len_ = len;
-      ACE_OS::memcpy (this->rep_, s, len * sizeof (ACE_CHAR_T));
+      std::memcpy (this->rep_, s, len * sizeof (ACE_CHAR_T));
       this->rep_[len] = 0;
     }
   else // Case 2. No memory allocation is necessary.
@@ -172,7 +174,7 @@ ACE_String_Base<ACE_CHAR_T>::set (const ACE_CHAR_T *s,
         }
       else
         {
-          ACE_OS::memcpy (this->rep_, s, len * sizeof (ACE_CHAR_T));
+          std::memcpy (this->rep_, s, len * sizeof (ACE_CHAR_T));
           this->rep_[len] = 0;
           this->len_ = len;
         }
@@ -216,7 +218,7 @@ ACE_String_Base<ACE_CHAR_T>::append (const ACE_CHAR_T* s,
     if (this->buf_len_ >= this->len_ + slen + 1)
     {
       // Copy in data from new string.
-      ACE_OS::memcpy (this->rep_ + this->len_, s, slen * sizeof (ACE_CHAR_T));
+      std::memcpy (this->rep_ + this->len_, s, slen * sizeof (ACE_CHAR_T));
     }
     else // case 2. Memory reallocation is needed
     {
@@ -229,9 +231,9 @@ ACE_String_Base<ACE_CHAR_T>::append (const ACE_CHAR_T* s,
         (ACE_CHAR_T *) this->allocator_->malloc (new_buf_len * sizeof (ACE_CHAR_T)), *this);
 
       // Copy memory from old string into new string.
-      ACE_OS::memcpy (t, this->rep_, this->len_ * sizeof (ACE_CHAR_T));
+      std::memcpy (t, this->rep_, this->len_ * sizeof (ACE_CHAR_T));
 
-      ACE_OS::memcpy (t + this->len_, s, slen * sizeof (ACE_CHAR_T));
+      std::memcpy (t + this->len_, s, slen * sizeof (ACE_CHAR_T));
 
       if (this->buf_len_ != 0 && this->release_)
         this->allocator_->free (this->rep_);
@@ -264,7 +266,7 @@ ACE_String_Base<ACE_CHAR_T>::resize (typename ACE_String_Base<ACE_CHAR_T>::size_
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::resize");
 
   fast_resize(len);
-  ACE_OS::memset (this->rep_, c, this->buf_len_ * sizeof (ACE_CHAR_T));
+  std::memset (this->rep_, c, this->buf_len_ * sizeof (ACE_CHAR_T));
 }
 
 template <class ACE_CHAR_T> void
@@ -393,7 +395,7 @@ ACE_String_Base<ACE_CHAR_T>::compare (const ACE_String_Base<ACE_CHAR_T> &s) cons
   // Pick smaller of the two lengths and perform the comparison.
   size_type const smaller_length = (std::min) (this->len_, s.len_);
 
-  int result = ACE_OS::memcmp (this->rep_,
+  int result = std::memcmp (this->rep_,
                                s.rep_,
                                smaller_length * sizeof (ACE_CHAR_T));
 
@@ -408,7 +410,7 @@ template <class ACE_CHAR_T> bool
 ACE_String_Base<ACE_CHAR_T>::operator== (const ACE_String_Base<ACE_CHAR_T> &s) const
 {
   return this->len_ == s.len_ &&
-         ACE_OS::memcmp (this->rep_,
+         std::memcmp (this->rep_,
                          s.rep_,
                          this->len_ * sizeof (ACE_CHAR_T)) == 0;
 }
@@ -418,7 +420,7 @@ ACE_String_Base<ACE_CHAR_T>::operator== (const ACE_CHAR_T *s) const
 {
   size_t len = ACE_OS::strlen (s);
   return this->len_ == len &&
-         ACE_OS::memcmp (this->rep_,
+         std::memcmp (this->rep_,
                          s,
                          len * sizeof (ACE_CHAR_T)) == 0;
 }
