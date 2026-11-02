@@ -366,6 +366,7 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                                 1,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (node_excep);
 
   node_excep->set_name (operation_name);
 
@@ -392,10 +393,11 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
 
   node_excep->set_defined_in (response_handler);
 
-  if (nullptr == response_handler->be_add_operation (node_excep))
+  if (nullptr == response_handler->be_add_operation (operation_owner.get ()))
     {
       return -1;
     }
+  operation_owner.release ();
 
   return 0;
 }
@@ -688,6 +690,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
                                 0,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
   operation->set_name (op_name);
   operation->set_defined_in (excep_holder);
@@ -708,10 +711,11 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   // After having generated the operation we insert it into the
   // exceptionholder valuetype.
-  if (nullptr == excep_holder->be_add_operation (operation))
+  if (nullptr == excep_holder->be_add_operation (operation_owner.get ()))
     {
       return -1;
     }
+  operation_owner.release ();
 
   return 0;
 }
