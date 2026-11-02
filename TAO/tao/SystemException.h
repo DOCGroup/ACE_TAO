@@ -92,7 +92,7 @@ namespace CORBA
     SystemException (const SystemException & src);
 
     /// Destructor.
-    virtual ~SystemException () = default;
+    ~SystemException () override = default;
 
     /// Get the minor status.
     ULong minor () const;
@@ -112,7 +112,7 @@ namespace CORBA
     /// The const version of narrow operation to a SystemException
     static const SystemException *_downcast(const CORBA::Exception *exception);
 
-    virtual void _raise () const = 0;
+    void _raise () const override = 0;
 
     // = TAO-specific extension.
 
@@ -122,11 +122,11 @@ namespace CORBA
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    virtual ACE_CString _info () const;
+    ACE_CString _info () const override;
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr) const;
+    void _tao_encode (TAO_OutputCDR &cdr) const override;
 
-    virtual void _tao_decode (TAO_InputCDR &cdr);
+    void _tao_decode (TAO_InputCDR &cdr) override;
 
     /// Helper to create a minor status value.
     static CORBA::ULong _tao_minor_code (u_int location, int errno_value);
@@ -136,7 +136,7 @@ namespace CORBA
     static CORBA::ULong _tao_errno (int errno_value);
 
     /// Deep copy
-    virtual CORBA::Exception *_tao_duplicate () const;
+    CORBA::Exception *_tao_duplicate () const override;
 
   protected:
     /// Default constructor.
@@ -181,10 +181,10 @@ namespace CORBA
             CORBA::CompletionStatus completed); \
       static name * _downcast (CORBA::Exception* exception); \
       static name const * _downcast (CORBA::Exception const * exception); \
-      virtual void _raise () const; \
-      virtual CORBA::TypeCode_ptr _tao_type () const; \
+      void _raise () const override; \
+      CORBA::TypeCode_ptr _tao_type () const override; \
       static void _tao_any_destructor (void*); \
-      virtual CORBA::Exception *_tao_duplicate () const; \
+      CORBA::Exception *_tao_duplicate () const override; \
       static CORBA::SystemException *_tao_create (); \
     }; \
 
