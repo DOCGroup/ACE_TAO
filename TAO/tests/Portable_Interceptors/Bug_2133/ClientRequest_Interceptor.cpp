@@ -4,15 +4,10 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-  CORBA::Boolean
-  ClientRequest_Interceptor::success_flag_ = 0;
+CORBA::Boolean ClientRequest_Interceptor::success_flag_ = false;
 
   ClientRequest_Interceptor::ClientRequest_Interceptor ()
     : name_ ("ClientRequest_Interceptor")
-  {
-  }
-
-  ClientRequest_Interceptor::~ClientRequest_Interceptor ()
   {
   }
 
@@ -83,5 +78,5 @@
     ACE_DEBUG ((LM_DEBUG,
                "ClientRequest_Interceptor::receive_exception called for operation: %C - test has succeeded...\n",
                 op.in ()));
-    success_flag_ = 1;
+    success_flag_ = true;
   }

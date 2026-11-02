@@ -77,12 +77,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         hello->get_string ();
 
       ACE_ERROR_RETURN ((LM_DEBUG,
-                            "Error - the remote call succeeded which is bloody miraculous given that no server is running !!\n"),
-                            1);
+                         "Error - the remote call succeeded which is bloody "
+                         "miraculous given that no server is running !!\n"),
+                        1);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       orb->destroy ();
 
@@ -94,7 +95,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Error: regression failed - interceptor receive_exception interception point was not invoked !!\n"),
+                             "Error: regression failed - interceptor "
+                             "receive_exception interception point was not invoked !!\n"),
                             1);
         }
     }
