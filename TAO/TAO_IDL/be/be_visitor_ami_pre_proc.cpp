@@ -226,27 +226,19 @@ be_visitor_ami_pre_proc::visit_attribute (be_attribute *node)
   if (! node->readonly ())
     {
       /// Temporarily generate the set operation.
-      be_operation *set_operation =
-        this->generate_set_operation (node);
+      std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const set_operation (
+        this->generate_set_operation (node));
       set_operation->set_defined_in (node->defined_in ());
 
-      this->visit_operation (set_operation);
-
-      set_operation->destroy ();
-      delete set_operation;
-      set_operation = nullptr;
+      this->visit_operation (set_operation.get ());
     }
 
   /// Temporarily generate the get operation.
-  be_operation *get_operation =
-    this->generate_get_operation (node);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const get_operation (
+    this->generate_get_operation (node));
   get_operation->set_defined_in (node->defined_in ());
 
-  this->visit_operation (get_operation);
-
-  get_operation->destroy ();
-  delete get_operation;
-  get_operation = nullptr;
+  this->visit_operation (get_operation.get ());
 
   return 0;
 }
@@ -337,33 +329,25 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
               if (attribute)
                 {
-                  be_operation *get_operation =
-                    this->generate_get_operation (attribute);
+                  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const get_operation (
+                    this->generate_get_operation (attribute));
 
-                  this->create_reply_handler_operation (get_operation,
+                  this->create_reply_handler_operation (get_operation.get (),
                                                         reply_handler);
 
-                  this->create_excep_operation (get_operation,
+                  this->create_excep_operation (get_operation.get (),
                                                 reply_handler);
-
-                  get_operation->destroy ();
-                  delete get_operation;
-                  get_operation = nullptr;
 
                   if (!attribute->readonly ())
                     {
-                      be_operation *set_operation =
-                        this->generate_set_operation (attribute);
+                      std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const set_operation (
+                        this->generate_set_operation (attribute));
 
-                      this->create_reply_handler_operation (set_operation,
+                      this->create_reply_handler_operation (set_operation.get (),
                                                             reply_handler);
 
-                      this->create_excep_operation (set_operation,
+                      this->create_excep_operation (set_operation.get (),
                                                     reply_handler);
-
-                      set_operation->destroy ();
-                      delete set_operation;
-                      set_operation = nullptr;
                     }
                 }
             }
