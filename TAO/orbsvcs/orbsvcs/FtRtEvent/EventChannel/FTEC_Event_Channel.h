@@ -106,7 +106,7 @@ public:
   /// FTRT::GroupManager Interfaces
   /// These are used for inter-replica communications
 
-  void set_state (const FTRT::State & s);
+  void set_state (const FTRT::State & s) override;
 
   void set_update (const FTRT::State & s) override;
 

@@ -41,7 +41,7 @@ namespace FTRTEC
     */
     static Identification_Service* instance();
 
-    int init(int argc, ACE_TCHAR* argv[]);
+    int init(int argc, ACE_TCHAR* argv[]) override;
 
     FtRtecEventComm::ObjectId const& object_id() const;
     CosNaming::Name const& name() const;
