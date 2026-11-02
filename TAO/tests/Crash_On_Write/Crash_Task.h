@@ -15,14 +15,19 @@ class Crash_Task : public ACE_Task_Base
 public:
   /// Constructor
   Crash_Task (ACE_Thread_Manager *thr_mgr,
-              const ACE_Time_Value &running_time);
+              ACE_Time_Value const &running_time);
+
+  Crash_Task (Crash_Task const &) = delete;
+  Crash_Task (Crash_Task &&) = delete;
+  Crash_Task & operator= (Crash_Task const &) = delete;
+  Crash_Task & operator= (Crash_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Total running time for each thread
-  ACE_Time_Value running_time_;
+  ACE_Time_Value const running_time_;
 };
 
 #include /**/ "ace/post.h"
