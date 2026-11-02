@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 
+#include <memory>
+
 class AST_Decl;
 class AST_Type;
 
@@ -104,9 +106,16 @@ public:
   virtual void destroy ();
 
 private:
+  struct Scoped_Name_Deleter
+  {
+    void operator() (UTL_ScopedName *name) const;
+  };
+
+  using Scoped_Name_Owner = std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter>;
+
   // Data.
   AST_Decl *pd_complex_part;       // If a complex declarator
-  UTL_ScopedName *pd_name;         // The name if complex
+  Scoped_Name_Owner pd_name;       // The name if complex
   Declarator_Type pd_decl_type;     // Whether complex or simple
 };
 

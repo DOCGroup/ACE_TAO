@@ -82,6 +82,16 @@ FE_Declarator::FE_Declarator (UTL_ScopedName *n,
 {
 }
 
+void
+FE_Declarator::Scoped_Name_Deleter::operator() (UTL_ScopedName *name) const
+{
+  if (name != nullptr)
+    {
+      name->destroy ();
+      delete name;
+    }
+}
+
 // Compose the type of the complex declarator (if any) with the base
 // type supplied in ct.
 AST_Type *
@@ -200,12 +210,7 @@ FE_Declarator::compose (AST_Decl *d)
 void
 FE_Declarator::destroy ()
 {
-  if (this->pd_name != nullptr)
-    {
-      this->pd_name->destroy ();
-      delete this->pd_name;
-      this->pd_name = nullptr;
-    }
+  this->pd_name.reset ();
 }
 
 // Data accessors.
@@ -219,5 +224,5 @@ FE_Declarator::complex_part () const
 UTL_ScopedName *
 FE_Declarator::name () const
 {
-  return this->pd_name;
+  return this->pd_name.get ();
 }
