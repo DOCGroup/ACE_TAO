@@ -40,7 +40,7 @@ Coffee_i::description ()
 
 // set attribute
 void
-Coffee_i::description (const Coffee::Desc &description
+Coffee_i::description (Coffee::Desc const & description
  /*env*/)
 {
   this->name_ = CORBA::string_dup (description.name);

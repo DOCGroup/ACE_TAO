@@ -33,7 +33,7 @@ template <class T>
 class Param_Test_Client
 {
 public:
-  typedef T TEST_OBJECT;
+  using TEST_OBJECT = T;
 
   // = Constructor and destructor.
   Param_Test_Client (CORBA::ORB_ptr orb,
