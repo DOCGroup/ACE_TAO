@@ -184,12 +184,12 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         }
 
       // Virtual destructor.
-      *os << be_nl << "virtual ~";
+      *os << be_nl << "~";
       if (! node->is_nested ())
         {
-          *os << "OBV_";
+        *os << "OBV_";
         }
-      *os << node->local_name () << " ();";
+      *os << node->local_name () << " () override;";
 
       // Virtual _copy_value() only provided in OBV_* class when
       // ::CORBA::DefaultValueRefCountBase has been included.
@@ -201,7 +201,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       if (this->obv_need_ref_counter (node))
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
-              << "virtual ::CORBA::ValueBase *_copy_value ();";
+              << "::CORBA::ValueBase *_copy_value () override;";
         }
 
       // Map fields to private data.
@@ -211,13 +211,13 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
             {
               *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
-              *os << "virtual ::CORBA::Boolean" << be_nl
+              *os << "::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name()
-                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl_2;
+                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const override;" << be_nl_2;
 
-              *os << "virtual ::CORBA::Boolean" << be_nl
+              *os << "::CORBA::Boolean" << be_nl
                   << "_tao_unmarshal__" << node->flat_name()
-                  << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl_2;
+                  << " (TAO_InputCDR &, TAO_ChunkInfo &) override;" << be_nl_2;
 
               *os << "::CORBA::Boolean "
                   << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
@@ -225,8 +225,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
                   << "::CORBA::Boolean "
                   << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
                   << be_nl
-                  << "virtual void "
-                  << "truncation_hook ();"
+                  << "void truncation_hook () override;"
                   << be_uidt_nl << be_nl;
             }
 
@@ -269,7 +268,7 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
       be_visitor_context ctx (*this->ctx_);
       be_visitor_valuetype_field_ch visitor (&ctx);
 
-      visitor.setenclosings ("virtual ",";");
+      visitor.setenclosings ("", " override;");
 
       if (node->accept (&visitor) == -1)
         {

@@ -138,16 +138,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // we have to override _add_ref() to avoid ambiguity.
   if (node->has_mixed_parentage ())
     {
-      *os << "virtual void _add_ref ();" << be_nl_2;
+      *os << "void _add_ref () override;" << be_nl_2;
     }
 
   // The _is_a method
-  *os << "virtual ::CORBA::Boolean _is_a (const char *type_id);"
+  *os << "::CORBA::Boolean _is_a (const char *type_id) override;"
       << be_nl;
 
   // The _interface_repository_id method.
-  *os << "virtual const char* _interface_repository_id "
-      << "() const;";
+  *os << "const char* _interface_repository_id "
+      << "() const override;";
 
   if (be_global->gen_static_desc_operations ())
     {
@@ -158,8 +158,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // The virtual marshal method, to prevent marshal of local interfaces.
   *os << be_nl
-      << "virtual ::CORBA::Boolean marshal "
-      << "(TAO_OutputCDR &cdr);";
+      << "::CORBA::Boolean marshal "
+      << "(TAO_OutputCDR &cdr) override;";
 
   // If we are generating CORBA Policy we need to add some more methods
   if (node->full_name () == "CORBA::Policy")
@@ -174,7 +174,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (be_global->gen_ostream_operators ())
     {
       *os << be_nl
-          << "virtual std::ostream &_tao_stream_v (std::ostream &) const;";
+          << "std::ostream &_tao_stream_v (std::ostream &) const override;";
     }
 
   *os << be_uidt_nl << be_nl
@@ -238,7 +238,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Protected destructor.
   *os << be_nl_2
-      << "virtual ~" << node->local_name () << " () = default;";
+      << "~" << node->local_name () << " () override = default;";
 
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
