@@ -84,20 +84,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       for (;;)
-      {
-        ACE_Time_Value tv (0, 500);
-        while (orb->work_pending (tv))
-          {
-            ACE_DEBUG ((LM_DEBUG, "Work pending\n"));
-            ACE_Time_Value tv2 (0, 500);
-            if (orb->work_pending (tv2))
-              {
-                ACE_Time_Value work_tv (0, 500);
-                orb->perform_work (work_tv);
-              }
-          }
-        ++idle_count;
-      }
+        {
+          ACE_Time_Value tv (0, 500);
+          while (orb->work_pending (tv))
+            {
+              ACE_DEBUG ((LM_DEBUG, "Work pending\n"));
+              ACE_Time_Value tv2 (0, 500);
+              if (orb->work_pending (tv2))
+                {
+                  ACE_Time_Value work_tv (0, 500);
+                  orb->perform_work (work_tv);
+                }
+            }
+          ++idle_count;
+        }
 
       orb->destroy ();
     }
@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // Expected
     }
-  catch (CORBA::Exception const &ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
