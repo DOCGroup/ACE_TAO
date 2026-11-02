@@ -196,7 +196,7 @@ TAO_CEC_Reactive_SupplierControl::handle_timeout (
     {
       // Query the state of the Current object *before* we initiate
       // the iteration...
-      CORBA::PolicyTypeSeq types;
+      CORBA::PolicyTypeSeq const types;
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types);
 
@@ -234,7 +234,7 @@ TAO_CEC_Reactive_SupplierControl::activate ()
   try
     {
       // Get the PolicyCurrent object
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent");
 
       this->policy_current_ =
@@ -377,7 +377,7 @@ TAO_CEC_Ping_Push_Supplier::work (TAO_CEC_ProxyPushConsumer *consumer)
   try
     {
       CORBA::Boolean disconnected;
-      CORBA::Boolean non_existent =
+      CORBA::Boolean const non_existent =
         consumer->supplier_non_existent (disconnected);
       if (non_existent && !disconnected)
         {
@@ -410,7 +410,7 @@ TAO_CEC_Ping_Typed_Push_Supplier::work (TAO_CEC_TypedProxyPushConsumer *consumer
   try
     {
       CORBA::Boolean disconnected;
-      CORBA::Boolean non_existent =
+      CORBA::Boolean const non_existent =
         consumer->supplier_non_existent (disconnected);
       if (non_existent && !disconnected)
         {

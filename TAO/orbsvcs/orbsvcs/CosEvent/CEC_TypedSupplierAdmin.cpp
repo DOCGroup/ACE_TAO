@@ -50,7 +50,8 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
     char const *supported_interface)
 
 {
-  int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface);
+  int const result =
+    this->typed_event_channel_->supplier_register_supported_interface (supported_interface);
 
   if (result == -1)
     {

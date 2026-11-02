@@ -121,10 +121,10 @@ TAO_CEC_TypedEventChannel::shutdown ()
   if (destroy_on_shutdown_)
     {
       // Deactivate the Typed EC
-      PortableServer::POA_var t_poa =
+      PortableServer::POA_var const t_poa =
         this->_default_POA ();
 
-      PortableServer::ObjectId_var t_id =
+      PortableServer::ObjectId_var const t_id =
         t_poa->servant_to_id (this);
 
       t_poa->deactivate_object (t_id.in ());
@@ -231,7 +231,7 @@ TAO_CEC_TypedEventChannel::clear_ifr_cache ()
       delete ((*i).int_id_);
     }
 
-  int result = this->interface_description_.unbind_all ();
+  int const result = this->interface_description_.unbind_all ();
 
   return result;
 }
@@ -248,7 +248,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
   try
     {
       // Lookup the Interface Name in the IFR
-      CORBA::Contained_var contained =
+      CORBA::Contained_var const contained =
         this->interface_repository_->lookup_id (interface_);
 
       // Narrow the interface
@@ -419,7 +419,7 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (char const *uses_int
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (uses_interface);
+      int const result = cache_interface_description (uses_interface);
 
       if (result == 0)
         {
@@ -482,7 +482,7 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (supported_interface);
+      int const result = cache_interface_description (supported_interface);
 
       if (result == 0)
         {

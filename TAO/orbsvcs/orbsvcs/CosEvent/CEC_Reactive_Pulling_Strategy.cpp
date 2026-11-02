@@ -49,7 +49,7 @@ TAO_CEC_Reactive_Pulling_Strategy::handle_timeout (
     {
       // Query the state of the Current object *before* we initiate
       // the iteration...
-      CORBA::PolicyTypeSeq types;
+      CORBA::PolicyTypeSeq const types;
       CORBA::PolicyList_var policies =
         this->policy_current_->get_policy_overrides (types);
 
@@ -96,7 +96,7 @@ TAO_CEC_Reactive_Pulling_Strategy::activate ()
   try
     {
       // Get the PolicyCurrent object
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent");
 
       this->policy_current_ =
