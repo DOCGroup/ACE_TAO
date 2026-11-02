@@ -205,7 +205,7 @@ namespace tao_yy {
     /// Symbol semantic values.
     union value_type
     {
-#line 185 "fe/idl.ypp"
+#line 187 "fe/idl.ypp"
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
