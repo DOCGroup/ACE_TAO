@@ -2776,7 +2776,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
                     -1);
                 }
 
-              bases[i] =
+              abs_bases[i] =
                 CORBA::AbstractInterfaceDef::_narrow (this->ir_current_.in ());
             }
           else

@@ -81,6 +81,29 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       printContents (cont.in ());
 
+      CORBA::Contained_var contained =
+        ifr->lookup_id ("IDL:IFR_Test/AbstractChild:1.0");
+      CORBA::AbstractInterfaceDef_var abstract_child =
+        CORBA::AbstractInterfaceDef::_narrow (contained.in ());
+
+      if (CORBA::is_nil (abstract_child.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "AbstractChild was not found in the IFR\n"),
+                            -1);
+        }
+
+      CORBA::InterfaceDefSeq_var abstract_bases =
+        abstract_child->base_interfaces ();
+
+      if (abstract_bases->length () != 1
+          || CORBA::is_nil (abstract_bases[0]))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "AbstractChild does not have its expected base\n"),
+                            -1);
+        }
+
       orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
