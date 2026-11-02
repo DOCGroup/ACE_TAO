@@ -101,7 +101,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        */
       void remove_endpoint (TAO_SSLIOP_Endpoint * endp);
 
-      void remove_generic_endpoint (TAO_Endpoint *ep);
+      void remove_generic_endpoint (TAO_Endpoint *ep) override;
 
     protected:
       /// Destructor.
