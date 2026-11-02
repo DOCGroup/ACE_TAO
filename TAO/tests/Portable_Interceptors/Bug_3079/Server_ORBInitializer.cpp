@@ -6,9 +6,7 @@
 #include "Server_Request_Interceptor.h"
 #include "tao/ORB_Constants.h"
 
-Server_ORBInitializer::Server_ORBInitializer ()
-{
-}
+Server_ORBInitializer::Server_ORBInitializer () = default;
 
 void
 Server_ORBInitializer::pre_init (

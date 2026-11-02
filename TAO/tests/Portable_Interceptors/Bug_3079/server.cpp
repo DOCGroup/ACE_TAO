@@ -7,9 +7,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "CrashPoint.h"
 
-const ACE_TCHAR *ior_file = 0;
-int number = 0;
-int server_number = 0;
+ACE_TCHAR const *ior_file = nullptr;
+int number {};
+int server_number {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -46,12 +46,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
-      Server_ORBInitializer *temp_initializer = 0;
+      Server_ORBInitializer *temp_initializer = nullptr;
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
                       -1);  // No exceptions yet!
@@ -81,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (::parse_args (argc, argv) != 0)
         return -1;
 
-      test_i *test_impl;
+      test_i *test_impl = nullptr;
       ACE_NEW_RETURN (test_impl, test_i (number, orb.in ()), 1);
       PortableServer::ServantBase_var owner_transfer (test_impl);
 
@@ -96,8 +96,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (test.in ());
 
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
                            "IOR: %C\n",
@@ -120,7 +120,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

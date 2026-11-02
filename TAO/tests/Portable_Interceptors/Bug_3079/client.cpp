@@ -4,9 +4,9 @@
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior1 = 0;
-const ACE_TCHAR *ior2 = 0;
-const ACE_TCHAR *ior3 = 0;
+ACE_TCHAR const *ior1 = nullptr;
+ACE_TCHAR const *ior2 = nullptr;
+ACE_TCHAR const *ior3 = nullptr;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -43,10 +43,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
-
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -83,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CORBA::Short number = 0;
+      CORBA::Short number {};
       for (int i = 1; i <= 9; ++i)
         {
           ACE_DEBUG ((LM_INFO,
@@ -102,15 +100,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
     }
 
-  if (status != -1)
-    ACE_DEBUG ((LM_INFO,
-                "PortableInterceptor::Redirection test passed.\n"));
+  ACE_DEBUG ((LM_INFO,
+              "PortableInterceptor::Redirection test passed.\n"));
 
-  return status;
+  return 0;
 }

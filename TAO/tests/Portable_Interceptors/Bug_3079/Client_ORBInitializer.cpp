@@ -6,7 +6,7 @@
 #include "Client_Request_Interceptor.h"
 #include "tao/StringSeqC.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 void
 Client_ORBInitializer::pre_init (
@@ -29,12 +29,12 @@ Client_ORBInitializer::post_init (
   CORBA::ULong args_len = args->length ();
   for (CORBA::ULong i = 0; i < args_len; ++i)
     {
-      if (ACE_OS::strcmp ("-f", args[i]) == 0
+      if (std::strcmp ("-f", args[i]) == 0
           && i < (args_len - 1))
         {
           first_forward_str = args[i + 1];
         }
-      if (ACE_OS::strcmp ("-s", args[i]) == 0
+      if (std::strcmp ("-s", args[i]) == 0
           && i < (args_len - 1))
         {
           second_forward_str = args[i + 1];

@@ -28,9 +28,9 @@ class Client_Request_Interceptor
 {
 public:
   /// Constructor.
-  Client_Request_Interceptor (const char *orb_id,
-                              const char *first_forward_str,
-                              const char *second_forward_str);
+  Client_Request_Interceptor (char const *orb_id,
+                              char const *first_forward_str,
+                              char const *second_forward_str);
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -42,25 +42,30 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestinterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
   //@}
+
+  Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor & operator = (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor & operator = (Client_Request_Interceptor &&) = delete;
 
 private:
   ///The ID of the ORB this interceptor is registered with.
@@ -68,13 +73,13 @@ private:
 
   /// Pseudo-reference to the ORB this interceptor is registered
   /// with.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 
   /// The number of exceptions intercepted by this interceptor.
-  CORBA::ULong exception_count_;
+  CORBA::ULong exception_count_ {};
 
   CORBA::String_var first_forward_str_;
   CORBA::String_var second_forward_str_;

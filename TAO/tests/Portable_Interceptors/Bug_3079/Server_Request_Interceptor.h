@@ -27,7 +27,7 @@ class Server_Request_Interceptor
 {
 public:
   /// Constructor.
-  Server_Request_Interceptor ();
+  Server_Request_Interceptor () = default;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -39,33 +39,38 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
   //@}
+
+  Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
+  Server_Request_Interceptor & operator = (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor & operator = (Server_Request_Interceptor &&) = delete;
 
 protected:
   /// Destructor.
-  ~Server_Request_Interceptor ();
+  ~Server_Request_Interceptor () override = default;
 
 private:
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 };
 
 #if defined(_MSC_VER)
