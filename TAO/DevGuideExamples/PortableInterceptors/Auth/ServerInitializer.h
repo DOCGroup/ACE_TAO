@@ -9,15 +9,17 @@ class ServerInitializer :
 public virtual PortableInterceptor::ORBInitializer,
 public virtual CORBA::LocalObject
 {
- public:
-  ServerInitializer ();
+public:
+  ServerInitializer () = default;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
- private:
-  int interceptor_type_;
+  ServerInitializer (ServerInitializer const &) = delete;
+  ServerInitializer (ServerInitializer &&) = delete;
+  ServerInitializer &operator= (ServerInitializer const &) = delete;
+  ServerInitializer &operator= (ServerInitializer &&) = delete;
 };
 
 #endif

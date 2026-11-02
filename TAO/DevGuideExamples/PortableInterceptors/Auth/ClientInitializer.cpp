@@ -2,10 +2,6 @@
 #include "ClientInterceptor.h"
 #include <iostream>
 
-ClientInitializer::ClientInitializer ()
-{
-}
-
 void
 ClientInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
@@ -22,7 +18,7 @@ ClientInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
     {
       ci = new ClientInterceptor();
     }
-  catch(...)
+  catch (...)
     {
       std::cerr << "Exception occurred creating ClientInterceptor" << std::endl;
     }
