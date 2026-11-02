@@ -3,12 +3,14 @@
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 
-static const ACE_TCHAR* monitor_ior = 0;
-static const char* shutdown_cmd = "shutdown";
-static const char* rm_consumer = "remove_consumer";
-static const char* rm_supplier = "remove_supplier";
-static const char* rm_consumeradmin = "remove_consumeradmin";
-static const char* rm_supplieradmin = "remove_supplieradmin";
+#include <cstring>
+
+static ACE_TCHAR const* monitor_ior = nullptr;
+static char const* shutdown_cmd = "shutdown";
+static char const* rm_consumer = "remove_consumer";
+static char const* rm_supplier = "remove_supplier";
+static char const* rm_consumeradmin = "remove_consumeradmin";
+static char const* rm_supplieradmin = "remove_supplieradmin";
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -38,21 +40,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 extern "C" int
-sorter (const void* a, const void* b)
+sorter (void const* a, void const* b)
 {
-  const char* left = *(reinterpret_cast<const char* const*> (a));
-  const char* right = *(reinterpret_cast<const char* const*> (b));
-  return ACE_OS::strcmp (left, right);
+  char const* left = *(reinterpret_cast<char const* const*> (a));
+  char const* right = *(reinterpret_cast<char const* const*> (b));
+  return std::strcmp (left, right);
 }
 
 bool
 process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
                  char* buf,
-                 const char* command)
+                 char const* command)
 {
-  if (ACE_OS::strstr (buf, command) == buf)
+  if (std::strstr (buf, command) == buf)
     {
-      const char* name = buf + ACE_OS::strlen (command);
+      char const* name = buf + std::strlen (command);
       bool space = false;
       size_t i = 0;
 
@@ -66,32 +68,32 @@ process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
         {
           try
             {
-              const char* start = name + i;
+              char const* start = name + i;
 
-              if (ACE_OS::strcmp (command, shutdown_cmd) == 0)
+              if (std::strcmp (command, shutdown_cmd) == 0)
                 {
                   nsm->shutdown_event_channel (start);
                 }
-              else if (ACE_OS::strcmp (command, rm_consumer) == 0)
+              else if (std::strcmp (command, rm_consumer) == 0)
                 {
                   nsm->remove_consumer (start);
                 }
-              else if (ACE_OS::strcmp (command, rm_supplier) == 0)
+              else if (std::strcmp (command, rm_supplier) == 0)
                 {
                   nsm->remove_supplier (start);
                 }
-              else if (ACE_OS::strcmp (command, rm_consumeradmin) == 0)
+              else if (std::strcmp (command, rm_consumeradmin) == 0)
                 {
                   nsm->remove_consumeradmin (start);
                 }
-              else if (ACE_OS::strcmp (command, rm_supplieradmin) == 0)
+              else if (std::strcmp (command, rm_supplieradmin) == 0)
                 {
                   nsm->remove_supplieradmin (start);
                 }
             }
           catch (const CORBA::Exception& ex)
             {
-              ACE_OS::strcat (buf, ": ");
+              std::strcat (buf, ": ");
               ex._tao_print_exception (buf);
             }
 
@@ -130,7 +132,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         }
 
       bool done = false;
-      static const size_t lsize = 1024;
+      constexpr size_t lsize = 1024;
       char prev[lsize];
 
       while (!done)
@@ -141,9 +143,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           char line[lsize] = "";
           char* rl = ACE_OS::fgets (line, lsize, stdin);
 
-          if (rl != 0)
+          if (rl != nullptr)
             {
-              int len = static_cast<int> (ACE_OS::strlen (line));
+              int const len = static_cast<int> (std::strlen (line));
 
               for (int i = 0; i < len && ACE_OS::ace_isspace (rl[0]); ++i)
                 {
@@ -155,29 +157,29 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                   line[i] = '\0';
                 }
 
-              if (ACE_OS::strlen (rl) == 0 || ACE_OS::strcmp (rl, "!!") == 0)
+              if (std::strlen (rl) == 0 || std::strcmp (rl, "!!") == 0)
                 {
-                  ACE_OS::strcpy (line, prev);
+                  std::strcpy (line, prev);
                   rl = line;
                 }
 
-              ACE_OS::strcpy (prev, line);
+              std::strcpy (prev, line);
             }
 
 
-          if (rl == 0)
+          if (rl == nullptr)
             {
               done = true;
               ACE_DEBUG ((LM_DEBUG, "\n"));
             }
-          else if (ACE_OS::strlen (rl) == 0)
+          else if (std::strlen (rl) == 0)
             {
             }
-          else if (ACE_OS::strcmp (rl, "quit") == 0)
+          else if (std::strcmp (rl, "quit") == 0)
             {
               done = true;
             }
-          else if (ACE_OS::strcmp (rl, "help") == 0)
+          else if (std::strcmp (rl, "help") == 0)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "names                - Get a list of "
@@ -196,7 +198,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                           "<statistic name>     - Return the "
                           "information for the specified statistic.\n"));
             }
-          else if (ACE_OS::strcmp (rl, "names") == 0)
+          else if (std::strcmp (rl, "names") == 0)
             {
               try
                 {
@@ -205,9 +207,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                   ACE_DEBUG ((LM_DEBUG, "Statistic names\n"));
 
                   // It's much easier to read once it's sorted
-                  const char** narray = 0;
+                  char const** narray = nullptr;
                   ACE_NEW_THROW_EX (narray,
-                                    const char* [length],
+                                    char const* [length],
                                     CORBA::NO_MEMORY ());
 
                   for (CORBA::ULong i = 0; i < length; ++i)
@@ -283,7 +285,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                 }
               catch (const CORBA::Exception& ex)
                 {
-                  ACE_OS::strcat (rl, ": ");
+                  std::strcat (rl, ": ");
                   ex._tao_print_exception (rl);
                 }
             }
