@@ -46,22 +46,22 @@ public:
   virtual ~ACEXML_SAXException ();
 
   /// Throw the exception.
-  virtual void _raise ();
+  void _raise () override;
 
   /// Static narrow operation.
   static ACEXML_SAXException* _downcast (ACEXML_Exception* ex);
 
   /// Return the name of the exception.
-  virtual const ACEXML_Char *id () const;
+  const ACEXML_Char *id () const override;
 
   /// Return the extra message accompanying the exception.
   const ACEXML_Char *message () const;
 
-  virtual ACEXML_Exception *duplicate () const;
+  ACEXML_Exception *duplicate () const override;
 
   bool is_a (ACEXML_Char const *name) override;
 
-  virtual void print () const;
+  void print () const override;
 
 protected:
   static const ACEXML_Char * exception_name_;
@@ -95,18 +95,18 @@ public:
   virtual ~ACEXML_SAXNotSupportedException ();
 
   /// Throw the exception.
-  virtual void _raise ();
+  void _raise () override;
 
   /// Static narrow operation.
   static ACEXML_SAXNotSupportedException* _downcast (ACEXML_Exception* ex);
 
-  virtual const ACEXML_Char *id () const;
+  const ACEXML_Char *id () const override;
 
-  virtual ACEXML_Exception *duplicate () const;
+  ACEXML_Exception *duplicate () const override;
 
   bool is_a (ACEXML_Char const *name) override;
 
-  virtual void print () const;
+  void print () const override;
 
 protected:
   static const ACEXML_Char exception_name_[];
@@ -137,18 +137,18 @@ public:
   virtual ~ACEXML_SAXNotRecognizedException ();
 
   /// Throw the exception.
-  virtual void _raise ();
+  void _raise () override;
 
   /// Static narrow operation.
   static ACEXML_SAXNotRecognizedException* _downcast (ACEXML_Exception* ex);
 
-  virtual const ACEXML_Char *id () const;
+  const ACEXML_Char *id () const override;
 
-  virtual ACEXML_Exception *duplicate () const;
+  ACEXML_Exception *duplicate () const override;
 
   bool is_a (ACEXML_Char const *name) override;
 
-  virtual void print () const;
+  void print () const override;
 
 protected:
   static const ACEXML_Char exception_name_[];
@@ -179,18 +179,18 @@ public:
   virtual ~ACEXML_SAXParseException ();
 
   /// Throw the exception.
-  virtual void _raise ();
+  void _raise () override;
 
   /// Static narrow operation.
   static ACEXML_SAXParseException* _downcast (ACEXML_Exception* ex);
 
-  virtual const ACEXML_Char *id () const;
+  const ACEXML_Char *id () const override;
 
-  virtual ACEXML_Exception *duplicate () const;
+  ACEXML_Exception *duplicate () const override;
 
   bool is_a (ACEXML_Char const *name) override;
 
-  virtual void print () const;
+  void print () const override;
 
 protected:
   static const ACEXML_Char exception_name_[];
