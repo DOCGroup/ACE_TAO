@@ -83,6 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+#include <memory>
 #include <utility>
 
 static std::unique_ptr<AST_Expression::AST_ExprValue>
@@ -1628,6 +1629,7 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
   ACE_NEW_RETURN (newval,
                   AST_Expression::AST_ExprValue,
                   nullptr);
+  std::unique_ptr<AST_Expression::AST_ExprValue> newval_owner (newval);
 
   if (ev != nullptr)
     {
@@ -1686,13 +1688,7 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
   // evaluated newval, other times 0. But a heap-allocated
   // ExprValue is not always passed to coerce_value(), so we
   // have to manage it here, where we know it is always a 'new'.
-  if (retval != newval)
-    {
-      delete newval;
-      newval = nullptr;
-    }
-
-  return retval;
+  return retval == newval ? newval_owner.release () : nullptr;
 }
 
 // Private operations.
@@ -1771,6 +1767,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
                   nullptr);
+  std::unique_ptr<AST_ExprValue> retval_owner (retval);
 
   pd_v1->set_ev (pd_v1->coerce (expr_type));
   pd_v2->set_ev (pd_v2->coerce (expr_type));
@@ -1840,11 +1837,10 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 
   if (!success)
     {
-      delete retval;
-      retval = nullptr;
+      return nullptr;
     }
 
-  return retval;
+  return retval_owner.release ();
 }
 
 template <typename Type>
@@ -1886,6 +1882,7 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
                   nullptr);
+  std::unique_ptr<AST_ExprValue> retval_owner (retval);
 
   pd_v1->set_ev (pd_v1->coerce (expr_type));
   pd_v2->set_ev (pd_v2->coerce (expr_type));
@@ -1945,11 +1942,10 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 
   if (!success)
     {
-      delete retval;
-      retval = nullptr;
+      return nullptr;
     }
 
-  return retval;
+  return retval_owner.release ();
 }
 
 // Apply bitwise operations to an AST_Expression after evaluating
@@ -2021,6 +2017,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
                   nullptr);
+  std::unique_ptr<AST_ExprValue> retval_owner (retval);
 
   pd_v1->set_ev (pd_v1->coerce (expr_type));
   pd_v2->set_ev (pd_v2->coerce (expr_type));
@@ -2085,11 +2082,10 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
 
   if (!success)
     {
-      delete retval;
-      retval = nullptr;
+      return nullptr;
     }
 
-  return retval;
+  return retval_owner.release ();
 }
 
 // Apply unary operators to an AST_Expression after evaluating its
@@ -2120,6 +2116,7 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
                   nullptr);
+  std::unique_ptr<AST_ExprValue> retval_owner (retval);
 
   if (this->pd_v1->ev ()->et == EV_fixed)
     {
@@ -2133,10 +2130,9 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
           retval->u.fixedval = -this->pd_v1->ev ()->u.fixedval;
           break;
         default:
-          delete retval;
           return nullptr;
         }
-      return retval;
+      return retval_owner.release ();
     }
 
   retval->et = EV_double;
@@ -2148,8 +2144,6 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
 
       if (this->pd_v1->ev () == nullptr)
         {
-          delete retval;
-          retval = nullptr;
           return nullptr;
         }
 
@@ -2160,8 +2154,6 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
 
       if (this->pd_v1->ev () == nullptr)
         {
-          delete retval;
-          retval = nullptr;
           return nullptr;
         }
 
@@ -2170,8 +2162,6 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
     case EC_bit_neg:
       if (this->pd_v1->ev () == nullptr)
         {
-          delete retval;
-          retval = nullptr;
           return nullptr;
         }
 
@@ -2205,20 +2195,16 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
           retval->u.uint8val = ~pd_v1->ev ()->u.uint8val;
           break;
         default:
-          delete retval;
-          retval = nullptr;
           return nullptr;
       }
       retval->et = pd_v1->ev ()->et;
 
       break;
     default:
-      delete retval;
-      retval = nullptr;
       return nullptr;
   }
 
-  return retval;
+  return retval_owner.release ();
 }
 
 // Evaluate a symbolic AST_Expression by looking up the named
@@ -2439,6 +2425,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
   ACE_NEW_RETURN (copy,
                   AST_ExprValue,
                   nullptr);
+  std::unique_ptr<AST_ExprValue> copy_owner (copy);
 
   copy->et = this->pd_ev->et;
 
@@ -2447,8 +2434,6 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_longdouble:
     case EV_void:
     case EV_none:
-      delete copy;
-      copy = nullptr;
       return nullptr;
     case EV_enum:
       copy->u.ulval = this->pd_ev->u.ulval;
@@ -2511,23 +2496,12 @@ AST_Expression::coerce (AST_Expression::ExprType t)
 
   if (this->pd_ev->et == t)
     {
-      return copy;
+      return copy_owner.release ();
     }
   else
     {
       AST_ExprValue *ev = coerce_value (copy, t);
-
-      if (ev == nullptr)
-        {
-          // coerce_value() will either return 'copy' or
-          // return 0 without freeing 'copy'. It's
-          // deleted here instead of putting a zillion
-          // delete statments inside coerce_value().
-          delete copy;
-          copy = nullptr;
-        }
-
-      return ev;
+      return ev == nullptr ? nullptr : copy_owner.release ();
     }
 }
 
