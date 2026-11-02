@@ -77,6 +77,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exceptlist.h"
 #include "utl_namelist.h"
 
+#include <memory>
+
+namespace
+{
+  struct UTL_NameList_Deleter
+  {
+    void operator() (UTL_NameList *list) const
+    {
+      if (list != nullptr)
+        {
+          list->destroy ();
+          delete list;
+        }
+    }
+  };
+}
+
 AST_Decl::NodeType const
 AST_Factory::NT = AST_Decl::NT_factory;
 
@@ -206,6 +223,8 @@ AST_Factory::fe_add_argument (AST_Argument *t)
 UTL_NameList *
 AST_Factory::fe_add_exceptions (UTL_NameList *t)
 {
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
+
   UTL_ScopedName *nl_n = nullptr;
   AST_Type *fe = nullptr;
   AST_Decl *d = nullptr;
@@ -255,14 +274,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
       this->pd_n_exceptions++;
     }
 
-  // This return value is never used, it's easier to
-  // destroy it here and return 0 than to destroy it
-  // each place it is passed in.
-  t->destroy ();
-  delete t;
-  t = nullptr;
-
-  return t;
+  return nullptr;
 }
 
 // Dump this AST_Factory node to the ostream o.

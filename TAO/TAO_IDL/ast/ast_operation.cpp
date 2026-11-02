@@ -88,7 +88,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "global_extern.h"
 
+#include <memory>
 #include <utility>
+
+namespace
+{
+  struct UTL_NameList_Deleter
+  {
+    void operator() (UTL_NameList *list) const
+    {
+      if (list != nullptr)
+        {
+          list->destroy ();
+          delete list;
+        }
+    }
+  };
+}
 
 AST_Decl::NodeType const
 AST_Operation::NT = AST_Decl::NT_op;
@@ -300,6 +316,8 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
       return nullptr;
     }
 
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
+
   UTL_ScopedName *nl_n = nullptr;
   AST_Type *fe = nullptr;
   AST_Decl *d = nullptr;
@@ -414,12 +432,6 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
         }
     }
 
-  // This return value is never used, it's easier to
-  // destroy it here and return 0 than to destroy it
-  // each place it is passed in.
-  t->destroy ();
-  delete t;
-  t = nullptr;
   return nullptr;
 }
 
