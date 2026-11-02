@@ -129,6 +129,36 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 #define TAO_IDL_HAS_STD_AST_LIST_API
 
+/**
+ * This signals that AST_Structure::field () returns its field through an
+ * AST_Field * reference instead of an AST_Field ** output argument.
+ */
+#define TAO_IDL_HAS_AST_FIELD_REFERENCE_API
+
+/**
+ * This signals that DCPS_Data_Type_Info stores keys in a standard container
+ * of std::string values instead of an ACE queue of ACE_TString pointers.
+ */
+#define TAO_IDL_HAS_STD_DCPS_DATA_TYPE_INFO
+
+/**
+ * This signals that IDL_GlobalData stores its default IDL version in an
+ * IdlVersion object, rather than a SpecificIdlVersion value.
+ */
+#define TAO_IDL_HAS_IDL_VERSION_CLASS
+
+/**
+ * This signals that IDL_GlobalData uses the scoped
+ * IDL_GlobalData::Anon_Type_Diagnostic enum.
+ */
+#define TAO_IDL_HAS_SCOPED_ANON_TYPE_DIAGNOSTIC
+
+/**
+ * This signals that TAO_IDL passes its source file list to BE_post_init () as
+ * a std::vector<std::string> instead of a char pointer array and count.
+ */
+#define TAO_IDL_HAS_STD_DRV_FILES
+
 #define NAMEBUFSIZE 1024
 // Maximum length of static buffers used to store names.
 
