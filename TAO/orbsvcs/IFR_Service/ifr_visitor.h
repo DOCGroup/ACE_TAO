@@ -18,18 +18,18 @@
 #include "be_extern.h"
 #include "tao/Environment.h"
 
+#include <memory>
 #include <string>
-#include <string_view>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/** Convert a string_view for the duration of a legacy CORBA C-string call. */
+/** Convert a string for the duration of a legacy CORBA C-string call. */
 class IFR_C_String
 {
 public:
-  explicit IFR_C_String (std::string_view value)
+  explicit IFR_C_String (std::string const& value)
     : value_ (value)
   {
   }
@@ -123,7 +123,7 @@ protected:
 
 private:
   /// Lock.
-  ACE_Lock *lock_ {};
+  std::unique_ptr<ACE_Lock> lock_;
 
   // Not supported, generate an error
   int visit_fixed (AST_Fixed *node) override;

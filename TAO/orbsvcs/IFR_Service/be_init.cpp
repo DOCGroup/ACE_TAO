@@ -3,6 +3,10 @@
 #include "be_extern.h"
 #include "../../tao/Version.h"
 
+#include "ace/SString.h"
+
+#include <string>
+
 int
 BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 {
@@ -56,7 +60,8 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
         }
     }
 
-  be_global->orb_args (ACE_TEXT_ALWAYS_CHAR(holder.c_str()));
+  std::string const orb_args (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
+  be_global->orb_args (orb_args);
 
   return 0;
 }

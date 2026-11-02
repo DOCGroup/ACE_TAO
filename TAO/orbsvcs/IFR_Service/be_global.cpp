@@ -80,18 +80,6 @@ BE_GlobalData::gen_source_info (bool)
   // The shared IDL driver uses this hook, but the IFR backend emits no source.
 }
 
-char const *
-BE_GlobalData::filename () const
-{
-  return this->filename_;
-}
-
-void
-BE_GlobalData::filename (char *fname)
-{
-  this->filename_ = fname;
-}
-
 bool
 BE_GlobalData::enable_locking () const
 {
@@ -128,24 +116,23 @@ BE_GlobalData::allow_duplicate_typedefs (bool val)
   this->allow_duplicate_typedefs_ = val;
 }
 
-ACE_CString
+std::string const&
 BE_GlobalData::orb_args () const
 {
   return this->orb_args_;
 }
 
 void
-BE_GlobalData::orb_args (ACE_CString const &args)
+BE_GlobalData::orb_args (std::string const& args)
 {
   this->orb_args_ = args;
 }
 
-ACE_CString
-BE_GlobalData::spawn_options ()
+std::string
+BE_GlobalData::spawn_options () const
 {
-  ACE_CString result (this->orb_args_);
-  std::string const idl_flags (idl_global->idl_flags ());
-  result += idl_flags.c_str ();
+  std::string result (this->orb_args_);
+  result += idl_global->idl_flags ();
   return result;
 }
 

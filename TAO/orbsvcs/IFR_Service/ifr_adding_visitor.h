@@ -14,7 +14,7 @@
 #ifndef TAO_IFR_ADDING_VISITOR_H
 #define TAO_IFR_ADDING_VISITOR_H
 
-#include <string_view>
+#include <string>
 
 #include "ast_interface.h"
 #include "ifr_visitor.h"
@@ -169,8 +169,8 @@ protected:
   void visit_all_finders (AST_Home *node,
                           CORBA::ComponentIR::HomeDef_ptr h);
 
-  void expand_id (ACE_CString &str,
-                  std::string_view const local_name);
+  void expand_id (std::string& str,
+                  std::string const& local_name);
 
 protected:
   /**

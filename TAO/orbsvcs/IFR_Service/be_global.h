@@ -18,7 +18,8 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 #include "ace/Containers.h"
-#include "ace/SString.h"
+
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,11 +61,8 @@ public:
 
   ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes ();
 
-  /// Cleanup function.
+  /// Cleanup hook required by the shared TAO_IDL driver.
   void destroy ();
-
-  char const *filename () const;
-  void filename (char *fname);
 
   bool enable_locking () const;
   void enable_locking (bool value);
@@ -75,12 +73,12 @@ public:
   bool allow_duplicate_typedefs () const;
   void allow_duplicate_typedefs (bool val);
 
-  ACE_CString orb_args () const;
-  void orb_args (ACE_CString const &args);
+  std::string const& orb_args () const;
+  void orb_args (std::string const& args);
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
-  ACE_CString spawn_options ();
+  std::string spawn_options () const;
 
   /// Parse an argument that might affect the backend.
   void parse_args (long &i, char **av);
@@ -103,9 +101,6 @@ private:
   /// IR object scope stack.
   ACE_Unbounded_Stack<CORBA::Container_ptr> ifr_scopes_;
 
-  /// Name of the IDL file we are processing.
-  char *filename_ {};
-
   /// Option to lock at the IDL file level.
   bool enable_locking_ {};
 
@@ -116,7 +111,7 @@ private:
   bool allow_duplicate_typedefs_ {};
 
   /// Holder for -ORB args saved and passed to DRV_fork.
-  ACE_CString orb_args_;
+  std::string orb_args_;
 };
 
 #endif /* TAO_IFR_BE_GLOBAL_H */
