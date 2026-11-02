@@ -2,8 +2,9 @@
 #include "ace/ACE.h"
 #include "ace/RW_Process_Mutex.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -102,8 +103,7 @@ ACE_NS_String::operator == (const ACE_NS_String &s) const
 {
   ACE_TRACE ("ACE_NS_String::operator ==");
   return this->len_ == s.len_
-    && ACE_OS::memcmp ((void *) this->rep_,
-                       (void *) s.rep_, this->len_) == 0;
+    && std::memcmp (this->rep_, s.rep_, this->len_) == 0;
 }
 
 bool
@@ -121,7 +121,7 @@ ACE_NS_String::ACE_NS_String (ACE_WCHAR_T *dst,
     delete_rep_ (false)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
-  ACE_OS::memcpy (this->rep_, src, bytes);
+  std::memcpy (this->rep_, src, bytes);
 }
 
 u_long
