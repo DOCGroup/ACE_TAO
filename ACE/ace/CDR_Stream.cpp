@@ -1554,7 +1554,7 @@ ACE_InputCDR::read_string (ACE_CDR::Char *&x)
                       0);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-      ACE_OS::strcpy (const_cast<char *&> (x), "");
+      x[0] = '\0';
       return true;
     }
 

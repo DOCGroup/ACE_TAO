@@ -2849,7 +2849,7 @@ ACE::set_handle_limit (int new_limit,
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
   struct rlimit rl;
 
-  ACE_OS::memset ((void *) &rl, 0, sizeof rl);
+  std::memset (&rl, 0, sizeof rl);
   int r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   if (r == 0)
     max_limit = rl.rlim_max;
