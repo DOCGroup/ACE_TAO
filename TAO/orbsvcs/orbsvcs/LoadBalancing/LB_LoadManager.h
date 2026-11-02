@@ -207,8 +207,8 @@ public:
       PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// TAO specific method
-  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-      PortableGroup::ObjectGroupId group_id);
+  PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+      PortableGroup::ObjectGroupId group_id) override;
 
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
