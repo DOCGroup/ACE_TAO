@@ -5,6 +5,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Queued_Data.inl"
 #endif /* __ACE_INLINE__ */
@@ -95,11 +97,13 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
                       nullptr);
     }
 
+  std::unique_ptr<TAO_Queued_Data, void (*) (TAO_Queued_Data *)> qd_guard (
+    qd, &TAO_Queued_Data::release);
+
   // Providing an ACE_Data_Block indicates that the caller wants
   // an aligned ACE_Message_Block added to the TAO_Queued_Data.
   if (db != nullptr)
     {
-      // If this allocation fails, the TAO_Queued_Data will be leaked.
       if (input_cdr_alloc == nullptr)
         ACE_NEW_RETURN (qd->msg_block_,
                         ACE_Message_Block (db,
@@ -118,7 +122,7 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
       ACE_CDR::mb_align (qd->msg_block_);
     }
 
-  return qd;
+  return qd_guard.release ();
 }
 
 /*static*/
