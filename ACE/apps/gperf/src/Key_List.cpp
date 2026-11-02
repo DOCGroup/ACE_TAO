@@ -830,9 +830,12 @@ Key_List::output_keyword_table ()
   List_Node *temp;
 
   int pointer_and_type_enabled = option[POINTER] && option[TYPE];
-  ACE_OS::printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
+  ACE_OS::printf ("%sstatic %s%s%swordlist[] =\n%s%s{\n",
           indent,
-          option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
+          option.cxx17 () && option[CONSTANT] ? "constexpr " : "",
+          (option[CONSTANT] || pointer_and_type_enabled == 0) &&
+            !(option.cxx17 () && option[CONSTANT] &&
+              std::strcmp (array_type_, Key_List::default_array_type) != 0) ? "const " : "",
           struct_tag,
           indent,
           indent);
@@ -1541,11 +1544,17 @@ Key_List::output_lookup_function ()
         }
       ACE_OS::printf ("          else\n            {\n"
               "              unsigned int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);\n"
-              "              %s%s*base = &wordlist[-lookup[offset]];\n"
-              "              %s%s*ptr = base + -lookup[offset + 1];\n\n"
+              "              %s%s%s*base = &wordlist[-lookup[offset]];\n"
+              "              %s%s%s*ptr = base + -lookup[offset + 1];\n\n"
               "              while (--ptr >= base)\n                ",
-              option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "", struct_tag,
-              option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "", struct_tag);
+              option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
+              struct_tag,
+              option.cxx17 () && option[CONSTANT] &&
+                std::strcmp (array_type_, Key_List::default_array_type) == 0 ? "const " : "",
+              option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
+              struct_tag,
+              option.cxx17 () && option[CONSTANT] &&
+                std::strcmp (array_type_, Key_List::default_array_type) == 0 ? "const " : "");
       if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
         {
           if (option[COMP])

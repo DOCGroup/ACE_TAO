@@ -121,10 +121,14 @@ public:
   static const char *class_name ();
   static const char *hash_name ();
   static const char *delimiter ();
+  static bool cxx17 ();
 
 private:
   /// Holds the user-specified Options.
   static int option_word_;
+
+  /// Whether C++17 output was selected.
+  static bool cxx17_;
 
   /// Number of switch statements to generate.
   static int total_switches_;
