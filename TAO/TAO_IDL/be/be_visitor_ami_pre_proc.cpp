@@ -212,10 +212,24 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
   // for this will be needed.
   be_global->messaging_exceptionholder ()->seen_in_operation (true);
 
-  be_operation *sendc_op =
-    this->create_sendc_operation (node); // for arguments = TRUE
+  if (node->flags () == AST_Operation::OP_oneway)
+    {
+      return 0;
+    }
 
-  parent->be_add_operation (sendc_op);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> sendc_op (
+    this->create_sendc_operation (node)); // for arguments = TRUE
+
+  if (sendc_op == nullptr ||
+      parent->be_add_operation (sendc_op.get ()) == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_ami_pre_proc::visit_operation - "
+                         "failed to add sendc operation\n"),
+                        -1);
+    }
+
+  sendc_op.release ();
 
   return 0;
 }
@@ -383,15 +397,14 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
     }
 
   Identifier *id = nullptr;
-  UTL_ScopedName *sn = nullptr;
 
   // Create the new name
   // Prepend "sendc_" to the name of the operation
   std::string new_op_name ("sendc_");
   new_op_name += node->name ()->last_component ()->get_string ();
 
-  UTL_ScopedName *op_name =
-    static_cast<UTL_ScopedName *> (node->name ()->copy ());
+  FE_Utils::Scoped_Name_Owner op_name (
+    static_cast<UTL_ScopedName *> (node->name ()->copy ()));
   op_name->last_component ()->replace_string (new_op_name);
 
   idl_global->scopes ().push (node->defined_in ());
@@ -401,14 +414,16 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   ACE_NEW_RETURN (op,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
-                                op_name,
+                                op_name.get (),
                                 false,
                                 false),
                   nullptr);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (op);
 
   idl_global->scopes ().pop ();
 
-  op->set_name (op_name);
+  op->set_name (op_name.get ());
+  op_name.release ();
 
   // Create the first argument, which is a Reply Handler
 
@@ -429,10 +444,6 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   if (nullptr == handler)
     {
-      op->destroy ();
-      delete op;
-      op = nullptr;
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ami_pre_proc::")
                          ACE_TEXT ("create_sendc_operation - ")
@@ -447,27 +458,36 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
   ACE_NEW_RETURN (id,
                   Identifier ("ami_handler"),
                   nullptr);
+  std::unique_ptr<Identifier> id_owner (id);
 
   UTL_ScopedName *tmp = nullptr;
 
   ACE_NEW_RETURN (tmp,
-                  UTL_ScopedName (id,
+                  UTL_ScopedName (id_owner.get (),
                                   nullptr),
                   nullptr);
+  id_owner.release ();
 
-  sn = (UTL_ScopedName *)op->name ()->copy ();
-  sn->nconc (tmp);
+  FE_Utils::Scoped_Name_Owner sn_owner (
+    static_cast<UTL_ScopedName *> (op->name ()->copy ()));
+  sn_owner->nconc (tmp);
 
   be_argument *arg = nullptr;
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                field_type, // is also a valuetype
-                               sn),
+                               sn_owner.get ()),
                   nullptr);
+  std::unique_ptr<be_argument, BE_AST_Decl_Deleter> arg_owner (arg);
 
   arg->set_defined_in (op);
-  arg->set_name (sn);
-  op->be_add_argument (arg);
+  arg->set_name (sn_owner.get ());
+  sn_owner.release ();
+  if (op->be_add_argument (arg_owner.get ()) == nullptr)
+    {
+      return nullptr;
+    }
+  arg_owner.release ();
 
   if (field_type->imported ())
     {
@@ -503,24 +523,30 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
             {
               // Create the argument.
               be_argument *arg_new = nullptr;
-              UTL_ScopedName *new_name =
-                (UTL_ScopedName *)original_arg->name ()->copy ();
+              FE_Utils::Scoped_Name_Owner new_name (
+                static_cast<UTL_ScopedName *> (original_arg->name ()->copy ()));
               ACE_NEW_RETURN (arg_new,
                               be_argument (AST_Argument::dir_IN,
                                            original_arg->field_type (),
-                                           new_name),
+                                           new_name.get ()),
                               nullptr);
+              std::unique_ptr<be_argument, BE_AST_Decl_Deleter> arg_owner (arg_new);
 
               arg_new->set_defined_in (op);
-              arg_new->set_name (new_name);
-              op->be_add_argument (arg_new);
+              arg_new->set_name (new_name.get ());
+              new_name.release ();
+              if (op->be_add_argument (arg_owner.get ()) == nullptr)
+                {
+                  return nullptr;
+                }
+              arg_owner.release ();
             }
         } // end of while loop
     } // end of if
 
   op->is_sendc_ami (true);
   op->is_attr_op (node->is_attr_op ());
-  return op;
+  return operation_owner.release ();
 }
 
 int
