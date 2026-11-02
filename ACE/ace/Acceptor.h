@@ -350,11 +350,11 @@ public:
    * @retval 0  Success
    * @retval -1 Failure, @c errno contains an error code.
    */
-  virtual int open (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
-                    ACE_Reactor *reactor,
-                    int flags = 0,
-                    int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
-                    int reuse_addr = 1);
+  int open (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+            ACE_Reactor *reactor,
+            int flags = 0,
+            int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
+            int reuse_addr = 1) override;
 
   /**
    * Initialize the appropriate strategies for creation, passive
@@ -377,13 +377,13 @@ public:
   virtual ~ACE_Strategy_Acceptor ();
 
   /// Return the underlying PEER_ACCEPTOR object.
-  virtual operator PEER_ACCEPTOR &() const;
+  operator PEER_ACCEPTOR &() const override;
 
   /// Return the underlying PEER_ACCEPTOR object.
-  virtual PEER_ACCEPTOR &acceptor () const;
+  PEER_ACCEPTOR &acceptor () const override;
 
   /// Returns the listening acceptor's {ACE_HANDLE}.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -395,18 +395,18 @@ public:
 
   /// This method delegates to the {Scheduling_Strategy}'s {suspend}
   /// method.
-  virtual int suspend ();
+  int suspend () override;
 
   /// This method delegates to the {Scheduling_Strategy}'s {resume}
   /// method.
-  virtual int resume ();
+  int resume () override;
 
 protected:
   /// Calls {handle_close} when dynamically unlinked.
-  virtual int fini ();
+  int fini () override;
 
   /// Default version returns address info in {buf}.
-  virtual int info (ACE_TCHAR **buf, size_t) const;
+  int info (ACE_TCHAR **buf, size_t) const override;
 
   // = The following three methods define the {Acceptor}'s strategies
   // for creating, accepting, and activating {SVC_HANDLER}'s,
@@ -422,14 +422,14 @@ protected:
    * instances of {SVC_HANDLER}, using a singleton, dynamically
    * linking the handler, etc.).  Returns -1 on failure, else 0.
    */
-  virtual int make_svc_handler (SVC_HANDLER *&);
+  int make_svc_handler (SVC_HANDLER *&) override;
 
   /**
    * Bridge method for accepting the new connection into the
    * {SVC_HANDLER}.  The default behavior delegates to the
    * {PEER_ACCEPTOR::accept} in the {Acceptor_Strategy}.
    */
-  virtual int accept_svc_handler (SVC_HANDLER *svc_handler);
+  int accept_svc_handler (SVC_HANDLER *svc_handler) override;
 
   /**
    * Bridge method for activating a {SVC_HANDLER} with the appropriate
@@ -441,16 +441,16 @@ protected:
    * {SVC_HANDLER} as an "active object" via multi-threading or
    * multi-processing).
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  int activate_svc_handler (SVC_HANDLER *svc_handler) override;
 
   // = Demultiplexing hooks.
   /// Perform termination activities when {this} is removed from the
   /// {Reactor}.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Handle SIGINT.
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
   // = These data members are "logically private" but are put in the
   // protected part in case subclasses want to access them.
