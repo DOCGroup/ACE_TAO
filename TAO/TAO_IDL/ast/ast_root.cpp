@@ -196,14 +196,6 @@ AST_Root::destroy ()
 
   if (this->pd_name_referenced.size () > 2)
     {
-      for (std::vector<Identifier *>::iterator iter =
-             this->pd_name_referenced.begin () + 2;
-           iter != this->pd_name_referenced.end ();
-           ++iter)
-        {
-          (*iter)->destroy ();
-          delete *iter;
-        }
       this->pd_name_referenced.resize (2);
     }
 }

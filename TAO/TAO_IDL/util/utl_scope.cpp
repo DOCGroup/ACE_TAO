@@ -140,12 +140,6 @@ UTL_Scope::~UTL_Scope ()
       d->destroy ();
       delete d;
     }
-
-  for (Identifier *id : this->pd_name_referenced)
-    {
-      id->destroy ();
-      delete id;
-    }
 }
 
 void
@@ -164,12 +158,7 @@ UTL_Scope::destroy ()
   std::vector<AST_Decl *> ().swap (this->pd_local_types);
   std::vector<AST_Decl *> ().swap (this->pd_referenced);
 
-  for (Identifier *id : this->pd_name_referenced)
-    {
-      id->destroy ();
-      delete id;
-    }
-  std::vector<Identifier *> ().swap (this->pd_name_referenced);
+  std::vector<std::unique_ptr<Identifier>> ().swap (this->pd_name_referenced);
 }
 
 // Protected operations.
@@ -1413,7 +1402,7 @@ void
 UTL_Scope::add_to_name_referenced (Identifier *id)
 {
   // Insert new identifier.
-  this->pd_name_referenced.push_back (id->copy ());
+  this->pd_name_referenced.push_back (std::unique_ptr<Identifier> (id->copy ()));
 }
 
 void
@@ -1610,7 +1599,7 @@ UTL_Scope::referenced (AST_Decl *const e,
   // so we can catch these name reolution clashes.
   if (id != nullptr)
     {
-      for (Identifier *name : this->pd_name_referenced)
+      for (std::unique_ptr<Identifier> const& name : this->pd_name_referenced)
         {
           // If we are a module, there is no clash, if we
           // are an interface, this is not the right place to
@@ -1621,7 +1610,7 @@ UTL_Scope::referenced (AST_Decl *const e,
           if (   nt != AST_Decl::NT_module
               && nt != AST_Decl::NT_param_holder
               && e->defined_in () == this
-              && id->compare (name))
+              && id->compare (name.get ()))
             {
               idl_global->err ()->redef_error (
                 id->get_string (),
@@ -1630,7 +1619,7 @@ UTL_Scope::referenced (AST_Decl *const e,
             }
           // No clash if one or the other of the identifiers was escaped.
           else if (!(id->escaped () ^ name->escaped ())
-                   && id->case_compare_quiet (name))
+                   && id->case_compare_quiet (name.get ()))
             {
               if (idl_global->case_diff_error ())
                 {

@@ -83,6 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_utils.h"
 #include "utl_strlist.h"
 
+#include <memory>
 #include <vector>
 
 class Identifier;
@@ -308,7 +309,7 @@ protected:
   // Storage for identifiers used in this scope. CORBA 2.3 introduced
   // stricter rules for clashes during name resolution, and the information
   // in pd_referenced is not enough to catch them all.
-  std::vector<Identifier *> pd_name_referenced; // Store name references
+  std::vector<std::unique_ptr<Identifier>> pd_name_referenced; // Store name references
 
   // Have we seen a #pragma prefix declaration in this scope?
   bool has_prefix_ {};
