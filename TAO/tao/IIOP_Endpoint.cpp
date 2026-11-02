@@ -453,7 +453,7 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
 
   std::vector<ACE_CString> local_ips;
   TAO_IIOP_Endpoint_get_ip_interfaces (local_ips);
-  if (local_ips.size () == 0)
+  if (local_ips.empty ())
     {
       return;
     }
