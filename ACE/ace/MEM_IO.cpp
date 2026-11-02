@@ -2,6 +2,8 @@
 #include "ace/MEM_IO.h"
 #include "ace/Handle_Set.h"
 
+#include <cstring>
+
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if !defined (__ACE_INLINE__)
@@ -411,9 +413,9 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
 
       while (message_block != nullptr)
         {
-          ACE_OS::memcpy (static_cast<char *> (buf->data ()) + n,
-                          message_block->rd_ptr (),
-                          message_block->length ());
+          std::memcpy (static_cast<char *> (buf->data ()) + n,
+                       message_block->rd_ptr (),
+                       message_block->length ());
           n += message_block->length ();
 
           if (message_block->cont ())

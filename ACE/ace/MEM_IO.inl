@@ -1,6 +1,7 @@
 // -*- C++ -*-
-#include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -141,7 +142,7 @@ ACE_MEM_IO::send (const void *buf,
       return -1;                  // Memory buffer not initialized.
     }
 
-  ACE_OS::memcpy (sbuf->data (), buf, len);
+  std::memcpy (sbuf->data (), buf, len);
 
   ///
 
@@ -177,11 +178,11 @@ ACE_MEM_IO::recv (void *buf,
       buf_len = this->buf_size_;
     }
 
-  size_t length = (len > buf_len ? buf_len : len);
+  size_t const length = (len > buf_len ? buf_len : len);
 
-  ACE_OS::memcpy ((char *) buf + count,
-                  (char *) this->recv_buffer_->data () + this->cur_offset_,
-                  length);
+  std::memcpy (static_cast<char *> (buf) + count,
+               static_cast<char *> (this->recv_buffer_->data ()) + this->cur_offset_,
+               length);
   this->cur_offset_ += ACE_Utils::truncate_cast<ssize_t> (length);
   count += length;
 
