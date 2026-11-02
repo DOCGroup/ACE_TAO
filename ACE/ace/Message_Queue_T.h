@@ -791,7 +791,7 @@ public:
                              ACE_Notification_Strategy * = nullptr);
 
   /// Close down the message queue and release all resources.
-  virtual ~ACE_Dynamic_Message_Queue ();
+  ~ACE_Dynamic_Message_Queue () override;
 
   /**
    * Detach all messages with status given in the passed flags from
@@ -811,11 +811,11 @@ public:
    * queue.  Returns -1 on failure, else the number of items still on
    * the queue.
    */
-  virtual int dequeue_head (ACE_Message_Block *&first_item,
-                            ACE_Time_Value *timeout = nullptr);
+  int dequeue_head (ACE_Message_Block *&first_item,
+                    ACE_Time_Value *timeout = nullptr) override;
 
   /// Dump the state of the queue.
-  virtual void dump () const;
+  void dump () const override;
 
   /**
    * Just call priority enqueue method: tail enqueue semantics for dynamic
@@ -823,8 +823,8 @@ public:
    * it was placed after the queue is refreshed prior to the next
    * enqueue or dequeue operation.
    */
-  virtual int enqueue_tail (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = nullptr);
+  int enqueue_tail (ACE_Message_Block *new_item,
+                    ACE_Time_Value *timeout = nullptr) override;
 
   /**
    * Just call priority enqueue method: head enqueue semantics for dynamic
@@ -832,8 +832,8 @@ public:
    * it was placed after the queue is refreshed prior to the next
    * enqueue or dequeue operation.
    */
-  virtual int enqueue_head (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = nullptr);
+  int enqueue_head (ACE_Message_Block *new_item,
+                    ACE_Time_Value *timeout = nullptr) override;
 
 
   /// Declare the dynamic allocation hooks.
@@ -847,7 +847,7 @@ protected:
    * Message Queue constructor to update the priorities of all
    * enqueued messages.
    */
-  virtual int enqueue_i (ACE_Message_Block *new_item);
+  int enqueue_i (ACE_Message_Block *new_item) override;
 
   /// Enqueue a message in priority order within a given priority status sublist
   virtual int sublist_enqueue_i (ACE_Message_Block *new_item,
@@ -863,7 +863,7 @@ protected:
    * or if that is empty from the beyond late portion, or if that is
    * empty just sets the passed pointer to zero and returns -1.
    */
-  virtual int dequeue_head_i (ACE_Message_Block *&first_item);
+  int dequeue_head_i (ACE_Message_Block *&first_item) override;
 
   /// Refresh the queue using the strategy
   /// specific priority status function.
@@ -903,8 +903,8 @@ private:
   // but make them private so they're not accessible outside the class
 
   /// Private method to hide public base class method: just calls base class method
-  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
-                                 ACE_Time_Value *timeout = nullptr);
+  int peek_dequeue_head (ACE_Message_Block *&first_item,
+                         ACE_Time_Value *timeout = nullptr) override;
 };
 
 /**
