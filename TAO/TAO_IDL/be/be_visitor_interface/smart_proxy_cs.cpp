@@ -44,7 +44,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       *os <<"TAO_"<< node->flat_name () << "_Default_Proxy_Factory::";
       *os << "TAO_"
-          << node->flat_name () << "_Default_Proxy_Factory (int permanent)"
+          << node->flat_name () << "_Default_Proxy_Factory (bool permanent)"
           << be_nl
           << "{" << be_idt_nl
           << "TAO_" << node->flat_name ()

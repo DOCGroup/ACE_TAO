@@ -41,12 +41,12 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "{" << be_nl
       << "public:" << be_idt_nl << be_nl
       << "TAO_" << node->flat_name ()
-      << "_Default_Proxy_Factory (int permanent = 1);"
+      << "_Default_Proxy_Factory (bool permanent = true);"
       << be_nl
       << "// <permanent> signifies that the proxy factory will remain" << be_nl
       << "// registered with the Proxy Factory Adapter until the program" << be_nl
       << "// terminates. That is, it will be a one-shot factory for the" << be_nl
-      << "// interface.  If this value is set to 0, then the factory will" << be_nl
+      << "// interface.  If this value is set to false, then the factory will" << be_nl
       << "// be unregistered after the first invocation providing the" << be_nl
       << "// flexibility of having a different smart proxy per object" << be_nl
       << "// instead of per interface." << be_nl << be_nl
