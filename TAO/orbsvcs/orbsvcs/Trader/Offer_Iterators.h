@@ -64,7 +64,7 @@ public:
   virtual void add_offer (CosTrading::OfferId offer_id,
                           const CosTrading::Offer* offer) = 0;
 
-  virtual CORBA::ULong max_left () = 0;
+  CORBA::ULong max_left () override = 0;
 
   // BEGIN SPEC
   // The max_left operation returns the number of service offers
@@ -88,8 +88,8 @@ public:
    * to be extracted.
    * END SPEC
    */
-  virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers) = 0;
+  CORBA::Boolean next_n (CORBA::ULong n,
+                         CosTrading::OfferSeq_out offers) override = 0;
  protected:
   TAO_Offer_Iterator (TAO_Offer_Iterator const&) = delete;
   TAO_Offer_Iterator& operator= (TAO_Offer_Iterator const&) = delete;

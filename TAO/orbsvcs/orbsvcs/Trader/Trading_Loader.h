@@ -53,7 +53,7 @@ public:
   /// ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc,
-                                   ACE_TCHAR *argv[]);
+                                   ACE_TCHAR *argv[]) override;
 
 protected:
   /// Enable the Trading Service to answer multicast requests for its
