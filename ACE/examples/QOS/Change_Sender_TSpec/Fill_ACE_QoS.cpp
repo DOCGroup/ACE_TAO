@@ -2,7 +2,7 @@
 #include "Fill_ACE_QoS.h"
 
 
-const iovec Fill_ACE_QoS::iov_ = {nullptr, 0};
+const iovec Fill_ACE_QoS::iov_ = {0, 0};
 
 Fill_ACE_QoS::Fill_ACE_QoS ()
   : default_traffic_ (std::make_unique<ACE_Flow_Spec> (

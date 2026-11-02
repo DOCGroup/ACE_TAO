@@ -872,6 +872,10 @@ project(Compiler_Features_42_Test) : acetest {
   specific(vs2019,vs2022) {
     LanguageStandard = stdcpp20
   }
+  specific(nmake) {
+    compile_flags -= /std:c++17
+    compile_flags += /std:c++20
+  }
 }
 
 project(Compiler_Features_43_Test) : acetest {

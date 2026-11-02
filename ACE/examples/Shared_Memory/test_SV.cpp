@@ -3,7 +3,11 @@
 #include "ace/OS_NS_unistd.h"
 
 static constexpr int SHMSZ = 27;
+#if defined (ACE_WIN32)
+static char SHM_KEY[] = "5678";
+#else
 static constexpr key_t SHM_KEY = 5678;
+#endif
 
 static void
 client ()

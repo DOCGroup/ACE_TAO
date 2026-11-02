@@ -23,7 +23,7 @@
 static int size = 0;
 static int iterations = 0;
 
-static void *
+static ACE_THR_FUNC_RETURN
 supplier (void *)
 {
   ACE_UPIPE_Stream s_stream;
@@ -57,7 +57,7 @@ supplier (void *)
                                          ACE_Message_Block::MB_DATA,
                                          (ACE_Message_Block *) nullptr,
                                          mybuf.get ()),
-                      nullptr);
+                      ACE_THR_FUNC_RETURN_NULL);
       if (s_stream.send (mb_p) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%t) %p\n",
@@ -67,7 +67,7 @@ supplier (void *)
 
   ACE_NEW_RETURN (mb_p,
                   ACE_Message_Block ((size_t) 0),
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
 
   // Insert a 0-sized message block to signal the other side to shut
   // down.
@@ -75,12 +75,12 @@ supplier (void *)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t) %p\n",
                        "send failed"),
-                          0);
+                      0);
   s_stream.close ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 consumer (void *)
 {
   ACE_UPIPE_Stream c_stream;
@@ -139,7 +139,7 @@ consumer (void *)
               "The program ran %d seconds\n",
               received_messages, size, secs));
   c_stream.close ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int

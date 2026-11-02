@@ -23,7 +23,7 @@
 static int size = 0;
 static int iterations = 0;
 
-static void *
+static ACE_THR_FUNC_RETURN
 supplier (void *)
 {
   ACE_UPIPE_Stream s_stream;
@@ -57,10 +57,10 @@ supplier (void *)
                        "(%t) %p\n", "error put"),
                       0);
   s_stream.close ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 consumer (void *)
 {
   ACE_UPIPE_Stream c_stream;
@@ -118,7 +118,7 @@ consumer (void *)
               size,
               secs));
   c_stream.close ();
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int

@@ -25,7 +25,7 @@ static ACE_UPIPE_Addr addr (ACE_TEXT("pattern"));
 
 // peer1 thread entry point.
 
-static void *
+static ACE_THR_FUNC_RETURN
 peer1 (void *)
 {
   ACE_UPIPE_Stream c_stream;
@@ -41,7 +41,7 @@ peer1 (void *)
   ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (20),
-                  nullptr);
+                  ACE_THR_FUNC_RETURN_NULL);
 
   mb->copy ("hello", 6);
 
@@ -87,10 +87,10 @@ peer1 (void *)
               "(%t) peer1 received buffer with \"%s\"\n",
               conbuf));
   c_stream.close ();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 peer2 (void *)
 {
   ACE_UPIPE_Acceptor acc (addr);
@@ -147,7 +147,7 @@ peer2 (void *)
     ACE_ERROR ((LM_ERROR,
                 "(%t) peer2 send failed\n"));
   s_stream.close ();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
