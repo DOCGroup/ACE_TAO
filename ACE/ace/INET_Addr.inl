@@ -1,15 +1,16 @@
 // -*- C++ -*-
 
-#include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_arpa_inet.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 ACE_INET_Addr::reset_i ()
 {
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  std::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->get_type() == AF_INET)
     {
 #ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
@@ -120,9 +121,9 @@ ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
 
   if (this->get_type() == PF_INET6)
   {
-    int memval = ACE_OS::memcmp (this->ip_addr_pointer(),
-                                 rhs.ip_addr_pointer(),
-                                 this->ip_addr_size());
+    int memval = std::memcmp (this->ip_addr_pointer (),
+                              rhs.ip_addr_pointer (),
+                              this->ip_addr_size ());
 
     return memval < 0
             || (memval == 0
