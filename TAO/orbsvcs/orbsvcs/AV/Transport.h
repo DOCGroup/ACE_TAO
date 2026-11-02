@@ -356,7 +356,7 @@ public:
   TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory const &) = delete;
   TAO_AV_Transport_Factory (TAO_AV_Transport_Factory &&) = delete;
   TAO_AV_Transport_Factory &operator= (TAO_AV_Transport_Factory &&) = delete;
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   virtual int match_protocol (char const *protocol_string);
   virtual TAO_AV_Acceptor *make_acceptor ();
   virtual TAO_AV_Connector *make_connector ();
