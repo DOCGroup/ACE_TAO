@@ -13,9 +13,7 @@ Current_Test_Impl::Current_Test_Impl (CORBA::ORB_ptr orb,
 {
 }
 
-Current_Test_Impl::~Current_Test_Impl ()
-{
-}
+Current_Test_Impl::~Current_Test_Impl () = default;
 
 ::CORBA::Long
 Current_Test_Impl::self_test ()

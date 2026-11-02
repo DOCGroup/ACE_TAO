@@ -25,6 +25,9 @@
 
 #include "Server_Request_Interceptor.h"
 
+#include <array>
+#include <cstring>
+
 namespace Test
 {
   class IIOP_Server_Request_Interceptor
@@ -33,13 +36,18 @@ namespace Test
   {
   public:
     /// Constructor.
-    IIOP_Server_Request_Interceptor (const char* orbid, TEST test);
+    IIOP_Server_Request_Interceptor (char const *orbid, TEST test);
 
     /// Destructor.
-    virtual ~IIOP_Server_Request_Interceptor () = default;
+    ~IIOP_Server_Request_Interceptor () override = default;
+
+    IIOP_Server_Request_Interceptor (IIOP_Server_Request_Interceptor const &) = delete;
+    IIOP_Server_Request_Interceptor (IIOP_Server_Request_Interceptor &&) = delete;
+    IIOP_Server_Request_Interceptor &operator= (IIOP_Server_Request_Interceptor const &) = delete;
+    IIOP_Server_Request_Interceptor &operator= (IIOP_Server_Request_Interceptor &&) = delete;
 
     /// queries the status of the test
-    virtual bool self_test ();
+    bool self_test () override;
 
     /**
      * @name Methods Required by the Server Request Interceptor
@@ -51,19 +59,19 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name ();
+    char * name () override;
 
     /// incoming interception point
-    virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
+    void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr) override;
 
     /// outgoing interception point
-    virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+    void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
     /// outgoing interception point
-    virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+    void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
     /// outgoing interception point
-    virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+    void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
     //@}
 
   protected:
@@ -81,41 +89,39 @@ namespace Test
     /// clears the outgoing request info
     void pop_request_info (size_t requestID);
 
-    TAO::Transport::IIOP::Current_ptr resolve_iiop_transport_current (const char* orbid);
+    TAO::Transport::IIOP::Current_ptr resolve_iiop_transport_current (char const *orbid);
 
   private:
     /// transport ID dtata structure
-    typedef struct EP {
-      CORBA::UShort port_;
-      CORBA::String_var host_;
+    struct EndPoint
+    {
+      CORBA::UShort port_ {};
+      CORBA::String_var host_ {};
 
-      EP ()
-        : port_(0)
-        , host_ ()
-      {};
+      EndPoint () = default;
 
-      EP (CORBA::UShort port, const char* host)
-        : port_(port)
+      EndPoint (CORBA::UShort port, char const *host)
+        : port_ (port)
         , host_ (host)
-      {};
+      {}
 
-      bool operator== (const struct EP &ep) const
+      bool operator== (EndPoint const &ep) const
       {
         return (this->port_ == ep.port_) &&
-          (strcmp (this->host_.in (), ep.host_.in ()) == 0);
-      };
-      bool operator!= (const struct EP &ep) const
+          (std::strcmp (this->host_.in (), ep.host_.in ()) == 0);
+      }
+      bool operator!= (EndPoint const &ep) const
       {
-        return !(this->operator== (ep));
-      };
-    } EndPoint;
+        return !(*this == ep);
+      }
+    };
 
   private:
     /// IIOPTraits test status
     bool iiop_test_successful_;
 
     /// Endpoints hash table
-    EndPoint endPoints_[1001];
+    std::array<EndPoint, 1001> endPoints_ {};
   };
 } // namespace Test
 
