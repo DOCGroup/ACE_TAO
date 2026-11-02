@@ -48,6 +48,12 @@
 #include <memory>
 #include <string>
 
+namespace
+{
+  using BE_Operation_Owner =
+    std::unique_ptr<be_operation, BE_AST_Decl_Deleter>;
+}
+
 std::string const LW_EXCEP_NAMES[] =
   {
     "AlreadyConnected",
@@ -213,6 +219,8 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
                                     0,
                                     0),
                       -1);
+      std::unique_ptr<AST_Operation, BE_AST_Decl_Deleter> provides_op_owner (
+        provides_op);
 
       provides_op->set_defined_in (comp_);
       provides_op->set_imported (comp_->imported ());
@@ -226,6 +234,7 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
                              ACE_TEXT ("be_add_operation() failed\n")),
                             -1);
         }
+      provides_op_owner.release ();
     }
 
   return 0;
@@ -532,6 +541,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
   op->set_name (op_full_name);
@@ -563,6 +573,7 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -588,6 +599,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -602,6 +614,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -627,6 +640,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -635,6 +649,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -661,6 +676,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -691,6 +707,7 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -716,6 +733,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -741,6 +759,7 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -782,6 +801,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -790,6 +810,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -813,6 +834,7 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
                                     false,
                                     false),
                       -1);
+      BE_Operation_Owner push_op_owner (push_op);
       push_op->set_defined_in (consumer);
       push_op->set_imported (node->imported ());
       push_op->set_name (op_full_name);
@@ -834,6 +856,7 @@ be_visitor_ccm_pre_proc::gen_push_op (be_eventtype *node,
         {
           return -1;
         }
+      push_op_owner.release ();
      }
   return 0;
 }
@@ -859,7 +882,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
                                 0,
                                 0),
                   -1);
-  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> op_owner (op);
+  BE_Operation_Owner op_owner (op);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
   op->set_name (op_name);
@@ -933,6 +956,7 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
   op->set_name (op_name);
@@ -957,6 +981,7 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -982,7 +1007,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
                                 0,
                                 0),
                   -1);
-  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> op_owner (op);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -1055,6 +1080,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -1069,6 +1095,7 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -1105,6 +1132,7 @@ be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -1113,6 +1141,7 @@ be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -1133,6 +1162,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
   AST_Type *pk = node->primary_key ();
   UTL_ExceptList *exceps = nullptr;
@@ -1176,6 +1206,7 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -1196,6 +1227,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
   AST_Type *pk = node->primary_key ();
   Identifier arg_id ("key");
@@ -1238,6 +1270,7 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -1258,6 +1291,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
   AST_Type *pk = node->primary_key ();
   Identifier arg_id ("key");
@@ -1300,6 +1334,7 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -1320,6 +1355,7 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
                                 0,
                                 0),
                   -1);
+  BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
   Identifier arg_id ("comp");
   UTL_ScopedName arg_name (&arg_id,
@@ -1339,6 +1375,7 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
