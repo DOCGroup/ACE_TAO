@@ -55,11 +55,13 @@ public:
   ACE_Reactor_Token_T (ACE_Reactor_Impl &r,
                        int s_queue = ACE_TOKEN_TYPE::FIFO);
   ACE_Reactor_Token_T (int s_queue = ACE_TOKEN_TYPE::FIFO);
-  ~ACE_Reactor_Token_T () override;
+  // ACE_TOKEN_TYPE may be ACE_Noop_Token, which has no virtual base destructor.
+  virtual ~ACE_Reactor_Token_T ();
 
   /// Called just before a token waiter goes to sleep.
   /// @see ACE_Token::sleep_hook
-  void sleep_hook () override;
+  // ACE_TOKEN_TYPE may be ACE_Noop_Token, which has no virtual sleep_hook.
+  virtual void sleep_hook ();
 
   /// Get the reactor implementation
   ACE_Reactor_Impl &reactor ();
