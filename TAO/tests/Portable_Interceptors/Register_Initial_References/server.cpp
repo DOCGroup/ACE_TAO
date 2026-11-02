@@ -6,7 +6,7 @@ int test_orb (CORBA::ORB_ptr orb)
 {
   int errors = 0;
 
-  POA_TestModule::test* test = 0;
+  POA_TestModule::test *test = nullptr;
   ACE_NEW_RETURN (test,
                   test_i, 1);
   PortableServer::ServantBase_var safe (test);
@@ -23,11 +23,11 @@ int test_orb (CORBA::ORB_ptr orb)
       orb->register_initial_reference ("",
                                        object.in ());
     }
-  catch (const CORBA::ORB::InvalidName&)
+  catch (CORBA::ORB::InvalidName const &)
     {
       invalid_name = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -45,11 +45,11 @@ int test_orb (CORBA::ORB_ptr orb)
       orb->register_initial_reference ("ORBMyService",
                                         object.in ());
     }
-  catch (const CORBA::ORB::InvalidName&)
+  catch (CORBA::ORB::InvalidName const &)
     {
       duplicate_name = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -67,14 +67,14 @@ int test_orb (CORBA::ORB_ptr orb)
       orb->register_initial_reference ("ORBNilServer",
                                        CORBA::Object::_nil());
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (CORBA::BAD_PARAM const &ex)
     {
       if ((ex.minor() & 0xFFFU) == 27)
         {
           invalid_object = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -91,7 +91,7 @@ int test_orb (CORBA::ORB_ptr orb)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  Server_ORBInitializer *initializer = 0;
+  Server_ORBInitializer *initializer = nullptr;
   int retval = 0;
 
   ACE_NEW_RETURN (initializer,
@@ -117,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception in server:");
       return 1;

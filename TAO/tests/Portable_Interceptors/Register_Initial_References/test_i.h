@@ -27,7 +27,12 @@ public:
   test_i ();
 
   /// Destructor.
-  ~test_i ();
+  ~test_i () override;
+
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
 private:
 };

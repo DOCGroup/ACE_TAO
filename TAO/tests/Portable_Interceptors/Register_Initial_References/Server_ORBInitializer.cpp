@@ -12,7 +12,7 @@ void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr orbinitinfo)
 {
-  POA_TestModule::test* test = 0;
+  POA_TestModule::test *test = nullptr;
   ACE_NEW (test,
            test_i);
   PortableServer::ServantBase_var safe (test);
@@ -29,11 +29,11 @@ Server_ORBInitializer::pre_init (
       orbinitinfo->register_initial_reference ("",
                                                object.in ());
     }
-  catch (const PortableInterceptor::ORBInitInfo::InvalidName&)
+  catch (PortableInterceptor::ORBInitInfo::InvalidName const &)
     {
       invalid_name = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -48,11 +48,11 @@ Server_ORBInitializer::pre_init (
       orbinitinfo->register_initial_reference ("MyService",
                                                object.in ());
     }
-  catch (const PortableInterceptor::ORBInitInfo::InvalidName&)
+  catch (PortableInterceptor::ORBInitInfo::InvalidName const &)
     {
       duplicate_name = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -67,14 +67,14 @@ Server_ORBInitializer::pre_init (
       orbinitinfo->register_initial_reference ("NilServer",
                                                CORBA::Object::_nil());
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (CORBA::BAD_PARAM const &ex)
     {
       if (ex.minor () == (CORBA::OMGVMCID | 27))
         {
           invalid_object = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
