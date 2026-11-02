@@ -15,7 +15,6 @@
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_netdb.h"
 
@@ -29,6 +28,8 @@
 #include <openssl/err.h>
 #include <openssl/rand.h>
 #include <openssl/safestack.h>
+
+#include <cstring>
 
 namespace
 {
@@ -410,7 +411,7 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
   char *peer = nullptr;
   char **peerarg = ACE::debug () ? &peer : nullptr;
   int const flags = X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT;
-  size_t const len = ACE_OS::strlen (name);
+  size_t const len = std::strlen (name);
 
   int const result = ::X509_check_host (cert, name, len, flags, peerarg);
 
@@ -700,7 +701,7 @@ ACE_SSL_Context::random_seed (const char * seed)
 {
   ACE_TRACE ("ACE_SSL_Context::random_seed");
 
-  int len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (seed));
+  int const len = ACE_Utils::truncate_cast<int> (std::strlen (seed));
   ::RAND_seed (seed, len);
 
 #if OPENSSL_VERSION_NUMBER >= 0x00905100L
