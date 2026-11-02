@@ -82,9 +82,9 @@ public:
         DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
   // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;

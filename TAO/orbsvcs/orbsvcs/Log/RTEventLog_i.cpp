@@ -29,7 +29,7 @@ TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
     poa_ (PortableServer::POA::_duplicate (poa)),
     log_poa_ (PortableServer::POA::_duplicate (log_poa))
 {
-  TAO_EC_Event_Channel_Attributes attr (poa_.in(), poa_.in());
+  TAO_EC_Event_Channel_Attributes const attr (poa_.in(), poa_.in());
 
   ACE_NEW_THROW_EX (this->event_channel_,
                     TAO_EC_Event_Channel(attr),
@@ -47,7 +47,7 @@ TAO_RTEventLog_i::~TAO_RTEventLog_i ()
 DsLogAdmin::Log_ptr
 TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id)
 {
-  RTEventLogAdmin::EventLogFactory_var eventLogFactory =
+  RTEventLogAdmin::EventLogFactory_var const eventLogFactory =
     RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   RTEventLogAdmin::EventLog_var log =
@@ -61,7 +61,7 @@ TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id)
 DsLogAdmin::Log_ptr
 TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id)
 {
-  RTEventLogAdmin::EventLogFactory_var eventLogFactory =
+  RTEventLogAdmin::EventLogFactory_var const eventLogFactory =
     RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   RTEventLogAdmin::EventLog_var log =
@@ -81,7 +81,7 @@ TAO_RTEventLog_i::destroy ()
   this->logmgr_i_.remove (this->logid_);
 
   // Deregister with POA.
-  PortableServer::ObjectId_var id = this->log_poa_->servant_to_id (this);
+  PortableServer::ObjectId_var const id = this->log_poa_->servant_to_id (this);
 
   this->log_poa_->deactivate_object (id.in ());
 }
@@ -89,7 +89,7 @@ TAO_RTEventLog_i::destroy ()
 void
 TAO_RTEventLog_i::activate ()
 {
-  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+  RtecEventChannelAdmin::ConsumerAdmin_var const consumer_admin =
     this->event_channel_->for_consumers ();
 
   this->my_log_consumer_ = new TAO_Rtec_LogConsumer (this);

@@ -80,54 +80,54 @@ public:
 
 
   // = Methods from CosNotifyChannelAdmin::ConsumerAdmin.
-  CosNotifyChannelAdmin::AdminID MyID ();
+  CosNotifyChannelAdmin::AdminID MyID () override;
 
-  CosNotifyChannelAdmin::EventChannel_ptr MyChannel ();
+  CosNotifyChannelAdmin::EventChannel_ptr MyChannel () override;
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator ();
+  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator () override;
 
-  CosNotifyFilter::MappingFilter_ptr priority_filter ();
-  void priority_filter (CosNotifyFilter::MappingFilter_ptr);
+  CosNotifyFilter::MappingFilter_ptr priority_filter () override;
+  void priority_filter (CosNotifyFilter::MappingFilter_ptr) override;
 
-  CosNotifyFilter::MappingFilter_ptr lifetime_filter ();
-  void lifetime_filter (CosNotifyFilter::MappingFilter_ptr);
+  CosNotifyFilter::MappingFilter_ptr lifetime_filter () override;
+  void lifetime_filter (CosNotifyFilter::MappingFilter_ptr) override;
 
-  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers ();
-  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers ();
+  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers () override;
+  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers () override;
 
   CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (
-    CosNotifyChannelAdmin::ProxyID proxy_id);
+    CosNotifyChannelAdmin::ProxyID proxy_id) override;
 
   CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_pull_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID& proxy_id);
+    CosNotifyChannelAdmin::ProxyID& proxy_id) override;
 
   CosNotifyChannelAdmin::ProxySupplier_ptr obtain_notification_push_supplier (
     CosNotifyChannelAdmin::ClientType ctype,
-    CosNotifyChannelAdmin::ProxyID& id);
+    CosNotifyChannelAdmin::ProxyID& id) override;
 
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
-  void destroy ();
+  void destroy () override;
 
   /// CosNotifyComm::NotifySubscribe.
   void subscription_change (CosNotification::EventTypeSeq const &added,
                             CosNotification::EventTypeSeq const &removed) override;
 
   /// CosNotification::QoSAdmin.
-  CosNotification::QoSProperties* get_qos ();
+  CosNotification::QoSProperties* get_qos () override;
   void set_qos (CosNotification::QoSProperties const &) override;
   void validate_qos (CosNotification::QoSProperties const &,
                      CosNotification::NamedPropertyRangeSeq_out) override;
 
   /// CosNotifyFilter::FilterAdmin.
-  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr);
-  void remove_filter (CosNotifyFilter::FilterID);
-  CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID);
-  CosNotifyFilter::FilterIDSeq* get_all_filters ();
-  void remove_all_filters ();
+  CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr) override;
+  void remove_filter (CosNotifyFilter::FilterID) override;
+  CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID) override;
+  CosNotifyFilter::FilterIDSeq* get_all_filters () override;
+  void remove_all_filters () override;
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;

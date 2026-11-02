@@ -27,7 +27,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->poa_ = PortableServer::POA::_duplicate (poa);
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     this->poa_->the_POAManager ();
 
   {
@@ -107,12 +107,12 @@ TAO_LogMgr_i::create_objectid (DsLogAdmin::LogId id)
 DsLogAdmin::Log_ptr
 TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id)
 {
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->create_objectid (id);
-  CORBA::RepositoryId_var intf =
+  CORBA::RepositoryId_var const intf =
     this->create_repositoryid ();
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->log_poa_->create_reference_with_id (oid.in (),
                 intf.in ());
 
@@ -132,11 +132,11 @@ TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id)
 
   servant = create_log_servant (id);
 
-  PortableServer::ServantBase_var safe_servant = servant;
+  PortableServer::ServantBase_var const safe_servant = servant;
   // Transfer ownership to the POA.
 
   // Obtain ObjectId
-  PortableServer::ObjectId_var oid = this->create_objectid (id);
+  PortableServer::ObjectId_var const oid = this->create_objectid (id);
 
   // Register with the poa
   this->log_poa_->activate_object_with_id (oid.in (),

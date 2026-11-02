@@ -82,8 +82,7 @@ public:
         DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
    // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
-  RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-      );
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;

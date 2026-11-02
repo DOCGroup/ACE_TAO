@@ -17,8 +17,8 @@ TAO_NotifyLog_i::TAO_NotifyLog_i (CORBA::ORB_ptr orb,
 {
   CosNotifyChannelAdmin::ChannelID channel_id;
 
-  CosNotification::QoSProperties initial_qos;
-  CosNotification::AdminProperties initial_admin;
+  CosNotification::QoSProperties const initial_qos;
+  CosNotification::AdminProperties const initial_admin;
 
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
@@ -37,7 +37,7 @@ TAO_NotifyLog_i::~TAO_NotifyLog_i ()
 DsLogAdmin::Log_ptr
 TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id)
 {
-  DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
+  DsNotifyLogAdmin::NotifyLogFactory_var const notifyLogFactory =
     DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in ());
 
   CosNotification::QoSProperties* qos = get_qos ();
@@ -61,7 +61,7 @@ TAO_NotifyLog_i::copy (DsLogAdmin::LogId &id)
 DsLogAdmin::Log_ptr
 TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
 {
-  DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
+  DsNotifyLogAdmin::NotifyLogFactory_var const notifyLogFactory =
     DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in ());
 
   CosNotification::QoSProperties* qos = get_qos ();
@@ -92,7 +92,7 @@ TAO_NotifyLog_i::destroy ()
   this->logmgr_i_.remove (this->logid_);
 
   // Deregister with POA.
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     this->poa_->servant_to_id (this);
 
   this->poa_->deactivate_object (id.in ());
@@ -102,7 +102,7 @@ void
 TAO_NotifyLog_i::activate ()
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
+  CosNotifyChannelAdmin::InterFilterGroupOperator const ifgop =
     CosNotifyChannelAdmin::OR_OP;
 
   this->consumer_admin_ =
