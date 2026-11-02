@@ -1535,6 +1535,18 @@ BE_GlobalData::gen_impl_debug_info () const
 }
 
 void
+BE_GlobalData::gen_source_info (bool val)
+{
+  this->gen_source_info_ = val;
+}
+
+bool
+BE_GlobalData::gen_source_info () const
+{
+  return this->gen_source_info_;
+}
+
+void
 BE_GlobalData::gen_copy_ctor (bool val)
 {
   this->gen_copy_ctor_ = val;

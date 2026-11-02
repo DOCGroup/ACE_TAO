@@ -148,6 +148,7 @@ DRV_usage ()
     ACE_TEXT (" --default-idl-version\tPrint the default IDL version and exit\n")
     ACE_TEXT (" --list-idl-versions\tPrint IDL versions supported and exit\n")
     ACE_TEXT (" --syntax-only\t\tJust check the syntax, do not create files\n")
+    ACE_TEXT (" --generate-source-info\tGenerate source file and line comments\n")
     ACE_TEXT (" --bison-trace\t\tEnable Bison Tracing (sets yydebug to 1)\n")
     ACE_TEXT (" --dump-builtins\tDump the compiler and user defined IDL.\n")
     ACE_TEXT (" --just-dump-builtins\tJust dump the compiler defined IDL and exit.\n")
@@ -592,6 +593,10 @@ process_long_option(long ac, char **av, long &i)
   else if (long_option == "syntax-only")
     {
       idl_global->syntax_only_ = true;
+    }
+  else if (long_option == "generate-source-info")
+    {
+      be_global->gen_source_info (true);
     }
   else if (long_option == "default-idl-version")
     {

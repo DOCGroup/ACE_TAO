@@ -704,6 +704,12 @@ public:
   /// Check generation of source file and line number implementation files.
   bool gen_impl_debug_info () const;
 
+  /// Set generation of source file and line comments in generated files.
+  void gen_source_info (bool);
+
+  /// Check generation of source file and line comments in generated files.
+  bool gen_source_info () const;
+
   /// Set generation of copy constructor.
   void gen_copy_ctor (bool);
 
@@ -1156,6 +1162,9 @@ private:
 
   /// are we generating source file and line numbers for implementation files?
   bool gen_impl_debug_info_ {};
+
+  /// Are we generating source file and line comments in generated files?
+  bool gen_source_info_ {};
 
   /// are we generating the copy constructor?
   bool gen_copy_ctor_ {};
