@@ -4,7 +4,7 @@
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -32,11 +32,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      Server_ORBInitializer * temp_initializer = 0;
+      Server_ORBInitializer *temp_initializer = nullptr;
 
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
@@ -86,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Echo_Server_Request_Interceptor * server_interceptor =
         temp_initializer->server_interceptor ();
 
-      if (server_interceptor == 0)
+      if (server_interceptor == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Could not obtain reference to "
                            "server request interceptor.\n"),
@@ -108,10 +108,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
@@ -128,7 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception in server:");
       return 1;

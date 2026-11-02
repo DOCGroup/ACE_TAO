@@ -2,12 +2,12 @@
 #include "tao/OctetSeqC.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-const IOP::ServiceId service_id = 0xdeadbeef;
-const char *request_msg = "REQUEST message";
-const char *reply_msg = "REPLY message";
-const char *forward_msg = "FORWARD message";
+constexpr IOP::ServiceId service_id = 0xdeadbeef;
+constexpr char request_msg[] = "REQUEST message";
+constexpr char reply_msg[] = "REPLY message";
+constexpr char forward_msg[] = "FORWARD message";
 int send_request_count = 0;
 int exception_count = 0;
 
@@ -19,10 +19,6 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location)
   : myname_ ("Echo_Server_Interceptor"),
     forward_location_ (CORBA::Object::_duplicate (forward_location))
-{
-}
-
-Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
 {
 }
 
@@ -65,39 +61,39 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
   // Same goes for the shutdown call
-  if (ACE_OS::strcmp ("shutdown", operation.in ()) == 0)
+  if (std::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
   IOP::ServiceId id = ::service_id;
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id);
 
-  const char *buf =
-    reinterpret_cast<const char *> (sc->context_data.get_buffer ());
+  char const *buf =
+    reinterpret_cast<char const *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received service context: %C\n",
               buf));
-  if (ACE_OS::strcmp (buf, request_msg) == 0)
+  if (std::strcmp (buf, request_msg) == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Sending LOCATION_FORWARD\n"));
       throw PortableInterceptor::ForwardRequest (this->forward_location_.in ());
     }
-  else if (ACE_OS::strcmp (buf, forward_msg) == 0)
+  else if (std::strcmp (buf, forward_msg) == 0)
     {
       // Make the context to send the context to the client
       IOP::ServiceContext scc;
 
       scc.context_id = ::service_id;
 
-      CORBA::ULong string_len = ACE_OS::strlen (reply_msg) + 1;
+      CORBA::ULong string_len = std::strlen (reply_msg) + 1;
       CORBA::Octet *buff = CORBA::OctetSeq::allocbuf (string_len);
 
-      ACE_OS::strcpy (reinterpret_cast<char *> (buff), reply_msg);
+      std::strcpy (reinterpret_cast<char *> (buff), reply_msg);
 
-      scc.context_data.replace (string_len, string_len, buff, 1);
+      scc.context_data.replace (string_len, string_len, buff, true);
 
       // Add this context to the service context list.
-      ri->add_reply_service_context (scc, 0);
+      ri->add_reply_service_context (scc, false);
     }
   else
     {
@@ -132,12 +128,12 @@ Echo_Server_Request_Interceptor::send_reply (
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (::service_id);
 
-  const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
+  char const *buf = reinterpret_cast<char const *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Reply service context: %C\n",
               buf));
 
-  if (ACE_OS::strcmp (buf, reply_msg) != 0)
+  if (std::strcmp (buf, reply_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_reply: "
@@ -149,9 +145,9 @@ Echo_Server_Request_Interceptor::send_reply (
   IOP::ServiceContext_var sc2 =
     ri->get_request_service_context (::service_id);
 
-  const char *buf2 = reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
+  char const *buf2 = reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf2, forward_msg) != 0)
+  if (std::strcmp (buf2, forward_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_reply: "
@@ -177,12 +173,12 @@ Echo_Server_Request_Interceptor::send_exception (
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (::service_id);
 
-  const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
+  char const *buf = reinterpret_cast<char const *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Reply service context: %C\n",
               buf));
 
-  if (ACE_OS::strcmp (buf, reply_msg) != 0)
+  if (std::strcmp (buf, reply_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_exception: "
@@ -194,9 +190,9 @@ Echo_Server_Request_Interceptor::send_exception (
   IOP::ServiceContext_var sc2 =
     ri->get_request_service_context (::service_id);
 
-  const char *buf2 = reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
+  char const *buf2 = reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf2, forward_msg) != 0)
+  if (std::strcmp (buf2, forward_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_exception: "
@@ -209,7 +205,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
 void
 Echo_Server_Request_Interceptor::send_other (
-             PortableInterceptor::ServerRequestInfo_ptr ri)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   CORBA::String_var operation = ri->operation ();
 
@@ -222,9 +218,9 @@ Echo_Server_Request_Interceptor::send_other (
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (::service_id);
 
-  const char *buf = reinterpret_cast<const char *> (sc->context_data.get_buffer ());
+  char const *buf = reinterpret_cast<char const *> (sc->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf, request_msg) != 0)
+  if (std::strcmp (buf, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_reply: "

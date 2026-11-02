@@ -3,7 +3,7 @@
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -46,7 +46,7 @@ run_test (Test_Interceptors::Visual_ptr server)
     {
       server->user ();
     }
-  catch (const Test_Interceptors::Silly&)
+  catch (Test_Interceptors::Silly const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught Silly\n"));
     }
@@ -55,14 +55,14 @@ run_test (Test_Interceptors::Visual_ptr server)
     {
       server->system ();
     }
-  catch (const CORBA::INV_OBJREF&)
+  catch (CORBA::INV_OBJREF const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -102,7 +102,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception in client:");
       return 1;

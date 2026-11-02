@@ -25,31 +25,36 @@ public:
   Echo_Server_Request_Interceptor ();
   // cotr.
 
-  Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location);
+  explicit Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location);
 
-  ~Echo_Server_Request_Interceptor ();
+  ~Echo_Server_Request_Interceptor () override = default;
   // dotr.
 
   void forward_reference (CORBA::Object_ptr forward_location);
 
-  virtual char * name ();
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (
+        PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
+
+  Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor &&) = delete;
+  Echo_Server_Request_Interceptor & operator = (Echo_Server_Request_Interceptor const &) = delete;
+  Echo_Server_Request_Interceptor & operator = (Echo_Server_Request_Interceptor &&) = delete;
 
 private:
-  const char *myname_;
+  char const *myname_;
   CORBA::Object_var forward_location_;
 };
 

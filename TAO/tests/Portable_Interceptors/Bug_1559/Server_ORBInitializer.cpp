@@ -1,9 +1,7 @@
 // -*- C++ -*-
 #include "Server_ORBInitializer.h"
 
-Server_ORBInitializer::Server_ORBInitializer ()
-{
-}
+Server_ORBInitializer::Server_ORBInitializer () = default;
 
 void
 Server_ORBInitializer::pre_init (
