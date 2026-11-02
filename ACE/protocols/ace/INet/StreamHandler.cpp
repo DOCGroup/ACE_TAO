@@ -8,6 +8,8 @@
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -363,9 +365,9 @@ namespace ACE
                 copy_len = (mb_remain->length () > char_length) ?
                                 char_length :
                                 mb_remain->length ();
-                ACE_OS::memmove (&buf[recv_char_count],
-                                  mb_remain->rd_ptr (),
-                                  copy_len);
+                std::memmove (&buf[recv_char_count],
+                              mb_remain->rd_ptr (),
+                              copy_len);
                 char_length -= copy_len;
                 recv_char_count += copy_len;
                 mb_remain->rd_ptr (copy_len);
@@ -388,9 +390,9 @@ namespace ACE
             // subtract what we possibly already copied from mb_remain
             copy_len = max_copy_len - copy_len;
 
-            ACE_OS::memmove (&buf[recv_char_count],
-                              mb->rd_ptr (),
-                              copy_len);
+            std::memmove (&buf[recv_char_count],
+                          mb->rd_ptr (),
+                          copy_len);
             recv_char_count += copy_len;
             char_length -= copy_len;
             mb->rd_ptr (copy_len);

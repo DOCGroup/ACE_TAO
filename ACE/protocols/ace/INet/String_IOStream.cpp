@@ -5,6 +5,8 @@
 #include "ace/INet/IOS_util.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -98,7 +100,9 @@ namespace ACE
               {
                 length = this->string_ref_->length () - this->rd_ptr_;
               }
-            ACE_OS::memmove (buffer, &(*this->string_ref_)[this->rd_ptr_], length * sizeof (char_type));
+            std::memmove (buffer,
+                          &(*this->string_ref_)[this->rd_ptr_],
+                          length * sizeof (char_type));
             this->rd_ptr_ += length;
             n = ACE_Utils::truncate_cast<int> (length);
           }

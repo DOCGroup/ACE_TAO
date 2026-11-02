@@ -3,7 +3,8 @@
 
 #include "ace/INet/BidirStreamBuffer.h"
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,9 +68,9 @@ namespace ACE
         int putback = int (this->gptr () - this->eback ());
         if (putback > 4) putback = 4;
 
-        ACE_OS::memmove (this->read_buffer_.get () + (4 - putback),
-                         this->gptr () - putback,
-                         putback * sizeof (char_type));
+        std::memmove (this->read_buffer_.get () + (4 - putback),
+                      this->gptr () - putback,
+                      putback * sizeof (char_type));
 
         if (this->interceptor_)
           this->interceptor_->before_read (this->bufsize_ - 4);
