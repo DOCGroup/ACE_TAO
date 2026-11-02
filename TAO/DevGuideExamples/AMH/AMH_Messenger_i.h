@@ -24,14 +24,19 @@ public:
   AMH_Messenger_i ();
 
   //Destructor
-  virtual ~AMH_Messenger_i ();
+  ~AMH_Messenger_i () override = default;
 
-  virtual void send_message (
+  AMH_Messenger_i (AMH_Messenger_i const &) = delete;
+  AMH_Messenger_i (AMH_Messenger_i &&) = delete;
+  AMH_Messenger_i &operator= (AMH_Messenger_i const &) = delete;
+  AMH_Messenger_i &operator= (AMH_Messenger_i &&) = delete;
+
+  void send_message (
     DevGuide::AMH_MessengerResponseHandler_ptr _tao_rh,
-    const char * user_name,
-    const char * subject,
-    const char * message
-  );
+    char const *user_name,
+    char const *subject,
+    char const *message
+  ) override;
 };
 
 
