@@ -4,6 +4,8 @@
 #include "tao/BD_String_Argument_T.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/BD_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -60,13 +62,14 @@ template<typename S_var,
 TAO::Argument*
 TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::clone ()
 {
-  typename S_var::s_traits::char_type * clone_x =
-             new typename S_var::s_traits::char_type [BOUND];
-  ACE_OS::strncpy (clone_x, this->x_, BOUND);
-  In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>* clone_arg =
-    new In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy> (clone_x);
+  std::unique_ptr<typename S_var::s_traits::char_type[]> clone_x (
+    new typename S_var::s_traits::char_type[BOUND]);
+  ACE_OS::strncpy (clone_x.get (), this->x_, BOUND);
+  std::unique_ptr<In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>> clone_arg =
+    std::make_unique<In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>> (clone_x.get ());
   clone_arg->is_clone_ = true;
-  return clone_arg;
+  clone_x.release ();
+  return clone_arg.release ();
 }
 
 // ===========================================================

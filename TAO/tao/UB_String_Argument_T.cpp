@@ -5,6 +5,8 @@
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/UB_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -50,14 +52,15 @@ TAO::Argument*
 TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::clone ()
 {
   size_t const len = ACE_OS::strlen (this->x_);
-  typename S_var::s_traits::char_type * clone_x =
-           new typename S_var::s_traits::char_type [len + 1];
-  ACE_OS::strncpy (clone_x, this->x_, len);
+  std::unique_ptr<typename S_var::s_traits::char_type[]> clone_x (
+    new typename S_var::s_traits::char_type[len + 1]);
+  ACE_OS::strncpy (clone_x.get (), this->x_, len);
   clone_x[len] = '\0';
-  In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>* clone_arg =
-       new In_UB_String_Clonable_Argument_T<S_var,Insert_Policy> (clone_x);
+  std::unique_ptr<In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>> clone_arg =
+    std::make_unique<In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>> (clone_x.get ());
   clone_arg->is_clone_ = true;
-  return clone_arg;
+  clone_x.release ();
+  return clone_arg.release ();
 }
 
 // ===========================================================
