@@ -7,7 +7,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Category.h"
 #include "ace/Malloc_Base.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 //#define ACE_ENABLE_TIMEPROBES
 #include "ace/Timeprobe.h"
@@ -86,9 +87,9 @@ ACE_Message_Block::copy (const char *buf, size_t n)
     }
   else
     {
-      (void) ACE_OS::memcpy (this->wr_ptr (),
-                             buf,
-                             n);
+      (void) std::memcpy (this->wr_ptr (),
+                          buf,
+                          n);
       this->wr_ptr (n);
       return 0;
     }
@@ -103,7 +104,7 @@ ACE_Message_Block::copy (const char *buf)
   // Note that for this to work correct, end() *must* be >= wr_ptr().
   size_t len = this->space ();
 
-  size_t buflen = ACE_OS::strlen (buf) + 1;
+  size_t const buflen = std::strlen (buf) + 1;
 
   if (len < buflen)
     {
@@ -112,9 +113,9 @@ ACE_Message_Block::copy (const char *buf)
     }
   else
     {
-      (void) ACE_OS::memcpy (this->wr_ptr (),
-                             buf,
-                             buflen);
+      (void) std::memcpy (this->wr_ptr (),
+                          buf,
+                          buflen);
       this->wr_ptr (buflen);
       return 0;
     }
@@ -129,9 +130,9 @@ ACE_Message_Block::crunch ()
         return -1;
 
       size_t const len = this->length ();
-      (void) ACE_OS::memmove (this->base (),
-                              this->rd_ptr (),
-                              len);
+      (void) std::memmove (this->base (),
+                           this->rd_ptr (),
+                           len);
       this->rd_ptr (this->base ());
       this->wr_ptr (this->base () + len);
     }
@@ -221,9 +222,9 @@ ACE_Data_Block::size (size_t length)
                             (char *) this->allocator_strategy_->malloc (length),
                             -1);
 
-      ACE_OS::memcpy (buf,
-                      this->base_,
-                      this->cur_size_);
+      std::memcpy (buf,
+                   this->base_,
+                   this->cur_size_);
       if (ACE_BIT_DISABLED (this->flags_,
                             ACE_Message_Block::DONT_DELETE))
         this->allocator_strategy_->free ((void *) this->base_);
@@ -364,9 +365,9 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
       ACE_ALLOCATOR (this->base_,
                      (char *) this->allocator_strategy_->malloc (size));
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-      (void) ACE_OS::memset (this->base_,
-                             '\0',
-                             size);
+      (void) std::memset (this->base_,
+                          '\0',
+                          size);
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
     }
 
@@ -653,9 +654,9 @@ ACE_Message_Block::ACE_Message_Block (const ACE_Message_Block &mb,
       size_t const wr_offset = mb.wr_ptr_ - (start - mb.base ());
 
       // Copy wr_offset amount of data in to <this->data_block>
-      (void) ACE_OS::memcpy (this->wr_ptr (),
-                             start,
-                             wr_offset);
+      (void) std::memcpy (this->wr_ptr (),
+                          start,
+                          wr_offset);
 
       // Don't move the write pointer, just leave it to the application
       // to do what it wants
@@ -1124,9 +1125,9 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
   // new block by only copying cur_size_ bytes.
   if (nb != nullptr)
     {
-      ACE_OS::memcpy (nb->base_,
-                      this->base_,
-                      this->cur_size_);
+      std::memcpy (nb->base_,
+                   this->base_,
+                   this->cur_size_);
     }
 
   return nb;
