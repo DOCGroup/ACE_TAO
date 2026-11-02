@@ -81,6 +81,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Truncate.h"
 
+#include <memory>
+
 AST_Structure::AST_Structure (UTL_ScopedName *n,
                               bool local,
                               bool abstract)
@@ -504,8 +506,8 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                 }
 
               // Use full definition node.
+              std::unique_ptr<AST_Structure> redefined_structure (i);
               i->destroy ();
-              delete i;
               i = fd;
             }
         }

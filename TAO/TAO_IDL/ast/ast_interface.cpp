@@ -370,8 +370,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                 }
 
               // Use full definition node.
+              std::unique_ptr<AST_Interface> redefined_interface (i);
               i->destroy ();
-              delete i;
               i = fd;
             }
         }
