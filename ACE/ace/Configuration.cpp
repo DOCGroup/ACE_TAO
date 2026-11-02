@@ -16,6 +16,7 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
+#include <cstring>
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -1854,7 +1855,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       entry->int_id_.free (allocator_);
       // Allocate the new value in this heap
       ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
-      ACE_OS::memcpy (pers_value, data, length);
+      std::memcpy (pers_value, data, length);
       ACE_Configuration_Value_IntId new_value_int (pers_value, length);
       entry->int_id_ = new_value_int;
     }
@@ -1865,7 +1866,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
  (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_name, t_name);
       ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
-      ACE_OS::memcpy (pers_value, data, length);
+      std::memcpy (pers_value, data, length);
       ACE_Configuration_ExtId item_name_pers (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value, length);
       if (section_int.value_hash_map_->bind (item_name_pers, item_value, allocator_))
@@ -2011,7 +2012,7 @@ ACE_Configuration_Heap::get_binary_value (
 #else
   ACE_NEW_RETURN (data, char[VIntId.length_], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  ACE_OS::memcpy (data, VIntId.data_.ptr_, VIntId.length_);
+  std::memcpy (data, VIntId.data_.ptr_, VIntId.length_);
   length = VIntId.length_;
   return 0;
 }

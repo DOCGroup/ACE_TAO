@@ -4,6 +4,8 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
@@ -74,7 +76,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
             }
 
           // copy the beginnning of the line
-          ACE_OS::memcpy (temp_buffer, buffer, buffer_size);
+          std::memcpy (temp_buffer, buffer, buffer_size);
           read_pos = buffer_size - 1;
           buffer_size *= 2;
 #if defined (ACE_HAS_ALLOC_HOOKS)
