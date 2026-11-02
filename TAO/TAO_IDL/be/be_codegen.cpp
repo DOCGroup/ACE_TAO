@@ -27,6 +27,7 @@
 
 #include <cctype>
 #include <random>
+#include <utility>
 
 TAO_CodeGen * tao_cg = nullptr;
 
@@ -1917,16 +1918,15 @@ TAO_CodeGen::end_ciao_ami_conn_idl ()
 // effectively a global.
 
 void
-TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
+TAO_CodeGen::gperf_input_stream (std::unique_ptr<TAO_OutStream> &&os)
 {
-  delete this->gperf_input_stream_;
-  this->gperf_input_stream_ = os;
+  this->gperf_input_stream_ = std::move (os);
 }
 
 TAO_OutStream *
 TAO_CodeGen::gperf_input_stream ()
 {
-  return this->gperf_input_stream_;
+  return this->gperf_input_stream_.get ();
 }
 
 void
@@ -3465,5 +3465,5 @@ TAO_CodeGen::destroy ()
   delete this->ciao_conn_header_;
   delete this->ciao_conn_source_;
   delete this->ciao_ami_conn_idl_;
-  delete this->gperf_input_stream_;
+  this->gperf_input_stream_.reset ();
 }

@@ -17,6 +17,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Unbounded_Queue.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -359,7 +360,7 @@ public:
   TAO_OutStream *ciao_ami_conn_idl ();
 
   /// Set the gperf input file stream.
-  void gperf_input_stream (TAO_OutStream *gperf_input);
+  void gperf_input_stream (std::unique_ptr<TAO_OutStream> &&gperf_input);
 
   /// Retrieve the gperf input stream being used.
   TAO_OutStream *gperf_input_stream ();
@@ -476,7 +477,7 @@ private:
   TAO_OutStream *anyop_source_ {};
 
   /// TAO_OutStream to collect the input for gperf program.
-  TAO_OutStream *gperf_input_stream_ {};
+  std::unique_ptr<TAO_OutStream> gperf_input_stream_;
 
   /// Component servant header file.
   TAO_OutStream *ciao_svnt_header_ {};

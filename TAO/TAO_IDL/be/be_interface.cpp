@@ -46,6 +46,8 @@
 #include "ace/OS_NS_fcntl.h"
 
 #include <deque>
+#include <memory>
+#include <utility>
 
 be_interface::be_interface (UTL_ScopedName *n,
                             AST_Type **ih,
@@ -903,8 +905,10 @@ be_interface::gen_operation_table (std::string const& flat_name,
                               -1);
           }
 
+        std::unique_ptr<TAO_OutStream> gperf_input (os);
+
         // Store the outstream with the codegen singleton.
-        tao_cg->gperf_input_stream (os);
+        tao_cg->gperf_input_stream (std::move (gperf_input));
 
         // Open the temp file.
         if (os->open (temp_file,
