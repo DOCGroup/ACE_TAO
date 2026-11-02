@@ -44,11 +44,11 @@ ACEXML_ZipCharStream::determine_encoding ()
   if (i < 4)
     return -1;
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
-  if (!temp)
+  if (temp == nullptr)
     return -1;
   else
     {
-      if (this->encoding_)
+      if (this->encoding_ != nullptr)
         delete [] this->encoding_;
       this->encoding_ = ACE::strnew (temp);
   //     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),

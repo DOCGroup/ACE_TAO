@@ -2,8 +2,8 @@
 #include "ACEXML/parser/debug_validator/Debug_Element_Builder.h"
 
 ACEXML_Debug_Element_Builder::ACEXML_Debug_Element_Builder ()
-  : type_ (UNDEFINED),
-    root_ (0)
+  : type_ (CONTENT_TYPE::UNDEFINED),
+    root_ (nullptr)
 {
 }
 
@@ -24,7 +24,7 @@ ACEXML_Debug_Element_Builder::setElementName (const ACEXML_Char *,
 int
 ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type)
 {
-  if (this->type_ == UNDEFINED)
+  if (this->type_ == CONTENT_TYPE::UNDEFINED)
     {
       this->type_ = type;
       return 0;
@@ -38,14 +38,14 @@ ACEXML_Debug_Element_Builder::insertMixedElement (const ACEXML_Char *,
                                                   const ACEXML_Char *,
                                                   const ACEXML_Char *qName)
 {
-  ACEXML_Element_Tree_Name_Node *node = 0;
+  ACEXML_Element_Tree_Name_Node *node = nullptr;
 
   // @@ We should "throw" an exception here instead of returning -1.
   ACE_NEW_RETURN (node,
                   ACEXML_Element_Tree_Name_Node (qName),
                   -1);
 
-  if (this->root_ == 0)
+  if (this->root_ == nullptr)
     // @@ Memory leak if fail?
     ACE_NEW_RETURN (this->root_,
                     ACEXML_Element_Tree_List_Node (),
@@ -58,13 +58,13 @@ ACEXML_Debug_Element_Builder::insertMixedElement (const ACEXML_Char *,
 int
 ACEXML_Debug_Element_Builder::startChildGroup ()
 {
-  ACEXML_Element_Tree_List_Node *lnode = 0;
+  ACEXML_Element_Tree_List_Node *lnode = nullptr;
 
   ACE_NEW_RETURN (lnode,
                   ACEXML_Element_Tree_List_Node (),
                   -1);
 
-  if (this->root_ == 0)
+  if (this->root_ == nullptr)
     {
       this->root_ = lnode;
     }
@@ -104,7 +104,7 @@ ACEXML_Debug_Element_Builder::insertElement  (const ACEXML_Char *,
                                               const ACEXML_Char *,
                                               const ACEXML_Char *qName)
 {
-  ACEXML_Element_Tree_Name_Node *node = 0;
+  ACEXML_Element_Tree_Name_Node *node = nullptr;
 
   // @@ We should "throw" an exception here instead of returning -1.
   ACE_NEW_RETURN (node,
@@ -122,14 +122,14 @@ ACEXML_Debug_Element_Builder::dump ()
   // @@ Also dump element contentspec here.
   switch (this->type_)
     {
-    case EMPTY:
+    case CONTENT_TYPE::EMPTY:
       cout << "EMPTY";
       break;
-    case ANY:
+    case CONTENT_TYPE::ANY:
       cout << "ANY";
       break;
-    case MIXED:
-    case CHILDREN:
+    case CONTENT_TYPE::MIXED:
+    case CONTENT_TYPE::CHILDREN:
       // @@ Dump the content of this->root_
       cout << "*** not implemented ***";
       break;

@@ -71,7 +71,7 @@ public:
   /**
    * Create a new input source with a system identifier.
    */
-  ACEXML_InputSource (const ACEXML_Char *systemId);
+  explicit ACEXML_InputSource (const ACEXML_Char *systemId);
 
   /**
    * Default destructor.

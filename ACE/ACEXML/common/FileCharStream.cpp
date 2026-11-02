@@ -77,7 +77,7 @@ ACEXML_FileCharStream::determine_encoding ()
   ACE_OS::rewind (this->infile_);
 
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
-  if (!temp)
+  if (temp == nullptr)
     return -1;
   else
     {

@@ -46,7 +46,7 @@ public:
   /**
    * Construct an XML filter with the specified parent.
    */
-  ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent);
+  explicit ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent);
 
   /**
    * Destructor.

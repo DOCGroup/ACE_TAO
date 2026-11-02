@@ -25,26 +25,27 @@
 #include "ace/Null_Mutex.h"
 
 
-typedef ACE_Hash_Map_Entry<ACEXML_String,
-                           ACEXML_String> ACEXML_NS_CONTEXT_ENTRY;
+using ACEXML_NS_CONTEXT_ENTRY = ACE_Hash_Map_Entry<ACEXML_String,
+                                                   ACEXML_String>;
 
-typedef ACE_Hash_Map_Manager_Ex<ACEXML_String,
-                                ACEXML_String,
-                                ACE_Hash<ACEXML_String>,
-                                ACE_Equal_To<ACEXML_String>,
-                                ACE_Null_Mutex> ACEXML_NS_CONTEXT;
+using ACEXML_NS_CONTEXT = ACE_Hash_Map_Manager_Ex<ACEXML_String,
+                                                  ACEXML_String,
+                                                  ACE_Hash<ACEXML_String>,
+                                                  ACE_Equal_To<ACEXML_String>,
+                                                  ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Iterator_Ex<ACEXML_String,
-                                 ACEXML_String,
-                                 ACE_Hash<ACEXML_String>,
-                                 ACE_Equal_To<ACEXML_String>,
-                                 ACE_Null_Mutex> ACEXML_NS_CONTEXT_ITER;
+using ACEXML_NS_CONTEXT_ITER = ACE_Hash_Map_Iterator_Ex<ACEXML_String,
+                                                        ACEXML_String,
+                                                        ACE_Hash<ACEXML_String>,
+                                                        ACE_Equal_To<ACEXML_String>,
+                                                        ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
-                                         ACEXML_String,
-                                         ACE_Hash<ACEXML_String>,
-                                         ACE_Equal_To<ACEXML_String>,
-                                         ACE_Null_Mutex> ACEXML_NS_CONTEXT_REVERSE_ITER;
+using ACEXML_NS_CONTEXT_REVERSE_ITER =
+  ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
+                                   ACEXML_String,
+                                   ACE_Hash<ACEXML_String>,
+                                   ACE_Equal_To<ACEXML_String>,
+                                   ACE_Null_Mutex>;
 
 using ACEXML_STR_LIST = ACE_Unbounded_Queue<const ACEXML_Char *>;
 
