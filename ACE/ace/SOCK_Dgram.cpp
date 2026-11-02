@@ -8,6 +8,8 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -429,7 +431,7 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   for (i = 0; i < n; i++)
     {
-      ACE_OS::memcpy (ptr, iov[i].iov_base, iov[i].iov_len);
+      std::memcpy (ptr, iov[i].iov_base, iov[i].iov_len);
       ptr += iov[i].iov_len;
     }
 
@@ -495,7 +497,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 
       for (i = 0; i < n && copyn > 0; i++)
         {
-          ACE_OS::memcpy (iov[i].iov_base, ptr,
+          std::memcpy (iov[i].iov_base, ptr,
                           // iov_len is int on some platforms, size_t on others
                           copyn > (int) iov[i].iov_len
                             ? (size_t) iov[i].iov_len
@@ -746,7 +748,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
   ACE_TRACE ("ACE_SOCK_Dgram::make_multicast_ifaddr6");
   ipv6_mreq  lmreq;       // Scratch copy.
 
-  ACE_OS::memset (&lmreq, 0, sizeof (lmreq));
+  std::memset (&lmreq, 0, sizeof (lmreq));
 
 #if defined (ACE_WIN32) || !defined (ACE_LACKS_IF_NAMETOINDEX)
   if (net_if != nullptr)
@@ -819,7 +821,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 #endif /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
 
   // now set the multicast address
-  ACE_OS::memcpy (&lmreq.ipv6mr_multiaddr,
+  std::memcpy (&lmreq.ipv6mr_multiaddr,
                   &((sockaddr_in6 *) mcast_addr.get_addr ())->sin6_addr,
                   sizeof (in6_addr));
 

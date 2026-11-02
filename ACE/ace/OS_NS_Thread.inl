@@ -9,6 +9,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
 
+#include <cstring>
+
 #if defined (ACE_USES_FIFO_SEM)
 #  include "ace/OS_NS_sys_stat.h"
 #  include "ace/OS_NS_sys_select.h"
@@ -153,7 +155,7 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
     * require zeroing of mutex/condition objects to function correctly
     * but also of the attribute objects.
     */
-  ACE_OS::memset (&attributes, 0, sizeof (attributes));
+  std::memset (&attributes, 0, sizeof (attributes));
 #       endif
   if (
       ACE_ADAPT_RETVAL (pthread_condattr_init (&attributes), result) == 0
@@ -299,7 +301,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
    *   block of memory so as to avoid spurious EBUSY return code
    *   when calling this routine.
    */
-  ACE_OS::memset (cv, 0, sizeof (*cv));
+  std::memset (cv, 0, sizeof (*cv));
 #     endif
 
   if (ACE_ADAPT_RETVAL (pthread_cond_init (cv, &attributes), result) == 0)
@@ -1598,7 +1600,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
       s->new_sema_ = true;
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
-      ACE_OS::memset(s->sema_, 0, sizeof(*s->sema_));
+      std::memset (s->sema_, 0, sizeof (*s->sema_));
       return ::sem_init (s->sema_, type != USYNC_THREAD, count);
 #  endif /* ACE_LACKS_UNNAMED_SEMAPHORE */
     }
@@ -3007,7 +3009,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
 
   int result;
   struct sched_param param;
-  ACE_OS::memset ((void *) &param, 0, sizeof param);
+  std::memset ((void *) &param, 0, sizeof param);
 
   // If <policy> is -1, we don't want to use it for
   // pthread_setschedparam().  Instead, obtain policy from

@@ -2,10 +2,11 @@
 
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_Memory.h"
+
+#include <cstring>
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -152,7 +153,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       if (hp == nullptr)
         return -1;
       else
-        ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr,
+        std::memcpy ((char *) &host_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
                         (char *) hp->ACE_HOSTENT_H_ADDR,
 # else
@@ -192,7 +193,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         {
           struct sockaddr_in if_addr;
 
-          ACE_OS::memcpy (&if_addr,
+          std::memcpy (&if_addr,
                           &ifr->ifr_addr,
                           sizeof if_addr);
 
