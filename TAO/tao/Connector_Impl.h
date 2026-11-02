@@ -78,7 +78,7 @@ public:
 
   /// Activates the Svc_Handler, and if the right wait strategy is in
   /// use, registers the handle with the reactor.
-  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg) override;
 
 private:
   /// Pointer to the ORB Core.
