@@ -46,7 +46,7 @@ public:
   TAO_CEC_Pulling_Strategy &operator= (TAO_CEC_Pulling_Strategy &&) = delete;
 
   /// destructor...
-  virtual ~TAO_CEC_Pulling_Strategy ();
+  virtual ~TAO_CEC_Pulling_Strategy () = default;
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.

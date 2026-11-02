@@ -85,7 +85,7 @@ public:
   TAO_CEC_Factory () = default;
 
   /// destructor...
-  virtual ~TAO_CEC_Factory ();
+  ~TAO_CEC_Factory () override = default;
 
   TAO_CEC_Factory (TAO_CEC_Factory const &) = delete;
   TAO_CEC_Factory (TAO_CEC_Factory &&) = delete;

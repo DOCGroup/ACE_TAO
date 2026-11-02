@@ -3,9 +3,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_Dispatching::~TAO_CEC_Dispatching ()
-= default;
-
 // ****************************************************************
 
 TAO_CEC_Reactive_Dispatching::TAO_CEC_Reactive_Dispatching () = default;

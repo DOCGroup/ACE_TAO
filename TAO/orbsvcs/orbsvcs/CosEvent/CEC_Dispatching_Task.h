@@ -83,7 +83,7 @@ public:
                            ACE_Allocator *mb_allocator = nullptr);
 
   /// Destructor
-  ~TAO_CEC_Dispatch_Command () override;
+  ~TAO_CEC_Dispatch_Command () override = default;
 
   TAO_CEC_Dispatch_Command (TAO_CEC_Dispatch_Command const &) = delete;
   TAO_CEC_Dispatch_Command (TAO_CEC_Dispatch_Command &&) = delete;
