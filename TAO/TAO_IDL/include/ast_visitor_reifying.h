@@ -105,8 +105,8 @@ private:
   // the corresponding instantiation, and store that instead.
   void check_and_store (AST_Decl *node);
 
-  // Returns a relative scoped name allocated on the heap if the
-  // arg is declared inside a template module, otherwise 0.
+  // Returns a relative scoped name owned by the caller if the arg is declared
+  // inside a template module, otherwise nullptr.
   UTL_ScopedName *template_module_rel_name (AST_Decl *d);
 
 private:

@@ -34,7 +34,25 @@
 #include "utl_exprlist.h"
 #include "utl_strlist.h"
 #include "utl_string.h"
+#include "fe_utils.h"
 #include "nr_extern.h"
+
+#include <memory>
+
+namespace
+{
+  struct UTL_ExprList_Deleter
+  {
+    void operator() (UTL_ExprList *list) const
+    {
+      if (list != nullptr)
+        {
+          list->destroy ();
+          delete list;
+        }
+    }
+  };
+}
 
 ast_visitor_reifying::ast_visitor_reifying (
       ast_visitor_context *ctx)
@@ -350,24 +368,18 @@ ast_visitor_reifying::visit_array (AST_Array *node)
 
   bt = dynamic_cast<AST_Type*> (this->reified_node_);
 
-  AST_Expression *v = nullptr;
-  UTL_ExprList *v_list = nullptr;
+  std::unique_ptr<AST_Expression> v;
+  std::unique_ptr<UTL_ExprList, UTL_ExprList_Deleter> v_list;
 
   for (std::size_t i = 0; i < node->n_dims (); ++i)
     {
+      // ACE_NEW_RETURN requires a raw output pointer; adopt it into v immediately.
       AST_Param_Holder *ph = node->dims ()[i]->param_holder ();
 
       if (ph != nullptr)
         {
           if (this->visit_param_holder (ph) != 0)
             {
-              if (v_list != nullptr)
-                {
-                  v_list->destroy ();
-                  delete v_list;
-                  v_list = nullptr;
-                }
-
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("ast_visitor_reifying::")
                                  ACE_TEXT ("visit_array - ")
@@ -378,27 +390,33 @@ ast_visitor_reifying::visit_array (AST_Array *node)
 
           AST_Constant *c = dynamic_cast<AST_Constant*> (this->reified_node_);
 
-          ACE_NEW_RETURN (v,
+          AST_Expression *new_expression = nullptr;
+          ACE_NEW_RETURN (new_expression,
                           AST_Expression (c->constant_value (),
                                           AST_Expression::EV_ulong),
                           -1);
+          v.reset (new_expression);
         }
       else
         {
-          ACE_NEW_RETURN (v,
+          AST_Expression *new_expression = nullptr;
+          ACE_NEW_RETURN (new_expression,
                           AST_Expression (node->dims ()[i].get (),
                                           AST_Expression::EV_ulong),
                           -1);
+          v.reset (new_expression);
         }
 
       UTL_ExprList *el = nullptr;
       ACE_NEW_RETURN (el,
-                      UTL_ExprList (v, nullptr),
+                      UTL_ExprList (v.get (), nullptr),
                       -1);
+      // The list owns v from this point, and v_list owns the list nodes.
+      v.release ();
 
-      if (v_list == nullptr)
+      if (!v_list)
         {
-          v_list = el;
+          v_list.reset (el);
         }
       else
         {
@@ -411,19 +429,12 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   AST_Array *arr =
     idl_global->gen ()->create_array (&sn,
                                       node->n_dims (),
-                                      v_list,
+                                      v_list.get (),
                                       false,
                                       false);
 
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
-
-  if (v_list != nullptr)
-    {
-      v_list->destroy ();
-      delete v_list;
-      v_list = nullptr;
-    }
 
   arr->set_base_type (bt);
   this->reified_node_ = arr;
@@ -672,22 +683,18 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
 void
 ast_visitor_reifying::check_and_store (AST_Decl *node)
 {
-  UTL_ScopedName *tmpl_tail =
-    this->template_module_rel_name (node);
+  FE_Utils::Scoped_Name_Owner const tmpl_tail (
+    this->template_module_rel_name (node));
 
-  if (tmpl_tail != nullptr)
+  if (tmpl_tail)
     {
       AST_Decl *d =
         idl_global->scopes ().top ()->lookup_by_name (
-          tmpl_tail,
+          tmpl_tail.get (),
           true,
           false);
 
       this->reified_node_ = d;
-
-      tmpl_tail->destroy ();
-      delete tmpl_tail;
-      tmpl_tail = nullptr;
     }
   else
     {
