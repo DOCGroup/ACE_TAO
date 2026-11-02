@@ -5,7 +5,7 @@
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior1 = 0;
+ACE_TCHAR const *ior1 = nullptr;
 bool interceptor_invoked = false;
 
 int
@@ -95,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       if (!interceptor_invoked)
         {

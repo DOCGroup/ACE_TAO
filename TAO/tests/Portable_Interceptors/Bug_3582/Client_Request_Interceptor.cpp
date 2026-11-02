@@ -6,8 +6,8 @@
 extern bool interceptor_invoked;
 
 Client_Request_Interceptor::Client_Request_Interceptor (
-  const char *orb_id,
-  const char *forward_str)
+  char const *orb_id,
+  char const *forward_str)
   : orb_id_ (CORBA::string_dup (orb_id)),
     orb_ (),
     request_count_ (0),
@@ -52,7 +52,7 @@ Client_Request_Interceptor::receive_exception (
   if (CORBA::is_nil (this->orb_.in ()))
   {
     int argc = 0;
-    ACE_TCHAR **argv = 0;
+    ACE_TCHAR **argv = nullptr;
     this->orb_ = CORBA::ORB_init (argc,
                                   argv,
                                   this->orb_id_.in ());
