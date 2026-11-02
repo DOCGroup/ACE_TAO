@@ -33,6 +33,7 @@
 #include "be_home.h"
 #include "be_finder.h"
 #include "be_extern.h"
+#include "be_global.h"
 
 #include "ast_generator.h"
 
@@ -44,6 +45,7 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <memory>
 #include <string>
 
 std::string const LW_EXCEP_NAMES[] =
@@ -857,6 +859,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
                                 0,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> op_owner (op);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
   op->set_name (op_name);
@@ -865,10 +868,6 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
 
   if (i == nullptr)
     {
-      op->destroy ();
-      delete op;
-      op = nullptr;
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ccm_pre_proc::")
                          ACE_TEXT ("gen_subscribe - ")
@@ -897,6 +896,7 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
@@ -982,6 +982,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
                                 0,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> op_owner (op);
   op->set_name (op_name);
   op->set_defined_in (comp_);
   op->set_imported (comp_->imported ());
@@ -989,10 +990,6 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
 
   if (i == nullptr)
     {
-      op->destroy ();
-      delete op;
-      op = nullptr;
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_ccm_pre_proc::")
                          ACE_TEXT ("gen_emits_connect - ")
@@ -1021,6 +1018,7 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
     {
       return -1;
     }
+  op_owner.release ();
 
   return 0;
 }
