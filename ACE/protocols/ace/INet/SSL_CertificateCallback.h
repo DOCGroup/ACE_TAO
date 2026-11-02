@@ -84,9 +84,9 @@ namespace ACE
           {
             public:
               SSL_CertificateAcceptor ();
-              virtual ~SSL_CertificateAcceptor ();
+              ~SSL_CertificateAcceptor () override;
 
-              virtual void handle_certificate_failure (SSL_CertificateCallbackArg& arg);
+              void handle_certificate_failure (SSL_CertificateCallbackArg& arg) override;
           };
       }
   }

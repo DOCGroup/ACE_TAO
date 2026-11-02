@@ -54,18 +54,18 @@ namespace ACE
               virtual ~StreamHandler ();
 
               /// Activate the connection
-              virtual int open (void * = 0);
+              int open (void * = 0) override;
 
               /// Close the connection
-              virtual int close (u_long flags = 0);
+              int close (u_long flags = 0) override;
 
               /// Called to handle incoming data when using StreamHandler in
               /// reactive mode
-              virtual int handle_input (ACE_HANDLE);
+              int handle_input (ACE_HANDLE) override;
 
               /// Called to handle outgoing data when using StreamHandler in
               /// reactive mode
-              virtual int handle_output (ACE_HANDLE);
+              int handle_output (ACE_HANDLE) override;
 
               /// Called by streambuffer to read/receive new data from peer
               int read_from_stream (void * buf, size_t length, size_t char_size);

@@ -35,12 +35,12 @@ namespace ACE
               using char_type = typename STREAM_BUFFER::char_type;
 
               FixedLengthStreamPolicyBase (std::streamsize length);
-              virtual ~FixedLengthStreamPolicyBase ();
+              ~FixedLengthStreamPolicyBase () override;
 
             protected:
-              virtual int read_from_stream (char_type* buffer, std::streamsize length);
+              int read_from_stream (char_type* buffer, std::streamsize length) override;
 
-              virtual int write_to_stream (const char_type* buffer, std::streamsize length);
+              int write_to_stream (const char_type* buffer, std::streamsize length) override;
 
             private:
               std::streamsize length_;
@@ -65,12 +65,12 @@ namespace ACE
               using buffer_type = ACE::IOS::String_OStreamBase<char_type>;
 
               ChunkedTransferStreamPolicyBase ();
-              virtual ~ChunkedTransferStreamPolicyBase ();
+              ~ChunkedTransferStreamPolicyBase () override;
 
             protected:
-              virtual int read_from_stream (char_type* buffer, std::streamsize length);
+              int read_from_stream (char_type* buffer, std::streamsize length) override;
 
-              virtual int write_to_stream (const char_type* buffer, std::streamsize length);
+              int write_to_stream (const char_type* buffer, std::streamsize length) override;
 
               int getc ();
 

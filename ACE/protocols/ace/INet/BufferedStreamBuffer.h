@@ -57,11 +57,11 @@ namespace ACE
               BasicBufferedStreamBuffer (std::streamsize bufsz,
                                          typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode);
 
-              virtual ~BasicBufferedStreamBuffer ();
+              ~BasicBufferedStreamBuffer () override;
 
-              virtual int_type overflow (int_type c);
-              virtual int_type underflow ();
-              virtual int sync ();
+              int_type overflow (int_type c) override;
+              int_type underflow () override;
+              int sync () override;
 
               void set_interceptor (interceptor_type& interceptor);
 

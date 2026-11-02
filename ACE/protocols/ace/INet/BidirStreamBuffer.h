@@ -60,11 +60,11 @@ namespace ACE
               BasicBidirStreamBuffer (STREAM_HANDLER* sh, std::streamsize bufsz, openmode mode);
 
               /// Destructor
-              virtual ~BasicBidirStreamBuffer ();
+              ~BasicBidirStreamBuffer () override;
 
-              virtual int_type overflow (int_type c);
-              virtual int_type underflow ();
-              virtual int sync ();
+              int_type overflow (int_type c) override;
+              int_type underflow () override;
+              int sync () override;
 
               const STREAM_HANDLER& stream () const;
 
