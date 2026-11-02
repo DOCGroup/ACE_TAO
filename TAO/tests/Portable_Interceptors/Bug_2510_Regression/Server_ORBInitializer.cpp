@@ -2,11 +2,6 @@
 #include "Server_ORBInitializer.h"
 extern PortableInterceptor::SlotId slotId;
 
-Server_ORBInitializer::Server_ORBInitializer () :
-  server_interceptor_ (0)
-{
-}
-
 void
 Server_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {

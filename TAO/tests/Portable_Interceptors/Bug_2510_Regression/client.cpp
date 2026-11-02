@@ -41,7 +41,7 @@ static ACE_THR_FUNC_RETURN run_test(void* pData)
     {
         server->normal (10);
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
     {
         ex._tao_print_exception ("Exception thrown in run_test()\n");
     }
@@ -100,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->destroy ();
     }
 
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
     {
         ex._tao_print_exception ("Caught exception in client:");
         return 1;

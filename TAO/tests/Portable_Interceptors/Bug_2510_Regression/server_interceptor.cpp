@@ -5,15 +5,11 @@
 #include "ace/OS_NS_string.h"
 
 const IOP::ServiceId service_id = 0x08154711;
-const char * const request_msg = "TEST 0123456789 TEST";
+char const * const request_msg = "TEST 0123456789 TEST";
 PortableInterceptor::SlotId slotId = 0;
 
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
   : myname_ ("Echo_Server_Interceptor")
-{
-}
-
-Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
 {
 }
 
@@ -49,7 +45,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id);
 
-  const char *buf =
+  char const *buf =
     reinterpret_cast<const char *> (sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received service context: %C\n",
@@ -73,7 +69,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
         ri->set_slot (slotId, data);
         ACE_DEBUG ((LM_DEBUG, "receive_request_service_contexts filled Slot %d\n",(int)slotId));
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
     {
         ex._tao_print_exception (
           "Exception thrown in receive_request_service_contexts()\n");

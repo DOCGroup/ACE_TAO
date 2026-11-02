@@ -29,14 +29,14 @@ Visual_i::normal (CORBA::Long arg)
   {
       retrieved_any = pi_current->get_slot(slotId);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
       ex._tao_print_exception (
         "Visual_i::normal : get_slot() threw Exception\n");
       throw;
   }
 
-  const char *str = 0;
+  char const *str = nullptr;
   if (! (retrieved_any.in() >>= str) )
   {
     ACE_DEBUG ((LM_DEBUG, "Visual_i::normal : Problem extracting data from CORBA::Any\n"));

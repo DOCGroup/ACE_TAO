@@ -5,15 +5,11 @@
 #include "ace/OS_NS_string.h"
 
 const IOP::ServiceId service_id = 0x08154711;
-const char * const request_msg = "TEST 0123456789 TEST";
+char const * const request_msg = "TEST 0123456789 TEST";
 
 Echo_Client_Request_Interceptor::
 Echo_Client_Request_Interceptor ()
   : myname_ ("Echo_Client_Interceptor")
-{
-}
-
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 {
 }
 
@@ -58,7 +54,7 @@ Echo_Client_Request_Interceptor::send_request (
   sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0);
+  ri->add_request_service_context (sc, false);
 }
 
 void
