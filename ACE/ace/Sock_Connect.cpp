@@ -182,7 +182,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       if (hp == nullptr)
         return -1;
       else
-        ACE_OS::memcpy ((char *) &ip_addr.sin_addr.s_addr,
+        std::memcpy ((char *) &ip_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
                         (char *) hp->ACE_HOSTENT_H_ADDR,
 # else
@@ -192,8 +192,8 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
     }
   else
     {
-      ACE_OS::memset ((void *) &ip_addr, 0, sizeof ip_addr);
-      ACE_OS::memcpy ((void *) &ip_addr.sin_addr,
+      std::memset ((void *) &ip_addr, 0, sizeof ip_addr);
+      std::memcpy ((void *) &ip_addr.sin_addr,
                       (void*) &host_addr,
                       sizeof ip_addr.sin_addr);
     }
@@ -216,7 +216,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       struct sockaddr_in if_addr;
 
       // Compare host ip address with interface ip address.
-      ACE_OS::memcpy (&if_addr,
+      std::memcpy (&if_addr,
                       &ifr->ifr_addr,
                       sizeof if_addr);
 
@@ -267,11 +267,11 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                         ACE_TEXT ("ioctl (get broadaddr)")));
           else
             {
-              ACE_OS::memcpy (&ip_addr,
+              std::memcpy (&ip_addr,
                               &if_req.ifr_broadaddr,
                               sizeof if_req.ifr_broadaddr);
 
-              ACE_OS::memcpy ((void *) &host_addr,
+              std::memcpy ((void *) &host_addr,
                               (void *) &ip_addr.sin_addr,
                               sizeof host_addr);
 
@@ -680,7 +680,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   ACE_NEW_RETURN (ifs,
                   struct IFREQ[num_ifs],
                   -1);
-  ACE_OS::memset (ifs, 0, num_ifs * sizeof (struct IFREQ));
+  std::memset (ifs, 0, num_ifs * sizeof (struct IFREQ));
 
   std::unique_ptr<struct IFREQ[]> p_ifs (ifs);
 
@@ -692,7 +692,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
     }
 
   struct IFCONF ifcfg;
-  ACE_OS::memset (&ifcfg, 0, sizeof (struct IFCONF));
+  std::memset (&ifcfg, 0, sizeof (struct IFCONF));
 
 # ifdef SETFAMILY
   ifcfg.IFC_FAMILY = AF_UNSPEC;  // request all families be returned
@@ -790,7 +790,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   struct addrinfo hints, *res0;
   int error;
 
-  ACE_OS::memset (&hints, 0, sizeof (hints));
+  std::memset (&hints, 0, sizeof (hints));
   hints.ai_flags = AI_NUMERICHOST;
   hints.ai_family = AF_INET6;
 
@@ -890,8 +890,8 @@ return 0;
       return -1;
     }
 
-  ACE_OS::memset (p_ifs, 0, ifreq_size);
-  ACE_OS::memset (&ifcfg, 0, sizeof (struct ifconf));
+  std::memset (p_ifs, 0, ifreq_size);
+  std::memset (&ifcfg, 0, sizeof (struct ifconf));
 
   ifcfg.ifc_req = p_ifs;
   ifcfg.ifc_len = ifreq_size;
