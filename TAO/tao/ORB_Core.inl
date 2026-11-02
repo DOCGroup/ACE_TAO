@@ -198,12 +198,12 @@ TAO_ORB_Core::not_default (const char * orb_id)
 }
 
 ACE_INLINE void
-TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
+TAO_ORB_Core::optimize_collocation_objects (bool opt)
 {
   this->opt_for_collocation_ = opt;
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE bool
 TAO_ORB_Core::optimize_collocation_objects () const
 {
   return this->opt_for_collocation_;

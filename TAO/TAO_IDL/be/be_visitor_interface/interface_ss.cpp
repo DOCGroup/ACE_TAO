@@ -79,11 +79,16 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2;
-
-  TAO_INSERT_COMMENT (os);
-
-  *os << be_nl_2;
+  if (be_global->gen_source_info ())
+    {
+      *os << be_nl_2;
+      TAO_INSERT_COMMENT (os);
+      *os << be_nl_2;
+    }
+  else
+    {
+      *os << be_nl_2;
+    }
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
@@ -150,12 +155,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
+  *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
 
   if (node->has_mixed_parentage ())
     {
       *os << " ||" << be_nl
-          << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
+          << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
 
   *os << be_uidt_nl
@@ -339,7 +344,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "TAO_Stub_Auto_Ptr stub (this->_create_stub ());"
       << be_nl;
 
-  *os << "::CORBA::Boolean const _tao_opt_colloc = "
+  *os << "bool const _tao_opt_colloc = "
       << "stub->servant_orb_var ()->orb_core ()->"
       << "optimize_collocation_objects ();" << be_nl;
 

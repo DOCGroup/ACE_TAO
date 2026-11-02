@@ -259,7 +259,7 @@ public:
    * This flag indicates whether the stub code should make use of the
    * collocation opportunities that are available to the ORB.
    */
-  CORBA::Boolean optimize_collocation_objects () const;
+  bool optimize_collocation_objects () const;
 
   /// Needed to avoid copying forward_profiles for thread safety
   CORBA::Boolean marshal (TAO_OutputCDR&);
@@ -401,7 +401,7 @@ protected:
    * reason for caching this helps our generated code, notably the
    * stubs to be decoupled from ORB_Core. Please do not move it away.
    */
-  CORBA::Boolean const collocation_opt_;
+  bool const collocation_opt_;
 
   /// True if forwarding request upon some specific exceptions
   /// (e.g. OBJECT_NOT_EXIST) already happened.

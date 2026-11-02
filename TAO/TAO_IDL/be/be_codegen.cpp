@@ -2685,10 +2685,9 @@ TAO_CodeGen::gen_skel_src_includes ()
         break;
     }
 
-  if (be_global->lookup_strategy () != BE_GlobalData::TAO_DYNAMIC_HASH)
-    {
-      this->gen_system_include (this->server_skeletons_, "cstring");
-    }
+  this->gen_system_include (this->server_skeletons_, "cstddef");
+  this->gen_system_include (this->server_skeletons_, "cstring");
+  this->gen_system_include (this->server_skeletons_, "memory");
 
   if (be_global->gen_direct_collocation ())
     {

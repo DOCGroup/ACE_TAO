@@ -1572,6 +1572,11 @@ be_interface::gen_gperf_things (std::string const &flat_name)
 
   TAO_INSERT_COMMENT (os);
 
+  if (!be_global->gen_source_info ())
+    {
+      *os << be_nl;
+    }
+
   // Generate the correct class definition for the operation lookup
   // strategy. Then, get the lookup method from GPERF. And then,
   // instantiate the correct class for the operation lookup strategy
@@ -1652,11 +1657,11 @@ be_interface::gen_perfect_hash_class_definition (std::string const &flat_name)
       << ": public TAO_Perfect_Hash_OpTable" << be_uidt_nl
       << "{" << be_nl
       << "private:" << be_idt_nl
-      << "unsigned int hash (const char *str, unsigned int len) override;"
-      << be_uidt_nl << be_nl
+      << "std::size_t hash (const char *str, std::size_t len) override;"
+      << be_uidt_nl
       << "public:" << be_idt_nl
       << "const TAO_operation_db_entry * lookup "
-      << "(const char *str, unsigned int len) override;"
+      << "(const char *str, std::size_t len) override;"
       << be_uidt_nl
       << "};\n\n";
 }
@@ -1942,7 +1947,7 @@ be_interface::is_a_helper (be_interface * /*derived*/,
                            TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "ACE_OS::strcmp (value, \"" << bi->repoID () << "\") == 0 ||" << be_nl;
+  *os << "std::strcmp (value, \"" << bi->repoID () << "\") == 0 ||" << be_nl;
 
   return 0;
 }
@@ -2330,11 +2335,11 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 
   if (this->is_abstract () || this->has_mixed_parentage ())
     {
-      *os << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
+      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
   else if (this->is_local ())
     {
-      *os << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/LocalObject:1.0\") == 0";
+      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/LocalObject:1.0\") == 0";
     }
 
   if (this->has_mixed_parentage () || this->is_local ())
@@ -2348,7 +2353,7 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 
   if (! this->is_abstract ())
     {
-      *os << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0" << be_nl;
+      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0" << be_nl;
     }
 
   return 0;

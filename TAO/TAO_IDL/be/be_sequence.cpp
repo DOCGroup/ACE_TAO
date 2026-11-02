@@ -528,13 +528,20 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
     case be_sequence::MNG_PSEUDO:
       if (this->unbounded ())
         {
-          *os << "::TAO::unbounded_object_reference_sequence<" << linebreak
-              << be_idt << be_idt_nl
-              << elem->nested_type_name (ctx_scope) << "," << linebreak
-              << be_nl;
-          *os << elem->nested_type_name (ctx_scope, "_var") << linebreak
-              << be_uidt_nl
-              << ">" << be_uidt;
+          *os << "::TAO::unbounded_object_reference_sequence<";
+          if (linebreak.empty ())
+            {
+              *os << elem->nested_type_name (ctx_scope) << ", "
+                  << elem->nested_type_name (ctx_scope, "_var") << ">";
+            }
+          else
+            {
+              *os << linebreak << be_idt << be_idt_nl
+                  << elem->nested_type_name (ctx_scope) << "," << linebreak
+                  << be_nl
+                  << elem->nested_type_name (ctx_scope, "_var") << linebreak
+                  << be_uidt_nl << ">" << be_uidt;
+            }
         }
       else
         {

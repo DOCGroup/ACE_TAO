@@ -297,10 +297,9 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
   for (std::size_t i = 0; i < ndims; ++i)
     {
-      os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *," << be_nl
-         << "                        TAO::Null_RefCount_Policy>"
-         << be_idt_nl
-         << node->flat_name ();
+      os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *, "
+            "TAO::Null_RefCount_Policy>"
+         << " " << node->flat_name ();
 
       std::size_t const inner_ndims = ndims - i - 1;
 
@@ -455,14 +454,10 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 
   this->gen_begin_NS_for_anon ();
 
-  os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *," << be_nl
-     << "                        TAO::Null_RefCount_Policy>"
-     << be_idt_nl
-     << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
-
-     << " (" << be_idt_nl
-     << "::CORBA::tk_sequence," << be_nl
-     << "&";
+  os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *, "
+        "TAO::Null_RefCount_Policy>"
+     << " " << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
+     << " (" << be_idt_nl << "::CORBA::tk_sequence, &";
 
   if (this->gen_base_typecode_name (base) != 0)
     {
@@ -474,8 +469,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
                         -1);
     }
 
-  os << "," << be_nl
-     << node->max_size () << ");" << be_uidt_nl
+  os << ", " << node->max_size () << ");" << be_uidt_nl
      << be_uidt_nl;
 
   os << "::CORBA::TypeCode_ptr const tc_"

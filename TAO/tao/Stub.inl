@@ -361,7 +361,7 @@ TAO_Stub::destroy ()
   delete this;
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE bool
 TAO_Stub::optimize_collocation_objects () const
 {
   return this->collocation_opt_;

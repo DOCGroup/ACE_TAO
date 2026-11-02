@@ -67,7 +67,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << "{" << be_idt_nl
       << "TAO_Stub_Auto_Ptr stub (this->_create_stub ());" << be_nl;
 
-  *os << "::CORBA::Boolean _tao_opt_colloc = "
+  *os << "bool _tao_opt_colloc = "
       << "stub->servant_orb_var ()->orb_core ()->"
       << "optimize_collocation_objects ();" << be_nl
       << "::CORBA::Object_var obj = "
@@ -158,7 +158,7 @@ emit (be_interface * /* derived */,
   std::string const buf = base->compute_full_name ("AMH_", "");
   amh_name += buf;
 
-  *os << "if (ACE_OS::strcmp (logical_type_id, \""
+  *os << "if (std::strcmp (logical_type_id, \""
       << base->repoID () << "\") == 0)" << be_idt_nl
       << "return static_cast<"
       << amh_name << "*> (this);" << be_uidt_nl;

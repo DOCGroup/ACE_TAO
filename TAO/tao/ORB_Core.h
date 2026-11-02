@@ -245,8 +245,8 @@ public:
 
   /// Set/get the collocation flags
   //@{
-  void optimize_collocation_objects (CORBA::Boolean opt);
-  CORBA::Boolean optimize_collocation_objects () const;
+  void optimize_collocation_objects (bool opt);
+  bool optimize_collocation_objects () const;
 
   void use_global_collocation (CORBA::Boolean opt);
   CORBA::Boolean use_global_collocation () const;
@@ -1125,7 +1125,7 @@ protected:
 
   /// TRUE if we want to take advantage of collocation optimization in
   /// this ORB.
-  CORBA::Boolean opt_for_collocation_;
+  bool opt_for_collocation_;
 
   /// TRUE if we want to consider all ORBs in this address space
   /// collocated.

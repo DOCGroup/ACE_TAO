@@ -191,7 +191,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{" << be_idt;
+  *os << "{" << be_idt_nl;
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -236,9 +236,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "};" << be_uidt_nl << be_nl;
 
   // Get the right object implementation.
-  *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
-      << "dynamic_cast<"
-      << intf->full_skel_name () << " *> (servant);" << be_uidt << be_nl_2;
+  *os << intf->full_skel_name () << " * const impl = dynamic_cast<"
+      << intf->full_skel_name () << " *> (servant);" << be_nl_2;
 
   *os << "if (!impl)" << be_idt_nl
       << "{" << be_idt_nl
@@ -246,23 +245,24 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "}" << be_uidt << be_nl_2;
 
   // Upcall_Command instantiation.
-  *os << upcall_command_name
-      << " command (" << be_idt_nl
-      << "impl";
+  *os << upcall_command_name << " command (";
 
-  if (!node->void_return_type () || node->argument_count () > 0)
+  if (node->void_return_type () && node->argument_count () == 0)
     {
+      *os << "impl);" << be_nl_2;
+    }
+  else
+    {
+      *os << be_idt_nl << "impl," << be_nl;
+
       // server_request.operation_details () will be non-zero in the
       // thru-POA collocation case.  Use them if available.
-      *os << "," << be_nl;
-
       if (be_global->gen_thru_poa_collocation ())
         *os << "server_request.operation_details ()," << be_nl;
 
       *os << "args";
+      *os << ");" << be_uidt_nl << be_nl;
     }
-
-  *os << ");" << be_uidt_nl << be_nl;
 
   *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl
       << "upcall_wrapper.upcall (server_request" << be_nl

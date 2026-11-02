@@ -89,7 +89,7 @@ be_visitor_operation_upcall_command_ss::visit (
 
   // Generate constructor
   os << "inline " << upcall_command_name
-     << " (" << be_idt_nl
+     << " (" << be_idt
      << full_skel_name << " * servant";
 
   // No need to accept an argument array parameter if the operation
@@ -124,10 +124,7 @@ be_visitor_operation_upcall_command_ss::visit (
       os << ", args_ (args)" << be_uidt;
     }
 
-  os << be_uidt_nl;
-
-  os << "{" << be_nl
-     << "}" << be_nl_2;
+  os << be_uidt << " {}" << be_nl_2;
 
   // Generate execute() method.
   os << "void execute () override" << be_nl
