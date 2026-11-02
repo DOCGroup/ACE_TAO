@@ -33,13 +33,14 @@ public:
 
   Client_ORBInitializer (Client_ORBInitializer const &) = delete;
   Client_ORBInitializer (Client_ORBInitializer &&) = delete;
-  Client_ORBInitializer &operator= (Client_ORBInitializer const &) = delete;
-  Client_ORBInitializer &operator= (Client_ORBInitializer &&) = delete;
+  Client_ORBInitializer & operator = (Client_ORBInitializer const &) = delete;
+  Client_ORBInitializer & operator = (Client_ORBInitializer &&) = delete;
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  Client_Request_Interceptor *client_interceptor_ = nullptr;
+  /// Non-owning reference to the interceptor retained by the ORB.
+  Client_Request_Interceptor *client_interceptor_ {};
 };
 
 #if defined(_MSC_VER)

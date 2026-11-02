@@ -28,12 +28,12 @@ class Client_Request_Interceptor
 {
 public:
   /// Constructor.
-  Client_Request_Interceptor ();
+  Client_Request_Interceptor () = default;
 
   Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
   Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
-  Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
-  Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor & operator = (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor & operator = (Client_Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -71,9 +71,9 @@ public:
 
 private:
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 
-  CORBA::ULong receive_exception_count_;
+  CORBA::ULong receive_exception_count_ {};
 };
 
 #if defined(_MSC_VER)

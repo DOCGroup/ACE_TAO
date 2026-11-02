@@ -36,10 +36,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
-
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -79,7 +77,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           (void) server->number ();
         }
-      catch (const CORBA::TRANSIENT&)
+      catch (CORBA::TRANSIENT const &)
         {
           // ignore
         }
@@ -108,9 +106,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-  if (status != -1)
-    ACE_DEBUG ((LM_INFO,
-                "PortableInterceptor::Redirection test passed.\n"));
+  ACE_DEBUG ((LM_INFO,
+              "PortableInterceptor::Redirection test passed.\n"));
 
-  return status;
+  return 0;
 }

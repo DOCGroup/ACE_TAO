@@ -3,12 +3,6 @@
 #include "testC.h"
 #include "ace/Log_Msg.h"
 
-Client_Request_Interceptor::Client_Request_Interceptor ()
-  : request_count_ (0),
-    receive_exception_count_ (0)
-{
-}
-
 CORBA::ULong
 Client_Request_Interceptor::receive_exception_count () const
 {
