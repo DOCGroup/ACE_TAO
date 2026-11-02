@@ -167,8 +167,6 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       return;
     }
 
-  std::size_t const length = supports->length ();
-
   AST_Decl *d = nullptr;
   UTL_ScopedName *item = nullptr;
   AST_Interface *iface = nullptr;
