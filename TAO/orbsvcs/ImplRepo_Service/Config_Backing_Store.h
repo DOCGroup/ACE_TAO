@@ -43,16 +43,16 @@ public:
 protected:
   /// perform config backing store specific initialization
   /// (loads servers and activators from the backing store)
-  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+  int init_repo(PortableServer::POA_ptr imr_poa) override;
 
   /// perform server persistent update
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+  int persistent_update(const Server_Info_Ptr& info, bool add) override;
 
   /// perform activator persistent update
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+  int persistent_update(const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  virtual int persistent_remove(const ACE_CString& name, bool activator);
+  int persistent_remove(const ACE_CString& name, bool activator) override;
 
   /// remove the section with the given name from the key section
   int remove(const ACE_CString& name, const ACE_TCHAR* key);
@@ -84,7 +84,7 @@ public:
   virtual ~Heap_Backing_Store();
 
   /// indicate the Heap filename as the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  const ACE_TCHAR* repo_mode() const override;
 
 private:
   /// the Heap filename
@@ -109,7 +109,7 @@ public:
   virtual ~Registry_Backing_Store();
 
   /// indicate Registry as the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  const ACE_TCHAR* repo_mode() const override;
 
 private:
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)

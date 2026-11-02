@@ -97,13 +97,13 @@ public:
   void start_server (const char* name,
                      const char* cmdline,
                      const char* dir,
-                     const ImplementationRepository::EnvironmentList & env);
+                     const ImplementationRepository::EnvironmentList & env) override;
 
-  CORBA::Boolean kill_server (const char* name, CORBA::Long pid, CORBA::Short signum);
+  CORBA::Boolean kill_server (const char* name, CORBA::Long pid, CORBA::Short signum) override;
 
-  CORBA::Boolean still_alive (CORBA::Long pid);
+  CORBA::Boolean still_alive (CORBA::Long pid) override;
 
-  void shutdown();
+  void shutdown() override;
 
   /// Initialize the Server state - parsing arguments and waiting.
   int init (Activator_Options& opts);
@@ -111,7 +111,7 @@ public:
   /// Cleans up any state created by init*.
   int fini ();
 
-  int handle_timeout (const ACE_Time_Value &, const void *tok);
+  int handle_timeout (const ACE_Time_Value &, const void *tok) override;
 
   /// Runs the orb.
   int run ();
@@ -126,7 +126,7 @@ private:
 
   // Handles the death of the child processes of the ImR_Activator.
   // Informs the ImR_Locator too.
-  int handle_exit (ACE_Process * process);
+  int handle_exit (ACE_Process * process) override;
   int handle_exit_i (pid_t pid);
 
   bool still_running_i (const char *name, pid_t& pid);

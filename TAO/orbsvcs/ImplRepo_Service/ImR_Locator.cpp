@@ -9,7 +9,7 @@ class ImR_Locator_Shutdown : public Shutdown_Functor
 public:
   ImR_Locator_Shutdown (ImR_Locator_i& imr);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 private:
   ImR_Locator_i& imr_;
 };

@@ -55,9 +55,9 @@ public:
   explicit INS_Locator (ImR_Locator_i& loc);
 
   /// Locate the appropriate IOR.
-  char* locate (const char *object_key);
+  char* locate (const char *object_key) override;
   void async_locate (::IORTable::Locate_ResponseHandler handler,
-                     const char *object_key);
+                     const char *object_key) override;
 
 private:
   ImR_Locator_i& imr_locator_;

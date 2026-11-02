@@ -127,8 +127,8 @@ public:
                      PortableServer::POA_ptr poa);
   virtual ~ActivatorReceiver ();
 
-  void start_server ();
-  void start_server_excep (Messaging::ExceptionHolder * excep_holder);
+  void start_server () override;
+  void start_server_excep (Messaging::ExceptionHolder * excep_holder) override;
 
   void shutdown ();
   void shutdown_excep (Messaging::ExceptionHolder * excep_holder);
@@ -158,7 +158,7 @@ class AccessLiveListener : public LiveListener
   virtual ~AccessLiveListener ();
   bool start ();
 
-  bool status_changed (LiveStatus status);
+  bool status_changed (LiveStatus status) override;
 
  private:
   AsyncAccessManager_ptr aam_;

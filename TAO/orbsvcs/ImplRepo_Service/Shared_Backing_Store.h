@@ -286,7 +286,7 @@ private:
   public :
     Shared_Backing_Store *owner_;
     Update_Handler (Shared_Backing_Store *owner) : owner_ (owner) {}
-    int handle_exception (ACE_HANDLE);
+    int handle_exception (ACE_HANDLE) override;
   } update_handler_;
 };
 

@@ -183,10 +183,10 @@ class Locator_Export PingReceiver :
   void cancel ();
 
   /// Called when an anticipated ping reply is received
-  void ping ();
+  void ping () override;
 
   /// Called when an anticipated ping raises an exception
-  void ping_excep (Messaging::ExceptionHolder * excep_holder);
+  void ping_excep (Messaging::ExceptionHolder * excep_holder) override;
 
  private:
   PortableServer::POA_var poa_;
