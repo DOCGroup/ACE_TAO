@@ -4,7 +4,7 @@
 #include "ace/Log_Msg.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -14,11 +14,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          "my_orb");
 
       // Obtain a reference to the CodecFactory.
-      CORBA::Object_var obj =
+      CORBA::Object_var object =
         orb->resolve_initial_references ("CodecFactory");
 
       IOP::CodecFactory_var codec_factory =
-        IOP::CodecFactory::_narrow (obj.in ());
+        IOP::CodecFactory::_narrow (object.in ());
 
       // ----------------------------------------------------------
 
@@ -38,7 +38,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::OctetSeq_var encoded_data;
         CORBA::Any_var decoded_data;
 
-        Foo::type_ulong l = 9192631;
+        Foo::type_ulong const l = 9192631;
 
         CORBA::Any tmp;
 
@@ -51,7 +51,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           codec->decode_value (encoded_data.in (),
                                Foo::_tc_type_ulong);
 
-        Foo::type_ulong check = 0;
+        Foo::type_ulong check {};
 
         if (!(decoded_data >>= check))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -69,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Test passed\n"));
     }
-  catch (CORBA::Exception const &ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Bug_1693_Test test:");
       return -1;
