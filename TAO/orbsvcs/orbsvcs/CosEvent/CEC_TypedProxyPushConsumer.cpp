@@ -86,9 +86,9 @@ TAO_CEC_TypedProxyPushConsumer::deactivate ()
 {
   try
     {
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         this->_default_POA ();
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
@@ -253,7 +253,7 @@ TAO_CEC_TypedProxyPushConsumer::apply_policy
       policy_list[0] = this->typed_event_channel_->
         create_roundtrip_timeout_policy (this->timeout_);
 
-      CORBA::Object_var post_obj = pre->_set_policy_overrides
+      CORBA::Object_var const post_obj = pre->_set_policy_overrides
         (policy_list, CORBA::ADD_OVERRIDE);
       post = CosEventComm::PushSupplier::_narrow(post_obj.in ());
 
@@ -330,7 +330,7 @@ CORBA::Object_ptr
 TAO_CEC_TypedProxyPushConsumer::get_typed_consumer ()
 
 {
-  CORBA::Object_var server =
+  CORBA::Object_var const server =
          default_POA_->id_to_reference (this->oid_.in ());
 
   return CORBA::Object::_duplicate (server.in());

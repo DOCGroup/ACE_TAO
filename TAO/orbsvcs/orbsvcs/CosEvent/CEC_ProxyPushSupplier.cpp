@@ -99,9 +99,9 @@ TAO_CEC_ProxyPushSupplier::deactivate ()
 {
   try
     {
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         this->_default_POA ();
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
@@ -188,9 +188,9 @@ using Destroy_Guard = TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_EventChannel, TAO_CEC
 void
 TAO_CEC_ProxyPushSupplier::push (CORBA::Any const &event)
 {
-  Destroy_Guard auto_destroy (this->refcount_,
-                              this->event_channel_,
-                              this);
+  Destroy_Guard const auto_destroy (this->refcount_,
+                                    this->event_channel_,
+                                    this);
 
   {
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
@@ -198,7 +198,7 @@ TAO_CEC_ProxyPushSupplier::push (CORBA::Any const &event)
     if (!this->is_connected_i ())
       return;
 
-    TAO_ESF_RefCount_Guard<CORBA::ULong> cnt_mon (this->refcount_);
+    TAO_ESF_RefCount_Guard<CORBA::ULong> const cnt_mon (this->refcount_);
 
     {
       TAO_CEC_Unlock reverse_lock (*this->lock_);
@@ -239,7 +239,7 @@ TAO_CEC_ProxyPushSupplier::invoke (TAO_CEC_TypedEvent const &typed_event)
 void
 TAO_CEC_ProxyPushSupplier::push_nocopy (CORBA::Any &event)
 {
-  Destroy_Guard auto_destroy (this->refcount_, this->event_channel_, this);
+  Destroy_Guard const auto_destroy (this->refcount_, this->event_channel_, this);
 
   {
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
@@ -247,7 +247,7 @@ TAO_CEC_ProxyPushSupplier::push_nocopy (CORBA::Any &event)
     if (!this->is_connected_i ())
       return;
 
-    TAO_ESF_RefCount_Guard<CORBA::ULong> cnt_mon (this->refcount_);
+    TAO_ESF_RefCount_Guard<CORBA::ULong> const cnt_mon (this->refcount_);
 
     {
       TAO_CEC_Unlock reverse_lock (*this->lock_);
@@ -462,7 +462,7 @@ CosEventComm::PushConsumer_ptr
 TAO_CEC_ProxyPushSupplier::apply_policy (CosEventComm::PushConsumer_ptr pre)
 {
   this->nopolicy_consumer_ = CosEventComm::PushConsumer::_duplicate (pre);
-  CORBA::Object_var post_obj = apply_policy_obj (pre);
+  CORBA::Object_var const post_obj = apply_policy_obj (pre);
   CosEventComm::PushConsumer_var post =
     CosEventComm::PushConsumer::_narrow (post_obj.in ());
   return post._retn ();
@@ -474,7 +474,7 @@ TAO_CEC_ProxyPushSupplier::apply_policy (CosTypedEventComm::TypedPushConsumer_pt
 {
   this->nopolicy_typed_consumer_ =
     CosTypedEventComm::TypedPushConsumer::_duplicate (pre);
-  CORBA::Object_var post_obj = apply_policy_obj (pre);
+  CORBA::Object_var const post_obj = apply_policy_obj (pre);
   CosTypedEventComm::TypedPushConsumer_var post =
     CosTypedEventComm::TypedPushConsumer::_narrow (post_obj.in ());
   return post._retn ();

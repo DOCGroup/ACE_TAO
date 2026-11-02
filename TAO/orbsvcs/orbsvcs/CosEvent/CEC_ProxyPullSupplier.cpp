@@ -54,9 +54,9 @@ TAO_CEC_ProxyPullSupplier::deactivate ()
 {
   try
     {
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         this->_default_POA ();
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
@@ -277,7 +277,7 @@ TAO_CEC_ProxyPullSupplier::apply_policy (CosEventComm::PullConsumer_ptr pre)
       policy_list[0] = this->event_channel_->
         create_roundtrip_timeout_policy (this->timeout_);
 
-      CORBA::Object_var post_obj = pre->_set_policy_overrides
+      CORBA::Object_var const post_obj = pre->_set_policy_overrides
         (policy_list, CORBA::ADD_OVERRIDE);
       post = CosEventComm::PullConsumer::_narrow(post_obj.in ());
 
