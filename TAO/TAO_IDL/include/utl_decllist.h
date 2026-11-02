@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "TAO_IDL_FE_Export.h"
 #include "utl_list.h"
 
+#include <memory>
+
 // List of FE_Declarator nodes
 
 // NOTE: This list class only works correctly because we use single public
@@ -86,6 +88,11 @@ public:
   // Constructor(s)
   UTL_DeclList (FE_Declarator *s,
                 UTL_DeclList *cdr);
+  UTL_DeclList (UTL_DeclList const &) = delete;
+  UTL_DeclList (UTL_DeclList &&) = delete;
+  UTL_DeclList &operator= (UTL_DeclList const &) = delete;
+  UTL_DeclList &operator= (UTL_DeclList &&) = delete;
+  ~UTL_DeclList () override;
 
   // Get element
   FE_Declarator *head ();
@@ -96,7 +103,7 @@ public:
 
 private:
   // Data
-  FE_Declarator *pd_car_data;   // The element this list stores
+  std::unique_ptr<FE_Declarator> pd_car_data; // The element this list stores
 };
 
 // Active iterator fooor UTL_DeclList
