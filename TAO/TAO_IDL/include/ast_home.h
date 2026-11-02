@@ -20,9 +20,9 @@ public:
             AST_Home *base_home,
             AST_Component *managed_component,
             AST_Type *primary_key,
-            AST_Type **supports,
+            AST_Type_List const& supports,
             long n_supports,
-            AST_Interface **supports_flat,
+            AST_Interface_List const& supports_flat,
             std::size_t n_supports_flat);
 
   ~AST_Home () override;
@@ -44,7 +44,7 @@ public:
 
   AST_Home *base_home () const;
 
-  AST_Type **supports () const;
+  AST_Type_List const& supports () const;
 
   long n_supports () const;
 
@@ -74,6 +74,7 @@ private:
   AST_Finder *fe_add_finder (AST_Finder *f) override;
 
 private:
+  AST_Type_List pd_supports;
   AST_Home *pd_base_home;
   AST_Component *pd_managed_component;
   AST_Type *pd_primary_key;

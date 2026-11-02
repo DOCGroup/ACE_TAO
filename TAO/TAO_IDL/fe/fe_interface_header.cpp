@@ -205,7 +205,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
       // If a template parameter as parent appears at any time,
       // we bag the flat list until instantiation time.
       this->has_template_parent_ = true;
-      this->destroy_flat_arrays ();
+      this->clear_flat_inheritance ();
     }
   else if (! this->has_template_parent_)
     {
@@ -216,8 +216,8 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
         }
 
       // Add i's parents to the flat list.
-      AST_Interface **const parents = iface->inherits_flat ();
-      std::size_t const num_parents = iface->n_inherits_flat ();
+      AST_Interface_List const& parents = iface->inherits_flat ();
+      std::size_t const num_parents = parents.size ();
 
       for (std::size_t j = 0; j < num_parents; ++j)
         {
@@ -229,7 +229,7 @@ FE_InterfaceHeader::compile_one_inheritance (AST_Type *i)
               // If a template parameter as parent appears at any time,
               // we bag the flat list until instantiation time.
               this->has_template_parent_ = true;
-              this->destroy_flat_arrays ();
+              this->clear_flat_inheritance ();
               break;
             }
           else if (! this->has_template_parent_)
@@ -382,8 +382,6 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         dynamic_cast<AST_Type*> (d));
     }
 
-  // OK, install in interface header.
-  this->install_in_header ();
 }
 
 int
@@ -470,38 +468,6 @@ FE_InterfaceHeader::already_seen_flat (AST_Interface *ip)
   return false;
 }
 
-void
-FE_InterfaceHeader::install_in_header ()
-{
-  // First the flat list (all ancestors).
-  if (!this->iseen_flat_.empty ())
-    {
-      ACE_NEW (this->inherits_flat_,
-               AST_Interface *[this->iseen_flat_.size ()]);
-
-      for (std::size_t i = 0; i < this->iseen_flat_.size (); ++i)
-        {
-          this->inherits_flat_[i] = this->iseen_flat_[i];
-        }
-
-      this->n_inherits_flat_ = this->iseen_flat_.size ();
-    }
-
-  // Then the list of immediate ancestors.
-  if (!this->iseen_.empty ())
-    {
-      ACE_NEW (this->inherits_,
-               AST_Type *[this->iseen_.size ()]);
-
-      for (std::size_t i = 0; i < this->iseen_.size (); ++i)
-        {
-          this->inherits_[i] = this->iseen_[i];
-        }
-
-      this->n_inherits_ = this->iseen_.size ();
-    }
-}
-
 // Data accessors.
 
 UTL_ScopedName *
@@ -510,36 +476,33 @@ FE_InterfaceHeader::name () const
   return this->interface_name_.get ();
 }
 
-AST_Type **
+AST_Type_List const&
 FE_InterfaceHeader::inherits () const
 {
-  return this->inherits_;
+  return this->iseen_;
 }
 
 std::size_t
 FE_InterfaceHeader::n_inherits () const
 {
-  return this->n_inherits_;
+  return this->iseen_.size ();
 }
 
-AST_Interface **
+AST_Interface_List const&
 FE_InterfaceHeader::inherits_flat () const
 {
-  return this->inherits_flat_;
+  return this->iseen_flat_;
 }
 
 std::size_t
 FE_InterfaceHeader::n_inherits_flat () const
 {
-  return this->n_inherits_flat_;
+  return this->iseen_flat_.size ();
 }
 
 void
-FE_InterfaceHeader::destroy_flat_arrays ()
+FE_InterfaceHeader::clear_flat_inheritance ()
 {
-  delete [] this->inherits_flat_;
-  this->inherits_flat_ = nullptr;
-  this->n_inherits_flat_ = 0;
   this->iseen_flat_.clear ();
 }
 

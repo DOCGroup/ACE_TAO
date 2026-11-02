@@ -14,12 +14,12 @@ public:
   AST_ValueType &operator= (AST_ValueType const &) = delete;
   AST_ValueType &operator= (AST_ValueType &&) = delete;
   AST_ValueType (UTL_ScopedName *n,
-                 AST_Type **inherits,
+                 AST_Type_List const& inherits,
                  long n_inherits,
                  AST_Type *inherits_concrete,
-                 AST_Interface **inherits_flat,
+                 AST_Interface_List const& inherits_flat,
                  std::size_t n_inherits_flat,
-                 AST_Type **supports,
+                 AST_Type_List const& supports,
                  std::size_t n_supports,
                  AST_Type *supports_concrete,
                  bool abstract,
@@ -34,7 +34,7 @@ public:
   // This also calls the base class version.
   void redefine (AST_Interface *from) override;
 
-  AST_Type **supports () const;
+  AST_Type_List const& supports () const;
 
   std::size_t n_supports () const;
 
@@ -75,7 +75,7 @@ public:
   using FWD_TYPE = AST_ValueTypeFwd;
 
 protected:
-  std::vector<AST_Type *> pd_supports;
+  AST_Type_List pd_supports;
   AST_Type *pd_inherits_concrete;
   AST_Type *pd_supports_concrete;
 

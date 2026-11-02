@@ -254,7 +254,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:Q"));
 
   argc_ = argc;
   argv_ = argv;
@@ -382,6 +382,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "-j\tAffects the ``jump value,'' i.e., how far to advance the associated\n"
                              "\tcharacter value upon collisions.  Must be an odd number, default is %d.\n"
                              "-J\tSkips '#include \"ace/OS_NS_string.h\"' part in the output.\n"
+                             "-Q\tSkips '#include <cstring>' in C++ output.\n"
                              "-k\tAllows selection of the key positions used in the hash function.\n"
                              "\tThe allowable choices range between 1-%d, inclusive.  The positions\n"
                              "\tare separated by commas, ranges may be used, and key positions may\n"
@@ -485,6 +486,12 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'J':
           {
             ACE_SET_BITS (option_word_, SKIPSTRINGH);
+            break;
+          }
+        // Skip including the C++ standard string header.
+        case 'Q':
+          {
+            ACE_SET_BITS (option_word_, SKIPSTDCSTRING);
             break;
           }
         // Sets key positions used for hash function.

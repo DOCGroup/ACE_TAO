@@ -2620,7 +2620,7 @@ TAO_CodeGen::gen_stub_src_includes ()
       || idl_global->union_seen_)
     {
       // Needed for _narrow(), which is now template-based.
-      this->gen_system_include (this->client_stubs_, "cstring");
+      this->gen_standard_include (this->client_stubs_, "ace/OS_NS_string.h");
     }
 }
 
@@ -2685,6 +2685,11 @@ TAO_CodeGen::gen_skel_src_includes ()
         break;
     }
 
+  if (be_global->lookup_strategy () != BE_GlobalData::TAO_DYNAMIC_HASH)
+    {
+      this->gen_system_include (this->server_skeletons_, "cstring");
+    }
+
   if (be_global->gen_direct_collocation ())
     {
       this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h");
@@ -2725,8 +2730,7 @@ TAO_CodeGen::gen_skel_src_includes ()
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_, "ace/Malloc_Allocator.h");
 
-  // For std::strcmp
-  this->gen_system_include (this->server_skeletons_, "cstring");
+  this->gen_standard_include (this->server_skeletons_, "ace/OS_NS_string.h");
 }
 
 void

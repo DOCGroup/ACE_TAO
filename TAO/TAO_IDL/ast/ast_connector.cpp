@@ -19,17 +19,17 @@ AST_Connector::AST_Connector (
               n),
     UTL_Scope (AST_Decl::NT_connector),
     AST_Interface (n,
-                   nullptr,
+                   AST_Type_List {},
                    0,
-                   nullptr,
+                   AST_Interface_List {},
                    0,
                    false,
                    false),
     AST_Component (n,
                    base_connector,
-                   nullptr,
+                   AST_Type_List {},
                    0,
-                   nullptr,
+                   AST_Interface_List {},
                    0)
 {
   if (!this->imported ())

@@ -90,9 +90,9 @@ public:
                                      UTL_ScopedName *n) override;
 
   AST_Interface *create_interface (UTL_ScopedName *n,
-                                           AST_Type **ih,
+                                           AST_Type_List const& ih,
                                            long nih,
-                                           AST_Interface **ih_flat,
+                                           AST_Interface_List const& ih_flat,
                                            std::size_t nih_flat,
                                            bool is_local,
                                            bool is_abstract) override;
@@ -106,12 +106,12 @@ public:
                                          AST_Type *boxed_type) override;
 
   AST_ValueType *create_valuetype (UTL_ScopedName *n,
-                                           AST_Type **inherits,
+                                           AST_Type_List const& inherits,
                                            long n_inherits,
                                            AST_Type *inherits_concrete,
-                                           AST_Interface **inherits_flat,
+                                           AST_Interface_List const& inherits_flat,
                                            std::size_t n_inherits_flat,
-                                           AST_Type **supports_list,
+                                           AST_Type_List const& supports_list,
                                            std::size_t n_supports,
                                            AST_Type *supports_concrete,
                                            bool is_abstract,
@@ -122,12 +122,12 @@ public:
                                                   bool abstract) override;
 
   AST_EventType *create_eventtype (UTL_ScopedName *n,
-                                           AST_Type **inherits,
+                                           AST_Type_List const& inherits,
                                            long n_inherits,
                                            AST_Type *inherits_concrete,
-                                           AST_Interface **inherits_flat,
+                                           AST_Interface_List const& inherits_flat,
                                            std::size_t n_inherits_flat,
-                                           AST_Type **supports_list,
+                                           AST_Type_List const& supports_list,
                                            std::size_t n_supports,
                                            AST_Type *supports_concrete,
                                            bool is_abstract,
@@ -139,9 +139,9 @@ public:
 
   AST_Component *create_component (UTL_ScopedName *n,
                                            AST_Component *base_component,
-                                           AST_Type **supports_list,
+                                           AST_Type_List const& supports_list,
                                            long n_supports,
-                                           AST_Interface **supports_flat,
+                                           AST_Interface_List const& supports_flat,
                                            std::size_t n_supports_flat) override;
 
   AST_ComponentFwd *create_component_fwd (UTL_ScopedName *n) override;
@@ -150,9 +150,9 @@ public:
                                  AST_Home *base_home,
                                  AST_Component *managed_component,
                                  AST_Type *primary_key,
-                                 AST_Type **supports_list,
+                                 AST_Type_List const& supports_list,
                                  long n_supports,
-                                 AST_Interface **supports_flat,
+                                 AST_Interface_List const& supports_flat,
                                  std::size_t n_supports_flat) override;
 
   AST_Exception *create_exception (UTL_ScopedName *n,

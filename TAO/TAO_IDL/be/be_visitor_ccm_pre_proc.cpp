@@ -1890,9 +1890,9 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses ()
           idl_global->scopes ().push (s);
           ACE_NEW_RETURN (ami_iface,
                           be_interface (&itmp_sn,
-                                        nullptr,
+                                        AST_Type_List {},
                                         0,
-                                        nullptr,
+                                        AST_Interface_List {},
                                         0,
                                         true,
                                         false),

@@ -24,7 +24,7 @@ public:
   ~FE_OBVHeader () override;
 
   // Data Accessors.
-  AST_Type **supports () const;
+  AST_Type_List const& supports () const;
   std::size_t n_supports () const;
   AST_Type *inherits_concrete () const;
   AST_Type *supports_concrete () const;
@@ -35,7 +35,7 @@ public:
 
 protected:
   // Supported interfaces.
-  AST_Type **supports_ {};
+  AST_Type_List supports_;
   std::size_t n_supports_ {};
 
   AST_Type *inherits_concrete_ {};

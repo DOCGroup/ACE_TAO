@@ -924,7 +924,8 @@ Key_List::output_binary_search_function ()
   ACE_OS::printf ("%s\n", include_src);
 
   // Get prototype for strncmp() and strcmp().
-  ACE_OS::printf (option[CPLUSPLUS] ? "#include <cstring>\n" : "#include <string.h>\n");
+  if (!option[SKIPSTDCSTRING] || !option[CPLUSPLUS])
+    ACE_OS::printf (option[CPLUSPLUS] ? "#include <cstring>\n" : "#include <string.h>\n");
   if (!option[SKIPSTRINGH] && option[STRCASECMP])
     ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
 
@@ -1025,7 +1026,8 @@ Key_List::output_linear_search_function ()
   ACE_OS::printf ("%s\n", include_src);
 
   // Get prototype for strncmp() and strcmp().
-  ACE_OS::printf (option[CPLUSPLUS] ? "#include <cstring>\n" : "#include <string.h>\n");
+  if (!option[SKIPSTDCSTRING] || !option[CPLUSPLUS])
+    ACE_OS::printf (option[CPLUSPLUS] ? "#include <cstring>\n" : "#include <string.h>\n");
   if (!option[SKIPSTRINGH] && option[STRCASECMP])
     ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
 
@@ -1673,7 +1675,8 @@ Key_List::output ()
       ACE_OS::printf ("%s\n", include_src);
 
       // Get prototype for strncmp() and strcmp().
-      ACE_OS::printf (option[CPLUSPLUS] ? "#include <cstring>\n" : "#include <string.h>\n");
+      if (!option[SKIPSTDCSTRING] || !option[CPLUSPLUS])
+        ACE_OS::printf (option[CPLUSPLUS] ? "#include <cstring>\n" : "#include <string.h>\n");
       if (!option[SKIPSTRINGH] && option[STRCASECMP])
         ACE_OS::printf ("#include \"ace/OS_NS_string.h\"\n");
 

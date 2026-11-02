@@ -150,12 +150,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
+  *os << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
 
   if (node->has_mixed_parentage ())
     {
       *os << " ||" << be_nl
-          << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
+          << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
 
   *os << be_uidt_nl

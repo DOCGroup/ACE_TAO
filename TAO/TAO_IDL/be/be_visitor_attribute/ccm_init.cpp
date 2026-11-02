@@ -229,7 +229,7 @@ void
 be_visitor_attribute_ccm_init::open_if_block ()
 {
   os_ << be_nl_2
-      << "if (std::strcmp (descr_name, \""
+      << "if (ACE_OS::strcmp (descr_name, \""
       << this->ctx_->port_prefix ()
       << attr_->local_name ()->get_string ()
       << "\") == 0)" << be_idt_nl

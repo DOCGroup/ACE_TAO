@@ -24,9 +24,9 @@
 
 be_component::be_component (UTL_ScopedName *n,
                             AST_Component *base_component,
-                            AST_Type **supports,
+                            AST_Type_List const& supports,
                             long n_supports,
-                            AST_Interface **supports_flat,
+                            AST_Interface_List const& supports_flat,
                             std::size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
@@ -271,19 +271,18 @@ be_component::gen_stub_inheritance (TAO_OutStream *os)
       *os << "Components::CCMObject";
     }
 
-  long nsupports = this->n_inherits ();
+  AST_Type_List const& supports = this->supports ();
+  std::size_t const nsupports = supports.size ();
 
   if (nsupports > 0)
     {
       *os << be_idt;
 
-      AST_Type **supp_list = this->supports ();
-
-      for (long i = 0; i < nsupports; ++i)
+      for (std::size_t i = 0; i < nsupports; ++i)
         {
           *os << "," << be_nl
               << "public virtual ::"
-              << supp_list[i]->name ();
+              << supports[i]->name ();
         }
 
       *os << be_uidt;
@@ -306,11 +305,11 @@ be_component::gen_skel_inheritance (TAO_OutStream *os)
       *os << "public virtual POA_Components::CCMObject";
     }
 
-  long nsupports = this->n_inherits ();
-  AST_Type **supports = this->supports ();
+  AST_Type_List const& supports = this->supports ();
+  std::size_t const nsupports = supports.size ();
   AST_Type *supported = nullptr;
 
-  for (long i = 0; i < nsupports; ++i)
+  for (std::size_t i = 0; i < nsupports; ++i)
     {
       supported = supports[i];
 
@@ -331,12 +330,12 @@ be_component::gen_is_a_ancestors (TAO_OutStream *os)
 
   while (ancestor != nullptr)
     {
-      *os << "std::strcmp (value, \"" << ancestor->repoID () << "\") == 0 ||" << be_nl;
+      *os << "ACE_OS::strcmp (value, \"" << ancestor->repoID () << "\") == 0 ||" << be_nl;
 
       ancestor = ancestor->base_component ();
     }
 
-  *os << "std::strcmp (value, \"IDL:omg.org/Components/CCMObject:1.0\") == 0" << be_nl;
+  *os << "ACE_OS::strcmp (value, \"IDL:omg.org/Components/CCMObject:1.0\") == 0" << be_nl;
 
   return 0;
 }

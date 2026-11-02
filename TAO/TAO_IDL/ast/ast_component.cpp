@@ -18,9 +18,9 @@ AST_Component::NT = AST_Decl::NT_component;
 
 AST_Component::AST_Component (UTL_ScopedName *n,
                               AST_Component *base_component,
-                              AST_Type **supports,
+                              AST_Type_List const& supports,
                               long n_supports,
-                              AST_Interface **supports_flat,
+                              AST_Interface_List const& supports_flat,
                               std::size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
@@ -90,8 +90,7 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
                                   bool full_def_only)
 {
   AST_Decl *d = nullptr;
-  AST_Type **is = nullptr;
-  long nis = -1;
+  AST_Type_List const& supported = this->supports ();
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -102,17 +101,15 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
 
   // OK, loop through supported interfaces.
 
-  for (nis = this->n_supports (), is = this->supports ();
-       nis > 0;
-       nis--, is++)
+  for (std::size_t j = 0; j < supported.size (); ++j)
     {
-      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+      if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {
           continue;
         }
 
       AST_Interface *i =
-        dynamic_cast<AST_Interface*> (*is);
+        dynamic_cast<AST_Interface*> (supported[j]);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
@@ -131,7 +128,7 @@ AST_Component::base_component () const
   return this->pd_base_component;
 }
 
-AST_Type **
+AST_Type_List const&
 AST_Component::supports () const
 {
   return this->inherits ();

@@ -18,9 +18,9 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Home *base_home,
                     AST_Component *managed_component,
                     AST_Type *primary_key,
-                    AST_Type **supports,
+                    AST_Type_List const& supports,
                     long n_supports,
-                    AST_Interface **supports_flat,
+                    AST_Interface_List const& supports_flat,
                     std::size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
@@ -40,6 +40,13 @@ AST_Home::AST_Home (UTL_ScopedName *n,
     pd_managed_component (managed_component),
     pd_primary_key (primary_key)
 {
+  AST_Type_List const& inherited = this->inherits ();
+  std::size_t const first_support = this->pd_base_home == nullptr ? 0 : 1;
+  if (first_support < inherited.size ())
+    {
+      this->pd_supports.assign (inherited.begin () + first_support, inherited.end ());
+    }
+
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
   AST_ValueType *pk = dynamic_cast<AST_ValueType*> (primary_key);
@@ -78,8 +85,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
                              bool full_def_only)
 {
   AST_Decl *d = nullptr;
-  AST_Type **is = nullptr;
-  long nis = -1;
+  AST_Type_List const& supported = this->supports ();
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -94,16 +100,14 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (nis = this->n_supports (), is = this->supports ();
-       nis > 0;
-       nis--, is++)
+  for (std::size_t j = 0; j < supported.size (); ++j)
     {
-      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+      if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {
           continue;
         }
 
-      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (supported[j]);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
@@ -140,19 +144,16 @@ AST_Home::base_home () const
 // These next two look ugly, but it is to keep from having to
 // create separate visitors for homes in the back end.
 
-AST_Type **
+AST_Type_List const&
 AST_Home::supports () const
 {
-  return
-    this->pd_base_home == nullptr
-      ? this->inherits ()
-      : this->inherits () + 1;
+  return this->pd_supports;
 }
 
 long
 AST_Home::n_supports () const
 {
-  return this->n_inherits ();
+  return this->pd_supports.size ();
 }
 
 AST_Component *

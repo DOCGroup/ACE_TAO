@@ -293,9 +293,9 @@ be_visitor_home_ex_idl::gen_supported ()
 {
   os_ << be_idt;
 
-  AST_Type **supported = node_->supports ();
+  AST_Type_List const& supported = node_->supports ();
 
-  for (long i = 0; i < node_->n_supports (); ++i)
+  for (std::size_t i = 0; i < supported.size (); ++i)
     {
       os_ << "," << be_nl
           << "::"

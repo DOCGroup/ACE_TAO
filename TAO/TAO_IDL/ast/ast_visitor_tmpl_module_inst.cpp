@@ -141,8 +141,7 @@ ast_visitor_tmpl_module_inst::visit_component (AST_Component *node)
     }
 
   UTL_NameList *supports_names =
-    this->create_name_list (node->supports (),
-                            node->n_supports ());
+    this->create_name_list (node->supports ());
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
@@ -409,8 +408,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
     }
 
   UTL_NameList *supports_names =
-    this->create_name_list (node->supports (),
-                            node->n_supports ());
+    this->create_name_list (node->supports ());
 
   UTL_ScopedName *managed_comp_name = nullptr;
 
@@ -779,12 +777,10 @@ int
 ast_visitor_tmpl_module_inst::visit_valuetype (AST_ValueType *node)
 {
   UTL_NameList *parent_names =
-    this->create_name_list (node->inherits (),
-                            node->n_inherits ());
+    this->create_name_list (node->inherits ());
 
   UTL_NameList *supports_names =
-    this->create_name_list (node->supports (),
-                            node->n_supports ());
+    this->create_name_list (node->supports ());
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
@@ -880,8 +876,7 @@ int
 ast_visitor_tmpl_module_inst::visit_interface (AST_Interface *node)
 {
   UTL_NameList *parent_names =
-    this->create_name_list (node->inherits (),
-                            node->n_inherits ());
+    this->create_name_list (node->inherits ());
 
   Identifier *node_id = nullptr;
   ACE_NEW_RETURN (node_id,
@@ -1293,15 +1288,14 @@ ast_visitor_tmpl_module_inst::reify_exception_list (
 }
 
 UTL_NameList *
-ast_visitor_tmpl_module_inst::create_name_list (AST_Type **list,
-                                               long length)
+ast_visitor_tmpl_module_inst::create_name_list (AST_Type_List const& list)
 {
   UTL_NameList *retval = nullptr;
 
-  for (long i = 0; i < length; ++i)
+  for (AST_Type *type : list)
     {
       AST_Type *item =
-        dynamic_cast<AST_Type*> (this->reify_type (list[i]));
+        dynamic_cast<AST_Type*> (this->reify_type (type));
 
       // We copy each name added so we can call destroy() on the
       // list, which disposes of the contents as well as the

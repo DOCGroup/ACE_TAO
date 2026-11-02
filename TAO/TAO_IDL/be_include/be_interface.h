@@ -44,9 +44,9 @@ public:
                                     TAO_OutStream *);
 
   be_interface (UTL_ScopedName *n,
-                AST_Type **ih,
+                AST_Type_List const& ih,
                 long nih,
-                AST_Interface **ih_flat,
+                AST_Interface_List const& ih_flat,
                 std::size_t nih_flat,
                 bool local,
                 bool abstract);

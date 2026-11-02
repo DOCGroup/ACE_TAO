@@ -22,9 +22,9 @@ public:
   AST_Component &operator= (AST_Component &&) = delete;
   AST_Component (UTL_ScopedName *n,
                  AST_Component *base_component,
-                 AST_Type **supports,
+                 AST_Type_List const& supports,
                  long n_supports,
-                 AST_Interface **supports_flat,
+                 AST_Interface_List const& supports_flat,
                  std::size_t n_supports_flat);
 
   ~AST_Component () override;
@@ -44,7 +44,7 @@ public:
 
   AST_Component *base_component () const;
 
-  AST_Type **supports () const;
+  AST_Type_List const& supports () const;
 
   long n_supports () const;
 

@@ -122,6 +122,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 #define TAO_IDL_HAS_STD_STRING_API
 
+/**
+ * This signals that the TAO IDL AST exposes inheritance and supported-interface
+ * lists as standard C++ containers instead of pointer arrays. External backends
+ * can use this to support both this API and older TAO IDL releases.
+ */
+#define TAO_IDL_HAS_STD_AST_LIST_API
+
 #define NAMEBUFSIZE 1024
 // Maximum length of static buffers used to store names.
 

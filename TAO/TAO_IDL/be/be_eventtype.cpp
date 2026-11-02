@@ -16,12 +16,12 @@
 #include "global_extern.h"
 
 be_eventtype::be_eventtype (UTL_ScopedName *n,
-                            AST_Type **inherits,
+                            AST_Type_List const& inherits,
                             long n_inherits,
                             AST_Type *inherits_concrete,
-                            AST_Interface **inherits_flat,
+                            AST_Interface_List const& inherits_flat,
                             std::size_t n_inherits_flat,
-                            AST_Type **supports,
+                            AST_Type_List const& supports,
                             std::size_t n_supports,
                             AST_Type *supports_concrete,
                             bool abstract,

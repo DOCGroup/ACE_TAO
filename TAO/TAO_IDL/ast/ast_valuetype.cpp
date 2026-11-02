@@ -23,12 +23,12 @@ AST_Decl::NodeType const
 AST_ValueType::NT = AST_Decl::NT_valuetype;
 
 AST_ValueType::AST_ValueType (UTL_ScopedName *n,
-                              AST_Type **inherits,
+                              AST_Type_List const& inherits,
                               long n_inherits,
                               AST_Type *inherits_concrete,
-                              AST_Interface **inherits_flat,
+                              AST_Interface_List const& inherits_flat,
                               std::size_t n_inherits_flat,
-                              AST_Type **supports,
+                              AST_Type_List const& supports,
                               std::size_t n_supports,
                               AST_Type *supports_concrete,
                               bool abstract,
@@ -48,18 +48,12 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                    n_inherits_flat,
                    false,
                    abstract),
+    pd_supports (supports),
     pd_inherits_concrete (inherits_concrete),
     pd_supports_concrete (supports_concrete),
     pd_truncatable (truncatable),
     pd_custom (custom)
 {
-  std::unique_ptr<AST_Type *[]> const supports_owner (supports);
-
-  if (n_supports > 0)
-    {
-      this->pd_supports.assign (supports, supports + n_supports);
-    }
-
   // Enqueue the param holders (if any) for later destruction.
   // By the time our destroy() is called, it will be too late
   // to iterate over pd_inherits.
@@ -207,12 +201,10 @@ AST_ValueType::redefine (AST_Interface *from)
   this->pd_truncatable = vt->pd_truncatable;
 }
 
-AST_Type **
+AST_Type_List const&
 AST_ValueType::supports () const
 {
-  return this->pd_supports.empty ()
-    ? nullptr
-    : const_cast<AST_Type **> (this->pd_supports.data ());
+  return this->pd_supports;
 }
 
 std::size_t
@@ -258,8 +250,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
 {
   AST_Decl *d = nullptr;
   AST_Decl *d_before = nullptr;
-  AST_Type **is = nullptr;
-  std::size_t nis = 0;
+  AST_Type_List const& supported = this->supports ();
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -272,16 +263,14 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (nis = this->n_supports (), is = this->supports ();
-       nis > 0;
-       nis--, is++)
+  for (std::size_t j = 0; j < supported.size (); ++j)
     {
-      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+      if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {
           continue;
         }
 
-      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (supported[j]);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
@@ -506,11 +495,11 @@ AST_ValueType::derived_from_primary_key_base (AST_ValueType const *node,
       return true;
     }
 
-  AST_Type **v = node->inherits ();
+  AST_Type_List const& inherited = node->inherits ();
 
-  for (long i = 0; i < node->pd_n_inherits; ++i)
+  for (std::size_t i = 0; i < inherited.size (); ++i)
     {
-      AST_ValueType *tmp = dynamic_cast<AST_ValueType*> (v[i]);
+      AST_ValueType *tmp = dynamic_cast<AST_ValueType*> (inherited[i]);
 
       if (this->derived_from_primary_key_base (tmp, pk_base))
         {

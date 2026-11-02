@@ -33,28 +33,28 @@ FE_ComponentHeader::base_component () const
   return this->base_component_;
 }
 
-AST_Type **
+AST_Type_List const&
 FE_ComponentHeader::supports () const
 {
-  return this->inherits_;
+  return this->inherits ();
 }
 
 std::size_t
 FE_ComponentHeader::n_supports () const
 {
-  return this->n_inherits_;
+  return this->n_inherits ();
 }
 
-AST_Interface **
+AST_Interface_List const&
 FE_ComponentHeader::supports_flat () const
 {
-  return this->inherits_flat_;
+  return this->inherits_flat ();
 }
 
 std::size_t
 FE_ComponentHeader::n_supports_flat () const
 {
-  return this->n_inherits_flat_;
+  return this->n_inherits_flat ();
 }
 
 void
@@ -219,33 +219,5 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       this->compile_one_inheritance (t);
     }
 
-  // OK, install in interface header.
-  // First the flat list (all ancestors).
-  if (!this->iseen_flat_.empty ())
-    {
-      ACE_NEW (this->inherits_flat_,
-               AST_Interface *[this->iseen_flat_.size ()]);
-
-      for (std::size_t i = 0; i < this->iseen_flat_.size (); ++i)
-        {
-          this->inherits_flat_[i] = this->iseen_flat_[i];
-        }
-
-      this->n_inherits_flat_ = this->iseen_flat_.size ();
-    }
-
-  // Then the list of immediate ancestors.
-  if (!this->iseen_.empty ())
-    {
-      ACE_NEW (this->inherits_,
-               AST_Type *[this->iseen_.size ()]);
-
-      for (std::size_t i = 0; i < this->iseen_.size (); ++i)
-        {
-          this->inherits_[i] = this->iseen_[i];
-        }
-
-      this->n_inherits_ = this->iseen_.size ();
-    }
 }
 

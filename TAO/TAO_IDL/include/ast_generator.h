@@ -66,6 +66,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_GENERATOR_AST_GENERATOR_HH
 
 #include "ast_operation.h"
+#include "ast_interface.h"
 #include "ast_argument.h"
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
@@ -128,9 +129,9 @@ public:
   // Create a node representing an interface.
   virtual AST_Interface *create_interface (
       UTL_ScopedName *n,
-      AST_Type **inherits,
+      AST_Type_List const& inherits,
       long n_inherits,
-      AST_Interface **inherits_flat,
+      AST_Interface_List const& inherits_flat,
       std::size_t n_inherits_flat,
       bool is_local,
       bool is_abstract);
@@ -144,12 +145,12 @@ public:
   // Create a node representing a valuetype.
   virtual AST_ValueType *create_valuetype (
       UTL_ScopedName *n,
-      AST_Type **inherits,
+      AST_Type_List const& inherits,
       long n_inherits,
       AST_Type *inherits_concrete,
-      AST_Interface **inherits_flat,
+      AST_Interface_List const& inherits_flat,
       std::size_t n_inherits_flat,
-      AST_Type **supports_list,
+      AST_Type_List const& supports_list,
       std::size_t n_supports,
       AST_Type *supports_concrete,
       bool is_abstract,
@@ -164,12 +165,12 @@ public:
   // Create a node representing an eventtype.
   virtual AST_EventType *create_eventtype (
       UTL_ScopedName *n,
-      AST_Type **inherits,
+      AST_Type_List const& inherits,
       long n_inherits,
       AST_Type *inherits_concrete,
-      AST_Interface **inherits_flat,
+      AST_Interface_List const& inherits_flat,
       std::size_t n_inherits_flat,
-      AST_Type **supports_list,
+      AST_Type_List const& supports_list,
       std::size_t n_supports,
       AST_Type *supports_concrete,
       bool is_abstract,
@@ -185,9 +186,9 @@ public:
   virtual AST_Component *create_component (
       UTL_ScopedName *n,
       AST_Component *base_component,
-      AST_Type **supports_list,
+      AST_Type_List const& supports_list,
       long n_supports,
-      AST_Interface **supports_flat,
+      AST_Interface_List const& supports_flat,
       std::size_t n_supports_flat);
 
   // Create a node representing a forward declaration of a component.
@@ -200,9 +201,9 @@ public:
       AST_Home *base_home,
       AST_Component *managed_component,
       AST_Type *primary_key,
-      AST_Type **support_lists,
+      AST_Type_List const& support_lists,
       long n_supports,
-      AST_Interface **supports_flat,
+      AST_Interface_List const& supports_flat,
       std::size_t n_supports_flat);
 
   // Create a node representing an exception.

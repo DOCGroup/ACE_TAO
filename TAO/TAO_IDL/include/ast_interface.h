@@ -76,6 +76,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <deque>
 #include <vector>
 
+class AST_Interface;
+using AST_Type_List = std::vector<AST_Type *>;
+using AST_Interface_List = std::vector<AST_Interface *>;
+
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
@@ -85,9 +89,9 @@ public:
   AST_Interface &operator= (AST_Interface const &) = delete;
   AST_Interface &operator= (AST_Interface &&) = delete;
   AST_Interface (UTL_ScopedName *n,
-                 AST_Type **ih,
+                 AST_Type_List const& ih,
                  long nih,
-                 AST_Interface **ih_flat,
+                 AST_Interface_List const& ih_flat,
                  std::size_t nih_flat,
                  bool local,
                  bool abstract);
@@ -101,11 +105,11 @@ public:
   // Overridden for valuetypes, components, and eventtypes.
   virtual void redefine (AST_Interface *from);
 
-  AST_Type **inherits () const;
+  AST_Type_List const& inherits () const;
 
   long n_inherits () const;
 
-  AST_Interface **inherits_flat () const;
+  AST_Interface_List const& inherits_flat () const;
 
   std::size_t n_inherits_flat () const;
 
@@ -179,11 +183,11 @@ protected:
   // Data.
 
   // Immediate ancestors.
-  std::vector<AST_Type *> pd_inherits;
+  AST_Type_List pd_inherits;
   long pd_n_inherits;
 
   // All ancestors.
-  std::vector<AST_Interface *> pd_inherits_flat;
+  AST_Interface_List pd_inherits_flat;
 
   // Queue data structure needed for breadth-first traversal of
   // inheritance tree.

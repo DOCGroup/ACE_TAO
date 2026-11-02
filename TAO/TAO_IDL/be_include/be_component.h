@@ -28,9 +28,9 @@ class be_component : public virtual AST_Component,
 public:
   be_component (UTL_ScopedName *n,
                 AST_Component *base_component,
-                AST_Type **supports,
+                AST_Type_List const& supports,
                 long n_supports,
-                AST_Interface **supports_flat,
+                AST_Interface_List const& supports_flat,
                 std::size_t n_supports_flat);
 
   ~be_component () override;

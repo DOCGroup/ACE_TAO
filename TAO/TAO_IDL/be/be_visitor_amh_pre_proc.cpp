@@ -170,9 +170,9 @@ be_visitor_amh_pre_proc::create_response_handler (
   be_interface *response_handler = nullptr;
   ACE_NEW_RETURN (response_handler,
                   be_interface (amh_name,   // name
-                                nullptr,          // list of inherited
+                                AST_Type_List {}, // list of inherited
                                 0,          // number of inherited
-                                nullptr,          // list of ancestors
+                                AST_Interface_List {}, // list of ancestors
                                 0,          // number of ancestors
                                 1,          // local
                                 0),         // non-abstract
@@ -545,8 +545,8 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 
   idl_global->valuefactory_seen_ = true;
 
-  const int inherit_count = 0;
-  AST_Type **p_intf = nullptr;
+  long const inherit_count = 0;
+  AST_Type_List const p_intf;
 
   UTL_ScopedName *excep_holder_name =
     node->compute_name ("AMH_",
@@ -561,9 +561,9 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                 p_intf,
                                 inherit_count,
                                 nullptr,
-                                nullptr,
+                                AST_Interface_List {},
                                 0,
-                                nullptr,
+                                AST_Type_List {},
                                 0,
                                 nullptr,
                                 0,

@@ -18,6 +18,7 @@
 #define TAO_AST_VISITOR_TMPL_MODULE_INST_H
 
 #include "ast_visitor.h"
+#include "ast_interface.h"
 #include "fe_utils.h"
 
 class UTL_ExceptList;
@@ -113,7 +114,7 @@ private:
 
   // Utility method to create a NameList from a list of inherited
   // or supported types that may contain a template param ref.
-  UTL_NameList *create_name_list (AST_Type **list, long length);
+  UTL_NameList *create_name_list (AST_Type_List const& list);
 
 private:
   ast_visitor_context *ctx_;

@@ -26,12 +26,12 @@
 #include "ace/Log_Msg.h"
 
 be_valuetype::be_valuetype (UTL_ScopedName *n,
-                            AST_Type **inherits,
+                              AST_Type_List const& inherits,
                             long n_inherits,
                             AST_Type *inherits_concrete,
-                            AST_Interface **inherits_flat,
+                              AST_Interface_List const& inherits_flat,
                             std::size_t n_inherits_flat,
-                            AST_Type **supports,
+                              AST_Type_List const& supports,
                             std::size_t n_supports,
                             AST_Type *supports_concrete,
                             bool abstract,
@@ -286,11 +286,9 @@ be_valuetype::have_operation ()
   if (! have_operation)
     {
       // Now traverse inheritance tree.
-      long i;  // loop index
-      long const n_inherits = this->n_inherits ();
-      AST_Type **inherits = this->inherits ();
+      AST_Type_List const& inherits = this->inherits ();
 
-      for (i = 0; i < n_inherits; ++i)
+      for (std::size_t i = 0; i < inherits.size (); ++i)
         {
           be_valuetype *vt = dynamic_cast<be_valuetype*> (inherits[i]);
 
@@ -362,11 +360,9 @@ be_valuetype::have_supported_op (be_interface * node)
   if (! have_supported_op)
     {
       // Now traverse inheritance tree.
-      long i;  // loop index
-      long const n_inherits = node->n_inherits ();
-      AST_Type **inherits = node->inherits ();
+      AST_Type_List const& inherits = node->inherits ();
 
-      for (i = 0; i < n_inherits; ++i)
+      for (std::size_t i = 0; i < inherits.size (); ++i)
         {
           be_interface * intf =
             dynamic_cast<be_interface*> (inherits[i]);

@@ -274,24 +274,14 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
   reply_handler_name->last_component ()->replace_string (
     reply_handler_local_name);
 
-  long n_parents = 0;
-  std::unique_ptr<AST_Type *[]> p_intf =
-    this->create_inheritance_list (node, n_parents);
-
-  if (!p_intf)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%N:%l) be_visitor_ami_pre_proc::visit_interface - "
-                        "bad inheritance list\n"),
-                        0);
-    }
+  AST_Type_List const p_intf = this->create_inheritance_list (node);
 
   be_interface *reply_handler = nullptr;
   ACE_NEW_RETURN (reply_handler,
                   be_interface (reply_handler_name, // name
-                                p_intf.release (),  // list of inherited
-                                n_parents,          // number of inherited
-                                nullptr,                  // list of all ancestors
+                                p_intf,             // list of inherited
+                                static_cast<long> (p_intf.size ()),
+                                AST_Interface_List {}, // list of all ancestors
                                 0,                  // number of ancestors
                                 0,                  // non-local
                                 0),                 // non-abstract
@@ -973,17 +963,16 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
   return operation;
 }
 
-std::unique_ptr<AST_Type *[]>
-be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
-                                                  long &n_rh_parents)
+AST_Type_List
+be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node)
 {
-  std::unique_ptr<AST_Type *[]> retval;
-
-  long const n_parents = node->n_inherits ();
-  AST_Type **parents = node->inherits ();
+  AST_Type_List retval;
+  AST_Type_List const& parents = node->inherits ();
+  std::size_t const n_parents = parents.size ();
   AST_Type *parent = nullptr;
+  std::size_t n_rh_parents = 0;
 
-  for (long i = 0; i < n_parents; ++i)
+  for (std::size_t i = 0; i < n_parents; ++i)
     {
       parent = parents[i];
 
@@ -999,29 +988,17 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
     {
       be_interface *inherit_intf = be_global->messaging_replyhandler ();
 
-      AST_Type **raw_retval = nullptr;
-      ACE_NEW_RETURN (raw_retval,
-                      AST_Type *[1],
-                      nullptr);
-      retval.reset (raw_retval);
-
-      retval[0] = inherit_intf;
+      retval.push_back (inherit_intf);
       n_rh_parents = 1;
     }
   else
     {
-      AST_Type **raw_retval = nullptr;
-      ACE_NEW_RETURN (raw_retval,
-                      AST_Type *[n_rh_parents],
-                      nullptr);
-      retval.reset (raw_retval);
-
       std::string const prefix ("AMI_");
 
       std::string const suffix ("Handler");
-      long index = 0;
+      std::size_t index = 0;
 
-      for (long j = 0; j < n_parents; ++j)
+      for (std::size_t j = 0; j < n_parents; ++j)
         {
           parent = parents[j];
 
@@ -1047,7 +1024,9 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
 
           if (d != nullptr)
             {
-              retval[index] = dynamic_cast<AST_Interface*> (d);
+              AST_Interface *reply_handler_parent =
+                dynamic_cast<AST_Interface*> (d);
+              retval.push_back (reply_handler_parent);
               retval[index++]->set_prefix_with_typeprefix (parent->prefix ());
             }
         }
@@ -1055,9 +1034,9 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
       // Just a sanity check until we're sure this works in all use cases.
       if (n_rh_parents != index)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "reply handler parent iteration mismatch\n"),
-                            0);
+          ACE_ERROR ((LM_ERROR,
+                      "reply handler parent iteration mismatch\n"));
+          return AST_Type_List {};
         }
     }
 

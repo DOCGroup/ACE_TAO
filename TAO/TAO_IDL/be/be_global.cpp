@@ -1990,12 +1990,12 @@ BE_GlobalData::messaging_exceptionholder ()
       be_valuetype *exceptionholder = nullptr;
       ACE_NEW_RETURN (exceptionholder,
                       be_valuetype (full_name,
-                                    nullptr,
+                                    AST_Type_List {},
                                     0,
                                     nullptr,
-                                    nullptr,
+                                    AST_Interface_List {},
                                     0,
-                                    nullptr,
+                                    AST_Type_List {},
                                     0,
                                     nullptr,
                                     0,
@@ -2059,9 +2059,9 @@ BE_GlobalData::messaging_replyhandler ()
       be_interface *replyhandler = nullptr;
       ACE_NEW_RETURN (replyhandler,
                       be_interface (full_name,
-                                    nullptr,  // inherited interfaces
+                                    AST_Type_List {},  // inherited interfaces
                                     0,  // number of inherited interfaces
-                                    nullptr,  // ancestors
+                                    AST_Interface_List {},  // ancestors
                                     0,  // number of ancestors
                                     0,  // not local
                                     0), // not abstract

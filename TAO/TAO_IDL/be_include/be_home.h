@@ -30,9 +30,9 @@ public:
            AST_Home *base_home,
            AST_Component *managed_component,
            AST_Type *primary_key,
-           AST_Type **supports,
+           AST_Type_List const& supports,
            long n_supports,
-           AST_Interface **supports_flat,
+           AST_Interface_List const& supports_flat,
            std::size_t n_supports_flat);
 
   ~be_home () override;

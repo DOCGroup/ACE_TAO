@@ -50,9 +50,9 @@
 #include <utility>
 
 be_interface::be_interface (UTL_ScopedName *n,
-                            AST_Type **ih,
+                            AST_Type_List const& ih,
                             long nih,
-                            AST_Interface **ih_flat,
+                            AST_Interface_List const& ih_flat,
                             std::size_t nih_flat,
                             bool local,
                             bool abstract)
@@ -1785,7 +1785,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
     case BE_GlobalData::TAO_PERFECT_HASH:
       process_options.command_line (ACE_TEXT ("%s")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-m -M -J -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
@@ -1808,7 +1808,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-B")
                                     ACE_TEXT ("  ")
-                                    ACE_TEXT ("-m -M -J -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
@@ -1831,7 +1831,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-b")
                                     ACE_TEXT ("  ")
-                                    ACE_TEXT ("-m -M -J -c -C")
+                                    ACE_TEXT ("-m -M -J -Q -c -C")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
@@ -1942,7 +1942,7 @@ be_interface::is_a_helper (be_interface * /*derived*/,
                            TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "std::strcmp (value, \"" << bi->repoID () << "\") == 0 ||" << be_nl;
+  *os << "ACE_OS::strcmp (value, \"" << bi->repoID () << "\") == 0 ||" << be_nl;
 
   return 0;
 }
@@ -2170,10 +2170,10 @@ be_interface::enqueue_base_component_r (AST_Component *node)
 
   (void) this->insert_non_dup (base);
 
-  long const n_supports = base->n_supports ();
-  AST_Type **supports = base->supports ();
+  AST_Type_List const& supports = base->supports ();
+  std::size_t const n_supports = supports.size ();
 
-  for (long j = 0; j < n_supports; ++j)
+  for (std::size_t j = 0; j < n_supports; ++j)
     {
       (void) this->insert_non_dup (supports[j]);
     }
@@ -2193,10 +2193,10 @@ be_interface::enqueue_base_home_r (AST_Home *node)
 
   (void) this->insert_non_dup (base);
 
-  long const n_supports = base->n_supports ();
-  AST_Type **supports = base->supports ();
+  AST_Type_List const& supports = base->supports ();
+  std::size_t const n_supports = supports.size ();
 
-  for (long j = 0; j < n_supports; ++j)
+  for (std::size_t j = 0; j < n_supports; ++j)
     {
       (void) this->insert_non_dup (supports[j]);
     }
@@ -2217,8 +2217,9 @@ be_interface::dds_connector_traits_done (bool val)
 void
 be_interface::gen_stub_inheritance (TAO_OutStream *os)
 {
-  long i;
-  long const nparents = this->n_inherits ();
+  std::size_t i = 0;
+  AST_Type_List const& parents = this->inherits ();
+  std::size_t const nparents = parents.size ();
   bool has_concrete_parent = false;
   bool const i_am_abs = this->is_abstract ();
 
@@ -2226,8 +2227,6 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
   if (nparents > 0)
     {
       *os << be_idt;
-
-      AST_Type **parents = this->inherits ();
 
       for (i = 0; i < nparents; ++i)
         {
@@ -2280,12 +2279,12 @@ be_interface::gen_stub_inheritance (TAO_OutStream *os)
 void
 be_interface::gen_skel_inheritance (TAO_OutStream *os)
 {
-  long const n_parents = this->n_inherits ();
+  AST_Type_List const& parents = this->inherits ();
+  std::size_t const n_parents = parents.size ();
   AST_Type *parent = nullptr;
-  AST_Type **parents = this->inherits ();
   bool has_concrete_parent = false;
 
-  for (int i = 0; i < n_parents; ++i)
+  for (std::size_t i = 0; i < n_parents; ++i)
     {
       parent = parents[i];
 
@@ -2331,11 +2330,11 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 
   if (this->is_abstract () || this->has_mixed_parentage ())
     {
-      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
+      *os << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
   else if (this->is_local ())
     {
-      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/LocalObject:1.0\") == 0";
+      *os << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/LocalObject:1.0\") == 0";
     }
 
   if (this->has_mixed_parentage () || this->is_local ())
@@ -2349,7 +2348,7 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 
   if (! this->is_abstract ())
     {
-      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0" << be_nl;
+      *os << "ACE_OS::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0" << be_nl;
     }
 
   return 0;

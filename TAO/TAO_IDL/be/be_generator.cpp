@@ -203,9 +203,9 @@ be_generator::create_module (UTL_Scope *s,
 
 AST_Interface *
 be_generator::create_interface (UTL_ScopedName *n,
-                                AST_Type **ih,
+                                AST_Type_List const& ih,
                                 long nih,
-                                AST_Interface **ih_flat,
+                                AST_Interface_List const& ih_flat,
                                 std::size_t nih_flat,
                                 bool l,
                                 bool a)
@@ -239,9 +239,9 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                                     bool is_abstract)
 {
   AST_Interface *full_defn = this->create_interface (n,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0,
                                                      is_local,
                                                      is_abstract);
@@ -271,12 +271,12 @@ be_generator::create_valuebox (UTL_ScopedName *n,
 
 AST_ValueType *
 be_generator::create_valuetype (UTL_ScopedName *n,
-                                AST_Type **inherits,
+                                AST_Type_List const& inherits,
                                 long n_inherits,
                                 AST_Type *inherits_concrete,
-                                AST_Interface **inherits_flat,
+                                AST_Interface_List const& inherits_flat,
                                 std::size_t n_inherits_flat,
-                                AST_Type **supports_list,
+                                AST_Type_List const& supports_list,
                                 std::size_t n_supports,
                                 AST_Type *supports_concrete,
                                 bool is_abstract,
@@ -307,12 +307,12 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
                                     bool is_abstract)
 {
   AST_ValueType *full_defn = this->create_valuetype (n,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      0,
                                                      nullptr,
                                                      is_abstract,
@@ -331,12 +331,12 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
 
 AST_EventType *
 be_generator::create_eventtype (UTL_ScopedName *n,
-                                AST_Type **inherits,
+                                AST_Type_List const& inherits,
                                 long n_inherits,
                                 AST_Type *inherits_concrete,
-                                AST_Interface **inherits_flat,
+                                AST_Interface_List const& inherits_flat,
                                 std::size_t n_inherits_flat,
-                                AST_Type **supports_list,
+                                AST_Type_List const& supports_list,
                                 std::size_t n_supports,
                                 AST_Type *supports_concrete,
                                 bool is_abstract,
@@ -367,12 +367,12 @@ be_generator::create_eventtype_fwd (UTL_ScopedName *n,
                                     bool is_abstract)
 {
   AST_EventType *full_defn = this->create_eventtype (n,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      0,
                                                      nullptr,
                                                      is_abstract,
@@ -392,9 +392,9 @@ be_generator::create_eventtype_fwd (UTL_ScopedName *n,
 AST_Component *
 be_generator::create_component (UTL_ScopedName *n,
                                 AST_Component *base_component,
-                                AST_Type **supports_list,
+                                AST_Type_List const& supports_list,
                                 long n_supports,
-                                AST_Interface **supports_flat,
+                                AST_Interface_List const& supports_flat,
                                 std::size_t n_supports_flat)
 {
   be_component *retval = nullptr;
@@ -415,9 +415,9 @@ be_generator::create_component_fwd (UTL_ScopedName *n)
 {
   AST_Component *full_defn = this->create_component (n,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0);
 
   be_component_fwd *retval = nullptr;
@@ -435,9 +435,9 @@ be_generator::create_home (UTL_ScopedName *n,
                            AST_Home *base_home,
                            AST_Component *managed_component,
                            AST_Type *primary_key,
-                           AST_Type **supports_list,
+                           AST_Type_List const& supports_list,
                            long n_supports,
-                           AST_Interface **supports_flat,
+                           AST_Interface_List const& supports_flat,
                            std::size_t n_supports_flat)
 {
   be_home *retval = nullptr;

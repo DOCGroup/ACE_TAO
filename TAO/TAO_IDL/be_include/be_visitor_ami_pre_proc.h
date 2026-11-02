@@ -17,6 +17,7 @@
 #define TAO_BE_VISITOR_AMI_PRE_PROC_H
 
 #include "be_visitor_scope.h"
+#include "ast_interface.h"
 
 #include <memory>
 #include <string>
@@ -92,8 +93,7 @@ private:
   be_operation *generate_set_operation (be_attribute *node);
 
   /// Create an inheritance list for the reply handler.
-  std::unique_ptr<AST_Type *[]> create_inheritance_list (be_interface *node,
-                                                         long &n_parents);
+  AST_Type_List create_inheritance_list (be_interface *node);
 
   /// Generate an *A.idl file for AMI4CCM.
   int generate_ami4ccm_idl ();

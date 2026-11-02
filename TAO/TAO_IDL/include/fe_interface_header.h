@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scoped_name.h"
 
 #include "ast_typedef.h"
+#include "ast_interface.h"
 
 #include <cstddef>
 #include <memory>
@@ -96,9 +97,9 @@ public:
 
   // Data Accessors.
   UTL_ScopedName *name () const;
-  AST_Type **inherits () const;
+  AST_Type_List const& inherits () const;
   std::size_t n_inherits () const;
-  AST_Interface **inherits_flat () const;
+  AST_Interface_List const& inherits_flat () const;
   std::size_t n_inherits_flat () const;
 
   bool is_local () const;
@@ -129,9 +130,7 @@ protected:
   bool already_seen (AST_Type *ip);
   bool already_seen_flat (AST_Interface *ip);
 
-  void install_in_header ();
-
-  void destroy_flat_arrays ();
+  void clear_flat_inheritance ();
 
   // Data.
 protected:
@@ -142,14 +141,6 @@ protected:
 
   std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter> interface_name_;
   bool has_template_parent_ {};
-
-  // Inherited interfaces.
-  AST_Type **inherits_ {};
-  std::size_t n_inherits_ {};
-
-  // Used for name clash checking.
-  AST_Interface  **inherits_flat_ {};
-  std::size_t n_inherits_flat_ {};
 
   bool is_local_ {};
   bool is_abstract_ {};

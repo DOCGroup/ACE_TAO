@@ -106,9 +106,9 @@ AST_Decl::NodeType const
 AST_Interface::NT = AST_Decl::NT_interface;
 
 AST_Interface::AST_Interface (UTL_ScopedName *n,
-                              AST_Type **ih,
+                              AST_Type_List const& ih,
                               long nih,
-                              AST_Interface **ih_flat,
+                              AST_Interface_List const& ih_flat,
                               std::size_t nih_flat,
                               bool local,
                               bool abstract)
@@ -119,20 +119,11 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     AST_Type (AST_Decl::NT_interface,
               n),
     UTL_Scope (AST_Decl::NT_interface),
-    pd_n_inherits (nih)
+    pd_inherits (ih),
+    pd_n_inherits (nih),
+    pd_inherits_flat (ih_flat)
 {
-  std::unique_ptr<AST_Type *[]> const inherits_owner (ih);
-  std::unique_ptr<AST_Interface *[]> const inherits_flat_owner (ih_flat);
-
-  if (nih > 0)
-    {
-      this->pd_inherits.assign (ih, ih + nih);
-    }
-
-  if (nih_flat > 0)
-    {
-      this->pd_inherits_flat.assign (ih_flat, ih_flat + nih_flat);
-    }
+  ACE_UNUSED_ARG (nih_flat);
 
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
@@ -396,26 +387,25 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
     }
 
   AST_Decl::NodeType const nt = t->node_type ();
-  long n = 0;
 
   if (nt != AST_Decl::NT_param_holder)
     {
       AST_Interface *i = dynamic_cast<AST_Interface*> (t);
 
-      AST_Type **parents = i->inherits ();
-      long const n_parents = i->n_inherits ();
+      AST_Type_List const& parents = i->inherits ();
+      std::size_t const n_parents = parents.size ();
 
-      for (n = 0; n < n_parents; ++n)
+      for (std::size_t j = 0; j < n_parents; ++j)
         {
-          this->redef_clash_populate_r (parents[n]);
+          this->redef_clash_populate_r (parents[j]);
         }
     }
 
   if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
     {
       AST_ValueType *v = dynamic_cast<AST_ValueType*> (t);
-      AST_Type **supports = v->supports ();
-      std::size_t const n_supports = v->n_supports ();
+      AST_Type_List const& supports = v->supports ();
+      std::size_t const n_supports = supports.size ();
 
       for (std::size_t i = 0; i < n_supports; ++i)
         {
@@ -425,12 +415,12 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
   else if (nt == AST_Decl::NT_component)
     {
       AST_Component *c = dynamic_cast<AST_Component*> (t);
-      AST_Type **supports = c->supports ();
-      long const n_supports = c->n_supports ();
+      AST_Type_List const& supports = c->supports ();
+      std::size_t const n_supports = supports.size ();
 
-      for (n = 0; n < n_supports; ++n)
+      for (std::size_t j = 0; j < n_supports; ++j)
         {
-          this->redef_clash_populate_r (supports[n]);
+          this->redef_clash_populate_r (supports[j]);
         }
     }
 }
@@ -543,12 +533,10 @@ AST_Interface::redefine (AST_Interface *from)
 
 // Data accessors.
 
-AST_Type **
+AST_Type_List const&
 AST_Interface::inherits () const
 {
-  return this->pd_inherits.empty ()
-    ? nullptr
-    : const_cast<AST_Type **> (this->pd_inherits.data ());
+  return this->pd_inherits;
 }
 
 long
@@ -557,12 +545,10 @@ AST_Interface::n_inherits () const
   return this->pd_n_inherits;
 }
 
-AST_Interface **
+AST_Interface_List const&
 AST_Interface::inherits_flat () const
 {
-  return this->pd_inherits_flat.empty ()
-    ? nullptr
-    : const_cast<AST_Interface **> (this->pd_inherits_flat.data ());
+  return this->pd_inherits_flat;
 }
 
 std::size_t
@@ -697,8 +683,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
 {
   AST_Decl *d = nullptr;
   AST_Decl *d_before = nullptr;
-  AST_Type **is = nullptr;
-  std::size_t nis {};
+  AST_Type_List const& inherited = this->inherits ();
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -711,11 +696,9 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (nis = this->n_inherits (), is = this->inherits ();
-       nis > 0;
-       nis--, is++)
+  for (std::size_t j = 0; j < inherited.size (); ++j)
     {
-      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (inherited[j]);
 
       if (i == nullptr)
         {
@@ -776,15 +759,12 @@ AST_Interface::look_in_inherited_local (Identifier *e,
     }
 
   AST_Decl *d = nullptr;
-  AST_Type **is = nullptr;
-  long nis = -1;
+  AST_Type_List const& inherited = this->inherits ();
 
   /// OK, loop through inherited interfaces.
-  for (nis = this->n_inherits (), is = this->inherits ();
-       nis > 0;
-       nis--, is++)
+  for (std::size_t j = 0; j < inherited.size (); ++j)
     {
-      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (inherited[j]);
 
       if (i == nullptr)
         {
@@ -813,8 +793,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
   Identifier *id = d->local_name ();
   AST_Decl *prev = nullptr;
   AST_Decl::NodeType nt = NT_root;
-  std::size_t nis = 0;
-  AST_Interface **is = nullptr;
+  AST_Interface_List const& inherited = this->inherits_flat ();
 
   if (this->idl_keyword_clash (id) != 0)
     {
@@ -833,11 +812,9 @@ AST_Interface::lookup_for_add (AST_Decl *d)
         }
     }
 
-  for (nis = this->n_inherits_flat (), is = this->inherits_flat ();
-       nis > 0;
-       nis--, is++)
+  for (std::size_t j = 0; j < inherited.size (); ++j)
     {
-      prev = (*is)->lookup_by_name_local (id, false);
+      prev = inherited[j]->lookup_by_name_local (id, false);
 
       if (prev != nullptr)
         {
