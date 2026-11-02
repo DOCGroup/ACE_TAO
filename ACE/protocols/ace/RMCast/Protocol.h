@@ -3,6 +3,7 @@
 #ifndef ACE_RMCAST_PROTOCOL_H
 #define ACE_RMCAST_PROTOCOL_H
 
+#include <cstring>
 #include <memory>
 #include "ace/Bound_Ptr.h"
 
@@ -15,7 +16,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
 #include "Bits.h"
@@ -62,9 +62,7 @@ namespace ACE_RMCast
 
   struct Profile;
 
-  typedef
-  ACE_Strong_Bound_Ptr<Profile, Mutex>
-  Profile_ptr;
+  using Profile_ptr = ACE_Strong_Bound_Ptr<Profile, Mutex>;
 
   struct Profile
   {
@@ -235,15 +233,11 @@ namespace ACE_RMCast
   //
   class Message;
 
-  typedef
-  ACE_Strong_Bound_Ptr<Message, Mutex>
-  Message_ptr;
+  using Message_ptr = ACE_Strong_Bound_Ptr<Message, Mutex>;
 
   class Message
   {
-    typedef
-    ACE_Hash_Map_Manager<u16, Profile_ptr, ACE_Null_Mutex>
-    Profiles;
+    using Profiles = ACE_Hash_Map_Manager<u16, Profile_ptr, ACE_Null_Mutex>;
 
   public:
     Message ()
@@ -306,16 +300,14 @@ namespace ACE_RMCast
     Profile const*
     find (u16 id) const
     {
-      Profiles::ENTRY* e = 0;
+      Profiles::ENTRY* e = nullptr;
 
-      if (profiles_.find (id, e) == -1) return 0;
+      if (profiles_.find (id, e) == -1) return nullptr;
 
       return e->int_id_.get ();
     }
 
-    typedef
-    Profiles::const_iterator
-    ProfileIterator;
+    using ProfileIterator = Profiles::const_iterator;
 
     ProfileIterator
     begin () const
@@ -368,9 +360,7 @@ namespace ACE_RMCast
   //
   struct From;
 
-  typedef
-  ACE_Strong_Bound_Ptr<From, Mutex>
-  From_ptr;
+  using From_ptr = ACE_Strong_Bound_Ptr<From, Mutex>;
 
   struct From : Profile
   {
@@ -450,9 +440,7 @@ namespace ACE_RMCast
   //
   struct To;
 
-  typedef
-  ACE_Strong_Bound_Ptr<To, Mutex>
-  To_ptr;
+  using To_ptr = ACE_Strong_Bound_Ptr<To, Mutex>;
 
   struct To : Profile
   {
@@ -532,9 +520,7 @@ namespace ACE_RMCast
   //
   struct Data;
 
-  typedef
-  ACE_Strong_Bound_Ptr<Data, Mutex>
-  Data_ptr;
+  using Data_ptr = ACE_Strong_Bound_Ptr<Data, Mutex>;
 
   struct Data : Profile
   {
@@ -570,7 +556,7 @@ namespace ACE_RMCast
       if (size_)
       {
         buf_ = reinterpret_cast<char*> (operator new (capacity_));
-        ACE_OS::memcpy (buf_, buf, size_);
+        std::memcpy (buf_, buf, size_);
       }
 
       Profile::size (calculate_size ());
@@ -598,7 +584,7 @@ namespace ACE_RMCast
       if (size_)
       {
         buf_ = reinterpret_cast<char*> (operator new (capacity_));
-        ACE_OS::memcpy (buf_, d.buf_, size_);
+        std::memcpy (buf_, d.buf_, size_);
       }
 
       Profile::size (calculate_size ());
@@ -663,9 +649,7 @@ namespace ACE_RMCast
   //
   struct SN;
 
-  typedef
-  ACE_Strong_Bound_Ptr<SN, Mutex>
-  SN_ptr;
+  using SN_ptr = ACE_Strong_Bound_Ptr<SN, Mutex>;
 
   struct SN : Profile
   {
@@ -731,9 +715,7 @@ namespace ACE_RMCast
   //
   class NAK;
 
-  typedef
-  ACE_Strong_Bound_Ptr<NAK, Mutex>
-  NAK_ptr;
+  using NAK_ptr = ACE_Strong_Bound_Ptr<NAK, Mutex>;
 
   class NAK : public Profile
   {
@@ -889,7 +871,7 @@ namespace ACE_RMCast
       //
       for (iterator i (this_.begin ()); !i.done (); i.advance ())
       {
-        u64* psn = 0;
+        u64* psn = nullptr;
         i.next (psn);
         os << *psn;
       }
@@ -924,9 +906,7 @@ namespace ACE_RMCast
   //
   struct NRTM;
 
-  typedef
-  ACE_Strong_Bound_Ptr<NRTM, Mutex>
-  NRTM_ptr;
+  using NRTM_ptr = ACE_Strong_Bound_Ptr<NRTM, Mutex>;
 
   struct NRTM : Profile
   {
@@ -1078,13 +1058,11 @@ namespace ACE_RMCast
     }
 
   private:
-    typedef
-    ACE_Hash_Map_Manager_Ex<Address,
-                            u64,
-                            AddressHasher,
-                            ACE_Equal_To<Address>,
-                            ACE_Null_Mutex>
-    Map;
+    using Map = ACE_Hash_Map_Manager_Ex<Address,
+                                        u64,
+                                        AddressHasher,
+                                        ACE_Equal_To<Address>,
+                                        ACE_Null_Mutex>;
 
     Map map_;
   };
@@ -1095,9 +1073,7 @@ namespace ACE_RMCast
   //
   struct NoData;
 
-  typedef
-  ACE_Strong_Bound_Ptr<NoData, Mutex>
-  NoData_ptr;
+  using NoData_ptr = ACE_Strong_Bound_Ptr<NoData, Mutex>;
 
   struct NoData : Profile
   {
@@ -1149,9 +1125,7 @@ namespace ACE_RMCast
   //
   struct Part;
 
-  typedef
-  ACE_Strong_Bound_Ptr<Part, Mutex>
-  Part_ptr;
+  using Part_ptr = ACE_Strong_Bound_Ptr<Part, Mutex>;
 
   struct Part : Profile
   {

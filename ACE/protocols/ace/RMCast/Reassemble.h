@@ -23,13 +23,11 @@ namespace ACE_RMCast
   private:
    // Parameters const& params_;
 
-    typedef
-    ACE_Hash_Map_Manager_Ex<Address,
-                            Data_ptr,
-                            AddressHasher,
-                            ACE_Equal_To<Address>,
-                            ACE_Null_Mutex>
-    Map;
+    using Map = ACE_Hash_Map_Manager_Ex<Address,
+                                        Data_ptr,
+                                        AddressHasher,
+                                        ACE_Equal_To<Address>,
+                                        ACE_Null_Mutex>;
 
     Map map_;
   };

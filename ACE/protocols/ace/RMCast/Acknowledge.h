@@ -197,13 +197,11 @@ namespace ACE_RMCast
       u64 sn_, max_sn_;
     };
 
-    typedef
-    ACE_Hash_Map_Manager_Ex<Address,
-                            Queue,
-                            AddressHasher,
-                            ACE_Equal_To<Address>,
-                            ACE_Null_Mutex>
-    Map;
+    using Map = ACE_Hash_Map_Manager_Ex<Address,
+                                        Queue,
+                                        AddressHasher,
+                                        ACE_Equal_To<Address>,
+                                        ACE_Null_Mutex>;
 
   private:
     void

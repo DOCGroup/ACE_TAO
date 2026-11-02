@@ -64,9 +64,7 @@ namespace ACE_RMCast
       unsigned long count_;
     };
 
-    typedef
-    ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex>
-    Queue;
+    using Queue = ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex>;
 
   private:
     void

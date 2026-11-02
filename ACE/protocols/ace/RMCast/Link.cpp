@@ -115,7 +115,7 @@ namespace ACE_RMCast
         {
           send_ (m);
           send_ (hold_);
-          hold_ = Message_ptr (0);
+          hold_ = Message_ptr (nullptr);
         }
         else
         {
@@ -319,7 +319,7 @@ namespace ACE_RMCast
   recv_thunk (void* obj)
   {
     reinterpret_cast<Link*> (obj)->recv ();
-    return 0;
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 
   void Link::recv (Message_ptr)
