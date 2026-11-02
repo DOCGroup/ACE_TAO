@@ -75,7 +75,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "::CORBA::Boolean release = true);" << be_uidt
       << be_uidt_nl
       << "/// dtor" << be_nl
-      << "~" << tiename << " ();" << be_nl
+      << "~" << tiename << " () override;" << be_nl
       << "// TIE specific functions" << be_nl
       << "/// return the underlying object" << be_nl
       << "T *_tied_object ();" << be_nl
@@ -88,7 +88,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "/// set the ownership" << be_nl_2
       << "void _is_owner (::CORBA::Boolean b);" << be_nl
       << "// overridden ServantBase operations" << be_nl
-      << "PortableServer::POA_ptr _default_POA ();";
+      << "PortableServer::POA_ptr _default_POA () override;";
 
   int status =
     node->traverse_inheritance_graph (
