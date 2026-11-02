@@ -565,37 +565,42 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
       return 0;
     }
 
-  Identifier *id = nullptr;
-  UTL_ScopedName *sn = nullptr;
-
   std::string const& original_op_name =
     node->name ()->last_component ()->get_string ();
 
-  UTL_ScopedName *op_name =
-    static_cast<UTL_ScopedName *> (reply_handler->name ()-> copy ());
+  FE_Utils::Scoped_Name_Owner op_name (
+    static_cast<UTL_ScopedName *> (reply_handler->name ()->copy ()));
 
+  Identifier *id = nullptr;
+  UTL_ScopedName *sn = nullptr;
   ACE_NEW_RETURN (id,
                   Identifier (original_op_name),
                   -1);
+  std::unique_ptr<Identifier> id_owner (id);
 
   ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
+                  UTL_ScopedName (id_owner.get (),
                                   nullptr),
                   -1);
+  id_owner.release ();
+  FE_Utils::Scoped_Name_Owner sn_owner (sn);
 
-  op_name->nconc (sn);
+  op_name->nconc (sn_owner.get ());
+  sn_owner.release ();
 
   // Create the operation.
   be_operation *operation = nullptr;
   ACE_NEW_RETURN (operation,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
-                                op_name,
+                                op_name.get (),
                                 0,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
-  operation->set_name (op_name);
+  operation->set_name (op_name.get ());
+  op_name.release ();
 
   // If return type is non-void add it as first argument.
 
@@ -604,30 +609,41 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
       ACE_NEW_RETURN (id,
                       Identifier ("ami_return_val"),
                       -1);
+      id_owner.reset (id);
 
       UTL_ScopedName *tmp = nullptr;
 
       ACE_NEW_RETURN (tmp,
-                      UTL_ScopedName (id,
+                      UTL_ScopedName (id_owner.get (),
                                       nullptr),
                       -1);
+      id_owner.release ();
+      FE_Utils::Scoped_Name_Owner tmp_owner (tmp);
 
-      sn = (UTL_ScopedName *)operation->name ()->copy ();
-      sn->nconc (tmp);
+      FE_Utils::Scoped_Name_Owner arg_name (
+        static_cast<UTL_ScopedName *> (operation->name ()->copy ()));
+      arg_name->nconc (tmp_owner.get ());
+      tmp_owner.release ();
 
       // Create the argument.
       be_argument *arg = nullptr;
       ACE_NEW_RETURN (arg,
                       be_argument (AST_Argument::dir_IN,
                                    node->return_type (),
-                                   sn),
+                                   arg_name.get ()),
                       -1);
+      std::unique_ptr<be_argument, BE_AST_Decl_Deleter> arg_owner (arg);
 
       arg->set_defined_in (operation);
-      arg->set_name (sn);
+      arg->set_name (arg_name.get ());
+      arg_name.release ();
 
       // Add the reply handler to the argument list.
-      operation->be_add_argument (arg);
+      if (operation->be_add_argument (arg_owner.get ()) == nullptr)
+        {
+          return -1;
+        }
+      arg_owner.release ();
     }
 
   // Iterate over the arguments and put all the in and inout
@@ -643,10 +659,6 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
 
           if (d == nullptr)
             {
-              operation->destroy ();
-              delete operation;
-              operation = nullptr;
-
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_ami_pre_proc::")
                                  ACE_TEXT ("create_reply_handler_operation - ")
@@ -661,17 +673,23 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
             {
               // Create the argument.
               be_argument *arg = nullptr;
-              UTL_ScopedName *new_name =
-                (UTL_ScopedName *)original_arg->name ()->copy ();
+              FE_Utils::Scoped_Name_Owner new_name (
+                static_cast<UTL_ScopedName *> (original_arg->name ()->copy ()));
               ACE_NEW_RETURN (arg,
                               be_argument (AST_Argument::dir_IN,
                                            original_arg->field_type (),
-                                           new_name),
+                                           new_name.get ()),
                               -1);
+              std::unique_ptr<be_argument, BE_AST_Decl_Deleter> arg_owner (arg);
 
               arg->set_defined_in (operation);
-              arg->set_name (new_name);
-              operation->be_add_argument (arg);
+              arg->set_name (new_name.get ());
+              new_name.release ();
+              if (operation->be_add_argument (arg_owner.get ()) == nullptr)
+                {
+                  return -1;
+                }
+              arg_owner.release ();
             }
         } // end of while loop
     } // end of if
@@ -691,10 +709,11 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
 
   // After having generated the operation we insert it into the
   // reply handler interface.
-  if (nullptr == reply_handler->be_add_operation (operation))
+  if (nullptr == reply_handler->be_add_operation (operation_owner.get ()))
     {
       return -1;
     }
+  operation_owner.release ();
 
   operation->is_attr_op (node->is_attr_op ());
   return 0;
@@ -712,29 +731,35 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
 
   // Create the return type, which is "void".
   Identifier *id = nullptr;
-  UTL_ScopedName *sn = nullptr;
 
   // Create the argument.
   ACE_NEW_RETURN (id,
                   Identifier ("excep_holder"),
                   -1);
+  std::unique_ptr<Identifier> id_owner (id);
 
+  UTL_ScopedName *sn = nullptr;
   ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
+                  UTL_ScopedName (id_owner.get (),
                                   nullptr),
                   -1);
+  id_owner.release ();
+  FE_Utils::Scoped_Name_Owner sn_owner (sn);
 
   be_valuetype *excep_holder = be_global->messaging_exceptionholder ();
   be_argument *arg = nullptr;
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                excep_holder, // is also a valuetype
-                               sn),
+                               sn_owner.get ()),
                   -1);
+  std::unique_ptr<be_argument, BE_AST_Decl_Deleter> arg_owner (arg);
 
-  arg->set_name (sn);
+  arg->set_name (sn_owner.get ());
+  sn_owner.release ();
 
-  UTL_ScopedName *tmp = (UTL_ScopedName *)sn->copy ();
+  FE_Utils::Scoped_Name_Owner tmp (
+    static_cast<UTL_ScopedName *> (arg->name ()->copy ()));
 
   // Create the new name
   // Append _excep to the name of the operation
@@ -743,19 +768,24 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   std::string new_op_name (original_op_name);
   new_op_name += "_excep";
 
-  UTL_ScopedName *op_name =
-    static_cast<UTL_ScopedName *> (reply_handler->name ()->copy ());
+  FE_Utils::Scoped_Name_Owner op_name (
+    static_cast<UTL_ScopedName *> (reply_handler->name ()->copy ()));
 
   ACE_NEW_RETURN (id,
                   Identifier (new_op_name),
                   -1);
+  id_owner.reset (id);
 
+  sn = nullptr;
   ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
+                  UTL_ScopedName (id_owner.get (),
                                   nullptr),
                   -1);
+  id_owner.release ();
+  sn_owner.reset (sn);
 
-  op_name->nconc (sn);
+  op_name->nconc (sn_owner.get ());
+  sn_owner.release ();
 
   AST_PredefinedType *rt = be_global->void_type ();
 
@@ -764,19 +794,27 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
   ACE_NEW_RETURN (operation,
                   be_operation (rt,
                                 AST_Operation::OP_noflags,
-                                op_name,
+                                op_name.get (),
                                 false,
                                 false),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
-  operation->set_name (op_name);
-  operation->be_add_argument (arg);
+  operation->set_name (op_name.get ());
+  op_name.release ();
+  if (operation->be_add_argument (arg_owner.get ()) == nullptr)
+    {
+      return -1;
+    }
+  arg_owner.release ();
   operation->set_defined_in (reply_handler);
 
-  UTL_ScopedName *arg_name =
-    dynamic_cast<UTL_ScopedName *> (op_name->copy ());
-  arg_name->nconc (tmp);
-  arg->set_name (arg_name);
+  FE_Utils::Scoped_Name_Owner arg_name (
+    static_cast<UTL_ScopedName *> (operation->name ()->copy ()));
+  arg_name->nconc (tmp.get ());
+  tmp.release ();
+  arg->set_name (arg_name.get ());
+  arg_name.release ();
   arg->set_defined_in (operation);
 
   // Copy the exceptions since the user exception information may
@@ -788,7 +826,11 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
       operation->be_add_exceptions (exceptions->copy ());
     }
 
-  reply_handler->be_add_operation (operation);
+  if (reply_handler->be_add_operation (operation_owner.get ()) == nullptr)
+    {
+      return -1;
+    }
+  operation_owner.release ();
 
   operation->is_excep_ami (true);
   return 0;
