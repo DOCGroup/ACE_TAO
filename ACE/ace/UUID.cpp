@@ -7,11 +7,13 @@
 
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/ACE.h"
+
+#include <cstring>
+
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -45,7 +47,7 @@ namespace ACE_Utils
           }
 
         // Copy the contents of the UUID.
-        ACE_OS::memcpy (&this->uuid_, &rhs.uuid_, BINARY_SIZE);
+        std::memcpy (&this->uuid_, &rhs.uuid_, BINARY_SIZE);
 
         /// @todo We should create an UUID_Ex class for UUIDs that
         ///       contain the thread id and process id.
@@ -348,9 +350,9 @@ namespace ACE_Utils
 
     if (-1 != result)
       {
-        ACE_OS::memcpy (node_id,
-                        macaddress.node,
-                        UUID_Node::NODE_ID_SIZE);
+        std::memcpy (node_id,
+                     macaddress.node,
+                     UUID_Node::NODE_ID_SIZE);
       }
     else
       {
@@ -368,9 +370,9 @@ namespace ACE_Utils
       ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *lock_);
       uuid_state_.timestamp = time_last_;
 
-      ACE_OS::memcpy (uuid_state_.node.node_ID (),
-                      node_id,
-                      UUID_Node::NODE_ID_SIZE);
+      std::memcpy (uuid_state_.node.node_ID (),
+                   node_id,
+                   UUID_Node::NODE_ID_SIZE);
     }
 
     this->is_init_ = true;
