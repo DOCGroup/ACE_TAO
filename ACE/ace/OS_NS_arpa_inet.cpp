@@ -11,6 +11,7 @@
 #endif
 
 #include <cstdlib>
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,9 +37,9 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     {
       if (part > 3)
         return 0;
-      dot = ACE_OS::strchr (host_name, '.');
+      dot = std::strchr (host_name, '.');
       if (!dot)
-        dot = host_name + ACE_OS::strlen (host_name);
+        dot = host_name + std::strlen (host_name);
       char *last;
       const unsigned long n = std::strtoul (host_name, &last, 0);
       if (last != dot)
@@ -78,7 +79,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 
   if (ip_addr == INADDR_NONE
       // Broadcast addresses are weird...
-      && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
+      && std::strcmp (host_name, "255.255.255.255") != 0)
     return 0;
   else if (addr == 0)
     return 0;

@@ -5,6 +5,8 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
+#include <cstring>
+
 #include "ace/Metrics_Cache.h"
 
 #if !defined (__ACE_INLINE__)
@@ -41,10 +43,10 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Metrics_Timeprobe (u_int id,
 
   char * name_tmp = nullptr;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) this->allocator ()->malloc (ACE_OS::strlen(name)+1),
+                        (char *) this->allocator ()->malloc (std::strlen (name) + 1),
                         char,
-                        ACE_OS::strlen(name)+1);
-  ACE_OS::memcpy (name_tmp, name, ACE_OS::strlen (name)+1);
+                        std::strlen (name) + 1);
+  std::memcpy (name_tmp, name, std::strlen (name) + 1);
   name_ = name_tmp;
 
   this->event_descriptions (event_description_strings,
@@ -67,10 +69,10 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
 
   char * name_tmp = nullptr;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) alloc->malloc(ACE_OS::strlen(name)+1),
+                        (char *) alloc->malloc (std::strlen (name) + 1),
                         char,
-                        ACE_OS::strlen(name)+1);
-  ACE_OS::memcpy (name_tmp, name, ACE_OS::strlen (name)+1);
+                        std::strlen (name) + 1);
+  std::memcpy (name_tmp, name, std::strlen (name) + 1);
   name_ = name_tmp;
 
   this->event_descriptions (event_description_strings,
@@ -114,10 +116,10 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (const char *name)
 {
   char * name_tmp = nullptr;
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) this->allocator ()->malloc (ACE_OS::strlen(name)+1),
+                        (char *) this->allocator ()->malloc (std::strlen (name) + 1),
                         char,
-                        ACE_OS::strlen(name)+1);
-  ACE_OS::memcpy (name_tmp, name, ACE_OS::strlen (name)+1);
+                        std::strlen (name) + 1);
+  std::memcpy (name_tmp, name, std::strlen (name) + 1);
 
   if (name_ != nullptr)
   {

@@ -3,6 +3,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 
+#include <cstring>
+
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
@@ -15,7 +17,7 @@
         TYPE ace_result_; \
         ACE_OSCALL (OP, TYPE, ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ACE_OS::memcpy (TARGET, \
+          std::memcpy (TARGET, \
                     ace_result_, \
                     SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         ACE_OS::netdb_release (); \
@@ -29,7 +31,7 @@
         TYPE ace_result_; \
         ACE_OSCALL(OP,TYPE,ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ACE_OS::memcpy (TARGET, \
+          std::memcpy (TARGET, \
                     ace_result_, \
                     SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         return ace_result_; \
@@ -144,16 +146,16 @@ ACE_OS::gethostbyaddr_r (const char *addr,
     result->h_addr_list = (char **) buffer;
     // Store the actual address _after_ the address list.
     result->h_addr_list[0] = (char *) &result->h_addr_list[2];
-    ACE_OS::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
+    std::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
     // Null-terminate the list of addresses.
     result->h_addr_list[1] = 0;
     // And no aliases, so null-terminate h_aliases.
     result->h_aliases = &result->h_addr_list[1];
 
-    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
+    if (((2*sizeof(char*))+hp->h_length+std::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
     {
       result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
-      ACE_OS::strcpy (result->h_name, hp->h_name);
+      std::strcpy (result->h_name, hp->h_name);
     }
     else
     {
@@ -308,16 +310,16 @@ ACE_OS::gethostbyname_r (const char *name,
     result->h_addr_list = (char **) buffer;
     // Store the actual address _after_ the address list.
     result->h_addr_list[0] = (char *) &result->h_addr_list[2];
-    ACE_OS::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
+    std::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
     // Null-terminate the list of addresses.
     result->h_addr_list[1] = 0;
     // And no aliases, so null-terminate h_aliases.
     result->h_aliases = &result->h_addr_list[1];
 
-    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
+    if (((2*sizeof(char*))+hp->h_length+std::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
     {
       result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
-      ACE_OS::strcpy (result->h_name, hp->h_name);
+      std::strcpy (result->h_name, hp->h_name);
     }
     else
     {

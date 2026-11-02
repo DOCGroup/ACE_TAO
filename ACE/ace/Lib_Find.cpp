@@ -8,6 +8,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_fcntl.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -496,7 +498,7 @@ ACE::strsplit_r (char *str,
 
   if (next_start != nullptr)
     {
-      char *tok_loc = ACE_OS::strstr (next_start, token);
+      char *tok_loc = std::strstr (next_start, token);
 
       if (tok_loc != nullptr)
         {
@@ -505,7 +507,7 @@ ACE::strsplit_r (char *str,
 
           // Insure it's terminated.
           *tok_loc = '\0';
-          next_start = tok_loc + ACE_OS::strlen (token);
+          next_start = tok_loc + std::strlen (token);
         }
       else
         {

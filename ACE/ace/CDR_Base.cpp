@@ -904,7 +904,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
   if (negative || *str == '+')
     ++str;
 
-  const size_t span = ACE_OS::strspn (str, ".0123456789");
+  const size_t span = std::strspn (str, ".0123456789");
 
   Fixed f;
   f.value_[15] = negative ? NEGATIVE : POSITIVE;

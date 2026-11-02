@@ -11,6 +11,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstring>
+
 #if defined (ACE_LACKS_MKTEMP) \
     || defined (ACE_LACKS_MKSTEMP) \
     || defined (ACE_LACKS_REALPATH)
@@ -1217,7 +1219,7 @@ ACE_OS::getprogname_emulation ()
 void
 ACE_OS::setprogname_emulation (const char* progname)
 {
-  const char *p = ACE_OS::strrchr (progname, '/');
+  const char *p = std::strrchr (progname, '/');
   if (p != nullptr)
 #  if defined (ACE_INTEGRITY)
     __progname = const_cast<char*> (p + 1);

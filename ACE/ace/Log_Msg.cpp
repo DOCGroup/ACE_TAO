@@ -42,6 +42,7 @@
 #include "ace/Atomic_Op.h"
 
 #include <algorithm>
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Log_Msg.inl"
@@ -649,11 +650,11 @@ ACE_Log_Msg::ACE_Log_Msg ()
   if (timestamp != nullptr)
     {
       // If variable is set or is set to date tag so we print date and time.
-      if (ACE_OS::strcmp (timestamp, "TIME") == 0)
+      if (std::strcmp (timestamp, "TIME") == 0)
         {
           this->timestamp_ = 1;
         }
-      else if (ACE_OS::strcmp (timestamp, "DATE") == 0)
+      else if (std::strcmp (timestamp, "DATE") == 0)
         {
           this->timestamp_ = 2;
         }
@@ -2211,7 +2212,7 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt)
 int ACE_Log_Formatter::copy_trunc (const char *str, int limit)
 {
   const int n = std::min (static_cast<int> (this->bspace_), limit);
-  ACE_OS::memcpy (this->bp_, str, n);
+  std::memcpy (this->bp_, str, n);
   ACE_UPDATE_COUNT (this->bspace_, n);
   this->bp_ += n;
   return n;
@@ -2232,20 +2233,20 @@ void ACE_Log_Formatter::prepare_format ()
         const int mapped = ACE::map_errno (this->logger_->errnum ());
 #ifdef ACE_LOG_MSG_USE_STRERROR_R
         char strerror_buf[128]; // always narrow chars
-        ACE_OS::strcpy (strerror_buf, "strerror_r failed");
+        std::strcpy (strerror_buf, "strerror_r failed");
         const char *const msg = ACE_OS::strerror_r (mapped, strerror_buf,
                                                     sizeof strerror_buf);
 #else
         const char *const msg = ACE_OS::strerror (mapped);
 #endif
         this->copy_trunc (": ", 2);
-        this->copy_trunc (msg, ACE_OS::strlen (msg));
+        this->copy_trunc (msg, std::strlen (msg));
         break;
       }
     case 'r':
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT))
         {
-          const size_t len = ACE_OS::strlen (this->bp_);
+          const size_t len = std::strlen (this->bp_);
           this->bspace_ -= len + 1;
           this->bp_ += len;
           this->copy_trunc ("}", 1);
@@ -2257,7 +2258,7 @@ void ACE_Log_Formatter::prepare_format ()
 
   *this->fmt_out_ = 0;
 
-  while (const char *const pct = ACE_OS::strchr (this->format_, '%'))
+  while (const char *const pct = std::strchr (this->format_, '%'))
     {
       const bool escaped = pct[1] == '%';
       this->format_ += 1 + this->copy_trunc (this->format_,
@@ -2265,19 +2266,19 @@ void ACE_Log_Formatter::prepare_format ()
       if (!this->bspace_) return;
       if (!escaped)
         {
-          ACE_OS::strcpy (this->fmt_out_, "%");
+          std::strcpy (this->fmt_out_, "%");
           this->fp_ = this->fmt_out_ + 1;
           this->last_star_ = 0;
           if (!this->process_conversion ()) return;
         }
     }
 
-  this->copy_trunc (this->format_, ACE_OS::strlen (this->format_));
+  this->copy_trunc (this->format_, std::strlen (this->format_));
 }
 
 bool ACE_Log_Formatter::process_conversion ()
 {
-  const size_t n = ACE_OS::strspn (this->format_, "-+ #0123456789.Lh");
+  const size_t n = std::strspn (this->format_, "-+ #0123456789.Lh");
   const size_t fspace = sizeof this->fmt_out_ - (this->fp_ - this->fmt_out_);
   if (n >= fspace || !this->format_[n]) return true;
 

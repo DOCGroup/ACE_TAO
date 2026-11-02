@@ -49,15 +49,15 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     return -1;
 
   size_t total_len =
-    ACE_OS::strlen (hoststr)
-    + 5 // ACE_OS::strlen ("65535"), Assuming the max port number.
+    std::strlen (hoststr)
+    + 5 // strlen ("65535"), Assuming the max port number.
     + 1 // sizeof (':'), addr/port sep
     + 1; // sizeof ('\0'), terminating NUL
   ACE_TCHAR const *format = ACE_TEXT("%") ACE_TEXT_PRIs ACE_TEXT(":%d");
 #if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strchr (hoststr, ACE_TEXT (':')) != nullptr)
+  if (std::strchr (hoststr, ':') != nullptr)
     {
-      total_len += 2; // ACE_OS::strlen ("[]") IPv6 addr frames
+      total_len += 2; // strlen ("[]") IPv6 addr frames
       format = ACE_TEXT("[%") ACE_TEXT_PRIs ACE_TEXT("]:%d");
     }
 #endif // ACE_HAS_IPV6
