@@ -16,19 +16,19 @@ Inner_callback_i::~Inner_callback_i ()
 }
 
 void
-Inner_callback_i::answer (const char * ami_return_val)
+Inner_callback_i::answer (char const *ami_return_val)
 {
   std::cout << "Inner_callback_i::answer called, return_val = "
        << ami_return_val << std::endl;
   this->response_handler_->get_the_answer (ami_return_val);
 
   std::cout << "inner_callback_i deactivating self" << std::endl;
-  PortableServer::ObjectId_var oid = this->poa_->servant_to_id(this);
+  PortableServer::ObjectId_var const oid = this->poa_->servant_to_id(this);
   this->poa_->deactivate_object (oid.in());
 }
 
 void
-Inner_callback_i::answer_excep (Messaging::ExceptionHolder* excep_holder)
+Inner_callback_i::answer_excep (Messaging::ExceptionHolder *excep_holder)
 {
   // Here, we need to extract the exception from this holder, and package
   // it in another so the AMH response handler may forward it on.
@@ -36,9 +36,9 @@ Inner_callback_i::answer_excep (Messaging::ExceptionHolder* excep_holder)
     {
       excep_holder->raise_exception();
     }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      CORBA::Exception *local_ex = ex._tao_duplicate();
+      CORBA::Exception *const local_ex = ex._tao_duplicate ();
       AMH_MiddleExceptionHolder amh_excep_holder (local_ex);
       this->response_handler_->get_the_answer_excep (&amh_excep_holder);
     }
@@ -48,12 +48,12 @@ Inner_callback_i::answer_excep (Messaging::ExceptionHolder* excep_holder)
         << "inner_callback_i::answer_excep got an unknown exception"
         << std::endl;
 
-      CORBA::Exception *unknown_ex = new CORBA::UNKNOWN;
+      CORBA::Exception *const unknown_ex = new CORBA::UNKNOWN;
       AMH_MiddleExceptionHolder amh_excep_holder (unknown_ex);
       this->response_handler_->get_the_answer_excep (&amh_excep_holder);
     }
 
   std::cout << "inner_callback_i deactivating self" << std::endl;
-  PortableServer::ObjectId_var oid = this->poa_->servant_to_id(this);
+  PortableServer::ObjectId_var const oid = this->poa_->servant_to_id(this);
   this->poa_->deactivate_object (oid.in());
 }

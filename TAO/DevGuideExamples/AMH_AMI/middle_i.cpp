@@ -22,7 +22,7 @@ Asynch_Middle_i::Asynch_Middle_i (PortableServer::POA_ptr poa,
 
 void
 Asynch_Middle_i::get_the_answer (AMH_MiddleResponseHandler_ptr _tao_rh,
-                                 const char * question)
+                                 char const *question)
 {
   // The callback handler servant instance holds on to a reference to the
   // AMH response handler. That way, it can forward the reply back to the
@@ -53,7 +53,7 @@ Middle_i::Middle_i (Inner_ptr inner)
 }
 
 char *
-Middle_i::get_the_answer ( const char * question )
+Middle_i::get_the_answer (char const *question)
 {
   return inner_->answer (question);
 }

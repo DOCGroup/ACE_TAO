@@ -1,14 +1,14 @@
 #include "amh_ami_pch.h"
 
 #include "inner_i.h"
-#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 int dont_crash = 1;
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("inner.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("inner.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -44,13 +44,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
             return 1;
 
     //Get reference to the RootPOA.
-    CORBA::Object_var obj = orb->resolve_initial_references( "RootPOA" );
+    CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
     PortableServer::POA_var poa = PortableServer::POA::_narrow( obj.in() );
 
     // Activate the POAManager.
@@ -65,11 +65,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     PortableServer::ObjectId_var oid = poa->activate_object( servant.in() );
     obj = poa->id_to_reference( oid.in() );
     CORBA::String_var str = orb->object_to_string( obj.in() );
-    ACE_CString iorname (ACE_TEXT_ALWAYS_CHAR(ior_output_file));
-    std::ofstream iorFile (iorname.c_str());
-    iorFile << str.in() << std::endl;
-    iorFile.close();
-    std::cout << "IOR written to " << iorname << std::endl;
+    std::string const ior_name (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+    std::ofstream ior_file (ior_name);
+    ior_file << str.in() << std::endl;
+    std::cout << "IOR written to " << ior_name << std::endl;
 
     // Accept requests from clients.
     orb->run();
@@ -77,7 +76,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex) {
     std::cerr << "CORBA exception: " << ex << std::endl;
   }
 
