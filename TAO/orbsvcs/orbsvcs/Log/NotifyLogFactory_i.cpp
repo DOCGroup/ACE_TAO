@@ -15,8 +15,8 @@ TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
 {
   CosNotifyChannelAdmin::ChannelID id;
   CosNotifyChannelAdmin::AdminID adminID = 0;
-  CosNotification::QoSProperties initial_qos;
-  CosNotification::AdminProperties initial_admin;
+  CosNotification::QoSProperties const initial_qos;
+  CosNotification::AdminProperties const initial_admin;
 
   this->event_channel_ =
           this->notify_factory_->create_channel (initial_qos,
@@ -52,10 +52,10 @@ TAO_NotifyLogFactory_i::activate (CORBA::ORB_ptr orb,
   TAO_LogMgr_i::init (orb, poa);
 
 
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->factory_poa_->activate_object (this);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->factory_poa_->id_to_reference (oid.in ());
 
   // narrow and store the result..
@@ -84,13 +84,13 @@ TAO_NotifyLogFactory_i::create (
                   max_size,
                   & thresholds,
                   id_out);
-  DsLogAdmin::LogId id = id_out;
+  DsLogAdmin::LogId const id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_reference (id);
 #else
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_object (id);
 #endif
 

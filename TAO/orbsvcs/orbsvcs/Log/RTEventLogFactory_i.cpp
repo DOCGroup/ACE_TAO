@@ -34,10 +34,10 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
   TAO_LogMgr_i::init (orb, poa);
 
 
-  PortableServer::POA_var defPOA =
+  PortableServer::POA_var const defPOA =
     this->_default_POA ();
 
-  TAO_EC_Event_Channel_Attributes attr (defPOA.in (), defPOA.in ());
+  TAO_EC_Event_Channel_Attributes const attr (defPOA.in (), defPOA.in ());
 
   this->impl = nullptr;
   ACE_NEW_THROW_EX (impl,
@@ -48,11 +48,11 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
 
   impl->activate ();
 
-  PortableServer::ObjectId_var oidec = poa_->activate_object (ec.get ());
+  PortableServer::ObjectId_var const oidec = poa_->activate_object (ec.get ());
 
   ec.release ();
 
-  CORBA::Object_var objec =
+  CORBA::Object_var const objec =
     poa_->id_to_reference (oidec.in ());
 
   this->event_channel_ = RtecEventChannelAdmin::EventChannel::_narrow (objec.in ());
@@ -71,10 +71,10 @@ TAO_RTEventLogFactory_i::activate ()
 {
   RTEventLogAdmin::EventLogFactory_var v_return;
 
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->factory_poa_->activate_object (this);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->factory_poa_->id_to_reference (oid.in ());
 
   // narrow and store the result..
@@ -98,13 +98,13 @@ TAO_RTEventLogFactory_i::create (
                   max_size,
                   & thresholds,
                   id_out);
-  DsLogAdmin::LogId id = id_out;
+  DsLogAdmin::LogId const id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_reference (id);
 #else
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_object (id);
 #endif
 

@@ -17,10 +17,10 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa);
 
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->factory_poa_->activate_object (this);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->factory_poa_->id_to_reference (oid.in ());
 
   // narrow and store the result..
@@ -42,13 +42,13 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                   max_size,
                   nullptr,
                   id_out);
-  DsLogAdmin::LogId id = id_out;
+  DsLogAdmin::LogId const id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_reference (id);
 #else
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_object (id);
 #endif
 

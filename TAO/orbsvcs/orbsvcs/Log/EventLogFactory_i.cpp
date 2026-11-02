@@ -14,10 +14,10 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i () :
 
   try
     {
-      PortableServer::POA_var defPOA =
+      PortableServer::POA_var const defPOA =
         this->_default_POA ();
 
-      TAO_CEC_EventChannel_Attributes attr (defPOA.in (), defPOA.in ());
+      TAO_CEC_EventChannel_Attributes const attr (defPOA.in (), defPOA.in ());
 
       ACE_NEW_THROW_EX (impl,
                         TAO_CEC_EventChannel (attr),
@@ -47,12 +47,12 @@ TAO_EventLogFactory_i::init (PortableServer::POA_ptr /* poa */)
 
   std::unique_ptr <TAO_CEC_EventChannel> ec (impl);
 
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->poa_->activate_object (ec.get ());
 
   ec.release ();
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->poa_->id_to_reference (oid.in ());
 
   ec_return =
@@ -77,10 +77,10 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
                     TAO_EventLogNotification(this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());
 
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->factory_poa_->activate_object (this);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->factory_poa_->id_to_reference (oid.in ());
 
   // narrow and store the result..
@@ -104,13 +104,13 @@ TAO_EventLogFactory_i::create (
                   max_size,
                   & thresholds,
                   id_out);
-  DsLogAdmin::LogId id = id_out;
+  DsLogAdmin::LogId const id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_reference (id);
 #else
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_object (id);
 #endif
 
