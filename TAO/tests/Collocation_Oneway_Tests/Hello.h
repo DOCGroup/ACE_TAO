@@ -20,11 +20,16 @@ public:
          ACE_thread_t thr_id);
 
   // = The skeleton methods
-  virtual char * get_string ();
+  char * get_string () override;
 
-  virtual void onewayTest ();
+  void onewayTest () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
+
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello & operator= (Hello const &) = delete;
+  Hello & operator= (Hello &&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

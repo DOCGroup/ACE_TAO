@@ -9,10 +9,9 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
                           Client_Task::ClientSyncModeEnum syncMode,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-    , input_ (ior)
-    , corb_ (CORBA::ORB::_duplicate (corb))
-    , syncMode_ (syncMode)
-
+  , input_ (ior)
+  , corb_ (CORBA::ORB::_duplicate (corb))
+  , syncMode_ (syncMode)
 {
 }
 
@@ -21,11 +20,11 @@ Client_Task::svc ()
 {
   try
     {
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         this->corb_->string_to_object (input_);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -35,39 +34,43 @@ Client_Task::svc ()
                              1);
         }
 
-      Test::Hello_var tmpVar = hello;
+      Test::Hello_var const tmpVar = Test::Hello::_duplicate (hello.in ());
       CORBA::Any anyPolicy;
 
-      Messaging::SyncScope selectedScope = Messaging::SYNC_NONE; // default
+      Messaging::SyncScope selectedScope = Messaging::SYNC_NONE;
 
-      if(syncMode_ == Client_Task::MODE_TRANSPORT) {
+      if (syncMode_ == Client_Task::MODE_TRANSPORT)
+        {
           selectedScope = Messaging::SYNC_WITH_TRANSPORT;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_TRANSPORT collocated oneway test\n"));
-      }
-      else if(syncMode_ == Client_Task::MODE_SERVER) {
+        }
+      else if (syncMode_ == Client_Task::MODE_SERVER)
+        {
           selectedScope = Messaging::SYNC_WITH_SERVER;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_SERVER collocated oneway test\n"));
-      }
-      else if(syncMode_ == Client_Task::MODE_TARGET) {
+        }
+      else if (syncMode_ == Client_Task::MODE_TARGET)
+        {
           selectedScope = Messaging::SYNC_WITH_TARGET;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_WITH_TARGET collocated oneway test\n"));
-      }
-      else if(syncMode_ == Client_Task::MODE_NONE) {
+        }
+      else if (syncMode_ == Client_Task::MODE_NONE)
+        {
           selectedScope = Messaging::SYNC_NONE;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - SYNC_NONE collocated oneway test\n"));
-      }
+        }
 
       anyPolicy <<= selectedScope;
       CORBA::PolicyList polList;
-      polList.length(1);
+      polList.length (1);
       polList[0] = this->corb_->create_policy(
         Messaging::SYNC_SCOPE_POLICY_TYPE, anyPolicy);
 
       CORBA::Object_var tmpGenericVar =
-        tmpVar->_set_policy_overrides(polList,CORBA::ADD_OVERRIDE);
+        tmpVar->_set_policy_overrides (polList, CORBA::ADD_OVERRIDE);
 
       // do unchecked narrow because ORB's not activated. Otherwise get TRANSIENT exception
-      hello = Test::Hello::_narrow(tmpGenericVar.in());
+      hello = Test::Hello::_narrow (tmpGenericVar.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -83,7 +86,7 @@ Client_Task::svc ()
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
 
-      hello->onewayTest();
+      hello->onewayTest ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - returned from onewayTest() call\n"));
 

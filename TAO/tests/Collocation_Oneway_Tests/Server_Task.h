@@ -27,11 +27,16 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
+
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task & operator= (Server_Task const &) = delete;
+  Server_Task & operator= (Server_Task &&) = delete;
 
 private:
   /// Output file for IOR
-  const ACE_TCHAR *output_;
+  ACE_TCHAR const *output_;
 
   /// Manual event to wake up the main thread to create a client
   /// thread.
