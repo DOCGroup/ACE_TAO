@@ -15,7 +15,7 @@ cache_size (CORBA::ORB_ptr orb)
 static bool
 expect_cache (CORBA::ORB_ptr orb, size_t expected)
 {
-  const size_t actual = cache_size (orb);
+  size_t const actual = cache_size (orb);
   if (actual != expected)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) cache size %B, expected %B\n"),
@@ -29,7 +29,8 @@ expect_cache (CORBA::ORB_ptr orb, size_t expected)
 static bool
 wait_for_idle_close (CORBA::ORB_ptr orb, int seconds)
 {
-  const auto deadline = std::chrono::steady_clock::now () + std::chrono::seconds (seconds);
+  std::chrono::steady_clock::time_point const deadline =
+    std::chrono::steady_clock::now () + std::chrono::seconds (seconds);
   while (cache_size (orb) != 0 && std::chrono::steady_clock::now () < deadline)
     {
       ACE_Time_Value slice (0, 50000);
@@ -39,13 +40,13 @@ wait_for_idle_close (CORBA::ORB_ptr orb, int seconds)
 }
 
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
@@ -101,7 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       test->shutdown ();
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
