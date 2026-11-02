@@ -189,7 +189,7 @@ DRV_cpp_expand_output_arg (std::string const& filename)
 {
   if (!output_arg_format.empty ())
     {
-      std::basic_string<ACE_TCHAR> tchar_filename (
+      std::basic_string<ACE_TCHAR> const tchar_filename (
         ACE_TEXT_CHAR_TO_TCHAR (filename.c_str ()));
       std::basic_string<ACE_TCHAR> output_arg (output_arg_format);
       std::size_t const placeholder = output_arg.find (ACE_TEXT ("%s"));
@@ -219,9 +219,9 @@ static bool
 DRV_get_line (FILE *file)
 {
   char buffer[LINEBUF_SIZE + 1];
-  char *line = ACE_OS::fgets (buffer,
-                              static_cast<int> (sizeof (buffer)),
-                              file);
+  char const *line = ACE_OS::fgets (buffer,
+                                    static_cast<int> (sizeof (buffer)),
+                                    file);
   if (!line || (!*line && feof (file)))
     {
       // End of file, nothing else read in.
@@ -314,7 +314,7 @@ DRV_cpp_init ()
       // So we can find OMG IDL files, such as `orb.idl'.
       std::string include_path1, include_path2;
 
-      char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+      char const *const TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
 
       if (TAO_ROOT != nullptr)
         {
@@ -330,7 +330,7 @@ DRV_cpp_init ()
         }
       else
         {
-          char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+          char const *const ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
 
           if (ACE_ROOT != nullptr)
             {
@@ -429,9 +429,9 @@ DRV_sweep_dirs (std::string const& rel_path,
         }
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
-      std::string lname (ACE_TEXT_ALWAYS_CHAR (dir_entry->d_name));
+      std::string const lname (ACE_TEXT_ALWAYS_CHAR (dir_entry->d_name));
 #else
-      std::string lname (dir_entry->d_name);
+      std::string const lname (dir_entry->d_name);
 #endif
       ACE_stat stat_buf;
 
@@ -608,7 +608,7 @@ DRV_cpp_post_init ()
   );
 
   // Add include path for TAO_ROOT/orbsvcs.
-  char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
+  char const *const TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
 
   std::string include_path3, include_path4, include_path5;
 
@@ -624,7 +624,7 @@ DRV_cpp_post_init ()
   else
     {
       // If TAO_ROOT isn't defined, assume it's under ACE_ROOT.
-      char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
+      char const *const ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
 
       if (ACE_ROOT != nullptr)
         {
@@ -652,7 +652,7 @@ DRV_cpp_post_init ()
     }
 
   // Add include paths for CIAO_ROOT and CIAO_ROOT/ciao.
-  char* CIAO_ROOT = ACE_OS::getenv ("CIAO_ROOT");
+  char const *const CIAO_ROOT = ACE_OS::getenv ("CIAO_ROOT");
 
   // When adding new dirs here don't forget to update
   // FE_Utils::validate_orb_include accordingly.
@@ -1404,7 +1404,7 @@ DRV_pre_proc (std::string const& myfile)
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      FILE *preproc = ACE_OS::fopen (t_file.c_str (), "r");
+      FILE *const preproc = ACE_OS::fopen (t_file.c_str (), "r");
       char buffer[ACE_MAXLOGMSGLEN];
       std::size_t bytes;
 
@@ -1426,7 +1426,7 @@ DRV_pre_proc (std::string const& myfile)
       // was created in this process. Since IDL_CF_ONLY_PREPROC causes
       // an (almost) immediate exit below, we don't have to restore
       // the singleton's default parameters.
-      ACE_Log_Msg *out = ACE_Log_Msg::instance ();
+      ACE_Log_Msg *const out = ACE_Log_Msg::instance ();
       out->msg_ostream (&cout);
       out->clr_flags (ACE_Log_Msg::STDERR);
       out->set_flags (ACE_Log_Msg::OSTREAM);
