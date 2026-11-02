@@ -9,50 +9,60 @@ class MessageImpl : public virtual OBV_Message,
                     public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  MessageImpl();
+  MessageImpl () = default;
 
-  MessageImpl(
-    const char* address,
-    const char* user,
-    const char* subject,
-    const char* txt
-    );
+  MessageImpl (
+    char const *address,
+    char const *user,
+    char const *subject,
+    char const *txt);
 
-  MessageImpl(
+  MessageImpl (
     ::Message::AddrList &address,
-    const char* user,
-    const char* subject,
-    const char* txt
-    );
+    char const *user,
+    char const *subject,
+    char const *txt);
 
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ::CORBA::ValueBase *_copy_value () override;
 
-  virtual ::Message::AddrList* getAddresses();
-  virtual void addAddress(const char*);
+  ::Message::AddrList *getAddresses () override;
+  void addAddress (char const *address) override;
 
-  virtual char* user();
-  virtual void user(const char*);
+  char *user () override;
+  void user (char const *value) override;
 
-  virtual char* subject();
-  virtual void subject(const char*);
+  char *subject () override;
+  void subject (char const *value) override;
 
-  virtual char* text();
-  virtual void text(const char*);
+  char *text () override;
+  void text (char const *value) override;
 
-  virtual void print();
+  void print () override;
+
+  MessageImpl (MessageImpl const &) = delete;
+  MessageImpl (MessageImpl &&) = delete;
+  MessageImpl &operator= (MessageImpl const &) = delete;
+  MessageImpl &operator= (MessageImpl &&) = delete;
 
 protected:
-  virtual ~MessageImpl();
+  ~MessageImpl () override = default;
 };
 
 class MessageFactory
   : public virtual CORBA::ValueFactoryBase
 {
 public:
-  static void register_new_factory(CORBA::ORB& orb);
+  MessageFactory () = default;
+
+  static void register_new_factory (CORBA::ORB &orb);
+
+  MessageFactory (MessageFactory const &) = delete;
+  MessageFactory (MessageFactory &&) = delete;
+  MessageFactory &operator= (MessageFactory const &) = delete;
+  MessageFactory &operator= (MessageFactory &&) = delete;
 
 private:
-  virtual CORBA::ValueBase* create_for_unmarshal();
+  CORBA::ValueBase *create_for_unmarshal () override;
 };
 
 #endif
