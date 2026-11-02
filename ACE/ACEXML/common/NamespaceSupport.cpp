@@ -33,14 +33,14 @@ ACEXML_NS_CONTEXT *
 ACEXML_Namespace_Context_Stack::pop ()
 {
   if (this->stack_.size() <= 0)
-    return 0;
+    return nullptr;
 
-  ACEXML_NS_CONTEXT* temp = 0;
+  ACEXML_NS_CONTEXT* temp = nullptr;
   int retval = this->stack_.pop (temp);
   if (retval != 0)
     {
       ACE_ERROR ((LM_ERROR, "Unable to pop Namespace context from stack\n"));
-      return 0;
+      return nullptr;
     }
   return temp;
 }
@@ -50,7 +50,7 @@ ACEXML_NamespaceSupport::popContext ()
 {
   delete this->effective_context_;
 
-  if ((this->effective_context_ = this->ns_stack_.pop ()) == 0)
+  if ((this->effective_context_ = this->ns_stack_.pop ()) == nullptr)
     return -1;
   return 0;
 }
@@ -64,7 +64,7 @@ ACEXML_NamespaceSupport::pushContext ()
                   -1);
 
   // @@ Copy everything from the old context to the new one.
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*temp);
        iter.next (entry) != 0;
@@ -77,7 +77,7 @@ ACEXML_NamespaceSupport::pushContext ()
 
 ACEXML_NamespaceSupport::ACEXML_NamespaceSupport ()
   : ns_stack_ (),
-    effective_context_ (0)
+    effective_context_ (nullptr)
 {}
 
 int
@@ -101,7 +101,7 @@ int
 ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
                                         const ACEXML_Char *uri)
 {
-  if (!prefix || !uri)
+  if (prefix == nullptr || uri == nullptr)
     return -1;
 
   // Unless predefined by w3.org(?) NS prefix can never start with
@@ -118,7 +118,7 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
 int
 ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
 {
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
 
   // The prefix for default namespace (empty string) is included in
   // the return list.
@@ -133,10 +133,10 @@ ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
 const ACEXML_Char *
 ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
 {
-  if (!uri || *uri == 0)
-    return 0;
+  if (uri == nullptr || *uri == 0)
+    return nullptr;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
@@ -144,13 +144,13 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
     if (entry->int_id_ == ACEXML_String (uri, 0, false))
       return entry->ext_id_.c_str ();
 
-  return 0;                     // Nothing found.
+  return nullptr;               // Nothing found.
 }
 
 int
 ACEXML_NamespaceSupport::getPrefixes (ACEXML_STR_LIST &prefixes) const
 {
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
 
   // The prefix for default namespace (empty string) is not included
   // in the return list.
@@ -165,10 +165,10 @@ int
 ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
                                       ACEXML_STR_LIST &prefixes) const
 {
-  if (!uri)
+  if (uri == nullptr)
     return -1;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
@@ -185,15 +185,15 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
 const ACEXML_Char *
 ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
 {
-  if (!prefix)
-    return 0;
+  if (prefix == nullptr)
+    return nullptr;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
 
   if (this->effective_context_->find (ACEXML_String (prefix, 0, false),
                                       entry) == 0)
     return entry->int_id_.c_str ();
-  return 0;
+  return nullptr;
 }
 
 int
@@ -225,7 +225,7 @@ ACEXML_NamespaceSupport::processName (ACEXML_Char const *qName,
     return 0;
   }
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = 0;
+  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
 
   if (this->effective_context_->find (prefix, entry) == 0)
     uri = entry->int_id_.c_str ();
