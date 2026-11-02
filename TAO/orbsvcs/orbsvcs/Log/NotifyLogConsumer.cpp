@@ -18,10 +18,10 @@ TAO_Notify_LogConsumer::connect (
   CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Activate the consumer with the default_POA_
-  CosNotifyComm::PushConsumer_var objref =
+  CosNotifyComm::PushConsumer_var const objref =
     this->_this ();
 
-  CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
+  CosNotifyChannelAdmin::ProxySupplier_var const proxysupplier =
     consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));

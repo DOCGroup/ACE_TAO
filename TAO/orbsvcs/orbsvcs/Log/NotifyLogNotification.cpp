@@ -10,17 +10,17 @@ TAO_NotifyLogNotification::TAO_NotifyLogNotification (
   : TAO_LogNotification (),
     event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (event_channel))
 {
-  CosNotifyComm::PushSupplier_var objref =
+  CosNotifyComm::PushSupplier_var const objref =
     this->_this ();
   ACE_ASSERT (!CORBA::is_nil (objref.in ()));
 
   CosNotifyChannelAdmin::AdminID adminID;
-  CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
+  CosNotifyChannelAdmin::SupplierAdmin_var const supplier_admin =
     this->event_channel_->new_for_suppliers (CosNotifyChannelAdmin::OR_OP, adminID);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin.in ()));
 
-  CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
+  CosNotifyChannelAdmin::ProxyConsumer_var const proxyconsumer =
     supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::ANY_EVENT, proxy_consumer_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));

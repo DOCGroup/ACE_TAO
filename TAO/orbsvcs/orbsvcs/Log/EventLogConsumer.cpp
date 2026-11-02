@@ -17,7 +17,7 @@ void
 TAO_Event_LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Connect to the event channel.
-  CosEventComm::PushConsumer_var myself = this->_this ();
+  CosEventComm::PushConsumer_var const myself = this->_this ();
   this->supplier_proxy_ = consumer_admin->obtain_push_supplier ();
   this->supplier_proxy_->connect_push_consumer (myself.in());
 }

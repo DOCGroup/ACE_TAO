@@ -48,7 +48,7 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord co
   this->property_lookup_.bind (ACE_CString ("info", 0, false), rec.info);
 
   // Bind an entry for each item in the record's attribute list.
-  CORBA::Long len = rec.attr_list.length ();
+  CORBA::Long const len = rec.attr_list.length ();
 
   for (CORBA::Long i = 0; i < len; ++i)
     {
@@ -85,7 +85,7 @@ int
 TAO_Log_Constraint_Visitor::visit_literal (
     ETCL_Literal_Constraint *literal)
 {
-  TAO_ETCL_Literal_Constraint lit (literal);
+  TAO_ETCL_Literal_Constraint const lit (literal);
   this->queue_.push_front (lit);
   return 0;
 }
@@ -95,7 +95,7 @@ TAO_Log_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
 {
   int return_value = -1;
   char const *name = ident->value ();
-  ACE_CString key (name, 0, false);
+  ACE_CString const key (name, 0, false);
 
   CORBA::Any any;
 
@@ -119,20 +119,20 @@ TAO_Log_Constraint_Visitor::visit_union_value (
   {
     case 0:
       {
-        TAO_ETCL_Literal_Constraint lit (union_value->string ());
+        TAO_ETCL_Literal_Constraint const lit (union_value->string ());
         this->queue_.push_front (lit);
       }
       break;
     case -1:
       {
-        CORBA::Long value = -(*union_value->integer ());
-        TAO_ETCL_Literal_Constraint lit (value);
+        CORBA::Long const value = -(*union_value->integer ());
+        TAO_ETCL_Literal_Constraint const lit (value);
         this->queue_.push_front (lit);
       }
       break;
     case 1:
       {
-        TAO_ETCL_Literal_Constraint lit (union_value->integer ());
+        TAO_ETCL_Literal_Constraint const lit (union_value->integer ());
         this->queue_.push_front (lit);
       }
       break;
@@ -157,7 +157,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
           TAO_DynUnion_i dyn_union;
           dyn_union.init (this->current_member_.in ());
 
-          CORBA::TypeCode_var tc = this->current_member_->type ();
+          CORBA::TypeCode_var const tc = this->current_member_->type ();
 
           switch (disc_val.expr_type ())
           {
@@ -166,9 +166,9 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
             case ETCL_UNSIGNED:
               {
                 CORBA::Any disc_any;
-                CORBA::TypeCode_var disc_tc =
+                CORBA::TypeCode_var const disc_tc =
                   tc->discriminator_type ();
-                CORBA::TCKind disc_kind =
+                CORBA::TCKind const disc_kind =
                   TAO_DynAnyFactory::unalias (disc_tc.in ());
 
                 switch (disc_kind)
@@ -217,13 +217,13 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                     return -1;
                 }
 
-                DynamicAny::DynAny_var dyn_any =
+                DynamicAny::DynAny_var const dyn_any =
                   TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const &> (
                     disc_tc.in (),
                     disc_any);
 
                 dyn_union.set_discriminator (dyn_any.in ());
-                DynamicAny::DynAny_var u_member =
+                DynamicAny::DynAny_var const u_member =
                   dyn_union.member ();
 
                 this->current_member_ =
@@ -234,7 +234,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
             case ETCL_STRING:
               {
                 char const *name = static_cast<char const *> (disc_val);
-                CORBA::ULong count =
+                CORBA::ULong const count =
                   tc->member_count ();
 
                 char const *member_name = nullptr;
@@ -271,7 +271,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
           // the nested component.
           if (nested == nullptr)
             {
-              TAO_ETCL_Literal_Constraint lit (this->current_member_.ptr ());
+              TAO_ETCL_Literal_Constraint const lit (this->current_member_.ptr ());
               this->queue_.push_front (lit);
               return 0;
             }
@@ -298,12 +298,12 @@ TAO_Log_Constraint_Visitor::visit_component_pos (ETCL_Component_Pos *pos)
     {
       // If we are here (from visit_component) the Any containing the
       // component as found in property_lookup_ will be in current_member_.
-      CORBA::TypeCode_var tc = this->current_member_->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
+      CORBA::TypeCode_var const tc = this->current_member_->type ();
+      CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
       DynamicAny::DynAny_var member;
       CORBA::Boolean success = false;
-      CORBA::ULong slot = static_cast<CORBA::ULong> (*pos->integer ());
+      CORBA::ULong const slot = static_cast<CORBA::ULong> (*pos->integer ());
 
       switch (kind)
       {
@@ -353,7 +353,7 @@ TAO_Log_Constraint_Visitor::visit_component_pos (ETCL_Component_Pos *pos)
 
       if (comp == 0)
         {
-          TAO_ETCL_Literal_Constraint result (value.ptr ());
+          TAO_ETCL_Literal_Constraint const result (value.ptr ());
           this->queue_.push_front (result);
           return 0;
         }
@@ -384,7 +384,7 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
   // the spec may come along someday.
 
   CORBA::Any any;
-  ACE_CString key (assoc->identifier ()->value (),
+  ACE_CString const key (assoc->identifier ()->value (),
        0,
        false);
 
@@ -398,7 +398,7 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
 
   if (comp == nullptr)
     {
-      TAO_ETCL_Literal_Constraint result (&any);
+      TAO_ETCL_Literal_Constraint const result (&any);
       this->queue_.push_front (result);
       return 0;
     }
@@ -419,12 +419,12 @@ TAO_Log_Constraint_Visitor::visit_component_array (
     {
       // If we are here (from visit_component) the Any containing the
       // component as found in property_lookup_ will be in current_member_.
-      CORBA::TypeCode_var tc = this->current_member_->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
+      CORBA::TypeCode_var const tc = this->current_member_->type ();
+      CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
       DynamicAny::DynAny_var member;
       CORBA::Boolean success = false;
-      CORBA::ULong slot = static_cast<CORBA::ULong> (*array->integer ());
+      CORBA::ULong const slot = static_cast<CORBA::ULong> (*array->integer ());
 
       switch (kind)
       {
@@ -473,7 +473,7 @@ TAO_Log_Constraint_Visitor::visit_component_array (
 
       if (comp == 0)
         {
-          TAO_ETCL_Literal_Constraint result (value.ptr ());
+          TAO_ETCL_Literal_Constraint const result (value.ptr ());
           this->queue_.push_front (result);
           return 0;
         }
@@ -494,7 +494,7 @@ TAO_Log_Constraint_Visitor::visit_special (ETCL_Special *special)
 {
   try
     {
-      CORBA::TypeCode_var tc = this->current_member_->type ();
+      CORBA::TypeCode_var const tc = this->current_member_->type ();
 
       switch (special->type ())
       {
@@ -503,9 +503,9 @@ TAO_Log_Constraint_Visitor::visit_special (ETCL_Special *special)
             // If the TCKind is not a sequence or an array, the
             // call to length() will raise an exception, and the
             // catch block will return -1;
-            CORBA::ULong length = tc->length ();
+            CORBA::ULong const length = tc->length ();
 
-            TAO_ETCL_Literal_Constraint lit (length);
+            TAO_ETCL_Literal_Constraint const lit (length);
             this->queue_.push_front (lit);
             return 0;
           }
@@ -517,12 +517,12 @@ TAO_Log_Constraint_Visitor::visit_special (ETCL_Special *special)
             TAO_DynUnion_i dyn_union;
             dyn_union.init (this->current_member_.in ());
 
-            DynamicAny::DynAny_var disc =
+            DynamicAny::DynAny_var const disc =
               dyn_union.get_discriminator ();
 
-            CORBA::Any_var disc_any = disc->to_any ();
+            CORBA::Any_var const disc_any = disc->to_any ();
 
-            TAO_ETCL_Literal_Constraint lit (disc_any.ptr ());
+            TAO_ETCL_Literal_Constraint const lit (disc_any.ptr ());
             this->queue_.push_front (lit);
             return 0;
           }
@@ -530,7 +530,7 @@ TAO_Log_Constraint_Visitor::visit_special (ETCL_Special *special)
           {
             char const *name = tc->name ();
 
-            TAO_ETCL_Literal_Constraint lit (name);
+            TAO_ETCL_Literal_Constraint const lit (name);
             this->queue_.push_front (lit);
             return 0;
           }
@@ -538,7 +538,7 @@ TAO_Log_Constraint_Visitor::visit_special (ETCL_Special *special)
           {
             char const *id = tc->id ();
 
-            TAO_ETCL_Literal_Constraint lit (id);
+            TAO_ETCL_Literal_Constraint const lit (id);
             this->queue_.push_front (lit);
             return 0;
           }
@@ -564,7 +564,7 @@ TAO_Log_Constraint_Visitor::visit_component (
   // nested level, and visit the sub-component.
 
   ETCL_Constraint *nested = component->component ();
-  int result = component->identifier ()->accept (this);
+  int const result = component->identifier ()->accept (this);
 
   if (nested == nullptr || result != 0)
     {
@@ -620,16 +620,16 @@ TAO_Log_Constraint_Visitor::visit_default (ETCL_Default *def)
 
   try
     {
-      CORBA::TypeCode_var tc = this->current_member_->type ();
+      CORBA::TypeCode_var const tc = this->current_member_->type ();
 
       // If the current member is not a union, this call will
       // throw BadKind and the catch block will return -1.
-      CORBA::Long default_index = tc->default_index ();
+      CORBA::Long const default_index = tc->default_index ();
 
       // No default index.
       if (default_index == -1)
         {
-          TAO_ETCL_Literal_Constraint result (false);
+          TAO_ETCL_Literal_Constraint const result (false);
           this->queue_.push_front (result);
           return 0;
         }
@@ -638,7 +638,7 @@ TAO_Log_Constraint_Visitor::visit_default (ETCL_Default *def)
 
       TAO_ETCL_Literal_Constraint disc_value;
       pop_queue_front (this->queue_, disc_value);
-      TAO_ETCL_Literal_Constraint default_index_value (default_index);
+      TAO_ETCL_Literal_Constraint const default_index_value (default_index);
       return (disc_value == default_index_value);
     }
   catch (CORBA::Exception const &)
@@ -658,9 +658,9 @@ TAO_Log_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
       pop_queue_front (this->queue_, top);
 
       char const *value = static_cast<char const *> (top);
-      ACE_CString key (value, 0, false);
+      ACE_CString const key (value, 0, false);
 
-      CORBA::Boolean result = (this->property_lookup_.find (key) == 0);
+      CORBA::Boolean const result = (this->property_lookup_.find (key) == 0);
 
       this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
 
@@ -680,7 +680,7 @@ TAO_Log_Constraint_Visitor::visit_unary_expr (
     {
       TAO_ETCL_Literal_Constraint subexpr_result;
       CORBA::Boolean result = false;
-      int op_type = unary_expr->type ();
+      int const op_type = unary_expr->type ();
 
       switch (op_type)
       {
@@ -715,7 +715,7 @@ TAO_Log_Constraint_Visitor::visit_binary_expr (
     ETCL_Binary_Expr *binary_expr)
 {
   // Evaluate the constraint
-  int bin_op_type = binary_expr->type ();
+  int const bin_op_type = binary_expr->type ();
 
   switch (bin_op_type)
   {
@@ -915,7 +915,7 @@ TAO_Log_Constraint_Visitor::visit_twiddle (
         {
           TAO_ETCL_Literal_Constraint right;
           pop_queue_front (this->queue_, right);
-          CORBA::Boolean result =
+          CORBA::Boolean const result =
             (std::strstr (static_cast<char const *> (left),
                              static_cast<char const *> (right)) != nullptr);
           this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
@@ -961,7 +961,7 @@ TAO_Log_Constraint_Visitor::visit_in (
 
               try
                 {
-                  CORBA::TypeCode_var tc = component->type ();
+                  CORBA::TypeCode_var const tc = component->type ();
                   kind = TAO_DynAnyFactory::unalias (tc.in ());
                 }
               catch (CORBA::Exception const &)
@@ -1024,13 +1024,13 @@ TAO_Log_Constraint_Visitor::sequence_does_contain (
 {
   try
     {
-      CORBA::TypeCode_var type = any->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ());
+      CORBA::TypeCode_var const type = any->type ();
+      CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (type.in ());
 
       // The literal and the array elements must be
       // of the same simple type.
-      CORBA::Boolean match = this->simple_type_match (item.expr_type (),
-                                                      kind);
+      CORBA::Boolean const match = this->simple_type_match (item.expr_type (),
+                                                            kind);
 
       if (!match)
         {
@@ -1042,11 +1042,11 @@ TAO_Log_Constraint_Visitor::sequence_does_contain (
 
       DynamicAny::AnySeq_var any_seq = dyn_seq.get_elements ();
 
-      CORBA::ULong length = any_seq->length ();
+      CORBA::ULong const length = any_seq->length ();
 
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          TAO_ETCL_Literal_Constraint element (&any_seq[i]);
+          TAO_ETCL_Literal_Constraint const element (&any_seq[i]);
 
           if (item == element)
             {
@@ -1069,13 +1069,13 @@ TAO_Log_Constraint_Visitor::array_does_contain (
 {
   try
     {
-      CORBA::TypeCode_var type = any->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ());
+      CORBA::TypeCode_var const type = any->type ();
+      CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (type.in ());
 
       // The literal and the array elements must be
       // of the same simple type.
-      CORBA::Boolean match = this->simple_type_match (item.expr_type (),
-                                                      kind);
+      CORBA::Boolean const match = this->simple_type_match (item.expr_type (),
+                                                            kind);
 
       if (!match)
         {
@@ -1088,11 +1088,11 @@ TAO_Log_Constraint_Visitor::array_does_contain (
 
       DynamicAny::AnySeq_var any_seq = dyn_array.get_elements ();
 
-      CORBA::ULong length = any_seq->length ();
+      CORBA::ULong const length = any_seq->length ();
 
       for (CORBA::ULong i = 0; i < length; ++i)
         {
-          TAO_ETCL_Literal_Constraint element (&any_seq[i]);
+          TAO_ETCL_Literal_Constraint const element (&any_seq[i]);
 
           if (item == element)
             {
@@ -1121,7 +1121,7 @@ TAO_Log_Constraint_Visitor::struct_does_contain (
       DynamicAny::NameValuePairSeq_var members =
         dyn_struct.get_members ();
 
-      CORBA::ULong length = members->length ();
+      CORBA::ULong const length = members->length ();
       CORBA::TypeCode_var tc;
       CORBA::TCKind kind;
 
@@ -1132,15 +1132,15 @@ TAO_Log_Constraint_Visitor::struct_does_contain (
 
           // The literal and the struct member must be
           // of the same simple type.
-          CORBA::Boolean match = this->simple_type_match (item.expr_type (),
-                                                          kind);
+          CORBA::Boolean const match = this->simple_type_match (item.expr_type (),
+                                                                kind);
 
       if (!match)
         {
           return false;
         }
 
-          TAO_ETCL_Literal_Constraint element (&members[i].value);
+          TAO_ETCL_Literal_Constraint const element (&members[i].value);
 
           if (item == element)
             {
@@ -1166,25 +1166,25 @@ TAO_Log_Constraint_Visitor::union_does_contain (
       TAO_DynUnion_i dyn_union;
       dyn_union.init (*any);
 
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var const cc =
         dyn_union.current_component ();
 
       CORBA::Any_var member = cc->to_any ();
 
-      CORBA::TypeCode_var tc = member->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
+      CORBA::TypeCode_var const tc = member->type ();
+      CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
       // The literal and the union member must be
       // of the same simple type.
-      CORBA::Boolean match = this->simple_type_match (item.expr_type (),
-                                                      kind);
+      CORBA::Boolean const match = this->simple_type_match (item.expr_type (),
+                                                            kind);
 
       if (!match)
         {
           return false;
         }
 
-      TAO_ETCL_Literal_Constraint element (&member.inout ());
+      TAO_ETCL_Literal_Constraint const element (&member.inout ());
 
       return (item == element);
     }
@@ -1203,7 +1203,7 @@ TAO_Log_Constraint_Visitor::any_does_contain (
 
   *any >>= result;
 
-  TAO_ETCL_Literal_Constraint element (const_cast<CORBA::Any *> (result));
+  TAO_ETCL_Literal_Constraint const element (const_cast<CORBA::Any *> (result));
 
   return (item == element);
 }

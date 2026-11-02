@@ -31,7 +31,7 @@ TAO_Log_Constraint_Interpreter::evaluate (
     TAO_Log_Constraint_Visitor &evaluator
   )
 {
-  CORBA::Boolean retval =
+  CORBA::Boolean const retval =
     evaluator.evaluate_constraint (this->root_);
 
   return retval;
