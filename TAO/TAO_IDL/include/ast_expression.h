@@ -336,7 +336,7 @@ private:
   ExprComb pd_ec;
   // What combinator.
 
-  AST_ExprValue *pd_ev;
+  std::unique_ptr<AST_ExprValue> pd_ev;
   // Computed value.
 
   std::unique_ptr<AST_Expression> pd_v1;
