@@ -34,7 +34,7 @@ public:
   ACEXML_HttpCharStream ();
 
   /// Destructor
-  virtual ~ACEXML_HttpCharStream ();
+  ~ACEXML_HttpCharStream () override;
 
   /// Open an URL.
   int open (const ACEXML_Char *url);
@@ -43,34 +43,34 @@ public:
    *  Returns the available ACEXML_Char in the buffer.  -1
    *  if the object is not initialized properly.
    */
-  virtual int available ();
+  int available () override;
 
   /**
    *  Close this stream and release all resources used by it.
    */
-  virtual int close ();
+  int close () override;
 
   /**
    *  Read the next ACEXML_Char.  Return -1 if we are not able to
    *  return an ACEXML_Char, 0 if EOS is reached, or 1 if succeed.
    */
-  virtual int get (ACEXML_Char& ch);
+  int get (ACEXML_Char& ch) override;
 
   /**
    *  Read the next batch of ACEXML_Char strings
    */
-  virtual int read (ACEXML_Char *str, size_t len);
+  int read (ACEXML_Char *str, size_t len) override;
 
   /**
    *  Peek the next ACEXML_Char in the CharStream.  Return the
    *  character if succeess, -1 if EOS is reached.
    */
-  virtual int peek ();
+  int peek () override;
 
   /**
    *  Resets the file pointer to the beginning of the stream.
    */
-  virtual void rewind ();
+  void rewind () override;
 
   /**
    *  Determine the encoding of the file.
@@ -80,12 +80,12 @@ public:
   /**
    * Get the encoding of the file
    */
-  virtual const ACEXML_Char* getEncoding ();
+  const ACEXML_Char* getEncoding () override;
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  virtual const ACEXML_Char* getSystemId ();
+  const ACEXML_Char* getSystemId () override;
 
 
 private:
