@@ -23,6 +23,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 
+#include <cstdlib>
 #include <string>
 
 be_predefined_type::be_predefined_type (
@@ -242,7 +243,7 @@ be_predefined_type::compute_tc_name ()
       idl_global->err ()->misc_error (
         "be_predefined_type::compute_tc_name: Unknown or invalid predefined type", this);
       // Nothing else to do. We will segfault if we continue, return, or throw Bailout
-      ACE_OS::abort ();
+      std::abort ();
     }
 
   ACE_NEW (conc_name,

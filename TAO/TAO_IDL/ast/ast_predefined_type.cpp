@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // type that this node represents. There is only one node in the entire
 // AST which represents each predefined type, such as long etc.
 
+#include <cstdlib>
 #include <string>
 
 #include "ast_predefined_type.h"
@@ -206,7 +207,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
         default:
           idl_global->err ()->misc_error ("AST_PredefinedType: bad enum value", this);
           // Nothing else to do. We will segfault if we continue, return, or throw Bailout
-          ACE_OS::abort ();
+          std::abort ();
         }
 
       ACE_NEW (conc_name,
