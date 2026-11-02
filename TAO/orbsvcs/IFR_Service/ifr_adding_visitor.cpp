@@ -314,13 +314,12 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                     }
                 }
 
-              CORBA::ULong n_parents = static_cast<CORBA::ULong> (node->n_inherits ());
+              AST_Type_List const& parents = node->inherits ();
+              CORBA::ULong const n_parents = static_cast<CORBA::ULong> (parents.size ());
 
               CORBA::InterfaceDefSeq bases (n_parents);
               bases.length (n_parents);
               CORBA::Contained_var result;
-
-              AST_Type **parents = node->inherits ();
 
               // Construct a list of the parents.
               for (CORBA::ULong i = 0; i < n_parents; ++i)
@@ -2731,8 +2730,8 @@ ifr_adding_visitor::element_type (AST_Type *base_type, bool owned)
 int
 ifr_adding_visitor::create_interface_def (AST_Interface *node)
 {
-  CORBA::ULong n_parents = static_cast<CORBA::ULong> (node->n_inherits ());
-  AST_Type **parents = node->inherits ();
+  AST_Type_List const& parents = node->inherits ();
+  CORBA::ULong const n_parents = static_cast<CORBA::ULong> (parents.size ());
   CORBA::Contained_var result;
   CORBA::AbstractInterfaceDefSeq abs_bases;
   CORBA::InterfaceDefSeq bases;
@@ -3674,17 +3673,13 @@ void
 ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
                                                AST_ValueType *node)
 {
-  CORBA::Long s_length = node->n_inherits ();
+  AST_Type_List const& list = node->inherits ();
   result.length (0);
 
-  // Not sure if this could be negative in some default case or
-  // not. If it's 0, we should make the call anyway to clear
-  // existing entries, if any,  from the repository.
-  if (s_length > 0)
+  if (!list.empty ())
     {
-      AST_Type **list = node->inherits ();
-      CORBA::ULong u_length = static_cast<CORBA::ULong> (s_length);
-      bool first_abs = list[0]->is_abstract ();
+      CORBA::ULong const u_length = static_cast<CORBA::ULong> (list.size ());
+      bool const first_abs = list[0]->is_abstract ();
       result.length (first_abs ? u_length : u_length - 1);
 
       for (CORBA::ULong i = 0; i < u_length; ++i)
@@ -3708,9 +3703,7 @@ ifr_adding_visitor::fill_inherited_interfaces (CORBA::InterfaceDefSeq &result,
                                                AST_Interface *node)
 {
   result.length (0);
-  this->fill_interfaces (result,
-                         node->inherits (),
-                         node->n_inherits ());
+  this->fill_interfaces (result, node->inherits ());
 }
 
 void
@@ -3718,8 +3711,7 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
                                                AST_Interface *node)
 {
   result.length (0);
-  CORBA::Long s_length = 0;
-  AST_Type **list = nullptr;
+  AST_Type_List const* list = nullptr;
 
   switch (node->node_type ())
     {
@@ -3727,44 +3719,35 @@ ifr_adding_visitor::fill_supported_interfaces (CORBA::InterfaceDefSeq &result,
       case AST_Decl::NT_eventtype:
         {
           AST_ValueType *v = dynamic_cast<AST_ValueType*> (node);
-          s_length = v->n_supports ();
-          list = v->supports ();
+          list = &v->supports ();
           break;
         }
       case AST_Decl::NT_component:
         {
           AST_Component *c = dynamic_cast<AST_Component*> (node);
-          s_length = c->n_supports ();
-          list = c->supports ();
+          list = &c->supports ();
           break;
         }
       case AST_Decl::NT_home:
         {
           AST_Home *h = dynamic_cast<AST_Home*> (node);
-          s_length = h->n_supports ();
-          list = h->supports ();
+          list = &h->supports ();
           break;
         }
       default:
         return;
     }
 
-  this->fill_interfaces (result,
-                         list,
-                         s_length);
+  this->fill_interfaces (result, *list);
 }
 
 void
 ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
-                                     AST_Type **list,
-                                     CORBA::Long length)
+                                     AST_Type_List const& list)
 {
-  // Not sure if this could be negative in some default case or
-  // not. If it's 0, we should make the call anyway to clear
-  // existing entries, if any,  from the repository.
-  if (length > 0)
+  if (!list.empty ())
     {
-      CORBA::ULong u_length = static_cast<CORBA::ULong> (length);
+      CORBA::ULong const u_length = static_cast<CORBA::ULong> (list.size ());
       result.length (u_length);
 
       for (CORBA::ULong i = 0; i < u_length; ++i)

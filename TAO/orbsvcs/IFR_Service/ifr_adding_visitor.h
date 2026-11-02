@@ -16,6 +16,7 @@
 
 #include <string_view>
 
+#include "ast_interface.h"
 #include "ifr_visitor.h"
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
@@ -142,8 +143,7 @@ protected:
                                   AST_Interface *node);
 
   void fill_interfaces (CORBA::InterfaceDefSeq &result,
-                        AST_Type **list,
-                        CORBA::Long length);
+                        AST_Type_List const& list);
 
   void fill_initializers (CORBA::ExtInitializerSeq &result,
                           AST_ValueType *node);
