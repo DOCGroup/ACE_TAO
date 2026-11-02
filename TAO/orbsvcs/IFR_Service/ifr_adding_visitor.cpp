@@ -2754,7 +2754,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                  ACE_TEXT ("create_interface_def -")
                  ACE_TEXT (" parent %s is not an interface\n"),
-                 parents[i]->full_name ()),
+                 parents[i]->full_name ().c_str ()),
                 -1);
             }
 
@@ -2816,7 +2816,7 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                  ACE_TEXT ("create_interface_def -")
                  ACE_TEXT (" parent %s is not an interface\n"),
-                 parents[i]->full_name ()),
+                 parents[i]->full_name ().c_str ()),
                 -1);
             }
 
