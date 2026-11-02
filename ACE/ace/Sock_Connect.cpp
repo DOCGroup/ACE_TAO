@@ -13,6 +13,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/net/os_if.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_IPV6)
 #  include "ace/Guard_T.h"
 #  include "ace/Recursive_Thread_Mutex.h"
@@ -374,7 +376,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                  hp->h_name));
 
    // check if the canonical name is the FQDN
-   if (!ACE_OS::strchr(hp->h_name, '.'))
+   if (!std::strchr (hp->h_name, '.'))
      {
        // list of address
        char** p;
@@ -387,10 +389,10 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
          {
            for (q = hp->h_aliases; *q != 0; ++q)
              {
-               if (ACE_OS::strchr(*q, '.'))
+               if (std::strchr (*q, '.'))
                  {
                    // we got an FQDN from an alias. use this
-                   if (ACE_OS::strlen (*q) >= len)
+                   if (std::strlen (*q) >= len)
                      // the hostname is too huge to fit into a
                      // buffer of size MAXHOSTNAMELEN
                      // should we check other aliases as well
@@ -405,7 +407,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                                  ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
                                  ACE_TEXT ("found fqdn within alias as %C\n"),
                                  *q));
-                   ACE_OS::strcpy (hostname, *q);
+                   std::strcpy (hostname, *q);
 
                    return 0;
                  }
@@ -416,7 +418,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
    // The canonical name may be an FQDN when we reach here.
    // Alternatively, the canonical name (a non FQDN) may be the best
    // we can do.
-   if (ACE_OS::strlen (hp->h_name) >= len)
+   if (std::strlen (hp->h_name) >= len)
      {
        // The hostname is too large to fit into a buffer of size
        // MAXHOSTNAMELEN.
@@ -424,7 +426,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
      }
    else
      {
-       ACE_OS::strcpy (hostname, hp->h_name);
+       std::strcpy (hostname, hp->h_name);
      }
 
    return 0;
