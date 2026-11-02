@@ -13,10 +13,6 @@
 
 #include "Collocation_Tester.h"
 
-Collocation_Test::Collocation_Test ()
-{
-}
-
 void
 Collocation_Test::shutdown ()
 {
@@ -50,9 +46,6 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
   PortableServer::ObjectId_var id =
     this->root_poa_->activate_object (&this->top_servant_);
 
-//    // We only care about the most derived class here.
-//    this->diamond_obj_ = this->diamond_servant_._this ();
-
   id =
     this->root_poa_->activate_object (&this->diamond_servant_);
 
@@ -65,11 +58,11 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
   id =
     this->root_poa_->activate_object (&this->right_servant_);
 
-  CORBA::String_var str =
+  CORBA::String_var const str =
     this->orb_->object_to_string (this->diamond_obj_.in ());
 
   ACE_DEBUG ((LM_DEBUG, "Diamond Servant activated:\n %C\n",
-              str.in()));
+              str.in ()));
 
   return 0;
 

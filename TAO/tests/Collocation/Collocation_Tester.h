@@ -22,7 +22,12 @@
 class Collocation_Test
 {
 public:
-  Collocation_Test ();
+  Collocation_Test () = default;
+
+  Collocation_Test (Collocation_Test const &) = delete;
+  Collocation_Test (Collocation_Test &&) = delete;
+  Collocation_Test &operator= (Collocation_Test const &) = delete;
+  Collocation_Test &operator= (Collocation_Test &&) = delete;
 
   void shutdown ();
 

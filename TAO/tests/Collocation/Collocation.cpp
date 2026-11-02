@@ -13,7 +13,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       coll_test.shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Uncaught exception: ");
     }
