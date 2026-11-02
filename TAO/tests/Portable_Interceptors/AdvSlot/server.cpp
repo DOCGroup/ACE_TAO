@@ -14,7 +14,7 @@ using namespace CORBA;
 using namespace PortableServer;
 using namespace PortableInterceptor;
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -44,29 +44,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 
 //
-PortableInterceptor::SlotId slot_id;
+PortableInterceptor::SlotId slot_id {};
 
 
 //
-class StateTransferImpl: public virtual POA_StateTransfer
+class StateTransferImpl : public virtual POA_StateTransfer
 {
 public:
-  StateTransferImpl (ORB_ptr orb)
+  explicit StateTransferImpl (ORB_ptr orb)
       : orb_ (ORB::_duplicate (orb))
   {
   }
 
-  virtual Short
-  number ()
+  Short number () override
   {
     // Prepare state update.
     //
     Any state;
-    CORBA::Long number = 5;
+    CORBA::Long const number = 5;
     state <<= number;
 
-    Object_var obj (orb_->resolve_initial_references ("PICurrent"));
-    PortableInterceptor::Current_var pic (
+    Object_var const obj (orb_->resolve_initial_references ("PICurrent"));
+    PortableInterceptor::Current_var const pic (
       PortableInterceptor::Current::_narrow (obj.in ()));
 
     pic->set_slot (slot_id, state);
@@ -75,13 +74,17 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void
-  shutdown ()
+  void shutdown () override
   {
     ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));
     this->orb_->shutdown (false);
   }
   //FUZZ: enable check_for_lack_ACE_OS
+
+  StateTransferImpl (StateTransferImpl const &) = delete;
+  StateTransferImpl (StateTransferImpl &&) = delete;
+  StateTransferImpl & operator = (StateTransferImpl const &) = delete;
+  StateTransferImpl & operator = (StateTransferImpl &&) = delete;
 
 private:
   ORB_var orb_;
@@ -89,43 +92,39 @@ private:
 
 
 //
-class ReplicaController: public virtual ServerRequestInterceptor,
-                         public virtual ::CORBA::LocalObject
+class ReplicaController : public virtual ServerRequestInterceptor,
+                          public virtual ::CORBA::LocalObject
 {
 public:
-  virtual char*
-  name ()
+  ReplicaController () = default;
+
+  char * name () override
   {
     return string_dup ("ReplicaController");
   }
 
-  virtual void
-  destroy ()
+  void destroy () override
   {
   }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-  virtual void
-  tao_ft_interception_point (ServerRequestInfo_ptr, OctetSeq_out)
+  void tao_ft_interception_point (ServerRequestInfo_ptr, OctetSeq_out) override
   {
   }
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
-  virtual void
-  receive_request_service_contexts (ServerRequestInfo_ptr)
+  void receive_request_service_contexts (ServerRequestInfo_ptr) override
   {
   }
 
-  virtual void
-  receive_request (ServerRequestInfo_ptr)
+  void receive_request (ServerRequestInfo_ptr) override
   {
   }
 
-  virtual void
-  send_reply (ServerRequestInfo_ptr ri)
+  void send_reply (ServerRequestInfo_ptr ri) override
   {
     Any_var state (ri->get_slot (slot_id));
-    CORBA::Long n (0);
+    CORBA::Long n {};
     state >>= n;
 
     if (n == 5)
@@ -134,15 +133,18 @@ public:
       ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
   }
 
-  virtual void
-  send_exception (ServerRequestInfo_ptr)
+  void send_exception (ServerRequestInfo_ptr) override
   {
   }
 
-  virtual void
-  send_other (ServerRequestInfo_ptr)
+  void send_other (ServerRequestInfo_ptr) override
   {
   }
+
+  ReplicaController (ReplicaController const &) = delete;
+  ReplicaController (ReplicaController &&) = delete;
+  ReplicaController & operator = (ReplicaController const &) = delete;
+  ReplicaController & operator = (ReplicaController &&) = delete;
 };
 
 
@@ -151,65 +153,71 @@ class ORB_Initializer : public virtual ORBInitializer,
                         public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void
-  pre_init (ORBInitInfo_ptr)
+  ORB_Initializer () = default;
+
+  void pre_init (ORBInitInfo_ptr) override
   {
   }
 
-  virtual void
-  post_init (ORBInitInfo_ptr info)
+  void post_init (ORBInitInfo_ptr info) override
   {
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));
 
-    ServerRequestInterceptor_var interceptor (new ReplicaController ());
+    ServerRequestInterceptor_var const interceptor (new ReplicaController ());
     info->add_server_request_interceptor (interceptor.in ());
   }
+
+  ORB_Initializer (ORB_Initializer const &) = delete;
+  ORB_Initializer (ORB_Initializer &&) = delete;
+  ORB_Initializer & operator = (ORB_Initializer const &) = delete;
+  ORB_Initializer & operator = (ORB_Initializer &&) = delete;
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ORBInitializer_var orb_initializer (new ORB_Initializer ());
+      ORBInitializer_var const orb_initializer (new ORB_Initializer ());
       register_orb_initializer (orb_initializer.in ());
 
-      ORB_var orb (ORB_init (argc, argv));
+      ORB_var const orb (ORB_init (argc, argv));
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Object_var obj (orb->resolve_initial_references ("RootPOA"));
+      Object_var const obj (orb->resolve_initial_references ("RootPOA"));
 
-      POA_var root_poa (POA::_narrow (obj.in ()));
-      POAManager_var poa_manager (root_poa->the_POAManager ());
+      POA_var const root_poa (POA::_narrow (obj.in ()));
+      POAManager_var const poa_manager (root_poa->the_POAManager ());
 
-      StateTransferImpl* impl = new StateTransferImpl (orb.in ());
+      StateTransferImpl * const impl = new StateTransferImpl (orb.in ());
+      // Transfer the initial servant reference to the owning var.
       ServantBase_var impl_var (impl);
 
-      PortableServer::ObjectId_var id_act =
+      PortableServer::ObjectId_var const id_act =
         root_poa->activate_object (impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id_act.in ());
 
-      StateTransfer_var ref = StateTransfer::_narrow (object.in ());
-      String_var ior (orb->object_to_string (ref.in ()));
+      StateTransfer_var const ref = StateTransfer::_narrow (object.in ());
+      String_var const ior (orb->object_to_string (ref.in ()));
 
       poa_manager->activate ();
 
       // Dump the ior.
       //
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file <%s> for writing "
-                          "IOR: %C",
-                          ior_output_file,
-                          ior.in ()),
-                          1);
-      }
+      FILE * const output_file = ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file <%s> for writing "
+                             "IOR: %C",
+                             ior_output_file,
+                             ior.in ()),
+                            1);
+        }
 
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
@@ -225,7 +233,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught unexpected CORBA exception:");
 

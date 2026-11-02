@@ -2,28 +2,28 @@
 #include "StateTransferC.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (argc != 2)
-      {
-        ACE_DEBUG ((LM_ERROR, "Usage: %s <ior>\n", argv[0]));
-        return -1;
-      }
+        {
+          ACE_DEBUG ((LM_ERROR, "Usage: %s <ior>\n", argv[0]));
+          return -1;
+        }
 
-      CORBA::Object_var obj = orb->string_to_object (argv[1]);
-      StateTransfer_var server = StateTransfer::_narrow (obj.in ());
+      CORBA::Object_var const obj = orb->string_to_object (argv[1]);
+      StateTransfer_var const server = StateTransfer::_narrow (obj.in ());
 
-      CORBA::Short n  = server->number ();
+      CORBA::Short const n = server->number ();
 
       ACE_DEBUG ((LM_ERROR, "Got number %d\n", n));
 
       server->shutdown ();
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ERROR : unexpected CORBA exception caught : ");
       return 1;
