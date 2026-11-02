@@ -8,7 +8,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      const ACE_TCHAR *ready = ACE_TEXT ("ready");
+      ACE_TCHAR const *ready = ACE_TEXT ("ready");
       ACE_Get_Opt options (argc, argv, ACE_TEXT ("o:"));
       if (options () == 'o')
         {
@@ -31,7 +31,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy ();
       return 0;
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const & ex)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Transport_Idle_Scanner: %C\n"),
                   ex._name ()));

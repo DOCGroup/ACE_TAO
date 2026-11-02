@@ -3,20 +3,23 @@
 #include "ace/CDR_Base.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+
+#include <cstring>
 
 // Probe without consuming anything. A timeout means the peer is still open.
 bool expect_open (ACE_SOCK_Stream &stream, bool open)
 {
-  char byte;
+  char byte {};
   ACE_Time_Value timeout (0, 100000);
   ssize_t result = stream.recv (&byte, 1, MSG_PEEK, &timeout);
   bool actual = result == -1
     && (errno == ETIME || errno == ETIMEDOUT || errno == EWOULDBLOCK);
   if (actual != open)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) socket open=%d, expected=%d, recv=%d errno=%d\n"),
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) socket open=%d, expected=%d, recv=")
+                  ACE_SSIZE_T_FORMAT_SPECIFIER ACE_TEXT (" errno=%d\n"),
                   actual, open, result, errno));
       return false;
     }
@@ -28,14 +31,15 @@ bool expect_close_connection (ACE_SOCK_Stream &stream)
   unsigned char message[12];
   ACE_Time_Value timeout (5);
   ssize_t const result = stream.recv_n (message, sizeof message, &timeout);
-  const unsigned char expected[] = {
+  unsigned char const expected[] = {
     'G', 'I', 'O', 'P', 1, 2, ACE_CDR_BYTE_ORDER, 5, 0, 0, 0, 0
   };
   if (result != static_cast<ssize_t> (sizeof expected)
-      || ACE_OS::memcmp (message, expected, sizeof expected) != 0)
+      || std::memcmp (message, expected, sizeof expected) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) expected GIOP::CloseConnection, recv=%d errno=%d\n"),
+                  ACE_TEXT ("(%P|%t) expected GIOP::CloseConnection, recv=")
+                  ACE_SSIZE_T_FORMAT_SPECIFIER ACE_TEXT (" errno=%d\n"),
                   result, errno));
       return false;
     }
@@ -60,11 +64,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   // Big-endian GIOP 1.2 CancelRequest, request id 1.
-  const unsigned char cancel[] = {
+  unsigned char const cancel[] = {
     'G','I','O','P', 1,2,0,2, 0,0,0,4, 0,0,0,1
   };
   // Incomplete GIOP 1.2 Request with more-fragments flag, request id 1.
-  const unsigned char fragment[] = {
+  unsigned char const fragment[] = {
     'G','I','O','P', 1,2,2,0, 0,0,0,4, 0,0,0,1
   };
   if (partial.send_n (cancel, 6) != 6
