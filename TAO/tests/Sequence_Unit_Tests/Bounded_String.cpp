@@ -48,7 +48,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       b.replace(0, s_sequence::allocbuf(), true);
 
       char const * const * x = d.get_buffer();
-      if (x != 0)
+      if (x != nullptr)
       {
         s_sequence::freebuf(a.get_buffer(true));
       }

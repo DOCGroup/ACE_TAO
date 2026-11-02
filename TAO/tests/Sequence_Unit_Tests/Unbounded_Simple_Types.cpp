@@ -52,7 +52,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       b.replace(64, 0, int_sequence::allocbuf(64), true);
 
       int const * x = d.get_buffer();
-      if (x != 0)
+      if (x != nullptr)
       {
         int_sequence::freebuf(a.get_buffer(true));
       }
