@@ -9,6 +9,7 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
+#include <cstring>
 
 #include "InvokeMeS.h"
 
@@ -16,7 +17,7 @@ using namespace CORBA;
 using namespace PortableServer;
 using namespace PortableInterceptor;
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -49,42 +50,38 @@ namespace
 {
   PortableInterceptor::SlotId slot_id;
 
-  CORBA::Long getMySlot(
+  CORBA::Long getMySlot (
     PortableInterceptor::ServerRequestInfo_ptr ri,
     PortableInterceptor::Current_ptr pi_current,
-    const char *location,
-    const CORBA::Long correctTSCvalue,
-    const CORBA::Long correctRSCvalue)
+    char const *location,
+    CORBA::Long const correctTSCvalue,
+    CORBA::Long const correctRSCvalue)
   {
-    CORBA::Long number= 0;
-    CORBA::String_var
-      op= ri->operation ();
+    CORBA::Long number {};
+    CORBA::String_var const op = ri->operation ();
 
-    const bool correctOperation=
-      (0 == ACE_OS::strcmp( op.in (), "invoke_me" ));
+    bool const correctOperation =
+      (0 == std::strcmp (op.in (), "invoke_me"));
 
     if (correctOperation)
     {
-      CORBA::Any_var data;
-
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(TSC) -> is ", location));
-      data= pi_current->get_slot(slot_id);
-      CORBA::TypeCode_var
-        tc= data->type();
-      if (tc->kind() == CORBA::tk_null)
+      CORBA::Any_var data = pi_current->get_slot (slot_id);
+      CORBA::TypeCode_var const tc = data->type ();
+      if (tc->kind () == CORBA::tk_null)
       {
         ACE_DEBUG ((LM_DEBUG, "EMPTY -> "));
-        if (0 != correctTSCvalue)
+        if (correctTSCvalue != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "WRONG\n"));
           throw INTERNAL ();
         }
         ACE_DEBUG ((LM_DEBUG, "OK\n"));
       }
-      else if (data.in() >>= number)
+      else if (data.in () >>= number)
       {
         ACE_DEBUG ((LM_DEBUG, "long (%d) -> ", number));
-        if ((0 != correctTSCvalue) && (correctTSCvalue != number))
+        if ((correctTSCvalue != 0) && (correctTSCvalue != number))
         {
           ACE_DEBUG ((LM_DEBUG, "WRONG\n"));
           throw INTERNAL ();
@@ -98,13 +95,12 @@ namespace
       }
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(RSC) -> is ", location));
-      data= ri->get_slot(slot_id);
-
-      tc= data->type();
-      if (tc->kind() == CORBA::tk_null)
+      CORBA::Any_var request_data = ri->get_slot (slot_id);
+      CORBA::TypeCode_var const request_tc = request_data->type ();
+      if (request_tc->kind () == CORBA::tk_null)
       {
         ACE_DEBUG ((LM_DEBUG, "EMPTY -> "));
-        if (0 != correctRSCvalue)
+        if (correctRSCvalue != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "WRONG\n"));
           throw INTERNAL ();
@@ -116,10 +112,10 @@ namespace
         number= 62;
 #endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1 */
       }
-      else if (data.in() >>= number)
+      else if (request_data.in () >>= number)
       {
         ACE_DEBUG ((LM_DEBUG, "long (%d) -> ", number));
-        if ((0 != correctRSCvalue) && (correctRSCvalue != number))
+        if ((correctRSCvalue != 0) && (correctRSCvalue != number))
         {
           ACE_DEBUG ((LM_DEBUG, "WRONG\n"));
           throw INTERNAL ();
@@ -130,40 +126,40 @@ namespace
       else
       {
         ACE_DEBUG ((LM_DEBUG, "WRONG TYPE\n"));
-        throw INTERNAL();
+        throw INTERNAL ();
       }
     }
 
     return number;
   }
 
-  void getAndSetMySlot(
+  void getAndSetMySlot (
     PortableInterceptor::ServerRequestInfo_ptr ri,
     PortableInterceptor::Current_ptr pi_current,
-    const char *location,
-    const CORBA::Long correctTSCvalue,
-    const CORBA::Long correctRSCvalue)
+    char const *location,
+    CORBA::Long const correctTSCvalue,
+    CORBA::Long const correctRSCvalue)
   {
-    const CORBA::Long number=
-      getMySlot(
+    CORBA::Long const number =
+      getMySlot (
         ri,
         pi_current,
         location,
         correctTSCvalue,
         correctRSCvalue);
 
-    if (number && (0 != ACE_OS::strcmp( location, "receive_request" )))
+    if (number && (0 != std::strcmp (location, "receive_request")))
     {
       // Insert data into the RSC (request scope current).
       CORBA::Any data;
       data <<= number;
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> set_slot(RSC)", location));
-      ri->set_slot( slot_id, data);
+      ri->set_slot (slot_id, data);
 
       ACE_DEBUG ((LM_DEBUG, " -> long (%d)\n", number));
 
-      getMySlot(
+      getMySlot (
           ri,
           pi_current,
           location,
@@ -174,22 +170,21 @@ namespace
 }
 
 //
-class InvokeMeImpl: public virtual POA_InvokeMe
+class InvokeMeImpl : public virtual POA_InvokeMe
 {
 public:
-  InvokeMeImpl (ORB_ptr orb)
+  explicit InvokeMeImpl (ORB_ptr orb)
       : orb_ (ORB::_duplicate (orb))
   {
   }
 
-  virtual void invoke_me()
+  void invoke_me () override
   {
     ACE_DEBUG ((LM_DEBUG, "invoke_me\n"));
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void
-  shutdown ()
+  void shutdown () override
   {
     ACE_DEBUG ((LM_DEBUG, "\nServer is shutting down.\n"));
     this->orb_->shutdown (false);
@@ -197,86 +192,90 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
+  InvokeMeImpl (InvokeMeImpl const &) = delete;
+  InvokeMeImpl (InvokeMeImpl &&) = delete;
+  InvokeMeImpl & operator = (InvokeMeImpl const &) = delete;
+  InvokeMeImpl & operator = (InvokeMeImpl &&) = delete;
+
   ORB_var orb_;
 };
 
 
 //
-class ReplicaController: public virtual ServerRequestInterceptor,
-                         public virtual ::CORBA::LocalObject
+class ReplicaController : public virtual ServerRequestInterceptor,
+                          public virtual ::CORBA::LocalObject
 {
-  PortableInterceptor::Current_ptr pi_current_;
 public:
-  ReplicaController (PortableInterceptor::Current_ptr pi_current )
-    : pi_current_( pi_current )
+  explicit ReplicaController (PortableInterceptor::Current_ptr pi_current)
+    : pi_current_ (PortableInterceptor::Current::_duplicate (pi_current))
   {
   }
 
-  virtual char*
-  name ()
+  char * name () override
   {
     return string_dup ("ReplicaController");
   }
 
-  virtual void
-  destroy ()
+  void destroy () override
   {
   }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-  virtual void
-  tao_ft_interception_point (ServerRequestInfo_ptr ri, OctetSeq_out)
+  void tao_ft_interception_point (ServerRequestInfo_ptr ri, OctetSeq_out) override
   {
-    getAndSetMySlot( ri, this->pi_current_, "tao_ft_interception_point", 0, 0);
+    getAndSetMySlot (ri, this->pi_current_.in (), "tao_ft_interception_point", 0, 0);
   }
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
-  virtual void
-  receive_request_service_contexts (ServerRequestInfo_ptr ri)
+  void receive_request_service_contexts (ServerRequestInfo_ptr ri) override
   {
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 61);
+    getAndSetMySlot (ri, this->pi_current_.in (), "receive_request_service_contexts", 0, 61);
 #else
-    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 0);
+    getAndSetMySlot (ri, this->pi_current_.in (), "receive_request_service_contexts", 0, 0);
 #endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1 */
   }
 
-  virtual void
-  receive_request (ServerRequestInfo_ptr ri)
+  void receive_request (ServerRequestInfo_ptr ri) override
   {
-    getAndSetMySlot( ri, this->pi_current_, "receive_request", 62, 62);
+    getAndSetMySlot (ri, this->pi_current_.in (), "receive_request", 62, 62);
   }
 
-  virtual void
-  send_reply (ServerRequestInfo_ptr ri)
+  void send_reply (ServerRequestInfo_ptr ri) override
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_reply", 62, 62);
+    getAndSetMySlot (ri, this->pi_current_.in (), "send_reply", 62, 62);
   }
 
-  virtual void
-  send_exception (ServerRequestInfo_ptr ri)
+  void send_exception (ServerRequestInfo_ptr ri) override
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_exception", 62, 62);
+    getAndSetMySlot (ri, this->pi_current_.in (), "send_exception", 62, 62);
   }
 
-  virtual void
-  send_other (ServerRequestInfo_ptr ri)
+  void send_other (ServerRequestInfo_ptr ri) override
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_other", 62, 62);
+    getAndSetMySlot (ri, this->pi_current_.in (), "send_other", 62, 62);
   }
+
+  ReplicaController (ReplicaController const &) = delete;
+  ReplicaController (ReplicaController &&) = delete;
+  ReplicaController & operator = (ReplicaController const &) = delete;
+  ReplicaController & operator = (ReplicaController &&) = delete;
+
+private:
+  PortableInterceptor::Current_var pi_current_;
 };
 
 class ORB_Initializer : public virtual ORBInitializer,
                         public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void
-  pre_init (ORBInitInfo_ptr)
+  ORB_Initializer () = default;
+
+  void pre_init (ORBInitInfo_ptr) override
   {
   }
 
-  virtual void
-  post_init (ORBInitInfo_ptr info)
+  void post_init (ORBInitInfo_ptr info) override
   {
     CORBA::Object_var obj =
       info->resolve_initial_references ("PICurrent");
@@ -291,49 +290,55 @@ public:
       interceptor (new ReplicaController (pi_current.in ()));
     info->add_server_request_interceptor (interceptor.in ());
   }
+
+  ORB_Initializer (ORB_Initializer const &) = delete;
+  ORB_Initializer (ORB_Initializer &&) = delete;
+  ORB_Initializer & operator = (ORB_Initializer const &) = delete;
+  ORB_Initializer & operator = (ORB_Initializer &&) = delete;
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ORBInitializer_var orb_initializer (new ORB_Initializer ());
+  ORBInitializer_var const orb_initializer (new ORB_Initializer ());
   register_orb_initializer (orb_initializer.in ());
 
-  ORB_var orb (ORB_init (argc, argv));
+  ORB_var const orb (ORB_init (argc, argv));
 
   if (parse_args (argc, argv) != 0)
     return 1;
 
-  Object_var obj (orb->resolve_initial_references ("RootPOA"));
+  Object_var const obj (orb->resolve_initial_references ("RootPOA"));
 
-  POA_var root_poa (POA::_narrow (obj.in ()));
-  POAManager_var poa_manager (root_poa->the_POAManager ());
+  POA_var const root_poa (POA::_narrow (obj.in ()));
+  POAManager_var const poa_manager (root_poa->the_POAManager ());
 
-  InvokeMeImpl* impl = new InvokeMeImpl (orb.in ());
+  InvokeMeImpl * const impl = new InvokeMeImpl (orb.in ());
+  // Transfer the initial servant reference to the owning var.
   ServantBase_var impl_var (impl);
 
-  PortableServer::ObjectId_var id_act =
+  PortableServer::ObjectId_var const id_act =
     root_poa->activate_object (impl);
 
-  CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+  CORBA::Object_var const object = root_poa->id_to_reference (id_act.in ());
 
-  InvokeMe_var ref = InvokeMe::_narrow (object.in ());
-  String_var ior (orb->object_to_string (ref.in ()));
+  InvokeMe_var const ref = InvokeMe::_narrow (object.in ());
+  String_var const ior (orb->object_to_string (ref.in ()));
 
   poa_manager->activate ();
 
   // Dump the ior.
   //
-  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-  if (output_file == 0)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file <%s> for writing "
-                       "IOR: %C",
-                       ior_output_file,
-                       ior.in ()),
-                      1);
-  }
+  FILE * const output_file = ACE_OS::fopen (ior_output_file, "w");
+  if (output_file == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file <%s> for writing "
+                         "IOR: %C",
+                         ior_output_file,
+                         ior.in ()),
+                        1);
+    }
 
   ACE_OS::fprintf (output_file, "%s", ior.in ());
   ACE_OS::fclose (output_file);
