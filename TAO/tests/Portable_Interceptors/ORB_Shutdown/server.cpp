@@ -6,7 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 
 
-const ACE_TCHAR *ior_file = 0;
+ACE_TCHAR const *ior_file = nullptr;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,7 +39,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #if TAO_HAS_INTERCEPTORS == 1
       bool destroy_called = false;
 
-      Server_ORBInitializer *temp_initializer = 0;
+      Server_ORBInitializer *temp_initializer = nullptr;
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer (destroy_called),
                       -1);  // No exceptions yet!
@@ -89,8 +89,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ior.in ()));
 
       // Write IOR to a file.
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
                            "IOR: %C",
@@ -108,12 +108,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
 
 #if TAO_HAS_INTERCEPTORS == 1
-      ACE_TEST_ASSERT (destroy_called == true);
+      ACE_TEST_ASSERT (destroy_called);
 #endif
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

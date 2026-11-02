@@ -30,13 +30,18 @@ public:
   test_i (CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~test_i ();
+  ~test_i () override;
+
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// Say hello.
-  virtual void hello ();
+  void hello () override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Pseudo-reference to the ORB.

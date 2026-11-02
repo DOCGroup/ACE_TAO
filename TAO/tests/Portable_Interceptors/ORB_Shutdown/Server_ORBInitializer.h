@@ -43,9 +43,13 @@ public:
   /// Constructor.
   Server_ORBInitializer (bool & destroy_called);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Server_ORBInitializer (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer (Server_ORBInitializer &&) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer &&) = delete;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
   /// Flag that states whether this interceptor's @c destroy() method
