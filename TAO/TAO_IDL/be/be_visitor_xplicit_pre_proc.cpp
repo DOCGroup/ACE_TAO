@@ -38,8 +38,26 @@
 #include "utl_exceptlist.h"
 
 #include "fe_obv_header.h"
+#include "fe_utils.h"
 #include "nr_extern.h"
 #include "global_extern.h"
+
+#include <memory>
+
+namespace
+{
+  struct UTL_NameList_Deleter
+  {
+    void operator() (UTL_NameList *name_list) const
+    {
+      if (name_list != nullptr)
+        {
+          name_list->destroy ();
+          delete name_list;
+        }
+    }
+  };
+}
 
 be_visitor_xplicit_pre_proc::be_visitor_xplicit_pre_proc (
       be_visitor_context *ctx)
@@ -52,10 +70,11 @@ be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc () = default;
 int
 be_visitor_xplicit_pre_proc::visit_home (be_home *node)
 {
-  UTL_NameList *parent_list = this->compute_inheritance (node);
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> parent_list (
+    this->compute_inheritance (node));
 
   FE_InterfaceHeader header (nullptr,
-                             parent_list,
+                             parent_list.get (),
                              false,
                              false,
                              true);
@@ -68,16 +87,15 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
 
   idl_global->scopes ().push (m);
 
-  UTL_ScopedName *explicit_name =
-    this->create_scoped_name (
-      "",
-      node->original_local_name (),
-      "Explicit",
-      m);
+  FE_Utils::Scoped_Name_Owner explicit_name (
+    this->create_scoped_name ("",
+                              node->original_local_name (),
+                              "Explicit",
+                              m));
 
   be_interface *i = nullptr;
   ACE_NEW_RETURN (i,
-                  be_interface (explicit_name,
+                  be_interface (explicit_name.get (),
                                 header.inherits (),
                                 header.n_inherits (),
                                 header.inherits_flat (),
@@ -108,15 +126,11 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   // Through with the explicit interface scope
   idl_global->scopes ().pop ();
 
-  explicit_name->destroy ();
-  delete explicit_name;
-  explicit_name = nullptr;
+  explicit_name.reset ();
 
   header.destroy ();
 
-  parent_list->destroy ();
-  delete parent_list;
-  parent_list = nullptr;
+  parent_list.reset ();
 
   // Through with the scope containing the home.
   idl_global->scopes ().pop ();
@@ -922,21 +936,17 @@ be_visitor_xplicit_pre_proc::xplicit () const
 void
 be_visitor_xplicit_pre_proc::check_and_store (AST_Decl *node)
 {
-  UTL_ScopedName *tmpl_tail =
-    this->xplicit_iface_rel_name (node);
+  FE_Utils::Scoped_Name_Owner tmpl_tail (
+    this->xplicit_iface_rel_name (node));
 
   if (tmpl_tail != nullptr)
     {
       AST_Decl *d =
         idl_global->scopes ().top ()->lookup_by_name (
-          tmpl_tail,
+          tmpl_tail.get (),
           true);
 
       this->type_holder_ = d;
-
-      tmpl_tail->destroy ();
-      delete tmpl_tail;
-      tmpl_tail = nullptr;
     }
   else
     {
