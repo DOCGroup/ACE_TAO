@@ -50,7 +50,7 @@ public:
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
-  bool no_leaders_available ();
+  bool no_leaders_available () override;
 
 private:
   /// Lane associated with this leader generator.
