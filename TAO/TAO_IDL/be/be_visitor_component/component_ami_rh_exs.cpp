@@ -12,6 +12,7 @@
 
 #include "component.h"
 
+#include <memory>
 #include <string>
 
 be_visitor_component_ami_rh_exs::be_visitor_component_ami_rh_exs (
@@ -144,13 +145,13 @@ be_visitor_component_ami_rh_exs::visit_operation (
                                   node->return_type (),
                                   sn),
                       -1);
+      std::unique_ptr<be_argument> const arg_owner (arg);
 
       arg->set_defined_in (node);
       arg->set_name (sn);
 
       if (this->visit_argument (arg) == -1)
         {
-          delete arg;
           ACE_ERROR_RETURN ((LM_ERROR,
                               ACE_TEXT ("be_visitor_component")
                               ACE_TEXT ("_ami_rh_exh")
@@ -158,10 +159,6 @@ be_visitor_component_ami_rh_exs::visit_operation (
                               ACE_TEXT ("return type arg")
                               ACE_TEXT (" gen failed\n")),
                             -1);
-        }
-      else
-        {
-          delete arg;
         }
 
       if (count != 0)
