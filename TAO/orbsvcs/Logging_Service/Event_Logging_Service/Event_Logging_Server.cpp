@@ -11,7 +11,7 @@ class Logging_Svc_Shutdown
 public:
   Logging_Svc_Shutdown (Event_Logging_Service& svc);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 
 private:
   Event_Logging_Service&        svc_;

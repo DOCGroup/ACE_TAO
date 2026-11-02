@@ -40,7 +40,7 @@ public:
   Basic_Logging_Service &operator= (Basic_Logging_Service const &) = delete;
   Basic_Logging_Service &operator= (Basic_Logging_Service &&) = delete;
 
-  int init (int argc, ACE_TCHAR * argv[]);
+  int init (int argc, ACE_TCHAR * argv[]) override;
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 

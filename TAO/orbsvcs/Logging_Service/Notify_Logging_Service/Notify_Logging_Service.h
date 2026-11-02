@@ -45,7 +45,7 @@ class Notify_Logging_Service
   Notify_Logging_Service &operator= (Notify_Logging_Service const &) = delete;
   Notify_Logging_Service &operator= (Notify_Logging_Service &&) = delete;
 
-  int init (int argc, ACE_TCHAR * argv[]);
+  int init (int argc, ACE_TCHAR * argv[]) override;
   // Initializes the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 

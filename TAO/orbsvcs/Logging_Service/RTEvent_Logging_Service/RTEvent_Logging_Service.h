@@ -39,7 +39,7 @@ public:
   RTEvent_Logging_Service &operator= (RTEvent_Logging_Service const &) = delete;
   RTEvent_Logging_Service &operator= (RTEvent_Logging_Service &&) = delete;
 
-  int init (int argc, ACE_TCHAR * argv[]);
+  int init (int argc, ACE_TCHAR * argv[]) override;
   // Initializes the Telecom Log Service.
 
   int run ();
