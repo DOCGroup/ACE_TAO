@@ -3,7 +3,7 @@
 #include "tao/ORB_Table.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 
-  Hello::Hello (CORBA::ORB_ptr orb)
+Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
