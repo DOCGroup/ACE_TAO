@@ -7,29 +7,31 @@ class  MessengerHandler : public virtual POA_AMI_MessengerHandler
 {
 public:
   //Constructor
-  MessengerHandler (CORBA::ORB_ptr orb);
+  explicit MessengerHandler (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~MessengerHandler ();
+  ~MessengerHandler () override = default;
 
-virtual void send_message (
+  void send_message (
     CORBA::Boolean ami_return_val,
-    const char * message,
-    CORBA::Long time
-  );
+    char const *message,
+    CORBA::Long time) override;
 
-virtual void send_message_excep (
-    Messaging::ExceptionHolder * excep_holder
-  );
+  void send_message_excep (
+    Messaging::ExceptionHolder *excep_holder) override;
 
-
-  int message_was_sent()
+  bool message_was_sent () const
   {
     return time_ > 0;
   }
 
+  MessengerHandler (MessengerHandler const &) = delete;
+  MessengerHandler (MessengerHandler &&) = delete;
+  MessengerHandler &operator= (MessengerHandler const &) = delete;
+  MessengerHandler &operator= (MessengerHandler &&) = delete;
+
 private:
-  CORBA::Long time_;
+  CORBA::Long time_ {};
   CORBA::ORB_var orb_;
 };
 
