@@ -21,15 +21,12 @@ Storable_File_Guard (bool redundant, bool use_backup)
 }
 
 TAO::Storable_File_Guard::
-~Storable_File_Guard () noexcept(false)
-{
-  delete fl_;
-}
+~Storable_File_Guard () noexcept(false) = default;
 
 void
-TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
+TAO::Storable_File_Guard::init_no_load (Method_Type method_type)
 {
-  ACE_CString mode;
+  char const *mode = nullptr;
   this->rwflags_ = 0;
   switch (method_type)
     {
@@ -48,7 +45,7 @@ TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
       break;
     }
 
-  if( rwflags_ <= 0 )
+  if (rwflags_ <= 0)
     {
       errno = EINVAL;
       if (TAO_debug_level > 0)
@@ -61,7 +58,7 @@ TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
     }
 
   // Create the stream
-  fl_ = this->create_stream(mode.c_str ());
+  this->fl_.reset (this->create_stream (mode));
 }
 
 void
@@ -97,7 +94,7 @@ TAO::Storable_File_Guard::reload ()
       // unlocked/closed before we leave this class
       closed_ = false;
 
-      if ( ! (rwflags_ & mode_create) )
+      if (!(rwflags_ & mode_create))
         {
           // Check if our copy is up to date
           if (this->object_obsolete ())
@@ -107,7 +104,7 @@ TAO::Storable_File_Guard::reload ()
             }
         }
     }
-  else if ( ! this->is_loaded_from_stream () || (rwflags_ & mode_write) )
+  else if (!this->is_loaded_from_stream () || (rwflags_ & mode_write))
     {
       bool file_has_data = fl_->exists ();
 
@@ -157,7 +154,7 @@ TAO::Storable_File_Guard::mark_object_current ()
 void
 TAO::Storable_File_Guard::release ()
 {
-  if ( ! closed_ )
+  if (!closed_)
     {
       if (this->use_backup_ &&
           (rwflags_ & mode_write) != 0)
@@ -166,9 +163,9 @@ TAO::Storable_File_Guard::release ()
         }
 
       // If we updated the disk, save the time stamp
-      if(redundant_)
+      if (redundant_)
         {
-          if( rwflags_ & mode_write )
+          if (rwflags_ & mode_write)
             {
               // This is a costly call, but necessary if
               // we are running redundant. It ensures that

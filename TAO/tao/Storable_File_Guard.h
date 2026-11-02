@@ -14,6 +14,8 @@
 
 #include "tao/Storable_Base.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -31,8 +33,13 @@ namespace TAO
   class TAO_Export Storable_File_Guard
   {
   public:
-    Storable_File_Guard (bool redundant,
-                         bool use_backup = Storable_Base::use_backup_default);
+    explicit Storable_File_Guard (bool redundant,
+                                  bool use_backup = Storable_Base::use_backup_default);
+
+    Storable_File_Guard (Storable_File_Guard const &) = delete;
+    Storable_File_Guard (Storable_File_Guard &&) = delete;
+    Storable_File_Guard & operator= (Storable_File_Guard const &) = delete;
+    Storable_File_Guard & operator= (Storable_File_Guard &&) = delete;
 
     virtual ~Storable_File_Guard () noexcept(false);
 
@@ -88,7 +95,7 @@ namespace TAO
     virtual void mark_object_current ();
 
     /// Indicate when the object in memory has last changed
-    virtual void set_object_last_changed (const time_t & time) = 0;
+    virtual void set_object_last_changed (time_t const & time) = 0;
 
     /// Load object from file to memory. Return 0 on success.
     virtual int load_from_stream () = 0;
@@ -96,16 +103,16 @@ namespace TAO
     /// Answer if object has been loaded from file
     virtual bool is_loaded_from_stream () = 0;
 
-    virtual Storable_Base * create_stream (const char * mode) = 0;
+    virtual Storable_Base * create_stream (char const * mode) = 0;
 
     /// The pointer to the actual file I/O (bridge pattern)
-    Storable_Base *fl_ {};
+    std::unique_ptr<Storable_Base> fl_ {};
 
   private:
     // Return 0 if successful.
     int load ();
 
-    bool redundant_;
+    bool const redundant_;
 
     /// A flag to keep us from trying to close things more than once.
     bool closed_ {true};
@@ -114,7 +121,7 @@ namespace TAO
     int rwflags_ {};
 
     /// A flag indicating if backup/restore should be performed
-    bool use_backup_;
+    bool const use_backup_;
 
     /// Symbolic values for the flags in the above
     enum { mode_write = 1, mode_read = 2, mode_create = 4 };
