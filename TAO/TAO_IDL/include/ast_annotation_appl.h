@@ -41,9 +41,6 @@ public:
   using Params = std::vector<std::unique_ptr<Param>>;
   ///}
 
-  /// Delete Annotation Parameters
-  static void delete_params (Params *params);
-
   /**
    * Create an Annotation using it's name and parameters
    */

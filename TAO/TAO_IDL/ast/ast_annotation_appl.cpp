@@ -11,12 +11,6 @@ AST_Annotation_Appl::Param::~Param ()
     }
 }
 
-void
-AST_Annotation_Appl::delete_params (AST_Annotation_Appl::Params* params)
-{
-  delete params;
-}
-
 AST_Decl::NodeType const AST_Annotation_Appl::NT = AST_Decl::NT_annotation_appl;
 
 AST_Annotation_Appl::AST_Annotation_Appl (

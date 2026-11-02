@@ -3418,7 +3418,7 @@ namespace tao_yy {
             }
           else
             {
-              AST_Annotation_Appl::delete_params (params);
+              delete params;
             }
 
           if (name)
