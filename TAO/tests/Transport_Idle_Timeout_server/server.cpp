@@ -5,7 +5,7 @@
 
 #include <cstdio>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 
 class Test_i : public virtual POA_Transport_Idle_Timeout_Test::Test
 {
@@ -14,6 +14,11 @@ public:
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
+
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i & operator= (Test_i const &) = delete;
+  Test_i & operator= (Test_i &&) = delete;
 
   void ping () override
   {
@@ -34,7 +39,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
@@ -77,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Test_i *servant = 0;
+      Test_i *servant = nullptr;
       ACE_NEW_RETURN (servant, Test_i (orb.in ()), 1);
       PortableServer::ServantBase_var owner_transfer (servant);
 
@@ -91,7 +96,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (object.in ());
 
       FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s>\n",
                            ior_output_file),
@@ -106,7 +111,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
