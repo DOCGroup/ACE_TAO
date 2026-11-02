@@ -1,10 +1,13 @@
 #ifndef ACE_ARGV_CPP
 #define ACE_ARGV_CPP
 
+#include "ace/ARGV.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ARGV.inl"
@@ -382,9 +385,9 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
             {
               len = ACE_OS::strlen (arg->arg_);
               // Copy the argument into buf_
-              ACE_OS::memcpy ((void *) ptr,
-                              (const void *) (arg->arg_),
-                              len * sizeof (CHAR_TYPE));
+              std::memcpy (ptr,
+                           arg->arg_,
+                           len * sizeof (CHAR_TYPE));
               // Move the pointer down.
               ptr += len;
             }
@@ -394,9 +397,9 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
         {
           len = ACE_OS::strlen (arg->arg_);
           // Copy the argument into buf_
-          ACE_OS::memcpy ((void *) ptr,
-                          (const void *) (arg->arg_),
-                          len * sizeof (CHAR_TYPE));
+          std::memcpy (ptr,
+                       arg->arg_,
+                       len * sizeof (CHAR_TYPE));
           // Move the pointer down.
           ptr += len;
         }
