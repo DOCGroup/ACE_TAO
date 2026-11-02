@@ -3,7 +3,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"
 
-const ACE_TCHAR *ior_file = 0;
+ACE_TCHAR const *ior_file = nullptr;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -53,7 +53,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (::parse_args (argc, argv) != 0)
         return -1;
 
-      test_i *test_impl = 0;
+      test_i *test_impl = nullptr;
       ACE_NEW_RETURN (test_impl, test_i (1, orb.in ()), 1);
       PortableServer::ServantBase_var owner_transfer (test_impl);
 
@@ -68,8 +68,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (test.in ());
 
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
+      FILE *output_file = ACE_OS::fopen (ior_file, "w");
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file <%s> for writing "
                            "IOR: %s",
@@ -84,7 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Server event loop finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
