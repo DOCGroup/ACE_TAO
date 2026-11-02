@@ -56,7 +56,7 @@ namespace ACE_RMCast
 
   private:
     //FUZZ: disable check_for_lack_ACE_OS
-    virtual void recv (Message_ptr m);
+    void recv (Message_ptr m) override;
     //FUZZ: enable check_for_lack_ACE_OS
 
   private:

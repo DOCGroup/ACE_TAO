@@ -26,21 +26,16 @@ namespace ACE_RMCast
   public:
     Acknowledge (Parameters const& params);
 
-    virtual void
-    in_start (In_Element* in);
+    void in_start (In_Element* in) override;
 
-    virtual void
-    out_start (Out_Element* out);
+    void out_start (Out_Element* out) override;
 
-    virtual void
-    out_stop ();
+    void out_stop () override;
 
   public:
-    virtual void
-    recv (Message_ptr m);
+    void recv (Message_ptr m) override;
 
-    virtual void
-    send (Message_ptr m);
+    void send (Message_ptr m) override;
 
   private:
     struct Descr
