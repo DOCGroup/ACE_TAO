@@ -72,11 +72,6 @@ endif
 CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
 CXX_MINOR_VERSION := $(word 2,$(subst ., ,$(CXX_VERSION)))
 
-# GCC 5 added the warning for virtual overrides missing the override keyword.
-ifneq ($(filter-out 0 1 2 3 4,$(CXX_MAJOR_VERSION)),)
-  CCFLAGS += -Wsuggest-override
-endif
-
 # Minimum C++ level is now C++17, gcc until version 11 have an older version as default
 ifeq ($(CXX_MAJOR_VERSION),7)
   c++std ?= c++17
