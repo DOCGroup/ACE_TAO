@@ -245,23 +245,26 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "}" << be_uidt << be_nl_2;
 
   // Upcall_Command instantiation.
-  *os << upcall_command_name << " command (";
-
   if (node->void_return_type () && node->argument_count () == 0)
     {
-      *os << "impl);" << be_nl_2;
+      *os << upcall_command_name << " command (impl);" << be_nl_2;
+    }
+  else if (!be_global->gen_thru_poa_collocation ()
+           && upcall_command_name.size () + 22 <= 120)
+    {
+      *os << upcall_command_name << " command (impl, args);" << be_nl_2;
     }
   else
     {
-      *os << be_idt_nl << "impl," << be_nl;
+      *os << upcall_command_name << " command (" << be_idt_nl
+          << "impl," << be_nl;
 
       // server_request.operation_details () will be non-zero in the
       // thru-POA collocation case.  Use them if available.
       if (be_global->gen_thru_poa_collocation ())
         *os << "server_request.operation_details ()," << be_nl;
 
-      *os << "args";
-      *os << ");" << be_uidt_nl << be_nl;
+      *os << "args);" << be_uidt_nl << be_nl;
     }
 
   *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl

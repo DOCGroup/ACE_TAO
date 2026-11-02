@@ -184,6 +184,7 @@ public:
     std::fprintf (this->fp_,
                   ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
                   num);
+    this->consecutive_newlines_ = 0;
 
     return *this;
   }
@@ -228,6 +229,7 @@ public:
 protected:
   void flush_pending_whitespace ();
   void write_text (std::string const& text);
+  void write_newline ();
 
   /// The underlying low-level I/O handle
   FILE *fp_ {};
@@ -243,6 +245,9 @@ protected:
 
   /// Trailing whitespace is buffered until non-whitespace or newline output.
   std::string pending_whitespace_;
+
+  /// Number of consecutive newlines in the generated file, capped at two.
+  unsigned int consecutive_newlines_ {};
 };
 
 #endif // if !defined

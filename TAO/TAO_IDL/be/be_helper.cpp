@@ -102,18 +102,21 @@ TAO_OutStream::open (std::string const& fname,
                      TAO_OutStream::STREAM_TYPE st)
 {
   this->pending_whitespace_.clear ();
+  this->consecutive_newlines_ = 0;
   // File name exists, open an I/O file handle.
   this->fp_ = ACE_OS::fopen (fname.c_str (), "w");
 
   if (this->fp_ != nullptr)
     {
       this->st_ = st;
+      this->consecutive_newlines_ = 0;
       // Put the copyright notice.  Not for the gperf's temp input
       // file.
       if (st != TAO_OutStream::TAO_GPERF_INPUT)
         {
           ACE_OS::fwrite (copyright.data (), 1, copyright.size (), this->fp_);
           std::fprintf (this->fp_, "\n");
+          this->consecutive_newlines_ = 1;
         }
 
       return 0;
@@ -143,6 +146,7 @@ FILE *&
 TAO_OutStream::file ()
 {
   this->flush_pending_whitespace ();
+  this->consecutive_newlines_ = 0;
   return this->fp_;
 }
 
@@ -189,6 +193,7 @@ TAO_OutStream::reset ()
 {
   this->indent_level_ = 0;
   this->pending_whitespace_.clear ();
+  this->consecutive_newlines_ = 0;
   return 0;
 }
 
@@ -202,6 +207,7 @@ TAO_OutStream::flush_pending_whitespace ()
                       this->pending_whitespace_.size (),
                       this->fp_);
       this->pending_whitespace_.clear ();
+      this->consecutive_newlines_ = 0;
     }
 }
 
@@ -223,6 +229,7 @@ TAO_OutStream::write_text (std::string const& text)
                             ? text.size () - position
                             : whitespace - position,
                           this->fp_);
+          this->consecutive_newlines_ = 0;
         }
 
       if (whitespace == std::string::npos)
@@ -234,7 +241,7 @@ TAO_OutStream::write_text (std::string const& text)
       if (ch == '\n')
         {
           this->pending_whitespace_.clear ();
-          ACE_OS::fwrite (&ch, 1, 1, this->fp_);
+          this->write_newline ();
         }
       else
         {
@@ -242,6 +249,19 @@ TAO_OutStream::write_text (std::string const& text)
         }
 
       position = whitespace + 1;
+    }
+}
+
+void
+TAO_OutStream::write_newline ()
+{
+  if (be_global->gen_source_info () || this->consecutive_newlines_ < 2)
+    {
+      std::fprintf (this->fp_, "\n");
+      if (this->consecutive_newlines_ < 2)
+        {
+          ++this->consecutive_newlines_;
+        }
     }
 }
 
@@ -265,7 +285,7 @@ int
 TAO_OutStream::nl ()
 {
   this->pending_whitespace_.clear ();
-  std::fprintf (this->fp_, "\n");
+  this->write_newline ();
   this->indent ();
   return 0;
 }
@@ -352,6 +372,7 @@ TAO_OutStream::print (const char *format, ...)
               int,
               result);
   va_end (ap);
+  this->consecutive_newlines_ = 0;
 
   return result;
 }
@@ -384,6 +405,7 @@ TAO_OutStream::operator<< (const ACE_CDR::UShort num)
   std::fprintf (this->fp_,
                 "%hu",
                 num);
+  this->consecutive_newlines_ = 0;
 
   return *this;
 }
@@ -395,6 +417,7 @@ TAO_OutStream::operator<< (const ACE_CDR::Short num)
   std::fprintf (this->fp_,
                 "%hd",
                 num);
+  this->consecutive_newlines_ = 0;
 
   return *this;
 }
@@ -406,6 +429,7 @@ TAO_OutStream::operator<< (const ACE_CDR::ULong num)
   std::fprintf (this->fp_,
                 "%lu",
                 (unsigned long) num);
+  this->consecutive_newlines_ = 0;
 
   return *this;
 }
@@ -417,6 +441,7 @@ TAO_OutStream::operator<< (const ACE_CDR::Long num)
   std::fprintf (this->fp_,
                 "%ld",
                 (long) num);
+  this->consecutive_newlines_ = 0;
 
   return *this;
 }
@@ -428,6 +453,7 @@ TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
   std::fprintf (this->fp_,
                 ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                 num);
+  this->consecutive_newlines_ = 0;
 
   return *this;
 }
@@ -439,6 +465,7 @@ TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
   std::fprintf (this->fp_,
                 ACE_INT64_FORMAT_SPECIFIER_ASCII,
                 num);
+  this->consecutive_newlines_ = 0;
 
   return *this;
 }
@@ -447,8 +474,7 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL&)
 {
   this->pending_whitespace_.clear ();
-  std::fprintf (this->fp_ ,
-                "\n");
+  this->write_newline ();
   this->indent ();
 
   return *this;
@@ -458,10 +484,8 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL_2&)
 {
   this->pending_whitespace_.clear ();
-  std::fprintf (this->fp_ ,
-                "\n");
-  std::fprintf (this->fp_ ,
-                "\n");
+  this->write_newline ();
+  this->write_newline ();
   this->indent ();
   return *this;
 }

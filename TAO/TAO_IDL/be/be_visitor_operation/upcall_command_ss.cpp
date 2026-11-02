@@ -82,10 +82,19 @@ be_visitor_operation_upcall_command_ss::visit (
   // class, an instance of which will be invoked by the
   // TAO::Upcall_Wrapper object.
 
-  os << "class " << upcall_command_name  << be_nl
-     << "  : public TAO::Upcall_Command" << be_nl
+  os << "class " << upcall_command_name;
+  if (upcall_command_name.size () + 35 <= 120)
+    {
+      os << " : public TAO::Upcall_Command";
+    }
+  else
+    {
+      os << be_nl << "  : public TAO::Upcall_Command";
+    }
+
+  os << be_nl
      << "{" << be_nl
-     << "public:" << be_idt_nl ;
+     << "public:" << be_idt_nl;
 
   // Generate constructor
   os << "inline " << upcall_command_name
