@@ -2,6 +2,8 @@
 #include "Gate.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 using namespace CORBA;
 using namespace CosNotifyComm;
 using namespace CosNotification;
@@ -50,8 +52,8 @@ init (ConsumerAdmin_ptr consumer_admin,
 
   id_ = string_alloc (ACE_Utils::truncate_cast<CORBA::ULong> (
                         uuid.to_string ()->length () + 2));
-  ACE_OS::strcpy (id_.inout (), "_");
-  ACE_OS::strcpy (id_.inout () + 1, uuid.to_string ()->rep ());
+  std::strcpy (id_.inout (), "_");
+  std::strcpy (id_.inout () + 1, uuid.to_string ()->rep ());
 
   // ACE_DEBUG ((LM_DEBUG, "ID: %s\n", id_.in ()));
 
@@ -89,7 +91,7 @@ init (ConsumerAdmin_ptr consumer_admin,
 ACE_THR_FUNC_RETURN Gate::
 tracker_thunk (void* arg)
 {
-  Gate* a = reinterpret_cast<Gate*> (arg);
+  Gate* const a = reinterpret_cast<Gate*> (arg);
   a->tracker ();
   return 0;
 }
@@ -128,11 +130,11 @@ tracker ()
         break;
     }
 
-    CORBA::ULong seqn = ACE_Utils::truncate_cast<CORBA::ULong> (n);
+    CORBA::ULong const seqn = ACE_Utils::truncate_cast<CORBA::ULong> (n);
     OctetSeq seq (seqn);
     seq.length (seqn);
 
-    char* buffer = reinterpret_cast<char*> (seq.get_buffer ());
+    char* const buffer = reinterpret_cast<char*> (seq.get_buffer ());
 
     if (socket_.recv (buffer, n) != n)
     {
@@ -153,7 +155,7 @@ tracker ()
 
     for (; i < e.header.variable_header.length (); ++i)
     {
-      if (ACE_OS::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
+      if (std::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
         break;
     }
 
@@ -186,7 +188,7 @@ push_structured_event (StructuredEvent const& e)
 {
   for (ULong i (0); i < e.header.variable_header.length (); ++i)
   {
-    if (ACE_OS::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
+    if (std::strcmp (e.header.variable_header[i].name.in (), id_.in ()) == 0)
     {
       ULong ttl;
 
@@ -214,21 +216,21 @@ push_structured_event (StructuredEvent const& e)
 
   cdr << e;
 
-  CORBA::ULong size (ACE_Utils::truncate_cast<CORBA::ULong> (cdr.total_length ()));
+  CORBA::ULong const size (ACE_Utils::truncate_cast<CORBA::ULong> (cdr.total_length ()));
 
   OctetSeq seq (size);
   seq.length (size);
 
-  char* buffer = reinterpret_cast<char*> (seq.get_buffer ());
+  char* const buffer = reinterpret_cast<char*> (seq.get_buffer ());
 
   {
     char* buf = buffer;
 
     for (ACE_Message_Block const* mb = cdr.begin ();
-         mb != 0;
+         mb != nullptr;
          mb = mb->cont ())
     {
-      ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
+      std::memcpy (buf, mb->rd_ptr (), mb->length ());
       buf += mb->length ();
     }
   }
