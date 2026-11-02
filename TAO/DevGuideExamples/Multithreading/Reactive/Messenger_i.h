@@ -29,8 +29,7 @@ public:
   CORBA::Boolean send_message (
     char const *user_name,
     char const *subject,
-    char *&message
-  ) override;
+    char *&message) override;
 
   Messenger_i (Messenger_i const &) = delete;
   Messenger_i (Messenger_i &&) = delete;

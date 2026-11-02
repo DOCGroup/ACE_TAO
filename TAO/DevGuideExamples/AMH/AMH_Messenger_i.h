@@ -35,8 +35,7 @@ public:
     DevGuide::AMH_MessengerResponseHandler_ptr _tao_rh,
     char const *user_name,
     char const *subject,
-    char const *message
-  ) override;
+    char const *message) override;
 };
 
 
