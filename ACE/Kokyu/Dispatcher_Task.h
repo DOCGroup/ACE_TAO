@@ -61,14 +61,14 @@ public:
                    ACE_Thread_Manager* thr_manager = 0);
 
 
-  ~Dispatcher_Task ();
+  ~Dispatcher_Task () override;
   int initialize();
 
   int enqueue (const Dispatch_Command* cmd,
            const QoSDescriptor& qos_info);
 
   /// Process the events in the queue.
-  int svc ();
+  int svc () override;
 
   const ConfigInfo& get_curr_config_info() const;
   Priority_t preemption_priority() const;
