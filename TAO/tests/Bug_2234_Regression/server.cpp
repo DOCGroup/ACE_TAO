@@ -21,13 +21,13 @@
 
 #include <cstring>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const * ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -49,7 +49,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-CORBA::ORB_ptr orb;
+CORBA::ORB_ptr orb = nullptr;
 
 // The test case code for the server always sends back to the client:
 // b(out)= a(in) *2
@@ -62,16 +62,18 @@ CORBA::ORB_ptr orb;
 class FooImpl : public POA_Test::Foo
 {
 public:
-  FooImpl() = default;
-  ~FooImpl() = default;
+  FooImpl () = default;
+  FooImpl (FooImpl const &) = delete;
+  FooImpl (FooImpl &&) = delete;
+  FooImpl & operator= (FooImpl const &) = delete;
+  FooImpl & operator= (FooImpl &&) = delete;
 
   //-----------------------------------------------------------
 
   CORBA::Long TestLong(
     CORBA::Long a,
     CORBA::Long_out b,
-    CORBA::Long &c
- )
+    CORBA::Long & c) override
   {
     ACE_DEBUG( (LM_INFO, ". in TestLong\n"));
     if (static_cast<CORBA::Long>(1) != a)
@@ -94,10 +96,9 @@ public:
   //-----------------------------------------------------------
 
   char *TestString(
-    const char *a,
+    char const * a,
     CORBA::String_out b,
-    char *&c
- )
+    char *& c) override
   {
     ACE_DEBUG( (LM_INFO, ". in TestString\n"));
     if (a == nullptr)
@@ -140,10 +141,9 @@ public:
   //-----------------------------------------------------------
 
   Test::MyNonVarStruct TestNonVarStruct(
-    const Test::MyNonVarStruct &a,
+    Test::MyNonVarStruct const & a,
     Test::MyNonVarStruct_out b,
-    Test::MyNonVarStruct &c
- )
+    Test::MyNonVarStruct & c) override
   {
     Test::MyNonVarStruct
       newret;
@@ -177,10 +177,9 @@ public:
   //-----------------------------------------------------------
 
   Test::MyVarStruct *TestVarStruct(
-    const Test::MyVarStruct &a,
+    Test::MyVarStruct const & a,
     Test::MyVarStruct_out b,
-    Test::MyVarStruct &c
- )
+    Test::MyVarStruct & c) override
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarStruct\n"));
     if (a.val.in() == nullptr)
@@ -240,9 +239,9 @@ public:
   //-----------------------------------------------------------
 
   Test::MyNonVarUnion TestNonVarUnion(
-    const Test::MyNonVarUnion &a,
+    Test::MyNonVarUnion const & a,
     Test::MyNonVarUnion_out b,
-    Test::MyNonVarUnion &c)
+    Test::MyNonVarUnion & c) override
   {
     Test::MyNonVarUnion
       newret;
@@ -286,10 +285,9 @@ public:
   //-----------------------------------------------------------
 
   Test::MyVarUnion *TestVarUnion(
-    const Test::MyVarUnion &a,
+    Test::MyVarUnion const & a,
     Test::MyVarUnion_out b,
-    Test::MyVarUnion &c
- )
+    Test::MyVarUnion & c) override
   {
     ACE_DEBUG( (LM_INFO, ". in TestVarUnion\n") );
     if (static_cast<CORBA::Short>(1) != a._d())
@@ -335,10 +333,9 @@ public:
   //-----------------------------------------------------------
 
   Test::MySeqOfLong *TestSeqOfLong (
-    const Test::MySeqOfLong &a,
+    Test::MySeqOfLong const & a,
     Test::MySeqOfLong_out b,
-    Test::MySeqOfLong &c
- )
+    Test::MySeqOfLong & c) override
   {
     ACE_DEBUG( (LM_INFO, ". in TestSeqOfLong\n") );
     if (1u != a.length())
@@ -385,10 +382,9 @@ public:
   //-----------------------------------------------------------
 
   CORBA::Any *TestAny(
-    const CORBA::Any &a,
+    CORBA::Any const & a,
     CORBA::Any_out b,
-    CORBA::Any &c
- )
+    CORBA::Any & c) override
   {
     ACE_DEBUG( (LM_INFO, ". in TestAny\n") );
     CORBA::Long aL;
@@ -441,9 +437,9 @@ public:
   //-----------------------------------------------------------
 
   Test::MyArray_slice *TestArray(
-    const Test::MyArray a,
+    Test::MyArray const a,
     Test::MyArray_out b,
-    Test::MyArray c)
+    Test::MyArray c) override
   {
     ACE_DEBUG( (LM_INFO, ". in TestArray\n") );
     if (a[0].length () != 1)
@@ -511,8 +507,7 @@ public:
   CORBA::Object_ptr TestObject(
     CORBA::Object_ptr a,
     CORBA::Object_out b,
-    CORBA::Object_ptr &c
-    )
+    CORBA::Object_ptr & c) override
   {
     b = CORBA::Object::_duplicate (a);
     return CORBA::Object::_duplicate (c);
@@ -520,8 +515,7 @@ public:
 
   //-----------------------------------------------------------
 
-  void ShutdownServer(
- )
+  void ShutdownServer () override
   {
     ACE_DEBUG( (LM_INFO, ". in ShutdownServer\n") );
     orb->shutdown(0);
@@ -534,23 +528,28 @@ public:
 class AnInterceptor : public PortableInterceptor::ServerRequestInterceptor
 {
 public:
-  char *name( )
+  AnInterceptor () = default;
+  AnInterceptor (AnInterceptor const &) = delete;
+  AnInterceptor (AnInterceptor &&) = delete;
+  AnInterceptor & operator= (AnInterceptor const &) = delete;
+  AnInterceptor & operator= (AnInterceptor &&) = delete;
+
+  char *name () override
   {
-    return const_cast<char *>("");
+    return CORBA::string_dup ("");
   }
 
-  void destroy( )
+  void destroy () override
   {
   }
 
-  void receive_request_service_contexts(
-    PortableInterceptor::ServerRequestInfo_ptr
- )
+  void receive_request_service_contexts (
+    PortableInterceptor::ServerRequestInfo_ptr) override
   {
   }
   // Note this helper only deals with the types inserted into
   // the any that we defined for this test.
-  static void display_any( const CORBA::Any &arg )
+  static void display_any (CORBA::Any const & arg)
   {
     const CORBA::Any           *holding;
     const Test::MyVarStruct    *vS;
@@ -677,7 +676,7 @@ public:
 
   // Useful parameter dumping helper method.-----------| Note this VAR
   // which will automatically delete after the call!   V
-  static void display_arg_list( Dynamic::ParameterList_var param_list )
+  static void display_arg_list (Dynamic::ParameterList_var param_list)
   {
     for (unsigned int i= 0u; i < param_list->length(); ++i)
     {
@@ -705,9 +704,8 @@ public:
     }
   }
 
-  void receive_request(
-    PortableInterceptor::ServerRequestInfo_ptr ri
- )
+  void receive_request (
+    PortableInterceptor::ServerRequestInfo_ptr ri) override
   {
     ACE_DEBUG( (LM_INFO, "AnInterceptor::receive_request\n") );
     Dynamic::ParameterList
@@ -720,9 +718,8 @@ public:
   // deleted (due to the display_arg_list( Dynamic::ParameterList_var ))
   // going out of scope, the "Owned" out pointer 'Argument B' would
   // be premiturely deleted before being sent back to the client.
-  void send_reply(
-    PortableInterceptor::ServerRequestInfo_ptr ri
- )
+  void send_reply (
+    PortableInterceptor::ServerRequestInfo_ptr ri) override
   {
     ACE_DEBUG( (LM_INFO, "AnInterceptor::send_reply\n") );
     Dynamic::ParameterList
@@ -735,14 +732,12 @@ public:
     ACE_DEBUG( (LM_INFO, "\n") );
   }
 
-  void send_exception(
-    PortableInterceptor::ServerRequestInfo_ptr
-  )
+  void send_exception (
+    PortableInterceptor::ServerRequestInfo_ptr) override
   {
   }
-  void send_other(
-    PortableInterceptor::ServerRequestInfo_ptr
- )
+  void send_other (
+    PortableInterceptor::ServerRequestInfo_ptr) override
   {
   }
 };
@@ -752,29 +747,34 @@ class Initialiser
   , public virtual CORBA::LocalObject
 {
 public:
-  Initialiser( AnInterceptor* interceptor )
-  {
-    this->interceptor_= interceptor;
-  }
-
-  void pre_init(
-    PortableInterceptor::ORBInitInfo_ptr
- )
+  explicit Initialiser (AnInterceptor * interceptor)
+    : interceptor_ (interceptor)
   {
   }
 
-  void post_init(
-     PortableInterceptor::ORBInitInfo_ptr info
- )
+  Initialiser (Initialiser const &) = delete;
+  Initialiser (Initialiser &&) = delete;
+  Initialiser & operator= (Initialiser const &) = delete;
+  Initialiser & operator= (Initialiser &&) = delete;
+
+  void pre_init (
+    PortableInterceptor::ORBInitInfo_ptr) override
+  {
+  }
+
+  void post_init (
+    PortableInterceptor::ORBInitInfo_ptr info) override
    {
      info->add_server_request_interceptor( interceptor_ );
    }
 
 private:
+  // Non-owning; the stack interceptor outlives the ORB initializer.
   AnInterceptor *interceptor_;
 };
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
@@ -817,12 +817,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->destroy( );
   }
-  catch (const CORBA::SystemException& exception)
+  catch (CORBA::SystemException const & exception)
   {
     exception._tao_print_exception ("CORBA::SystemException: ");
     return -1;
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("CORBA::Exception: ");
     return -1;

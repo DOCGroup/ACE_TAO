@@ -7,13 +7,13 @@
 
 #include <cstring>
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const * ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,10 +37,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 ACE_TMAIN (
-  int        argc,
+  int argc,
   ACE_TCHAR *argv[])
 {
-  CORBA::Boolean testFailed= 0;
+  CORBA::Boolean testFailed {};
   ACE_DEBUG( (LM_INFO, "Regression test for Bug 2234 (Interceptor arg list with var len out params)\n"));
   try
   {
@@ -105,7 +105,8 @@ ACE_TMAIN (
     cFS->val= 3;
     ACE_DEBUG( (LM_INFO, ". MyNonVarStruct()  "));
     rFS= foo->TestNonVarStruct( aFS.in(), bFS.out(), cFS.inout());
-    ACE_DEBUG( (LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ", aFS.in().val, bFS.in().val, cFS.in().val, rFS.in().val));
+    ACE_DEBUG ((LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ",
+                aFS.in ().val, bFS.in ().val, cFS.in ().val, rFS.in ().val));
     if (static_cast<CORBA::Long>(1) != aFS->val) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
     else if (static_cast<CORBA::Long>(2) != bFS->val) {
@@ -127,7 +128,8 @@ ACE_TMAIN (
     cVS->val= CORBA::string_dup("3");
     ACE_DEBUG( (LM_INFO, ". MyVarStruct()     "));
     rVS= foo->TestVarStruct( aVS.in(), bVS.out(), cVS.inout());
-    ACE_DEBUG( (LM_INFO, "a is %C, b is %C, c is %C, r is %C:  ", aVS->val.in(), bVS->val.in (), cVS->val.in (), rVS->val.in ()));
+    ACE_DEBUG ((LM_INFO, "a is %C, b is %C, c is %C, r is %C:  ",
+                aVS->val.in (), bVS->val.in (), cVS->val.in (), rVS->val.in ()));
     if ((0 != *aVS->val) && (0 != std::strcmp(aVS->val, "1"))) {
        ACE_DEBUG( (LM_ERROR, "a is wrong\n")); testFailed= 1;}
     else if ((0 != *bVS->val) && (0 != std::strcmp(bVS->val, "2"))) {
