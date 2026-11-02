@@ -433,6 +433,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                                 1,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
   operation->set_name (op_name);
 
@@ -474,10 +475,6 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
 
       if (!d)
         {
-          operation->destroy ();
-          delete operation;
-          operation = nullptr;
-
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_amh_pre_proc::")
                              ACE_TEXT ("add_normal_reply - ")
@@ -510,10 +507,11 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
 
   // After having generated the operation we insert it into the
   // response handler interface.
-  if (nullptr == response_handler->be_add_operation (operation))
+  if (nullptr == response_handler->be_add_operation (operation_owner.get ()))
     {
       return -1;
     }
+  operation_owner.release ();
 
   return 0;
 }
