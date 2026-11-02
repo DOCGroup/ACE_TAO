@@ -26,7 +26,7 @@ TAO_Hash_LogStore::list_logs ()
   DsLogAdmin::LogList* list;
 
   // Figure out the length of the list.
-  CORBA::ULong len = static_cast<CORBA::ULong> (hash_map_.current_size ());
+  CORBA::ULong const len = static_cast<CORBA::ULong> (hash_map_.current_size ());
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list,
@@ -62,7 +62,7 @@ TAO_Hash_LogStore::list_logs_by_id ()
   DsLogAdmin::LogIdList* list;
 
   // Figure out the length of the list.
-  CORBA::ULong len = static_cast<CORBA::ULong> (hash_map_.current_size ());
+  CORBA::ULong const len = static_cast<CORBA::ULong> (hash_map_.current_size ());
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list,
@@ -129,7 +129,7 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
 
   TAO_Hash_LogRecordStore *recordstore = nullptr;
 
-  int retval = this->hash_map_.unbind (id, recordstore);
+  int const retval = this->hash_map_.unbind (id, recordstore);
   if (retval == 0)
     {
       delete recordstore;

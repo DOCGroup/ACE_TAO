@@ -67,7 +67,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
   char buf[32];
   ACE_OS::snprintf (buf, sizeof (buf), "Log%d", (int) id_);
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     log_poa->the_POAManager ();
 
   this->iterator_poa_ =
@@ -120,7 +120,7 @@ int
 TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord const &const_rec)
 {
   // Get log record size...
-  size_t record_size = log_record_size (const_rec);
+  size_t const record_size = log_record_size (const_rec);
 
   // Check if we are allowed to write...
   if (max_size_ !=0 && ((current_size_ + record_size) >= max_size_))
@@ -156,7 +156,7 @@ int
 TAO_Hash_LogRecordStore::retrieve_i (DsLogAdmin::RecordId id,
                                      DsLogAdmin::LogRecord &rec)
 {
-  int retval = rec_map_.find (id, rec);
+  int const retval = rec_map_.find (id, rec);
   return retval;
 }
 
@@ -202,7 +202,7 @@ TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id)
 void
 TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter)
 {
-  size_t size = log_record_size(iter->item ());
+  size_t const size = log_record_size(iter->item ());
 
   rec_map_.unbind(&*iter);
 
@@ -224,7 +224,7 @@ TAO_Hash_LogRecordStore::purge_old_records ()
     {
       // Create iterators
       LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-      LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+      LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
       for (CORBA::ULongLong i = 0;
            iter != iter_end && i < num_records_to_purge;
@@ -273,7 +273,7 @@ TAO_Hash_LogRecordStore::set_records_attribute (
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -298,7 +298,7 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id)
 {
   DsLogAdmin::LogRecord rec;
 
-  int retval = this->retrieve_i (id, rec);
+  int const retval = this->retrieve_i (id, rec);
 
   if (retval == -1)
     {
@@ -363,7 +363,7 @@ TAO_Hash_LogRecordStore::query_i (char const *constraint,
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0;       // count of matches found.
 
@@ -406,12 +406,12 @@ TAO_Hash_LogRecordStore::query_i (char const *constraint,
                         CORBA::NO_MEMORY ());
 
       // Transfer ownership to the POA.
-      PortableServer::ServantBase_var safe_iter_query = iter_query;
+      PortableServer::ServantBase_var const safe_iter_query = iter_query;
 
       // Activate it.
-      PortableServer::ObjectId_var oid =
+      PortableServer::ObjectId_var const oid =
         this->iterator_poa_->activate_object (iter_query);
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         this->iterator_poa_->id_to_reference (oid.in ());
 
       // Narrow it
@@ -472,7 +472,7 @@ TAO_Hash_LogRecordStore::match (char const *grammar,
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -502,7 +502,7 @@ TAO_Hash_LogRecordStore::delete_records (char const *grammar,
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0; // count of matches found.
 
@@ -549,7 +549,9 @@ TAO_Hash_LogRecordStore::remove_old_records ()
     return 0;
   }
 
-  TimeBase::TimeT purge_time (ORBSVCS_Time::to_Absolute_TimeT ((ACE_OS::gettimeofday () - ACE_Time_Value(this->max_record_life_))));
+  TimeBase::TimeT const purge_time (
+    ORBSVCS_Time::to_Absolute_TimeT (
+      ACE_OS::gettimeofday () - ACE_Time_Value (this->max_record_life_)));
 
   // As there is no separate timestamp index, we must iterate through
   // the entire map.  We can't be tempted to think timestamps will be
@@ -557,7 +559,7 @@ TAO_Hash_LogRecordStore::remove_old_records ()
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
   CORBA::ULong count = 0; // count of matches found.
 
