@@ -40,6 +40,7 @@
 
 #include "fe_obv_header.h"
 #include "fe_utils.h"
+#include "be_global.h"
 #include "nr_extern.h"
 #include "global_extern.h"
 
@@ -47,6 +48,18 @@
 
 namespace
 {
+  struct UTL_LabelList_Deleter
+  {
+    void operator() (UTL_LabelList *label_list) const
+    {
+      if (label_list != nullptr)
+        {
+          label_list->destroy ();
+          delete label_list;
+        }
+    }
+  };
+
   struct UTL_NameList_Deleter
   {
     void operator() (UTL_NameList *name_list) const
@@ -645,12 +658,17 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
   UTL_ScopedName sn (node->local_name (), nullptr);
 
   // The union branch owns its label list so we have to copy it.
-  UTL_LabelList *ll = node->labels ()->copy ();
+  std::unique_ptr<UTL_LabelList, UTL_LabelList_Deleter> label_list (
+    node->labels ()->copy ());
 
+  // ACE_NEW_RETURN requires a raw output pointer; the list stays guarded until
+  // ownership transfers to the branch.
   be_union_branch *added_branch = nullptr;
   ACE_NEW_RETURN (added_branch,
-                  be_union_branch (ll, bt, &sn),
+                  be_union_branch (label_list.get (), bt, &sn),
                   -1);
+  std::unique_ptr<be_union_branch, BE_AST_Decl_Deleter> branch_owner (added_branch);
+  label_list.release ();
 
   // fe_add_union_branch() does necessary things besides calling
   // add_to_scope() so we need to reuse it.
@@ -658,7 +676,10 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
   be_union *u =
     dynamic_cast<be_union*> (idl_global->scopes ().top ());
 
-  u->be_add_union_branch (added_branch);
+  // be_add_union_branch also records the raw node in its field list, so the
+  // branch lifetime is tied to the union even if declaration insertion fails.
+  u->be_add_union_branch (branch_owner.get ());
+  branch_owner.release ();
 
   return 0;
 }
@@ -683,17 +704,22 @@ be_visitor_xplicit_pre_proc::visit_constant (be_constant *node)
                   AST_Expression (node->constant_value (),
                                   node->et ()),
                   -1);
+  std::unique_ptr<AST_Expression, AST_Expression_Deleter> value_owner (new_v);
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
   be_constant *added_const = nullptr;
   ACE_NEW_RETURN (added_const,
                   be_constant (node->et (),
-                               new_v,
+                               value_owner.get (),
                                &sn),
                   -1);
+  value_owner.release ();
+  std::unique_ptr<be_constant, BE_AST_Decl_Deleter> constant_owner (added_const);
 
+  // The scope stores inserted declarations as raw pointers and owns their lifetime.
   idl_global->scopes ().top ()->add_to_scope (added_const);
+  constant_owner.release ();
 
   return 0;
 }
