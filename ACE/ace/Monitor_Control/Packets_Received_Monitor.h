@@ -64,14 +64,14 @@ namespace ACE
       Packets_Received_Monitor (const char* name);
 
       /// Implementation of the pure virtual method.
-      virtual void update ();
+      void update () override;
 
       /// Stores the default name, used if none is supplied by the user.
       static const char* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
-      virtual void clear_i ();
+      void clear_i () override;
 
     private:
       static const char* default_name_;
