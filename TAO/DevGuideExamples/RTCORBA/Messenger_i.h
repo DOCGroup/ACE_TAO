@@ -23,14 +23,19 @@ class  Messenger_i : public virtual POA_Messenger
 {
 public:
   //Constructor
-  Messenger_i(CORBA::ORB_ptr orb);
+  explicit Messenger_i (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~Messenger_i();
+  ~Messenger_i () override = default;
 
-  virtual CORBA::Boolean send_message(const char* user_name,
-                                      const char* subject,
-                                      char*& message);
+  CORBA::Boolean send_message (char const *user_name,
+                               char const *subject,
+                               char *&message) override;
+
+  Messenger_i (Messenger_i const &) = delete;
+  Messenger_i (Messenger_i &&) = delete;
+  Messenger_i &operator= (Messenger_i const &) = delete;
+  Messenger_i &operator= (Messenger_i &&) = delete;
 
 private:
   RTCORBA::Current_var rt_current_;
