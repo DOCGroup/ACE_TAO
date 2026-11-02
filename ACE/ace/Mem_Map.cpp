@@ -11,6 +11,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Category.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -242,7 +245,7 @@ ACE_Mem_Map::ACE_Mem_Map ()
     close_handle_ (false)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
-  ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
+  std::memset (this->filename_, 0, sizeof this->filename_);
 }
 
 // Map a file specified by FILE_NAME.
@@ -293,9 +296,9 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
 
-  ACE_OS::memset (this->filename_,
-                  0,
-                  sizeof this->filename_);
+  std::memset (this->filename_,
+               0,
+               sizeof this->filename_);
   if (this->map (handle,
                  len,
                  prot,

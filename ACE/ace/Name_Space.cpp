@@ -3,6 +3,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -69,7 +70,7 @@ ACE_Name_Binding::operator == (const ACE_Name_Binding &s) const
   ACE_TRACE ("ACE_Name_Binding::operator ==");
   return this->name_ == s.name_
     && this->value_ == s.value_
-    && ACE_OS::strcmp (this->type_, s.type_) == 0;
+    && std::strcmp (this->type_, s.type_) == 0;
 }
 
 ACE_Name_Space::~ACE_Name_Space ()
