@@ -1,6 +1,8 @@
 #include "ace/CDR_Stream.h"
 #include "ace/SString.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 #include <memory>
 
 #if !defined (__ACE_INLINE__)
@@ -629,12 +631,12 @@ ACE_OutputCDR::write_array (const void *x,
   if (this->adjust (size * length, align, buf) == 0)
     {
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
-      ACE_OS::memcpy (buf, x, size*length);
+      std::memcpy (buf, x, size*length);
       return true;
 #else
       if (!this->do_byte_swap_ || size == 1)
         {
-          ACE_OS::memcpy (buf, x, size*length);
+          std::memcpy (buf, x, size*length);
           return true;
         }
       else
@@ -1831,10 +1833,10 @@ ACE_InputCDR::read_array (void* x,
   if (this->adjust (size * length, align, buf) == 0)
     {
 #if defined (ACE_DISABLE_SWAP_ON_READ)
-      ACE_OS::memcpy (x, buf, size*length);
+      std::memcpy (x, buf, size*length);
 #else
       if (!this->do_byte_swap_ || size == 1)
-        ACE_OS::memcpy (x, buf, size*length);
+        std::memcpy (x, buf, size*length);
       else
         {
           char *target = reinterpret_cast<char*> (x);
@@ -2284,9 +2286,9 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
     }
 
   // Now do the copy
-  (void) ACE_OS::memcpy (this->start_.wr_ptr (),
-                         cdr.start_.rd_ptr (),
-                         wr_bytes);
+  (void) std::memcpy (this->start_.wr_ptr (),
+                      cdr.start_.rd_ptr (),
+                      wr_bytes);
 
   // Set the read pointer position to the same point as that was in
   // <incoming> cdr.

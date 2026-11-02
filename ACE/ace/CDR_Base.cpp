@@ -509,7 +509,7 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
   char *start = ACE_ptr_align_binary (db->base (),
                                       ACE_CDR::MAX_ALIGNMENT);
 
-  ACE_OS::memcpy (start, mb->rd_ptr (), mb_len);
+  std::memcpy (start, mb->rd_ptr (), mb_len);
   mb->data_block (db);
 
   // Setting the data block on the mb resets the read and write
@@ -583,7 +583,7 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
 ACE_CDR::LongDouble&
 ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
 {
-  ACE_OS::memset (this->ld, 0, sizeof (this->ld));
+  std::memset (this->ld, 0, sizeof (this->ld));
 
   if (sizeof (rhs) == 8)
     {
@@ -639,14 +639,14 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
             }
         }
 #if defined (ACE_LITTLE_ENDIAN)
-      ACE_OS::memcpy (rhs_ptr, this->ld, sizeof (this->ld));
+      std::memcpy (rhs_ptr, this->ld, sizeof (this->ld));
       ACE_CDR::swap_16 (rhs_ptr, this->ld);
 #endif
     }
   else
     {
-      ACE_OS::memcpy(this->ld,
-                     reinterpret_cast<const char*> (&rhs), sizeof (rhs));
+      std::memcpy (this->ld,
+                   reinterpret_cast<const char*> (&rhs), sizeof (rhs));
     }
   return *this;
 }
@@ -662,13 +662,13 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble& rhs)
 bool
 ACE_CDR::LongDouble::operator== (const ACE_CDR::LongDouble &rhs) const
 {
-  return ACE_OS::memcmp (this->ld, rhs.ld, 16) == 0;
+  return std::memcmp (this->ld, rhs.ld, 16) == 0;
 }
 
 bool
 ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 {
-  return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
+  return std::memcmp (this->ld, rhs.ld, 16) != 0;
 }
 
 ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
@@ -737,7 +737,7 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
     }
   else
     {
-      ACE_OS::memcpy(lhs_ptr, this->ld, sizeof (ret));
+      std::memcpy (lhs_ptr, this->ld, sizeof (ret));
     }
 
   // This bit of code is unnecessary.  However, this code is
@@ -776,7 +776,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::LongLong val)
         break;
     }
 
-  ACE_OS::memset (f.value_, 0, idx + !high);
+  std::memset (f.value_, 0, idx + !high);
   return f;
 }
 
@@ -803,7 +803,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::ULongLong val)
         break;
     }
 
-  ACE_OS::memset (f.value_, 0, idx + !high);
+  std::memset (f.value_, 0, idx + !high);
   return f;
 }
 
@@ -831,7 +831,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
     static_cast<size_t> (1 + ((val > 0) ? std::log10 (val) : 0));
   if (digits_left > MAX_DIGITS)
     {
-      ACE_OS::memset (f.value_, 0, sizeof f.value_);
+      std::memset (f.value_, 0, sizeof f.value_);
       return f;
     }
 
@@ -934,7 +934,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
     f.scale_ = f.digits_;
 
   if (idx >= 0)
-    ACE_OS::memset (f.value_, 0, idx + !high);
+    std::memset (f.value_, 0, idx + !high);
   return f;
 }
 
@@ -942,8 +942,8 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len,
   unsigned int scale)
 {
   Fixed f;
-  ACE_OS::memcpy (f.value_ + 16 - len, array, len);
-  ACE_OS::memset (f.value_, 0, 16 - len);
+  std::memcpy (f.value_ + 16 - len, array, len);
+  std::memset (f.value_, 0, 16 - len);
   f.scale_ = static_cast<Octet> (scale);
 
   f.digits_ = static_cast<Octet> (len * 2 - 1);
@@ -1566,7 +1566,7 @@ bool ACE_CDR::Fixed::operator! () const
 {
   static const Octet ZERO[] = {0, 0, 0, 0, 0, 0, 0, 0,
                                0, 0, 0, 0, 0, 0, 0, POSITIVE};
-  return 0 == ACE_OS::memcmp (this->value_, ZERO, sizeof ZERO);
+  return 0 == std::memcmp (this->value_, ZERO, sizeof ZERO);
 }
 
 ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs, const ACE_CDR::Fixed &rhs)
@@ -1608,7 +1608,7 @@ bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
     &b = lhs.sign () ? lhs : rhs;
 
   if (a.scale_ == b.scale_)
-    return ACE_OS::memcmp (a.value_, b.value_, sizeof a.value_) < 0;
+    return std::memcmp (a.value_, b.value_, sizeof a.value_) < 0;
 
   const int a_int_dig = a.digits_ - a.scale_, b_int_dig = b.digits_ - b.scale_;
 
@@ -1652,7 +1652,7 @@ bool ACE_CDR::Fixed::equal (const ACE_CDR::Fixed &rhs) const
     return false;
 
   if (lhs.scale_ == rhs.scale_)
-    return 0 == ACE_OS::memcmp (lhs.value_, rhs.value_, sizeof lhs.value_);
+    return 0 == std::memcmp (lhs.value_, rhs.value_, sizeof lhs.value_);
 
   const ACE_CDR::Fixed &more = (lhs.scale_ > rhs.scale_) ? lhs : rhs,
     &fewer = (lhs.scale_ > rhs.scale_) ? rhs : lhs;
