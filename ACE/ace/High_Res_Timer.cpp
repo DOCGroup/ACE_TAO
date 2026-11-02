@@ -20,6 +20,9 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Truncate.h"
 
+#include <cstdlib>
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
@@ -104,9 +107,9 @@ ACE_High_Res_Timer::get_cpuinfo ()
             {
               // If this is an Alpha chip, then the BogoMips rating is
               // usable...
-              if (ACE_OS::strncmp (arg,
-                                   "Alpha",
-                                   5) == 0)
+              if (std::strncmp (arg,
+                                "Alpha",
+                                5) == 0)
                 {
                   supported = true;
                 }
@@ -117,10 +120,10 @@ ACE_High_Res_Timer::get_cpuinfo ()
             {
               // But if we don't have the right kind of Intel chip,
               // just quit.
-              if (ACE_OS::strcmp (arg, "II") == 0
-                  || ACE_OS::strcmp (arg, "III") == 0
-                  || ACE_OS::strcmp (arg, "IV") == 0
-                  || ACE_OS::strcmp (arg, "Pro") == 0)
+              if (std::strcmp (arg, "II") == 0
+                  || std::strcmp (arg, "III") == 0
+                  || std::strcmp (arg, "IV") == 0
+                  || std::strcmp (arg, "Pro") == 0)
                 {
                   supported = true;
                 }
@@ -488,10 +491,10 @@ ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
 {
   if (env != nullptr)
     {
-      const char *env_value = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (env));
+      char const *env_value = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (env));
       if (env_value != nullptr)
         {
-          int const value = ACE_OS::atoi (env_value);
+          int const value = std::atoi (env_value);
           if (value > 0)
             {
               ACE_High_Res_Timer::global_scale_factor (value);
