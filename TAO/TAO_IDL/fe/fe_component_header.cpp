@@ -176,7 +176,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
           if (!iface->is_defined ())
             {
               idl_global->err ()->inheritance_fwd_error (
-                this->interface_name_,
+                this->interface_name_.get (),
                 iface);
 
               continue;

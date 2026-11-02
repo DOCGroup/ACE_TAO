@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_typedef.h"
 
 #include <cstddef>
+#include <memory>
 #include <vector>
 
 class UTL_NameList;
@@ -134,7 +135,12 @@ protected:
 
   // Data.
 protected:
-  UTL_ScopedName *interface_name_ {};
+  struct Scoped_Name_Deleter
+  {
+    void operator() (UTL_ScopedName *name) const;
+  };
+
+  std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter> interface_name_;
   bool has_template_parent_ {};
 
   // Inherited interfaces.

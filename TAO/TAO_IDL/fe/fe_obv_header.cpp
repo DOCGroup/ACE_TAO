@@ -251,7 +251,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         }
       else
         {
-          idl_global->err ()->supports_error (this->interface_name_,
+          idl_global->err ()->supports_error (this->interface_name_.get (),
                                               d);
           continue;
         }
@@ -259,7 +259,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       // Forward declared interface?
       if (iface != nullptr && !iface->is_defined ())
         {
-          idl_global->err ()->supports_fwd_error (this->interface_name_,
+          idl_global->err ()->supports_fwd_error (this->interface_name_.get (),
                                                   iface);
           continue;
         }

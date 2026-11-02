@@ -147,6 +147,16 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
 
 FE_InterfaceHeader::~FE_InterfaceHeader () = default;
 
+void
+FE_InterfaceHeader::Scoped_Name_Deleter::operator() (UTL_ScopedName *name) const
+{
+  if (name != nullptr)
+    {
+      name->destroy ();
+      delete name;
+    }
+}
+
 bool
 FE_InterfaceHeader::is_local () const
 {
@@ -162,12 +172,7 @@ FE_InterfaceHeader::is_abstract () const
 void
 FE_InterfaceHeader::destroy ()
 {
-  if (nullptr != this->interface_name_)
-    {
-      this->interface_name_->destroy ();
-      delete this->interface_name_;
-      this->interface_name_ = nullptr;
-    }
+  this->interface_name_.reset ();
 
   this->iseen_.clear ();
   this->iseen_flat_.clear ();
@@ -289,7 +294,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
           if (nullptr != d)
             {
               idl_global->err ()->inheritance_fwd_error (
-                                      this->interface_name_,
+                                      this->interface_name_.get (),
                                       dynamic_cast<AST_Interface*> (d)
                                     );
               break;
@@ -502,7 +507,7 @@ FE_InterfaceHeader::install_in_header ()
 UTL_ScopedName *
 FE_InterfaceHeader::name () const
 {
-  return this->interface_name_;
+  return this->interface_name_.get ();
 }
 
 AST_Type **
