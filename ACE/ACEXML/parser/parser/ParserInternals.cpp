@@ -41,8 +41,8 @@ const ACEXML_Char ACEXML_ParserInt::base_char_table_[] = {
 
 #if defined (ACE_USES_WCHAR)
 
-int
-ACEXML_ParserInt::isBasechar_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isBasechar_i (ACEXML_Char const c)
 {
   if (c < 0x0100)
     return ACEXML_ParserInt::base_char_table_[c];
@@ -241,16 +241,16 @@ ACEXML_ParserInt::isBasechar_i (const ACEXML_Char c)
             (c >= 0xAC00 && c <= 0xD7A3));
 };
 
-int
-ACEXML_ParserInt::isIdeographic_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isIdeographic_i (ACEXML_Char const c)
 {
   return ((c >= 0x4E00 && c <= 0x9FA5) ||
           (c == 3007) ||
           (c >= 0x3021 && c <= 0x3029));
 }
 
-int
-ACEXML_ParserInt::isCombiningchar_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isCombiningchar_i (ACEXML_Char const c)
 {
   if (c < 0x0901)
     return ((c >= 0x0300 && c <= 0x0345) ||
@@ -351,8 +351,8 @@ ACEXML_ParserInt::isCombiningchar_i (const ACEXML_Char c)
             (c == 0x309A));
 }
 
-int
-ACEXML_ParserInt::isDigit_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isDigit_i (ACEXML_Char const c)
 {
   if (c < 0x0040)
     return (c >= 0x0030 && c <= 0x0039);
@@ -373,8 +373,8 @@ ACEXML_ParserInt::isDigit_i (const ACEXML_Char c)
             (c >= 0x0F20 && c <= 0x0F29));
 }
 
-int
-ACEXML_ParserInt::isExtender_i (const ACEXML_Char c)
+bool
+ACEXML_ParserInt::isExtender_i (ACEXML_Char const c)
 {
   // The compiler should generate a jump table and index into it directly.
   switch (c)
@@ -383,9 +383,9 @@ ACEXML_ParserInt::isExtender_i (const ACEXML_Char c)
       case 0x0E46: case 0x0EC6: case 0x3005: case 0x3031: case 0x3032:
       case 0x3033: case 0x3034: case 0x3035: case 0x309D: case 0x309E:
       case 0x30FC: case 0x30FD: case 0x30FE:
-        return 1;
+        return true;
       default:
-        return 0;
+        return false;
     }
 }
 

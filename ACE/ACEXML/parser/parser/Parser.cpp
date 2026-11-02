@@ -30,25 +30,25 @@ const ACEXML_Char
 ACEXML_Parser::validation_feature_[] = ACE_TEXT ("http://xml.org/sax/features/validation");
 
 ACEXML_Parser::ACEXML_Parser ()
-  :   dtd_handler_ (0),
-      entity_resolver_ (0),
-      content_handler_ (0),
-      error_handler_ (0),
-      doctype_ (0),
-      current_ (0),
+  :   dtd_handler_ (nullptr),
+      entity_resolver_ (nullptr),
+      content_handler_ (nullptr),
+      error_handler_ (nullptr),
+      doctype_ (nullptr),
+      current_ (nullptr),
       alt_stack_ (MAXPATHLEN),
       nested_namespace_ (0),
       ref_state_ (ACEXML_ParserInt::INVALID),
-      external_subset_ (0),
+      external_subset_ (false),
       external_entity_ (0),
-      has_pe_refs_ (0),
-      standalone_ (0),
-      external_dtd_ (0),
-      internal_dtd_ (0),
-      simple_parsing_ (0),
-      validate_ (1),
-      namespaces_(1),
-      namespace_prefixes_ (0)
+      has_pe_refs_ (false),
+      standalone_ (false),
+      external_dtd_ (false),
+      internal_dtd_ (false),
+      simple_parsing_ (false),
+      validate_ (true),
+      namespaces_ (true),
+      namespace_prefixes_ (false)
 {
 }
 
@@ -84,7 +84,7 @@ ACEXML_Parser::initialize(ACEXML_InputSource* input)
 void
 ACEXML_Parser::parse (const ACEXML_Char *systemId)
 {
-  ACEXML_InputSource* input = 0;
+  ACEXML_InputSource* input = nullptr;
   ACE_NEW (input, ACEXML_InputSource (systemId));
   this->parse (input);
 }
@@ -92,16 +92,16 @@ ACEXML_Parser::parse (const ACEXML_Char *systemId)
 void
 ACEXML_Parser::parse (ACEXML_InputSource *input)
 {
-  if (input == 0)
+  if (input == nullptr)
     {
       this->fatal_error(ACE_TEXT ("Invalid input source"));
     }
-  if (this->content_handler_ == 0)
+  if (this->content_handler_ == nullptr)
     {
       this->fatal_error (ACE_TEXT ("No content handlers defined. Exiting.."));
     }
 
-  if (this->validate_ && this->dtd_handler_ == 0)
+  if (this->validate_ && this->dtd_handler_ == nullptr)
     {
       this->fatal_error (ACE_TEXT ("No DTD handlers defined. Exiting.."));
     }
@@ -113,7 +113,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
   // Set up Locator.
   this->content_handler_->setDocumentLocator (this->current_->getLocator());
 
-  int xmldecl_defined = 0;
+  bool xmldecl_defined = false;
   ACEXML_Char fwd = this->get();  // Consume '<'
   if (fwd == '<' && this->peek() == '?')
     {
@@ -122,7 +122,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
       if (fwd == 'x' && !xmldecl_defined)
         {
           this->parse_xml_decl ();
-          xmldecl_defined = 1;
+          xmldecl_defined = true;
         }
     }
   // We need a XMLDecl in a Valid XML document
@@ -133,8 +133,9 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
     }
   this->content_handler_->startDocument ();
 
-  int doctype_defined = 0;
-  for (int prolog_done = 0; prolog_done == 0; )
+  bool doctype_defined = false;
+  bool prolog_done = false;
+  while (!prolog_done)
     {
       // Expect a '<' only if we have encountered a XMLDecl, or we are
       // looping through Misc blocks.
@@ -152,7 +153,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
           case '?':
             this->get();
             this->parse_processing_instruction ();
-            xmldecl_defined = 1;
+            xmldecl_defined = true;
             break;
           case '!':
             this->get();
@@ -161,10 +162,10 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
               {
                 // This will also take care of the trailing MISC block if any.
                 this->parse_doctypedecl ();
-                doctype_defined = 1;
+                doctype_defined = true;
                 // Now that we have a DOCTYPE Decl defined, we shouldn't
                 // accept XML Decl any longer
-                xmldecl_defined = 1;
+                xmldecl_defined = true;
               }
             else if (fwd == 'D')
               {
@@ -176,14 +177,14 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
                   {
                     this->fatal_error(ACE_TEXT ("Invalid comment in document"));
                   }
-                xmldecl_defined = 1;
+                xmldecl_defined = true;
               }
             break;
           case 0:
             this->fatal_error (ACE_TEXT ("Unexpected end-of-file"));
             break;
           default:                // Root element begins
-            prolog_done = 1;
+            prolog_done = true;
             break;
         }
     }
@@ -194,7 +195,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
     }
 
   // Now parse root element.
-  this->parse_element (1);
+  this->parse_element (true);
 
   this->content_handler_->endDocument ();
 
@@ -218,7 +219,7 @@ ACEXML_Parser::parse_doctypedecl ()
     }
 
   this->doctype_ = this->parse_name ();
-  if (this->doctype_ == 0)
+  if (this->doctype_ == nullptr)
     {
       this->fatal_error(ACE_TEXT ("Invalid DOCTYPE name"));
     }
@@ -231,7 +232,7 @@ ACEXML_Parser::parse_doctypedecl ()
           this->fatal_error(ACE_TEXT ("Expecting a space between DOCTYPE")
                             ACE_TEXT ("keyword and name"));
         }
-      this->external_dtd_ = 1;
+      this->external_dtd_ = true;
       this->parse_external_dtd ();
     }
 
@@ -239,7 +240,7 @@ ACEXML_Parser::parse_doctypedecl ()
   switch (nextch)
     {
       case '[':
-        this->internal_dtd_ = 1;  // Internal DTD definition
+        this->internal_dtd_ = true; // Internal DTD definition
         this->parse_internal_dtd ();
         break;
       case '>':                   // End of DTD definition
@@ -286,7 +287,7 @@ ACEXML_Parser::parse_internal_dtd ()
             }
           break;
         case '%':
-          this->has_pe_refs_ = 1;
+          this->has_pe_refs_ = true;
           this->parse_PE_reference ();
           break;
         case ']':                 // End of internal definitions.
@@ -310,8 +311,8 @@ int
 ACEXML_Parser::parse_external_dtd ()
 {
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
-  ACEXML_Char* publicId = 0;
-  ACEXML_Char* systemId = 0;
+  ACEXML_Char* publicId = nullptr;
+  ACEXML_Char* systemId = nullptr;
   if (this->parse_external_id (publicId, systemId) != 0)
     {
       this->fatal_error (ACE_TEXT ("Error in parsing ExternalID"));
@@ -320,7 +321,7 @@ ACEXML_Parser::parse_external_dtd ()
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
       std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
-      ACEXML_InputSource* ip = 0;
+      ACEXML_InputSource* ip = nullptr;
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
@@ -352,7 +353,7 @@ int
 ACEXML_Parser::parse_external_subset ()
 {
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
-  this->external_subset_ = 1;
+  this->external_subset_ = true;
   size_t nrelems = 0;
   ACEXML_Char nextch = this->skip_whitespace();
   do {
@@ -399,7 +400,7 @@ int
 ACEXML_Parser::parse_conditional_section ()
 {
   ACEXML_Char ch = this->get ();
-  int include = 0;
+  bool include = false;
   if (ch != '[')
     {
       this->fatal_error(ACE_TEXT ("Internal Parser Error"));
@@ -421,7 +422,7 @@ ACEXML_Parser::parse_conditional_section ()
                 this->fatal_error (ACE_TEXT ("Expecting keyword INCLUDE in ")
                                    ACE_TEXT ("conditionalSect"));
               }
-            include = 1;
+            include = true;
             break;
           case 'G':
             if (this->parse_token (ACE_TEXT ("GNORE")) < 0)
@@ -429,7 +430,7 @@ ACEXML_Parser::parse_conditional_section ()
                 this->fatal_error (ACE_TEXT ("Expecting keyword IGNORE in ")
                                    ACE_TEXT ("conditionalSect"));
               }
-            include = 0;
+            include = false;
             break;
           default:
             this->fatal_error (ACE_TEXT ("Invalid conditionalSect"));
@@ -462,7 +463,7 @@ ACEXML_Parser::parse_ignoresect ()
 {
   ACEXML_Char nextch = this->skip_whitespace();
   int count = 0;
-  int done = 0;
+  bool done = false;
   do {
     switch (nextch)
       {
@@ -489,7 +490,7 @@ ACEXML_Parser::parse_ignoresect ()
                       --count;
                       break;
                     }
-                  done = 1;
+                  done = true;
                 }
             }
           break;
@@ -610,7 +611,7 @@ int
 ACEXML_Parser::parse_external_id (ACEXML_Char *&publicId,
                                   ACEXML_Char *&systemId)
 {
-  publicId = systemId = 0;
+  publicId = systemId = nullptr;
   ACEXML_Char nextch = this->get ();
   ACEXML_Char fwd = 0;
   switch (nextch)
@@ -659,17 +660,17 @@ ACEXML_Parser::parse_external_id (ACEXML_Char *&publicId,
 ACEXML_Char*
 ACEXML_Parser::normalize_systemid (const ACEXML_Char* systemId)
 {
-  if (ACE_OS::strstr (systemId, ACE_TEXT("ftp://")) != 0 ||
-      ACE_OS::strstr (systemId, ACE_TEXT ("http://")) != 0 ||
-      ACE_OS::strstr (systemId, ACE_TEXT ("file://")) != 0)
-    return 0;
+  if (ACE_OS::strstr (systemId, ACE_TEXT("ftp://")) != nullptr ||
+      ACE_OS::strstr (systemId, ACE_TEXT ("http://")) != nullptr ||
+      ACE_OS::strstr (systemId, ACE_TEXT ("file://")) != nullptr)
+    return nullptr;
   else
     {
-      ACEXML_Char* normalized_uri = 0;
+      ACEXML_Char* normalized_uri = nullptr;
       const ACEXML_Char* baseURI = this->current_->getLocator()->getSystemId();
       ACE_ASSERT (baseURI);
-      const ACEXML_Char* temp = 0;
-      if (ACE_OS::strstr (baseURI, ACE_TEXT ("http://")) != 0)
+      const ACEXML_Char* temp = nullptr;
+      if (ACE_OS::strstr (baseURI, ACE_TEXT ("http://")) != nullptr)
         {
           // baseURI is a HTTP URL and systemId is relative. Note that this
           // is not compliant with RFC2396. Caveat Emptor !
@@ -690,26 +691,26 @@ ACEXML_Parser::normalize_systemid (const ACEXML_Char* systemId)
         {
           size_t pos = temp - baseURI + 1;
           size_t len = pos + ACE_OS::strlen (systemId) + 1;
-          ACE_NEW_RETURN (normalized_uri, ACEXML_Char[len], 0);
+          ACE_NEW_RETURN (normalized_uri, ACEXML_Char[len], nullptr);
           ACE_OS::strncpy (normalized_uri, baseURI, pos);
           ACE_OS::strcpy (normalized_uri + pos, systemId);
           return normalized_uri;
         }
-      return 0;
+      return nullptr;
     }
 }
 
 void
-ACEXML_Parser::parse_element (int is_root)
+ACEXML_Parser::parse_element (bool is_root)
 {
   // Parse STag.
   const ACEXML_Char *startname = this->parse_name ();
-  if (startname == 0)
+  if (startname == nullptr)
     {
       this->fatal_error (ACE_TEXT ("Unexpected end-of-file"));
       return;
     }
-  if (is_root && this->doctype_ != 0
+  if (is_root && this->doctype_ != nullptr
       && ACE_OS::strcmp (startname, this->doctype_) != 0)
     {
       this->fatal_error (ACE_TEXT ("Root element different from DOCTYPE"));
@@ -717,12 +718,13 @@ ACEXML_Parser::parse_element (int is_root)
     }
   ACEXML_AttributesImpl attributes;
   ACEXML_Char ch;
-  int ns_flag = 0;   // Push only one namespace context onto the stack
+  bool ns_flag = false; // Push only one namespace context onto the stack
                      // if there are multiple namespaces declared.
 
-  const ACEXML_Char* ns_uri = 0;
-  const ACEXML_Char* ns_lname = 0; // namespace URI and localName
-  for (int start_element_done = 0; start_element_done == 0;)
+  const ACEXML_Char* ns_uri = nullptr;
+  const ACEXML_Char* ns_lname = nullptr; // namespace URI and localName
+  bool start_element_done = false;
+  while (!start_element_done)
     {
       ch = this->skip_whitespace ();
 
@@ -741,12 +743,12 @@ ACEXML_Parser::parse_element (int is_root)
             this->xml_namespace_.processName(startname, ns_uri,
                                              ns_lname, false);
             this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
-                                  ns_uri, 1);
+                                  ns_uri, true);
             this->content_handler_->startElement(ns_uri, ns_lname,
                                                  startname, &attributes);
             this->content_handler_->endElement (ns_uri, ns_lname, startname);
             this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
-                                  ns_uri, 0);
+                                  ns_uri, false);
             if (ns_flag)
               {
                 this->xml_namespace_.popContext ();
@@ -757,16 +759,16 @@ ACEXML_Parser::parse_element (int is_root)
             this->xml_namespace_.processName (startname, ns_uri,
                                               ns_lname, false);
             this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
-                                  ns_uri, 1);
+                                  ns_uri, true);
             this->content_handler_->startElement(ns_uri, ns_lname, startname,
                                                  &attributes);
-            start_element_done = 1;
+            start_element_done = true;
             break;
           default:
-            ACEXML_Char *attvalue = 0;
+            ACEXML_Char *attvalue = nullptr;
             ACEXML_Char *attname = this->parse_name (ch);
 
-            if (attname == 0 ||
+            if (attname == nullptr ||
                 this->skip_equal () != 0 ||
                 this->parse_attvalue (attvalue) != 0)
               {
@@ -784,11 +786,11 @@ ACEXML_Parser::parse_element (int is_root)
                       {
                         this->xml_namespace_.pushContext ();
                         this->nested_namespace_++;
-                        ns_flag = 1;
+                        ns_flag = true;
                       }
 
                     ACEXML_Char* name = ACE_OS::strchr (attname, ':');
-                    const ACEXML_Char* ns_name = (name == 0)?
+                    const ACEXML_Char* ns_name = (name == nullptr)?
                                                  empty_string:name+1;
                     if (this->xml_namespace_.declarePrefix (ns_name,
                                                             attvalue) == -1)
@@ -845,7 +847,7 @@ ACEXML_Parser::parse_element (int is_root)
 int
 ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                               const ACEXML_Char*& ns_uri,
-                              const ACEXML_Char*& ns_lname, int ns_flag)
+                              const ACEXML_Char*& ns_lname, bool ns_flag)
 {
   ACEXML_Char *cdata;
   size_t cdata_length = 0;
@@ -900,7 +902,7 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                   {
                     this->get ();       // consume '/'
                     ACEXML_Char* endname = this->parse_name ();
-                    if (endname == 0 ||
+                    if (endname == nullptr ||
                         ACE_OS::strcmp (startname, endname) != 0)
                       {
                         this->fatal_error(ACE_TEXT ("Name in ETag doesn't ")
@@ -915,7 +917,7 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                     this->content_handler_->endElement (ns_uri, ns_lname,
                                                         endname);
                     this->prefix_mapping (this->xml_namespace_.getPrefix(ns_uri),
-                                          ns_uri, 0);
+                                          ns_uri, false);
                     if (this->namespaces_ && ns_flag)
                       {
                         if (this->nested_namespace_ >= 1)
@@ -927,7 +929,7 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
                     return 0;
                   }
                 default:              // a new nested element?
-                  this->parse_element (0);
+                  this->parse_element (false);
                   break;
               }
             break;
@@ -1014,7 +1016,7 @@ ACEXML_Parser::parse_cdata ()
 
   ACEXML_Char ch;
   int datalen = 0;
-  ACEXML_Char *cdata = 0;
+  ACEXML_Char *cdata = nullptr;
   while (1)
     {
       ch = this->get ();
@@ -1053,10 +1055,10 @@ ACEXML_Parser::parse_entity_decl ()
                          ACE_TEXT ("space"));
     }
 
-  int is_GEDecl = 1;
+  bool is_GEDecl = true;
   if (nextch == '%')            // This is a PEDecl.
     {
-      is_GEDecl = 0;
+      is_GEDecl = false;
       this->get ();             // consume the '%'
       if (this->skip_whitespace_count (&nextch) == 0)
         {
@@ -1066,7 +1068,7 @@ ACEXML_Parser::parse_entity_decl ()
     }
 
   ACEXML_Char *entity_name = this->parse_name ();
-  if (entity_name == 0)
+  if (entity_name == nullptr)
     {
       this->fatal_error (ACE_TEXT ("Invalid entity name"));
     }
@@ -1079,7 +1081,7 @@ ACEXML_Parser::parse_entity_decl ()
   int retval = 0;
   if (nextch == '\'' || nextch == '"')
     {
-      ACEXML_Char *entity_value = 0;
+      ACEXML_Char *entity_value = nullptr;
       if (this->parse_entity_value (entity_value) != 0)
         {
           this->fatal_error(ACE_TEXT ("Invalid EntityValue"));
@@ -1102,17 +1104,17 @@ ACEXML_Parser::parse_entity_decl ()
     }
   else
     {
-      ACEXML_Char *systemid = 0, *publicid = 0;
+      ACEXML_Char *systemid = nullptr, *publicid = nullptr;
 
       this->parse_external_id (publicid, systemid);
-      if (systemid == 0)
+      if (systemid == nullptr)
         {
           this->fatal_error(ACE_TEXT ("Invalid SystemLiteral"));
         }
       this->skip_whitespace_count (&nextch);
       if (nextch == 'N')        // NDATA section followed
         {
-          if (is_GEDecl == 0)
+          if (!is_GEDecl)
             {
               this->fatal_error(ACE_TEXT ("Invalid NDataDecl in PEDef"));
             }
@@ -1183,7 +1185,7 @@ ACEXML_Parser::parse_attlist_decl ()
     }
 
   ACEXML_Char *element_name = this->parse_name ();
-  if (element_name == 0)
+  if (element_name == nullptr)
     {
       this->fatal_error(ACE_TEXT ("Invalid element Name in attlistDecl"));
     }
@@ -1266,7 +1268,7 @@ ACEXML_Parser::parse_attname ()
 {
   // Parse attribute name
   ACEXML_Char *att_name = this->parse_name ();
-  if (att_name == 0)
+  if (att_name == nullptr)
     {
       this->fatal_error(ACE_TEXT ("Invalid AttName"));
     }
@@ -1278,7 +1280,7 @@ ACEXML_Parser::parse_defaultdecl ()
 {
   // DefaultDecl ::=  '#REQUIRED' | '#IMPLIED' | (('#FIXED' S)? AttValue)
   ACEXML_Char nextch = this->peek ();
-  ACEXML_Char *fixed_attr = 0;
+  ACEXML_Char *fixed_attr = nullptr;
   switch (nextch)
     {
       case '#':
@@ -1502,7 +1504,7 @@ ACEXML_Parser::parse_atttype ()
             do {
               this->skip_whitespace_count();
               ACEXML_Char *notation_name = this->parse_name ();
-              if (notation_name == 0)
+              if (notation_name == nullptr)
                 {
                   this->fatal_error(ACE_TEXT ("Invalid notation name"));
                 }
@@ -1523,7 +1525,7 @@ ACEXML_Parser::parse_atttype ()
         do {
           this->skip_whitespace_count();
           ACEXML_Char *token_name = this->parse_nmtoken ();
-          if (token_name == 0)
+          if (token_name == nullptr)
             {
               this->fatal_error(ACE_TEXT ("Invalid enumeration name"));
             }
@@ -1560,7 +1562,7 @@ ACEXML_Parser::parse_notation_decl ()
                          ACE_TEXT (" and notation name"));
     }
   ACEXML_Char *notation = this->parse_name ();
-  if (notation == 0)
+  if (notation == nullptr)
     {
       this->fatal_error(ACE_TEXT ("Invalid Notation name"));
     }
@@ -1624,7 +1626,7 @@ ACEXML_Parser::parse_element_decl ()
                          ACE_TEXT (" and element name"));
     }
   ACEXML_Char *element_name = this->parse_name ();
-  if (element_name == 0)
+  if (element_name == nullptr)
     {
       this->fatal_error (ACE_TEXT ("Invalid element name"));
     }
@@ -1700,7 +1702,7 @@ ACEXML_Parser::parse_children_definition ()
         // @@ close the element definition in the validator.
         break;
       default:
-        int status = this->parse_child (1);
+        int status = this->parse_child (true);
         if (status != 0)
           return -1;
     }
@@ -1729,10 +1731,10 @@ ACEXML_Parser::parse_children_definition ()
 }
 
 int
-ACEXML_Parser::parse_child (int skip_open_paren)
+ACEXML_Parser::parse_child (bool skip_open_paren)
 {
   // Conditionally consume the open paren.
-  if (skip_open_paren == 0 && this->get () != '(')
+  if (!skip_open_paren && this->get () != '(')
     {
       this->fatal_error(ACE_TEXT ("Expecting '(' at beginning of children"));
     }
@@ -1747,13 +1749,13 @@ ACEXML_Parser::parse_child (int skip_open_paren)
       {
         case '(':
           this->check_for_PE_reference ();
-          this->parse_child (0);
+          this->parse_child (false);
           break;
         default:
           this->check_for_PE_reference ();
           // must be an element name here.
           ACEXML_Char *subelement = this->parse_name ();
-          if (subelement == 0)
+          if (subelement == nullptr)
             {
               this->fatal_error(ACE_TEXT ("Invalid subelement name"));
             }
@@ -1857,22 +1859,22 @@ ACEXML_Parser::parse_char_reference (ACEXML_Char *buf, size_t& len)
   ACEXML_Char ch = this->get();
   if (ch != '#')      // Internal error.
     return -1;
-  int hex = 0;
+  bool hex = false;
   ch = this->peek();
   if (ch == 'x')
     {
-      hex = 1;
+      hex = true;
       this->get ();
     }
   size_t i = 0;
-  int more_digit = 0;
+  bool more_digit = false;
   ch = this->get ();
   for ( ; i < len &&
-          (this->isNormalDigit (ch) || (hex ? this->isCharRef(ch): 0)); ++i)
+          (this->isNormalDigit (ch) || (hex ? this->isCharRef (ch) : false)); ++i)
     {
       buf[i] = ch;
       ch = this->get();
-      ++more_digit;
+      more_digit = true;
     }
   if (ch != ';' || !more_digit)
     return -1;
@@ -1999,7 +2001,7 @@ int
 ACEXML_Parser::parse_entity_reference ()
 {
   ACEXML_Char* replace = this->parse_reference_name ();
-  if (replace == 0)
+  if (replace == nullptr)
     {
       this->fatal_error (ACE_TEXT ("Invalid Reference name"));
     }
@@ -2051,8 +2053,8 @@ ACEXML_Parser::parse_entity_reference ()
       this->fatal_error (ACE_TEXT ("Undeclared Entity reference"));
     }
 
-  ACEXML_Char* systemId = 0;
-  ACEXML_Char* publicId = 0;
+  ACEXML_Char* systemId = nullptr;
+  ACEXML_Char* publicId = nullptr;
   if (!entity)
     {
       if (this->external_GE_.resolve_entity (replace, systemId, publicId) < 0)
@@ -2079,7 +2081,7 @@ ACEXML_Parser::parse_entity_reference ()
 
   if (!this->external_entity_)
     {
-      ACEXML_StrCharStream* str = 0;
+      ACEXML_StrCharStream* str = nullptr;
       ACE_NEW_RETURN (str, ACEXML_StrCharStream, -1);
       if (str->open (entity, replace) < 0
           || this->switch_input (str, replace) != 0)
@@ -2093,7 +2095,7 @@ ACEXML_Parser::parse_entity_reference ()
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
       std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
-      ACEXML_InputSource* ip = 0;
+      ACEXML_InputSource* ip = nullptr;
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
@@ -2125,7 +2127,7 @@ int
 ACEXML_Parser::parse_PE_reference ()
 {
   ACEXML_Char* replace = this->parse_reference_name ();
-  if (replace == 0)
+  if (replace == nullptr)
     {
       this->fatal_error (ACE_TEXT ("Invalid PEReference name"));
     }
@@ -2141,8 +2143,8 @@ ACEXML_Parser::parse_PE_reference ()
       this->fatal_error (ACE_TEXT ("Undefined Internal PEReference"));
     }
 
-  ACEXML_Char* systemId = 0;
-  ACEXML_Char* publicId = 0;
+  ACEXML_Char* systemId = nullptr;
+  ACEXML_Char* publicId = nullptr;
   if (!entity && this->validate_)
     {
       if (this->external_PE_.resolve_entity (replace, systemId, publicId) < 0)
@@ -2164,7 +2166,7 @@ ACEXML_Parser::parse_PE_reference ()
 
   if (entity && !this->external_entity_)
     {
-      ACEXML_StrCharStream* sstream = 0;
+      ACEXML_StrCharStream* sstream = nullptr;
       ACEXML_String str (entity);
       if (this->ref_state_ != ACEXML_ParserInt::IN_ENTITY_VALUE)
         {
@@ -2186,7 +2188,7 @@ ACEXML_Parser::parse_PE_reference ()
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
       std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
-      ACEXML_InputSource* ip = 0;
+      ACEXML_InputSource* ip = nullptr;
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
@@ -2486,11 +2488,11 @@ ACEXML_Parser::parse_sddecl (ACEXML_Char*& str)
 void
 ACEXML_Parser::prefix_mapping (const ACEXML_Char* prefix,
                                const ACEXML_Char* uri,
-                               int start)
+                               bool start)
 {
   if (this->namespaces_)
     {
-      const ACEXML_Char* temp = (prefix == 0) ? empty_string : prefix;
+      const ACEXML_Char* temp = (prefix == nullptr) ? empty_string : prefix;
       if (start) {
         this->content_handler_->startPrefixMapping (temp, uri);
       }
@@ -2506,7 +2508,7 @@ ACEXML_Parser::switch_input (ACEXML_CharStream* cstream,
                              const ACEXML_Char* systemId,
                              const ACEXML_Char* publicId)
 {
-  ACEXML_InputSource* input = 0;
+  ACEXML_InputSource* input = nullptr;
   ACE_NEW_RETURN (input, ACEXML_InputSource (cstream), -1);
   return this->switch_input (input, systemId, publicId);
 }
@@ -2516,11 +2518,11 @@ ACEXML_Parser::switch_input (ACEXML_InputSource* input,
                              const ACEXML_Char* systemId,
                              const ACEXML_Char* publicId)
 {
-  ACEXML_LocatorImpl* locator = 0;
+  ACEXML_LocatorImpl* locator = nullptr;
   if (!systemId)
     systemId = input->getSystemId();
   ACE_NEW_RETURN (locator, ACEXML_LocatorImpl (systemId, publicId), -1);
-  ACEXML_Parser_Context* new_context = 0;
+  ACEXML_Parser_Context* new_context = nullptr;
   ACE_NEW_RETURN (new_context, ACEXML_Parser_Context(input, locator), -1);
   if (this->push_context (new_context) != 0)
     {
@@ -2553,7 +2555,7 @@ ACEXML_Parser::pop_context (int GE_ref)
       this->fatal_error(ACE_TEXT ("Unexpected end-of-file"));
     }
 
-  ACEXML_Parser_Context* temp = 0;
+  ACEXML_Parser_Context* temp = nullptr;
   int retval = this->ctx_stack_.pop (temp);
   if (retval != 0)
     {
@@ -2564,7 +2566,7 @@ ACEXML_Parser::pop_context (int GE_ref)
     {
       this->fatal_error (ACE_TEXT ("Unable to read top element of input stack"));
     }
-  ACEXML_Char* reference = 0;
+  ACEXML_Char* reference = nullptr;
   if (GE_ref == 1 && this->GE_reference_.size() > 0)
     {
       if (this->GE_reference_.pop (reference) < 0)
@@ -2618,23 +2620,23 @@ ACEXML_Parser::setFeature (const ACEXML_Char *name, int boolean_value)
 {
   if (ACE_OS::strcmp (name, ACEXML_Parser::simple_parsing_feature_) == 0)
     {
-      this->simple_parsing_ = (boolean_value == 0 ? 0 : 1);
+      this->simple_parsing_ = (boolean_value != 0);
       return;
     }
   else if (ACE_OS::strcmp (name, ACEXML_Parser::namespaces_feature_) == 0)
     {
-      this->namespaces_ = (boolean_value == 0 ? 0 : 1);
+      this->namespaces_ = (boolean_value != 0);
       return;
     }
   else if (ACE_OS::strcmp (name,
                            ACEXML_Parser::namespace_prefixes_feature_) == 0)
     {
-      this->namespace_prefixes_ = (boolean_value == 0 ? 0 : 1);
+      this->namespace_prefixes_ = (boolean_value != 0);
       return;
     }
   else if (ACE_OS::strcmp (name, ACEXML_Parser::validation_feature_) == 0)
     {
-      this->validate_ = (boolean_value == 0 ? 0 : 1);
+      this->validate_ = (boolean_value != 0);
       return;
     }
 
@@ -2702,7 +2704,7 @@ ACEXML_Parser::parse_version_info ()
 void
 ACEXML_Parser::parse_encoding_decl ()
 {
-  ACEXML_Char* astring = 0;
+  ACEXML_Char* astring = nullptr;
   if ((this->parse_token (ACE_TEXT("ncoding")) < 0)
       || this->skip_equal () != 0
       || this->parse_encname (astring) != 0)
@@ -2710,7 +2712,7 @@ ACEXML_Parser::parse_encoding_decl ()
       this->fatal_error (ACE_TEXT ("Invalid EncodingDecl specification"));
     }
   const ACEXML_Char* encoding = this->current_->getInputSource()->getEncoding();
-  if (encoding != 0 && ACE_OS::strcasecmp (astring, encoding) != 0)
+  if (encoding != nullptr && ACE_OS::strcasecmp (astring, encoding) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Detected Encoding is %s ")
                   ACE_TEXT (": Declared Encoding is %s\n"),
@@ -2789,7 +2791,7 @@ ACEXML_Parser::parse_xml_decl ()
               this->parse_sddecl (astring) == 0)
             {
               if (ACE_OS::strcmp (astring, ACE_TEXT ("yes")) == 0)
-                this->standalone_ = 1;
+                this->standalone_ = true;
               fwd = this->skip_whitespace();
             }
         }
@@ -2829,7 +2831,7 @@ int
 ACEXML_Parser::parse_processing_instruction ()
 {
   const ACEXML_Char *pitarget = this->parse_name ();
-  ACEXML_Char *instruction = 0;
+  ACEXML_Char *instruction = nullptr;
 
   if (!ACE_OS::strcasecmp (ACE_TEXT ("xml"), pitarget))
     {
@@ -2874,7 +2876,7 @@ ACEXML_Parser::parse_processing_instruction ()
 void
 ACEXML_Parser::reset ()
 {
-  this->doctype_ = 0;
+  this->doctype_ = nullptr;
   if (this->ctx_stack_.pop (this->current_) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Mismatched push/pop of Context stack")));
@@ -2884,10 +2886,10 @@ ACEXML_Parser::reset ()
 
       this->current_->setInputSource (0);
       delete this->current_;
-      this->current_ = 0;
+      this->current_ = nullptr;
     }
 
-  ACEXML_Char* temp = 0;
+  ACEXML_Char* temp = nullptr;
   while (this->GE_reference_.pop (temp) != -1)
     ;
   while (this->PE_reference_.pop (temp) != -1)
@@ -2904,11 +2906,11 @@ ACEXML_Parser::reset ()
   this->external_PE_.reset();
   this->notations_.reset();
   this->ref_state_ = ACEXML_ParserInt::INVALID;
-  this->external_subset_ = 0;
+  this->external_subset_ = false;
   this->external_entity_ = 0;
-  this->has_pe_refs_ = 0;
-  this->standalone_ = 0;
-  this->external_dtd_ = 0;
-  this->internal_dtd_ = 0;
+  this->has_pe_refs_ = false;
+  this->standalone_ = false;
+  this->external_dtd_ = false;
+  this->internal_dtd_ = false;
 }
 
