@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 
 ACEXML_StrCharStream::ACEXML_StrCharStream ()
-  : start_ (0), ptr_ (0), end_ (0), encoding_ (0), name_ (0)
+  : start_ (nullptr), ptr_ (nullptr), end_ (nullptr), encoding_ (nullptr), name_ (nullptr)
 {
 }
 
@@ -18,13 +18,13 @@ ACEXML_StrCharStream::~ACEXML_StrCharStream ()
 int
 ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
 {
-  if (str != 0 && name != 0)
+  if (str != nullptr && name != nullptr)
     {
       delete [] this->start_;
-      if ((this->start_ = ACE::strnew (str)) == 0)
+      if ((this->start_ = ACE::strnew (str)) == nullptr)
         return -1;
       delete [] this->name_;
-      if ((this->name_ = ACE::strnew (name)) == 0)
+      if ((this->name_ = ACE::strnew (name)) == nullptr)
         return -1;
       this->ptr_ = this->start_;
       this->end_ = this->start_ + ACE_OS::strlen (this->start_);
@@ -36,7 +36,7 @@ ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
 int
 ACEXML_StrCharStream::available ()
 {
-  if (this->start_ != 0)
+  if (this->start_ != nullptr)
     return static_cast<int> (this->end_ - this->start_); // @@ Will this work on all platforms?
   return -1;
 }
@@ -46,17 +46,17 @@ ACEXML_StrCharStream::close ()
 {
   delete[] this->start_;
   delete[] this->encoding_;
-  this->encoding_ = 0;
+  this->encoding_ = nullptr;
   delete[] this->name_;
-  this->name_ = 0;
-  this->start_ = this->ptr_ = this->end_ = 0;
+  this->name_ = nullptr;
+  this->start_ = this->ptr_ = this->end_ = nullptr;
   return 0;
 }
 
 int
 ACEXML_StrCharStream::determine_encoding ()
 {
-  if (this->start_ == 0)
+  if (this->start_ == nullptr)
     return -1;
   char input[4] = {0,0,0,0};
   char* sptr  = (char*)this->start_;
@@ -64,7 +64,7 @@ ACEXML_StrCharStream::determine_encoding ()
   for ( ; i < 4 && sptr != (char*)this->end_; ++sptr, ++i)
     input[i] = *sptr;
   const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
-  if (!temp)
+  if (temp == nullptr)
     return -1;
   else
     {
@@ -85,7 +85,7 @@ ACEXML_StrCharStream::rewind ()
 int
 ACEXML_StrCharStream::get (ACEXML_Char& ch)
 {
-  if (this->start_ != 0 && this->ptr_ != this->end_)
+  if (this->start_ != nullptr && this->ptr_ != this->end_)
     {
       ch = *this->ptr_++;
       return 0;
@@ -96,7 +96,7 @@ ACEXML_StrCharStream::get (ACEXML_Char& ch)
 int
 ACEXML_StrCharStream::read (ACEXML_Char *str, size_t len)
 {
-  if (this->start_ != 0 &&
+  if (this->start_ != nullptr &&
       this->ptr_ != this->end_)
     {
       if (len * sizeof (ACEXML_Char) > (size_t) (this->end_ - this->ptr_))
@@ -111,7 +111,7 @@ ACEXML_StrCharStream::read (ACEXML_Char *str, size_t len)
 int
 ACEXML_StrCharStream::peek ()
 {
-  if (this->start_ != 0 && this->ptr_ != this->end_)
+  if (this->start_ != nullptr && this->ptr_ != this->end_)
     return *this->ptr_;
   return -1;
 }
