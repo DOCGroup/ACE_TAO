@@ -15,15 +15,16 @@ Echo_Caller::Echo_Caller (CORBA::ORB_ptr orb)
 void
 Echo_Caller::start_task (Test::Echo_ptr client)
 {
-  Server_Timer *task =
+  // The reactor holds references after activation; release the creator reference.
+  Server_Timer * const task =
     new Server_Timer (client, this->orb_->orb_core ()->reactor ());
-  task->activate();
+  task->activate ();
   task->remove_reference ();
 
-  task =
+  Server_Timer * const second_task =
     new Server_Timer (client, this->orb_->orb_core ()->reactor ());
-  task->activate();
-  task->remove_reference ();
+  second_task->activate ();
+  second_task->remove_reference ();
 }
 
 void

@@ -19,7 +19,7 @@ Server_Timer::Server_Timer (Test::Echo_ptr echo,
 void
 Server_Timer::activate ()
 {
-  ACE_Time_Value tv (0, 20000);
+  ACE_Time_Value const tv (0, 20000);
   this->reactor ()->schedule_timer (this, nullptr, tv, tv);
 }
 
@@ -36,7 +36,7 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
       if (CORBA::is_nil (this->echo_.in ()))
         return -1;
 
-      Test::Echo_var echo =
+      Test::Echo_var const echo =
         Test::Echo::_duplicate (this->echo_.in ());
 
       echo->echo_payload (pload);
