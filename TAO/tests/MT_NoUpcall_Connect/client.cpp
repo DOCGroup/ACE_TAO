@@ -1,52 +1,55 @@
 #include "SharedIntfC.h"
 #include "SharedIntfS.h"
 
-#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_time.h"
+#include <string>
 
 Test_Idl::SharedIntf_var intf;
 
-ACE_Time_Value upcall_start (0,0);
-ACE_Time_Value upcall_end (0,0);
-ACE_Time_Value ping_start (0,0);
-ACE_Time_Value ping_end (0,0);
+ACE_Time_Value upcall_end {};
+ACE_Time_Value ping_end {};
 
 class SharedIntfCB : public POA_Test_Idl::AMI_SharedIntfHandler
 {
 public:
-  void ping ()
+  SharedIntfCB () = default;
+
+  void ping () override
   {
     ACE_DEBUG ((LM_DEBUG, "ping returned\n"));
     ping_end = ping_end.now ();
   }
 
-  void ping_excep (::Messaging::ExceptionHolder * )
+  void ping_excep (::Messaging::ExceptionHolder *) override
   {
     ACE_DEBUG ((LM_DEBUG, "exception caught on ping req\n"));
     ping_end = ping_end.now ();
   }
 
-  void do_upcall ()
+  void do_upcall () override
   {
     ACE_DEBUG ((LM_DEBUG, "upcall returned\n"));
     upcall_end = upcall_end.now ();
   }
 
-  void do_upcall_excep (::Messaging::ExceptionHolder * excep )
+  void do_upcall_excep (::Messaging::ExceptionHolder *excep) override
   {
     try
       {
         excep->raise_exception ();
       }
-    catch (const CORBA::Exception &)
+    catch (CORBA::Exception const&)
       {
       }
     ACE_DEBUG ((LM_DEBUG, "exception caught on upcall req\n"));
     upcall_end = upcall_end.now ();
   }
+
+  SharedIntfCB (SharedIntfCB const&) = delete;
+  SharedIntfCB (SharedIntfCB&&) = delete;
+  SharedIntfCB& operator= (SharedIntfCB const&) = delete;
+  SharedIntfCB& operator= (SharedIntfCB&&) = delete;
 };
 
 
@@ -54,7 +57,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -76,11 +79,11 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb_;
-  int result = 0;
+  int result {};
 
   try
   {
-    ACE_DEBUG((LM_INFO,"(%P|%t) START OF CLIENT TEST\n"));
+    ACE_DEBUG ((LM_INFO, "(%P|%t) START OF CLIENT TEST\n"));
 
     orb_ = CORBA::ORB_init (argc, argv);
 
@@ -102,20 +105,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     obj = root_poa->id_to_reference (oid.in());
 
     Test_Idl::AMI_SharedIntfHandler_var cb =
-      Test_Idl::AMI_SharedIntfHandler::_narrow (obj.in());
+      Test_Idl::AMI_SharedIntfHandler::_narrow (obj.in ());
 
     obj = orb_->string_to_object ("file://server.ior");
-    intf = Test_Idl::SharedIntf::_narrow(obj.in());
+    intf = Test_Idl::SharedIntf::_narrow (obj.in ());
 
-    ACE_DEBUG((LM_INFO,"(%P|%t) invoking async upcall.\n"));
+    ACE_DEBUG ((LM_INFO, "(%P|%t) invoking async upcall.\n"));
 
-    upcall_start = upcall_start.now ();
     intf->sendc_do_upcall (cb.in());
-    ACE_DEBUG((LM_INFO,"(%P|%t) invoking ping\n"));
+    ACE_DEBUG ((LM_INFO, "(%P|%t) invoking ping\n"));
 
-    ping_start = ping_start.now ();
     intf->ping ();
-    ACE_DEBUG((LM_INFO,"(%P|%t) sync ping returned\n"));
+    ACE_DEBUG ((LM_INFO, "(%P|%t) sync ping returned\n"));
     ping_end = ping_end.now ();
 
     result = (upcall_end > ACE_Time_Value::zero && upcall_end <= ping_end) ? 0 : 1;
@@ -127,7 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_INFO,"(%P|%t) Client Test %C\n",
                 (result == 0 ? "succeeded":"failed")));
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Error: Exception caught:");
   }

@@ -6,18 +6,15 @@
 #include "tao/PolicyC.h"
 #include "tao/AnyTypeCode/Any.h"
 
-Test_Idl_SharedIntf_i::Test_Idl_SharedIntf_i(CORBA::ORB_ptr orb)
-  : upper_ior (),
-    orb_ (orb)
+Test_Idl_SharedIntf_i::Test_Idl_SharedIntf_i (CORBA::ORB_ptr orb)
+  : orb_ (orb)
 {
 }
 
-Test_Idl_SharedIntf_i::~Test_Idl_SharedIntf_i() {}
-
 void
-Test_Idl_SharedIntf_i::set_upper (const char *ior)
+Test_Idl_SharedIntf_i::set_upper (std::string const& ior)
 {
-  this->upper_ior = CORBA::string_dup (ior);
+  this->upper_ior_ = ior;
 }
 
 void
@@ -25,13 +22,13 @@ Test_Idl_SharedIntf_i::do_upcall ()
 {
    ACE_DEBUG((LM_DEBUG,"(%P|%t) Test_Idl_SharedIntf::do_upcall called\n"));
 
-   CORBA::Object_var obj =
+  CORBA::Object_var const obj =
      orb_->resolve_initial_references ("ORBPolicyManager");
 
-   CORBA::PolicyManager_var policy_manager_ =
+  CORBA::PolicyManager_var const policy_manager_ =
      CORBA::PolicyManager::_narrow (obj.in ());
 
-   TimeBase::TimeT timeout = 10000 * 100;
+  constexpr TimeBase::TimeT timeout = 10000 * 100;
 
    CORBA::Any any_orb;
    any_orb <<= timeout;
@@ -46,18 +43,20 @@ Test_Idl_SharedIntf_i::do_upcall ()
                                           CORBA::SET_OVERRIDE);
 
 
-   obj = this->orb_->string_to_object (this->upper_ior.in());
-   Test_Idl::SharedIntf_var upper = Test_Idl::SharedIntf::_narrow (obj.in());
+   CORBA::Object_var const upper_obj = this->orb_->string_to_object (this->upper_ior_.c_str ());
+   Test_Idl::SharedIntf_var const upper = Test_Idl::SharedIntf::_narrow (upper_obj.in ());
    upper->ping ();
    ACE_DEBUG((LM_DEBUG,"(%P|%t) Test_Idl_SharedIntf::do_upcall returning\n"));
 }
 
-void Test_Idl_SharedIntf_i::ping ()
+void
+Test_Idl_SharedIntf_i::ping ()
 {
    ACE_DEBUG((LM_DEBUG,"(%P|%t) Test_Idl_SharedIntf::ping - called\n"));
 }
 
-void Test_Idl_SharedIntf_i::farewell ()
+void
+Test_Idl_SharedIntf_i::farewell ()
 {
   ACE_DEBUG((LM_INFO,"(%P|%t) farewell begins\n"));
   // if (!CORBA::is_nil (this->upper_.in ()))
