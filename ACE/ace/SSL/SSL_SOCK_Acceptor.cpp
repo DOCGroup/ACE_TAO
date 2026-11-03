@@ -45,11 +45,11 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // is 0 (wait as long as it takes) then don't worry about the blocking
   // status; we'll block in SSL_accept if the socket is blocking, and
   // block in ACE::select if not.
-  int reset_blocking_mode = 0;
+  bool reset_blocking_mode = false;
   if (timeout != nullptr)
     {
       reset_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
-                                              ACE_NONBLOCK);
+                                              ACE_NONBLOCK) != 0;
           // Set the handle into non-blocking mode if it's not already
           // in it.
           if (reset_blocking_mode

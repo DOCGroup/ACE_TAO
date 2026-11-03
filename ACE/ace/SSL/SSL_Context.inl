@@ -8,7 +8,7 @@ ACE_SSL_Data_File::ACE_SSL_Data_File ()
 }
 
 ACE_INLINE
-ACE_SSL_Data_File::ACE_SSL_Data_File (const char *file_name,
+ACE_SSL_Data_File::ACE_SSL_Data_File (char const *file_name,
                                       int type)
   : file_name_ (file_name),
     type_ (type)

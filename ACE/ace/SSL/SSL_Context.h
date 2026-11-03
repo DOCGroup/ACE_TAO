@@ -38,8 +38,8 @@ public:
   ACE_SSL_Data_File ();
 
   /// Constructor from a file name and the file type.
-  ACE_SSL_Data_File (const char *file_name,
-                     int type = SSL_FILETYPE_PEM);
+  explicit ACE_SSL_Data_File (char const *file_name,
+                              int type = SSL_FILETYPE_PEM);
 
   /// The file name
   const char *file_name () const;
