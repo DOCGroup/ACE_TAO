@@ -13,6 +13,7 @@
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
 #include <cstdio>
+#include <memory>
 
 static const char prefix_[] = "uiop";
 
@@ -277,7 +278,9 @@ TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   char *rendezvous = nullptr;
 
   // Get rendezvous_point
-  if (cdr.read_string (rendezvous) == 0)
+  int const read_result = cdr.read_string (rendezvous);
+  std::unique_ptr<char[]> rendezvous_owner (rendezvous);
+  if (read_result == 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
@@ -298,9 +301,6 @@ TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
                       ACE_TEXT ("ACE_UNIX_Addr::set() failed\n")));
         }
     }
-
-  // Clean up
-  delete [] rendezvous;
 
   return 1;
 }

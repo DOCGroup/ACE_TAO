@@ -16,6 +16,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -369,15 +370,14 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   char *rendezvous = nullptr;
 
   // Get rendezvous_point
-  if (cdr.read_string (rendezvous) == 0)
+  int const read_result = cdr.read_string (rendezvous);
+  std::unique_ptr<char[]> rendezvous_owner (rendezvous);
+  if (read_result == 0)
     {
       TAOLIB_ERROR ((LM_ERROR, "error decoding UIOP rendezvous_point"));
 
       return -1;
     }
-
-  // delete the rendezvous point. We don't do any processing.
-  delete [] rendezvous;
 
   // ... and object key.
   if ((cdr >> object_key) == 0)
