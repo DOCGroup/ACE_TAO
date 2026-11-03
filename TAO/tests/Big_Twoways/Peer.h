@@ -30,7 +30,7 @@ public:
 
 private:
   /// Keep a pointer to the ORB to shutdown cleanly
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

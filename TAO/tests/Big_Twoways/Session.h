@@ -69,13 +69,13 @@ private:
   Test::Session_List other_sessions_;
 
   /// Size of each message
-  CORBA::ULong payload_size_;
+  CORBA::ULong const payload_size_;
 
   /// Number of threads
-  CORBA::ULong thread_count_;
+  CORBA::ULong const thread_count_;
 
   /// Number of messages to send
-  CORBA::ULong message_count_;
+  CORBA::ULong const message_count_;
 
   /// The number of threads currently running, when this reaches 0 the
   /// session destroys itself.

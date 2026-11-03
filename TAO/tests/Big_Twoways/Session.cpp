@@ -24,7 +24,7 @@ Session::svc ()
   /// Automatically decrease the reference count at the end of the
   /// thread
   PortableServer::ServantBase_var auto_decrement (this);
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
 
   try
     {
@@ -33,7 +33,7 @@ Session::svc ()
       payload.length (this->payload_size_);
 
       // Get the number of peers just once.
-      CORBA::ULong session_count =
+      CORBA::ULong const session_count =
         this->other_sessions_.length ();
 
       for (; i != this->message_count_; ++i)
@@ -149,7 +149,7 @@ Session::echo_payload (Test::Payload const &the_payload)
                       retval._retn ());
     this->expected_messages_--;
 
-    bool verbose = false;
+    bool verbose {};
 #if 0
     verbose = this->expected_messages_ % 500 == 0;
     if (this->expected_messages_ < 500)
@@ -181,9 +181,9 @@ Session::destroy ()
 {
   // Make sure local resources are released
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     poa->servant_to_id (this);
   poa->deactivate_object (oid.in ());
 }

@@ -54,9 +54,9 @@ Session_Control::session_finished (CORBA::Boolean success)
               this->session_count_));
   if (session_count_ == 0)
     {
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         this->_default_POA ();
-      PortableServer::ObjectId_var oid =
+      PortableServer::ObjectId_var const oid =
         poa->servant_to_id (this);
       poa->deactivate_object (oid.in ());
     }

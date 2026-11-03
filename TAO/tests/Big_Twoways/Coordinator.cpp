@@ -21,7 +21,7 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
 {
   CORBA::ULong const peer_count = static_cast<CORBA::ULong> (this->peers_.size ());
   session_list.length (peer_count);
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   for (Test::Peer_var const &peer : this->peers_)
     {
       session_list[count++] =

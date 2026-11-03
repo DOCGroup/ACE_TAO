@@ -13,7 +13,7 @@ Peer::create_session (Test::Session_Control_ptr control,
                       CORBA::ULong message_count,
                       CORBA::ULong peer_count)
 {
-  Session *session_impl = nullptr;
+  Session *session_impl {};
   ACE_NEW_THROW_EX (session_impl,
                     Session (control,
                              payload_size,
