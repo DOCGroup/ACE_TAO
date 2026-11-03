@@ -9,14 +9,19 @@ class Manager
   :  public virtual POA_Test::Manager
 {
 public:
-  Manager (CORBA::ORB_ptr orb);
+  explicit Manager (CORBA::ORB_ptr orb);
   // Constructor
 
   // = The skeleton methods
-  virtual void start_workers (CORBA::Short worker_count,
-                              CORBA::Long milliseconds,
-                              Test::Controller_ptr controller);
-  virtual void shutdown ();
+  void start_workers (CORBA::Short worker_count,
+                      CORBA::Long milliseconds,
+                      Test::Controller_ptr controller) override;
+  void shutdown () override;
+
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager & operator= (Manager const &) = delete;
+  Manager & operator= (Manager &&) = delete;
 
 private:
   CORBA::ORB_var orb_;
@@ -32,7 +37,12 @@ public:
           Test::Controller_ptr controller,
           CORBA::Long milliseconds);
 
-  virtual int svc ();
+  int svc () override;
+
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker & operator= (Worker const &) = delete;
+  Worker & operator= (Worker &&) = delete;
   // The service method
 
 private:

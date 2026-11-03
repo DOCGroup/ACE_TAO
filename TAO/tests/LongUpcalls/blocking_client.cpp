@@ -1,7 +1,10 @@
 #include "ace/Get_Opt.h"
 #include "Controller.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+namespace
+{
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,21 +36,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
@@ -55,17 +58,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Controller controller_impl;
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&controller_impl);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Test::Controller_var controller =
+      Test::Controller_var const controller =
         Test::Controller::_narrow (object_act.in ());
 
       object = orb->string_to_object (ior);
 
-      Test::Manager_var manager =
+      Test::Manager_var const manager =
         Test::Manager::_narrow (object.in ());
 
       if (CORBA::is_nil (manager.in ()))
@@ -76,7 +79,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      const CORBA::Short worker_count = 10;
+      CORBA::Short const worker_count = 10;
       manager->start_workers (worker_count,
                               CORBA::Long (1000),
                               controller.in ());
@@ -89,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -14,8 +14,13 @@ public:
   // Constructor
 
   // = The skeleton methods
-  virtual void start_workers ();
-  virtual void start_workers_excep (::Messaging::ExceptionHolder *holder);
+  void start_workers () override;
+  void start_workers_excep (::Messaging::ExceptionHolder *holder) override;
+
+  Manager_Handler (Manager_Handler const &) = delete;
+  Manager_Handler (Manager_Handler &&) = delete;
+  Manager_Handler & operator= (Manager_Handler const &) = delete;
+  Manager_Handler & operator= (Manager_Handler &&) = delete;
 
 private:
   Test::Manager_var manager_;

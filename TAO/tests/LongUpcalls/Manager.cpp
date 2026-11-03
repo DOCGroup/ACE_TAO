@@ -14,7 +14,7 @@ validate_connection (Test::Controller_ptr controller)
       controller->_is_a ("Not_an_IDL_Type");
 #endif
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 }
@@ -31,7 +31,7 @@ Manager::start_workers (CORBA::Short worker_count,
 {
   ACE_Thread_Manager thread_manager;
 
-  validate_connection(controller);
+  validate_connection (controller);
 
   // ACE_DEBUG ((LM_DEBUG, "Starting %d workers\n", worker_count));
   Worker worker (&thread_manager,
@@ -54,9 +54,9 @@ Manager::shutdown ()
 Worker::Worker (ACE_Thread_Manager *thr_mgr,
                 Test::Controller_ptr controller,
                 CORBA::Long milliseconds)
-  :  ACE_Task_Base (thr_mgr)
-  ,  controller_ (Test::Controller::_duplicate (controller))
-  ,  milliseconds_ (milliseconds)
+  : ACE_Task_Base (thr_mgr)
+  , controller_ (Test::Controller::_duplicate (controller))
+  , milliseconds_ (milliseconds)
 {
 }
 
@@ -66,20 +66,20 @@ Worker::svc ()
   // ACE_DEBUG ((LM_DEBUG, "Worker starts\n"));
   try
     {
-      validate_connection(this->controller_.in());
+      validate_connection (this->controller_.in ());
 
       this->controller_->worker_started ();
 
       // ACE_DEBUG ((LM_DEBUG, "Worker start reported\n"));
 
-      ACE_Time_Value tv (0, 1000 * this->milliseconds_);
+      ACE_Time_Value const tv (0, 1000 * this->milliseconds_);
       ACE_OS::sleep (tv);
 
       this->controller_->worker_finished ();
 
       // ACE_DEBUG ((LM_DEBUG, "Worker completion reported\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in svc() method\n");
     }

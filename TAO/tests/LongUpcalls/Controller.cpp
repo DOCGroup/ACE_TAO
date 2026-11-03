@@ -1,11 +1,5 @@
 #include "Controller.h"
 
-Controller::Controller ()
-  :  start_count_ (0)
-  ,  finish_count_ (0)
-{
-}
-
 void
 Controller::dump_results ()
 {

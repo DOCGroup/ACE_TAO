@@ -14,7 +14,7 @@ validate_connection (Test::Controller_ptr controller)
       controller->_is_a ("Not_an_IDL_Type");
 #endif
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 }
@@ -31,7 +31,7 @@ AMI_Manager::start_workers (CORBA::Short worker_count,
 {
   ACE_Thread_Manager thread_manager;
 
-  validate_connection(controller);
+  validate_connection (controller);
 
   // ACE_DEBUG ((LM_DEBUG, "Starting %d workers\n", worker_count));
   Worker worker (&thread_manager,
@@ -55,10 +55,10 @@ Worker::Worker (ACE_Thread_Manager *thr_mgr,
                 Test::Controller_ptr controller,
                 CORBA::Long milliseconds,
                 CORBA::ORB_ptr orb)
-  :  ACE_Task_Base (thr_mgr)
-  ,  controller_ (Test::Controller::_duplicate (controller))
-  ,  milliseconds_ (milliseconds)
-  ,  orb_ (CORBA::ORB::_duplicate (orb))
+  : ACE_Task_Base (thr_mgr)
+  , controller_ (Test::Controller::_duplicate (controller))
+  , milliseconds_ (milliseconds)
+  , orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -79,28 +79,28 @@ Worker::svc ()
                                             &pending_requests),
                         -1);
 
-        CORBA::Object_var poa_object =
-          this->orb_->resolve_initial_references("RootPOA");
+        CORBA::Object_var const poa_object =
+          this->orb_->resolve_initial_references ("RootPOA");
 
-        PortableServer::POA_var root_poa =
+        PortableServer::POA_var const root_poa =
           PortableServer::POA::_narrow (poa_object.in ());
 
-        PortableServer::ObjectId_var id =
+        PortableServer::ObjectId_var const id =
           root_poa->activate_object (handler_impl);
 
-        CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+        CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
         PortableServer::ServantBase_var auto_destroy (handler_impl);
         handler = Test::AMI_ControllerHandler::_narrow (object.in ());
       }
 
-      validate_connection(this->controller_.in());
+      validate_connection (this->controller_.in ());
 
       this->controller_->sendc_worker_started (handler.in ());
 
       // ACE_DEBUG ((LM_DEBUG, "Worker start reported\n"));
 
-      ACE_Time_Value tv (0, 1000 * this->milliseconds_);
+      ACE_Time_Value const tv (0, 1000 * this->milliseconds_);
       ACE_OS::sleep (tv);
 
       this->controller_->sendc_worker_finished (handler.in ());
@@ -117,7 +117,7 @@ Worker::svc ()
             break;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in svc() method\n");
     }
@@ -142,13 +142,13 @@ Controller_Handler::worker_started ()
 
 void
 Controller_Handler::worker_started_excep
-    (::Messaging::ExceptionHolder* h)
+    (::Messaging::ExceptionHolder *h)
 {
   try
     {
       h->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Controller_Handler exception raised in"" worker_started");
@@ -170,7 +170,7 @@ Controller_Handler::worker_finished_excep
     {
       h->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Controller_Handler exception raised in"" worker_finished");
