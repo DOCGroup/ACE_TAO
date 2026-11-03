@@ -34,6 +34,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Dynamic_Service.h"
 
+#include <string>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
@@ -100,10 +102,10 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               ACE_TCHAR const *s = arg_shifter.get_current ();
               // need to parse the flags...ugh
-              ACE_TCHAR* opt = ACE_OS::strdup (s);
+              std::basic_string<ACE_TCHAR> opt (s);
 
               ACE_TCHAR* aux = nullptr;
-              ACE_TCHAR* flags = ACE_OS::strtok_r (opt, ACE_TEXT (":"), &aux);
+              ACE_TCHAR* flags = ACE_OS::strtok_r (opt.data (), ACE_TEXT (":"), &aux);
 
               TAO_EC_Thread_Flags tf(ACE_TEXT_ALWAYS_CHAR (flags)); // parse and set up
               this->dispatching_threads_flags_ = tf.flags ();
@@ -120,7 +122,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                   // Should we set the default priority?
                   this->dispatching_threads_priority_ = tf.default_priority ();
                 }
-              ACE_OS::free (opt);
               arg_shifter.consume_arg ();
             }
         }
@@ -233,13 +234,13 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *current_arg = arg_shifter.get_current ();
-              ACE_TCHAR *opt = ACE_OS::strdup (current_arg);
+              std::basic_string<ACE_TCHAR> opt (current_arg);
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
 
               ACE_TCHAR* aux;
-              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
+              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt.data (), ACE_TEXT(":"), &aux);
                    arg != nullptr;
                    arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
@@ -264,7 +265,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                                 "EC_Default_Factory - "
                                 "Unknown consumer collection modifier <%s>.\n", arg));
                 }
-              ACE_OS::free (opt);
               this->consumer_collection_ =
                  (synch_type << 8) |(collection_type << 4) | iteration_type;
               arg_shifter.consume_arg ();
@@ -278,13 +278,13 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *current_arg = arg_shifter.get_current();
-              ACE_TCHAR* opt = ACE_OS::strdup(current_arg);
+              std::basic_string<ACE_TCHAR> opt (current_arg);
               int collection_type = 0;
               int synch_type = 0;
               int iteration_type = 0;
 
               ACE_TCHAR* aux;
-              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
+              for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt.data (), ACE_TEXT(":"), &aux);
                    arg != nullptr;
                    arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
@@ -309,7 +309,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
                                 "EC_Default_Factory - "
                                 "Unknown supplier collection modifier <%s>.\n", arg));
                 }
-              ACE_OS::free(opt);
               this->supplier_collection_ =
                 (synch_type << 8) | (collection_type << 4) | iteration_type;
               arg_shifter.consume_arg ();
