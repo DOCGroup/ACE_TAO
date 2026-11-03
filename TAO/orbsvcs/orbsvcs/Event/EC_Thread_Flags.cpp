@@ -6,6 +6,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Sched_Params.h"
 
+#include <string>
+
 
 #define TETFSF(flag)  { #flag, flag }
 TAO_EC_Thread_Flags::Supported_Flag TAO_EC_Thread_Flags::supported_flags_[] = {
@@ -51,14 +53,12 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
   if (syms == nullptr || *syms == '\0')
     return;
 
-  static size_t num_flags = sizeof(supported_flags_)/sizeof(Supported_Flag);
-  char* s = ACE_OS::strdup (syms); // need a mutable string
-  if (s == nullptr)
-    return;
+  constexpr size_t num_flags = sizeof(supported_flags_)/sizeof(Supported_Flag);
+  std::string s (syms);
 
-  const char* SEPARATORS = " |"; // this should probably be at class level
+  char const * const SEPARATORS = " |"; // this should probably be at class level
   char* ptr = nullptr;
-  char* tok = ACE_OS::strtok_r (s, SEPARATORS, &ptr);
+  char* tok = ACE_OS::strtok_r (s.data (), SEPARATORS, &ptr);
   while (tok != nullptr)
     {
       // This would allow for easy accomodation of flags that
@@ -111,8 +111,6 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
         }
       tok = ACE_OS::strtok_r (nullptr, SEPARATORS, &ptr);
     }
-
-  ACE_OS::free (s); // clean up after ourselves
 }
 
 long
