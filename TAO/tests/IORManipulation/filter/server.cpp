@@ -2,19 +2,21 @@
 #include "tao/IORManipulation/IORManip_IIOP_Filter.h"
 #include "tao/Stub.h"
 
+#include <string>
+
 class Filter_Localhost: public TAO_IORManip_IIOP_Filter
 {
 public:
   virtual CORBA::Boolean profile_info_matches (
-                         const TAO_IORManip_IIOP_Filter::Profile_Info& pinfo);
+                         const TAO_IORManip_IIOP_Filter::Profile_Info& pinfo) override;
 };
 
 CORBA::Boolean
 Filter_Localhost::profile_info_matches (
                          const TAO_IORManip_IIOP_Filter::Profile_Info& pinfo)
 {
-  static const ACE_CString localhost ("localhost");
-  static const ACE_CString localip ("127.0.0.1");
+  static const std::string localhost ("localhost");
+  static const std::string localip ("127.0.0.1");
   return (pinfo.host_name_ != localhost && pinfo.host_name_ != localip);
 }
 

@@ -155,6 +155,7 @@ ACE_Service_Gestalt::intrusive_add_ref (ACE_Service_Gestalt* g)
     {
       const long refcnt = g->refcnt_.fetch_add (1) + 1;
       ACE_ASSERT (refcnt > 0);
+      ACE_UNUSED_ARG (refcnt);
     }
 }
 

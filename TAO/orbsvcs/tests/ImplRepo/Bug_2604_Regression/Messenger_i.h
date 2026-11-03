@@ -13,7 +13,7 @@ public:
   {}
 
   virtual CORBA::Boolean
-  send_message (const char *user_name, const char *subject, char *&message);
+  send_message (const char *user_name, const char *subject, char *&message) override;
 
 private:
   int count_;

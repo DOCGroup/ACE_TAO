@@ -495,12 +495,12 @@ TAO_AV_RTCP_Object::ts_offset (ACE_UINT32 ts_offset)
 // TAO_AV_RTCP_Callback
 TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
 {
-  char cname[256];
   char host[256];
+  char cname[sizeof ("username@") + sizeof (host) - 1];
   ACE_OS::hostname(host, sizeof(host));
 
   // TODO: determine username auto-magically?
-  std::sprintf (cname, "username@%s", host);
+  std::snprintf (cname, sizeof (cname), "username@%s", host);
 
   this->output_.cname(cname);
 }

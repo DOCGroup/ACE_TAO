@@ -8,6 +8,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
+#include <string>
+
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("messenger.ior");
 
 int
@@ -117,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception &ex)
     {
-      ACE_CString str = ex._info ();
+      std::string str = ex._info ();
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server main() caught: %C\n"),
                   str.c_str ()));
     }

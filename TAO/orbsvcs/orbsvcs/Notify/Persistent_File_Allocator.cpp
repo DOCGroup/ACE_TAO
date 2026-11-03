@@ -415,6 +415,7 @@ Persistent_File_Allocator::run()
         // if this triggers, someone pushed onto the head of the queue
         // or removed the head from the queue without telling ME.
         ACE_ASSERT (blk2 == blk);
+        ACE_UNUSED_ARG (blk2);
       }
       // If we own the block, then delete it.
       if (blk->get_allocator_owns())
