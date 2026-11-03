@@ -28,6 +28,7 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "orbsvcs/Log/EventLog_i.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -95,10 +96,10 @@ protected:
   DsLogAdmin::LogMgr_var log_mgr_;
 
   /// The event channel used for log generated events.
-  TAO_CEC_EventChannel * impl;
+  std::unique_ptr<TAO_CEC_EventChannel> impl;
 
   /// The object used for log generated events.
-  TAO_EventLogNotification * notifier_;
+  std::unique_ptr<TAO_EventLogNotification> notifier_;
 
   /// EventChannel used to obtain the ConsumerAdmin.
   CosEventChannelAdmin::EventChannel_var event_channel_;

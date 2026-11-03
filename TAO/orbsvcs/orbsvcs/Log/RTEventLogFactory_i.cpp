@@ -17,11 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i () :
-  impl (nullptr),
-  notifier_ (nullptr)
-{
-}
+TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i () = default;
 
 TAO_RTEventLogFactory_i::~TAO_RTEventLogFactory_i() = default;
 
@@ -37,14 +33,15 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
 
   TAO_EC_Event_Channel_Attributes const attr (defPOA.in (), defPOA.in ());
 
-  this->impl = nullptr;
+  TAO_EC_Event_Channel *impl = nullptr;
   ACE_NEW_THROW_EX (impl,
                     TAO_EC_Event_Channel (attr),
                     CORBA::NO_MEMORY ());
+  this->impl.reset (impl);
 
-  std::unique_ptr <TAO_EC_Event_Channel> ec (impl);
+  std::unique_ptr <TAO_EC_Event_Channel> ec (std::move (this->impl));
 
-  impl->activate ();
+  ec->activate ();
 
   PortableServer::ObjectId_var const oidec = poa_->activate_object (ec.get ());
 
@@ -58,9 +55,11 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
 
   this->consumer_admin_ = this->event_channel_->for_consumers();
 
-  ACE_NEW_THROW_EX (this->notifier_,
+  TAO_RTEventLogNotification *notifier = nullptr;
+  ACE_NEW_THROW_EX (notifier,
                     TAO_RTEventLogNotification(this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());
+  this->notifier_.reset (notifier);
   return 0;
 }
 
@@ -163,7 +162,7 @@ TAO_RTEventLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
                                       this->log_poa_.in (),
                                       *this,
                                       this->log_mgr_.in (),
-                                      this->notifier_,
+                                      this->notifier_.get (),
                                       id
                                       ),
                     CORBA::NO_MEMORY ());

@@ -1,14 +1,11 @@
 #include "orbsvcs/Log/EventLogFactory_i.h"
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/EventLogNotification.h"
-#include <memory>
 #include "ace/OS_NS_stdio.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EventLogFactory_i::TAO_EventLogFactory_i () :
-  impl (nullptr),
-  notifier_ (nullptr)
+TAO_EventLogFactory_i::TAO_EventLogFactory_i ()
 {
   TAO_CEC_Default_Factory::init_svcs ();
 
@@ -19,11 +16,13 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i () :
 
       TAO_CEC_EventChannel_Attributes const attr (defPOA.in (), defPOA.in ());
 
+      TAO_CEC_EventChannel *impl = nullptr;
       ACE_NEW_THROW_EX (impl,
                         TAO_CEC_EventChannel (attr),
                         CORBA::NO_MEMORY ());
+      this->impl.reset (impl);
 
-      impl->activate ();
+      this->impl->activate ();
     }
   catch (CORBA::Exception const &ex)
     {
@@ -33,10 +32,7 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i () :
     }
 }
 
-TAO_EventLogFactory_i::~TAO_EventLogFactory_i ()
-{
-  // No-Op.
-}
+TAO_EventLogFactory_i::~TAO_EventLogFactory_i () = default;
 
 CosEventChannelAdmin::EventChannel_ptr
 TAO_EventLogFactory_i::init (PortableServer::POA_ptr /* poa */)
@@ -45,7 +41,7 @@ TAO_EventLogFactory_i::init (PortableServer::POA_ptr /* poa */)
 
   CosEventChannelAdmin::EventChannel_var ec_return;
 
-  std::unique_ptr <TAO_CEC_EventChannel> ec (impl);
+  std::unique_ptr <TAO_CEC_EventChannel> ec (std::move (this->impl));
 
   PortableServer::ObjectId_var const oid =
     this->poa_->activate_object (ec.get ());
@@ -73,9 +69,11 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
   this->consumer_admin_ =
     this->event_channel_->for_consumers ();
 
-  ACE_NEW_THROW_EX (this->notifier_,
+  TAO_EventLogNotification *notifier = nullptr;
+  ACE_NEW_THROW_EX (notifier,
                     TAO_EventLogNotification(this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());
+  this->notifier_.reset (notifier);
 
   PortableServer::ObjectId_var const oid =
     this->factory_poa_->activate_object (this);
@@ -171,7 +169,7 @@ TAO_EventLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
                                     this->log_poa_.in (),
                                     *this,
                                     this->log_mgr_.in (),
-                                    this->notifier_,
+                                    this->notifier_.get (),
                                     id
                                     ),
                     CORBA::NO_MEMORY ());

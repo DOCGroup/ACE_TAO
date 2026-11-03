@@ -28,6 +28,7 @@
 
 #include "orbsvcs/Log/RTEventLog_i.h"
 #include "orbsvcs/Log/rteventlog_serv_export.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -93,10 +94,10 @@ protected:
   DsLogAdmin::LogMgr_var log_mgr_;
 
   /// The event channel used for log generated events.
-  TAO_EC_Event_Channel * impl;
+  std::unique_ptr<TAO_EC_Event_Channel> impl;
 
   /// The object used for log generated events.
-  TAO_RTEventLogNotification * notifier_;
+  std::unique_ptr<TAO_RTEventLogNotification> notifier_;
 
   /// EventChannel used to obtain the ConsumerAdmin.
   RtecEventChannelAdmin::EventChannel_var event_channel_;
