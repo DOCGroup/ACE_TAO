@@ -15,6 +15,8 @@
 
 #include "ace/Process_Semaphore.h"
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------------
@@ -189,7 +191,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
   try
     {
       char vdev_name [BUFSIZ];
-      ACE_OS::sprintf (vdev_name,
+      std::sprintf (vdev_name,
                        "%s:%s:%ld",
                        "VDev",
                        this->host_,
@@ -262,7 +264,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
   try
     {
       char stream_endpoint_name[BUFSIZ];
-      ACE_OS::sprintf (stream_endpoint_name,
+      std::sprintf (stream_endpoint_name,
                        "%s:%s:%ld",
                        "Stream_Endpoint_A",
                        this->host_,
@@ -349,7 +351,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
   try
     {
       char stream_endpoint_name[BUFSIZ];
-      ACE_OS::sprintf (stream_endpoint_name,
+      std::sprintf (stream_endpoint_name,
                        "%s:%s:%ld",
                        "Stream_Endpoint_B",
                        this->host_,

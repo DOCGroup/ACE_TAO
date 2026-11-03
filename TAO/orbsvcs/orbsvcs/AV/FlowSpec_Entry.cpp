@@ -12,6 +12,8 @@
 #include "ace/OS_NS_strings.h"
 
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/FlowSpec_Entry.inl"
@@ -307,9 +309,9 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                 }
             }
 
-          short control_port = static_cast<short> (ACE_OS::atoi(port_tokenizer[0])) + 1;
-          char control_port_str[6];
-          ACE_OS::sprintf (control_port_str, "%d", control_port);
+          short control_port = static_cast<short> (std::atoi (port_tokenizer[0])) + 1;
+          char control_port_str[7];
+          std::sprintf (control_port_str, "%d", control_port);
 
           ACE_CString control_addr = "";
           if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
@@ -712,7 +714,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 
       address_str += ";";
       char port_str[10];
-      ACE_OS::sprintf(port_str, "%u", control_port);
+      std::sprintf (port_str, "%u", control_port);
       address_str += port_str;
     }
 
@@ -902,7 +904,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 
       address_str += ";";
       char port_str[10];
-      ACE_OS::sprintf(port_str, "%u", control_port);
+      std::sprintf (port_str, "%u", control_port);
       address_str += port_str;
     }
 

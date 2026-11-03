@@ -6,6 +6,8 @@
 #include "ace/OS_NS_strings.h"
 
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -1110,7 +1112,7 @@ TAO_SFP_Consumer_Object::TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
     {
       sfp_options = "sfp:1.0:credit=";
       char buf[10];
-      ACE_OS::sprintf(buf, "%d", this->max_credit_);
+      std::sprintf (buf, "%d", this->max_credit_);
       sfp_options += buf;
     }
 }
@@ -1161,7 +1163,7 @@ TAO_SFP_Producer_Object::TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
     {
       TAO_Tokenizer options (flow_string[2],'=');
       if (options [1] != 0)
-        this->max_credit_ = ACE_OS::atoi (options[1]);
+        this->max_credit_ = std::atoi (options[1]);
     }
 }
 

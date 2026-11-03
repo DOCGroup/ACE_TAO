@@ -21,6 +21,9 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_arpa_inet.h"
 
+#include <cstdio>
+#include <string>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/AVStreams_i.inl"
 #endif /* __ACE_INLINE__ */
@@ -2217,7 +2220,7 @@ TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep)
       // generated.
       flow_name = "flow";
       char tmp[255];
-      ACE_OS::sprintf (tmp, "%u", this->flow_num_++);
+      std::sprintf (tmp, "%u", this->flow_num_++);
       flow_name += tmp;
 
       CORBA::Any flowname_any;
@@ -2352,7 +2355,7 @@ TAO_StreamEndPoint::set_key (char const *flow_name,
       CORBA::Any PublicKey;
       PublicKey <<= the_key;
       char PublicKey_property [BUFSIZ];
-      ACE_OS::sprintf (PublicKey_property, "%s_PublicKey", flow_name);
+      std::sprintf (PublicKey_property, "%s_PublicKey", flow_name);
       this->define_property (PublicKey_property,
                              PublicKey);
     }
@@ -2829,7 +2832,7 @@ TAO_VDev::set_format (char const *flowName,
       if (flowName == nullptr || format_name == nullptr)
         ORBSVCS_ERROR ((LM_ERROR, "TAO_VDev::set_format: flowName or format_name is null\n"));
       char format_property [BUFSIZ];
-      ACE_OS::sprintf (format_property, "%s_currFormat", flowName);
+      std::sprintf (format_property, "%s_currFormat", flowName);
       CORBA::Any format;
       format <<= format_name;
       this->define_property (format_property,
@@ -2853,7 +2856,7 @@ TAO_VDev::set_dev_params (char const *flowName,
       if (flowName == nullptr)
         ORBSVCS_ERROR ((LM_ERROR, "TAO_VDev::set_dev_params:flowName is null\n"));
       char devParams_property[BUFSIZ];
-      ACE_OS::sprintf (devParams_property, "%s_devParams", flowName);
+      std::sprintf (devParams_property, "%s_devParams", flowName);
       CORBA::Any devParams;
       devParams <<= new_params;
       this->define_property (devParams_property,
@@ -3219,7 +3222,7 @@ TAO_MMDevice::add_fdev_i (AVStreams::FDev_ptr fdev)
     {
       // exception implies the flow name is not defined and is system
       // generated.
-      ACE_OS::sprintf (tmp, "flow%d", flow_num_++);
+      std::sprintf (tmp, "flow%d", flow_num_++);
       CORBA::Any flowname_any;
       flowname_any <<= flow_name.in ();
       fdev->define_property ("Flow", flowname_any);
@@ -3650,7 +3653,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
               ORBSVCS_ERROR_RETURN ((LM_WARNING, "TAO_FlowConnection::add_producer: producer already exists\n"), 1);
             }
           CORBA::Boolean met_qos;
-          char mcast_address[BUFSIZ];
+          std::string mcast_address;
           if (this->producer_address_.in () == nullptr)
             {
               ACE_INET_Addr mcast_addr;
@@ -3659,16 +3662,17 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
 
               ACE_TCHAR buf [BUFSIZ];
               mcast_addr.addr_to_string (buf, BUFSIZ);
-              ACE_OS::sprintf (mcast_address, "%s=%s", this->protocol_.in (),
-                               ACE_TEXT_ALWAYS_CHAR (buf));
+              mcast_address = this->protocol_.in ();
+              mcast_address += '=';
+              mcast_address += ACE_TEXT_ALWAYS_CHAR (buf);
             }
           else
             {
-              std::strcpy (mcast_address, this->producer_address_.in ());
+              mcast_address = this->producer_address_.in ();
             }
           char *address = flow_producer->connect_mcast (the_qos,
                                                         met_qos,
-                                                        mcast_address,
+                                                        mcast_address.c_str (),
                                                         this->fp_name_.in ());
 
           if (this->producer_address_.in () == nullptr)
@@ -4200,7 +4204,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
         ACE_NEW_RETURN (address,
                         char [BUFSIZ],
                         0);
-        ACE_OS::sprintf (address, "%s=%s", listen_protocol.in (), listen_address);
+        std::sprintf (address, "%s=%s", listen_protocol.in (), listen_address);
         return address;
       }
   return 0;

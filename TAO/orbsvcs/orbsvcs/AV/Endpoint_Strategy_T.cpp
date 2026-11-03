@@ -9,6 +9,8 @@
 #include "ace/Process_Semaphore.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstdio>
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -480,7 +482,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev ()
   try
     {
       char vdev_name [BUFSIZ];
-      ACE_OS::sprintf (vdev_name,
+      std::sprintf (vdev_name,
                        "%s:%s:%ld",
                        "VDev",
                        this->host_,
@@ -555,7 +557,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
   char sem_str [BUFSIZ];
 
   long pid = this->pid_;
-  ACE_OS::sprintf (sem_str,
+  std::sprintf (sem_str,
                    "%s:%s:%ld",
                    "TAO_AV_Process_Semaphore",
                    this->host_,
@@ -689,7 +691,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process_A ()
 {
   char stream_endpoint_name[BUFSIZ];
-  ACE_OS::sprintf (stream_endpoint_name,
+  std::sprintf (stream_endpoint_name,
                    "%s:%s:%ld",
                    "Stream_Endpoint_A",
                    this->host_,
@@ -713,7 +715,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process_B ()
 {
   char stream_endpoint_name[BUFSIZ];
-  ACE_OS::sprintf (stream_endpoint_name,
+  std::sprintf (stream_endpoint_name,
                    "%s:%s:%ld",
                    "Stream_Endpoint_B",
                    this->host_,

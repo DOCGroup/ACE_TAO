@@ -47,6 +47,7 @@
 #include "ace/Truncate.h"
 
 #include <cstring>
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -499,7 +500,7 @@ TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
   ACE_OS::hostname(host, sizeof(host));
 
   // TODO: determine username auto-magically?
-  ACE_OS::sprintf(cname, "username@%s", host);
+  std::sprintf (cname, "username@%s", host);
 
   this->output_.cname(cname);
 }
