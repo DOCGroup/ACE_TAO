@@ -18,18 +18,21 @@
 class Test_DynAny
 {
 public:
-  Test_DynAny (CORBA::ORB_var orb, int debug);
-  ~Test_DynAny ();
+  Test_DynAny (CORBA::ORB_var orb, bool debug);
+  ~Test_DynAny () = default;
+  Test_DynAny (Test_DynAny const&) = delete;
+  Test_DynAny (Test_DynAny&&) = delete;
+  Test_DynAny& operator= (Test_DynAny const&) = delete;
+  Test_DynAny& operator= (Test_DynAny&&) = delete;
 
-  const char* test_name () const;
+  char const* test_name () const;
 
   int run_test ();
 
 private:
   CORBA::ORB_var orb_;
-  char* test_name_;
-  CORBA::ULong error_count_;
-  int debug_;
+  CORBA::ULong error_count_ {};
+  bool debug_ {};
 };
 
 #endif /* TEST_DYNANY_H */

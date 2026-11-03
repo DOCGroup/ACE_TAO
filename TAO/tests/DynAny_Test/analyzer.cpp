@@ -49,10 +49,9 @@
 
 DynAnyAnalyzer::DynAnyAnalyzer (CORBA::ORB_ptr orb,
                                 DynamicAny::DynAnyFactory_ptr dynany_factory,
-                                int debug)
+                                bool debug)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     dynany_factory_ (DynamicAny::DynAnyFactory::_duplicate (dynany_factory)),
-    level_ (0),
     debug_ (debug)
 {
 }
@@ -66,10 +65,6 @@ void DynAnyAnalyzer::tab (int t)
           ACE_DEBUG ((LM_DEBUG, "\t"));
         }
     }
-}
-
-DynAnyAnalyzer::~DynAnyAnalyzer ()
-{
 }
 
 void DynAnyAnalyzer::resetTab ()

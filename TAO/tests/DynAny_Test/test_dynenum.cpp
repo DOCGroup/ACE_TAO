@@ -14,26 +14,18 @@
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "analyzer.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-Test_DynEnum::Test_DynEnum (CORBA::ORB_var orb, int debug)
+Test_DynEnum::Test_DynEnum (CORBA::ORB_var orb, bool debug)
   : orb_ (orb),
-    test_name_ (CORBA::string_dup ("test_dynenum")),
-    error_count_ (0),
     debug_ (debug)
 {
 }
 
-Test_DynEnum::~Test_DynEnum ()
-{
-  CORBA::string_free (this->test_name_);
-  this->test_name_ = 0;
-}
-
-const char*
+char const*
 Test_DynEnum::test_name () const
 {
-  return this->test_name_;
+  return "test_dynenum";
 }
 
 int
@@ -106,7 +98,7 @@ Test_DynEnum::run_test ()
         CORBA::String_var s =
           de1->get_as_string ();
 
-        if (ACE_OS::strcmp (s.in (), "TE_THIRD") == 0)
+        if (std::strcmp (s.in (), "TE_THIRD") == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                       "++ OK ++\n"));
@@ -223,7 +215,7 @@ Test_DynEnum::run_test ()
 
         CORBA::String_var s = member1->get_as_string ();
 
-        if (ACE_OS::strcmp (s.in (), "TE_THIRD") == 0)
+        if (std::strcmp (s.in (), "TE_THIRD") == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                       "++ OK ++\n"));

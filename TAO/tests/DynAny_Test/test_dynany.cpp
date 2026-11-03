@@ -20,25 +20,18 @@
 #include "analyzer.h"
 
 #include <cstring>
+#include <memory>
 
-Test_DynAny::Test_DynAny (CORBA::ORB_var orb, int debug)
+Test_DynAny::Test_DynAny (CORBA::ORB_var orb, bool debug)
   : orb_ (orb),
-    test_name_ (CORBA::string_dup ("test_dynany")),
-    error_count_ (0),
     debug_ (debug)
 {
 }
 
-Test_DynAny::~Test_DynAny ()
-{
-  CORBA::string_free (this->test_name_);
-  this->test_name_ = 0;
-}
-
-const char*
+char const*
 Test_DynAny::test_name () const
 {
-  return this->test_name_;
+  return "test_dynany";
 }
 
 int
@@ -356,13 +349,14 @@ Test_DynAny::run_test ()
               malformed_output.write_octet (0x12);
             }
           TAO_InputCDR malformed_input (malformed_output);
-          TAO::Unknown_IDL_Type *malformed_impl = nullptr;
+          TAO::Unknown_IDL_Type *malformed_impl {};
           ACE_NEW_THROW_EX (malformed_impl,
                             TAO::Unknown_IDL_Type (small_fixed_tc.in (),
                                                    malformed_input),
                             CORBA::NO_MEMORY ());
+          std::unique_ptr<TAO::Unknown_IDL_Type> malformed_owner (malformed_impl);
           CORBA::Any malformed_any;
-          malformed_any.replace (malformed_impl);
+          malformed_any.replace (malformed_owner.release ());
 
           bool rejected = false;
           try
@@ -655,7 +649,7 @@ Test_DynAny::run_test ()
       analyzer.analyze (ftc3.in ());
       CORBA::Any_var out_any3 = ftc3->to_any ();
 
-      const CORBA::ShortSeq *outseq = 0;
+      CORBA::ShortSeq const* outseq {};
       out_any3.in () >>= outseq;
 
       good =

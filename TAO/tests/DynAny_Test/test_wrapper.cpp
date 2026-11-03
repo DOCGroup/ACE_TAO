@@ -15,25 +15,11 @@
 #include "test_wrapper.h"
 #include "ace/Log_Msg.h"
 
-// Constructor
-template <class T>
-Test_Wrapper<T>::Test_Wrapper (T* t)
-  : test_object_ (t)
-{
-}
-
-// Destructor
-template <class T>
-Test_Wrapper<T>::~Test_Wrapper ()
-{
-  delete this->test_object_;
-}
-
 template <class T>
 int
 Test_Wrapper<T>::run_test ()
 {
-  const char* test_name = this->test_object_->test_name ();
+  char const* test_name = this->test_object_->test_name ();
 
   ACE_DEBUG ((LM_DEBUG,
               "********************* %C *******************\n\n",

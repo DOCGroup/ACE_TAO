@@ -19,18 +19,22 @@ class Driver
 {
 public:
   // = Constructor and destructor.
-  Driver ();
+  Driver () = default;
   ~Driver ();
+  Driver (Driver const&) = delete;
+  Driver (Driver&&) = delete;
+  Driver& operator= (Driver const&) = delete;
+  Driver& operator= (Driver&&) = delete;
 
-enum TEST_TYPE
+  enum class Test_Type
   {
-    NO_TEST,
-    TEST_DYNANY,
-    TEST_DYNARRAY,
-    TEST_DYNENUM,
-    TEST_DYNSEQUENCE,
-    TEST_DYNSTRUCT,
-    TEST_DYNUNION
+    none,
+    dynany,
+    dynarray,
+    dynenum,
+    dynsequence,
+    dynstruct,
+    dynunion
   };
 
   /// Initialize the driver object.
@@ -49,9 +53,9 @@ private:
   /// underlying ORB (we do not own it)
   CORBA::ORB_var orb_;
 
-  TEST_TYPE test_type_;
+  Test_Type test_type_ {Test_Type::none};
 
-  int debug_;
+  bool debug_ {};
 };
 
 #endif /* DRIVER_H */

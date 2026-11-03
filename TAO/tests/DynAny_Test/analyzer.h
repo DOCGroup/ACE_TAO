@@ -23,11 +23,15 @@ class DynAnyAnalyzer
 public:
   DynAnyAnalyzer (CORBA::ORB_ptr orb,
                   DynamicAny::DynAnyFactory_ptr dynany_factory,
-                  int debug);
+                  bool debug);
 
   void tab (int t);
 
-  ~DynAnyAnalyzer ();
+  ~DynAnyAnalyzer () = default;
+  DynAnyAnalyzer (DynAnyAnalyzer const&) = delete;
+  DynAnyAnalyzer (DynAnyAnalyzer&&) = delete;
+  DynAnyAnalyzer& operator= (DynAnyAnalyzer const&) = delete;
+  DynAnyAnalyzer& operator= (DynAnyAnalyzer&&) = delete;
 
   void resetTab ();
 
@@ -39,8 +43,8 @@ public:
 private:
   CORBA::ORB_var orb_;
   DynamicAny::DynAnyFactory_var dynany_factory_;
-  int level_;
-  int debug_;
+  int level_ {};
+  bool debug_ {};
 };
 
 

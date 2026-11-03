@@ -17,18 +17,21 @@
 class Test_DynSequence
 {
 public:
-  Test_DynSequence (CORBA::ORB_var orb, int debug);
-  ~Test_DynSequence ();
+  Test_DynSequence (CORBA::ORB_var orb, bool debug);
+  ~Test_DynSequence () = default;
+  Test_DynSequence (Test_DynSequence const&) = delete;
+  Test_DynSequence (Test_DynSequence&&) = delete;
+  Test_DynSequence& operator= (Test_DynSequence const&) = delete;
+  Test_DynSequence& operator= (Test_DynSequence&&) = delete;
 
-  const char* test_name () const;
+  char const* test_name () const;
 
   int run_test ();
 
 private:
   CORBA::ORB_var orb_;
-  char* test_name_;
-  CORBA::ULong error_count_;
-  int debug_;
+  CORBA::ULong error_count_ {};
+  bool debug_ {};
 };
 
 #endif /* TEST_DYNSEQUENCE_H */

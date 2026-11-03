@@ -17,18 +17,21 @@
 class Test_DynUnion
 {
 public:
-  Test_DynUnion (CORBA::ORB_var orb, int debug);
-  ~Test_DynUnion ();
+  Test_DynUnion (CORBA::ORB_var orb, bool debug);
+  ~Test_DynUnion () = default;
+  Test_DynUnion (Test_DynUnion const&) = delete;
+  Test_DynUnion (Test_DynUnion&&) = delete;
+  Test_DynUnion& operator= (Test_DynUnion const&) = delete;
+  Test_DynUnion& operator= (Test_DynUnion&&) = delete;
 
-  const char* test_name () const;
+  char const* test_name () const;
 
   int run_test ();
 
 private:
   CORBA::ORB_var orb_;
-  char* test_name_;
-  CORBA::ULong error_count_;
-  int debug_;
+  CORBA::ULong error_count_ {};
+  bool debug_ {};
 };
 
 #endif /* TEST_DYNUNION_H */

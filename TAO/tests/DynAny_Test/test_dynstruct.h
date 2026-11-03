@@ -17,18 +17,21 @@
 class Test_DynStruct
 {
 public:
-  Test_DynStruct (CORBA::ORB_var orb, int debug);
-  ~Test_DynStruct ();
+  Test_DynStruct (CORBA::ORB_var orb, bool debug);
+  ~Test_DynStruct () = default;
+  Test_DynStruct (Test_DynStruct const&) = delete;
+  Test_DynStruct (Test_DynStruct&&) = delete;
+  Test_DynStruct& operator= (Test_DynStruct const&) = delete;
+  Test_DynStruct& operator= (Test_DynStruct&&) = delete;
 
-  const char* test_name () const;
+  char const* test_name () const;
 
   int run_test ();
 
 private:
   CORBA::ORB_var orb_;
-  char* test_name_;
-  CORBA::ULong error_count_;
-  int debug_;
+  CORBA::ULong error_count_ {};
+  bool debug_ {};
 };
 
 #endif /* TEST_DYNSTRUCT_H */
