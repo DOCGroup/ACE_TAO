@@ -25,10 +25,29 @@
 #include "ace/Get_Opt.h"
 #include "Iterator.h"
 #include "ace/ACE.h"
+#include "ace/ace_wchar.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Truncate.h"
+
+namespace
+{
+  void
+  print_option (ACE_TCHAR const *option)
+  {
+    if (option == nullptr)
+      option = ACE_TEXT ("");
+
+#if defined (ACE_USES_WCHAR)
+    ACE_Wide_To_Ascii narrow_option (option);
+    char const *narrow = narrow_option.char_rep ();
+    ACE_OS::printf ("%s ", narrow == nullptr ? "" : narrow);
+#else
+    ACE_OS::printf ("%s ", option);
+#endif
+  }
+}
 
 /// These need to appear before the global class instantiation, since
 /// they are static members with a default constructor that initializes
@@ -97,9 +116,13 @@ Options::print_options ()
 {
   ACE_OS::printf ("/* Command-line: ");
 
-  ACE_OS::printf ("%s ", ACE_TEXT_ALWAYS_CHAR (ACE::basename (argv_[0])));
-  for (int i = 1; i < argc_; i++)
-    ACE_OS::printf ("%s ", ACE_TEXT_ALWAYS_CHAR (argv_[i]));
+  if (argv_ != nullptr && argc_ > 0 && argv_[0] != nullptr)
+    print_option (ACE::basename (argv_[0]));
+  else
+    print_option (nullptr);
+
+  for (int i = 1; argv_ != nullptr && i < argc_; i++)
+    print_option (argv_[i]);
 
   ACE_OS::printf ("*/\n");
 }
