@@ -33,9 +33,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("hostname = %C, port = %d, filename = %s, ")
                 ACE_TEXT ("length = %d, offset = %d, operation = %c\n"),
-                options->hostname_,
+                options->hostname_.c_str (),
                 options->port_,
-                options->filename_,
+                options->filename_.c_str (),
                 options->length_,
                 options->offset_,
                 options->operation_));
@@ -46,11 +46,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // User requested a read
   if (options->operation_ == 'r')
     {
-      ACE_Message_Block mb (0, options->length_);
+      ACE_Message_Block mb (static_cast<char const *> (nullptr), options->length_);
 
       // Open the blob
-      if (blob.open (options->filename_,
-                     options->hostname_,
+      if (blob.open (options->filename_.c_str (),
+                     options->hostname_.c_str (),
                      options->port_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
@@ -77,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Message_Block mb (total);
 
       // Open the file to be sent
-      ACE_HANDLE h = ACE_OS::open (options->filename_, O_RDONLY);
+      ACE_HANDLE h = ACE_OS::open (options->filename_.c_str (), O_RDONLY);
       if (h == ACE_INVALID_HANDLE)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
@@ -85,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           -1);
 
       // Open the blob
-      if (blob.open (options->filename_, options->hostname_, options->port_) == -1)
+      if (blob.open (options->filename_.c_str (), options->hostname_.c_str (), options->port_) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("connection open error")),
