@@ -20,6 +20,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/CORBA_macros.h"
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -262,10 +263,15 @@ TAO_IIOP_Connector::make_parallel_connection (
                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
                 ACE_TEXT ("make_parallel_connection, ")
                 ACE_TEXT ("to %d endpoints\n"), max_count));
-  TAO_IIOP_Endpoint **eplist = nullptr;
-  TAO_IIOP_Connection_Handler **shlist = nullptr;
-  ACE_NEW_RETURN (shlist, TAO_IIOP_Connection_Handler *[max_count], nullptr);
-  ACE_NEW_RETURN (eplist, TAO_IIOP_Endpoint *[max_count], nullptr);
+  TAO_IIOP_Connection_Handler **shlist_buffer = nullptr;
+  ACE_NEW_RETURN (shlist_buffer,
+                  TAO_IIOP_Connection_Handler *[max_count],
+                  nullptr);
+  std::unique_ptr<TAO_IIOP_Connection_Handler *[]> shlist (shlist_buffer);
+
+  TAO_IIOP_Endpoint **eplist_buffer = nullptr;
+  ACE_NEW_RETURN (eplist_buffer, TAO_IIOP_Endpoint *[max_count], nullptr);
+  std::unique_ptr<TAO_IIOP_Endpoint *[]> eplist (eplist_buffer);
 
   TAO_LF_Multi_Event mev;
   int result = 0;
@@ -318,12 +324,12 @@ TAO_IIOP_Connector::make_parallel_connection (
     {
       // Make sure that we always do a remove_reference for every member
       // of the list
-      TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (shlist, count);
+      TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (shlist.get (), count);
 
       winner = this->complete_connection (result,
                                           desc,
-                                          shlist,
-                                          eplist,
+                                          shlist.get (),
+                                          eplist.get (),
                                           count,r,
                                           &mev,
                                           timeout);
@@ -334,8 +340,6 @@ TAO_IIOP_Connector::make_parallel_connection (
         winner->add_reference ();
     }
 
-  delete [] shlist; // reference reductions should have been done already
-  delete [] eplist;
   return winner;
 }
 
@@ -415,49 +419,17 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   return result;
 }
 
-namespace TAO_IIOP
-{
-  /// RAII holder for a TAO_Transport list
-  class TList_Holder
-  {
-  public:
-    TList_Holder (size_t count)
-      : tlist_ (nullptr)
-    {
-      // Resources are acquired during initialization (RAII)
-      ACE_NEW (tlist_, TAO_Transport*[count]);
-    }
-
-    ~TList_Holder ()
-    {
-      // Resources are unacquired during uninitialization
-      delete [] tlist_;
-    }
-
-    operator TAO_Transport** ()
-    {
-      return tlist_;
-    }
-
-  private:
-    TAO_Transport** tlist_;
-  private:
-    void operator= (const TList_Holder &) = delete;
-    TList_Holder (const TList_Holder &) = delete;
-  };
-}
-
 TAO_Transport *
 TAO_IIOP_Connector::complete_connection (int result,
                                          TAO_Transport_Descriptor_Interface &desc,
-                                         TAO_IIOP_Connection_Handler **&sh_list,
+                                         TAO_IIOP_Connection_Handler **sh_list,
                                          TAO_IIOP_Endpoint **ep_list,
                                          unsigned count,
                                          TAO::Profile_Transport_Resolver *r,
                                          TAO_LF_Multi_Event *mev,
                                          ACE_Time_Value *timeout)
 {
-  TAO_IIOP::TList_Holder tlist(count);
+  std::unique_ptr<TAO_Transport *[]> tlist = std::make_unique<TAO_Transport *[]> (count);
 
   TAO_Transport *transport  = nullptr;
 
@@ -472,7 +444,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       // iterator stopped on a successful connect.
       transport = tlist[count-1];
 
-      this->cleanup_pending (transport, tlist, count);
+      this->cleanup_pending (transport, tlist.get (), count);
 
       desc.reset_endpoint (ep_list[count-1]);
       TAO::Transport_Cache_Manager &tcm =
@@ -506,7 +478,7 @@ TAO_IIOP_Connector::complete_connection (int result,
         {
           if (!this->wait_for_connection_completion (r,
                                                      transport,
-                                                     tlist,
+                                                     tlist.get (),
                                                      count,
                                                      mev,
                                                      timeout))
