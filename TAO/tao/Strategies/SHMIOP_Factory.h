@@ -25,6 +25,7 @@
 #include "tao/Strategies/strategies_export.h"
 
 #include "ace/Service_Config.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -73,13 +74,18 @@ public:
   const ACE_TCHAR *mmap_file_prefix ();
 
 private:
+  struct ACE_TCHAR_String_Deleter
+  {
+    void operator() (ACE_TCHAR *value) const;
+  };
+
   TAO_SHMIOP_Protocol_Factory (TAO_SHMIOP_Protocol_Factory const &) = delete;
   TAO_SHMIOP_Protocol_Factory &operator= (TAO_SHMIOP_Protocol_Factory const &) = delete;
   TAO_SHMIOP_Protocol_Factory (TAO_SHMIOP_Protocol_Factory &&) = delete;
   TAO_SHMIOP_Protocol_Factory &operator= (TAO_SHMIOP_Protocol_Factory &&) = delete;
 
   /// Specify the prefix (full path) for mmap files
-  ACE_TCHAR *mmap_prefix_ {};
+  std::unique_ptr<ACE_TCHAR, ACE_TCHAR_String_Deleter> mmap_prefix_;
 
   /// Minimum bytes of the mmap files.
   ACE_OFF_T min_bytes_ {10 * 1024}; // @@ Nanbor, remove this magic number!!
