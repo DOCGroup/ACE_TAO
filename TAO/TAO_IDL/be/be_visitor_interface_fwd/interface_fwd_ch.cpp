@@ -17,9 +17,7 @@ be_visitor_interface_fwd_ch::be_visitor_interface_fwd_ch (
 {
 }
 
-be_visitor_interface_fwd_ch::~be_visitor_interface_fwd_ch ()
-{
-}
+be_visitor_interface_fwd_ch::~be_visitor_interface_fwd_ch () = default;
 
 // Visit the interface_fwd_ch node and its scope.
 int

@@ -19,21 +19,25 @@ public:
                       UTL_ScopedName *base_component,
                       UTL_NameList *supports,
                       bool compile_now);
+  FE_ComponentHeader (FE_ComponentHeader const &) = delete;
+  FE_ComponentHeader (FE_ComponentHeader &&) = delete;
+  FE_ComponentHeader &operator= (FE_ComponentHeader const &) = delete;
+  FE_ComponentHeader &operator= (FE_ComponentHeader &&) = delete;
   ~FE_ComponentHeader () override;
 
   // Data Accessors.
   AST_Component *base_component () const;
-  AST_Type **supports () const;
-  long n_supports () const;
-  AST_Interface **supports_flat () const;
-  long n_supports_flat () const;
+  AST_Type_List const& supports () const;
+  std::size_t n_supports () const;
+  AST_Interface_List const& supports_flat () const;
+  std::size_t n_supports_flat () const;
 
 protected:
   void compile_inheritance (UTL_ScopedName *base_component);
   void compile_supports (UTL_NameList *supports);
 
 protected:
-  AST_Component *base_component_;
+  AST_Component *base_component_ {};
 };
 
 #endif /* FE_COMPONENT_HEADER_H */

@@ -32,9 +32,7 @@ be_provides::be_provides (UTL_ScopedName *n,
 {
 }
 
-be_provides::~be_provides ()
-{
-}
+be_provides::~be_provides () = default;
 
 be_type *
 be_provides::provides_type () const

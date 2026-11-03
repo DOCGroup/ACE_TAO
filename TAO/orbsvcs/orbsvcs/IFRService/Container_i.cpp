@@ -8,19 +8,19 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "ace/SString.h"
 #include <memory>
+#include <deque>
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char *TAO_Container_i::tmp_name_holder_ = nullptr;
+char const *TAO_Container_i::tmp_name_holder_ = nullptr;
 
 TAO_Container_i::TAO_Container_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo)
 {
 }
 
-TAO_Container_i::~TAO_Container_i ()
-{
-}
+TAO_Container_i::~TAO_Container_i () = default;
 
 void
 TAO_Container_i::destroy ()
@@ -172,9 +172,9 @@ TAO_Container_i::destroy_definitions_i ()
 }
 
 CORBA::Contained_ptr
-TAO_Container_i::lookup (const char *search_name)
+TAO_Container_i::lookup (char const *search_name)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -182,7 +182,7 @@ TAO_Container_i::lookup (const char *search_name)
 }
 
 CORBA::Contained_ptr
-TAO_Container_i::lookup_i (const char *search_name)
+TAO_Container_i::lookup_i (char const *search_name)
 {
   ACE_Configuration_Section_Key iter_key;
   ACE_Configuration_Section_Key work_key;
@@ -196,7 +196,7 @@ TAO_Container_i::lookup_i (const char *search_name)
   CORBA::DefinitionKind def_kind = CORBA::dk_none;
 
 
-  if (ACE_OS::strncmp (search_name, "::", 2) == 0)
+  if (std::strncmp (search_name, "::", 2) == 0)
     {
       // We were given an absolute scoped name.
       work_string = search_name + 2;
@@ -443,7 +443,7 @@ CORBA::ContainedSeq *
 TAO_Container_i::contents (CORBA::DefinitionKind limit_type,
                            CORBA::Boolean exclude_inherited)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -468,8 +468,8 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
       return retval._retn ();
     }
 
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   // Definitions
 
@@ -512,7 +512,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
               if (limit_type == CORBA::dk_all
                   || limit_type == def_kind)
                 {
-                  kind_queue.enqueue_tail (def_kind);
+                  kind_queue.push_back (def_kind);
 
                   ACE_TString id;
                   this->repo_->config ()->get_string_value (defn_key,
@@ -526,7 +526,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
                                               path
                                             );
 
-                  path_queue.enqueue_tail (path);
+                  path_queue.push_back (path);
                 }
             }
         }
@@ -572,10 +572,12 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
   for (CORBA::ULong j = 0; j < size; ++j)
     {
       CORBA::DefinitionKind next_kind = CORBA::dk_none;
-      kind_queue.dequeue_head (next_kind);
+      next_kind = kind_queue.front ();
+      kind_queue.pop_front ();
 
       ACE_TString next_path;
-      path_queue.dequeue_head (next_path);
+      next_path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (next_kind,
@@ -592,12 +594,12 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
 }
 
 CORBA::ContainedSeq *
-TAO_Container_i::lookup_name (const char *search_name,
+TAO_Container_i::lookup_name (char const *search_name,
                               CORBA::Long levels_to_search,
                               CORBA::DefinitionKind limit_type,
                               CORBA::Boolean exclude_inherited)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -608,13 +610,13 @@ TAO_Container_i::lookup_name (const char *search_name,
 }
 
 CORBA::ContainedSeq *
-TAO_Container_i::lookup_name_i (const char *search_name,
+TAO_Container_i::lookup_name_i (char const *search_name,
                                 CORBA::Long levels_to_search,
                                 CORBA::DefinitionKind limit_type,
                                 CORBA::Boolean exclude_inherited)
 {
-  ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<CORBA::DefinitionKind> kind_queue;
+  std::deque<ACE_TString> path_queue;
 
   this->lookup_name_recursive (kind_queue,
                                path_queue,
@@ -636,10 +638,12 @@ TAO_Container_i::lookup_name_i (const char *search_name,
   for (CORBA::ULong i = 0; i < size; ++i)
     {
       CORBA::DefinitionKind next_kind = CORBA::dk_none;
-      kind_queue.dequeue_head (next_kind);
+      next_kind = kind_queue.front ();
+      kind_queue.pop_front ();
 
       ACE_TString next_path;
-      path_queue.dequeue_head (next_path);
+      next_path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (next_kind,
@@ -660,7 +664,7 @@ TAO_Container_i::describe_contents (CORBA::DefinitionKind limit_type,
                                     CORBA::Boolean exclude_inherited,
                                     CORBA::Long max_returned_objs)
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -725,9 +729,9 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
 }
 
 CORBA::ModuleDef_ptr
-TAO_Container_i::create_module (const char *id,
-                                const char *name,
-                                const char *version)
+TAO_Container_i::create_module (char const *id,
+                                char const *name,
+                                char const *version)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ModuleDef::_nil ());
 
@@ -739,9 +743,9 @@ TAO_Container_i::create_module (const char *id,
 }
 
 CORBA::ModuleDef_ptr
-TAO_Container_i::create_module_i (const char *id,
-                                  const char *name,
-                                  const char *version)
+TAO_Container_i::create_module_i (char const *id,
+                                  char const *name,
+                                  char const *version)
 {
   // new_key is not needed when creating a module, but it is needed
   // by most of the other creation methods, so a blank one gets passed in.
@@ -769,11 +773,11 @@ TAO_Container_i::create_module_i (const char *id,
 }
 
 CORBA::ConstantDef_ptr
-TAO_Container_i::create_constant (const char *id,
-                                  const char *name,
-                                  const char *version,
+TAO_Container_i::create_constant (char const *id,
+                                  char const *name,
+                                  char const *version,
                                   CORBA::IDLType_ptr type,
-                                  const CORBA::Any &value)
+                                  CORBA::Any const &value)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ConstantDef::_nil ());
 
@@ -787,11 +791,11 @@ TAO_Container_i::create_constant (const char *id,
 }
 
 CORBA::ConstantDef_ptr
-TAO_Container_i::create_constant_i (const char *id,
-                                    const char *name,
-                                    const char *version,
+TAO_Container_i::create_constant_i (char const *id,
+                                    char const *name,
+                                    char const *version,
                                     CORBA::IDLType_ptr type,
-                                    const CORBA::Any &value)
+                                    CORBA::Any const &value)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -872,10 +876,10 @@ TAO_Container_i::create_constant_i (const char *id,
 }
 
 CORBA::StructDef_ptr
-TAO_Container_i::create_struct (const char *id,
-                                const char *name,
-                                const char *version,
-                                const CORBA::StructMemberSeq &members)
+TAO_Container_i::create_struct (char const *id,
+                                char const *name,
+                                char const *version,
+                                CORBA::StructMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::StructDef::_nil ());
 
@@ -888,10 +892,10 @@ TAO_Container_i::create_struct (const char *id,
 }
 
 CORBA::StructDef_ptr
-TAO_Container_i::create_struct_i (const char *id,
-                                  const char *name,
-                                  const char *version,
-                                  const CORBA::StructMemberSeq &members)
+TAO_Container_i::create_struct_i (char const *id,
+                                  char const *name,
+                                  char const *version,
+                                  CORBA::StructMemberSeq const &members)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -964,11 +968,11 @@ TAO_Container_i::create_struct_i (const char *id,
 }
 
 CORBA::UnionDef_ptr
-TAO_Container_i::create_union (const char *id,
-                               const char *name,
-                               const char *version,
+TAO_Container_i::create_union (char const *id,
+                               char const *name,
+                               char const *version,
                                CORBA::IDLType_ptr discriminator_type,
-                               const CORBA::UnionMemberSeq &members)
+                               CORBA::UnionMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::UnionDef::_nil ());
 
@@ -982,11 +986,11 @@ TAO_Container_i::create_union (const char *id,
 }
 
 CORBA::UnionDef_ptr
-TAO_Container_i::create_union_i (const char *id,
-                                 const char *name,
-                                 const char *version,
+TAO_Container_i::create_union_i (char const *id,
+                                 char const *name,
+                                 char const *version,
                                  CORBA::IDLType_ptr discriminator_type,
-                                 const CORBA::UnionMemberSeq &members)
+                                 CORBA::UnionMemberSeq const &members)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1076,10 +1080,10 @@ TAO_Container_i::create_union_i (const char *id,
 }
 
 CORBA::EnumDef_ptr
-TAO_Container_i::create_enum (const char *id,
-                              const char *name,
-                              const char *version,
-                              const CORBA::EnumMemberSeq &members)
+TAO_Container_i::create_enum (char const *id,
+                              char const *name,
+                              char const *version,
+                              CORBA::EnumMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::EnumDef::_nil ());
 
@@ -1092,10 +1096,10 @@ TAO_Container_i::create_enum (const char *id,
 }
 
 CORBA::EnumDef_ptr
-TAO_Container_i::create_enum_i (const char *id,
-                                const char *name,
-                                const char *version,
-                                const CORBA::EnumMemberSeq &members)
+TAO_Container_i::create_enum_i (char const *id,
+                                char const *name,
+                                char const *version,
+                                CORBA::EnumMemberSeq const &members)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1154,9 +1158,9 @@ TAO_Container_i::create_enum_i (const char *id,
 }
 
 CORBA::AliasDef_ptr
-TAO_Container_i::create_alias (const char *id,
-                               const char *name,
-                               const char *version,
+TAO_Container_i::create_alias (char const *id,
+                               char const *name,
+                               char const *version,
                                CORBA::IDLType_ptr original_type)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AliasDef::_nil ());
@@ -1170,9 +1174,9 @@ TAO_Container_i::create_alias (const char *id,
 }
 
 CORBA::AliasDef_ptr
-TAO_Container_i::create_alias_i (const char *id,
-                                 const char *name,
-                                 const char *version,
+TAO_Container_i::create_alias_i (char const *id,
+                                 char const *name,
+                                 char const *version,
                                  CORBA::IDLType_ptr original_type)
 {
   TAO_Container_i::tmp_name_holder_ = name;
@@ -1207,10 +1211,10 @@ TAO_Container_i::create_alias_i (const char *id,
 }
 
 CORBA::InterfaceDef_ptr
-TAO_Container_i::create_interface (const char *id,
-                                   const char *name,
-                                   const char *version,
-                                   const CORBA::InterfaceDefSeq &base_interfaces)
+TAO_Container_i::create_interface (char const *id,
+                                   char const *name,
+                                   char const *version,
+                                   CORBA::InterfaceDefSeq const &base_interfaces)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::InterfaceDef::_nil ());
 
@@ -1223,10 +1227,10 @@ TAO_Container_i::create_interface (const char *id,
 }
 
 CORBA::InterfaceDef_ptr
-TAO_Container_i::create_interface_i (const char *id,
-                                     const char *name,
-                                     const char *version,
-                                     const CORBA::InterfaceDefSeq &base_interfaces)
+TAO_Container_i::create_interface_i (char const *id,
+                                     char const *name,
+                                     char const *version,
+                                     CORBA::InterfaceDefSeq const &base_interfaces)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1279,16 +1283,16 @@ TAO_Container_i::create_interface_i (const char *id,
 
 CORBA::ValueDef_ptr
 TAO_Container_i::create_value (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces,
-    const CORBA::InitializerSeq &initializers
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces,
+    CORBA::InitializerSeq const &initializers
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueDef::_nil ());
@@ -1309,16 +1313,16 @@ TAO_Container_i::create_value (
 
 CORBA::ValueDef_ptr
 TAO_Container_i::create_value_i (
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces,
-    const CORBA::InitializerSeq &initializers
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces,
+    CORBA::InitializerSeq const &initializers
   )
 {
   ACE_Configuration_Section_Key new_key;
@@ -1352,9 +1356,9 @@ TAO_Container_i::create_value_i (
 }
 
 CORBA::ValueBoxDef_ptr
-TAO_Container_i::create_value_box (const char *id,
-                                   const char *name,
-                                   const char *version,
+TAO_Container_i::create_value_box (char const *id,
+                                   char const *name,
+                                   char const *version,
                                    CORBA::IDLType_ptr original_type_def)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueBoxDef::_nil ());
@@ -1368,9 +1372,9 @@ TAO_Container_i::create_value_box (const char *id,
 }
 
 CORBA::ValueBoxDef_ptr
-TAO_Container_i::create_value_box_i (const char *id,
-                                     const char *name,
-                                     const char *version,
+TAO_Container_i::create_value_box_i (char const *id,
+                                     char const *name,
+                                     char const *version,
                                      CORBA::IDLType_ptr original_type_def
  )
 {
@@ -1406,10 +1410,10 @@ TAO_Container_i::create_value_box_i (const char *id,
 }
 
 CORBA::ExceptionDef_ptr
-TAO_Container_i::create_exception (const char *id,
-                                   const char *name,
-                                   const char *version,
-                                   const CORBA::StructMemberSeq &members)
+TAO_Container_i::create_exception (char const *id,
+                                   char const *name,
+                                   char const *version,
+                                   CORBA::StructMemberSeq const &members)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExceptionDef::_nil ());
 
@@ -1422,10 +1426,10 @@ TAO_Container_i::create_exception (const char *id,
 }
 
 CORBA::ExceptionDef_ptr
-TAO_Container_i::create_exception_i (const char *id,
-                                     const char *name,
-                                     const char *version,
-                                     const CORBA::StructMemberSeq &members)
+TAO_Container_i::create_exception_i (char const *id,
+                                     char const *name,
+                                     char const *version,
+                                     CORBA::StructMemberSeq const &members)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1486,9 +1490,9 @@ TAO_Container_i::create_exception_i (const char *id,
 }
 
 CORBA::NativeDef_ptr
-TAO_Container_i::create_native (const char *id,
-                                const char *name,
-                                const char *version)
+TAO_Container_i::create_native (char const *id,
+                                char const *name,
+                                char const *version)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::NativeDef::_nil ());
 
@@ -1500,9 +1504,9 @@ TAO_Container_i::create_native (const char *id,
 }
 
 CORBA::NativeDef_ptr
-TAO_Container_i::create_native_i (const char *id,
-                                  const char *name,
-                                  const char *version)
+TAO_Container_i::create_native_i (char const *id,
+                                  char const *name,
+                                  char const *version)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1529,10 +1533,10 @@ TAO_Container_i::create_native_i (const char *id,
 
 CORBA::AbstractInterfaceDef_ptr
 TAO_Container_i::create_abstract_interface (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::AbstractInterfaceDefSeq &base_interfaces
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::AbstractInterfaceDefSeq const &base_interfaces
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AbstractInterfaceDef::_nil ());
@@ -1547,10 +1551,10 @@ TAO_Container_i::create_abstract_interface (
 
 CORBA::AbstractInterfaceDef_ptr
 TAO_Container_i::create_abstract_interface_i (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::AbstractInterfaceDefSeq &base_interfaces
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::AbstractInterfaceDefSeq const &base_interfaces
   )
 {
   TAO_Container_i::tmp_name_holder_ = name;
@@ -1604,10 +1608,10 @@ TAO_Container_i::create_abstract_interface_i (
 
 CORBA::LocalInterfaceDef_ptr
 TAO_Container_i::create_local_interface (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::InterfaceDefSeq &base_interfaces
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::InterfaceDefSeq const &base_interfaces
   )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::LocalInterfaceDef::_nil ());
@@ -1622,10 +1626,10 @@ TAO_Container_i::create_local_interface (
 
 CORBA::LocalInterfaceDef_ptr
 TAO_Container_i::create_local_interface_i (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::InterfaceDefSeq &base_interfaces
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::InterfaceDefSeq const &base_interfaces
   )
 {
   TAO_Container_i::tmp_name_holder_ = name;
@@ -1679,16 +1683,16 @@ TAO_Container_i::create_local_interface_i (
 
 CORBA::ExtValueDef_ptr
 TAO_Container_i::create_ext_value (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers
     )
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtValueDef::_nil ());
@@ -1709,16 +1713,16 @@ TAO_Container_i::create_ext_value (
 
 CORBA::ExtValueDef_ptr
 TAO_Container_i::create_ext_value_i (
-      const char *id,
-      const char *name,
-      const char *version,
+      char const *id,
+      char const *name,
+      char const *version,
       CORBA::Boolean is_custom,
       CORBA::Boolean is_abstract,
       CORBA::ValueDef_ptr base_value,
       CORBA::Boolean is_truncatable,
-      const CORBA::ValueDefSeq &abstract_base_values,
-      const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers
+      CORBA::ValueDefSeq const &abstract_base_values,
+      CORBA::InterfaceDefSeq const &supported_interfaces,
+      CORBA::ExtInitializerSeq const &initializers
     )
 {
   ACE_Configuration_Section_Key new_key;
@@ -1781,22 +1785,22 @@ TAO_Container_i::create_ext_value_i (
 }
 
 int
-TAO_Container_i::same_as_tmp_name (const char *name)
+TAO_Container_i::same_as_tmp_name (char const *name)
 {
-  return ACE_OS::strcmp (TAO_Container_i::tmp_name_holder_, name) == 0;
+  return std::strcmp (TAO_Container_i::tmp_name_holder_, name) == 0;
 }
 
 void
-TAO_Container_i::tmp_name_holder (const char *name)
+TAO_Container_i::tmp_name_holder (char const *name)
 {
   TAO_Container_i::tmp_name_holder_ = name;
 }
 
 void
 TAO_Container_i::lookup_name_recursive (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
+      char const *search_name,
       CORBA::Long levels_to_search,
       CORBA::DefinitionKind limit_type,
       CORBA::Boolean exclude_inherited
@@ -1851,11 +1855,11 @@ TAO_Container_i::lookup_name_recursive (
                                                         "name",
                                                         name);
 
-              if (ACE_OS::strcmp (name.c_str (), search_name) == 0)
+              if (std::strcmp (name.c_str (), search_name) == 0)
                 {
-                  kind_queue.enqueue_tail (def_kind);
+                  kind_queue.push_back (def_kind);
 
-                  path_queue.enqueue_tail (path);
+                  path_queue.push_back (path);
                 }
             }
 
@@ -1866,7 +1870,7 @@ TAO_Container_i::lookup_name_recursive (
                                                           this->repo_);
 
               // This member may not be a container.
-              if (impl == 0)
+              if (impl == nullptr)
                 {
                   continue;
                 }
@@ -1907,9 +1911,9 @@ TAO_Container_i::lookup_name_recursive (
 
 void
 TAO_Container_i:: lookup_attr (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
+      char const *search_name,
       CORBA::Boolean exclude_inherited
     )
 {
@@ -1943,7 +1947,7 @@ TAO_Container_i:: lookup_attr (
 
           if (name == search_name)
             {
-              kind_queue.enqueue_tail (CORBA::dk_Attribute);
+              kind_queue.push_back (CORBA::dk_Attribute);
 
               ACE_TString id;
               this->repo_->config ()->get_string_value (member_key,
@@ -1957,12 +1961,12 @@ TAO_Container_i:: lookup_attr (
                                           path
                                         );
 
-              path_queue.enqueue_tail (path);
+              path_queue.push_back (path);
             }
         }
     }
 
-  if (exclude_inherited == 0)
+  if (!exclude_inherited)
     {
       ACE_Configuration_Section_Key bases_key;
       status =
@@ -2009,9 +2013,9 @@ TAO_Container_i:: lookup_attr (
 
 void
 TAO_Container_i::lookup_op (
-      ACE_Unbounded_Queue<CORBA::DefinitionKind> &kind_queue,
-      ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      const char *search_name,
+      std::deque<CORBA::DefinitionKind> &kind_queue,
+      std::deque<ACE_TString> &path_queue,
+      char const *search_name,
       CORBA::Boolean exclude_inherited
     )
 {
@@ -2045,7 +2049,7 @@ TAO_Container_i::lookup_op (
 
           if (name == search_name)
             {
-              kind_queue.enqueue_tail (CORBA::dk_Operation);
+              kind_queue.push_back (CORBA::dk_Operation);
 
               ACE_TString id;
               this->repo_->config ()->get_string_value (member_key,
@@ -2059,12 +2063,12 @@ TAO_Container_i::lookup_op (
                                           path
                                         );
 
-              path_queue.enqueue_tail (path);
+              path_queue.push_back (path);
             }
         }
     }
 
-  if (exclude_inherited == 0)
+  if (!exclude_inherited)
     {
       ACE_Configuration_Section_Key bases_key;
       status =
@@ -2112,19 +2116,19 @@ TAO_Container_i::lookup_op (
 
 void
 TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
-                              const CORBA::Any &value)
+                              CORBA::Any const &value)
 {
   CORBA::TypeCode_var tc = value.type ();
 
   CORBA::TCKind kind = tc->kind ();
 
   u_int result = 0;
-  int default_label = 0;
+  bool default_label = false;
 
   switch (kind)
   {
     case CORBA::tk_octet:
-      default_label = 1;
+      default_label = true;
       break;
     case CORBA::tk_char:
     {
@@ -2195,7 +2199,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
     {
       CORBA::ULong x;
       TAO::Any_Impl *impl = value.impl ();
-      TAO_InputCDR in (static_cast<ACE_Message_Block *> (0));
+      TAO_InputCDR in (static_cast<ACE_Message_Block *> (nullptr));
 
       if (impl->encoded ())
         {
@@ -2220,7 +2224,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       break;
   }
 
-  if (default_label == 1)
+  if (default_label)
     {
       this->repo_->config ()->set_string_value (key,
                                                 "label",
@@ -2235,8 +2239,8 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
 }
 
 void
-TAO_Container_i::update_refs (const char *path,
-                              const char *name)
+TAO_Container_i::update_refs (char const *path,
+                              char const *name)
 {
   ACE_Configuration_Section_Key refs_key;
   int status =
@@ -2280,8 +2284,8 @@ TAO_Container_i::update_refs (const char *path,
       if (pos != ACE_TString::npos)
         {
           // If we're just changing the path after doing a 'move',
-          // we don't want to change the name, so we've passed in 0.
-          if (name != 0)
+          // we don't want to change the name, so we've passed in nullptr.
+          if (name != nullptr)
             {
               this->repo_->config ()->set_string_value (ref_key,
                                                         "name",
@@ -2303,7 +2307,7 @@ TAO_Container_i::update_refs (const char *path,
     }
 
   // If we're just changing the path after doing a 'move', we're done.
-  if (name == 0)
+  if (name == nullptr)
     {
       return;
     }
@@ -2334,15 +2338,15 @@ TAO_Container_i::create_value_common (
     CORBA::DefinitionKind container_kind,
     ACE_Configuration_Section_Key &container_key,
     ACE_Configuration_Section_Key &new_key,
-    const char *id,
-    const char *name,
-    const char *version,
+    char const *id,
+    char const *name,
+    char const *version,
     CORBA::Boolean is_custom,
     CORBA::Boolean is_abstract,
     CORBA::ValueDef_ptr base_value,
     CORBA::Boolean is_truncatable,
-    const CORBA::ValueDefSeq &abstract_base_values,
-    const CORBA::InterfaceDefSeq &supported_interfaces
+    CORBA::ValueDefSeq const &abstract_base_values,
+    CORBA::InterfaceDefSeq const &supported_interfaces
   )
 {
   TAO_Container_i::tmp_name_holder_ = name;
@@ -2372,7 +2376,7 @@ TAO_Container_i::create_value_common (
                                              (CORBA::ULong) is_truncatable);
   if (!CORBA::is_nil (base_value))
     {
-      const char *base_path =
+      char const *base_path =
         TAO_IFR_Service_Utils::reference_to_path (base_value);
 
       // Get the servant's key into the temporary key holder, because
@@ -2408,7 +2412,7 @@ TAO_Container_i::create_value_common (
                                                  length);
 
       ACE_TString base_id;
-      const char *base_path = nullptr;
+      char const *base_path = nullptr;
       char *stringified = nullptr;
 
       for (CORBA::ULong i = 0; i < length; ++i)
@@ -2457,9 +2461,9 @@ TAO_Container_i::create_value_common (
                                                  "count",
                                                  length);
       ACE_TString supported_id;
-      const char *supported_path = nullptr;
+      char const *supported_path = nullptr;
       CORBA::ULong kind = 0;
-      CORBA::Boolean concrete_seen = 0;
+      bool concrete_seen = false;
       CORBA::DefinitionKind def_kind;
 
       for (CORBA::ULong i = 0; i < length; ++i)
@@ -2484,9 +2488,9 @@ TAO_Container_i::create_value_common (
 
           if (def_kind == CORBA::dk_Interface)
             {
-              if (concrete_seen == 0)
+              if (!concrete_seen)
                 {
-                  concrete_seen = 1;
+                  concrete_seen = true;
                 }
               else
                 {

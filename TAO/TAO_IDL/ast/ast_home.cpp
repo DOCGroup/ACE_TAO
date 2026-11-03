@@ -18,10 +18,10 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Home *base_home,
                     AST_Component *managed_component,
                     AST_Type *primary_key,
-                    AST_Type **supports,
+                    AST_Type_List const& supports,
                     long n_supports,
-                    AST_Interface **supports_flat,
-                    long n_supports_flat)
+                    AST_Interface_List const& supports_flat,
+                    std::size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_home,
@@ -38,27 +38,31 @@ AST_Home::AST_Home (UTL_ScopedName *n,
                    false),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
-    pd_primary_key (primary_key),
-    owns_primary_key_ (false)
+    pd_primary_key (primary_key)
 {
+  AST_Type_List const& inherited = this->inherits ();
+  std::size_t const first_support = this->pd_base_home == nullptr ? 0 : 1;
+  if (first_support < inherited.size ())
+    {
+      this->pd_supports.assign (inherited.begin () + first_support, inherited.end ());
+    }
+
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
   AST_ValueType *pk = dynamic_cast<AST_ValueType*> (primary_key);
 
   if (pk != nullptr)
     {
-      idl_global->primary_keys ().enqueue_tail (pk);
+      idl_global->primary_keys ().push_back (pk);
     }
   else if (primary_key != nullptr)
     {
       // If we are here, it's a param holder and we must destroy it.
-      this->owns_primary_key_ = true;
+      this->owned_primary_key_.reset (primary_key);
     }
 }
 
-AST_Home::~AST_Home ()
-{
-}
+AST_Home::~AST_Home () = default;
 
 AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,
@@ -81,8 +85,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
                              bool full_def_only)
 {
   AST_Decl *d = nullptr;
-  AST_Type **is = nullptr;
-  long nis = -1;
+  AST_Type_List const& supported = this->supports ();
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -97,16 +100,14 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (nis = this->n_supports (), is = this->supports ();
-       nis > 0;
-       nis--, is++)
+  for (std::size_t j = 0; j < supported.size (); ++j)
     {
-      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+      if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {
           continue;
         }
 
-      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (supported[j]);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
@@ -143,19 +144,16 @@ AST_Home::base_home () const
 // These next two look ugly, but it is to keep from having to
 // create separate visitors for homes in the back end.
 
-AST_Type **
+AST_Type_List const&
 AST_Home::supports () const
 {
-  return
-    this->pd_base_home == nullptr
-      ? this->inherits ()
-      : this->inherits () + 1;
+  return this->pd_supports;
 }
 
 long
 AST_Home::n_supports () const
 {
-  return this->n_inherits ();
+  return this->pd_supports.size ();
 }
 
 AST_Component *
@@ -171,47 +169,13 @@ AST_Home::primary_key () const
 }
 
 void
-AST_Home::transfer_scope_elements (AST_Interface *dst)
-{
-  for (UTL_ScopeActiveIterator src_iter (this, UTL_Scope::IK_decls);
-       ! src_iter.is_done ();
-       src_iter.next ())
-    {
-      AST_Decl *d = src_iter.item ();
-
-      Identifier *local_id = nullptr;
-      ACE_NEW (local_id,
-               Identifier (d->local_name ()->get_string ()));
-      UTL_ScopedName *last_segment = nullptr;
-      ACE_NEW (last_segment,
-               UTL_ScopedName (local_id,
-                               nullptr));
-      UTL_ScopedName *full_name =
-        static_cast<UTL_ScopedName *> (dst->name ()->copy ());
-      full_name->nconc (last_segment);
-
-      d->set_name (full_name);
-      dst->add_to_scope (d);
-      d->set_defined_in (dst);
-    }
-
-  // Zero decls so that they are not cleaned twice.
-  long const end = this->pd_decls_used;
-  for (long i = 0; i < end; ++i)
-    {
-      this->pd_decls[i] = nullptr;
-      --this->pd_decls_used;
-    }
-}
-
-void
 AST_Home::destroy ()
 {
   // If it's a param holder, it was created on the fly.
-  if (owns_primary_key_)
+  if (this->owned_primary_key_ != nullptr)
     {
-      this->pd_primary_key->destroy ();
-      delete this->pd_primary_key;
+      this->owned_primary_key_->destroy ();
+      this->owned_primary_key_.reset ();
       this->pd_primary_key = nullptr;
     }
 

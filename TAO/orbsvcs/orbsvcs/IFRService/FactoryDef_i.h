@@ -40,7 +40,7 @@ class TAO_IFRService_Export TAO_FactoryDef_i : public virtual TAO_OperationDef_i
 {
 public:
   /// Constructor
-  TAO_FactoryDef_i (TAO_Repository_i *repo);
+  explicit TAO_FactoryDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_FactoryDef_i () override;

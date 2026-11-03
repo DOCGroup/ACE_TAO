@@ -20,9 +20,7 @@ be_visitor_operation_cs::be_visitor_operation_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_cs::~be_visitor_operation_cs ()
-{
-}
+be_visitor_operation_cs::~be_visitor_operation_cs () = default;
 
 // Processing to be done after every element in the scope is processed.
 int
@@ -100,7 +98,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
-  be_visitor_operation_rettype rt_visitor = (&ctx);
+  be_visitor_operation_rettype rt_visitor (&ctx);
 
   if (bt->accept (&rt_visitor) == -1)
     {

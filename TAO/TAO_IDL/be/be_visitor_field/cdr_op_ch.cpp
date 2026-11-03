@@ -25,10 +25,7 @@ be_visitor_field_cdr_op_ch::be_visitor_field_cdr_op_ch (be_visitor_context *ctx)
 {
 }
 
-// Destructor.
-be_visitor_field_cdr_op_ch::~be_visitor_field_cdr_op_ch ()
-{
-}
+be_visitor_field_cdr_op_ch::~be_visitor_field_cdr_op_ch () = default;
 
 // Visit the field node.
 int

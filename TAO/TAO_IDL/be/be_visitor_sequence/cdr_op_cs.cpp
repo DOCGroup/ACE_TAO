@@ -24,9 +24,7 @@ be_visitor_sequence_cdr_op_cs::be_visitor_sequence_cdr_op_cs (
 {
 }
 
-be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs ()
-{
-}
+be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs () = default;
 
 int
 be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
@@ -107,8 +105,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     {
       *os << "::CORBA::Boolean operator<< (" << be_idt_nl
           << "TAO_OutputCDR &strm," << be_nl
-          << "const std::vector<" << bt->full_name ()
-          << "> &_tao_vector)"
+          << "std::vector<" << bt->full_name ()
+          << "> const &_tao_vector)"
           << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::ULong length = _tao_vector.size ();"
@@ -130,7 +128,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "::CORBA::Boolean operator<< ("
           << be_idt << be_idt_nl
           << "TAO_OutputCDR &strm," << be_nl
-          << "const " << node->name () << " &_tao_sequence)"
+          << node->name () << " const &_tao_sequence)"
           << be_uidt
           << be_uidt_nl
           << "{" << be_idt_nl

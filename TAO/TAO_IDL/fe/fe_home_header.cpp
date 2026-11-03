@@ -17,9 +17,7 @@ FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
   : FE_ComponentHeader (n,
                         nullptr,
                         supports,
-                        false),
-    base_home_ (nullptr),
-    primary_key_ (nullptr)
+                        false)
 {
   // No need to call compile_supports(), it got done in
   // the call to the base class FE_ComponentHeader.
@@ -28,9 +26,7 @@ FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
   this->compile_primary_key (primary_key);
 }
 
-FE_HomeHeader::~FE_HomeHeader ()
-{
-}
+FE_HomeHeader::~FE_HomeHeader () = default;
 
 AST_Home *
 FE_HomeHeader::base_home () const
@@ -171,7 +167,7 @@ FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
                   && nt != AST_Decl::NT_valuetype)
                 {
                   idl_global->err ()->mismatched_template_param (
-                    ph->info ()->name_.c_str ());
+                    ph->info ()->name_);
                 }
 
               break;

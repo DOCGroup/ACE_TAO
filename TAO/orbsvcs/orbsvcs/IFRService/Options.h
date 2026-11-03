@@ -21,6 +21,8 @@
 #include "orbsvcs/IFRService/ifr_service_export.h"
 #include "tao/Versioned_Namespace.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -45,13 +47,13 @@ public:
                   ACE_TCHAR *argv[]);
 
   /// Return the file where the IOR of the server object is stored.
-  const char *ior_output_file () const;
+  char const *ior_output_file () const;
 
   /// Is the Interface Repository persistent?
   int persistent () const;
 
   /// Return the default filename for persistent IFR.
-  const char *persistent_file () const;
+  char const *persistent_file () const;
 
   /// Are we using a WIN32 registry as the backing store?
   int using_registry () const;
@@ -69,22 +71,22 @@ private:
   Options &operator= (Options &&) = delete;
 
   /// File where the IOR of the server object is stored.
-  char *ior_output_file_;
+  std::string ior_output_file_;
 
   /// Is the Interface Repository persistent?
-  int persistent_;
+  bool persistent_ {};
 
   /// Default filename for persistent IFR.
-  char *persistent_file_;
+  std::string persistent_file_;
 
   /// Are we using a WIN32 registry as the backing store?
-  int using_registry_;
+  bool using_registry_ {};
 
   /// Should the repository have a real mutex or a null mutex?
-  int enable_locking_;
+  bool enable_locking_ {};
 
   /// If not zero multicast is enabled.
-  int support_multicast_;
+  bool support_multicast_ {};
 };
 
 // Options Singleton.

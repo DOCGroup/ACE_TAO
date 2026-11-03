@@ -19,22 +19,25 @@
 #include "be_valuetype.h"
 #include "be_attribute.h"
 #include "be_operation.h"
+#include "be_global.h"
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "be_extern.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
+#include "fe_utils.h"
 #include "global_extern.h"
 #include "ace/Log_Msg.h"
+
+#include <memory>
+#include <string>
 
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_amh_pre_proc::~be_visitor_amh_pre_proc ()
-{
-}
+be_visitor_amh_pre_proc::~be_visitor_amh_pre_proc () = default;
 
 int
 be_visitor_amh_pre_proc::visit_root (be_root *node)
@@ -99,8 +102,16 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   // Create the exception holder, it needs to go before the response
   // handler, because the response handler uses an exception holder as
   // argument for some of its operations....
-  be_valuetype *excep_holder =
-    this->create_exception_holder (node);
+  std::unique_ptr<be_valuetype, BE_AST_Decl_Deleter> excep_holder (
+    this->create_exception_holder (node));
+  if (excep_holder == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_amh_pre_proc::visit_interface - "
+                         "creating the exception holder failed\n"),
+                        -1);
+    }
+
   excep_holder->set_defined_in (node->defined_in ());
   excep_holder->original_interface (node);
   excep_holder->is_amh_excep_holder (true);
@@ -110,9 +121,9 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   module->set_has_nested_valuetype ();
 
   // Create the ResponseHandler class
-  be_interface *response_handler =
+  std::unique_ptr<be_interface, BE_AST_Decl_Deleter> response_handler (
     this->create_response_handler (node,
-                                   excep_holder);
+                                   excep_holder.get ()));
   if (response_handler == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,15 +133,15 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
                         -1);
     }
   response_handler->set_defined_in (node->defined_in ());
-
-  // Insert the response handler after the node.
-  module->be_add_interface (response_handler,
-                            node);
-
-  // Remember from whom we were cloned
   response_handler->original_interface (node);
 
-  module->be_add_interface (excep_holder, node);
+  // Insert the response handler after the node.
+  module->be_add_interface (response_handler.get (),
+                            node);
+  response_handler.release ();
+
+  module->be_add_interface (excep_holder.get (), node);
+  excep_holder.release ();
 
   return 0;
 }
@@ -142,13 +153,13 @@ be_visitor_amh_pre_proc::create_response_handler (
   )
 {
   // Generate 'AMH_InterfaceResponseHandler'
-  ACE_CString class_name;
+  std::string class_name;
   class_name += "AMH_";
   class_name += node->local_name ();
   class_name += "ResponseHandler";
 
-  UTL_ScopedName * const amh_name =
-    dynamic_cast<UTL_ScopedName*> (node->name ()->copy ());
+  FE_Utils::Scoped_Name_Owner amh_name (
+    dynamic_cast<UTL_ScopedName*> (node->name ()->copy ()));
 
   if (!amh_name)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -156,7 +167,7 @@ be_visitor_amh_pre_proc::create_response_handler (
                        " - Scope downcast failed.\n"),
                       0);
   Identifier *local_name = amh_name->last_component ();
-  local_name->replace_string (class_name.c_str ());
+  local_name->replace_string (class_name);
 
   UTL_Scope *s = node->defined_in ();
   idl_global->scopes ().push (s);
@@ -168,19 +179,27 @@ be_visitor_amh_pre_proc::create_response_handler (
   // names and then use the symbol table to look up the
   // AMH-response-handler nodes.
   be_interface *response_handler = nullptr;
-  ACE_NEW_RETURN (response_handler,
-                  be_interface (amh_name,   // name
-                                nullptr,          // list of inherited
-                                0,          // number of inherited
-                                nullptr,          // list of ancestors
-                                0,          // number of ancestors
-                                1,          // local
-                                0),         // non-abstract
-                  nullptr);
+  // ACE_NEW_NORETURN keeps the temporary scope balanced on allocation failure;
+  // its raw output is adopted after the scope is popped.
+  ACE_NEW_NORETURN (response_handler,
+                    be_interface (amh_name.get (),   // name
+                                  AST_Type_List {}, // list of inherited
+                                  0,          // number of inherited
+                                  AST_Interface_List {}, // list of ancestors
+                                  0,          // number of ancestors
+                                  1,          // local
+                                  0));        // non-abstract
 
   idl_global->scopes ().pop ();
+  if (response_handler == nullptr)
+    {
+      return nullptr;
+    }
+  std::unique_ptr<be_interface, BE_AST_Decl_Deleter> response_handler_owner (
+    response_handler);
 
-  response_handler->set_name (amh_name);
+  response_handler->set_name (amh_name.get ());
+  amh_name.release ();
   response_handler->set_defined_in (node->defined_in ());
   response_handler->set_imported (node->imported ());
   response_handler->set_line (node->line ());
@@ -190,12 +209,15 @@ be_visitor_amh_pre_proc::create_response_handler (
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
-  response_handler->AST_Decl::repoID (nullptr);
-  response_handler->prefix (const_cast<char*> (node->prefix ()));
+  response_handler->AST_Decl::clear_repoID ();
+  response_handler->prefix (node->prefix ());
 
   response_handler->gen_fwd_helper_name ();
-  this->add_rh_node_members (node, response_handler, exception_holder);
-  return response_handler;
+  if (this->add_rh_node_members (node, response_handler, exception_holder) == 0)
+    {
+      return nullptr;
+    }
+  return response_handler_owner.release ();
 }
 
 int
@@ -224,7 +246,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                             0);
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
       int status = 0;
 
       if (nt == AST_Decl::NT_attr)
@@ -314,18 +336,19 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
   )
 {
   // Temporarily generate the get operation.
-  be_operation *get_operation = this->generate_get_operation (node);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const get_operation (
+    this->generate_get_operation (node));
+  if (get_operation == nullptr)
+    {
+      return -1;
+    }
 
-  this->visit_operation (get_operation);
+  this->visit_operation (get_operation.get ());
 
   int status =
-    this->create_response_handler_operation (get_operation,
+    this->create_response_handler_operation (get_operation.get (),
                                              response_handler,
                                              exception_holder);
-
-  get_operation->destroy ();
-  delete get_operation;
-  get_operation = nullptr;
 
   if (status == -1)
     {
@@ -338,18 +361,19 @@ be_visitor_amh_pre_proc::create_response_handler_attribute (
     }
 
   // Temporarily generate the set operation.
-  be_operation *set_operation = this->generate_set_operation (node);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> const set_operation (
+    this->generate_set_operation (node));
+  if (set_operation == nullptr)
+    {
+      return -1;
+    }
 
-  this->visit_operation (set_operation);
+  this->visit_operation (set_operation.get ());
 
   status =
-    this->create_response_handler_operation (set_operation,
+    this->create_response_handler_operation (set_operation.get (),
                                              response_handler,
                                              exception_holder);
-
-  set_operation->destroy ();
-  delete set_operation;
-  set_operation = nullptr;
 
   return status;
 }
@@ -359,47 +383,62 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                                               be_interface *response_handler,
                                               be_valuetype *exception_holder)
 {
-  UTL_ScopedName *operation_name = node->compute_name ("",
-                                                       "_excep");
+  FE_Utils::Scoped_Name_Owner operation_name (
+    node->compute_name ("",
+                        "_excep"));
 
+  // ACE_NEW_RETURN requires raw output pointers; each allocation is adopted below.
   be_operation *node_excep = nullptr;
+  // ACE_NEW_RETURN requires a raw output pointer; adopt it immediately.
   ACE_NEW_RETURN (node_excep,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
-                                operation_name,
+                                operation_name.get (),
                                 1,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (node_excep);
 
-  node_excep->set_name (operation_name);
+  node_excep->set_name (operation_name.get ());
+  operation_name.release ();
 
   Identifier *arg_id = nullptr;
   ACE_NEW_RETURN (arg_id,
                   Identifier ("holder"),
                   -1);
+  std::unique_ptr<Identifier> arg_id_owner (arg_id);
 
   UTL_ScopedName *arg_name = nullptr;
   ACE_NEW_RETURN (arg_name,
-                  UTL_ScopedName (arg_id, nullptr),
+                  UTL_ScopedName (arg_id_owner.get (), nullptr),
                   -1);
+  arg_id_owner.release ();
+  FE_Utils::Scoped_Name_Owner arg_name_owner (arg_name);
 
   be_argument *argument = nullptr;
   ACE_NEW_RETURN (argument,
                   be_argument (AST_Argument::dir_IN,
                                exception_holder,
-                               arg_name),
+                               arg_name_owner.get ()),
                   -1);
+  std::unique_ptr<be_argument, BE_AST_Decl_Deleter> argument_owner (argument);
 
-  argument->set_name (arg_name);
+  argument->set_name (arg_name_owner.get ());
+  arg_name_owner.release ();
   argument->set_defined_in (node_excep);
-  node_excep->be_add_argument (argument);
-
-  node_excep->set_defined_in (response_handler);
-
-  if (nullptr == response_handler->be_add_operation (node_excep))
+  if (node_excep->be_add_argument (argument_owner.get ()) == nullptr)
     {
       return -1;
     }
+  argument_owner.release ();
+
+  node_excep->set_defined_in (response_handler);
+
+  if (nullptr == response_handler->be_add_operation (operation_owner.get ()))
+    {
+      return -1;
+    }
+  operation_owner.release ();
 
   return 0;
 }
@@ -408,38 +447,43 @@ int
 be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                                            be_interface *response_handler)
 {
+  std::string const& original_op_name =
+    node->name ()->last_component ()->get_string ();
+
+  FE_Utils::Scoped_Name_Owner op_name (
+    static_cast<UTL_ScopedName *> (response_handler->name ()->copy ()));
+
+  // ACE_NEW_RETURN requires raw output pointers; each allocation is adopted below.
   Identifier *id = nullptr;
-  UTL_ScopedName *sn = nullptr;
-
-  ACE_CString original_op_name (
-                  node->name ()->last_component ()->get_string ()
-                );
-
-  UTL_ScopedName *op_name =
-    static_cast<UTL_ScopedName *> (response_handler->name ()->copy ());
-
   ACE_NEW_RETURN (id,
-                  Identifier (original_op_name.c_str ()),
+                  Identifier (original_op_name),
                   -1);
+  std::unique_ptr<Identifier> id_owner (id);
 
+  UTL_ScopedName *sn = nullptr;
   ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
+                  UTL_ScopedName (id_owner.get (),
                                   nullptr),
                   -1);
+  id_owner.release ();
+  FE_Utils::Scoped_Name_Owner sn_owner (sn);
 
-  op_name->nconc (sn);
+  op_name->nconc (sn_owner.get ());
+  sn_owner.release ();
 
   // Create the operation
   be_operation *operation = nullptr;
   ACE_NEW_RETURN (operation,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
-                                op_name,
+                                op_name.get (),
                                 1,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
-  operation->set_name (op_name);
+  operation->set_name (op_name.get ());
+  op_name.release ();
 
   // If return type is non-void add it as first argument
 
@@ -449,24 +493,33 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
       ACE_NEW_RETURN (arg_id,
                       Identifier ("return_value"),
                       -1);
+      std::unique_ptr<Identifier> arg_id_owner (arg_id);
 
       UTL_ScopedName *arg_name = nullptr;
       ACE_NEW_RETURN (arg_name,
-                      UTL_ScopedName (arg_id, nullptr),
+                      UTL_ScopedName (arg_id_owner.get (), nullptr),
                       -1);
+      arg_id_owner.release ();
+      FE_Utils::Scoped_Name_Owner arg_name_owner (arg_name);
 
       // Create the argument
       be_argument *arg = nullptr;
       ACE_NEW_RETURN (arg,
                       be_argument (AST_Argument::dir_IN,
                                    node->return_type (),
-                                   arg_name),
+                                   arg_name_owner.get ()),
                       -1);
+      std::unique_ptr<be_argument, BE_AST_Decl_Deleter> arg_owner (arg);
 
-      arg->set_name (arg_name);
+      arg->set_name (arg_name_owner.get ());
+      arg_name_owner.release ();
 
       // Add the response handler to the argument list
-      operation->be_add_argument (arg);
+      if (operation->be_add_argument (arg_owner.get ()) == nullptr)
+        {
+          return -1;
+        }
+      arg_owner.release ();
     }
 
   // Iterate over the arguments and put all the out and inout arguments
@@ -479,10 +532,6 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
 
       if (!d)
         {
-          operation->destroy ();
-          delete operation;
-          operation = nullptr;
-
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_amh_pre_proc::")
                              ACE_TEXT ("add_normal_reply - ")
@@ -496,15 +545,21 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
       if (original_arg->direction () == AST_Argument::dir_INOUT ||
           original_arg->direction () == AST_Argument::dir_OUT)
         {
-          // Create the argument
+          // The argument constructor only uses this borrowed name to initialize
+          // its local/full name, so its ownership remains with the source node.
           be_argument *arg = nullptr;
           ACE_NEW_RETURN (arg,
                           be_argument (AST_Argument::dir_IN,
                                        original_arg->field_type (),
                                        original_arg->name ()),
                           -1);
+          std::unique_ptr<be_argument, BE_AST_Decl_Deleter> arg_owner (arg);
 
-          operation->be_add_argument (arg);
+          if (operation->be_add_argument (arg_owner.get ()) == nullptr)
+            {
+              return -1;
+            }
+          arg_owner.release ();
         }
     }
 
@@ -515,10 +570,11 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
 
   // After having generated the operation we insert it into the
   // response handler interface.
-  if (nullptr == response_handler->be_add_operation (operation))
+  if (nullptr == response_handler->be_add_operation (operation_owner.get ()))
     {
       return -1;
     }
+  operation_owner.release ();
 
   return 0;
 }
@@ -546,43 +602,51 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 
   idl_global->valuefactory_seen_ = true;
 
-  const int inherit_count = 0;
-  AST_Type **p_intf = nullptr;
+  long const inherit_count = 0;
+  AST_Type_List const p_intf;
 
-  UTL_ScopedName *excep_holder_name =
+  FE_Utils::Scoped_Name_Owner excep_holder_name (
     node->compute_name ("AMH_",
-                        "ExceptionHolder");
+                        "ExceptionHolder"));
 
   UTL_Scope *s = node->defined_in ();
   idl_global->scopes ().push (s);
 
   be_valuetype *excep_holder = nullptr;
-  ACE_NEW_RETURN (excep_holder,
-                  be_valuetype (excep_holder_name,
-                                p_intf,
-                                inherit_count,
-                                nullptr,
-                                nullptr,
-                                0,
-                                nullptr,
-                                0,
-                                nullptr,
-                                0,
-                                0,
-                                0),
-                  nullptr);
+  // ACE_NEW_NORETURN keeps the temporary scope balanced on allocation failure;
+  // its raw output is adopted after the scope is popped.
+  ACE_NEW_NORETURN (excep_holder,
+                    be_valuetype (excep_holder_name.get (),
+                                  p_intf,
+                                  inherit_count,
+                                  nullptr,
+                                  AST_Interface_List {},
+                                  0,
+                                  AST_Type_List {},
+                                  0,
+                                  nullptr,
+                                  0,
+                                  0,
+                                  0));
 
   idl_global->scopes ().pop ();
+  if (excep_holder == nullptr)
+    {
+      return nullptr;
+    }
+  std::unique_ptr<be_valuetype, BE_AST_Decl_Deleter> excep_holder_owner (
+    excep_holder);
 
-  excep_holder->set_name (excep_holder_name);
+  excep_holder->set_name (excep_holder_name.get ());
+  excep_holder_name.release ();
   excep_holder->set_defined_in (node->defined_in ());
 
   // Set repo id to 0, so it will be recomputed on the next access,
   // and set the prefix to the node's prefix. All this is
   // necessary in case the node's prefix was modified after
   // its declaration.
-  excep_holder->AST_Decl::repoID (nullptr);
-  excep_holder->prefix (const_cast<char*> (node->prefix ()));
+  excep_holder->AST_Decl::clear_repoID ();
+  excep_holder->prefix (node->prefix ());
 
   excep_holder->gen_fwd_helper_name ();
 
@@ -606,7 +670,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
         }
 
       be_decl *op = dynamic_cast<be_decl*> (d);
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt == AST_Decl::NT_attr)
         {
@@ -640,7 +704,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
         }
     }
 
-  return excep_holder;
+  return excep_holder_owner.release ();
 }
 
 int
@@ -650,8 +714,6 @@ be_visitor_amh_pre_proc::create_raise_operation (
     Operation_Kind operation_kind
   )
 {
-  Identifier *id = nullptr;
-  UTL_ScopedName *sn = nullptr;
   be_operation *orig_op = nullptr;
 
   if (operation_kind == Operation_Kind::NORMAL)
@@ -660,10 +722,10 @@ be_visitor_amh_pre_proc::create_raise_operation (
     }
 
   // Name the operation properly
-  UTL_ScopedName *op_name =
-    static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ());
+  FE_Utils::Scoped_Name_Owner op_name (
+    static_cast<UTL_ScopedName *> (excep_holder->name ()->copy ()));
 
-  ACE_CString new_local_name ("raise_");
+  std::string new_local_name ("raise_");
 
   if (operation_kind == Operation_Kind::SET)
     {
@@ -676,27 +738,36 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   new_local_name += node->name ()->last_component ()->get_string ();
 
+  // ACE_NEW_RETURN requires raw output pointers; each allocation is adopted below.
+  Identifier *id = nullptr;
   ACE_NEW_RETURN (id,
-                  Identifier (new_local_name.c_str ()),
+                  Identifier (new_local_name),
                   -1);
+  std::unique_ptr<Identifier> id_owner (id);
 
+  UTL_ScopedName *sn = nullptr;
   ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
+                  UTL_ScopedName (id_owner.get (),
                                   nullptr),
                   -1);
+  id_owner.release ();
+  FE_Utils::Scoped_Name_Owner sn_owner (sn);
 
-  op_name->nconc (sn);
+  op_name->nconc (sn_owner.get ());
+  sn_owner.release ();
 
   be_operation *operation = nullptr;
   ACE_NEW_RETURN (operation,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
-                                op_name,
+                                op_name.get (),
                                 0,
                                 0),
                   -1);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
-  operation->set_name (op_name);
+  operation->set_name (op_name.get ());
+  op_name.release ();
   operation->set_defined_in (excep_holder);
 
   if (operation_kind == Operation_Kind::NORMAL)
@@ -715,90 +786,87 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   // After having generated the operation we insert it into the
   // exceptionholder valuetype.
-  if (nullptr == excep_holder->be_add_operation (operation))
+  if (nullptr == excep_holder->be_add_operation (operation_owner.get ()))
     {
       return -1;
     }
+  operation_owner.release ();
 
   return 0;
 }
-
-
-int
-be_visitor_amh_pre_proc::generate_name (ACE_CString &destination,
-                                        const char *prefix,
-                                        const char *middle_name,
-                                        const char *suffix)
-{
-  destination = prefix;
-  destination += middle_name;
-  destination += suffix;
-  return 0;
-}
-
 
 be_operation *
 be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (
-      node->name ()->last_component ()->get_string ()
-    );
-  ACE_CString new_op_name = ACE_CString ("get_") + original_op_name;
+  std::string new_op_name ("get_");
+  new_op_name += node->name ()->last_component ()->get_string ();
 
-  UTL_ScopedName *get_name =
-    static_cast<UTL_ScopedName *> (node->name ()-> copy ());
-  get_name->last_component ()->replace_string (new_op_name.c_str ());
+  FE_Utils::Scoped_Name_Owner get_name (
+    static_cast<UTL_ScopedName *> (node->name ()->copy ()));
+  get_name->last_component ()->replace_string (new_op_name);
 
   be_operation *operation = nullptr;
+  // ACE_NEW_RETURN requires a raw output pointer; the caller adopts the result.
   ACE_NEW_RETURN (operation,
                   be_operation (node->field_type (),
                                 AST_Operation::OP_noflags,
-                                get_name,
+                                get_name.get (),
                                 1,
                                 0),
                   nullptr);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
-  operation->set_name (get_name);
+  operation->set_name (get_name.get ());
+  get_name.release ();
   operation->set_defined_in (node->defined_in ());
 
-  return operation;
+  return operation_owner.release ();
 }
 
 be_operation *
 be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (
-      node->name ()->last_component ()->get_string ()
-    );
-  ACE_CString new_op_name = ACE_CString ("set_") + original_op_name;
+  std::string new_op_name ("set_");
+  new_op_name += node->name ()->last_component ()->get_string ();
 
-  UTL_ScopedName *set_op_name =
-    dynamic_cast<UTL_ScopedName *> (node->name ()-> copy ());
-  set_op_name->last_component ()->replace_string (new_op_name.c_str ());
+  FE_Utils::Scoped_Name_Owner set_op_name (
+    dynamic_cast<UTL_ScopedName *> (node->name ()->copy ()));
+  set_op_name->last_component ()->replace_string (new_op_name);
 
   // argument type is the same as the attribute type
+  FE_Utils::Scoped_Name_Owner arg_name (
+    static_cast<UTL_ScopedName *> (node->name ()->copy ()));
+  // ACE_NEW_RETURN requires raw output pointers; each allocation is adopted below.
   be_argument *arg = nullptr;
   ACE_NEW_RETURN (arg,
                   be_argument (AST_Argument::dir_IN,
                                node->field_type (),
-                               set_op_name),
+                               arg_name.get ()),
                   nullptr);
+  std::unique_ptr<be_argument, BE_AST_Decl_Deleter> arg_owner (arg);
 
-  arg->set_name (dynamic_cast<UTL_ScopedName *> (node->name ()->copy ()));
+  arg->set_name (arg_name.get ());
+  arg_name.release ();
 
   // create the operation
   be_operation *operation = nullptr;
   ACE_NEW_RETURN (operation,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
-                                set_op_name,
+                                set_op_name.get (),
                                 0,
                                 0),
                   nullptr);
+  std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
-  operation->set_name (set_op_name);
+  operation->set_name (set_op_name.get ());
+  set_op_name.release ();
   operation->set_defined_in (node->defined_in ());
-  operation->be_add_argument (arg);
+  if (operation->be_add_argument (arg_owner.get ()) == nullptr)
+    {
+      return nullptr;
+    }
+  arg_owner.release ();
 
-  return operation;
+  return operation_owner.release ();
 }

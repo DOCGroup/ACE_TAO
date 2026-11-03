@@ -15,7 +15,7 @@ class TAO_IDL_FE_Export AST_PortType
     public virtual UTL_Scope
 {
 public:
-  AST_PortType (UTL_ScopedName *n);
+  explicit AST_PortType (UTL_ScopedName *n);
 
   ~AST_PortType () override;
 

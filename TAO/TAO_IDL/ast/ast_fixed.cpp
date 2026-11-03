@@ -14,9 +14,7 @@ AST_Fixed::AST_Fixed (UTL_ScopedName *name,
 {
 }
 
-AST_Fixed::~AST_Fixed ()
-{
-}
+AST_Fixed::~AST_Fixed () = default;
 
 void AST_Fixed::dump (ACE_OSTREAM_TYPE &os)
 {
@@ -29,13 +27,9 @@ void AST_Fixed::dump (ACE_OSTREAM_TYPE &os)
 
 void AST_Fixed::destroy ()
 {
-  pd_digits->destroy ();
-  delete pd_digits;
-  pd_digits = nullptr;
+  pd_digits.reset ();
 
-  pd_scale->destroy ();
-  delete pd_scale;
-  pd_scale = nullptr;
+  pd_scale.reset ();
 
   AST_ConcreteType::destroy ();
 }
@@ -45,12 +39,12 @@ int AST_Fixed::ast_accept (ast_visitor *visitor)
   return visitor->visit_fixed (this);
 }
 
-AST_Expression *AST_Fixed::digits ()
+AST_Expression *AST_Fixed::digits () const
 {
-  return pd_digits;
+  return pd_digits.get ();
 }
 
-AST_Expression *AST_Fixed::scale ()
+AST_Expression *AST_Fixed::scale () const
 {
-  return pd_scale;
+  return pd_scale.get ();
 }

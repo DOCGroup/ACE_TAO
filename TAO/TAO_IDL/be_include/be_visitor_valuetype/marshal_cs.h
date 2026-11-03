@@ -30,13 +30,17 @@ class be_visitor_valuetype_marshal_cs : public be_visitor_scope
 
 public:
   /// constructor
-  be_visitor_valuetype_marshal_cs (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_marshal_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_marshal_cs ();
+  ~be_visitor_valuetype_marshal_cs () override;
+  be_visitor_valuetype_marshal_cs (be_visitor_valuetype_marshal_cs const &) = delete;
+  be_visitor_valuetype_marshal_cs (be_visitor_valuetype_marshal_cs &&) = delete;
+  be_visitor_valuetype_marshal_cs &operator= (be_visitor_valuetype_marshal_cs const &) = delete;
+  be_visitor_valuetype_marshal_cs &operator= (be_visitor_valuetype_marshal_cs &&) = delete;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 
   void class_name (be_valuetype *node, TAO_OutStream *os);
   int gen_fields (be_valuetype *node, be_visitor_context &ctx);

@@ -18,18 +18,16 @@ TAO_ComponentRepository_i::TAO_ComponentRepository_i (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
     ACE_Configuration *config)
-  : TAO_IRObject_i (0),
-    TAO_Container_i (0),
+  : TAO_IRObject_i (nullptr),
+    TAO_Container_i (nullptr),
     TAO_Repository_i (orb,
                       poa,
                       config),
-    TAO_ComponentContainer_i (0)
+    TAO_ComponentContainer_i (nullptr)
 {
 }
 
-TAO_ComponentRepository_i::~TAO_ComponentRepository_i ()
-{
-}
+TAO_ComponentRepository_i::~TAO_ComponentRepository_i () = default;
 
 int
 TAO_ComponentRepository_i::create_servants_and_poas (

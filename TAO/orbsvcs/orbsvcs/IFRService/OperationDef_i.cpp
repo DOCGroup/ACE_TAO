@@ -8,6 +8,7 @@
 
 #include <memory>
 #include "ace/SString.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,9 +20,7 @@ TAO_OperationDef_i::TAO_OperationDef_i (
 {
 }
 
-TAO_OperationDef_i::~TAO_OperationDef_i ()
-{
-}
+TAO_OperationDef_i::~TAO_OperationDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_OperationDef_i::def_kind ()
@@ -32,7 +31,7 @@ TAO_OperationDef_i::def_kind ()
 CORBA::Contained::Description *
 TAO_OperationDef_i::describe ( )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -134,7 +133,7 @@ TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def)
 CORBA::ParDescriptionSeq *
 TAO_OperationDef_i::params ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -152,7 +151,7 @@ TAO_OperationDef_i::params_i ()
                                           0,
                                           params_key);
 
-  ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
+  std::deque<ACE_Configuration_Section_Key> key_queue;
 
   // This section may not have been created.
   if (status == 0)
@@ -174,7 +173,7 @@ TAO_OperationDef_i::params_i ()
 
           if (status == 0)
             {
-              key_queue.enqueue_tail (param_key);
+              key_queue.push_back (param_key);
             }
         }
     }
@@ -198,7 +197,8 @@ TAO_OperationDef_i::params_i ()
   for (i = 0; i < size; ++i)
     {
       ACE_Configuration_Section_Key key;
-      key_queue.dequeue_head (key);
+      key = key_queue.front ();
+      key_queue.pop_front ();
 
       ACE_TString name;
       this->repo_->config ()->get_string_value (key,
@@ -224,7 +224,7 @@ TAO_OperationDef_i::params_i ()
                                                 this->repo_);
 
       // We have an undefined interface
-      if (impl == 0)
+      if (impl == nullptr)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Encountered undefined parameter type "
@@ -247,7 +247,7 @@ TAO_OperationDef_i::params_i ()
 }
 
 void
-TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params)
+TAO_OperationDef_i::params (CORBA::ParDescriptionSeq const &params)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -257,7 +257,7 @@ TAO_OperationDef_i::params (const CORBA::ParDescriptionSeq &params)
 }
 
 void
-TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params)
+TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "params",
@@ -348,7 +348,7 @@ TAO_OperationDef_i::mode_i (CORBA::OperationMode mode)
 CORBA::ContextIdSeq *
 TAO_OperationDef_i::contexts ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -365,7 +365,7 @@ TAO_OperationDef_i::contexts_i ()
                                           0,
                                           contexts_key);
 
-  ACE_Unbounded_Queue<ACE_TString> context_queue;
+  std::deque<ACE_TString> context_queue;
 
   // This section may not have been created.
   if (status == 0)
@@ -383,7 +383,7 @@ TAO_OperationDef_i::contexts_i ()
                                                        context)
               == 0)
         {
-          context_queue.enqueue_tail (context);
+          context_queue.push_back (context);
           ++index;
           stringified =
             TAO_IFR_Service_Utils::int_to_string (index);
@@ -402,7 +402,8 @@ TAO_OperationDef_i::contexts_i ()
   for (CORBA::ULong i = 0; i < size; ++i)
     {
       ACE_TString context_string;
-      context_queue.dequeue_head (context_string);
+      context_string = context_queue.front ();
+      context_queue.pop_front ();
 
       (*ci_seq)[i] = context_string.c_str ();
     }
@@ -411,7 +412,7 @@ TAO_OperationDef_i::contexts_i ()
 }
 
 void
-TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts)
+TAO_OperationDef_i::contexts (CORBA::ContextIdSeq const &contexts)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -421,7 +422,7 @@ TAO_OperationDef_i::contexts (const CORBA::ContextIdSeq &contexts)
 }
 
 void
-TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts)
+TAO_OperationDef_i::contexts_i (CORBA::ContextIdSeq const &contexts)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "contexts",
@@ -450,7 +451,7 @@ TAO_OperationDef_i::contexts_i (const CORBA::ContextIdSeq &contexts)
 CORBA::ExceptionDefSeq *
 TAO_OperationDef_i::exceptions ( )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -468,7 +469,7 @@ TAO_OperationDef_i::exceptions_i ( )
                                           excepts_key);
 
   int index = 0;
-  ACE_Unbounded_Queue<ACE_TString> path_queue;
+  std::deque<ACE_TString> path_queue;
 
   // This section may not have been created.
   if (status == 0)
@@ -486,7 +487,7 @@ TAO_OperationDef_i::exceptions_i ( )
                                                     field_name.c_str (),
                                                     type_path);
 
-          path_queue.enqueue_tail (type_path);
+          path_queue.push_back (type_path);
         }
     }
 
@@ -509,7 +510,8 @@ TAO_OperationDef_i::exceptions_i ( )
   for (CORBA::ULong i = 0; i < size; ++i)
     {
       ACE_TString path;
-      path_queue.dequeue_head (path);
+      path = path_queue.front ();
+      path_queue.pop_front ();
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
@@ -523,7 +525,7 @@ TAO_OperationDef_i::exceptions_i ( )
 }
 
 void
-TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions)
+TAO_OperationDef_i::exceptions (CORBA::ExceptionDefSeq const &exceptions)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -533,7 +535,7 @@ TAO_OperationDef_i::exceptions (const CORBA::ExceptionDefSeq &exceptions)
 }
 
 void
-TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions)
+TAO_OperationDef_i::exceptions_i (CORBA::ExceptionDefSeq const &exceptions)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           "excepts",
@@ -590,7 +592,7 @@ TAO_OperationDef_i::make_description (
       int status = 0;
       ACE_TString field_name, type_path;
       ACE_Configuration::VALUETYPE type;
-      ACE_Unbounded_Queue<ACE_TString> path_queue;
+      std::deque<ACE_TString> path_queue;
 
       while (this->repo_->config ()->enumerate_values (excepts_key,
                                                        index++,
@@ -605,7 +607,7 @@ TAO_OperationDef_i::make_description (
 
           if (status == 0)
             {
-              path_queue.enqueue_tail (type_path);
+              path_queue.push_back (type_path);
             }
         }
 
@@ -616,7 +618,8 @@ TAO_OperationDef_i::make_description (
       for (CORBA::ULong i = 0; i < size; ++i)
         {
           ACE_TString type_path;
-          path_queue.dequeue_head (type_path);
+          type_path = path_queue.front ();
+          path_queue.pop_front ();
 
           ACE_Configuration_Section_Key type_key;
           this->repo_->config ()->expand_path (this->repo_->root_key (),

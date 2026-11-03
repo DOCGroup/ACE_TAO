@@ -10,22 +10,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // structure processing.
 //-----------------------------------------------------------------------------
 
-TAO_RecursiveDef_OuterScopes::TAO_RecursiveDef_OuterScopes( const ACE_TString &id )
-  : id_( id ), pNextOuterID_( pIDsSeenAlready )
+TAO_RecursiveDef_OuterScopes::TAO_RecursiveDef_OuterScopes (ACE_TString const &id)
+  : id_ (id), pNextOuterID_ (pIDsSeenAlready)
 {
-  pIDsSeenAlready= this; // "Push" this scope
+  pIDsSeenAlready = this; // "Push" this scope
 }
 
 TAO_RecursiveDef_OuterScopes::~TAO_RecursiveDef_OuterScopes()
 {
-  pIDsSeenAlready= pNextOuterID_; // "Pop" this scope
+  pIDsSeenAlready = pNextOuterID_; // "Pop" this scope
 }
 
-bool TAO_RecursiveDef_OuterScopes::SeenBefore( const ACE_TString &id )
+bool TAO_RecursiveDef_OuterScopes::SeenBefore (ACE_TString const &id)
 {
-  for ( const TAO_RecursiveDef_OuterScopes *pOuterScope= pIDsSeenAlready;
+  for (TAO_RecursiveDef_OuterScopes const *pOuterScope = pIDsSeenAlready;
         pOuterScope;
-        pOuterScope= pOuterScope->pNextOuterID_ )
+        pOuterScope = pOuterScope->pNextOuterID_)
   {
     if (pOuterScope->id_ == id)
       return true;
@@ -34,7 +34,6 @@ bool TAO_RecursiveDef_OuterScopes::SeenBefore( const ACE_TString &id )
   return false;
 }
 
-const TAO_RecursiveDef_OuterScopes
-  *TAO_RecursiveDef_OuterScopes::pIDsSeenAlready= 0;
+TAO_RecursiveDef_OuterScopes const *TAO_RecursiveDef_OuterScopes::pIDsSeenAlready = nullptr;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

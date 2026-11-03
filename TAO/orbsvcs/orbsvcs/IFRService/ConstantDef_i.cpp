@@ -14,9 +14,7 @@ TAO_ConstantDef_i::TAO_ConstantDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ConstantDef_i::~TAO_ConstantDef_i ()
-{
-}
+TAO_ConstantDef_i::~TAO_ConstantDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ConstantDef_i::def_kind ()
@@ -27,7 +25,7 @@ TAO_ConstantDef_i::def_kind ()
 CORBA::Contained::Description *
 TAO_ConstantDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -142,7 +140,7 @@ TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 CORBA::Any *
 TAO_ConstantDef_i::value ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -188,7 +186,7 @@ TAO_ConstantDef_i::value_i ()
 }
 
 void
-TAO_ConstantDef_i::value (const CORBA::Any &value)
+TAO_ConstantDef_i::value (CORBA::Any const &value)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -198,7 +196,7 @@ TAO_ConstantDef_i::value (const CORBA::Any &value)
 }
 
 void
-TAO_ConstantDef_i::value_i (const CORBA::Any &value)
+TAO_ConstantDef_i::value_i (CORBA::Any const &value)
 {
   CORBA::TypeCode_var my_tc =
     this->type_i ();

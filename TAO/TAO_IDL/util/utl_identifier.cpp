@@ -70,101 +70,72 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-#include "ace/OS_NS_string.h"
 
-Identifier::Identifier ()
-  : pv_string (nullptr),
-    escaped_ (false)
-{
-}
-
-Identifier::Identifier (const char *s)
-  : pv_string (nullptr),
-    escaped_ (false)
+Identifier::Identifier (std::string const& s)
 {
   preprocess_and_replace_string (s);
 }
 
-Identifier::Identifier (const Identifier &other)
-  : pv_string (nullptr),
-    escaped_ (other.escaped ())
-{
-  *this = other;
-}
+Identifier::Identifier (Identifier const &) = default;
 
-Identifier::~Identifier ()
-{
-  if (this->pv_string != nullptr)
-    {
-      ACE::strdelete (this->pv_string);
-    }
-}
+Identifier::~Identifier () = default;
 
 // Operations.
 
-char *
-Identifier::get_string ()
-{
-  return this->pv_string;
-}
-
-const char *
+std::string const&
 Identifier::get_string () const
 {
-  return this->pv_string;
+  return this->pv_string_;
 }
 
 void
-Identifier::replace_string (const char * s)
+Identifier::replace_string (std::string const& s)
 {
-  if (pv_string)
-    {
-      delete [] this->pv_string;
-    }
-  this->pv_string = s ? ACE::strnew (s) : nullptr;
+  this->pv_string_ = s;
 }
 
 void
-Identifier::preprocess_and_replace_string (const char * s)
+Identifier::preprocess_and_replace_string (std::string const& s)
 {
   bool shift = false;
 
-  if (*s == '_')
+  if (!s.empty () && s[0] == '_')
     {
       // Only one leading underscore is allowed.
-      if (s[1] == '_')
+      if (s.size () > 1 && s[1] == '_')
         {
           idl_global->err ()->error0 (UTL_Error::EIDL_UNDERSCORE);
         }
 
       shift = true;
       this->escaped_ = true;
-      ACE_CString str (s);
-      const char *c_prefix = "_cxx_";
+      static constexpr char cxx_prefix[] = "_cxx_";
+      static constexpr char eh_suffix[] = "_excep";
 
-      if (str.find ("_tc_") == 0
-          || str.find ("_tao_") == 0)
+      if (s.compare (0, 4, "_tc_") == 0
+          || s.compare (0, 5, "_tao_") == 0)
         {
           shift = false;
         }
-      else if (str.find (c_prefix) == 0)
+      else if (s.compare (0, sizeof (cxx_prefix) - 1, cxx_prefix) == 0)
         {
-          str = str.substr (ACE_OS::strlen (c_prefix));
-          const char *eh_suffix = "_excep";
-          ACE_CString::size_type pos =
-            str.length () - ACE_OS::strlen (eh_suffix);
+          std::string::size_type const keyword_offset = sizeof (cxx_prefix) - 1;
+          std::string::size_type keyword_length = s.size () - keyword_offset;
+          std::string::size_type const suffix_length = sizeof (eh_suffix) - 1;
 
           // If we have an AMI exception holder suffix, strip it off.
-          if (str.find (eh_suffix) == pos)
+          if (keyword_length >= suffix_length
+              && s.compare (s.size () - suffix_length, suffix_length,
+                            eh_suffix) == 0)
             {
-              str = str.substr (0, pos);
+              keyword_length -= suffix_length;
             }
 
           TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
           unsigned int len =
-            static_cast<unsigned int> (str.length ());
-          const TAO_IDL_CPP_Keyword_Entry *entry =
-            cpp_key_tbl.lookup (str.c_str (), len);
+            static_cast<unsigned int> (keyword_length);
+          TAO_IDL_CPP_Keyword_Entry const *entry =
+            cpp_key_tbl.lookup (s.data () + keyword_offset, len);
 
           if (entry != nullptr)
             {
@@ -173,47 +144,52 @@ Identifier::preprocess_and_replace_string (const char * s)
         }
     }
 
-  replace_string (shift ? s + 1 : s);
+  replace_string (shift ? s.substr (1) : s);
 }
 
 // Compare two Identifier *
 bool
-Identifier::compare (Identifier *o)
+Identifier::compare (Identifier const *o) const
 {
-  if (!o ||
-      !o->pv_string ||
-      !this->pv_string ||
-      this->escaped_ ^ o->escaped_)
+  if (o == nullptr || this->escaped_ ^ o->escaped_)
     {
       return false;
     }
 
-  return !ACE_OS::strcmp (this->pv_string, o->pv_string);
+  return this->pv_string_ == o->pv_string_;
 }
 
 // Report the appropriate error if the two identifiers differ only in case.
 bool
-Identifier::case_compare (Identifier *o)
+Identifier::case_compare (Identifier const *o) const
 {
-  return UTL_String::compare (this->pv_string, o->pv_string);
+  if (o == nullptr)
+    {
+      return false;
+    }
+
+  return UTL_String::compare (this->get_string (), o->get_string ());
 }
 
 // Report no error if the two identifiers differ only in case.
 bool
-Identifier::case_compare_quiet (Identifier *o)
+Identifier::case_compare_quiet (Identifier const *o) const
 {
-  return UTL_String::compare_quiet (this->pv_string, o->pv_string);
+  if (o == nullptr)
+    {
+      return false;
+    }
+
+  return UTL_String::compare_quiet (this->get_string (), o->get_string ());
 }
 
 Identifier *
-Identifier::copy ()
+Identifier::copy () const
 {
   Identifier *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  Identifier (this->pv_string),
+                  Identifier (*this),
                   nullptr);
-
-  retval->escaped_ = this->escaped_;
 
   return retval;
 }
@@ -228,32 +204,29 @@ Identifier::escaped () const
 void
 Identifier::dump (ACE_OSTREAM_TYPE &o)
 {
-  if (this->pv_string == nullptr)
-    {
-      return;
-    }
-
   /*
    * Annotation ids are prefixed with '@' to effectively create an alternative
    * namespace for them. This hides that hack from dumping.
    */
-  o << ((pv_string[0] == '@') ? pv_string + 1 : pv_string);
-}
-
-void
-Identifier::destroy ()
-{
+  if (!this->pv_string_.empty () && this->pv_string_[0] == '@')
+    {
+      o << this->pv_string_.substr (1);
+    }
+  else
+    {
+      o << this->pv_string_;
+    }
 }
 
 bool
-Identifier::operator== (const Identifier &other) const
+Identifier::operator== (Identifier const &other) const
 {
-  return !ACE_OS::strcmp (pv_string, other.get_string ());
+  return this->pv_string_ == other.pv_string_;
 }
 
 Identifier &
-Identifier::operator= (const Identifier &other)
+Identifier::operator= (Identifier const &other)
 {
-  replace_string (other.get_string ());
+  this->pv_string_ = other.pv_string_;
   return *this;
 }

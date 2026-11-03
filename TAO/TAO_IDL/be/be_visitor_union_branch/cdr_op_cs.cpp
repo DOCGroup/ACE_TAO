@@ -17,6 +17,8 @@
 
 #include "union_branch.h"
 
+#include <string>
+
 // **********************************************
 //  Visitor for union_branch in the client stubs file.
 // **********************************************
@@ -28,9 +30,7 @@ be_visitor_union_branch_cdr_op_cs::be_visitor_union_branch_cdr_op_cs (
 {
 }
 
-be_visitor_union_branch_cdr_op_cs::~be_visitor_union_branch_cdr_op_cs ()
-{
-}
+be_visitor_union_branch_cdr_op_cs::~be_visitor_union_branch_cdr_op_cs () = default;
 
 int
 be_visitor_union_branch_cdr_op_cs::visit_union_branch (be_union_branch *node)
@@ -59,7 +59,6 @@ be_visitor_union_branch_cdr_op_cs::visit_union_branch (be_union_branch *node)
 
   return 0;
 }
-
 int
 be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 {
@@ -98,13 +97,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute the
   // fullname with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];  // to hold the full and
-
-  // Save the node's local name and full name in a buffer for quick
-  // use later on.
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()->decl ()))
@@ -117,22 +110,20 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
         {
           be_decl *parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += node->local_name ()->get_string ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
+          fname = "_";
+          fname += node->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname, "%s", node->full_name ());
+      fname = node->full_name ();
     }
 
   // Check what is the code generations substate. Are we generating code for
@@ -177,7 +168,6 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 
   return 0;
 }
-
 int
 be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
 {
@@ -786,7 +776,7 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      if (node->width () == (long) sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "::CORBA::String_var _tao_union_tmp;" << be_nl;
         }
@@ -797,7 +787,7 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
 
       if (node->max_size ()->ev ()->u.ulval != 0)
         {
-          if (node->width () == (long) sizeof (char))
+          if (node->width () == sizeof (char))
             {
               *os << "result = strm >> ACE_InputCDR::to_string ("
                   << "_tao_union_tmp.out (), "
@@ -829,7 +819,7 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       if (node->max_size ()->ev ()->u.ulval != 0)
         {
-          if (node->width () == (long) sizeof (char))
+          if (node->width () == sizeof (char))
             {
               *os << "result = strm << ACE_OutputCDR::from_string ("
                   << "_tao_union." << f->local_name () << " (), "
@@ -1033,48 +1023,6 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
                          "visit_union - "
                          "bad sub state\n"),
                         -1);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_union_branch_cdr_op_cs::explicit_default ()
-{
-  be_union *bu =
-    dynamic_cast<be_union*> (this->ctx_->scope ()->decl ());
-  int def_index = bu->default_index ();
-
-  if (def_index != -1)
-    {
-      be_union_branch *ub =
-        dynamic_cast<be_union_branch*> (this->ctx_->node ());
-
-      int i = 0;
-
-      // Instantiate a scope iterator.
-      for (UTL_ScopeActiveIterator si (bu, UTL_Scope::IK_decls);
-           !si.is_done ();
-           si.next ())
-        {
-          be_union_branch *bub = nullptr; // union branch node
-
-          AST_Decl *d = si.item ();
-
-          if (!d->imported ())
-            {
-              bub = dynamic_cast<be_union_branch*> (d);
-            }
-
-          if (bub == ub)
-            {
-              return (i == def_index);
-            }
-          else
-            {
-              ++i;
-            }
-        }
     }
 
   return 0;

@@ -70,6 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
+#include <memory>
+
 AST_Decl::NodeType const
 AST_Enum::NT = AST_Decl::NT_enum;
 
@@ -84,16 +86,12 @@ AST_Enum::AST_Enum (UTL_ScopedName *n,
               n),
     AST_ConcreteType (AST_Decl::NT_enum,
                       n),
-    UTL_Scope (AST_Decl::NT_enum),
-    pd_enum_counter (0),
-    member_count_ (-1)
+    UTL_Scope (AST_Decl::NT_enum)
 {
   this->size_type (AST_Type::FIXED);
 }
 
-AST_Enum::~AST_Enum ()
-{
-}
+AST_Enum::~AST_Enum () = default;
 
 // Return the member count.
 int
@@ -151,7 +149,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
       // Enum union label expressions don't get evaluated upon
       // creation, to evaluate them later, we have only the
       // string name to look up the enum value with.
-      UTL_ScopedName *v_n = const_cast<AST_Expression *> (v)->n ();
+      UTL_ScopedName *v_n = v->n ();
 
       if (v_n != nullptr)
         {
@@ -186,7 +184,7 @@ static UTL_ScopedName *
 munge_name_for_enumval (UTL_ScopedName *n,
                         Identifier *last_component)
 {
-  long len = n->length ();
+  std::size_t len = n->length ();
   UTL_ScopedName *hold = n;
 
   // Last three components are:
@@ -240,14 +238,11 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = nullptr;
   AST_EnumVal *t1 = nullptr;
 
-  AST_Expression::AST_ExprValue *ev =
-    t->constant_value ()->coerce (AST_Expression::EV_ulong);
+  std::unique_ptr<AST_Expression::AST_ExprValue> ev (
+    t->constant_value ()->coerce (AST_Expression::EV_ulong));
 
   t1 = idl_global->gen ()->create_enum_val (ev->u.ulval,
                                             t->name ());
-
-  delete ev;
-  ev = nullptr;
 
   UTL_ScopedName *sn =
     munge_name_for_enumval ((UTL_IdList *) t->name ()->copy (),

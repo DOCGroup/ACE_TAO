@@ -14,19 +14,22 @@
 #include "global_extern.h"
 #include "nr_extern.h"
 
+#include <memory>
+#include <string>
+
 #include "ace/streams.h"
 
 AST_Decl::NodeType const
 AST_ValueType::NT = AST_Decl::NT_valuetype;
 
 AST_ValueType::AST_ValueType (UTL_ScopedName *n,
-                              AST_Type **inherits,
+                              AST_Type_List const& inherits,
                               long n_inherits,
                               AST_Type *inherits_concrete,
-                              AST_Interface **inherits_flat,
-                              long n_inherits_flat,
-                              AST_Type **supports,
-                              long n_supports,
+                              AST_Interface_List const& inherits_flat,
+                              std::size_t n_inherits_flat,
+                              AST_Type_List const& supports,
+                              std::size_t n_supports,
                               AST_Type *supports_concrete,
                               bool abstract,
                               bool truncatable,
@@ -46,7 +49,6 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                    false,
                    abstract),
     pd_supports (supports),
-    pd_n_supports (n_supports),
     pd_inherits_concrete (inherits_concrete),
     pd_supports_concrete (supports_concrete),
     pd_truncatable (truncatable),
@@ -57,11 +59,11 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
   // to iterate over pd_inherits.
   // Also check for illegal template module scope reference,
   // as long as we're iterating.
-  for (long i = 0; i < n_supports; ++i)
+  for (std::size_t i = 0; i < n_supports; ++i)
     {
       if (supports[i]->node_type () == AST_Decl::NT_param_holder)
         {
-          this->param_holders_.enqueue_tail (supports[i]);
+          this->param_holders_.push_back (supports[i]);
         }
 
       FE_Utils::tmpl_mod_ref_check (this, supports[i]);
@@ -71,25 +73,23 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     {
       if (inherits_concrete->node_type () == AST_Decl::NT_param_holder)
         {
-          this->param_holders_.enqueue_tail (inherits_concrete);
+          this->param_holders_.push_back (inherits_concrete);
         }
     }
 }
 
-AST_ValueType::~AST_ValueType ()
-{
-}
+AST_ValueType::~AST_ValueType () = default;
 
 bool
-AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_ValueType::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = (list.size () == 0);
+  bool const self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.
-  if (self_test && this->in_recursion_ != -1)
+  if (self_test && this->in_recursion_ != Recursion_State::unknown)
     {
-      return (this->in_recursion_ == 1);
+      return this->in_recursion_ == Recursion_State::recursive;
     }
 
   if (list.size ())
@@ -108,11 +108,9 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       else
       {
         // get the head element which is the type being tested
-        AST_Type** recursable_type = nullptr;
-        list.get (recursable_type, 0);
+        AST_Type *recursable_type = list.front ();
         // Check if we are the possibly recursive type being tested
-        if (!ACE_OS::strcmp (this->full_name (),
-                                 (*recursable_type)->full_name ()))
+        if (this->full_name () == recursable_type->full_name ())
         {
           // match, so we're recursive
           idl_global->recursive_type_seen_ = true;
@@ -126,7 +124,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
   }
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -169,7 +167,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       if (type->in_recursion (list))
         {
           if (self_test)
-            this->in_recursion_ = 1;
+            this->in_recursion_ = Recursion_State::recursive;
           idl_global->recursive_type_seen_ = true;
           return true;
         }
@@ -178,7 +176,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   // Not in recursion.
   if (self_test)
-    this->in_recursion_ = 0;
+    this->in_recursion_ = Recursion_State::not_recursive;
   return false;
 }
 
@@ -189,8 +187,9 @@ AST_ValueType::redefine (AST_Interface *from)
 
   if (vt == nullptr)
     {
-      idl_global->err ()->redef_error (from->local_name ()->get_string (),
-                                       this->local_name ()->get_string ());
+      idl_global->err ()->redef_error (
+        from->local_name ()->get_string (),
+        this->local_name ()->get_string ());
       return;
     }
 
@@ -202,16 +201,16 @@ AST_ValueType::redefine (AST_Interface *from)
   this->pd_truncatable = vt->pd_truncatable;
 }
 
-AST_Type **
+AST_Type_List const&
 AST_ValueType::supports () const
 {
   return this->pd_supports;
 }
 
-long
+std::size_t
 AST_ValueType::n_supports () const
 {
-  return this->pd_n_supports;
+  return this->pd_supports.size ();
 }
 
 AST_Type *
@@ -251,8 +250,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
 {
   AST_Decl *d = nullptr;
   AST_Decl *d_before = nullptr;
-  AST_Type **is = nullptr;
-  long nis = -1;
+  AST_Type_List const& supported = this->supports ();
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
@@ -265,16 +263,14 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (nis = this->n_supports (), is = this->supports ();
-       nis > 0;
-       nis--, is++)
+  for (std::size_t j = 0; j < supported.size (); ++j)
     {
-      if ((*is)->node_type () == AST_Decl::NT_param_holder)
+      if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {
           continue;
         }
 
-      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (supported[j]);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
@@ -290,9 +286,11 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
               // Conflict against further results?
               if (d != d_before)
                 {
+                  std::string const filename (
+                    idl_global->filename ());
                   ACE_ERROR ((LM_ERROR,
                               "warning in %C line %d: ",
-                              idl_global->filename ()->get_string (),
+                              filename.c_str (),
                               idl_global->lineno ()));
 
                   e->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -398,9 +396,7 @@ AST_ValueType::destroy ()
 {
   this->AST_Interface::destroy ();
 
-  delete [] this->pd_supports;
-  this->pd_supports = nullptr;
-  this->pd_n_supports = 0;
+  this->pd_supports.clear ();
 }
 
 void
@@ -437,15 +433,15 @@ AST_ValueType::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, "\n\n");
 
-  if (this->pd_n_supports > 0)
+  if (!this->pd_supports.empty ())
     {
       this->dump_i (o, "supports ");
 
-      for (long i = 0; i < this->pd_n_supports; ++i)
+      for (std::size_t i = 0; i < this->pd_supports.size (); ++i)
         {
           this->pd_supports[i]->local_name ()->dump (o);
 
-          if (i < this->pd_n_supports - 1)
+          if (i + 1 < this->pd_supports.size ())
             {
               this->dump_i (o, ", ");
             }
@@ -479,8 +475,8 @@ AST_ValueType::fe_add_factory (AST_Factory *f)
 }
 
 bool
-AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
-                                              const AST_ValueType *pk_base) const
+AST_ValueType::derived_from_primary_key_base (AST_ValueType const *node,
+                                              AST_ValueType const *pk_base) const
 {
   if (nullptr == node)
     {
@@ -499,11 +495,11 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
       return true;
     }
 
-  AST_Type **v = node->pd_inherits;
+  AST_Type_List const& inherited = node->inherits ();
 
-  for (long i = 0; i < node->pd_n_inherits; ++i)
+  for (std::size_t i = 0; i < inherited.size (); ++i)
     {
-      AST_ValueType *tmp = dynamic_cast<AST_ValueType*> (v[i]);
+      AST_ValueType *tmp = dynamic_cast<AST_ValueType*> (inherited[i]);
 
       if (this->derived_from_primary_key_base (tmp, pk_base))
         {
@@ -528,9 +524,6 @@ AST_ValueType::lookup_primary_key_base () const
       UTL_ScopedName pk_name (&scope_name, &local_name);
       AST_Decl *d =
         const_cast<AST_ValueType *> (this)->lookup_by_name (&pk_name, true);
-
-      local_id.destroy ();
-      scope_name.destroy ();
 
       if (d == nullptr)
         {

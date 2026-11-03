@@ -1,6 +1,8 @@
 #ifndef ANNOTEST_IDL_BE_UTIL_HEADER
 #define ANNOTEST_IDL_BE_UTIL_HEADER
 
+#include <string>
+
 class TAO_OutStream;
 class be_module;
 class AST_Decl;
@@ -10,7 +12,7 @@ class be_util
 {
 public:
   /// Special BE arg call factored out of DRV_args.
-  static void prep_be_arg (char *s);
+  static void prep_be_arg (std::string const& s);
 
   /// Checks made after parsing args.
   static void arg_post_proc ();

@@ -24,8 +24,13 @@
 class be_visitor_field_cs : public be_visitor_decl
 {
 public:
-  be_visitor_field_cs (be_visitor_context *ctx);
+  explicit be_visitor_field_cs (be_visitor_context *ctx);
   ~be_visitor_field_cs () override;
+
+  be_visitor_field_cs (const be_visitor_field_cs &) = delete;
+  be_visitor_field_cs (be_visitor_field_cs &&) = delete;
+  be_visitor_field_cs &operator= (const be_visitor_field_cs &) = delete;
+  be_visitor_field_cs &operator= (be_visitor_field_cs &&) = delete;
 
   int visit_field (be_field *node) override;
 

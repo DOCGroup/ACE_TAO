@@ -25,33 +25,38 @@ class be_visitor_union_branch_cdr_op_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_union_branch_cdr_op_ch (be_visitor_context *ctx);
+  explicit be_visitor_union_branch_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_branch_cdr_op_ch ();
+  ~be_visitor_union_branch_cdr_op_ch () override;
+
+  be_visitor_union_branch_cdr_op_ch (be_visitor_union_branch_cdr_op_ch const &) = delete;
+  be_visitor_union_branch_cdr_op_ch (be_visitor_union_branch_cdr_op_ch &&) = delete;
+  be_visitor_union_branch_cdr_op_ch &operator= (be_visitor_union_branch_cdr_op_ch const &) = delete;
+  be_visitor_union_branch_cdr_op_ch &operator= (be_visitor_union_branch_cdr_op_ch &&) = delete;
 
   /// visit the union_branch node
-  virtual int visit_union_branch (be_union_branch *node);
+  int visit_union_branch (be_union_branch *node) override;
 
   // =visit operations on all possible data types that a union_branch can be
 
   /// visit array type
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 
   /// visit enum type
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
   /// visit sequence type
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 
   /// visit structure type
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit typedefed type
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
   /// visit union type
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 };
 
 #endif /*  _BE_VISITOR_UNION_BRANCH_CDR_OP_CH_H_ */

@@ -19,9 +19,7 @@ be_visitor_exception_ctor_assign::be_visitor_exception_ctor_assign (
 {
 }
 
-be_visitor_exception_ctor_assign::~be_visitor_exception_ctor_assign ()
-{
-}
+be_visitor_exception_ctor_assign::~be_visitor_exception_ctor_assign () = default;
 
 int
 be_visitor_exception_ctor_assign::visit_exception (be_exception *node)
@@ -82,7 +80,7 @@ be_visitor_exception_ctor_assign::visit_array (be_array *node)
 
   *os << be_nl;
 
-  if (ACE_OS::strcmp (bd->flat_name (), node->flat_name ()) != 0)
+  if (bd->flat_name () != node->flat_name ())
     {
       // We are typedef'd.
       *os << node->name ();
@@ -202,7 +200,7 @@ be_visitor_exception_ctor_assign::visit_predefined_type (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_decl *bd = this->ctx_->node ();
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   *os << be_nl;
 
@@ -285,7 +283,7 @@ be_visitor_exception_ctor_assign::visit_string (be_string *node)
 
   if (this->ctx_->exception ()) // Special constructor.
     {
-      if (node->width () == (long) sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "this->" << bd->local_name ()
               << " = ::CORBA::string_dup (_tao_"
@@ -300,7 +298,7 @@ be_visitor_exception_ctor_assign::visit_string (be_string *node)
     }
   else
     {
-      if (node->width () == (long) sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "this->" << bd->local_name ()
               << " = ::CORBA::string_dup (_tao_excp."

@@ -28,21 +28,21 @@ namespace
 
         for (unsigned long i = 0; i < node->nfields (); ++i)
           {
-            AST_Field **field = nullptr;
+            AST_Field *field = nullptr;
 
             if (node->field (field, i) != 0 || field == nullptr)
               {
                 return -1;
               }
 
-            be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
+            be_union_branch *branch = dynamic_cast<be_union_branch*> (field);
 
             if (branch == nullptr)
               {
                 continue;
               }
 
-            for (unsigned long j = 0; j < branch->label_list_length (); ++j)
+            for (std::size_t j = 0; j < branch->label_list_length (); ++j)
               {
                 AST_UnionLabel *label = branch->label (j);
 
@@ -83,14 +83,14 @@ namespace
 
     for (unsigned long i = 0; i < node->nfields (); ++i)
       {
-        AST_Field **field = nullptr;
+        AST_Field *field = nullptr;
 
         if (node->field (field, i) != 0 || field == nullptr)
           {
             return -1;
           }
 
-        be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
+        be_union_branch *branch = dynamic_cast<be_union_branch*> (field);
 
         if (branch == nullptr)
           {
@@ -98,7 +98,7 @@ namespace
           }
 
         bool generated_label = false;
-        for (unsigned long j = 0; j < branch->label_list_length (); ++j)
+        for (std::size_t j = 0; j < branch->label_list_length (); ++j)
           {
             if (branch->label (j)->label_kind () == AST_UnionLabel::UL_default)
               {
@@ -158,9 +158,6 @@ be_visitor_union_discriminant_ci::be_visitor_union_discriminant_ci (
 {
 }
 
-be_visitor_union_discriminant_ci::~be_visitor_union_discriminant_ci ()
-{
-}
 
 int
 be_visitor_union_discriminant_ci::visit_enum (be_enum *node)

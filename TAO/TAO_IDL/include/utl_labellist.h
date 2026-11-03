@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_list.h"
 
+#include <memory>
+
 class AST_UnionLabel;
 
 // List of AST_UnionBranch nodes.
@@ -82,9 +84,15 @@ class TAO_IDL_FE_Export UTL_LabelList : public UTL_List
 public:
   UTL_LabelList (AST_UnionLabel *s,
                  UTL_LabelList *cdr);
+  UTL_LabelList (UTL_LabelList const &) = delete;
+  UTL_LabelList (UTL_LabelList &&) = delete;
+  UTL_LabelList &operator= (UTL_LabelList const &) = delete;
+  UTL_LabelList &operator= (UTL_LabelList &&) = delete;
+  ~UTL_LabelList () override;
 
   // Get list item.
   AST_UnionLabel *head ();
+  AST_UnionLabel const *head () const;
 
   // Override of base class method.
   UTL_LabelList *copy () override;
@@ -93,17 +101,24 @@ public:
   void destroy () override;
 
 private:
-  AST_UnionLabel *pd_car_data;
+  struct Union_Label_Deleter
+  {
+    void operator() (AST_UnionLabel *label) const;
+  };
+
+  using Union_Label_Owner = std::unique_ptr<AST_UnionLabel, Union_Label_Deleter>;
+
+  Union_Label_Owner pd_car_data;
 };
 
 // Active iterator for UTL_LabelList.
 class UTL_LabellistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  UTL_LabellistActiveIterator (UTL_LabelList *source);
+  explicit UTL_LabellistActiveIterator (UTL_LabelList *source);
 
   // Get current item.
-  AST_UnionLabel *item ();
+  AST_UnionLabel *item () const;
 };
 
 #endif           // _UTL_LABELLIST_UTL_LABELLIST_HH

@@ -29,11 +29,15 @@ class be_visitor_connector_ami_exh
   //
   //
 public:
-  be_visitor_connector_ami_exh (be_visitor_context *ctx);
+  explicit be_visitor_connector_ami_exh (be_visitor_context *ctx);
 
-  ~be_visitor_connector_ami_exh ();
+  ~be_visitor_connector_ami_exh () override;
+  be_visitor_connector_ami_exh (be_visitor_connector_ami_exh const &) = delete;
+  be_visitor_connector_ami_exh (be_visitor_connector_ami_exh &&) = delete;
+  be_visitor_connector_ami_exh &operator= (be_visitor_connector_ami_exh const &) = delete;
+  be_visitor_connector_ami_exh &operator= (be_visitor_connector_ami_exh &&) = delete;
 
-  virtual int visit_connector (be_connector *node);
+  int visit_connector (be_connector *node) override;
 
 private:
   void gen_entrypoint ();

@@ -16,9 +16,7 @@ be_visitor_exception_ctor::be_visitor_exception_ctor (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception_ctor::~be_visitor_exception_ctor ()
-{
-}
+be_visitor_exception_ctor::~be_visitor_exception_ctor () = default;
 
 int
 be_visitor_exception_ctor::post_process (be_decl *bd)
@@ -264,7 +262,7 @@ be_visitor_exception_ctor::visit_predefined_type (be_predefined_type *node)
       bt = node;
     }
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_any)
     {
@@ -344,7 +342,7 @@ be_visitor_exception_ctor::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << "const char *";
     }

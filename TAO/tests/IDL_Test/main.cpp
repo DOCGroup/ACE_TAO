@@ -23,8 +23,9 @@
 #include "fixedA.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "tao/AnyTypeCode/Any.h"
+
+#include <cstring>
 
 class hello_i : public virtual POA_hello
 {
@@ -311,7 +312,7 @@ test_union_discriminators (int &error_count)
   shared_labels._d (4);
   expect_equals<CORBA::Short> (
     error_count, "foo::_d valid shared label", shared_labels._d (), 4);
-  if (ACE_OS::strcmp (shared_labels.foo_str_member (), "value") != 0)
+  if (std::strcmp (shared_labels.foo_str_member (), "value") != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "foo::_d changed the shared-label member value\n"));
@@ -339,7 +340,7 @@ test_union_discriminators (int &error_count)
 
   expect_equals<CORBA::Short> (
     error_count, "foo::_d unchanged after BAD_PARAM", shared_labels._d (), 4);
-  if (ACE_OS::strcmp (shared_labels.foo_str_member (), "value") != 0)
+  if (std::strcmp (shared_labels.foo_str_member (), "value") != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "foo::_d changed the member value after BAD_PARAM\n"));
@@ -350,7 +351,7 @@ test_union_discriminators (int &error_count)
   expect_equals<CORBA::Short> (
     error_count, "foo shared-label copy discriminator",
     shared_labels_copy._d (), 4);
-  if (ACE_OS::strcmp (shared_labels_copy.foo_str_member (), "value") != 0)
+  if (std::strcmp (shared_labels_copy.foo_str_member (), "value") != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "foo shared-label copy has the wrong member value\n"));
@@ -363,7 +364,7 @@ test_union_discriminators (int &error_count)
   expect_equals<CORBA::Short> (
     error_count, "foo shared-label assignment discriminator",
     shared_labels_assigned._d (), 4);
-  if (ACE_OS::strcmp (shared_labels_assigned.foo_str_member (), "value") != 0)
+  if (std::strcmp (shared_labels_assigned.foo_str_member (), "value") != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "foo shared-label assignment has the wrong member value\n"));
@@ -494,7 +495,7 @@ test_union_discriminators (int &error_count)
   expect_equals<FieldType> (
     error_count, "FieldValue::_d unchanged after BAD_PARAM",
     enum_union._d (), FTYPE_VARCHAR);
-  if (ACE_OS::strcmp (enum_union.strValue (), "value") != 0)
+  if (std::strcmp (enum_union.strValue (), "value") != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "FieldValue::_d changed the member value after BAD_PARAM\n"));
@@ -701,7 +702,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       obj = root_poa->id_to_reference (id.in ());
       obj = hello::_narrow (obj.in ());
 
-      if (ACE_OS::strcmp (obj->_interface_repository_id (),
+      if (std::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/hello:1.0"))
         {
           ++error_count;
@@ -714,7 +715,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       obj = root_poa->id_to_reference (id.in ());
       obj = goodbye::_narrow (obj.in ());
 
-      if (ACE_OS::strcmp (obj->_interface_repository_id (),
+      if (std::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/goodbye:1.0"))
         {
           ++error_count;
@@ -727,7 +728,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       obj = root_poa->id_to_reference (id.in ());
       obj = salutation::sayonara::_narrow (obj.in ());
 
-      if (ACE_OS::strcmp (obj->_interface_repository_id (),
+      if (std::strcmp (obj->_interface_repository_id (),
                           "IDL:hammer.com/salutation/sayonara:1.0"))
         {
           ++error_count;
@@ -746,7 +747,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       obj = root_poa->id_to_reference (id.in ());
       obj = ciao::_narrow (obj.in ());
 
-      if (ACE_OS::strcmp (obj->_interface_repository_id (),
+      if (std::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/ciao:1.0"))
         {
           ++error_count;
@@ -759,7 +760,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       obj = root_poa->id_to_reference (id.in ());
       obj = aloha::_narrow (obj.in ());
 
-      if (ACE_OS::strcmp (obj->_interface_repository_id (),
+      if (std::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/aloha:1.0"))
         {
           ++error_count;
@@ -771,7 +772,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       schmooze_i s_schmooze;
 
-      if (ACE_OS::strcmp (s_schmooze._interface_repository_id (),
+      if (std::strcmp (s_schmooze._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/schmooze:1.0"))
         {
           ++error_count;
@@ -781,7 +782,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       schmeer_i s_schmeer;
 
-      if (ACE_OS::strcmp (s_schmeer._interface_repository_id (),
+      if (std::strcmp (s_schmeer._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/schmeer:1.0"))
         {
           ++error_count;
@@ -791,7 +792,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       schlemiel_i s_schlemiel;
 
-      if (ACE_OS::strcmp (s_schlemiel._interface_repository_id (),
+      if (std::strcmp (s_schlemiel._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/schlemiel:1.0"))
         {
           ++error_count;
@@ -801,7 +802,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       spilkis_i s_spilkis;
 
-      if (ACE_OS::strcmp (s_spilkis._interface_repository_id (),
+      if (std::strcmp (s_spilkis._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/spilkis:1.0"))
         {
           ++error_count;
@@ -811,7 +812,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       schmuck_i s_schmuck;
 
-      if (ACE_OS::strcmp (s_schmuck._interface_repository_id (),
+      if (std::strcmp (s_schmuck._interface_repository_id (),
                           "ABRA:cadabra/hocus/pocus:1.23"))
         {
           ++error_count;
@@ -821,21 +822,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       schmendrick_i s_schmendrick;
 
-      if (ACE_OS::strcmp (s_schmendrick._interface_repository_id (),
+      if (std::strcmp (s_schmendrick._interface_repository_id (),
                           "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
         {
           ++error_count;
           ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmendrick'\n"));
         }
-      if (ACE_OS::strcmp (gleep::floop::schmendrick::_desc_repository_id (),
+      if (std::strcmp (gleep::floop::schmendrick::_desc_repository_id (),
                           "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
         {
           ++error_count;
           ACE_ERROR ((LM_ERROR,
                       "error in _desc_repository_id 'schmendrick'\n"));
         }
-      if (ACE_OS::strcmp (gleep::floop::schmendrick::_desc_interface_name (),
+      if (std::strcmp (gleep::floop::schmendrick::_desc_interface_name (),
                           "schmendrick"))
         {
           ++error_count;
@@ -845,7 +846,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       schlemazel_i s_schlemazel;
 
-      if (ACE_OS::strcmp (
+      if (std::strcmp (
               s_schlemazel._interface_repository_id (),
               "IDL:verklempt_prefix/gleep/floop/verklempt/schlemazel:1.0"
             ))
@@ -857,7 +858,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       schmegegging_i s_schmegegging;
 
-      if (ACE_OS::strcmp (s_schmegegging._interface_repository_id (),
+      if (std::strcmp (s_schmegegging._interface_repository_id (),
                           "IDL:gleep_prefix/gleep/schmegegging:1.0"))
         {
           ++error_count;
@@ -932,7 +933,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       const char *str = outfield->value.strValue ();
 
-      if (ACE_OS::strcmp (str, "duplicate case label test string") != 0)
+      if (std::strcmp (str, "duplicate case label test string") != 0)
         {
           ++error_count;
           ACE_ERROR ((LM_ERROR,
@@ -953,7 +954,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       str = outfield->value.defstr ();
 
-      if (ACE_OS::strcmp (str, "default case test string") != 0)
+      if (std::strcmp (str, "default case test string") != 0)
         {
           ++error_count;
           ACE_ERROR ((LM_ERROR,

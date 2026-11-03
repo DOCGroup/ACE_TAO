@@ -30,20 +30,20 @@ public:
            AST_Home *base_home,
            AST_Component *managed_component,
            AST_Type *primary_key,
-           AST_Type **supports,
+           AST_Type_List const& supports,
            long n_supports,
-           AST_Interface **supports_flat,
-           long n_supports_flat);
+           AST_Interface_List const& supports_flat,
+           std::size_t n_supports_flat);
 
-  virtual ~be_home ();
+  ~be_home () override;
 
   void scan (UTL_Scope *s);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 };
 
 #endif // if !defined

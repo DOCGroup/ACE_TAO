@@ -18,16 +18,13 @@ be_visitor_operation_upcall_command_ss::be_visitor_operation_upcall_command_ss (
 {
 }
 
-be_visitor_operation_upcall_command_ss::~be_visitor_operation_upcall_command_ss (
-  )
-{
-}
+be_visitor_operation_upcall_command_ss::~be_visitor_operation_upcall_command_ss () = default;
 
 int
 be_visitor_operation_upcall_command_ss::visit (
   be_operation * node,
-  char const * full_skel_name,
-  char const * upcall_command_name)
+  std::string const& full_skel_name,
+  std::string const& upcall_command_name)
 {
   if (node->is_sendc_ami ())
     {
@@ -85,14 +82,23 @@ be_visitor_operation_upcall_command_ss::visit (
   // class, an instance of which will be invoked by the
   // TAO::Upcall_Wrapper object.
 
-  os << "class " << upcall_command_name  << be_nl
-     << "  : public TAO::Upcall_Command" << be_nl
+  os << "class " << upcall_command_name;
+  if (upcall_command_name.size () + 35 <= 120)
+    {
+      os << " : public TAO::Upcall_Command";
+    }
+  else
+    {
+      os << be_nl << "  : public TAO::Upcall_Command";
+    }
+
+  os << be_nl
      << "{" << be_nl
-     << "public:" << be_idt_nl ;
+     << "public:" << be_idt_nl;
 
   // Generate constructor
   os << "inline " << upcall_command_name
-     << " (" << be_idt_nl
+     << " (" << be_idt
      << full_skel_name << " * servant";
 
   // No need to accept an argument array parameter if the operation
@@ -127,10 +133,7 @@ be_visitor_operation_upcall_command_ss::visit (
       os << ", args_ (args)" << be_uidt;
     }
 
-  os << be_uidt_nl;
-
-  os << "{" << be_nl
-     << "}" << be_nl_2;
+  os << be_uidt << " {}" << be_nl_2;
 
   // Generate execute() method.
   os << "void execute () override" << be_nl
@@ -217,11 +220,11 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
                               UTL_Scope::IK_decls);
 
   unsigned int index = 1;
-  const char *op_name = node->flat_name ();
-  static constexpr char const *excep_suffix = "_excep";
-  static size_t const excep_suffix_len = ACE_OS::strlen (excep_suffix);
-  const char *substr = ACE_OS::strstr (op_name, excep_suffix);
-  bool excep_method = substr && substr + excep_suffix_len == op_name + ACE_OS::strlen (op_name);
+  std::string const& op_name = node->flat_name ();
+  std::string const excep_suffix = "_excep";
+  std::string::size_type const excep_suffix_len = excep_suffix.size ();
+  bool excep_method = op_name.size () >= excep_suffix_len
+    && op_name.substr (op_name.size () - excep_suffix_len) == excep_suffix;
 
   for (; !si.is_done (); si.next (), ++index)
     {
@@ -239,14 +242,13 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
 
           if (value_type != nullptr)
             {
-              static constexpr char const *excepholder = "ExceptionHolder";
-              static size_t const excepholder_len =
-                                         ACE_OS::strlen (excepholder);
-              const char *param_name = value_type->full_name ();
-              excep_method =
-                 ((ACE_OS::strstr (param_name, excepholder) +
-                   excepholder_len) ==
-                  (param_name + ACE_OS::strlen (param_name)));
+              static std::string const excepholder = "ExceptionHolder";
+              std::string::size_type const excepholder_len =
+                excepholder.size ();
+              std::string const& param_name = value_type->full_name ();
+              std::size_t const excepholder_pos = param_name.find (excepholder);
+              excep_method = excepholder_pos != std::string::npos
+                && excepholder_pos + excepholder_len == param_name.size ();
             }
         }
 
@@ -371,7 +373,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
   os << "this->servant_->" << node->local_name () << " ("
      << be_idt;
 
-  size_t const count = node->argument_count ();
+  std::size_t const count = node->argument_count ();
 
   for (unsigned int i = 0; i < count; ++i)
     {

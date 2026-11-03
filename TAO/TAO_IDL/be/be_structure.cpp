@@ -11,6 +11,8 @@
  */
 //=============================================================================
 
+#include <cstddef>
+
 #include "be_structure.h"
 #include "be_field.h"
 #include "be_codegen.h"
@@ -96,7 +98,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
       << "std::ostream &strm," << be_nl
       << "const " << this->name () << " &";
 
-  long n = this->pd_decls_used;
+  std::size_t const n = this->pd_decls.size ();
 
   // be_exception is a subclass and could be empty.
   if (n > 0)
@@ -109,7 +111,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "(\"";
 
-  for (long i = 0; i < n; ++i)
+  for (std::size_t i = 0; i < n; ++i)
     {
       be_field *f = dynamic_cast<be_field*> (this->pd_decls[i]);
 
@@ -127,13 +129,13 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
       *os << be_nl
           << "     << ";
 
-      ACE_CString instance_name ("_tao_aggregate.");
+      std::string instance_name ("_tao_aggregate.");
       instance_name += f->local_name ()->get_string ();
       AST_Decl::NodeType nt = f->field_type ()->node_type ();
       bool member_use_underscore =
         nt == AST_Decl::NT_array || nt == AST_Decl::NT_sequence;
       f->gen_member_ostream_operator (os,
-                                      instance_name.c_str (),
+                                      instance_name,
                                       member_use_underscore,
                                       false);
     }

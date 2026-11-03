@@ -11,6 +11,8 @@
  */
 //=============================================================================
 
+#include <cstddef>
+
 #include "be_union.h"
 #include "be_union_branch.h"
 #include "be_union_label.h"
@@ -71,26 +73,6 @@ be_union::redefine (AST_Structure *from)
   AST_Union::redefine (from);
 }
 
-bool
-be_union::has_duplicate_case_labels ()
-{
-  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      AST_Decl *d = si.item ();
-      AST_UnionBranch *ub =
-        dynamic_cast<AST_UnionBranch*> (d);
-
-      if (ub->label_list_length () > 1)
-        {
-          return true;
-        }
-    }
-
-  return false;
-}
-
 void
 be_union::gen_ostream_operator (TAO_OutStream *os,
                                 bool /*use_underscore*/)
@@ -105,7 +87,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
-  for (long i = 0; i < this->pd_decls_used; ++i)
+  for (std::size_t i = 0; i < this->pd_decls.size (); ++i)
     {
       be_union_branch *ub =
         dynamic_cast<be_union_branch*> (this->pd_decls[i]);
@@ -118,9 +100,9 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 
       *os << be_nl;
 
-      unsigned long ll_len = ub->label_list_length ();
+      std::size_t const ll_len = ub->label_list_length ();
 
-      for (unsigned long j = 0; j < ll_len; ++j)
+      for (std::size_t j = 0; j < ll_len; ++j)
         {
           // Check if we are printing the default case.
           if (ub->label (j)->label_kind () == AST_UnionLabel::UL_default)
@@ -146,18 +128,18 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
             }
         }
 
-      ACE_CString instance_name ("_tao_union.");
+      std::string instance_name ("_tao_union.");
       instance_name += ub->local_name ()->get_string ();
 
       *os << "strm << ";
 
       be_type *ub_ft = dynamic_cast<be_type*> (ub->field_type ());
-      AST_Decl::NodeType ub_nt = ub_ft->node_type ();
+      AST_Decl::NodeType const ub_nt = ub_ft->node_type ();
       // catch anonymous Array member types
-      bool ub_use_underscore = ub_nt == AST_Decl::NT_array;
+      bool const ub_use_underscore = ub_nt == AST_Decl::NT_array;
 
       ub->gen_member_ostream_operator (os,
-                                       instance_name.c_str (),
+                                       instance_name,
                                        ub_use_underscore,
                                        true);
 
@@ -211,8 +193,8 @@ be_union::gen_empty_default_label ()
       return true; // In reality this is an error.
     }
 
-  AST_Decl::NodeType nt = disc->node_type ();
-  ACE_UINT64 n_labels = this->nlabels ();
+  AST_Decl::NodeType const nt = disc->node_type ();
+  ACE_UINT64 const n_labels = this->nlabels ();
 
   if (nt == AST_Decl::NT_enum)
     {

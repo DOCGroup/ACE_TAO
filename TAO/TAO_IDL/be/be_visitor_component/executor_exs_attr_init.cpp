@@ -14,14 +14,11 @@
 
 be_visitor_executor_exs_attr_init::be_visitor_executor_exs_attr_init (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    semicolon_generated_ (false)
+  : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init ()
-{
-}
+be_visitor_executor_exs_attr_init::~be_visitor_executor_exs_attr_init () = default;
 
 int
 be_visitor_executor_exs_attr_init::visit_attribute (
@@ -32,7 +29,7 @@ be_visitor_executor_exs_attr_init::visit_attribute (
       return 0;
     }
 
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.
@@ -41,12 +38,12 @@ be_visitor_executor_exs_attr_init::visit_attribute (
       return 0;
     }
 
-  os_ << this->ctx_->port_prefix ().c_str ()
+  os_ << this->ctx_->port_prefix ()
       << node->local_name () << "_ (";
 
   be_visitor_attr_init nrt_visitor (this->ctx_);
 
-  int status =
+  int const status =
     node->field_type ()->accept (&nrt_visitor);
 
    if (status == -1)
@@ -71,7 +68,7 @@ be_visitor_executor_exs_attr_init::pre_process (be_decl *node)
     {
       return 0;
     }
-  AST_Decl::NodeType nt = this->node_->node_type ();
+  AST_Decl::NodeType const nt = this->node_->node_type ();
 
   // Executor attribute code generated for porttype attributes
   // always in connectors and only for mirrorports in components.

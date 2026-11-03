@@ -10,6 +10,7 @@
 //=============================================================================
 
 #include "operation.h"
+#include "be_interface.h"
 
 // ************************************************************
 //   operation visitor  to generate the argument list.
@@ -19,14 +20,11 @@
 
 be_visitor_operation_arglist::be_visitor_operation_arglist (
     be_visitor_context *ctx)
-  : be_visitor_operation (ctx),
-    unused_ (false)
+  : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_arglist::~be_visitor_operation_arglist ()
-{
-}
+be_visitor_operation_arglist::~be_visitor_operation_arglist () = default;
 
 int
 be_visitor_operation_arglist::visit_operation (be_operation *node)
@@ -71,10 +69,19 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
   *os << ")" << be_uidt;
 
+  bool const inherited_operation =
+    this->ctx_->interface () != nullptr
+    && this->ctx_->interface () != node->defined_in ();
+
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
+      if (inherited_operation)
+        {
+          *os << " override";
+        }
+
       if (node->is_local ())
         {
           *os << " = 0";
@@ -82,9 +89,16 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+      break;
     case TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH:
+      *os << " override";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+      if (inherited_operation)
+        {
+          *os << " override";
+        }
+
       *os << " = 0";
       break;
     default:

@@ -18,9 +18,7 @@ be_visitor_amh_operation_sh::be_visitor_amh_operation_sh (
 {
 }
 
-be_visitor_amh_operation_sh::~be_visitor_amh_operation_sh ()
-{
-}
+be_visitor_amh_operation_sh::~be_visitor_amh_operation_sh () = default;
 
 int
 be_visitor_amh_operation_sh::visit_operation (be_operation *node)
@@ -121,12 +119,12 @@ void
 be_visitor_amh_operation_sh::generate_shared_prologue (
     be_decl *node,
     TAO_OutStream *os,
-    const char *skel_prefix)
+    std::string const& skel_prefix)
 {
   TAO_INSERT_COMMENT (os);
 
   *os << "static void " << skel_prefix
-      << this->ctx_->port_prefix ().c_str ()
+      << this->ctx_->port_prefix ()
       << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_req," << be_nl
@@ -167,14 +165,9 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
   //         parameter listing. We also generate the ResponseHandler
   //         argument 'on the fly' and add it to the argument list
 
-  char *buf;
   // @@ TODO this must be kept consistent with the code in
   //    be_visitor_interface/amh_sh.cpp
-  intf->compute_full_name ("AMH_", "ResponseHandler_ptr", buf);
+  std::string const buf = intf->compute_full_name ("AMH_", "ResponseHandler_ptr");
 
   *os << buf << " _tao_rh";
-  // buf was allocated by ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
-  buf = nullptr;
 }

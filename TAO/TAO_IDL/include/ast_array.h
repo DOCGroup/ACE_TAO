@@ -69,6 +69,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_concrete_type.h"
 
+#include <cstddef>
+#include <memory>
+#include <vector>
+
 class UTL_ExprList;
 class AST_Expression;
 class AST_Type;
@@ -80,20 +84,22 @@ class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:
   AST_Array (UTL_ScopedName *n,
-             ACE_CDR::ULong ndims,
+             std::size_t ndims,
              UTL_ExprList *dims,
              bool local,
              bool abstract);
 
   ~AST_Array () override;
+  AST_Array (AST_Array const &) = delete;
+  AST_Array (AST_Array &&) = delete;
+  AST_Array &operator= (AST_Array const &) = delete;
+  AST_Array &operator= (AST_Array &&) = delete;
 
   // Data Accessors.
 
-  ACE_CDR::ULong n_dims ();
+  std::size_t n_dims () const;
 
-  AST_Expression **dims ();
-  void set_dims (AST_Expression **,
-                 ACE_CDR::ULong);
+  std::vector<std::unique_ptr<AST_Expression>> const &dims () const;
 
   AST_Type *base_type () const;
   void set_base_type (AST_Type *nbt);
@@ -119,7 +125,7 @@ public:
    */
   ///{
   AST_Annotation_Appls &base_type_annotations ();
-  void base_type_annotations (const AST_Annotation_Appls &annotations);
+  void base_type_annotations (AST_Annotation_Appls const &annotations);
   ///}
 
 protected:
@@ -129,22 +135,17 @@ protected:
 private:
   // Data.
 
-  ACE_CDR::ULong pd_n_dims;
-  // How many dimensions?
-
-  AST_Expression **pd_dims;
-  // Their expressions.
+  std::vector<std::unique_ptr<AST_Expression>> pd_dims;
 
   AST_Type *pd_base_type;
   // Base type of array.
 
-  bool owns_base_type_;
-  // If our base type is anonymous array or sequence, we're
-  // responsible for destroying it.
+  std::unique_ptr<AST_Type> owned_base_type_;
 
   // Compute how many dimensions.
-  AST_Expression **compute_dims (UTL_ExprList *dims,
-                                 ACE_CDR::ULong ndims);
+  std::vector<std::unique_ptr<AST_Expression>> compute_dims (
+    UTL_ExprList *dims,
+    std::size_t ndims);
 
   /**
    * Annotations on the base type

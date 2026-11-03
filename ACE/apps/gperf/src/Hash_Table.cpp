@@ -23,8 +23,9 @@
 
 #include "Hash_Table.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+#include <algorithm>
+#include <cstring>
 
 // The size of the hash table is always the smallest power of 2 >= the
 // size indicated by the user.  This allows several optimizations,
@@ -40,18 +41,16 @@ Hash_Table::Hash_Table (size_t s)
     this->size_ = 1;
   ACE_NEW (this->table_,
            List_Node*[this->size_]);
-  ACE_OS::memset ((char *) this->table_,
-                  0,
-                  this->size_ * sizeof *this->table_);
+  std::fill_n (this->table_, this->size_, nullptr);
 }
 
 Hash_Table::~Hash_Table ()
 {
   if (option[DEBUGGING])
     {
-      size_t keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig")
+      size_t keysig_width = option.max_keysig_size () > std::strlen ("keysig")
         ? option.max_keysig_size ()
-        : ACE_OS::strlen ("keysig");
+        : std::strlen ("keysig");
 
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping the hash table\ntotal available table slots = %d, total bytes = %d, total collisions = %d\n"
@@ -94,7 +93,7 @@ Hash_Table::find (List_Node *item,
 
   for (probe = hash_val & size;
        this->table_[probe]
-         && (ACE_OS::strcmp (this->table_[probe]->keysig, item->keysig) != 0
+         && (std::strcmp (this->table_[probe]->keysig, item->keysig) != 0
              || (ignore_length == 0 && this->table_[probe]->length != item->length));
        probe = (probe + increment) & size)
     {

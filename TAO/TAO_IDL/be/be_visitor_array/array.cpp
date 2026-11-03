@@ -16,9 +16,7 @@ be_visitor_array::be_visitor_array (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array::~be_visitor_array ()
-{
-}
+be_visitor_array::~be_visitor_array () = default;
 
 int be_visitor_array::visit_array (be_array *)
 {
@@ -66,7 +64,7 @@ int
 be_visitor_array::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   *os << "::";
 
@@ -94,7 +92,7 @@ be_visitor_array::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << "::TAO::String_Manager";
     }
@@ -123,7 +121,7 @@ be_visitor_array::visit_typedef (be_typedef *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   AST_Type *pbt = node->primitive_base_type ();
-  AST_Decl::NodeType nt = pbt->node_type ();
+  AST_Decl::NodeType const nt = pbt->node_type ();
   AST_PredefinedType::PredefinedType pt = AST_PredefinedType:: PT_void;
   int result = 0;
 

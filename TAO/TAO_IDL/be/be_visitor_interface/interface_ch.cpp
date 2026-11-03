@@ -16,9 +16,7 @@ be_visitor_interface_ch::be_visitor_interface_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ch::~be_visitor_interface_ch ()
-{
-}
+be_visitor_interface_ch::~be_visitor_interface_ch () = default;
 
 int
 be_visitor_interface_ch::visit_interface (be_interface *node)
@@ -27,6 +25,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       return 0;
     }
+
+  be_interface *const previous_interface = this->ctx_->interface ();
+  this->ctx_->interface (node);
 
   // This will be a no-op if it has already been done by a forward
   // declaration.
@@ -140,16 +141,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // we have to override _add_ref() to avoid ambiguity.
   if (node->has_mixed_parentage ())
     {
-      *os << "virtual void _add_ref ();" << be_nl_2;
+      *os << "void _add_ref () override;" << be_nl_2;
     }
 
   // The _is_a method
-  *os << "virtual ::CORBA::Boolean _is_a (const char *type_id);"
+  *os << "::CORBA::Boolean _is_a (const char *type_id) override;"
       << be_nl;
 
   // The _interface_repository_id method.
-  *os << "virtual const char* _interface_repository_id "
-      << "() const;";
+  *os << "const char* _interface_repository_id "
+      << "() const override;";
 
   if (be_global->gen_static_desc_operations ())
     {
@@ -158,13 +159,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << be_nl << "static const char* _desc_interface_name ();";
     }
 
-  // The virtual marshal method, to prevent marshal of local interfaces.
-  *os << be_nl
-      << "virtual ::CORBA::Boolean marshal "
-      << "(TAO_OutputCDR &cdr);";
+  // The marshal method is not part of the abstract interface mapping.
+  if (!node->is_abstract ())
+    {
+      *os << be_nl
+          << "::CORBA::Boolean marshal "
+          << "(TAO_OutputCDR &cdr) override;";
+    }
 
   // If we are generating CORBA Policy we need to add some more methods
-  if (ACE_OS::strcmp (node->full_name (), "CORBA::Policy") == 0)
+  if (node->full_name () == "CORBA::Policy")
     {
       *os << be_nl
           << "virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &);" << be_nl
@@ -176,7 +180,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (be_global->gen_ostream_operators ())
     {
       *os << be_nl
-          << "virtual std::ostream &_tao_stream_v (std::ostream &) const;";
+          << "std::ostream &_tao_stream_v (std::ostream &) const override;";
     }
 
   *os << be_uidt_nl << be_nl
@@ -240,7 +244,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Protected destructor.
   *os << be_nl_2
-      << "virtual ~" << node->local_name () << " () = default;";
+      << "~" << node->local_name () << " () override = default;";
 
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
@@ -303,6 +307,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   node->cli_hdr_gen (true);
+  this->ctx_->interface (previous_interface);
   return 0;
 }
 
@@ -321,8 +326,8 @@ be_visitor_interface_ch::visit_connector (be_connector *node)
 int
 be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
 {
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
+  this->ctx_->port_prefix (node->local_name ()->get_string ());
+  this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
@@ -343,15 +348,15 @@ be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 
 int
 be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
 {
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
+  this->ctx_->port_prefix (node->local_name ()->get_string ());
+  this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
@@ -372,7 +377,7 @@ be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 
@@ -420,7 +425,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
 }
 
 bool
-be_visitor_interface_ch::gen_xxx_narrow (const char *nar,
+be_visitor_interface_ch::gen_xxx_narrow (std::string const& nar,
                                          be_interface *node,
                                          TAO_OutStream *os)
 {

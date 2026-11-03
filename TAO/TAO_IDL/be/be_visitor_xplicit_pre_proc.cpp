@@ -36,31 +36,83 @@
 #include "utl_labellist.h"
 #include "utl_exprlist.h"
 #include "utl_exceptlist.h"
+#include "ast_expression.h"
 
 #include "fe_obv_header.h"
+#include "fe_utils.h"
+#include "be_global.h"
 #include "nr_extern.h"
 #include "global_extern.h"
 
+#include <memory>
+
+namespace
+{
+  struct UTL_LabelList_Deleter
+  {
+    void operator() (UTL_LabelList *label_list) const
+    {
+      if (label_list != nullptr)
+        {
+          label_list->destroy ();
+          delete label_list;
+        }
+    }
+  };
+
+  struct UTL_NameList_Deleter
+  {
+    void operator() (UTL_NameList *name_list) const
+    {
+      if (name_list != nullptr)
+        {
+          name_list->destroy ();
+          delete name_list;
+        }
+    }
+  };
+
+  struct AST_Expression_Deleter
+  {
+    void operator() (AST_Expression *expression) const
+    {
+      if (expression != nullptr)
+        {
+          expression->destroy ();
+          delete expression;
+        }
+    }
+  };
+
+  struct UTL_ExprList_Deleter
+  {
+    void operator() (UTL_ExprList *expression_list) const
+    {
+      if (expression_list != nullptr)
+        {
+          expression_list->destroy ();
+          delete expression_list;
+        }
+    }
+  };
+}
+
 be_visitor_xplicit_pre_proc::be_visitor_xplicit_pre_proc (
       be_visitor_context *ctx)
-  : be_visitor_ccm_pre_proc (ctx),
-    xplicit_ (nullptr),
-    type_holder_ (nullptr),
-    ref_type_ (false)
+  : be_visitor_ccm_pre_proc (ctx)
 {
 }
 
-be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc ()
-{
-}
+be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc () = default;
 
 int
 be_visitor_xplicit_pre_proc::visit_home (be_home *node)
 {
-  UTL_NameList *parent_list = this->compute_inheritance (node);
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> parent_list (
+    this->compute_inheritance (node));
 
   FE_InterfaceHeader header (nullptr,
-                             parent_list,
+                             parent_list.get (),
                              false,
                              false,
                              true);
@@ -73,16 +125,15 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
 
   idl_global->scopes ().push (m);
 
-  UTL_ScopedName *explicit_name =
-    this->create_scoped_name (
-      "",
-      node->original_local_name ()->get_string (),
-      "Explicit",
-      m);
+  FE_Utils::Scoped_Name_Owner explicit_name (
+    this->create_scoped_name ("",
+                              node->original_local_name (),
+                              "Explicit",
+                              m));
 
   be_interface *i = nullptr;
   ACE_NEW_RETURN (i,
-                  be_interface (explicit_name,
+                  be_interface (explicit_name.get (),
                                 header.inherits (),
                                 header.n_inherits (),
                                 header.inherits_flat (),
@@ -113,15 +164,11 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   // Through with the explicit interface scope
   idl_global->scopes ().pop ();
 
-  explicit_name->destroy ();
-  delete explicit_name;
-  explicit_name = nullptr;
+  explicit_name.reset ();
 
   header.destroy ();
 
-  parent_list->destroy ();
-  delete parent_list;
-  parent_list = nullptr;
+  parent_list.reset ();
 
   // Through with the scope containing the home.
   idl_global->scopes ().pop ();
@@ -611,12 +658,17 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
   UTL_ScopedName sn (node->local_name (), nullptr);
 
   // The union branch owns its label list so we have to copy it.
-  UTL_LabelList *ll = node->labels ()->copy ();
+  std::unique_ptr<UTL_LabelList, UTL_LabelList_Deleter> label_list (
+    node->labels ()->copy ());
 
+  // ACE_NEW_RETURN requires a raw output pointer; the list stays guarded until
+  // ownership transfers to the branch.
   be_union_branch *added_branch = nullptr;
   ACE_NEW_RETURN (added_branch,
-                  be_union_branch (ll, bt, &sn),
+                  be_union_branch (label_list.get (), bt, &sn),
                   -1);
+  std::unique_ptr<be_union_branch, BE_AST_Decl_Deleter> branch_owner (added_branch);
+  label_list.release ();
 
   // fe_add_union_branch() does necessary things besides calling
   // add_to_scope() so we need to reuse it.
@@ -624,7 +676,10 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
   be_union *u =
     dynamic_cast<be_union*> (idl_global->scopes ().top ());
 
-  u->be_add_union_branch (added_branch);
+  // be_add_union_branch also records the raw node in its field list, so the
+  // branch lifetime is tied to the union even if declaration insertion fails.
+  u->be_add_union_branch (branch_owner.get ());
+  branch_owner.release ();
 
   return 0;
 }
@@ -649,17 +704,22 @@ be_visitor_xplicit_pre_proc::visit_constant (be_constant *node)
                   AST_Expression (node->constant_value (),
                                   node->et ()),
                   -1);
+  std::unique_ptr<AST_Expression, AST_Expression_Deleter> value_owner (new_v);
 
   UTL_ScopedName sn (node->local_name (), nullptr);
 
   be_constant *added_const = nullptr;
   ACE_NEW_RETURN (added_const,
                   be_constant (node->et (),
-                               new_v,
+                               value_owner.get (),
                                &sn),
                   -1);
+  value_owner.release ();
+  std::unique_ptr<be_constant, BE_AST_Decl_Deleter> constant_owner (added_const);
 
+  // The scope stores inserted declarations as raw pointers and owns their lifetime.
   idl_global->scopes ().top ()->add_to_scope (added_const);
+  constant_owner.release ();
 
   return 0;
 }
@@ -706,28 +766,31 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
 
   this->ref_type_ = tmp;
 
-  AST_Expression *v = nullptr;
-  UTL_ExprList *v_list = nullptr;
+  std::unique_ptr<UTL_ExprList, UTL_ExprList_Deleter> v_list;
 
-  for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
+  for (std::size_t i = 0; i < node->n_dims (); ++i)
     {
+      AST_Expression *v = nullptr;
       ACE_NEW_RETURN (v,
-                      AST_Expression (node->dims ()[i],
+                      AST_Expression (node->dims ()[i].get (),
                                       AST_Expression::EV_ulong),
                       -1);
+      std::unique_ptr<AST_Expression, AST_Expression_Deleter> v_owner (v);
 
       UTL_ExprList *el = nullptr;
       ACE_NEW_RETURN (el,
-                      UTL_ExprList (v, nullptr),
+                      UTL_ExprList (v_owner.get (), nullptr),
                       -1);
+      v_owner.release ();
+      std::unique_ptr<UTL_ExprList, UTL_ExprList_Deleter> el_owner (el);
 
       if (v_list == nullptr)
         {
-          v_list = el;
+          v_list.reset (el_owner.release ());
         }
       else
         {
-          v_list->nconc (el);
+          v_list->nconc (el_owner.release ());
         }
     }
 
@@ -737,7 +800,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   ACE_NEW_RETURN (added_array,
                   be_array (&sn,
                             node->n_dims (),
-                            v_list,
+                            v_list.get (),
                             false,
                             false),
                   -1);
@@ -745,12 +808,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
-  if (v_list != nullptr)
-    {
-      v_list->destroy ();
-      delete v_list;
-      v_list = nullptr;
-    }
+  v_list.reset ();
 
   AST_Type *base_type =
     dynamic_cast<AST_Type*> (this->type_holder_);
@@ -927,21 +985,17 @@ be_visitor_xplicit_pre_proc::xplicit () const
 void
 be_visitor_xplicit_pre_proc::check_and_store (AST_Decl *node)
 {
-  UTL_ScopedName *tmpl_tail =
-    this->xplicit_iface_rel_name (node);
+  FE_Utils::Scoped_Name_Owner tmpl_tail (
+    this->xplicit_iface_rel_name (node));
 
   if (tmpl_tail != nullptr)
     {
       AST_Decl *d =
         idl_global->scopes ().top ()->lookup_by_name (
-          tmpl_tail,
+          tmpl_tail.get (),
           true);
 
       this->type_holder_ = d;
-
-      tmpl_tail->destroy ();
-      delete tmpl_tail;
-      tmpl_tail = nullptr;
     }
   else
     {
@@ -953,19 +1007,29 @@ UTL_ScopedName *
 be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
 {
   AST_Decl *tmp = d;
-  ACE_CString name (d->full_name ());
+  std::string const& name = d->full_name ();
 
   while (tmp != nullptr)
     {
       if (dynamic_cast<be_home*> (tmp) != nullptr)
         {
-          ACE_CString head (tmp->local_name ()->get_string ());
+          std::string const& head = tmp->local_name ()->get_string ();
 
-          ACE_CString::size_type start = name.find (head) + 2;
+          std::size_t const head_start = name.find (head);
+          if (head_start == std::string::npos)
+            {
+              tmp = ScopeAsDecl (tmp->defined_in ());
+              continue;
+            }
 
-          ACE_CString tail (name.substr (start + head.length ()));
+          std::size_t const tail_start = head_start + head.size () + 2;
+          if (tail_start > name.size ())
+            {
+              tmp = ScopeAsDecl (tmp->defined_in ());
+              continue;
+            }
 
-          return FE_Utils::string_to_scoped_name (tail.c_str ());
+          return FE_Utils::string_to_scoped_name (name.substr (tail_start));
         }
 
       tmp = ScopeAsDecl (tmp->defined_in ());

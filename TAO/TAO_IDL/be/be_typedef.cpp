@@ -38,7 +38,7 @@ be_typedef::be_typedef (AST_Type *bt,
              n)
 {
   AST_Type *pbt = this->primitive_base_type ();
-  AST_Decl::NodeType nt = pbt->node_type ();
+  AST_Decl::NodeType const nt = pbt->node_type ();
 
   if (nt == AST_Decl::NT_sequence)
     {
@@ -87,16 +87,14 @@ be_typedef::primitive_base_type ()
 AST_Decl::NodeType
 be_typedef::base_node_type () const
 {
-  be_typedef *td = const_cast<be_typedef *> (this);
-
-  be_type *base = dynamic_cast<be_type*> (td->base_type ());
+  be_type *base = dynamic_cast<be_type*> (this->base_type ());
 
   return base->base_node_type ();
 }
 
 void
 be_typedef::gen_member_ostream_operator (TAO_OutStream *os,
-                                         const char *instance_name,
+                                         std::string const& instance_name,
                                          bool use_underscore,
                                          bool accessor)
 {

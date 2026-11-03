@@ -11,14 +11,14 @@
 
 #include "operation.h"
 
+#include <string>
+
 be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_ss::~be_visitor_operation_ss ()
-{
-}
+be_visitor_operation_ss::~be_visitor_operation_ss () = default;
 
 int
 be_visitor_operation_ss::visit_operation (be_operation * node)
@@ -138,10 +138,10 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                         -1);
     }
 
-  ACE_CString upcall_command_name =
-    this->ctx_->port_prefix ()
-    + ACE_CString (node->local_name ()->get_string ()) + "_"
-    + ACE_CString (intf->local_name ());
+  std::string upcall_command_name (this->ctx_->port_prefix ());
+  upcall_command_name += node->local_name ()->get_string ();
+  upcall_command_name += '_';
+  upcall_command_name += intf->local_name ();
 
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
@@ -162,7 +162,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
   upcall_command_visitor.visit (node,
                                 intf->full_skel_name (),
-                                upcall_command_name.c_str ());
+                                upcall_command_name);
 
   TAO_INSERT_COMMENT (os);
 
@@ -182,7 +182,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
         }
     }
 
-  *os << this->ctx_->port_prefix ().c_str () << node->local_name ()
+  *os << this->ctx_->port_prefix () << node->local_name ()
       << "_skel (" << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
       << "TAO::Portable_Server::Servant_Upcall *TAO_INTERCEPTOR (servant_upcall)," << be_nl
@@ -191,7 +191,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{" << be_idt;
+  *os << "{" << be_idt_nl;
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -236,9 +236,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "};" << be_uidt_nl << be_nl;
 
   // Get the right object implementation.
-  *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
-      << "dynamic_cast<"
-      << intf->full_skel_name () << " *> (servant);" << be_uidt << be_nl_2;
+  *os << intf->full_skel_name () << " * const impl = dynamic_cast<"
+      << intf->full_skel_name () << " *> (servant);" << be_nl_2;
 
   *os << "if (!impl)" << be_idt_nl
       << "{" << be_idt_nl
@@ -246,23 +245,27 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "}" << be_uidt << be_nl_2;
 
   // Upcall_Command instantiation.
-  *os << upcall_command_name.c_str()
-      << " command (" << be_idt_nl
-      << "impl";
-
-  if (!node->void_return_type () || node->argument_count () > 0)
+  if (node->void_return_type () && node->argument_count () == 0)
     {
+      *os << upcall_command_name << " command (impl);" << be_nl_2;
+    }
+  else if (!be_global->gen_thru_poa_collocation ()
+           && upcall_command_name.size () + 22 <= 120)
+    {
+      *os << upcall_command_name << " command (impl, args);" << be_nl_2;
+    }
+  else
+    {
+      *os << upcall_command_name << " command (" << be_idt_nl
+          << "impl," << be_nl;
+
       // server_request.operation_details () will be non-zero in the
       // thru-POA collocation case.  Use them if available.
-      *os << "," << be_nl;
-
       if (be_global->gen_thru_poa_collocation ())
         *os << "server_request.operation_details ()," << be_nl;
 
-      *os << "args";
+      *os << "args);" << be_uidt_nl << be_nl;
     }
-
-  *os << ");" << be_uidt_nl << be_nl;
 
   *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl
       << "upcall_wrapper.upcall (server_request" << be_nl

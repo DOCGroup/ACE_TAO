@@ -16,12 +16,16 @@ class TAO_IDL_FE_Export AST_Component
   : public virtual AST_Interface
 {
 public:
+  AST_Component (AST_Component const &) = delete;
+  AST_Component (AST_Component &&) = delete;
+  AST_Component &operator= (AST_Component const &) = delete;
+  AST_Component &operator= (AST_Component &&) = delete;
   AST_Component (UTL_ScopedName *n,
                  AST_Component *base_component,
-                 AST_Type **supports,
+                 AST_Type_List const& supports,
                  long n_supports,
-                 AST_Interface **supports_flat,
-                 long n_supports_flat);
+                 AST_Interface_List const& supports_flat,
+                 std::size_t n_supports_flat);
 
   ~AST_Component () override;
 
@@ -33,14 +37,14 @@ public:
                                        bool full_def_only) override;
 
   // Extend lookup to the supported interfaces.
-  virtual AST_Decl *look_in_supported (UTL_ScopedName *e,
-                                       bool full_def_only);
+  AST_Decl *look_in_supported (UTL_ScopedName *e,
+                               bool full_def_only) override;
 
   // Accessors.
 
   AST_Component *base_component () const;
 
-  AST_Type **supports () const;
+  AST_Type_List const& supports () const;
 
   long n_supports () const;
 
@@ -52,12 +56,6 @@ public:
   // Cleanup function.
   void destroy () override;
 
-  // Allows adding an uses to a later point
-  // The port i is inserted after port ix, if
-  // ix is not null.
-  int be_add_uses (AST_Uses *i,
-                   AST_Uses *ix = nullptr);
-
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &) override;
 
@@ -68,19 +66,19 @@ public:
   using FWD_TYPE = AST_ComponentFwd;
 
 protected:
-  virtual AST_Provides *fe_add_provides (AST_Provides *p);
+  AST_Provides *fe_add_provides (AST_Provides *p) override;
 
-  virtual AST_Uses *fe_add_uses (AST_Uses *p);
+  AST_Uses *fe_add_uses (AST_Uses *p) override;
 
-  virtual AST_Publishes *fe_add_publishes (AST_Publishes *p);
+  AST_Publishes *fe_add_publishes (AST_Publishes *p) override;
 
-  virtual AST_Emits *fe_add_emits (AST_Emits *p);
+  AST_Emits *fe_add_emits (AST_Emits *p) override;
 
-  virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
+  AST_Consumes *fe_add_consumes (AST_Consumes *p) override;
 
-  virtual AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p);
+  AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p) override;
 
-  virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p);
+  AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p) override;
 
 protected:
   AST_Component *pd_base_component;

@@ -74,6 +74,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Argument : public virtual AST_Field
 {
 public:
+  AST_Argument (AST_Argument const &) = delete;
+  AST_Argument (AST_Argument &&) = delete;
+  AST_Argument &operator= (AST_Argument const &) = delete;
+  AST_Argument &operator= (AST_Argument &&) = delete;
   // Define enum with values denoting argument passing directions.
   enum Direction
     {
@@ -89,7 +93,7 @@ public:
   ~AST_Argument () override;
 
   // Data Accessors.
-  Direction direction ();
+  Direction direction () const;
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -103,7 +107,7 @@ public:
   static AST_Decl::NodeType const NT;
 
 private:
-  const Direction pd_direction;
+  Direction const pd_direction;
   // Argument direction.
 };
 

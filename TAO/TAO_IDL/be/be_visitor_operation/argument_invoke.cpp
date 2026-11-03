@@ -20,14 +20,11 @@
 be_visitor_operation_argument_invoke::be_visitor_operation_argument_invoke (
     be_visitor_context
     *ctx)
-  : be_visitor_operation_argument (ctx),
-    last_arg_printed_ (be_visitor_operation_argument_invoke::TAO_ARG_NONE)
+  : be_visitor_operation_argument (ctx)
 {
 }
 
-be_visitor_operation_argument_invoke::~be_visitor_operation_argument_invoke ()
-{
-}
+be_visitor_operation_argument_invoke::~be_visitor_operation_argument_invoke () = default;
 
 int
 be_visitor_operation_argument_invoke::pre_process (be_decl *bd)

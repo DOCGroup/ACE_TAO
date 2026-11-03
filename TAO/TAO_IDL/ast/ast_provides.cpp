@@ -16,9 +16,7 @@ AST_Provides::AST_Provides (UTL_ScopedName *n,
 {
 }
 
-AST_Provides::~AST_Provides ()
-{
-}
+AST_Provides::~AST_Provides () = default;
 
 AST_Type *
 AST_Provides::provides_type () const

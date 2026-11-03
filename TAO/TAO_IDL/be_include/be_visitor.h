@@ -86,6 +86,11 @@ class TAO_OutStream;
 class be_visitor
 {
 public:
+  be_visitor (be_visitor const &) = delete;
+  be_visitor (be_visitor &&) = delete;
+  be_visitor &operator= (be_visitor const &) = delete;
+  be_visitor &operator= (be_visitor &&) = delete;
+
   virtual ~be_visitor ();
 
   virtual int visit_decl (be_decl *d);

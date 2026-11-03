@@ -10,9 +10,7 @@ TAO_EmitsDef_i::TAO_EmitsDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EmitsDef_i::~TAO_EmitsDef_i ()
-{
-}
+TAO_EmitsDef_i::~TAO_EmitsDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_EmitsDef_i::def_kind ()

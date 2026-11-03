@@ -86,11 +86,29 @@ UTL_LabelList::UTL_LabelList (AST_UnionLabel *s,
 {
 }
 
+UTL_LabelList::~UTL_LabelList () = default;
+
+void
+UTL_LabelList::Union_Label_Deleter::operator() (AST_UnionLabel *label) const
+{
+  if (label != nullptr)
+    {
+      label->destroy ();
+      delete label;
+    }
+}
+
 // Get list item.
 AST_UnionLabel *
 UTL_LabelList::head ()
 {
-  return this->pd_car_data;
+  return this->pd_car_data.get ();
+}
+
+AST_UnionLabel const *
+UTL_LabelList::head () const
+{
+  return this->pd_car_data.get ();
 }
 
 // Copy a label list.
@@ -116,7 +134,7 @@ UTL_LabelList::copy ()
 
   if (this->tail () != nullptr)
     {
-      retval->nconc ((UTL_LabelList *) this->tail ()->copy ());
+      retval->nconc (static_cast<UTL_LabelList *> (this->tail ()->copy ()));
     }
 
   return retval;
@@ -125,9 +143,7 @@ UTL_LabelList::copy ()
 void
 UTL_LabelList::destroy ()
 {
-  this->pd_car_data->destroy ();
-  delete this->pd_car_data;
-  this->pd_car_data = nullptr;
+  this->pd_car_data.reset ();
 
   this->UTL_List::destroy ();
 }
@@ -139,7 +155,7 @@ UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
 
 // Get current item.
 AST_UnionLabel *
-UTL_LabellistActiveIterator::item ()
+UTL_LabellistActiveIterator::item () const
 {
   if (this->source == nullptr)
     {

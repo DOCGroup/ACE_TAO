@@ -82,6 +82,8 @@ UTL_DeclList::UTL_DeclList (FE_Declarator *s,
 {
 }
 
+UTL_DeclList::~UTL_DeclList () = default;
+
 /*
  * Public operations
  */
@@ -90,7 +92,13 @@ UTL_DeclList::UTL_DeclList (FE_Declarator *s,
 FE_Declarator *
 UTL_DeclList::head ()
 {
-  return pd_car_data;
+  return this->pd_car_data.get ();
+}
+
+FE_Declarator const *
+UTL_DeclList::head () const
+{
+  return this->pd_car_data.get ();
 }
 
 void
@@ -99,8 +107,7 @@ UTL_DeclList::destroy ()
   if (this->pd_car_data != nullptr)
     {
       this->pd_car_data->destroy ();
-      delete this->pd_car_data;
-      this->pd_car_data = nullptr;
+      this->pd_car_data.reset ();
     }
 
   this->UTL_List::destroy ();
@@ -131,14 +138,14 @@ UTL_DecllistActiveIterator::UTL_DecllistActiveIterator (UTL_DeclList *s)
 
 // Get current item
 FE_Declarator *
-UTL_DecllistActiveIterator::item ()
+UTL_DecllistActiveIterator::item () const
 {
   if (source == nullptr)
     {
       return nullptr;
     }
 
-  return ((UTL_DeclList *) source)->head ();
+  return static_cast<UTL_DeclList *> (source)->head ();
 }
 
 /*

@@ -115,6 +115,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_generator.h"
 
+#include <utility>
+
 AST_PredefinedType *
 AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
                                        UTL_ScopedName *n)
@@ -146,7 +148,7 @@ AST_Generator::create_module (UTL_Scope *s,
           // Create this new module with referance to the
           // "first" previous module found in scope.
           ACE_NEW_RETURN (retval, AST_Module (n, m), nullptr);
-          retval->prefix (const_cast<char *> (m->prefix ()));
+          retval->prefix (m->prefix ());
           return retval;
         }
     }
@@ -159,7 +161,7 @@ AST_Generator::create_module (UTL_Scope *s,
   AST_Module *prev_module = dynamic_cast<AST_Module*> (s);
   if (prev_module)
     {
-      while (0 != (prev_module = prev_module->previous_opening ()))
+      while ((prev_module = prev_module->previous_opening ()) != nullptr)
         {
           for (UTL_ScopeActiveIterator iter (prev_module, UTL_Scope::IK_decls);
                !iter.is_done ();
@@ -195,10 +197,10 @@ AST_Generator::create_root (UTL_ScopedName *n)
 
 AST_Interface *
 AST_Generator::create_interface (UTL_ScopedName *n,
-                                 AST_Type **inherits,
+                                 AST_Type_List const& inherits,
                                  long n_inherits,
-                                 AST_Interface **inherits_flat,
-                                 long n_inherits_flat,
+                                 AST_Interface_List const& inherits_flat,
+                                 std::size_t n_inherits_flat,
                                  bool is_local,
                                  bool is_abstract)
 {
@@ -223,9 +225,9 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
 {
   AST_Interface
     *full_defn = this->create_interface (n,
-                                         nullptr,
+                                         AST_Type_List {},
                                          -1,
-                                         nullptr,
+                                         AST_Interface_List {},
                                          0,
                                          is_local,
                                          is_abstract);
@@ -240,13 +242,13 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
 
 AST_ValueType *
 AST_Generator::create_valuetype (UTL_ScopedName *n,
-                                 AST_Type **inherits,
+                                 AST_Type_List const& inherits,
                                  long n_inherits,
                                  AST_Type *inherits_concrete,
-                                 AST_Interface **inherits_flat,
-                                 long n_inherits_flat,
-                                 AST_Type **supports_list,
-                                 long n_supports,
+                                 AST_Interface_List const& inherits_flat,
+                                 std::size_t n_inherits_flat,
+                                 AST_Type_List const& supports_list,
+                                 std::size_t n_supports,
                                  AST_Type *supports_concrete,
                                  bool is_abstract,
                                  bool is_truncatable,
@@ -283,12 +285,12 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
                                      bool is_abstract)
 {
   AST_ValueType *full_defn = this->create_valuetype (n,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      0,
                                                      nullptr,
                                                      is_abstract,
@@ -307,13 +309,13 @@ AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
 
 AST_EventType *
 AST_Generator::create_eventtype (UTL_ScopedName *n,
-                                 AST_Type **inherits,
+                                 AST_Type_List const& inherits,
                                  long n_inherits,
                                  AST_Type *inherits_concrete,
-                                 AST_Interface **inherits_flat,
-                                 long n_inherits_flat,
-                                 AST_Type **supports_list,
-                                 long n_supports,
+                                 AST_Interface_List const& inherits_flat,
+                                 std::size_t n_inherits_flat,
+                                 AST_Type_List const& supports_list,
+                                 std::size_t n_supports,
                                  AST_Type *supports_concrete,
                                  bool is_abstract,
                                  bool is_truncatable,
@@ -351,12 +353,12 @@ AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
                                      bool is_abstract)
 {
   AST_EventType *full_defn = this->create_eventtype (n,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      0,
                                                      nullptr,
                                                      is_abstract,
@@ -376,10 +378,10 @@ AST_Generator::create_eventtype_fwd (UTL_ScopedName *n,
 AST_Component *
 AST_Generator::create_component (UTL_ScopedName *n,
                                  AST_Component *base_component,
-                                 AST_Type **supports_list,
+                                 AST_Type_List const& supports_list,
                                  long n_supports,
-                                 AST_Interface **supports_flat,
-                                 long n_supports_flat)
+                                 AST_Interface_List const& supports_flat,
+                                 std::size_t n_supports_flat)
 {
   AST_Component *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -399,9 +401,9 @@ AST_Generator::create_component_fwd (UTL_ScopedName *n)
 {
   AST_Component *full_defn = this->create_component (n,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0);
 
   AST_ComponentFwd *retval = nullptr;
@@ -419,10 +421,10 @@ AST_Generator::create_home (UTL_ScopedName *n,
                             AST_Home *base_home,
                             AST_Component *managed_component,
                             AST_Type *primary_key,
-                            AST_Type **supports_list,
+                            AST_Type_List const& supports_list,
                             long n_supports,
-                            AST_Interface **supports_flat,
-                            long n_supports_flat)
+                            AST_Interface_List const& supports_flat,
+                            std::size_t n_supports_flat)
 {
   AST_Home *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -752,11 +754,11 @@ AST_Generator::create_expr (ACE_CDR::ULong v,
 }
 
 AST_Expression *
-AST_Generator::create_expr (UTL_String *s)
+AST_Generator::create_expr (std::string s)
 {
   AST_Expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (s),
+                  AST_Expression (std::move (s)),
                   nullptr);
 
   return retval;
@@ -785,11 +787,11 @@ AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-AST_Generator::create_expr (char *s)
+AST_Generator::create_wstring_expr (std::string s)
 {
   AST_Expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  AST_Expression (s),
+                  AST_Expression (std::move (s), AST_Expression::EV_wstring),
                   nullptr);
 
   return retval;
@@ -832,7 +834,7 @@ AST_Generator::create_enum_val (ACE_CDR::ULong v,
 
 AST_Array *
 AST_Generator::create_array (UTL_ScopedName *n,
-                             ACE_CDR::ULong ndims,
+                             std::size_t ndims,
                              UTL_ExprList *dims,
                              bool is_local,
                              bool is_abstract)
@@ -914,7 +916,7 @@ AST_Generator::create_wstring (AST_Expression *ms)
                    : "wstring");
   UTL_ScopedName n (&id,
                     nullptr);
-  AST_Decl::NodeType nt = sizeof (ACE_CDR::WChar) == 1
+  AST_Decl::NodeType const nt = sizeof (ACE_CDR::WChar) == 1
                             ? AST_Decl::NT_string
                             : AST_Decl::NT_wstring;
 
@@ -1155,13 +1157,13 @@ AST_Template_Module_Ref *
 AST_Generator::create_template_module_ref (
   UTL_ScopedName *n,
   AST_Template_Module *ref,
-  UTL_StrList *param_refs)
+  UTL_StrList param_refs)
 {
   AST_Template_Module_Ref *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   AST_Template_Module_Ref (n,
                                            ref,
-                                           param_refs),
+                                           std::move (param_refs)),
                   nullptr);
 
   return retval;

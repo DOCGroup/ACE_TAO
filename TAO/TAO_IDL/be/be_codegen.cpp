@@ -23,67 +23,41 @@
 // version check code.
 #include "../../tao/Version.h"
 
-#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cctype>
 #include <random>
+#include <utility>
 
 TAO_CodeGen * tao_cg = nullptr;
 
 TAO_CodeGen::TAO_CodeGen ()
-  : client_header_ (nullptr),
-    client_stubs_ (nullptr),
-    client_inline_ (nullptr),
-    server_header_ (nullptr),
-    implementation_header_(nullptr),
-    implementation_skeleton_(nullptr),
-    server_template_header_ (nullptr),
-    server_skeletons_ (nullptr),
-    server_template_skeletons_ (nullptr),
-    anyop_header_ (nullptr),
-    anyop_source_ (nullptr),
-    gperf_input_stream_ (nullptr),
-    ciao_svnt_header_ (nullptr),
-    ciao_svnt_source_ (nullptr),
-    ciao_svnt_template_header_ (nullptr),
-    ciao_svnt_template_source_ (nullptr),
-    ciao_exec_header_ (nullptr),
-    ciao_exec_source_ (nullptr),
-    ciao_exec_idl_ (nullptr),
-    ciao_conn_header_ (nullptr),
-    ciao_conn_source_ (nullptr),
-    ciao_ami_conn_idl_ (nullptr),
-    gperf_input_filename_ (nullptr),
-    strategy_ (TAO_PERFECT_HASH)
+  : strategy_ (TAO_PERFECT_HASH)
 {
 }
 
 // destructor
-TAO_CodeGen::~TAO_CodeGen ()
-{
-}
+TAO_CodeGen::~TAO_CodeGen () = default;
 
 // Change the string to all upper case.
-const char *
-TAO_CodeGen::upcase (const char *str)
+std::string
+TAO_CodeGen::upcase (std::string const& str)
 {
-  static char upcase_str [NAMEBUFSIZE];
-
-  ACE_OS::memset (upcase_str,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string upcase_str;
+  upcase_str.reserve (str.size ());
 
   // Convert letters in str to upper case.
-  for (unsigned int i = 0; i < ACE_OS::strlen (str); ++i)
+  for (char const c : str)
     {
-      if (ACE_OS::ace_isalpha (str[i]))
+      if (std::isalpha (static_cast<unsigned char> (c)))
         {
-          upcase_str[i] =
-            static_cast<char> (ACE_OS::ace_toupper (str[i]));
+          upcase_str.push_back (
+            static_cast<char> (std::toupper (static_cast<unsigned char> (c))));
         }
       else
         {
           // Copy it as it is.
-          upcase_str[i] = str[i];
+          upcase_str.push_back (c);
         }
     }
 
@@ -91,27 +65,24 @@ TAO_CodeGen::upcase (const char *str)
 }
 
 // Change the string to all lower case.
-const char *
-TAO_CodeGen::downcase (const char *str)
+std::string
+TAO_CodeGen::downcase (std::string const& str)
 {
-  static char downcase_str [NAMEBUFSIZE];
+  std::string downcase_str;
+  downcase_str.reserve (str.size ());
 
-  ACE_OS::memset (downcase_str,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  // Convert letters in str to upper case.
-  for (unsigned int i = 0; i < ACE_OS::strlen (str); ++i)
+  // Convert letters in str to lower case.
+  for (char const c : str)
     {
-      if (ACE_OS::ace_isalpha (str[i]))
+      if (std::isalpha (static_cast<unsigned char> (c)))
         {
-          downcase_str[i] =
-            static_cast<char> (ACE_OS::ace_tolower (str[i]));
+          downcase_str.push_back (
+            static_cast<char> (std::tolower (static_cast<unsigned char> (c))));
         }
       else
         {
           // Copy it as it is.
-          downcase_str[i] = str[i];
+          downcase_str.push_back (c);
         }
     }
 
@@ -120,14 +91,8 @@ TAO_CodeGen::downcase (const char *str)
 
 // Set the client header stream.
 int
-TAO_CodeGen::start_client_header (const char *fname)
+TAO_CodeGen::start_client_header (const std::string &fname)
 {
-  if (nullptr == fname)
-    {
-      // Bad file name.
-      return -1;
-    }
-
   // @@ We are making use of "included_idl_files" that is in the
   // idl_global. We need to make sure the validity of those files.
   FE_Utils::validate_included_idl_files ();
@@ -149,9 +114,9 @@ TAO_CodeGen::start_client_header (const char *fname)
   // Generate the #ident string, if any.
   this->gen_ident_string (this->client_header_);
 
-  ACE_CString pidl_checker (idl_global->filename ()->get_string ());
-  bool const got_pidl =
-    (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+  std::string const& filename = idl_global->filename ();
+  bool const got_pidl = filename.size () >= 5
+    && filename.substr (filename.size () - 5) == ".pidl";
 
   if (!got_pidl)
     {
@@ -170,14 +135,14 @@ TAO_CodeGen::start_client_header (const char *fname)
                                "_H_");
     }
 
-  if (be_global->pre_include () != nullptr)
+  if (!be_global->pre_include ().empty ())
     {
       *this->client_header_ << "#include /**/ \""
                             << be_global->pre_include ()
                             << "\"\n\n";
     }
 
-  if (be_global->include_guard () != nullptr)
+  if (!be_global->include_guard ().empty ())
     {
       *this->client_header_ << "#ifndef "
                             << be_global->include_guard ()
@@ -186,7 +151,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       *this->client_header_ << "#error "
                             << "You should not include " << fname;
 
-      if (be_global->safe_include () != nullptr)
+      if (!be_global->safe_include ().empty ())
         {
           *this->client_header_ << ", use " << be_global->safe_include ();
         }
@@ -221,14 +186,14 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   // Other include files.
 
-  if (be_global->stub_export_include () != nullptr)
+  if (!be_global->stub_export_include ().empty ())
     {
       *this->client_header_ << "\n#include /**/ \""
                             << be_global->stub_export_include ()
                             << "\"";
     }
 
-  if (be_global->unique_include () != nullptr)
+  if (!be_global->unique_include ().empty ())
     {
       *this->client_header_ << "\n#include \""
                             << be_global->unique_include ()
@@ -245,7 +210,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       this->gen_stub_hdr_includes ();
 
-      size_t const nfiles = idl_global->n_included_idl_files ();
+      std::size_t const nfiles = idl_global->n_included_idl_files ();
 
       if (nfiles > 0)
         {
@@ -257,65 +222,47 @@ TAO_CodeGen::start_client_header (const char *fname)
       // We will use the included IDL file names as they appeared
       // in the original main IDL file, not the one which went
       // thru CC preprocessor.
-      for (size_t j = 0; j < nfiles; ++j)
+      for (std::size_t j = 0; j < nfiles; ++j)
         {
-          char* idl_name = idl_global->included_idl_files ()[j];
-
-          // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
+          std::string const &idl_name = idl_global->included_idl_files ()[j];
 
           // Get the clnt header from the IDL file name.
-          const char* client_hdr =
-            BE_GlobalData::be_get_client_hdr (&idl_name_str,
+          std::string const client_hdr =
+            BE_GlobalData::be_get_client_hdr (idl_name,
                                               true);
 
-          idl_name_str.destroy ();
-
           // Sanity check and then print.
-          if (client_hdr != nullptr)
+          if (!client_hdr.empty ())
             {
-              this->client_header_->print ("\n#include \"%s\"",
-                                           client_hdr);
+              *this->client_header_ << "\n#include \"" << client_hdr << "\"";
             }
           else
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("\nERROR, invalid file '%C' included"),
-                                 idl_name),
+                                 idl_name.c_str ()),
                                 -1);
             }
         }
     }
 
-  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
-         idl_global->ciao_ami_idl_fnames ());
-       !i.done ();
-       i.advance ())
+  for (std::string const &idl_name : idl_global->ciao_ami_idl_fnames ())
     {
-      char **tmp = nullptr;
-      i.next (tmp);
-
-      // Make a String out of it.
-      UTL_String idl_name_str (*tmp);
-
       // Get the clnt header from the IDL file name.
-      const char* client_hdr =
-        BE_GlobalData::be_get_client_hdr (&idl_name_str,
+      std::string const client_hdr =
+        BE_GlobalData::be_get_client_hdr (idl_name,
                                           true);
 
-      idl_name_str.destroy ();
-
       // Sanity check and then print.
-      if (client_hdr != nullptr)
+      if (!client_hdr.empty ())
         {
-          this->client_header_->print ("\n#include \"%s\"",
-                                       client_hdr);
+          *this->client_header_ << "\n#include \"" << client_hdr << "\"";
         }
       else
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("\nERROR, invalid file '%C' included"),
-                             *tmp),
+                             idl_name.c_str ()),
                             -1);
         }
     }
@@ -353,7 +300,7 @@ TAO_CodeGen::client_header ()
 
 // Set the client stub stream.
 int
-TAO_CodeGen::start_client_stubs (const char *fname)
+TAO_CodeGen::start_client_stubs (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->client_stubs_;
@@ -402,7 +349,7 @@ TAO_CodeGen::client_stubs ()
 
 // Set the client inline stream.
 int
-TAO_CodeGen::start_client_inline (const char *fname)
+TAO_CodeGen::start_client_inline (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->client_inline_;
@@ -437,7 +384,7 @@ TAO_CodeGen::client_inline ()
 
 // Set the server header stream.
 int
-TAO_CodeGen::start_server_header (const char *fname)
+TAO_CodeGen::start_server_header (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->server_header_;
@@ -462,7 +409,7 @@ TAO_CodeGen::start_server_header (const char *fname)
                            "_TAO_IDL_",
                            "_H_");
 
-  if (be_global->pre_include () != nullptr)
+  if (!be_global->pre_include ().empty ())
     {
       *this->server_header_ << "#include /**/ \""
                             << be_global->pre_include ()
@@ -470,7 +417,7 @@ TAO_CodeGen::start_server_header (const char *fname)
     }
 
   // The server header should include the client header.
-  if (be_global->safe_include ())
+  if (!be_global->safe_include ().empty ())
     {
       // Generate the safe include if it is defined instead of the client header
       // need to put only the base names. Path info is not required.
@@ -490,22 +437,16 @@ TAO_CodeGen::start_server_header (const char *fname)
   // We will use the included IDL file names as they appeared
   // in the original main IDL file, not the one which went
   // thru CC preprocessor.
-  for (size_t j = 0;
+  for (std::size_t j = 0;
        j < idl_global->n_included_idl_files ();
        ++j)
     {
-      char* idl_name = idl_global->included_idl_files ()[j];
+      std::string const &idl_name = idl_global->included_idl_files ()[j];
 
-      // String'ifying the name.
-      UTL_String idl_name_str (idl_name);
+      std::string const server_hdr =
+        BE_GlobalData::be_get_server_hdr (idl_name, true);
 
-      char const * const server_hdr =
-        BE_GlobalData::be_get_server_hdr (&idl_name_str, true);
-
-      idl_name_str.destroy ();
-
-      this->server_header_->print ("\n#include \"%s\"",
-                                   server_hdr);
+      *this->server_header_ << "\n#include \"" << server_hdr << "\"";
     }
 
   /// These are generated regardless, so we put it before the
@@ -525,7 +466,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       this->gen_skel_hdr_includes ();
 
-      if (be_global->skel_export_include () != nullptr)
+      if (!be_global->skel_export_include ().empty ())
         {
           *this->server_header_ << "\n\n#include /**/ \""
                                 << be_global->skel_export_include ()
@@ -558,7 +499,7 @@ TAO_CodeGen::server_header ()
 
 // Set the server header stream.
 int
-TAO_CodeGen::start_server_template_header (const char *fname)
+TAO_CodeGen::start_server_template_header (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->server_template_header_;
@@ -567,7 +508,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->server_template_header_->open (
       fname,
       TAO_OutStream::TAO_SVR_TMPL_HDR);
@@ -588,7 +529,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                            "_TAO_IDL_",
                            "_H_");
 
-  if (be_global->pre_include () != nullptr)
+  if (!be_global->pre_include ().empty ())
     {
       *this->server_template_header_ << "#include /**/ \""
                                      << be_global->pre_include ()
@@ -612,7 +553,7 @@ TAO_CodeGen::server_template_header ()
 
 // Set the server skeletons stream.
 int
-TAO_CodeGen::start_server_skeletons (const char *fname)
+TAO_CodeGen::start_server_skeletons (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->server_skeletons_;
@@ -634,7 +575,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   this->gen_ident_string (this->server_skeletons_);
 
   // Generate the include statement for the precompiled header file.
-  if (be_global->pch_include ())
+  if (!be_global->pch_include ().empty ())
     {
       *this->server_skeletons_ << "#include \""
                                << be_global->pch_include ()
@@ -672,7 +613,7 @@ TAO_CodeGen::server_skeletons ()
 
 // Start the server template skeleton stream.
 int
-TAO_CodeGen::start_server_template_skeletons (const char *fname)
+TAO_CodeGen::start_server_template_skeletons (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->server_template_skeletons_;
@@ -721,7 +662,7 @@ TAO_CodeGen::server_template_skeletons ()
 }
 
 int
-TAO_CodeGen::start_anyop_header (const char *fname)
+TAO_CodeGen::start_anyop_header (const std::string &fname)
 {
   // We may want to generate the full file or generate an empty
   // one, but this is the only condition under which we want to
@@ -775,7 +716,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                            "_TAO_IDL_",
                            "_H_");
 
-  if (be_global->pre_include () != nullptr)
+  if (!be_global->pre_include ().empty ())
     {
       *this->anyop_header_ << "#include /**/ \""
                            << be_global->pre_include ()
@@ -783,13 +724,13 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     }
 
   // If anyop macro hasn't been set, default to stub macro.
-  if (be_global->anyop_export_include () != nullptr)
+  if (!be_global->anyop_export_include ().empty ())
     {
       *this->anyop_header_ << "\n#include /**/ \""
                            << be_global->anyop_export_include ()
                            << "\"";
     }
-  else if (be_global->stub_export_include () != nullptr)
+  else if (!be_global->stub_export_include ().empty ())
     {
       *this->anyop_header_ << "\n#include /**/ \""
                            << be_global->stub_export_include ()
@@ -799,19 +740,19 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   // Generate the include statement for AnyTypeCode
   *this->anyop_header_ << "\n#include \"tao/AnyTypeCode/Any.h\"\n";
 
-  ACE_CString tao_prefix;
-  ACE_CString pidl_checker (idl_global->filename ()->get_string ());
-  bool const got_tao_pidl =
-    (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+  std::string tao_prefix;
+  std::string const& filename = idl_global->filename ();
+  bool const got_tao_pidl = filename.size () >= 5
+    && filename.substr (filename.size () - 5) == ".pidl";
 
   // If we're here and we have a .pidl file, we need to generate
   // the *C.h include from the tao library, or from the command line
   // override path.
   if (got_tao_pidl)
     {
-      const char *stub_incl_dir = be_global->stub_include_dir ();
+      std::string const& stub_incl_dir = be_global->stub_include_dir ();
 
-      if (stub_incl_dir == nullptr)
+      if (stub_incl_dir.empty ())
         {
           tao_prefix = "tao/";
         }
@@ -824,7 +765,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
-  if (be_global->safe_include ())
+  if (!be_global->safe_include ().empty ())
     {
       // Generate the safe include if it is defined instead of the client header
       // need to put only the base names. Path info is not required.
@@ -834,7 +775,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     }
   else
     {
-      *this->anyop_header_ << "\n#include \"" << tao_prefix.c_str ()
+      *this->anyop_header_ << "\n#include \"" << tao_prefix
                            << be_global->be_get_client_hdr_fname ()
                            << "\"";
     }
@@ -844,13 +785,15 @@ TAO_CodeGen::start_anyop_header (const char *fname)
   // need to include the *A.h file from all .pidl files here.
   if (be_global->gen_anyop_files ())
     {
-      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+      for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
-          char* idl_name = idl_global->included_idl_files ()[j];
+          std::string const &idl_name = idl_global->included_idl_files ()[j];
 
-          ACE_CString const pidl_checker_included (idl_name);
-          bool const got_pidl =
-            (pidl_checker_included.substr (pidl_checker_included.length () - 5) == ".pidl");
+          std::string const& pidl_checker_included = idl_name;
+          std::string const pidl_suffix = ".pidl";
+          bool const got_pidl = pidl_checker_included.size () >= pidl_suffix.size ()
+            && pidl_checker_included.substr (
+                 pidl_checker_included.size () - pidl_suffix.size ()) == pidl_suffix;
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include, if it is not a .pidl file we don't generate
@@ -858,23 +801,18 @@ TAO_CodeGen::start_anyop_header (const char *fname)
           // C.h file
           if (got_pidl)
             {
-              // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
-
-              const char *anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
-
-              idl_name_str.destroy ();
+              std::string const anyop_hdr =
+                BE_GlobalData::be_get_anyop_header (idl_name, true);
 
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
-              ACE_CString work_hdr (anyop_hdr);
-              ACE_CString final_hdr = "tao/AnyTypeCode/";
-              ACE_CString::size_type pos = work_hdr.rfind ('/');
+              std::string work_hdr (anyop_hdr);
+              std::string final_hdr = "tao/AnyTypeCode/";
+              std::string::size_type const pos = work_hdr.rfind ('/');
 
-              if (pos != ACE_CString::npos)
+              if (pos != std::string::npos)
                 {
-                  ACE_CString scope (work_hdr.substr (0, pos - 1));
+                  std::string const scope (work_hdr.substr (0, pos - 1));
 
                   // If we find a '/' in the containing scope name, it
                   // means we are including a .pidl file from a
@@ -884,7 +822,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                   // Only .pidl files in $TAO_ROOT/tao itself have
                   // their generated *A.* files moved to the AnyTypeCode
                   // library.
-                  if (scope.find ('/') == ACE_CString::npos)
+                  if (scope.find ('/') == std::string::npos)
                     {
                       work_hdr = work_hdr.substr (pos + 1);
                       final_hdr += work_hdr;
@@ -895,8 +833,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                     }
                 }
 
-              this->anyop_header_->print ("\n#include \"%s\"",
-                                          final_hdr.c_str ());
+              *this->anyop_header_ << "\n#include \"" << final_hdr << "\"";
             }
         }
     }
@@ -912,7 +849,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
 }
 
 int
-TAO_CodeGen::start_anyop_source (const char *fname)
+TAO_CodeGen::start_anyop_source (const std::string &fname)
 {
   if (!be_global->gen_anyop_files ())
     {
@@ -935,7 +872,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
     }
 
   // Generate the include statement for the precompiled header file.
-  if (be_global->pch_include ())
+  if (!be_global->pch_include ().empty ())
     {
       *this->anyop_source_ << "#include \""
                            << be_global->pch_include ()
@@ -974,7 +911,7 @@ TAO_CodeGen::anyop_source ()
 }
 
 int
-TAO_CodeGen::start_ciao_svnt_header (const char *fname)
+TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_svnt_header_;
@@ -983,7 +920,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_svnt_header_->open (fname,
                                    TAO_OutStream::CIAO_SVNT_HDR);
 
@@ -1008,7 +945,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
                            "CIAO_SESSION_",
                            "_H_");
 
-  if (be_global->pre_include () != nullptr)
+  if (!be_global->pre_include ().empty ())
     {
       os << "#include /**/ \""
          << be_global->pre_include ()
@@ -1019,13 +956,13 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
   // generated code in the same library, using the skel export macro,
   // so the values for the servant export default to the skel values.
   // Eventually, there should be a way to completely decouple them.
-  if (be_global->svnt_export_include () != nullptr)
+  if (!be_global->svnt_export_include ().empty ())
     {
       os << "\n#include /**/ \""
          << be_global->svnt_export_include ()
          << "\"\n";
     }
-  else if (be_global->skel_export_include () != nullptr)
+  else if (!be_global->skel_export_include ().empty ())
     {
       os << "\n#include /**/ \""
          << be_global->skel_export_include ()
@@ -1040,21 +977,18 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
      << be_nl;
 
 
-  char **path_tmp = nullptr;
-
-  for (ACE_Unbounded_Queue_Iterator<char *>riter (
-         idl_global->ciao_lem_file_names ());
-       riter.done () == 0;
-       riter.advance ())
+  for (std::string const &path_tmp : idl_global->ciao_lem_file_names ())
     {
-      riter.next (path_tmp);
-
-      ACE_CString filename (*path_tmp);
+      std::string const& filename = path_tmp;
+      std::string const exec_idl_suffix = "E.idl";
       // sanity
-      if (filename.substr (filename.length() - 5) == "E.idl")
+      if (filename.size () >= exec_idl_suffix.size ()
+          && filename.substr (filename.size () - exec_idl_suffix.size ())
+            == exec_idl_suffix)
         {
           os  << "#include \""
-              << filename.substr(0, filename.length() - 5) << "_svnt.h\""
+              << filename.substr (0, filename.size () - exec_idl_suffix.size ())
+              << "_svnt.h\""
               << be_nl;
         }
     }
@@ -1073,7 +1007,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
 }
 
 int
-TAO_CodeGen::start_ciao_svnt_source (const char *fname)
+TAO_CodeGen::start_ciao_svnt_source (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_svnt_source_;
@@ -1082,7 +1016,7 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_svnt_source_->open (fname,
                                    TAO_OutStream::CIAO_SVNT_IMPL);
 
@@ -1114,7 +1048,7 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
 }
 
 int
-TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
+TAO_CodeGen::start_ciao_svnt_template_header (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_svnt_template_header_;
@@ -1123,7 +1057,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_svnt_template_header_->open (fname,
                                             TAO_OutStream::CIAO_SVNT_T_HDR);
 
@@ -1148,7 +1082,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
                            "CIAO_SERVANT_",
                            "_H_");
 
-  if (be_global->pre_include () != nullptr)
+  if (!be_global->pre_include ().empty ())
     {
       os << "#include /**/ \""
          << be_global->pre_include ()
@@ -1159,13 +1093,13 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
   // generated code in the same library, using the skel export macro,
   // so the values for the servant export default to the skel values.
   // Eventually, there should be a way to completely decouple them.
-  if (be_global->svnt_export_include () != nullptr)
+  if (!be_global->svnt_export_include ().empty ())
     {
       os << "\n#include /**/ \""
          << be_global->svnt_export_include ()
          << "\"\n";
     }
-  else if (be_global->skel_export_include () != nullptr)
+  else if (!be_global->skel_export_include ().empty ())
     {
       os << "\n#include /**/ \""
          << be_global->skel_export_include ()
@@ -1192,7 +1126,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
 }
 
 int
-TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
+TAO_CodeGen::start_ciao_svnt_template_source (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_svnt_template_source_;
@@ -1201,7 +1135,7 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_svnt_template_source_->open (fname,
                                             TAO_OutStream::CIAO_SVNT_T_IMPL);
 
@@ -1257,7 +1191,7 @@ TAO_CodeGen::ciao_svnt_template_source ()
 }
 
 int
-TAO_CodeGen::start_ciao_exec_header (const char *fname)
+TAO_CodeGen::start_ciao_exec_header (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_exec_header_;
@@ -1266,7 +1200,7 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
    this->ciao_exec_header_->open (fname,
                                   TAO_OutStream::CIAO_EXEC_HDR);
 
@@ -1289,7 +1223,7 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
                            "CIAO_",
                            "_H_");
 
-  if (be_global->pre_include () != nullptr)
+  if (!be_global->pre_include ().empty ())
     {
       os << "#include /**/ \""
          << be_global->pre_include ()
@@ -1310,7 +1244,7 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
 }
 
 int
-TAO_CodeGen::start_ciao_exec_source (const char *fname)
+TAO_CodeGen::start_ciao_exec_source (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_exec_source_;
@@ -1319,7 +1253,7 @@ TAO_CodeGen::start_ciao_exec_source (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_exec_source_->open (fname,
                                    TAO_OutStream::CIAO_EXEC_IMPL);
   if (status == -1)
@@ -1352,7 +1286,7 @@ TAO_CodeGen::ciao_exec_source ()
 }
 
 int
-TAO_CodeGen::start_ciao_exec_idl (const char *fname)
+TAO_CodeGen::start_ciao_exec_idl (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_exec_idl_;
@@ -1361,7 +1295,7 @@ TAO_CodeGen::start_ciao_exec_idl (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_exec_idl_->open (fname,
                                 TAO_OutStream::CIAO_EXEC_IDL);
 
@@ -1395,7 +1329,7 @@ TAO_CodeGen::ciao_exec_idl ()
 }
 
 int
-TAO_CodeGen::start_ciao_conn_header (const char *fname)
+TAO_CodeGen::start_ciao_conn_header (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_conn_header_;
@@ -1404,7 +1338,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_conn_header_->open (fname,
                                    TAO_OutStream::CIAO_CONN_HDR);
 
@@ -1429,7 +1363,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
                            "CIAO_",
                            "_H_");
 
-  if (be_global->pre_include () != nullptr)
+  if (!be_global->pre_include ().empty ())
     {
       os << "#include /**/ \""
          << be_global->pre_include ()
@@ -1437,7 +1371,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
     }
 
   // This will almost certainly be true, but just in case...
-  if (be_global->conn_export_include () != nullptr)
+  if (!be_global->conn_export_include ().empty ())
     {
       this->gen_standard_include (this->ciao_conn_header_, be_global->conn_export_include (), true);
     }
@@ -1460,7 +1394,7 @@ TAO_CodeGen::ciao_conn_header ()
 }
 
 int
-TAO_CodeGen::start_ciao_conn_source (const char *fname)
+TAO_CodeGen::start_ciao_conn_source (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_conn_source_;
@@ -1469,7 +1403,7 @@ TAO_CodeGen::start_ciao_conn_source (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_conn_source_->open (fname,
                                    TAO_OutStream::CIAO_CONN_IMPL);
 
@@ -1501,7 +1435,7 @@ TAO_CodeGen::ciao_conn_source ()
 }
 
 int
-TAO_CodeGen::start_ciao_ami_conn_idl (const char *fname)
+TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->ciao_ami_conn_idl_;
@@ -1510,7 +1444,7 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const char *fname)
                   TAO_OutStream,
                   -1);
 
-  int status =
+  int const status =
     this->ciao_ami_conn_idl_->open (fname,
                                     TAO_OutStream::CIAO_AMI4CCM_CONN_IDL);
 
@@ -1545,7 +1479,7 @@ TAO_CodeGen::ciao_ami_conn_idl ()
 
 // Set the server header stream.
 int
-TAO_CodeGen::start_implementation_header (const char *fname)
+TAO_CodeGen::start_implementation_header (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->implementation_header_;
@@ -1571,7 +1505,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
                            "",
                            "_H_");
 
-  const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (true);
+  std::string const server_hdr = BE_GlobalData::be_get_server_hdr_fname (true);
 
   *this->implementation_header_<< "#include \"" << server_hdr <<"\"";
 
@@ -1598,7 +1532,7 @@ TAO_CodeGen::implementation_header ()
 
 // Set the implementation skeleton stream.
 int
-TAO_CodeGen::start_implementation_skeleton (const char *fname)
+TAO_CodeGen::start_implementation_skeleton (const std::string &fname)
 {
   // Clean up between multiple files.
   delete this->implementation_skeleton_;
@@ -1619,11 +1553,10 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
   // Generate the ident string, if any.
   this->gen_ident_string (this->implementation_skeleton_);
 
-  const char* impl_hdr =
+  std::string const impl_hdr =
     BE_GlobalData::be_get_implementation_hdr_fname ();
 
-  this->implementation_skeleton_->print ("#include \"%s\"\n\n",
-                                         impl_hdr);
+  *this->implementation_skeleton_ << "#include \"" << impl_hdr << "\"\n\n";
 
   return 0;
 }
@@ -1660,7 +1593,7 @@ TAO_CodeGen::end_client_header ()
 
   // Code to put the last #endif.
 
-  if (be_global->post_include () != nullptr)
+  if (!be_global->post_include ().empty ())
     {
       *this->client_header_ << "#include /**/ \""
                             << be_global->post_include ()
@@ -1719,7 +1652,7 @@ TAO_CodeGen::end_server_header ()
         }
     }
 
-  if (be_global->post_include () != nullptr)
+  if (!be_global->post_include ().empty ())
     {
       *os << be_nl_2
           << "#include /**/ \""
@@ -1735,48 +1668,41 @@ TAO_CodeGen::end_server_header ()
 }
 
 int
-TAO_CodeGen::end_implementation_header (const char *fname)
+TAO_CodeGen::end_implementation_header (const std::string &fname)
 {
-  if (fname == nullptr)
+  if (fname.empty ())
     {
       // Bad file name.
       return -1;
     }
 
-  const char *suffix = ACE_OS::strrchr (fname, '.');
-
-  if (suffix == nullptr)
-    {
-      // File seems to have no extension, so let us take the name
-      // as it is.
-      suffix = fname;
-    }
-
-  char macro_name [NAMEBUFSIZE] = { 0 };
+  std::string macro_name;
+  std::size_t const extension = fname.find_last_of ('.');
+  std::size_t const length = extension == std::string::npos ? 0 : extension;
+  macro_name.reserve (length + 3);
 
   // Convert letters in fname to upper case.
-  for (int i = 0; i < (suffix - fname); ++i)
+  for (std::size_t i = 0; i < length; ++i)
     {
-      if (ACE_OS::ace_isalpha (fname [i]))
+      if (std::isalpha (static_cast<unsigned char> (fname [i])))
         {
-          macro_name[i] = static_cast<char> (ACE_OS::ace_toupper (fname [i]));
+          macro_name.push_back (static_cast<char> (
+            std::toupper (static_cast<unsigned char> (fname [i]))));
         }
-      else if (ACE_OS::ace_isdigit (fname [i]))
+      else if (std::isdigit (static_cast<unsigned char> (fname [i])))
         {
-          macro_name[i] = fname[i];
+          macro_name.push_back (fname [i]);
         }
       else
         {
-          macro_name[i] = '_';
+          macro_name.push_back ('_');
         }
     }
 
-  ACE_OS::strcat (macro_name,
-                  "_H_");
+  macro_name += "_H_";
 
   // Code to put the last #endif.
-  this->implementation_header_->print ("\n#endif /* %s  */\n",
-                                       macro_name);
+  *this->implementation_header_ << "\n#endif /* " << macro_name << "  */\n";
   return 0;
 }
 
@@ -1798,7 +1724,7 @@ TAO_CodeGen::end_server_template_header ()
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";
 
-  if (be_global->post_include () != nullptr)
+  if (!be_global->post_include ().empty ())
     {
       *this->server_template_header_ << "#include /**/ \""
                                      << be_global->post_include ()
@@ -1846,7 +1772,7 @@ TAO_CodeGen::end_anyop_header ()
   *this->anyop_header_ << be_global->versioning_end ();
 
 
-  if (be_global->post_include () != nullptr)
+  if (!be_global->post_include ().empty ())
     {
       *this->anyop_header_ << "\n\n#include /**/ \""
                            << be_global->post_include ()
@@ -1874,7 +1800,7 @@ TAO_CodeGen::end_anyop_source ()
 int
 TAO_CodeGen::end_ciao_svnt_header ()
 {
-  if (be_global->post_include () != nullptr)
+  if (!be_global->post_include ().empty ())
     {
       *this->ciao_svnt_header_ << "\n\n#include /**/ \""
                                << be_global->post_include ()
@@ -1902,7 +1828,7 @@ TAO_CodeGen::end_ciao_svnt_template_header ()
                                     << be_global->be_get_ciao_tmpl_svnt_src_fname (true)
                                     << "\"" << be_nl;
 
-  if (be_global->post_include () != nullptr)
+  if (!be_global->post_include ().empty ())
     {
       *this->ciao_svnt_template_header_ << "\n\n#include /**/ \""
                                         << be_global->post_include ()
@@ -1927,7 +1853,7 @@ TAO_CodeGen::end_ciao_svnt_template_source ()
 int
 TAO_CodeGen::end_ciao_exec_header ()
 {
-  if (be_global->post_include () != nullptr)
+  if (!be_global->post_include ().empty ())
     {
       *this->ciao_exec_header_ << "\n\n#include /**/ \""
                                << be_global->post_include ()
@@ -1958,7 +1884,7 @@ TAO_CodeGen::end_ciao_exec_idl ()
 int
 TAO_CodeGen::end_ciao_conn_header ()
 {
-  if (be_global->post_include () != nullptr)
+  if (!be_global->post_include ().empty ())
     {
       *this->ciao_conn_header_ << "\n\n#include /**/ \""
                                << be_global->post_include ()
@@ -1992,27 +1918,25 @@ TAO_CodeGen::end_ciao_ami_conn_idl ()
 // effectively a global.
 
 void
-TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
+TAO_CodeGen::gperf_input_stream (std::unique_ptr<TAO_OutStream> &&os)
 {
-  delete this->gperf_input_stream_;
-  this->gperf_input_stream_ = os;
+  this->gperf_input_stream_ = std::move (os);
 }
 
 TAO_OutStream *
 TAO_CodeGen::gperf_input_stream ()
 {
-  return this->gperf_input_stream_;
+  return this->gperf_input_stream_.get ();
 }
 
 void
-TAO_CodeGen::gperf_input_filename (char *filename)
+TAO_CodeGen::gperf_input_filename (std::string const& filename)
 {
-  delete [] this->gperf_input_filename_;
   this->gperf_input_filename_ = filename;
 }
 
-char *
-TAO_CodeGen::gperf_input_filename ()
+std::string const&
+TAO_CodeGen::gperf_input_filename () const
 {
   return this->gperf_input_filename_;
 }
@@ -2020,9 +1944,9 @@ TAO_CodeGen::gperf_input_filename ()
 void
 TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
 {
-  const char *str = idl_global->ident_string ();
+  std::string const& str = idl_global->ident_string ();
 
-  if (str != nullptr)
+  if (!str.empty ())
     {
       *stream << "#" << str << be_nl_2;
     }
@@ -2032,101 +1956,95 @@ void
 TAO_CodeGen::gen_export_files ()
 {
   if (be_global->gen_stub_export_hdr_file ()
-      && be_global->stub_export_macro () != nullptr
-      && (be_global->stub_export_include () != nullptr || be_global->stub_export_file () != nullptr))
+      && !be_global->stub_export_macro ().empty ()
+      && (!be_global->stub_export_include ().empty () || !be_global->stub_export_file ().empty ()))
     {
+      std::string const& filename = be_global->stub_export_file ().empty ()
+        ? be_global->stub_export_include () : be_global->stub_export_file ();
       this->gen_export_file (
-        (be_global->stub_export_file () != nullptr) ? be_global->stub_export_file () : be_global->stub_export_include (),
-        be_global->stub_export_macro (),
-        "stub");
+        filename,
+        be_global->stub_export_macro ());
     }
 
   if (be_global->gen_skel_export_hdr_file ()
-      && be_global->skel_export_macro () != nullptr
-      && be_global->skel_export_include () != nullptr)
+      && !be_global->skel_export_macro ().empty ()
+      && !be_global->skel_export_include ().empty ())
     {
       this->gen_export_file (
-        (be_global->skel_export_file () != nullptr) ? be_global->skel_export_file () : be_global->skel_export_include (),
+        be_global->skel_export_file ().empty ()
+          ? be_global->skel_export_include () : be_global->skel_export_file (),
         be_global->skel_export_macro (),
-        "skel",
         true);
     }
 
   if (be_global->gen_svnt_export_hdr_file ()
-      && be_global->svnt_export_macro () != nullptr
-      && be_global->svnt_export_include () != nullptr)
+      && !be_global->svnt_export_macro ().empty ()
+      && !be_global->svnt_export_include ().empty ())
     {
       this->gen_export_file (
         be_global->svnt_export_include (),
-        be_global->svnt_export_macro (),
-        "svnt");
+        be_global->svnt_export_macro ());
     }
 
   if (be_global->gen_exec_export_hdr_file ()
-      && be_global->exec_export_macro () != nullptr
-      && be_global->exec_export_include () != nullptr)
+      && !be_global->exec_export_macro ().empty ()
+      && !be_global->exec_export_include ().empty ())
     {
       this->gen_export_file (
         be_global->exec_export_include (),
-        be_global->exec_export_macro (),
-        "exec");
+        be_global->exec_export_macro ());
     }
 
   if (be_global->gen_conn_export_hdr_file ()
-      && be_global->conn_export_macro () != nullptr
-      && be_global->conn_export_include () != nullptr)
+      && !be_global->conn_export_macro ().empty ()
+      && !be_global->conn_export_include ().empty ())
     {
       this->gen_export_file (
         be_global->conn_export_include (),
-        be_global->conn_export_macro (),
-        "conn");
+        be_global->conn_export_macro ());
     }
 }
 
 void
-TAO_CodeGen::gen_export_file (const char *filename,
-                              const char *macro,
-                              const char *,
+TAO_CodeGen::gen_export_file (std::string const& filename,
+                              std::string const& macro,
                               bool for_skel)
 {
-  // Svnt export macro may correctly default to skel
-  // export macro, so we just return silently. The
-  // null filename check below will catch a real error.
-  if (macro == nullptr)
+  // Svnt export macro may correctly default to skel export macro,
+  // so we just return silently when no macro or filename is configured.
+  if (macro.empty () || filename.empty ())
     {
       return;
     }
 
-  ACE_CString macro_str (macro);
-  ACE_CString file_str;
+  std::string file_str;
 
-  const char *output_path =
+  std::string const& output_path =
     be_util::get_output_path (false, for_skel, false);
 
-  if (output_path != nullptr)
+  if (!output_path.empty ())
     {
       // Turn '\' and '\\' into '/'.
-      char* i = const_cast<char*> (output_path);
+      std::string normalized_path;
+      normalized_path.reserve (output_path.size ());
 
-      for (const char* j = output_path; *j != 0; ++i, ++j)
+      for (std::string::size_type i = 0; i < output_path.size (); ++i)
         {
-          if (*j == '\\')
+          if (output_path[i] == '\\')
             {
-              *i = '/';
-
-              if (*(j + 1) == '\\')
+              normalized_path.push_back ('/');
+              if (i + 1 < output_path.size () && output_path[i + 1] == '\\')
                 {
-                  ++j;
+                  ++i;
                 }
             }
           else
             {
-              *i = *j;
+              normalized_path.push_back (output_path[i]);
             }
         }
 
-      *i = 0;
-      file_str += output_path;
+      file_str += normalized_path;
       file_str += '/';
     }
 
@@ -2134,31 +2052,28 @@ TAO_CodeGen::gen_export_file (const char *filename,
 
   TAO_OutStream os;
 
-  if (os.open (file_str.c_str ()) == -1)
+  if (os.open (file_str) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
                   ACE_TEXT ("Error: file open failed on %C\n"),
-                  filename));
+                  filename.c_str ()));
       return;
     }
 
-  ACE_CString suffix ("_Export");
-  size_t stem_len =
-    macro_str.length () - suffix.length ();
-
-  if (macro_str.substr (stem_len) != suffix)
+  std::string const suffix = "_Export";
+  if (macro.size () < suffix.size ()
+      || macro.substr (macro.size () - suffix.size ()) != suffix)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_CodeGen::gen_export_file() - ")
                   ACE_TEXT ("Error: export macro %C does not end with ")
                   ACE_TEXT ("\"_Export\""),
-                  macro));
+                  macro.c_str ()));
       return;
     }
 
-  ACE_CString stem_str (macro_str.substr (0, stem_len));
-  const char *stem = stem_str.c_str ();
+  std::string const stem = macro.substr (0, macro.size () - suffix.size ());
 
   os << "\n#ifndef " << stem << "_EXPORT_H\n"
      << "#define " << stem << "_EXPORT_H\n\n"
@@ -2207,7 +2122,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
 
 void
 TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
-                                   const char *included_file,
+                                   std::string const& included_file,
                                    bool add_comment)
 {
   // Switch between changing or non-changing standard include files
@@ -2215,8 +2130,8 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
   // generated with ""s or <>s respectively, for the standard include
   // files (e.g. tao/corba.h).
 
-  const char *start_delimiter = "\"";
-  const char *end_delimiter = "\"";
+  std::string start_delimiter = "\"";
+  std::string end_delimiter = "\"";
 
   if (be_global->changing_standard_include_files () == 0)
     {
@@ -2238,7 +2153,7 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 
 void
 TAO_CodeGen::gen_system_include (TAO_OutStream *stream,
-                                 const char *included_file)
+                                 std::string const& included_file)
 {
   *stream << "\n#include <"
           << included_file
@@ -2246,58 +2161,45 @@ TAO_CodeGen::gen_system_include (TAO_OutStream *stream,
 }
 
 void
-TAO_CodeGen::gen_ifndef_string (const char *fname,
+TAO_CodeGen::gen_ifndef_string (std::string const& fname,
                                 TAO_OutStream *stream,
-                                const char *prefix,
-                                const char *suffix)
+                                std::string const& prefix,
+                                std::string const& suffix)
 {
-  char macro_name [NAMEBUFSIZE] = { 0 };
-
-  const char *extension = ACE_OS::strrchr (fname, '.');
-
-  if (extension == nullptr)
-    {
-      // File seems to have no extension, so let us take the name
-      // as it is.
-      extension = fname;
-    }
-
-  ACE_OS::sprintf (macro_name, "%s", prefix);
-
-  size_t offset = ACE_OS::strlen (prefix);
+  std::size_t const extension = fname.find_last_of ('.');
+  std::size_t const length = extension == std::string::npos ? 0 : extension;
+  std::string macro_name (prefix);
+  macro_name.reserve (prefix.size () + length + suffix.size () + 7);
 
   // Convert letters in fname to upper case.
-  for (int i = 0; i < (extension - fname); i++)
+  for (std::size_t i = 0; i < length; ++i)
     {
-      if (ACE_OS::ace_isalpha (fname [i]))
+      if (std::isalpha (static_cast<unsigned char> (fname [i])))
         {
-          macro_name[i + offset] = static_cast<char> (ACE_OS::ace_toupper (fname [i]));
+          macro_name.push_back (static_cast<char> (
+            std::toupper (static_cast<unsigned char> (fname [i]))));
         }
-      else if (ACE_OS::ace_isdigit (fname [i]))
+      else if (std::isdigit (static_cast<unsigned char> (fname [i])))
         {
-          macro_name[i + offset] = fname[i];
+          macro_name.push_back (fname [i]);
         }
       else
         {
-          macro_name[i + offset] = '_';
+          macro_name.push_back ('_');
         }
     }
 
   if (be_global->gen_unique_guards ())
     {
-      ACE_OS::strcat (macro_name, "_XXXXXX");
-      char * const t = ACE_OS::strstr (macro_name, "XXXXXX");
-
-      this->make_rand_extension (t);
+      macro_name += '_';
+      this->make_rand_extension (macro_name);
     }
 
-  ACE_OS::strcat (macro_name, suffix);
+  macro_name += suffix;
 
   // Generate the #ifndef ... #define statements.
-  stream->print ("#ifndef %s\n",
-                 macro_name);
-  stream->print ("#define %s\n\n",
-                 macro_name);
+  *stream << "#ifndef " << macro_name << "\n";
+  *stream << "#define " << macro_name << "\n\n";
 }
 
 void
@@ -2413,16 +2315,9 @@ TAO_CodeGen::gen_stub_hdr_includes ()
 
       if (the_dds_impl == BE_GlobalData::OPENDDS)
         {
-          ACE_Unbounded_Queue<char *> &ts_files =
-            idl_global->ciao_oci_ts_file_names ();
-          char **tmp = nullptr;
-
-          for (ACE_Unbounded_Queue_Iterator<char *> i (ts_files);
-              !i.done ();
-              i.advance ())
+          for (std::string const &ts_file : idl_global->ciao_oci_ts_file_names ())
             {
-              i.next (tmp);
-              this->gen_standard_include (this->client_header_, *tmp);
+              this->gen_standard_include (this->client_header_, ts_file);
             }
         }
     }
@@ -2505,35 +2400,32 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   // need to include the *A.h file from all .pidl files here.
   if (be_global->any_support () && !be_global->gen_anyop_files ())
     {
-      for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+      for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
         {
-          char * const idl_name = idl_global->included_idl_files ()[j];
+          std::string const &idl_name = idl_global->included_idl_files ()[j];
 
-          ACE_CString pidl_checker (idl_name);
-          bool const got_pidl =
-            (pidl_checker.substr (pidl_checker.length () - 5) == ".pidl");
+          std::string const& pidl_checker = idl_name;
+          std::string const pidl_suffix = ".pidl";
+          bool const got_pidl = pidl_checker.size () >= pidl_suffix.size ()
+            && pidl_checker.substr (
+                 pidl_checker.size () - pidl_suffix.size ()) == pidl_suffix;
 
           // If we're here and we have a .pidl file, we need to generate
           // the *A.h include from the AnyTypeCode library.
           if (got_pidl)
             {
-              // Make a String out of it.
-              UTL_String idl_name_str = idl_name;
-
-              char const * const anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
-
-              idl_name_str.destroy ();
+              std::string const anyop_hdr =
+                BE_GlobalData::be_get_anyop_header (idl_name, true);
 
               // Stripped off any scope in the name and add the
               // AnyTypeCode prefix.
-              ACE_CString work_hdr (anyop_hdr);
-              ACE_CString final_hdr = "tao/AnyTypeCode/";
-              ACE_CString::size_type const pos = work_hdr.rfind ('/');
+              std::string work_hdr (anyop_hdr);
+              std::string final_hdr = "tao/AnyTypeCode/";
+              std::string::size_type const pos = work_hdr.rfind ('/');
 
-              if (pos != ACE_CString::npos)
+              if (pos != std::string::npos)
                 {
-                  ACE_CString scope (work_hdr.substr (0, pos));
+                  std::string const scope (work_hdr.substr (0, pos));
 
                   // If we find a '/' in the containing scope name, it
                   // means we are including a .pidl file from a
@@ -2543,7 +2435,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
                   // Only .pidl files in $TAO_ROOT/tao itself have
                   // their generated *A.* files moved to the AnyTypeCode
                   // library.
-                  if (scope.find ('/') == ACE_CString::npos)
+                  if (scope.find ('/') == std::string::npos)
                     {
                       work_hdr = work_hdr.substr (pos + 1);
                       final_hdr += work_hdr;
@@ -2554,8 +2446,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
                     }
                 }
 
-              this->client_header_->print ("\n#include \"%s\"",
-                                           final_hdr.c_str ());
+              *this->client_header_ << "\n#include \"" << final_hdr << "\"";
             }
         }
     }
@@ -2579,9 +2470,11 @@ TAO_CodeGen::gen_stub_hdr_includes ()
   // Versioned namespace support.
   this->gen_standard_include (this->client_header_, "tao/Versioned_Namespace.h", true);
 
-  if ((be_global->versioning_include () != nullptr) && (ACE_OS::strlen (be_global->versioning_include ()) > 0))
+  if (!be_global->versioning_include ().empty ())
     {
-      this->gen_standard_include (this->client_header_, be_global->versioning_include (), true);
+      this->gen_standard_include (this->client_header_,
+                                  be_global->versioning_include (),
+                                  true);
     }
 
   // On some platforms, this include isn't needed if certain command
@@ -2608,14 +2501,14 @@ void
 TAO_CodeGen::gen_stub_src_includes ()
 {
   // Generate the include statement for the precompiled header file.
-  if (be_global->pch_include ())
+  if (!be_global->pch_include ().empty ())
     {
       *this->client_stubs_ << "#include \""
                            << be_global->pch_include ()
                            << "\"";
     }
 
-  if (be_global->safe_include ())
+  if (!be_global->safe_include ().empty ())
     {
       // Generate the safe include if it is defined instead of the client header
       // need to put only the base names. Path info is not required.
@@ -2727,7 +2620,7 @@ TAO_CodeGen::gen_stub_src_includes ()
       || idl_global->union_seen_)
     {
       // Needed for _narrow(), which is now template-based.
-      this->gen_system_include (this->client_stubs_, "cstring");
+      this->gen_standard_include (this->client_stubs_, "ace/OS_NS_string.h");
     }
 }
 
@@ -2792,6 +2685,10 @@ TAO_CodeGen::gen_skel_src_includes ()
         break;
     }
 
+  this->gen_system_include (this->server_skeletons_, "cstddef");
+  this->gen_system_include (this->server_skeletons_, "cstring");
+  this->gen_system_include (this->server_skeletons_, "memory");
+
   if (be_global->gen_direct_collocation ())
     {
       this->gen_standard_include (this->server_skeletons_, "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h");
@@ -2832,8 +2729,7 @@ TAO_CodeGen::gen_skel_src_includes ()
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_, "ace/Malloc_Allocator.h");
 
-  // For std::strcmp
-  this->gen_system_include (this->server_skeletons_, "cstring");
+  this->gen_standard_include (this->server_skeletons_, "ace/OS_NS_string.h");
 }
 
 void
@@ -3151,7 +3047,7 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
 
 void
 TAO_CodeGen::gen_cond_file_include (bool condition_green,
-                                    const char *filepath,
+                                    std::string const& filepath,
                                     TAO_OutStream *stream)
 {
   if (condition_green)
@@ -3232,27 +3128,29 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 void
 TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
 {
-  ACE_CString container_file ("ciao/Containers/");
-  container_file += be_global->ciao_container_type ();
+  std::string const container_type (be_global->ciao_container_type ());
+
+  std::string container_file ("ciao/Containers/");
+  container_file += container_type;
   container_file += "/";
-  container_file += be_global->ciao_container_type ();
+  container_file += container_type;
   container_file += "_ContainerC.h";
 
-  this->gen_standard_include (stream, container_file.c_str ());
+  this->gen_standard_include (stream, container_file);
 
-  ACE_CString context_file ("ciao/Contexts/");
-  context_file += be_global->ciao_container_type ();
+  std::string context_file ("ciao/Contexts/");
+  context_file += container_type;
   context_file += "/";
-  context_file += be_global->ciao_container_type ();
+  context_file += container_type;
   context_file += "_Context_T.h";
 
-  this->gen_standard_include (stream, context_file.c_str ());
+  this->gen_standard_include (stream, context_file);
 
-  ACE_CString servant_file ("ciao/Servants/");
-  servant_file += be_global->ciao_container_type ();
+  std::string servant_file ("ciao/Servants/");
+  servant_file += container_type;
   servant_file += "/Servant_Impl_T.h";
 
-  this->gen_standard_include (stream, servant_file.c_str ());
+  this->gen_standard_include (stream, servant_file);
 
   this->gen_standard_include (stream, "ciao/Servants/Home_Servant_Impl_T.h");
 
@@ -3266,11 +3164,12 @@ TAO_CodeGen::gen_svnt_hdr_includes (TAO_OutStream *stream)
 void
 TAO_CodeGen::gen_svnt_tmpl_hdr_includes (TAO_OutStream *stream)
 {
-  ACE_CString servant_file ("ciao/Servants/");
-  servant_file += be_global->ciao_container_type ();
+  std::string const container_type (be_global->ciao_container_type ());
+  std::string servant_file ("ciao/Servants/");
+  servant_file += container_type;
   servant_file += "/Servant_Impl_T.h";
 
-  this->gen_standard_include (stream, servant_file.c_str ());
+  this->gen_standard_include (stream, servant_file);
 
   this->gen_standard_include (stream, "ciao/Servants/Home_Servant_Impl_T.h");
 
@@ -3309,7 +3208,7 @@ TAO_CodeGen::gen_exec_hdr_includes ()
   // generated code in the same library, using the skel export macro,
   // so the values for the servant export default to the skel values.
   // Eventually, there should be a way to completely decouple them.
-  if (be_global->exec_export_include () != nullptr)
+  if (!be_global->exec_export_include ().empty ())
     {
       this->gen_standard_include (this->ciao_exec_header_, be_global->exec_export_include (), true);
     }
@@ -3351,97 +3250,76 @@ TAO_CodeGen::gen_exec_idl_includes ()
   this->gen_standard_include (this->ciao_exec_idl_, "ccm/CCM_HomeExecutorBase.idl");
 
 
-  ACE_CString component_file ("ccm/");
-  component_file += be_global->ciao_container_type ();
+  std::string const container_type (be_global->ciao_container_type ());
+  std::string component_file ("ccm/");
+  component_file += container_type;
   component_file += "/CCM_";
-  component_file += be_global->ciao_container_type ();
+  component_file += container_type;
   component_file += "Component.idl";
 
-  this->gen_standard_include (this->ciao_exec_idl_, component_file.c_str ());
+  this->gen_standard_include (this->ciao_exec_idl_, component_file);
 
   if (be_global->ami4ccm_call_back ())
     {
       this->gen_standard_include (this->ciao_exec_idl_, "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
-  if (be_global->stripped_filename ())
+  if (!be_global->stripped_filename ().empty ())
     {
       this->gen_standard_include (this->ciao_exec_idl_, be_global->stripped_filename ());
     }
   else
     {
-      this->gen_standard_include (this->ciao_exec_idl_, idl_global->stripped_filename ()->get_string ());
+      this->gen_standard_include (
+        this->ciao_exec_idl_,
+        idl_global->stripped_filename ());
     }
 
-  char **path_tmp = nullptr;
-
-  for (ACE_Unbounded_Queue_Iterator<char *>riter (
-         idl_global->ciao_lem_file_names ());
-       riter.done () == 0;
-       riter.advance ())
+  for (std::string const &path_tmp : idl_global->ciao_lem_file_names ())
     {
-      riter.next (path_tmp);
-
-      const char *exec_idl_fname =
+      std::string const exec_idl_fname =
         be_global->be_get_ciao_exec_idl_fname (true);
 
       bool skip_incl = false;
       // special case for ami4ccm, if xxxE.idl. don't include xxxAE.idl.
-      char *exe_idl_fname = ACE_OS::strdup(exec_idl_fname);
-      char * base = ACE_OS::strstr(exe_idl_fname, "E.idl");
-      if (base != nullptr)
+      std::size_t const base = exec_idl_fname.find ("E.idl");
+      if (base != std::string::npos)
         {
-          static char test[MAXPATHLEN];
-          ACE_OS::memset (test, 0, MAXPATHLEN);
+          std::string const test = exec_idl_fname.substr (0, base) + "AE.idl";
 
-          ACE_OS::strncpy(test, exe_idl_fname, base - exe_idl_fname);
-          ACE_OS::strcat (test, "AE.idl");
+          if (path_tmp.find (test) != std::string::npos)
+            {
+              // Skip this include for ami4ccm.
+              skip_incl = true;
+            }
+        }
 
-          if (ACE_OS::strstr ( *path_tmp,  test) != nullptr)
-           {
-             //skip include
-             skip_incl = true;
-           }
-
-       }
-        /// No need to have the exec IDL file include itself.
-       if ((ACE_OS::strcmp (*path_tmp, exec_idl_fname) != 0) &&
-           (!skip_incl))
-         {
-            this->gen_standard_include (this->ciao_exec_idl_, *path_tmp);
-         }
+      // No need to have the exec IDL file include itself.
+      if (path_tmp != exec_idl_fname && !skip_incl)
+        {
+          this->gen_standard_include (this->ciao_exec_idl_, path_tmp);
+        }
     }
 }
 
 bool
-TAO_CodeGen::is_system_file (const char * idl_name) const
+TAO_CodeGen::is_system_file (std::string const& idl_name) const
 {
   return
-    ACE_OS::strcmp (idl_name, "Components.idl") == 0
-    || ACE_OS::strcmp (
-          idl_name,
-          "connectors/ami4ccm/ami4ccm/ami4ccm.idl") == 0;
+    idl_name == "Components.idl"
+    || idl_name == "connectors/ami4ccm/ami4ccm/ami4ccm.idl";
 }
 
 void
 TAO_CodeGen::gen_conn_hdr_includes ()
 {
-  ACE_Unbounded_Queue<char *> &lem_file_names =
-    idl_global->ciao_lem_file_names ();
-
-  char **path_tmp  = nullptr;
-
-  for (ACE_Unbounded_Queue_Iterator<char *> riter (
-         lem_file_names);
-       riter.done () == 0;
-       riter.advance ())
+  for (std::string const &path_tmp : idl_global->ciao_lem_file_names ())
     {
-      riter.next (path_tmp);
-      ACE_CString lem_str (*path_tmp);
+      std::string lem_str (path_tmp);
       lem_str = lem_str.substr (0, lem_str.find (".idl"));
-      lem_str += be_global->client_hdr_ending ();
+      lem_str.append (be_global->client_hdr_ending ());
 
-      this->gen_standard_include (this->ciao_conn_header_, lem_str.c_str ());
+      this->gen_standard_include (this->ciao_conn_header_, lem_str);
     }
 
   *this->ciao_conn_header_ << be_nl;
@@ -3474,14 +3352,9 @@ TAO_CodeGen::gen_conn_hdr_includes ()
         }
     }
 
-  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR iiter (
-         idl_global->dds4ccm_impl_fnames ());
-       !iiter.done ();
-       iiter.advance ())
+  for (std::string const &impl_fname : idl_global->dds4ccm_impl_fnames ())
     {
-      iiter.next (path_tmp);
-
-      this->gen_standard_include (this->ciao_conn_header_, *path_tmp);
+      this->gen_standard_include (this->ciao_conn_header_, impl_fname);
     }
 
   if (idl_global->ami_connector_seen_)
@@ -3489,14 +3362,14 @@ TAO_CodeGen::gen_conn_hdr_includes ()
       this->gen_standard_include (this->ciao_conn_header_, "tao/LocalObject.h");
     }
 
-  for (size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
+  for (std::size_t j = 0; j < idl_global->n_included_idl_files (); ++j)
     {
       if (j == 0)
         {
           *this->ciao_conn_header_ << be_nl;
         }
 
-      char * const idl_name =
+      std::string const &idl_name =
         idl_global->included_idl_files ()[j];
 
 
@@ -3505,11 +3378,9 @@ TAO_CodeGen::gen_conn_hdr_includes ()
           continue;
         }
 
-      UTL_String str (idl_name);
+      this->gen_standard_include (this->ciao_conn_header_,
+                                  BE_GlobalData::be_get_server_hdr (idl_name, true));
 
-      this->gen_standard_include (this->ciao_conn_header_, BE_GlobalData::be_get_server_hdr (&str, true));
-
-      str.destroy ();
     }
 
   this->gen_standard_include (
@@ -3540,41 +3411,38 @@ TAO_CodeGen::gen_ami_conn_idl_includes ()
       this->gen_standard_include (this->ciao_ami_conn_idl_, "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
-  this->gen_standard_include (this->ciao_ami_conn_idl_, idl_global->stripped_filename ()->get_string ());
+  this->gen_standard_include (
+    this->ciao_ami_conn_idl_,
+    idl_global->stripped_filename ());
 }
 
 void
-TAO_CodeGen::make_rand_extension (char * const t)
+TAO_CodeGen::make_rand_extension (std::string &name)
 {
   // random device and engine
-  size_t const length = ACE_OS::strlen (t);
   std::random_device rd;  // non-deterministic generator
   std::mt19937 gen(rd()); // mersenne twister engine
   char constexpr alphabet[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  std::uniform_int_distribution<size_t> dist(0, sizeof(alphabet) - 2); // exclude null
+  std::uniform_int_distribution<std::size_t> dist(0, sizeof(alphabet) - 2); // exclude null
 
-  for (size_t i = 0; i < length; ++i) {
-      t[i] = alphabet[dist(gen)];
-  }
+  for (std::size_t i = 0; i < 6; ++i)
+    {
+      name.push_back (alphabet[dist(gen)]);
+    }
 }
 
 void
 TAO_CodeGen::gen_conn_ts_includes (
-  ACE_Unbounded_Queue<char *> &ts_files)
+  std::vector<std::string> const &ts_files)
 {
-  if (ts_files.size () > 0)
+  if (!ts_files.empty ())
     {
       *this->ciao_conn_header_ << be_nl;
     }
 
-  char **tmp = nullptr;
-
-  for (ACE_Unbounded_Queue_Iterator<char *> i (ts_files);
-       !i.done ();
-       i.advance ())
+  for (std::string const &ts_file : ts_files)
     {
-      i.next (tmp);
-      this->gen_standard_include (this->ciao_conn_header_, *tmp);
+      this->gen_standard_include (this->ciao_conn_header_, ts_file);
     }
 }
 
@@ -3600,6 +3468,5 @@ TAO_CodeGen::destroy ()
   delete this->ciao_conn_header_;
   delete this->ciao_conn_source_;
   delete this->ciao_ami_conn_idl_;
-  delete this->gperf_input_stream_;
-  delete [] this->gperf_input_filename_;
+  this->gperf_input_stream_.reset ();
 }

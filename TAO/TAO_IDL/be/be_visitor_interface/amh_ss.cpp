@@ -10,13 +10,11 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
     be_visitor_context *ctx)
   : be_visitor_interface_ss (ctx)
-{
-}
-
-be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss ()
 {
 }
 
@@ -53,23 +51,21 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
 
   // the _this () operation
   //const char *non_amh_name = node->full_name () + 4;
-  ACE_CString non_amh_name = "";
+  std::string non_amh_name;
   non_amh_name += node->client_enclosing_scope ();
   non_amh_name += node->local_name ();
 
-  ACE_CString full_skel_name_holder =
-    this->generate_full_skel_name (node);
-  const char *full_skel_name = full_skel_name_holder.c_str ();
+  std::string const full_skel_name = this->generate_full_skel_name (node);
 
   TAO_INSERT_COMMENT (os);
 
-  *os << non_amh_name.c_str () << "*" << be_nl
+  *os << non_amh_name << "*" << be_nl
       << full_skel_name
       << "::_this ()" << be_nl
       << "{" << be_idt_nl
       << "TAO_Stub_Auto_Ptr stub (this->_create_stub ());" << be_nl;
 
-  *os << "::CORBA::Boolean _tao_opt_colloc = "
+  *os << "bool _tao_opt_colloc = "
       << "stub->servant_orb_var ()->orb_core ()->"
       << "optimize_collocation_objects ();" << be_nl
       << "::CORBA::Object_var obj = "
@@ -99,9 +95,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  ACE_CString full_skel_name_holder =
-    this->generate_full_skel_name (node);
-  const char *full_skel_name = full_skel_name_holder.c_str ();
+  std::string const full_skel_name = this->generate_full_skel_name (node);
 
   TAO_INSERT_COMMENT (os);
 
@@ -139,17 +133,12 @@ class TAO_IDL_Downcast_Implementation_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  TAO_IDL_Downcast_Implementation_Worker ();
+  TAO_IDL_Downcast_Implementation_Worker () = default;
 
-  virtual int emit (be_interface *base,
-                    TAO_OutStream *os,
-                    be_interface *derived);
+  int emit (be_interface *base,
+            TAO_OutStream *os,
+            be_interface *derived) override;
 };
-
-TAO_IDL_Downcast_Implementation_Worker::
-TAO_IDL_Downcast_Implementation_Worker ()
-{
-}
 
 int
 TAO_IDL_Downcast_Implementation_Worker::
@@ -157,23 +146,15 @@ emit (be_interface * /* derived */,
       TAO_OutStream *os,
       be_interface *base)
 {
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
-  // internally.
-  ACE_CString amh_name ("POA_");
+  std::string amh_name ("POA_");
 
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = nullptr;
-  base->compute_full_name ("AMH_", "", buf);
+  std::string const buf = base->compute_full_name ("AMH_", "");
   amh_name += buf;
-  // buf was allocated using ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
 
-  *os << "if (ACE_OS::strcmp (logical_type_id, \""
+  *os << "if (std::strcmp (logical_type_id, \""
       << base->repoID () << "\") == 0)" << be_idt_nl
       << "return static_cast<"
-      << amh_name.c_str () << "*> (this);" << be_uidt_nl;
+      << amh_name << "*> (this);" << be_uidt_nl;
 
   return 0;
 }
@@ -184,16 +165,12 @@ class TAO_IDL_Copy_Ctor_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  TAO_IDL_Copy_Ctor_Worker ();
+  TAO_IDL_Copy_Ctor_Worker () = default;
 
-  virtual int emit (be_interface *base,
-                    TAO_OutStream *os,
-                    be_interface *derived);
+  int emit (be_interface *base,
+            TAO_OutStream *os,
+            be_interface *derived) override;
 };
-
-TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker ()
-{
-}
 
 int
 TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
@@ -217,20 +194,12 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
     }
   else
     {
-      // @@ This whole thing would be more efficient if we could pass the
-      // ACE_CString to compute_full_name, after all it uses that
-      // internally.
-      ACE_CString amh_name ("POA_");
+      std::string amh_name ("POA_");
 
-      // @@ The following code is *NOT* exception-safe.
-      char *buf = nullptr;
-      base->compute_full_name ("AMH_", "", buf);
+      std::string const buf = base->compute_full_name ("AMH_", "");
       amh_name += buf;
-      // buf was allocated by ACE_OS::strdup, so we need to use free
-      // instead of delete.
-      ACE_OS::free (buf);
 
-      *os << amh_name.c_str () << " (rhs)";
+      *os << amh_name << " (rhs)";
     }
 
   *os << be_uidt;
@@ -238,70 +207,27 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
   return 0;
 }
 
-int
-be_visitor_amh_interface_ss::generate_copy_ctor (be_interface *node,
-                                                 TAO_OutStream *os)
-{
-  // Make sure the queues are empty.
-  node->get_insert_queue ().reset ();
-  node->get_del_queue ().reset ();
-
-  // Insert ourselves in the queue.
-  if (node->get_insert_queue ().enqueue_tail (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_interface::generate_copy_ctor - "
-                         "error generating entries\n"),
-                        -1);
-    }
-
-  TAO_IDL_Copy_Ctor_Worker worker;
-  return node->traverse_inheritance_graph (worker, os);
-}
-
 // ****************************************************************
 
-ACE_CString
+std::string
 be_visitor_amh_interface_ss::generate_flat_name (be_interface *node)
 {
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = nullptr;
-  node->compute_flat_name ("AMH_", "", buf);
-
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_flat_name, after all it uses that
-  // internally.
-  ACE_CString result (buf);
-  // buf was allocated using ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
-
-  return result;
+  return node->compute_flat_name ("AMH_", "");
 }
 
-ACE_CString
+std::string
 be_visitor_amh_interface_ss::generate_local_name (be_interface *node)
 {
-  ACE_CString local_name = "AMH_";
+  std::string local_name = "AMH_";
   local_name += node->local_name ();
   return local_name;
 }
 
-ACE_CString
+std::string
 be_visitor_amh_interface_ss::generate_full_skel_name (be_interface *node)
 {
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
-  // internally.
-  ACE_CString result ("POA_");
-
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = nullptr;
-  node->compute_full_name ("AMH_", "", buf);
-  result += buf;
-  // buf was allocated using ACE_OS::strdup, so we must use free instead
-  // of delete.
-  ACE_OS::free (buf);
+  std::string result ("POA_");
+  result += node->compute_full_name ("AMH_", "");
 
   return result;
 }

@@ -25,9 +25,7 @@ be_visitor_union_branch_private_ch::be_visitor_union_branch_private_ch (
 }
 
 // Destructor.
-be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch ()
-{
-}
+be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch () = default;
 
 // Visit the union_branch node.
 int
@@ -477,7 +475,7 @@ be_visitor_union_branch_private_ch::visit_string (be_string *node)
 
   *os << be_nl;
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << "char *" << ub->local_name () << "_;";
     }

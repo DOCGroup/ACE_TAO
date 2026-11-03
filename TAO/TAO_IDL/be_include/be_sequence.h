@@ -20,6 +20,8 @@
 #include "be_type.h"
 #include "ast_sequence.h"
 
+#include <string>
+
 class AST_Expression;
 class AST_Type;
 class be_visitor;
@@ -67,31 +69,31 @@ public:
   virtual int create_name (be_typedef *node);
 
   /// Return the managed type.
-  virtual MANAGED_TYPE managed_type ();
+  virtual MANAGED_TYPE managed_type () const;
 
   // Scope management functions.
-  virtual AST_Sequence *fe_add_sequence (AST_Sequence *);
+  virtual AST_Sequence *fe_add_sequence (AST_Sequence *) override;
 
   /// Overridden method on the be_scope class.
-  virtual be_decl *decl ();
+  be_decl *decl () override;
 
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+                                     bool use_underscore) override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   /// Report the instance name for instantiation.
-  const char *instance_name ();
+  std::string instance_name () const;
 
   /// Common code for generating the name and parameters of our
   /// template sequence base class.
   int gen_base_class_name (TAO_OutStream *os,
-                           const char * linebreak,
+                           std::string const& linebreak,
                            AST_Decl *elem_scope);
 
   /// Accessors for the member.
@@ -99,22 +101,22 @@ public:
   void field_node (be_field *node);
 
   /// Helper to create_name, also used by the traits visitor.
-  virtual char *gen_name ();
+  virtual std::string gen_name ();
 
 protected:
   /// Computes the fully scoped typecode name.
-  virtual void compute_tc_name ();
+  void compute_tc_name () override;
 
 private:
-  const char *smart_fwd_helper_name (AST_Decl *elem_scope,
+  std::string smart_fwd_helper_name (AST_Decl *elem_scope,
                                      be_type *elem);
 
 private:
   /// Our managed type.
-  MANAGED_TYPE mt_;
+  mutable MANAGED_TYPE mt_ {MNG_UNKNOWN};
 
   /// Used if we are an anonymous member, to help generate a unique name.
-  be_field *field_node_;
+  be_field *field_node_ {};
 };
 
 #endif

@@ -15,9 +15,12 @@
 #define TAO_BE_OUTSTRM_H
 
 #include "ace/CDR_Base.h"
-#include "ace/SString.h"
 
 #include "ace/OS_NS_stdio.h"
+
+#include <cstddef>
+#include <cstdio>
+#include <string>
 #include <type_traits>
 
 class Identifier;
@@ -40,26 +43,26 @@ struct TAO_NL_2
  * Operates like a manipulator, increasing the indentation level.
  *
  * Increase the indentation level, if the "do_now" parameter is
- * not zero then the <indent> method is called on the stream.
+ * true then the <indent> method is called on the stream.
  */
 struct TAO_INDENT
 {
-  TAO_INDENT (int do_now = 0);
+  explicit TAO_INDENT (bool do_now = false);
 
-  const int do_now_;
+  bool const do_now_;
 };
 
 /**
  * Operates like a manipulator, decreasing the indentation level.
  *
  * Decrease the indentation level, if the "do_now" parameter is
- * not zero then the <indent> method is called on the stream.
+ * true then the <indent> method is called on the stream.
  */
 struct TAO_UNINDENT
 {
-  TAO_UNINDENT (int do_now = 0);
+  explicit TAO_UNINDENT (bool do_now = false);
 
-  const int do_now_;
+  bool const do_now_;
 };
 
 extern const TAO_NL be_nl;
@@ -73,11 +76,11 @@ extern const TAO_UNINDENT be_uidt_nl;
 // conditionally output a newline and some form of "ACE_CHECK".
 struct TAO_ACE_CHECK
 {
-  TAO_ACE_CHECK (const char *retval = 0,
+  TAO_ACE_CHECK (char const *retval = nullptr,
                  bool do_return = false);
 
-  const char *retval_;
-  bool do_return_;
+  char const *retval_;
+  bool do_return_ {};
 };
 
 /**
@@ -125,9 +128,13 @@ public:
   TAO_OutStream ();
 
   virtual ~TAO_OutStream ();
+  TAO_OutStream (TAO_OutStream const &) = delete;
+  TAO_OutStream (TAO_OutStream &&) = delete;
+  TAO_OutStream &operator= (TAO_OutStream const &) = delete;
+  TAO_OutStream &operator= (TAO_OutStream &&) = delete;
 
   /// Open the underlying low-level handle for output.
-  int open (const char *fname,
+  int open (std::string const& fname,
             TAO_OutStream::STREAM_TYPE st = TAO_OutStream::TAO_CLI_HDR);
 
   /// Set the stream type
@@ -141,11 +148,11 @@ public:
 
   /// Increment the indentation level and by default actually indent the output
   /// accordingly
-  int incr_indent (unsigned short flag = 1);
+  int incr_indent (bool flag = true);
 
   /// Decrease the indentation level and by default actually indent the output
   /// accordingly
-  int decr_indent (unsigned short flag = 1);
+  int decr_indent (bool flag = true);
 
   /// Reset indentation level to 0
   int reset ();
@@ -161,32 +168,34 @@ public:
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /// Generate a #if !defined, #defined macro
-  int gen_ifdef_macro (const char *flat_name,
-                       const char *suffix = 0,
+  int gen_ifdef_macro (std::string const& flat_name,
+                       std::string const& suffix = {},
                        bool add_stream_type_suffix = true);
 
   /// Generate an endif statement
   int gen_endif ();
 
   // =overloaded operators
-  // Avoid duplication for the underlying type of size_t
+  // Avoid duplication for the underlying type of std::size_t
   template <typename Dummy = TAO_OutStream &>
   typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
-                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
-                          !std::is_same<ACE_CDR::ULong, size_t>::value,
+                          !std::is_same<ACE_CDR::ULongLong, std::size_t>::value &&
+                          !std::is_same<ACE_CDR::ULong, std::size_t>::value,
                           TAO_OutStream &>::type
-  operator << (const size_t num)
+  operator << (std::size_t const num)
   {
-    ACE_OS::fprintf (this->fp_,
-                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
-                     num);
+    this->flush_pending_whitespace ();
+    std::fprintf (this->fp_,
+                  ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
+                  num);
+    this->consecutive_newlines_ = 0;
 
     return *this;
   }
 
   TAO_OutStream &operator<< (const char *str);
   TAO_OutStream &operator<< (char ch);
-  TAO_OutStream &operator<< (const ACE_CString &str);
+  TAO_OutStream &operator<< (std::string const &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
   TAO_OutStream &operator<< (const ACE_CDR::ULong num);
@@ -222,17 +231,27 @@ public:
 #define TAO_INSERT_COMMENT(STRM) (STRM)->insert_comment (__FILE__, __LINE__)
 
 protected:
+  void flush_pending_whitespace ();
+  void write_text (std::string const& text);
+  void write_newline ();
+
   /// The underlying low-level I/O handle
-  FILE *fp_;
+  FILE *fp_ {};
 
   /// Stream type
   TAO_OutStream::STREAM_TYPE st_;
 
   /// Indentation level
-  int indent_level_;
+  int indent_level_ {};
 
   /// Used to set tab spaces.
-  ACE_CString tab_unit_str_;
+  std::string tab_unit_str_;
+
+  /// Trailing whitespace is buffered until non-whitespace or newline output.
+  std::string pending_whitespace_;
+
+  /// Number of consecutive newlines in the generated file, capped at two.
+  unsigned int consecutive_newlines_ {};
 };
 
 #endif // if !defined

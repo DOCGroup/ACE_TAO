@@ -23,9 +23,7 @@ be_visitor_operation_exceptlist_ss::be_visitor_operation_exceptlist_ss (
 {
 }
 
-be_visitor_operation_exceptlist_ss::~be_visitor_operation_exceptlist_ss ()
-{
-}
+be_visitor_operation_exceptlist_ss::~be_visitor_operation_exceptlist_ss () = default;
 
 int
 be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
@@ -38,7 +36,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
     {
       *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
 
-      *os << "static ::CORBA::TypeCode_ptr const exceptions[] = " << be_idt_nl;
+      *os << "static ::CORBA::TypeCode_ptr const exceptions[] =" << be_idt_nl;
       *os << "{" << be_idt_nl;
 
       // Initialize an iterator to iterate thru the exception list.

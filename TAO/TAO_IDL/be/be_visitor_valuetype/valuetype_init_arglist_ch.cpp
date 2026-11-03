@@ -19,10 +19,7 @@ be_visitor_valuetype_init_arglist_ch::be_visitor_valuetype_init_arglist_ch (
 {
 }
 
-be_visitor_valuetype_init_arglist_ch::~be_visitor_valuetype_init_arglist_ch (
-  )
-{
-}
+be_visitor_valuetype_init_arglist_ch::~be_visitor_valuetype_init_arglist_ch () = default;
 
 int
 be_visitor_valuetype_init_arglist_ch::visit_factory (be_factory *node)

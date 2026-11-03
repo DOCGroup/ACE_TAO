@@ -15,9 +15,7 @@ be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_cs::~be_visitor_interface_cs ()
-{
-}
+be_visitor_interface_cs::~be_visitor_interface_cs () = default;
 
 int
 be_visitor_interface_cs::visit_interface (be_interface *node)
@@ -110,7 +108,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // If we are generating CORBA Policy we need to add some more methods
-  if (ACE_OS::strcmp (node->full_name (), "CORBA::Policy") == 0)
+  if (node->full_name () == "CORBA::Policy")
     {
       *os << be_nl
           << "CORBA::Boolean" << be_nl
@@ -342,18 +340,21 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
     }
 
-  bool const is_loc = node->is_local ();
+  if (!node->is_abstract ())
+    {
+      bool const is_loc = node->is_local ();
 
-  *os << be_nl_2
-      << "::CORBA::Boolean" << be_nl
-      << node->name () << "::marshal (TAO_OutputCDR &"
-      << (is_loc ? " /* " : "") << "cdr"
-      << (is_loc ? " */" : "") << ")" << be_nl
-      << "{" << be_idt_nl
-      << "return "
-      << (is_loc ? "false" : "(cdr << this)")
-      << ";" << be_uidt_nl
-      << "}";
+      *os << be_nl_2
+          << "::CORBA::Boolean" << be_nl
+          << node->name () << "::marshal (TAO_OutputCDR &"
+          << (is_loc ? " /* " : "") << "cdr"
+          << (is_loc ? " */" : "") << ")" << be_nl
+          << "{" << be_idt_nl
+          << "return "
+          << (is_loc ? "false" : "(cdr << this)")
+          << ";" << be_uidt_nl
+          << "}";
+    }
 
   if (! node->is_abstract ())
     {
@@ -396,7 +397,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 }
 
 bool
-be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
+be_visitor_interface_cs::gen_xxx_narrow (std::string const& pre,
                                          be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -432,7 +433,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
   else if (be_global->gen_smart_proxies () &&
            !node->is_abstract ())
     {
-      *os << node->full_name () << " *proxy = 0;"
+      *os << node->full_name () << " *proxy = nullptr;"
       << be_nl_2
           << "proxy = TAO::Narrow_Utils<"
           << node->local_name () << ">::" << pre << " (";
@@ -440,7 +441,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
       *os << be_idt << be_idt_nl;
 
       *os << "_tao_objref";
-      if (ACE_OS::strcmp (pre, "narrow") == 0)
+      if (pre == "narrow")
         {
           *os << "," << be_nl
               << "\"" << node->repoID () << "\"";
@@ -471,7 +472,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
 
       *os << "_tao_objref";
 
-      if (ACE_OS::strcmp (pre, "narrow") == 0)
+      if (pre == "narrow")
         {
           *os << ", "
               << "\"" << node->repoID () << "\"";
@@ -501,8 +502,8 @@ be_visitor_interface_cs::visit_connector (be_connector *node)
 int
 be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
 {
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
+  this->ctx_->port_prefix (node->local_name ()->get_string ());
+  this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
@@ -523,15 +524,15 @@ be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 
 int
 be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
 {
-  this->ctx_->port_prefix () = node->local_name ()->get_string ();
-  this->ctx_->port_prefix () += '_';
+  this->ctx_->port_prefix (node->local_name ()->get_string ());
+  this->ctx_->append_port_prefix ("_");
 
   /// If the port visit traverses any attributes defined in the
   /// original porttype, this is a way for visitors down the
@@ -552,7 +553,7 @@ be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 

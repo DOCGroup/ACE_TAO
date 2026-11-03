@@ -20,9 +20,6 @@ be_visitor_sequence_cs::be_visitor_sequence_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_cs::~be_visitor_sequence_cs ()
-{
-}
 
 int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 {
@@ -109,10 +106,9 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       *os << be_nl_2
-          << node->name () << "::" << node->local_name () << " ("
-          << be_idt << be_idt_nl
-          << "::CORBA::ULong max)" << be_uidt_nl
-          << ": " << be_idt;
+          << node->name () << "::" << node->local_name ()
+          << " (::CORBA::ULong max)" << be_nl
+          << "  : " << be_idt;
 
       int status =
         node->gen_base_class_name (os,
@@ -131,8 +127,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
 
-      *os << " (max)" << be_uidt << be_uidt_nl
-          << "{}";
+      *os << " (max) {}" << be_uidt;
     }
 
   /// If we are using std::vector, we can't implement this
@@ -142,7 +137,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       // Constructor with the buffer
       *os << be_nl_2
           << node->name () << "::" << node->local_name () << " ("
-          << be_idt << be_idt_nl;
+          << be_idt;
 
       if (node->unbounded ())
         {
@@ -166,8 +161,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
       *os << " * buffer," << be_nl
-          << "::CORBA::Boolean release)" << be_uidt
-          << be_uidt_nl
+          << "::CORBA::Boolean release)" << be_uidt_nl
           << "  : " << be_idt << be_idt;
 
       // Pass it to the base constructor.

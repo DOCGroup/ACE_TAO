@@ -28,51 +28,45 @@ class be_component : public virtual AST_Component,
 public:
   be_component (UTL_ScopedName *n,
                 AST_Component *base_component,
-                AST_Type **supports,
+                AST_Type_List const& supports,
                 long n_supports,
-                AST_Interface **supports_flat,
-                long n_supports_flat);
+                AST_Interface_List const& supports_flat,
+                std::size_t n_supports_flat);
 
-  ~be_component ();
+  ~be_component () override;
 
   /// Override of the AST method to eliminate narrowing of
   /// the return value. Non-virtual.
   be_component *base_component () const;
 
   /// Catch BE-specific members before delegating to the base class.
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   /// Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
-  // Need for public access to fe_add_structure and fe_add_typedef,
-  // used to add implied IDL nodes created for 'uses multiple' declarations.
-  AST_Structure *be_add_structure (AST_Structure *t);
-  AST_Typedef *be_add_typedef (AST_Typedef *t);
-
-  ACE_CDR::ULong n_provides () const;
-  ACE_CDR::ULong n_remote_provides () const;
-  ACE_CDR::ULong n_uses () const;
-  ACE_CDR::ULong n_remote_uses () const;
+  std::size_t n_provides () const;
+  std::size_t n_remote_provides () const;
+  std::size_t n_uses () const;
   bool has_uses_multiple () const;
-  ACE_CDR::ULong n_publishes () const;
-  ACE_CDR::ULong n_consumes () const;
-  ACE_CDR::ULong n_emits () const;
+  std::size_t n_publishes () const;
+  std::size_t n_consumes () const;
+  std::size_t n_emits () const;
 
   /// Update the has_* members.
   void scan (UTL_Scope *s);
 
   /// Generate the "public virtual" entries in the stub header.
-  virtual void gen_stub_inheritance (TAO_OutStream *os);
+  void gen_stub_inheritance (TAO_OutStream *os) override;
 
   /// Generate the "public virtual" entries in the skel header.
-  virtual void gen_skel_inheritance (TAO_OutStream *os);
+  void gen_skel_inheritance (TAO_OutStream *os) override;
 
   /// Generate the string compares for ancestors in _is_a().
-  virtual int gen_is_a_ancestors (TAO_OutStream *os);
+  int gen_is_a_ancestors (TAO_OutStream *os) override;
 
 private:
   /// Specialized version for mirror ports.
@@ -80,14 +74,13 @@ private:
 
 private:
   /// Used by visitors to reduce footprint.
-  ACE_CDR::ULong n_provides_;
-  ACE_CDR::ULong n_remote_provides_;
-  ACE_CDR::ULong n_uses_;
-  ACE_CDR::ULong n_remote_uses_;
-  bool has_uses_multiple_;
-  ACE_CDR::ULong n_publishes_;
-  ACE_CDR::ULong n_consumes_;
-  ACE_CDR::ULong n_emits_;
+  std::size_t n_provides_ {};
+  std::size_t n_remote_provides_ {};
+  std::size_t n_uses_ {};
+  bool has_uses_multiple_ {};
+  std::size_t n_publishes_ {};
+  std::size_t n_consumes_ {};
+  std::size_t n_emits_ {};
 };
 
 #endif  // if !defined

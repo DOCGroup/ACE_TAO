@@ -32,13 +32,13 @@ public:
 
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+                                     bool use_underscore) override;
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif

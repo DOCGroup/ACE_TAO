@@ -7,9 +7,7 @@ be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
 }
 
 be_visitor_operation_direct_proxy_impl_ss::
-~be_visitor_operation_direct_proxy_impl_ss ()
-{
-}
+~be_visitor_operation_direct_proxy_impl_ss () = default;
 
 int
 be_visitor_operation_direct_proxy_impl_ss::visit_operation (
@@ -72,7 +70,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
         }
     }
 
-  *os << this->ctx_->port_prefix ().c_str ()
+  *os << this->ctx_->port_prefix ()
       << node->local_name () << " (" << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase  *servant," << be_nl
       << "TAO::Argument **";
@@ -87,7 +85,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
   *os << be_uidt_nl
       << "{" << be_idt_nl;
 
-  *os << intf->full_skel_name () << "_ptr _tao_ptr = " << be_idt_nl
+  *os << intf->full_skel_name () << "_ptr _tao_ptr =" << be_idt_nl
       << "dynamic_cast<" << intf->full_skel_name () << "_ptr> ("
       << "servant);" << be_uidt_nl;
 

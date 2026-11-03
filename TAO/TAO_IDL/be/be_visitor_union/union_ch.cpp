@@ -16,9 +16,6 @@ be_visitor_union_ch::be_visitor_union_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union_ch::~be_visitor_union_ch ()
-{
-}
 
 int be_visitor_union_ch::visit_union (be_union *node)
 {
@@ -29,7 +26,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   // Evaluate the member in time for the decision to generate
   // the recursive typecode include in the stub source file.
-  ACE_Unbounded_Queue<AST_Type *> list;
+  std::vector<AST_Type *> list;
   (void) node->in_recursion (list);
 
   // Instantiate a visitor context with a copy of our context. This info
@@ -50,15 +47,15 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
     // Generate default and copy constructors.
       << node->local_name () << " ();" << be_nl
-      << node->local_name () << " (const " << node->local_name ()
-      << " &);" << be_nl
+      << node->local_name () << " (" << node->local_name ()
+      << " const &);" << be_nl
     // Generate destructor.
       << "~" << node->local_name () << " ();";
 
     // Generate assignment operator.
   *os << be_nl_2
-      << node->local_name () << " &operator= (const "
-      << node->local_name () << " &);";
+      << node->local_name () << " &operator= ("
+      << node->local_name () << " const &);";
 
   // Retrieve the disriminant type.
   be_type *bt = dynamic_cast<be_type*> (node->disc_type ());

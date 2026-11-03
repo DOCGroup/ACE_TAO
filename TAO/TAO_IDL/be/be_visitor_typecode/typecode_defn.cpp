@@ -12,51 +12,14 @@
 #include "typecode.h"
 #include "be_interface_fwd.h"
 
-// This is an implementation of C++ "scoped lock" idiom in order to
-// avoid repetitive code.
-class Scoped_Compute_Queue_Guard
-{
-public:
-  Scoped_Compute_Queue_Guard (be_visitor_typecode_defn* );
-  ~Scoped_Compute_Queue_Guard ();
-
-private:
-  be_visitor_typecode_defn* customer_;
-};
-
-Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
-    be_visitor_typecode_defn* customer
-  )
-  :customer_ (customer)
-{
-  if (customer_ != nullptr)
-    {
-      // Reset the compute queue to set the stage for computing our
-      // encapsulation length.
-      customer_->queue_reset (customer_->compute_queue_);
-    }
-}
-
-Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard ()
-{
-  if (customer_ != nullptr)
-    {
-      // Reset the compute queue since we must not affect computation of other
-      // nodes.
-      customer_->queue_reset (customer_->compute_queue_);
-    }
-}
+#include <utility>
 
 // ******************************************************
 // TypeCode Definitions
 // ******************************************************
 
 be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
-    : be_visitor_scope (ctx),
-      recursion_detect_ (false),
-      computed_encap_len_ (0),
-      computed_scope_encap_len_ (0),
-      index_ (0)
+    : be_visitor_scope (ctx)
 {
   if (be_global->gen_anyop_files ())
     {
@@ -64,17 +27,9 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
       this->ctx_->stream (tao_cg->anyop_source ());
     }
 
-  for (unsigned long i = 0UL; i < TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE; ++i)
-    {
-      scope_stack_[i] = 0;
-    }
 }
 
-be_visitor_typecode_defn::~be_visitor_typecode_defn ()
-{
-  this->queue_reset (this->tc_queue_);
-  this->queue_reset (this->compute_queue_);
-}
+be_visitor_typecode_defn::~be_visitor_typecode_defn () = default;
 
 int
 be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
@@ -338,18 +293,17 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   // Namespace begin.
   this->gen_begin_NS_for_anon ();
 
-  ACE_CDR::ULong const ndims = node->n_dims ();
+  std::size_t const ndims = node->n_dims ();
 
-  for (ACE_CDR::ULong i = 0; i < ndims; ++i)
+  for (std::size_t i = 0; i < ndims; ++i)
     {
-      os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *," << be_nl
-         << "                        TAO::Null_RefCount_Policy>"
-         << be_idt_nl
-         << node->flat_name ();
+      os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *, "
+            "TAO::Null_RefCount_Policy>"
+         << " " << node->flat_name ();
 
-      ACE_CDR::ULong const inner_ndims = ndims - i - 1;
+      std::size_t const inner_ndims = ndims - i - 1;
 
-      for (ACE_CDR::ULong j = inner_ndims; j < ndims; ++j)
+      for (std::size_t j = inner_ndims; j < ndims; ++j)
         {
           os << "_" << node->dims ()[j]->ev ()->u.ulval;
         }
@@ -382,7 +336,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
         }
 
       os << "," << be_nl
-         << node->dims ()[inner_ndims] << ");" << be_uidt_nl
+         << node->dims ()[inner_ndims].get () << ");" << be_uidt_nl
          << be_uidt_nl;
 
       os << "::CORBA::TypeCode_ptr const tc_"
@@ -500,14 +454,10 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 
   this->gen_begin_NS_for_anon ();
 
-  os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *," << be_nl
-     << "                        TAO::Null_RefCount_Policy>"
-     << be_idt_nl
-     << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
-
-     << " (" << be_idt_nl
-     << "::CORBA::tk_sequence," << be_nl
-     << "&";
+  os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *, "
+        "TAO::Null_RefCount_Policy>"
+     << " " << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
+     << " (" << be_idt_nl << "::CORBA::tk_sequence, &";
 
   if (this->gen_base_typecode_name (base) != 0)
     {
@@ -519,8 +469,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
                         -1);
     }
 
-  os << "," << be_nl
-     << node->max_size () << ");" << be_uidt_nl
+  os << ", " << node->max_size () << ");" << be_uidt_nl
      << be_uidt_nl;
 
   os << "::CORBA::TypeCode_ptr const tc_"
@@ -601,8 +550,8 @@ int
 be_visitor_typecode_defn::visit_fixed (be_fixed * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
-  const ACE_CDR::ULong digits = node->digits ()->ev ()->u.ulval;
-  const ACE_CDR::ULong scale = node->scale ()->ev ()->u.ulval;
+  ACE_CDR::ULong const digits = node->digits ()->ev ()->u.ulval;
+  ACE_CDR::ULong const scale = node->scale ()->ev ()->u.ulval;
 
   os << "#ifndef _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
      << "#define _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD" << be_nl
@@ -695,101 +644,38 @@ be_visitor_typecode_defn::visit_eventtype (be_eventtype * node)
   return this->visit_valuetype (node);
 }
 
-// post processing
-int
-be_visitor_typecode_defn::post_process (be_decl *)
-{
-  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_TC_DEFN_SCOPE_LEN)
-    {
-      this->computed_scope_encap_len_ += this->computed_encap_len_;
-    }
-
-  return 0;
-}
-
-// scope stack routines
-int
-be_visitor_typecode_defn::push (ACE_CDR::Long val)
-{
-  if (this->index_ >= TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE)
-    {
-      return -1;
-    }
-
-  this->scope_stack_ [this->index_++] = val;  // Must post-increment
-                                              // to avoid buffer
-                                              // overrun.
-  return 0;
-}
-
-int
-be_visitor_typecode_defn::pop (ACE_CDR::Long &val)
-{
-  val = this->scope_stack_[this->index_--];  // Must post-increment!
-  return 0;
-}
-
-const be_visitor_typecode_defn::QNode *
+be_visitor_typecode_defn::QNode const *
 be_visitor_typecode_defn::queue_insert (
-    ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
+    std::vector<std::unique_ptr<be_visitor_typecode_defn::QNode>> &queue,
     be_type *node,
     ACE_CDR::Long offset
   )
 {
-  be_visitor_typecode_defn::QNode *qnode = nullptr;
-
-  ACE_NEW_RETURN (qnode, be_visitor_typecode_defn::QNode, nullptr);
+  std::unique_ptr<be_visitor_typecode_defn::QNode> qnode =
+    std::make_unique<be_visitor_typecode_defn::QNode> ();
 
   qnode->node = node;
   qnode->offset = offset;
 
-  if (queue.enqueue_tail (qnode) == -1)
-    {
-      delete qnode;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
-                         ACE_TEXT ("::queue_insert - failed\n")),
-                        0);
-    }
-
-  return qnode;
+  be_visitor_typecode_defn::QNode const *result = qnode.get ();
+  queue.push_back (std::move (qnode));
+  return result;
 }
 
-const be_visitor_typecode_defn::QNode *
+be_visitor_typecode_defn::QNode const *
 be_visitor_typecode_defn::queue_lookup (
-    ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> &queue,
+    std::vector<std::unique_ptr<be_visitor_typecode_defn::QNode>> &queue,
     be_type *node
   )
 {
-  for (ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode *>
-         iter (queue);
-       !iter.done ();
-       iter.advance ())
+  for (std::unique_ptr<be_visitor_typecode_defn::QNode> const& item : queue)
     {
-      be_visitor_typecode_defn::QNode **addr = nullptr;
-      be_visitor_typecode_defn::QNode *item = nullptr;
-      iter.next (addr);
-      item = *addr;
-
-      if (!ACE_OS::strcmp (item->node->full_name (),
-                           node->full_name ()))
+      if (item->node->full_name () == node->full_name ())
         {
           // Found.
-          return item;
+          return item.get ();
         }
     }
 
   return nullptr;
-}
-
-void
-be_visitor_typecode_defn::
-queue_reset (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> & queue)
-{
-  while (!queue.is_empty ())
-    {
-      be_visitor_typecode_defn::QNode * qnode = nullptr;
-      (void) queue.dequeue_head (qnode);
-      delete qnode;
-    }
 }

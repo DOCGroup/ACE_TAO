@@ -31,6 +31,8 @@
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
 #include "tao/CORBA_String.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class IFR_Servant_Factory;
@@ -78,15 +80,20 @@ public:
 
   ~TAO_Repository_i () override;
 
+  TAO_Repository_i (TAO_Repository_i const&) = delete;
+  TAO_Repository_i& operator= (TAO_Repository_i const&) = delete;
+  TAO_Repository_i (TAO_Repository_i&&) = delete;
+  TAO_Repository_i& operator= (TAO_Repository_i&&) = delete;
+
   /// Accessor for the readonly attribute.
   CORBA::DefinitionKind def_kind () override;
 
   /// May not be called on a repository - raises BAD_INV_ORDER.
   void destroy () override;
 
-  virtual CORBA::Contained_ptr lookup_id (const char *search_id);
+  virtual CORBA::Contained_ptr lookup_id (char const *search_id);
 
-  CORBA::Contained_ptr lookup_id_i (const char *search_id);
+  CORBA::Contained_ptr lookup_id_i (char const *search_id);
 
   virtual CORBA::TypeCode_ptr get_canonical_typecode (CORBA::TypeCode_ptr tc);
 
@@ -189,7 +196,7 @@ public:
   ACE_Configuration_Section_Key sequences_key () const;
 
   /// Accessor for the name extension string.
-  const char *extension () const;
+  char const *extension () const;
 
   /// Repo lock.
   ACE_Lock &lock () const;
@@ -252,7 +259,7 @@ protected:
   CORBA::String_var extension_;
 
   /// Lock.
-  ACE_Lock *lock_ {};
+  std::unique_ptr<ACE_Lock> lock_;
 
   // Define a POA for each IR Object type, and a corresponding
   // default servant.
@@ -299,10 +306,10 @@ protected:
 private:
   /// Set of strings corresponding to the CORBA::PrimitiveKind
   /// enum values.
-  static const char * TAO_IFR_primitive_kinds[];
+  static char const *TAO_IFR_primitive_kinds[];
 
   /// Convert the enum value to the equivalent string.
-  const char *pkind_to_string (CORBA::PrimitiveKind pkind) const;
+  char const *pkind_to_string (CORBA::PrimitiveKind pkind) const;
 
   /// Return the number of entries in the CORBA::PrimitiveKind enum.
   u_int num_pkinds () const;

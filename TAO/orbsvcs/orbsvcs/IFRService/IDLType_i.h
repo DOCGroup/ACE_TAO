@@ -43,7 +43,7 @@ class TAO_IFRService_Export TAO_IDLType_i : public virtual TAO_IRObject_i
 {
 public:
   /// Constructor.
-  TAO_IDLType_i (TAO_Repository_i *repo);
+  explicit TAO_IDLType_i (TAO_Repository_i *repo);
 
   /// Destructor.
   ~TAO_IDLType_i () override;

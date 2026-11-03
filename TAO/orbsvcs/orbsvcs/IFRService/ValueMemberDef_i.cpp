@@ -14,9 +14,7 @@ TAO_ValueMemberDef_i::TAO_ValueMemberDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ValueMemberDef_i::~TAO_ValueMemberDef_i ()
-{
-}
+TAO_ValueMemberDef_i::~TAO_ValueMemberDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ValueMemberDef_i::def_kind ()
@@ -27,7 +25,7 @@ TAO_ValueMemberDef_i::def_kind ()
 CORBA::Contained::Description *
 TAO_ValueMemberDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -133,7 +131,7 @@ TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def)
 void
 TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 {
-  const char *path = TAO_IFR_Service_Utils::reference_to_path (type_def);
+  char const *path = TAO_IFR_Service_Utils::reference_to_path (type_def);
   this->repo_->config ()->set_string_value (this->section_key_,
                                             "type_path",
                                             path);

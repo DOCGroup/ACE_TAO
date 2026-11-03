@@ -94,9 +94,7 @@ AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
 {
 }
 
-AST_UnionBranch::~AST_UnionBranch ()
-{
-}
+AST_UnionBranch::~AST_UnionBranch () = default;
 
 // Redefinition of inherited virtual operations.
 
@@ -104,8 +102,8 @@ AST_UnionBranch::~AST_UnionBranch ()
 void
 AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
 {
-  unsigned long l = this->label_list_length ();
-  for (unsigned long i = 0; i < l; ++i)
+  std::size_t const l = this->label_list_length ();
+  for (std::size_t i = 0; i < l; ++i)
     {
       this->dump_i (o, "case ");
 
@@ -132,25 +130,33 @@ AST_UnionBranch::ast_accept (ast_visitor *visitor)
 void
 AST_UnionBranch::destroy ()
 {
-  this->pd_ll->destroy ();
-  delete this->pd_ll;
-  this->pd_ll = nullptr;
+  if (this->pd_ll != nullptr)
+    {
+      this->pd_ll->destroy ();
+      this->pd_ll.reset ();
+    }
 
   this->AST_Field::destroy ();
 }
 
 UTL_LabelList *
+AST_UnionBranch::labels ()
+{
+  return this->pd_ll.get ();
+}
+
+UTL_LabelList const *
 AST_UnionBranch::labels () const
 {
-  return this->pd_ll;
+  return this->pd_ll.get ();
 }
 
 AST_UnionLabel *
-AST_UnionBranch::label (unsigned long index)
+AST_UnionBranch::label (std::size_t index)
 {
-  unsigned long i = 0;
+  std::size_t i = 0;
 
-  for (UTL_LabellistActiveIterator iter (this->pd_ll);
+  for (UTL_LabellistActiveIterator iter (this->pd_ll.get ());
        !iter.is_done ();
        iter.next ())
     {
@@ -165,8 +171,26 @@ AST_UnionBranch::label (unsigned long index)
   return nullptr;
 }
 
-unsigned long
-AST_UnionBranch::label_list_length ()
+AST_UnionLabel const *
+AST_UnionBranch::label (std::size_t index) const
+{
+  UTL_LabelList const *labels = this->pd_ll.get ();
+
+  for (std::size_t i = 0; labels != nullptr; ++i)
+    {
+      if (i == index)
+        {
+          return labels->head ();
+        }
+
+      labels = static_cast<UTL_LabelList const *> (labels->tail ());
+    }
+
+  return nullptr;
+}
+
+std::size_t
+AST_UnionBranch::label_list_length () const
 {
   if (this->pd_ll)
     {
@@ -182,7 +206,7 @@ void
 AST_UnionBranch::add_labels (AST_Union *u)
 {
   const bool enum_labels = (u->udisc_type () == AST_Expression::EV_enum);
-  for (UTL_LabellistActiveIterator i (this->pd_ll);
+  for (UTL_LabellistActiveIterator i (this->pd_ll.get ());
        !i.is_done ();
        i.next ())
     {
@@ -228,7 +252,7 @@ AST_UnionBranch::add_labels (AST_Union *u)
 void
 AST_UnionBranch::coerce_labels (AST_Union *u)
 {
-  for (unsigned long i = 0; i < this->label_list_length (); ++i)
+  for (std::size_t i = 0; i < this->label_list_length (); ++i)
     {
       AST_UnionLabel *ul = this->label (i);
 

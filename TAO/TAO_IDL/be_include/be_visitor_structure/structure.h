@@ -25,10 +25,15 @@ class be_visitor_structure : public be_visitor_scope
 {
 public:
   /// constructur
-  be_visitor_structure (be_visitor_context *ctx);
+  explicit be_visitor_structure (be_visitor_context *ctx);
 
   /// destructur
   ~be_visitor_structure () override = default;
+
+  be_visitor_structure (const be_visitor_structure &) = delete;
+  be_visitor_structure (be_visitor_structure &&) = delete;
+  be_visitor_structure &operator= (const be_visitor_structure &) = delete;
+  be_visitor_structure &operator= (be_visitor_structure &&) = delete;
 
   /// visit structure. We provide code for this method in the derived class
   int visit_structure (be_structure *node) override;

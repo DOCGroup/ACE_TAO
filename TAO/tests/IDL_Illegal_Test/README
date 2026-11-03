@@ -1,0 +1,4 @@
+This test contains IDL files that are expected to be rejected by tao_idl.
+The run_test.pl script checks that each file fails compilation and that
+keyword_case_diff.idl is accepted with -Cw while producing the expected
+warning.

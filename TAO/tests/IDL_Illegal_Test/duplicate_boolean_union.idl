@@ -1,0 +1,11 @@
+union DuplicateBooleanLabel switch (boolean) {
+  case TRUE: long first;
+  case TRUE: long second;
+};
+
+const long DuplicateValue = 1;
+
+union DuplicateNumericLabel switch (long) {
+  case 1: long first;
+  case DuplicateValue: long second;
+};
