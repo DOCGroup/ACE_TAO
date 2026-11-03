@@ -6,7 +6,7 @@
 ACE_INLINE
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr& address)
   :  ACE_Addr (),
-     url_ (address.url_ == 0 ? 0 : ACE_OS::strdup (address.url_))
+     url_ (address.url_ == nullptr ? nullptr : ACE_OS::strdup (address.url_))
 {
 }
 

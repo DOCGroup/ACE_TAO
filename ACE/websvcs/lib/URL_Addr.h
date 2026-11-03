@@ -76,10 +76,10 @@ public:
   static ACE_URL_Addr* create_address (const ACE_TCHAR *url);
 
   /// Returns 1 if the URL scheme is recognized, 0 otherwise.
-  static int known_scheme (const ACE_TCHAR *url);
+  static bool known_scheme (const ACE_TCHAR *url);
 
   /// Hash function
-  u_long hash () const;
+  u_long hash () const override;
 
 protected:
   /// Allows the derived classes to store the compact representation of
@@ -164,13 +164,13 @@ public:
   /// Construct an HTTP URL from the host, path, query and port.
   ACE_HTTP_Addr (const ACE_TCHAR *host_name,
                  const ACE_TCHAR *path,
-                 const ACE_TCHAR *query = 0,
+                 const ACE_TCHAR *query = nullptr,
                  u_short port = ACE_DEFAULT_HTTP_PORT);
 
   /// Essentially the constructor above.
   int set (const ACE_TCHAR *host_name,
            const ACE_TCHAR *path,
-           const ACE_TCHAR *query = 0,
+           const ACE_TCHAR *query = nullptr,
            u_short port = ACE_DEFAULT_HTTP_PORT);
 
   /// Copy constructor.
@@ -219,11 +219,11 @@ public:
   ACE_URL_Addr* create_relative_address (const ACE_TCHAR *url) const;
 
   // = The ACE_URL methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address);
+  virtual int string_to_addr (const ACE_TCHAR *address) override;
   virtual int addr_to_string (ACE_TCHAR *s,
                               size_t size,
-                              int flags = 0) const;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor);
+                              int flags = 0) const override;
+  virtual int accept (ACE_URL_Addr_Visitor* visitor) override;
 
 private:
   /// Compute the size required to store the URL in a string
@@ -268,14 +268,14 @@ public:
   /// and the password.
   ACE_FTP_Addr (const ACE_TCHAR *host_name,
                 const ACE_TCHAR *path,
-                const ACE_TCHAR *user = 0,
-                const ACE_TCHAR *password = 0);
+                const ACE_TCHAR *user = nullptr,
+                const ACE_TCHAR *password = nullptr);
 
   /// Essentially the constructor above.
   int set (const ACE_TCHAR *host_name,
            const ACE_TCHAR *path,
-           const ACE_TCHAR *user = 0,
-           const ACE_TCHAR *password = 0);
+           const ACE_TCHAR *user = nullptr,
+           const ACE_TCHAR *password = nullptr);
 
   /// Copy constructor.
   ACE_FTP_Addr (const ACE_FTP_Addr &addr);
@@ -306,11 +306,11 @@ public:
   ACE_INET_Addr get_inet_address () const;
 
   // = The ACE_Addr methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address);
+  virtual int string_to_addr (const ACE_TCHAR *address) override;
   virtual int addr_to_string (ACE_TCHAR *s,
                               size_t size,
-                              int flags = 0) const;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor);
+                              int flags = 0) const override;
+  virtual int accept (ACE_URL_Addr_Visitor* visitor) override;
 
 private:
   /// Compute the size required to store the URL in a string
@@ -350,12 +350,12 @@ public:
   /// Construct an FTP URL from the host, path and headers.
   ACE_Mailto_Addr (const ACE_TCHAR *user,
                    const ACE_TCHAR *hostname,
-                   const ACE_TCHAR *headers = 0);
+                   const ACE_TCHAR *headers = nullptr);
 
   /// Essentially the constructor above.
   int set (const ACE_TCHAR *user,
            const ACE_TCHAR *hostname,
-           const ACE_TCHAR *headers = 0);
+           const ACE_TCHAR *headers = nullptr);
 
   /// Copy constructor.
   ACE_Mailto_Addr (const ACE_Mailto_Addr &addr);
@@ -383,11 +383,11 @@ public:
   // headers would be nice also.
 
   // = The ACE_URL methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address);
+  virtual int string_to_addr (const ACE_TCHAR *address) override;
   virtual int addr_to_string (ACE_TCHAR *s,
                               size_t size,
-                              int flags = 0) const;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor);
+                              int flags = 0) const override;
+  virtual int accept (ACE_URL_Addr_Visitor* visitor) override;
 
 private:
   /// Compute the size required to store the URL in a string
