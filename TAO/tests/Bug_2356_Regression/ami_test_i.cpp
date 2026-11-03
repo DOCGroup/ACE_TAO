@@ -8,13 +8,11 @@
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
-
-
 #include "ami_test_i.h"
 #include "tao/debug.h"
 
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
