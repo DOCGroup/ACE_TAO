@@ -12,12 +12,12 @@
 
 
 #include <algorithm>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 
-#include "ace/OS_NS_string.h"
 #include "server.h"
 #include "icp.h"
 
@@ -65,7 +65,7 @@ make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
   // the repository ID.
   char buf[32] {};
   assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
-  char const *rep_id = ACE_OS::strcmp (buf, "Sens-A-Temp") == 0
+  char const *rep_id = std::strcmp (buf, "Sens-A-Temp") == 0
     ? "IDL:acme.com/CCS/Thermometer:1.0"
     : "IDL:acme.com/CCS/Thermostat:1.0";
 
@@ -540,7 +540,7 @@ preinvoke (PortableServer::ObjectId const& oid,
       throw CORBA::OBJECT_NOT_EXIST ();
     }
 
-  if  (ACE_OS::strcmp (oid_string.in (), Controller_oid) == 0)
+  if  (std::strcmp (oid_string.in (), Controller_oid) == 0)
     return m_ctrl;
 
   std::istringstream istr (oid_string.in ());
@@ -571,7 +571,7 @@ preinvoke (PortableServer::ObjectId const& oid,
       // Instantiate correct type of servant.
       char buf[32] {};
       assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
-      if  (ACE_OS::strcmp (buf, "Sens-A-Temp") == 0)
+      if  (std::strcmp (buf, "Sens-A-Temp") == 0)
         servant = new Thermometer_impl (anum);
       else
         servant = new Thermostat_impl (anum);
@@ -584,14 +584,14 @@ preinvoke (PortableServer::ObjectId const& oid,
 
       // If operation is "remove", also remove entry from
       // active object map -- the object is about to be deleted.
-      if (ACE_OS::strcmp (operation, "remove") == 0)
+      if (std::strcmp (operation, "remove") == 0)
         m_aom.erase (servant_pos);
     }
 
   // We found a servant, or just instantiated it.  If the operation is
   // not a remove, move the servant to the tail of the evictor queue
   // and update its queue position in the map.
-  if  (ACE_OS::strcmp (operation, "remove") != 0)
+  if  (std::strcmp (operation, "remove") != 0)
     {
       m_eq.push_front (servant);
       m_aom[anum] = m_eq.begin ();
