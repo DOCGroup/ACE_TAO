@@ -7,13 +7,16 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+namespace
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -36,27 +39,27 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (ior);
 
-      Baz::C_var cobject =
+      Baz::C_var const cobject =
         Baz::C::_narrow (object.in ());
 
       if (CORBA::is_nil (cobject.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                                "Cannot narrow Baz::C object <%s>\n",
-                                ior),
+                             "Cannot narrow Baz::C object <%s>\n",
+                             ior),
                             1);
         }
 
@@ -66,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       cobject->op4 ();
       cobject->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("");
       return 1;
