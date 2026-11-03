@@ -29,7 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_Binary_Search_OpTable::find (char const *opname,
                                  TAO_Skeleton &skelfunc,
-                                 unsigned int const /* length */)
+                                 std::size_t const /* length */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 
@@ -49,7 +49,7 @@ int
 TAO_Binary_Search_OpTable::find (char const *opname,
                                  TAO_Collocated_Skeleton &skelfunc,
                                  TAO::Collocation_Strategy st,
-                                 unsigned int const /* length */)
+                                 std::size_t const /* length */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
 

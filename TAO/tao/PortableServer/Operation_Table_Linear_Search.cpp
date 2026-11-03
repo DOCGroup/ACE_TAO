@@ -37,7 +37,7 @@ TAO_Linear_Search_OpTable::bind (char const *,
 int
 TAO_Linear_Search_OpTable::find (char const *opname,
                                  TAO_Skeleton& skelfunc,
-                                 unsigned int const)
+                                 std::size_t const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 
@@ -58,7 +58,7 @@ int
 TAO_Linear_Search_OpTable::find (char const *opname,
                                  TAO_Collocated_Skeleton &skelfunc,
                                  TAO::Collocation_Strategy st,
-                                 unsigned int const)
+                                 std::size_t const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 

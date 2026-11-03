@@ -21,6 +21,7 @@
 
 #include "tao/Object.h"
 #include "tao/Collocation_Strategy.h"
+#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -106,7 +107,7 @@ public:
    */
   virtual int find (char const *opname,
                     TAO_Skeleton &skelfunc,
-                    unsigned int const length = 0) = 0;
+                    std::size_t const length = 0) = 0;
 
   /**
    * Uses @a opname to look up the collocated skeleton function and
@@ -116,7 +117,7 @@ public:
   virtual int find (char const *opname,
                     TAO_Collocated_Skeleton &skelfunc,
                     TAO::Collocation_Strategy s,
-                    unsigned int const length = 0) = 0;
+                    std::size_t const length = 0) = 0;
 
   /// Associate the skeleton @a skel_ptr with an operation named
   /// @a opname.  Returns -1 on failure, 0 on success, 1 on duplicate.

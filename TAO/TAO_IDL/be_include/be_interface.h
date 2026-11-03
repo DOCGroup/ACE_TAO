@@ -438,7 +438,7 @@ class be_code_emitter_wrapper
 public:
   explicit be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
 
-  virtual int emit (be_interface *derived_interface,
+  int emit (be_interface *derived_interface,
                     TAO_OutStream *output_stream,
                     be_interface *base_interface) override;
 

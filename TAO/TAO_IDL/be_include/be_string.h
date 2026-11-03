@@ -32,7 +32,7 @@ public:
              std::size_t width);
 
   // Overridden from class be_type.
-  virtual void gen_member_ostream_operator (TAO_OutStream *os,
+  void gen_member_ostream_operator (TAO_OutStream *os,
                                             std::string const& instance_name,
                                             bool use_underscore,
                                             bool accessor = false) override;
