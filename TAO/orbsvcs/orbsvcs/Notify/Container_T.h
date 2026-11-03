@@ -18,6 +18,8 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -62,7 +64,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Container_T
 
 protected:
   /// The collection data structure that we add objects to.
-  COLLECTION* collection_ {};
+  std::unique_ptr<COLLECTION> collection_;
 
 private:
   class Destroyer: public TAO_ESF_Worker<TYPE>

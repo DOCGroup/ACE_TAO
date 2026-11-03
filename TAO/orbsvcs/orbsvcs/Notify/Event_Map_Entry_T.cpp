@@ -20,17 +20,16 @@ TAO_Notify_Event_Map_Entry_T<PROXY>::TAO_Notify_Event_Map_Entry_T ()
 }
 
 template <class PROXY>
-TAO_Notify_Event_Map_Entry_T<PROXY>::~TAO_Notify_Event_Map_Entry_T ()
-{
-  delete collection_;
-}
+TAO_Notify_Event_Map_Entry_T<PROXY>::~TAO_Notify_Event_Map_Entry_T () = default;
 
 template <class PROXY> void
 TAO_Notify_Event_Map_Entry_T<PROXY>::init ()
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  factory->create (collection_);
+  COLLECTION *collection = nullptr;
+  factory->create (collection);
+  this->collection_.reset (collection);
 }
 
 template <class PROXY> void

@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class PROXY> ACE_INLINE typename
 TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
 TAO_Notify_Event_Map_Entry_T<PROXY>::collection () {
-  return collection_;
+  return collection_.get ();
 }
 
 template <class PROXY> ACE_INLINE int

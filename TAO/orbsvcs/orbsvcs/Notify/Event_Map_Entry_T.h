@@ -21,6 +21,8 @@
 #include "tao/ORB_Constants.h"
 #include "tao/orbconf.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY, class ACE_LOCK> class TAO_Notify_Event_Map_T;
@@ -72,7 +74,7 @@ public:
 
 protected:
   /// The Collection
-  COLLECTION* collection_ {};
+  std::unique_ptr<COLLECTION> collection_;
 
   /// Count of PROXY's connected in the collection;
   int count_ {};

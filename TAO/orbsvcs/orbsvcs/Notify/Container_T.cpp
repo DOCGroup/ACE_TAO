@@ -26,10 +26,7 @@ template<class TYPE>
 TAO_Notify_Container_T<TYPE>::TAO_Notify_Container_T () = default;
 
 template<class TYPE>
-TAO_Notify_Container_T<TYPE>::~TAO_Notify_Container_T ()
-{
-  delete collection_;
-}
+TAO_Notify_Container_T<TYPE>::~TAO_Notify_Container_T () = default;
 
 template <class TYPE> void
 TAO_Notify_Container_T<TYPE>::shutdown ()
@@ -65,7 +62,9 @@ TAO_Notify_Container_T<TYPE>::init ()
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
   // Init variables
-  factory->create (this->collection_);
+  COLLECTION *collection = nullptr;
+  factory->create (collection);
+  this->collection_.reset (collection);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
