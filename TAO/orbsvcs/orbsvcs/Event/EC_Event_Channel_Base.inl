@@ -188,13 +188,13 @@ TAO_EC_Event_Channel_Base::disconnect_callbacks () const
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_EC_Event_Channel_Base::scheduler ()
+TAO_EC_Event_Channel_Base::scheduler () const
 {
   return CORBA::Object::_duplicate (this->scheduler_.in ());
 }
 
 ACE_INLINE bool
-TAO_EC_Event_Channel_Base::destroyed ()
+TAO_EC_Event_Channel_Base::destroyed () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, false);
   return this->status_ == Status::destroyed;

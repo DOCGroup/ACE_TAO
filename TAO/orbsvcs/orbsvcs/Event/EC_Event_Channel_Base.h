@@ -211,7 +211,7 @@ public:
   bool disconnect_callbacks () const;
 
   /// Obtain the scheduler, the user must release
-  CORBA::Object_ptr scheduler ();
+  CORBA::Object_ptr scheduler () const;
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
@@ -233,7 +233,7 @@ public:
       remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
   /// Return true if the event channel is already destroyed.
-  bool destroyed ();
+  bool destroyed () const;
 
 protected:
   /**
@@ -328,7 +328,7 @@ protected:
   TAO_EC_SupplierControl *supplier_control_;
 
   /// Mutex to protect the internal state
-  TAO_SYNCH_MUTEX mutex_;
+  mutable TAO_SYNCH_MUTEX mutex_;
 
   /// Track the lifecycle status of the event channel.
   enum class Status
