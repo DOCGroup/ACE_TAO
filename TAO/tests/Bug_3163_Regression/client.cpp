@@ -1,24 +1,21 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-int message_size = 0;
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior, int &message_size)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:v:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:v:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
         break;
-      case 'v' :
-       message_size = ACE_OS::atoi (get_opts.opt_arg ());
-       break;
+      case 'v':
+        message_size = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -28,23 +25,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+  int message_size {};
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, message_size) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var const tmp = orb->string_to_object (ior);
 
-      ctest_var hello = ctest::_narrow (tmp.in ());
+      ctest_var const hello = ctest::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -58,7 +56,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       hello->ctestfn (message_size, data.out ());
 
-      ACE_DEBUG ((LM_DEBUG, "Received %d bytes\n", data->length()));
+      CORBA::ULong const received = data->length ();
+      ACE_DEBUG ((LM_DEBUG, "Received %u bytes\n", received));
 
       hello->shutdown ();
 
