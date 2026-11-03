@@ -1,7 +1,8 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 bool server_shutdown {};
 
@@ -33,6 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -45,7 +47,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
       Test::Big_Reply_var reply_gen =

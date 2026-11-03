@@ -1,9 +1,7 @@
-
 #include "Client_Task.h"
 
-
 Client_Task::Client_Task (Test::Big_Reply_ptr reply_gen,
-                          int event_count,
+                          CORBA::Long event_count,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
   , reply_gen_ (Test::Big_Reply::_duplicate (reply_gen))
@@ -25,7 +23,7 @@ Client_Task::svc ()
   // Now get the big replies..
   try
     {
-      for (int i = 0; i != this->event_count_; ++i)
+      for (CORBA::Long i = 0; i != this->event_count_; ++i)
         {
           Test::Octet_Seq_var dummy =
           this->reply_gen_->get_big_reply ();

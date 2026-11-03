@@ -2,8 +2,8 @@
 
 Big_Reply_i::Big_Reply_i (CORBA::ORB_ptr orb,
                           CORBA::ULong len)
-  : orb_ (orb),
-    length_ (len)
+  : orb_ (orb)
+  , length_ (len)
 {
 }
 
