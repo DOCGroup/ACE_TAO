@@ -2,6 +2,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
+namespace
+{
 ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://test.ior");
 bool debug = false;
 
@@ -14,6 +16,7 @@ enum class Test_Selection
 };
 
 Test_Selection which_test = Test_Selection::All;
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -65,8 +68,10 @@ dump_node (BaseNode *bn, int indent)
   if (debug)
     {
       // This is ugly I know
-      int i = indent;
-      for (; i != 0; --i) ACE_DEBUG ((LM_DEBUG, "  "));
+      for (int i = indent; i != 0; --i)
+        {
+          ACE_DEBUG ((LM_DEBUG, "  "));
+        }
 
       if (sn != nullptr)
         {
@@ -216,7 +221,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           which_test == Test_Selection::All)
         {
           // Create and register factory for BaseNode.
-          BaseNode_init *bn_factory = nullptr;
+          BaseNode_init *bn_factory {};
           ACE_NEW_RETURN (bn_factory,
                           BaseNode_init,
                           1);
@@ -226,7 +231,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           bn_factory->_remove_ref (); // release ownership
 
           // Create and register factory for TreeController.
-          TreeController_init *tc_factory = nullptr;
+          TreeController_init *tc_factory {};
           ACE_NEW_RETURN (tc_factory,
                           TreeController_init,
                           1);
@@ -236,7 +241,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           tc_factory->_remove_ref (); // release ownership
 
           // Create and register factory for StringNode.
-          StringNode_init *sn_factory = nullptr;
+          StringNode_init *sn_factory {};
           ACE_NEW_RETURN (sn_factory,
                           StringNode_init,
                           1);

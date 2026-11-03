@@ -1,13 +1,13 @@
 // -*- C++ -*-
 #include "test_i.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 char *
 foo_i::foo_op (char const *inarg)
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
-  if (ACE_OS::strcmp (inarg, "foo_op") == 0)
+  if (std::strcmp (inarg, "foo_op") == 0)
     {
       retval = CORBA::string_dup ("good");
     }
@@ -24,7 +24,7 @@ foo_i::base_op (char const *inarg)
 {
   CORBA::String_var retval = CORBA::string_dup ("bad");
 
-  if (ACE_OS::strcmp (inarg, "base_op") == 0)
+  if (std::strcmp (inarg, "base_op") == 0)
     {
       retval = CORBA::string_dup ("good");
     }
@@ -51,7 +51,7 @@ passer_i::shutdown ()
 void
 passer_i::pass_ops (base_out outarg)
 {
-  foo_i *servant = nullptr;
+  foo_i *servant {};
   ACE_NEW (servant,
            foo_i);
 
