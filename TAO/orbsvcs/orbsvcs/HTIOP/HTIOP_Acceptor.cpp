@@ -50,12 +50,9 @@ TAO::HTIOP::Acceptor::~Acceptor ()
   delete this->concurrency_strategy_;
   delete this->accept_strategy_;
 
-  delete [] this->addrs_;
-
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
-    CORBA::string_free (this->hosts_[i]);
-
-  delete [] this->hosts_;
+  if (this->hosts_ != nullptr)
+    for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+      CORBA::string_free (this->hosts_[i]);
 }
 
 // TODO =
@@ -362,13 +359,17 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
-  ACE_NEW_RETURN (this->addrs_,
+  ACE::HTBP::Addr *addrs = nullptr;
+  ACE_NEW_RETURN (addrs,
                   ACE::HTBP::Addr[this->endpoint_count_],
                   -1);
+  this->addrs_.reset (addrs);
 
-  ACE_NEW_RETURN (this->hosts_,
+  char **hosts = nullptr;
+  ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
+  this->hosts_.reset (hosts);
 
   this->hosts_[0] = nullptr;
 
@@ -441,15 +442,19 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
        proxy_port != 0))
     {
       this->endpoint_count_ = 1;
-      ACE_NEW_RETURN (this->addrs_,
+      ACE::HTBP::Addr *addrs = nullptr;
+      ACE_NEW_RETURN (addrs,
                       ACE::HTBP::Addr[this->endpoint_count_],
                       -1);
+      this->addrs_.reset (addrs);
 
-      ACE_NEW_RETURN (this->hosts_,
+      char **hosts = nullptr;
+      ACE_NEW_RETURN (hosts,
                       char *[this->endpoint_count_],
                       -1);
+      this->hosts_.reset (hosts);
 
-      std::fill_n (this->hosts_, this->endpoint_count_, nullptr);
+      std::fill_n (this->hosts_.get (), this->endpoint_count_, nullptr);
 
       ACE::HTBP::ID_Requestor req(ht_env_);
       ACE_TCHAR *htid = req.get_HTID ();
@@ -684,15 +689,19 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   else
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 
-  ACE_NEW_RETURN (this->addrs_,
+  ACE::HTBP::Addr *addrs = nullptr;
+  ACE_NEW_RETURN (addrs,
                   ACE::HTBP::Addr[this->endpoint_count_],
                   -1);
+  this->addrs_.reset (addrs);
 
-  ACE_NEW_RETURN (this->hosts_,
+  char **hosts = nullptr;
+  ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
+  this->hosts_.reset (hosts);
 
-  std::fill_n (this->hosts_, this->endpoint_count_, nullptr);
+  std::fill_n (this->hosts_.get (), this->endpoint_count_, nullptr);
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
