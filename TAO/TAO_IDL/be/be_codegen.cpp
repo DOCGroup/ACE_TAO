@@ -2525,6 +2525,11 @@ TAO_CodeGen::gen_stub_src_includes ()
                            << "\"";
     }
 
+  if (idl_global->non_local_iface_seen_)
+    {
+      this->gen_system_include (this->client_stubs_, "cstring");
+    }
+
   this->gen_system_include (this->client_stubs_, "memory");
 
   if (idl_global->union_seen_)
