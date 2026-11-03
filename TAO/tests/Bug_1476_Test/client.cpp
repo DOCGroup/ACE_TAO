@@ -12,6 +12,8 @@
 
 #include "ace/Get_Opt.h"
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 enum class Policy_Level
@@ -29,6 +31,7 @@ enum class Synchronization
 
 Policy_Level policy_level = Policy_Level::object;
 Synchronization synchronization = Synchronization::none;
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -85,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, "test");
 
       if (parse_args (argc, argv) != 0)
@@ -127,9 +130,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying Synch Scope at thread level.\n"));
 
-            CORBA::Object_var object =
+            CORBA::Object_var const object =
               orb->resolve_initial_references ("PolicyCurrent");
-            CORBA::PolicyCurrent_var policy_current =
+            CORBA::PolicyCurrent_var const policy_current =
               CORBA::PolicyCurrent::_narrow (object.in ());
 
             policy_current->set_policy_overrides (policies,
@@ -140,9 +143,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Applying Synch Scope at orb level.\n"));
 
-            CORBA::Object_var obj =
+            CORBA::Object_var const obj =
               orb->resolve_initial_references ("ORBPolicyManager");
-            CORBA::PolicyManager_var policy_manager =
+            CORBA::PolicyManager_var const policy_manager =
               CORBA::PolicyManager::_narrow (obj.in ());
 
             policy_manager->set_policy_overrides (policies,
@@ -159,8 +162,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         policies[0]->destroy ();
       }
 
-      Test::Hello_var hello =
-        Test::Hello::_unchecked_narrow(tmp.in ());
+      Test::Hello_var const hello =
+        Test::Hello::_unchecked_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -189,8 +192,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       size_t busy_count {};
-      TAO_Transport *transport = nullptr;
-      TAO::Transport_Cache_Manager::Find_Result find_result =
+      TAO_Transport *transport {};
+      TAO::Transport_Cache_Manager::Find_Result const find_result =
         tcm.find_transport (&desc, transport, busy_count);
       // We don't need this transport any more. Release the ownership.
       transport->remove_reference ();
