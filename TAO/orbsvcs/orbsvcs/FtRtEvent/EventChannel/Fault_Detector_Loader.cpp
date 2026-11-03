@@ -17,13 +17,9 @@ namespace FTRTEC {
     ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_STREAM> , ACE_SOCK_ACCEPTOR>,
     ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >;
 
-  Fault_Detector_Loader::Fault_Detector_Loader ()
-  {
-  }
+  Fault_Detector_Loader::Fault_Detector_Loader () = default;
 
-  Fault_Detector_Loader::~Fault_Detector_Loader ()
-  {
-  }
+  Fault_Detector_Loader::~Fault_Detector_Loader () = default;
 
   int
   Fault_Detector_Loader::init (int argc, ACE_TCHAR* argv[])

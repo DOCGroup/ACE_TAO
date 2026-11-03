@@ -2,8 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FTEC_Become_Primary_Listener::~TAO_FTEC_Become_Primary_Listener()
-{
-}
+TAO_FTEC_Become_Primary_Listener::~TAO_FTEC_Become_Primary_Listener() = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
