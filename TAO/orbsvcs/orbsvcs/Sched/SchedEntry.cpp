@@ -17,6 +17,8 @@
 #include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Task_Entry::~Task_Entry ()
@@ -184,7 +186,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
 
               // Record entry point in list of unresolved remote
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
                                static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
@@ -207,7 +209,7 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
 
               // Record entry point in list of unresolved local
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
                                static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
@@ -277,7 +279,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
 
               // Record entry point in list of unresolved remote
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
                                static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
@@ -299,7 +301,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
                           static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
                                static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=

@@ -15,6 +15,8 @@
 #include "ace/Null_Mutex.h"
 
 #include <algorithm>
+#include <cstdio>
+#include <cstdlib>
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Sched/DynSched.inl"
@@ -255,7 +257,7 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
 
           if (output_level () >= 5)
             {
-              ACE_OS::printf ("registered task \"%s\" with RT_Info at %p\n",
+              std::printf ("registered task \"%s\" with RT_Info at %p\n",
                               static_cast<char const *> (rt_info->entry_point), rt_info);
             }
         }
@@ -353,7 +355,7 @@ int ACE_DynScheduler::priority (
 
     if (output_level () >= 3)
     {
-      ACE_OS::printf ("preemption_prio %d: min %d, pri %d, min_pri %d\n",
+      std::printf ("preemption_prio %d: min %d, pri %d, min_pri %d\n",
                       preemption_prio, minimum_priority_queue (),
                       priority, minimum_priority_);
     }
@@ -435,7 +437,7 @@ void ACE_DynScheduler::export_to_file (RT_Info* info, FILE* file)
 
 void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
 {
-  (void) ACE_OS::fprintf (file,
+  (void) std::fprintf (file,
                           "%s\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n%d\n%u\n"
                           "# begin calls\n%d\n",
                           info.entry_point.in (),
@@ -453,12 +455,12 @@ void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
   for (int i = 0; i < number_of_dependencies(info); ++i)
     {
       RT_Info tmp;
-      (void) ACE_OS::fprintf (file, "%s, %d\n",
+      (void) std::fprintf (file, "%s, %d\n",
                               static_cast<char const *> (tmp.entry_point),
                               info.dependencies[i].number_of_calls);
     }
 
-  (void) ACE_OS::fprintf (file, "# end calls\n%d\n%d\n\n",
+  (void) std::fprintf (file, "# end calls\n%d\n%d\n\n",
                           info.priority,
                           info.preemption_subpriority);
 
@@ -1511,7 +1513,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
               static_cast<char const *> (task_entries_ [i].rt_info ()->entry_point)));
 
           // Record entry point in list of unresolved remote dependencies
-          ACE_OS::sprintf (string_buffer, "// %s\n",
+          std::sprintf (string_buffer, "// %s\n",
                            static_cast<char const *> (task_entries_ [i].rt_info ()->
                                                                entry_point));
           unresolved_remotes +=
@@ -1532,7 +1534,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
           task_entries_ [i].has_unresolved_local_dependencies (true);
 
           // Record entry point in list of unresolved local dependencies
-          ACE_OS::sprintf (string_buffer, "// %s\n",
+          std::sprintf (string_buffer, "// %s\n",
                            static_cast<char const *> (task_entries_ [i].rt_info ()->
                                                                entry_point));
           unresolved_locals +=
@@ -1550,7 +1552,7 @@ ACE_DynScheduler::check_dependency_cycles ()
   status_t return_status = SUCCEEDED;
 
   // sort the pointers to entries in order of descending finish time
-  ACE_OS::qsort (static_cast<void *> (ordered_task_entries_),
+  std::qsort (static_cast<void *> (ordered_task_entries_),
                  tasks (),
                  sizeof (Task_Entry *),
                  compare_entry_finish_times);
@@ -1904,7 +1906,7 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
      / ordered_dispatch_entries_[i]->task_entry ().effective_period ();
   }
 
-  if (ACE_OS::fprintf (
+  if (std::fprintf (
       file, "\n\nSCHEDULING RESULTS:\n\n"
             "Number of dispatches:              %3lu\n"
             "Number of threads:                 %3u\n"
@@ -1943,7 +1945,7 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 
   for (i = 0; i < dispatch_entry_count_; ++i)
   {
-    if (ACE_OS::fprintf (file, "%-11s  %8lu  %8u  %11u  %11u\n",
+    if (std::fprintf (file, "%-11s  %8lu  %8u  %11u  %11u\n",
         ordered_dispatch_entries_[i]->task_entry ().rt_info ()->
           entry_point.in (),
         ordered_dispatch_entries_[i]->dispatch_id (),
@@ -1989,7 +1991,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_timeline (FILE *file)
 {
   //FUZZ: disable check_for_lack_ACE_OS
-  if (ACE_OS::fprintf (
+  if (std::fprintf (
       file, "\n\nDISPATCH TIMELINE:\n\n"
             "                dispatch  arrival  deadline     start        stop    execution     latency        laxity\n"
             "operation             ID   (nsec)    (nsec)    (nsec)      (nsec)  time (nsec)      (nsec)        (nsec)\n"
@@ -2032,7 +2034,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
                    worst_case_execution_time;
       if (link->entry ().dispatch_entry ().original_dispatch ())
       {
-        if (ACE_OS::fprintf (
+        if (std::fprintf (
               file,
               "%-11s  [%4lu] %4lu  %7u  %8u  %8u  "
               "%10u  %11u   %10d   %10d\n",
@@ -2059,7 +2061,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
       }
       else
       {
-        if (ACE_OS::fprintf (
+        if (std::fprintf (
               file,
               "%-11s  %11lu  %7u  %8u  %8u  %10u  %11u   %10d   %10d\n",
               link->entry ().dispatch_entry ().task_entry ().rt_info ()->
@@ -2115,7 +2117,7 @@ ACE_DynScheduler::output_preemption_timeline (char const *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_preemption_timeline (FILE *file)
 {
-  if (ACE_OS::fprintf (
+  if (std::fprintf (
         file, "\n\nPREEMPTION TIMELINE:\n\n"
         "              dispatch     start      stop \n"
         "operation           ID    (nsec)    (nsec)\n"
@@ -2142,7 +2144,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
 
     if (link->entry ().dispatch_entry ().original_dispatch ())
     {
-      if (ACE_OS::fprintf (
+      if (std::fprintf (
             file, "%-9s  [%4lu] %4lu  %8u  %8u\n",
             link->entry ().dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
@@ -2159,7 +2161,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
     }
     else
     {
-      if (ACE_OS::fprintf (
+      if (std::fprintf (
             file, "%-9s  %11lu  %8u  %8u\n",
             link->entry ().dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
@@ -2199,7 +2201,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::output_viewer_timeline (FILE *file)
 {
   //FUZZ: disable check_for_lack_ACE_OS
-  if (ACE_OS::fprintf (
+  if (std::fprintf (
       file, "\n\nVIEWER TIMELINE:\n\n"
             "                                    arrival  deadline   completion    execution \n"
             "operation  utilization   overhead    (nsec)    (nsec)  time (nsec)  time (nsec)\n"
@@ -2272,7 +2274,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
     // if we found another entry, print it (otherwise we're done)
     if (current_entry)
     {
-      if (ACE_OS::fprintf (
+      if (std::fprintf (
             file, "%-11s  %9f  %9f  %8u  %8u  %11u  %11u\n",
             current_entry->dispatch_entry ().task_entry ().rt_info ()->
               entry_point.in (),
@@ -2328,7 +2330,7 @@ ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 
   if ((status == SUCCEEDED) && (heading))
   {
-    if (ACE_OS::fprintf (file, "%s\n\n", heading) < 0)
+    if (std::fprintf (file, "%s\n\n", heading) < 0)
     {
       status = UNABLE_TO_WRITE_SCHEDULE_FILE;
       ORBSVCS_ERROR ((LM_ERROR,
