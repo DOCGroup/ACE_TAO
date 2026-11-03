@@ -1,4 +1,5 @@
 #include "global.h"
+#include <vector>
 
 #ifndef _D_Stats
 #define _D_Stats
@@ -8,22 +9,22 @@
 
 class Init_Fini_t {
 public:
-  int type; // 0 is start, 1 is end
+  int type {}; // 0 is start, 1 is end
   ACE_Time_Value timestamp;
 };
 
 class Stats {
 public:
-  Stats(int);
-  void log(int, float, float);
-  void i_have_started(int);
-  void i_am_done(int);
-  void print (char *);
-  void output();
+  explicit Stats (int);
+  void log (int, float, float);
+  void i_have_started (int);
+  void i_am_done (int);
+  void print (char const *);
+  void output ();
 private:
-  float *throughput_;
-  float *latency_;
-  Init_Fini_t *init_fini_; // Array (2n deep) to count peak no. of active threads
-  int thread_count_;
+  std::vector<float> throughput_;
+  std::vector<float> latency_;
+  std::vector<Init_Fini_t> init_fini_; // Two entries per thread for peak activity.
+  int thread_count_ {};
 };
 #endif
