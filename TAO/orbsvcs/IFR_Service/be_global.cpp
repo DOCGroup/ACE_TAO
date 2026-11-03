@@ -129,22 +129,27 @@ BE_GlobalData::allow_duplicate_typedefs (bool val)
   this->allow_duplicate_typedefs_ = val;
 }
 
-ACE_CString
+std::string
 BE_GlobalData::orb_args () const
 {
   return this->orb_args_;
 }
 
 void
-BE_GlobalData::orb_args (const ACE_CString& args)
+BE_GlobalData::orb_args (std::string const& args)
 {
   this->orb_args_ = args;
 }
 
-ACE_CString
+std::string
 BE_GlobalData::spawn_options ()
 {
   return this->orb_args_ + idl_global->idl_flags ();
+}
+
+void
+BE_GlobalData::gen_source_info (bool)
+{
 }
 
 #define UNKNOWN_OPTION \

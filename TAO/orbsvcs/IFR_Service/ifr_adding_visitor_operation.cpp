@@ -12,6 +12,8 @@
 #include "utl_strlist.h"
 #include "nr_extern.h"
 
+#include <string>
+
 ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
   : ifr_adding_visitor (scope),
     index_ (0)
@@ -33,7 +35,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // compiler front end would have told us.
 
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       if (!CORBA::is_nil (prev_def.in ()))
         {
@@ -88,7 +90,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           ex = ex_iter.item ();
 
           prev_def =
-            be_global->repository ()->lookup_id (ex->repoID ());
+            be_global->repository ()->lookup_id (ex->repoID ().c_str ());
 
           exceptions[i] =
             CORBA::ExceptionDef::_narrow (prev_def.in ());
@@ -96,31 +98,17 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       // Build the context list.
 
-      UTL_StrList *ctx_list = node->context ();
-
-      if (ctx_list != 0)
-        {
-          length = static_cast<CORBA::ULong> (ctx_list->length ());
-        }
-      else
-        {
-          length = 0;
-        }
+      UTL_StrList const& ctx_list = node->context ();
+      length = static_cast<CORBA::ULong> (ctx_list.size ());
 
       CORBA::ContextIdSeq contexts (length);
       contexts.length (length);
 
-      UTL_StrlistActiveIterator ctx_iter (ctx_list);
-      UTL_String *str = 0;
       i = 0;
 
-      while (!ctx_iter.is_done ())
+      for (std::string const& context : ctx_list)
         {
-          str = ctx_iter.item ();
-
-          contexts[i++] = str->get_string ();
-
-          ctx_iter.next ();
+          contexts[i++] = context.c_str ();
         }
 
       // Get the return type.
@@ -151,9 +139,9 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                 CORBA::InterfaceDef::_narrow (current_scope);
 
               CORBA::OperationDef_var new_def =
-                iface->create_operation (node->repoID (),
-                                         node->local_name ()->get_string (),
-                                         node->version (),
+                iface->create_operation (node->repoID ().c_str (),
+                                         node->local_name ()->get_string ().c_str (),
+                                         node->version ().c_str (),
                                          this->ir_current_.in (),
                                          mode,
                                          this->params_,
@@ -166,9 +154,9 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                 CORBA::ValueDef::_narrow (current_scope);
 
               CORBA::OperationDef_var new_def =
-                vtype->create_operation (node->repoID (),
-                                         node->local_name ()->get_string (),
-                                         node->version (),
+                vtype->create_operation (node->repoID ().c_str (),
+                                         node->local_name ()->get_string ().c_str (),
+                                         node->version ().c_str (),
                                          this->ir_current_.in (),
                                          mode,
                                          this->params_,
@@ -205,7 +193,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 {
   // Get the parameter's name.
   this->params_[this->index_].name =
-    CORBA::string_dup (node->local_name ()->get_string ());
+    CORBA::string_dup (node->local_name ()->get_string ().c_str ());
 
   AST_Type *arg_type = node->field_type ();
 

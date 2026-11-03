@@ -19,7 +19,7 @@
 
 // Prepare an argument for a BE.
 void
-be_util::prep_be_arg (char *)
+be_util::prep_be_arg (std::string const&)
 {
 }
 

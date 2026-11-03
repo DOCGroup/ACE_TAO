@@ -68,6 +68,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "TAO_IFR_BE_Export.h"
 #include "be_global.h"
 
+#include <string>
+#include <vector>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -75,7 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern TAO_IFR_BE_Export BE_GlobalData *be_global;
 
 extern TAO_IFR_BE_Export int BE_init (int &, ACE_TCHAR*[]);
-extern TAO_IFR_BE_Export void BE_post_init (char *[], long);
+extern TAO_IFR_BE_Export void BE_post_init (std::vector<std::string> const&);
 extern TAO_IFR_BE_Export void BE_version ();
 extern TAO_IFR_BE_Export void BE_produce ();
 extern TAO_IFR_BE_Export void BE_cleanup ();

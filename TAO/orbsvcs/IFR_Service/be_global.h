@@ -18,7 +18,7 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 #include "ace/Containers.h"
-#include "ace/SString.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -71,12 +71,15 @@ public:
   bool allow_duplicate_typedefs () const;
   void allow_duplicate_typedefs (bool val);
 
-  ACE_CString orb_args () const;
-  void orb_args (const ACE_CString& args);
+  std::string orb_args () const;
+  void orb_args (std::string const& args);
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
-  ACE_CString spawn_options ();
+  std::string spawn_options ();
+
+  /// Source information comments are only used by the C++ code generation backend.
+  void gen_source_info (bool value);
 
   /// Parse an argument that might affect the backend.
   void parse_args (long &i, char **av);
@@ -110,7 +113,7 @@ private:
   bool allow_duplicate_typedefs_;
 
   /// Holder for -ORB args saved and passed to DRV_fork.
-  ACE_CString orb_args_;
+  std::string orb_args_;
 };
 
 #endif /* TAO_IFR_BE_GLOBAL_H */

@@ -14,6 +14,7 @@
 #ifndef TAO_IFR_ADDING_VISITOR_H
 #define TAO_IFR_ADDING_VISITOR_H
 
+#include "ast_interface.h"
 #include "ifr_visitor.h"
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
@@ -136,7 +137,7 @@ protected:
                                   AST_Interface *node);
 
   void fill_interfaces (CORBA::InterfaceDefSeq &result,
-                        AST_Type **list,
+                        AST_Type_List const& list,
                         CORBA::Long length);
 
   void fill_initializers (CORBA::ExtInitializerSeq &result,

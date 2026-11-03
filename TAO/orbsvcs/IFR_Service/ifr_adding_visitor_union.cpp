@@ -39,7 +39,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
   this->members_.length (nfields);
 
-  AST_Field **f = 0;
+  AST_Field *f = nullptr;
 
   // Index into members_.
   CORBA::ULong index = 0;
@@ -61,7 +61,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
               );
             }
 
-          AST_Type *ft = (*f)->field_type ();
+          AST_Type *ft = f->field_type ();
 
           bool defined_here = ft->is_child (this->scope_);
 
@@ -111,7 +111,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
           // Get the case label(s).
 
           AST_UnionLabel *case_label = 0;
-          AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (*f);
+          AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (f);
           unsigned long len = ub->label_list_length ();
 
           // If there are multiple case labels, we will have an element
@@ -160,7 +160,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
                 }
 
               this->members_[index].name =
-                CORBA::string_dup ((*f)->local_name ()->get_string ());
+                CORBA::string_dup (f->local_name ()->get_string ().c_str ());
 
               // IfR method create_union does not use this - it just needs
               // to be non-zero for marshaling.
@@ -191,7 +191,7 @@ ifr_adding_visitor_union::visit_structure (AST_Structure *node)
     {
       // Is this struct already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -245,7 +245,7 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
     {
       // Is this enum already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -265,14 +265,14 @@ ifr_adding_visitor_union::visit_enum (AST_Enum *node)
 
               members[i] =
                 CORBA::string_dup (
-                  member_name->last_component ()->get_string ());
+                  member_name->last_component ()->get_string ().c_str ());
             }
 
           this->ir_current_ =
             be_global->repository ()->create_enum (
-                                          node->repoID (),
-                                          node->local_name ()->get_string (),
-                                          node->version (),
+                                          node->repoID ().c_str (),
+                                          node->local_name ()->get_string ().c_str (),
+                                          node->version ().c_str (),
                                           members
                                         );
 
@@ -328,7 +328,7 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
 
       CORBA::UnionDef_var union_def;
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -349,9 +349,9 @@ ifr_adding_visitor_union::visit_union (AST_Union *node)
           // First create the named union without any members.
           union_def =
             current_scope->create_union (
-                node->repoID (),
-                node->local_name ()->get_string (),
-                node->version (),
+                node->repoID ().c_str (),
+                node->local_name ()->get_string ().c_str (),
+                node->version ().c_str (),
                 this->ir_current_.in (),
                 dummyMembers
               );
