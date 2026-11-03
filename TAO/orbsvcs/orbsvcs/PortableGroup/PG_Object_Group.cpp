@@ -100,7 +100,6 @@ TAO::PG_Object_Group::~PG_Object_Group ()
                 ACE_TEXT ("%T %n (%P|%t) - Destroying object group: %s"),
                 this->group_name_ ? this->group_name_->c_str () : nullptr));
 
-  CORBA::string_free (this->type_id_._retn());
   this->clear_members_map ();
 }
 

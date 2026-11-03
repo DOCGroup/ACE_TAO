@@ -457,7 +457,9 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
 
   stream >> this->distribute_;
 
-  stream >> this->role_;
+  ACE_CString role;
+  stream >> role;
+  this->role_ = role.c_str ();
 
   ///// primary_location_ /////
   read_cdr (stream, this->primary_location_);
@@ -559,7 +561,8 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
   ACE_CString group_name = PG_Object_Group::get_name ();
   stream << group_name;
   stream << this->distribute_;
-  stream << this->role_;
+  ACE_CString role (this->role_.c_str ());
+  stream << role;
 
   TAO_OutputCDR primary_location_cdr;
   primary_location_cdr << PG_Object_Group::get_primary_location ();

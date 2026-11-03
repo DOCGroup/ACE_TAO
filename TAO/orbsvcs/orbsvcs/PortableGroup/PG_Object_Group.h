@@ -35,7 +35,6 @@
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/ACE.h"
 
 #include <optional>
 #include <string>
@@ -323,7 +322,7 @@ namespace TAO
     /// boolean true if empty group
     bool empty_ {true};
 
-    ACE_CString role_;
+    std::string role_;
 
 
     PortableGroup::TypeId_var type_id_;
