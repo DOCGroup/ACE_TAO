@@ -17,9 +17,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_time.h"
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");
-int done = 0;
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
+bool done {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -54,10 +55,10 @@ TimeOfDay
 Time_impl::
 get_gmt ()
 {
-  time_t time_now = ACE_OS::time (0);
-  struct tm *time_p = ACE_OS::gmtime (&time_now);
+  time_t const time_now = ACE_OS::time (nullptr);
+  tm const *const time_p = ACE_OS::gmtime (&time_now);
 
-  TimeOfDay tod;
+  TimeOfDay tod {};
   tod.hour = time_p->tm_hour;
   tod.minute = time_p->tm_min;
   tod.second = time_p->tm_sec;
@@ -117,11 +118,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "%s\n",
                   str.in ()));
 
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
 
-          if (output_file == 0)
+          if (!output_file)
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
@@ -131,16 +133,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 1);
             }
 
-          ACE_OS::fprintf (output_file,
+          ACE_OS::fprintf (output_file.get (),
                            "%s",
                            str.in ());
-          ACE_OS::fclose (output_file);
         }
 
       // Explicit Event Loop.
       while (!done)
         {
-          CORBA::Boolean pending =
+          CORBA::Boolean const pending =
             orb->work_pending ();
 
           if (pending)
@@ -154,7 +155,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("server: a CORBA exception occurred");
       return 1;

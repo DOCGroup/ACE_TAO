@@ -19,7 +19,13 @@
 class Time_impl : public virtual POA_Time
 {
 public:
-  virtual TimeOfDay get_gmt ();
+  Time_impl () = default;
+  TimeOfDay get_gmt () override;
+
+  Time_impl (Time_impl const &) = delete;
+  Time_impl &operator= (Time_impl const &) = delete;
+  Time_impl (Time_impl &&) = delete;
+  Time_impl &operator= (Time_impl &&) = delete;
 };
 
 #endif /* server_HH_ */
