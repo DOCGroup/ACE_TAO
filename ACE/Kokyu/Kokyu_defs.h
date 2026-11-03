@@ -81,7 +81,7 @@ namespace Kokyu
 
     //allocator to be used for dynamic memory allocation. If each
     //thread gets its own memory pool, contention will be less
-    ACE_Allocator *allocator_;
+    ACE_Allocator *allocator_; // Borrowed; it must outlive tasks using this configuration.
 
     Reordering_Queue_Attributes reordering_flags_;
 
@@ -94,7 +94,7 @@ namespace Kokyu
   {
   public:
     ConfigInfoSet config_info_set_;
-    int immediate_activation_;
+    bool immediate_activation_;
 
   public:
     Dispatcher_Attributes ();
@@ -122,8 +122,13 @@ namespace Kokyu
   class Kokyu_Export Dispatch_Command
   {
   public:
-    Dispatch_Command(int dont_delete = 0,
-                      ACE_Allocator *allocator = 0);
+    Dispatch_Command (Dispatch_Command const &) = delete;
+    Dispatch_Command (Dispatch_Command &&) = delete;
+    Dispatch_Command &operator= (Dispatch_Command const &) = delete;
+    Dispatch_Command &operator= (Dispatch_Command &&) = delete;
+
+    Dispatch_Command (bool dont_delete = false,
+                      ACE_Allocator *allocator = nullptr);
     //dont_delete indicates whether this object needs to be deleted once processed.
     //allocator indicates the ACE_Allocator, if any, from which this object was created.
     //This same allocator has to be used for the deletion also
@@ -131,7 +136,7 @@ namespace Kokyu
     /// Command callback
     virtual int execute () = 0;
 
-    int can_be_deleted () const;
+    bool can_be_deleted () const;
 
     void destroy ();
   protected:
@@ -141,7 +146,7 @@ namespace Kokyu
     virtual ~Dispatch_Command ();
 
   private:
-    int dont_delete_;
+    bool dont_delete_;
     ACE_Allocator *allocator_;
     //if this object has to be deleted, then delete it using the allocator
     //if one is present.
@@ -176,7 +181,8 @@ namespace Kokyu
 } //end of namespace
 
 //to satisfy ACE_Array<ConfigInfo>
-ACE_INLINE bool operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
+ACE_INLINE bool operator != (Kokyu::ConfigInfo const &lhs,
+                             Kokyu::ConfigInfo const &rhs);
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_defs.inl"

@@ -16,8 +16,8 @@ namespace Kokyu
 
 template <class DSRT_Scheduler_Traits>
 int Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::MoreEligible::
-operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
-            const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item2)
+operator ()(DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item1,
+            DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item2)
 {
   int rc = qos_comparator_ (item1->qos (), item2->qos ());
 
@@ -38,7 +38,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                          int sched_scope)
   :DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>(sched_policy, sched_scope),
-   sched_queue_modified_ (0),
+   sched_queue_modified_ (false),
    sched_queue_modified_cond_ (sched_queue_modified_cond_lock_)
 {
   //Run scheduler thread at highest priority
@@ -55,7 +55,7 @@ DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
 
 template <class DSRT_Scheduler_Traits> int
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-init_i (const DSRT_ConfigInfo&)
+init_i (DSRT_ConfigInfo const &)
 {
   return 0;
 }
@@ -120,7 +120,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
       ACE_DEBUG ((LM_DEBUG, "(%t|%T): sched thread done waiting on cv\n"));
 #endif
 
-      sched_queue_modified_ = 0;
+      sched_queue_modified_ = false;
 
       ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                         synch_lock_mon,
@@ -189,7 +189,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
 
 template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
+schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
@@ -248,7 +248,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
               "(%t|%T):schedule_i after acquiring cond lock\n"));
 #endif
 
-  this->sched_queue_modified_ = 1;
+  this->sched_queue_modified_ = true;
   this->sched_queue_modified_cond_.signal ();
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -261,7 +261,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
 template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-update_schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
+update_schedule_i (Guid_t guid, DSRT_QoSDescriptor const &qos)
 {
   return this->schedule (guid, qos);
 }
@@ -341,7 +341,7 @@ cancel_schedule_i (Guid_t guid)
 
   ACE_GUARD_RETURN (cond_lock_t,
                     mon, this->sched_queue_modified_cond_lock_, 0);
-  this->sched_queue_modified_ = 1;
+  this->sched_queue_modified_ = true;
   this->sched_queue_modified_cond_.signal ();
   return 0;
 }
@@ -350,10 +350,10 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 shutdown_i ()
 {
-  this->shutdown_flagged_ = 1;
+  this->shutdown_flagged_ = true;
 
   ACE_GUARD_RETURN (cond_lock_t, mon, this->sched_queue_modified_cond_lock_, 0);
-  this->sched_queue_modified_ = 1;
+  this->sched_queue_modified_ = true;
   this->sched_queue_modified_cond_.signal ();
   // We have to wait until the scheduler executive thread shuts
   // down. But we have acquired the lock and if we wait without

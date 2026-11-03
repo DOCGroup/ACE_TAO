@@ -17,7 +17,7 @@ namespace Kokyu
   }
 
 Dispatcher_Attributes::Dispatcher_Attributes()
-    :immediate_activation_ (0),
+    :immediate_activation_ (false),
      sched_policy_ (ACE_SCHED_FIFO),
      sched_scope_ (ACE_SCOPE_THREAD),
      base_thread_creation_flags_ (THR_NEW_LWP | THR_BOUND | THR_JOINABLE)

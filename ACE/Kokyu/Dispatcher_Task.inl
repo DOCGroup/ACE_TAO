@@ -1,12 +1,13 @@
 namespace Kokyu
 {
 ACE_INLINE
-Dispatcher_Task::Dispatcher_Task (const ConfigInfo& config_info,
+Dispatcher_Task::Dispatcher_Task (ConfigInfo const &config_info,
                                   ACE_Thread_Manager* thr_manager)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
      curr_config_info_ (config_info),
      allocator_ (config_info.allocator_),
-     own_allocator_ (0),
+     own_allocator_ (false),
+     the_queue_ (nullptr),
      deadline_msg_strategy_ (config_info.reordering_flags_.static_bit_field_mask_,
                              config_info.reordering_flags_.static_bit_field_shift_,
                              config_info.reordering_flags_.dynamic_priority_max_,
@@ -37,7 +38,7 @@ Dispatcher_Task::preemption_priority() const
 
 
 ACE_INLINE
-const ConfigInfo&
+ConfigInfo const &
 Dispatcher_Task::get_curr_config_info() const
 {
     return curr_config_info_;
@@ -45,8 +46,8 @@ Dispatcher_Task::get_curr_config_info() const
 
 ACE_INLINE
 Dispatch_Queue_Item::Dispatch_Queue_Item (
-        const Dispatch_Command* cmd,
-        const QoSDescriptor& qos_info,
+        Dispatch_Command const *cmd,
+        QoSDescriptor const &qos_info,
         ACE_Data_Block *data_block,
         int flags,
         ACE_Allocator* mb_allocator)
@@ -61,8 +62,8 @@ Dispatch_Queue_Item::Dispatch_Queue_Item (
 
 ACE_INLINE
 Dispatch_Queue_Item::Dispatch_Queue_Item (
-        const Dispatch_Command* cmd,
-        const QoSDescriptor& qos_info,
+        Dispatch_Command const *cmd,
+        QoSDescriptor const &qos_info,
         ACE_Allocator* mb_allocator)
  : ACE_Message_Block (mb_allocator),
    command_ (cmd), qos_info_ (qos_info)

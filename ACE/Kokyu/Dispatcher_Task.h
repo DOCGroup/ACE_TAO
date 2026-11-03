@@ -26,24 +26,24 @@ class Dispatch_Queue_Item : public ACE_Message_Block
 {
 public:
   Dispatch_Queue_Item (
-        const Dispatch_Command* cmd,
-        const QoSDescriptor& qos_info,
-        ACE_Allocator* mb_allocator =0);
+        Dispatch_Command const *cmd,
+        QoSDescriptor const &qos_info,
+        ACE_Allocator *mb_allocator = nullptr);
 
   Dispatch_Queue_Item (
-        const Dispatch_Command* cmd,
-        const QoSDescriptor& qos_info,
-        ACE_Data_Block* data_block,
+        Dispatch_Command const *cmd,
+        QoSDescriptor const &qos_info,
+        ACE_Data_Block *data_block,
         int flags,
-        ACE_Allocator* mb_allocator =0);
+        ACE_Allocator *mb_allocator = nullptr);
 
   Dispatch_Command* command ();
 
 private:
-  void init_i(const QoSDescriptor&);
+  void init_i (QoSDescriptor const &);
 
 private:
-  const Dispatch_Command* command_;
+  Dispatch_Command const *command_;
   QoSDescriptor qos_info_;
 };
 
@@ -57,20 +57,25 @@ class Dispatcher_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   /// Constructor
-  Dispatcher_Task (const ConfigInfo& config_info,
-                   ACE_Thread_Manager* thr_manager = 0);
+  Dispatcher_Task (ConfigInfo const &config_info,
+                   ACE_Thread_Manager *thr_manager = nullptr);
 
 
   ~Dispatcher_Task () override;
+  Dispatcher_Task (Dispatcher_Task const &) = delete;
+  Dispatcher_Task (Dispatcher_Task &&) = delete;
+  Dispatcher_Task &operator= (Dispatcher_Task const &) = delete;
+  Dispatcher_Task &operator= (Dispatcher_Task &&) = delete;
+
   int initialize();
 
-  int enqueue (const Dispatch_Command* cmd,
-           const QoSDescriptor& qos_info);
+  int enqueue (Dispatch_Command const *cmd,
+               QoSDescriptor const &qos_info);
 
   /// Process the events in the queue.
   int svc () override;
 
-  const ConfigInfo& get_curr_config_info() const;
+  ConfigInfo const &get_curr_config_info () const;
   Priority_t preemption_priority() const;
 
 private:
@@ -79,14 +84,14 @@ private:
 private:
   ConfigInfo curr_config_info_;
 
-  ACE_Allocator *allocator_;
-  int own_allocator_;
+  ACE_Allocator *allocator_; // Borrowed unless own_allocator_ is true.
+  bool own_allocator_;
 
   /// Helper data structure to minimize memory allocations...
   ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
 
   /// The queue
-  ACE_Message_Queue<ACE_SYNCH>* the_queue_;
+  ACE_Message_Queue<ACE_SYNCH>* the_queue_; // Managed through ACE_Task::msg_queue.
 
   ACE_Deadline_Message_Strategy deadline_msg_strategy_;
   ACE_Laxity_Message_Strategy laxity_msg_strategy_;

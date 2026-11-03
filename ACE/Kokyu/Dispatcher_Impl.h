@@ -34,28 +34,33 @@ namespace Kokyu
   class Kokyu_Export Dispatcher_Impl
   {
   public:
+    Dispatcher_Impl () = default;
     /// Configure the dispatcher.
-    int init (const Dispatcher_Attributes&);
+    int init (Dispatcher_Attributes const &);
 
     int activate ();
 
     /// dispatch a command (eg. event) based on the QoS supplied.
-    int dispatch (const Dispatch_Command*,
-                  const QoSDescriptor&);
+    int dispatch (Dispatch_Command const *,
+                  QoSDescriptor const &);
 
     /// shutdown the dispatcher.
     int shutdown ();
 
     virtual ~Dispatcher_Impl();
+    Dispatcher_Impl (Dispatcher_Impl const &) = delete;
+    Dispatcher_Impl (Dispatcher_Impl &&) = delete;
+    Dispatcher_Impl &operator= (Dispatcher_Impl const &) = delete;
+    Dispatcher_Impl &operator= (Dispatcher_Impl &&) = delete;
 
   private:
     //following an idiom to avoid public virtual functions.
     //instead make them private and use the template method
     //pattern - "Virtually Yours" article in CUJ Experts Forum
 
-    virtual int init_i (const Dispatcher_Attributes&) =0;
-    virtual int dispatch_i (const Dispatch_Command*,
-                            const QoSDescriptor&) =0;
+    virtual int init_i (Dispatcher_Attributes const &) = 0;
+    virtual int dispatch_i (Dispatch_Command const *,
+                            QoSDescriptor const &) = 0;
     virtual int shutdown_i () =0;
     virtual int activate_i () =0;
 

@@ -10,13 +10,13 @@
 namespace
 //anonymous namespace - use this to avoid polluting the global namespace
 {
-  const int ALLOC_POOL_CHUNKS = 200;
+  constexpr int ALLOC_POOL_CHUNKS = 200;
 }
 
 namespace Kokyu
 {
-typedef ACE_Cached_Allocator<Dispatch_Queue_Item, ACE_SYNCH_MUTEX>
-Dispatch_Queue_Item_Allocator;
+using Dispatch_Queue_Item_Allocator =
+  ACE_Cached_Allocator<Dispatch_Queue_Item, ACE_SYNCH_MUTEX>;
 
 int
 Dispatcher_Task::initialize ()
@@ -48,17 +48,17 @@ Dispatcher_Task::initialize ()
       return -1;
     }
 
-  if (this->the_queue_ != 0)
+  if (this->the_queue_ != nullptr)
     {
       this->msg_queue(this->the_queue_);
     }
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     {
       ACE_NEW_RETURN (this->allocator_,
                       Dispatch_Queue_Item_Allocator(ALLOC_POOL_CHUNKS),
                       -1);
-      own_allocator_ = 1;
+      own_allocator_ = true;
     }
 
   return 0;
@@ -67,7 +67,7 @@ Dispatcher_Task::initialize ()
 int
 Dispatcher_Task::svc ()
 {
-  int done = 0;
+  bool done = false;
 
     ACE_hthread_t thr_handle;
     ACE_Thread::self (thr_handle);
@@ -92,7 +92,7 @@ Dispatcher_Task::svc ()
 
   while (!done)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       if (this->getq (mb) == -1)
         {
@@ -112,7 +112,7 @@ Dispatcher_Task::svc ()
       Dispatch_Queue_Item *qitem =
         dynamic_cast<Dispatch_Queue_Item*> (mb);
 
-      if (qitem == 0)
+      if (qitem == nullptr)
         {
           ACE_Message_Block::release (mb);
           continue;
@@ -120,7 +120,7 @@ Dispatcher_Task::svc ()
 
       Dispatch_Command* command = qitem->command ();
 
-      ACE_ASSERT(command != 0);
+      ACE_ASSERT(command != nullptr);
       int result = command->execute ();
 
       if (command->can_be_deleted ())
@@ -129,18 +129,18 @@ Dispatcher_Task::svc ()
       ACE_Message_Block::release (mb);
 
       if (result == -1)
-        done = 1;
+        done = true;
     }
   return 0;
 }
 
 int
-Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
-                          const QoSDescriptor& qos_info)
+Dispatcher_Task::enqueue (Dispatch_Command const *cmd,
+                          QoSDescriptor const &qos_info)
 {
   void* buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
 
-  if (buf == 0)
+  if (buf == nullptr)
     return -1;
 
   ACE_Message_Block *mb =
@@ -179,7 +179,7 @@ int Dispatcher_Task::get_native_prio ()
   return prio;
 }
 
-void Dispatch_Queue_Item::init_i (const QoSDescriptor& qos_info)
+void Dispatch_Queue_Item::init_i (QoSDescriptor const &qos_info)
 {
   this->msg_priority (qos_info.preemption_priority_);
   this->msg_execution_time (qos_info.execution_time_);

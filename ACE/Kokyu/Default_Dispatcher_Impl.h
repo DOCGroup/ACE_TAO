@@ -38,12 +38,16 @@ namespace Kokyu
   {
   public:
     Default_Dispatcher_Impl ();
+    Default_Dispatcher_Impl (Default_Dispatcher_Impl const &) = delete;
+    Default_Dispatcher_Impl (Default_Dispatcher_Impl &&) = delete;
+    Default_Dispatcher_Impl &operator= (Default_Dispatcher_Impl const &) = delete;
+    Default_Dispatcher_Impl &operator= (Default_Dispatcher_Impl &&) = delete;
 
   private:
     int activate_i () override;
-    int init_i (const Dispatcher_Attributes&) override;
-    int dispatch_i (const Dispatch_Command*,
-                    const QoSDescriptor&) override;
+    int init_i (Dispatcher_Attributes const &) override;
+    int dispatch_i (Dispatch_Command const *,
+                    QoSDescriptor const &) override;
     int shutdown_i () override;
     Dispatcher_Task* find_task_with_preemption_prio (Priority_t);
 
@@ -52,14 +56,14 @@ namespace Kokyu
     std::unique_ptr<Dispatcher_Task_Auto_Ptr[]> tasks_;
     int ntasks_;
     ConfigInfoSet curr_config_info_;
-    int activated_;
+    bool activated_;
   };
 
   class Shutdown_Task_Command : public Dispatch_Command
   {
   public:
     /// Constructor
-    Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
+    explicit Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
 
     /// Command callback
     int execute () override;

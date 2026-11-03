@@ -23,10 +23,10 @@
 
 //Currently I am not seeing a way to avoid including these here. The
 //whole purpose of the pImpl idiom is to avoid this dependency. But
-//using the auto_ptr<> to store the implementation causes a compile
+//using std::unique_ptr<> to store the implementation causes a compile
 //error (in the destructor) that the implementation definition is not
-//found. Note that the auto-ptr<T>::~auto_ptr() calls delete on the
-//internal pointer and at this point the class definition needs to be
+//found. Note that std::unique_ptr<T>'s destructor calls delete on the
+//internal pointer, so the class definition needs to be
 //visible. Need to revisit this and see whether there is a work
 //around.
 #include "Dispatcher_Impl.h"
@@ -59,19 +59,19 @@ namespace Kokyu
   {
   public:
     Dispatcher () = default;
-    Dispatcher (const Dispatcher &) = delete;
+    Dispatcher (Dispatcher const &) = delete;
     Dispatcher (Dispatcher &&) = delete;
-    Dispatcher &operator= (const Dispatcher &) = delete;
+    Dispatcher &operator= (Dispatcher const &) = delete;
     Dispatcher &operator= (Dispatcher &&) = delete;
 
     /// Dispatch a command object based on the qos info supplied.
-    int dispatch (const Dispatch_Command*, const QoSDescriptor&);
+    int dispatch (Dispatch_Command const *, QoSDescriptor const &);
 
     /// Shut down the dispatcher. The dispatcher will stop processing requests.
     int shutdown ();
 
     /// Supply this interface with an appripriate implementation.
-    void implementation (Dispatcher_Impl*);
+    void implementation (Dispatcher_Impl *);
 
     int activate ();
 
@@ -98,9 +98,9 @@ namespace Kokyu
   class Kokyu_Export Dispatcher_Factory
   {
   public:
-    Dispatcher_Factory (const Dispatcher_Factory &) = delete;
+    Dispatcher_Factory (Dispatcher_Factory const &) = delete;
     Dispatcher_Factory (Dispatcher_Factory &&) = delete;
-    Dispatcher_Factory &operator= (const Dispatcher_Factory &) = delete;
+    Dispatcher_Factory &operator= (Dispatcher_Factory const &) = delete;
     Dispatcher_Factory &operator= (Dispatcher_Factory &&) = delete;
 
     /**
@@ -113,7 +113,7 @@ namespace Kokyu
       * @return pointer to the dispatcher.
       */
     static Dispatcher*
-    create_dispatcher (const Dispatcher_Attributes& attr);
+    create_dispatcher (Dispatcher_Attributes const &attr);
   };
 } //end of namespace
 

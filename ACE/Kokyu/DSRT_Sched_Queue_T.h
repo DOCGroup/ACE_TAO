@@ -63,10 +63,15 @@ namespace Kokyu
     /// Extract the necessary types from the traits class
     using Guid_t = typename DSRT_Scheduler_Traits::Guid_t;
 
-    typedef typename
-    DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor_t;
+    using DSRT_QoSDescriptor_t = typename DSRT_Scheduler_Traits::QoSDescriptor_t;
 
   public:
+    Sched_Ready_Queue () = default;
+    Sched_Ready_Queue (Sched_Ready_Queue const &) = delete;
+    Sched_Ready_Queue (Sched_Ready_Queue &&) = delete;
+    Sched_Ready_Queue &operator= (Sched_Ready_Queue const &) = delete;
+    Sched_Ready_Queue &operator= (Sched_Ready_Queue &&) = delete;
+
     /**
      * Given a guid, find an item in the priority queue.
      *
@@ -142,7 +147,7 @@ namespace Kokyu
     {
     public:
       /// Returns hash value.
-      u_long operator () (const typename DSRT_Scheduler_Traits::Guid_t &id)
+      u_long operator () (typename DSRT_Scheduler_Traits::Guid_t const &id)
       {
         typename DSRT_Scheduler_Traits::Guid_Hash guid_hash;
         return guid_hash(id);
@@ -150,41 +155,38 @@ namespace Kokyu
     };
 
     // RB_Tree related typedefs
-    typedef ACE_RB_Tree <DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
-                         DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
-                         More_Eligible_Comparator,
-                         ACE_SYNCH_NULL_MUTEX> Dispatch_Items_Priority_Queue;
+    using Dispatch_Items_Priority_Queue =
+      ACE_RB_Tree<DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
+                  DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
+                  More_Eligible_Comparator,
+                  ACE_SYNCH_NULL_MUTEX>;
 
 
-    typedef
-    ACE_RB_Tree_Node<DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
-                     DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> >
-    RB_Tree_Dispatch_Item_Node;
+    using RB_Tree_Dispatch_Item_Node =
+      ACE_RB_Tree_Node<DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
+                       DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>>;
 
-    typedef typename
-    Dispatch_Items_Priority_Queue::ITERATOR PRIO_QUEUE_ITERATOR;
+    using PRIO_QUEUE_ITERATOR = typename Dispatch_Items_Priority_Queue::ITERATOR;
 
-    typedef typename
-    Dispatch_Items_Priority_Queue::ENTRY PRIO_QUEUE_ENTRY;
+    using PRIO_QUEUE_ENTRY = typename Dispatch_Items_Priority_Queue::ENTRY;
 
     // Hash map related typedefs
-    typedef ACE_Hash_Map_Manager_Ex<Guid_t,
-                                    RB_Tree_Dispatch_Item_Node*,
-                                    Guid_Hash,
-                                    ACE_Equal_To<Guid_t>,
-                                    ACE_SYNCH_NULL_MUTEX>
-    Dispatch_Items_Hash_Map;
+    using Dispatch_Items_Hash_Map =
+      ACE_Hash_Map_Manager_Ex<Guid_t,
+                              RB_Tree_Dispatch_Item_Node *,
+                              Guid_Hash,
+                              ACE_Equal_To<Guid_t>,
+                              ACE_SYNCH_NULL_MUTEX>;
 
-    typedef ACE_Hash_Map_Iterator_Ex<Guid_t,
-                                     RB_Tree_Dispatch_Item_Node*,
-                                     Guid_Hash,
-                                     ACE_Equal_To<Guid_t>,
-                                     ACE_SYNCH_NULL_MUTEX>
-    Dispatch_Items_Hash_Map_Iterator;
+    using Dispatch_Items_Hash_Map_Iterator =
+      ACE_Hash_Map_Iterator_Ex<Guid_t,
+                               RB_Tree_Dispatch_Item_Node *,
+                               Guid_Hash,
+                               ACE_Equal_To<Guid_t>,
+                               ACE_SYNCH_NULL_MUTEX>;
 
-    typedef ACE_Hash_Map_Entry <Guid_t,
-                                RB_Tree_Dispatch_Item_Node*>
-    Dispatch_Items_Hash_Map_Entry;
+    using Dispatch_Items_Hash_Map_Entry =
+      ACE_Hash_Map_Entry<Guid_t, RB_Tree_Dispatch_Item_Node *>;
 
     /**
      * Lock used to protect the state of the scheduler queue. A
