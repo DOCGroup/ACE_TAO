@@ -28,6 +28,8 @@
 
 #include "orbsvcs/PortableGroup/portablegroup_export.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Note [] as sizeof used to infer length
@@ -124,7 +126,7 @@ private:
 protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
-  ACE_INET_Addr *addrs_ {};
+  std::unique_ptr<ACE_INET_Addr[]> addrs_;
 
   /**
    * Cache the information about the endpoints serviced by this
@@ -133,7 +135,7 @@ protected:
    * example, if the IP address is INADDR_ANY (0.0.0.0) then there
    * will be possibly a different hostname for each interface.
    */
-  char **hosts_ {};
+  std::unique_ptr<char *[]> hosts_;
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).

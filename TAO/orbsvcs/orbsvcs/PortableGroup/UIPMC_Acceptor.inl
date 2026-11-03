@@ -20,7 +20,7 @@ TAO_UIPMC_Acceptor::endpoints ()
 {
   ACE_ASSERT (this->addrs_ != nullptr);
 
-  return this->addrs_;
+  return this->addrs_.get ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
