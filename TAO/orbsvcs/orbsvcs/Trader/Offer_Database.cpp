@@ -2,9 +2,9 @@
 #define TAO_OFFER_DATABASE_CPP
 
 #include "orbsvcs/Trader/Offer_Database.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <string>
 
@@ -271,7 +271,7 @@ parse_offer_id (char const* offer_id,
 
   // Convert the fixed-width numeric prefix without modifying offer_id.
   std::string id_string (offer_id, 16);
-  id = ACE_OS::atoi (id_string.c_str ());
+  id = std::atoi (id_string.c_str ());
 
   if (! TAO_Trader_Base::is_valid_identifier_name (service_type))
     throw CosTrading::IllegalOfferId (offer_id);
@@ -279,21 +279,13 @@ parse_offer_id (char const* offer_id,
 
 template <class LOCK_TYPE> CosTrading::OfferId
 TAO_Offer_Database<LOCK_TYPE>::
-generate_offer_id (const char *service_type_name, CORBA::ULong id)
+generate_offer_id (char const* service_type_name, CORBA::ULong id)
 {
-  // holds final id string.
-  size_t total_size = 16 + std::strlen (service_type_name);
-
-  // hold portions of id string.
+  std::size_t const total_size = 16 + std::strlen (service_type_name);
   CosTrading::OfferId offer_id =
-     CORBA::string_alloc (static_cast<CORBA::ULong> (total_size));
-  char* return_value = nullptr;
-  ACE_OS::sprintf (offer_id, "%016u%s", id, service_type_name);
-
-  return_value = CORBA::string_dup (offer_id);
-  delete [] offer_id;
-
-  return return_value;
+    CORBA::string_alloc (static_cast<CORBA::ULong> (total_size));
+  std::snprintf (offer_id, total_size + 1, "%016u%s", id, service_type_name);
+  return offer_id;
 }
 
 

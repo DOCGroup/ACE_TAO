@@ -114,7 +114,7 @@ private:
 
   /// Take in a service type name for the offer the current value of
   /// of the counter and generate an offer id.
-  static CosTrading::OfferId generate_offer_id (const char *type_name,
+  static CosTrading::OfferId generate_offer_id (char const* type_name,
                                                 CORBA::ULong id);
 
   /// Take in a previously generated offer id and return the type
