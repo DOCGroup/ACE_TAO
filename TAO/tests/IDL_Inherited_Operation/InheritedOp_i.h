@@ -8,13 +8,18 @@
 class Derived_i : public virtual POA_Outer::Derived
 {
 public:
-  Derived_i (CORBA::ORB_ptr orb);
+  explicit Derived_i (CORBA::ORB_ptr orb);
 
-  virtual void BaseOp ();
-  virtual void shutdown ();
+  void BaseOp () override;
+  void shutdown () override;
+
+  Derived_i (Derived_i const&) = delete;
+  Derived_i (Derived_i&&) = delete;
+  Derived_i& operator= (Derived_i const&) = delete;
+  Derived_i& operator= (Derived_i&&) = delete;
 
 private:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_ptr const orb_; // Borrowed; main keeps the ORB alive until the servant is released.
 };
 
 #endif // INHERITED_OP_I_H

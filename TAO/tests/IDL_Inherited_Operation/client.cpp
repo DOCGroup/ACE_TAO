@@ -1,13 +1,14 @@
 #include "InheritedOpC.h"
 #include "ace/Get_Opt.h"
+#include <string>
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -42,7 +43,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var const tmp = orb->string_to_object (ior.c_str ());
 
       target = Outer::Derived::_narrow (tmp.in ());
 
@@ -51,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("Nil Outer::Derived ")
                              ACE_TEXT ("reference <%s>\n"),
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
@@ -60,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::BAD_OPERATION&)
+  catch (CORBA::BAD_OPERATION const&)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("client - target operation ")
@@ -69,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy  ();
       return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("client - Exception caught:");
       target->shutdown ();
