@@ -44,7 +44,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 
           args.add (argv[0]);
           args.add (ACE_TEXT ("-p10011")); // Port number.
-          ACE_Service_Object *so =
+          ACE_Service_Object * const so =
             ACE_SVC_INVOKE (ACE_Naming_Context);
 
           if (so->init (args.argc (),

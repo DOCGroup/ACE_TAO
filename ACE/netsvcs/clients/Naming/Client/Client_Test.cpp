@@ -95,18 +95,18 @@ Client_Test::handle_input (ACE_HANDLE)
       ACE_OS::fgets (input, sizeof input, stdin);
 
       // get the key
-      if (0 != (temp_buf = ACE_OS::strtok (input, " ")))
+      if (nullptr != (temp_buf = ACE_OS::strtok (input, " ")))
         {
           ACE_OS::strcpy (buf1, temp_buf);
 
-          temp_buf = ACE_OS::strtok (0, " ");
+          temp_buf = ACE_OS::strtok (nullptr, " ");
 
           // get the value
           if (temp_buf)
             {
               ACE_OS::strcpy (buf2, temp_buf);
 
-              temp_buf = ACE_OS::strtok (0, " ");
+              temp_buf = ACE_OS::strtok (nullptr, " ");
 
               // get the type (if entered).
               if (temp_buf)
@@ -140,14 +140,14 @@ Client_Test::handle_input (ACE_HANDLE)
         {
           ACE_OS::strcpy (buf1, temp_buf);
 
-          temp_buf = ACE_OS::strtok (0, " ");
+          temp_buf = ACE_OS::strtok (nullptr, " ");
 
           // get the value
           if (temp_buf)
             {
               ACE_OS::strcpy (buf2, temp_buf);
 
-              temp_buf = ACE_OS::strtok (0, " ");
+              temp_buf = ACE_OS::strtok (nullptr, " ");
               // get the type (if entered)
               if (temp_buf)
                 {
@@ -358,7 +358,7 @@ Client_Test::list_names (const char *pattern)
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
 
-      for (ACE_NS_WString *name = 0;
+      for (ACE_NS_WString *name = nullptr;
            set_iterator.next (name) !=0;
            set_iterator.advance())
         ACE_DEBUG ((LM_DEBUG,
@@ -382,7 +382,7 @@ Client_Test::list_values (const char *pattern)
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
 
-      for (ACE_NS_WString *value = 0;
+      for (ACE_NS_WString *value = nullptr;
            set_iterator.next (value) !=0;
            set_iterator.advance())
         ACE_DEBUG ((LM_DEBUG,
@@ -406,7 +406,7 @@ Client_Test::list_types (const char *pattern)
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
 
-      for (ACE_NS_WString *type = 0;
+      for (ACE_NS_WString *type = nullptr;
            set_iterator.next (type) !=0;
            set_iterator.advance())
         ACE_DEBUG ((LM_DEBUG,
@@ -430,7 +430,7 @@ Client_Test::list_name_entries (const char *pattern)
     {
       ACE_BINDING_ITERATOR set_iterator (set);
 
-      for (ACE_Name_Binding *entry = 0;
+      for (ACE_Name_Binding *entry = nullptr;
            set_iterator.next (entry) !=0;
            set_iterator.advance())
         {
@@ -462,7 +462,7 @@ Client_Test::list_value_entries (const char *pattern)
   else
     {
       ACE_BINDING_ITERATOR set_iterator (set);
-      for (ACE_Name_Binding *entry = 0;
+      for (ACE_Name_Binding *entry = nullptr;
            set_iterator.next (entry) !=0;
            set_iterator.advance())
         {
@@ -495,7 +495,7 @@ Client_Test::list_type_entries (const char *pattern)
     {
       ACE_BINDING_ITERATOR set_iterator (set);
 
-      for (ACE_Name_Binding *entry = 0;
+      for (ACE_Name_Binding *entry = nullptr;
            set_iterator.next (entry) !=0;
            set_iterator.advance())
         {
@@ -516,8 +516,8 @@ Client_Test::list_type_entries (const char *pattern)
 int
 Client_Test::find (const char *key)
 {
-  char *value = 0;
-  char *type = 0;
+  char *value = nullptr;
+  char *type = nullptr;
 
   if (NAMING_CONTEXT ()->resolve (key, value, type) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,

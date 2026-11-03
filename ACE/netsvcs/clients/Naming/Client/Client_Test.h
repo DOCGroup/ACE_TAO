@@ -11,13 +11,18 @@ class Client_Test : public ACE_Event_Handler
 public:
   Client_Test ();
 
+  Client_Test (Client_Test const &) = delete;
+  Client_Test (Client_Test &&) = delete;
+  Client_Test &operator= (Client_Test const &) = delete;
+  Client_Test &operator= (Client_Test &&) = delete;
+
   int open ();
   // Cache reactor and then register self with reactor
 
   int close ();
   // Close things down and free up resources.
 
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
   // Handle user entered commands
 
   void list_options ();
@@ -58,8 +63,8 @@ public:
   // Find all types that match pattern
 
 private:
-  ACE_Name_Options *name_options_;
-  // Name Options associated with the Naming Context
+  ACE_Name_Options *name_options_ {};
+  // Borrowed from the dynamically loaded ACE_Naming_Context.
 
   void display_menu ();
   // Display user menu
