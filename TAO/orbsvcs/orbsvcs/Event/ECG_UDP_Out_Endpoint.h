@@ -23,7 +23,8 @@
 
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/SOCK_Dgram.h"
-#include "ace/Atomic_Op.h"
+
+#include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_INET_Addr;
@@ -69,7 +70,7 @@ public:
 
 private:
   /// The request id....
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,CORBA::ULong> request_id_generator_;
+  std::atomic<CORBA::ULong> request_id_generator_;
 
   /// The datagram....
   ACE_SOCK_Dgram dgram_;

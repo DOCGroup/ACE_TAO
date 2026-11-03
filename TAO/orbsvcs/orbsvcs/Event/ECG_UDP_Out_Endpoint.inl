@@ -14,7 +14,8 @@ TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint ()
 
 ACE_INLINE
 TAO_ECG_UDP_Out_Endpoint::TAO_ECG_UDP_Out_Endpoint (const TAO_ECG_UDP_Out_Endpoint& rhs)
-  : port_number_ (0),
+  : request_id_generator_ (rhs.request_id_generator_.load ()),
+    port_number_ (0),
     if_count_ (0),
     ifs_ (nullptr)
 {
