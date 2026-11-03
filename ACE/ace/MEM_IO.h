@@ -136,8 +136,8 @@ public:
                     const ACE_Time_Value *timeout) override;
 
 private:
-  Channel recv_channel_;
-  Channel send_channel_;
+  Channel recv_channel_ {};
+  Channel send_channel_ {};
 };
 #endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 

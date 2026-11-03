@@ -13,24 +13,18 @@ ACE_Reactive_MEM_IO::ACE_Reactive_MEM_IO ()
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
 ACE_INLINE
 ACE_MT_MEM_IO::Simple_Queue::Simple_Queue ()
-  : mq_ (0),
-    malloc_ (0)
+  : mq_ (nullptr),
+    malloc_ (nullptr)
 {
 }
 
 ACE_INLINE
-ACE_MT_MEM_IO::ACE_MT_MEM_IO ()
-{
-  this->recv_channel_.sema_ = 0;
-  this->recv_channel_.lock_ = 0;
-  this->send_channel_.sema_ = 0;
-  this->send_channel_.lock_ = 0;
-}
+ACE_MT_MEM_IO::ACE_MT_MEM_IO () = default;
 
 ACE_INLINE
 ACE_MT_MEM_IO::Simple_Queue::Simple_Queue (MQ_Struct *mq)
   : mq_ (mq),
-    malloc_ (0)
+    malloc_ (nullptr)
 {
 }
 
@@ -38,7 +32,7 @@ ACE_INLINE int
 ACE_MT_MEM_IO::Simple_Queue::init (MQ_Struct *mq,
                                    ACE_MEM_SAP::MALLOC_TYPE *malloc)
 {
-  if (this->mq_ != 0)
+  if (this->mq_ != nullptr)
     return -1;
 
   this->mq_ = mq;
@@ -54,7 +48,7 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
   ACE_TRACE ("ACE_Reactive_MEM_IO::get_buf_len");
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == nullptr)
     {
       return -1;
     }
@@ -78,8 +72,8 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
 // Send an n byte message to the connected socket.
 ACE_INLINE
 ACE_MEM_IO::ACE_MEM_IO ()
-  : deliver_strategy_ (0),
-    recv_buffer_ (0),
+  : deliver_strategy_ (nullptr),
+    recv_buffer_ (nullptr),
     buf_size_ (0),
     cur_offset_ (0)
 {
@@ -91,14 +85,14 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::fetch_recv_buf");
 
-  if (this->deliver_strategy_ == 0)
+  if (this->deliver_strategy_ == nullptr)
     return -1;
 
   // This method can only be called when <buf_size_> == <cur_offset_>.
   ACE_ASSERT (this->buf_size_ == this->cur_offset_);
 
   // We have done using the previous buffer, return it to malloc.
-  if (this->recv_buffer_ != 0)
+  if (this->recv_buffer_ != nullptr)
     this->deliver_strategy_->release_buffer (this->recv_buffer_);
 
   this->cur_offset_ = 0;
@@ -128,7 +122,7 @@ ACE_MEM_IO::send (const void *buf,
 {
   ACE_TRACE ("ACE_MEM_IO::send");
 
-  if (this->deliver_strategy_ == 0)
+  if (this->deliver_strategy_ == nullptr)
     {
       return 0;
     }
@@ -137,7 +131,7 @@ ACE_MEM_IO::send (const void *buf,
     this->deliver_strategy_->acquire_buffer (
       ACE_Utils::truncate_cast<ssize_t> (len));
 
-  if (sbuf == 0)
+  if (sbuf == nullptr)
     {
       return -1;                  // Memory buffer not initialized.
     }
