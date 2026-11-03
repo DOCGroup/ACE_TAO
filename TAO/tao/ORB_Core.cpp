@@ -210,7 +210,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     init_ref_map_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE),
     object_ref_table_ (),
     object_key_table_ (),
-    orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
+    orbid_ (orbid ? orbid : ""),
     resource_factory_ (nullptr),
     client_factory_ (nullptr),
     server_factory_ (nullptr),
@@ -300,8 +300,6 @@ TAO_ORB_Core::~TAO_ORB_Core ()
   delete this->thread_lane_resources_manager_;
 
   delete this->flushing_strategy_;
-
-  ACE_OS::free (this->orbid_);
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -1512,7 +1510,7 @@ TAO_ORB_Core::fini ()
     {
       ACE_CString message =
         "Exception caught in trying to shutdown ";
-      message += this->orbid_;
+      message += this->orbid_.c_str ();
       message += "\n";
 
       ex._tao_print_exception (message.c_str ());
@@ -1541,7 +1539,7 @@ TAO_ORB_Core::fini ()
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Destroying ORB <%C>\n"),
-                  this->orbid_));
+                  this->orbid_.c_str ()));
     }
 
   // Finalize lane resources.
@@ -2450,7 +2448,7 @@ TAO_ORB_Core::destroy ()
 
   // Now remove it from the ORB table so that it's ORBid may be
   // reused.
-  TAO::ORB_Table::instance ()->unbind (this->orbid_);
+  TAO::ORB_Table::instance ()->unbind (this->orbid_.c_str ());
 }
 
 void

@@ -43,6 +43,7 @@
 #include "ace/Service_Config.h"
 
 #include <atomic>
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Data_Block;
@@ -1095,7 +1096,7 @@ protected:
   TAO::ObjectKey_Table object_key_table_;
 
   /// The ORBid for this ORB.
-  char *orbid_;
+  std::string orbid_;
 
   /// Handle to the factory for resource information..
   TAO_Resource_Factory *resource_factory_;

@@ -343,7 +343,7 @@ TAO_ORB_Core::thread_per_connection_timeout (ACE_Time_Value &timeout) const
 ACE_INLINE const char *
 TAO_ORB_Core::orbid () const
 {
-  return this->orbid_;
+  return this->orbid_.c_str ();
 }
 
 ACE_INLINE void
