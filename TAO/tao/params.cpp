@@ -282,7 +282,7 @@ TAO_ORB_Parameters::preferred_interfaces (const char *s)
       // Append any valid string to those already specified
       // (by other -ORBPreferredInterfaces options that have been
       // seen previously)
-      if (this->pref_network_.length ())
+      if (!this->pref_network_.empty ())
         this->pref_network_+= ',';
       this->pref_network_+= s;
     }
