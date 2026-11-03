@@ -67,7 +67,7 @@ namespace TAO
       /// Initialization and termination methods.
       /// Constructor.
       /// {@
-      Connector (ACE::HTBP::Environment *ht_env);
+      explicit Connector (ACE::HTBP::Environment *ht_env);
 
       /// Destructor.
       ~Connector () override;

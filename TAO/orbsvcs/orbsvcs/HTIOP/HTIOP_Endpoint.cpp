@@ -74,9 +74,7 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     this->htid_ = htid;
 }
 
-TAO::HTIOP::Endpoint::~Endpoint ()
-{
-}
+TAO::HTIOP::Endpoint::~Endpoint () = default;
 
 int
 TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,

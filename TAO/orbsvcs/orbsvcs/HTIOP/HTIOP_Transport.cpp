@@ -30,9 +30,7 @@ TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
 {
 }
 
-TAO::HTIOP::Transport::~Transport ()
-{
-}
+TAO::HTIOP::Transport::~Transport () = default;
 
 ACE_Event_Handler *
 TAO::HTIOP::Transport::event_handler_i ()

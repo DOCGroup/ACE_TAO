@@ -31,9 +31,7 @@ TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
 {
 }
 
-TAO::HTIOP::Connector::~Connector ()
-{
-}
+TAO::HTIOP::Connector::~Connector () = default;
 
 int
 TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
