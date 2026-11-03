@@ -39,12 +39,15 @@
 class trapapp {
 public:
   trapapp(int argc, char **argv); // process command line args
-  int valid() const;             // verify transaction can proceed
+  bool valid() const;            // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
 private:
-  trapapp(const trapapp&);
+  trapapp (trapapp const &) = delete;
+  trapapp (trapapp &&) = delete;
+  trapapp &operator= (trapapp const &) = delete;
+  trapapp &operator= (trapapp &&) = delete;
 
   UdpAddress address_;
   Pdu pdu_;                                // construct a request Pdu
@@ -52,7 +55,7 @@ private:
   OctetStr community_;
   Snmp snmp_;
   UdpTarget target_;
-  int valid_;
+  bool valid_;
 };
 
 
@@ -68,11 +71,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 1;
 }
 
-int trapapp::valid() const
+bool trapapp::valid() const
 {
  return valid_;
 }
-trapapp::trapapp(int argc, char *argv[]): valid_(0)
+trapapp::trapapp(int argc, char *argv[]): valid_(false)
 {
    Oid def_ent_oid("1.3.6.1.2.1.1.1.2.0.1");      // def enterprise oid
    Oid ent, trap; // user specified values
@@ -105,7 +108,7 @@ trapapp::trapapp(int argc, char *argv[]): valid_(0)
 
        case 't': // trap oid
          trap = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         break;;
+         break;
 
        default:
          break;
@@ -127,7 +130,7 @@ trapapp::trapapp(int argc, char *argv[]): valid_(0)
   pdu_ += vb;
 
   pdu_.get_notify_id(oid_); // store for later use
-  valid_ = 1;
+  valid_ = true;
 }
 
 void trapapp::usage()
