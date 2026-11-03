@@ -4,9 +4,9 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  const ACEXML_Char* test = ACE_TEXT("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd");
+  ACEXML_Char const *test = ACE_TEXT ("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd");
 
-  const ACEXML_Char* simple = ACE_TEXT("http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent");
+  ACEXML_Char const *simple = ACE_TEXT ("http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent");
 
   ACEXML_HttpCharStream first;
   ACEXML_HttpCharStream second;
@@ -19,7 +19,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     }
   else
     {
-      first.close();
+      first.close ();
       ACE_ERROR ((LM_ERROR, "Error in opening stream : %m\n"));
     }
   if (second.open (simple) != -1)
@@ -29,10 +29,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     }
   else
     {
-      second.close();
+      second.close ();
       ACE_ERROR ((LM_ERROR, "Error in opening stream : %m\n"));
     }
-  first.close();
-  second.close();
+  first.close ();
+  second.close ();
   return 0;
 }

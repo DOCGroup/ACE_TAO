@@ -2,8 +2,8 @@
 
 #include "ACEXML/common/Transcode.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
+#include <cstring>
 
 void dump_utf16 (const ACEXML_UTF16 *data, size_t len)
 {
@@ -37,7 +37,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 //      0x1000, 0x2000, 0x4000, 0x8000, 0 }
   ACEXML_UCS4 temp = 1;
 
-  ACE_OS::memset (org, 0, sizeof org);
+  std::memset (org, 0, sizeof org);
   size_t x;
 
   for (x = 0; temp < 0x10000; x++, temp <<= 1)
@@ -50,16 +50,16 @@ ACE_TMAIN (int, ACE_TCHAR*[])
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
 
   ACEXML_UTF8 decoded [MAXPATHLEN];
-  ACE_OS::memset (decoded, 0, sizeof decoded);
+  std::memset (decoded, 0, sizeof decoded);
 
   ACEXML_Transcoder::utf16s2utf8s (org, decoded, MAXPATHLEN);
 
   ACE_DEBUG ((LM_DEBUG, "Transcoded UTF8 string:\n"));
-  ACE_HEX_DUMP ((LM_DEBUG, decoded, ACE_OS::strlen (decoded) + 1));
+  ACE_HEX_DUMP ((LM_DEBUG, decoded, std::strlen (decoded) + 1));
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
 
   ACEXML_UTF16 after [18];
-  ACE_OS::memset (after, 0, sizeof after);
+  std::memset (after, 0, sizeof after);
   ACEXML_Transcoder::utf8s2utf16s (decoded, after, 18);
 
   ACE_DEBUG ((LM_DEBUG, "Restored UTF16 string:\n"));
