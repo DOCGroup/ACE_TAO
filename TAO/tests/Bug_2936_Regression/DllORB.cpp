@@ -12,32 +12,29 @@ DllORB::DllORB ()
 }
 
 
-DllORB::~DllORB ()
-{
-  delete mp_barrier_;
-}
+DllORB::~DllORB () = default;
 
 
 int
 DllORB::init (int argc, ACE_TCHAR *argv[])
 {
-  int threadCnt = 1;
+  int thread_count {1};
 
   try
     {
       ACE_Arg_Shifter as (argc, argv);
-      ACE_TCHAR const *currentArg = nullptr;
+      ACE_TCHAR const *current_arg {};
       while (as.is_anything_left ())
         {
-          if ((currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
+          if ((current_arg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
             {
-              int num = ACE_OS::atoi (currentArg);
-              if (num >= 1)
-                threadCnt = num;
+              int const num_threads = ACE_OS::atoi (current_arg);
+              if (num_threads >= 1)
+                thread_count = num_threads;
               as.consume_arg ();
             }
-        else
-          as.ignore_arg ();
+          else
+            as.ignore_arg ();
         }
 
       if (failPrePostInit_ < 3)
@@ -55,9 +52,9 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
           // (dangling) references to instances of objects created by this
           // module and destroyed by this object when it is dynamically
           // unloaded.
-          int register_with_object_manager = 0;
-          TAO_Singleton_Manager *p_tsm = TAO_Singleton_Manager::instance ();
-          int result = p_tsm->init (register_with_object_manager);
+          int const register_with_object_manager = 0;
+          TAO_Singleton_Manager * const p_tsm = TAO_Singleton_Manager::instance ();
+          int const result = p_tsm->init (register_with_object_manager);
 
           if (result == -1)
             {
@@ -93,7 +90,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      CORBA::Object_var v_poa =
+      CORBA::Object_var const v_poa =
         mv_orb_->resolve_initial_references ("RootPOA");
 
       mv_rootPOA_ = PortableServer::POA::_narrow (v_poa.in ());
@@ -118,9 +115,9 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  mp_barrier_ = new ACE_Thread_Barrier (threadCnt + 1);
+  mp_barrier_ = std::make_unique<ACE_Thread_Barrier> (thread_count + 1);
 
-  this->activate (THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED, threadCnt);
+  this->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_count);
   mp_barrier_->wait ();
 
   return 0;
@@ -149,8 +146,7 @@ DllORB::fini ()
   // wait for our threads to finish
   this->wait ();
 
-  delete mp_barrier_;
-  mp_barrier_ = nullptr;
+  mp_barrier_.reset ();
 
   try
     {
@@ -171,8 +167,8 @@ DllORB::fini ()
       // -----------------------------------------------------------------
       // Explicitly clean up singletons created by TAO before
       // unloading this module.
-      TAO_Singleton_Manager *p_tsm = TAO_Singleton_Manager::instance ();
-      int result = p_tsm->fini ();
+      TAO_Singleton_Manager * const p_tsm = TAO_Singleton_Manager::instance ();
+      int const result = p_tsm->fini ();
       if (result == -1)
         {
           if (failPrePostInit_ == 0)
@@ -203,11 +199,12 @@ DllORB::fini ()
 }
 
 
-int DllORB::svc ()
+int
+DllORB::svc ()
 {
   mp_barrier_->wait ();
 
-  int result = 0;
+  int result {};
 
   try
     {

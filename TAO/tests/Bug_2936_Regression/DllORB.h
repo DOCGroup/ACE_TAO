@@ -1,6 +1,8 @@
 #ifndef DLLORB_H
 #define DLLORB_H
 
+#include <memory>
+
 #include "ace/Task.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -15,6 +17,10 @@ class bug2936_Export DllORB : public ACE_Task_Base
 public:
   DllORB ();
   ~DllORB () override;
+  DllORB (DllORB const &) = delete;
+  DllORB &operator= (DllORB const &) = delete;
+  DllORB (DllORB &&) = delete;
+  DllORB &operator= (DllORB &&) = delete;
 
   inline CORBA::ORB_ptr orb () const
   {
@@ -29,10 +35,10 @@ protected:
   int svc () override;
 
 private:
-  unsigned int                   failPrePostInit_;
-  ACE_Thread_Barrier *mp_barrier_ {};
-  CORBA::ORB_var                 mv_orb_;
-  PortableServer::POA_var        mv_rootPOA_;
+  unsigned int const failPrePostInit_;
+  std::unique_ptr<ACE_Thread_Barrier> mp_barrier_ {};
+  CORBA::ORB_var mv_orb_;
+  PortableServer::POA_var mv_rootPOA_;
   PortableServer::POAManager_var mv_poaManager_;
 };
 

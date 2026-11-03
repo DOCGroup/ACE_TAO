@@ -13,6 +13,10 @@ class bug2936_Export PersistentPoa : public ACE_Service_Object
 public:
   /// Default constructor.
   PersistentPoa () = default;
+  PersistentPoa (PersistentPoa const &) = delete;
+  PersistentPoa &operator= (PersistentPoa const &) = delete;
+  PersistentPoa (PersistentPoa &&) = delete;
+  PersistentPoa &operator= (PersistentPoa &&) = delete;
 
   /// Destructor.
   ~PersistentPoa () noexcept override;
