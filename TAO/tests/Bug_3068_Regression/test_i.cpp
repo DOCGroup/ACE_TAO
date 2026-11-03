@@ -1,3 +1,5 @@
+#include <atomic>
+
 #include "test_i.h"
 
 #include "tao/ORB_Core.h"
@@ -20,7 +22,7 @@ Callback_i::shutdown ()
 void
 Callback_i::callback_method (CORBA::OctetSeq const &)
 {
-  static int count = 0;
+  static std::atomic<int> count {};
   if (count++ > 0)
     ACE_OS::exit (0);
 }
@@ -43,21 +45,20 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback)
 void
 Simple_Server_i::ow_test ()
 {
-  int iter = this->ow_count_++;
+  int const iter = this->ow_count_++;
   ACE_DEBUG ((LM_DEBUG, "%t: Invoking ow test, iter = %d\n", iter));
 }
 
 void
 Simple_Server_i::callback_object (Callback_ptr callback)
 {
-  this->caller_ = new Caller (callback, orb_.in ());
+  this->caller_ = std::make_unique<Caller> (callback, orb_.in ());
 }
 
 Caller::Caller (Callback_ptr callback, CORBA::ORB_ptr orb)
   : cbobj_ (Callback::_duplicate (callback))
   , orb_ (CORBA::ORB::_duplicate (orb))
   , cond_ (this->lock_)
-  , going_ (false)
 {
   this->payload_.length (0);  // 10000
   this->activate (THR_JOINABLE | THR_NEW_LWP, 4);
@@ -68,20 +69,20 @@ Caller::Caller (Callback_ptr callback, CORBA::ORB_ptr orb)
 void
 Caller::go ()
 {
-  this->lock_.acquire ();
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
   this->going_ = true;
   this->cond_.broadcast ();
-  this->lock_.release ();
 }
 
 int
 Caller::svc ()
 {
-  this->lock_.acquire ();
-  ACE_DEBUG ((LM_DEBUG, "%t Getting ready to call\n"));
-  while (!this->going_)
-    this->cond_.wait ();
-  this->lock_.release ();
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, -1);
+    ACE_DEBUG ((LM_DEBUG, "%t Getting ready to call\n"));
+    while (!this->going_)
+      this->cond_.wait ();
+  }
   try
     {
       while (true)

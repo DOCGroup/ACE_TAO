@@ -5,17 +5,16 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
-
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+#include "tao/Utils/PolicyList_Destroyer.h"
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -33,11 +32,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -45,40 +45,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      // Policies for the childPOA to be created.
-      CORBA::PolicyList policies (1);
-      policies.length (1);
+      PortableServer::POA_var child_poa;
+      {
+        // Policies for the childPOA to be created.
+        TAO::Utils::PolicyList_Destroyer policies (1);
+        policies.length (1);
 
-      CORBA::Any pol;
-      pol <<= BiDirPolicy::BOTH;
-      policies[0] =
-        orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE, pol);
+        CORBA::Any pol;
+        pol <<= BiDirPolicy::BOTH;
+        policies[0] =
+          orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE, pol);
 
-      // Create POA as child of RootPOA with the above policies.  This POA
-      // will receive request in the same connection in which it sent
-      // the request
-      PortableServer::POA_var child_poa =
-        root_poa->create_POA ("childPOA", poa_manager.in (), policies);
-
-      // Creation of childPOA is over. Destroy the Policy objects.
-      for (CORBA::ULong i = 0; i < policies.length (); ++i)
-        {
-          policies[i]->destroy ();
-        }
+        // Create the child POA so callbacks use their existing connection.
+        child_poa = root_poa->create_POA ("childPOA", poa_manager.in (), policies);
+      }
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var object = orb->string_to_object (ior);
+      CORBA::Object_var const object = orb->string_to_object (ior);
 
-      Simple_Server_var server = Simple_Server::_narrow (object.in ());
+      Simple_Server_var const server = Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -88,42 +82,43 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
+      // The POA borrows this stack servant until root_poa->destroy() completes.
       Callback_i callback_impl (orb.in ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("client_callback");
 
       child_poa->activate_object_with_id (id.in (), &callback_impl);
 
-      CORBA::Object_var callback_object =
+      CORBA::Object_var const callback_object =
         child_poa->id_to_reference (id.in ());
 
-      Callback_var callback = Callback::_narrow (callback_object.in ());
+      Callback_var const callback = Callback::_narrow (callback_object.in ());
 
-      CORBA::String_var ior = orb->object_to_string (callback.in ());
+      CORBA::String_var const callback_ior = orb->object_to_string (callback.in ());
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client callback activated as <%C>\n",
-                            ior.in ()));
+                            callback_ior.in ()));
 
       // Send the callback object to the server
       server->callback_object (callback.in ());
 
-      int pre_call_connections =
+      int const pre_call_connections =
         orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
 
       // A method to kickstart callbacks from the server
-      CORBA::Long r = server->test_method (1);
+      CORBA::Long const result = server->test_method (1);
 
-      if (r != 0)
+      if (result != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) unexpected result = %d ",
-                      r));
+                      result));
         }
 
       orb->run ();
 
-      int cur_connections =
+      int const cur_connections =
         orb->orb_core ()->lane_resources ().transport_cache ().current_size ();
 
       if (cur_connections > pre_call_connections)
