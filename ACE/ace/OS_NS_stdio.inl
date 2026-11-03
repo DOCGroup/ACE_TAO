@@ -1036,37 +1036,6 @@ ACE_OS::vfprintf (FILE *fp, const wchar_t *format, va_list argptr)
 }
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE int
-ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
-{
-# if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
-      defined (ACE_HAS_VSWPRINTF) || \
-      (defined (_MSC_VER))
-
-  // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
-  // maxlen argument. Since this method doesn't supply one, pass in
-  // a length that works (ULONG_MAX doesn't on all platform since some check
-  // to see if the operation will remain in bounds). If this isn't ok, use
-  // ACE_OS::snprintf().
-  return vswprintf (buffer, 4096, format, argptr);
-
-# elif defined (ACE_WIN32)
-  // Windows has vswprintf, but the pre-VC8 signature is from the older
-  // ISO C standard. Also see ACE_OS::snprintf() for more info on this.
-
-  return vswprintf (buffer, format, argptr);
-
-# else
-  ACE_UNUSED_ARG (buffer);
-  ACE_UNUSED_ARG (format);
-  ACE_UNUSED_ARG (argptr);
-  ACE_NOTSUP_RETURN (-1);
-
-# endif /* XPG5 */
-}
-#endif /* ACE_HAS_WCHAR */
-
 ACE_INLINE int
 ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
 {
