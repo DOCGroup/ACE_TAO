@@ -2,8 +2,10 @@
 #include "tao/OctetSeqC.h"
 #include "tao/PI/ClientRequestInfo.h"
 #include "MessengerC.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 #include <iostream>
+#include <memory>
 
 constexpr CORBA::ULong service_ctx_id = 0xdeed;
 
@@ -17,10 +19,6 @@ ClientInterceptor (Messenger_var theMessenger,
   this->messenger = theMessenger;
   this->pic = thePic;
   this->slot = theSlot;
-}
-
-ClientInterceptor::~ClientInterceptor ()
-{
 }
 
 char *
@@ -55,17 +53,18 @@ ClientInterceptor::send_request (
 
   char const user_name[] = "Ron Klein";
   std::cout << "User's Name: " << user_name << std::endl;
-  CORBA::ULong string_len = sizeof (user_name) + 1;
-  CORBA::Octet * buf = nullptr;
-  buf = new CORBA::Octet [string_len];
+  CORBA::ULong const string_len = sizeof (user_name);
+  std::unique_ptr<CORBA::Octet[]> buf =
+    std::make_unique<CORBA::Octet[]> (string_len);
 
-  ACE_OS::strcpy (reinterpret_cast<char*> (buf), user_name);
+  std::strcpy (reinterpret_cast<char *> (buf.get ()), user_name);
 
-  sc.context_data.replace (string_len, string_len, buf, 1);
+  sc.context_data.replace (string_len, string_len, buf.get (), true);
+  buf.release ();
 
   // recursive call setup
-  CORBA::Any *recurse = ri->get_slot(slot);
-  CORBA::Long x;
+  CORBA::Any * const recurse = ri->get_slot (slot);
+  CORBA::Long x {};
   *recurse >>= x;
 
   CORBA::Any flag;
@@ -76,7 +75,8 @@ ClientInterceptor::send_request (
       pic->set_slot(slot, flag);
 
       // get server time
-      std::cout << "Server Time = " << messenger->get_time() << std::endl;
+      CORBA::String_var server_time = messenger->get_time ();
+      std::cout << "Server Time = " << server_time.in () << std::endl;
     }
   // Add this context to the service context list.
   ri->add_request_service_context (sc, false);

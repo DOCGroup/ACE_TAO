@@ -1,6 +1,7 @@
 #include "ServerInterceptor.h"
 #include "tao/PI_Server/ServerRequestInfoA.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 #include <iostream>
 
 constexpr IOP::ServiceId service_id = 0xdeed;
@@ -13,10 +14,6 @@ ServerInterceptor::ServerInterceptor ()
   : myname_ ("Server_Authentication_Interceptor")
 {
   std::cout << "Calling ServerInterceptor constructor." << std::endl;
-}
-
-ServerInterceptor::~ServerInterceptor ()
-{
 }
 
 char *
@@ -48,25 +45,25 @@ ServerInterceptor::receive_request (
   std::cout << "Calling receive_request()." << std::endl;
 
   if (ri->target_is_a(restricted_interfaces[0])){
-    IOP::ServiceId id = service_id;
+    IOP::ServiceId const id = service_id;
     // Check that the request service context can be retrieved.
     IOP::ServiceContext_var sc =
       ri->get_request_service_context (id);
 
-    CORBA::OctetSeq ocSeq = sc->context_data;
+    CORBA::OctetSeq const ocSeq = sc->context_data;
 
-    char const * buf =
+    char const * const buf =
       reinterpret_cast<char const *> (ocSeq.get_buffer ());
 
     for (unsigned int i=0; i<num_allowed_users; ++i) {
-      if (ACE_OS::strcmp (buf, allowed_users[i]) == 0)
+      if (std::strcmp (buf, allowed_users[i]) == 0)
         {
           permission_granted = true;
         }
     }
   }
 
-  if (permission_granted == true) {
+  if (permission_granted) {
     std::cout << "Permission Granted " << std::endl;
   }
   else {

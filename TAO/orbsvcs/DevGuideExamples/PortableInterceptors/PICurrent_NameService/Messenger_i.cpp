@@ -11,16 +11,6 @@
 #include "ace/OS_NS_time.h"
 #include <iostream>
 
-// Implementation skeleton constructor
-Messenger_i::Messenger_i ()
-  {
-  }
-
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-  {
-  }
-
 CORBA::Boolean Messenger_i::send_message (
     char const * user_name,
     char const * subject,
