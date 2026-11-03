@@ -720,9 +720,11 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   ACE_INET_Addr *if_addrs = nullptr;
   size_t if_cnt = 0;
 
-  if (ACE::get_ip_interfaces (if_cnt,
-                              if_addrs) != 0
-      && errno != ENOTSUP)
+  int const interface_result = ACE::get_ip_interfaces (if_cnt, if_addrs);
+  // The instantiation for this template is in tao/DIOP_Connector.cpp.
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
+
+  if (interface_result != 0 && errno != ENOTSUP)
     {
       // In the case where errno == ENOTSUP, if_cnt and if_addrs will
       // not be modified, and will each remain equal to zero.  This
@@ -740,10 +742,13 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
         }
 
       if_cnt = 1; // Force the network interface count to be one.
-      delete [] if_addrs;
-      ACE_NEW_RETURN (if_addrs,
+      safe_if_addrs.reset ();
+      ACE_INET_Addr *default_if_addrs = nullptr;
+      ACE_NEW_RETURN (default_if_addrs,
                       ACE_INET_Addr[if_cnt],
                       -1);
+      safe_if_addrs.reset (default_if_addrs);
+      if_addrs = safe_if_addrs.get ();
     }
 
   // Scan for the loopback interface since it shouldn't be included in
@@ -779,10 +784,6 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
         ++ipv6_ll;  // count link local addrs to exclude them afterwards
       }
 #endif /* ACE_HAS_IPV6 */
-
-  // The instantiation for this template is in
-  // tao/DIOP_Connector.cpp.
-  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
   bool ipv4_only = def_type == AF_INET;
