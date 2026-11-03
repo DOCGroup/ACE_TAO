@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "testC.h"
 
 #include "tao/Messaging/Messaging.h"
@@ -21,43 +20,44 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+#include <string>
 
 // Eager buffering option.
-static int eager_buffering = 0;
+static bool eager_buffering {};
 
 // Name of file contains ior.
-static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
+static std::basic_string<ACE_TCHAR> IOR = ACE_TEXT ("file://ior");
 
 // Default iterations.
-static u_long iterations = 20;
+static u_long iterations {20};
 
 // Default number of bytes to send as data.
-static CORBA::ULong data_bytes = 100000;
+static CORBA::ULong data_bytes {100000};
 
 // Default roundtrip timeout (in milli seconds).
-static long timeout = 500;
+static long timeout {500};
 
 // Default amount of work.
-static CORBA::ULong work = 3000;
+static CORBA::ULong work {3000};
 
 // Time interval between invocation (in milli seconds).
-static u_long interval = 500;
+static u_long interval {500};
 
 // Flag indicates whether to shutdown remote server or not upon client
 // shutdown.
-static int shutdown_server = 0;
+static bool shutdown_server {};
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ek:i:d:t:w:z:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'e':
-        eager_buffering = 1;
+        eager_buffering = true;
         break;
 
       case 'k':
@@ -85,7 +85,7 @@ parse_args (int argc, ACE_TCHAR **argv)
         break;
 
       case 'x':
-        shutdown_server = 1;
+        shutdown_server = true;
         break;
 
       case '?':
@@ -105,7 +105,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR == 0)
+  if (IOR.empty ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant\n"), -1);
 
@@ -125,7 +125,7 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object)
   else
     {
       policy_list.length (1);
-      TimeBase::TimeT rt_timeout = 10 * 1000 * timeout;
+      TimeBase::TimeT const rt_timeout = 10 * 1000 * timeout;
 
       CORBA::Any rt_timeout_any;
       rt_timeout_any <<= rt_timeout;
@@ -142,7 +142,7 @@ setup_policies (CORBA::ORB_ptr orb, test_ptr object)
       policy_list[0]->destroy ();
     }
 
-  Messaging::SyncScope sync =
+  Messaging::SyncScope const sync =
     eager_buffering ? Messaging::SYNC_NONE : TAO::SYNC_DELAYED_BUFFERING;
 
   CORBA::Any sync_any;
@@ -170,31 +170,32 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
+      int const parse_args_result = parse_args (argc, argv);
       if (parse_args_result != 0)
         return parse_args_result;
 
       // Get an object reference from the argument string.
-      CORBA::Object_var object =
-        orb->string_to_object (IOR);
+      CORBA::Object_var const object =
+        orb->string_to_object (IOR.c_str ());
 
       // Try to narrow the object reference to a <test> reference.
-      test_var test_object_no_policy = test::_narrow (object.in ());
+      test_var const test_object_no_policy = test::_narrow (object.in ());
 
       // Setup buffering and timeout
-      test_var test_object = setup_policies (orb.in (),
-                                             test_object_no_policy.in ());
+      test_var const test_object = setup_policies (orb.in (),
+                                                   test_object_no_policy.in ());
 
       test::data the_data (data_bytes);
       the_data.length (data_bytes);
 
       for (CORBA::ULong i = 1; i <= iterations; ++i)
         {
-          ACE_Time_Value start = ACE_OS::gettimeofday (), end;
+          ACE_Time_Value const start = ACE_OS::gettimeofday ();
+          ACE_Time_Value end;
           try
             {
               // Invoke the oneway method.
@@ -215,7 +216,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               // connection will be made initially.
               orb->run (sleep_interval);
             }
-          catch (const CORBA::TIMEOUT& )
+          catch (CORBA::TIMEOUT const &)
             {
               // The timeout could be from a previous loop.
               // A simplistic analysis could incorrectly conclude
@@ -234,7 +235,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (shutdown_server)
         {
           ACE_DEBUG ((LM_DEBUG,"client killing server\n"));
-          long now = ACE_OS::gettimeofday ().msec ();
+          long const now = ACE_OS::gettimeofday ().msec ();
           test_object_no_policy->shutdown (now);
         }
 
@@ -248,7 +249,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // queues before main() ends.
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Client side exception caught:");
       return -1;

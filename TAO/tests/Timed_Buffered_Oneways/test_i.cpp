@@ -9,10 +9,8 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::method (CORBA::ULong request_number,
-                CORBA::Long start_time,
-                const test::data &,
-                CORBA::ULong work)
+test_i::method (CORBA::ULong request_number, CORBA::Long start_time,
+                test::data const &, CORBA::ULong work)
 {
   ACE_Time_Value start (0);
   start.msec (static_cast<long> (start_time));
@@ -23,7 +21,7 @@ test_i::method (CORBA::ULong request_number,
 
   // Time required to process this request. <work> is time units in
   // milli seconds.
-  ACE_Time_Value work_time (0, work * 1000);
+  ACE_Time_Value const work_time (0, work * 1000);
 
   ACE_OS::sleep (work_time);
 }
@@ -40,6 +38,6 @@ test_i::shutdown (CORBA::Long start_time)
   ACE_Time_Value start (0);
   start.msec (static_cast<long> (start_time));
   ACE_DEBUG ((LM_DEBUG, "server: Shutting down... (%dms)\n",
-              (ACE_OS::gettimeofday() - start).msec ()));
+              (ACE_OS::gettimeofday () - start).msec ()));
   this->orb_->shutdown (false);
 }
