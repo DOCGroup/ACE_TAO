@@ -28,10 +28,7 @@ TAO_RTEventLogNotification::TAO_RTEventLogNotification (
   obtainProxyConsumer ();
 }
 
-TAO_RTEventLogNotification::~TAO_RTEventLogNotification ()
-{
-  // No-Op.
-}
+TAO_RTEventLogNotification::~TAO_RTEventLogNotification () = default;
 
 void
 TAO_RTEventLogNotification::disconnect_push_supplier ()

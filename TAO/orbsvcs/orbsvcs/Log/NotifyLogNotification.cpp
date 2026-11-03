@@ -34,10 +34,7 @@ TAO_NotifyLogNotification::TAO_NotifyLogNotification (
   proxy_consumer_->connect_any_push_supplier (objref.in ());
 }
 
-TAO_NotifyLogNotification::~TAO_NotifyLogNotification ()
-{
-  // No-Op.
-}
+TAO_NotifyLogNotification::~TAO_NotifyLogNotification () = default;
 
 void
 TAO_NotifyLogNotification::send_notification (CORBA::Any const & any)

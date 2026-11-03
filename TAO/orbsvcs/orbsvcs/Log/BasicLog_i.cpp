@@ -12,13 +12,9 @@ TAO_BasicLog_i::TAO_BasicLog_i (CORBA::ORB_ptr orb,
   : TAO_Log_i (orb, logmgr_i, factory, id, nullptr),
     poa_ (PortableServer::POA::_duplicate (poa))
 {
-  // No-Op.
 }
 
-TAO_BasicLog_i::~TAO_BasicLog_i ()
-{
-  // No-Op.
-}
+TAO_BasicLog_i::~TAO_BasicLog_i () = default;
 
 DsLogAdmin::Log_ptr
 TAO_BasicLog_i::copy (DsLogAdmin::LogId_out id)

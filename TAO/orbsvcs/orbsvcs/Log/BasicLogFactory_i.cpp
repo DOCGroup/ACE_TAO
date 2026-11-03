@@ -3,9 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_BasicLogFactory_i::TAO_BasicLogFactory_i ()
-{
-}
+TAO_BasicLogFactory_i::TAO_BasicLogFactory_i () = default;
 
 TAO_BasicLogFactory_i::~TAO_BasicLogFactory_i () = default;
 

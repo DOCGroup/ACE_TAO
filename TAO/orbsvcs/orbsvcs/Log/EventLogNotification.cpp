@@ -13,10 +13,7 @@ TAO_EventLogNotification::TAO_EventLogNotification (
   obtain_proxy_consumer ();
 }
 
-TAO_EventLogNotification::~TAO_EventLogNotification ()
-{
-  // No-Op.
-}
+TAO_EventLogNotification::~TAO_EventLogNotification () = default;
 
 void
 TAO_EventLogNotification::disconnect_push_supplier ()

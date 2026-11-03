@@ -128,7 +128,7 @@ public:
 private:
   /// The PushConsumer that consumes the events and stores them
   /// in the log.
-  TAO_Notify_LogConsumer * my_log_consumer_;
+  TAO_Notify_LogConsumer * my_log_consumer_ {};
 
   /// The Event Channel that the log uses.
   CosNotifyChannelAdmin::EventChannel_var event_channel_;
