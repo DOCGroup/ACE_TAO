@@ -28,14 +28,20 @@ class Thread_Task : public Periodic_Task
 {
  public:
   /// Constructor
-  Thread_Task ();
+  Thread_Task () = default;
+
+  Thread_Task (Thread_Task const &) = delete;
+  Thread_Task (Thread_Task &&) = delete;
+  Thread_Task &operator= (Thread_Task const &) = delete;
+  Thread_Task &operator= (Thread_Task &&) = delete;
 
   /// Activate thread(s).
-  virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping);
+  int activate_task (ACE_Barrier *barrier,
+                     RTCORBA::PriorityMapping *priority_mapping) override;
 
  protected:
   /// task svc
-  virtual int svc ();
+  int svc () override;
 };
 
 #endif /* THREAD_TASK_H */

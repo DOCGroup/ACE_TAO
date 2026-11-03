@@ -17,6 +17,8 @@
 #include "tao/debug.h"
 #include "ace/High_Res_Timer.h"
 
+#include <memory>
+
 /**
  * @class Base_Time
  *
@@ -29,7 +31,7 @@ class Base_Time
   ACE_hrtime_t base_time_;
 };
 
-typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
+using BASE_TIME = ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
 
 /**
  * @class Task_Stats
@@ -40,10 +42,15 @@ class Task_Stats
 {
  public:
   /// Constructor
-  Task_Stats (size_t max_samples);
+  explicit Task_Stats (size_t max_samples);
 
   /// Destructor
-  ~Task_Stats ();
+  ~Task_Stats () = default;
+
+  Task_Stats (Task_Stats const &) = delete;
+  Task_Stats (Task_Stats &&) = delete;
+  Task_Stats &operator= (Task_Stats const &) = delete;
+  Task_Stats &operator= (Task_Stats &&) = delete;
 
   /// Init
   int init ();
@@ -57,7 +64,7 @@ class Task_Stats
   /// Record a sample
   int sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time);
 
-  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
+  void dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg,
                      ACE_High_Res_Timer::global_scale_factor_type scale_factor);
  protected:
   void dump_latency_stats (ACE_TCHAR *out_msg,
@@ -74,8 +81,8 @@ class Task_Stats
   ACE_UINT32 samples_count_;
 
   /// The samples : the time of invocation. and the recorded exec. time .
-  ACE_UINT64 *time_inv_;
-  ACE_UINT64 *time_exec_;
+  std::unique_ptr<ACE_UINT64[]> time_inv_;
+  std::unique_ptr<ACE_UINT64[]> time_exec_;
 
   /// The minimum value
   ACE_UINT64 exec_time_min_;

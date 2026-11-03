@@ -21,6 +21,8 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -42,6 +44,11 @@ class Activity
 private:
   Activity ();
   ~Activity ();
+
+  Activity (Activity const &) = delete;
+  Activity (Activity &&) = delete;
+  Activity &operator= (Activity const &) = delete;
+  Activity &operator= (Activity &&) = delete;
 
 public:
   /// initialize the ORB et. al.
@@ -89,13 +96,14 @@ protected:
   /// = Data members
 
   /// The Builder object.
-  Builder* builder_;
+  /// Borrowed from the Builder service object.
+  Builder *builder_ {};
 
   /// ACE_Barrier to synch. tasks.
-  ACE_Barrier* barrier_;
+  std::unique_ptr<ACE_Barrier> barrier_;
 
   /// Mutex to serialize access to our internal state.
-  ACE_Lock* state_lock_;
+  std::unique_ptr<ACE_Lock> state_lock_;
 
   /// The ORB that we use.
   CORBA::ORB_var orb_;
@@ -110,18 +118,19 @@ protected:
   PortableServer::POA_var root_poa_;
 
   /// A naming context.
-  CosNaming::NamingContextExt_ptr naming_;
+  CosNaming::NamingContextExt_var naming_;
 
   /// The Priority Mapping helper.
-  RTCORBA::PriorityMapping *priority_mapping_;
+  /// Borrowed from the priority mapping manager.
+  RTCORBA::PriorityMapping *priority_mapping_ {};
 
   /// Count the number of periodic tasks active.
-  int active_task_count_;
+  int active_task_count_ {};
 
   /// Count the number of Jobs active
-  int active_job_count_;
+  int active_job_count_ {};
 };
 
-typedef ACE_Singleton<Activity, ACE_Null_Mutex> ACTIVITY;
+using ACTIVITY = ACE_Singleton<Activity, ACE_Null_Mutex>;
 
 #endif /* ACTIVITY_H */

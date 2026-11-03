@@ -25,7 +25,12 @@ class POA_Holder
 {
  public:
   /// Constructor
-  POA_Holder ();
+  POA_Holder () = default;
+
+  POA_Holder (POA_Holder const &) = delete;
+  POA_Holder (POA_Holder &&) = delete;
+  POA_Holder &operator= (POA_Holder const &) = delete;
+  POA_Holder &operator= (POA_Holder &&) = delete;
 
   /// The arg_shifter options are read in the following manner: -POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
   int init (ACE_Arg_Shifter& arg_shifter);
@@ -39,8 +44,8 @@ class POA_Holder
 
   /// = POA create options.
   ACE_CString POA_name_;
-  RTCORBA::PriorityModel priority_model_;
-  RTCORBA::Priority server_priority_;
+  RTCORBA::PriorityModel priority_model_ {RTCORBA::CLIENT_PROPAGATED};
+  RTCORBA::Priority server_priority_ {};
   RTCORBA::ThreadpoolLanes lanes_;
   RTCORBA::PriorityBands bands_;
 };

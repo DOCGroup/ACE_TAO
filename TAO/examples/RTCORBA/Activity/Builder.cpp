@@ -6,19 +6,15 @@
 #include "Thread_Task.h"
 #include "Activity.h"
 
+#include <new>
+#include <utility>
+
 Builder::Builder()
   :poa_count_ (0),
-   poa_list_ (0),
    task_count_ (0),
-   task_list_ (0),
-   job_count_ (0),
-   job_list_ (0)
+   job_count_ (0)
 {
   ACTIVITY::instance()->builder (this);
-}
-
-Builder::~Builder()
-{
 }
 
 int
@@ -26,7 +22,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const *current_arg = nullptr;
 
   int task_count = 0;
   int poa_count = 0;
@@ -37,28 +33,31 @@ Builder::init (int argc, ACE_TCHAR *argv[])
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-TaskCount"))))
         {
           task_count_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (task_list_, Periodic_Task*[task_count_], -1);
-          ACE_OS::memset (this->task_list_,
-                          0,
-                          this->task_count_ * sizeof (this->task_list_[0]));
+          std::unique_ptr<Periodic_Task *[]> task_list (
+            new (std::nothrow) Periodic_Task *[task_count_] {});
+          if (!task_list)
+            return -1;
+          task_list_ = std::move (task_list);
           arg_shifter.consume_arg ();
         }
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobCount"))))
         {
           job_count_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (job_list_, Job_i*[job_count_], -1);
-          ACE_OS::memset (this->job_list_,
-                          0,
-                          this->job_count_ * sizeof (this->job_list_[0]));
+          std::unique_ptr<Job_i *[]> job_list (
+            new (std::nothrow) Job_i *[job_count_] {});
+          if (!job_list)
+            return -1;
+          job_list_ = std::move (job_list);
           arg_shifter.consume_arg ();
         }
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-POACount"))))
         {
           poa_count_ = ACE_OS::atoi (current_arg);
-          ACE_NEW_RETURN (poa_list_, POA_Holder*[poa_count_], -1);
-          ACE_OS::memset (this->poa_list_,
-                          0,
-                          this->poa_count_ * sizeof (this->poa_list_[0]));
+          std::unique_ptr<POA_Holder *[]> poa_list (
+            new (std::nothrow) POA_Holder *[poa_count_] {});
+          if (!poa_list)
+            return -1;
+          poa_list_ = std::move (poa_list);
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadTask")) == 0)
@@ -67,14 +66,14 @@ Builder::init (int argc, ACE_TCHAR *argv[])
             {
               arg_shifter.consume_arg ();
 
-              Periodic_Task *task = 0;
-
-              ACE_NEW_RETURN (task, Thread_Task (), -1);
+              Periodic_Task *task_pointer = nullptr;
+              ACE_NEW_RETURN (task_pointer, Thread_Task (), -1);
+              std::unique_ptr<Periodic_Task> task (task_pointer);
 
               if (task->init_task (arg_shifter) == -1)
                 return -1;
 
-              task_list_[task_count++] = task;
+              task_list_[task_count++] = task.release ();
             }
           else
             return -1;
@@ -85,14 +84,14 @@ Builder::init (int argc, ACE_TCHAR *argv[])
             {
               arg_shifter.consume_arg ();
 
-              Job_i *job;
-
-              ACE_NEW_RETURN (job, Job_i (), -1);
+              Job_i *job_pointer = nullptr;
+              ACE_NEW_RETURN (job_pointer, Job_i (), -1);
+              std::unique_ptr<Job_i> job (job_pointer);
 
               if (job->init (arg_shifter) == -1)
                 return -1;
 
-              this->job_list_[job_count++] = job;
+              this->job_list_[job_count++] = job.release ();
             }
           else
             return -1;
@@ -103,17 +102,14 @@ Builder::init (int argc, ACE_TCHAR *argv[])
             {
               arg_shifter.consume_arg ();
 
-              POA_Holder *poa_holder = 0;
-
-              ACE_NEW_RETURN (poa_holder, POA_Holder (), -1);
+              POA_Holder *poa_holder_pointer = nullptr;
+              ACE_NEW_RETURN (poa_holder_pointer, POA_Holder (), -1);
+              std::unique_ptr<POA_Holder> poa_holder (poa_holder_pointer);
 
               if (poa_holder->init (arg_shifter) == -1)
-                {
-                  delete poa_holder;
-                  return -1;
-                }
+                return -1;
 
-              this->poa_list_[poa_count++] = poa_holder;
+              this->poa_list_[poa_count++] = poa_holder.release ();
             }
           else
             return -1;
@@ -139,13 +135,13 @@ Builder::fini ()
 
   for (count = 0; count < this->task_count_; ++count)
     delete this->task_list_[count];
-  delete [] this->task_list_;
+  this->task_list_.reset ();
 
-  delete [] this->job_list_;
+  this->job_list_.reset ();
 
   for (count = 0; count < this->poa_count_; ++count)
     delete this->poa_list_[count];
-  delete [] this->poa_list_;
+  this->poa_list_.reset ();
 
   already_cleaned = true;
 
@@ -153,23 +149,23 @@ Builder::fini ()
 }
 
 int
-Builder::poa_list (POA_LIST& poa_list)
+Builder::poa_list (POA_LIST& poa_list) const
 {
-  poa_list = poa_list_;
+  poa_list = poa_list_.get ();
   return poa_count_;
 }
 
 int
-Builder::task_list (TASK_LIST& task_list)
+Builder::task_list (TASK_LIST& task_list) const
 {
-  task_list = task_list_;
+  task_list = task_list_.get ();
   return task_count_;
 }
 
 int
-Builder::job_list (JOB_LIST& job_list)
+Builder::job_list (JOB_LIST& job_list) const
 {
-  job_list = job_list_;
+  job_list = job_list_.get ();
   return job_count_;
 }
 
