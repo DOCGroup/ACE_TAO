@@ -1,13 +1,11 @@
 #include "brokenC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://broken.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -30,8 +28,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://broken.ior");
   ServerAdmin_var saobj;
   CORBA::ORB_var orb;
 
@@ -39,13 +38,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (ior);
 
-      saobj = ServerAdmin::_narrow (tmp.in());
+      saobj = ServerAdmin::_narrow (tmp.in ());
 
       if (CORBA::is_nil (saobj.in ()))
         {
@@ -55,22 +54,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      ArrayTest_var atobj = saobj->target();
+      ArrayTest_var const atobj = saobj->target ();
 
-      CharArray_var char_array = CharArray_alloc();
-      for (int i = 0; i < 10; ++i)
+      CharArray_var char_array = CharArray_alloc ();
+      for (int i {}; i < 10; ++i)
         char_array.inout ()[i] = static_cast<CORBA::Char> ('a' + i);
       atobj->a_charArray (char_array.in ());
 
       ACE_DEBUG ((LM_DEBUG, "a_charArray worked OK.\n"));
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
 
-  saobj->shutdown();
+  if (!CORBA::is_nil (saobj.in ()))
+    saobj->shutdown ();
 
-  orb->destroy ();
+  if (!CORBA::is_nil (orb.in ()))
+    orb->destroy ();
+
   return 0;
 }
