@@ -1,23 +1,24 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include <string>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
 int niterations = 10;
-int nthreads = 1;
-int do_shutdown = 0;
+constexpr int nthreads = 1;
+bool do_shutdown {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'x':
-        do_shutdown = 1;
+        do_shutdown = true;
         break;
 
       case 'k':
@@ -45,26 +46,31 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr orb);
   // Constructor
 
-  virtual void run_test ();
+  void run_test ();
   // The actual implementation of the test
 
   // = The Task_Base methods
-  virtual int svc ();
+  int svc () override;
+
+  Worker (Worker const&) = delete;
+  Worker (Worker&&) = delete;
+  Worker& operator= (Worker const&) = delete;
+  Worker& operator= (Worker&&) = delete;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   // The ORB reference
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
@@ -78,7 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "(%P|%t) Cannot activate worker threads\n"),
                           1);
 
-      ACE_Time_Value tv (5, 0);
+      ACE_Time_Value tv (5);
 
       orb->run (tv);
 
@@ -90,10 +96,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (do_shutdown)
         {
-          CORBA::Object_var object =
-            orb->string_to_object (ior);
+          CORBA::Object_var const object =
+            orb->string_to_object (ior.c_str ());
 
-          Simple_Server_var server =
+          Simple_Server_var const server =
             Simple_Server::_narrow (object.in ());
 
           server->shutdown ();
@@ -101,7 +107,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught in main:");
       return 1;
@@ -124,7 +130,7 @@ Worker::svc ()
     {
       this->run_test ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught in thread (%t)\n");
     }
@@ -137,33 +143,33 @@ Worker::run_test ()
 {
   for (int j = 0; j != niterations; ++j)
     {
-      CORBA::Object_var object =
-        this->orb_->string_to_object (ior);
+      CORBA::Object_var const object =
+        this->orb_->string_to_object (ior.c_str ());
 
-      CORBA::Boolean is_simple_server =
+      CORBA::Boolean const is_simple_server =
         object->_is_a ("IDL:Simple_Server:1.0");
       if (!is_simple_server)
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) unexpected result from _is_a()\n"));
     }
 
-  CORBA::Object_var object =
-    this->orb_->string_to_object (ior);
+  CORBA::Object_var const object =
+    this->orb_->string_to_object (ior.c_str ());
 
-  Simple_Server_var server =
+  Simple_Server_var const server =
     Simple_Server::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   "Object reference <%s> is nil.\n",
-                  ior));
+                  ior.c_str ()));
       return;
     }
 
   for (int i = 0; i != niterations; ++i)
     {
-      CORBA::Boolean r =
+      CORBA::Boolean const r =
         server->test_is_a ("IDL:Foo:1.0");
 
       if (r != 0)
