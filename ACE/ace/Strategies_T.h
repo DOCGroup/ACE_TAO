@@ -659,13 +659,13 @@ public:
   // = Scheduling methods
 
   /// Suspend hook.
-  virtual int suspend ();
+  virtual int suspend () override;
 
   /// Resume hook.
-  virtual int resume ();
+  virtual int resume () override;
 
   /// Dump the state of the object.
-  virtual void dump () const;
+  virtual void dump () const override;
 
 protected:
   /// Reactor
@@ -695,13 +695,13 @@ public:
   // = Scheduling methods
 
   /// Suspend hook.
-  virtual int suspend ();
+  virtual int suspend () override;
 
   /// Resume hook.
-  virtual int resume ();
+  virtual int resume () override;
 
   /// Dump the state of the object.
-  virtual void dump () const;
+  virtual void dump () const override;
 
 protected:
   /// Thread Manager
