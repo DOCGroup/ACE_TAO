@@ -1,6 +1,8 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int
@@ -28,22 +30,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
-
+}
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-    try
+  try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      BlobServer_var blob_server = BlobServer::_narrow (tmp.in ());
+      BlobServer_var const blob_server = BlobServer::_narrow (tmp.in ());
       if (CORBA::is_nil (blob_server.in ()))
       {
           ACE_ERROR_RETURN ((LM_DEBUG,
@@ -57,7 +59,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       BlobType1 blob1;
 
       blob1.length (16384);
-      for (CORBA::ULong i = 0; i < blob1.length (); ++i)
+      for (CORBA::ULong i {}; i < blob1.length (); ++i)
         {
           blob1[i] = static_cast<CORBA::Octet> (i & 0xff);
         }
@@ -68,7 +70,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - checking reply for ABCDEFGHIJ\n"));
 
-      for (CORBA::ULong i = 0; i < blob1.length (); ++i)
+      for (CORBA::ULong i {}; i < blob1.length (); ++i)
         {
           if (blob1[i] != static_cast<CORBA::Octet> ('A' + i))
             {
@@ -78,7 +80,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      for (CORBA::ULong i = 0; i < blob2.length (); ++i)
+      for (CORBA::ULong i {}; i < blob2.length (); ++i)
         {
          if (blob2[i] != static_cast<CORBA::Octet> ('A' + i))
            {
