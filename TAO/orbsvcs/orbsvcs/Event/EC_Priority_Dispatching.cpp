@@ -9,6 +9,8 @@
 
 #include "ace/Sched_Params.h"
 
+#include <cstdio>
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,7 +45,7 @@ TAO_EC_Priority_Dispatching::activate ()
           RtecScheduler::Period_t period =
             ACE_CU64_TO_CU32 (ACE_Scheduler_Rates[i]);
           char buf[128];
-          ACE_OS::sprintf (buf, "Dispatching_Task-%d.us", period);
+          std::sprintf (buf, "Dispatching_Task-%d.us", period);
 
           RtecScheduler::handle_t rt_info =
             this->scheduler_->create (buf);

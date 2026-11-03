@@ -8,6 +8,8 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstdio>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Kokyu_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
@@ -278,7 +280,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
         RtecBase::handle_t h_consumer_rt_info = qos.dependencies[pos].rt_info;
 
         //build a unique name using the cosumer_rt_info
-        ACE_OS::sprintf (buf, "TIMEOUT:%umsec:%d",
+        std::sprintf (buf, "TIMEOUT:%umsec:%d",
                          static_cast<u_int> ((e.header.creation_time / 10000)),
                          h_consumer_rt_info);
         ACE_CString name = buf;
@@ -430,7 +432,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
       pos++;
 
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%umsec",
+      std::sprintf (buf, "TIMEOUT:%umsec",
                        static_cast<u_int> ((e.header.creation_time / 10000)));
       name = buf;
 

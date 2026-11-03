@@ -27,6 +27,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -204,7 +206,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
           if (iorf != nullptr)
             {
-              ACE_OS::fprintf (iorf, "%s\n", ior.in ());
+              std::fprintf (iorf, "%s\n", ior.in ());
               ACE_OS::fclose (iorf);
             }
         }
@@ -214,7 +216,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
           FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
           if (pidf != nullptr)
             {
-              ACE_OS::fprintf (pidf,
+              std::fprintf (pidf,
                                "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
               ACE_OS::fclose (pidf);
@@ -334,7 +336,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
               if (iorf != nullptr)
                 {
-                  ACE_OS::fprintf (iorf, "%s\n", ior.in ());
+                  std::fprintf (iorf, "%s\n", ior.in ());
                   ACE_OS::fclose (iorf);
                 }
             }
@@ -344,7 +346,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
               if (pidf != nullptr)
                 {
-                  ACE_OS::fprintf (pidf,
+                  std::fprintf (pidf,
                                    "%ld\n",
                                    static_cast<long> (ACE_OS::getpid ()));
                   ACE_OS::fclose (pidf);

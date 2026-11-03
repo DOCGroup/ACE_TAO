@@ -8,6 +8,8 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstdio>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Sched_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
@@ -134,7 +136,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       // @@ We need a unique name for each timeout, assigned by the
       //    application?
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%u",
+      std::sprintf (buf, "TIMEOUT:%u",
                        static_cast<u_int> ((e.header.creation_time / 10000)));
       ACE_CString name = buf;
 
@@ -259,7 +261,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
       pos++;
 
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%u",
+      std::sprintf (buf, "TIMEOUT:%u",
                        static_cast<u_int> ((e.header.creation_time / 10000)));
       name = buf;
 
