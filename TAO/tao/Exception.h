@@ -26,10 +26,10 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_String.h"
-#include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
 #include "ace/CORBA_macros.h"
 
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
@@ -145,7 +145,7 @@ namespace CORBA
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    virtual ACE_CString _info () const = 0;
+    virtual std::string _info () const = 0;
 
     virtual void _tao_encode (TAO_OutputCDR &cdr) const = 0;
 
