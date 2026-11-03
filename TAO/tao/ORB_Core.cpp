@@ -930,7 +930,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // The this->server_id_ is to uniquely identify a server to
           // an IMR.
           // Fill in later.
-          this->server_id_.set(ACE_TEXT_ALWAYS_CHAR(current_arg));
+          this->server_id_ = ACE_TEXT_ALWAYS_CHAR(current_arg);
 
           arg_shifter.consume_arg ();
         }
@@ -1472,7 +1472,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   // Look in the service repository for an instance of the
   // Network Priority Protocol Hooks.
-  const ACE_CString &network_priority_protocols_hooks_name =
+  std::string const &network_priority_protocols_hooks_name =
      TAO_ORB_Core_Static_Resources::instance ()->
        network_priority_protocols_hooks_name_;
 
@@ -1657,7 +1657,7 @@ TAO_ORB_Core::resource_factory ()
     }
 
   // Look in the service repository for an instance.
-  ACE_CString &resource_factory_name =
+  std::string &resource_factory_name =
     TAO_ORB_Core_Static_Resources::instance ()->resource_factory_name_;
 
   this->resource_factory_ =

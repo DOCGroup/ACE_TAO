@@ -1102,7 +1102,7 @@ protected:
   TAO_Resource_Factory *resource_factory_;
 
   /// The server_id_ that was passed via -ORBServerId option
-  ACE_CString server_id_;
+  std::string server_id_;
 
   /// Handle to the factory for Client-side strategies.
   TAO_Client_Strategy_Factory *client_factory_;
@@ -1300,7 +1300,7 @@ public:
   /**
    * Name of the network_priority_protocols_hooks that needs to be instantiated.
   */
-  ACE_CString network_priority_protocols_hooks_name_;
+  std::string network_priority_protocols_hooks_name_;
 
   /// The hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook connection_timeout_hook_;
@@ -1311,7 +1311,7 @@ public:
    * linked, the set_resource_factory will be called to set the value
    * to be "Advanced_Resource_Factory".
    */
-  ACE_CString resource_factory_name_;
+  std::string resource_factory_name_;
 
   /**
    * Name of the service object for DII request creation that needs
@@ -1319,7 +1319,7 @@ public:
    * TAO_DynamicInterface is linked, dynamic_adapter_name() will be
    * called to set the value to "Concrete_Dynamic_Adapter".
    */
-  ACE_CString dynamic_adapter_name_;
+  std::string dynamic_adapter_name_;
 
   /**
    * Name of the service object for functions that make calls on
@@ -1327,7 +1327,7 @@ public:
    * If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
    * called to set the value to "Concrete_IFR_Client_Adapter".
    */
-  ACE_CString ifr_client_adapter_name_;
+  std::string ifr_client_adapter_name_;
 
   /**
    * Name of the service object used by the ORB create_*_tc functions.
@@ -1336,7 +1336,7 @@ public:
    * function typecodefactory_adapter_name() will be called to set
    * the value to "Concrete_TypeCodeFactory_Adapter".
    */
-  ACE_CString typecodefactory_adapter_name_;
+  std::string typecodefactory_adapter_name_;
 
   /**
    * Name of the factory object used to adapt function calls on
@@ -1346,7 +1346,7 @@ public:
    * function iorinterceptor_adapter_factory_name() will be called to set
    * the value to "Concrete_IORInterceptor_Adapter_Factory".
    */
-  ACE_CString iorinterceptor_adapter_factory_name_;
+  std::string iorinterceptor_adapter_factory_name_;
 
   /**
    * Name of the factory object used to adapt function calls on
@@ -1356,7 +1356,7 @@ public:
    * function valuetype_adapter_factory_name() will be called to set
    * the value to "Concrete_Valuetype_Adapter_Factory".
    */
-  ACE_CString valuetype_adapter_factory_name_;
+  std::string valuetype_adapter_factory_name_;
 
   /// An alternative hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;
