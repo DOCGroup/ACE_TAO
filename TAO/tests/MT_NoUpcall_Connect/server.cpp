@@ -64,15 +64,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var const intfString_var = orb_->object_to_string (intf_var.in ());
 
       // Output the IOR to the <ior_output_file>
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
-      if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_output_file.c_str ()),
-                          1);
-      ACE_OS::fprintf (output_file.get (), "%s", intfString_var.in ());
-      output_file.reset ();
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s\n",
+                             ior_output_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", intfString_var.in ());
+      }
 
       intf_i->set_upper (upper_ior);
 

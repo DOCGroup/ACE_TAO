@@ -58,7 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Keep the raw servant pointer until ownership transfers to ServantBase_var.
-      Hello *hello_impl = nullptr;
+      Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
@@ -76,15 +76,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
-      if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file.c_str ()),
-                          1);
-      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
-      output_file.reset ();
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 

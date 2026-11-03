@@ -76,20 +76,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var const ior = orb->object_to_string (derived.in ());
 
       // Output the IOR to the <ior_output_file>
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
-
-      if (!output_file)
-        {
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output ")
                              ACE_TEXT ("file for writing IOR: %s\n"),
                              ior_output_file.c_str ()),
-                             1);
-        }
-
-      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
-      output_file.reset ();
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
