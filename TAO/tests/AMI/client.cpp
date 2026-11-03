@@ -14,18 +14,21 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_test_i.h"
+#include <atomic>
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+namespace
+{
+ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 bool debug = false;
 bool shutdown_flag = false;
 bool perform_work_flag = true;
-int number_of_replies = 0;
+std::atomic<int> number_of_replies {};
 
 CORBA::Long in_number = 931232;
-char const *in_str = "Let's talk AMI.";
-bool parameter_corruption = false;
+char const* const in_str = "Let's talk AMI.";
+std::atomic<bool> parameter_corruption {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -69,6 +72,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
+}
 }
 
 
@@ -119,7 +123,7 @@ public:
       if (result == 0)
         {
           ACE_ERROR((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
-          parameter_corruption = true;
+          parameter_corruption.store (true);
         }
 
       if (debug)
@@ -130,7 +134,7 @@ public:
                       out_l));
         }
 
-      --number_of_replies;
+      number_of_replies.fetch_sub (1);
     };
 
   void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -239,7 +243,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
-      number_of_replies = nthreads *niterations;
+      number_of_replies.store (nthreads * niterations);
 
       if (perform_work_flag)
         {
@@ -247,12 +251,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                          number_of_replies));
+                          number_of_replies.load ()));
             }
 
           // ORB loop.
 
-          while (number_of_replies > 0)
+          while (number_of_replies.load () > 0)
             {
               CORBA::Boolean pending = orb->work_pending();
 
@@ -277,7 +281,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies));
+                      (nthreads * niterations) - number_of_replies.load ()));
         }
 
       if (shutdown_flag)
@@ -296,7 +300,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return parameter_corruption;
+  return parameter_corruption.load ();
 }
 
 // ****************************************************************

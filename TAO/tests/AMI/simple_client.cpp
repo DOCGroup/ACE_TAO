@@ -14,12 +14,16 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_testS.h"
+#include <atomic>
+#include <cstring>
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+namespace
+{
+ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 bool shutdown_flag = false;
 bool debug = false;
-int result = 0;
+std::atomic<int> result {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -56,6 +60,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
+}
 
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
@@ -85,14 +90,14 @@ public:
           ACE_ERROR ((LM_ERROR,
                       "ERROR: out_l not 931233: %d\n",
                       out_l));
-          result = 1;
+          result.store (1);
         }
       if (ami_return_val != 931234)
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: ami_return_val not 931234: %d\n",
                       ami_return_val));
-          result = 1;
+          result.store (1);
         }
     };
 
@@ -114,14 +119,14 @@ public:
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.id not 42: %d\n",
                           ex.id));
-              result = 1;
+              result.store (1);
             }
-          if (ACE_OS::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
+          if (std::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.whatDidTheRightThing not ok: <%C>\n",
                           ex.whatDidTheRightThing.in ()));
-              result = 1;
+              result.store (1);
             }
         }
       catch (CORBA::Exception const &ex)
@@ -318,5 +323,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return result;
+  return result.load ();
 }
