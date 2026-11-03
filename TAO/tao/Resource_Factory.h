@@ -27,8 +27,9 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
-#include "ace/SString.h"
 #include "ace/CDR_Base.h"
+
+#include <string>
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -55,7 +56,7 @@ class TAO_Export TAO_Protocol_Item
 public:
   /// Creator method, the protocol name can only be set when the
   /// object is created.
-  explicit TAO_Protocol_Item (ACE_CString const &name);
+  explicit TAO_Protocol_Item (std::string const &name);
 
   /// Destructor that deallocates the factory object if the
   /// Protocol_Item retains ownership.
@@ -63,7 +64,7 @@ public:
 
   /// Return a reference to the character representation of the protocol
   /// factories name.
-  const ACE_CString &protocol_name () const;
+  std::string const &protocol_name () const;
 
   /// Return a pointer to the protocol factory.
   TAO_Protocol_Factory *factory () const;
@@ -79,7 +80,7 @@ private:
 
 private:
   /// Protocol factory name.
-  ACE_CString name_;
+  std::string name_;
 
   /// Pointer to factory object.
   TAO_Protocol_Factory *factory_ {};

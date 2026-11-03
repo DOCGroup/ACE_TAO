@@ -354,7 +354,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
 
   for (; factory != end; factory++)
     {
-      const ACE_CString &name = (*factory)->protocol_name ();
+      std::string const &name = (*factory)->protocol_name ();
 
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));

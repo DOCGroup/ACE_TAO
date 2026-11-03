@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Protocol_Item::TAO_Protocol_Item (ACE_CString const &name)
+TAO_Protocol_Item::TAO_Protocol_Item (std::string const &name)
   : name_ (name)
 {
 }
@@ -16,7 +16,7 @@ TAO_Protocol_Item::~TAO_Protocol_Item ()
     delete this->factory_;
 }
 
-const ACE_CString &
+std::string const &
 TAO_Protocol_Item::protocol_name () const
 {
   return this->name_;
