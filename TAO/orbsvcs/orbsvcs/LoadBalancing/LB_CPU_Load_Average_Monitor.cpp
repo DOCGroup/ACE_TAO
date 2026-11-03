@@ -4,6 +4,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
+
+#include <cstdio>
 #if defined(__NetBSD__) || defined (__APPLE__)
 #include <sys/sysctl.h>
 #endif
@@ -29,7 +31,7 @@ TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
           // A 64 byte buffer is more than enough to contain the
           // string representation of a 32 bit unsigned integer.
           char buf[64] = { '\0' };
-          ACE_OS::sprintf (buf, "%u", t);
+          std::sprintf (buf, "%u", t);
 
           this->location_[0].id = CORBA::string_dup (buf);
           this->location_[0].kind = CORBA::string_dup ("Creation Time");

@@ -23,6 +23,7 @@
 #include "ace/OS_NS_stdio.h"
 
 #include <cstring>
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -835,7 +836,7 @@ TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
 
       // Overwrite the last 8 characters in the POA name with the
       // hexadecimal representation of the time in milliseconds.
-      ACE_OS::sprintf (astr, "%x", time);
+      std::sprintf (astr, "%x", time);
 
       this->poa_ = root_poa->create_POA (poa_name,
                                          poa_manager.in (),
