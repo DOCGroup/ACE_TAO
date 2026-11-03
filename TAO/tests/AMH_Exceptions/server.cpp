@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "TestS.h"
 #include "tao/ORB_Core.h"
+#include <memory>
 
 /***************************/
 /*** Servant Declaration ***/
@@ -43,10 +44,11 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp)
 {
   // Throw an overload exception
-  Test::ServerOverload *ts = new Test::ServerOverload;
-
-  // Caller owns the memory now.  Need not delete 'ts'
-  Test::AMH_RoundtripExceptionHolder holder (ts);
+  std::unique_ptr<Test::ServerOverload> exception =
+    std::make_unique<Test::ServerOverload> ();
+  Test::AMH_RoundtripExceptionHolder holder (exception.get ());
+  // The exception holder takes ownership of the exception.
+  exception.release ();
 
   try
     {
@@ -95,13 +97,13 @@ public:
 protected:
   int argc_;
   ACE_TCHAR **argv_;
-  ACE_TCHAR const *ior_output_file_ {ACE_TEXT ("test.ior")};
+  ACE_TCHAR const* ior_output_file_ {ACE_TEXT ("test.ior")};
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
 private:
   /// Write servant IOR to file specified with the '-o' option
-  int write_ior_to_file (CORBA::String_var ior);
+  int write_ior_to_file (CORBA::String_var const& ior);
 };
 
 /*** Server Declaration ***/
@@ -134,7 +136,6 @@ ST_AMH_Server::~ST_AMH_Server ()
     {
       ex._tao_print_exception ("Exception caught:");
     }
-
 }
 
 int
@@ -214,12 +215,12 @@ ST_AMH_Server::run_event_loop ()
 }
 
 int
-ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
+ST_AMH_Server::write_ior_to_file (CORBA::String_var const& ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file = ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
-                                     "w");
-  if (output_file == nullptr)
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (ST_AMH_Server::ior_output_file_, "w"), ACE_OS::fclose);
+  if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
@@ -227,8 +228,7 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
-  ACE_OS::fclose (output_file);
+  ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
   return 0;
 }
 
