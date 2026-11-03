@@ -37,18 +37,23 @@ HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS] =
 // null-terminated, and buflen does NOT include the \0.
 
 HTTP_Request::HTTP_Request ()
-  : got_request_line_ (0),
-    method_ (0),
-    uri_ (0),
-    version_ (0),
-    path_ (0),
-    cgi_ (0),
-    cgi_env_ (0),
-    cgi_args_ (0),
-    query_string_ (0),
-    path_info_ (0),
+  : got_request_line_ (false),
+    method_ (nullptr),
+    uri_ (nullptr),
+    version_ (nullptr),
+    path_ (nullptr),
+    cgi_ (false),
+    cgi_env_ (nullptr),
+    cgi_args_ (nullptr),
+    query_string_ (nullptr),
+    path_info_ (nullptr),
     header_strings_ (HTTP_Request::static_header_strings_),
-    method_strings_ (HTTP_Request::static_method_strings_)
+    method_strings_ (HTTP_Request::static_method_strings_),
+    data_ (nullptr),
+    datalen_ (0),
+    content_length_ (-1),
+    status_ (HTTP_Status_Code::STATUS_OK),
+    type_ (HTTP_Request::NO_TYPE)
 {
   for (size_t i = 0;
        i < HTTP_Request::NUM_HEADER_STRINGS;
@@ -98,7 +103,7 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
   mb.wr_ptr (ACE_OS::strlen(mb.rd_ptr ()) - mb.length ());
 
   if (this->headers_.end_of_headers ()
-      || (this->got_request_line () && this->version () == 0))
+      || (this->got_request_line () && this->version () == nullptr))
     return this->init (mb.rd_ptr (), mb.length ());
   else
     return 0;
@@ -127,21 +132,21 @@ HTTP_Request::parse_request_line (char *const request_line)
   *ptr = '\0';
   ptr += offset;
 
-  char *lasts = 0; // for strtok_r
+  char *lasts = nullptr; // for strtok_r
 
   // Get the request type.
-  this->got_request_line_ = 1;
+  this->got_request_line_ = true;
 
   if (this->method (ACE_OS::strtok_r (buf, " \t", &lasts))
-      && this->uri (ACE_OS::strtok_r (0, " \t", &lasts)))
+      && this->uri (ACE_OS::strtok_r (nullptr, " \t", &lasts)))
     {
       this->type (this->method ());
 
-      if (this->version (ACE_OS::strtok_r (0, " \t", &lasts)) == 0
+      if (this->version (ACE_OS::strtok_r (nullptr, " \t", &lasts)) == nullptr
           && this->type () != HTTP_Request::GET)
         this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
 
-      if (this->path (this->uri ()) == 0)
+      if (this->path (this->uri ()) == nullptr)
         this->status_ = HTTP_Status_Code::STATUS_NOT_FOUND;
     }
 
@@ -165,7 +170,7 @@ HTTP_Request::init (char *const buffer,
   datalen_ = 0;
 
   // Set the datalen
-  if (data_ != 0)
+  if (data_ != nullptr)
     datalen_ = buflen;
   else
     datalen_ = 0;
@@ -250,7 +255,7 @@ HTTP_Request::headers () const
 const char *
 HTTP_Request::header_strings (int index) const
 {
-  const char *hs = 0;
+  char const *hs = nullptr;
 
   if (0 <= index && index < NUM_HEADER_STRINGS)
     hs = this->header_strings_[index];
@@ -261,8 +266,8 @@ HTTP_Request::header_strings (int index) const
 const char *
 HTTP_Request::header_values (int index) const
 {
-  const char *hs = 0;
-  const char *hv = 0;
+  char const *hs = nullptr;
+  char const *hv = nullptr;
 
   if (0 <= index && index < NUM_HEADER_STRINGS)
     {
@@ -333,10 +338,10 @@ HTTP_Request::method (const char *method_string)
   if (this->method_)
     ACE_OS::free (this->method_);
 
-  if (method_string == 0)
+  if (method_string == nullptr)
     {
       this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
-      this->method_ = 0;
+      this->method_ = nullptr;
     }
   else
     this->method_ = ACE_OS::strdup (method_string);
@@ -350,10 +355,10 @@ HTTP_Request::uri (char *uri_string)
   if (this->uri_)
     ACE_OS::free (this->uri_);
 
-  if (uri_string == 0)
+  if (uri_string == nullptr)
     {
       this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
-      this->uri_ = 0;
+      this->uri_ = nullptr;
     }
   else
     {
@@ -374,7 +379,7 @@ HTTP_Request::version (const char *version_string)
   if (version_string)
     this->version_ = ACE_OS::strdup (version_string);
   else
-    this->version_ = 0;
+    this->version_ = nullptr;
 
   return this->version_;
 }
@@ -384,7 +389,7 @@ HTTP_Request::type (const char *type_string)
 {
   this->type_ = HTTP_Request::NO_TYPE;
 
-  if (type_string == 0)
+  if (type_string == nullptr)
     return this->type_;
 
   for (size_t i = 0;
@@ -406,13 +411,13 @@ HTTP_Request::type (const char *type_string)
 int
 HTTP_Request::cgi (char *uri_string)
 {
-  this->cgi_ = 0;
-  this->cgi_env_ = 0;
-  this->cgi_args_ = 0;
+  this->cgi_ = false;
+  this->cgi_env_ = nullptr;
+  this->cgi_args_ = nullptr;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi (%s)\n", uri_string));
 
-  if (uri_string == 0 || ACE_OS::strlen (uri_string) == 0)
+  if (uri_string == nullptr || ACE_OS::strlen (uri_string) == 0)
     return 0;
 
   // There are 2 cases where a file could be a CGI script
@@ -420,7 +425,7 @@ HTTP_Request::cgi (char *uri_string)
   // (1) the file has a CGI extension.
   // (2) the file resides in a CGI bin directory.
 
-  char *extra_path_info = 0;
+  char *extra_path_info = nullptr;
   if (this->cgi_in_path (uri_string, extra_path_info)
       || this->cgi_in_extension (uri_string, extra_path_info))
     {
@@ -451,10 +456,10 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
     cgi_path = ACE_OS::strdup ("");
 
   // error checking considered helpful!
-  if (cgi_path == 0)
+  if (cgi_path == nullptr)
     return 0;
 
-  char *lasts = 0;
+  char *lasts = nullptr;
   char *cgi_path_next = ACE_OS::strtok_r (cgi_path, ":", &lasts);
 
   if (cgi_path_next)
@@ -463,7 +468,7 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
         int len = ACE_OS::strlen (cgi_path_next);
 
         // match path to cgi path
-        int in_cgi_path = 0;
+        bool in_cgi_path = false;
 
         if (*cgi_path_next == '/')
           {
@@ -476,14 +481,14 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
           {
             // cgi path next points to a ``relative'' path
             extra_path_info = ACE_OS::strstr (uri_string, cgi_path_next);
-            in_cgi_path = (extra_path_info != 0);
+            in_cgi_path = (extra_path_info != nullptr);
           }
 
         if (in_cgi_path)
           {
             if (extra_path_info[len] == '/')
               {
-                this->cgi_ = 1;
+                this->cgi_ = true;
                 extra_path_info += len;
 
                 // move past the executable name
@@ -494,14 +499,14 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
                        && *extra_path_info != '\0');
 
                 if (*extra_path_info == '\0')
-                  extra_path_info = 0;
+                  extra_path_info = nullptr;
 
                 break;
               }
           }
-        extra_path_info = 0;
+        extra_path_info = nullptr;
 
-        cgi_path_next = ACE_OS::strtok_r (0, ":", &lasts);
+        cgi_path_next = ACE_OS::strtok_r (nullptr, ":", &lasts);
       }
     while (cgi_path_next);
 
@@ -518,7 +523,7 @@ HTTP_Request::cgi_in_extension (char *uri_string, char *&extra_path_info)
   ACE_DEBUG ((LM_DEBUG, " (%t) HTTP_Request::cgi_in_extension (%s)\n",
               uri_string));
 
-  while (extra_path_info != 0)
+  while (extra_path_info != nullptr)
     {
       extra_path_info += 4;
       // skip past ``.cgi''
@@ -526,7 +531,7 @@ HTTP_Request::cgi_in_extension (char *uri_string, char *&extra_path_info)
       switch (*extra_path_info)
         {
         case '\0':
-          extra_path_info = 0;
+          extra_path_info = nullptr;
           break;
         case '/':
         case '?':
@@ -535,7 +540,7 @@ HTTP_Request::cgi_in_extension (char *uri_string, char *&extra_path_info)
           extra_path_info = ACE_OS::strstr (extra_path_info, ".cgi");
           continue;
         }
-      this->cgi_ = 1;
+      this->cgi_ = true;
       break;
     }
 
@@ -545,13 +550,13 @@ HTTP_Request::cgi_in_extension (char *uri_string, char *&extra_path_info)
 void
 HTTP_Request::cgi_args_and_env (char *&extra_path_info)
 {
-  char *cgi_question = 0;
+  char *cgi_question = nullptr;
 
   if (extra_path_info)
     cgi_question = ACE_OS::strchr (extra_path_info, '?');
 
   if (extra_path_info == cgi_question)
-    extra_path_info = 0;
+    extra_path_info = nullptr;
 
   if (cgi_question)
     {
@@ -594,7 +599,7 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
                 }
               while (i < count);
 
-              this->cgi_env_[count] = 0;
+              this->cgi_env_[count] = nullptr;
             }
           else
             {
@@ -612,7 +617,7 @@ HTTP_Request::path (const char *uri_string)
   char buf[MAXPATHLEN + 1];
   buf[0] = '\0';
 
-  if (file_name == 0) return 0;
+  if (file_name == nullptr) return nullptr;
 
   if (*file_name == '/')
     {
@@ -636,7 +641,7 @@ HTTP_Request::path (const char *uri_string)
               struct passwd *pw_struct_ptr;
               if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf,
                                       sizeof (pw_buf), &pw_struct_ptr) == 0)
-                return 0;
+                return nullptr;
               ACE_OS::strcpy (buf, pw_struct.pw_dir);
 #endif /* NOT ACE_WIN32 AND NOT VXWORKS */
             }

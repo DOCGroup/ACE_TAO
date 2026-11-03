@@ -23,8 +23,8 @@ class JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
 {
 public:
   JAWS_Concurrency_Base ();
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int svc ();
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
+  int svc () override;
 };
 
 class JAWS_Dispatch_Policy
@@ -37,8 +37,12 @@ class JAWS_Dispatch_Policy
 {
 public:
   JAWS_Dispatch_Policy ();
-  virtual ~JAWS_Dispatch_Policy ();
-  virtual JAWS_Concurrency_Base * update (void *state = 0) = 0;
+  virtual ~JAWS_Dispatch_Policy () = default;
+  JAWS_Dispatch_Policy (JAWS_Dispatch_Policy const &) = delete;
+  JAWS_Dispatch_Policy (JAWS_Dispatch_Policy &&) = delete;
+  JAWS_Dispatch_Policy &operator= (JAWS_Dispatch_Policy const &) = delete;
+  JAWS_Dispatch_Policy &operator= (JAWS_Dispatch_Policy &&) = delete;
+  virtual JAWS_Concurrency_Base * update (void *state = nullptr) = 0;
 };
 
 class JAWS_Dispatcher
@@ -51,7 +55,7 @@ class JAWS_Dispatcher
   //     IO can find a thread to take care of it.
 {
 public:
-  JAWS_Dispatcher (JAWS_Dispatch_Policy *policy);
+  explicit JAWS_Dispatcher (JAWS_Dispatch_Policy *policy);
 
   int dispatch (JAWS_IO_Handler *ioh);
 
@@ -89,7 +93,7 @@ class JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
 public:
   JAWS_Thread_Per_Task (long flags = THR_NEW_LWP, int maxthreads = 20);
 
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
 
 private:
   long flags_;

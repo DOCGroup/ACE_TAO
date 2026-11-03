@@ -28,6 +28,11 @@ class HTTP_Request;
 class HTTP_Response
 {
 public:
+  HTTP_Response (HTTP_Response const &) = delete;
+  HTTP_Response (HTTP_Response &&) = delete;
+  HTTP_Response &operator= (HTTP_Response const &) = delete;
+  HTTP_Response &operator= (HTTP_Response &&) = delete;
+
   HTTP_Response (JAWS_IO &io,
                  HTTP_Request &request);
   HTTP_Response (HTTP_Request &request, JAWS_IO &io);

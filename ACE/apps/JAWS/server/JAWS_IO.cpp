@@ -15,11 +15,7 @@
 #include <algorithm>
 
 JAWS_IO::JAWS_IO ()
-  : handler_ (0)
-{
-}
-
-JAWS_IO::~JAWS_IO ()
+  : handler_ (nullptr)
 {
 }
 
@@ -27,10 +23,6 @@ void
 JAWS_IO::handler (JAWS_IO_Handler *handler)
 {
   this->handler_ = handler;
-}
-
-JAWS_IO_Handler::~JAWS_IO_Handler ()
-{
 }
 
 JAWS_Synch_IO::JAWS_Synch_IO ()
@@ -217,7 +209,7 @@ void
 JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 {
   // This callback is for this->receive_file()
-  if (result.act () != 0)
+  if (result.act () != nullptr)
     {
       int code = 0;
       if (result.success () && result.bytes_transferred () != 0)
@@ -264,7 +256,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
                               int initial_data_length,
                               int entire_length)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_Filecache_Handle *handle;
 
   ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length, ACE_NOMAP));
@@ -282,7 +274,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
       ACE_NEW (mb, ACE_Message_Block ((char *)handle->address ()
                                       + initial_data_length, bytes_to_read));
 
-      if (mb == 0)
+      if (mb == nullptr)
         {
           errno = ENOMEM;
           result = -1;
@@ -312,7 +304,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
                                const char *trailer,
                                int trailer_size)
 {
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = nullptr;
   ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, ACE_NOMAP);
 
   int result = handle->error ();
@@ -381,10 +373,10 @@ JAWS_Asynch_IO::send_message (const char *buffer,
                               int length,
                               int act)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
 
-  if (mb == 0)
+  if (mb == nullptr)
     {
       this->handler_->error_message_complete ();
       return;

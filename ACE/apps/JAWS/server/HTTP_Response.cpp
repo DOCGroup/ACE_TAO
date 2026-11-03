@@ -18,12 +18,22 @@ static const char * const EMPTY_HEADER = "";
 #endif /* ACE_JAWS_BASELINE */
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
-  : io_(io), request_(request)
+  : io_ (io),
+    request_ (request),
+    HTTP_HEADER (nullptr),
+    HTTP_TRAILER (nullptr),
+    HTTP_HEADER_LENGTH (0),
+    HTTP_TRAILER_LENGTH (0)
 {
 }
 
 HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
-  : io_(io), request_(request)
+  : io_ (io),
+    request_ (request),
+    HTTP_HEADER (nullptr),
+    HTTP_TRAILER (nullptr),
+    HTTP_HEADER_LENGTH (0),
+    HTTP_TRAILER_LENGTH (0)
 {
 }
 
@@ -108,7 +118,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
     ;
 
 
-  char *buf = 0;
+  char *buf = nullptr;
   char buf1[4 * BUFSIZ];
   char buf2[BUFSIZ];
 
@@ -123,7 +133,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
                      status_code, HTTP_Status_Code::instance ()[status_code],
                      log_message);
 
-  if (this->request_.version () == 0
+  if (this->request_.version () == nullptr
       || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     buf = buf2;
   else
@@ -143,7 +153,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 void
 HTTP_Response::normal_response ()
 {
-  const char *hv = 0;;
+  char const *hv = nullptr;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) %s request for %s [%s], version %s\n",
               request_.method (), request_.uri (), request_.path (),
@@ -183,7 +193,7 @@ HTTP_Response::normal_response ()
       // if there is no Authentication: header on the incoming request,
       // deny it
       hv = this->request_.headers ()["Authorization"].value ();
-      if (hv == 0 || *hv == '\0')
+      if (hv == nullptr || *hv == '\0')
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                               "Unauthorized to use PUT method");
       else if (ACE_OS::strncmp (hv, "Basic ", 6) != 0)
@@ -200,8 +210,9 @@ HTTP_Response::normal_response ()
             = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));
 
           if (mmapfile.map (ACE_TEXT ("jaws.auth")) != -1
-              && auth != 0
-              && ACE_OS::strstr((const char *) mmapfile.addr (), auth) != 0)
+              && auth != nullptr
+              && ACE_OS::strstr (static_cast<char const *> (mmapfile.addr ()), auth)
+                != nullptr)
             this->io_.receive_file (this->request_.path (),
                                     this->request_.data (),
                                     this->request_.data_length (),
@@ -265,13 +276,13 @@ HTTP_Response::cgi_response ()
                         this->request_.query_string ());
 
   if (this->request_.cgi_env ())
-    for (size_t i = 0; this->request_.cgi_env ()[i]; i += 2)
+    for (size_t i = 0; this->request_.cgi_env ()[i] != nullptr; i += 2)
       cgi_options.setenv (ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i]),
                           ACE_TEXT ("%s"),
                           ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i+1]));
 
   ACE_TCHAR buf[BUFSIZ];
-  ACE_TCHAR *p = 0, *q = 0;
+  ACE_TCHAR *p = nullptr, *q = nullptr;
   ACE_OS::strcpy (buf, ACE_TEXT ("HTTP_"));
   p = q = buf + ACE_OS::strlen (buf);
 
@@ -321,7 +332,7 @@ HTTP_Response::build_headers ()
   // Let's assume this is HTML for now.  Unless the request is CGI,
   // then do not include content-* headers.
 
-  if (this->request_.version () == 0
+  if (this->request_.version () == nullptr
       || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     {
       HTTP_HEADER = EMPTY_HEADER;
@@ -339,7 +350,7 @@ HTTP_Response::build_headers ()
       char date_ptr [40];
       // 40 bytes is the maximum length needed to store the date
 
-      if (HTTP_Helper::HTTP_date (date_ptr) != 0)
+      if (HTTP_Helper::HTTP_date (date_ptr) != nullptr)
         HTTP_HEADER_LENGTH +=
           ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
                            "Date: %s\r\n", date_ptr);

@@ -50,6 +50,11 @@ class HTTP_Handler : protected JAWS_IO_Handler
   friend class No_Cache_Synch_HTTP_Handler_Factory;
 
 public:
+  HTTP_Handler (HTTP_Handler const &) = delete;
+  HTTP_Handler (HTTP_Handler &&) = delete;
+  HTTP_Handler &operator= (HTTP_Handler const &) = delete;
+  HTTP_Handler &operator= (HTTP_Handler &&) = delete;
+
   /**
    * The handler is initialized with a connection <handle> of a new
    * client and any <initial_data> that came across. The
@@ -67,7 +72,7 @@ protected:
                 HTTP_Handler_Factory &factory);
 
   /// Destructor
-  virtual ~HTTP_Handler ();
+  ~HTTP_Handler () override;
 
   /// This method is called by the framework when there is a timeout.
   virtual void timeout ();
@@ -88,15 +93,15 @@ protected:
 protected:
   // = Completion methods inherited from <JAWS_IO_Handler>.
 
-  virtual void read_complete (ACE_Message_Block &data);
-  virtual void read_error ();
-  virtual void transmit_file_complete ();
-  virtual void transmit_file_error (int result);
-  virtual void receive_file_complete ();
-  virtual void receive_file_error (int result);
-  virtual void write_error ();
-  virtual void confirmation_message_complete ();
-  virtual void error_message_complete ();
+  void read_complete (ACE_Message_Block &data) override;
+  void read_error () override;
+  void transmit_file_complete () override;
+  void transmit_file_error (int result) override;
+  void receive_file_complete () override;
+  void receive_file_error (int result) override;
+  void write_error () override;
+  void confirmation_message_complete () override;
+  void error_message_complete () override;
 
 public:
   enum
@@ -132,7 +137,12 @@ class HTTP_Handler_Factory
 {
 public:
   /// Destructor
-  virtual ~HTTP_Handler_Factory ();
+  virtual ~HTTP_Handler_Factory () = default;
+  HTTP_Handler_Factory () = default;
+  HTTP_Handler_Factory (HTTP_Handler_Factory const &) = delete;
+  HTTP_Handler_Factory (HTTP_Handler_Factory &&) = delete;
+  HTTP_Handler_Factory &operator= (HTTP_Handler_Factory const &) = delete;
+  HTTP_Handler_Factory &operator= (HTTP_Handler_Factory &&) = delete;
 
   /// This creates a new HTTP_Handler
   virtual HTTP_Handler *create_http_handler () = 0;
@@ -156,7 +166,7 @@ class Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
 {
 public:
   /// This creates a new HTTP_Handler
-  HTTP_Handler *create_http_handler ();
+  HTTP_Handler *create_http_handler () override;
 
   /**
    * The HTTP handler will call this method from HTTP_Handler::done to
@@ -164,7 +174,7 @@ public:
    * the protocol
    */
   void destroy_http_handler (HTTP_Handler &handler,
-                             JAWS_IO &io);
+                             JAWS_IO &io) override;
 };
 
 //--------------Added a factory for SYNCH IO without caching
@@ -179,7 +189,7 @@ class No_Cache_Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
 {
 public:
   /// This creates a new HTTP_Handler
-  HTTP_Handler *create_http_handler ();
+  HTTP_Handler *create_http_handler () override;
 
   /**
    * The HTTP handler will call this method from HTTP_Handler::done to
@@ -187,7 +197,7 @@ public:
    * the protocol
    */
   void destroy_http_handler (HTTP_Handler &handler,
-                             JAWS_IO &io);
+                             JAWS_IO &io) override;
 };
 
 //--------------
@@ -208,7 +218,7 @@ public:
    * the protocol
    */
   void destroy_http_handler (HTTP_Handler &handler,
-                             JAWS_IO &io);
+                             JAWS_IO &io) override;
 
   /**
    * <open> is called by <ACE_Asynch_Acceptor> to initialize a new
@@ -217,8 +227,8 @@ public:
    *
    * This will act as a creation point for new handlers.
    */
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE handle,
+             ACE_Message_Block &message_block) override;
 
 private:
   /**
@@ -226,7 +236,7 @@ private:
    * handlers. New handlers can only be created by the framework when
    * new client connections arrive.
    */
-  HTTP_Handler *create_http_handler ();
+  HTTP_Handler *create_http_handler () override;
 };
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 #endif /* HTTP_HANDLER_H */

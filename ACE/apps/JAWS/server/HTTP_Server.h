@@ -53,10 +53,10 @@ class ACE_Svc_Export HTTP_Server : public ACE_Service_Object
 {
 public:
   /// Initialization
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Exit hooks
-  virtual int fini ();
+  int fini () override;
 
 protected:
   /// Thread Per Request implementation
@@ -96,7 +96,7 @@ public:
                           ACE_Thread_Manager &tm,
                           int threads,
                           HTTP_Handler_Factory &factory);
-  virtual int svc ();
+  int svc () override;
 
 private:
   HTTP_Acceptor &acceptor_;
@@ -119,9 +119,9 @@ public:
                            ACE_Thread_Manager &tm,
                            int &grp_id,
                            HTTP_Handler_Factory &factory);
-  virtual int open (void *args = 0);
-  virtual int close (u_long);
-  virtual int svc ();
+  int open (void *args = nullptr) override;
+  int close (u_long) override;
+  int svc () override;
 
 private:
   ACE_HANDLE handle_;
@@ -143,7 +143,7 @@ class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
 public:
   Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
                            ACE_Thread_Manager &tm);
-  virtual int svc ();
+  int svc () override;
 
 private:
   ACE_Proactor &proactor_;

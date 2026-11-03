@@ -17,7 +17,7 @@ HTTP_Helper::months_[12]=
 
 char const *HTTP_Helper::alphabet_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-char * HTTP_Helper::date_string_ = 0;
+char * HTTP_Helper::date_string_ = nullptr;
 ACE_SYNCH_MUTEX HTTP_Helper::mutex_;
 
 ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
@@ -108,19 +108,19 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 const char *
 HTTP_Helper::HTTP_date ()
 {
-  if (HTTP_Helper::date_string_ == 0)
+  if (HTTP_Helper::date_string_ == nullptr)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, m, HTTP_Helper::mutex_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, m, HTTP_Helper::mutex_, nullptr));
 
-      if (HTTP_Helper::date_string_ == 0)
+      if (HTTP_Helper::date_string_ == nullptr)
         {
           // 40 bytes is all I need.
-          ACE_NEW_RETURN (HTTP_Helper::date_string_, char[40], 0);
+          ACE_NEW_RETURN (HTTP_Helper::date_string_, char[40], nullptr);
 
           if (!HTTP_Helper::HTTP_date (HTTP_Helper::date_string_))
             {
               delete [] HTTP_Helper::date_string_;
-              HTTP_Helper::date_string_ = 0;
+              HTTP_Helper::date_string_ = nullptr;
             }
         }
     }
@@ -143,7 +143,7 @@ HTTP_Helper::HTTP_date (char *s)
   char * date_string = s;
 
   if (ACE_OS::time (&tloc) != (time_t) -1
-      && ACE_OS::gmtime_r (&tloc, &tms) != 0)
+      && ACE_OS::gmtime_r (&tloc, &tms) != nullptr)
   {
     ACE_OS::sprintf (date_string,
                      "%s, %2.2d %s %4.4d %2.2d:%2.2d:%2.2d GMT",
@@ -151,7 +151,7 @@ HTTP_Helper::HTTP_date (char *s)
                      tms.tm_year + 1900, tms.tm_hour, tms.tm_min, tms.tm_sec);
   }
   else
-    date_string = 0;
+    date_string = nullptr;
 
   return date_string;
 }

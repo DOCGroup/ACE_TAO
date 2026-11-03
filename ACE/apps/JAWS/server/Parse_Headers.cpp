@@ -8,11 +8,7 @@
 
 // Implementation of class Headers
 
-Headers::Headers () : done_(0)
-{
-}
-
-Headers::~Headers ()
+Headers::Headers () : done_ (false)
 {
 }
 
@@ -39,20 +35,20 @@ Headers::parse_header_line (char * const header_line)
 
   if (ptr == header_line)
     {
-      this->done_ = 1;
+      this->done_ = true;
       return;
     }
 
   *ptr = '\0';
   ptr += offset;
 
-  char *value = 0;
+  char *value = nullptr;
   char *header = ACE_OS::strtok_r (buf, ":", &value);
 
   ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line [%s]\n",
              header ? header : "<empty>"));
 
-  if (header != 0 && this->map_.mapped (header))
+  if (header != nullptr && this->map_.mapped (header))
     {
       while (ACE_OS::ace_isspace (*value))
         value++;
@@ -89,7 +85,7 @@ Headers::complete_header_line (char *const header_line)
   if (ptr == header_line)
     {
       ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
-      this->done_ = 1;
+      this->done_ = true;
       ACE_DEBUG ((LM_DEBUG, "  (%t) no more headers\n"));
       return 0;
     }
@@ -143,7 +139,7 @@ Headers::end_of_line (char *&line, int &offset) const
   char *old_line = line;
   char *ptr = ACE_OS::strchr (old_line, '\n');
 
-  if (ptr == 0)
+  if (ptr == nullptr)
     return 0;
 
   line = ptr;
@@ -167,13 +163,9 @@ Headers_Map::Headers_Map ()
 {
 }
 
-Headers_Map::~Headers_Map ()
-{
-}
-
 Headers_Map_Item::Headers_Map_Item ()
-  : header_(0),
-    value_(0)
+  : header_ (nullptr),
+    value_ (nullptr)
 {
 }
 
@@ -181,7 +173,7 @@ Headers_Map_Item::~Headers_Map_Item ()
 {
   ACE_OS::free ((void *) this->header_);
   ACE_OS::free ((void *) this->value_);
-  this->header_ = this->value_ = 0;
+  this->header_ = this->value_ = nullptr;
 }
 
 // Headers_Map_Item::operator const char * () const
@@ -211,7 +203,7 @@ Headers_Map_Item::operator= (const Headers_Map_Item & mi)
   ACE_OS::free ((void *) this->value_);
   ACE_OS::free ((void *) this->header_);
   this->header_ = ACE_OS::strdup (mi.header_);
-  this->value_ = (mi.value_ ? ACE_OS::strdup (mi.value_) : 0);
+  this->value_ = (mi.value_ ? ACE_OS::strdup (mi.value_) : nullptr);
   return *this;
 }
 
@@ -234,7 +226,7 @@ Headers_Map::operator[] (const char * const header)
 
   item_ptr = this->find (header);
 
-  if (item_ptr == 0)
+  if (item_ptr == nullptr)
     item_ptr = this->place (header);
 
   return *item_ptr;
@@ -248,7 +240,7 @@ Headers_Map::operator[] (const char * const header) const
 
   item_ptr = this->find (header);
 
-  if (item_ptr == 0)
+  if (item_ptr == nullptr)
     item_ptr = mutable_this->place (header);
 
   return *item_ptr;
@@ -257,7 +249,7 @@ Headers_Map::operator[] (const char * const header) const
 int
 Headers_Map::mapped (const char * const header) const
 {
-  int result = this->find (header) != 0;
+  int result = this->find (header) != nullptr;
 
   return result;
 }
@@ -290,10 +282,10 @@ Headers_Map::find (const char * const header) const
 
   Headers_Map_Item *mi_ptr = mutable_this->map_ + i;
   if (Headers_Map::compare (&this->garbage_, mi_ptr) != 0)
-    mi_ptr = 0;
+    mi_ptr = nullptr;
 #endif
 
-  mutable_this->garbage_.header_ = 0;
+  mutable_this->garbage_.header_ = nullptr;
 
   return mi_ptr;
 }
@@ -306,8 +298,8 @@ Headers_Map::place (const char *const header)
   int i = this->num_headers_++;
   ACE_OS::free ((void *) this->map_[i].header_);
   ACE_OS::free ((void *) this->map_[i].value_);
-  this->map_[i].header_ = 0;
-  this->map_[i].value_ = 0;
+  this->map_[i].header_ = nullptr;
+  this->map_[i].value_ = nullptr;
   Headers_Map_Item temp_item;
 
   while (i > 0)
@@ -318,8 +310,8 @@ Headers_Map::place (const char *const header)
 
       this->map_[i].header_ = this->map_[i - 1].header_;
       this->map_[i].value_ = this->map_[i - 1].value_;
-      this->map_[i - 1].header_ = 0;
-      this->map_[i - 1].value_ = 0;
+      this->map_[i - 1].header_ = nullptr;
+      this->map_[i - 1].value_ = nullptr;
 
       i--;
     }
@@ -327,7 +319,7 @@ Headers_Map::place (const char *const header)
   this->map_[i].header_ = this->garbage_.header_;
   this->map_[i].value_ = this->garbage_.value_;
 
-  this->garbage_.header_ = 0;
+  this->garbage_.header_ = nullptr;
 
   return &this->map_[i];
 }
@@ -342,11 +334,11 @@ Headers_Map::compare (const void *item1,
   a = (Headers_Map_Item *) item1;
   b = (Headers_Map_Item *) item2;
 
-  if (a->header_ == 0 || b->header_ == 0)
+  if (a->header_ == nullptr || b->header_ == nullptr)
     {
-      if (a->header_ == 0 && b->header_ == 0)
+      if (a->header_ == nullptr && b->header_ == nullptr)
         result = 0;
-      else if (a->header_ == 0)
+      else if (a->header_ == nullptr)
         result = 1;
       else
         result = -1;

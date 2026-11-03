@@ -42,7 +42,11 @@ class HTTP_Config_Info
 friend class HTTP_Config;
 public:
   HTTP_Config_Info ();
-  ~HTTP_Config_Info ();
+  HTTP_Config_Info (HTTP_Config_Info const &) = delete;
+  HTTP_Config_Info (HTTP_Config_Info &&) = delete;
+  HTTP_Config_Info &operator= (HTTP_Config_Info const &) = delete;
+  HTTP_Config_Info &operator= (HTTP_Config_Info &&) = delete;
+  ~HTTP_Config_Info () = default;
 
   // Accessors to the information
 
