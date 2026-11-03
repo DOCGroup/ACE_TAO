@@ -29,6 +29,8 @@
 #include "ace/ACE.h"
 #include "ace/Hash_Map_Manager.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////
@@ -194,7 +196,7 @@ namespace TAO
 
     bool use_persistence_ {};
 
-    PG_Group_List_Store * list_store_ {};
+    std::unique_ptr<PG_Group_List_Store> list_store_;
 
   private:
     CORBA::ORB_var orb_;
@@ -221,7 +223,7 @@ namespace TAO
 
     // Lazily read groups from store
     bool groups_read_ {};
-    Storable_Factory * storable_factory_ {};
+    std::unique_ptr<Storable_Factory> storable_factory_;
   };
 } // namespace TAO
 

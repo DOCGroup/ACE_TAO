@@ -66,8 +66,8 @@ TAO::PG_Group_Factory::~PG_Group_Factory ()
     delete group;
   }
   this->group_map_.unbind_all ();
-  delete this->list_store_;
-  delete this->storable_factory_;
+  this->list_store_.reset ();
+  this->storable_factory_.reset ();
 }
 
 
@@ -349,10 +349,14 @@ TAO::PG_Group_Factory::set_object_group_storable_factory (
   TAO::Storable_Factory * factory)
 {
   this->use_persistence_ = true;
-  this->storable_factory_  = factory;
-  ACE_NEW_THROW_EX (this->list_store_,
+  this->list_store_.reset ();
+  if (this->storable_factory_.get () != factory)
+    this->storable_factory_.reset (factory);
+  PG_Group_List_Store *list_store = nullptr;
+  ACE_NEW_THROW_EX (list_store,
                     TAO::PG_Group_List_Store (*this->storable_factory_),
                     CORBA::NO_MEMORY ());
+  this->list_store_.reset (list_store);
 }
 
 TAO::PG_Group_Factory::Group_Map &

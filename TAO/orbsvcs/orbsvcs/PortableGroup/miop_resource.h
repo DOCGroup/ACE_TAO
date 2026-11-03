@@ -27,6 +27,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
@@ -110,7 +112,8 @@ private:
 
   int fragments_cleanup_bound_;
 
-  mutable TAO_PG::Fragments_Cleanup_Strategy *fragments_cleanup_strategy_;
+  mutable std::unique_ptr<TAO_PG::Fragments_Cleanup_Strategy>
+    fragments_cleanup_strategy_;
 
   /// Maximum number of fragments.
   u_long max_fragments_;
