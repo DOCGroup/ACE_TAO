@@ -13,17 +13,18 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/Atomic_Op.h"
-#include "ace/Synch_Traits.h"
 #include "ami_test_i.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+#include <atomic>
+#include <string>
+
+std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
 int nthreads = 1;
 int niterations = 2;
-int debug = 0;
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> number_of_replies = 0;
+bool debug = false;
+std::atomic<int> number_of_replies {0};
 
-int invalid_exception = 0;
+std::atomic<bool> invalid_exception {false};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -35,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
@@ -75,16 +76,21 @@ class Client : public ACE_Task_Base
 public:
   /// ctor
   Client (A::AMI_Test_ptr server, int niterations);
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
+  ~Client () override = default;
 
   /// The thread entry point.
   int svc () override;
 
-  // private:
+private:
   /// Var for the AMI_Test object.
   A::AMI_Test_var ami_test_var_;
 
   /// The number of iterations on each client thread.
-  int niterations_;
+  int const niterations_;
 
   /// Var for AMI_AMI_Test_ReplyHandler object.
   A::AMI_AMI_TestHandler_var the_handler_var_;
@@ -94,6 +100,10 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   Handler () = default;
+  Handler (Handler const &) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   void foo () override
     {
@@ -127,7 +137,7 @@ public:
         {
           if (request_ != 0)
             {
-              ++invalid_exception;
+              invalid_exception = true;
               ex._tao_print_exception ("Caught exception:");
             }
           else
@@ -139,7 +149,7 @@ public:
         {
           if (request_ != 1)
             {
-              ++invalid_exception;
+              invalid_exception = true;
               ex._tao_print_exception ("Caught exception:");
             }
           else
@@ -150,7 +160,7 @@ public:
       ++request_;
     }
 
-  ~Handler () = default;
+  ~Handler () override = default;
 private:
   int request_ {};
 };
@@ -181,7 +191,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
@@ -220,12 +230,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies.value ()));
+                      number_of_replies.load ()));
         }
 
       // ORB loop.
 
-      while (number_of_replies > 0)
+      while (number_of_replies.load () > 0)
         {
           CORBA::Boolean const pending = orb->work_pending ();
 
@@ -243,7 +253,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads * niterations) - number_of_replies.value ()));
+                      (nthreads * niterations) - number_of_replies.load ()));
         }
 
       client.thr_mgr ()->wait ();
@@ -261,7 +271,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return invalid_exception;
+  return invalid_exception.load ();
 }
 
 // ****************************************************************
