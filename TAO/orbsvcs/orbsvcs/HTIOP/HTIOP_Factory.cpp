@@ -20,9 +20,7 @@ TAO::HTIOP::Protocol_Factory::Protocol_Factory ()
 }
 
 TAO::HTIOP::Protocol_Factory::~Protocol_Factory ()
-{
-  delete this->ht_env_;
-}
+= default;
 
 int
 TAO::HTIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
@@ -92,11 +90,13 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
         }
     }
 
-  ACE_NEW_RETURN (this->ht_env_,
+  ACE::HTBP::Environment *ht_env = nullptr;
+  ACE_NEW_RETURN (ht_env,
                   ACE::HTBP::Environment(0,
                                        use_registry,
                                        persist_file),
                   -1);
+  this->ht_env_.reset (ht_env);
 
   if (config_file != nullptr)
     this->ht_env_->import_config (config_file);
@@ -116,7 +116,7 @@ TAO::HTIOP::Protocol_Factory::make_acceptor ()
   TAO_Acceptor *acceptor = nullptr;
 
   ACE_NEW_RETURN (acceptor,
-                  TAO::HTIOP::Acceptor (this->ht_env_,
+                  TAO::HTIOP::Acceptor (this->ht_env_.get (),
                                         this->inside_),
                   0);
   return acceptor;
@@ -127,7 +127,7 @@ TAO::HTIOP::Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = nullptr;
   ACE_NEW_RETURN (connector,
-                  TAO::HTIOP::Connector (this->ht_env_),
+                  TAO::HTIOP::Connector (this->ht_env_.get ()),
                   0);
   return connector;
 }

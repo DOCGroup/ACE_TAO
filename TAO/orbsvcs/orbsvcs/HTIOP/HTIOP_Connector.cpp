@@ -44,16 +44,19 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   /// Our connect creation strategy
-  ACE_NEW_RETURN (this->connect_creation_strategy_,
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  this->connect_creation_strategy_.reset (connect_creation_strategy);
 
-
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
   return 0;
 }
@@ -61,8 +64,8 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO::HTIOP::Connector::close ()
 {
-  delete this->concurrency_strategy_;
-  delete this->connect_creation_strategy_;
+  this->concurrency_strategy_.reset ();
+  this->connect_creation_strategy_.reset ();
 
   return 0;
 }

@@ -28,6 +28,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
@@ -112,10 +114,10 @@ namespace TAO
       Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
       /// Our creation strategy
-      CONNECT_CREATION_STRATEGY *connect_creation_strategy_;
+      std::unique_ptr<CONNECT_CREATION_STRATEGY> connect_creation_strategy_;
 
       /// Our activation strategy
-      CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy_;
+      std::unique_ptr<CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 
       /// reference to the configuration parameters
       ACE::HTBP::Environment *ht_env_;

@@ -210,9 +210,9 @@ namespace TAO
       BASE_ACCEPTOR base_acceptor_;
 
       /// Acceptor strategies.
-      CREATION_STRATEGY *creation_strategy_;
-      CONCURRENCY_STRATEGY *concurrency_strategy_;
-      ACCEPT_STRATEGY *accept_strategy_;
+      std::unique_ptr<CREATION_STRATEGY> creation_strategy_;
+      std::unique_ptr<CONCURRENCY_STRATEGY> concurrency_strategy_;
+      std::unique_ptr<ACCEPT_STRATEGY> accept_strategy_;
 
       ACE::HTBP::Environment *ht_env_;
 

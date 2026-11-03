@@ -45,10 +45,7 @@ TAO::HTIOP::Completion_Handler::Completion_Handler (TAO_ORB_Core *orb_core,
 
 
 TAO::HTIOP::Completion_Handler::~Completion_Handler ()
-{
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-}
+= default;
 
 int
 TAO::HTIOP::Completion_Handler::open (void*)
@@ -56,12 +53,17 @@ TAO::HTIOP::Completion_Handler::open (void*)
   this->orb_core_->reactor()->register_handler(this,
                                                ACE_Event_Handler::READ_MASK);
 
-  ACE_NEW_RETURN (creation_strategy_,
+  CREATION_STRATEGY2 *creation_strategy = nullptr;
+  ACE_NEW_RETURN (creation_strategy,
                   TAO::HTIOP::CREATION_STRATEGY2 (this->orb_core_),
                   -1);
-  ACE_NEW_RETURN (concurrency_strategy_,
+  this->creation_strategy_.reset (creation_strategy);
+
+  CONCURRENCY_STRATEGY2 *concurrency_strategy = nullptr;
+  ACE_NEW_RETURN (concurrency_strategy,
                   TAO::HTIOP::CONCURRENCY_STRATEGY2 (this->orb_core_),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
   return 0;
 }
 
