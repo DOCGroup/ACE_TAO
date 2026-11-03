@@ -4,6 +4,7 @@
 #include "FooS.h"
 #include "CallbackC.h"
 #include "ace/SString.h"
+#include <atomic>
 
 class FooServantList;
 
@@ -12,78 +13,78 @@ class Foo_i : public virtual POA_Foo
 {
   public:
     Foo_i(const char* servant_name, FooServantList* mgr);
-    virtual ~Foo_i();
+    ~Foo_i () override;
 
-    virtual void op1();
+    void op1 () override;
 
-    virtual void op2(CORBA::Long value);
+    void op2 (CORBA::Long value) override;
 
-    virtual CORBA::Long op3();
+    CORBA::Long op3 () override;
 
-    virtual void op4(CORBA::Long value);
+    void op4 (CORBA::Long value) override;
 
-    virtual void op5();
+    void op5 () override;
 
-    virtual CORBA::Boolean op6 (
-        const char * user_name,
-        char *& message);
+    CORBA::Boolean op6 (
+        char const * user_name,
+        char *& message) override;
 
-    virtual void test_unbounded_string_arg (
-        const char * message);
+    void test_unbounded_string_arg (
+        char const * message) override;
 
-    virtual void test_bounded_string_arg (
-        const char * message);
+    void test_bounded_string_arg (
+        char const * message) override;
 
-    virtual void test_fixed_array_arg (
-        const ::Fixed_Array message);
+    void test_fixed_array_arg (
+        ::Fixed_Array const message) override;
 
-    virtual void test_var_array_arg (
-        const ::Var_Array messages);
+    void test_var_array_arg (
+        ::Var_Array const messages) override;
 
-    virtual void test_bounded_var_size_arg (
-        const ::Bounded_Var_Size & message);
+    void test_bounded_var_size_arg (
+        ::Bounded_Var_Size const & message) override;
 
-    virtual void test_unbounded_var_size_arg (
-        const ::Unbounded_Var_Size & message);
+    void test_unbounded_var_size_arg (
+        ::Unbounded_Var_Size const & message) override;
 
-    virtual void test_fixed_size_arg (
-        const ::TimeOfDay & t);
+    void test_fixed_size_arg (
+        ::TimeOfDay const & t) override;
 
-    virtual void test_fixed_size_arg_two_way (
-        const ::TimeOfDay & t);
+    void test_fixed_size_arg_two_way (
+        ::TimeOfDay const & t) override;
 
-    virtual void test_special_basic_arg (
-        ::CORBA::Boolean value);
+    void test_special_basic_arg (
+        ::CORBA::Boolean value) override;
 
-    virtual void test_objref_arg (
-        ::Callback_ptr cb);
+    void test_objref_arg (
+        ::Callback_ptr cb) override;
 
-    virtual void callback_object (
-        ::Callback_ptr cb);
+    void callback_object (
+        ::Callback_ptr cb) override;
 
-    virtual void test_callback ();
+    void test_callback () override;
 
-    virtual void done();
+    void done () override;
 
     void active (bool flag);
 
     bool active ();
 
   private:
-    typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> AtomicLong;
-    typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> AtomicUnsigned;
-    typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> AtomicBool;
+    using AtomicLong = std::atomic<CORBA::Long>;
+    using AtomicUnsigned = std::atomic<unsigned>;
+    using AtomicBool = std::atomic<bool>;
 
-    AtomicLong value_;
-    AtomicUnsigned count_op1_;
-    AtomicUnsigned count_op2_;
-    AtomicUnsigned count_op3_;
-    AtomicUnsigned count_op4_;
-    AtomicUnsigned count_op5_;
+    AtomicLong value_ {0};
+    AtomicUnsigned count_op1_ {0};
+    AtomicUnsigned count_op2_ {0};
+    AtomicUnsigned count_op3_ {0};
+    AtomicUnsigned count_op4_ {0};
+    AtomicUnsigned count_op5_ {0};
 
     ACE_CString     servant_name_;
     FooServantList* mgr_;
-    AtomicBool      active_;
+    AtomicBool      active_ {true};
     Callback_var    callback_;
 };
 

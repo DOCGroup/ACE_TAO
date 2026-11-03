@@ -2,15 +2,8 @@
 #include "FooServantList.h"
 
 Foo_i::Foo_i(const char* servant_name,FooServantList* mgr)
-  : value_(0),
-    count_op1_(0),
-    count_op2_(0),
-    count_op3_(0),
-    count_op4_(0),
-    count_op5_(0),
-    servant_name_(servant_name),
-    mgr_(mgr),
-    active_ (true)
+  : servant_name_(servant_name),
+    mgr_(mgr)
 {
 }
 
@@ -42,12 +35,12 @@ Foo_i::op3()
 {
   ++this->count_op3_;
 
-  if (this->count_op3_ == 30)
+  if (this->count_op3_.load () == 30)
     {
       this->mgr_->deactivate_servant ();
     }
 
-  return this->value_.value ();
+  return this->value_.load ();
 }
 
 
@@ -57,11 +50,11 @@ Foo_i::op4(CORBA::Long value)
   ++this->count_op4_;
   this->value_ = value;
 
-  if (this->count_op4_.value () % 1 == 0)
+  if (this->count_op4_.load () % 1 == 0)
     {
       ACE_DEBUG((LM_DEBUG,
                  "(%P|%t) op4() has been called %d times now.  value == %d\n",
-                 this->count_op4_.value (), this->value_.value ()));
+                 this->count_op4_.load (), this->value_.load ()));
     }
 
   // Sleep for 10 milliseconds (10,000 microseconds)
@@ -79,7 +72,7 @@ Foo_i::op5()
 
 CORBA::Boolean
 Foo_i::op6 (
-  const char * user_name,
+  char const * user_name,
   char *& message
 )
 {
@@ -93,7 +86,7 @@ Foo_i::op6 (
 
 void
 Foo_i::test_unbounded_string_arg (
-  const char * message
+  char const * message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_string_arg ")
@@ -104,7 +97,7 @@ Foo_i::test_unbounded_string_arg (
 
 void
 Foo_i::test_bounded_string_arg (
-  const char * message
+  char const * message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_string_arg ")
@@ -115,7 +108,7 @@ Foo_i::test_bounded_string_arg (
 
 void
 Foo_i::test_fixed_array_arg (
-  const ::Fixed_Array message
+  ::Fixed_Array const message
 )
 {
   for (CORBA::ULong i = 0; i < 20; i++)
@@ -129,7 +122,7 @@ Foo_i::test_fixed_array_arg (
 
 void
 Foo_i::test_bounded_var_size_arg (
-  const ::Bounded_Var_Size & message
+  ::Bounded_Var_Size const & message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_var_size_arg ")
@@ -140,7 +133,7 @@ Foo_i::test_bounded_var_size_arg (
 
 void
 Foo_i::test_unbounded_var_size_arg (
-  const ::Unbounded_Var_Size & message
+  ::Unbounded_Var_Size const & message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_var_size_arg ")
@@ -151,7 +144,7 @@ Foo_i::test_unbounded_var_size_arg (
 
 void
 Foo_i::test_fixed_size_arg (
-  const ::TimeOfDay & t
+  ::TimeOfDay const & t
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_size_arg ")
@@ -161,7 +154,7 @@ Foo_i::test_fixed_size_arg (
 
 void
 Foo_i::test_fixed_size_arg_two_way (
-  const ::TimeOfDay & t
+  ::TimeOfDay const & t
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_size_arg_two_way ")
@@ -171,7 +164,7 @@ Foo_i::test_fixed_size_arg_two_way (
 
 void
 Foo_i::test_var_array_arg (
-  const ::Var_Array messages
+  ::Var_Array const messages
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
@@ -244,7 +237,7 @@ Foo_i::active (bool flag)
 bool
 Foo_i::active ()
 {
-  return active_.value ();
+  return active_.load ();
 }
 
 

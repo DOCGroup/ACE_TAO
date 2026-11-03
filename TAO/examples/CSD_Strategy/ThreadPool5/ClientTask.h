@@ -21,11 +21,11 @@ public:
               Callback_ptr callback,
               bool         collocated = false);
 
-  virtual ~ClientTask();
+  ~ClientTask () override;
 
-  virtual int open(void* x = 0);
-  virtual int svc();
-  virtual int close(u_long);
+  int open(void* x = 0) override;
+  int svc() override;
+  int close(u_long) override;
 
 private:
   bool validate_connection ();

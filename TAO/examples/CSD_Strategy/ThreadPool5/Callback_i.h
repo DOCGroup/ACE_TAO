@@ -9,10 +9,9 @@ class Callback_i : public virtual POA_Callback
   public:
     Callback_i();
 
-    virtual ~Callback_i();
+    ~Callback_i () override;
 
-    virtual void test_method (
-    );
+    void test_method () override;
 };
 
 
