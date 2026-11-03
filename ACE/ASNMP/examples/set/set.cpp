@@ -37,12 +37,15 @@
 class set {
 public:
   set(int argc, char **argv); // process command line args
-  int valid() const;             // verify transaction can proceed
+  bool valid() const;            // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
 private:
-  set(const set&);
+  set (set const &) = delete;
+  set (set &&) = delete;
+  set &operator= (set const &) = delete;
+  set &operator= (set &&) = delete;
 
   UdpAddress address_;
   Pdu pdu_;                                // construct a request Pdu
@@ -50,7 +53,7 @@ private:
   OctetStr community_;
   Snmp snmp_;
   UdpTarget target_;
-  int valid_;
+  bool valid_;
 };
 
 
@@ -66,13 +69,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 1;
 }
 
-int
+bool
 set::valid() const
 {
  return valid_;
 }
 
-set::set(int argc, char *argv[]): valid_(0)
+set::set(int argc, char *argv[]): valid_(false)
 {
    Vb vb;                                  // construct a Vb object
    Oid req;
@@ -192,7 +195,7 @@ set::set(int argc, char *argv[]): valid_(0)
         def_value.to_string() << endl;
   }
 
-  valid_ = 1;
+  valid_ = true;
 }
 
 void set::usage()
@@ -227,7 +230,7 @@ int set::run()
        " SET SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   const char *name = address_.resolve_hostname(rc);
+   char const *name = address_.resolve_hostname(rc);
 
    cout << "Device: " << address_ << " ";
 
@@ -255,7 +258,7 @@ int set::run()
      }
    }
    else {
-    const char *ptr = snmp_.error_string();
+    char const *ptr = snmp_.error_string();
     cout << "ASNMP:ERROR: set command failed reason: " << ptr << endl;
   }
   cout << "ASNMP:INFO:command completed normally.\n"<< endl;
