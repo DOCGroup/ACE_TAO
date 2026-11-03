@@ -15,6 +15,8 @@
 
 #include "ami_testS.h"
 
+#include <atomic>
+
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
 bool shutdown_flag = false;
@@ -77,7 +79,7 @@ public:
   /// Get the reply count
   long reply_count () const
   {
-    return reply_count_.value ();
+    return reply_count_.load ();
   }
 
   void foo (CORBA::Long ami_return_val,
@@ -112,7 +114,7 @@ public:
     };
 
 private:
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> reply_count_ {};
+  std::atomic<long> reply_count_ {};
 };
 
 int
