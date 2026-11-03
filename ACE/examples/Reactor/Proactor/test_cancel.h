@@ -21,16 +21,16 @@ class Receiver : public ACE_Service_Handler
 
 public:
   Receiver ();
-  ~Receiver ();
+  ~Receiver () override;
 
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE handle,
+             ACE_Message_Block &message_block) override;
   // This is called after the new connection has been accepted.
 
 protected:
   // These methods are called by the framework
 
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
   // This is called when asynchronous read from the socket complete
 
 private:

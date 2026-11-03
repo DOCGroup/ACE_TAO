@@ -15,8 +15,9 @@
 #include "ace/Task.h"
 #include "ace/Proactor.h"
 #include "ace/WIN32_Proactor.h"
-#include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
+#include <atomic>
+#include <cstring>
 
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
@@ -29,45 +30,43 @@
 class Timeout_Handler : public ACE_Handler, public ACE_Event_Handler
 {
 public:
-  Timeout_Handler ()
-    {
-    }
+  Timeout_Handler () = default;
 
   // This is called by the Proactor. This is declared in ACE_Handler.
-  virtual void handle_time_out (const ACE_Time_Value &tv,
-                                const void *arg)
+  void handle_time_out (const ACE_Time_Value &tv,
+                        const void *arg) override
     {
       // Print out when timeouts occur.
       ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %d.\n",
                   ++count_,
-                  (char *) arg,
+                  static_cast<char const *> (arg),
                   tv.sec ()));
 
       // Since there is only one thread that can do the timeouts in
       // Reactor, lets keep the handle_timeout short for that
       // thread.
-      if (ACE_OS::strcmp ((char *) arg, "Proactor") == 0)
+      if (std::strcmp (static_cast<char const *> (arg), "Proactor") == 0)
       // Sleep for a while
       ACE_OS::sleep (1);
     }
 
   // This method is declared in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &tv,
+                      const void *arg) override
     {
       this->handle_time_out (tv, arg);
       return 0;
     }
 
 private:
-  ACE_Atomic_Op <ACE_Thread_Mutex, int> count_;
+  std::atomic<int> count_ {0};
 };
 
 class Worker : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
   // Thread fuction.
-  int svc ()
+  int svc () override
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) Worker started\n"));
 
