@@ -1,11 +1,14 @@
 #include "JAWS/Parse_Headers.h"
 #include "HTTPU/http_base.h"
 #include "HTTPU/http_headers.h"
+#include <cstdio>
+#include <cstring>
+#include <memory>
 
 int
 HTTP_Base::receive (ACE_Message_Block &mb)
 {
-  if (this->line () == 0)
+  if (this->line () == nullptr)
     {
       if (this->extract_line (mb) == 0)
         return 0;
@@ -40,21 +43,16 @@ HTTP_Base::receive (ACE_Message_Block &mb)
 int
 HTTP_Base::deliver (ACE_Message_Block &mb)
 {
-  JAWS_Header_Data *data = 0;
+  JAWS_Header_Data *data = nullptr;
 
   // Deliver this outgoing request.
   // We do this by building the request up and writing it into the
   // message block.
-  if (this->mb_ == 0)
+  if (!this->mb_)
     {
       // Make our Message Block big enough to hold a header name and
       // header value
-      this->mb_ = new ACE_Message_Block (16384); // MAGIC!  2 x 8192
-      if (this->mb_ == 0)
-        {
-          this->status_ = STATUS_INTERNAL_SERVER_ERROR;
-          return -1;
-        }
+      this->mb_ = std::make_unique<ACE_Message_Block> (16384); // MAGIC!  2 x 8192
 
       // Call into the deliver hook
       int r = this->espouse_line ();
@@ -97,8 +95,7 @@ HTTP_Base::deliver (ACE_Message_Block &mb)
           break;
 
         case 2: // Finished!
-          delete this->mb_;
-          this->mb_ = 0;
+          this->mb_.reset ();
           this->deliver_state_ = 3;
         }
     }
@@ -175,15 +172,15 @@ HTTP_Base::payload_size ()
 int
 HTTP_Base::build_headers (JAWS_Headers *new_headers)
 {
-  JAWS_Header_Data *data = 0;
-  JAWS_Header_Data *data2 = 0;
+  JAWS_Header_Data *data = nullptr;
+  JAWS_Header_Data *data2 = nullptr;
   JAWS_Header_Table_Iterator iter (*new_headers);
 
   iter.first ();
   while (! iter.done ())
     {
       data = iter.next ();
-      if (data == 0)
+      if (data == nullptr)
         {
           iter.advance ();
           continue;
@@ -195,26 +192,20 @@ HTTP_Base::build_headers (JAWS_Headers *new_headers)
                || data->header_type () == HTTP_HCodes::APPENDTO_HEADER)
         {
           data2 = this->headers ()->find (data->header_name ());
-          if (data2 != 0)
+          if (data2 != nullptr)
             {
               if (data->header_type () == HTTP_HCodes::APPENDTO_HEADER)
                 {
                   // Append to existing header
                   size_t len
-                    = ACE_OS::strlen (data->header_value ())
-                    + ACE_OS::strlen (data2->header_value ())
+                    = std::strlen (data->header_value ())
+                    + std::strlen (data2->header_value ())
                     + 3; /* for comma, space, and nul */
-                  char *buf = new char [len];
-                  if (buf == 0)
-                    {
-                      this->status_ = STATUS_INTERNAL_SERVER_ERROR;
-                      return -1;
-                    }
-                  ACE_OS::sprintf (buf, "%s, %s",
-                                   data2->header_value (),
-                                   data->header_value ());
-                  data2->header_value (buf);
-                  delete [] buf;
+                  std::unique_ptr<char[]> buf = std::make_unique<char[]> (len);
+                  std::sprintf (buf.get (), "%s, %s",
+                                data2->header_value (),
+                                data->header_value ());
+                  data2->header_value (buf.get ());
                 }
 
               // Only insert if it isn't already present
@@ -225,8 +216,8 @@ HTTP_Base::build_headers (JAWS_Headers *new_headers)
 
       data2 = new JAWS_Header_Data (data->header_name (),
                                     data->header_value ());
-      if (data2 == 0 || data2->header_name () == 0
-          || data2->header_value () == 0)
+      if (data2 == nullptr || data2->header_name () == nullptr
+          || data2->header_value () == nullptr)
         {
           this->status_ = STATUS_INTERNAL_SERVER_ERROR;
           return -1;
@@ -242,11 +233,11 @@ HTTP_Base::build_headers (JAWS_Headers *new_headers)
 int
 HTTP_Base::deliver_header_name (JAWS_Header_Data *&data)
 {
-  data = 0;
+  data = nullptr;
 
   for (;;)
     {
-      if ((data = this->iter_.next ()) == 0)
+      if ((data = this->iter_.next ()) == nullptr)
         {
           // No more headers, deliver final "\r\n"
           this->mb_->copy ("\r\n", 2);
@@ -298,7 +289,7 @@ HTTP_Base::extract_line (ACE_Message_Block &mb)
     p[-1] = '\0';
 
   this->line_ = ACE_OS::strdup (mb.rd_ptr ());
-  if (this->line_ == 0)
+  if (this->line_ == nullptr)
     this->status_ = STATUS_INTERNAL_SERVER_ERROR;
 
   mb.rd_ptr (p+1);

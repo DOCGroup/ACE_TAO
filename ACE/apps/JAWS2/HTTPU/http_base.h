@@ -11,12 +11,17 @@
 #include "HTTPU/http_export.h"
 #include "HTTPU/http_status.h"
 #include "HTTPU/http_headers.h"
+#include <memory>
 
 class HTTPU_Export HTTP_Base : public HTTP_SCode_Base
 {
 public:
   HTTP_Base ();
   virtual ~HTTP_Base ();
+  HTTP_Base (HTTP_Base const &) = delete;
+  HTTP_Base (HTTP_Base &&) = delete;
+  HTTP_Base &operator= (HTTP_Base const &) = delete;
+  HTTP_Base &operator= (HTTP_Base &&) = delete;
 
   virtual int receive (ACE_Message_Block &mb);
   virtual int deliver (ACE_Message_Block &mb);
@@ -60,12 +65,12 @@ protected:
 
 protected:
   int status_;
-  char *line_;
+  char *line_; // Owns the strdup buffer.
   int deliver_state_;
-  int no_headers_;
+  bool no_headers_;
   HTTP_Headers info_;
   JAWS_Header_Table_Iterator iter_;
-  ACE_Message_Block *mb_;
+  std::unique_ptr<ACE_Message_Block> mb_;
   ACE_Message_Block payload_;
 };
 

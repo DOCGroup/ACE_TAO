@@ -125,15 +125,15 @@ HTTP_Headers::value (int index)
 const char *
 HTTP_Headers::value_next (int index)
 {
-  const char *hs = 0;
-  const char *hv = 0;
+  char const *hs = nullptr;
+  char const *hv = nullptr;
   JAWS_Header_Data *data;
 
   if (0 <= index && index < NUM_HEADER_STRINGS)
     {
       hs = this->header (index);
       data = this->table ()->find_next (hs);
-      if (data != 0)
+      if (data != nullptr)
         hv = data->header_value ();
     }
 

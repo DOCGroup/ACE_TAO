@@ -1,34 +1,32 @@
 #include "HTTPU/parse_http_response.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
+#include <cstring>
 
 Parse_HTTP_Response::Parse_HTTP_Response (const char *response)
   : code_ (200),
-    code_str_ (0),
+    code_str_ (nullptr),
     major_version_ (0),
     minor_version_ (9),
-    version_ (0),
-    response_ (0),
+    version_ (nullptr),
+    response_ (nullptr),
     error_ (0)
 {
-  if (response != 0)
+  if (response != nullptr)
     this->init (response);
 }
 
 Parse_HTTP_Response::~Parse_HTTP_Response ()
 {
-  if (this->response_)
+  if (this->response_ != nullptr)
     ACE_OS::free (this->response_);
-  this->response_ = 0;
-  this->code_str_ = 0;
-  this->version_ = 0;
 }
 
 void
 Parse_HTTP_Response::init (const char *response)
 {
   this->response_ = ACE_OS::strdup (response);
-  if (this->response_ == 0)
+  if (this->response_ == nullptr)
     {
       this->error_ = NO_MEMORY;
       return;
@@ -58,7 +56,7 @@ Parse_HTTP_Response::init (const char *response)
 
       this->code_str_ = p;
 
-      while (*p && !ACE_OS::strchr (" \t\r\n", *p))
+      while (*p && !std::strchr (" \t\r\n", *p))
         p++;
 
       *p++ = '\0';

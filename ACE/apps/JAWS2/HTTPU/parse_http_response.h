@@ -12,8 +12,12 @@
 class HTTPU_Export Parse_HTTP_Response
 {
 public:
-  Parse_HTTP_Response (const char *response = 0);
+  explicit Parse_HTTP_Response (char const *response = nullptr);
   ~Parse_HTTP_Response ();
+  Parse_HTTP_Response (Parse_HTTP_Response const &) = delete;
+  Parse_HTTP_Response (Parse_HTTP_Response &&) = delete;
+  Parse_HTTP_Response &operator= (Parse_HTTP_Response const &) = delete;
+  Parse_HTTP_Response &operator= (Parse_HTTP_Response &&) = delete;
 
   void init (const char *response);
 
@@ -36,7 +40,7 @@ private:
   int major_version_;
   int minor_version_;
   char *version_;
-  char *response_;
+  char *response_; // Owns the strdup buffer; code_str_ and version_ point into it.
   int error_;
 };
 

@@ -21,7 +21,11 @@ class HTTPU_Export HTTP_Response : public HTTP_Base
 {
 public:
   HTTP_Response ();
-  ~HTTP_Response ();
+  ~HTTP_Response () override;
+  HTTP_Response (HTTP_Response const &) = delete;
+  HTTP_Response (HTTP_Response &&) = delete;
+  HTTP_Response &operator= (HTTP_Response const &) = delete;
+  HTTP_Response &operator= (HTTP_Response &&) = delete;
 
   Parse_HTTP_Response *response_line ();
   // Returns the parsed response line.
@@ -29,8 +33,8 @@ public:
   void dump ();
 
 protected:
-  virtual void parse_line ();
-  virtual int espouse_line ();
+  void parse_line () override;
+  int espouse_line () override;
 
 private:
   Parse_HTTP_Response response_;

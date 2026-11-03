@@ -1,4 +1,5 @@
 #include "HTTPU/http_response.h"
+#include <cstdio>
 
 void
 HTTP_Response::parse_line ()
@@ -19,10 +20,10 @@ HTTP_Response::espouse_line ()
   else
     status = this->response_line ()->code ();
 
-  count = ACE_OS::sprintf (this->mb_->wr_ptr (), "%s %d %s\r\n",
-                           "HTTP/1.1",
-                           status,
-                           (char *)(*HTTP_SCode::instance ())[status]);
+  count = std::sprintf (this->mb_->wr_ptr (), "%s %d %s\r\n",
+                        "HTTP/1.1",
+                        status,
+                        (*HTTP_SCode::instance ())[status]);
   // Last arg is hard coded since we are suppose to report the
   // level of server we are, and not act like the level of the
   // client.  This information should be obtained from the config.

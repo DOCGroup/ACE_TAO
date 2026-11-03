@@ -35,12 +35,12 @@ ACE_INLINE const char *
 HTTP_Headers::header_token (int name) const
 {
   const HTTP_Hdr_Node **hn = this->header_nodes_->find (name);
-  return ((hn && *hn) ? (const char *)**hn : 0);
+  return (hn && *hn) ? **hn : nullptr;
 }
 
 ACE_INLINE const char *
 HTTP_Headers::header_strings (int name) const
 {
   const HTTP_Hdr_Node **hn = this->header_nodes_->find (name);
-  return ((hn && *hn) ? (*hn)->format () : 0);
+  return ((hn && *hn) ? (*hn)->format () : nullptr);
 }

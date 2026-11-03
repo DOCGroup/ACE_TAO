@@ -15,8 +15,12 @@ class HTTPU_Export HTTP_Parse_URL
   // always returns a null value for the host.
 
 public:
-  HTTP_Parse_URL (const char *url = 0);
+  explicit HTTP_Parse_URL (char const *url = nullptr);
   ~HTTP_Parse_URL ();
+  HTTP_Parse_URL (HTTP_Parse_URL const &) = delete;
+  HTTP_Parse_URL (HTTP_Parse_URL &&) = delete;
+  HTTP_Parse_URL &operator= (HTTP_Parse_URL const &) = delete;
+  HTTP_Parse_URL &operator= (HTTP_Parse_URL &&) = delete;
 
   void init (const char *url);
 
@@ -33,7 +37,7 @@ public:
 
   int error () const { return( error_ ); }
 
-  int is_cgi () const;
+  bool is_cgi () const;
 
 private:
   void parse_url ();
@@ -45,7 +49,7 @@ private:
   void set_port_from_scheme ();
 
 private:
-  char *url_;
+  char *url_; // Owns the strdup buffer; the remaining string members point into it.
 
   const char *scheme_;
   const char *user_;
@@ -55,7 +59,7 @@ private:
   const char *url_path_;
 
   int error_;
-  int is_cgi_;
+  bool is_cgi_;
 };
 
 #endif /* !defined (HTTPU_HTTP_PARSE_H) */

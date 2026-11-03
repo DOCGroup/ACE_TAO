@@ -12,8 +12,12 @@
 class HTTPU_Export Parse_HTTP_Request : public HTTP_HCodes
 {
 public:
-  Parse_HTTP_Request (const char *request = 0);
+  explicit Parse_HTTP_Request (char const *request = nullptr);
   ~Parse_HTTP_Request ();
+  Parse_HTTP_Request (Parse_HTTP_Request const &) = delete;
+  Parse_HTTP_Request (Parse_HTTP_Request &&) = delete;
+  Parse_HTTP_Request &operator= (Parse_HTTP_Request const &) = delete;
+  Parse_HTTP_Request &operator= (Parse_HTTP_Request &&) = delete;
 
   void init (const char *request);
 
@@ -40,7 +44,7 @@ private:
   int minor_version_;
   char *version_;
   char *url_;
-  char *request_;
+  char *request_; // Owns the strdup buffer; url_ and version_ point into it.
   int error_;
 };
 
