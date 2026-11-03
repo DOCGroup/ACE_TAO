@@ -17,8 +17,8 @@ public:
   void disconnect ();
   // Disconnect from the event channel.
 
-  void push (const RtecEventComm::EventSet& data);
-  void disconnect_push_consumer ();
+  void push (const RtecEventComm::EventSet& data) override;
+  void disconnect_push_consumer () override;
 
 private:
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;

@@ -1,29 +1,27 @@
 #include "Stock_i.h"
 #include <orbsvcs/Event_Utilities.h>
+#include <atomic>
 
 ///derive a class from the tie template class to release itself by ref_count
 class MyTieStock:public POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
 {
   friend class Quoter_Stock_i;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> ref_count_;
+  std::atomic<long> ref_count_ {0};
 
 protected:
   MyTieStock (Quoter_Stock_i *tp,
               CORBA::Boolean release)
-    : POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i> (tp,release),
-      ref_count_(0) {}
+    : POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i> (tp,release) {}
 
 public:
-  virtual void _add_ref ()
+  void _add_ref () override
   {
-    ++this->ref_count_;
+    this->ref_count_.fetch_add (1, std::memory_order_relaxed);
   }
 
-  virtual void _remove_ref ()
+  void _remove_ref () override
   {
-    CORBA::ULong new_count = --this->ref_count_;
-
-    if (new_count == 0)
+    if (this->ref_count_.fetch_sub (1, std::memory_order_acq_rel) == 1)
       delete this;
   }
 };

@@ -14,7 +14,7 @@ public:
                            RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   void destroy_stock_objects ();
 
-  Quoter::Stock_ptr get_stock (const char *symbol);
+  Quoter::Stock_ptr get_stock (const char *symbol) override;
 
 private:
   PortableServer::POA_var stock_factory_poa_;
