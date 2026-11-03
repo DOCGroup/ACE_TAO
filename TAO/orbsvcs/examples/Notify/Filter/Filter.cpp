@@ -1,6 +1,7 @@
 /* -*- C++ -*-  */
 
 #include "Filter.h"
+#include <atomic>
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
@@ -11,12 +12,12 @@
 #define EVENTS_TO_SEND 30
 #define EVENTS_EXPECTED_TO_RECEIVE 9*4  // 2 consumers get the same events from 2 suppliers
 
-ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
+std::atomic<int> g_result_count {0};
 
 FilterClient::FilterClient ()
   :done_ (0)
 {
-  g_result_count = 0;
+  g_result_count.store (0);
   // No-Op.
   ifgop_ = CosNotifyChannelAdmin::AND_OP;
 }
@@ -51,7 +52,7 @@ FilterClient::run ()
 {
   send_events ();
 
-  if (g_result_count != EVENTS_EXPECTED_TO_RECEIVE)
+  if (g_result_count.load () != EVENTS_EXPECTED_TO_RECEIVE)
     { // if we still need to wait for events, run the orb.
       while (!this->done_)
         if (this->orb_->work_pending ())
@@ -352,7 +353,7 @@ Filter_StructuredPushConsumer::push_structured_event
     ACE_DEBUG ((LM_DEBUG,
                 "%C received event, %d\n", my_name_.fast_rep (), val));
 
-    ACE_DEBUG ((LM_DEBUG,"event count %d\n", g_result_count.value ()));
+    ACE_DEBUG ((LM_DEBUG,"event count %d\n", g_result_count.load ()));
 
     if (++g_result_count == EVENTS_EXPECTED_TO_RECEIVE)
       this->filter_->done (); // all events received, we're done.

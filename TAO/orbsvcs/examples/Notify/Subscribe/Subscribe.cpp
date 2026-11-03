@@ -1,5 +1,6 @@
 /* -*- C++ -*-  */
 #include "Subscribe.h"
+#include <atomic>
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
@@ -14,7 +15,7 @@
 
 #define EVENT_COUNT 4 // number of events we expect the consumer to get from the EC
 
-ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0; // we wait for 4 events.
+std::atomic<int> g_result_count {0}; // we wait for 4 events.
 
 Subscribe::Subscribe ()
   : done_ (0)
@@ -46,7 +47,7 @@ Subscribe::run ()
 {
   this->send_events ();
 
-  if (g_result_count != EVENT_COUNT) // if we still need to wait for events, run the orb.
+  if (g_result_count.load () != EVENT_COUNT) // if we still need to wait for events, run the orb.
     { // if we still need to wait for events, run the orb.
       while (!this->done_)
         if (this->orb_->work_pending ())

@@ -161,18 +161,18 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~Filter_StructuredPushConsumer ();
+  ~Filter_StructuredPushConsumer () override;
 
   // = NotifyPublish method
-    virtual void offer_change (
+    void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+        const CosNotification::EventTypeSeq & removed) override;
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+        const CosNotification::StructuredEvent & notification) override;
 
-  virtual void disconnect_structured_push_consumer ();
+  void disconnect_structured_push_consumer () override;
 };
 
 /*****************************************************************/
@@ -213,15 +213,15 @@ protected:
 
   // = Protected Methods
   /// Destructor
-  virtual ~Filter_StructuredPushSupplier ();
+  ~Filter_StructuredPushSupplier () override;
 
   // = NotifySubscribe
-  virtual void subscription_change (
+  void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+        const CosNotification::EventTypeSeq & removed) override;
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier ();
+  void disconnect_structured_push_supplier () override;
 };
 
 #endif /* NOTIFY_FILTER_CLIENT_H */
