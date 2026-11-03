@@ -21,7 +21,7 @@
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -93,7 +93,7 @@ protected:
 
 private:
   /// The number of requests that have arrived on the server.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> request_count_;
+  std::atomic<long> request_count_ {};
 };
 
 #if defined(_MSC_VER)
