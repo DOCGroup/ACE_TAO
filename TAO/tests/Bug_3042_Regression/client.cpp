@@ -8,7 +8,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   try
     {
       // Creation.
-      Foo::Node node;
+      Foo::Node node {};
       node.nodes.length (2);
     }
   catch (CORBA::Exception const &ex)
