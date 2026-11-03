@@ -21,6 +21,8 @@
 #include "orbsvcs/IFRService/ifr_service_export.h"
 #include "tao/Versioned_Namespace.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -69,13 +71,13 @@ private:
   Options &operator= (Options &&) = delete;
 
   /// File where the IOR of the server object is stored.
-  char *ior_output_file_;
+  std::string ior_output_file_;
 
   /// Is the Interface Repository persistent?
   bool persistent_ {};
 
   /// Default filename for persistent IFR.
-  char *persistent_file_;
+  std::string persistent_file_;
 
   /// Are we using a WIN32 registry as the backing store?
   bool using_registry_ {};
