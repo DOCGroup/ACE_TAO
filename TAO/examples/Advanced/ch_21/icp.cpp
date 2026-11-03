@@ -16,13 +16,12 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <cstdlib>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
-
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
 
 //----------------------------------------------------------------
 
@@ -121,7 +120,7 @@ static
 long
 vary_temp (long temp)
 {
-    long const r = ACE_OS::rand () % 50;
+    long const r = std::rand () % 50;
     long delta {};
     if (r < 5)
         delta = 3;
@@ -131,7 +130,7 @@ vary_temp (long temp)
         delta = 1;
     else
         delta = 0;
-    if (ACE_OS::rand () % 2)
+    if (std::rand () % 2)
         delta = -delta;
     return temp + delta;
 }
@@ -225,24 +224,24 @@ ICP_get (
 
     // Depending on the attribute, return the
     // corresponding piece of state.
-    if (ACE_OS::strcmp (attr, "model") == 0) {
-        ACE_OS::strncpy (static_cast<char *> (value), pos->second.model, len);
-    } else if (ACE_OS::strcmp (attr, "location") == 0) {
-      ACE_OS::strncpy (static_cast<char *> (value), pos->second.location.c_str (), len);
-    } else if (ACE_OS::strcmp (attr, "nominal_temp") == 0) {
+    if (std::strcmp (attr, "model") == 0) {
+        std::strncpy (static_cast<char *> (value), pos->second.model, len);
+    } else if (std::strcmp (attr, "location") == 0) {
+      std::strncpy (static_cast<char *> (value), pos->second.location.c_str (), len);
+    } else if (std::strcmp (attr, "nominal_temp") == 0) {
         if (pos->second.type != DeviceType::thermostat)
             return -1;                      // Must be thermostat
-        ACE_OS::memcpy(
+        std::memcpy(
             value, &pos->second.nominal_temp,
             (std::min)(len, sizeof(pos->second.nominal_temp))
         );
-    } else if (ACE_OS::strcmp(attr, "temperature") == 0) {
+    } else if (std::strcmp (attr, "temperature") == 0) {
         long const temp = actual_temp (pos);
-        ACE_OS::memcpy (value, &temp, (std::min) (len, sizeof (temp)));
-    } else if (ACE_OS::strcmp (attr, "MIN_TEMP") == 0) {
-        ACE_OS::memcpy (value, &MIN_TEMP, (std::min) (len, sizeof (MIN_TEMP)));
-    } else if (ACE_OS::strcmp (attr, "MAX_TEMP") == 0) {
-        ACE_OS::memcpy (value, &MAX_TEMP, (std::min) (len, sizeof (MAX_TEMP)));
+        std::memcpy (value, &temp, (std::min) (len, sizeof (temp)));
+    } else if (std::strcmp (attr, "MIN_TEMP") == 0) {
+        std::memcpy (value, &MIN_TEMP, (std::min) (len, sizeof (MIN_TEMP)));
+    } else if (std::strcmp (attr, "MAX_TEMP") == 0) {
+        std::memcpy (value, &MAX_TEMP, (std::min) (len, sizeof (MAX_TEMP)));
     } else {
         return -1;                          // No such attribute
     }
@@ -270,15 +269,15 @@ ICP_set (unsigned long id, char const *attr, void const *value)
         return -1;                          // No such device
 
     // Change either location or nominal temp, depending on attr.
-    if (ACE_OS::strcmp (attr, "location") == 0) {
+    if (std::strcmp (attr, "location") == 0) {
         pos->second.location.assign(
             static_cast<char const *> (value), MAXSTR - 1
         );
-    } else if (ACE_OS::strcmp (attr, "nominal_temp") == 0) {
+    } else if (std::strcmp (attr, "nominal_temp") == 0) {
         if (pos->second.type != DeviceType::thermostat)
             return -1;                      // Must be thermostat
         short temp {};
-        ACE_OS::memcpy (&temp, value, sizeof (temp));
+        std::memcpy (&temp, value, sizeof (temp));
         if (temp < MIN_TEMP || temp > MAX_TEMP)
             return -1;
         pos->second.nominal_temp = temp;
@@ -312,7 +311,7 @@ ICP_Persist (char const *file) : m_filename (file)
     std::ifstream db (m_filename.c_str (), std::ios::in|std::ios::out);//, 0666);
     if (!db) {
         std::cerr << "Error opening " << m_filename << std::endl;
-        ACE_OS::exit(1);
+        std::exit (1);
     }
 
     // Read device details, one attribute per line.
@@ -338,7 +337,7 @@ ICP_Persist (char const *file) : m_filename (file)
     // db.close();
     // if (!db) {
     //    cerr << "Error closing " << m_filename << endl;
-    //    ACE_OS::exit(1);
+    //    std::exit (1);
     // }
 }
 
@@ -351,7 +350,7 @@ ICP_Persist::
     std::ofstream db (m_filename.c_str ());
     if (!db) {
         std::cerr << "Error opening " << m_filename << std::endl;
-        ACE_OS::exit(1);
+        std::exit (1);
     }
 
     // Write the state details for each device.
@@ -364,7 +363,7 @@ ICP_Persist::
     }
     if (!db) {
         std::cerr << "Error writing " << m_filename << std::endl;
-        ACE_OS::exit(1);
+        std::exit (1);
     }
 
     // db.close();
