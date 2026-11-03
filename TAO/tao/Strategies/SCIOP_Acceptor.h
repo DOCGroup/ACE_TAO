@@ -30,7 +30,9 @@
 
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "ace/Acceptor.h"
+
 #include <memory>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -189,7 +191,7 @@ protected:
   /**
    * Override the hostname used in the ORBEndPoint.
    */
-  char *hostname_in_ior_ {};
+  std::string hostname_in_ior_;
 
   /**
    * The GIOP version for this endpoint

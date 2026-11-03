@@ -32,7 +32,9 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
+
 #include <memory>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -227,7 +229,7 @@ protected:
   /**
    * Override the hostname used in the ORBEndPoint.
    */
-  char *hostname_in_ior_;
+  std::string hostname_in_ior_;
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).

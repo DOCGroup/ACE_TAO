@@ -32,6 +32,8 @@
 
 #include "ace/SOCK_Acceptor.h"
 
+#include <string>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
 {
@@ -190,7 +192,7 @@ namespace TAO
       /**
        * Override the hostname used in the ORBEndPoint.
        */
-      char *hostname_in_ior_;
+      std::string hostname_in_ior_;
 
       /**
        * The GIOP version for this endpoint

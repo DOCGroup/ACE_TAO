@@ -27,7 +27,6 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor ()
     addrs_ (nullptr),
     port_span_ (1),
     hosts_ (nullptr),
-    hostname_in_ior_ (nullptr),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (nullptr),
@@ -65,7 +64,6 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor ()
     for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
       CORBA::string_free (this->hosts_[i]);
 
-  delete [] this->hostname_in_ior_;
 }
 
 // TODO =
@@ -362,7 +360,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->hosts_[0] = nullptr;
 
-  if (this->hostname_in_ior_ != nullptr)
+  if (!this->hostname_in_ior_.empty ())
     {
       if (TAO_debug_level > 2)
         {
@@ -370,9 +368,9 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT ("IIOP_Acceptor::open, ")
                       ACE_TEXT ("overriding address in IOR with %C\n"),
-                      this->hostname_in_ior_));
+                      this->hostname_in_ior_.c_str ()));
         }
-      specified_hostname = this->hostname_in_ior_;
+      specified_hostname = this->hostname_in_ior_.c_str ();
     }
 
   if (this->hostname (orb_core,
@@ -593,15 +591,15 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                              char *&host,
                              const char *specified_hostname)
 {
-  if (this->hostname_in_ior_ != nullptr)
+  if (!this->hostname_in_ior_.empty ())
     {
       if (TAO_debug_level >= 5)
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::hostname, ")
                       ACE_TEXT ("overriding the hostname with <%C>\n"),
-                      this->hostname_in_ior_));
+                      this->hostname_in_ior_.c_str ()));
 
-      host = CORBA::string_dup (this->hostname_in_ior_);
+      host = CORBA::string_dup (this->hostname_in_ior_.c_str ());
     }
   else if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
@@ -1240,7 +1238,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
         }
       else if (name == "hostname_in_ior")
         {
-          this->hostname_in_ior_ = value.rep ();
+          this->hostname_in_ior_ = value.c_str ();
         }
       else if (name == "reuse_addr")
         {

@@ -29,7 +29,6 @@ TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
     addrs_ (nullptr),
     hosts_ (nullptr),
     endpoint_count_ (0),
-    hostname_in_ior_ (nullptr),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (nullptr),
     base_acceptor_ (this),
@@ -373,19 +372,19 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->hosts_[0] = nullptr;
 
-  if (this->hostname_in_ior_ != nullptr)
+  if (!this->hostname_in_ior_.empty ())
     {
       if (TAO_debug_level > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Overriding address in IOR with %s\n"),
-                      this->hostname_in_ior_));
+                      this->hostname_in_ior_.c_str ()));
         }
 
       if (this->hostname (orb_core,
                           addr,
                           this->hosts_[0],
-                          this->hostname_in_ior_) != 0)
+                          this->hostname_in_ior_.c_str ()) != 0)
         return -1;
     }
   else
@@ -708,18 +707,18 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           inet_addrs[i].is_loopback ())
         continue;
 
-      if (this->hostname_in_ior_ != nullptr)
+      if (!this->hostname_in_ior_.empty ())
         {
           if (TAO_debug_level > 2)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Overriding address in IOR with %s\n"),
-                          this->hostname_in_ior_));
+                          this->hostname_in_ior_.c_str ()));
             }
           if (this->hostname (orb_core,
                               inet_addrs[i],
                               this->hosts_[host_cnt],
-                              this->hostname_in_ior_) != 0)
+                              this->hostname_in_ior_.c_str ()) != 0)
             return -1;
         }
       else
@@ -874,7 +873,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
                               -1);
           else if (name == "hostname_in_ior")
             {
-              this->hostname_in_ior_ = value.rep ();
+              this->hostname_in_ior_ = value.c_str ();
             }
           else
             ORBSVCS_ERROR_RETURN ((LM_ERROR,

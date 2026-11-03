@@ -399,7 +399,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   i = 0;
   while (i < hostnames.size()) {
     // The hostname_in_ior_ field may override the FIRST hostname only.
-    if (this->hostname_in_ior_ != nullptr && i == 0)
+    if (!this->hostname_in_ior_.empty () && i == 0)
     {
       if (TAO_debug_level > 2)
       {
@@ -407,12 +407,12 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT ("SCIOP_Acceptor::open, ")
                       ACE_TEXT ("overriding address in IOR with %C\n"),
-                      this->hostname_in_ior_));
+                      this->hostname_in_ior_.c_str ()));
       }
       if (this->hostname (orb_core,
                           this->addrs_[i],
                           this->hosts_[i],
-                          this->hostname_in_ior_) != 0)
+                          this->hostname_in_ior_.c_str ()) != 0)
         return -1;
     }
     else
@@ -766,7 +766,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           if_addrs[i].is_loopback ())
         continue;
 
-      if (this->hostname_in_ior_ != nullptr)
+      if (!this->hostname_in_ior_.empty ())
         {
           if (TAO_debug_level > 2)
             {
@@ -774,12 +774,12 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
                           ACE_TEXT ("TAO (%P|%t) - ")
                           ACE_TEXT ("SCIOP_Acceptor::probe_interfaces, ")
                           ACE_TEXT ("overriding address in IOR with %C\n"),
-                          this->hostname_in_ior_));
+                          this->hostname_in_ior_.c_str ()));
             }
           if (this->hostname (orb_core,
                               if_addrs[i],
                               this->hosts_[host_cnt],
-                              this->hostname_in_ior_) != 0)
+                              this->hostname_in_ior_.c_str ()) != 0)
             return -1;
         }
       else
@@ -1010,7 +1010,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
             }
           else if (name == "hostname_in_ior")
             {
-              this->hostname_in_ior_ = value.rep ();
+              this->hostname_in_ior_ = value.c_str ();
             }
           else
             TAOLIB_ERROR_RETURN ((LM_ERROR,
