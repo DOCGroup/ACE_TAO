@@ -19,13 +19,13 @@ class ACE_Svc_Export Gateway : public ACE_Service_Object
 protected:
   // = Service configurator hooks.
   // Perform initialization.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   // Perform termination when unlinked dynamically.
-  virtual int fini ();
+  int fini () override;
 
   // Return info about this service.
-  virtual int info (ACE_TCHAR **, size_t) const;
+  int info (ACE_TCHAR **, size_t) const override;
 
   // = Configuration methods.
   // Parse the proxy configuration file.
@@ -37,10 +37,10 @@ protected:
   // = Lifecycle management methods.
   // Shut down the Gateway when input comes in from the controlling
   // console.
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   // Shut down the Gateway when a signal arrives.
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
   // The Event Channel routes events from Supplier(s) to Consumer(s)
   // using <Supplier_Handler> and <Consumer_Handler> objects.
@@ -160,7 +160,7 @@ Gateway::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy
     (buf, ACE_TEXT ("Gateway daemon\t   # Application-level gateway\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, buf, length);
@@ -174,7 +174,7 @@ Gateway::parse_connection_config_file ()
 {
   // File that contains the proxy configuration information.
   Connection_Config_File_Parser connection_file;
-  int file_empty = 1;
+  bool file_empty = true;
   int line_number = 0;
 
   if (connection_file.open (Options::instance ()->connection_config_file ()) == -1)
@@ -193,7 +193,7 @@ Gateway::parse_connection_config_file ()
        connection_file.read_entry (pci, line_number) != FPRT::RT_EOFILE;
        )
     {
-      file_empty = 0;
+      file_empty = false;
 
       // First time in check.
       if (previous_connection_id == 0)
@@ -260,7 +260,7 @@ Gateway::parse_consumer_config_file ()
 {
   // File that contains the consumer event forwarding information.
   Consumer_Config_File_Parser consumer_file;
-  int file_empty = 1;
+  bool file_empty = true;
   int line_number = 0;
 
   if (consumer_file.open (Options::instance ()->consumer_config_file ()) == -1)
@@ -274,7 +274,7 @@ Gateway::parse_consumer_config_file ()
        consumer_file.read_entry (cci_entry, line_number) != FPRT::RT_EOFILE;
        )
     {
-      file_empty = 0;
+      file_empty = false;
 
       if (Options::instance ()->enabled (Options::DEBUGGING))
         {
@@ -303,7 +303,7 @@ Gateway::parse_consumer_config_file ()
       // Add the Consumers to the Dispatch_Set.
       for (int i = 0; i < cci_entry.total_consumers_; i++)
         {
-          Connection_Handler *connection_handler = 0;
+          Connection_Handler *connection_handler = nullptr;
 
           // Lookup destination and add to Consumer_Dispatch_Set set
           // if found.

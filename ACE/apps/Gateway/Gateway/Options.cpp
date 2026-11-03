@@ -10,7 +10,7 @@
 
 
 // Static initialization.
-Options *Options::instance_ = 0;
+Options *Options::instance_ = nullptr;
 
 // Let's have a usage prompt.
 void
@@ -38,14 +38,14 @@ Options::print_usage ()
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == 0)
-    ACE_NEW_RETURN (Options::instance_, Options, 0);
+  if (Options::instance_ == nullptr)
+    ACE_NEW_RETURN (Options::instance_, Options, nullptr);
 
   return Options::instance_;
 }
 
 Options::Options ()
-  : locking_strategy_ (0),
+  : locking_strategy_ (),
     performance_window_ (0),
     blocking_semantics_ (ACE_NONBLOCK),
     socket_queue_size_ (0),
@@ -69,21 +69,18 @@ Options::enabled (int option) const
   return ACE_BIT_ENABLED (this->options_, option);
 }
 
-Options::~Options ()
-{
-  delete this->locking_strategy_;
-}
+Options::~Options () = default;
 
 ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *
 Options::locking_strategy () const
 {
-  return this->locking_strategy_;
+  return this->locking_strategy_.get ();
 }
 
 void
 Options::locking_strategy (ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *ls)
 {
-  this->locking_strategy_ = ls;
+  this->locking_strategy_.reset (ls);
 }
 
 long
@@ -184,8 +181,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             // Become an Acceptor.
 
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
-                 flag != 0;
-                 flag = ACE_OS::strtok (0, ACE_TEXT("|")))
+                 flag != nullptr;
+                 flag = ACE_OS::strtok (nullptr, ACE_TEXT("|")))
               if (ACE_OS::strncasecmp (flag, ACE_TEXT("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
@@ -219,8 +216,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             // Become a Connector.
 
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
-                 flag != 0;
-                 flag = ACE_OS::strtok (0, ACE_TEXT("|")))
+                 flag != nullptr;
+                 flag = ACE_OS::strtok (nullptr, ACE_TEXT("|")))
               if (ACE_OS::strncasecmp (flag, ACE_TEXT("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
@@ -255,8 +252,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 't': // Use a different threading strategy.
           {
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (), ACE_TEXT("|"));
-                 flag != 0;
-                 flag = ACE_OS::strtok (0, ACE_TEXT("|")))
+                 flag != nullptr;
+                 flag = ACE_OS::strtok (nullptr, ACE_TEXT("|")))
               if (ACE_OS::strcmp (flag, ACE_TEXT("OUTPUT_MT")) == 0)
                 ACE_SET_BITS (this->threading_strategy_,
                               Options::OUTPUT_MT);

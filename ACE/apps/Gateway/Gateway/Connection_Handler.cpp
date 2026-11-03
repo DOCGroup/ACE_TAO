@@ -43,6 +43,13 @@ Connection_Handler::total_bytes (size_t bytes)
 }
 
 Connection_Handler::Connection_Handler ()
+  : connection_id_ (0),
+    total_bytes_ (0),
+    state_ (Connection_Handler::IDLE),
+    timeout_ (1),
+    max_timeout_ (1),
+    connection_role_ ('\0'),
+    event_channel_ (nullptr)
 {
 }
 
@@ -227,7 +234,7 @@ Connection_Handler::local_addr (ACE_INET_Addr &la)
 Connection_Handler *
 Connection_Handler_Factory::make_connection_handler (const Connection_Config_Info &pci)
 {
-  Connection_Handler *connection_handler = 0;
+  Connection_Handler *connection_handler = nullptr;
 
   // The next few lines of code are dependent on whether we are making
   // a threaded/reactive Supplier_Handler/Consumer_Handler.
@@ -239,13 +246,13 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
                            Options::OUTPUT_MT))
         ACE_NEW_RETURN (connection_handler,
                         Thr_Consumer_Handler (pci),
-                        0);
+                        nullptr);
 
       // Create a reactive Consumer_Handler.
       else
         ACE_NEW_RETURN (connection_handler,
                         Consumer_Handler (pci),
-                        0);
+                        nullptr);
     }
   else // connection_role == 'S', so configure a Supplier_Handler.
     {
@@ -254,13 +261,13 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
                            Options::INPUT_MT))
         ACE_NEW_RETURN (connection_handler,
                         Thr_Supplier_Handler (pci),
-                        0);
+                        nullptr);
 
       // Create a reactive Supplier_Handler.
       else
         ACE_NEW_RETURN (connection_handler,
                         Supplier_Handler (pci),
-                        0);
+                        nullptr);
     }
 
   return connection_handler;

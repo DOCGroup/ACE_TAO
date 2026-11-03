@@ -34,10 +34,14 @@ class ACE_Svc_Export Event_Channel : public ACE_Event_Handler
 {
 public:
   Event_Channel ();
-  ~Event_Channel ();
+  ~Event_Channel () override;
+  Event_Channel (Event_Channel const &) = delete;
+  Event_Channel (Event_Channel &&) = delete;
+  Event_Channel &operator= (Event_Channel const &) = delete;
+  Event_Channel &operator= (Event_Channel &&) = delete;
 
   /// Open the channel.
-  virtual int open (void * = 0);
+  virtual int open (void * = nullptr);
 
   /// Close down the Channel.
   virtual int close (u_long = 0);
@@ -49,7 +53,7 @@ public:
    * block the connecting procedure directly, need not care
    * Options::blocking_semantics().
    */
-  int initiate_connection_connection (Connection_Handler *, int sync_directly = 0);
+  int initiate_connection_connection (Connection_Handler *, bool sync_directly = false);
 
   /// Complete the initialization of the <Connection_Handler> once it's
   /// connected to its Peer.
@@ -75,7 +79,7 @@ public:
   // = Event processing entry point.
   /// Pass <mb> to the Event Channel so it can forward it to Consumers.
   virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value * = 0);
+                   ACE_Time_Value * = nullptr);
 
   /// Actively initiate connections to the Peers.
   void initiate_connector ();
@@ -102,8 +106,8 @@ private:
 
   /// Periodically callback to perform timer-based performance
   /// profiling.
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &,
+                      const void *arg) override;
 
   /// Used to establish the connections actively.
   Connection_Handler_Connector connector_;

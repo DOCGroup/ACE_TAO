@@ -29,13 +29,17 @@
 class Supplier_Handler : public Connection_Handler
 {
 public:
-  Supplier_Handler (const Connection_Config_Info &);
+  explicit Supplier_Handler (const Connection_Config_Info &);
+  Supplier_Handler (Supplier_Handler const &) = delete;
+  Supplier_Handler (Supplier_Handler &&) = delete;
+  Supplier_Handler &operator= (Supplier_Handler const &) = delete;
+  Supplier_Handler &operator= (Supplier_Handler &&) = delete;
 
 protected:
   // = All the following methods are upcalls, so they can be protected.
 
   /// Receive and process peer events.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
   /// Receive an event from a Supplier.
   virtual int recv (ACE_Message_Block *&);
@@ -65,15 +69,19 @@ protected:
 class Consumer_Handler : public Connection_Handler
 {
 public:
-  Consumer_Handler (const Connection_Config_Info &);
+  explicit Consumer_Handler (const Connection_Config_Info &);
+  Consumer_Handler (Consumer_Handler const &) = delete;
+  Consumer_Handler (Consumer_Handler &&) = delete;
+  Consumer_Handler &operator= (Consumer_Handler const &) = delete;
+  Consumer_Handler &operator= (Consumer_Handler &&) = delete;
 
   /// Send an event to a Consumer (may be queued if necessary).
-  virtual int put (ACE_Message_Block *event,
-                   ACE_Time_Value * = 0);
+  int put (ACE_Message_Block *event,
+           ACE_Time_Value * = nullptr) override;
 
 protected:
   /// Finish sending event when flow control conditions abate.
-  virtual int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   /// Perform a non-blocking put().
   int nonblk_put (ACE_Message_Block *mb);
@@ -82,7 +90,7 @@ protected:
   virtual ssize_t send (ACE_Message_Block *);
 
   /// Receive and process shutdowns from a Consumer.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 };
 
 /**
@@ -93,21 +101,25 @@ protected:
 class Thr_Consumer_Handler : public Consumer_Handler
 {
 public:
-  Thr_Consumer_Handler (const Connection_Config_Info &);
+  explicit Thr_Consumer_Handler (const Connection_Config_Info &);
+  Thr_Consumer_Handler (Thr_Consumer_Handler const &) = delete;
+  Thr_Consumer_Handler (Thr_Consumer_Handler &&) = delete;
+  Thr_Consumer_Handler &operator= (Thr_Consumer_Handler const &) = delete;
+  Thr_Consumer_Handler &operator= (Thr_Consumer_Handler &&) = delete;
 
   /// Initialize the threaded Consumer_Handler object and spawn a new
   /// thread.
-  virtual int open (void *);
+  int open (void *) override;
 
   /// Send a message to a peer.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+  int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 protected:
   /// Called when Peer shutdown unexpectedly.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Transmit peer messages.
-  virtual int svc ();
+  int svc () override;
 
   /**
    * When thread started, connection become blocked, so no need to use
@@ -116,12 +128,12 @@ protected:
    * not. If yes, handle_close do nothing, otherwise, it call parent
    * handle_close().
    */
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
 private:
   /// If the controlling is in thread's svc() or not.
-  int in_thread_;
+  bool in_thread_;
 };
 
 /**
@@ -132,10 +144,14 @@ private:
 class Thr_Supplier_Handler : public Supplier_Handler
 {
 public:
-  Thr_Supplier_Handler (const Connection_Config_Info &pci);
+  explicit Thr_Supplier_Handler (const Connection_Config_Info &pci);
+  Thr_Supplier_Handler (Thr_Supplier_Handler const &) = delete;
+  Thr_Supplier_Handler (Thr_Supplier_Handler &&) = delete;
+  Thr_Supplier_Handler &operator= (Thr_Supplier_Handler const &) = delete;
+  Thr_Supplier_Handler &operator= (Thr_Supplier_Handler &&) = delete;
 
   /// Initialize the object and spawn a new thread.
-  virtual int open (void *);
+  int open (void *) override;
 
 protected:
   /**
@@ -145,15 +161,15 @@ protected:
    * not. If yes, handle_close do nothing, otherwise, it call parent
    * handle_close().
    */
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Transmit peer messages.
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// If the controlling is in thread's svc() or not.
-  int in_thread_;
+  bool in_thread_;
 };
 
 #endif /* CONCRETE_CONNECTION_HANDLER */

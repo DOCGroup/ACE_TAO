@@ -43,11 +43,15 @@ public:
   Connection_Handler ();
 
   /// Real constructor.
-  Connection_Handler (const Connection_Config_Info &);
+  explicit Connection_Handler (const Connection_Config_Info &);
+  Connection_Handler (Connection_Handler const &) = delete;
+  Connection_Handler (Connection_Handler &&) = delete;
+  Connection_Handler &operator= (Connection_Handler const &) = delete;
+  Connection_Handler &operator= (Connection_Handler &&) = delete;
 
   /// Initialize and activate a single-threaded <Connection_Handler>
   /// (called by <ACE_Connector::handle_output>).
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
 
   // = The current state of the Connection_Handler.
   enum State
@@ -99,11 +103,11 @@ public:
   size_t total_bytes () const;
 
   /// Perform timer-based Connection_Handler reconnection.
-  virtual int handle_timeout (const ACE_Time_Value &, const void *arg);
+  int handle_timeout (const ACE_Time_Value &, const void *arg) override;
 
   /// Perform Connection_Handler termination.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
 protected:
   /// Address of peer.
