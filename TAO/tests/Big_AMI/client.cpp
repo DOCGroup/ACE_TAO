@@ -17,11 +17,13 @@
 
 #include <atomic>
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
-int niterations = 5;
-bool shutdown_flag = false;
-bool debug = true;
-CORBA::ULong payload_size  = 128000;
+int niterations {5};
+bool shutdown_flag {};
+bool debug {true};
+CORBA::ULong payload_size {128000};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -45,7 +47,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         shutdown_flag = true;
         break;
       case 'b':
-        payload_size  = ACE_OS::atoi (get_opts.opt_arg ());
+        payload_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -61,6 +63,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
+}
 }
 
 class Handler : public POA_A::AMI_AMI_TestHandler
@@ -200,10 +203,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "Issuing a synchronous method to collect the AMI replies\n"));
         }
 
-      CORBA::Long number = ami_test_var->foo (l,
-                                              l,
-                                              "Let's talk SMI.",
-                                              payload);
+      CORBA::Long const number = ami_test_var->foo (l,
+                                                    l,
+                                                    "Let's talk SMI.",
+                                                    payload);
 
       if (debug)
         {
