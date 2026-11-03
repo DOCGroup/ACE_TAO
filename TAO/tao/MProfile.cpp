@@ -8,6 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
 #include "ace/CORBA_macros.h"
+#include <utility>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.inl"
@@ -48,7 +49,6 @@ TAO_MProfile::cleanup ()
       for (TAO_PHandle i = 0; i < this->last_; ++i)
         if (this->pfiles_[i])
           this->pfiles_[i]->_decr_refcnt ();
-      delete [] this->pfiles_;
       this->pfiles_ = nullptr;
     }
 
@@ -85,11 +85,11 @@ TAO_MProfile::set (CORBA::ULong sz)
       if (this->size_ < sz)
         {
           // we cant reuse memory since the current array is too small!
-          delete [] this->pfiles_;
-
-          ACE_NEW_RETURN (this->pfiles_,
+          TAO_Profile **pfiles = nullptr;
+          ACE_NEW_RETURN (pfiles,
                           TAO_Profile *[sz],
                           -1);
+          this->pfiles_.reset (pfiles);
           this->size_ = sz;
         }
       // else , leave this->size and this->pfiles alone!
@@ -97,9 +97,11 @@ TAO_MProfile::set (CORBA::ULong sz)
   else
     {
       // first time, initialize!
-      ACE_NEW_RETURN (this->pfiles_,
+      TAO_Profile **pfiles = nullptr;
+      ACE_NEW_RETURN (pfiles,
                       TAO_Profile *[sz],
                       -1);
+      this->pfiles_.reset (pfiles);
       this->size_ = sz;
     }
 
@@ -148,23 +150,20 @@ TAO_MProfile::grow (CORBA::ULong sz)
 
   // get the additional space
   TAO_Profile **new_pfiles = nullptr;
-  TAO_Profile **old_pfiles = nullptr;
   ACE_NEW_RETURN (new_pfiles,
                   TAO_Profile *[sz],
                   -1);
-
-  old_pfiles = this->pfiles_;
+  std::unique_ptr<TAO_Profile *[]> owned_new_pfiles (new_pfiles);
 
   // got it, now copy profiles
   for (TAO_PHandle h = 0; h < this->size_; ++h)
     {
-      new_pfiles[h] = old_pfiles[h];
-      old_pfiles[h] = nullptr;
+      new_pfiles[h] = this->pfiles_[h];
+      this->pfiles_[h] = nullptr;
     }
 
-  this->pfiles_ = new_pfiles;
+  this->pfiles_ = std::move (owned_new_pfiles);
   this->size_ = sz;
-  delete [] old_pfiles;
 
   return 0;
 }

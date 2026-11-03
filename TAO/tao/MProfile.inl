@@ -186,7 +186,7 @@ TAO_MProfile::get_profile (CORBA::ULong slot) const
 ACE_INLINE TAO_Profile **
 TAO_MProfile::pfiles () const
 {
-  return this->pfiles_;
+  return this->pfiles_.get ();
 }
 
 ACE_INLINE void

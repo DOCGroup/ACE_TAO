@@ -25,6 +25,7 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -225,7 +226,7 @@ private:
   TAO_MProfile  *forward_from_;
 
   /// Actual list of profiles.
-  TAO_Profile **pfiles_;
+  std::unique_ptr<TAO_Profile *[]> pfiles_;
 
   /// Points to the next profile to be used.  0 ... size_
   TAO_PHandle current_;
