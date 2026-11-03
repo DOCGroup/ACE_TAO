@@ -22,6 +22,8 @@
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
 #include "orbsvcs/Naming/nsconf.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if !defined (CORBA_E_MICRO)
@@ -213,7 +215,7 @@ protected:
   /// Although this class only manages the root context info
   /// the FT class adds primary/backup IORs for the root context
   /// as well as IORs for LB groups as well.
-  IOR_Bundle *iors_ {};
+  std::unique_ptr<IOR_Bundle[]> iors_;
   size_t bundle_size_;
   IOR_Bundle *bundle_at (size_t ndx);
   IOR_Bundle const *bundle_at (size_t ndx) const;
@@ -235,7 +237,7 @@ protected:
    * the Naming Service when local persistent Naming Service is
    * desired.
    */
-  TAO_Persistent_Context_Index *context_index_ {};
+  std::unique_ptr<TAO_Persistent_Context_Index> context_index_;
 
   /// Path to the file to be used to store/read in Naming Service
   /// persistent state.

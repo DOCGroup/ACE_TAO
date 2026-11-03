@@ -41,7 +41,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Naming_Server::TAO_Naming_Server (size_t bsize)
   : bundle_size_ (bsize)
 {
-  ACE_NEW (iors_, IOR_Bundle[bsize]);
+  IOR_Bundle* iors = nullptr;
+  ACE_NEW (iors, IOR_Bundle[bsize]);
+  this->iors_.reset (iors);
 }
 
 TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
@@ -61,7 +63,9 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
   , use_storable_context_ (use_storable_context)
 #endif /* CORBA_E_MICRO */
 {
-  ACE_NEW (iors_, IOR_Bundle[bsize]);
+  IOR_Bundle* iors = nullptr;
+  ACE_NEW (iors, IOR_Bundle[bsize]);
+  this->iors_.reset (iors);
   if (this->init (orb,
                   poa,
                   context_size,
@@ -551,9 +555,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (naming_context_factory == nullptr) return -1;
 
           // Allocate and initialize Persistent Context Index.
-          ACE_NEW_RETURN (this->context_index_,
+          TAO_Persistent_Context_Index* context_index = nullptr;
+          ACE_NEW_RETURN (context_index,
                           TAO_Persistent_Context_Index (orb, poa, naming_context_factory),
                           -1);
+          this->context_index_.reset (context_index);
 
           if (this->context_index_->open (persistence_location,
                                           base_addr) == -1
@@ -798,7 +804,7 @@ TAO_Naming_Server::fini ()
   orb_ = CORBA::ORB::_nil ();
 
 #if !defined (CORBA_E_MICRO)
-  delete this->context_index_;
+  this->context_index_.reset ();
 #endif /* CORBA_E_MICRO */
 
   return 0;
@@ -827,7 +833,6 @@ TAO_Naming_Server::operator-> () const
 
 TAO_Naming_Server::~TAO_Naming_Server ()
 {
-  delete [] this->iors_;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && \
     !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
