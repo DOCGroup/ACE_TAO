@@ -30,6 +30,8 @@
 #include "ace/Time_Policy.h"
 #include "ace/Service_Config.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -69,7 +71,7 @@ private:
 
   Time_Policy_Setting time_policy_setting_;
 
-  ACE_CString time_policy_name_;
+  std::string time_policy_name_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Time_Policy_Manager)
