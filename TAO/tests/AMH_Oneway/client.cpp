@@ -2,7 +2,9 @@
 #include "TestC.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+namespace
+{
+ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
 int num_calls = 10;
 
 int
@@ -21,6 +23,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       }
   return 0;
+}
 }
 
 int
@@ -52,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // do something stupid like sending an exception to us, then it
       // won't be able to handle more than 1 request from us.
       Test::Timestamp time = 10;
-      for (int i = 0; i < num_calls; i++)
+      for (int i = 0; i < num_calls; ++i)
         {
           roundtrip->test_method (time);
 

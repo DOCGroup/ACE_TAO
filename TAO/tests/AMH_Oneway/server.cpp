@@ -2,11 +2,15 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "TestS.h"
+#include <atomic>
+#include <memory>
 
+namespace
+{
 int num_calls = 10; // total calls client is going to make
 
 // This should equal num_calls within 'sleep * num_calls' seconds
-int calls_received = 0;
+std::atomic<int> calls_received {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -24,6 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       }
   return 0;
+}
 }
 
 
@@ -60,8 +65,8 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
                              Test::Timestamp)
 {
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "Received Timestamp # %d on %T\n", calls_received));
-  ++calls_received;
+  int const call_number = calls_received.fetch_add (1);
+  ACE_DEBUG ((LM_DEBUG, "Received Timestamp # %d on %T\n", call_number));
 
   // When _tao_rh destructor is called, it shouldn't send anything to
   // the client as well
@@ -108,13 +113,13 @@ public:
 protected:
   int *argc_;
   ACE_TCHAR **argv_;
-  char const *ior_output_file_ {"test.ior"};
+  ACE_TCHAR const* ior_output_file_ {ACE_TEXT ("test.ior")};
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
 private:
   /// Write servant IOR to file specified with the '-o' option
-  int write_ior_to_file (CORBA::String_var ior);
+  int write_ior_to_file (CORBA::String_var const& ior);
 };
 
 /*** Server Declaration ***/
@@ -214,7 +219,7 @@ ST_AMH_Server::run_event_loop ()
           this->orb_->perform_work (&period);
 
           // when all calls from client have been received, exit
-          if (calls_received == num_calls)
+          if (calls_received.load () == num_calls)
             return;
         }
     }
@@ -223,21 +228,20 @@ ST_AMH_Server::run_event_loop ()
 }
 
 int
-ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
+ST_AMH_Server::write_ior_to_file (CORBA::String_var const& ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file = ACE_OS::fopen (ST_AMH_Server::ior_output_file_,
-                                     "w");
-  if (output_file == nullptr)
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (ST_AMH_Server::ior_output_file_, "w"), ACE_OS::fclose);
+  if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Cannot open output file for writing IOR: %s",
+                  ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                   ST_AMH_Server::ior_output_file_));
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
-  ACE_OS::fclose (output_file);
+  ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
   return 0;
 }
 
