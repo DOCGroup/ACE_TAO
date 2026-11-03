@@ -56,7 +56,7 @@ public:
   ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs) = default;
 
   /// Copy.
-  void operator= (const ACE_Mutex_Invariants &rhs) = default;
+  ACE_Mutex_Invariants &operator= (const ACE_Mutex_Invariants &rhs) = default;
 
   /// Dump the state of the class.
   void dump () const;
@@ -98,7 +98,7 @@ public:
   ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs) = default;
 
   /// Copy.
-  void operator= (const ACE_RWLock_Invariants &rhs) = default;
+  ACE_RWLock_Invariants &operator= (const ACE_RWLock_Invariants &rhs) = default;
 
   /// Dump the state of the class.
   void dump () const;
