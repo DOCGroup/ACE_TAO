@@ -4,11 +4,11 @@
 #include "DT_Creator.h"
 
 #include "tao/ORB_Core.h"
+#include <atomic>
+
 #include "tao/RTScheduling/Current.h"
 
 #include "ace/High_Res_Timer.h"
-
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
 
 int
 DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
@@ -90,7 +90,9 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
     {
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-GuidSeed"))))
         {
-          guid_counter = (long) ACE_OS::atoi (current_arg);
+          TAO_RTScheduler_Current::guid_counter.store (
+            ACE_OS::atoi (current_arg),
+            std::memory_order_relaxed);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DT_Count"))))
