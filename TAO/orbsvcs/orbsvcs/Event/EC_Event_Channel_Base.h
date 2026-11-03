@@ -313,13 +313,13 @@ protected:
   TAO_EC_Scheduling_Strategy *scheduling_strategy_;
 
   /// Consumer reconnection flags
-  bool consumer_reconnect_;
+  bool const consumer_reconnect_;
 
   /// Supplier reconnection flags
-  bool supplier_reconnect_;
+  bool const supplier_reconnect_;
 
   /// Whether callbacks are sent when a proxy is disconnected
-  bool disconnect_callbacks_;
+  bool const disconnect_callbacks_;
 
   /// Strategies to disconnect misbehaving or destroyed consumers
   TAO_EC_ConsumerControl *consumer_control_;
