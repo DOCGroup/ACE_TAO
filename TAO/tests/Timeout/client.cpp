@@ -83,7 +83,6 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb, Simple_Server_ptr server, CORBA::L
     }
 }
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
