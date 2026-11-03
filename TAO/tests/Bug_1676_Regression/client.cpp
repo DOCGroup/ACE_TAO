@@ -1,13 +1,16 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+namespace
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -29,23 +32,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void get_stringList2(Test::Hello_var hello);
+void get_stringList2 (Test::Hello_var hello);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test::Hello_var hello =
+      Test::Hello_var const hello =
         Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
@@ -61,23 +64,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::StringList_var seq =
         hello->get_stringList ();
 
-      for (CORBA::ULong i = 0; i<seq->length(); i++)
+      for (CORBA::ULong i {}; i < seq->length (); ++i)
         {
-          CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                      the_string.in ()));
+                      (*seq)[i].in ()));
         }
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - get_stringList2 with initialization\n"));
 
       Test::StringList_var seq2;
-      hello->get_stringList2(true, seq2.out());
+      hello->get_stringList2 (true, seq2.out ());
 
-      for (CORBA::ULong i = 0; i<seq2->length(); i++)
+      for (CORBA::ULong i {}; i < seq2->length (); ++i)
         {
-          CORBA::String_var the_string = seq2.in()[i].in();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                      the_string.in ()));
+                      seq2.in ()[i].in ()));
         }
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - get_stringList2 without initialization\n"));
@@ -86,20 +87,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - mod_stringList\n"));
 
-      hello->mod_stringList(seq.inout());
+      hello->mod_stringList (seq.inout ());
 
-      for (CORBA::ULong i = 0; i<seq->length(); i++)
+      for (CORBA::ULong i {}; i < seq->length (); ++i)
         {
-          CORBA::String_var the_string = CORBA::string_dup ((*seq)[i]);
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                      the_string.in ()));
+                      (*seq)[i].in ()));
         }
 
       hello->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -108,29 +108,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void get_stringList2(Test::Hello_var hello)
+void
+get_stringList2 (Test::Hello_var hello)
 {
-    Test::StringList_var seq2;
+  Test::StringList_var seq2;
 
   try
     {
       // Shutdown the ORB and block until the shutdown is complete.
-      hello->get_stringList2(false, seq2.out());
+      hello->get_stringList2 (false, seq2.out ());
 
-      for (CORBA::ULong i = 0; i<seq2->length(); i++)
+      for (CORBA::ULong i {}; i < seq2->length (); ++i)
         {
-          CORBA::String_var the_string = seq2.in()[i].in ();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
-                      the_string.in ()));
+                      seq2.in ()[i].in ()));
         }
     }
-  catch (const CORBA::BAD_PARAM& )
+  catch (CORBA::BAD_PARAM const &)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected exception BAD_PARAM\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("get_stringList2");
     }
-  return;
 }

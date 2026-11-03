@@ -1,4 +1,6 @@
 #include "Hello.h"
+#include <memory>
+#include <string>
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -16,19 +18,16 @@ Hello::get_string ()
 ::Test::StringList *
 Hello::get_stringList ()
 {
-  Test::StringList * seq;
-  ACE_NEW_RETURN (seq,
-                  Test::StringList(10),
-                  0);
-  seq->length(10);
-  for (CORBA::ULong i = 0; i<seq->length(); i++)
+  std::unique_ptr<Test::StringList> seq = std::make_unique<Test::StringList> (10);
+  seq->length (10);
+  for (CORBA::ULong i {}; i < seq->length (); ++i)
     {
-      char tmp[255] = {0};
-      ACE_OS::sprintf(tmp, "Hello World %d", i);
-      (*seq)[i] = CORBA::string_dup(tmp);
+      std::string const value = "Hello World " + std::to_string (i);
+      (*seq)[i] = CORBA::string_dup (value.c_str ());
     }
 
-  return seq;
+  // The IDL return type transfers the allocated sequence to the caller.
+  return seq.release ();
 }
 
 void
@@ -40,16 +39,16 @@ Hello::get_stringList2 (::CORBA::Boolean initialize,
 
   if (initialize)
     {
-      ACE_NEW (osl,
-               Test::StringList(10));
+      std::unique_ptr<Test::StringList> seq = std::make_unique<Test::StringList> (10);
 
-      osl->length(5);
-      for (CORBA::ULong i = 0; i<osl->length(); i++)
+      seq->length (5);
+      for (CORBA::ULong i {}; i < seq->length (); ++i)
         {
-          char tmp[255] = {0};
-          ACE_OS::sprintf(tmp, "Hello Again %d", i);
-          (*osl)[i] = CORBA::string_dup(tmp);
+          std::string const value = "Hello Again " + std::to_string (i);
+          (*seq)[i] = CORBA::string_dup (value.c_str ());
         }
+      // The out parameter takes ownership of the completed sequence.
+      osl = seq.release ();
     }
 }
 
@@ -57,13 +56,12 @@ void
 Hello::mod_stringList (::Test::StringList & iosl)
 {
   // osl->length(10);
-  for (CORBA::ULong i = 0; i<iosl.length(); i++)
+  for (CORBA::ULong i {}; i < iosl.length (); ++i)
     {
-      char tmp[255] = {0};
-      ACE_OS::sprintf(tmp, "Hello Client %d", i);
-      if (i%2)
+      if (i % 2)
         {
-          iosl[i] = CORBA::string_dup(tmp);
+          std::string const value = "Hello Client " + std::to_string (i);
+          iosl[i] = CORBA::string_dup (value.c_str ());
         }
     }
 }
