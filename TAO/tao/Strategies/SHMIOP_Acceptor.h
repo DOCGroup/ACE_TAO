@@ -30,6 +30,7 @@
 #include "tao/GIOP_Message_Version.h"
 
 #include <memory>
+#include <string>
 
 // TAO SHMIOP_Acceptor concrete call definitions
 
@@ -113,7 +114,7 @@ protected:
   ///    For example it the IP address is INADDR_ANY
   ///    (0.0.0.0) then there will be possibly a different hostname for
   ///    each interface.
-  ACE_CString host_;
+  std::string host_;
 
   /// A local endpoint.
   ACE_MEM_Addr address_;
