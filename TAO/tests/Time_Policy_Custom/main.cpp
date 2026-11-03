@@ -28,25 +28,28 @@ class TestHandler
   : public ACE_Event_Handler
 {
 public:
-  TestHandler (CORBA::ORB_ptr orb)
+  explicit TestHandler (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb)),
-      timeout_triggered_ (false)
+      timeout_triggered_ {}
   {}
 
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  TestHandler (TestHandler const &) = delete;
+  TestHandler (TestHandler &&) = delete;
+  TestHandler & operator= (TestHandler const &) = delete;
+  TestHandler & operator= (TestHandler &&) = delete;
 
-  bool trigger_in(const ACE_Time_Value &delay);
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg) override;
 
-  bool timeout_triggered () { return this->timeout_triggered_; }
+  bool trigger_in (ACE_Time_Value const &delay);
+
+  bool timeout_triggered () const { return this->timeout_triggered_; }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   bool timeout_triggered_;
 };
 
-int TestHandler::handle_timeout (const ACE_Time_Value &,
-                                 const void *)
+int TestHandler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_DEBUG ((LM_DEBUG, "TestHandler::handle_timeout - timeout triggered\n"));
   this->timeout_triggered_ = true;
@@ -54,24 +57,25 @@ int TestHandler::handle_timeout (const ACE_Time_Value &,
   return 0;
 }
 
-bool TestHandler::trigger_in(const ACE_Time_Value &delay)
+bool TestHandler::trigger_in (ACE_Time_Value const &delay)
 {
-  return -1 != this->orb_->orb_core ()->reactor ()->schedule_timer (this, 0, delay, ACE_Time_Value (0));
+  return -1 != this->orb_->orb_core ()->reactor ()->schedule_timer (
+    this, nullptr, delay, ACE_Time_Value (0));
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       ACE_ARGV my_argv;
-      if (argc>1 && argv[1][0]=='-' && argv[1][1]=='s')
+      if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 's')
         {
           ACE_DEBUG ((LM_DEBUG, "loading static service\n"));
 
           ACE_Service_Config::process_directive (ace_svc_desc_Custom_Time_Policy_Strategy);
-          my_argv.add(argv[0]);
-          for (int i=2; i<argc ;++i)
+          my_argv.add (argv[0]);
+          for (int i = 2; i < argc; ++i)
             my_argv.add (argv[i]);
 
           my_argv.add (ACE_TEXT ("-ORBSvcConfDirective"));
@@ -79,7 +83,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          for (int i=0; i<argc ;++i)
+          for (int i = 0; i < argc; ++i)
             my_argv.add (argv[i]);
         }
 
@@ -88,9 +92,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (my_argc, my_argv.argv ());
 
       // check if custom policy installed in ORB
-      ACE_Time_Value tv_hr = ACE_High_Res_Timer::gettimeofday_hr ();
-      ACE_Time_Value tv_orb = orb->orb_core ()->reactor ()->timer_queue ()->gettimeofday ();
-      ACE_Time_Value tv_diff = tv_orb - tv_hr;
+      ACE_Time_Value const tv_hr = ACE_High_Res_Timer::gettimeofday_hr ();
+      ACE_Time_Value const tv_orb = orb->orb_core ()->reactor ()->timer_queue ()->gettimeofday ();
+      ACE_Time_Value const tv_diff = tv_orb - tv_hr;
       // The custom policy gives an offset of +10s
       if (tv_diff.sec () != 10)
       {
@@ -99,18 +103,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           1);
       }
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
@@ -118,13 +122,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       TestHandler test_handler (orb.in ());
 
       // trigger in 2 seconds
-      if (!test_handler.trigger_in (ACE_Time_Value (2, 0)))
+      if (!test_handler.trigger_in (ACE_Time_Value (2)))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to schedule trigger.\n"),
                           1);
 
       // run for max. 4 seconds
-      ACE_Time_Value timeout (4, 0);
+      ACE_Time_Value timeout (4);
       orb->run (timeout);
 
       root_poa->destroy (true,  // ethernalize objects
@@ -140,7 +144,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return 1;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -151,7 +155,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 #else
 int
-ACE_TMAIN(int , ACE_TCHAR * [])
+ACE_TMAIN (int, ACE_TCHAR * [])
 {
   ACE_DEBUG ((LM_INFO, "TAO built without Time Policy support\n"));
   return 0;

@@ -12,28 +12,23 @@ public:
   /// Return the current time according to this policy
   ACE_Time_Value operator() () const
   {
-    ACE_Time_Value tv = ACE_High_Res_Timer::gettimeofday_hr ();
-    return (tv += ACE_Time_Value (10, 0));
+    return ACE_High_Res_Timer::gettimeofday_hr () + ACE_Time_Value (10);
   }
   /// Noop. Just here to satisfy backwards compatibility demands.
   void set_gettimeofday (ACE_Time_Value (*)(void)) {}
 };
 
-static ACE_Time_Policy_T<Custom_Time_Policy>  custom_time_policy_;
-
-Custom_Time_Policy_Strategy::~Custom_Time_Policy_Strategy ()
-{
-}
+static ACE_Time_Policy_T<Custom_Time_Policy> custom_time_policy_;
 
 ACE_Timer_Queue * Custom_Time_Policy_Strategy::create_timer_queue ()
 {
-  ACE_Timer_Queue * tmq = 0;
+  ACE_Timer_Queue * tmq {};
 
-  typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                           ACE_Event_Handler_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX,
-                           Custom_Time_Policy> timer_queue_type;
-  ACE_NEW_RETURN (tmq, timer_queue_type (), 0);
+  using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *,
+                                            ACE_Event_Handler_Handle_Timeout_Upcall,
+                                            ACE_SYNCH_RECURSIVE_MUTEX,
+                                            Custom_Time_Policy>;
+  ACE_NEW_RETURN (tmq, timer_queue_type (), nullptr);
 
   return tmq;
 }
