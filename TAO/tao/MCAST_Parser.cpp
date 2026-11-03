@@ -12,6 +12,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+#include <cstdlib>
 #include <cstring>
 
 #if !defined(__ACE_INLINE__)
@@ -443,7 +444,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
   else
     {
       int const the_port =
-        ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
+        std::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
 
       if (the_port >= 0 && the_port <= ACE_MAX_DEFAULT_PORT)
         this->mcast_port_ = static_cast<unsigned short> (the_port);
@@ -468,7 +469,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
     {
       // Change TTL to non-default value.
       int const the_ttl =
-        ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon4).c_str ());
+        std::atoi (mcast_name_cstring.substring (0, pos_colon4).c_str ());
 
       if (the_ttl > 0 && the_ttl <= 255)  // Valid TTLs: (0, 255]
         this->mcast_ttl_ = the_ttl;

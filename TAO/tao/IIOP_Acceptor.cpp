@@ -16,6 +16,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
+#include <cstdlib>
 #include <cstring>
 #include <algorithm>
 
@@ -739,8 +740,8 @@ TAO_IIOP_Acceptor::parse_address (const char *address,
       if (port_separator_loc != nullptr)
         {
           portno =
-            static_cast<u_short> (ACE_OS::atoi (port_separator_loc +
-                                                sizeof (':')));
+            static_cast<u_short> (std::atoi (port_separator_loc +
+                                             sizeof (':')));
         }
       this->default_address_.set_port_number (portno);
 
@@ -1219,7 +1220,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
                           -1);
       if (name == "portspan")
         {
-          int const range = ACE_OS::atoi (value.c_str ());
+          int const range = std::atoi (value.c_str ());
           // @@ What's the lower bound on the range?  zero, or one?
           if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
             TAOLIB_ERROR_RETURN ((LM_ERROR,
@@ -1237,7 +1238,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
         }
       else if (name == "reuse_addr")
         {
-          this->reuse_addr_ = ACE_OS::atoi (value.c_str ());
+          this->reuse_addr_ = std::atoi (value.c_str ());
         }
       else
         {
