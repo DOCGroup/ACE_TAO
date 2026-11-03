@@ -1,8 +1,10 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
-bool shutdown_server = false;
+bool shutdown_server {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -31,6 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -38,17 +41,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int result {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test_var server =
-        Test::_narrow(tmp.in ());
+      Test_var const server =
+        Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
