@@ -33,9 +33,9 @@ TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor ()
   // strategies.
   this->close ();
 
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  this->accept_strategy_.reset ();
 }
 
 int
@@ -235,17 +235,23 @@ int
 TAO_UIOP_Acceptor::open_i (const char *rendezvous,
                            ACE_Reactor *reactor)
 {
-  ACE_NEW_RETURN (this->creation_strategy_,
+  TAO_UIOP_CREATION_STRATEGY *creation_strategy = nullptr;
+  ACE_NEW_RETURN (creation_strategy,
                   TAO_UIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
+  this->creation_strategy_.reset (creation_strategy);
 
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  ACE_NEW_RETURN (concurrency_strategy,
                   TAO_UIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
-  ACE_NEW_RETURN (this->accept_strategy_,
+  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy = nullptr;
+  ACE_NEW_RETURN (accept_strategy,
                   TAO_UIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
+  this->accept_strategy_.reset (accept_strategy);
 
   ACE_UNIX_Addr addr;
 
@@ -253,9 +259,9 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
 
   if (this->base_acceptor_.open (addr,
                                  reactor,
-                                 this->creation_strategy_,
-                                 this->accept_strategy_,
-                                 this->concurrency_strategy_) == -1)
+                                 this->creation_strategy_.get (),
+                                 this->accept_strategy_.get (),
+                                 this->concurrency_strategy_.get ()) == -1)
     {
       // Don't unlink an existing rendezvous point since it may be in
       // use by another UIOP server/client.

@@ -28,6 +28,9 @@
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
+
+#include <memory>
+
 // TAO SHMIOP_Acceptor concrete call definitions
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -131,9 +134,9 @@ private:
   TAO_SHMIOP_BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  TAO_SHMIOP_CREATION_STRATEGY *creation_strategy_ {};
-  TAO_SHMIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-  TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy_ {};
+  std::unique_ptr<TAO_SHMIOP_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_SHMIOP_CONCURRENCY_STRATEGY> concurrency_strategy_;
+  std::unique_ptr<TAO_SHMIOP_ACCEPT_STRATEGY> accept_strategy_;
 
   /// Determine the prefix (include path name) of the mmap file.
   ACE_TCHAR const *mmap_file_prefix_ {};

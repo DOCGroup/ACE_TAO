@@ -28,9 +28,9 @@ TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor ()
   // strategies.
   this->close ();
 
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  this->accept_strategy_.reset ();
 }
 
 // TODO =
@@ -222,24 +222,30 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 
-  ACE_NEW_RETURN (this->creation_strategy_,
+  TAO_SHMIOP_CREATION_STRATEGY *creation_strategy = nullptr;
+  ACE_NEW_RETURN (creation_strategy,
                   TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
+  this->creation_strategy_.reset (creation_strategy);
 
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  TAO_SHMIOP_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SHMIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
-  ACE_NEW_RETURN (this->accept_strategy_,
+  TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy = nullptr;
+  ACE_NEW_RETURN (accept_strategy,
                   TAO_SHMIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
+  this->accept_strategy_.reset (accept_strategy);
 
   // We only accept connection on localhost.
   if (this->base_acceptor_.open (this->address_,
                                  reactor,
-                                 this->creation_strategy_,
-                                 this->accept_strategy_,
-                                 this->concurrency_strategy_) == -1)
+                                 this->creation_strategy_.get (),
+                                 this->accept_strategy_.get (),
+                                 this->concurrency_strategy_.get ()) == -1)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,

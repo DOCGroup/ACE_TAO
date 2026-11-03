@@ -33,9 +33,9 @@ TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor ()
   // strategies.
   this->close ();
 
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  this->accept_strategy_.reset ();
 
   if (this->hosts_ != nullptr)
     for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
@@ -483,17 +483,23 @@ int
 TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
-  ACE_NEW_RETURN (this->creation_strategy_,
+  TAO_SCIOP_CREATION_STRATEGY *creation_strategy = nullptr;
+  ACE_NEW_RETURN (creation_strategy,
                   TAO_SCIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
+  this->creation_strategy_.reset (creation_strategy);
 
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SCIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
-  ACE_NEW_RETURN (this->accept_strategy_,
+  TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy = nullptr;
+  ACE_NEW_RETURN (accept_strategy,
                   TAO_SCIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
+  this->accept_strategy_.reset (accept_strategy);
 
   u_short requested_port = addr.get_port_number ();
   if (requested_port == 0)
@@ -501,9 +507,9 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
       // don't care, i.e., let the OS choose an ephemeral port
       if (this->base_acceptor_.open (addr,
                                      reactor,
-                                     this->creation_strategy_,
-                                     this->accept_strategy_,
-                                     this->concurrency_strategy_) == -1)
+                                     this->creation_strategy_.get (),
+                                     this->accept_strategy_.get (),
+                                     this->concurrency_strategy_.get ()) == -1)
         {
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -531,9 +537,9 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
           a.set_port_number ((u_short)p);
           if (this->base_acceptor_.open (a,
                                          reactor,
-                                         this->creation_strategy_,
-                                         this->accept_strategy_,
-                                         this->concurrency_strategy_) != -1)
+                                         this->creation_strategy_.get (),
+                                         this->accept_strategy_.get (),
+                                         this->concurrency_strategy_.get ()) != -1)
             {
               found_a_port = true;
               break;

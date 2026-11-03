@@ -211,9 +211,9 @@ private:
   TAO_SCIOP_BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  TAO_SCIOP_CREATION_STRATEGY *creation_strategy_ {};
-  TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-  TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_ {};
+  std::unique_ptr<TAO_SCIOP_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_SCIOP_CONCURRENCY_STRATEGY> concurrency_strategy_;
+  std::unique_ptr<TAO_SCIOP_ACCEPT_STRATEGY> accept_strategy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
