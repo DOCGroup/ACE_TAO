@@ -23,7 +23,7 @@
 class Foo_Impl : public virtual POA_foo
 {
 public:
-  CORBA::Boolean match_references ();
+  CORBA::Boolean match_references () override;
 
   CORBA::String_var ior_from_main_;
   ACE_Equal_To<const char*> equal_func;
@@ -45,18 +45,22 @@ Foo_Impl::match_references ()
 class Server_Task : public ACE_Task_Base
 {
 public:
-  Server_Task (CORBA::ORB_ptr orb)
+  explicit Server_Task (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
-  virtual ~Server_Task ();
+  ~Server_Task () override = default;
 
-  virtual int svc ();
+  int svc () override;
+
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task & operator= (Server_Task const &) = delete;
+  Server_Task & operator= (Server_Task &&) = delete;
+
 private:
   CORBA::ORB_var orb_;
 };
-
-Server_Task::~Server_Task() { }
 
 int
 Server_Task::svc ()
@@ -80,13 +84,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poamgr = rootpoa->the_POAManager();
 
-      Foo_Impl* foo = 0;
+      Foo_Impl* foo = nullptr;
       ACE_NEW_RETURN (foo, Foo_Impl, 1);
       PortableServer::ServantBase_var owner_transfer (foo);
       PortableServer::ObjectId_var id = rootpoa->activate_object (foo);
       o = rootpoa->id_to_reference (id.in());
 
-      Foo_Impl* foo2 = 0;
+      Foo_Impl* foo2 = nullptr;
       ACE_NEW_RETURN (foo2, Foo_Impl, 1);
       PortableServer::ServantBase_var foo_owner (foo2);
       foo_var f2 = foo2->_this (); // implicit activation
@@ -96,19 +100,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       foo->ior_from_main_ = s_orb->object_to_string (o.in());
       foo2->ior_from_main_ = foo->ior_from_main_;
 
-      Server_Task server(s_orb.in());
-      server.activate(1); // activate one thread running the task
+      Server_Task server (s_orb.in());
+      server.activate (1); // activate one thread running the task
 
       foo_var f = foo::_narrow (o.in());  // ignore the possibility that
                                           // it's not a 'foo' since we
                                           // created it above
 
-      int const iterations = 10;
+      constexpr int iterations = 10;
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: next %d iterations should match\n",
                   iterations));
       for (int i = 0; i < iterations; ++i)
         {
-          CORBA::Boolean b = f->match_references ();
+          CORBA::Boolean const b = f->match_references ();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
                       i, b));
         }
@@ -118,7 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   iterations));
       for (int i = 0; i < iterations; ++i)
         {
-          CORBA::Boolean b = f2->match_references ();
+          CORBA::Boolean const b = f2->match_references ();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: iteration %d, match = %d\n",
                       i, b));
         }
