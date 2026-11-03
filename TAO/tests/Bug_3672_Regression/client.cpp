@@ -12,15 +12,16 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/Atomic_Op.h"
 #include "ami_test_i.h"
 #include "tao/ORB_Core.h"
+
+#include <atomic>
 
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int nthreads = 1;
 int niterations = 1;
 bool debug = true;
-ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> number_of_replies {};
+std::atomic<long> number_of_replies {0};
 
 bool parameter_corruption {};
 
@@ -215,7 +216,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies.value ()));
+                      number_of_replies.load ()));
         }
 
       // ORB loop.
@@ -226,7 +227,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads * niterations) - number_of_replies.value ()));
+                      (nthreads * niterations) - number_of_replies.load ()));
         }
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
