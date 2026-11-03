@@ -43,12 +43,9 @@ public:
   ~TAO_AbstractInterfaceDef_i () override;
 
   /// Return our definition kind.
-  CORBA::DefinitionKind def_kind (
-    ) override;
+  CORBA::DefinitionKind def_kind () override;
 
-  CORBA::Boolean is_a (
-      char const *interface_id
-    ) override;
+  CORBA::Boolean is_a (char const *interface_id) override;
 
   CORBA::Boolean is_a_i (
       char const *interface_id
