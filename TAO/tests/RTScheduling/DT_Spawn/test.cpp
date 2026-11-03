@@ -3,7 +3,7 @@
 #include "tao/ORB.h"
 #include "Thread_Action.h"
 #include "ace/Thread_Manager.h"
-#include "ace/SString.h"
+#include <cstring>
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -11,9 +11,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   CORBA::ORB_var orb;
   RTScheduling::Current_var current;
 
-  const char * name = 0;
-  CORBA::Policy_ptr sched_param = 0;
-  CORBA::Policy_ptr implicit_sched_param = 0;
+  char const * const name = nullptr;
+  CORBA::Policy_ptr const sched_param = nullptr;
+  CORBA::Policy_ptr const implicit_sched_param = nullptr;
 
   Test_Thread_Action thread_action;
 
@@ -26,13 +26,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-      TAO_Scheduler* scheduler;
-      ACE_NEW_RETURN (scheduler,
-                      TAO_Scheduler (orb.in ()),
-                      -1);
-      RTScheduling::Scheduler_var safe_scheduler = scheduler;
+      TAO_Scheduler scheduler (orb.in ());
 
-      manager->rtscheduler (scheduler);
+      manager->rtscheduler (&scheduler);
 
       CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current");
 
@@ -43,10 +39,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "Invoking DT spawn without calling begin_scheduling_segment...\n"));
 
-          ACE_CString data ("Harry Potter");
           RTScheduling::DistributableThread_var dt =
             current->spawn (&thread_action,
-                            const_cast<char *> (data.c_str ()),
+                            nullptr,
                             name,
                             sched_param,
                             implicit_sched_param,
@@ -70,14 +65,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                          sched_param,
                                          implicit_sched_param);
 
-      size_t count = 0;
-      RTScheduling::Current::IdType_var id = current->id ();
-      ACE_OS::memcpy (&count,
-                      id->get_buffer (),
-                      id->length ());
+      size_t count {};
+      RTScheduling::Current::IdType_var const id = current->id ();
+      std::memcpy (&count,
+                   id->get_buffer (),
+                   id->length ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The Current DT Guid is %d\n",
+                  "The Current DT Guid is %B\n",
                   count));
 
       //Initialize data to be passed to the Thread_Action::do method
@@ -89,6 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "Spawning a new DT...\n"));
       RTScheduling::DistributableThread_var dt =
         current->spawn (&thread_action,
+                        // Borrowed by the worker until wait() returns below.
                         &spawn_data,
                         "Chamber of Secrets",
                         sched_param,
@@ -98,14 +94,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       current->end_scheduling_segment (name);
       ACE_DEBUG ((LM_DEBUG,
-                  "End - Scheduling Segment %d\n",
+                  "End - Scheduling Segment %B\n",
                   count));
 
       ACE_Thread_Manager::instance ()->wait ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught Exception\n");
     }
