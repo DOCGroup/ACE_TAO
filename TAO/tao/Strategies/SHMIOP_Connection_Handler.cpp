@@ -21,20 +21,20 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0)
+  : TAO_SHMIOP_SVC_HANDLER (t, nullptr, 0),
+    TAO_Connection_Handler (nullptr)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core)
 {
   TAO_SHMIOP_Transport *specific_transport = nullptr;
@@ -220,7 +220,7 @@ int
 TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE,
                                              ACE_Reactor_Mask)
 {
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
   return 0;
 }
 

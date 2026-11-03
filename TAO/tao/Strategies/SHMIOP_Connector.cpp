@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_SHMIOP_Connector::TAO_SHMIOP_Connector ()
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
-    base_connector_ (0)
+    base_connector_ (nullptr)
 {
 }
 

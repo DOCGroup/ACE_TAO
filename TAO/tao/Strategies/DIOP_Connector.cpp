@@ -137,7 +137,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   svc_handler->local_addr (local_addr);
   svc_handler->addr (remote_address);
 
-  int retval = svc_handler->open (0);
+  int retval = svc_handler->open (nullptr);
 
   // Failure to open a connection.
   if (retval != 0)

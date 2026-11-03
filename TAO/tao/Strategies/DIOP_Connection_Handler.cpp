@@ -23,8 +23,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_DIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
+  : TAO_DIOP_SVC_HANDLER (t, nullptr, 0),
+    TAO_Connection_Handler (nullptr),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
@@ -32,11 +32,11 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
