@@ -3,6 +3,8 @@
 
 #include "TestC.h"
 
+#include <atomic>
+
 class Thread_Pool : public ACE_Task<ACE_SYNCH>
 {
   // = TITLE
@@ -33,5 +35,5 @@ private:
   int close (u_long) override;
   // Close hook.
   CORBA::ORB_var orb_;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> nt_;     // number of threads
+  std::atomic<int> nt_;     // number of threads
 };

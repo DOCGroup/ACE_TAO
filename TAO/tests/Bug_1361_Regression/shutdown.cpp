@@ -1,7 +1,9 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+#include <string>
+
+std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -20,7 +22,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior.c_str ());
 
       Test::Echo_Caller_var server =
         Test::Echo_Caller::_narrow(tmp.in ());
@@ -29,7 +31,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Echo_Caller reference <%s>\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 

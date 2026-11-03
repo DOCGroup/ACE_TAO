@@ -1,10 +1,14 @@
 #include "Echo_Caller.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "Server_Thread_Pool.h"
 #include "ORB_Task.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+#include <memory>
+#include <string>
+
+std::basic_string<ACE_TCHAR> ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -40,6 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::ServantBase_var impl;
       {
         Echo_Caller *tmp = nullptr;
+        // ServantBase_var assumes ownership of the servant reference.
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
@@ -62,14 +67,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+        File_Handle output_file (ACE_OS::fopen (ior_output_file.c_str (), "w"),
+                                 &ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 

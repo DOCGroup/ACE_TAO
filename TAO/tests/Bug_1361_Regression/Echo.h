@@ -7,8 +7,9 @@
 #ifndef TAO_TESTS_BUG1270_ECHO_H
 #define TAO_TESTS_BUG1270_ECHO_H
 
-#include "ace/Atomic_Op.h"
 #include "TestS.h"
+
+#include <atomic>
 
 class Echo : public POA_Test::Echo
 {
@@ -26,7 +27,7 @@ public:
 private:
   CORBA::ORB_var orb_;
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> abort_counter_;
+  std::atomic<int> abort_counter_;
 };
 
 #endif /* TAO_TESTS_BUG1270_ECHO_H*/

@@ -2,8 +2,6 @@
 #include "TestC.h"
 #include "ace/OS_NS_unistd.h"
 
-time_t last_success;
-
 int
 Thread_Pool::close (u_long)
 {
@@ -31,15 +29,16 @@ Thread_Pool::shutdown ()
 {
   thr_mgr_->cancel_grp (grp_id_);
 
-  int n_threads = nt_.value ();
+  int const n_threads = this->nt_.load ();
   for (int i = 0; i < n_threads; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) eof, sending block for thread=%d\n",
                   i + 1));
       ACE_Message_Block *mb1 = nullptr;
+      // put() transfers ownership of the shutdown message block to the queue.
       ACE_NEW_RETURN (mb1,
-                      ACE_Message_Block ((char*) Test::Echo::_nil ()),
+                      ACE_Message_Block (reinterpret_cast<char *> (Test::Echo::_nil ())),
                       -1);
       mb1->length (0);
 
@@ -59,7 +58,9 @@ Thread_Pool::shutdown ()
 int
 Thread_Pool::put (Test::Echo_ptr echoptr)
 {
-  char *char_data = (char *) Test::Echo::_duplicate (echoptr);
+  // The message block stores the duplicated object reference until a worker
+  // wraps it in a Test::Echo_var after dequeueing it.
+  char *char_data = reinterpret_cast<char *> (Test::Echo::_duplicate (echoptr));
 
   ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb, ACE_Message_Block (char_data), -1);
@@ -117,8 +118,9 @@ Thread_Pool::svc ()
         }
 #endif
 
-      Test::Echo_var echo = (Test::Echo_ptr)mb->base();
+      Test::Echo_var echo = reinterpret_cast<Test::Echo_ptr> (mb->base ());
 
+      // echo now owns the duplicate stored in this message block.
       mb->release ();
 
       if (CORBA::is_nil (echo.in ()))
@@ -165,8 +167,7 @@ Thread_Pool::svc ()
 
     }
 
-  --nt_;
-  if (nt_ == 0)
+  if (--this->nt_ == 0)
     {
       orb_->shutdown (false);
     }

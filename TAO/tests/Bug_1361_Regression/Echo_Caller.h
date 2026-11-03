@@ -24,7 +24,8 @@ public:
   void shutdown () override;
 
 private:
-  Thread_Pool *pool_;
+  /// Borrowed; the server owns the thread pool for the servant's lifetime.
+  Thread_Pool * const pool_;
 };
 
 #endif /* Echo_Caller__h_ */

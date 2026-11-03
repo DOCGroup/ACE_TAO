@@ -5,7 +5,9 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_signal.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+#include <string>
+
+std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
 int serverthreads = 4;
 
 int
@@ -28,7 +30,7 @@ public:
 
   void activate ()
   {
-    ACE_Time_Value tv (150, 0);
+    ACE_Time_Value const tv (150, 0);
     this->reactor ()->schedule_timer (this, nullptr, tv, tv);
   }
 
@@ -70,6 +72,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ServantBase_var impl;
       {
         Echo *tmp = nullptr;
+        // ServantBase_var assumes ownership of the servant reference.
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
@@ -89,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         Test::Echo::_narrow (object_act.in ());
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior.c_str ());
 
       Test::Echo_Caller_var server =
         Test::Echo_Caller::_narrow(tmp.in ());
@@ -98,7 +101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Echo_Caller reference <%s>\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
@@ -119,8 +122,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
         }
 
+      // The reactor retains the scheduled reference until timer cancellation.
       Client_Timer *task = new Client_Timer (orb->orb_core ()->reactor ());
       task->activate ();
+      // Release the caller's initial reference after scheduling.
       task->remove_reference ();
 
       orb->run ();
