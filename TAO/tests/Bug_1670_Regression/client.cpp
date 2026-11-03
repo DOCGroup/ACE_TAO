@@ -7,13 +7,16 @@
 
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+namespace
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -36,71 +39,67 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (ior);
 
-      Baz::C_var cobject =
+      Baz::C_var const cobject =
         Baz::C::_narrow (object.in ());
 
       if (CORBA::is_nil (cobject.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                                "Cannot narrow Baz::C object <%s>\n",
-                                ior),
+                             "Cannot narrow Baz::C object <%s>\n",
+                             ior),
                             1);
         }
 
-      CORBA::Long result;
+      CORBA::Long result {};
       result = cobject->op1 ();
       if (result != 1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                                "Result not 1\n"),
+          ACE_ERROR_RETURN ((LM_ERROR, "Result not 1\n"),
                             1);
         }
 
       result = cobject->op2 ();
       if (result != 2)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                                "Result not 2\n"),
+          ACE_ERROR_RETURN ((LM_ERROR, "Result not 2\n"),
                             1);
         }
 
       result = cobject->op3 ();
       if (result != 3)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                                "Result not 3\n"),
+          ACE_ERROR_RETURN ((LM_ERROR, "Result not 3\n"),
                             1);
         }
 
       result = cobject->op4 ();
       if (result != 4)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                                "Result not 4\n"),
+          ACE_ERROR_RETURN ((LM_ERROR, "Result not 4\n"),
                             1);
         }
 
-      Foo::Bar::B_var bobject =
+      Foo::Bar::B_var const bobject =
         Foo::Bar::B::_narrow (object.in ());
 
       if (CORBA::is_nil (bobject.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                                "Cannot narrow Foo::Bar::B object <%s>\n",
-                                ior),
+                             "Cannot narrow Foo::Bar::B object <%s>\n",
+                             ior),
                             1);
         }
 
@@ -112,14 +111,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Foo::Bar::A_var aobject =
+      Foo::Bar::A_var const aobject =
         Foo::Bar::A::_narrow (object.in ());
 
       if (CORBA::is_nil (aobject.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                                "Cannot narrow Foo::Bar::A object <%s>\n",
-                                ior),
+                             "Cannot narrow Foo::Bar::A object <%s>\n",
+                             ior),
                             1);
         }
 
@@ -143,7 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("");
       return 1;
