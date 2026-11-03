@@ -43,15 +43,15 @@ namespace ACE
 
               Session_T (bool keep_alive = true
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
-                         , Context* ctx = 0
+                         , Context* ctx = nullptr
 #endif
                          );
 
               Session_T (const ACE_Time_Value& timeout,
                          bool keep_alive = true,
-                         const ACE_Time_Value* alive_timeout = 0
+                         const ACE_Time_Value* alive_timeout = nullptr
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
-                         , Context* ctx = 0
+                         , Context* ctx = nullptr
 #endif
                          );
 

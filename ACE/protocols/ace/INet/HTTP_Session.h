@@ -34,9 +34,9 @@ namespace ACE
 
               Session_T (bool keep_alive = false);
 
-              Session_T (const ACE_Time_Value& timeout,
+              explicit Session_T (const ACE_Time_Value& timeout,
                          bool keep_alive = false,
-                         const ACE_Time_Value* alive_timeout = 0);
+                         const ACE_Time_Value* alive_timeout = nullptr);
 
               ~Session_T () override;
 

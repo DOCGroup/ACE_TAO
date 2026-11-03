@@ -46,9 +46,7 @@ namespace ACE
       {
       }
 
-    Request::~Request()
-      {
-      }
+    Request::~Request() = default;
 
     void Request::arguments (ACE_Array<ACE_CString> & args) const
       {

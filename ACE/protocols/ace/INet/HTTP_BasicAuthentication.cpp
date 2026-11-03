@@ -47,9 +47,7 @@ namespace ACE
         }
       }
 
-    BasicAuthentication::~BasicAuthentication()
-      {
-      }
+    BasicAuthentication::~BasicAuthentication() = default;
 
     void BasicAuthentication::set_credentials (Request& request) const
       {

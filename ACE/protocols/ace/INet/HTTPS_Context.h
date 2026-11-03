@@ -44,7 +44,7 @@ namespace ACE
 
               Context (ACE_SSL_Context* ssl_ctx,
                        bool release = false,
-                       ACE::INet::SSL_CallbackManager* ssl_cbmngr = 0);
+                       ACE::INet::SSL_CallbackManager* ssl_cbmngr = nullptr);
 
               ~Context ();
 

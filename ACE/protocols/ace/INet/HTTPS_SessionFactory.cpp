@@ -13,9 +13,7 @@ namespace ACE
       {
       }
 
-    SessionFactory_Impl::SessionHolder_Impl::~SessionHolder_Impl()
-      {
-      }
+    SessionFactory_Impl::SessionHolder_Impl::~SessionHolder_Impl() = default;
 
     ACE::HTTP::SessionBase& SessionFactory_Impl::SessionHolder_Impl::session ()
       {
@@ -34,9 +32,7 @@ namespace ACE
         ACE::HTTP::SessionFactoryRegistry::instance ().register_session_factory (URL::protocol (), this);
       }
 
-    SessionFactory_Impl::~SessionFactory_Impl ()
-      {
-      }
+    SessionFactory_Impl::~SessionFactory_Impl () = default;
 
     ACE::INet::ConnectionHolder*
     SessionFactory_Impl::create_connection (
@@ -47,7 +43,7 @@ namespace ACE
         const ACE::HTTP::ClientRequestHandler::HttpConnectionKey& ikey =
             dynamic_cast<const ACE::HTTP::ClientRequestHandler::HttpConnectionKey&> (key);
 
-        SessionHolder_Impl* session_holder = 0;
+        SessionHolder_Impl* session_holder = nullptr;
         ACE_NEW_RETURN (session_holder,
                         SessionHolder_Impl (),
                         0);

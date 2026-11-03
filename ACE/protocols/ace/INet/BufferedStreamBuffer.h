@@ -43,16 +43,16 @@ namespace ACE
           : public std::basic_streambuf<ACE_CHAR_T, TR>
           {
             public:
-              typedef std::basic_streambuf<ACE_CHAR_T, TR> base_type;
-              typedef std::basic_ios<ACE_CHAR_T, TR> ios_type;
-              typedef ACE_CHAR_T char_type;
-              typedef TR char_traits;
-              typedef typename base_type::int_type int_type;
-              typedef typename base_type::pos_type pos_type;
-              typedef typename base_type::off_type off_type;
-              typedef typename ios_type::seekdir seekdir;
-              typedef typename ios_type::openmode openmode;
-              typedef StreamInterceptorBase<char_type, char_traits> interceptor_type;
+              using base_type = std::basic_streambuf<ACE_CHAR_T, TR>;
+              using ios_type = std::basic_ios<ACE_CHAR_T, TR>;
+              using char_type = ACE_CHAR_T;
+              using char_traits = TR;
+              using int_type = typename base_type::int_type;
+              using pos_type = typename base_type::pos_type;
+              using off_type = typename base_type::off_type;
+              using seekdir = typename ios_type::seekdir;
+              using openmode = typename ios_type::openmode;
+              using interceptor_type = StreamInterceptorBase<char_type, char_traits>;
 
               BasicBufferedStreamBuffer (std::streamsize bufsz,
                                          typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode);
@@ -89,7 +89,7 @@ namespace ACE
           };
 
         /// char specialization
-        typedef BasicBufferedStreamBuffer<char, std::char_traits<char> > BufferedStreamBuffer;
+        using BufferedStreamBuffer = BasicBufferedStreamBuffer<char, std::char_traits<char> >;
       }
   }
 

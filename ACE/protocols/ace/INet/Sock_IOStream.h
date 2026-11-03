@@ -38,7 +38,7 @@ namespace ACE
           : public BidirStreamBuffer<StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> >
           {
             public:
-              typedef StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> stream_type;
+              using stream_type = StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE>;
 
               Sock_StreamBufferBase (stream_type* stream);
               virtual ~Sock_StreamBufferBase ();
@@ -61,8 +61,8 @@ namespace ACE
           : public virtual std::ios
           {
             public:
-              typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
-              typedef typename buffer_type::stream_type stream_type;
+              using buffer_type = Sock_StreamBufferBase<ACE_SYNCH_USE>;
+              using stream_type = typename buffer_type::stream_type;
 
               Sock_IOSBase (stream_type* stream);
               ~Sock_IOSBase ();
@@ -88,9 +88,9 @@ namespace ACE
           : public Sock_IOSBase<ACE_SYNCH_USE>, public std::ostream
           {
             public:
-              typedef Sock_IOSBase<ACE_SYNCH_USE> ios_base;
-              typedef typename ios_base::stream_type stream_type;
-              typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
+              using ios_base = Sock_IOSBase<ACE_SYNCH_USE>;
+              using stream_type = typename ios_base::stream_type;
+              using buffer_type = Sock_StreamBufferBase<ACE_SYNCH_USE>;
 
               explicit Sock_OStreamBase(stream_type* stream);
 
@@ -113,9 +113,9 @@ namespace ACE
           : public Sock_IOSBase<ACE_SYNCH_USE>, public std::istream
           {
             public:
-              typedef Sock_IOSBase<ACE_SYNCH_USE> ios_base;
-              typedef typename ios_base::stream_type stream_type;
-              typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
+              using ios_base = Sock_IOSBase<ACE_SYNCH_USE>;
+              using stream_type = typename ios_base::stream_type;
+              using buffer_type = Sock_StreamBufferBase<ACE_SYNCH_USE>;
 
               explicit Sock_IStreamBase(stream_type* stream);
 
@@ -138,9 +138,9 @@ namespace ACE
           : public Sock_IOSBase<ACE_SYNCH_USE>, public std::iostream
           {
             public:
-              typedef Sock_IOSBase<ACE_SYNCH_USE> ios_base;
-              typedef typename ios_base::stream_type stream_type;
-              typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
+              using ios_base = Sock_IOSBase<ACE_SYNCH_USE>;
+              using stream_type = typename ios_base::stream_type;
+              using buffer_type = Sock_StreamBufferBase<ACE_SYNCH_USE>;
 
               explicit Sock_IOStreamBase(stream_type* stream);
 
@@ -152,11 +152,11 @@ namespace ACE
               void set_interceptor (typename buffer_type::interceptor_type& interceptor);
           };
 
-        typedef Sock_StreamBufferBase<ACE_NULL_SYNCH> Sock_StreamBuffer;
-        typedef Sock_IOSBase<ACE_NULL_SYNCH> Sock_IOS;
-        typedef Sock_IStreamBase<ACE_NULL_SYNCH> Sock_IStream;
-        typedef Sock_OStreamBase<ACE_NULL_SYNCH> Sock_OStream;
-        typedef Sock_IOStreamBase<ACE_NULL_SYNCH> Sock_IOStream;
+        using Sock_StreamBuffer = Sock_StreamBufferBase<ACE_NULL_SYNCH>;
+        using Sock_IOS = Sock_IOSBase<ACE_NULL_SYNCH>;
+        using Sock_IStream = Sock_IStreamBase<ACE_NULL_SYNCH>;
+        using Sock_OStream = Sock_OStreamBase<ACE_NULL_SYNCH>;
+        using Sock_IOStream = Sock_IOStreamBase<ACE_NULL_SYNCH>;
       }
   }
 

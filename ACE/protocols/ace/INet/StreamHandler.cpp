@@ -93,7 +93,7 @@ namespace ACE
             INET_HEX_DUMP (11, (LM_DEBUG, buffer, bytes_in, DLINFO
                                 ACE_TEXT ("ACE_IOS_StreamHandler::handle_input_i <--")));
 
-            ACE_Message_Block *mb = 0;
+            ACE_Message_Block *mb = nullptr;
             ACE_NEW_RETURN (mb, ACE_Message_Block (bytes_in), -1);
             mb->copy (buffer, bytes_in);
             ACE_Time_Value nowait (ACE_OS::gettimeofday ());
@@ -132,7 +132,7 @@ namespace ACE
             return this->handle_output_i (&to);
           }
         else
-          return this->handle_output_i (0);
+          return this->handle_output_i (nullptr);
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
@@ -140,7 +140,7 @@ namespace ACE
       {
         INET_TRACE ("ACE_IOS_StreamHandler::handle_output_i");
 
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
         size_t bytes_out = 0;
         if (-1 != this->getq (mb, &nowait))
@@ -208,7 +208,7 @@ namespace ACE
                   {
                     // Run the event loop.
                     result = this->reactor ()->handle_events (this->use_timeout () ?
-                                                                  &max_wait_time : 0);
+                                                                  &max_wait_time : nullptr);
                   }
 
                 if (result != -1)
@@ -217,7 +217,7 @@ namespace ACE
                                                   char_length,
                                                   char_size,
                                                   this->use_timeout () ?
-                                                        &max_wait_time : 0);
+                                                        &max_wait_time : nullptr);
                   }
 
                 if (result == -1)
@@ -272,7 +272,7 @@ namespace ACE
                                               char_length,
                                               char_size,
                                               this->use_timeout () ?
-                                                        &max_wait_time : 0);
+                                                        &max_wait_time : nullptr);
 
                 if (result == -1)
                   return result;
@@ -298,7 +298,7 @@ namespace ACE
                     // nothing has been read the first time round
                     // now start blocking read 1 char_size data at a time
                     rdlen = char_size;
-                    to = this->use_timeout () ? &max_wait_time : 0;
+                    to = this->use_timeout () ? &max_wait_time : nullptr;
                   }
               }
           }
@@ -326,11 +326,11 @@ namespace ACE
             wait += *timeout;
             timeout_countdown.start ();
           }
-        ACE_Message_Block *mb_remain = 0;
+        ACE_Message_Block *mb_remain = nullptr;
         size_t recv_char_count = 0;
         while (!this->msg_queue ()->is_empty () && char_length > 0)
           {
-            ACE_Message_Block *mb = 0;
+            ACE_Message_Block *mb = nullptr;
             if (this->getq (mb, &wait) == -1)
               {
                 if (ACE_OS::last_error () == EWOULDBLOCK)
@@ -345,10 +345,10 @@ namespace ACE
               {
                 if ((mb_remain->length () + mb->length ()) < char_size)
                   {
-                    ACE_Message_Block *mb_new = 0;
+                    ACE_Message_Block *mb_new = nullptr;
                     ACE_NEW_NORETURN (mb,
                                       ACE_Message_Block (mb_remain->length () + mb->length ()));
-                    if (mb_new == 0)
+                    if (mb_new == nullptr)
                       {
                         mb->release ();
                         mb_remain->release ();
@@ -378,7 +378,7 @@ namespace ACE
 
                 // cleanup empty block
                 mb_remain->release ();
-                mb_remain = 0;
+                mb_remain = nullptr;
               }
 
             // normalize to total nr of char_size elements available in mb [+ mb_remain]
@@ -448,10 +448,10 @@ namespace ACE
         // set notification strategy if reactive
         NotificationStrategyGuard ns_guard__(*this,
                                              use_reactor ?
-                                                &this->notification_strategy_ : 0);
+                                                &this->notification_strategy_ : nullptr);
 
         size_t datasz = length * char_size;
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         ACE_NEW_RETURN (mb, ACE_Message_Block (datasz), -1);
         mb->copy ((const char*)buf, datasz);
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
@@ -482,7 +482,7 @@ namespace ACE
               {
                 // Run the event loop.
                 result = this->reactor ()->handle_events (this->use_timeout () ?
-                                                              &max_wait_time : 0);
+                                                              &max_wait_time : nullptr);
 
                 if (result == -1)
                   {
@@ -525,7 +525,7 @@ namespace ACE
             while (this->connected_)
               {
                 result = this->handle_output_i (this->use_timeout () ?
-                                                    &max_wait_time : 0);
+                                                    &max_wait_time : nullptr);
 
                 // If we got our message out, no need to run the event loop any
                 // further.

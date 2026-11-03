@@ -64,7 +64,7 @@ namespace ACE
           {
             protected:
               SessionFactory () {}
-              ~SessionFactory () override {}
+              ~SessionFactory () override = default;
           };
 
         /**
@@ -125,9 +125,7 @@ namespace ACE
               static SessionFactoryRegistry& instance ();
 
             private:
-              typedef ACE_Map_Manager<ACE_CString,
-                                      SessionFactory*,
-                                      ACE_SYNCH::MUTEX> TSessionFactoryMap;
+              using TSessionFactoryMap = ACE_Map_Manager<ACE_CString, SessionFactory*, ACE_SYNCH::MUTEX>;
 
               TSessionFactoryMap factory_map_;
           };
@@ -170,7 +168,7 @@ namespace ACE
                                                          const PostData& post_data);
 
               virtual std::istream& handle_put_request (const URL& url,
-                                                        std::istream* put_data = 0);
+                                                        std::istream* put_data = nullptr);
 */
 
               class ACE_INET_Export HttpConnectionKey

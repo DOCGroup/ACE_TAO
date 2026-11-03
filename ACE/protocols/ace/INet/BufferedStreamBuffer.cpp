@@ -18,9 +18,9 @@ namespace ACE
         typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode)
       : bufsize_ (bufsz),
         mode_ (mode),
-        interceptor_ (0)
+        interceptor_ (nullptr)
       {
-        char_type* p = 0;
+        char_type* p = nullptr;
         ACE_NEW_NORETURN (p, char_type [bufsz]);
         this->buffer_.reset (p);
 
@@ -32,9 +32,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::~BasicBufferedStreamBuffer ()
-      {
-      }
+    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::~BasicBufferedStreamBuffer () = default;
 
     template <class ACE_CHAR_T, class TR>
     typename BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::int_type

@@ -8,6 +8,7 @@
 #include "ace/Singleton.h"
 #include "ace/INet/INet_Log.h"
 
+#include <cstring>
 #include <openssl/x509.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,15 +23,13 @@ namespace ACE
       {
       }
 
-    SSL_CallbackManager::~SSL_CallbackManager ()
-      {
-      }
+    SSL_CallbackManager::~SSL_CallbackManager () = default;
 
     void SSL_CallbackManager::initialize_callbacks (ACE_SSL_Context* ssl_ctx)
       {
         if (ssl_ctx_mngr_index_ < -1)
           {
-            ssl_ctx_mngr_index_ = ::SSL_CTX_get_ex_new_index (0, 0, 0,0,0);
+            ssl_ctx_mngr_index_ = ::SSL_CTX_get_ex_new_index (0, nullptr, nullptr, nullptr, nullptr);
             if (ssl_ctx_mngr_index_ < 0)
               {
                 INET_ERROR (1, (LM_ERROR, DLINFO
@@ -40,7 +39,7 @@ namespace ACE
               }
           }
 
-        this->ssl_ctx_ = ssl_ctx == 0 ? ACE_SSL_Context::instance () : ssl_ctx;
+        this->ssl_ctx_ = ssl_ctx == nullptr ? ACE_SSL_Context::instance () : ssl_ctx;
         ::SSL_CTX_set_ex_data (this->ssl_ctx_->context (), ssl_ctx_mngr_index_, this);
         this->ssl_ctx_->default_verify_callback (extern_C_verify_certificate_callback);
         ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), extern_C_passwd_callback);
@@ -93,7 +92,7 @@ namespace ACE
 
     int extern_C_passwd_callback (char* buf, int size, int /*rwflag*/, void* user_data)
       {
-        if (user_data == 0)
+        if (user_data == nullptr)
           return 0;
 
         SSL_CallbackManager* cbmngr = reinterpret_cast<SSL_CallbackManager*> (user_data);
@@ -102,7 +101,7 @@ namespace ACE
         cbmngr->passwd_callback (pwd);
         if (!pwd.empty ())
           {
-            ACE_OS::strncpy (buf, pwd.c_str (), size);
+            std::strncpy (buf, pwd.c_str (), size);
             buf[size - 1] = '\0';
             if (size > ACE_Utils::truncate_cast<int> (pwd.length ()))
               size = ACE_Utils::truncate_cast<int> (pwd.length ());

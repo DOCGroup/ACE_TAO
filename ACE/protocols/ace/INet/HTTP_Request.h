@@ -34,7 +34,7 @@ namespace ACE
               Request();
 
               /// Constructor; creates a GET request with given version.
-              Request(const ACE_CString& version);
+              explicit Request(const ACE_CString& version);
 
               /// Constructor; creates a HTTP/1.0 request with given method and URI.
               Request(const ACE_CString& method, const ACE_CString& uri);

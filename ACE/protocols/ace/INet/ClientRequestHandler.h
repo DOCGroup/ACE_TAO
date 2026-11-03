@@ -49,8 +49,7 @@ namespace ACE
               static ConnectionCache& connection_cache ();
 
             private:
-              typedef ACE_Singleton<ConnectionCache,
-                                    ACE_SYNCH_MUTEX> TConnectionCacheSingleton;
+              using TConnectionCacheSingleton = ACE_Singleton<ConnectionCache, ACE_SYNCH_MUTEX>;
           };
 
         /**

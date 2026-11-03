@@ -46,9 +46,7 @@ namespace ACE
       {
       }
 
-    URL::~URL ()
-      {
-      }
+    URL::~URL () = default;
 
     URL& URL::operator =(const URL& url)
       {
@@ -100,7 +98,7 @@ namespace ACE
 
     ACE::INet::ClientRequestHandler* URL::create_default_request_handler () const
       {
-        ACE::INet::ClientRequestHandler* prh = 0;
+        ACE::INet::ClientRequestHandler* prh = nullptr;
         ACE_NEW_NORETURN (prh, ClientRequestHandler ());
         return prh;
       }
@@ -112,8 +110,7 @@ namespace ACE
         ACE::INet::URL_Base::register_factory (this);
       }
 
-    URL::Factory::~Factory ()
-      {}
+    URL::Factory::~Factory () = default;
 
     const ACE_CString& URL::Factory::protocol ()
       {
@@ -122,7 +119,7 @@ namespace ACE
 
     ACE::INet::URL_Base* URL::Factory::create_from_string (const ACE_CString& url_string)
       {
-        URL* purl = 0;
+        URL* purl = nullptr;
         ACE_NEW_NORETURN (purl, URL (url_string));
         return purl;
       }

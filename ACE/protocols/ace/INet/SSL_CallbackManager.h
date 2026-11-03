@@ -77,10 +77,10 @@ namespace ACE
 
               ACE_SSL_Context* ssl_ctx_;
 
-              typedef ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_CertificateCallback,
-                                              ACE_SYNCH::MUTEX>        TCertificateCallback;
-              typedef ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_PasswordCallback,
-                                              ACE_SYNCH::MUTEX>        TPasswordCallback;
+              using TCertificateCallback =
+                ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_CertificateCallback,
+                                        ACE_SYNCH::MUTEX>;
+              using TPasswordCallback = ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_PasswordCallback, ACE_SYNCH::MUTEX>;
 
               TCertificateCallback cert_callback_;
               TPasswordCallback passwd_callback_;

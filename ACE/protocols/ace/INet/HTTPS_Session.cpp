@@ -29,8 +29,8 @@ namespace ACE
 #endif
                                          )
       : ACE::HTTP::SessionBase (URL::HTTPS_PORT, keep_alive),
-        connection_ (0),
-        sock_stream_ (0)
+        connection_ (nullptr),
+        sock_stream_ (nullptr)
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
         , context_ (ctx)
 #endif
@@ -47,8 +47,8 @@ namespace ACE
 #endif
                                          )
       : ACE::HTTP::SessionBase (URL::HTTPS_PORT, timeout, keep_alive, alive_timeout),
-        connection_ (0),
-        sock_stream_ (0)
+        connection_ (nullptr),
+        sock_stream_ (nullptr)
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
         , context_ (ctx)
 #endif
@@ -75,13 +75,13 @@ namespace ACE
       {
         INET_TRACE ("ACE_HTTPS_Session::connect_i");
 
-        connection_type* new_connection = 0;
+        connection_type* new_connection = nullptr;
 
         if (this->is_proxy_connection ())
           {
-            typedef ACE::IOS::StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> proxy_connection_type;
-            typedef ACE_Connector<proxy_connection_type, ACE_SOCK_CONNECTOR> proxy_connector_type;
-            typedef ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE> proxy_stream_type;
+            using proxy_connection_type = ACE::IOS::StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE>;
+            using proxy_connector_type = ACE_Connector<proxy_connection_type, ACE_SOCK_CONNECTOR>;
+            using proxy_stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE>;
 
             proxy_connection_type proxy_connection(sync_opt);
             proxy_connector_type proxy_connector;
@@ -127,7 +127,7 @@ namespace ACE
                             false);
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
             // set the provided SSL context for the SSL structure of the SSL_SOCK_Stream
-            if (this->context_ != 0)
+            if (this->context_ != nullptr)
               {
                 ::SSL * ssl_ptr = new_connection->peer ().ssl ();
                 ::SSL_set_SSL_CTX (ssl_ptr, this->context_->ssl_context ().context ());
@@ -156,13 +156,13 @@ namespace ACE
                             false);
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
             // set the provided SSL context for the SSL structure of the SSL_SOCK_Stream
-            if (this->context_ != 0)
+            if (this->context_ != nullptr)
               {
                 ::SSL * ssl_ptr = new_connection->peer ().ssl ();
                 ::SSL_set_SSL_CTX (ssl_ptr, this->context_->ssl_context ().context ());
               }
 #endif
-            typedef ACE_Connector<connection_type, ACE_SSL_SOCK_Connector> connector_type;
+            using connector_type = ACE_Connector<connection_type, ACE_SSL_SOCK_Connector>;
 
             connector_type connector;
 
@@ -247,7 +247,7 @@ namespace ACE
         if (this->sock_stream_)
           {
             delete this->sock_stream_;
-            this->sock_stream_ = 0;
+            this->sock_stream_ = nullptr;
           }
 
         if (this->connection_)
@@ -255,7 +255,7 @@ namespace ACE
             // this should be the last referece and removing it
             // causes the connection to be destroyed
             this->connection_->remove_reference ();
-            this->connection_ = 0;
+            this->connection_ = nullptr;
           }
       }
 

@@ -39,7 +39,7 @@ namespace ACE
           : public BidirStreamBuffer<StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE> >
           {
             public:
-              typedef StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE> stream_type;
+              using stream_type = StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE>;
 
               SSLSock_StreamBufferBase (stream_type* stream);
               virtual ~SSLSock_StreamBufferBase ();
@@ -62,8 +62,8 @@ namespace ACE
           : public virtual std::ios
           {
             public:
-              typedef SSLSock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
-              typedef typename buffer_type::stream_type stream_type;
+              using buffer_type = SSLSock_StreamBufferBase<ACE_SYNCH_USE>;
+              using stream_type = typename buffer_type::stream_type;
 
               SSLSock_IOSBase (stream_type* stream);
               ~SSLSock_IOSBase ();
@@ -89,9 +89,9 @@ namespace ACE
           : public SSLSock_IOSBase<ACE_SYNCH_USE>, public std::ostream
           {
             public:
-              typedef SSLSock_IOSBase<ACE_SYNCH_USE> ios_base;
-              typedef typename ios_base::stream_type stream_type;
-              typedef SSLSock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
+              using ios_base = SSLSock_IOSBase<ACE_SYNCH_USE>;
+              using stream_type = typename ios_base::stream_type;
+              using buffer_type = SSLSock_StreamBufferBase<ACE_SYNCH_USE>;
 
               explicit SSLSock_OStreamBase(stream_type* stream);
 
@@ -114,9 +114,9 @@ namespace ACE
           : public SSLSock_IOSBase<ACE_SYNCH_USE>, public std::istream
           {
             public:
-              typedef SSLSock_IOSBase<ACE_SYNCH_USE> ios_base;
-              typedef typename ios_base::stream_type stream_type;
-              typedef SSLSock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
+              using ios_base = SSLSock_IOSBase<ACE_SYNCH_USE>;
+              using stream_type = typename ios_base::stream_type;
+              using buffer_type = SSLSock_StreamBufferBase<ACE_SYNCH_USE>;
 
               explicit SSLSock_IStreamBase(stream_type* stream);
 
@@ -139,9 +139,9 @@ namespace ACE
           : public SSLSock_IOSBase<ACE_SYNCH_USE>, public std::iostream
           {
             public:
-              typedef SSLSock_IOSBase<ACE_SYNCH_USE> ios_base;
-              typedef typename ios_base::stream_type stream_type;
-              typedef SSLSock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
+              using ios_base = SSLSock_IOSBase<ACE_SYNCH_USE>;
+              using stream_type = typename ios_base::stream_type;
+              using buffer_type = SSLSock_StreamBufferBase<ACE_SYNCH_USE>;
 
               explicit SSLSock_IOStreamBase(stream_type* stream);
 
@@ -153,11 +153,11 @@ namespace ACE
               void set_interceptor (typename buffer_type::interceptor_type& interceptor);
           };
 
-        typedef SSLSock_StreamBufferBase<ACE_NULL_SYNCH> SSLSock_StreamBuffer;
-        typedef SSLSock_IOSBase<ACE_NULL_SYNCH> SSLSock_IOS;
-        typedef SSLSock_IStreamBase<ACE_NULL_SYNCH> SSLSock_IStream;
-        typedef SSLSock_OStreamBase<ACE_NULL_SYNCH> SSLSock_OStream;
-        typedef SSLSock_IOStreamBase<ACE_NULL_SYNCH> SSLSock_IOStream;
+        using SSLSock_StreamBuffer = SSLSock_StreamBufferBase<ACE_NULL_SYNCH>;
+        using SSLSock_IOS = SSLSock_IOSBase<ACE_NULL_SYNCH>;
+        using SSLSock_IStream = SSLSock_IStreamBase<ACE_NULL_SYNCH>;
+        using SSLSock_OStream = SSLSock_OStreamBase<ACE_NULL_SYNCH>;
+        using SSLSock_IOStream = SSLSock_IOStreamBase<ACE_NULL_SYNCH>;
       }
   }
 

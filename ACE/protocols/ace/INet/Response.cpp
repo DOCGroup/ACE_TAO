@@ -9,7 +9,7 @@ namespace ACE
   {
     Response::Response () {}
 
-    Response::~Response () {}
+    Response::~Response () = default;
 
   }
 }

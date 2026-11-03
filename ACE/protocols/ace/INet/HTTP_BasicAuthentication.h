@@ -40,7 +40,7 @@ namespace ACE
               BasicAuthentication(const ACE_CString& user, const ACE_CString& passwd);
 
               /// Constructor. Decodes cedentials from request (if any).
-              BasicAuthentication(const Request& request);
+              explicit BasicAuthentication(const Request& request);
 
               /// Destructor
               virtual ~BasicAuthentication();

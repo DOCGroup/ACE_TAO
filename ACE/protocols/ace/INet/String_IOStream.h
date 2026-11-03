@@ -32,14 +32,14 @@ namespace ACE
           : public BasicBufferedStreamBuffer<ACE_CHAR_T, TR>
           {
             public:
-              typedef BasicBufferedStreamBuffer<ACE_CHAR_T, TR> super;
-              typedef typename super::char_type char_type;
-              typedef typename super::openmode openmode;
-              typedef ACE_String_Base<ACE_CHAR_T> string_type;
-              typedef typename string_type::size_type size_type;
-              typedef typename super::pos_type pos_type;
-              typedef typename super::off_type off_type;
-              typedef typename super::seekdir seekdir;
+              using super = BasicBufferedStreamBuffer<ACE_CHAR_T, TR>;
+              using char_type = typename super::char_type;
+              using openmode = typename super::openmode;
+              using string_type = ACE_String_Base<ACE_CHAR_T>;
+              using size_type = typename string_type::size_type;
+              using pos_type = typename super::pos_type;
+              using off_type = typename super::off_type;
+              using seekdir = typename super::seekdir;
 
               String_StreamBufferBase (openmode mode);
               String_StreamBufferBase (string_type& string, openmode mode);
@@ -85,10 +85,10 @@ namespace ACE
           : public virtual std::basic_ios<ACE_CHAR_T, TR>
           {
             public:
-              typedef std::basic_ios<ACE_CHAR_T, TR> ios_base;
-              typedef String_StreamBufferBase<ACE_CHAR_T, TR> buffer_type;
-              typedef typename buffer_type::string_type string_type;
-              typedef typename buffer_type::openmode openmode;
+              using ios_base = std::basic_ios<ACE_CHAR_T, TR>;
+              using buffer_type = String_StreamBufferBase<ACE_CHAR_T, TR>;
+              using string_type = typename buffer_type::string_type;
+              using openmode = typename buffer_type::openmode;
 
               String_IOSBase (openmode mode);
               String_IOSBase (string_type& string, openmode mode);
@@ -116,8 +116,8 @@ namespace ACE
             public std::basic_ostream<ACE_CHAR_T, TR>
           {
             public:
-              typedef String_IOSBase<ACE_CHAR_T, TR> ios_base;
-              typedef typename ios_base::string_type string_type;
+              using ios_base = String_IOSBase<ACE_CHAR_T, TR>;
+              using string_type = typename ios_base::string_type;
 
               explicit String_OStreamBase();
               explicit String_OStreamBase(string_type& string);
@@ -140,9 +140,9 @@ namespace ACE
             public std::basic_istream<ACE_CHAR_T, TR>
           {
             public:
-              typedef String_IOSBase<ACE_CHAR_T, TR> ios_base;
-              typedef typename ios_base::string_type string_type;
-              typedef typename ios_base::buffer_type::pos_type pos_type;
+              using ios_base = String_IOSBase<ACE_CHAR_T, TR>;
+              using string_type = typename ios_base::string_type;
+              using pos_type = typename ios_base::buffer_type::pos_type;
 
               explicit String_IStreamBase();
               explicit String_IStreamBase(const string_type& string);
@@ -151,10 +151,10 @@ namespace ACE
               String_IStreamBase& rewind ();
           };
 
-        typedef String_StreamBufferBase<char> CString_StreamBuffer;
-        typedef String_IOSBase<char> CString_IOS;
-        typedef String_OStreamBase<char> CString_OStream;
-        typedef String_IStreamBase<char> CString_IStream;
+        using CString_StreamBuffer = String_StreamBufferBase<char>;
+        using CString_IOS = String_IOSBase<char>;
+        using CString_OStream = String_OStreamBase<char>;
+        using CString_IStream = String_IStreamBase<char>;
       }
   }
 

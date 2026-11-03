@@ -40,21 +40,21 @@ namespace ACE
           {
             public:
               // useful traits
-              typedef StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE> this_type;
-              typedef ACE_Svc_Handler<ACE_PEER_STREAM, ACE_SYNCH_USE> base_type;
-              typedef ACE_Message_Queue<ACE_SYNCH_USE> mq_type;
+              using this_type = StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>;
+              using base_type = ACE_Svc_Handler<ACE_PEER_STREAM, ACE_SYNCH_USE>;
+              using mq_type = ACE_Message_Queue<ACE_SYNCH_USE>;
 
               /// Constructor
               StreamHandler (const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
-                             ACE_Thread_Manager *thr_mgr = 0,
-                             mq_type *mq = 0,
+                             ACE_Thread_Manager *thr_mgr = nullptr,
+                             mq_type *mq = nullptr,
                              ACE_Reactor *reactor = ACE_Reactor::instance ());
 
               /// Destructor
               virtual ~StreamHandler ();
 
               /// Activate the connection
-              int open (void * = 0) override;
+              int open (void * = nullptr) override;
 
               /// Close the connection
               int close (u_long flags = 0) override;
@@ -88,12 +88,12 @@ namespace ACE
               /// Attempts to receive data from peer and queue it.
               /// Called either from handle_input in reactive mode or
               /// directly from read_from_stream when non-reactive.
-              int handle_output_i (ACE_Time_Value* timeout = 0);
+              int handle_output_i (ACE_Time_Value* timeout = nullptr);
 
               /// Attempts to send queued data to peer.
               /// Called either from handle_output in reactive mode
               /// or directly from write_to_stream when non-reactive.
-              int handle_input_i (size_t rdlen, ACE_Time_Value* timeout = 0);
+              int handle_input_i (size_t rdlen, ACE_Time_Value* timeout = nullptr);
 
               /// processes queued input
               int process_input (char* buf,
@@ -131,7 +131,7 @@ namespace ACE
                 };
           };
 
-        typedef StreamHandler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>  SockStreamHandler;
+        using SockStreamHandler = StreamHandler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
       }
   }
 

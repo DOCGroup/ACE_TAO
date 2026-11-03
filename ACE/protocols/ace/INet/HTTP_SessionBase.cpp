@@ -23,8 +23,8 @@ namespace ACE
     SessionBase::SessionBase (u_short port, bool keep_alive)
       : port_ (port),
         reactive_ (false),
-        in_stream_ (0),
-        out_stream_ (0),
+        in_stream_ (nullptr),
+        out_stream_ (nullptr),
         http_timeout_ (DEFAULT_TIMEOUT),
         keep_alive_timeout_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
         reconnect_timer_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
@@ -43,8 +43,8 @@ namespace ACE
                               const ACE_Time_Value* alive_timeout)
       : port_ (port),
         reactive_ (false),
-        in_stream_ (0),
-        out_stream_ (0),
+        in_stream_ (nullptr),
+        out_stream_ (nullptr),
         http_timeout_ (timeout),
         keep_alive_timeout_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
         reconnect_timer_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
@@ -87,7 +87,7 @@ namespace ACE
         if (this->in_stream_)
           {
             delete this->in_stream_;
-            this->in_stream_ = 0;
+            this->in_stream_ = nullptr;
           }
 
         bool keep_alive = this->keep_alive ();
@@ -100,7 +100,7 @@ namespace ACE
         if (this->out_stream_)
           {
             delete this->out_stream_;
-            this->out_stream_ = 0;
+            this->out_stream_ = nullptr;
           }
 
         if (!this->is_connected ())
@@ -215,7 +215,7 @@ namespace ACE
         if (this->out_stream_)
           {
             delete this->out_stream_;
-            this->out_stream_ = 0;
+            this->out_stream_ = nullptr;
           }
 
         this->sock_stream ().flush ();

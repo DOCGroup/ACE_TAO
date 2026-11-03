@@ -14,7 +14,7 @@ namespace ACE
   {
     ClientRequestHandler::ClientRequestHandler () {}
 
-    ClientRequestHandler::~ClientRequestHandler () {}
+    ClientRequestHandler::~ClientRequestHandler () = default;
 
     ConnectionCache& ClientRequestHandler::connection_cache ()
       {
@@ -23,7 +23,7 @@ namespace ACE
 
     ClientINetRequestHandler::ClientINetRequestHandler () {}
 
-    ClientINetRequestHandler::~ClientINetRequestHandler () {}
+    ClientINetRequestHandler::~ClientINetRequestHandler () = default;
 
     ClientINetRequestHandler::INetConnectionKey::INetConnectionKey (
         const ACE_CString& host,
@@ -34,8 +34,7 @@ namespace ACE
       {
       }
 
-    ClientINetRequestHandler::INetConnectionKey::~INetConnectionKey ()
-      {}
+    ClientINetRequestHandler::INetConnectionKey::~INetConnectionKey () = default;
 
     u_long ClientINetRequestHandler::INetConnectionKey::hash () const
       {
@@ -44,7 +43,7 @@ namespace ACE
 
     ConnectionKey* ClientINetRequestHandler::INetConnectionKey::duplicate () const
       {
-        ConnectionKey* k = 0;
+        ConnectionKey* k = nullptr;
         ACE_NEW_RETURN (k,
                         INetConnectionKey (this->host_, this->port_),
                         0);

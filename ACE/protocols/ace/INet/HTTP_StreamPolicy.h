@@ -34,7 +34,7 @@ namespace ACE
             public:
               using char_type = typename STREAM_BUFFER::char_type;
 
-              FixedLengthStreamPolicyBase (std::streamsize length);
+              explicit FixedLengthStreamPolicyBase (std::streamsize length);
               ~FixedLengthStreamPolicyBase () override;
 
             protected:

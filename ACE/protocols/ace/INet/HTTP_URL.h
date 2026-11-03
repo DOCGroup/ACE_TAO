@@ -35,7 +35,7 @@ namespace ACE
           {
             public:
               URL ();
-              URL (const ACE_CString& url_string);
+              explicit URL (const ACE_CString& url_string);
               URL (const URL& url);
               ~URL () override;
 
@@ -76,7 +76,7 @@ namespace ACE
               };
 
             protected:
-              URL (u_short port);
+              explicit URL (u_short port);
 
               ACE::INet::ClientRequestHandler* create_default_request_handler () const override;
 
@@ -97,8 +97,7 @@ namespace ACE
                     ACE::INet::URL_Base* create_from_string (const ACE_CString& url_string) override;
                 };
 
-              typedef ACE_Singleton<Factory,
-                                    ACE_Null_Mutex> TURLFactorySingleton;
+              using TURLFactorySingleton = ACE_Singleton<Factory, ACE_Null_Mutex>;
               static const Factory& factory_;
           };
       }

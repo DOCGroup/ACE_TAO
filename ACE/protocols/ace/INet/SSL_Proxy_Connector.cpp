@@ -17,7 +17,7 @@ namespace ACE
   {
     SSL_Proxy_Connector::SSL_Proxy_Connector () {}
 
-    SSL_Proxy_Connector::~SSL_Proxy_Connector () {}
+    SSL_Proxy_Connector::~SSL_Proxy_Connector () = default;
 
     /*
      * This code is copied from ace/SSL/SSL_SOCK_Connector.cpp
@@ -47,7 +47,7 @@ namespace ACE
         // status; we'll block in SSL_connect if the socket is blocking, and
         // block in ACE::select if not.
         int reset_blocking_mode = 0;
-        if (timeout != 0)
+        if (timeout != nullptr)
           {
             reset_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
                                                     ACE_NONBLOCK);
@@ -60,11 +60,11 @@ namespace ACE
           }
 
         ACE_Time_Value t;
-        if (timeout != 0)
+        if (timeout != nullptr)
           t = *timeout;   // Need a non-const copy.
 
         // Take into account the time between each select() call below.
-        ACE_Countdown_Time countdown ((timeout == 0 ? 0 : &t));
+        ACE_Countdown_Time countdown ((timeout == nullptr ? nullptr : &t));
 
         int status;
 
@@ -155,8 +155,8 @@ namespace ACE
                 status = ACE::select (select_width,
                                       &rd_handle,
                                       &wr_handle,
-                                      0,
-                                      (timeout == 0 ? 0 : &t));
+                                      nullptr,
+                                      (timeout == nullptr ? nullptr : &t));
 
                 (void) countdown.update ();
 

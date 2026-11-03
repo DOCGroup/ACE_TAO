@@ -40,7 +40,7 @@ namespace ACE
               /// Constructor
               Response();
 
-              Response(const Status& status);
+              explicit Response(const Status& status);
 
               Response(const ACE_CString& version, const Status& status = Status());
 

@@ -9,7 +9,7 @@ namespace ACE
   {
     RequestHandler::RequestHandler () {}
 
-    RequestHandler::~RequestHandler () {}
+    RequestHandler::~RequestHandler () = default;
 
   }
 }

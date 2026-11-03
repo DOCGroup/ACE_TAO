@@ -36,7 +36,7 @@ namespace ACE
           : public ACE::IOS::BufferedStreamBuffer
           {
             public:
-              StreamBuffer (std::iostream * stream);
+              explicit StreamBuffer (std::iostream * stream);
               ~StreamBuffer () override;
 
               int sync () override;
@@ -68,7 +68,7 @@ namespace ACE
           : public virtual std::ios
           {
             public:
-              IOS (std::iostream* stream);
+              explicit IOS (std::iostream* stream);
               ~IOS ();
 
               StreamBuffer* rdbuf ();

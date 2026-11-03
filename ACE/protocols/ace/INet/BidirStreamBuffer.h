@@ -46,15 +46,15 @@ namespace ACE
           {
             public:
               // useful traits
-              typedef std::basic_streambuf<ACE_CHAR_T, TR> base_type;
-              typedef std::basic_ios<ACE_CHAR_T, TR> ios_type;
-              typedef ACE_CHAR_T char_type;
-              typedef TR char_traits;
-              typedef typename base_type::int_type int_type;
-              typedef typename base_type::pos_type pos_type;
-              typedef typename base_type::off_type off_type;
-              typedef typename ios_type::openmode openmode;
-              typedef StreamInterceptorBase<char_type, char_traits> interceptor_type;
+              using base_type = std::basic_streambuf<ACE_CHAR_T, TR>;
+              using ios_type = std::basic_ios<ACE_CHAR_T, TR>;
+              using char_type = ACE_CHAR_T;
+              using char_traits = TR;
+              using int_type = typename base_type::int_type;
+              using pos_type = typename base_type::pos_type;
+              using off_type = typename base_type::off_type;
+              using openmode = typename ios_type::openmode;
+              using interceptor_type = StreamInterceptorBase<char_type, char_traits>;
 
               /// Constructor
               BasicBidirStreamBuffer (STREAM_HANDLER* sh, std::streamsize bufsz, openmode mode);
@@ -109,8 +109,8 @@ namespace ACE
           : public BasicBidirStreamBuffer<char, STREAM_HANDLER>
           {
             public:
-              typedef BasicBidirStreamBuffer< char, STREAM_HANDLER> super;
-              typedef typename super::openmode openmode;
+              using super = BasicBidirStreamBuffer< char, STREAM_HANDLER>;
+              using openmode = typename super::openmode;
 
               BidirStreamBuffer (STREAM_HANDLER* sh, std::streamsize bufsz, openmode mode);
               virtual ~BidirStreamBuffer ();

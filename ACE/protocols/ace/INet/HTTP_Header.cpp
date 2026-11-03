@@ -33,9 +33,7 @@ namespace ACE
       {
       }
 
-    Header::~Header()
-      {
-      }
+    Header::~Header() = default;
 
   }
 }

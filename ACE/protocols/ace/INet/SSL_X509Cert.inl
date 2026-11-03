@@ -8,13 +8,13 @@ namespace ACE
 
     ACE_INLINE
     SSL_X509Cert::SSL_X509Cert ()
-      : ssl_cert_ (0)
+      : ssl_cert_ (nullptr)
       {
       }
 
     ACE_INLINE
     SSL_X509Cert::SSL_X509Cert (::X509* ssl_cert)
-      : ssl_cert_ (0)
+      : ssl_cert_ (nullptr)
       {
         *this = ssl_cert;
       }
@@ -26,17 +26,15 @@ namespace ACE
       }
 
     ACE_INLINE
-    SSL_X509Cert::~SSL_X509Cert ()
-      {
-      }
+    SSL_X509Cert::~SSL_X509Cert () = default;
 
     ACE_INLINE
     SSL_X509Cert& SSL_X509Cert::operator= (::X509* ssl_cert)
       {
-        if (this->ssl_cert_ != 0)
+        if (this->ssl_cert_ != nullptr)
           ::X509_free (this->ssl_cert_);
 
-        if (ssl_cert != 0)
+        if (ssl_cert != nullptr)
           {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
             ::X509_up_ref(ssl_cert);

@@ -44,7 +44,7 @@ namespace ACE
 
               Session_T ();
 
-              Session_T (const ACE_Time_Value& timeout);
+              explicit Session_T (const ACE_Time_Value& timeout);
 
               virtual ~Session_T ();
 

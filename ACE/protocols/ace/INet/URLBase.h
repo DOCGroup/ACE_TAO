@@ -52,11 +52,10 @@ namespace ACE
             private:
               friend class URL_Base;
 
-              URLStream (ClientRequestHandler& rh);
-              URLStream (ClientRequestHandler* rh);
+              explicit URLStream (ClientRequestHandler& rh);
+              explicit URLStream (ClientRequestHandler* rh);
 
-              typedef ACE_Refcounted_Auto_Ptr<ClientRequestHandler,
-                                              ACE_Null_Mutex> TRequestHandlerRef;
+              using TRequestHandlerRef = ACE_Refcounted_Auto_Ptr<ClientRequestHandler, ACE_Null_Mutex>;
 
               TRequestHandlerRef request_handler_ref_;
               ClientRequestHandler* request_handler_;
@@ -140,11 +139,8 @@ namespace ACE
               static void deregister_factory (Factory* url_factory);
 
             private:
-              typedef ACE_Map_Manager<ACE_CString,
-                                      Factory*,
-                                      ACE_SYNCH::MUTEX> TURLFactoryMap;
-              typedef ACE_Singleton<TURLFactoryMap,
-                                    ACE_SYNCH::NULL_MUTEX> TURLFactorySingleton;
+              using TURLFactoryMap = ACE_Map_Manager<ACE_CString, Factory*, ACE_SYNCH::MUTEX>;
+              using TURLFactorySingleton = ACE_Singleton<TURLFactoryMap, ACE_SYNCH::NULL_MUTEX>;
               static TURLFactoryMap* factories_;
           };
 
@@ -159,7 +155,7 @@ namespace ACE
           : public URL_Base
           {
             public:
-              URL_INetBase(u_short port);
+              explicit URL_INetBase(u_short port);
               virtual ~URL_INetBase ();
 
               void set_host (const ACE_CString& host);
@@ -205,7 +201,7 @@ namespace ACE
           : public URL_INetBase
           {
             public:
-              URL_INetAuthBase(u_short port);
+              explicit URL_INetAuthBase(u_short port);
               virtual ~URL_INetAuthBase ();
 
               const ACE_CString& get_user_info () const;
@@ -230,11 +226,8 @@ namespace ACE
               static bool authenticate (AuthenticationBase& authentication);
 
             private:
-              typedef ACE_Refcounted_Auto_Ptr<AuthenticatorBase,
-                                              ACE_SYNCH::NULL_MUTEX> authenticator_ptr;
-              typedef ACE_Map_Manager<ACE_CString,
-                                      authenticator_ptr,
-                                      ACE_SYNCH::RECURSIVE_MUTEX>  authenticator_map;
+              using authenticator_ptr = ACE_Refcounted_Auto_Ptr<AuthenticatorBase, ACE_SYNCH::NULL_MUTEX>;
+              using authenticator_map = ACE_Map_Manager<ACE_CString, authenticator_ptr, ACE_SYNCH::RECURSIVE_MUTEX>;
 
               static authenticator_map authenticators_;
           };

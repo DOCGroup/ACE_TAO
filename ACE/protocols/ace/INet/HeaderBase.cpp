@@ -26,9 +26,7 @@ namespace ACE
       {
       }
 
-    HeaderBase::~HeaderBase()
-      {
-      }
+    HeaderBase::~HeaderBase() = default;
 
     void HeaderBase::set_content_length(int length)
       {
@@ -163,7 +161,7 @@ namespace ACE
         *this = pair;
       }
 
-    NVPair::~NVPair () {}
+    NVPair::~NVPair () = default;
 
   }
 }

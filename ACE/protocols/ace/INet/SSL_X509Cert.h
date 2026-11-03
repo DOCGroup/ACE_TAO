@@ -30,7 +30,7 @@ namespace ACE
           {
             public:
               SSL_X509Cert ();
-              SSL_X509Cert (::X509* ssl_cert);
+              explicit SSL_X509Cert (::X509* ssl_cert);
               SSL_X509Cert (const SSL_X509Cert& cert);
               ~SSL_X509Cert ();
 

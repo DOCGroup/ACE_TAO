@@ -6,8 +6,8 @@ namespace ACE
 {
   namespace IOS
   {
-    std::ostream Null::out_stream_ (0);
-    std::istream Null::in_stream_ (0);
+    std::ostream Null::out_stream_ (nullptr);
+    std::istream Null::in_stream_ (nullptr);
   }
 }
 

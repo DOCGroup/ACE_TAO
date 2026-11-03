@@ -39,7 +39,7 @@ namespace ACE
             public:
               using policy_type = StreamPolicyBase<StreamBuffer>;
 
-              StreamBuffer (std::iostream& stream, policy_type* policy = 0);
+              explicit StreamBuffer (std::iostream& stream, policy_type* policy = nullptr);
               ~StreamBuffer () override;
 
               int sync () override;
@@ -76,7 +76,7 @@ namespace ACE
           : public virtual std::ios
           {
             public:
-              IOS (std::iostream& stream, StreamBuffer::policy_type* policy = 0);
+              explicit IOS (std::iostream& stream, StreamBuffer::policy_type* policy = nullptr);
               ~IOS ();
 
               StreamBuffer* rdbuf ();
@@ -95,7 +95,7 @@ namespace ACE
           : public IOS, public std::ostream
           {
             public:
-              explicit OStream(std::iostream& stream, StreamBuffer::policy_type* policy = 0);
+              explicit OStream(std::iostream& stream, StreamBuffer::policy_type* policy = nullptr);
               ~OStream();
 
               void set_interceptor (StreamBuffer::interceptor_type& interceptor);
@@ -111,7 +111,7 @@ namespace ACE
           : public IOS, public std::istream
           {
             public:
-              explicit IStream(std::iostream& stream, StreamBuffer::policy_type* policy = 0);
+              explicit IStream(std::iostream& stream, StreamBuffer::policy_type* policy = nullptr);
               ~IStream();
 
               void set_interceptor (StreamBuffer::interceptor_type& interceptor);

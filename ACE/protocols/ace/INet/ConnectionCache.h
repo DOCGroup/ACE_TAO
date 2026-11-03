@@ -133,7 +133,7 @@ namespace ACE
                   CST_CLOSED
                 };
 
-              typedef ConnectionHolder connection_type;
+              using connection_type = ConnectionHolder;
 
               ConnectionCacheValue ();
               explicit ConnectionCacheValue (connection_type* connection);
@@ -170,19 +170,19 @@ namespace ACE
         class ACE_INET_Export ConnectionCache
           {
             public:
-              typedef ConnectionHolder connection_type;
-              typedef ConnectionFactory factory_type;
+              using connection_type = ConnectionHolder;
+              using factory_type = ConnectionFactory;
 
-              typedef ACE_Hash_Map_Manager_Ex <ConnectionCacheKey,
-                                               ConnectionCacheValue,
-                                               ACE_Hash<ConnectionCacheKey>,
-                                               ACE_Equal_To<ConnectionCacheKey>,
-                                               ACE_SYNCH_NULL_MUTEX> map_type;
+              using map_type =
+                ACE_Hash_Map_Manager_Ex<ConnectionCacheKey,
+                                         ConnectionCacheValue,
+                                         ACE_Hash<ConnectionCacheKey>,
+                                         ACE_Equal_To<ConnectionCacheKey>,
+                                         ACE_SYNCH_NULL_MUTEX>;
 
-              typedef map_type::iterator map_iter_type;
+              using map_iter_type = map_type::iterator;
 
-              typedef ACE_Hash_Map_Entry <ConnectionCacheKey,
-                                          ConnectionCacheValue> map_entry_type;
+              using map_entry_type = ACE_Hash_Map_Entry<ConnectionCacheKey, ConnectionCacheValue>;
 
               /// Constructor
               ConnectionCache(size_t size = ACE_DEFAULT_MAP_SIZE);
