@@ -76,11 +76,11 @@ class ACE_Export ACE_MT_MEM_IO : public ACE_MEM_SAP
 {
 public:
   /// Structure for a simple queue
-  typedef struct
+  struct MQ_Struct
   {
     ACE_MEM_SAP_Node::ACE_MEM_SAP_NODE_PTR head_;
     ACE_MEM_SAP_Node::ACE_MEM_SAP_NODE_PTR tail_;
-  } MQ_Struct;
+  };
 
   class Simple_Queue
   {
@@ -98,12 +98,12 @@ public:
     ACE_MEM_SAP::MALLOC_TYPE *malloc_;
   };
 
-  typedef struct
+  struct Channel
   {
     ACE_SYNCH_PROCESS_SEMAPHORE *sema_;
     ACE_SYNCH_PROCESS_MUTEX *lock_;
     Simple_Queue queue_;
-  } Channel;
+  };
 
   ACE_MT_MEM_IO ();
 
