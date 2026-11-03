@@ -12,7 +12,6 @@
 #include "tao/SystemException.h"
 
 #include <memory>
-#include <new>
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
 
@@ -71,10 +70,16 @@ CORBA::NVList::_decr_refcount ()
 
 CORBA::NVList::~NVList ()
 {
-  for (CORBA::NamedValue_ptr nv : this->values_)
+  ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> iter (this->values_);
+
+  for (iter.first (); !iter.done (); iter.advance ())
     {
-      delete nv;
+      CORBA::NamedValue_ptr *nv = nullptr;
+      (void) iter.next (nv);
+      delete *nv;
     }
+
+  this->max_ = 0;
 
   // Remove the CDR stream if it is present.
   delete this->incoming_;
@@ -210,16 +215,13 @@ CORBA::NVList::add_element (CORBA::Flags flags)
   // Set the flags and add it to the list.
   nv->flags_ = flags;
 
-  try
-    {
-      this->values_.push_back (nv);
-    }
-  catch (std::bad_alloc const&)
+  if (this->values_.enqueue_tail (nv) == -1)
     {
       delete nv;
-      throw CORBA::NO_MEMORY ();
+      return nullptr;
     }
 
+  ++this->max_;
   return nv; // success
 }
 
@@ -229,12 +231,14 @@ CORBA::NVList::item (CORBA::ULong n)
 {
   this->evaluate ();
 
-  if (n >= this->values_.size ())
+  if (n >= this->max_)
     {
       throw ::CORBA::Bounds ();
     }
 
-  return this->values_[n];
+  CORBA::NamedValue_ptr *nv = nullptr;
+  this->values_.get (nv, n);
+  return *nv;
 }
 
 void
@@ -247,7 +251,7 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
   // @@ There are other cases where we can use lazy evaluation, for
   //    example if the list is not empty but the anys own all their
   //    objects.
-  if (lazy_evaluation == false && this->values_.empty ())
+  if (lazy_evaluation == false && this->max_ == 0)
     {
       lazy_evaluation = true;
     }
@@ -279,7 +283,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 
   if (this->incoming_ != nullptr)
     {
-      if (this->values_.empty ())
+      if (this->max_ == 0)
         {
           // The list is empty aggressively reduce copies and just send
           // the CDR stream, we assume that
@@ -291,8 +295,13 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
         }
 
       // Then unmarshal each "in" and "inout" parameter.
-      for (CORBA::NamedValue_ptr nv : this->values_)
+      ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> i (this->values_);
+
+      for (i.first (); !i.done (); i.advance ())
         {
+          CORBA::NamedValue_ptr *item = nullptr;
+          (void) i.next (item);
+          CORBA::NamedValue_ptr nv = *item;
           if (ACE_BIT_DISABLED (nv->flags (), flag))
             {
               continue;
@@ -326,8 +335,13 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
   // ahead with the slow way to do things.
 
   // Then marshal each "in" and "inout" parameter.
-  for (CORBA::NamedValue_ptr nv : this->values_)
+  ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> i (this->values_);
+
+  for (i.first (); !i.done (); i.advance ())
     {
+      CORBA::NamedValue_ptr *item = nullptr;
+      (void) i.next (item);
+      CORBA::NamedValue_ptr nv = *item;
       if (ACE_BIT_DISABLED (nv->flags (), flag))
         {
           continue;
@@ -347,8 +361,13 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
     }
 
   // Then unmarshal each "in" and "inout" parameter.
-  for (CORBA::NamedValue_ptr nv : this->values_)
+  ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> i (this->values_);
+
+  for (i.first (); !i.done (); i.advance ())
     {
+      CORBA::NamedValue_ptr *item = nullptr;
+      (void) i.next (item);
+      CORBA::NamedValue_ptr nv = *item;
       // check if it is an in or inout parameter
       // @@ this is where we assume that the NVList is coming from
       //    a Server-side request, we could probably handle both

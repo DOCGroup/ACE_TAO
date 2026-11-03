@@ -22,10 +22,10 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
 
+#include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
 
 #include <atomic>
-#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -259,8 +259,11 @@ namespace CORBA
     void evaluate ();
 
   private:
-    /// Internal list of parameters stored as NamedValues
-    std::vector<NamedValue_ptr> values_;
+    /// Owns NamedValue objects; the ACE queue owns only its internal nodes.
+    ACE_Unbounded_Queue<NamedValue_ptr> values_;
+
+    /// Maximum length of list
+    ULong max_ {};
 
     /// Reference counter.
     std::atomic<uint32_t> refcount_ {1};

@@ -4,8 +4,6 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
-#include <new>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -26,16 +24,7 @@ TAO_NVList_Adapter_Impl::create_list (
   // If count is greater than 0, create a list of NamedValues.
   if (count != 0)
     {
-      try
-        {
-          new_list->values_.reserve (static_cast<size_t> (count));
-        }
-      catch (std::bad_alloc const&)
-        {
-          throw CORBA::NO_MEMORY (
-            CORBA::SystemException::_tao_minor_code (0, ENOMEM),
-            CORBA::COMPLETED_NO);
-        }
+      new_list->max_ = static_cast<CORBA::ULong> (count);
 
       for (CORBA::Long i = 0; i < count; ++i)
         {
@@ -48,7 +37,7 @@ TAO_NVList_Adapter_Impl::create_list (
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
 
-          new_list->values_.push_back (nv);
+          new_list->values_.enqueue_tail (nv);
         }
     }
 }
