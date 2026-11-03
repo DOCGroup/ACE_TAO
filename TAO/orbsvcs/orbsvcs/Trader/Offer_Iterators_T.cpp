@@ -3,6 +3,8 @@
 
 #include "orbsvcs/Trader/Offer_Iterators_T.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class MAP_LOCK_TYPE>
@@ -41,15 +43,17 @@ next_n (CORBA::ULong n,
 {
   CORBA::ULong ret_offers = 0;
 
-  CORBA::ULong max_possible_offers_in_sequence =
+  CORBA::ULong const max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n :
        static_cast<CORBA::ULong> (this->offer_ids_.size ());
 
-  ACE_NEW_THROW_EX (offers,
+  CosTrading::OfferSeq* raw_offer_sequence = nullptr;
+  ACE_NEW_THROW_EX (raw_offer_sequence,
                     CosTrading::OfferSeq,
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<CosTrading::OfferSeq> offer_sequence (raw_offer_sequence);
 
-  offers->length (max_possible_offers_in_sequence);
+  offer_sequence->length (max_possible_offers_in_sequence);
 
   // While there are entries left and we haven't filled <offers>
   // with requested number.
@@ -59,18 +63,19 @@ next_n (CORBA::ULong n,
       // If offer is found, put it into the sequence.
       // remove this id irrespective of whether the offer is found
       // or not.
-      std::string id = this->offer_ids_.front ();
+      std::string const id = this->offer_ids_.front ();
       this->offer_ids_.pop_front ();
       CosTrading::Offer* offer = this->db_.lookup_offer (id.c_str ());
 
       if (offer != nullptr)
         this->pfilter_.filter_offer (offer,
-                                     offers[ret_offers++]);
+                                     (*offer_sequence)[ret_offers++]);
     }
 
   // Reset the length to the correct value
-  offers->length (ret_offers);
+  offer_sequence->length (ret_offers);
 
+  offers = offer_sequence.release ();
   return static_cast<CORBA::Boolean> (ret_offers != 0);
 }
 

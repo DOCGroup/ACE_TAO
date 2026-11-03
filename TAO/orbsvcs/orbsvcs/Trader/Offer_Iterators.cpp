@@ -1,5 +1,7 @@
 #include "orbsvcs/Trader/Offer_Iterators.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Offer_Iterator::TAO_Offer_Iterator (TAO_Property_Filter const& pfilter)
@@ -45,20 +47,22 @@ CORBA::Boolean
 TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
                                        CosTrading::OfferSeq_out offers)
 {
-  offers = new CosTrading::OfferSeq;
+  std::unique_ptr<CosTrading::OfferSeq> offer_sequence =
+    std::make_unique<CosTrading::OfferSeq> ();
 
-  CORBA::ULong sequence_size = static_cast<CORBA::ULong> (this->offers_.size ());
-  CORBA::ULong offers_in_sequence = (n < sequence_size) ? n : sequence_size;
-  offers->length (offers_in_sequence);
+  CORBA::ULong const sequence_size = static_cast<CORBA::ULong> (this->offers_.size ());
+  CORBA::ULong const offers_in_sequence = (n < sequence_size) ? n : sequence_size;
+  offer_sequence->length (offers_in_sequence);
 
   // populate the sequence.
   for (CORBA::ULong i = 0; i < offers_in_sequence; i++)
     {
       CosTrading::Offer* source = this->offers_.front ();
       this->offers_.pop_front ();
-      this->pfilter_.filter_offer (source, offers[i]);
+      this->pfilter_.filter_offer (source, (*offer_sequence)[i]);
     }
 
+  offers = offer_sequence.release ();
   return offers_in_sequence != 0;
 }
 
