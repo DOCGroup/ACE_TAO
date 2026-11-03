@@ -6,8 +6,7 @@
 class Manager
 {
 public:
-  Manager ();
-  // Ctor
+  Manager () = default;
 
   ~Manager ();
 
@@ -25,23 +24,23 @@ public:
   int run ();
   // Run the ORB's event loop.
 
-  CORBA::ORB_ptr orb ();
+  CORBA::ORB_ptr orb () const;
   // ORB's accessor.
 
-  CORBA::Object_ptr server ();
+  CORBA::Object_ptr server () const;
   // Server's accessor.
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // Our ORB
 
-  PortableServer::POA_var new_poa_var_;
+  PortableServer::POA_var new_poa_var_ {};
   // The new poa that is created.
 
-  PortableServer::ServantLocator_var servant_locator_;
+  PortableServer::ServantLocator_var servant_locator_ {};
   // Our servant locator
 
-  CORBA::Object_var server_;
+  CORBA::Object_var server_ {};
   //
 };
 
