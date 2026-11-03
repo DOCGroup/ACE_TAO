@@ -98,21 +98,21 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 int
 ACE_MT_MEM_IO::Simple_Queue::write (ACE_MEM_SAP_Node *new_node)
 {
-  if (this->mq_ == 0)
+  if (this->mq_ == nullptr)
     return -1;
 
   // Here, we assume we already have acquired the lock necessary.
   // And we are allowed to write.
-  if (this->mq_->tail_.addr () == 0)     // nothing in the queue.
+  if (this->mq_->tail_.addr () == nullptr)     // nothing in the queue.
     {
       this->mq_->head_ = new_node;
       this->mq_->tail_ = new_node;
-      new_node->next_ = 0;
+      new_node->next_ = nullptr;
     }
   else
     {
       this->mq_->tail_->next_ = new_node;
-      new_node->next_ = 0;
+      new_node->next_ = nullptr;
       this->mq_->tail_ = new_node;
     }
   return 0;
@@ -121,8 +121,8 @@ ACE_MT_MEM_IO::Simple_Queue::write (ACE_MEM_SAP_Node *new_node)
 ACE_MEM_SAP_Node *
 ACE_MT_MEM_IO::Simple_Queue::read ()
 {
-  if (this->mq_ == 0)
-    return 0;
+  if (this->mq_ == nullptr)
+    return nullptr;
 
   ACE_MEM_SAP_Node *retv = nullptr;
 
@@ -134,8 +134,8 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
       if (this->mq_->head_ == this->mq_->tail_)
         {
           // Last message in the queue.
-          this->mq_->head_ = 0;
-          this->mq_->tail_ = 0;
+          this->mq_->head_ = nullptr;
+          this->mq_->tail_ = nullptr;
         }
       else
         this->mq_->head_ = retv->next_;
@@ -200,10 +200,10 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
                             -1);
 
       MQ_Struct *mymq = reinterpret_cast<MQ_Struct *> (ptr);
-      mymq->tail_ = 0;
-      mymq->head_ = 0;
-      (mymq + 1)->tail_ = 0;
-      (mymq + 1)->head_ = 0;
+      mymq->tail_ = nullptr;
+      mymq->head_ = nullptr;
+      (mymq + 1)->tail_ = nullptr;
+      (mymq + 1)->head_ = nullptr;
       if (this->shm_malloc_->bind ("to_server", mymq) == -1)
         return -1;
 
@@ -269,7 +269,7 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (flags);
 
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == nullptr)
     {
       return -1;
     }
@@ -286,7 +286,7 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
 
     buf = this->recv_channel_.queue_.read ();
 
-    if (buf != 0)
+    if (buf != nullptr)
       {
         return ACE_Utils::truncate_cast<ssize_t> (buf->size ());
       }
@@ -306,7 +306,7 @@ ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (flags);
 
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == nullptr)
     {
       return -1;
     }

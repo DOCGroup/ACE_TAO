@@ -86,7 +86,7 @@ public:
   {
   public:
     Simple_Queue ();
-    Simple_Queue (MQ_Struct *mq);
+    explicit Simple_Queue (MQ_Struct *mq);
 
     int init (MQ_Struct *mq, ACE_MEM_SAP::MALLOC_TYPE *malloc);
 
