@@ -439,9 +439,7 @@ TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
   return property;
 }
 
-TAO_Dynamic_Property::~TAO_Dynamic_Property ()
-{
-}
+TAO_Dynamic_Property::~TAO_Dynamic_Property () = default;
 
 CosTradingDynamic::DynamicProp*
 TAO_Dynamic_Property::
@@ -565,9 +563,7 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
     }
 }
 
-TAO_Policies::~TAO_Policies ()
-{
-}
+TAO_Policies::~TAO_Policies () = default;
 
 CORBA::ULong
 TAO_Policies::ulong_prop (POLICY_TYPE pol) const

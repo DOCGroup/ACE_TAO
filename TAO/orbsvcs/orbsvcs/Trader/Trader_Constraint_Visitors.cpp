@@ -70,8 +70,6 @@ TAO_Trader_Constraint_Validator
 }
 
 TAO_Trader_Constraint_Validator::
-~TAO_Trader_Constraint_Validator ()
-{
-}
+~TAO_Trader_Constraint_Validator () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

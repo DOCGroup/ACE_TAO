@@ -793,9 +793,7 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Register (TAO_Trader<TRADER_LO
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register ()
-{
-}
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register () = default;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::OfferId
@@ -1164,9 +1162,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Admin ()
-{
-}
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Admin () = default;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Admin::OctetSeq *
@@ -1456,9 +1452,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Link ()
-{
-}
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Link () = default;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
@@ -1634,9 +1628,7 @@ TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Proxy ()
-{
-}
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Proxy () = default;
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::OfferId

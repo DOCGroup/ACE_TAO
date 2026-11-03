@@ -51,9 +51,7 @@ TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
     }
 }
 
-TAO_Constraint_Interpreter::~TAO_Constraint_Interpreter ()
-{
-}
+TAO_Constraint_Interpreter::~TAO_Constraint_Interpreter () = default;
 
 CORBA::Boolean
 TAO_Constraint_Interpreter::evaluate (CosTrading::Offer* offer)
@@ -112,9 +110,7 @@ TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
     }
 }
 
-TAO_Preference_Interpreter::~TAO_Preference_Interpreter ()
-{
-}
+TAO_Preference_Interpreter::~TAO_Preference_Interpreter () = default;
 
 void
 TAO_Preference_Interpreter::

@@ -21,9 +21,7 @@ TAO_Trader_Base::TAO_Trader_Base ()
 {
 }
 
-TAO_Trader_Base::~TAO_Trader_Base ()
-{
-}
+TAO_Trader_Base::~TAO_Trader_Base () = default;
 
 TAO_Import_Attributes_i &
 TAO_Trader_Base::import_attributes ()
@@ -159,9 +157,7 @@ TAO_Trader_Base::is_valid_identifier_name (const char* ident)
   return return_value;
 }
 
-TAO_Lockable::~TAO_Lockable ()
-{
-}
+TAO_Lockable::~TAO_Lockable () = default;
 
 TAO_Support_Attributes_i::
 TAO_Support_Attributes_i (TAO_Lockable &locker)
@@ -174,9 +170,7 @@ TAO_Support_Attributes_i (TAO_Lockable &locker)
 {
 }
 
-TAO_Support_Attributes_i::~TAO_Support_Attributes_i ()
-{
-}
+TAO_Support_Attributes_i::~TAO_Support_Attributes_i () = default;
 
 CORBA::Boolean
 TAO_Support_Attributes_i::supports_modifiable_properties () const
@@ -274,9 +268,7 @@ TAO_Import_Attributes_i (TAO_Lockable &locker)
 }
 
 
-TAO_Import_Attributes_i::~TAO_Import_Attributes_i ()
-{
-}
+TAO_Import_Attributes_i::~TAO_Import_Attributes_i () = default;
 
 CORBA::ULong
 TAO_Import_Attributes_i::def_search_card () const
@@ -479,9 +471,7 @@ TAO_Trading_Components_i::TAO_Trading_Components_i (TAO_Lockable &locker)
 {
 }
 
-TAO_Trading_Components_i::~TAO_Trading_Components_i ()
-{
-}
+TAO_Trading_Components_i::~TAO_Trading_Components_i () = default;
 
 CosTrading::Lookup_ptr
 TAO_Trading_Components_i::lookup_if () const
@@ -565,9 +555,7 @@ TAO_Link_Attributes_i::TAO_Link_Attributes_i (TAO_Lockable &locker)
 {
 }
 
-TAO_Link_Attributes_i::~TAO_Link_Attributes_i ()
-{
-}
+TAO_Link_Attributes_i::~TAO_Link_Attributes_i () = default;
 
 CosTrading::FollowOption
 TAO_Link_Attributes_i::max_link_follow_policy () const
