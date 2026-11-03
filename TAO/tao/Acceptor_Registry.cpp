@@ -28,8 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Acceptor_Registry::~TAO_Acceptor_Registry ()
 {
   this->close_all ();
-
-  delete [] this->acceptors_;
 }
 
 size_t
@@ -200,13 +198,15 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   // than the number of endpoints stored in TAO_ORB_Parameters.
   if (this->acceptors_ == nullptr)
     {
-      ACE_NEW_THROW_EX (this->acceptors_,
+      TAO_Acceptor **acceptors = nullptr;
+      ACE_NEW_THROW_EX (acceptors,
                         TAO_Acceptor *[acceptor_count],
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
+      this->acceptors_.reset (acceptors);
     }
 
   for (ACE_CString const& iop : endpoint_set)
@@ -335,9 +335,11 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
             }
         }
 
-      ACE_NEW_RETURN (this->acceptors_,
+      TAO_Acceptor **acceptors = nullptr;
+      ACE_NEW_RETURN (acceptors,
                       TAO_Acceptor *[acceptor_count],
                       -1);
+      this->acceptors_.reset (acceptors);
 
       // Loop through all the loaded protocols...
       for (TAO_ProtocolFactorySetItor i = pfs->begin (); i != end; ++i)
@@ -467,9 +469,11 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   // in the ORB core.
   if (this->acceptors_ == nullptr)
     {
-      ACE_NEW_RETURN (this->acceptors_,
+      TAO_Acceptor **acceptors = nullptr;
+      ACE_NEW_RETURN (acceptors,
                       TAO_Acceptor *[pfs->size ()],
                       -1);
+      this->acceptors_.reset (acceptors);
     }
 
   TAO_ProtocolFactorySetItor const end = pfs->end ();

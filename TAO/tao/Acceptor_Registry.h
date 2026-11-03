@@ -24,6 +24,7 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Exception.h"
 #include "tao/params.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
@@ -136,7 +137,7 @@ private:
 
 private:
   /// List of acceptors that are currently open.
-  TAO_Acceptor **acceptors_ {};
+  std::unique_ptr<TAO_Acceptor *[]> acceptors_;
 
   /// Number of acceptors that are currently open.
   size_t size_ {};
