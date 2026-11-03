@@ -36,14 +36,17 @@ class getapp : public Snmp_Result
 {
 public:
   getapp(int argc, char **argv); // process command line args
-  int valid() const;             // verify transaction can proceed
+  bool valid() const;            // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
-  virtual void result(Snmp * r, int rc);
+  void result(Snmp * r, int rc) override;
 
 private:
-  getapp(const getapp&);
+  getapp (getapp const &) = delete;
+  getapp (getapp &&) = delete;
+  getapp &operator= (getapp const &) = delete;
+  getapp &operator= (getapp &&) = delete;
 
   UdpAddress address_;
   Pdu pdu_;                                // construct a request Pdu
@@ -51,7 +54,7 @@ private:
   OctetStr community_;
   Snmp snmp_;
   UdpTarget target_;
-  int valid_;
+  bool valid_;
 };
 
 
@@ -67,11 +70,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 1;
 }
 
-int getapp::valid() const
+bool getapp::valid() const
 {
  return valid_;
 }
-getapp::getapp(int argc, char *argv[]): valid_(0)
+getapp::getapp(int argc, char *argv[]): valid_(false)
 {
    Oid req, def_oid("1.3.6.1.2.1.1.1.0");      // default is sysDescr
    if ( argc < 2)
@@ -124,7 +127,7 @@ getapp::getapp(int argc, char *argv[]): valid_(0)
   }
   pdu_ += vb;
   vb.get_oid(oid_); // store for later use
-  valid_ = 1;
+  valid_ = true;
 }
 
 void getapp::usage()
