@@ -19,6 +19,7 @@
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "tao/debug.h"
+#include <cstring>
 #include <iostream>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -1011,7 +1012,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
           object_groups_at_location[i]);
 
       // If the type id is the same as the failed type id...
-      if (ACE_OS::strcmp (type_id.in(), fault_event_desc.type_id.in()) == 0)
+      if (std::strcmp (type_id.in(), fault_event_desc.type_id.in()) == 0)
       {
         // Handle it as a single replica failure.
         result = this->single_replica_failure (fault_event_desc);
