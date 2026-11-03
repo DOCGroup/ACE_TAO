@@ -52,7 +52,7 @@ class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  TAO_OC_Endpoint_Selector_Factory () = default;
+  TAO_OC_Endpoint_Selector_Factory ();
 
   /// Destructor.
   ~TAO_OC_Endpoint_Selector_Factory () override;

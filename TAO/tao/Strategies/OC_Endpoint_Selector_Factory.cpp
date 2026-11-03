@@ -9,6 +9,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+TAO_OC_Endpoint_Selector_Factory::TAO_OC_Endpoint_Selector_Factory () = default;
+
 TAO_OC_Endpoint_Selector_Factory::~TAO_OC_Endpoint_Selector_Factory () = default;
 
 int
