@@ -41,7 +41,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
 TAO_HTTP_Parser::match_prefix (const char *nior_string) const
 {
-  ACE_TString ior_string = ACE_TEXT_CHAR_TO_TCHAR (nior_string);
+  std::basic_string<ACE_TCHAR> ior_string = ACE_TEXT_CHAR_TO_TCHAR (nior_string);
   return (ACE_OS::strncmp (ior_string.c_str (),
                            ::file_prefix,
                            sizeof (::file_prefix) - 1) == 0);
@@ -53,7 +53,7 @@ TAO_HTTP_Parser::parse_string (const char *nior,
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
-  ACE_TString ior = ACE_TEXT_CHAR_TO_TCHAR (nior);
+  std::basic_string<ACE_TCHAR> ior = ACE_TEXT_CHAR_TO_TCHAR (nior);
   const ACE_TCHAR *http_url =
     ior.c_str () + sizeof (::file_prefix) + 1;
 
@@ -128,7 +128,7 @@ TAO_HTTP_Parser::parse_string (const char *nior,
 
   // We get multiple message blocks back, concatenate them to
   // one large string
-  ACE_CString string;
+  std::string string;
   for (ACE_Message_Block * curr = mb_owner.get ();
        curr != nullptr;
        curr = curr->cont ())
