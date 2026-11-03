@@ -14,9 +14,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB.
       //
       orb = CORBA::ORB_init (argc, argv);
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       // Create a PERSISTENT POA
@@ -32,10 +32,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // this will cause an access violation if no IMR server is found.
       // The access violation WILL NOT HAPPEN if a POAManager is created and
       // given as a parameter to create_POA (instead of a nil POAManager)
-      PortableServer::POA_var persistent_poa =
+      PortableServer::POA_var const persistent_poa =
         root_poa->create_POA ("myPoa", PortableServer::POAManager::_nil (), policies);
-
-      return 0;
     }
   catch (CORBA::Exception const &)
     {
