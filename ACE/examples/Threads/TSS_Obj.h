@@ -11,8 +11,7 @@
 //=============================================================================
 
 
-#include "ace/Atomic_Op.h"
-#include "ace/Synch_Traits.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,6 +29,6 @@ public:
   ~TSS_Obj ();
 
 private:
- static ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> count_;
+  static std::atomic<int> count_;
 };
 

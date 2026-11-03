@@ -6,17 +6,14 @@
 #include "ace/Task.h"
 
 #include "ace/Service_Config.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 
 #if defined (ACE_HAS_THREADS)
 
-using ATOMIC_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-
-static constexpr int zero = 0;
-static ATOMIC_INT task_count (zero);
-static ATOMIC_INT max_count (zero);
-static ATOMIC_INT wait_count (zero);
+static std::atomic<int> task_count {0};
+static std::atomic<int> max_count {0};
+static std::atomic<int> wait_count {0};
 
 static int n_threads = 0;
 
@@ -54,9 +51,9 @@ Task_Test::open (void *)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Task_Test::lock_, -1);
 
-  task_count++;
+  task_count.fetch_add (1, std::memory_order_relaxed);
   ACE_DEBUG ((LM_DEBUG, "(%t) creating Task_Test, task count = %d\n",
-              task_count.value ()));
+              task_count.load (std::memory_order_relaxed)));
 
   return this->activate (THR_BOUND);
 }
@@ -66,23 +63,23 @@ Task_Test::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Task_Test::lock_, -1);
 
-  task_count--;
+  task_count.fetch_sub (1, std::memory_order_relaxed);
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying Task_Test, task count = %d\n",
-              task_count.value ()));
-  wait_count--;
+              task_count.load (std::memory_order_relaxed)));
+  wait_count.fetch_sub (1, std::memory_order_relaxed);
   return 0;
 }
 
 int
 Task_Test::svc ()
 {
-  wait_count++;
-  max_count++;
+  wait_count.fetch_add (1, std::memory_order_relaxed);
+  max_count.fetch_add (1, std::memory_order_relaxed);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting\n"));
 
   for (;;)
-    if (max_count >= n_threads)
+    if (max_count.load (std::memory_order_relaxed) >= n_threads)
       break;
     else
       ACE_Thread::yield ();
@@ -102,8 +99,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (int i = 1; i <= n_iterations; i++)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) iteration = %d, max_count %d\n",
-                  i, max_count.value ()));
-      max_count = 0;
+                  i, max_count.load (std::memory_order_relaxed)));
+      max_count.store (0, std::memory_order_relaxed);
 
       ACE_DEBUG ((LM_DEBUG, "(%t) starting %d task%s\n",
                   n_threads, n_threads == 1 ? "" : "s"));
@@ -117,18 +114,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Wait for initialization to kick in.
-      while (max_count == 0)
+      while (max_count.load (std::memory_order_relaxed) == 0)
         ACE_Thread::yield ();
 
       ACE_DEBUG ((LM_DEBUG, "(%t) waiting for threads to finish\n"));
 
       // Wait for the threads to finish this iteration.
-      while (max_count != n_threads && wait_count != 0)
+      while (max_count.load (std::memory_order_relaxed) != n_threads
+             && wait_count.load (std::memory_order_relaxed) != 0)
         ACE_Thread::yield ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) iteration %d finished, max_count %d, wait_count %d, waiting for tasks to exit\n",
-                  i, max_count.value (), wait_count.value ()));
+                  i,
+                  max_count.load (std::memory_order_relaxed),
+                  wait_count.load (std::memory_order_relaxed)));
 
       // Wait for all the tasks to exit.
           ACE_Thread_Manager::instance ()->wait ();

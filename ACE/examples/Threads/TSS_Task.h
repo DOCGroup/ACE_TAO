@@ -16,8 +16,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Token.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 class Test_Task
 {
@@ -29,9 +28,9 @@ public:
 
   static void *svc (void *arg);
 
-  static ACE_Atomic_Op<ACE_Token, int> wait_count_;
-  static ACE_Atomic_Op<ACE_Token, int> max_count_;
+  static std::atomic<int> wait_count_;
+  static std::atomic<int> max_count_;
 
 private:
-  static ACE_Atomic_Op<ACE_Token, int> count_;
+  static std::atomic<int> count_;
 };

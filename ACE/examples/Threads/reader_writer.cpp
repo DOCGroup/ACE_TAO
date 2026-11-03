@@ -5,7 +5,7 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 
 #if defined (ACE_HAS_THREADS)
@@ -32,7 +32,8 @@ static ACE_thread_t shared_thr_id;
 static ACE_RW_Mutex rw_mutex;
 
 // Count of the number of readers and writers.
-ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers, current_writers;
+std::atomic<int> current_readers {0};
+std::atomic<int> current_writers {0};
 
 // Thread manager
 static ACE_Thread_Manager thr_mgr;
@@ -88,9 +89,9 @@ reader (void *)
     {
       ACE_READ_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, nullptr);
 
-      ++current_readers;
+      current_readers.fetch_add (1, std::memory_order_relaxed);
 
-      if (current_writers > 0)
+      if (current_writers.load (std::memory_order_relaxed) > 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) writers found!!!\n"));
 
       ACE_thread_t thr_id = shared_thr_id;
@@ -105,7 +106,7 @@ reader (void *)
                         thr_id, shared_thr_id));
         }
 
-      --current_readers;
+      current_readers.fetch_sub (1, std::memory_order_relaxed);
 
       ACE_Thread::yield ();
     }
@@ -126,12 +127,12 @@ writer (void *)
     {
       ACE_WRITE_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, nullptr);
 
-      ++current_writers;
+      current_writers.fetch_add (1, std::memory_order_relaxed);
 
-      if (current_writers > 1)
+      if (current_writers.load (std::memory_order_relaxed) > 1)
         ACE_DEBUG ((LM_DEBUG, "(%t) other writers found!!!\n"));
 
-      if (current_readers > 0)
+      if (current_readers.load (std::memory_order_relaxed) > 0)
         ACE_DEBUG ((LM_DEBUG, "(%t) readers found!!!\n"));
 
       ACE_thread_t self = ACE_Thread::self ();
@@ -146,7 +147,7 @@ writer (void *)
                         shared_thr_id));
         }
 
-      --current_writers;
+      current_writers.fetch_sub (1, std::memory_order_relaxed);
 
       ACE_Thread::yield ();
     }
@@ -160,8 +161,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->open (argv[0]);
   parse_args (argc, argv);
 
-  current_readers = 0; // Possibly already done
-  current_writers = 0; // Possibly already done
+  current_readers.store (0, std::memory_order_relaxed); // Possibly already done
+  current_writers.store (0, std::memory_order_relaxed); // Possibly already done
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread starting\n"));
 

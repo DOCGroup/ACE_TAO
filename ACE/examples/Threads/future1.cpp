@@ -20,12 +20,12 @@
 #include "ace/Future.h"
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 #include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
-using ATOMIC_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+using ATOMIC_INT = std::atomic<int>;
 
 // a counter for the tasks..
 static ATOMIC_INT task_count (0);
@@ -194,7 +194,7 @@ Scheduler::~Scheduler ()
 int
 Scheduler::open (void *)
 {
-  task_count++;
+  task_count.fetch_add (1, std::memory_order_relaxed);
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s open\n", this->name_));
   return this->activate (THR_BOUND);
 }
@@ -204,7 +204,7 @@ int
 Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s close\n", this->name_));
-  task_count--;
+  task_count.fetch_sub (1, std::memory_order_relaxed);
   return 0;
 }
 
@@ -373,10 +373,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-                  task_count.value (),
-                  future_count.value (),
-                  capsule_count.value (),
-                  methodobject_count.value ()));
+                  task_count.load (std::memory_order_relaxed),
+                  future_count.load (std::memory_order_relaxed),
+                  capsule_count.load (std::memory_order_relaxed),
+                  methodobject_count.load (std::memory_order_relaxed)));
     }
 
   // Close things down.
@@ -389,10 +389,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-              task_count.value (),
-              future_count.value (),
-              capsule_count.value (),
-              methodobject_count.value ()));
+              task_count.load (std::memory_order_relaxed),
+              future_count.load (std::memory_order_relaxed),
+              capsule_count.load (std::memory_order_relaxed),
+              methodobject_count.load (std::memory_order_relaxed)));
 
   ACE_DEBUG ((LM_DEBUG,"(%t) th' that's all folks!\n"));
 

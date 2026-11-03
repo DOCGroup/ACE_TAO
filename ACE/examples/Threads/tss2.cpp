@@ -14,7 +14,7 @@
 #include "ace/OS_main.h"
 #include "ace/Thread.h"
 #include "ace/Log_Msg.h"
-#include "ace/Atomic_Op.h"
+#include "ace/Token.h"
 #include "TSS_Data.h"
 #include "TSS_Obj.h"
 #include "TSS_Task.h"
@@ -25,42 +25,46 @@
 const int MAX_TASKS = 4;
 const int MAX_ITERATIONS = 10;
 
-ACE_Atomic_Op<ACE_Token, int> Test_Task::count_ (0);
-ACE_Atomic_Op<ACE_Token, int> Test_Task::wait_count_ (0);
-ACE_Atomic_Op<ACE_Token, int> Test_Task::max_count_ (0);
+std::atomic<int> Test_Task::count_ {0};
+std::atomic<int> Test_Task::wait_count_ {0};
+std::atomic<int> Test_Task::max_count_ {0};
 int num_tasks = 0;
 
 // ACE synchronization object.
 static ACE_Token token;
 
-ACE_Atomic_Op<ACE_Thread_Mutex, int> TSS_Obj::count_ = 0;
+std::atomic<int> TSS_Obj::count_ {0};
 
 TSS_Obj::TSS_Obj ()
 {
-  TSS_Obj::count_++;
-  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj+: %d\n", TSS_Obj::count_.value ()));
+  TSS_Obj::count_.fetch_add (1, std::memory_order_relaxed);
+  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj+: %d\n",
+              TSS_Obj::count_.load (std::memory_order_relaxed)));
 }
 
 TSS_Obj::~TSS_Obj ()
 {
-  TSS_Obj::count_--;
-  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj-: %d\n", TSS_Obj::count_.value ()));
+  TSS_Obj::count_.fetch_sub (1, std::memory_order_relaxed);
+  ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj-: %d\n",
+              TSS_Obj::count_.load (std::memory_order_relaxed)));
 }
 
 Test_Task::Test_Task ()
 {
-  Test_Task::count_++;
+  Test_Task::count_.fetch_add (1, std::memory_order_relaxed);
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Test_Task+: %d\n", Test_Task::count_.value ()));
+              "(%t) Test_Task+: %d\n",
+              Test_Task::count_.load (std::memory_order_relaxed)));
 }
 
 Test_Task::~Test_Task ()
 {
-  Test_Task::count_--;
+  Test_Task::count_.fetch_sub (1, std::memory_order_relaxed);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Test_Task-: %d\n", Test_Task::count_.value ()));
-  Test_Task::wait_count_--;
+              "(%t) Test_Task-: %d\n",
+              Test_Task::count_.load (std::memory_order_relaxed)));
+  Test_Task::wait_count_.fetch_sub (1, std::memory_order_relaxed);
 }
 
 void *
@@ -72,8 +76,8 @@ Test_Task::svc (void *arg)
 
   TSS_DATA::instance ()->data (arg);
 
-  Test_Task::wait_count_++;
-  Test_Task::max_count_++;
+  Test_Task::wait_count_.fetch_add (1, std::memory_order_relaxed);
+  Test_Task::max_count_.fetch_add (1, std::memory_order_relaxed);
 
   ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting (data = %u)\n",
               arg));
@@ -81,7 +85,7 @@ Test_Task::svc (void *arg)
   // Do a bunch of set operations on the TSS data just to make sure
   // that it's truly in TSS (it it weren't, the assertion would fail).
 
-  while (Test_Task::max_count_ < num_tasks)
+  while (Test_Task::max_count_.load (std::memory_order_relaxed) < num_tasks)
     {
       TSS_DATA::instance ()->data (arg);
       ACE_Thread::yield ();
@@ -123,8 +127,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "(%t) ********* iteration %d **********\n"
                   "Test_Task::max_count_ %d\n",
                   i,
-                  Test_Task::max_count_.value ()));
-      Test_Task::max_count_ = 0;
+                  Test_Task::max_count_.load (std::memory_order_relaxed)));
+      Test_Task::max_count_.store (0, std::memory_order_relaxed);
 
       for (int j = 0; j < num_tasks; j++)
         {
@@ -138,7 +142,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_Thread::yield ();
 
-          if (Test_Task::max_count_ != 0 )
+          if (Test_Task::max_count_.load (std::memory_order_relaxed) != 0)
             break;
         }
 
@@ -147,8 +151,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (;;)
         {
-          if (!(Test_Task::max_count_ == num_tasks
-                && Test_Task::wait_count_ == 0))
+          if (!(Test_Task::max_count_.load (std::memory_order_relaxed) == num_tasks
+                && Test_Task::wait_count_.load (std::memory_order_relaxed) == 0))
             {
               ACE_Thread::yield ();
               continue;
@@ -156,8 +160,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) Test_Task::max_count_ = %d,"
                       " Test_Task::wait_count_ = %d",
-                      Test_Task::max_count_.value (),
-                      Test_Task::wait_count_.value ()));
+                      Test_Task::max_count_.load (std::memory_order_relaxed),
+                      Test_Task::wait_count_.load (std::memory_order_relaxed)));
           break;
         }
 

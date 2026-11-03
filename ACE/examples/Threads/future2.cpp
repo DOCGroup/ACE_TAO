@@ -5,7 +5,10 @@
  *
  *  This example tests the ACE Future.
  *
- *  @author Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>                   and "Method_Request_work".                 - make the methods "work_i" and "name_i" private                  the tests so they are more modular.
+ *  @author Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
+ *          and "Method_Request_work".
+ *          - make the methods "work_i" and "name_i" private
+ *          - make the tests more modular.
  */
 //=============================================================================
 
@@ -20,12 +23,12 @@
 #include "ace/Future.h"
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 #include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
-using ATOMIC_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+using ATOMIC_INT = std::atomic<int>;
 
 // a counter for the tasks..
 static ATOMIC_INT scheduler_open_count (0);
@@ -191,7 +194,7 @@ Scheduler::~Scheduler ()
 int
 Scheduler::open (void *)
 {
-  scheduler_open_count++;
+  scheduler_open_count.fetch_add (1, std::memory_order_relaxed);
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s open\n", this->name_));
   return this->activate (THR_BOUND);
 }
@@ -200,7 +203,7 @@ int
 Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s close\n", this->name_));
-  scheduler_open_count--;
+  scheduler_open_count.fetch_sub (1, std::memory_order_relaxed);
   return 0;
 }
 
@@ -412,19 +415,19 @@ test_active_object (int n_iterations)
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d before end ()\n",
-              scheduler_open_count.value ()));
+              scheduler_open_count.load (std::memory_order_relaxed)));
 
   worker_a->end ();
   worker_b->end ();
   worker_c->end ();
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d immediately after end ()\n",
-              scheduler_open_count.value ()));
+              scheduler_open_count.load (std::memory_order_relaxed)));
 
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d after waiting\n",
-              scheduler_open_count.value ()));
+              scheduler_open_count.load (std::memory_order_relaxed)));
   // @@ Can we safely delete worker_a, worker_b, and worker_c?
 }
 
