@@ -39,9 +39,7 @@ TAO_Storable_IntId::TAO_Storable_IntId (TAO_Storable_IntId const &rhs)
   type_ = rhs.type_;
 }
 
-TAO_Storable_IntId::~TAO_Storable_IntId ()
-{
-}
+TAO_Storable_IntId::~TAO_Storable_IntId () = default;
 
 void
 TAO_Storable_IntId::operator= (TAO_Storable_IntId const &rhs)
@@ -72,9 +70,7 @@ TAO_Storable_ExtId::TAO_Storable_ExtId (TAO_Storable_ExtId const &rhs)
   kind_ = rhs.kind_;
 }
 
-TAO_Storable_ExtId::~TAO_Storable_ExtId ()
-{
-}
+TAO_Storable_ExtId::~TAO_Storable_ExtId () = default;
 
 void
 TAO_Storable_ExtId::operator= (TAO_Storable_ExtId const &rhs)

@@ -15,9 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Bindings_Map::~TAO_Bindings_Map ()
-{
-}
+TAO_Bindings_Map::~TAO_Bindings_Map () = default;
 
 TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                                                   char const *poa_id)

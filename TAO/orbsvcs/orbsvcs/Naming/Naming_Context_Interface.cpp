@@ -462,9 +462,7 @@ TAO_Naming_Context::stale (bool value)
   this->impl_->stale (value);
 }
 
-TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl ()
-{
-}
+TAO_Naming_Context_Impl::~TAO_Naming_Context_Impl () = default;
 
 void
 TAO_Naming_Context_Impl::stale (bool value)

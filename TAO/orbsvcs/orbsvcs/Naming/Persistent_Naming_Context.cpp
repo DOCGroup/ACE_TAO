@@ -71,9 +71,7 @@ TAO_Persistent_Bindings_Map::TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb)
 {
 }
 
-TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map ()
-{
-}
+TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map () = default;
 
 void
 TAO_Persistent_Bindings_Map::destroy ()

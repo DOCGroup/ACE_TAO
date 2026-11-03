@@ -64,9 +64,7 @@ TAO_Transient_Bindings_Map::TAO_Transient_Bindings_Map (size_t hash_table_size)
 {
 }
 
-TAO_Transient_Bindings_Map::~TAO_Transient_Bindings_Map ()
-{
-}
+TAO_Transient_Bindings_Map::~TAO_Transient_Bindings_Map () = default;
 
 TAO_Transient_Bindings_Map::HASH_MAP &
 TAO_Transient_Bindings_Map::map ()
@@ -129,9 +127,7 @@ TAO_Transient_Naming_Context::TAO_Transient_Naming_Context (PortableServer::POA_
   context_ = transient_context_;
 }
 
-TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context ()
-{
-}
+TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context () = default;
 
 CosNaming::NamingContext_ptr
 TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
