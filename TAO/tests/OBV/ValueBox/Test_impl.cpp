@@ -1,5 +1,7 @@
 #include "Test_impl.h"
 
+#include <cstring>
+
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -13,12 +15,12 @@ static void
 rotate_string (char *s)
 {
   unsigned char c;
-  size_t const l = ACE_OS::strlen (s);
+  size_t const l = std::strlen (s);
 
   if (l > 1)
     {
       c = s[l - 1];
-      ACE_OS::memmove (&s[1], &s[0], l - 1);
+      std::memmove (&s[1], &s[0], l - 1);
       s[0] = c;
     }
 }
@@ -100,8 +102,7 @@ Test_impl::string_op2 (char const *p1,
 {
   rotate_string (p2);
 
-  p3 = CORBA::string_alloc (ACE_OS::strlen(p2));
-  ACE_OS::strcpy (p3, p2);
+  p3 = CORBA::string_dup (p2);
 
   CORBA::String_var rotated_p1 (CORBA::string_dup (p1));
   rotate_string (rotated_p1.inout ());
