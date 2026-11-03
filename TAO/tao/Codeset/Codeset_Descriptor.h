@@ -22,6 +22,8 @@
 
 #include "tao/Codeset_Descriptor_Base.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Translator_Factory;
@@ -35,7 +37,7 @@ public:
 
   struct Translator_Node
   {
-    ACE_TCHAR *name_ {};
+    std::basic_string<ACE_TCHAR> name_ {};
     TAO_Codeset_Translator_Factory *translator_factory_ {};
     Translator_Node *next_ {};
   };

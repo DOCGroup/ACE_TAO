@@ -18,6 +18,8 @@
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
@@ -28,7 +30,6 @@ TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
       temp = trans_base_->next_;
       // don't need to delete the associated translator factory, it is
       // owned by the service registry
-      ACE_OS::free (trans_base_->name_);
       delete trans_base_;
       trans_base_ = temp;
     }
@@ -86,26 +87,23 @@ TAO_Codeset_Descriptor::max_bytes () const
 void
 TAO_Codeset_Descriptor::add_translator (const ACE_TCHAR *name)
 {
-  Translator_Node *temp = trans_base_;
+  std::unique_ptr<Translator_Node> node = std::make_unique<Translator_Node> ();
+  node->name_ = name;
+
   if (this->trans_base_ == nullptr)
     {
-      ACE_NEW (this->trans_base_, Translator_Node);
-      temp = trans_base_;
+      this->trans_base_ = node.get ();
     }
   else
     {
+      Translator_Node *temp = this->trans_base_;
       while (temp->next_ != nullptr)
         temp = temp->next_;
-      ACE_NEW (temp->next_, Translator_Node);
-      temp = temp->next_;
+      temp->next_ = node.get ();
     }
-  if (temp)
-    {
-      this->num_translators_ ++;
-      temp->name_ = ACE_OS::strdup (name);
-      temp->translator_factory_ = nullptr;
-      temp->next_ = nullptr;
-    }
+
+  ++this->num_translators_;
+  node.release ();
 }
 
 TAO_Codeset_Descriptor::Translator_Node *

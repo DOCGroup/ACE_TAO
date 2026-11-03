@@ -425,7 +425,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
     {
       tlist->translator_factory_ =
         ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::instance
-        (tlist->name_);
+        (tlist->name_.c_str ());
 
       if (tlist->translator_factory_ == nullptr)
         {
