@@ -25,6 +25,7 @@
 #endif /* _MSC_VER */
 
 #include "tao/Pseudo_VarOut_T.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -96,14 +97,8 @@ private:
   TAO_Adapter_Registry (TAO_Adapter_Registry &&) = delete;
   TAO_Adapter_Registry &operator= (TAO_Adapter_Registry &&) = delete;
 
-  /**
-   * @name A simple array of adapters.
-   */
-  //@{
-  size_t adapters_capacity_ {16}; // @@ Make it configurable
-  size_t adapters_count_ {0};
-  TAO_Adapter **adapters_ {nullptr};
-  //@}
+  /// The registry owns the adapters passed to insert, ordered by priority.
+  std::vector<TAO_Adapter *> adapters_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
