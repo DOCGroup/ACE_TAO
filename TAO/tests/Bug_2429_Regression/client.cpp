@@ -3,135 +3,122 @@
 #include "ChildS.h"
 
 class Reply_Handler
- : public POA_AMI_ChildHandler
+  : public POA_AMI_ChildHandler
 {
- public:
-   Reply_Handler () = default;
-   Reply_Handler (Reply_Handler const &) = delete;
-   Reply_Handler &operator= (Reply_Handler const &) = delete;
-   Reply_Handler (Reply_Handler &&) = delete;
-   Reply_Handler &operator= (Reply_Handler &&) = delete;
+public:
+  Reply_Handler () = default;
+  Reply_Handler (Reply_Handler const &) = delete;
+  Reply_Handler &operator= (Reply_Handler const &) = delete;
+  Reply_Handler (Reply_Handler &&) = delete;
+  Reply_Handler &operator= (Reply_Handler &&) = delete;
 
-   void childMethod () override
+  void childMethod () override
     {
     }
 
-   void childMethod_excep (Messaging::ExceptionHolder * excep_holder) override
+  void childMethod_excep (Messaging::ExceptionHolder * excep_holder) override
     {
       try
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::SystemException& ex)
+      catch (CORBA::SystemException const &ex)
         {
           ex._tao_print_exception ("Reply_Handler::childMethod_excep: ");
         }
     }
 
-   void parentMethod () override
+  void parentMethod () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "client: parentMethod reply %d @ %T\n",
-                  ++parentMethod_count));
+                  ++this->parent_method_count_));
     }
 
-   void parentMethod_excep (Messaging::ExceptionHolder * excep_holder) override
-   {
+  void parentMethod_excep (Messaging::ExceptionHolder *excep_holder) override
+    {
       try
         {
-          ++parentMethod_excep_count;
+          ++this->parent_method_excep_count_;
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::INTERNAL&)
+      catch (CORBA::INTERNAL const &)
         {
-          ACE_DEBUG ((LM_DEBUG, "Successfully received an Internal Excep*ion as expected.\n"));
+          ACE_DEBUG ((LM_DEBUG, "Successfully received an Internal Exception as expected.\n"));
         }
-      catch (const CORBA::SystemException& ex)
+      catch (CORBA::SystemException const &ex)
         {
-          ex._tao_print_exception ("Reply_Handler::childMethod_excep: ");
+          ex._tao_print_exception ("Reply_Handler::parentMethod_excep: ");
         }
-   }
+    }
 
-   CORBA::ULong reply_count () const { return parentMethod_count + parentMethod_excep_count; }
+  CORBA::ULong reply_count () const
+  {
+    return this->parent_method_count_ + this->parent_method_excep_count_;
+  }
 
- private:
-   // Count of replies and excep
-   CORBA::ULong parentMethod_count {};
-   CORBA::ULong parentMethod_excep_count {};
+private:
+  CORBA::ULong parent_method_count_ {};
+  CORBA::ULong parent_method_excep_count_ {};
 };
 
-// Server ior.
-static ACE_TCHAR const *server_ior = ACE_TEXT ("file://server.ior");
-
 static int
-client_parse_args (int argc, ACE_TCHAR *argv[])
+client_parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&server_ior)
 {
-   ACE_Get_Opt
-   get_opts (argc, argv, "f:");
-   int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("f:"));
+  int c {};
 
-   while ((c = get_opts ()) != -1)
-   {
-      switch (c)
+  while ((c = get_opts ()) != -1)
+    switch (c)
       {
       case 'f':
-         server_ior = get_opts.opt_arg ();
-         break;
+        server_ior = get_opts.opt_arg ();
+        break;
       case '?':
       default:
-         ACE_DEBUG((LM_ERROR,
-                           "usage:  %s "
-                           "-f server IOR file\n"));
-         return 1;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage: %s -f <server IOR file>\n",
+                           argv[0]),
+                          1);
       }
-   }
 
-   // Indicates successful parsing of the command line
-   return 0;
+  return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  CORBA::ORB_var orb;
-
+  ACE_TCHAR const *server_ior = ACE_TEXT ("file://server.ior");
   try
     {
-      // Initialize the ORB.
-      orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      // Initialize options based on command-line arguments.
-      int parse_args_result = client_parse_args (argc, argv);
-      if (parse_args_result != 0)
+      if (client_parse_args (argc, argv, server_ior) != 0)
         {
           return 1;
         }
 
-      CORBA::Object_var object =
-         orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
-         PortableServer::POA::_narrow (object.in ());
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (object.in ());
 
       // Get an object reference from the nominated file
       object = orb->string_to_object (server_ior);
 
-
-      PortableServer::POAManager_var poa_manager =
-         root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      Child_var child = Child::_narrow (object.in ());
+      Child_var const child = Child::_narrow (object.in ());
 
       Reply_Handler reply_handler_servant;
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&reply_handler_servant);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      AMI_ChildHandler_var reply_handler_object =
+      AMI_ChildHandler_var const reply_handler_object =
         AMI_ChildHandler::_narrow (object_act.in ());
 
       // Invoke the AMI parentMethod
@@ -148,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
