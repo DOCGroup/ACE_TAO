@@ -72,7 +72,7 @@ namespace ACE
       ssize_t recv_data_header (Channel *) override;
       ssize_t recv_data_trailer (Channel *) override;
     private:
-      int make_request_header (Channel *, const char *, char *, size_t );
+      int make_request_header (Channel*, char const*, char*, size_t);
     };
   }
 }

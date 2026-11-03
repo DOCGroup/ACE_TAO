@@ -32,7 +32,7 @@ namespace ACE
     {
     public:
       /// Constructor.
-      ID_Requestor (Environment * = 0);
+      explicit ID_Requestor (Environment* = nullptr);
 
       /// Accessor to HTID
       ACE_TCHAR *get_HTID ();

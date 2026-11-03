@@ -43,12 +43,13 @@ ACE::HTBP::Session::remove_session (ACE::HTBP::Session *s)
 }
 
 int
-ACE::HTBP::Session::find_session (const ACE::HTBP::Session_Id_t &sid, ACE::HTBP::Session *&out)
+ACE::HTBP::Session::find_session (ACE::HTBP::Session_Id_t const& sid,
+                                  ACE::HTBP::Session *&out)
 {
-  ACE::HTBP::Session::Map_Entry *e = 0;
+  ACE::HTBP::Session::Map_Entry *e = nullptr;
   if (session_map_.find (sid,e) == -1)
     {
-      out = 0;
+      out = nullptr;
       return -1;
     }
   out = e->int_id_;
@@ -57,38 +58,38 @@ ACE::HTBP::Session::find_session (const ACE::HTBP::Session_Id_t &sid, ACE::HTBP:
 
 //----------------------------------------------------------------------------
 ACE::HTBP::Session::Session ()
-  : proxy_addr_ (0),
-    destroy_proxy_addr_ (0),
-    inbound_ (0),
-    outbound_ (0),
+  : proxy_addr_ (nullptr),
+    destroy_proxy_addr_ (false),
+    inbound_ (nullptr),
+    outbound_ (nullptr),
     closed_ (false),
-    handler_ (0),
-    reactor_(0),
-    stream_ (0),
+    handler_ (nullptr),
+    reactor_(nullptr),
+    stream_ (nullptr),
     sock_flags_(0)
 {
   ACE::HTBP::ID_Requestor req;
   ACE_TCHAR * htid = req.get_HTID();
   std::unique_ptr<ACE_TCHAR[]> guard (htid);
-  session_id_.local_ = ACE_TEXT_ALWAYS_CHAR(htid);
+  session_id_.local_.set_htid (ACE_TEXT_ALWAYS_CHAR (htid));
   session_id_.id_ = ACE::HTBP::Session::next_session_id();
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));
   ACE_NEW (outbound_, ACE::HTBP::Channel (this));
 }
 
-ACE::HTBP::Session::Session (const ACE::HTBP::Addr &peer,
-                             const ACE::HTBP::Addr &local,
+ACE::HTBP::Session::Session (ACE::HTBP::Addr const& peer,
+                             ACE::HTBP::Addr const& local,
                              ACE_UINT32 sid,
                              ACE_INET_Addr *proxy,
                              bool take_proxy)
   : proxy_addr_ (proxy),
     destroy_proxy_addr_ (take_proxy),
-    inbound_ (0),
-    outbound_ (0),
+    inbound_ (nullptr),
+    outbound_ (nullptr),
     closed_ (false),
-    handler_ (0),
-    reactor_(0),
-    stream_ (0),
+    handler_ (nullptr),
+    reactor_(nullptr),
+    stream_ (nullptr),
     sock_flags_(0)
 {
   session_id_.peer_ = peer;
@@ -100,37 +101,22 @@ ACE::HTBP::Session::Session (const ACE::HTBP::Addr &peer,
   ACE_NEW (outbound_,ACE::HTBP::Channel (this));
 }
 
-ACE::HTBP::Session::Session (const ACE::HTBP::Session_Id_t &id,
+ACE::HTBP::Session::Session (ACE::HTBP::Session_Id_t const& id,
                              ACE_INET_Addr *proxy,
                              bool take_proxy)
   : proxy_addr_ (proxy),
     destroy_proxy_addr_ (take_proxy),
     session_id_(id),
-    inbound_ (0),
-    outbound_ (0),
+    inbound_ (nullptr),
+    outbound_ (nullptr),
     closed_ (false),
-    handler_ (0),
-    reactor_ (0),
-    stream_ (0),
+    handler_ (nullptr),
+    reactor_ (nullptr),
+    stream_ (nullptr),
     sock_flags_(0)
 {
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));
   ACE_NEW (outbound_, ACE::HTBP::Channel (this));
-}
-
-ACE::HTBP::Session::Session (const ACE::HTBP::Session &other)
-{
-  this->operator=(other);
-}
-
-ACE::HTBP::Session&
-ACE::HTBP::Session::operator= (const ACE::HTBP::Session &)
-{
-  // @TODO: figure out why the assignment operator is here if it is
-  // unimplemented? Previously there was an ACE_ASSERT(this == 0)
-  // so apparently something bad had been happening long ago, but I
-  // have no idea what.
-  return *this;
 }
 
 ACE::HTBP::Session::~Session ()
@@ -159,10 +145,11 @@ ACE::HTBP::Session::outbound () const
 {
   if (!this->closed_ && this->proxy_addr_)
     this->reconnect();
-  if ( this->outbound_ == 0)
-    return 0;
-  ACE::HTBP::Channel::State s =this->outbound_->state();
-  return s == ACE::HTBP::Channel::Init || s == ACE::HTBP::Channel::Ready ? this->outbound_ : 0;
+  if (this->outbound_ == nullptr)
+    return nullptr;
+  ACE::HTBP::Channel::State const state = this->outbound_->state ();
+  return state == ACE::HTBP::Channel::Init || state == ACE::HTBP::Channel::Ready ?
+    this->outbound_ : nullptr;
 }
 
 void
@@ -213,9 +200,9 @@ void
 ACE::HTBP::Session::detach (ACE::HTBP::Channel *ch)
 {
   if (this->inbound_ == ch)
-    this->inbound_ = 0;
+    this->inbound_ = nullptr;
   else if (this->outbound_ == ch)
-    this->outbound_ = 0;
+    this->outbound_ = nullptr;
   else
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT("ACE::HTBP::Session::detach ")
@@ -243,8 +230,8 @@ ACE::HTBP::Session::flush_outbound_queue ()
   int result = 0;
   if (this->outbound_queue_.message_count() > 0)
     {
-      ACE_Message_Block *msg = 0;
-      iovec *iov = 0;
+      ACE_Message_Block *msg = nullptr;
+      iovec *iov = nullptr;
       ACE_NEW_RETURN (iov,
                       iovec[this->outbound_queue_.message_count()],
                       -1);

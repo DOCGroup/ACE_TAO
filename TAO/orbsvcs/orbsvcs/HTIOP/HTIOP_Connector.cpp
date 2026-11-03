@@ -156,7 +156,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   else
     {
       ACE::HTBP::ID_Requestor req(ht_env_);
-      session_id.local_ = ACE_TEXT_ALWAYS_CHAR(req.get_HTID());
+      session_id.local_.set_htid (ACE_TEXT_ALWAYS_CHAR (req.get_HTID ()));
     }
 
   if (proxy_port == 0)

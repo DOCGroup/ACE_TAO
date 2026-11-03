@@ -43,40 +43,40 @@ namespace ACE
       /// Constructor
       Addr () = default;
 
-      Addr (const Addr &) = default;
+      Addr (Addr const&) = default;
       Addr (Addr&&) = default;
-      Addr& operator= (const Addr&) = default;
+      Addr& operator= (Addr const&) = default;
       Addr& operator= (Addr&&) = default;
 
       /// Create an Addr suitable for use on the inside of a firewall this
       /// take a string used to populate the htid_ member. With this address,
       /// the IP addr form is ignored.
-      Addr (const char *htid);
+      explicit Addr (char const* htid);
 
       /// Initialize an Addr for the outside of a firewall. In this form,
       /// the htid_ is an empty string and the arguments are passed to the
       /// base address type.
       Addr (u_short port_number,
-            const char host_name[],
+            char const host_name[],
             int address_family = AF_UNSPEC);
 
       /// Destructor
       ~Addr () override = default;
 
       int set (u_short port,
-               const char host [],
-               const char *htid);
+               char const host [],
+               char const* htid);
 
       /// Methods to help convert the OutSide_Addr to a String
       /// and vice versa
       int addr_to_string (ACE_TCHAR buffer[],
                           size_t size,
                           int ipaddr_format = 1) const override;
-      int string_to_addr (const char address[],
+      int string_to_addr (char const address[],
                           int address_family = AF_UNSPEC) override;
 
-      int set_htid(const char *htid);
-      const char *get_htid () const;
+      int set_htid (char const* htid);
+      char const* get_htid () const;
 
     private:
       /// HTID - web-obtained unique-identifier

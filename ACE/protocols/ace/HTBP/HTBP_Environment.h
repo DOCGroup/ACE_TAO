@@ -31,12 +31,17 @@ namespace ACE
     {
     public:
       /// Constructor
-      Environment (ACE_Configuration *config = 0,
-                   int using_registry = 0,
-                   const ACE_TCHAR *persistent_file = 0);
+      Environment (ACE_Configuration *config = nullptr,
+                   bool using_registry = false,
+                   ACE_TCHAR const* persistent_file = nullptr);
 
       /// Destructor
       ~Environment ();
+
+      Environment (Environment const&) = delete;
+      Environment& operator= (Environment const&) = delete;
+      Environment (Environment&&) = delete;
+      Environment& operator= (Environment&&) = delete;
 
       /// removes all htbp related values from the configuration
       void clear ();
@@ -45,7 +50,7 @@ namespace ACE
       /// Returns 0 on success
       /// {@
       int get_htid_url (ACE_TString &htid_url) const;
-      int set_htid_url (const ACE_TCHAR *htid_generator_url);
+      int set_htid_url (ACE_TCHAR const* htid_generator_url);
       /// @}
 
       /// Accessors to HTID via proxy - If value is true, HTID request goes
@@ -60,7 +65,7 @@ namespace ACE
       /// Returns 0 on success
       /// {@
       int get_proxy_host (ACE_TString &proxy_host) const;
-      int set_proxy_host (const ACE_TCHAR *proxy_host);
+      int set_proxy_host (ACE_TCHAR const* proxy_host);
       /// @}
 
       /// Returns 0 on success
@@ -70,19 +75,19 @@ namespace ACE
       /// @}
 
       /// Import the configuration from the filename
-      int import_config (const ACE_TCHAR *filename);
+      int import_config (ACE_TCHAR const* filename);
 
       /// Export the configuration to the filename
-      int export_config (const ACE_TCHAR *filename);
+      int export_config (ACE_TCHAR const* filename);
 
     private:
       /// Open config, set sections etc
-      int initialize (int use_registry,
-                      const ACE_TCHAR *persistent_file);
+      int initialize (bool use_registry,
+                      ACE_TCHAR const* persistent_file);
 
       /// Open an ACE_Configuration of the appropriate type.
       int open_registry_config ();
-      int open_persistent_config (const ACE_TCHAR *persistent_file);
+      int open_persistent_config (ACE_TCHAR const* persistent_file);
 
       /// Our Proxy and HTID generator URL database
       ACE_Configuration *config_;

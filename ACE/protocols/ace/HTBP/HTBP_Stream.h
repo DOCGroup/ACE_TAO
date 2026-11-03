@@ -87,7 +87,7 @@ namespace ACE
     public:
       // Initialization and termination methods.
       /// Constructor.
-      Stream (Session *s = 0);
+      explicit Stream (Session* s = nullptr);
 
       /// Destructor.
       ~Stream ();
@@ -103,22 +103,22 @@ namespace ACE
       ssize_t recv (void *buf,
                     size_t n,
                     int flags,
-                    const ACE_Time_Value *timeout = 0) const;
+                    ACE_Time_Value const* timeout = nullptr) const;
 
       /// Recv an <n> byte buffer from the connected socket.
       ssize_t recv (void *buf,
                     size_t n,
-                    const ACE_Time_Value *timeout = 0) const;
+                    ACE_Time_Value const* timeout = nullptr) const;
 
       /// Recv an <iovec> of size <n> from the connected socket.
       ssize_t recvv (iovec iov[],
                      int n,
-                     const ACE_Time_Value *timeout = 0) const;
+                     ACE_Time_Value const* timeout = nullptr) const;
 
       /// Same as above.  Deprecated.
       ssize_t recv (iovec iov[],
                     size_t n,
-                    const ACE_Time_Value *timeout = 0) const;
+                    ACE_Time_Value const* timeout = nullptr) const;
 
       /**
        * Allows a client to read from a socket without having to
@@ -130,7 +130,7 @@ namespace ACE
        * io_vec->iov_base.
        */
       ssize_t recvv (iovec *io_vec,
-                     const ACE_Time_Value *timeout = 0) const;
+                     ACE_Time_Value const* timeout = nullptr) const;
 
       /// Recv <n> bytes via Win32 <ReadFile> using overlapped I/O.
       ssize_t recv (void *buf,
@@ -141,17 +141,17 @@ namespace ACE
       ssize_t send (const void *buf,
                     size_t n,
                     int flags,
-                    const ACE_Time_Value *timeout = 0) const;
+                    ACE_Time_Value const* timeout = nullptr) const;
 
       /// Send an <n> byte buffer to the connected socket.
       ssize_t send (const void *buf,
                     size_t n,
-                    const ACE_Time_Value *timeout = 0) const;
+                    ACE_Time_Value const* timeout = nullptr) const;
 
       /// Send an <iovec> of size <n> to the connected socket.
       ssize_t sendv (const iovec iov[],
                      int n,
-                     const ACE_Time_Value *timeout = 0) const;
+                     ACE_Time_Value const* timeout = nullptr) const;
 
       /// Send <n> bytes via Win32 <WriteFile> using overlapped I/O.
       ssize_t send (const void *buf,
@@ -164,51 +164,51 @@ namespace ACE
       ssize_t recv_n (void *buf,
                       size_t len,
                       int flags,
-                      const ACE_Time_Value *timeout = 0,
-                      size_t *bytes_transferred = 0) const;
+                      ACE_Time_Value const* timeout = nullptr,
+                      size_t *bytes_transferred = nullptr) const;
 
       /// Try to recv exactly <len> bytes into <buf> from the
       /// connected socket.
       ssize_t recv_n (void *buf,
                       size_t len,
-                      const ACE_Time_Value *timeout = 0,
-                      size_t *bytes_transferred = 0) const;
+                      ACE_Time_Value const* timeout = nullptr,
+                      size_t *bytes_transferred = nullptr) const;
 
       /// Receive an <iovec> of size <iovcnt> from the connected
       /// socket.
       ssize_t recvv_n (iovec iov[],
                        int iovcnt,
-                       const ACE_Time_Value *timeout = 0,
-                       size_t *bytes_transferred = 0) const;
+                       ACE_Time_Value const* timeout = nullptr,
+                       size_t *bytes_transferred = nullptr) const;
 
       /// Try to send exactly <len> bytes from <buf> to the connection
       /// socket.
       ssize_t send_n (const void *buf,
                       size_t len,
                       int flags,
-                      const ACE_Time_Value *timeout = 0,
-                      size_t *bytes_transferred = 0) const;
+                      ACE_Time_Value const* timeout = nullptr,
+                      size_t *bytes_transferred = nullptr) const;
 
       /// Try to send exactly <len> bytes from <buf> to the connected
       /// socket.
       ssize_t send_n (const void *buf,
                       size_t len,
-                      const ACE_Time_Value *timeout = 0,
-                      size_t *bytes_transferred = 0) const;
+                      ACE_Time_Value const* timeout = nullptr,
+                      size_t *bytes_transferred = nullptr) const;
 
       /// Send all the <message_block>s chained through their <next>
       /// and <cont> pointers.  This call uses the underlying OS
       /// gather-write operation to reduce the domain-crossing
       /// penalty.
       ssize_t send_n (const ACE_Message_Block *message_block,
-                      const ACE_Time_Value *timeout = 0,
-                      size_t *bytes_transferred = 0) const;
+                      ACE_Time_Value const* timeout = nullptr,
+                      size_t* bytes_transferred = nullptr) const;
 
       /// Send an <iovec> of size <iovcnt> to the connected socket.
       ssize_t sendv_n (const iovec iov[],
                        int iovcnt,
-                       const ACE_Time_Value *timeout = 0,
-                       size_t *bytes_transferred = 0) const;
+                       ACE_Time_Value const* timeout = nullptr,
+                       size_t *bytes_transferred = nullptr) const;
 
       // = Selectively close endpoints.  / Close down the reader.
       int close_reader ();
@@ -224,7 +224,7 @@ namespace ACE
       int close ();
 
       // = Meta-type info
-      typedef Addr PEER_ADDR;
+      using PEER_ADDR = Addr;
 
       /// Dump the state of an object.
       void dump () const;

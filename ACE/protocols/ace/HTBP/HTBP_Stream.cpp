@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE::HTBP::Stream::Stream (ACE::HTBP::Session *s)
   : session_ (s)
 {
-  if (s == 0)
+  if (s == nullptr)
     // create a temporary session to be replaced on first recv.
     ACE_NEW (session_, ACE::HTBP::Session);
   session_->stream (this);
@@ -47,9 +47,9 @@ ssize_t
 ACE::HTBP::Stream::recv (void *buf,
                          size_t n,
                          int flags,
-                         const ACE_Time_Value *timeout) const
+                         ACE_Time_Value const* timeout) const
 {
-  if (this->session_->inbound() == 0)
+  if (this->session_->inbound() == nullptr)
     {
       errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -65,9 +65,9 @@ ACE::HTBP::Stream::recv (void *buf,
 ssize_t
 ACE::HTBP::Stream::recv (void *buf,
                          size_t n,
-                         const ACE_Time_Value *timeout) const
+                         ACE_Time_Value const* timeout) const
 {
-  if (this->session_->inbound() == 0)
+  if (this->session_->inbound() == nullptr)
     {
       errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -83,9 +83,9 @@ ACE::HTBP::Stream::recv (void *buf,
 ssize_t
 ACE::HTBP::Stream::recvv (iovec iov[],
                   int iovcnt,
-                  const ACE_Time_Value *timeout) const
+                  ACE_Time_Value const* timeout) const
 {
-  if (this->session_->inbound() == 0)
+  if (this->session_->inbound() == nullptr)
     {
       errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -99,9 +99,9 @@ ACE::HTBP::Stream::recvv (iovec iov[],
 
 ssize_t
 ACE::HTBP::Stream::recvv (iovec *io_vec,
-                  const ACE_Time_Value *timeout) const
+                  ACE_Time_Value const* timeout) const
 {
-  if (this->session_->inbound() == 0)
+  if (this->session_->inbound() == nullptr)
     {
       errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -128,13 +128,13 @@ ssize_t
 ACE::HTBP::Stream::send (const void *buf,
                  size_t n,
                  int flags,
-                 const ACE_Time_Value *timeout) const
+                 ACE_Time_Value const* timeout) const
 {
-  if (this->session_->outbound() == 0)
+  if (this->session_->outbound() == nullptr)
     {
-      ACE_Message_Block *msg = 0;
+      ACE_Message_Block *msg = nullptr;
       ACE_NEW_RETURN (msg,ACE_Message_Block(n),-1);
-      msg->copy ((const char *)buf,n);
+      msg->copy (static_cast<char const*> (buf), n);
       // probably ought to separately enqueue the flags and put the data buf
       // in a continuation message
       // Also, the timeout poses another interesting problem.
@@ -146,13 +146,13 @@ ACE::HTBP::Stream::send (const void *buf,
 ssize_t
 ACE::HTBP::Stream::send (const void *buf,
                  size_t n,
-                 const ACE_Time_Value *timeout) const
+                 ACE_Time_Value const* timeout) const
 {
-  if (this->session_->outbound() == 0)
+  if (this->session_->outbound() == nullptr)
     {
-      ACE_Message_Block *msg = 0;
+      ACE_Message_Block *msg = nullptr;
       ACE_NEW_RETURN (msg,ACE_Message_Block(n),-1);
-      msg->copy ((const char *)buf,n);
+      msg->copy (static_cast<char const*> (buf), n);
       return this->session_->enqueue(msg);
     }
   return this->session_->outbound()->send(buf,n,timeout);
@@ -161,18 +161,18 @@ ACE::HTBP::Stream::send (const void *buf,
 ssize_t
 ACE::HTBP::Stream::sendv (const iovec iov[],
                   int iovcnt,
-                  const ACE_Time_Value *timeout) const
+                  ACE_Time_Value const* timeout) const
 {
-  if (this->session_->outbound() == 0)
+  if (this->session_->outbound() == nullptr)
     {
-      ACE_Message_Block *msg = 0;
+      ACE_Message_Block *msg = nullptr;
       size_t total = 0;
       int i = 0;
       for (; i < iovcnt; i++)
         total += iov[i].iov_len;
       ACE_NEW_RETURN (msg,ACE_Message_Block(total),-1);
       for (i = 0; i < iovcnt; i++)
-        msg->copy ((const char *)iov[i].iov_base,iov[i].iov_len);
+        msg->copy (static_cast<char const*> (iov[i].iov_base), iov[i].iov_len);
       return this->session_->enqueue(msg);
     }
   return this->session_->outbound()->sendv(iov,iovcnt,timeout);
@@ -194,7 +194,7 @@ ssize_t
 ACE::HTBP::Stream::recv_n (void *,
                    size_t ,
                    int ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -207,7 +207,7 @@ ACE::HTBP::Stream::recv_n (void *,
 ssize_t
 ACE::HTBP::Stream::recv_n (void *,
                    size_t ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -220,7 +220,7 @@ ACE::HTBP::Stream::recv_n (void *,
 ssize_t
 ACE::HTBP::Stream::recvv_n (iovec [],
                    int ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -234,7 +234,7 @@ ssize_t
 ACE::HTBP::Stream::send_n (const void *,
                    size_t ,
                    int ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -247,7 +247,7 @@ ACE::HTBP::Stream::send_n (const void *,
 ssize_t
 ACE::HTBP::Stream::send_n (const void *,
                    size_t ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -261,7 +261,7 @@ ACE::HTBP::Stream::send_n (const void *,
   /// operation to reduce the domain-crossing penalty.
 ssize_t
 ACE::HTBP::Stream::send_n (const ACE_Message_Block *,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -274,7 +274,7 @@ ACE::HTBP::Stream::send_n (const ACE_Message_Block *,
 ssize_t
 ACE::HTBP::Stream::sendv_n (const iovec [],
                     int,
-                    const ACE_Time_Value *,
+                    ACE_Time_Value const*,
                     size_t *) const
 {
   errno = ENOTSUP;

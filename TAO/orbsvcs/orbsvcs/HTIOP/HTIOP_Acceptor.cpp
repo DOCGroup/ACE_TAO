@@ -455,7 +455,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
       ACE::HTBP::ID_Requestor req(ht_env_);
       ACE_TCHAR *htid = req.get_HTID ();
       std::unique_ptr<ACE_TCHAR[]> guard (htid);
-      this->addrs_[0] = ACE_TEXT_ALWAYS_CHAR (htid);
+      this->addrs_[0].set_htid (ACE_TEXT_ALWAYS_CHAR (htid));
       return 0;
     }
 

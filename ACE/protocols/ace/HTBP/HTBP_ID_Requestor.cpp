@@ -1,3 +1,6 @@
+#include <cstdio>
+#include <cstring>
+
 #include "HTBP_ID_Requestor.h"
 #include "HTBP_Environment.h"
 
@@ -78,9 +81,9 @@ ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
   char *buffer;
   ACE_NEW_RETURN (buffer, char[this->url_.length()+16],-1);
   std::unique_ptr<char[]> guard (buffer);
-  ACE_OS::sprintf (buffer,"GET %s HTTP/1.0\n\n",
+  std::sprintf (buffer, "GET %s HTTP/1.0\n\n",
                    ACE_TEXT_ALWAYS_CHAR(url_.c_str()));
-  int result = cli_stream->send_n (buffer,ACE_OS::strlen(buffer));
+  int result = cli_stream->send_n (buffer, std::strlen (buffer));
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
@@ -95,13 +98,13 @@ ACE::HTBP::ID_Requestor::get_HTID ()
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
     return ACE::HTBP::ID_Requestor::htid_.rep();
 
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, ACE::HTBP::ID_Requestor::htid_lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, ACE::HTBP::ID_Requestor::htid_lock_, nullptr);
 
   if (ACE::HTBP::ID_Requestor::htid_.length() != 0)
     return ACE::HTBP::ID_Requestor::htid_.rep();
 
   ACE_SOCK_Stream cli_stream;
-  ACE_TCHAR * htid = 0;
+  ACE_TCHAR *htid = nullptr;
 
   if (this->url_.length() == 0 ||
       this->connect_to_server (&cli_stream) == -1 ||

@@ -1,4 +1,9 @@
 // ACE_HTBP_Filter.cpp
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <memory>
+
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "HTBP_Session.h"
@@ -7,8 +12,6 @@
 #if !defined (__ACE_INLINE__)
 #include "HTBP_Inside_Squid_Filter.inl"
 #endif
-
-#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,7 +24,7 @@ ACE::HTBP::Inside_Squid_Filter::send_data_trailer (ACE::HTBP::Channel *ch)
 
 int
 ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
-                                                     const char *cmd,
+                                                     char const* cmd,
                                                      char *buffer,
                                                      size_t buffer_size)
 {
@@ -34,10 +37,10 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
 
   ACE::HTBP::Session *session = ch->session();
 
-  const char * format = "%shttp://%s:%d/%s/%d/request%d.html HTTP/1.1\n";
+  char const* format = "%shttp://%s:%d/%s/%d/request%d.html HTTP/1.1\n";
   char remote_host[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
   unsigned remote_port = session->peer_addr().get_port_number();
-  const char *local_htid = session->local_addr().get_htid();
+  char const* local_htid = session->local_addr().get_htid();
 
   ACE_UINT32 tempId = session->session_id().id_;
   size_t sid_size = 1;
@@ -60,12 +63,12 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
 
 
   size_t size =
-    ACE_OS::strlen(format)
+    std::strlen (format)
     - 12    // subtract out the size of the format specifiers
-    + ACE_OS::strlen (cmd)
-    + ACE_OS::strlen (remote_host)
+    + std::strlen (cmd)
+    + std::strlen (remote_host)
     + 5     // maximum size for a the remote port number
-    + ACE_OS::strlen (local_htid)
+    + std::strlen (local_htid)
     + sid_size // size of session id
     + rid_size; // size of request id
 
@@ -77,12 +80,12 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
                        size, buffer_size),
                       -1);
 
-  ACE_OS::sprintf (buffer,format,
+  std::sprintf (buffer, format,
                    cmd,remote_host,remote_port,
                    local_htid, session->session_id().id_,
                    ch->request_count());
 
-  return ACE_OS::strlen(buffer);
+  return std::strlen (buffer);
 }
 
 ssize_t
@@ -123,7 +126,7 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
       return 0;
     }
   char *header_end = this->header_complete(ch);
-  if (header_end == 0)
+  if (header_end == nullptr)
     {
       if (ch->state() != ACE::HTBP::Channel::Closed)
         {
@@ -138,13 +141,13 @@ ACE::HTBP::Inside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
     }
   char *start = ch->leftovers().rd_ptr();
   ACE_CString token = "Content-Length: ";
-  char *tpos = ACE_OS::strstr(start,token.c_str());
-  char *nl = ACE_OS::strchr (start,'\n');
-  if (tpos != 0)
+  char *tpos = std::strstr (start, token.c_str ());
+  char *nl = std::strchr (start, '\n');
+  if (tpos != nullptr)
     {
       tpos += token.length();
       *nl = 0;
-      ch->data_len (ACE_OS::strtol(tpos,0,10));
+      ch->data_len (std::strtol (tpos, nullptr, 10));
       start = nl+1;
     }
 
@@ -200,7 +203,7 @@ int
 ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
 {
   char *header_end = this->header_complete(ch);
-  if (header_end == 0)
+  if (header_end == nullptr)
     {
       if (ch->state() != ACE::HTBP::Channel::Closed)
         errno = EWOULDBLOCK;
@@ -218,13 +221,13 @@ ACE::HTBP::Inside_Squid_Filter::recv_ack (ACE::HTBP::Channel *ch)
 
   char *start = ch->leftovers().rd_ptr();
   ACE_CString token = "Content-Length: ";
-  char *tpos = ACE_OS::strstr(start,token.c_str());
-  char *nl = ACE_OS::strchr (start,'\n');
-  if (tpos != 0)
+  char *tpos = std::strstr (start, token.c_str ());
+  char *nl = std::strchr (start, '\n');
+  if (tpos != nullptr)
     {
       tpos += token.length();
       *nl = 0;
-      ch->data_len (ACE_OS::strtol(tpos,0,10));
+      ch->data_len (std::strtol (tpos, nullptr, 10));
       start = nl+1;
     }
 

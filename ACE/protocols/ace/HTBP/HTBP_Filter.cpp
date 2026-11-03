@@ -1,3 +1,6 @@
+#include <cstring>
+#include <cstdlib>
+
 #include "ace/Log_Msg.h"
 
 #include "HTBP_Session.h"
@@ -19,19 +22,19 @@ ACE::HTBP::Filter::header_complete (ACE::HTBP::Channel *ch)
 {
   if (ch->leftovers().length() == 0)
     {
-      return 0;
+      return nullptr;
     }
   if (ch->leftovers().space() > 0)
     *ch->leftovers().wr_ptr() = '\0';
   char *start = ch->leftovers().rd_ptr();
-  char *nl = ACE_OS::strchr (start,'\n');
+  char *nl = std::strchr (start, '\n');
   if (this->http_code_ == 0)
     {
-      char *code = ACE_OS::strstr (start,"HTTP/1.");
+      char *code = std::strstr (start, "HTTP/1.");
       if (code && code < nl)
         {
           code += 9; // skip past "HTTP/1.1 "
-          this->http_code_ = ACE_OS::strtol(code,0,10);
+          this->http_code_ = std::strtol (code, nullptr, 10);
         }
     }
 
@@ -41,9 +44,9 @@ ACE::HTBP::Filter::header_complete (ACE::HTBP::Channel *ch)
           (nl == start +1 && *start == '\r'))
         return nl + 1;
       start = nl + 1;
-      nl = ACE_OS::strchr (start,'\n');
+      nl = std::strchr (start, '\n');
     }
-  return 0;
+  return nullptr;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

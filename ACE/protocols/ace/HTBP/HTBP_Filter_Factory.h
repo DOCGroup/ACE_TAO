@@ -43,13 +43,13 @@ namespace ACE
       /// Constructor
       Filter_Factory ();
 
-      ~Filter_Factory ();
+      ~Filter_Factory () override;
 
       /// Initialization hook.
       int init (int argc, ACE_TCHAR *argv[]) override;
 
       //
-      static Filter *get_filter (int inside);
+      static Filter *get_filter (bool inside);
     };
   }
 }

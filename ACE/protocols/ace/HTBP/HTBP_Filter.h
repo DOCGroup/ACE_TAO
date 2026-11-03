@@ -78,7 +78,7 @@ namespace ACE
       void reset_http_code ();
 
       /// get the value of the most recent http result code
-      int http_code ();
+      int http_code () const;
 
     protected:
       char *header_complete (Channel *ch);
