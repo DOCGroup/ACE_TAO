@@ -21,7 +21,7 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* BUG_1020_BASIC_REGRESSION_ECHO_CALLER_H*/
