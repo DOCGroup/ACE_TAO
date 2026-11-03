@@ -3,8 +3,6 @@
 #define NAMING_SERVICE_NAME "NameService"
 
 Notify_Test_Client::Notify_Test_Client ()
-: num_clients_( 0 )
-, done_( false )
 {
   // @@ Later: accept the inter filter operator as a param.
   ifgop_ = CosNotifyChannelAdmin::OR_OP;
@@ -136,23 +134,22 @@ Notify_Test_Client::ORB_run (ACE_Time_Value& tv)
 
 void Notify_Test_Client::consumer_start (TAO_Notify_Tests_Peer*)
 {
-  num_clients_++;
+  num_clients_.fetch_add (1, std::memory_order_relaxed);
 }
 
 void
 Notify_Test_Client::consumer_done (TAO_Notify_Tests_Peer*)
 {
-  int value = --num_clients_;
-  if ( value == 0 )
+  if (num_clients_.fetch_sub (1, std::memory_order_relaxed) == 1)
   {
-    this->done_ = true;
+    this->done_.store (true, std::memory_order_relaxed);
   }
 }
 
 bool
 Notify_Test_Client::is_done () const
 {
-  return this->done_;
+  return this->done_.load (std::memory_order_relaxed);
 }
 
 CORBA::ORB_ptr
