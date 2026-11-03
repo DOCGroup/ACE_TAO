@@ -13,12 +13,8 @@
 
 #include "QuoterS.h"
 
-// Forward declaration.
-class Quoter_i;
-
-// Typedefs.
-using Quoter_i_ptr = Quoter_i *;
-using Quoter_i_ref = Quoter_i_ptr;
+#include <memory>
+#include <vector>
 
 /**
  * @class Quoter_i:
@@ -33,12 +29,16 @@ class Quoter_i: public POA_Stock::Quoter
 public:
   /// Constructor (use_LifeCycle_Service is true if the LifeCycle_Service should be used
   /// instead of the Quoter Generic_Factory
-  explicit Quoter_i (char const *obj_name = "",
-                     bool use_LifeCycle_Service = false,
+  explicit Quoter_i (bool use_LifeCycle_Service,
                      PortableServer::POA_ptr poa_ptr = nullptr);
 
   /// Destructor
   ~Quoter_i () override = default;
+
+  Quoter_i (Quoter_i const &) = delete;
+  Quoter_i &operator= (Quoter_i const &) = delete;
+  Quoter_i (Quoter_i &&) = delete;
+  Quoter_i &operator= (Quoter_i &&) = delete;
 
   /// Returns the current quote for the stock <stock_name>
   CORBA::Long get_quote (char const *stock_name) override;
@@ -65,11 +65,6 @@ private:
   PortableServer::POA_var poa_var_ {};
 };
 
-// Forward declaration.
-class Quoter_Factory_i;
-
-using Quoter_Factory_i_ptr = Quoter_Factory_i *;
-
 /**
  * @class Quoter_Factory_i:
  *
@@ -84,7 +79,12 @@ public:
   Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr);
 
   /// Destructor.
-  ~Quoter_Factory_i () override;
+  ~Quoter_Factory_i () override = default;
+
+  Quoter_Factory_i (Quoter_Factory_i const &) = delete;
+  Quoter_Factory_i &operator= (Quoter_Factory_i const &) = delete;
+  Quoter_Factory_i (Quoter_Factory_i &&) = delete;
+  Quoter_Factory_i &operator= (Quoter_Factory_i &&) = delete;
 
   /// Initialize everything in the factory
   int init ();
@@ -94,10 +94,10 @@ public:
 
 private:
   /// Pointer to the poa.
-  PortableServer::POA_ptr poa_ptr_ {};
+  PortableServer::POA_var poa_var_ {};
 
-  /// Array of quoters.
-  Quoter_i **my_quoters_ {};
+  /// Owns the servants registered by this factory.
+  std::vector<std::unique_ptr<Quoter_i>> quoters_;
 
   /// Number of quoters.
   size_t quoter_num_ {};

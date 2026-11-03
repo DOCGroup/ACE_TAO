@@ -14,8 +14,6 @@
 
 #include "orbsvcs/LifeCycleServiceC.h"
 
-Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server () = default;
-
 Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server ()
 {
   try
@@ -42,6 +40,13 @@ int
 Quoter_Generic_Factory_Server::init (int argc,
                                      ACE_TCHAR *argv[])
 {
+  this->argc_ = argc;
+  ACE_TCHAR **argv_copy = nullptr;
+  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+  this->argv_.reset (argv_copy);
+  for (int i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
+
   char const *exception_message = "Null Message";
 
   try
@@ -61,19 +66,19 @@ Quoter_Generic_Factory_Server::init (int argc,
       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
 
-      // Copy them, because parse_args expects them there.
-      this->argc_ = argc;
-      this->argv_ = argv;
-      this->parse_args ();
+      if (this->parse_args () != 0)
+        return -1;
 
-      ACE_NEW_RETURN (this->quoter_Generic_Factory_i_ptr_,
-                      Quoter_Generic_Factory_i(this->debug_level_),
+      Quoter_Generic_Factory_i *factory = nullptr;
+      ACE_NEW_RETURN (factory,
+                      Quoter_Generic_Factory_i (this->debug_level_),
                       -1);
+      this->quoter_Generic_Factory_i_ptr_.reset (factory);
 
       // Activate the object.
       exception_message = "While activating the Generic Factory";
       CORBA::String_var str  =
-        this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_);
+        this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_.get ());
 
       // Print the IOR.
       if (this->debug_level_ >= 2)
@@ -131,7 +136,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoter_Generic_Factory_Name[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
 
       exception_message = "Generic_Factory::_this";
-      CORBA::Object_var gf_obj = this->quoter_Generic_Factory_i_ptr_->_this();
+      CORBA::Object_var gf_obj = this->quoter_Generic_Factory_i_ptr_->_this ();
 
       exception_message = "While binding the Generic Factory";
       quoterNamingContext_var_->bind (quoter_Generic_Factory_Name,
@@ -164,7 +169,7 @@ Quoter_Generic_Factory_Server::init (int argc,
           ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Have a proper reference to Life Cycle Service.\n"));
 
         exception_message = "While _this on Generic Factory";
-        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this();
+        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this ();
 
         exception_message = "While registering the generic factory";
         life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
@@ -207,7 +212,7 @@ Quoter_Generic_Factory_Server::run ()
 u_int
 Quoter_Generic_Factory_Server::parse_args ()
 {
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, ACE_TEXT("l?d:"));
+  ACE_Get_Opt get_opt (this->argc_, this->argv_.get (), ACE_TEXT("l?d:"));
   int opt;
   int exit_code = 0;
 

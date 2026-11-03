@@ -29,7 +29,7 @@ Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
 {
   char const *exception_message = "Null Message";
 
-  CosLifeCycle::Factories *factories_ptr = nullptr;
+  CosLifeCycle::Factories_var factories;
 
   try
   {
@@ -63,17 +63,17 @@ Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
       throw CosLifeCycle::NoFactory (factory_key);
 
     // create a sequence of factories object
-    factories_ptr = new CosLifeCycle::Factories (1);
+    factories = new CosLifeCycle::Factories (1);
 
     // using the Naming Service only one reference is available
-    factories_ptr->length (1);
+    factories->length (1);
 
     // Check if it is a valid Quoter Factory reference.
     if (CORBA::is_nil (quoterFactoryObject_var.in ())) // throw a NoFactory exception.
       throw CosLifeCycle::NoFactory (factory_key);
 
     // insert the object reference
-    (*factories_ptr)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.in());
+    (*factories)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.in ());
 
     if (this->debug_level_ > 1)
       ACE_DEBUG ((LM_DEBUG,
@@ -85,5 +85,5 @@ Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
       throw CosLifeCycle::NoFactory (factory_key);
     }
 
-  return factories_ptr;
+  return factories._retn ();
 }

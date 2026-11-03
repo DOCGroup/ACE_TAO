@@ -10,53 +10,53 @@
 
 #include "Quoter_i.h"
 
+#include <new>
+#include <utility>
+
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 
 // Constructor.  Create all the quoter factories.
 
 Quoter_Factory_i::Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr)
-  : poa_ptr_ (poa_ptr),
-    quoter_num_ (num),
-    next_quoter_ (0)
+  : poa_var_ (PortableServer::POA::_duplicate (poa_ptr)),
+    quoter_num_ (num)
 {
-  // Nothing
 }
-
-
-// Destructor
-
-Quoter_Factory_i::~Quoter_Factory_i ()
-{
-  for (size_t i = 0; i < this->quoter_num_; i++)
-    delete this->my_quoters_[i];
-  delete [] this->my_quoters_;
-}
-
 
 // Initialize everything in the factory
 
 int Quoter_Factory_i::init ()
 {
-  ACE_NEW_RETURN (this->my_quoters_,
-                  Quoter_i *[this->quoter_num_],
-                  -1);
+  if (this->quoter_num_ == 0 || this->quoter_num_ > this->quoters_.max_size ())
+    return -1;
+
+  try
+    {
+      this->quoters_.reserve (this->quoter_num_);
+    }
+  catch (std::bad_alloc const&)
+    {
+      return -1;
+    }
 
   for (size_t i = 0; i < this->quoter_num_; i++)
     {
-      ACE_NEW_RETURN (this->my_quoters_[i],
-                      Quoter_i("x",  // name
-                               false, // don't use the LifeCycle_Service
-                               this->poa_ptr_), // a reference to the poa
+      Quoter_i *quoter = nullptr;
+      ACE_NEW_RETURN (quoter,
+                      Quoter_i (false, this->poa_var_.in ()),
                       -1);
+      std::unique_ptr<Quoter_i> quoter_owner (quoter);
+      this->quoters_.push_back (std::move (quoter_owner));
+      Quoter_i *const servant = this->quoters_.back ().get ();
 
       char const *location_string = "POA::activate";
       try
         {
-          this->poa_ptr_->activate_object (this->my_quoters_[i]);
+          this->poa_var_->activate_object (servant);
 
           location_string = "_this";
-          Stock::Quoter_var quoter_var = this->my_quoters_[i]->_this();
+          Stock::Quoter_var quoter_var = servant->_this ();
 
           location_string = "CORBA::ORB::object_to_string";
           // Stringify the object reference and print it out.
@@ -80,24 +80,25 @@ int Quoter_Factory_i::init ()
 Stock::Quoter_ptr
 Quoter_Factory_i::create_quoter (char const *)
 {
+  if (this->quoters_.empty ())
+    throw CORBA::INTERNAL ();
+
   this->next_quoter_ = (this->next_quoter_ + 1) % this->quoter_num_;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Quoter %d Created\n", this->next_quoter_));
 
-  return my_quoters_[this->next_quoter_]->_this ();
+  return this->quoters_[this->next_quoter_].get ()->_this ();
 }
 
 
 // Constructor
 
-Quoter_i::Quoter_i (char const *name,
-                    bool use_LifeCycle_Service,
+Quoter_i::Quoter_i (bool use_LifeCycle_Service,
                     PortableServer::POA_ptr poa_ptr)
   : use_LifeCycle_Service_ (use_LifeCycle_Service),
     poa_var_ (PortableServer::POA::_duplicate (poa_ptr))
 {
-  ACE_UNUSED_ARG (name);
 }
 
 
@@ -141,16 +142,18 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 
       // Find an appropriate factory over there.
       exception_message = "While trying to find a factory.\n";
-      CosLifeCycle::Factories *factories_ptr =
+      CosLifeCycle::Factories_var factories =
         there->find_factories (factoryKey);
+      if (factories.ptr () == nullptr)
+        throw CosLifeCycle::NoFactory (factoryKey);
 
       // Now it is known that there is at least one factory.
       Stock::Quoter_var quoter_var;
 
-      for (u_int i = 0; i < factories_ptr->length (); i++)
+      for (CORBA::ULong i = 0; i < factories->length (); i++)
       {
         // Get the first object reference to a factory.
-        CORBA::Object_ptr generic_FactoryObj_ptr = (*factories_ptr)[i];
+        CORBA::Object_ptr const generic_FactoryObj_ptr = (*factories)[i];
 
         // Narrow it to a Quoter Factory.
         exception_message = "While narrowing.\n";
@@ -184,7 +187,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
           if (CORBA::is_nil (quoter_var.in ()))
             {
               // If we had already our last chance, then give up.
-              if (i == factories_ptr->length ())
+              if (i + 1 == factories->length ())
                 {
                   ACE_ERROR ((LM_ERROR,
                               "Quoter::copy: Last factory did not work.\n"
@@ -207,7 +210,8 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
         ACE_DEBUG ((LM_DEBUG, "Quoter copied\n"));
 
       lifeCycleObject_ptr =
-        CosLifeCycle::LifeCycleObject::_duplicate ((CosLifeCycle::LifeCycleObject_ptr) quoter_var.in());
+        CosLifeCycle::LifeCycleObject::_duplicate (
+          static_cast<CosLifeCycle::LifeCycleObject_ptr> (quoter_var.in ()));
     }
   catch (CORBA::Exception const &ex)
     {

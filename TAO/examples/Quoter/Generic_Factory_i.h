@@ -28,6 +28,11 @@ public:
   explicit Quoter_Generic_Factory_i (int debug_level = 1);
   ~Quoter_Generic_Factory_i () override = default;
 
+  Quoter_Generic_Factory_i (Quoter_Generic_Factory_i const &) = delete;
+  Quoter_Generic_Factory_i &operator= (Quoter_Generic_Factory_i const &) = delete;
+  Quoter_Generic_Factory_i (Quoter_Generic_Factory_i &&) = delete;
+  Quoter_Generic_Factory_i &operator= (Quoter_Generic_Factory_i &&) = delete;
+
   /// Returns true if the Generic Factory is able to forward a request
   /// for creating an object described by the <factory_key>.
   CORBA::Boolean supports (CosLifeCycle::Key const &factory_key) override;

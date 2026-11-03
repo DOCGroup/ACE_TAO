@@ -28,6 +28,8 @@
 #include "Quoter_i.h"
 #include "QuoterC.h"
 
+#include <memory>
+
 /**
  * @class Quoter_Server
  *
@@ -42,7 +44,7 @@ class Quoter_Server
 {
 public:
   /// Default constructor
-  Quoter_Server ();
+  Quoter_Server () = default;
 
   /// Destructor
   ~Quoter_Server ();
@@ -73,7 +75,7 @@ private:
   CosNaming::NamingContext_var namingContext_var_ {};
 
   /// Instantiate the Quoter Factory
-  Quoter_Factory_i *quoter_Factory_i_ptr_ {};
+  std::unique_ptr<Quoter_Factory_i> quoter_Factory_i_ptr_;
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
@@ -81,8 +83,8 @@ private:
   /// Number of commandline arguments.
   int argc_ {};
 
-  /// commandline arguments.
-  ACE_TCHAR **argv_ {};
+  /// Pointer-array copy made before ORB_init modifies argv.
+  std::unique_ptr<ACE_TCHAR *[]> argv_;
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_ {1};

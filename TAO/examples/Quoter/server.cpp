@@ -12,13 +12,11 @@
 #include "server.h"
 #include "tao/ORB_Core.h"
 
-Quoter_Server::Quoter_Server () = default;
-
 int
 Quoter_Server::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("d:n:"));
-  int c;
+  ACE_Get_Opt get_opts (argc_, this->argv_.get (), ACE_TEXT("d:n:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -36,7 +34,7 @@ Quoter_Server::parse_args ()
                            " [-d] <debug level>"
                            " [-n] <num of Quoter objects>"
                            "\n",
-                           argv_ [0]),
+                           this->argv_[0]),
                           1);
       }
 
@@ -52,11 +50,18 @@ int
 Quoter_Server::init (int argc,
                     ACE_TCHAR* argv[])
 {
+  this->argc_ = argc;
+  ACE_TCHAR **argv_copy = nullptr;
+  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+  this->argv_.reset (argv_copy);
+  for (int i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
+
   char const *exception_message = "Null Message";
   try
     {
       exception_message = "While ORB Manager init";
-      int result = this->orb_manager_.init (argc, argv);
+      int const result = this->orb_manager_.init (argc, argv);
 
       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -64,17 +69,11 @@ Quoter_Server::init (int argc,
                            "init"),
                           -1);
 
-      // Copy them, because parse_args expects them there.
-      this->argc_ = argc;
-      int i;
+      if (this->parse_args () != 0)
+        return -1;
 
-      // Make a copy of argv since ORB_init will change it.
-      this->argv_ = new ACE_TCHAR *[argc];
-
-      for (i = 0; i < argc; i++)
-        this->argv_[i] = argv[i];
-
-      this->parse_args ();
+      if (this->num_of_objs_ <= 0)
+        ACE_ERROR_RETURN ((LM_ERROR, "The number of Quoter objects must be positive\n"), -1);
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -90,24 +89,27 @@ Quoter_Server::init (int argc,
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      ACE_NEW_RETURN (quoter_Factory_i_ptr_,
-                      Quoter_Factory_i(this->num_of_objs_,
-                                       root_poa.in()),
-                      0);
+      Quoter_Factory_i *factory = nullptr;
+      ACE_NEW_RETURN (factory,
+                      Quoter_Factory_i (static_cast<size_t> (this->num_of_objs_),
+                                        root_poa.in ()),
+                      -1);
+      this->quoter_Factory_i_ptr_.reset (factory);
 
       exception_message = "While initing the quoter factory";
-      quoter_Factory_i_ptr_->init ();
+      if (this->quoter_Factory_i_ptr_->init () != 0)
+        return -1;
 
       PortableServer::ObjectId_var quoter_Factory_oid =
         PortableServer::string_to_ObjectId ("Quoter_Factory");
 
       exception_message = "While activating quoter factory";
       root_poa->activate_object_with_id (quoter_Factory_oid.in (),
-                                         quoter_Factory_i_ptr_);
+                                         this->quoter_Factory_i_ptr_.get ());
 
       // Get Object reference for first_foo_impl object.
       exception_message = "While quoter_Factor::_this";
-      Stock::Quoter_Factory_var quoter_Factory_var = quoter_Factory_i_ptr_->_this ();
+      Stock::Quoter_Factory_var quoter_Factory_var = this->quoter_Factory_i_ptr_->_this ();
 
       // Stringify the object reference and print it out.
       exception_message = "While object_to_string";
@@ -170,7 +172,7 @@ Quoter_Server::init_naming_service ()
       quoterFactoryContextName[0].id = CORBA::string_dup ("Quoter_Factory");
 
       exception_message = "While using factory _this";
-      Stock::Quoter_Factory_var quoter_factory_var = quoter_Factory_i_ptr_->_this ();
+      Stock::Quoter_Factory_var quoter_factory_var = this->quoter_Factory_i_ptr_->_this ();
 
       exception_message = "While binding factory";
       quoterNameContext->bind (quoterFactoryContextName,
@@ -220,8 +222,6 @@ Quoter_Server::~Quoter_Server ()
                   "Could not unbind Quoter Server from the Name Service\n"));
       ex._tao_print_exception ("~Quoter_Server");
     }
-
-  delete [] this->argv_;
 }
 
 int
@@ -231,7 +231,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      int result = quoter_server.init (argc, argv);
+      int const result = quoter_server.init (argc, argv);
 
       if (result == -1)
         return 1;

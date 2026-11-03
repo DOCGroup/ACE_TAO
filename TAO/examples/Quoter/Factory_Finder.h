@@ -19,6 +19,8 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "Factory_Finder_i.h"
 
+#include <memory>
+
 #ifndef QUOTER_FACTORY_FINDER_H
 #define QUOTER_FACTORY_FINDER_H
 
@@ -31,7 +33,7 @@ class Quoter_Factory_Finder_Server
 {
 public:
   /// Default constructor
-  Quoter_Factory_Finder_Server ();
+  Quoter_Factory_Finder_Server () = default;
 
   /// Destructor
   ~Quoter_Factory_Finder_Server ();
@@ -51,20 +53,20 @@ public:
   u_int parse_args ();
 
 private:
-  /// instance of the ORB Manager
-  TAO_ORB_Manager orb_manager_;
+  /// Instance of the Quoter Factory Finder.
+  std::unique_ptr<Quoter_Factory_Finder_i> quoter_Factory_Finder_i_ptr_;
 
-  /// instance of the Quoter Factory Finder
-  Quoter_Factory_Finder_i *quoter_Factory_Finder_i_ptr_ {};
+  /// Instance of the ORB Manager.
+  TAO_ORB_Manager orb_manager_;
 
   /// reference to the Quoter naming context
   CosNaming::NamingContext_var quoterNamingContext_var_ {};
 
-  /// Number of commandline arguments.
+  /// Number of commandline arguments preserved before ORB_init.
   int argc_ {};
 
-  /// commandline arguments.
-  ACE_TCHAR **argv_ {};
+  /// Pointer-array copy made before ORB_init modifies argv.
+  std::unique_ptr<ACE_TCHAR *[]> argv_;
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
   int debug_level_ {1};

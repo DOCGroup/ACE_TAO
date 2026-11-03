@@ -26,6 +26,8 @@
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"
 
+#include <memory>
+
 /**
  * @class Quoter_Client
  *
@@ -37,8 +39,8 @@ class Quoter_Client
 {
 public:
   // = Constructor and destructor.
-  Quoter_Client ();
-  ~Quoter_Client ();
+  Quoter_Client () = default;
+  ~Quoter_Client () = default;
 
   Quoter_Client (Quoter_Client const &) = delete;
   Quoter_Client &operator= (Quoter_Client const &) = delete;
@@ -64,14 +66,8 @@ private:
   /// # of arguments on the command line.
   int argc_ {};
 
-  /// arguments from command line.
-  ACE_TCHAR **argv_ {};
-
-  /// Key of factory obj ref.
-  char *quoter_factory_key_ {};
-
-  /// Key of the obj ref to be retrieved via the factory.
-  char *quoter_key_ {};
+  /// Copy of argv because ORB_init modifies the argument vector.
+  std::unique_ptr<ACE_TCHAR *[]> argv_;
 
   /// Flag to tell server to shutdown.
   bool shutdown_ {};
@@ -118,6 +114,7 @@ public:
 private:
   Quoter_Client quoter_client;
   int argc_ {};
+  /// Borrowed from main; the client threads finish before main returns.
   ACE_TCHAR **argv_ {};
 };
 

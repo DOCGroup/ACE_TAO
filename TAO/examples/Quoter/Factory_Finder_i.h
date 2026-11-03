@@ -27,6 +27,11 @@ public:
   explicit Quoter_Factory_Finder_i (int debug_level = 1);
   ~Quoter_Factory_Finder_i () override = default;
 
+  Quoter_Factory_Finder_i (Quoter_Factory_Finder_i const &) = delete;
+  Quoter_Factory_Finder_i &operator= (Quoter_Factory_Finder_i const &) = delete;
+  Quoter_Factory_Finder_i (Quoter_Factory_Finder_i &&) = delete;
+  Quoter_Factory_Finder_i &operator= (Quoter_Factory_Finder_i &&) = delete;
+
   /**
    * Returns a sequence of Factories if factories matching the
    * factory_key were found. If no factory was found, then the

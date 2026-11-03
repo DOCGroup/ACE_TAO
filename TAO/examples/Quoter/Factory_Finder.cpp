@@ -13,8 +13,6 @@
 
 #include "Factory_Finder.h"
 
-Quoter_Factory_Finder_Server::Quoter_Factory_Finder_Server () = default;
-
 Quoter_Factory_Finder_Server::~Quoter_Factory_Finder_Server ()
 {
   try
@@ -38,13 +36,20 @@ int
 Quoter_Factory_Finder_Server::init (int argc,
                                     ACE_TCHAR *argv[])
 {
+  this->argc_ = argc;
+  ACE_TCHAR **argv_copy = nullptr;
+  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+  this->argv_.reset (argv_copy);
+  for (int i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
+
   char const *exception_message = "Null Message";
 
   try
     {
       exception_message = "While ORB_Manager::init";
-      int initvalue = this->orb_manager_.init (argc,
-                                               argv);
+      int const initvalue = this->orb_manager_.init (argc,
+                                                     argv);
 
       if (initvalue == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -54,26 +59,24 @@ Quoter_Factory_Finder_Server::init (int argc,
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";
-      int result = this->orb_manager_.activate_poa_manager ();
+      int const result = this->orb_manager_.activate_poa_manager ();
 
       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
 
-      // Copy them, because parse_args expects them there.
-      this->argc_ = argc;
-      this->argv_ = argv;
+      if (this->parse_args () != 0)
+        return -1;
 
-      this->parse_args ();
-
-
-      ACE_NEW_RETURN (this->quoter_Factory_Finder_i_ptr_,
-                      Quoter_Factory_Finder_i(this->debug_level_),
+      Quoter_Factory_Finder_i *factory_finder = nullptr;
+      ACE_NEW_RETURN (factory_finder,
+                      Quoter_Factory_Finder_i (this->debug_level_),
                       -1);
+      this->quoter_Factory_Finder_i_ptr_.reset (factory_finder);
 
       // Activate the object.
       exception_message = "Failure while activating the Quoter Factory Finder Impl";
       CORBA::String_var str  =
-        this->orb_manager_.activate (this->quoter_Factory_Finder_i_ptr_);
+        this->orb_manager_.activate (this->quoter_Factory_Finder_i_ptr_.get ());
 
       // Print the IOR.
       if (this->debug_level_ >= 2)
@@ -121,7 +124,7 @@ Quoter_Factory_Finder_Server::init (int argc,
       quoter_Factory_Finder_Name_[0].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
       exception_message = "Factory_Factory::_this";
-      CORBA::Object_var ff_obj = this->quoter_Factory_Finder_i_ptr_->_this();
+      CORBA::Object_var ff_obj = this->quoter_Factory_Finder_i_ptr_->_this ();
 
       exception_message = "While binding the Factory Finder";
       quoterNamingContext_var_->bind (quoter_Factory_Finder_Name_,
@@ -159,7 +162,7 @@ Quoter_Factory_Finder_Server::run ()
 u_int
 Quoter_Factory_Finder_Server::parse_args ()
 {
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, ACE_TEXT("?d:"));
+  ACE_Get_Opt get_opt (this->argc_, this->argv_.get (), ACE_TEXT("?d:"));
   int opt;
   int exit_code = 0;
 
@@ -197,7 +200,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      int result = quoter_Factory_Finder_Server.init (argc, argv);
+      int const result = quoter_Factory_Finder_Server.init (argc, argv);
 
       if (result == -1)
         return 1;
