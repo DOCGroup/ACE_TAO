@@ -18,7 +18,7 @@ TAO_Persistent_Context_Index::unbind (char const *poa_id)
 
   TAO_Persistent_Index_ExtId name (poa_id);
   TAO_Persistent_Index_IntId entry;
-  if (this->index_->unbind (name, entry, this->allocator_) != 0)
+  if (this->index_->unbind (name, entry, this->allocator_.get ()) != 0)
     return -1;
   else
     {
@@ -56,7 +56,7 @@ TAO_Persistent_Context_Index::bind (char const *poa_id,
 
       // Do a normal bind.  This will fail if there's already an
       // entry with the same name.
-      result = this->index_->bind (name, entry, this->allocator_);
+      result = this->index_->bind (name, entry, this->allocator_.get ());
 
       if (result == 1)
         {
@@ -91,15 +91,15 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
 
 TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index ()
 {
-  delete allocator_;
-  delete context_impl_factory_;
+  this->allocator_.reset ();
+  this->context_impl_factory_.reset ();
   ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *> (index_file_)));
 }
 
 ACE_Allocator*
 TAO_Persistent_Context_Index::allocator ()
 {
-  return allocator_;
+  return this->allocator_.get ();
 }
 
 CosNaming::NamingContext_ptr
@@ -247,11 +247,13 @@ TAO_Persistent_Context_Index::create_index ()
 
   // Create the allocator with the appropriate options.  The name used
   // for  the lock is the same as one used for the file.
-  ACE_NEW_RETURN (this->allocator_,
+  ALLOCATOR *allocator = nullptr;
+  ACE_NEW_RETURN (allocator,
                   ALLOCATOR (this->index_file_,
                              this->index_file_,
                              &options),
                   -1);
+  this->allocator_.reset (allocator);
 
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully.
@@ -293,7 +295,7 @@ TAO_Persistent_Context_Index::create_index ()
 int
 TAO_Persistent_Context_Index::create_index_helper (void *buffer)
 {
-  this->index_ = new (buffer) CONTEXT_INDEX (this->allocator_);
+  this->index_ = new (buffer) CONTEXT_INDEX (this->allocator_.get ());
   return 0;
 }
 

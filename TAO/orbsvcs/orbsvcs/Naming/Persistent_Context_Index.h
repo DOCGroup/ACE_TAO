@@ -20,6 +20,8 @@
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Persistent_Naming_Context;
@@ -120,7 +122,7 @@ public:
 
   // = Accessors.
 
-  /// Return allocator.
+  /// Return a borrowed pointer to this index's owned allocator.
   ACE_Allocator *allocator ();
 
   /// Return orb pointer.
@@ -151,10 +153,11 @@ private:
    * use it here, and in TAO_Persistent_Naming_Context, whenever we
    * deal with data that should be kept in persistent store.
    */
-  ALLOCATOR *allocator_ {};
+  std::unique_ptr<ALLOCATOR> allocator_;
 
   /// Hash map where we keep entries for all Persistent Naming
   /// Contexts.
+  /// Placement-constructed in mapped allocator memory; not separately deleted.
   CONTEXT_INDEX *index_ {};
 
   /// Name of the memory-mapped file used by <allocator_>.
@@ -175,7 +178,7 @@ private:
   CosNaming::NamingContext_var root_context_;
 
   /// The factory for constructing naming contexts within the index
-  TAO_Persistent_Naming_Context_Factory *context_impl_factory_;
+  std::unique_ptr<TAO_Persistent_Naming_Context_Factory> context_impl_factory_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
