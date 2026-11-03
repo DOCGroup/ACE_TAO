@@ -16,9 +16,14 @@ public:
   Second_i (CORBA::ORB_ptr orb,
             CORBA::ULong len, ACE_Auto_Event &two_way_done);
 
-  Two_Objects_Test::Octet_Seq *twoway_method ();
+  Two_Objects_Test::Octet_Seq *twoway_method () override;
 
-  void shutdown ();
+  void shutdown () override;
+
+  Second_i (Second_i const &) = delete;
+  Second_i (Second_i &&) = delete;
+  Second_i & operator= (Second_i const &) = delete;
+  Second_i & operator= (Second_i &&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -3,9 +3,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-int msglen = 100; //default length of reply message is 100 bytes
-int nthreads = 2;
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+namespace
+{
+  int msglen = 100; // Default length of reply message is 100 bytes.
+  int nthreads = 2;
+  ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -21,7 +24,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'l':
-        msglen = ACE_OS::atoi( get_opts.opt_arg ());
+        msglen = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'n':
@@ -78,7 +81,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ior_output_file, nthreads, msglen));
 
       // Create the factory servant
-      Object_Factory_i *factory_impl = 0;
+      Object_Factory_i *factory_impl = nullptr;
       ACE_NEW_THROW_EX (factory_impl,
                         Object_Factory_i (orb.in (), msglen),
                         CORBA::NO_MEMORY ());
@@ -100,9 +103,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (factory.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
 
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
                            ior_output_file),
@@ -132,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

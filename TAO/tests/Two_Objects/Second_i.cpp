@@ -8,15 +8,15 @@
 Second_i::Second_i (CORBA::ORB_ptr orb,
                     CORBA::ULong len, ACE_Auto_Event &two_way_done)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    length_(len),
-    two_way_done_(two_way_done)
+    length_ (len),
+    two_way_done_ (two_way_done)
 {
 }
 
 Two_Objects_Test::Octet_Seq *
 Second_i::twoway_method ()
 {
-  Two_Objects_Test::Octet_Seq  *preply_mesg = 0;
+  Two_Objects_Test::Octet_Seq *preply_mesg = nullptr;
 
   ACE_NEW_THROW_EX (preply_mesg,
                     Two_Objects_Test::Octet_Seq (this->length_),
@@ -33,7 +33,7 @@ Second_i::twoway_method ()
   // has moved the cache somewhere else. You may want to check the
   // latest code in BiDir cals again ;)
   // @@ Try to use the current_size () instead of total_size ()
-  ACE_ASSERT(this->orb_->orb_core ()->lane_resources().
+  ACE_ASSERT (this->orb_->orb_core ()->lane_resources ().
                transport_cache ().current_size () == 1);
 
   ACE_DEBUG ((LM_DEBUG,

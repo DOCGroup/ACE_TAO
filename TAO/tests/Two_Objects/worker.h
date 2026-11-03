@@ -11,11 +11,15 @@ class Worker : public ACE_Task_Base
 {
 public:
   // Ctor
-  Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr orb);
 
   // The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker & operator= (Worker const &) = delete;
+  Worker & operator= (Worker &&) = delete;
 
 private:
   // The orb

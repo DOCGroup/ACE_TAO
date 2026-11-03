@@ -18,7 +18,12 @@ public:
   First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done);
 
   /// Interface methods..
-  void oneway_method ();
+  void oneway_method () override;
+
+  First_i (First_i const &) = delete;
+  First_i (First_i &&) = delete;
+  First_i & operator= (First_i const &) = delete;
+  First_i & operator= (First_i &&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
