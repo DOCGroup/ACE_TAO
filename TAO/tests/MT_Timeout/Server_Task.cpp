@@ -3,7 +3,7 @@
 
 Server_Task::Server_Task (ACE_Thread_Manager *thr_mgr,
                           CORBA::ORB_ptr orb,
-                          const ACE_Time_Value &running_time)
+                          ACE_Time_Value const& running_time)
   : ACE_Task_Base (thr_mgr)
   , orb_ (CORBA::ORB::_duplicate (orb))
   , running_time_ (running_time)
@@ -17,7 +17,7 @@ Server_Task::svc ()
     {
       this->orb_->run (this->running_time_);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }

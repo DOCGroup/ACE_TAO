@@ -17,14 +17,19 @@ public:
   /// Constructor
   Server_Task (ACE_Thread_Manager *thr_mgr,
                CORBA::ORB_ptr orb,
-               const ACE_Time_Value &running_time);
+               ACE_Time_Value const& running_time);
+
+  Server_Task (Server_Task const&) = delete;
+  Server_Task (Server_Task&&) = delete;
+  Server_Task& operator= (Server_Task const&) = delete;
+  Server_Task& operator= (Server_Task&&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
   /// Reference to the ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// Total running time for each thread
   ACE_Time_Value running_time_;

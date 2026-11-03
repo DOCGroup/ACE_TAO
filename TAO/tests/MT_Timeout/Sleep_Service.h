@@ -11,17 +11,23 @@ class Sleep_Service
 {
 public:
   /// Constructor
-  Sleep_Service (CORBA::ORB_ptr orb);
+  explicit Sleep_Service (CORBA::ORB_ptr orb);
+  ~Sleep_Service () override = default;
 
   // = The skeleton methods
-  virtual void go_to_sleep (CORBA::ULong microseconds);
+  void go_to_sleep (CORBA::ULong microseconds) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
+
+  Sleep_Service (Sleep_Service const&) = delete;
+  Sleep_Service (Sleep_Service&&) = delete;
+  Sleep_Service& operator= (Sleep_Service const&) = delete;
+  Sleep_Service& operator= (Sleep_Service&&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"
