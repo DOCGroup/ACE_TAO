@@ -10,10 +10,7 @@ CORBA::Long
 Simple_Server_i::echo (CORBA::Long x,
                        CORBA::Long msecs)
 {
-  ACE_Time_Value tv (msecs / 1000, (msecs % 1000) * 1000);
-
-  // ACE_DEBUG ((LM_DEBUG, "server (%P) Sleeping for %d msecs\n",
-  //             tv.msec ()));
+  ACE_Time_Value const tv (msecs / 1000, (msecs % 1000) * 1000);
   ACE_OS::sleep (tv);
 
   return x;
