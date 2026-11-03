@@ -15,6 +15,8 @@
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC
@@ -54,7 +56,7 @@ namespace TAO_FTRTEC
       FTEC_Gateway (FTEC_Gateway &&) = delete;
       FTEC_Gateway &operator= (FTEC_Gateway &&) = delete;
 
-      struct FTEC_Gateway_Impl  *impl_;
+      std::unique_ptr<FTEC_Gateway_Impl> impl_;
   };
 }
 
