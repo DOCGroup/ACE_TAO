@@ -47,7 +47,7 @@ public:
   void orb (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
   // Shutdown ORB
   void done ();
@@ -210,18 +210,18 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~RedGreen_Test_StructuredPushConsumer ();
+  ~RedGreen_Test_StructuredPushConsumer () override;
 
   // = NotifyPublish method
-  virtual void offer_change (
+  void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed);
+      const CosNotification::EventTypeSeq & removed) override;
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+      const CosNotification::StructuredEvent & notification) override;
 
-  virtual void disconnect_structured_push_consumer ();
+  void disconnect_structured_push_consumer () override;
 };
 
 /*****************************************************************/
@@ -231,8 +231,8 @@ class SlowConsumer : public RedGreen_Test_StructuredPushConsumer
 public:
   SlowConsumer (RedGreen_Test* RedGreen_Test);
 
-  virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+      const CosNotification::StructuredEvent & notification) override;
 };
 
 /*****************************************************************/
@@ -279,15 +279,15 @@ protected:
 
   // = Protected Methods
   /// Destructor
-  virtual ~RedGreen_Test_StructuredPushSupplier ();
+  ~RedGreen_Test_StructuredPushSupplier () override;
 
   // = NotifyRedGreen_Test
-  virtual void subscription_change (
+  void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed);
+      const CosNotification::EventTypeSeq & removed) override;
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier ();
+  void disconnect_structured_push_supplier () override;
 };
 
 /*****************************************************************/

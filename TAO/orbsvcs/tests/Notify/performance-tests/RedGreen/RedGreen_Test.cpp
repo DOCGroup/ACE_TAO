@@ -7,6 +7,8 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
+#include <atomic>
+
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
@@ -16,7 +18,7 @@
 #define TYPE_GREEN "TYPE_GREEN"
 #define TYPE_RED "TYPE_RED"
 
-ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
+std::atomic<int> g_result_count {0};
 ACE_hrtime_t g_throughput_start_;
 
 static bool consumer_is_done = false;
@@ -481,7 +483,8 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (
                             now - latency_base);
 
 
-  if (++g_result_count == 2*RedGreen_Test_->burst_size_)
+  if (g_result_count.fetch_add (1, std::memory_order_relaxed) + 1 ==
+      2 * RedGreen_Test_->burst_size_)
     {
       RedGreen_Test_->done ();
     }
