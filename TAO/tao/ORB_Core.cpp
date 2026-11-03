@@ -67,6 +67,7 @@
 #include "ace/Message_Block.h"
 #include <cstring>
 #include <memory>
+#include <string>
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ClientRequestInterceptor_Adapter.h"
@@ -1508,10 +1509,8 @@ TAO_ORB_Core::fini ()
     }
   catch (const ::CORBA::Exception& ex)
     {
-      ACE_CString message =
-        "Exception caught in trying to shutdown ";
-      message += this->orbid_.c_str ();
-      message += "\n";
+      std::string message =
+        "Exception caught in trying to shutdown " + this->orbid_ + "\n";
 
       ex._tao_print_exception (message.c_str ());
     }

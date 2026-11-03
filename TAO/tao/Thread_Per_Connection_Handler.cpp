@@ -4,6 +4,7 @@
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "ace/Flag_Manip.h"
+#include <string>
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -36,16 +37,14 @@ TAO_Thread_Per_Connection_Handler::activate_ch (long flags,
                      static_cast<ACE_INT64> (flags)));
     }
 
-  std::vector<ACE_CString> names;
+  std::vector<std::string> names;
   names.reserve (n_threads);
   for (int i = 0; i < n_threads; ++i)
     {
-      ACE_CString buffer = "          ";
-      ACE_OS::itoa (static_cast<ACE_INT32> (i), &buffer[0], 10);
-      names.push_back ("TAO " + buffer);
+      names.push_back ("TAO " + std::to_string (i));
     }
 
-  std::vector<const char *> thread_names;
+  std::vector<char const *> thread_names;
   thread_names.reserve (n_threads);
   for (int i = 0; i < n_threads; ++i)
     {
