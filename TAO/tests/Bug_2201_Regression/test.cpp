@@ -6,7 +6,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int retval {};
 
-  CORBA::ORB_var orb =
+  CORBA::ORB_var const orb =
     CORBA::ORB_init (argc, argv);
 
   SeqTest::NodeSeq ns;
