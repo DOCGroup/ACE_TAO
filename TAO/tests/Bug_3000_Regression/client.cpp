@@ -2,19 +2,20 @@
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-bool shutdown_server = false;
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            ACE_TCHAR const *&ior,
+            bool &shutdown_server)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:s"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:s"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -39,15 +40,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+  bool shutdown_server {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -55,14 +58,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Make all oneways "reliable."
       {
-        CORBA::Object_var manager_object =
+        CORBA::Object_var const manager_object =
           orb->resolve_initial_references ("ORBPolicyManager");
-        CORBA::PolicyManager_var policy_manager =
+        CORBA::PolicyManager_var const policy_manager =
           CORBA::PolicyManager::_narrow (manager_object.in ());
 
         if (CORBA::is_nil (policy_manager.in ()))
@@ -71,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         CORBA::Any policy_value;
         policy_value <<= Messaging::SYNC_WITH_SERVER;
-        CORBA::PolicyList policies (1);
+        TAO::Utils::PolicyList_Destroyer policies (1);
         policies.length (1);
         policies[0] =
           orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
@@ -80,16 +83,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         policy_manager->set_policy_overrides (policies,
                                               CORBA::ADD_OVERRIDE);
 
-        policies[0]->destroy ();
       }
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, shutdown_server) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test::Service_var service =
+      Test::Service_var const service =
         Test::Service::_narrow (tmp.in ());
 
       if (CORBA::is_nil (service.in ()))
@@ -100,18 +102,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Callback *callback_impl = nullptr;
+      // ServantBase_var owns this servant; the raw pointer is borrowed for the callback check.
+      Callback *callback_impl {};
       ACE_NEW_RETURN (callback_impl,
                       Callback (),
                       1);
       PortableServer::ServantBase_var owner_transfer (callback_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (callback_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Test::Callback_var callback =
+      Test::Callback_var const callback =
         Test::Callback::_narrow (object.in ());
 
       poa_manager->activate ();

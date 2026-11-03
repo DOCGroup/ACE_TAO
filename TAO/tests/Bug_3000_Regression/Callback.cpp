@@ -1,10 +1,5 @@
 #include "Callback.h"
 
-Callback::Callback ()
-  : received_callback_ (false)
-{
-}
-
 void
 Callback::test_oneway ()
 {
@@ -15,7 +10,7 @@ Callback::test_oneway ()
 }
 
 bool
-Callback::received_callback ()
+Callback::received_callback () const
 {
   return received_callback_;
 }

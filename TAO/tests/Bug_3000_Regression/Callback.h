@@ -10,15 +10,18 @@ class Callback
   : public virtual POA_Test::Callback
 {
 public:
-  /// Constructor
-  Callback ();
+  Callback () = default;
+  Callback (Callback const &) = delete;
+  Callback &operator= (Callback const &) = delete;
+  Callback (Callback &&) = delete;
+  Callback &operator= (Callback &&) = delete;
 
   void test_oneway () override;
 
-  bool received_callback ();
+  bool received_callback () const;
 
- private:
-  bool received_callback_;
+private:
+  bool received_callback_ {};
 };
 
 #include /**/ "ace/post.h"
