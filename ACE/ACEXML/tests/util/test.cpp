@@ -7,10 +7,10 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Log_Msg.h"
 
-const int MAX_ITERATIONS = 100 * 1000;
-const int NUM_TEST_STRS = 6;
+constexpr int MAX_ITERATIONS = 100 * 1000;
+constexpr int NUM_TEST_STRS = 6;
 
-static bool is_escaped(const ACEXML_String& s)
+static bool is_escaped (ACEXML_String const &s)
 {
   if (s[0] != ACE_TEXT('&'))
     return false;
@@ -19,12 +19,11 @@ static bool is_escaped(const ACEXML_String& s)
   return true;
 }
 
-static int run_tests(ACEXML_String test_strings[NUM_TEST_STRS], int iterations)
+static int run_tests (ACEXML_String const *test_strings, int iterations)
 {
   // Test 1 - Escape the strings using a new temporary string each iteration.
   ACE_Time_Value start = ACE_OS::gettimeofday();
-  int i = 0;
-  for (i = 0; i < iterations; ++i)
+  for (int i = 0; i < iterations; ++i)
   {
     ACEXML_String tmp = ACEXML_escape_string(test_strings[i % NUM_TEST_STRS]);
     if (! is_escaped(tmp))
@@ -39,7 +38,7 @@ static int run_tests(ACEXML_String test_strings[NUM_TEST_STRS], int iterations)
   // be any faster than Test 1 as long as the compiler has return value optimization.
   ACEXML_String tmp;
   start = ACE_OS::gettimeofday();
-  for (i = 0; i < iterations; ++i)
+  for (int i = 0; i < iterations; ++i)
   {
     tmp = ACEXML_escape_string(test_strings[i % NUM_TEST_STRS]);
     if (! is_escaped(tmp))
@@ -54,7 +53,7 @@ static int run_tests(ACEXML_String test_strings[NUM_TEST_STRS], int iterations)
   // the alternate form of ACEXML_escape_string() so that our temporary buffer is reused.
   tmp.clear(1);
   start = ACE_OS::gettimeofday();
-  for (i = 0; i < iterations; ++i)
+  for (int i = 0; i < iterations; ++i)
   {
     ACEXML_escape_string(test_strings[i % NUM_TEST_STRS], tmp);
     if (! is_escaped(tmp))
@@ -67,7 +66,7 @@ static int run_tests(ACEXML_String test_strings[NUM_TEST_STRS], int iterations)
 
   // Test 4 - Same as Test 3, except that the tmp buffer shouldn't have to resize.
   start = ACE_OS::gettimeofday();
-  for (i = 0; i < iterations; ++i)
+  for (int i = 0; i < iterations; ++i)
   {
     ACEXML_escape_string(test_strings[i % NUM_TEST_STRS], tmp);
     if (! is_escaped(tmp))
@@ -91,7 +90,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_TEXT("&xxxx\"xxxxxxx&xx xxx'xxxxx xx<xxxxxxx>xxxxxxx xx\"xxxxxxxxxxxx>"),
   };
 
-  if (run_tests(test_strings, MAX_ITERATIONS) != 0)
+  if (run_tests (test_strings, MAX_ITERATIONS) != 0)
     return 1;
 
   ACE_DEBUG((LM_DEBUG, "Rerun tests with larger strings\n"));
@@ -103,7 +102,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     }
   }
 
-  if (run_tests(test_strings, MAX_ITERATIONS / 10) != 0)
+  if (run_tests (test_strings, MAX_ITERATIONS / 10) != 0)
     return 1;
 
   return 0;
