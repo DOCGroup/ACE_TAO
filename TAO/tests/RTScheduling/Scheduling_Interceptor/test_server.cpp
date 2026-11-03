@@ -4,26 +4,31 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR* filename = ACE_TEXT("test.ior");
+ACE_TCHAR const * filename = ACE_TEXT("test.ior");
 
 class test_impl : public POA_test
 {
 public:
   test_impl (CORBA::ORB_ptr orb,
              RTScheduling::Current_ptr current)
-    : orb_ (orb),
+    : orb_ (CORBA::ORB::_duplicate (orb)),
     current_ (RTScheduling::Current::_duplicate (current))
   {
   }
 
-  virtual void one_way (const char * message)
+  test_impl (test_impl const &) = delete;
+  test_impl (test_impl &&) = delete;
+  test_impl & operator= (test_impl const &) = delete;
+  test_impl & operator= (test_impl &&) = delete;
+
+  void one_way (char const * message) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "One-Way Message = %s\n",
                 message));
   }
 
-  virtual char * two_way (const char * message)
+  char * two_way (char const * message) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Two-Way Message = %s\n",
@@ -39,14 +44,14 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void shutdown ()
+  void shutdown () override
   {
-    orb_->shutdown ();
+    this->orb_->shutdown ();
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
   RTScheduling::Current_var current_;
 };
 
@@ -58,7 +63,7 @@ parse_args (int argc,
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:"));
 
   int c;
-  while ((c= opts ()) != -1)
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
@@ -82,7 +87,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc,
                          argv);
 
-      parse_args (argc, argv);
+      if (parse_args (argc, argv) == -1)
+        {
+          return -1;
+        }
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RootPOA");
@@ -95,7 +103,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      CORBA::Object_var current_obj = orb->resolve_initial_references ("RTScheduler_Current");
+      CORBA::Object_var const current_obj =
+        orb->resolve_initial_references ("RTScheduler_Current");
 
       RTScheduling::Current_var current = RTScheduling::Current::_narrow (current_obj.in ());
 
@@ -104,13 +113,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       test_impl (orb.in (),
                       current.in ()),
                       -1);
+      // The servant var owns this reference; test_i is borrowed by the POA calls below.
       PortableServer::ServantBase_var safe (test_i);
 
       PortableServer::ObjectId_var id;
 
       id = root_poa->activate_object (test_i);
 
-      CORBA::Object_var server =
+      CORBA::Object_var const server =
         root_poa->id_to_reference (id.in ());
 
       CORBA::String_var ior;
@@ -137,10 +147,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       manager->rtscheduler (&scheduler);
 
       // Print ior to the file.
-      if (filename != 0)
+      if (filename != nullptr)
         {
-          FILE* output_file = ACE_OS::fopen (filename, "w");
-          if (output_file == 0)
+          FILE * const output_file = ACE_OS::fopen (filename, "w");
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                filename),
@@ -153,7 +163,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
