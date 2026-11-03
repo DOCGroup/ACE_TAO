@@ -26,6 +26,9 @@
 
 #include "ace/Thread_Manager.h"
 
+#include <memory>
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_EC_Dispatching_Task;
@@ -53,6 +56,7 @@ public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
   explicit TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
+  ~TAO_EC_Priority_Dispatching () override;
 
   TAO_EC_Priority_Dispatching (TAO_EC_Priority_Dispatching const &) = delete;
   TAO_EC_Priority_Dispatching (TAO_EC_Priority_Dispatching &&) = delete;
@@ -79,7 +83,7 @@ private:
   int ntasks_;
 
   /// The tasks..
-  TAO_EC_Dispatching_Task** tasks_;
+  std::vector<std::unique_ptr<TAO_EC_Dispatching_Task>> tasks_;
 
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;

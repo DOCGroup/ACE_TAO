@@ -15,22 +15,24 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base *ec)
-  :  ntasks_ (0),
-     tasks_ (nullptr)
+  : ntasks_ (0)
+  , tasks_ ()
 {
   CORBA::Object_var tmp = ec->scheduler ();
   this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
 }
 
+TAO_EC_Priority_Dispatching::~TAO_EC_Priority_Dispatching () = default;
+
 void
 TAO_EC_Priority_Dispatching::activate ()
 {
-  if (this->tasks_ != nullptr)
+  if (!this->tasks_.empty ())
     return;
 
   // @@ Query the scheduler to obtain this....
   this->ntasks_ = ACE_Scheduler_MAX_PRIORITIES;
-  ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task*[this->ntasks_]);
+  this->tasks_.resize (this->ntasks_);
 
   // @@ Query the scheduler to obtain the priorities!
   int priority =
@@ -66,8 +68,8 @@ TAO_EC_Priority_Dispatching::activate ()
           // Ignore exceptions..
         }
 
-      ACE_NEW (this->tasks_[i],
-               TAO_EC_Dispatching_Task (&this->thread_manager_));
+      this->tasks_[i] = std::make_unique<TAO_EC_Dispatching_Task> (
+        &this->thread_manager_);
 
       // @@ Query the scheduler to obtain the priority...
       long flags = THR_BOUND | THR_SCHED_FIFO;
@@ -86,7 +88,7 @@ TAO_EC_Priority_Dispatching::activate ()
 void
 TAO_EC_Priority_Dispatching::shutdown ()
 {
-  if (this->tasks_ == nullptr)
+  if (this->tasks_.empty ())
     return;
 
   for (int i = 0; i < this->ntasks_; ++i)
@@ -94,11 +96,7 @@ TAO_EC_Priority_Dispatching::shutdown ()
 
   this->thread_manager_.wait ();
 
-  for (int j = 0; j < this->ntasks_; ++j)
-    delete this->tasks_[j];
-
-  delete[] this->tasks_;
-  this->tasks_ = nullptr;
+  this->tasks_.clear ();
 }
 
 void
@@ -117,7 +115,7 @@ TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                           RtecEventComm::EventSet& event,
                                           TAO_EC_QOS_Info& qos_info)
 {
-  if (this->tasks_ == nullptr)
+  if (this->tasks_.empty ())
     this->activate ();
 
   int i = qos_info.preemption_priority;
