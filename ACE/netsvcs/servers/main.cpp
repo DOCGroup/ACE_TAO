@@ -1,12 +1,19 @@
 #include "ace/Service_Config.h"
 #include "ace/Logging_Strategy.h"
 #include "ace/Sig_Adapter.h"
+#include "ace/Signal.h"
 #include "TS_Clerk_Handler.h"
 #include "TS_Server_Handler.h"
 #include "Client_Logging_Handler.h"
 #include "Name_Handler.h"
 #include "Token_Handler.h"
 #include "Server_Logging_Handler.h"
+
+static void
+end_event_loop_handler (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -37,12 +44,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // ACE_Service_Object_Ptr which is an <auto_ptr> specialized
           // for ACE_Service_Object.
 
-          ACE_TCHAR *l_argv[3];
+          ACE_TCHAR *l_argv[3] {};
           ACE_TCHAR name_port[] =
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_NAME_SERVER_PORT_STR);
 
           l_argv[0] = name_port;
-          l_argv[1] = 0;
+          l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_1 = ACE_SVC_INVOKE (ACE_Name_Acceptor);
 
           if (sp_1->init (1, l_argv) == -1)
@@ -54,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_TCHAR time_port[] =
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_TIME_SERVER_PORT_STR);
           l_argv[0] = time_port;
-          l_argv[1] = 0;
+          l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_2 = ACE_SVC_INVOKE (ACE_TS_Server_Acceptor);
 
           if (sp_2->init (1, l_argv) == -1)
@@ -66,7 +73,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_TCHAR clerk_port[] = ACE_TEXT ("-p 10011");
           l_argv[0] = argv[0];
           l_argv[1] = clerk_port;
-          l_argv[2] = 0;
+          l_argv[2] = nullptr;
           ACE_Service_Object_Ptr sp_3 = ACE_SVC_INVOKE (ACE_TS_Clerk_Processor);
 
           if (sp_3->init (2, l_argv) == -1)
@@ -79,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_TCHAR token_port[] =
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_TOKEN_SERVER_PORT_STR);
           l_argv[0] = token_port;
-          l_argv[1] = 0;
+          l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_4 = ACE_SVC_INVOKE (ACE_Token_Acceptor);
 
           if (sp_4->init (1, l_argv) == -1)
@@ -92,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_TCHAR thr_logging_port[] =
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR);
           l_argv[0] = thr_logging_port;
-          l_argv[1] = 0;
+          l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_5 =
             ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor);
 
@@ -105,7 +112,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_TCHAR logging_port[] =
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_LOGGING_SERVER_PORT_STR);
           l_argv[0] = logging_port;
-          l_argv[1] = 0;
+          l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_6 =
             ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
 
@@ -116,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               1);
 
           l_argv[0] = logging_port;
-          l_argv[1] = 0;
+          l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_7 =
             ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor);
 
@@ -129,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // Run forever, performing the configured services until we
           // are shut down by a SIGINT/SIGQUIT signal.
           // Create an adapter to end the event loop.
-          ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+          ACE_Sig_Adapter sa (end_event_loop_handler);
 
           ACE_Sig_Set sig_set;
           sig_set.sig_add (SIGINT);
@@ -159,7 +166,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Run forever, performing the configured services until we are
       // shut down by a SIGINT/SIGQUIT signal.
       // Create an adapter to end the event loop.
-      ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+      ACE_Sig_Adapter sa (end_event_loop_handler);
 
       ACE_Sig_Set sig_set;
       sig_set.sig_add (SIGINT);
