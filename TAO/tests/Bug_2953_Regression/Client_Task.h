@@ -15,7 +15,11 @@ class Client_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Client_Task (CORBA::ORB_ptr orb);
+  explicit Client_Task (CORBA::ORB_ptr orb);
+  Client_Task (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Terminate the loop
   void terminate_loop ();
@@ -25,7 +29,7 @@ public:
 
 private:
   /// Reference to the ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// A mutex, synchronize access to the termination flag
   TAO_SYNCH_MUTEX mutex_;
