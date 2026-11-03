@@ -32,6 +32,7 @@
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -205,7 +206,7 @@ private:
 protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
-  ACE_INET_Addr *addrs_;
+  std::unique_ptr<ACE_INET_Addr[]> addrs_;
 
   /**
    * The number of ports over which the acceptor should search (starting
@@ -221,7 +222,7 @@ protected:
    * example, if the IP address is INADDR_ANY (0.0.0.0) then there
    * will be possibly a different hostname for each interface.
    */
-  char **hosts_;
+  std::unique_ptr<char *[]> hosts_;
 
   /**
    * Override the hostname used in the ORBEndPoint.

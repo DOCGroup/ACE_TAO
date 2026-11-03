@@ -61,12 +61,9 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor ()
   delete this->concurrency_strategy_;
   delete this->accept_strategy_;
 
-  delete [] this->addrs_;
-
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
-    CORBA::string_free (this->hosts_[i]);
-
-  delete [] this->hosts_;
+  if (this->hosts_ != nullptr)
+    for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+      CORBA::string_free (this->hosts_[i]);
 
   delete [] this->hostname_in_ior_;
 }
@@ -351,13 +348,17 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
-  ACE_NEW_RETURN (this->addrs_,
+  ACE_INET_Addr *addrs = nullptr;
+  ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[this->endpoint_count_],
                   -1);
+  this->addrs_.reset (addrs);
 
-  ACE_NEW_RETURN (this->hosts_,
+  char **hosts = nullptr;
+  ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
+  this->hosts_.reset (hosts);
 
   this->hosts_[0] = nullptr;
 
@@ -980,15 +981,19 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
       return -1;
     }
 
-  ACE_NEW_RETURN (this->addrs_,
+  ACE_INET_Addr *addrs = nullptr;
+  ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[this->endpoint_count_],
                   -1);
+  this->addrs_.reset (addrs);
 
-  ACE_NEW_RETURN (this->hosts_,
+  char **hosts = nullptr;
+  ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
+  this->hosts_.reset (hosts);
 
-  std::fill_n (this->hosts_, this->endpoint_count_, nullptr);
+  std::fill_n (this->hosts_.get (), this->endpoint_count_, nullptr);
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
@@ -1138,10 +1143,13 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  ACE_CString *argv_base = nullptr;
-  ACE_NEW_RETURN (argv_base, ACE_CString[argc],-1);
-  ACE_CString **argv = nullptr;
-  ACE_NEW_RETURN (argv, ACE_CString*[argc],-1);
+  ACE_CString *argv_base_buffer = nullptr;
+  ACE_NEW_RETURN (argv_base_buffer, ACE_CString[argc], -1);
+  std::unique_ptr<ACE_CString[]> argv_base (argv_base_buffer);
+
+  ACE_CString **argv_buffer = nullptr;
+  ACE_NEW_RETURN (argv_buffer, ACE_CString *[argc], -1);
+  std::unique_ptr<ACE_CString *[]> argv (argv_buffer);
 
   ACE_CString::size_type begin = 0;
   ACE_CString::size_type end = 0;
@@ -1173,7 +1181,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
     }
 
   if (result == 0)
-    result = this->parse_options_i (argc,argv);
+    result = this->parse_options_i (argc, argv.get ());
 
   if (argc > 0)
     {
@@ -1184,11 +1192,9 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
       for (int i = 0; i < argc; i++)
         TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT("\t%C\n"),
-                    argv[i]->c_str()));
+                    argv[i]->c_str ()));
       result = -1;
     }
-  delete [] argv;
-  delete [] argv_base;
   return result;
 }
 
