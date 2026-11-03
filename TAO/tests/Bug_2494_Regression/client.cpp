@@ -1,23 +1,24 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 #include "testC.h"
-
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-int nthreads = 5;
-int do_shutdown = 0;
+#include <cstring>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            ACE_TCHAR const *&ior,
+            int &nthreads,
+            bool &do_shutdown)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'x':
-        do_shutdown = 1;
+        do_shutdown = true;
         break;
 
       case 'k':
@@ -44,7 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 namespace
 {
-  char const *twohundredbytes =
+  char const * const two_hundred_bytes =
   "12345678901234567890123456789012345678901234567890"
   "12345678901234567890123456789012345678901234567890"
   "12345678901234567890123456789012345678901234567890"
@@ -54,8 +55,8 @@ namespace
 
 struct Worker : ACE_Task_Base
 {
-  Worker (Simple_Server_ptr srv)
-    : srv_ (Simple_Server::_duplicate (srv))
+  explicit Worker (Simple_Server_ptr server)
+    : server_ (Simple_Server::_duplicate (server))
   {
   }
 
@@ -64,28 +65,28 @@ struct Worker : ACE_Task_Base
   Worker (Worker &&) = delete;
   Worker &operator= (Worker &&) = delete;
 
-  Simple_Server_var srv_;
+  Simple_Server_var const server_;
 
   int svc () override
   {
     CORBA::String_var str = CORBA::string_alloc (200 * 2000 + 1);
-    if (str.in () == nullptr)
+    if (!str.in ())
       return 1;
     str.inout ()[0] = CORBA::Char ('\0');
-    for (int i = 0; i < 2000; ++i)
+    for (int i {}; i < 2000; ++i)
       {
-        ACE_OS::strcat (str.inout (), twohundredbytes);
+        std::strcat (str.inout (), two_hundred_bytes);
       }
 
     while (true)
       {
         try
           {
-            CORBA::String_var ret = srv_->test_method (str.in ());
-            if (ACE_OS::strcmp (str.in (), ret.in ()) != 0)
+            CORBA::String_var const ret = this->server_->test_method (str.in ());
+            if (std::strcmp (str.in (), ret.in ()) != 0)
               return 1;
           }
-        catch (const CORBA::Exception& ex)
+        catch (CORBA::Exception const &ex)
           {
             ACE_DEBUG ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) Exception caught: \n%C\n"),
@@ -98,18 +99,21 @@ struct Worker : ACE_Task_Base
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+  int nthreads {5};
+  bool do_shutdown {};
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, nthreads, do_shutdown) != 0)
         return 1;
 
-      CORBA::Object_var object = orb->string_to_object (ior);
+      CORBA::Object_var const object = orb->string_to_object (ior);
 
-      Simple_Server_var server = Simple_Server::_narrow (object.in ());
+      Simple_Server_var const server = Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -124,12 +128,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          Worker wrk (server.in ());
-          wrk.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, nthreads);
-          wrk.thr_mgr ()->wait ();
+          Worker worker (server.in ());
+          if (worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+                               nthreads) != 0)
+            ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate client threads\n"), 1);
+          worker.thr_mgr ()->wait ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%P|%t) ERROR: Exception caught: \n%C\n"),
                   ex._info ().c_str ()));
