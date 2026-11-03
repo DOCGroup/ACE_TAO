@@ -10,7 +10,7 @@ JAWS_Timer::JAWS_Timer (JAWS_Timer_Impl *impl)
 {
   // TODO: Change this to use JAWS_Options after we have more than
   // one way of handling timers.
-  if (this->impl_ == 0)
+  if (this->impl_ == nullptr)
     this->impl_ = JAWS_Task_Timer::instance ();
 }
 

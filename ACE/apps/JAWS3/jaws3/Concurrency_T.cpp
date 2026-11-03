@@ -13,7 +13,7 @@ JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>
 ::JAWS_Concurrency_Bridge (CONCURRENCY_IMPL *impl)
   : impl_ (impl)
 {
-  if (this->impl_ == 0)
+  if (this->impl_ == nullptr)
     this->impl_ = CONCURRENCY_IMPL::instance ();
 }
 

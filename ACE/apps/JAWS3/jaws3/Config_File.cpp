@@ -4,6 +4,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
 #include "ace/Unbounded_Queue.h"
+#include <memory>
 
 #ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
@@ -27,7 +28,7 @@ public:
   const ACE_TCHAR * duplicate (const ACE_TCHAR *s)
   {
     void **x;
-    const ACE_TCHAR *d = 0;
+    ACE_TCHAR const *d = nullptr;
     ACE_Unbounded_Queue_Iterator<void *> iter (this->queue_);
 
     while (iter.next (x))
@@ -35,11 +36,11 @@ public:
         d = (const ACE_TCHAR *) *x;
         if (ACE_OS::strcmp (d, s) == 0)
           break;
-        d = 0;
+        d = nullptr;
         iter.advance ();
       }
 
-    if (d == 0)
+    if (d == nullptr)
       {
         d = ACE_OS::strdup (s);
         this->queue_.enqueue_tail ((void *) d);
@@ -71,27 +72,22 @@ public:
 
 private:
   ACE_FILE_Addr faddr_;
-  JAWS_strings *strings_;
-  JAWS_Symbol_Table *symbols_;
+  std::unique_ptr<JAWS_strings> strings_;
+  std::unique_ptr<JAWS_Symbol_Table> symbols_;
 };
 
 JAWS_Config_File_Impl::JAWS_Config_File_Impl (const ACE_TCHAR *config_file)
   : faddr_ (config_file)
-  , strings_ (0)
-  , symbols_ (0)
+  , strings_ ()
+  , symbols_ ()
 {
-  this->strings_ = new JAWS_strings;
-  this->symbols_ = new JAWS_Symbol_Table (JAWS_CONFIG_FILE_SYMBOL_TABLE_SIZE);
+  this->strings_ = std::make_unique<JAWS_strings> ();
+  this->symbols_ = std::make_unique<JAWS_Symbol_Table> (
+    JAWS_CONFIG_FILE_SYMBOL_TABLE_SIZE);
   this->parse_file ();
 }
 
-JAWS_Config_File_Impl::~JAWS_Config_File_Impl ()
-{
-  delete this->symbols_;
-  this->symbols_ = 0;
-  delete this->strings_;
-  this->strings_ = 0;
-}
+JAWS_Config_File_Impl::~JAWS_Config_File_Impl () = default;
 
 int
 JAWS_Config_File_Impl::find (const ACE_TCHAR *key, const ACE_TCHAR *&value)
@@ -119,14 +115,14 @@ JAWS_Config_File_Impl::parse_file ()
   ssize_t count = 0;
   const ACE_TCHAR *sym_name;
   const ACE_TCHAR *sym_value;
-  int last_line_was_read = 0;
-  ACE_TCHAR *end_of_current_line = 0;
-  ACE_TCHAR *p = 0;
+  bool last_line_was_read = false;
+  ACE_TCHAR *end_of_current_line = nullptr;
+  ACE_TCHAR *p = nullptr;
 
   while (last_line_was_read
          || (count = fio.recv (buffer.wr_ptr (), buffer.space () - 2)) >= 0)
     {
-      end_of_current_line = 0;
+      end_of_current_line = nullptr;
 
       // Make sure input is newline terminated if it is the last line,
       // and always null terminated.
@@ -157,13 +153,13 @@ JAWS_Config_File_Impl::parse_file ()
                   buffer.wr_ptr (1);
                 }
 
-              last_line_was_read = 1;
+              last_line_was_read = true;
             }
 
           buffer.wr_ptr ()[0] = '\0';
         }
 
-      if (end_of_current_line == 0)
+      if (end_of_current_line == nullptr)
         {
           end_of_current_line = buffer.rd_ptr ();
           while (*end_of_current_line != '\n')
@@ -178,8 +174,8 @@ JAWS_Config_File_Impl::parse_file ()
               || (buffer.rd_ptr ()[0] != ' '
                   && buffer.rd_ptr ()[0] != '\t')))
         {
-          ACE_TCHAR *name = 0;
-          ACE_TCHAR *value = 0;
+          ACE_TCHAR *name = nullptr;
+          ACE_TCHAR *value = nullptr;
 
           name = line.rd_ptr ();
           for (p = name; *p != '\0'; p++)
@@ -244,10 +240,9 @@ JAWS_Config_File_Impl::parse_file ()
 void
 JAWS_Config_File_Impl::reset ()
 {
-  delete this->symbols_;
-  delete this->strings_;
-  this->strings_ = new JAWS_strings;
-  this->symbols_ = new JAWS_Symbol_Table (JAWS_CONFIG_FILE_SYMBOL_TABLE_SIZE);
+  this->strings_ = std::make_unique<JAWS_strings> ();
+  this->symbols_ = std::make_unique<JAWS_Symbol_Table> (
+    JAWS_CONFIG_FILE_SYMBOL_TABLE_SIZE);
   this->parse_file ();
 }
 
@@ -255,7 +250,7 @@ void
 JAWS_Config_File_Impl::dump ()
 {
   JAWS_SYMBOL_TABLE_ITERATOR iter (*this->symbols_);
-  JAWS_SYMBOL_TABLE_ENTRY *entry = 0;
+  JAWS_SYMBOL_TABLE_ENTRY *entry = nullptr;
 
   while (iter.next (entry))
     {
@@ -266,15 +261,17 @@ JAWS_Config_File_Impl::dump ()
     }
 }
 
-JAWS_Config_File::JAWS_Config_File (const ACE_TCHAR *config_file,
-                                    const ACE_TCHAR *config_dir)
+JAWS_Config_File::JAWS_Config_File (ACE_TCHAR const *config_file,
+                                    ACE_TCHAR const *config_dir)
 {
   ACE_TCHAR filename[MAXPATHLEN];
   ACE_OS::strcpy (filename, config_dir);
   ACE_OS::strcat (filename, config_file);
 
-  this->impl_ = new JAWS_Config_File_Impl (filename);
+  this->impl_ = std::make_unique<JAWS_Config_File_Impl> (filename);
 }
+
+JAWS_Config_File::~JAWS_Config_File () = default;
 
 int
 JAWS_Config_File::find (const ACE_TCHAR *key, const ACE_TCHAR *&value)

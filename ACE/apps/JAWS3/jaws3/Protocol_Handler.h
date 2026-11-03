@@ -33,7 +33,12 @@ class JAWS_Export JAWS_Protocol_Handler
   friend class JAWS_THYBRID_Concurrency;
 
 public:
-  JAWS_Protocol_Handler (JAWS_Protocol_State *state = 0, void *data = 0);
+  explicit JAWS_Protocol_Handler (JAWS_Protocol_State *state = nullptr,
+                                  void *data = nullptr);
+  JAWS_Protocol_Handler (JAWS_Protocol_Handler const &) = delete;
+  JAWS_Protocol_Handler (JAWS_Protocol_Handler &&) = delete;
+  JAWS_Protocol_Handler &operator= (JAWS_Protocol_Handler const &) = delete;
+  JAWS_Protocol_Handler &operator= (JAWS_Protocol_Handler &&) = delete;
 
   virtual int service ();
 

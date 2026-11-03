@@ -50,20 +50,24 @@ private:
     , act_ (act)
     , mask_ (mask)
     , timer_id_ (-1)
-    , was_active_ (0)
+    , was_active_ (false)
   {
     if (ACE_Time_Value::zero < this->tv_)
       this->timer_id_ =
-        ACE_Reactor::instance ()->schedule_timer (this, 0, this->tv_);
+        ACE_Reactor::instance ()->schedule_timer (this, nullptr, this->tv_);
   }
 
 public: // needed for destructor due to "aCC: HP ANSI C++ B3910B A.03.39" compiler bug
 
-  ~JAWS_IO_Reactive_Handler ()
+  ~JAWS_IO_Reactive_Handler () override
   {
     if (this->timer_id_ != -1)
       ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
   }
+  JAWS_IO_Reactive_Handler (JAWS_IO_Reactive_Handler const &) = delete;
+  JAWS_IO_Reactive_Handler (JAWS_IO_Reactive_Handler &&) = delete;
+  JAWS_IO_Reactive_Handler &operator= (JAWS_IO_Reactive_Handler const &) = delete;
+  JAWS_IO_Reactive_Handler &operator= (JAWS_IO_Reactive_Handler &&) = delete;
 
 private:
   JAWS_Event_Result io_result_;
@@ -77,7 +81,7 @@ private:
   ACE_Reactor_Mask mask_;
   long timer_id_;
 
-  int was_active_;
+  bool was_active_;
 };
 
 

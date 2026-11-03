@@ -25,7 +25,7 @@ JAWS_Asynch_IO::send ( ACE_HANDLE handle
 
   ACE_Asynch_Write_Stream asynch_write_stream;
 
-  if (jecaha == 0
+  if (jecaha == nullptr
       || asynch_write_stream.open (*jecaha, handle) == -1
       || asynch_write_stream.write (*mb, mb->length (), act) == -1)
     {
@@ -53,7 +53,7 @@ JAWS_Asynch_IO::recv ( ACE_HANDLE handle
 
   ACE_Asynch_Read_Stream asynch_read_stream;
 
-  if (jecaha == 0
+  if (jecaha == nullptr
       || asynch_read_stream.open (*jecaha, handle) == -1
       || asynch_read_stream.read (*mb, mb->space (), act) == -1)
     {
@@ -81,7 +81,7 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
   JAWS_EC_AH_Adapter *jecaha;
   jecaha = JAWS_EC_AH_Adapter::make (completer);
 
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = nullptr;
   header_and_trailer =
     new ACE_Asynch_Transmit_File::Header_And_Trailer ( header
                                                      , header->length ()
@@ -92,8 +92,8 @@ JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
   ACE_Asynch_Transmit_File asynch_transmit_file;
 
   if (source == ACE_INVALID_HANDLE
-      || jecaha == 0
-      || header_and_trailer == 0
+      || jecaha == nullptr
+      || header_and_trailer == nullptr
       || asynch_transmit_file.open (*jecaha, handle) == -1
       || asynch_transmit_file.transmit_file ( source
                                             , header_and_trailer

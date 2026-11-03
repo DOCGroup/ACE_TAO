@@ -71,7 +71,7 @@ JAWS_Synch_IO::send ( ACE_HANDLE handle
                     )
 {
   JAWS_Event_Result io_result;
-  const ACE_Time_Value *tvp = 0;
+  ACE_Time_Value const *tvp = nullptr;
 
   if (ACE_Time_Value::zero < tv)
     tvp = &tv;
@@ -103,7 +103,7 @@ JAWS_Synch_IO::recv ( ACE_HANDLE handle
                     )
 {
   JAWS_Event_Result io_result;
-  const ACE_Time_Value *tvp = 0;
+  ACE_Time_Value const *tvp = nullptr;
 
   if (ACE_Time_Value::zero < tv)
     tvp = &tv;
@@ -156,7 +156,7 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
                         )
 {
   JAWS_Event_Result io_result;
-  const ACE_Time_Value *tvp = 0;
+  ACE_Time_Value const *tvp = nullptr;
 
   if (ACE_Time_Value::zero < tv)
     tvp = &tv;

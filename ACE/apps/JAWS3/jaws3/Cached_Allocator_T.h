@@ -22,14 +22,18 @@ class JAWS_Cached_Allocator : public ACE_New_Allocator
 //   fixed-sized classes.
 {
 public:
-  JAWS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
+  explicit JAWS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
 
-  ~JAWS_Cached_Allocator ();
+  ~JAWS_Cached_Allocator () override;
+  JAWS_Cached_Allocator (JAWS_Cached_Allocator const &) = delete;
+  JAWS_Cached_Allocator (JAWS_Cached_Allocator &&) = delete;
+  JAWS_Cached_Allocator &operator= (JAWS_Cached_Allocator const &) = delete;
+  JAWS_Cached_Allocator &operator= (JAWS_Cached_Allocator &&) = delete;
 
-  void* malloc (size_t);
+  void* malloc (size_t) override;
   // get a chunk of memory from free store.
 
-  void free (void *);
+  void free (void *) override;
   // return a chunk of memory back to free store.
 
 protected:
@@ -64,14 +68,18 @@ class JAWS_TSS_Cached_Allocator : public ACE_New_Allocator
 //   fixed-sized classes.
 {
 public:
-  JAWS_TSS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
+  explicit JAWS_TSS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
 
-  ~JAWS_TSS_Cached_Allocator ();
+  ~JAWS_TSS_Cached_Allocator () override;
+  JAWS_TSS_Cached_Allocator (JAWS_TSS_Cached_Allocator const &) = delete;
+  JAWS_TSS_Cached_Allocator (JAWS_TSS_Cached_Allocator &&) = delete;
+  JAWS_TSS_Cached_Allocator &operator= (JAWS_TSS_Cached_Allocator const &) = delete;
+  JAWS_TSS_Cached_Allocator &operator= (JAWS_TSS_Cached_Allocator &&) = delete;
 
-  void * malloc (size_t);
+  void * malloc (size_t) override;
   // get a chunk of memory from free store.
 
-  void free (void *);
+  void free (void *) override;
   // return a chunk of memory back to free store.
 
 protected:

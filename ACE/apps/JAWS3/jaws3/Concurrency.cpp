@@ -25,7 +25,7 @@ JAWS_Concurrency_Impl::svc ()
 
   while (this->getq (ph) != -1)
     {
-      if (ph == 0)
+      if (ph == nullptr)
         continue;
 
       if (ph->service () == -1)
@@ -45,11 +45,11 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::JAWS_Concurrency_Bridge (JAWS_Concurrency_Impl *impl)
   : impl_ (impl)
 {
-  if (this->impl_ == 0)
+  if (this->impl_ == nullptr)
     {
-      const char *concurrency;
+      char const *concurrency;
       concurrency = JAWS_Options::instance ()->getenv ("JAWS_CONCURRENCY");
-      if (concurrency == 0)
+      if (concurrency == nullptr)
         concurrency = JAWS_DEFAULT_CONCURRENCY;
 
       if (ACE_OS::strcasecmp (concurrency, "TPR") == 0)

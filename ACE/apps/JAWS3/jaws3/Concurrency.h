@@ -15,7 +15,12 @@ using JAWS_CONCURRENCY_TASK = ACE_Task<ACE_SYNCH>;
 class JAWS_Export JAWS_Concurrency_Impl : public JAWS_CONCURRENCY_TASK
 {
 public:
-  virtual ~JAWS_Concurrency_Impl () {};
+  JAWS_Concurrency_Impl () = default;
+  virtual ~JAWS_Concurrency_Impl () = default;
+  JAWS_Concurrency_Impl (JAWS_Concurrency_Impl const &) = delete;
+  JAWS_Concurrency_Impl (JAWS_Concurrency_Impl &&) = delete;
+  JAWS_Concurrency_Impl &operator= (JAWS_Concurrency_Impl const &) = delete;
+  JAWS_Concurrency_Impl &operator= (JAWS_Concurrency_Impl &&) = delete;
 
   virtual int putq (JAWS_Protocol_Handler *ph) = 0;
 
@@ -33,7 +38,7 @@ template<>
 class JAWS_Export JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 {
 public:
-  JAWS_Concurrency_Bridge (JAWS_Concurrency_Impl *impl = 0);
+  explicit JAWS_Concurrency_Bridge (JAWS_Concurrency_Impl *impl = nullptr);
 
   int putq (JAWS_Protocol_Handler *ph);
   int getq (JAWS_Protocol_Handler *&ph);

@@ -22,8 +22,8 @@ public:
 private:
   std::atomic<int> getting_ {0};
   int min_number_of_threads_;
-  int shutdown_task_;
-  int error_;
+  bool shutdown_task_;
+  bool error_;
 };
 
 #endif /* JAWS_TPR_CONCURRENCY_H */

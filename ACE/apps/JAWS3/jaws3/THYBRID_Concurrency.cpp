@@ -14,8 +14,8 @@
 JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
   : min_number_of_threads_ (1)
   , max_number_of_threads_ (-1)
-  , shutdown_task_ (0)
-  , error_ (0)
+  , shutdown_task_ (false)
+  , error_ (false)
 {
   char const *value;
 
@@ -45,8 +45,8 @@ JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
   r = this->activate (THR_BOUND | THR_JOINABLE, this->min_number_of_threads_);
   if (r < 0)
     {
-      this->shutdown_task_ = 1;
-      this->error_ = 1;
+      this->shutdown_task_ = true;
+      this->error_ = true;
     }
 }
 
@@ -112,7 +112,7 @@ JAWS_THYBRID_Concurrency::getq (JAWS_Protocol_Handler *&ph)
       if (ph == nullptr)
         {
           // Shutdown this task;
-          this->shutdown_task_ = 1;
+          this->shutdown_task_ = true;
           if (this->getting_.load () > 1)
             {
               task->putq (mb);

@@ -17,10 +17,10 @@ JAWS_IO::JAWS_IO (JAWS_IO_Impl *impl)
   // in terms of calls needed, but provides the least amount
   // of support for concurrency.
 
-  if (this->impl_ == 0)
+  if (this->impl_ == nullptr)
     {
-      const char *io_type = JAWS_Options::instance ()->getenv ("JAWS_IO");
-      if (io_type == 0)
+      char const *io_type = JAWS_Options::instance ()->getenv ("JAWS_IO");
+      if (io_type == nullptr)
         io_type = JAWS_DEFAULT_IO;
 
       if (ACE_OS::strcasecmp (io_type, "SYNCH") == 0)
@@ -34,9 +34,7 @@ JAWS_IO::JAWS_IO (JAWS_IO_Impl *impl)
     }
 }
 
-JAWS_IO::~JAWS_IO ()
-{
-}
+JAWS_IO::~JAWS_IO () = default;
 
 
 void

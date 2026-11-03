@@ -11,15 +11,15 @@
 
 
 JAWS_TPR_Concurrency::JAWS_TPR_Concurrency ()
-  : shutdown_task_ (0)
-  , error_ (0)
+  : shutdown_task_ (false)
+  , error_ (false)
 {
   int r;
   r = this->activate (THR_BOUND | THR_JOINABLE);
   if (r < 0)
     {
-      this->error_ = 1;
-      this->shutdown_task_ = 1;
+      this->error_ = true;
+      this->shutdown_task_ = true;
     }
 }
 
@@ -77,7 +77,7 @@ JAWS_TPR_Concurrency::getq (JAWS_Protocol_Handler *&ph)
       if (ph == nullptr)
         {
           // Shutdown this task;
-          this->shutdown_task_ = 1;
+          this->shutdown_task_ = true;
         }
     }
 
