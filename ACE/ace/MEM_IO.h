@@ -43,8 +43,8 @@ public:
    * underlying ACE_MMAP.
    */
   int init (ACE_HANDLE handle,
-                    const ACE_TCHAR *name,
-                    MALLOC_OPTIONS *options) override;
+            const ACE_TCHAR *name,
+            MALLOC_OPTIONS *options) override;
 
   /**
    * Fetch location of next available data into <recv_buffer_>.
@@ -52,16 +52,16 @@ public:
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
   ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
-                            int flags,
-                            const ACE_Time_Value *timeout) override;
+                    int flags,
+                    const ACE_Time_Value *timeout) override;
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If <send>
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   ssize_t send_buf (ACE_MEM_SAP_Node *buf,
-                            int flags,
-                            const ACE_Time_Value *timeout) override;
+                    int flags,
+                    const ACE_Time_Value *timeout) override;
 
   /**
    * Convert the buffer offset @a off to absolute address to @a buf.
@@ -107,33 +107,33 @@ public:
 
   ACE_MT_MEM_IO ();
 
-  virtual ~ACE_MT_MEM_IO ();
+  ~ACE_MT_MEM_IO () override;
 
   /**
    * Initialize the MEM_SAP object.
    */
-  virtual int init (ACE_HANDLE handle,
-                    const ACE_TCHAR *name,
-                    MALLOC_OPTIONS *options);
+  int init (ACE_HANDLE handle,
+            const ACE_TCHAR *name,
+            MALLOC_OPTIONS *options) override;
 
-  int fini ();
+  int fini () override;
 
   /**
    * Fetch location of next available data into <recv_buffer_>.
    * As this operation read the address of the data off the socket
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
-  virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
-                            int flags,
-                            const ACE_Time_Value *timeout);
+  ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
+                    int flags,
+                    const ACE_Time_Value *timeout) override;
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If <send>
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
-  virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
-                            int flags,
-                            const ACE_Time_Value *timeout);
+  ssize_t send_buf (ACE_MEM_SAP_Node *buf,
+                    int flags,
+                    const ACE_Time_Value *timeout) override;
 
 private:
   Channel recv_channel_;
