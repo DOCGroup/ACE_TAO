@@ -20,7 +20,12 @@ public:
   void dump_results ();
 
   // = The skeleton methods
-  virtual void run_test (Test::Crashed_Callback_ptr callback);
+  void run_test (Test::Crashed_Callback_ptr callback) override;
+
+  Service (Service const&) = delete;
+  Service (Service&&) = delete;
+  Service& operator= (Service const&) = delete;
+  Service& operator= (Service&&) = delete;
 
   CORBA::ORB_var orb_;
 

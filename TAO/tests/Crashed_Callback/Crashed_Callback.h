@@ -11,14 +11,19 @@ class Crashed_Callback
 {
 public:
   /// Constructor
-  Crashed_Callback ();
+  Crashed_Callback () = default;
 
   // = The skeleton methods
-  virtual CORBA::Boolean are_you_there ();
+  CORBA::Boolean are_you_there () override;
 
-  virtual void crash_now_please ();
+  void crash_now_please () override;
 
-  virtual void test_oneway ();
+  void test_oneway () override;
+
+  Crashed_Callback (Crashed_Callback const&) = delete;
+  Crashed_Callback (Crashed_Callback&&) = delete;
+  Crashed_Callback& operator= (Crashed_Callback const&) = delete;
+  Crashed_Callback& operator= (Crashed_Callback&&) = delete;
 };
 
 #include /**/ "ace/post.h"

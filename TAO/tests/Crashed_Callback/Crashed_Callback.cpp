@@ -1,13 +1,9 @@
 #include "Crashed_Callback.h"
 
-Crashed_Callback::Crashed_Callback ()
-{
-}
-
 CORBA::Boolean
 Crashed_Callback::are_you_there ()
 {
-  return 1;
+  return true;
 }
 
 void

@@ -31,7 +31,7 @@ Service::run_test (Test::Crashed_Callback_ptr callback)
                   "(%P|%t) - Service, calling crash_now_please\n"));
       callback->crash_now_please ();
     }
-  catch (const CORBA::Exception&){}
+  catch (CORBA::Exception const&) {}
 
   int pos_crash_exceptions =
     this->call_test_oneway (callback);
@@ -63,16 +63,16 @@ int
 Service::call_are_you_there (Test::Crashed_Callback_ptr callback)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling are_you_there\n"));
-  const int iterations = 50;
+  constexpr int iterations = 50;
 
-  int exception_count = 0;
+  int exception_count {};
   for (int i = 0; i != iterations; ++i)
     {
       try
         {
           (void) callback->are_you_there ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           exception_count++;
         }
@@ -84,16 +84,16 @@ int
 Service::call_test_oneway (Test::Crashed_Callback_ptr callback)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling test_oneway\n"));
-  const int iterations = 50;
+  constexpr int iterations = 50;
 
-  int exception_count = 0;
+  int exception_count {};
   for (int i = 0; i != iterations; ++i)
     {
       try
         {
           (void) callback->test_oneway ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           exception_count++;
         }
