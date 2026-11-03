@@ -8,22 +8,23 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
+#include <array>
 
-static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
-static const ACE_TCHAR *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
-static const ACE_TCHAR *const DATA = ACE_TEXT ("hello world\n");
+constexpr u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
+ACE_TCHAR const * const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
+ACE_TCHAR const * const DATA = ACE_TEXT ("hello world\n");
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  u_short logger_port  = argc > 1 ? ACE_OS::atoi (argv[1]) : LOGGER_PORT;
-  const ACE_TCHAR *logger_host = argc > 2 ? argv[2] : LOGGER_HOST;
+  const u_short logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : LOGGER_PORT;
+  ACE_TCHAR const * const logger_host = argc > 2 ? argv[2] : LOGGER_HOST;
 
   ACE_SOCK_Stream logger;
   ACE_SOCK_Connector connector;
   ACE_INET_Addr addr (logger_port, logger_host);
   ACE_Log_Record log_record (LM_DEBUG,
-                             ACE_OS::time ((time_t *) 0),
+                             ACE_OS::time (nullptr),
                              ACE_OS::getpid ());
 
   if (connector.connect (logger, addr) == -1)
@@ -54,13 +55,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   header << ACE_CDR::ULong (length);
 
   // Use an iovec to send both buffer and payload simultaneously.
-  iovec iov[2];
+  std::array<iovec, 2> iov {};
   iov[0].iov_base = header.begin ()->rd_ptr ();
   iov[0].iov_len  = 8;
   iov[1].iov_base = payload.begin ()->rd_ptr ();
   iov[1].iov_len  = length;
 
-  if (logger.sendv_n (iov, 2) == -1)
+  if (logger.sendv_n (iov.data (), iov.size ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
   else if (logger.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
