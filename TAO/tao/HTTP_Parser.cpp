@@ -14,7 +14,25 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
+#include <memory>
 #include <string>
+
+namespace
+{
+  struct Message_Block_Chain_Deleter
+  {
+    void operator() (ACE_Message_Block *message_block) const
+    {
+      while (message_block != nullptr)
+        {
+          ACE_Message_Block *next = message_block->cont ();
+          message_block->cont (nullptr);
+          message_block->release ();
+          message_block = next;
+        }
+    }
+  };
+}
 
 static const ACE_TCHAR file_prefix[] = ACE_TEXT ("http:");
 
@@ -76,10 +94,11 @@ TAO_HTTP_Parser::parse_string (const char *nior,
     }
   }
 
-  ACE_Message_Block* mb = nullptr;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_THROW_EX (mb,
                     ACE_Message_Block (),
                     CORBA::INTERNAL ());
+  std::unique_ptr<ACE_Message_Block, Message_Block_Chain_Deleter> mb_owner (mb);
 
   // Create a client
   TAO_HTTP_Client client;
@@ -101,7 +120,7 @@ TAO_HTTP_Parser::parse_string (const char *nior,
   }
 
   // Read from it
-  if (client.read (mb) <= 0)
+  if (client.read (mb_owner.get ()) <= 0)
   {
       client.close ();
       return nullptr;
@@ -110,7 +129,9 @@ TAO_HTTP_Parser::parse_string (const char *nior,
   // We get multiple message blocks back, concatenate them to
   // one large string
   ACE_CString string;
-  for (ACE_Message_Block * curr = mb; curr != nullptr; curr = curr->cont ())
+  for (ACE_Message_Block * curr = mb_owner.get ();
+       curr != nullptr;
+       curr = curr->cont ())
     string += curr->rd_ptr();
 
   return orb->string_to_object (string.c_str());
