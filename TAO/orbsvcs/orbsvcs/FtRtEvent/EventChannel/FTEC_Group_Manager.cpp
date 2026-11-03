@@ -41,15 +41,12 @@ struct TAO_FTEC_Group_Manager_Impl
 };
 
 TAO_FTEC_Group_Manager::TAO_FTEC_Group_Manager()
-: impl_(new TAO_FTEC_Group_Manager_Impl)
+: impl_ (std::make_unique<TAO_FTEC_Group_Manager_Impl> ())
 {
   Fault_Detector::instance()->set_listener(this);
 }
 
-TAO_FTEC_Group_Manager::~TAO_FTEC_Group_Manager()
-{
-  delete impl_;
-}
+TAO_FTEC_Group_Manager::~TAO_FTEC_Group_Manager() = default;
 
 CORBA::Boolean TAO_FTEC_Group_Manager::start (
         FTRT::FaultListener_ptr listener,
@@ -222,8 +219,7 @@ void TAO_FTEC_Group_Manager::add_member (
   // commit the changes
   IOGR_Maker::instance()->set_ref_version( object_group_ref_version );
   publisher->update_info(group_info);
-  delete impl_;
-  impl_ = new_impl.release();
+  impl_.swap (new_impl);
 }
 
 template <class SEQ>
