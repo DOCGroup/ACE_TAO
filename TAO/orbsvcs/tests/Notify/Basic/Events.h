@@ -18,6 +18,8 @@
 #include "Notify_StructuredPushConsumer.h"
 #include "Notify_StructuredPushSupplier.h"
 
+#include <atomic>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -87,7 +89,7 @@ protected:
   void create_EC ();
 
   /// Number of events received so far.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
+  std::atomic<int> result_count_ {0};
 
   /// Use the default admins.
   int use_default_admin_;

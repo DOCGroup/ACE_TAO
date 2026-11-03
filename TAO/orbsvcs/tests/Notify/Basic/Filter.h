@@ -17,6 +17,8 @@
 #include "Notify_PushConsumer.h"
 #include "Notify_PushSupplier.h"
 
+#include <atomic>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -58,7 +60,7 @@ protected:
   CosNotifyFilter::FilterFactory_var ffact_;
 
   /// Number of events received so far.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
+  std::atomic<int> result_count_ {0};
 
   /// Number of events to send
   int event_count_;

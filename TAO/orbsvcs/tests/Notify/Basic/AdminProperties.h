@@ -18,6 +18,8 @@
 #include "Notify_StructuredPushConsumer.h"
 #include "Notify_StructuredPushSupplier.h"
 
+#include <atomic>
+
 class AdminProperties;
 /***************************************************************************/
 
@@ -33,7 +35,7 @@ public:
 protected:
   AdminProperties* client_;
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> events_received_;
+  std::atomic<CORBA::Long> events_received_ {0};
 };
 
 

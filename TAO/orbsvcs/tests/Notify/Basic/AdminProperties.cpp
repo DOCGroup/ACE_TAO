@@ -98,7 +98,6 @@ return 0;
 
 AdminProperties_StructuredPushConsumer::AdminProperties_StructuredPushConsumer (AdminProperties* client)
   : client_ (client)
-  , events_received_ (0)
 {
   client_->consumer_start(this);
 }
@@ -109,13 +108,13 @@ AdminProperties_StructuredPushConsumer::push_structured_event (const CosNotifica
 {
   ++events_received_;
 
-  if (events_received_ >= client_->max_queue_length_)
+  if (events_received_.load () >= client_->max_queue_length_)
     client_->consumer_done(this);
 
   ACE_DEBUG((LM_DEBUG, "-"));
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "\nConsumer %x received event %d\n", this, events_received_.value ()));
+    ACE_DEBUG ((LM_DEBUG, "\nConsumer %x received event %d\n", this, events_received_.load ()));
 }
 
 /***************************************************************************/
@@ -304,7 +303,7 @@ AdminProperties::test_max_queue_length (bool reject)
   this->ORB_run();
 
   // consumer is destroyed by consumer->disconnect()
-  CORBA::Long received_count = consumer->events_received_.value ();
+  CORBA::Long received_count = consumer->events_received_.load ();
 
   // disconnect the participants.
   consumer->disconnect ();

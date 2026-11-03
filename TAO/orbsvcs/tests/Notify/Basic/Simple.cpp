@@ -154,9 +154,9 @@ Simple_Test::on_event_received ()
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
                 "event count = #%d\n",
-                this->result_count_.value ()));
+                this->result_count_.load ()));
 
-  if (this->result_count_ == 2 * this->event_count_)
+  if (this->result_count_.load () == 2 * this->event_count_)
     {
       this->end_test ();
     }
@@ -187,7 +187,7 @@ Simple_Test::check_results ()
   // Destroy the channel
   this->ec_->destroy ();
 
-  if (this->result_count_ == 2 * this->event_count_)
+  if (this->result_count_.load () == 2 * this->event_count_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Events test success\n"));

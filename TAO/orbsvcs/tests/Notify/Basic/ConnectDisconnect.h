@@ -21,6 +21,8 @@
 #include "Notify_SequencePushConsumer.h"
 #include "Notify_SequencePushSupplier.h"
 
+#include <atomic>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -110,7 +112,7 @@ protected:
 
   /// Count of clients destroyed. for c consumers, s suppliers and for t times.
   /// this should be (s+c)*t.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
+  std::atomic<int> result_count_ {0};
 
   int expected_count_; // (s+c)*t
 

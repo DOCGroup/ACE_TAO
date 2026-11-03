@@ -18,6 +18,8 @@
 #include "Notify_SequencePushSupplier.h"
 #include "orbsvcs/TimeBaseC.h"
 
+#include <atomic>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -99,7 +101,7 @@ protected:
   CORBA::Short order_policy_;
 
   /// Count the number of events received by the consumer.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> events_received_;
+  std::atomic<int> events_received_ {0};
 
   ACE_Time_Value consumer_delay_;
 

@@ -57,9 +57,6 @@ MultiTypes::MultiTypes ()
    any_supplier_ (0),
    structured_supplier_ (0),
    sequence_supplier_ (0),
-   any_event_count_ (0),
-   struct_event_count_ (0),
-   seq_event_count_ (0),
    disconnect_on_last_event_ (0)
 {
 }
@@ -74,7 +71,7 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
   ++any_event_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "PushConsumer received event #%d\n", any_event_count_.value ()));
+    ACE_DEBUG ((LM_DEBUG, "PushConsumer received event #%d\n", any_event_count_.load ()));
 
 
   if (disconnect_on_last_event_ == 1)
@@ -92,7 +89,7 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
   ++struct_event_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer received event #%d\n", struct_event_count_.value ()));
+    ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer received event #%d\n", struct_event_count_.load ()));
 
 
   if (disconnect_on_last_event_ == 1)
@@ -110,7 +107,7 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
   ++seq_event_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer received event #%d\n", seq_event_count_.value ()));
+    ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer received event #%d\n", seq_event_count_.load ()));
 
 
   if (disconnect_on_last_event_ == 1)
@@ -296,9 +293,9 @@ MultiTypes::wait_for_all_consumers (int expected_count_per_consumer)
 {
   while (true)
     {
-      if (any_event_count_.value () >= expected_count_per_consumer &&
-          struct_event_count_.value () >= expected_count_per_consumer &&
-          seq_event_count_.value () >= expected_count_per_consumer)
+      if (any_event_count_.load () >= expected_count_per_consumer &&
+          struct_event_count_.load () >= expected_count_per_consumer &&
+          seq_event_count_.load () >= expected_count_per_consumer)
       {
         break;
       }

@@ -21,6 +21,8 @@
 #include "Notify_SequencePushConsumer.h"
 #include "Notify_SequencePushSupplier.h"
 
+#include <atomic>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -125,13 +127,13 @@ protected:
   TAO_Notify_Tests_SequencePushSupplier* sequence_supplier_;
 
   // Count of Any events received;
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> any_event_count_;
+  std::atomic<int> any_event_count_ {0};
 
   // Count of Structured events received;
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> struct_event_count_;
+  std::atomic<int> struct_event_count_ {0};
 
   // Count of Sequence events received;
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> seq_event_count_;
+  std::atomic<int> seq_event_count_ {0};
 
   // disconnect_on_last_event_
   int disconnect_on_last_event_;

@@ -69,7 +69,7 @@ ConnectDisconnect::on_entity_destroyed ()
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
                 "result_count = %d\n",
-                this->result_count_.value ()));
+                this->result_count_.load ()));
 }
 
 int
@@ -277,10 +277,10 @@ ConnectDisconnect::end_test ()
 int
 ConnectDisconnect::check_results ()
 {
-  ACE_DEBUG ((LM_DEBUG, "result_count_ = %d", this->result_count_.value ()));
+  ACE_DEBUG ((LM_DEBUG, "result_count_ = %d", this->result_count_.load ()));
   ACE_DEBUG ((LM_DEBUG, " expected_count_ = %d\n", this->expected_count_));
 
-  if (this->result_count_ != this->expected_count_)
+  if (this->result_count_.load () != this->expected_count_)
     {
       ACE_DEBUG ((LM_DEBUG, "ConnectDisconnect test failed\n"));
     }
