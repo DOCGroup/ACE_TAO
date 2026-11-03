@@ -12,6 +12,7 @@ Hello::get_objects ()
   my_seq->length (1);
 
   (*my_seq)[0] = CORBA::Object::_duplicate (CORBA::Object::_nil ());
+  // The generated operation signature returns ownership to the caller.
   return my_seq._retn ();
 }
 
