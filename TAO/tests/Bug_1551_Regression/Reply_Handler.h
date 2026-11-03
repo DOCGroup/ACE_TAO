@@ -29,8 +29,8 @@ private:
 
 private:
   std::atomic<long> counter_ {1000};
-  Test::Hello_var hello_;
-  CORBA::ORB_var orb_;
+  Test::Hello_var const hello_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

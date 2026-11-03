@@ -22,9 +22,9 @@ public:
   void short_sleep () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
-  bool simulate_crashes_;
+  bool const simulate_crashes_;
 
   std::atomic<long> atomic_counter_ {200};
 };
