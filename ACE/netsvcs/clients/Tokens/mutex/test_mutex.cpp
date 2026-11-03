@@ -12,12 +12,13 @@
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
-static ACE_Token_Proxy *mutex;
-static int remote_mutexes = 0;
-static const char *server_host = ACE_DEFAULT_SERVER_HOST;
+static std::unique_ptr<ACE_Token_Proxy> mutex;
+static bool remote_mutexes = false;
+static ACE_TCHAR const *server_host = ACE_DEFAULT_SERVER_HOST;
 static int server_port = ACE_DEFAULT_SERVER_PORT;
 static int iterations = 100;
 static int spawn_count = 2;
@@ -70,11 +71,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'h':  // specify the host machine on which the server is running
           server_host = get_opt.opt_arg ();
-          remote_mutexes = 1;
+          remote_mutexes = true;
           break;
         case 'p':  // specify the port on which the server is running
           server_port = ACE_OS::atoi (get_opt.opt_arg ());
-          remote_mutexes = 1;
+          remote_mutexes = true;
           break;
         case 'n':  // specify the port on which the server is running
           iterations = ACE_OS::atoi (get_opt.opt_arg ());
@@ -107,16 +108,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (remote_mutexes)
     {
       ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port, server_host));
-      mutex = new ACE_Remote_Mutex ("Remote TOKEN", 0, 1);
+      mutex = std::make_unique<ACE_Remote_Mutex> ("Remote TOKEN", 0, 1);
     }
   else
     {
-      mutex = new ACE_Local_Mutex ("Local TOKEN", 0, 1);
+      mutex = std::make_unique<ACE_Local_Mutex> ("Local TOKEN", 0, 1);
     }
 
   if (thread_mgr.spawn_n (spawn_count,
                           ACE_THR_FUNC (run_test),
-                          0,
+                          nullptr,
                           THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn"), -1);
 
