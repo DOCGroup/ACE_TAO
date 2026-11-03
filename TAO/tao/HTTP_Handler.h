@@ -30,6 +30,8 @@
 #include "ace/Message_Block.h"
 #include "tao/Versioned_Namespace.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -40,7 +42,7 @@ class TAO_Export TAO_HTTP_Handler : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE
 {
 public:
   /// Null constructor, insures that it works properly with Connector
-  TAO_HTTP_Handler ();
+  TAO_HTTP_Handler () = default;
 
   /// Always use this constructor to make HTTP_Handlers
   TAO_HTTP_Handler (ACE_Message_Block *mb,
@@ -55,15 +57,15 @@ public:
   /// Close down the Blob
   int close (u_long flags = 0) override;
 
-  ~TAO_HTTP_Handler ();
+  ~TAO_HTTP_Handler () = default;
 
 protected:
   virtual int send_request ();
   virtual int receive_reply ();
 
-  ACE_Message_Block *mb_;
-  ACE_TCHAR *filename_;
-  size_t bytecount_;
+  ACE_Message_Block *mb_ {};
+  std::basic_string<ACE_TCHAR> filename_;
+  size_t bytecount_ {};
   /// The handler assumes that the first 2048 bytes of a server response
   /// contains the header
   static constexpr int MAX_HEADER_SIZE = 2048;

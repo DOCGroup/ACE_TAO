@@ -10,28 +10,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_HTTP_Handler::TAO_HTTP_Handler () :
-  mb_ (nullptr),
-  filename_ (nullptr),
-  bytecount_ (0)
-{
-}
-
 TAO_HTTP_Handler::TAO_HTTP_Handler (ACE_Message_Block * mb,
                             ACE_TCHAR *filename) :
   mb_ (mb),
-  filename_ (ACE_OS::strdup (filename)),
-  bytecount_ (0)
+  filename_ (filename)
 {
-}
-
-TAO_HTTP_Handler::~TAO_HTTP_Handler ()
-{
-  if (this->filename_)
-    {
-      ACE_OS::free (this->filename_);
-      filename_ = nullptr;
-    }
 }
 
 int
@@ -88,13 +71,13 @@ TAO_HTTP_Reader::send_request ()
 
   // Check to see if the request is too big
   if (MAX_HEADER_SIZE < (std::strlen (request_prefix_)
-                         + ACE_OS::strlen (filename_)
+                         + ACE_OS::strlen (this->filename_.c_str ())
                          + std::strlen (request_suffix_) + 4))
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
   int const len = std::sprintf (mesg, "%s %s %s", request_prefix_,
-                                   ACE_TEXT_ALWAYS_CHAR (filename_),
+                                   ACE_TEXT_ALWAYS_CHAR (this->filename_.c_str ()),
                                    request_suffix_);
 
   // Send the message to server
