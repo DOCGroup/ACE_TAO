@@ -1612,8 +1612,15 @@ Key_List::output_lookup_function ()
           ACE_OS::printf ("          else if (slot < 0 && slot >= -static_cast<int> (MAX_HASH_VALUE))\n"
                   "            return %s;\n", generated_null_pointer ());
         }
-      ACE_OS::printf ("          else\n            {\n"
-              "              unsigned int offset = key + slot + (slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);\n"
+      ACE_OS::printf ("          else\n            {\n");
+      if (option.cxx17 ())
+        ACE_OS::printf ("              std::size_t const offset = slot > 0\n"
+                        "                ? key + static_cast<std::size_t> (slot) - MAX_HASH_VALUE\n"
+                        "                : key + MAX_HASH_VALUE - static_cast<std::size_t> (-slot);\n");
+      else
+        ACE_OS::printf ("              unsigned int offset = key + slot + "
+                        "(slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);\n");
+      ACE_OS::printf (
               "              %s%s%s*base = %swordlist[-lookup[offset]]%s;\n"
               "              %s%s%s*ptr = base + -lookup[offset + 1];\n\n"
               "              while (--ptr >= base)\n                ",
