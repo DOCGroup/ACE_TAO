@@ -6,7 +6,7 @@
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 
 #include <cstring>
-#include <cstdio>
+#include <string>
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -118,9 +118,8 @@ TAO_MonitorSupplierAdmin::obtain_notification_push_consumer (
       ctype, proxy_id);
 
   // Next, map the proxy id to the name in the ec
-  char name[64];
-  std::sprintf (name, "%d", proxy_id);
-  ec->map_consumer_proxy (proxy_id, name);
+  const std::string proxy_name = std::to_string (proxy_id);
+  ec->map_consumer_proxy (proxy_id, proxy_name.c_str ());
 
   return proxy._retn ();
 }
