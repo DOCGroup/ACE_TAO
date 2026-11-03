@@ -3,6 +3,10 @@
 #include "be_extern.h"
 #include "../../tao/Version.h"
 
+#include "ace/SString.h"
+
+#include <string>
+
 int
 BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
 {
@@ -56,7 +60,8 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
         }
     }
 
-  be_global->orb_args (ACE_TEXT_ALWAYS_CHAR(holder.c_str()));
+  std::string const orb_args (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
+  be_global->orb_args (orb_args);
 
   return 0;
 }
@@ -70,12 +75,12 @@ BE_ifr_orb_init (int &ac, ACE_TCHAR *av[])
 {
   try
     {
-      ACE_TCHAR* name = 0;
+      ACE_TCHAR *name = nullptr;
       be_global->orb (CORBA::ORB_init (ac,
                                        av,
                                        name));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("BE_ifr_orb_init"));
 
@@ -116,7 +121,7 @@ BE_init (int &argc, ACE_TCHAR *argv[])
 }
 
 TAO_IFR_BE_Export void
-BE_post_init (std::vector<std::string> const&)
+BE_post_init (std::vector<std::string> const &)
 {
 }
 

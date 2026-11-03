@@ -14,7 +14,7 @@ public:
   IFR_Service_Shutdown_Functor &operator= (IFR_Service_Shutdown_Functor const &) = delete;
   IFR_Service_Shutdown_Functor &operator= (IFR_Service_Shutdown_Functor &&) = delete;
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 private:
   IFR_Service & ifr_;
 };
@@ -61,12 +61,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
             }
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unknown Exception");
       return -1;

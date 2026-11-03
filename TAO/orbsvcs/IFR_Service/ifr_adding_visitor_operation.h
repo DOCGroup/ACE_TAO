@@ -32,16 +32,20 @@ class ifr_adding_visitor_operation : public ifr_adding_visitor
 {
 public:
   /// Constructor.
-  ifr_adding_visitor_operation (AST_Decl *scope);
+  explicit ifr_adding_visitor_operation (AST_Decl *scope);
 
   /// Destructor.
-  virtual ~ifr_adding_visitor_operation ();
+  ~ifr_adding_visitor_operation () override;
+  ifr_adding_visitor_operation (ifr_adding_visitor_operation const &) = delete;
+  ifr_adding_visitor_operation (ifr_adding_visitor_operation &&) = delete;
+  ifr_adding_visitor_operation &operator= (ifr_adding_visitor_operation const &) = delete;
+  ifr_adding_visitor_operation &operator= (ifr_adding_visitor_operation &&) = delete;
 
   /// Visit an operation.
-  virtual int visit_operation (AST_Operation *node);
+  int visit_operation (AST_Operation *node) override;
 
   /// Visit argument.
-  virtual int visit_argument (AST_Argument *node);
+  int visit_argument (AST_Argument *node) override;
 
 private:
   /// Holder for the operation parameter info passed to the
@@ -49,7 +53,7 @@ private:
   CORBA::ParDescriptionSeq params_;
 
   /// Counter for building the parameter list.
-  CORBA::ULong index_;
+  CORBA::ULong index_ {};
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_OPERATION_H */

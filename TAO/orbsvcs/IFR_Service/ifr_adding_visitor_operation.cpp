@@ -5,7 +5,6 @@
 #include "ast_expression.h"
 #include "ast_operation.h"
 #include "utl_identifier.h"
-#include "utl_string.h"
 
 #include "ifr_adding_visitor_operation.h"
 #include "utl_exceptlist.h"
@@ -15,14 +14,11 @@
 #include <string>
 
 ifr_adding_visitor_operation::ifr_adding_visitor_operation (AST_Decl *scope)
-  : ifr_adding_visitor (scope),
-    index_ (0)
+  : ifr_adding_visitor (scope)
 {
 }
 
-ifr_adding_visitor_operation::~ifr_adding_visitor_operation ()
-{
-}
+ifr_adding_visitor_operation::~ifr_adding_visitor_operation () = default;
 
 int
 ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
@@ -35,7 +31,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // compiler front end would have told us.
 
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ().c_str ());
+        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
 
       if (!CORBA::is_nil (prev_def.in ()))
         {
@@ -68,7 +64,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       UTL_ExceptList *excepts = node->exceptions ();
 
-      if (excepts != 0)
+      if (excepts != nullptr)
         {
           length = static_cast<CORBA::ULong> (excepts->length ());
         }
@@ -80,7 +76,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       CORBA::ExceptionDefSeq exceptions (length);
       exceptions.length (length);
 
-      AST_Type *ex = 0;
+      AST_Type *ex = nullptr;
       CORBA::ULong i = 0;
 
       for (UTL_ExceptlistActiveIterator ex_iter (excepts);
@@ -90,7 +86,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           ex = ex_iter.item ();
 
           prev_def =
-            be_global->repository ()->lookup_id (ex->repoID ().c_str ());
+            be_global->repository ()->lookup_id (IFR_C_String (ex->repoID ()));
 
           exceptions[i] =
             CORBA::ExceptionDef::_narrow (prev_def.in ());
@@ -139,9 +135,9 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                 CORBA::InterfaceDef::_narrow (current_scope);
 
               CORBA::OperationDef_var new_def =
-                iface->create_operation (node->repoID ().c_str (),
+                iface->create_operation (IFR_C_String (node->repoID ()),
                                          node->local_name ()->get_string ().c_str (),
-                                         node->version ().c_str (),
+                                         IFR_C_String (node->version ()),
                                          this->ir_current_.in (),
                                          mode,
                                          this->params_,
@@ -154,9 +150,9 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
                 CORBA::ValueDef::_narrow (current_scope);
 
               CORBA::OperationDef_var new_def =
-                vtype->create_operation (node->repoID ().c_str (),
+                vtype->create_operation (IFR_C_String (node->repoID ()),
                                          node->local_name ()->get_string ().c_str (),
-                                         node->version ().c_str (),
+                                         IFR_C_String (node->version ()),
                                          this->ir_current_.in (),
                                          mode,
                                          this->params_,
@@ -176,7 +172,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
           );
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -226,7 +222,7 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
 
       ++this->index_;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
