@@ -60,7 +60,7 @@ Consumer_Handler::read_ior (ACE_TCHAR const *filename)
                        "Unable to read ior: %p\n"),
                       -1);
 
-  this->ior_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
+  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR(data);
   ior_buffer.alloc ()->free (data);
 
   ACE_OS::close (f_handle);
@@ -72,7 +72,7 @@ Consumer_Handler::read_ior (ACE_TCHAR const *filename)
 int
 Consumer_Handler::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("a:t:d:f:xk:xs"));
+  ACE_Get_Opt get_opts (this->argc_, this->argv_.get (), ACE_TEXT("a:t:d:f:xk:xs"));
   int c;
   int result;
 
@@ -84,7 +84,7 @@ Consumer_Handler::parse_args ()
         break;
 
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->ior_ = get_opts.opt_arg ();
         break;
 
       case 'f': // read the IOR from the file.
@@ -125,7 +125,7 @@ Consumer_Handler::parse_args ()
                            " [-a stock_name]"
                            " [-t threshold]"
                            "\n",
-                           this->argv_ [0]),
+                           this->argv_[0]),
                           -1);
       }
 
@@ -173,7 +173,11 @@ int
 Consumer_Handler::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
-  this->argv_ = argv;
+  ACE_TCHAR **argv_copy = nullptr;
+  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+  this->argv_.reset (argv_copy);
+  for (int i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
 
   // Register our <Input_Handler> to handle STDIN events, which will
   // trigger the <handle_input> method to process these events.
@@ -181,7 +185,7 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_.get ());
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -233,19 +237,19 @@ Consumer_Handler::init (int argc, ACE_TCHAR **argv)
          }
       else
         {
-          if (this->ior_ == nullptr)
+          if (this->ior_.empty ())
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: no ior specified\n",
                                this->argv_[0]),
                               -1);
 
           CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_);
+            this->orb_->string_to_object (this->ior_.c_str ());
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%s>\n",
-                               this->ior_),
+                               this->ior_.c_str ()),
                               -1);
           // The downcasting from CORBA::Object_var to Notifier_var is
           // done using the <_narrow> method.
@@ -279,9 +283,11 @@ Consumer_Handler::run ()
 
      poa_manager->activate ();
 
-     ACE_NEW_RETURN (this->consumer_servant_,
+     Consumer_i *servant = nullptr;
+     ACE_NEW_RETURN (servant,
                      Consumer_i (),
                      -1);
+     this->consumer_servant_.reset (servant);
      // Set the orb in the consumer_ object.
      this->consumer_servant_->orb (this->orb_.in ());
 

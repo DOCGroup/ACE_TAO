@@ -26,6 +26,9 @@
 #include "Consumer_Input_Handler.h"
 #include "Consumer_Signal_Handler.h"
 
+#include <memory>
+#include <string>
+
 class Consumer_Input_Handler;
 class Consumer_Signal_Handler;
 
@@ -68,7 +71,7 @@ public:
   Notifier_var server_ {};
 
   /// The consumer object.
-  Consumer_i *consumer_servant_ {};
+  std::unique_ptr<Consumer_i> consumer_servant_;
 
   /// Pointer to the consumer object registered with the ORB.
   Callback_Quoter::Consumer_var consumer_var_ {};
@@ -102,11 +105,11 @@ private:
   /// # of arguments on the command line.
   int argc_ {};
 
-  /// arguments from command line.
-  ACE_TCHAR **argv_ {};
+  /// Pointer-array copy made before ORB_init modifies argv.
+  std::unique_ptr<ACE_TCHAR *[]> argv_;
 
   /// IOR of the obj ref of the server.
-  ACE_TCHAR *ior_ {};
+  std::basic_string<ACE_TCHAR> ior_;
 
   /// Flag for server shutdown.
   bool shutdown_ {};
@@ -119,10 +122,11 @@ private:
   /// is used or not.
   bool use_naming_service_ {true};
 
-  /// Reference to the input_event_handler.
+  /// The reactor uses this handler after registration; removal is managed
+  /// through remove_stdin_handler.
   Consumer_Input_Handler *consumer_input_handler_ {};
 
-  /// Reference to the signal_event_handler.
+  /// The signal handler deletes itself from handle_close.
   Consumer_Signal_Handler *consumer_signal_handler_ {};
 
   /// Is the example interactive?

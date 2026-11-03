@@ -26,6 +26,8 @@
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 /**
  * @class Notifier_i
  *
@@ -41,7 +43,7 @@ public:
   Notifier_i () = default;
 
   /// Destructor.
-  ~Notifier_i () = default;
+  ~Notifier_i () override;
 
   Notifier_i (Notifier_i const &) = delete;
   Notifier_i &operator= (Notifier_i const &) = delete;
@@ -100,6 +102,10 @@ public:
   ///This marks the exit of the notifier. This should be taken care of
   /// before the consumer tries to unregister after the notifier quits.
   bool notifier_exited_ {};
+
+private:
+  /// Releases mapped consumer sets before closing the ACE map.
+  int close_consumer_map ();
 };
 
 #endif /* NOTIFIER_I_H */

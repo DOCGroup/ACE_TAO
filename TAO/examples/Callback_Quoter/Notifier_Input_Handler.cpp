@@ -15,9 +15,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_ctype.h"
 
-// Constructor.
-Notifier_Input_Handler::Notifier_Input_Handler () = default;
-
 // Destructor.
 Notifier_Input_Handler::~Notifier_Input_Handler ()
 {
@@ -70,7 +67,7 @@ Notifier_Input_Handler::init_naming_service ()
 int
 Notifier_Input_Handler::parse_args ()
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:s "));
+  ACE_Get_Opt get_opts (this->argc_, this->argv_.get (), ACE_TEXT("df:s "));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -81,8 +78,8 @@ Notifier_Input_Handler::parse_args ()
         break;
 
       case 'f':  // output the IOR toi a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == nullptr)
+        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->ior_output_file_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()),
@@ -101,7 +98,7 @@ Notifier_Input_Handler::parse_args ()
                            " [-f] <ior_output_file>"
                            " [-s]"
                            "\n",
-                           argv_ [0]),
+                           this->argv_[0]),
                           1);
       }
 
@@ -117,10 +114,14 @@ Notifier_Input_Handler::init (int argc,
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
   this->argc_ = argc;
-  this->argv_ = argv;
+  ACE_TCHAR **argv_copy = nullptr;
+  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+  this->argv_.reset (argv_copy);
+  for (int i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
 
   if (this->orb_manager_.init_child_poa (this->argc_,
-                                         this->argv_,
+                                         this->argv_.get (),
                                          "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -160,10 +161,10 @@ Notifier_Input_Handler::init (int argc,
 
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
+      ACE_OS::fprintf (this->ior_output_file_.get (),
                        "%s",
                        str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      this->ior_output_file_.reset ();
     }
 
   if (this->using_naming_service_)

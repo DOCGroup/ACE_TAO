@@ -18,16 +18,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
-// Constructor.
-Supplier::Supplier () = default;
-
 Supplier::~Supplier ()
 {
-  // Release the memory allocated for ior_.
-  ACE_OS::free (this->ior_);
-
-  // Close the stream.
-  ACE_OS::fclose (f_ptr_);
+  if (this->timer_id_ != -1)
+    this->reactor_used ()->cancel_timer (this->timer_id_);
 
   ACE_DEBUG ((LM_DEBUG,
               "Market Status Supplier daemon exiting!\n"));
@@ -54,7 +48,7 @@ Supplier::read_ior (ACE_TCHAR const *filename)
                        "Unable to read ior\n"),
                       -1);
 
-  this->ior_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
+  this->ior_ = ACE_TEXT_CHAR_TO_TCHAR(data);
   ior_buffer.alloc ()->free (data);
 
   ACE_OS::close (f_handle);
@@ -66,7 +60,7 @@ Supplier::read_ior (ACE_TCHAR const *filename)
 int
 Supplier::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:f:i:xk:xs"));
+  ACE_Get_Opt get_opts (this->argc_, this->argv_.get (), ACE_TEXT("dn:f:i:xk:xs"));
 
   int c;
   int result;
@@ -92,7 +86,7 @@ Supplier::parse_args ()
         break;
 
       case 'k':  // Ior provide on command line
-        this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->ior_ = get_opts.opt_arg ();
         break;
 
       case 'f': // Read the IOR from the file.
@@ -157,8 +151,6 @@ Supplier::send_market_status (char const *stock_name, long value)
 int
 Supplier::run ()
 {
-  long timer_id {};
-
   ACE_DEBUG ((LM_DEBUG,
               "Market Status Supplier Daemon is running...\n"));
 
@@ -166,11 +158,12 @@ Supplier::run ()
   ACE_Time_Value period (period_value_);
 
   // "Your time starts now!" ;) the timer is scheduled to begin work.
-  timer_id = reactor_used ()->schedule_timer (supplier_timer_handler_,
-                                              "Periodic stockfeed",
-                                              period,
-                                              period);
-  if (timer_id == -1)
+  this->timer_id_ = this->reactor_used ()->schedule_timer (
+    this->supplier_timer_handler_.get (),
+    "Periodic stockfeed",
+    period,
+    period);
+  if (this->timer_id_ == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "schedule_timer"),
@@ -224,39 +217,45 @@ int
 Supplier::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
-  this->argv_ = argv;
+  ACE_TCHAR **argv_copy = nullptr;
+  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+  this->argv_.reset (argv_copy);
+  for (int i = 0; i < argc; i++)
+    this->argv_[i] = argv[i];
 
   try
     {
       // Retrieve the ORB.
-      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_);
+      this->orb_ = CORBA::ORB_init (this->argc_, this->argv_.get ());
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
 
       // Create the Timer_Handler.
-      ACE_NEW_RETURN (supplier_timer_handler_,
+      Supplier_Timer_Handler *timer_handler = nullptr;
+      ACE_NEW_RETURN (timer_handler,
                       Supplier_Timer_Handler (this,
                                               this->reactor_used (),
-                                              this->f_ptr_),
+                                              this->f_ptr_.get ()),
                       -1);
+      this->supplier_timer_handler_.reset (timer_handler);
 
       if (this->use_naming_service_)
         return via_naming_service ();
 
-      if (this->ior_ == nullptr)
+      if (this->ior_.empty ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: no ior specified\n",
                            this->argv_[0]),
                           -1);
       CORBA::Object_var notifier_object =
-        this->orb_->string_to_object (this->ior_);
+        this->orb_->string_to_object (this->ior_.c_str ());
 
       if (CORBA::is_nil (notifier_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid ior <%s>\n",
-                           this->ior_),
+                           this->ior_.c_str ()),
                           -1);
       // The downcasting from CORBA::Object_var to Notifier_var is
       // done using the <_narrow> method.
@@ -286,14 +285,14 @@ Supplier::reactor_used () const
 int
 Supplier::read_file (ACE_TCHAR const *filename)
 {
-  f_ptr_ = ACE_OS::fopen (filename, "r");
+  this->f_ptr_.reset (ACE_OS::fopen (filename, "r"));
 
   ACE_DEBUG ((LM_DEBUG,
               "filename = %s\n",
               filename));
 
   // the stock values are to be read from a file.
-  if (f_ptr_ == nullptr)
+  if (!this->f_ptr_)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
                        filename),

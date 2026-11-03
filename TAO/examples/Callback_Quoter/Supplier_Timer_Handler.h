@@ -55,13 +55,13 @@ private:
   /// The values of the stock and its rate are got from the file.
   int get_stock_information ();
 
-  /// The supplier instance.
+  /// Borrowed from Supplier, which owns this handler and outlives its timer.
   Supplier *supplier_obj_ {};
 
-  /// Reactor used by the supplier.
+  /// Borrowed singleton reactor.
   ACE_Reactor *reactor_ {};
 
-  /// The file handle of the file from where the stock input is obtained.
+  /// Borrowed from Supplier, which owns the input stream.
   FILE *file_ptr_ {};
 
   /// The name of the stock.

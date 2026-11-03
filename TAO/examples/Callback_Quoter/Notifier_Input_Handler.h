@@ -16,9 +16,13 @@
 #include "Notifier_i.h"
 #include "NotifierS.h"
 #include "ace/Event_Handler.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingS.h"
 #include "orbsvcs/Naming/Naming_Client.h"
+
+#include <cstdio>
+#include <memory>
 
 /**
  * @class Notifier_Input_Handler
@@ -34,7 +38,7 @@ class Notifier_Input_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Notifier_Input_Handler ();
+  Notifier_Input_Handler () = default;
 
   Notifier_Input_Handler (Notifier_Input_Handler const &) = delete;
   Notifier_Input_Handler &operator= (Notifier_Input_Handler const &) = delete;
@@ -65,13 +69,14 @@ private:
   int init_naming_service ();
 
   /// File where the IOR of the Notifier object is stored.
-  FILE *ior_output_file_ {};
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Handle ior_output_file_ {nullptr, &ACE_OS::fclose};
 
   /// Number of command line arguments.
   int argc_ {};
 
   /// The command line arguments.
-  ACE_TCHAR **argv_ {};
+  std::unique_ptr<ACE_TCHAR *[]> argv_;
 
   /// Naming context for the naming service.
   CosNaming::NamingContext_var naming_context_ {};

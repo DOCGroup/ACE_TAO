@@ -12,6 +12,30 @@
 
 #include "Notifier_i.h"
 
+Notifier_i::~Notifier_i ()
+{
+  this->close_consumer_map ();
+}
+
+int
+Notifier_i::close_consumer_map ()
+{
+  if (this->notifier_exited_)
+    return 0;
+
+  this->notifier_exited_ = true;
+
+  for (CONSUMER_MAP::ITERATOR iter = this->consumer_map_.begin ();
+       iter != this->consumer_map_.end ();
+       ++iter)
+    {
+      delete (*iter).int_id_;
+      (*iter).int_id_ = nullptr;
+    }
+
+  return this->consumer_map_.close ();
+}
+
 // Register a distributed callback handler that is invoked when the
 // given stock reaches the desired threshold value.
 void
@@ -52,7 +76,9 @@ Notifier_i::register_callback (char const *stock_name,
   else
     {
       // the unbounded set entry is created.
+      std::unique_ptr<CONSUMERS> consumers_owner;
       ACE_NEW_THROW_EX (consumers, CONSUMERS, CORBA::NO_MEMORY ());
+      consumers_owner.reset (consumers);
 
       // When a new entry is tried to be inserted into the unbounded set and it
       // fails an exception is raised.
@@ -62,14 +88,18 @@ Notifier_i::register_callback (char const *stock_name,
 
       // The bond between the stockname <hash_key> and the consumers <hash_value>
       // is fused.
-      if (this->consumer_map_.bind (stock_name, consumers) == -1)
-         ACE_ERROR ((LM_ERROR,
-                   "register_callback: Bind failed!/n"));
+      int const bind_result = this->consumer_map_.bind (stock_name, consumers);
+      if (bind_result != 0)
+        ACE_ERROR ((LM_ERROR,
+                    "register_callback: Bind failed!\n"));
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "new map entry: stockname %s threshold %d\n",
-                    stock_name,
-                    threshold_value));
+        {
+          consumers_owner.release ();
+          ACE_DEBUG ((LM_DEBUG,
+                      "new map entry: stockname %s threshold %d\n",
+                      stock_name,
+                      threshold_value));
+        }
     }
 }
 
@@ -174,13 +204,9 @@ Notifier_i::market_status (char const *stock_name,
 void
 Notifier_i::shutdown ()
 {
-  if ( this->consumer_map_.close () > 0)
+  if (this->close_consumer_map () != 0)
     ACE_ERROR ((LM_ERROR,
                 "Consumer_map_close error!\n"));
-  else
-  // This marks the exit of the notifier. This should be taken care of
-  // before the consumer tries to unregister after the notifier quits.
-  notifier_exited_ = true;
 
   ACE_DEBUG ((LM_DEBUG,
               "The Callback Quoter server is shutting down...\n"));
