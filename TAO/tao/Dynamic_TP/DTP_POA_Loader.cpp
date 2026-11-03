@@ -113,7 +113,7 @@ int
 TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
                                   TAO_CSD_Strategy_Repository *repo)
 {
-  ACE_CString poa_name;
+  std::string poa_name;
   ACE_CString config_name;
   TAO_DTP_POA_Strategy *strategy_container = nullptr;
 

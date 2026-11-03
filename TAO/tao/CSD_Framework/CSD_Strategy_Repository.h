@@ -17,7 +17,7 @@
 #include "tao/CSD_Framework/CSD_FrameworkC.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
-#include "ace/SString.h"
+#include <string>
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -46,19 +46,19 @@ public:
   int init (int argc, ACE_TCHAR ** argv) override;
 
   /// Factory method used to create a CSD_Strategy object.
-  CSD_Framework::Strategy_ptr find (ACE_CString const &poa_name);
+  CSD_Framework::Strategy_ptr find (std::string const &poa_name);
 
-  int add_strategy (ACE_CString const &poa_name,
+  int add_strategy (std::string const &poa_name,
                     CSD_Framework::Strategy_ptr strategy);
 
 private:
   struct Strategy_Node
   {
-    Strategy_Node (ACE_CString const &poa_name,
+    Strategy_Node (std::string const &poa_name,
                    CSD_Framework::Strategy_ptr strategy);
     ~Strategy_Node ();
     void add_node (Strategy_Node *);
-    Strategy_Node *find (ACE_CString const &name);
+    Strategy_Node *find (std::string const &name);
 
   private:
     Strategy_Node (Strategy_Node const &) = delete;
@@ -67,7 +67,7 @@ private:
     Strategy_Node &operator= (Strategy_Node &&) = delete;
 
   public:
-    ACE_CString poa_name_;
+    std::string poa_name_;
     CSD_Framework::Strategy_var strategy_;
     /// The node owns the remainder of the linked list.
     Strategy_Node *next_ {};

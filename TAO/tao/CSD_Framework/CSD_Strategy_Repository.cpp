@@ -23,7 +23,7 @@ TAO_CSD_Strategy_Repository::init(int, ACE_TCHAR **)
 }
 
 CSD_Framework::Strategy_ptr
-TAO_CSD_Strategy_Repository::find (ACE_CString const &name)
+TAO_CSD_Strategy_Repository::find (std::string const &name)
 {
   if (this->strategy_list_head_ != nullptr)
     {
@@ -37,7 +37,7 @@ TAO_CSD_Strategy_Repository::find (ACE_CString const &name)
 
 
 int
-TAO_CSD_Strategy_Repository::add_strategy (ACE_CString const &name,
+TAO_CSD_Strategy_Repository::add_strategy (std::string const &name,
                                            CSD_Framework::Strategy_ptr strat)
 {
   Strategy_Node *node = nullptr;
@@ -57,7 +57,7 @@ TAO_CSD_Strategy_Repository::add_strategy (ACE_CString const &name,
 }
 
 TAO_CSD_Strategy_Repository::Strategy_Node::Strategy_Node (
-  ACE_CString const &name,
+  std::string const &name,
   CSD_Framework::Strategy_ptr strategy)
   : poa_name_ (name),
     strategy_ (CSD_Framework::Strategy::_duplicate (strategy))
@@ -79,7 +79,7 @@ TAO_CSD_Strategy_Repository::Strategy_Node::add_node (Strategy_Node *node)
 }
 
 TAO_CSD_Strategy_Repository::Strategy_Node *
-TAO_CSD_Strategy_Repository::Strategy_Node::find (ACE_CString const &name)
+TAO_CSD_Strategy_Repository::Strategy_Node::find (std::string const &name)
 {
   if (this->poa_name_ == name)
     return this;

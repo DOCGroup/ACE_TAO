@@ -78,7 +78,7 @@ TAO_CSD_POA::new_POA (const String &name,
 
   if (repo)
     {
-      CSD_Framework::Strategy_var strategy = repo->find (name);
+      CSD_Framework::Strategy_var strategy = repo->find (std::string (name.c_str ()));
 
       if (! ::CORBA::is_nil (strategy.in ()))
         {
