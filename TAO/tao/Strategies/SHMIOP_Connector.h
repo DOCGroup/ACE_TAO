@@ -31,6 +31,8 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_SHMIOP_Endpoint;
@@ -52,8 +54,8 @@ public:
   /// Constructor.
   TAO_SHMIOP_Connector ();
 
-  /// Default destructor
-  ~TAO_SHMIOP_Connector () = default;
+  /// Destructor
+  ~TAO_SHMIOP_Connector () override;
 
   /**
    * @name The TAO_Connector Methods
@@ -121,6 +123,9 @@ private:
 
   /// The connector initiating connection requests for SHMIOP.
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
+
+  std::unique_ptr<TAO_SHMIOP_CONNECT_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_SHMIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -16,6 +16,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,6 +46,8 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  std::unique_ptr<TAO_UIOP_CONNECT_CREATION_STRATEGY> creation_strategy_owner (
+    connect_creation_strategy);
 
   /// Our activation strategy
   TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
@@ -52,19 +55,24 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  std::unique_ptr<TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_owner (
+    concurrency_strategy);
 
-  return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_creation_strategy,
-                                     &this->connect_strategy_,
-                                     concurrency_strategy);
+  int const result = this->base_connector_.open (this->orb_core ()->reactor (),
+                                                 creation_strategy_owner.get (),
+                                                 &this->connect_strategy_,
+                                                 concurrency_strategy_owner.get ());
+  this->creation_strategy_.reset (creation_strategy_owner.release ());
+  this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());
+  return result;
 }
 
 int
 TAO_UIOP_Connector::close ()
 {
   // Zap the creation strategy that we created earlier.
-  delete this->base_connector_.creation_strategy ();
-  delete this->base_connector_.concurrency_strategy ();
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
 
   return this->base_connector_.close ();
 }
