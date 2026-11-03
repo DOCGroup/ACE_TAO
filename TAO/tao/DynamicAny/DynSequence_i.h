@@ -21,7 +21,7 @@
 #include "tao/DynamicAny/DynCommon.h"
 #include "tao/LocalObject.h"
 
-#include <vector>
+#include "ace/Array_Base.h"
 
 #if defined (_MSC_VER)
 # pragma warning(push)
@@ -98,7 +98,7 @@ private:
 
 private:
   /// Each component is also a DynAny.
-  std::vector<DynamicAny::DynAny_var> da_members_;
+  ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

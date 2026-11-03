@@ -95,7 +95,7 @@ TAO_DynValue_i::init_helper (CORBA::TypeCode_ptr tc)
     tc,
     this->da_base_types_,
     &this->component_count_);
-  TAO::resize_std_vector (this->da_members_, this->component_count_);
+  this->da_members_.size (this->component_count_);
 
   // And initialize all of the DynCommon mix-in
 
@@ -111,7 +111,7 @@ TAO_DynValue_i::get_base_types (
   // First initialize to the fully derived type we are
   // starting with.
   CORBA::ULong numberOfBases = 1u;
-  TAO::resize_std_vector (base_types, numberOfBases);
+  base_types.size (numberOfBases);
   base_types[0] = TAO_DynAnyFactory::strip_alias (tc);
   if (total_member_count)
     {
@@ -135,7 +135,7 @@ TAO_DynValue_i::get_base_types (
           *total_member_count += base->member_count ();
         }
 
-      TAO::resize_std_vector (base_types, numberOfBases + 1);
+      base_types.size (numberOfBases + 1);
       base_types[numberOfBases++] = CORBA::TypeCode::_duplicate (base.in ());
       base = base->concrete_base_type();
     }
