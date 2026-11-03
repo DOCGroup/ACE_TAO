@@ -94,14 +94,11 @@ protected:
   int supports_dp_;
 
   /**
-   * In order for the client to treat the results of property_value
-   * uniformly, we need to collect the dynamically allocated anys
-   * retrieved from dynamic properties and free them upon deletion. If
-   * we didn't do this, then the property_value method would leak or
-   * cause seg faults, since the client wouldn't be able to tell
-   * whether or not the return value should be freed.
+   * Keep ownership of dynamically allocated Any values retrieved from
+   * dynamic properties. property_value() returns borrowed pointers, so
+   * callers do not need to decide whether the result should be freed.
    */
-  std::unique_ptr<CORBA::Any*[]> dp_cache_;
+  std::unique_ptr<std::unique_ptr<CORBA::Any>[]> dp_cache_;
 
 private:
   TAO_Property_Evaluator (TAO_Property_Evaluator const&) = delete;

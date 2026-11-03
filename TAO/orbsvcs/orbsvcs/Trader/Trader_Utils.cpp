@@ -219,7 +219,7 @@ TAO_Property_Evaluator(const CosTrading::PropertySeq& props,
                        CORBA::Boolean supports_dp)
   : props_ (props),
     supports_dp_ (supports_dp),
-    dp_cache_ (std::make_unique<CORBA::Any*[]> (props.length ()))
+    dp_cache_ (std::make_unique<std::unique_ptr<CORBA::Any>[]> (props.length ()))
 {
 }
 
@@ -229,17 +229,11 @@ TAO_Property_Evaluator(CosTrading::Offer& offer,
                        CORBA::Boolean supports_dp)
   : props_ (offer.properties),
     supports_dp_ (supports_dp),
-    dp_cache_ (std::make_unique<CORBA::Any*[]> (offer.properties.length ()))
+    dp_cache_ (std::make_unique<std::unique_ptr<CORBA::Any>[]> (offer.properties.length ()))
 {
 }
 
-TAO_Property_Evaluator::~TAO_Property_Evaluator ()
-{
-  // Clean up the results of any dynamic properties.
-  for (CORBA::ULong i = 0; i < this->props_.length (); i++)
-    if (this->dp_cache_[i] != nullptr)
-      delete this->dp_cache_[i];
-}
+TAO_Property_Evaluator::~TAO_Property_Evaluator () = default;
 
 bool
 TAO_Property_Evaluator::is_dynamic_property (int index)
@@ -268,14 +262,14 @@ CORBA::Any*
 TAO_Property_Evaluator::property_value (int index)
 {
   CORBA::Any* prop_val = nullptr;
-  CORBA::Boolean in_cache = this->dp_cache_[index] != nullptr;
+  bool const in_cache = this->dp_cache_[index] != nullptr;
 
-  int dynamic = this->is_dynamic_property (index);
+  bool const dynamic = this->is_dynamic_property (index);
 
   if (!dynamic)
     prop_val = (CORBA::Any *) &(this->props_[index].value);
   else if (this->supports_dp_ && in_cache)
-    prop_val = this->dp_cache_[index];
+    prop_val = this->dp_cache_[index].get ();
   else if (this->supports_dp_)
     {
       // Property is defined at this point.
@@ -306,7 +300,7 @@ TAO_Property_Evaluator::property_value (int index)
               // Retrieve the value of the dynamic property.
               prop_val = dp_eval->evalDP(name, type, info);
 
-              this->dp_cache_[index] = prop_val;
+              this->dp_cache_[index].reset (prop_val);
             }
           catch (const CORBA::SystemException&)
             {
