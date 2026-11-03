@@ -9,7 +9,7 @@
 #include "Options.h"
 
 // Static initialization.
-Options *Options::instance_ = 0;
+Options *Options::instance_ = nullptr;
 
 void
 Options::print_usage_and_die ()
@@ -32,7 +32,7 @@ Options::Options ()
 {
   char *timeout = ACE_OS::getenv ("TIMEOUT");
 
-  if (timeout == 0)
+  if (timeout == nullptr)
     this->timeout_ = Options::DEFAULT_TIMEOUT;
   else
     this->timeout_ = ACE_OS::atoi (timeout);
@@ -41,8 +41,8 @@ Options::Options ()
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == 0)
-    ACE_NEW_RETURN (Options::instance_, Options, 0);
+  if (Options::instance_ == nullptr)
+    ACE_NEW_RETURN (Options::instance_, Options, nullptr);
 
   return Options::instance_;
 }
@@ -116,8 +116,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (),
                                                    ACE_TEXT ("|"));
-                 flag != 0;
-                 flag = ACE_OS::strtok (0, ACE_TEXT ("|")))
+                 flag != nullptr;
+                 flag = ACE_OS::strtok (nullptr, ACE_TEXT ("|")))
               if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
@@ -143,8 +143,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (),
                                                    ACE_TEXT ("|"));
-                 flag != 0;
-                 flag = ACE_OS::strtok (0, ACE_TEXT ("|")))
+                 flag != nullptr;
+                 flag = ACE_OS::strtok (nullptr, ACE_TEXT ("|")))
               if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,

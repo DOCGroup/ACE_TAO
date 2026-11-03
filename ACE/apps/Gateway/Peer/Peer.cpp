@@ -8,13 +8,13 @@
 
 Peer_Handler::Peer_Handler ()
   : connection_id_ (-1),  // Maybe it's better than 0.
-    msg_frag_ (0),
-    total_bytes_ (0)
+    msg_frag_ (nullptr),
+    total_bytes_ (0),
+    first_time_ (true)
 {
   // Set the high water mark of the <ACE_Message_Queue>.  This is used
   // to exert flow control.
   this->msg_queue ()->high_water_mark (Options::instance ()->max_queue_size ());
-  first_time_ = 1;  // It will be first time to open Peer_Handler.
 }
 
 // Upcall from the <ACE_Acceptor::handle_input> that turns control
@@ -46,7 +46,7 @@ Peer_Handler::open (void *a)
   // Schedule the time between disconnects.  This should really be a
   // "tunable" parameter.
   if (ACE_Reactor::instance ()->schedule_timer
-      (this, 0, timeout) == -1)
+      (this, nullptr, timeout) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("schedule_timer")));
@@ -108,11 +108,11 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
 int
 Peer_Handler::transmit_stdin ()
 {
-  // If return value is -1, then first_time_ must be reset to 1.
+  // If return value is -1, then first_time_ must be reset to true.
   int result = 0;
   if (this->connection_id_ != -1)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (sizeof (Event)),
@@ -164,9 +164,9 @@ Peer_Handler::transmit_stdin ()
     result = -1; // Save return value at here, return at exit of function.
   }
   // If transmit error, the stdin-thread will be cancelled, so should
-  // reset first_time_ to 1, which will register_stdin_handler again.
+  // reset first_time_ to true, which will register_stdin_handler again.
   if (result == -1)
-    first_time_ = 1;
+    first_time_ = true;
 
   return result;
 }
@@ -224,7 +224,7 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
 int
 Peer_Handler::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("in handle_output\n")));
@@ -332,7 +332,7 @@ Peer_Handler::send (ACE_Message_Block *mb)
 int
 Peer_Handler::recv (ACE_Message_Block *&mb)
 {
-  if (this->msg_frag_ == 0)
+  if (this->msg_frag_ == nullptr)
     // No existing fragment...
     ACE_NEW_RETURN (this->msg_frag_,
                     ACE_Message_Block (sizeof (Event)),
@@ -445,7 +445,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
           mb = this->msg_frag_;
 
           // Reset the pointer to indicate we've got an entire event.
-          this->msg_frag_ = 0;
+          this->msg_frag_ = nullptr;
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -537,7 +537,7 @@ Peer_Handler::await_connection_id ()
 
       // Next time in await_connection_id(), I'll don't call
       // register_stdin_handler().
-      first_time_ = 0;
+      first_time_ = false;
     }
   return 0;
 }
@@ -545,7 +545,7 @@ Peer_Handler::await_connection_id ()
 int
 Peer_Handler::subscribe ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (sizeof (Event)),
@@ -564,7 +564,7 @@ Peer_Handler::subscribe ()
 int
 Peer_Handler::await_events ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   ssize_t n = this->recv (mb);
 
@@ -693,7 +693,7 @@ Peer_Acceptor::start (u_short port)
 }
 
 Peer_Acceptor::Peer_Acceptor ()
-  : peer_handler_ (0)
+  : peer_handler_ (nullptr)
 {
 }
 
@@ -701,7 +701,7 @@ int
 Peer_Acceptor::close ()
 {
   // Will trigger a delete.
-  if (this->peer_handler_ != 0)
+  if (this->peer_handler_ != nullptr)
     this->peer_handler_->destroy ();
 
   // Close down the base class.
@@ -753,8 +753,8 @@ Peer_Connector::open_connector (Peer_Handler *&peer_handler,
 int
 Peer_Connector::open (ACE_Reactor *, int)
 {
-  this->supplier_peer_handler_ = 0;
-  this->consumer_peer_handler_ = 0;
+  this->supplier_peer_handler_ = nullptr;
+  this->consumer_peer_handler_ = nullptr;
 
   if (Options::instance ()->enabled (Options::SUPPLIER_CONNECTOR)
       && this->open_connector (this->supplier_peer_handler_,
@@ -811,7 +811,7 @@ Peer_Factory::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp # Gateway traffic generator and data sink\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, buf, length);
