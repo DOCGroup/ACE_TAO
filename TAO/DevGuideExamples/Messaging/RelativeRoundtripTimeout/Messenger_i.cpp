@@ -11,6 +11,10 @@
 #include "ace/OS_NS_unistd.h"
 #include <iostream>
 
+Messenger_i::Messenger_i ()
+{
+}
+
 CORBA::Boolean
 Messenger_i::send_message (char const *user_name,
                            char const *subject,

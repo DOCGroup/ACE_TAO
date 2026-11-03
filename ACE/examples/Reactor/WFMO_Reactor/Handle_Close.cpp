@@ -17,6 +17,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Pipe.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
 #include <memory>
 
