@@ -12,6 +12,8 @@
 
 #include "ace/UUID.h"
 
+#include <atomic>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Transport::TAO_UIPMC_Transport (
@@ -53,7 +55,7 @@ TAO_UIPMC_Transport::write_unique_id (
   unsigned long const pid = static_cast<unsigned long> (ACE_OS::getpid ());
 
   // This is unique within single process.
-  static ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> cnt = 0;
+  static std::atomic<unsigned long> cnt {};
   unsigned long const id = ++cnt;
 
   CORBA::Octet unique_id[MIOP_DEFAULT_ID_LENGTH];
