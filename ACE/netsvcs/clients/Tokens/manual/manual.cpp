@@ -19,6 +19,9 @@
 #include "ace/Token_Collection.h"
 #include "ace/Map_Manager.h"
 #include "ace/Service_Config.h"
+#include <memory>
+#include <utility>
+#include <vector>
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
@@ -47,8 +50,13 @@ public:
   int open (int argc, char *argv[]);
 
   // = Event_Handler methods.
-  int handle_input (ACE_HANDLE);
-  int handle_exception (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
+  int handle_exception (ACE_HANDLE) override;
+
+  STDIN_Token (STDIN_Token const &) = delete;
+  STDIN_Token (STDIN_Token &&) = delete;
+  STDIN_Token &operator= (STDIN_Token const &) = delete;
+  STDIN_Token &operator= (STDIN_Token &&) = delete;
 
   using TID = ACE_CString;
 
@@ -60,37 +68,29 @@ private:
   ACE_Token_Proxy *get_proxy (const char *tid, const char *token, char type);
 
   /// Create a proxy to <token> with a <tid> client id.
-  ACE_Token_Proxy *create_proxy (const char *token, char type);
+  std::unique_ptr<ACE_Token_Proxy> create_proxy (const char *token, char type);
 
   // = Mapping from tid to Token_Collection.
   /// COLLECTION maintains a mapping from tid to a collection.
-  typedef ACE_Map_Manager<TID, ACE_Token_Collection *, ACE_Null_Mutex>
-    COLLECTIONS;
+  using COLLECTIONS = ACE_Map_Manager<TID, ACE_Token_Collection *, ACE_Null_Mutex>;
 
-  /// Allows iterations through collections_.
-  typedef ACE_Map_Iterator<TID, ACE_Token_Collection *, ACE_Null_Mutex>
-    COLLECTIONS_ITERATOR;
-
-  /// Allows iterations through collections_.
-  typedef ACE_Map_Entry<TID, ACE_Token_Collection *>
-    COLLECTIONS_ENTRY;
-
+  std::vector<std::unique_ptr<ACE_Token_Collection>> owned_collections_;
   /// A collection for each <tid>.
   COLLECTIONS collections_;
 
-  const char *server_host_;
+  char const *server_host_; // Borrowed from argv or ACE_DEFAULT_SERVER_HOST.
   int server_port_;
-  int ignore_deadlock_;
-  int debug_;
-  int remote_;
+  bool ignore_deadlock_;
+  bool debug_;
+  bool remote_;
 };
 
 STDIN_Token::STDIN_Token ()
   : server_host_ (ACE_DEFAULT_SERVER_HOST),
     server_port_ (ACE_DEFAULT_SERVER_PORT),
-    ignore_deadlock_ (0),
-    debug_ (0),
-    remote_ (0)
+    ignore_deadlock_ (false),
+    debug_ (false),
+    remote_ (false)
 {
 }
 
@@ -107,17 +107,17 @@ STDIN_Token::parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'h':  // specify the host machine on which the server is running
         server_host_ = get_opt.opt_arg ();
-        remote_ = 1;
+        remote_ = true;
         break;
       case 'p':  // specify the port on which the server is running
         server_port_ = ACE_OS::atoi (get_opt.opt_arg ());
-        remote_ = 1;
+        remote_ = true;
         break;
       case 'd':
-        debug_ = 1;
+        debug_ = true;
         break;
       case 'i':
-        ignore_deadlock_ = 1;
+        ignore_deadlock_ = true;
         break;
       case 'u':
         // usage same as unknown
@@ -193,7 +193,7 @@ STDIN_Token::handle_input (ACE_HANDLE fd)
   ACE_Token_Proxy *proxy =
     this->get_proxy (tid, token, type[0]);
 
-  if (proxy == 0)
+  if (proxy == nullptr)
     return -1;
 
   switch (operation[0])
@@ -266,44 +266,48 @@ STDIN_Token::handle_exception (ACE_HANDLE fd)
 ACE_Token_Proxy *
 STDIN_Token::get_proxy (const char *_tid, const char *token, char type)
 {
-  ACE_Token_Collection *proxy_collection;
+  ACE_Token_Collection *proxy_collection; // Borrowed from owned_collections_.
 
-  TID tid (_tid);
+  TID const tid (_tid);
 
   if (collections_.find (tid, proxy_collection) == -1)
     // We did not find a proxy_collection.
     {
       // Make one.
-      proxy_collection = new ACE_Token_Collection (debug_, "no name collection");
+      std::unique_ptr<ACE_Token_Collection> collection =
+        std::make_unique<ACE_Token_Collection> (debug_, "no name collection");
+      proxy_collection = collection.get ();
+
+      this->owned_collections_.push_back (std::move (collection));
 
       // Put it in the collections.
       if (collections_.bind (tid, proxy_collection) == -1)
         {
-          delete proxy_collection;
-          return 0;
+          this->owned_collections_.pop_back ();
+          return nullptr;
         }
     }
 
   // Either way, we have a proxy_collection now.
 
   // See if the proxy already exists in the collection.
-  ACE_Token_Proxy *proxy = proxy_collection->is_member (token);
+  ACE_Token_Proxy *proxy = proxy_collection->is_member (token); // Borrowed from proxy_collection.
 
   // If not, create one.
-  if (proxy == 0)
+  if (proxy == nullptr)
     {
-      proxy = this->create_proxy (token, type);
+      std::unique_ptr<ACE_Token_Proxy> new_proxy = this->create_proxy (token, type);
+      if (!new_proxy)
+        return nullptr;
 
       // Put the new_proxy in this tid's collection.
-      if (proxy_collection->insert (*proxy) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "insert failed\n"), 0);
+      if (proxy_collection->insert (*new_proxy) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "insert failed\n"), nullptr);
 
-      // Delete our copy (one was created in the collection).
-      delete proxy;
       proxy = proxy_collection->is_member (token);
 
-      if (proxy == 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "is_member failed\n"), 0);
+      if (proxy == nullptr)
+        ACE_ERROR_RETURN ((LM_ERROR, "is_member failed\n"), nullptr);
 
       // Set the client_id (it was set to 1 since we're
       // single-threaded.
@@ -313,7 +317,7 @@ STDIN_Token::get_proxy (const char *_tid, const char *token, char type)
   return proxy;
 }
 
-ACE_Token_Proxy *
+std::unique_ptr<ACE_Token_Proxy>
 STDIN_Token::create_proxy (const char *token, char type)
 {
   switch (type)
@@ -321,27 +325,27 @@ STDIN_Token::create_proxy (const char *token, char type)
     case 'm':
     case 'M':
       if (remote_)
-        return new ACE_Remote_Mutex (token, ignore_deadlock_, debug_);
+        return std::make_unique<ACE_Remote_Mutex> (token, ignore_deadlock_, debug_);
       else
-        return new ACE_Local_Mutex (token, ignore_deadlock_, debug_);
+        return std::make_unique<ACE_Local_Mutex> (token, ignore_deadlock_, debug_);
 
     case 'r':
     case 'R':
       if (remote_)
-        return new ACE_Remote_RLock (token, ignore_deadlock_, debug_);
+        return std::make_unique<ACE_Remote_RLock> (token, ignore_deadlock_, debug_);
       else
-        return new ACE_Local_RLock (token, ignore_deadlock_, debug_);
+        return std::make_unique<ACE_Local_RLock> (token, ignore_deadlock_, debug_);
 
     case 'w':
     case 'W':
       if (remote_)
-        return new ACE_Remote_WLock (token, ignore_deadlock_, debug_);
+        return std::make_unique<ACE_Remote_WLock> (token, ignore_deadlock_, debug_);
       else
-        return new ACE_Local_WLock (token, ignore_deadlock_, debug_);
+        return std::make_unique<ACE_Local_WLock> (token, ignore_deadlock_, debug_);
     }
 
   // should never get here, but this avoids a compiler warning . . .
-  return 0;
+  return nullptr;
 }
 
 int
