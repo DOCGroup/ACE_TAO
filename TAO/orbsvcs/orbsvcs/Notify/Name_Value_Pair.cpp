@@ -34,10 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  NVP::NVP()
-  {
-  }
-
   NVP::NVP(const TAO_Notify_Property_Short& p)
     : name(p.name())
   {

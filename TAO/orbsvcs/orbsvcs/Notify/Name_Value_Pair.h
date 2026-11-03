@@ -37,7 +37,7 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export NVP {
   public:
     /// Construct an undefined name/value (to allow use in collections)
-    NVP();
+    NVP() = default;
     /// Construct from a property containing a short value.
     explicit NVP(const TAO_Notify_Property_Short& p);
     /// Construct from a property containing a long value.
