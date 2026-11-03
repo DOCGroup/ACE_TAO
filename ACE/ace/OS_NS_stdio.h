@@ -529,7 +529,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int vfprintf (FILE *fp, const wchar_t *format, va_list argptr);
 
-  ACE_NAMESPACE_STORAGE_CLASS
+  ACE_NAMESPACE_INLINE_FUNCTION
   int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
