@@ -16,6 +16,7 @@
 #include "tao/PortableServer/Active_Object_Map.h"
 #include "tao/PortableServer/Active_Object_Map_Entry.h"
 
+#include <string>
 #include <vector>
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
@@ -46,7 +47,7 @@ namespace TAO
       this->active_object_map_.reset (active_object_map);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-      ACE_CString name_str ("Active_Object_Map_");
+      std::string name_str ("Active_Object_Map_");
       name_str += poa->orb_core ().orbid ();
       name_str += '_';
       name_str += poa->the_name ();

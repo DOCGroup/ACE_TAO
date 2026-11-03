@@ -9,6 +9,7 @@
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
 
+#include <string>
 #include <vector>
 
 #if !defined (__ACE_INLINE__)
@@ -66,8 +67,8 @@ namespace TAO
     ACE_NEW (this->size_monitor_,
              ACE::Monitor_Control::Size_Monitor);
 
-    ACE_CString purge_name ("Connection_Cache_Purge_");
-    ACE_CString size_name ("Connection_Cache_Size_");
+    std::string purge_name ("Connection_Cache_Purge_");
+    std::string size_name ("Connection_Cache_Size_");
 
     purge_name += orbid;
     size_name += orbid;
