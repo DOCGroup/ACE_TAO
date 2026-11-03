@@ -511,7 +511,7 @@ namespace ACE_OS {
   int vfprintf (FILE *fp, const char *format, va_list argptr)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 0);
 
-  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_NAMESPACE_STORAGE_CLASS
   int vsprintf (char *buffer, const char *format, va_list argptr)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 0);
 

@@ -1036,19 +1036,6 @@ ACE_OS::vfprintf (FILE *fp, const wchar_t *format, va_list argptr)
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INLINE int
-ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
-{
-#ifdef ACE_LACKS_VSPRINTF
-  ACE_UNUSED_ARG (buffer);
-  ACE_UNUSED_ARG (format);
-  ACE_UNUSED_ARG (argptr);
-  ACE_NOTSUP_RETURN (-1);
-#else
-  return std::vsprintf (buffer, format, argptr);
-#endif /* ACE_LACKS_VSPRINTF */
-}
-
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
