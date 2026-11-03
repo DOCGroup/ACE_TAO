@@ -8,6 +8,7 @@
 
 #include "Library.h"
 #include <memory>
+#include <vector>
 
 // A shared object group is a wrapper around all of the information needed to
 // analize a collection of applications so that common shared libraries can
@@ -43,8 +44,7 @@ public:
 private:
   Obj_Module undef_wrapper_;
   Sig_List &undefs_;
-  std::unique_ptr<Library *[]> libs_;
-  int max_libs_;
+  std::vector<std::unique_ptr<Library>> libs_;
   int num_libs_;
 };
 

@@ -15,6 +15,7 @@
 
 #include "Obj_Module.h"
 #include <memory>
+#include <vector>
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -125,7 +126,7 @@ private:
   int num_modules_;
   int num_extrefs_;
 
-  std::unique_ptr<Obj_Module *[]> modules_;
+  std::vector<std::unique_ptr<Obj_Module>> modules_;
   Sig_List exported_;
   std::unique_ptr<MPC_Generator> mpcfile_;
 };

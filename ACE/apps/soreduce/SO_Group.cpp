@@ -6,6 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process.h"
 #include "ace/Pipe.h"
+#include <utility>
 
 #include "Library.h"
 #include "SO_Group.h"
@@ -13,18 +14,11 @@
 SO_Group::SO_Group ()
   : undef_wrapper_ ("nothing"),
     undefs_ (undef_wrapper_.imports()),
-    libs_ (nullptr),
-    max_libs_ (128),
     num_libs_ (0)
 {
-  libs_.reset (new Library *[max_libs_] ());
 }
 
-SO_Group::~SO_Group ()
-{
-  for (int i = 0; i < num_libs_; ++i)
-    delete libs_[i];
-}
+SO_Group::~SO_Group () = default;
 
 void
 SO_Group::add_executable (char const *path)
@@ -138,8 +132,8 @@ SO_Group::add_executable (char const *path)
 
       line[len] = '\0';
       nlib->set_path (line);
-      libs_[num_libs_++] = nlib.release ();
-      ACE_ASSERT (num_libs_ < max_libs_); // grow max libs?
+      libs_.push_back (std::move (nlib));
+      ++num_libs_;
     }
 
     // Skip the rest of the line.

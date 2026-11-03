@@ -170,11 +170,7 @@ Library::Library (ACE_TCHAR const *name)
     mpcfile_ = std::make_unique<MPC_TAO_Dep_Lib> (name_);
 }
 
-Library::~Library ()
-{
-  for (int i = 0; i < num_modules_; ++i)
-    delete modules_[i];
-}
+Library::~Library () = default;
 
 void
 Library::set_path (ACE_TCHAR const *p)
@@ -229,21 +225,21 @@ Library::load_modules ()
 {
   ACE_CString subdir = path_ + "/.shobj";
 
-  struct dirent **dent;
+  struct dirent **dent {};
   num_modules_ = ACE_OS::scandir(ACE_TEXT_CHAR_TO_TCHAR (subdir.c_str()),
                                  &dent,selector,comparator);
 
   if (num_modules_ > 0) {
-    modules_.reset (new Obj_Module *[num_modules_] ());
+    modules_.resize (num_modules_);
     for (int i = 0; i < num_modules_; i++) {
       ACE_CString ent_name (ACE_TEXT_ALWAYS_CHAR (dent[i]->d_name));
-      modules_[i] = new Obj_Module (ent_name);
+      modules_[i] = std::make_unique<Obj_Module> (ent_name);
       modules_[i]->add_source (ACE_CString(subdir + "/" + ent_name).c_str());
       ACE_OS::free(dent[i]);
     };
   }
 
-  if (num_modules_ > -1)
+  if (num_modules_ >= 0)
     ACE_OS::free(dent);
 }
 
