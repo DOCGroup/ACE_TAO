@@ -5,16 +5,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -36,16 +34,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var obj = orb->string_to_object (ior);
+      CORBA::Object_var const obj = orb->string_to_object (ior);
 
-      char const *the_string = nullptr;
+      // The extracted string is borrowed from the current request's return Any.
+      char const *the_string {};
 
       ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Synchronous twoway DII\n"));
 
@@ -77,10 +77,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       req->set_return_type (CORBA::_tc_string);
 
       req->send_deferred ();
-      do {
-        ACE_OS::sleep (1);
-        ACE_DEBUG ((LM_INFO, "(%P|%t) - Polling...\n"));
-      } while (!req->poll_response ());
+      do
+        {
+          ACE_OS::sleep (1);
+          ACE_DEBUG ((LM_INFO, "(%P|%t) - Polling...\n"));
+        }
+      while (!req->poll_response ());
       req->return_value () >>= the_string;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
