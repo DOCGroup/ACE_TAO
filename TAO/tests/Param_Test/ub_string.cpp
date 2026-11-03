@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "ub_string.h"
 
 // ************************************************************************
@@ -134,13 +136,13 @@ Test_Unbounded_String::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Unbounded_String::check_validity ()
 {
-  CORBA::ULong len = ACE_OS::strlen (this->in_);
+  CORBA::ULong len = std::strlen (this->in_);
 
-  if (!ACE_OS::strcmp (this->in_, this->out_) &&
-      !ACE_OS::strcmp (this->in_, this->ret_) &&
-      ACE_OS::strlen (this->inout_) == 2*len &&
-      !ACE_OS::strncmp (this->in_, this->inout_, len) &&
-      !ACE_OS::strncmp (this->in_, &this->inout_[len], len))
+  if (!std::strcmp (this->in_, this->out_) &&
+      !std::strcmp (this->in_, this->ret_) &&
+      std::strlen (this->inout_) == 2*len &&
+      !std::strncmp (this->in_, this->inout_, len) &&
+      !std::strncmp (this->in_, &this->inout_[len], len))
     return 1;
 
   return 0; // otherwise
@@ -164,12 +166,12 @@ Test_Unbounded_String::print_values ()
               "out with len (%d) = %C\n"
               "ret with len (%d) = %C\n"
               "\n=*=*=*=*=*=*\n",
-              (this->in_ ? ACE_OS::strlen (this->in_):0),
+              (this->in_ ? std::strlen (this->in_):0),
               (this->in_ ? this->in_:"<nul string>"),
-              (this->inout_ ? ACE_OS::strlen (this->inout_):0),
+              (this->inout_ ? std::strlen (this->inout_):0),
               (this->inout_ ? this->inout_:"<nul string>"),
-              (this->out_ ? ACE_OS::strlen (this->out_):0),
+              (this->out_ ? std::strlen (this->out_):0),
               (this->out_ ? this->out_:"<nul string>"),
-              (this->ret_ ? ACE_OS::strlen (this->ret_):0),
+              (this->ret_ ? std::strlen (this->ret_):0),
               (this->ret_ ? this->ret_:"<nul string>")));
 }

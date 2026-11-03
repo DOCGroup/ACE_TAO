@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "objref.h"
 
 // ************************************************************************
@@ -79,7 +81,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref)
 
   try
     {
-      ACE_OS::strcpy (msg_str, "make_cofee");
+      std::strcpy (msg_str, "make_cofee");
 
       // first get a Coffee object
       this->in_ = objref->make_coffee ();
@@ -89,7 +91,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref)
       desc.name = Coffee_Flavor [index];
 
       // set the attribute of the object
-      ACE_OS::strcpy (msg_str, "set coffee attribute");
+      std::strcpy (msg_str, "set coffee attribute");
       this->in_->description (desc); // set the attribute for the in object
 
       this->inout_ = Coffee::_nil ();
@@ -188,9 +190,9 @@ Test_ObjRef::check_validity ()
       const char* ret = ret_desc->name.in ();
 
       // now compare them
-      if (!ACE_OS::strcmp (in, inout) &&
-          !ACE_OS::strcmp (in, out) &&
-          !ACE_OS::strcmp (in, ret))
+      if (!std::strcmp (in, inout) &&
+          !std::strcmp (in, out) &&
+          !std::strcmp (in, ret))
         return 1; // success
     }
   catch (const CORBA::Exception& ex)

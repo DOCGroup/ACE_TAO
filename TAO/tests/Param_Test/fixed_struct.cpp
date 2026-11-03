@@ -68,26 +68,18 @@ Test_Fixed_Struct::init_parameters (Param_Test_ptr /*objref*/
   //ACE_UNUSED_ARG (objref);
 
   this->in_ = gen->gen_fixed_struct ();
-  ACE_OS::memset (&this->inout_,
-                  0,
-                  sizeof (Param_Test::Fixed_Struct));
+  this->inout_ = {};
   return 0;
 }
 
 int
 Test_Fixed_Struct::reset_parameters ()
 {
-  ACE_OS::memset (&this->inout_,
-                  0,
-                  sizeof (Param_Test::Fixed_Struct));
+  this->inout_ = {};
 
-  ACE_OS::memset (&this->out_,
-                  0,
-                  sizeof (Param_Test::Fixed_Struct));
+  this->out_ = {};
 
-  ACE_OS::memset (&this->ret_,
-                  0,
-                  sizeof (Param_Test::Fixed_Struct));
+  this->ret_ = {};
 
   return 0;
 }

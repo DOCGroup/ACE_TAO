@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "nested_struct.h"
 
 // ************************************************************************
@@ -148,9 +150,9 @@ Test_Nested_Struct::check_validity ()
       // lengths are same. Now compare the contents
       for (CORBA::ULong i=0; i < this->in_.vs.seq.length () && flag; i++)
         {
-          if (ACE_OS::strcmp (this->in_.vs.seq[i], this->inout_->vs.seq[i]) ||
-              ACE_OS::strcmp (this->in_.vs.seq[i], this->out_->vs.seq[i]) ||
-              ACE_OS::strcmp (this->in_.vs.seq[i], this->ret_->vs.seq[i]))
+          if (std::strcmp (this->in_.vs.seq[i], this->inout_->vs.seq[i]) ||
+              std::strcmp (this->in_.vs.seq[i], this->out_->vs.seq[i]) ||
+              std::strcmp (this->in_.vs.seq[i], this->ret_->vs.seq[i]))
             // not equal
             flag = false;
         }

@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "ub_any_seq.h"
 #include "tao/debug.h"
 
@@ -246,9 +248,9 @@ Test_AnySeq::check_validity ()
                (this->out_[i] >>= str_out) &&
                (this->ret_[i] >>= str_ret))
         {
-          if (ACE_OS::strcmp (str_in, str_inout) ||
-              ACE_OS::strcmp (str_in, str_out) ||
-              ACE_OS::strcmp (str_in, str_ret))
+          if (std::strcmp (str_in, str_inout) ||
+              std::strcmp (str_in, str_out) ||
+              std::strcmp (str_in, str_ret))
             {
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of string values\n"));

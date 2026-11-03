@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "any.h"
 #include "tao/debug.h"
 
@@ -312,9 +314,9 @@ Test_Any::check_validity ()
            (this->out_.in () >>= str_out) &&
            (this->ret_.in () >>= str_ret))
     {
-      if (!ACE_OS::strcmp (str_in, str_inout) &&
-          !ACE_OS::strcmp (str_in, str_out) &&
-          !ACE_OS::strcmp (str_in, str_ret))
+      if (!std::strcmp (str_in, str_inout) &&
+          !std::strcmp (str_in, str_out) &&
+          !std::strcmp (str_in, str_ret))
         return 1;
       else
         {

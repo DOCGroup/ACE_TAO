@@ -10,6 +10,8 @@
 
 #include "param_testC.h"
 
+#include <cstring>
+
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"
 
@@ -216,7 +218,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             const char *o;
 
             if (!(any >>= o)
-                || ACE_OS::strcmp (i, o) != 0)
+                || std::strcmp (i, o) != 0)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for char* (%C,%C)\n",

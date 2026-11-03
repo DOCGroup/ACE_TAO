@@ -13,6 +13,10 @@
 
 
 #include "helper.h"
+
+#include <cstring>
+#include <cstdlib>
+
 #include "complex_any.h"
 #include "tao/debug.h"
 
@@ -120,7 +124,7 @@ Test_Complex_Any::reset_parameters ()
 
           level8_struct.level9_string = l9_str;
 
-          CORBA::Short l9_bool = ACE_OS::rand () % 2;
+          CORBA::Short l9_bool = std::rand () % 2;
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -240,7 +244,7 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           if (!((*level3_test_seq)[j] >>= level4_test_struct))
             return 0;
 
-          if (ACE_OS::strcmp (level4_in_struct->level5_string,
+          if (std::strcmp (level4_in_struct->level5_string,
                               level4_test_struct->level5_string))
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -271,7 +275,7 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           if (!((*level7_test_any) >>= level8_test_struct))
             return 0;
 
-          if (ACE_OS::strcmp (level8_in_struct->level9_string,
+          if (std::strcmp (level8_in_struct->level9_string,
                                level8_test_struct->level9_string))
             {
               ACE_DEBUG ((LM_DEBUG,

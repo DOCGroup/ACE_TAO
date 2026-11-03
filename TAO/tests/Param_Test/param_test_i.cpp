@@ -10,8 +10,9 @@
 
 #include "param_test_i.h"
 
+#include <string>
+
 #include "tao/debug.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
 
@@ -102,8 +103,9 @@ Param_Test_i::test_unbounded_string (const char *s1,
 {
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
-  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
+  std::string doubled (s2);
+  doubled += s2;
+  char *tmp = CORBA::string_dup (doubled.c_str ());
   CORBA::string_free (s2);
   s2 = tmp;
   return retstr;
@@ -119,8 +121,9 @@ Param_Test_i::test_bounded_string (const char *s1,
 {
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
-  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
+  std::string doubled (s2);
+  doubled += s2;
+  char *tmp = CORBA::string_dup (doubled.c_str ());
   CORBA::string_free (s2);
   s2 = tmp;
   return retstr;

@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "ub_objref_seq.h"
 
 // ************************************************************************
@@ -232,7 +234,7 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
 
           CORBA::String_var n2 = desc2->name.in ();
 
-          if (ACE_OS::strcmp(n1.in (), n2.in ()) != 0)
+          if (std::strcmp(n1.in (), n2.in ()) != 0)
             {
               return 0;
             }

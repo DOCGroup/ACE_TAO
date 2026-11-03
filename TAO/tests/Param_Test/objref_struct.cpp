@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "objref_struct.h"
 
 // ************************************************************************
@@ -162,9 +164,9 @@ Test_Objref_Struct::check_validity ()
 
       Coffee::Desc_var s_ret = this->ret_->y->description ();
 
-      if (ACE_OS::strcmp (s_in->name, s_out->name) != 0
-          || ACE_OS::strcmp (s_in->name, s_inout->name) != 0
-          || ACE_OS::strcmp (s_in->name, s_ret->name) != 0 )
+      if (std::strcmp (s_in->name, s_out->name) != 0
+          || std::strcmp (s_in->name, s_inout->name) != 0
+          || std::strcmp (s_in->name, s_ret->name) != 0 )
         {
           return 0;
         }

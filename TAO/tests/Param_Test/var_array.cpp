@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "var_array.h"
 
 // ************************************************************************
@@ -131,7 +133,7 @@ Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
 {
   for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
     {
-      if (ACE_OS::strcmp (a1[i].in (), a2[i].in ()))
+      if (std::strcmp (a1[i].in (), a2[i].in ()))
         return 0;
     }
   return 1; // success

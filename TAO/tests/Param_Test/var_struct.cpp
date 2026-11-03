@@ -11,6 +11,8 @@
 
 
 #include "helper.h"
+
+#include <cstring>
 #include "var_struct.h"
 
 // ************************************************************************
@@ -145,15 +147,15 @@ Test_Var_Struct::check_validity ()
   if (ACE::is_equal (this->in_.dbl, this->inout_->dbl) &&
       ACE::is_equal (this->in_.dbl, this->out_->dbl) &&
       ACE::is_equal (this->in_.dbl, this->ret_->dbl) &&
-      (!ACE_OS::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
-      (!ACE_OS::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
-      (!ACE_OS::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&
+      (!std::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
+      (!std::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
+      (!std::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&
       this->in_.boole == this->inout_->boole &&
       this->in_.boole == this->out_->boole &&
       this->in_.boole == this->ret_->boole &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->inout_->dummy2)) &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->out_->dummy2)) &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->ret_->dummy2)) &&
+      (!std::strcmp (this->in_.dummy2, this->inout_->dummy2)) &&
+      (!std::strcmp (this->in_.dummy2, this->out_->dummy2)) &&
+      (!std::strcmp (this->in_.dummy2, this->ret_->dummy2)) &&
       this->in_.shrt == this->inout_->shrt &&
       this->in_.shrt == this->out_->shrt &&
       this->in_.shrt == this->ret_->shrt &&
@@ -165,9 +167,9 @@ Test_Var_Struct::check_validity ()
       // lengths are same. Now compare the contents
       for (CORBA::ULong i=0; i < this->in_.seq.length () && flag; i++)
         {
-          if (ACE_OS::strcmp (this->in_.seq[i], this->inout_->seq[i]) ||
-              ACE_OS::strcmp (this->in_.seq[i], this->out_->seq[i]) ||
-              ACE_OS::strcmp (this->in_.seq[i], this->ret_->seq[i]))
+          if (std::strcmp (this->in_.seq[i], this->inout_->seq[i]) ||
+              std::strcmp (this->in_.seq[i], this->out_->seq[i]) ||
+              std::strcmp (this->in_.seq[i], this->ret_->seq[i]))
             // not equal
             flag = false;
         }
