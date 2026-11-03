@@ -50,7 +50,7 @@ AppShutdown::client_done()
       return;
     }
 
-  unsigned cur_shutdown = ++this->num_clients_shutdown_;
+  unsigned const cur_shutdown = ++this->num_clients_shutdown_;
 
   if (cur_shutdown == this->num_clients_)
     {
