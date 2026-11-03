@@ -45,6 +45,6 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
   PortableServer::Servant_var<MIF_Scheduler> scheduler_;
 };
 
-typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;
+using DT_TEST = ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX>;
 
 #endif /*TEST_H*/

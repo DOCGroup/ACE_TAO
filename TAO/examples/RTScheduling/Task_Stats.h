@@ -31,7 +31,7 @@ class RTSCHEDTESTLIB_Export Base_Time
   ACE_hrtime_t base_time_;
 };
 
-typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
+using BASE_TIME = ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
 
 /**
  * @class Task_Stats
@@ -96,7 +96,7 @@ class RTSCHEDTESTLIB_Export Task_Stats
   ACE_UINT64 sum2_;
 };
 
-typedef ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX> TASK_STATS;
+using TASK_STATS = ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX>;
 
 #if defined (__ACE_INLINE__)
 #include "Task_Stats.inl"

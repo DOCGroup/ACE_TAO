@@ -42,14 +42,14 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   /// = inteface Job method implementation.
   virtual void work (CORBA::ULong work,
-         CORBA::Short importance);
+         CORBA::Short importance) override;
 
   virtual void post_work (int guid,
         int importance);
 
   void dump_stats ();
 
-  virtual void shutdown ();
+  virtual void shutdown () override;
 
   int guid ();
 

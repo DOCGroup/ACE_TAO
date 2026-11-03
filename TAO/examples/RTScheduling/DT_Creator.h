@@ -17,9 +17,9 @@
 class Thread_Task;
 class Task;
 
-typedef Thread_Task **DT_LIST;
-typedef POA_Holder **POA_LIST;
-typedef Job_i **JOB_LIST;
+using DT_LIST = Thread_Task **;
+using POA_LIST = POA_Holder **;
+using JOB_LIST = Job_i **;
 
 class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 {
@@ -28,7 +28,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   virtual ~DT_Creator ();
 
-  int init (int argc, ACE_TCHAR *argv []);
+  int init (int argc, ACE_TCHAR *argv []) override;
 
   int dt_task_init (ACE_Arg_Shifter& arg_shifter);
 
