@@ -30,8 +30,8 @@ public:
   JAWS_Pipeline ();
   // ACE_Task hooks
 
-  virtual int open (void * = 0);
-  virtual int close (u_long = 0);
+  int open (void * = nullptr) override;
+  int close (u_long = 0) override;
 };
 
 #endif /* !defined (JAWS_PIPELINE_H) */

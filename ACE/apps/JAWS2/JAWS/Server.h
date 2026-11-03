@@ -15,7 +15,7 @@ public:
   JAWS_Server (int argc, char *argv[]);
 
   void init (int argc, char *argv[]);
-  int open (JAWS_Pipeline_Handler *ph, JAWS_Dispatch_Policy *dp = 0);
+  int open (JAWS_Pipeline_Handler *ph, JAWS_Dispatch_Policy *dp = nullptr);
 
 private:
   void parse_args (int argc, ACE_TCHAR *argv[]);

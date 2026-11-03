@@ -43,13 +43,13 @@ public:
   // Initiate a passive mode socket.
 
   virtual int accept (ACE_SOCK_Stream &new_stream,
-                      ACE_Addr *remote_addr = 0,
-                      ACE_Time_Value *timeout = 0,
+                      ACE_Addr *remote_addr = nullptr,
+                      ACE_Time_Value *timeout = nullptr,
                       int restart = 1,
                       int reset_new_handle = 0) const;
   // Synchronously accept the connection
 
-  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
+  virtual int accept (size_t bytes_to_read = 0, void const *act = nullptr);
   // This initiates a new asynchronous accept through the AcceptEx call.
 
   virtual ACE_HANDLE get_handle ();
@@ -66,24 +66,24 @@ public:
 class JAWS_Export JAWS_IO_Synch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
-  virtual int open (const ACE_INET_Addr &local_sap, int backlog = 20);
+  int open (const ACE_INET_Addr &local_sap, int backlog = 20) override;
   // Initiate a passive mode socket.
 
-  virtual int open (const ACE_HANDLE &socket);
+  int open (const ACE_HANDLE &socket) override;
   // Initiate a passive mode socket.
 
   virtual int accept (ACE_SOCK_Stream &new_stream,
-                      ACE_Addr *remote_addr = 0,
-                      ACE_Time_Value *timeout = 0,
+                      ACE_Addr *remote_addr = nullptr,
+                      ACE_Time_Value *timeout = nullptr,
                       int restart = 1,
-                      int reset_new_handle = 0) const;
+                      int reset_new_handle = 0) const override;
   // Accept the connection
 
-  virtual ACE_HANDLE get_handle ();
+  ACE_HANDLE get_handle () override;
   // Get the listener's handle
 
 private:
-  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
+  int accept (size_t bytes_to_read = 0, void const *act = nullptr) override;
 
 private:
   JAWS_IO_SOCK_Acceptor acceptor_;
@@ -94,28 +94,28 @@ class JAWS_Export JAWS_IO_Asynch_Acceptor : public JAWS_IO_Acceptor
 {
 public:
   JAWS_IO_Asynch_Acceptor ();
-  virtual ~JAWS_IO_Asynch_Acceptor ();
+  ~JAWS_IO_Asynch_Acceptor () override;
 
-  virtual int open (const ACE_INET_Addr &address, int backlog = 20);
+  int open (const ACE_INET_Addr &address, int backlog = 20) override;
   // Initiate an asynchronous passive connection
 
-  virtual int open (const ACE_HANDLE &socket);
+  int open (const ACE_HANDLE &socket) override;
   // Initiate an asynchronous passive connection
 
-  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
+  int accept (size_t bytes_to_read = 0, void const *act = nullptr) override;
   // This initiates a new asynchronous accept through the AcceptEx call.
 
-  virtual ACE_HANDLE get_handle ();
+  ACE_HANDLE get_handle () override;
   // Get the listener's handle
 
-  virtual void close ();
+  void close () override;
 
 private:
   virtual int accept (ACE_SOCK_Stream &new_stream,
-                      ACE_Addr *remote_addr = 0,
-                      ACE_Time_Value *timeout = 0,
+                      ACE_Addr *remote_addr = nullptr,
+                      ACE_Time_Value *timeout = nullptr,
                       int restart = 1,
-                      int reset_new_handle = 0) const;
+                      int reset_new_handle = 0) const override;
 
 private:
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)

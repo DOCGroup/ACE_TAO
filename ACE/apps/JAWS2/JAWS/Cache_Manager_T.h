@@ -25,8 +25,8 @@ public:
   using Cache_Hash = JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC>;
   using Cache_Heap = JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
 
-  JAWS_Cache_Manager (ACE_Allocator *alloc = 0,
-                     JAWS_Cache_Object_Factory *cof = 0,
+  explicit JAWS_Cache_Manager (ACE_Allocator *alloc = nullptr,
+                     JAWS_Cache_Object_Factory *cof = nullptr,
 
                      size_t hashsize = 8192,   // number of hash buckets
                      size_t maxsize = 65535,   // max number of in memory
@@ -48,8 +48,8 @@ public:
                                                // counts
                      );
 
-  int open (ACE_Allocator *alloc = 0,
-            JAWS_Cache_Object_Factory *cof = 0,
+  int open (ACE_Allocator *alloc = nullptr,
+            JAWS_Cache_Object_Factory *cof = nullptr,
 
             size_t hashsize = 1024,   // number of hash buckets
             size_t maxsize = 4096,    // max number of in memory
@@ -146,10 +146,10 @@ public:
   using Cache_Manager = CACHE_MANAGER;
   using Cache_Manager_Singleton = ACE_Singleton<Cache_Manager, ACE_SYNCH_MUTEX>;
 
-  JAWS_Cache_Proxy (const KEY &, Cache_Manager * = 0);
+  JAWS_Cache_Proxy (const KEY &, Cache_Manager * = nullptr);
   // Corresponds to a GET
 
-  JAWS_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = 0);
+  JAWS_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = nullptr);
   // Corresponds to a U/PUT
 
   virtual ~JAWS_Cache_Proxy ();

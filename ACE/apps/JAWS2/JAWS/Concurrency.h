@@ -10,6 +10,7 @@
 
 #include "ace/Task.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
 
 #include "JAWS/Export.h"
 #include "JAWS/Jaws_IO.h"
@@ -30,10 +31,14 @@ class JAWS_Export JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
 {
 public:
   JAWS_Concurrency_Base ();
-  ~JAWS_Concurrency_Base ();
+  ~JAWS_Concurrency_Base () override;
+  JAWS_Concurrency_Base (JAWS_Concurrency_Base const &) = delete;
+  JAWS_Concurrency_Base (JAWS_Concurrency_Base &&) = delete;
+  JAWS_Concurrency_Base &operator= (JAWS_Concurrency_Base const &) = delete;
+  JAWS_Concurrency_Base &operator= (JAWS_Concurrency_Base &&) = delete;
 
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int svc ();
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
+  int svc () override;
 
   virtual int svc_loop (JAWS_Data_Block *db);
   // in thread pool, this is an infinite loop
@@ -50,7 +55,7 @@ public:
 protected:
   int mb_acquired_;
   ACE_Message_Block *mb_;
-  JAWS_Reaper *reaper_;
+  std::unique_ptr<JAWS_Reaper> reaper_;
   ACE_SYNCH_MUTEX lock_;
 };
 
@@ -105,12 +110,12 @@ public:
   virtual int make (long flags, int maxthreads);
   // Initiate the thread_per task
 
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
 
-  virtual int svc_loop (JAWS_Data_Block *db);
+  int svc_loop (JAWS_Data_Block *db) override;
   // a single iteration
 
-  virtual int activate_hook ();
+  int activate_hook () override;
   // callback for IO_Handler when accept completes
 
 private:
