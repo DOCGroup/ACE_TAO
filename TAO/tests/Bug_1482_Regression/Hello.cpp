@@ -1,12 +1,6 @@
 #include "Hello.h"
 #include "ace/ACE.h"
 
-Hello::Hello (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
-  , mutex_ ()
-{
-}
-
 CORBA::ULong
 Hello::next_prime ()
 {

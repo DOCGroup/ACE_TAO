@@ -8,10 +8,9 @@ Client_Task::Client_Task (Test::Hello_ptr receiver,
   : ACE_Task_Base (thr_mgr)
   , receiver_ (Test::Hello::_duplicate (receiver))
   , handler_ (o)
-  , handler_var_ ()
+  , handler_var_ (handler_._this ())
   , orb_ (CORBA::ORB::_duplicate (o))
 {
-  this->handler_var_ = this->handler_._this ();
 }
 
 int
@@ -34,7 +33,7 @@ Client_Task::svc ()
           CORBA::Short repl = 0;
           while (repl != 25)
             {
-              bool pending =
+              bool const pending =
                 this->orb_->work_pending ();
 
               if (pending)

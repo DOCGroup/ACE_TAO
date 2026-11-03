@@ -3,7 +3,10 @@
 #include "ace/Get_Opt.h"
 #include "tao/AnyTypeCode/Any.h"
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -36,17 +39,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var const hello =
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -56,20 +59,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       constexpr TimeBase::TimeT timeout_period = 10 * 1000;
@@ -85,7 +88,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE);
-
 
       // Let the client perform the test in a separate thread
       Client_Task client (hello.in (),
