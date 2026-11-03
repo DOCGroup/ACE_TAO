@@ -7,8 +7,6 @@ Test_Idl_SharedIntf_i::Test_Idl_SharedIntf_i(CORBA::ORB_ptr orb)
 {
 }
 
-Test_Idl_SharedIntf_i::~Test_Idl_SharedIntf_i() {}
-
 void Test_Idl_SharedIntf_i::ping ()
 {
    ACE_DEBUG((LM_DEBUG,"(%P|%t) Test_Idl_SharedIntf::ping - sleeping for 5 seconds\n"));

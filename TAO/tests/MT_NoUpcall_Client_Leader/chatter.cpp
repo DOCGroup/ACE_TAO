@@ -2,7 +2,7 @@
 #include "worker.h"
 #include "chatter.h"
 
-Chatter::Chatter (CORBA::ORB_ptr orb, const ACE_TCHAR *ior, ACE_Condition<ACE_Mutex>& cond)
+Chatter::Chatter (CORBA::ORB_ptr orb, ACE_TCHAR const* ior, ACE_Condition<ACE_Mutex>& cond)
  : Worker (orb),
    nrequests_ (0),
    nreplies_ (0),
@@ -57,7 +57,7 @@ Chatter::svc ()
      cond_.signal();
      return 0;
    }
-   catch (const CORBA::Exception& ex)
+   catch (CORBA::Exception const& ex)
    {
       ex._tao_print_exception ("Exception caught:");
       ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d] %p for %s\n", nrq, "failed", ior_));
@@ -87,7 +87,7 @@ Chatter::farewell ()
 
       ACE_DEBUG((LM_INFO,"(%P|%t) farewell COMPLETE for %s\n", ior_));
    }
-   catch (const CORBA::Exception& ex)
+   catch (CORBA::Exception const& ex)
    {
       ex._tao_print_exception ("Exception caught:");
       ACE_DEBUG((LM_INFO,"(%P|%t) %p for %s\n", "farewell FAILED", ior_));

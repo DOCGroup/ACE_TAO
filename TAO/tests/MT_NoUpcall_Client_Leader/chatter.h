@@ -9,7 +9,11 @@
 class Chatter : public Worker
 {
 public:
-  Chatter (CORBA::ORB_ptr orb, const ACE_TCHAR *ior, ACE_Condition<ACE_Mutex>& cond);
+  Chatter (CORBA::ORB_ptr orb, ACE_TCHAR const* ior, ACE_Condition<ACE_Mutex>& cond);
+  Chatter (Chatter const&) = delete;
+  Chatter (Chatter&&) = delete;
+  Chatter& operator= (Chatter const&) = delete;
+  Chatter& operator= (Chatter&&) = delete;
   int svc () override;
   int farewell ();
   long nrequests ();
@@ -18,7 +22,7 @@ public:
   long nrequests_;
   long nreplies_;
 private:
-  const ACE_TCHAR* ior_;
+  ACE_TCHAR const* ior_;
   ACE_Condition<ACE_Mutex>& cond_;
   TAO_SYNCH_MUTEX request_reply_count_mutex_;
 };
