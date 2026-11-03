@@ -27,8 +27,10 @@ Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
   , callback_(nullptr)
   , allocator_owns_(true)
 {
-  ACE_NEW(this->data_, unsigned char[this->block_size_]);
-  std::memset(this->data_, 0, this->block_size_);
+  unsigned char *data = nullptr;
+  ACE_NEW (data, unsigned char[this->block_size_]);
+  this->data_.reset (data);
+  std::memset (this->data_.get (), 0, this->block_size_);
 }
 
 Persistent_Storage_Block::Persistent_Storage_Block(
@@ -40,15 +42,40 @@ Persistent_Storage_Block::Persistent_Storage_Block(
   , callback_(psb.callback_)
   , allocator_owns_(psb.allocator_owns_)
 {
-  ACE_NEW(this->data_, unsigned char[this->block_size_]);
-  std::memcpy(this->data_, psb.data(), this->block_size_);
+  if (psb.data () != nullptr)
+    {
+      unsigned char *data = nullptr;
+      ACE_NEW (data, unsigned char[this->block_size_]);
+      this->data_.reset (data);
+      std::memcpy (this->data_.get (), psb.data (), this->block_size_);
+    }
 }
 
-Persistent_Storage_Block::~Persistent_Storage_Block()
+Persistent_Storage_Block&
+Persistent_Storage_Block::operator= (Persistent_Storage_Block const &psb)
 {
-  delete [] this->data_;
-  this->data_ = nullptr;
+  if (this != &psb)
+    {
+      unsigned char *data = nullptr;
+      if (psb.data () != nullptr)
+        {
+          data = new unsigned char[psb.block_size_];
+          std::memcpy (data, psb.data (), psb.block_size_);
+        }
+
+      this->data_.reset (data);
+      this->block_number_ = psb.block_number_;
+      this->no_write_ = psb.no_write_;
+      this->sync_ = psb.sync_;
+      this->block_size_ = psb.block_size_;
+      this->callback_ = psb.callback_;
+      this->allocator_owns_ = psb.allocator_owns_;
+    }
+
+  return *this;
 }
+
+Persistent_Storage_Block::~Persistent_Storage_Block () = default;
 
 void
 Persistent_Storage_Block::set_no_write()
@@ -84,18 +111,22 @@ Persistent_Storage_Block::block_number() const
 unsigned char*
 Persistent_Storage_Block::data() const
 {
-  return this->data_;
+  return this->data_.get ();
 }
 
 void
 Persistent_Storage_Block::reassign_data(unsigned char* newptr,
   bool delete_old)
 {
+  if (this->data_.get () == newptr)
+    return;
+
   if (delete_old)
-  {
-    delete [] this->data_;
-  }
-  this->data_ = newptr;
+    this->data_.reset ();
+  else
+    this->data_.release ();
+
+  this->data_.reset (newptr);
 }
 
 void

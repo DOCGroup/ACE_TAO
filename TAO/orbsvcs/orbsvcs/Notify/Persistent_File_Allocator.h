@@ -27,6 +27,7 @@
 #include "ace/Thread_Manager.h"
 
 #include <deque>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,6 +60,9 @@ public:
     const size_t block_size);
   /// The copy constructor.  Makes a deep copy of the passed in PSB.
   Persistent_Storage_Block(const Persistent_Storage_Block& psb);
+  Persistent_Storage_Block& operator= (Persistent_Storage_Block const &psb);
+  Persistent_Storage_Block (Persistent_Storage_Block &&) = delete;
+  Persistent_Storage_Block& operator= (Persistent_Storage_Block &&) = delete;
   /// The destructor.
   ~Persistent_Storage_Block();
 
@@ -95,8 +99,8 @@ public:
   bool get_allocator_owns() const;
 
 private:
-  /// Our raw data.
-  unsigned char* data_ {};
+  /// Our owned data buffer.
+  std::unique_ptr<unsigned char[]> data_;
   /// The block number corresponding to our data.
   size_t block_number_;
   /// Are we a no-op with just a callback?
