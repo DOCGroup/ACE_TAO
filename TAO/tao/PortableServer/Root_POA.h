@@ -50,6 +50,8 @@
 #include "tao/OctetSeqC.h"
 
 #include "ace/SString.h"
+
+#include <string>
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Array_Base.h"
 #include "ace/Synch_Traits.h"
@@ -806,7 +808,7 @@ public:
    * objectreferencefactory_adapter_factory_name() will be called to set
    * the value to "Concrete_ObjectReferenceTemplate_Adapter_Factory".
    */
-  ACE_CString ort_adapter_factory_name_;
+  std::string ort_adapter_factory_name_;
 
   /**
    * Name of the service object for functions that make calls on
@@ -814,7 +816,7 @@ public:
    * If TAO_IMR_CLient is linked, imr_client_adapter_name() will be
    * called to set the value to "Concrete_ImR_Client_Adapter".
    */
-  ACE_CString imr_client_adapter_name_;
+  std::string imr_client_adapter_name_;
 private:
   /// Constructor.
   TAO_POA_Static_Resources ();
