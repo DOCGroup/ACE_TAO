@@ -14,6 +14,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
+#include <string>
+
 static const ACE_TCHAR file_prefix[] = ACE_TEXT ("http:");
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -37,14 +39,15 @@ TAO_HTTP_Parser::parse_string (const char *nior,
   const ACE_TCHAR *http_url =
     ior.c_str () + sizeof (::file_prefix) + 1;
 
-  ACE_TCHAR *hostname = nullptr;
-  ACE_TCHAR *filename = nullptr;
+  std::basic_string<ACE_TCHAR> hostname;
+  std::basic_string<ACE_TCHAR> filename;
+  const ACE_TCHAR *hostname_arg = nullptr;
   const ACE_TCHAR *ptr = nullptr;
   u_short port = 80;
 
   if (http_url[0] == '/')
     {
-      filename = ACE_OS::strdup (http_url);
+      filename = http_url;
     }
   else
     {
@@ -59,17 +62,15 @@ TAO_HTTP_Parser::parse_string (const char *nior,
     else
     {
       size_t const host_len = ptr - http_url;
-      ACE_NEW_RETURN (hostname, ACE_TCHAR [host_len + 1], nullptr );
-      ACE_OS::strncpy (hostname, http_url, host_len);
-      hostname [host_len] = '\0';
+      hostname.assign (http_url, host_len);
+      hostname_arg = hostname.c_str ();
       ptr = ACE_OS::strstr (ptr, ACE_TEXT ("/"));
       if (ptr)
       {
-        filename = ACE_OS::strdup(ptr);
+        filename = ptr;
       }
       else
       {
-        delete [] hostname;
         return nullptr;
       }
     }
@@ -87,20 +88,17 @@ TAO_HTTP_Parser::parse_string (const char *nior,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - HTTP_Parser::parse_string, getting IOR from <%s> <%s> <%d>\n"),
-                  hostname, filename, port));
+                  hostname_arg, filename.c_str (), port));
     }
 
   // Open the client
-  if (client.open (filename,
-                   hostname,
+  if (client.open (filename.c_str (),
+                   hostname_arg,
                    port) == -1)
   {
       client.close ();
       return nullptr;
   }
-
-  delete [] hostname;
-  ACE_OS::free (filename);
 
   // Read from it
   if (client.read (mb) <= 0)
