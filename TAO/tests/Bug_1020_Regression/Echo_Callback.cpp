@@ -5,20 +5,21 @@
  */
 
 #include "Echo_Callback.h"
+#include "ace/OS_NS_unistd.h"
 
 void
-Echo_Callback::echo_payload(Test::Payload const &)
+Echo_Callback::echo_payload (Test::Payload const &)
 {
   static int n {};
   n++;
   if (n == 30)
     ACE_OS::abort();
 
-  ACE_Time_Value tick(0, 20000);
-  ACE_OS::sleep(tick);
+  ACE_Time_Value const tick (0, 20000);
+  ACE_OS::sleep (tick);
 }
 
 void
-Echo_Callback::echo_payload_excep(Test::AMI_EchoExceptionHolder *)
+Echo_Callback::echo_payload_excep (Test::AMI_EchoExceptionHolder *)
 {
 }

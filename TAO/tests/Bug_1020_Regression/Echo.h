@@ -19,7 +19,7 @@ public:
   Test::Payload *echo_payload (Test::Payload const &data) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* Echo__h_ */

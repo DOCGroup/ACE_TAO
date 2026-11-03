@@ -20,7 +20,7 @@ public:
   int svc () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* ORB_Task__h_ */

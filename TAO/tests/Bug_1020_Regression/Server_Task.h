@@ -25,7 +25,7 @@ public:
 
 private:
   /// Reference to the test interface
-  Test::Echo_var echo_;
+  Test::Echo_var const echo_;
 };
 
 #include /**/ "ace/post.h"

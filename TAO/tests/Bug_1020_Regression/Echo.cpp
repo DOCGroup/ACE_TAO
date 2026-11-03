@@ -5,7 +5,6 @@
  */
 #include "Echo.h"
 
-
 Echo::Echo (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -19,5 +18,5 @@ Echo::echo_payload (Test::Payload const &)
 
   Test::Payload_var pload (new Test::Payload);
   pload->length (1024);
-  return pload._retn();
+  return pload._retn ();
 }

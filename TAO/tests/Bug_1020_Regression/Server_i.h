@@ -20,7 +20,7 @@ public:
   void start_task (Test::Echo_ptr client) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* BUG_1020_REGRESSION_SERVER_I_H*/

@@ -9,6 +9,7 @@ Server::Server (CORBA::ORB_ptr orb)
 void
 Server::start_task (Test::Echo_ptr client)
 {
-  Server_Task *task = new Server_Task (client);
+  // The detached thread may outlive this call, so the task has independent lifetime.
+  Server_Task * const task = new Server_Task (client);
   task->activate (THR_NEW_LWP | THR_DETACHED);
 }
