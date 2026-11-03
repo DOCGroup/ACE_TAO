@@ -1,18 +1,10 @@
 #include "middle_i.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_string.h"
 
 Middle_i::Middle_i (CORBA::ORB_ptr orb, ThreeTier_ptr target)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , target_ (ThreeTier::_duplicate (target))
 {
 // ACE_DEBUG ((LM_DEBUG, "Middle (%P|%t) Construct middle_i @%8.8x\n", this));
-}
-
-bool
-Middle_i::parse_args (int /* argc */, ACE_TCHAR * /* argv */[])
-{
-  return true;
 }
 
 // Implement the tick method
