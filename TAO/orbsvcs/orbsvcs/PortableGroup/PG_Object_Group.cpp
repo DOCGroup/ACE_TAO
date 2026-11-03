@@ -98,9 +98,8 @@ TAO::PG_Object_Group::~PG_Object_Group ()
   if (TAO_debug_level > 3)
     ORBSVCS_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%T %n (%P|%t) - Destroying object group: %s"),
-                this->group_name_));
+                this->group_name_ ? this->group_name_->c_str () : nullptr));
 
-  CORBA::string_free (this->group_name_);
   CORBA::string_free (this->type_id_._retn());
   this->clear_members_map ();
 }
@@ -896,16 +895,16 @@ TAO::PG_Object_Group::distribute (int value)
 void
 TAO::PG_Object_Group::set_name (char const * group_name)
 {
-  if (group_name_ != nullptr)
-    CORBA::string_free (group_name_);
-
-  group_name_ = CORBA::string_dup (group_name);
+  if (group_name == nullptr)
+    this->group_name_.reset ();
+  else
+    this->group_name_ = group_name;
 }
 
 char const *
 TAO::PG_Object_Group::get_name ()
 {
-  return group_name_;
+  return this->group_name_ ? this->group_name_->c_str () : nullptr;
 }
 
 void

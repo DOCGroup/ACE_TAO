@@ -37,6 +37,9 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/ACE.h"
 
+#include <optional>
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
@@ -349,7 +352,7 @@ namespace TAO
      * an optional attribute of the object group which is a string
      * name that is assigned to the object group by the creator.
      */
-    char * group_name_ {};
+    std::optional<std::string> group_name_;
 
     // group members
     MemberMap members_;
