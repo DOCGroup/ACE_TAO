@@ -35,19 +35,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // ----------------------------------------------------------
       {
-        CORBA::OctetSeq_var encoded_data;
-        CORBA::Any_var decoded_data;
-
         constexpr Foo::type_ulong l = 9192631;
 
-        CORBA::Any tmp;
+        CORBA::Any tmp {};
 
         tmp <<= l;
 
-        encoded_data =
+        CORBA::OctetSeq_var const encoded_data =
           codec->encode_value (tmp);
 
-        decoded_data =
+        CORBA::Any_var const decoded_data =
           codec->decode_value (encoded_data.in (),
                                Foo::_tc_type_ulong);
 
