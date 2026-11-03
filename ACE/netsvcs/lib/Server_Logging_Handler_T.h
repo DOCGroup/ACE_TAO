@@ -13,6 +13,7 @@
 #define ACE_SERVER_LOGGING_HANDLER_T_H
 
 #include "ace/config-all.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +24,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SString.h"
-#include "ace/Atomic_Op.h"
 
 
 #if !defined (__GNUG__)
@@ -51,7 +51,7 @@ public:
 
 
   /// Process remote logging records.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
 protected:
   /// Receive the logging record from a client.
@@ -106,7 +106,7 @@ class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGIN
 public:
   /// Dynamic linking hook.
   ACE_Server_Logging_Acceptor_T ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]) override;
 
 protected:
   /// Parse svc.conf arguments.
@@ -117,7 +117,7 @@ protected:
    * specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
    * passed into the <SERVER_LOGGING_HANDLER>.
    */
-  virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&);
+  virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&) override;
 
 private:
   // At the moment each ACE_Server_Logging_Acceptor_T contains
@@ -167,11 +167,11 @@ public:
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
                               const LOG_MESSAGE_RECEIVER &receiver);
 
-  virtual int open (void* = 0);
+  virtual int open (void* = 0) override;
 };
 
 #if defined (ACE_HAS_THREADS)
-using ACE_LOGGER_COUNTER = ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
+using ACE_LOGGER_COUNTER = std::atomic<u_long>;
 #define ACE_LOGGER_SYNCH ACE_MT_SYNCH
 #else
 using ACE_LOGGER_COUNTER = u_long;
@@ -195,8 +195,8 @@ public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
                                   const LOG_MESSAGE_RECEIVER &receiver);
-  virtual int open (void * = 0);
-  virtual int svc ();
+  virtual int open (void * = 0) override;
+  virtual int svc () override;
 };
 
 #include "Server_Logging_Handler_T.cpp"

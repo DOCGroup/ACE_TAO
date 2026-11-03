@@ -93,21 +93,21 @@ public:
 
   /// Activate this instance of the <ACE_TS_Clerk_Handler>
   /// (called by the <ACE_TS_Clerk_Processor>).
-  virtual int open (void * = 0);
+  virtual int open (void * = 0) override;
 
   /// Return the handle of the message_fifo_;
-  virtual ACE_HANDLE get_handle () const;
+  virtual ACE_HANDLE get_handle () const override;
 
   /// Called when object is removed from the ACE_Reactor
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Receive time update from a server.
-  virtual int handle_input (ACE_HANDLE);
+  virtual int handle_input (ACE_HANDLE) override;
 
   /// Restart connection asynchronously when timeout occurs.
   virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+                              const void *arg) override;
 
   /// Get/Set remote addr
   void remote_addr (ACE_INET_Addr &addr);
@@ -120,7 +120,7 @@ public:
 
 protected:
   /// Handle SIGPIPE.
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
   static void stderr_output (int = 0);
 
@@ -183,7 +183,7 @@ public:
 
   /// Query servers for time periodically (timeout value)
   virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+                              const void *arg) override;
 
   /// Set up connections to all servers
   int initiate_connection (ACE_TS_Clerk_Handler *,
@@ -192,17 +192,17 @@ public:
 protected:
   // = Dynamic linking hooks.
   /// Called when service is linked.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Called when service is unlinked.
-  virtual int fini ();
+  virtual int fini () override;
 
   /// Called to determine info about the service.
-  virtual int info (ACE_TCHAR **strp, size_t length) const;
+  virtual int info (ACE_TCHAR **strp, size_t length) const override;
 
   // = Scheduling hooks.
-  virtual int suspend ();
-  virtual int resume ();
+  virtual int suspend () override;
+  virtual int resume () override;
 
 private:
   /// Parse svc.conf arguments.

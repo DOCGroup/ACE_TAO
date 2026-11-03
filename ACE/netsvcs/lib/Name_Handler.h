@@ -50,20 +50,20 @@ class ACE_Svc_Export ACE_Name_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, 
 {
 public:
   /// Pointer to a member function of ACE_Name_Handler returning int
-  typedef int (ACE_Name_Handler::*OPERATION) ();
+  using OPERATION = int (ACE_Name_Handler::*) ();
 
   /// Pointer to a member function of ACE_Naming_Context returning int
-  typedef int (ACE_Naming_Context::*LIST_OP) (ACE_PWSTRING_SET &, const ACE_NS_WString &);
+  using LIST_OP = int (ACE_Naming_Context::*) (ACE_PWSTRING_SET &, const ACE_NS_WString &);
 
   /// Pointer to a member function of ACE_Name_Handler returning ACE_Name_Request
-  typedef ACE_Name_Request (ACE_Name_Handler::*REQUEST) (ACE_NS_WString *);
+  using REQUEST = ACE_Name_Request (ACE_Name_Handler::*) (ACE_NS_WString *);
 
   /// Default constructor.
   ACE_Name_Handler (ACE_Thread_Manager * = 0);
 
   /// Activate this instance of the <ACE_Name_Handler> (called by the
   /// <ACE_Strategy_Acceptor>).
-  virtual int open (void * = 0);
+  virtual int open (void * = 0) override;
 
 protected:
   // = Helper routines for the operations exported to clients.
@@ -91,15 +91,15 @@ protected:
 
   // = Demultiplexing hooks.
   /// Return the underlying <ACE_HANDLE>.
-  virtual ACE_HANDLE get_handle () const;
+  virtual ACE_HANDLE get_handle () const override;
 
   /// Callback method invoked by the <ACE_Reactor> when client events
   /// arrive.
-  virtual int handle_input (ACE_HANDLE);
+  virtual int handle_input (ACE_HANDLE) override;
 
   // = Timer hook.
   /// Enable clients to limit the amount of time they wait for a name.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
 
   /// Ensure dynamic allocation...
   ~ACE_Name_Handler ();
@@ -185,7 +185,7 @@ class ACE_Name_Acceptor : public ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOC
 {
 public:
   /// Dynamic linking hook.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
