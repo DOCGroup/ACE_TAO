@@ -16,8 +16,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_TCHAR const *ior_output_file {};
-int const nthreads = 5;
+#include <memory>
+#include <string>
+
+std::basic_string<ACE_TCHAR> ior_output_file;
+int constexpr nthreads = 5;
 
 /**
  * Run a server thread
@@ -111,16 +114,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
+      if (!ior_output_file.empty ())
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
+          using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+          File_Handle output_file (ACE_OS::fopen (ior_output_file.c_str (), "w"),
+                                   &ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               ior_output_file.c_str ()),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       poa_manager->activate ();

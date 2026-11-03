@@ -13,14 +13,17 @@
 #include "ace/OS_NS_unistd.h"
 #include "ami_test_i.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+#include <atomic>
+#include <string>
+
+std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
 int nthreads = 5;
 int niterations = 10;
 bool debug {};
-ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> number_of_replies {};
+std::atomic<long> number_of_replies {0};
 
 CORBA::Long const in_number = 931232;
-char const *const in_str = "Let's talk AMI.";
+char const in_str[] = "Let's talk AMI.";
 bool parameter_corruption {};
 
 int
@@ -106,7 +109,7 @@ public:
   /// The thread entry point.
   int svc () override;
 
-  // private:
+private:
   /// Var for the AMI_Test object.
   A::AMI_Test_var ami_test_var_;
 
@@ -220,14 +223,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       A::AMI_Test_var server;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ior.c_str ());
       server =  A::AMI_Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
@@ -276,7 +279,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies.value ()));
+                      number_of_replies.load ()));
         }
 
       // ORB loop.
@@ -294,7 +297,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies.value ()));
+                      (nthreads*niterations) - number_of_replies.load ()));
         }
 
       client.thr_mgr ()->wait ();
@@ -359,7 +362,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc ()
 {
-  while (number_of_replies > 0)
+  while (number_of_replies.load () > 0)
     {
       CORBA::Boolean const pending = this->orb_->work_pending ();
 
