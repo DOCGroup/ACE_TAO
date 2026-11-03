@@ -18,9 +18,9 @@ public:
 
   void shutdown () override;
 
-  char *create_and_activate_server ();
+  CORBA::String_var create_and_activate_server () const;
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif // test_i_h
