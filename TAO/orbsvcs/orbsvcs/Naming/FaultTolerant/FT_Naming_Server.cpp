@@ -185,7 +185,9 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
                                      ACE_TCHAR *argv [],
                                      CORBA::ORB_ptr orb)
 {
-  ACE_NEW_RETURN (this->replicator_, TAO_FT_Naming_Replication_Manager (*this), -1);
+  TAO_FT_Naming_Replication_Manager *replicator = nullptr;
+  ACE_NEW_RETURN (replicator, TAO_FT_Naming_Replication_Manager (*this), -1);
+  this->replicator_.reset (replicator);
 
   // Invoke the base class initialization to setup the naming service
   // What follows after that are the initialization steps to support
@@ -243,7 +245,7 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
 
       // Setup the pairing with peer
       init_replication_pairing ();
-      this->naming_manager_.set_replicator (this->replicator_);
+      this->naming_manager_.set_replicator (this->replicator_.get ());
     }
   catch (CORBA::Exception const &ex)
     { // No exceptions are expected.
@@ -624,19 +626,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
 int
 TAO_FT_Naming_Server::fini ()
 {
-  if (this->replicator_ != nullptr)
-    {
-      try
-        {
-          this->replicator_->stop ();
-        }
-      catch (CORBA::Exception const &)
-        {
-          // Ignore
-        }
-      delete replicator_;
-      replicator_ = nullptr;
-    }
+  this->stop_replicator ();
   try
     {
       if (!CORBA::is_nil (this->naming_manager_poa_.in ()))
@@ -691,7 +681,9 @@ TAO_FT_Naming_Server::fini ()
 TAO_Storable_Naming_Context_Factory *
 TAO_FT_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
-  return new (std::nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
+  return new (std::nothrow) TAO_FT_Storable_Naming_Context_Factory (
+      context_size,
+      this->replicator_.get ());
 }
 
 TAO_Persistent_Naming_Context_Factory *
@@ -808,8 +800,31 @@ TAO_FT_Naming_Server::update_naming_context (
 /// Destructor.
 TAO_FT_Naming_Server::~TAO_FT_Naming_Server ()
 {
+  this->stop_replicator ();
+
   // Clear out the static naming manager from the persistent naming context
   TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (nullptr);
+}
+
+void
+TAO_FT_Naming_Server::stop_replicator ()
+{
+  if (!this->replicator_)
+    {
+      return;
+    }
+
+  try
+    {
+      this->replicator_->stop ();
+    }
+  catch (CORBA::Exception const &)
+    {
+      // Ignore
+    }
+
+  this->naming_manager_.set_replicator (nullptr);
+  this->replicator_.reset ();
 }
 
 CosNaming::NamingContext_ptr

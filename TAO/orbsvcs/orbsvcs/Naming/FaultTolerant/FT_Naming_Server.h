@@ -162,6 +162,8 @@ protected:
   TAO_FT_Naming_Manager naming_manager_;
 
 private:
+  void stop_replicator ();
+
   TAO_FT_Naming_Server (TAO_FT_Naming_Server const &) = delete;
   TAO_FT_Naming_Server (TAO_FT_Naming_Server &&) = delete;
   TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server const &) = delete;
@@ -169,9 +171,8 @@ private:
 
 protected:
   /// The object that implements the FT_Naming::Replication_Manager
-  /// interface. The server owns it and stops it before deletion in fini();
-  /// contexts and the naming manager borrow this pointer.
-  TAO_FT_Naming_Replication_Manager *replicator_ {};
+  /// interface. The server owns it; contexts and the naming manager borrow it.
+  std::unique_ptr<TAO_FT_Naming_Replication_Manager> replicator_;
 
   /// The Object Group Manager POA.
   PortableServer::POA_var naming_manager_poa_;
