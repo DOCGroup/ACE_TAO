@@ -72,7 +72,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
           // IORInterceptors.
           if (TAO_debug_level > 1)
             {
-              CORBA::String_var name =
+              CORBA::String_var const name =
                 this->ior_interceptor_list_.interceptor (i)->name ();
               // @@ What do we do if we get an exception here?
 
@@ -116,10 +116,10 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
     {
       try
         {
-          PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+          PortableInterceptor::IORInterceptor_ptr const ior_interceptor =
             this->ior_interceptor_list_.interceptor (j);
 
-          PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+          PortableInterceptor::IORInterceptor_3_0_var const ior_3_interceptor =
             PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
           if (!CORBA::is_nil (ior_3_interceptor.in ()))
             {
@@ -147,11 +147,11 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
   PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
 
   seq_obj_ref_template.length (
-    static_cast <CORBA::ULong> (array_obj_ref_template.size()));
+    static_cast<CORBA::ULong> (array_obj_ref_template.size()));
 
   for (size_t counter = 0; counter < array_obj_ref_template.size(); ++counter)
     {
-      PortableInterceptor::ObjectReferenceTemplate *member =
+      PortableInterceptor::ObjectReferenceTemplate *const member =
         array_obj_ref_template[counter];
 
       CORBA::add_ref (member);
@@ -161,10 +161,10 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+      PortableInterceptor::IORInterceptor_ptr const ior_interceptor =
         this->ior_interceptor_list_.interceptor (i);
 
-      PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+      PortableInterceptor::IORInterceptor_3_0_var const ior_3_interceptor =
         PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
       if (!CORBA::is_nil (ior_3_interceptor.in ()))
         {
@@ -188,10 +188,10 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+      PortableInterceptor::IORInterceptor_ptr const ior_interceptor =
         this->ior_interceptor_list_.interceptor (i);
 
-      PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+      PortableInterceptor::IORInterceptor_3_0_var const ior_3_interceptor =
         PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
       if (!CORBA::is_nil (ior_3_interceptor.in ()))
         {
