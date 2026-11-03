@@ -31,6 +31,9 @@
 #include "orbsvcs/Event/EC_Lifetime_Utils.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
 
+#include <optional>
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -215,7 +218,7 @@ private:
 
 private:
   /// The NIC used to subscribe for multicast traffic.
-  ACE_TCHAR *net_if_;
+  std::optional<std::basic_string<ACE_TCHAR>> net_if_;
 
   struct Subscription
   {

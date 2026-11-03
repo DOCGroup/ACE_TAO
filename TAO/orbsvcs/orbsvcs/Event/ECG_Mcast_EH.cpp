@@ -3,7 +3,6 @@
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/os_fcntl.h"
 
@@ -17,20 +16,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
                                     ACE_TCHAR const *net_if,
                                     CORBA::ULong sz)
-  : net_if_ (net_if ? ACE_OS::strdup (net_if) : nullptr)
+  : net_if_ ()
   , subscriptions_ ()
   , receiver_ (recv)
   , recvbuf_size_ (sz)
   , observer_ ()
   , auto_observer_disconnect_ ()
 {
+  if (net_if != nullptr)
+    this->net_if_ = net_if;
+
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH ()
-{
-  ACE_OS::free (this->net_if_);
-}
+TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH () = default;
 
 void
 TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec)
@@ -241,7 +240,9 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
 
-      if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
+      ACE_TCHAR const *net_if = this->net_if_ ? this->net_if_->c_str () : nullptr;
+
+      if (socket->open (new_subscription.mcast_addr, net_if, 1) == -1) {
         ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to open multicast socket\n",
                     ACE_ERRNO_GET));
@@ -253,7 +254,7 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
                     ACE_ERRNO_GET));
       }
 
-      if (socket->join (new_subscription.mcast_addr, 1, this->net_if_) == -1) {
+      if (socket->join (new_subscription.mcast_addr, 1, net_if) == -1) {
         ORBSVCS_ERROR ((LM_ERROR,
                     "Error: %d - Unable to join multicast group\n",
                     ACE_ERRNO_GET));
