@@ -19,6 +19,8 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/ORB_Core.h"
 
+#include <cstdlib>
+
 namespace {
   class Lockable_File
   {
@@ -341,14 +343,15 @@ Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
          this->repo_values_[Shared_Backing_Store::REPO_TYPE].first))
       {
         repo_type =
-          (Options::ImrType)ACE_OS::atoi(extra_params[Shared_Backing_Store::REPO_TYPE].second.c_str());
+          static_cast<Options::ImrType> (
+            std::atoi (extra_params[Shared_Backing_Store::REPO_TYPE].second.c_str ()));
       }
     if ((size > Shared_Backing_Store::REPO_ID) &&
         (extra_params[Shared_Backing_Store::REPO_ID].first ==
          this->repo_values_[Shared_Backing_Store::REPO_ID].first))
       {
         repo_id =
-          ACE_OS::atoi(extra_params[Shared_Backing_Store::REPO_ID].second.c_str());
+          std::atoi (extra_params[Shared_Backing_Store::REPO_ID].second.c_str ());
       }
     else
       {

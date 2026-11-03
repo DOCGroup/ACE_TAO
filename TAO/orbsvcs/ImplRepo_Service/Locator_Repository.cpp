@@ -12,6 +12,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Vector_T.h"
 
+#include <cstdlib>
+
 Locator_Repository::Locator_Repository (const Options& opts,
                                         CORBA::ORB_ptr orb)
 : opts_ (opts),
@@ -219,7 +221,7 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
           const char* port_number = ACE_OS::getenv ("ImplRepoServicePort");
 
           if (port_number != nullptr)
-            port = static_cast<CORBA::UShort> (ACE_OS::atoi (port_number));
+            port = static_cast<CORBA::UShort> (std::atoi (port_number));
         }
       if (port == 0)
         port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;

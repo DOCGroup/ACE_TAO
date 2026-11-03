@@ -5,6 +5,7 @@
 #include "UpdateableServerInfo.h"
 #include "orbsvcs/Log_Macros.h"
 
+#include <cstdlib>
 #include <cstring>
 
 //---------------------------------------------------------------------------
@@ -879,7 +880,7 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
         }
       if (std::strstr (ca.reason.in (), "pid:") == ca.reason.in ())
         {
-          int const pid = ACE_OS::atoi (ca.reason.in()+4);
+          int const pid = std::atoi (ca.reason.in () + 4);
           this->aam_->activator_replied_start_running (true, pid);
         }
       else
