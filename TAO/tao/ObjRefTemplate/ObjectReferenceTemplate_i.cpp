@@ -9,8 +9,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   ObjectReferenceTemplate::ObjectReferenceTemplate (
-  const char *server_id,
-  const char *orb_id,
+  std::string const& server_id,
+  std::string const& orb_id,
   PortableInterceptor::AdapterName *adapter_name,
   PortableServer::POA_ptr poa)
   : server_id_ (server_id),
@@ -42,13 +42,13 @@ namespace TAO
   char *
   ObjectReferenceTemplate::server_id ()
   {
-    return CORBA::string_dup (this->server_id_);
+    return CORBA::string_dup (this->server_id_.c_str ());
   }
 
   char *
   ObjectReferenceTemplate::orb_id ()
   {
-    return CORBA::string_dup (this->orb_id_);
+    return CORBA::string_dup (this->orb_id_.c_str ());
   }
 
   PortableInterceptor::AdapterName *
