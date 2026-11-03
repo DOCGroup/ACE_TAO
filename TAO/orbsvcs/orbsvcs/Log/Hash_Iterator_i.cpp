@@ -25,9 +25,7 @@ TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (
 }
 
 
-TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i ()
-{
-}
+TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i () = default;
 
 
 DsLogAdmin::RecordList*

@@ -89,9 +89,7 @@ TAO_Log_i::init ()
   this->op_state_ = DsLogAdmin::enabled;
 }
 
-TAO_Log_i::~TAO_Log_i ()
-{
-}
+TAO_Log_i::~TAO_Log_i () = default;
 
 DsLogAdmin::LogMgr_ptr
 TAO_Log_i::my_factory ()

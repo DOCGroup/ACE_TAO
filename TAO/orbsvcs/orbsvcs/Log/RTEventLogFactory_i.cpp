@@ -23,9 +23,7 @@ TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i () :
 {
 }
 
-TAO_RTEventLogFactory_i::~TAO_RTEventLogFactory_i()
-{
-}
+TAO_RTEventLogFactory_i::~TAO_RTEventLogFactory_i() = default;
 
 int
 TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,

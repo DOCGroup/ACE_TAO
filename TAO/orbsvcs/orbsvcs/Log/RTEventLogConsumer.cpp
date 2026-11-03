@@ -20,9 +20,7 @@ TAO_Rtec_LogConsumer::TAO_Rtec_LogConsumer (TAO_RTEventLog_i * log)
 {
 }
 
-TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer ()
-{
-}
+TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer () = default;
 
 void
 TAO_Rtec_LogConsumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)

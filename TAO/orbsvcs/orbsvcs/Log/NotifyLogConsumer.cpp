@@ -9,9 +9,7 @@ TAO_Notify_LogConsumer::TAO_Notify_LogConsumer (TAO_NotifyLog_i * log)
 {
 }
 
-TAO_Notify_LogConsumer::~TAO_Notify_LogConsumer ()
-{
-}
+TAO_Notify_LogConsumer::~TAO_Notify_LogConsumer () = default;
 
 void
 TAO_Notify_LogConsumer::connect (

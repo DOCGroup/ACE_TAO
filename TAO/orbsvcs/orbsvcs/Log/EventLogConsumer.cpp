@@ -9,9 +9,7 @@ TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i * log)
 {
 }
 
-TAO_Event_LogConsumer::~TAO_Event_LogConsumer ()
-{
-}
+TAO_Event_LogConsumer::~TAO_Event_LogConsumer () = default;
 
 void
 TAO_Event_LogConsumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)

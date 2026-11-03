@@ -7,9 +7,7 @@ TAO_BasicLogFactory_i::TAO_BasicLogFactory_i ()
 {
 }
 
-TAO_BasicLogFactory_i::~TAO_BasicLogFactory_i ()
-{
-}
+TAO_BasicLogFactory_i::~TAO_BasicLogFactory_i () = default;
 
 DsLogAdmin::BasicLogFactory_ptr
 TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
