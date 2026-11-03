@@ -3,8 +3,13 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 
+#include <memory>
+
+namespace
+{
 ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 int number_of_oneways = 10;
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -40,10 +45,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -51,41 +56,44 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Sender_i *sender_impl = nullptr;
+      Sender_i *sender_impl {};
       ACE_NEW_RETURN (sender_impl,
-                      Sender_i (orb.in ()),
+                      Sender_i (),
                       1);
-      PortableServer::ServantBase_var receiver_owner_transfer (sender_impl);
+      // This wrapper owns the servant's initial reference; sender_impl is a borrowed pointer.
+      PortableServer::ServantBase_var servant_owner (sender_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (sender_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Test::Sender_var sender =
+      Test::Sender_var const sender =
         Test::Sender::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (sender.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
@@ -101,16 +109,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Now terminating test\n"));
 
       CORBA::ULong const active_objects = sender_impl->get_active_objects ();
+      CORBA::ULong const number_received = sender_impl->get_number_received ();
       if (((number_of_oneways * active_objects) !=
-            sender_impl->get_number_received ()) && active_objects != 0)
+            number_received) && active_objects != 0)
         {
           ACE_ERROR ((LM_ERROR, "Error, expected %d oneways, received %d\n",
                       number_of_oneways,
-                      sender_impl->get_number_received()));
+                      number_received));
         }
       else
         {
-          if (sender_impl->get_number_received () == 0)
+          if (number_received == 0)
             {
               ACE_ERROR ((LM_ERROR, "Error: Received no calls\n"));
             }

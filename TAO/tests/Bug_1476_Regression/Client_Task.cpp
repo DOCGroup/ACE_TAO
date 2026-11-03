@@ -23,10 +23,10 @@ Client_Task::svc ()
   try
     {
       // Apply sync_none policy
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb_->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       if (CORBA::is_nil (policy_current.in ()))
@@ -41,7 +41,7 @@ Client_Task::svc ()
       policies.length (1);
       policies[0] =
         orb_->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any);
+                             scope_as_any);
       policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
 
       policies[0]->destroy ();
@@ -55,8 +55,8 @@ Client_Task::svc ()
 
           // Do it slowly.
           ACE_OS::sleep (ACE_Time_Value (0, 250000));
-         }
-       }
+        }
+    }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught Exception");

@@ -1,10 +1,5 @@
 #include "Sender_i.h"
 
-Sender_i::Sender_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-
 void
 Sender_i::active_objects (CORBA::ULong no_threads)
 {
@@ -18,13 +13,13 @@ Sender_i::send_ready_message ()
   ACE_DEBUG ((LM_DEBUG,
               "Received a call ...\n"));
 
-  this->number_received_++;
+  this->number_received_.fetch_add (1, std::memory_order_relaxed);
 }
 
 CORBA::ULong
 Sender_i::get_number_received () const
 {
-  return number_received_;
+  return this->number_received_.load (std::memory_order_relaxed);
 }
 
 CORBA::ULong

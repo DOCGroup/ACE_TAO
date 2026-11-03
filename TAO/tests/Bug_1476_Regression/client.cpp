@@ -9,9 +9,12 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/AnyTypeCode/Any.h"
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int number_of_oneways = 10;
 int number_of_client_tasks = 2;
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -51,10 +54,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -62,16 +65,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       if (CORBA::is_nil (policy_current.in ()))
@@ -95,11 +98,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Get the sender reference..
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test::Sender_var sender =
-        Test::Sender::_narrow(tmp.in ());
+      Test::Sender_var const sender =
+        Test::Sender::_narrow (tmp.in ());
 
       if (CORBA::is_nil (sender.in ()))
         {
@@ -127,14 +130,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->orb_core ()->lane_resources ().transport_cache ();
 
       TAO::Transport_Cache_Manager::HASH_MAP &cachemap = manager.map ();
-      TAO::Transport_Cache_Manager::HASH_MAP_ITER end_iter = cachemap.end ();
+      TAO::Transport_Cache_Manager::HASH_MAP_ITER const end_iter = cachemap.end ();
 
       bool transport_with_queue = false;
       for (TAO::Transport_Cache_Manager::HASH_MAP_ITER iter = cachemap.begin ();
            iter != end_iter;
            ++iter)
         {
-          TAO_Transport *transport = (*iter).int_id_.transport ();
+          TAO_Transport * const transport = (*iter).int_id_.transport ();
           if (!transport->queue_is_empty () && !transport->is_connected ())
             {
               transport_with_queue = true;
@@ -142,14 +145,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-        if (!transport_with_queue)
-          {
-            ACE_ERROR ((LM_ERROR, "(%P|%t) Error: expect a not connected transport with a queue\n"));
-          }
-        else
-          {
-            ACE_DEBUG ((LM_DEBUG, "(%P|%t) Found not connected transport with a queue\n"));
-          }
+      if (!transport_with_queue)
+        {
+          ACE_ERROR ((LM_ERROR, "(%P|%t) Error: expect a not connected transport with a queue\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) Found not connected transport with a queue\n"));
+        }
 
       if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 2, 1) == -1)
         {
