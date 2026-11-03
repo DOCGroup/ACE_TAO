@@ -35,11 +35,11 @@ class Client_Task : public ACE_Task_Base
   int svc () override;
 
 private:
-  /// File to read in the remote IOR.
-  ACE_TCHAR const *input_;
+  /// Borrowed command-line path; argv outlives this task.
+  ACE_TCHAR const * const input_;
 
   /// Client ORB.
-  CORBA::ORB_var corb_;
+  CORBA::ORB_var const corb_;
 };
 
 

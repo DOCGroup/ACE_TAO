@@ -5,15 +5,19 @@
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
+#include <memory>
+
+namespace
+{
 ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 ACE_TCHAR const *ior_input_file = ACE_TEXT("file://thr_server.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:o:"));
-  int c;
-
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -25,7 +29,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           ior_output_file = get_opts.opt_arg ();
           break;
         case '?':
-          default:
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-i <iorfile>"
@@ -39,26 +43,27 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Create the ORB initializer.
-      Server_ORBInitializer *temp_initializer = nullptr;
+      Server_ORBInitializer *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
                       -1);
 
-      PortableInterceptor::ORBInitializer_var initializer =
+      // The var owns the newly allocated initializer reference; this pointer is borrowed.
+      PortableInterceptor::ORBInitializer_var const initializer =
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (initializer.in ());
 
       // Now initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv,
-                                            "Remote_Server_ORB");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv,
+                                                  "Remote_Server_ORB");
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -68,10 +73,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              1);
         }
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
@@ -82,7 +87,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Create the interceptor.
-      Echo_Server_Request_Interceptor * server_interceptor =
+      // The initializer owns the interceptor; this pointer is borrowed.
+      Echo_Server_Request_Interceptor * const server_interceptor =
         temp_initializer->server_interceptor ();
 
       if (server_interceptor == nullptr)
@@ -94,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Pull in the ior from the remote server to use as the forward location.
-      CORBA::Object_var forward_location = orb->string_to_object (ior_input_file);
+      CORBA::Object_var const forward_location = orb->string_to_object (ior_input_file);
 
       if (CORBA::is_nil (forward_location.in ()))
         {
@@ -108,24 +114,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Bug1495_i server_impl (orb.in ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&server_impl);
 
-      CORBA::Object_var test_obj =
+      CORBA::Object_var const test_obj =
         root_poa->id_to_reference (id.in ());
 
-      Bug1495_Regression::Bug1495_var server =
+      Bug1495_Regression::Bug1495_var const server =
         Bug1495_Regression::Bug1495::_narrow (test_obj.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
       // Output the server IOR to a file
       if (ior_output_file != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-
-          if (output_file == nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Cannot open output file for writing the "
@@ -133,8 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                  1);
             }
 
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       ACE_Time_Value tv (15, 0);
@@ -151,7 +156,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught an exception in server:");
       return 1;

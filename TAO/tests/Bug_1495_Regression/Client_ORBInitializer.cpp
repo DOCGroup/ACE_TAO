@@ -3,9 +3,6 @@
 #include "Client_ORBInitializer.h"
 #include "interceptors.h"
 
-Client_ORBInitializer::Client_ORBInitializer ()
-= default;
-
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
@@ -17,10 +14,10 @@ void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  CORBA::String_var orb_id =
+  CORBA::String_var const orb_id =
     info->orb_id ();
 
-  PortableInterceptor::ClientRequestInterceptor_ptr interceptor =
+  PortableInterceptor::ClientRequestInterceptor_ptr interceptor {};
     PortableInterceptor::ClientRequestInterceptor::_nil ();
 
   // Install the Echo client request interceptor
@@ -28,8 +25,8 @@ Client_ORBInitializer::post_init (
                     Echo_Client_Request_Interceptor (orb_id.in ()),
                     CORBA::NO_MEMORY ());
 
-  PortableInterceptor::ClientRequestInterceptor_var
-    client_interceptor = interceptor;
+  // The var owns the newly allocated interceptor reference.
+  PortableInterceptor::ClientRequestInterceptor_var const client_interceptor = interceptor;
 
   info->add_client_request_interceptor (client_interceptor.in ());
 }

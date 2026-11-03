@@ -22,7 +22,7 @@ class Echo_Client_Request_Interceptor
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Client_Request_Interceptor (char const *orb_id);
+  explicit Echo_Client_Request_Interceptor (char const *orb_id);
   // ctor.
 
   ~Echo_Client_Request_Interceptor () override = default;
@@ -49,9 +49,9 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  char const *myname_;
+  char const * const myname_;
 
-  CORBA::String_var orb_id_;
+  CORBA::String_var const orb_id_;
   // The ID of the ORB where this interceptor was created, usually
   // obtained from the ORBInitInfo
 };

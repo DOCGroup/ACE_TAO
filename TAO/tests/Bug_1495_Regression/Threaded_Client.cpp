@@ -19,14 +19,17 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Manual_Event.h"
 
+namespace
+{
 ACE_TCHAR const *ior_input_file = ACE_TEXT("test.ior");
 ACE_TCHAR const *ior_output_file = ACE_TEXT("thr_server.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -52,17 +55,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       ACE_Argv_Type_Converter main_args_s (argc, argv);
 
-      CORBA::ORB_var sorb =
+      CORBA::ORB_var const sorb =
         CORBA::ORB_init (main_args_s.get_argc (),
                          main_args_s.get_TCHAR_argv (),
                          "Server_ORB");
-    // Parse command line
+      // Parse the command line.
       if (parse_args (argc, argv) == -1)
         {
           return -1;
@@ -86,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Argv_Type_Converter main_args_c (argc, argv);
 
-      CORBA::ORB_var corb =
+      CORBA::ORB_var const corb =
         CORBA::ORB_init (main_args_c.get_argc (),
                          main_args_c.get_TCHAR_argv (),
                          "Client_ORB");
@@ -107,7 +110,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       corb->destroy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // ignore exceptions
     }
