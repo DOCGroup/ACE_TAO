@@ -22,7 +22,8 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/IOPC.h"
-#include "ace/SString.h"
+
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -70,8 +71,8 @@ public:
   int dont_route_;
   int no_delay_;
   CORBA::Long preallocate_buffer_size_;
-  ACE_CString mmap_filename_;
-  ACE_CString mmap_lockname_;
+  std::string mmap_filename_;
+  std::string mmap_lockname_;
 };
 
 class TAO_Export TAO_DIOP_Protocol_Properties

@@ -26,9 +26,7 @@ TAO_SHMIOP_Protocol_Properties::TAO_SHMIOP_Protocol_Properties ()
     keep_alive_ (0),
     dont_route_ (0),
     no_delay_ (0),
-    preallocate_buffer_size_ (0),
-    mmap_filename_ (),
-    mmap_lockname_ ()
+    preallocate_buffer_size_ (0)
 {
 }
 
