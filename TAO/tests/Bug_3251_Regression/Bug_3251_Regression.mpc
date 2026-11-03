@@ -6,6 +6,7 @@ project(*server) : taoserver, threads {
 }
 
 project(*lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  libs += TAO_Utils
   libout = .
   sharedname = Bug_3251
   dynamicflags += BUG_3251_REGRESSION_BUILD_DLL

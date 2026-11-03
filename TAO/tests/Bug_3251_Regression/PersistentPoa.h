@@ -1,8 +1,6 @@
 #ifndef bug_3251_PersistentPoa_h
 #define bug_3251_PersistentPoa_h
 
-#include <string>
-
 #include "ace/Service_Object.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -23,9 +21,7 @@ protected:
   int fini () override;
 
 private:
-  std::string                    m_poaName;
   CORBA::ORB_var                 mv_orb;
-  PortableServer::POA_var        mv_rootPOA;
   PortableServer::POA_var        mv_thisPOA;
   PortableServer::POAManager_var mv_poaManager;
 }; /* end of class PersistentPoa */

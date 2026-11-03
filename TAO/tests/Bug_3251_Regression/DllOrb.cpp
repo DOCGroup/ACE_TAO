@@ -4,28 +4,26 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
-
 DllOrb::DllOrb () = default;
 
 DllOrb::~DllOrb () = default;
 
-
 int
 DllOrb::init (int argc, ACE_TCHAR *argv[])
 {
-  int threadCnt = 1;
+  int thread_count {1};
 
   try
   {
     ACE_Arg_Shifter as (argc, argv);
-    ACE_TCHAR const *currentArg = nullptr;
+    ACE_TCHAR const *current_arg {};
     while (as.is_anything_left ())
     {
-      if ((currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))) != nullptr)
+      if ((current_arg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))) != nullptr)
       {
-        int num = ACE_OS::atoi (currentArg);
-        if (num >= 1)
-          threadCnt = num;
+        int const num_threads = ACE_OS::atoi (current_arg);
+        if (num_threads >= 1)
+          thread_count = num_threads;
         as.consume_arg ();
       }
       else
@@ -40,10 +38,10 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-    CORBA::Object_var v_poa =
+    CORBA::Object_var const poa_object =
       mv_orb_->resolve_initial_references ("RootPOA");
 
-    mv_rootPOA_ = PortableServer::POA::_narrow (v_poa.in ());
+    mv_rootPOA_ = PortableServer::POA::_narrow (poa_object.in ());
     if (CORBA::is_nil (mv_rootPOA_.in ()))
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("nil RootPOA\n")));
@@ -65,11 +63,10 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  ma_barrier_.reset (new ACE_Thread_Barrier (threadCnt + 1));
+  ma_barrier_ = std::make_unique<ACE_Thread_Barrier> (thread_count + 1);
 
-  this->activate (
-    THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-    threadCnt);
+  if (this->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_count) != 0)
+    return -1;
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() ...\n")));
   ma_barrier_->wait ();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() done\n")));
