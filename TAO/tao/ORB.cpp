@@ -40,6 +40,7 @@
 #include "ace/CORBA_macros.h"
 #include <cstdlib>
 #include <cstring>
+#include <string>
 
 static const char ior_prefix[] = "IOR:";
 
@@ -948,18 +949,14 @@ CORBA::ORB::resolve_initial_references (const char *name,
   //
   static const char ior_string[] = "IOR";
 
-  CORBA::String_var ior_env_var_name =
-    CORBA::string_alloc (
-      static_cast<CORBA::ULong> (std::strlen (name) + sizeof (ior_string)));
+  std::string ior_env_var_name (name);
+  ior_env_var_name += ior_string;
 
-  std::strcpy (ior_env_var_name.inout (), name);
+  char const *service_ior_value = ACE_OS::getenv (ior_env_var_name.c_str ());
 
-  std::strcat (ior_env_var_name.inout (), ior_string);
-
-  ACE_CString service_ior = ACE_OS::getenv (ior_env_var_name.in ());
-
-  if (std::strcmp (service_ior.c_str (), "") != 0)
+  if (service_ior_value != nullptr && *service_ior_value != '\0')
     {
+      std::string service_ior (service_ior_value);
       result = this->string_to_object (service_ior.c_str());
 
       return result._retn ();
