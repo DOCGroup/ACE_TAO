@@ -20,6 +20,7 @@
 
 #include /**/ "tao/TAO_Export.h"
 #include /**/ "tao/Versioned_Namespace.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -82,7 +83,7 @@ protected:
   TAO_ORB_Core * const orb_core_;
 
   /// The leader follower strategy
-  TAO_LF_Strategy *lf_strategy_;
+  std::unique_ptr<TAO_LF_Strategy> lf_strategy_;
 };
 
 /**
