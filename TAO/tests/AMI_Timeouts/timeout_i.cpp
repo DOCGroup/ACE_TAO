@@ -84,25 +84,25 @@ TimeoutHandler_i::sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_hold
 void
 TimeoutHandler_i::reset_reply_counter ()
 {
-  reply_counter_ = 0;
+  reply_counter_.store (0);
 }
 
 void
 TimeoutHandler_i::reset_reply_excep_counter ()
 {
-  reply_excep_counter_ = 0;
+  reply_excep_counter_.store (0);
 }
 
 unsigned short
 TimeoutHandler_i::reply_counter () const
 {
-  return reply_counter_;
+  return reply_counter_.load ();
 }
 
 unsigned short
 TimeoutHandler_i::reply_excep_counter () const
 {
-  return reply_excep_counter_;
+  return reply_excep_counter_.load ();
 }
 
 void

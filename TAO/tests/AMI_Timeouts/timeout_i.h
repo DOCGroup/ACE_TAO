@@ -13,6 +13,7 @@
 
 #include "ace/High_Res_Timer.h"
 #include "timeoutS.h"
+#include <atomic>
 
 class Timeout_i
 : public POA_TimeoutObj
@@ -65,9 +66,9 @@ public:
   ACE_Time_Value elapsed_time () const;
 
 private:
-  unsigned short reply_counter_ {};
+  std::atomic<unsigned short> reply_counter_ {};
 
-  unsigned short reply_excep_counter_ {};
+  std::atomic<unsigned short> reply_excep_counter_ {};
 
   ACE_High_Res_Timer timer_;
 };

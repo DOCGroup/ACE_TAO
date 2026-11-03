@@ -10,11 +10,15 @@
 //=============================================================================
 
 
-#include "timeout_client.h"
+#include "timeout_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
+#include <memory>
 
-ACE_TCHAR const *ior_output_file = nullptr;
+namespace
+{
+ACE_TCHAR const *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -42,6 +46,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
+}
 }
 
 int
@@ -85,40 +90,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
+      if (ior_output_file)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       poa_manager->activate ();
-
-      // Instantiate reply handler
-      TimeoutHandler_i timeoutHandler_i;
-
-      PortableServer::ObjectId_var idu =
-        root_poa->activate_object (&timeoutHandler_i);
-
-      CORBA::Object_var objectu = root_poa->id_to_reference (idu.in ());
-
-      AMI_TimeoutObjHandler_var timeoutHandler_var =
-        AMI_TimeoutObjHandler::_narrow (objectu.in ());
-
-      // Instantiate client
-      /*
-      TimeoutClient* client = new TimeoutClient (orb,
-                                                 timeout_var.in (),
-                                                 timeoutHandler_var.in (),
-                                                 &timeoutHandler_i);
-
-      client->activate ();
-      */
 
       orb->run ();
 
@@ -129,7 +113,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      //delete client;
     }
   catch (CORBA::Exception const &ex)
     {

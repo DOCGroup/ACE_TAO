@@ -10,7 +10,6 @@ project(*Server): taoserver, ami {
   after += *idl
   Source_Files {
     timeout_i.cpp
-    timeout_client.cpp
     server.cpp
     timeoutS.cpp
     timeoutC.cpp
