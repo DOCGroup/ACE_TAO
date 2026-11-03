@@ -6,18 +6,12 @@ FooServantList::FooServantList(const ACE_TCHAR* prefix,
                                unsigned    num_servants,
                                unsigned    num_clients,
                                CORBA::ORB_ptr orb)
-  : prefix_(prefix),
+  : servants_ (std::make_unique<PortableServer::ServantBase_var[]> (num_servants)),
+    prefix_(prefix),
     num_servants_(num_servants),
     num_clients_(num_clients),
     orb_ (CORBA::ORB::_duplicate(orb))
 {
-  this->servants_ = new PortableServer::ServantBase_var[num_servants];
-}
-
-
-FooServantList::~FooServantList()
-{
-  delete [] this->servants_;
 }
 
 
@@ -54,7 +48,7 @@ FooServantList::create_and_activate(PortableServer::POA_ptr poa)
       ACE_TString filename = servant_name + ACE_TEXT(".ior");
       FILE* ior_file = ACE_OS::fopen(filename.c_str(), "w");
 
-      if (ior_file == 0)
+      if (ior_file == nullptr)
         {
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Cannot open output file (%s) for writing IOR.",
@@ -71,11 +65,11 @@ FooServantList::create_and_activate(PortableServer::POA_ptr poa)
 void
 FooServantList::client_done()
 {
-  unsigned num_left = --this->num_clients_;
+  unsigned const num_left = --this->num_clients_;
 
   if (num_left == 0)
     {
-      if (TheOrbShutdownTask::instance()->open(0) != 0)
+      if (TheOrbShutdownTask::instance()->open (nullptr) != 0)
         {
           ACE_ERROR((LM_ERROR, "(%P|%t)FooServantList::client_done: "
             "failed to create orb shutdown thread.\n"));

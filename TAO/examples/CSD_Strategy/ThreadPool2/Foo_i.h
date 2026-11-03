@@ -12,19 +12,19 @@ class Foo_i : public virtual POA_Foo
 {
   public:
     Foo_i(const ACE_TCHAR* servant_name, FooServantList* mgr);
-    virtual ~Foo_i();
+    ~Foo_i () override;
 
-    virtual void op1();
+    void op1 () override;
 
-    virtual void op2(CORBA::Long value);
+    void op2 (CORBA::Long value) override;
 
-    virtual CORBA::Long op3();
+    CORBA::Long op3 () override;
 
-    virtual void op4(CORBA::Long value);
+    void op4 (CORBA::Long value) override;
 
-    virtual void op5();
+    void op5 () override;
 
-    virtual void done();
+    void done () override;
 
 
   private:
