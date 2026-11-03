@@ -1,11 +1,11 @@
 ACEXML_INLINE
 ACEXML_Element_Tree_Node::ACEXML_Element_Tree_Node ()
-  : next_ (0)
+  : next_ (nullptr)
 {
 }
 
 ACEXML_INLINE ACEXML_Element_Tree_Node *
-ACEXML_Element_Tree_Node::next ()
+ACEXML_Element_Tree_Node::next () const
 {
   return this->next_;
 }
@@ -17,30 +17,30 @@ ACEXML_Element_Tree_Node::next (ACEXML_Element_Tree_Node * n)
 }
 
 ACEXML_INLINE
-ACEXML_Element_Tree_Name_Node::ACEXML_Element_Tree_Name_Node (const ACEXML_Char *name,
-                                                              int release)
-  : name_ (name, 0, release)
+ACEXML_Element_Tree_Name_Node::ACEXML_Element_Tree_Name_Node (ACEXML_Char const *name,
+                                                              bool release)
+  : name_ (name, nullptr, release)
 {
 }
 
 ACEXML_INLINE void
-ACEXML_Element_Tree_Name_Node::set (const ACEXML_Char *name,
-                                    int release)
+ACEXML_Element_Tree_Name_Node::set (ACEXML_Char const *name,
+                                    bool release)
 {
   this->name_.set (name, release);
 }
 
 ACEXML_INLINE
 ACEXML_Element_Tree_List_Node::ACEXML_Element_Tree_List_Node ()
-  : type_ (SEQUENCE),
-    head_ (0),
-    tail_ (0),
-    pop_next_ (0)
+  : type_ (LIST_TYPE::SEQUENCE),
+    head_ (nullptr),
+    tail_ (nullptr),
+    pop_next_ (nullptr)
 {
 }
 
 ACEXML_INLINE ACEXML_Element_Tree_List_Node::LIST_TYPE
-ACEXML_Element_Tree_List_Node::get ()
+ACEXML_Element_Tree_List_Node::get () const
 {
   return this->type_;
 }
@@ -54,12 +54,12 @@ ACEXML_Element_Tree_List_Node::set (ACEXML_Element_Tree_List_Node::LIST_TYPE typ
 
 ACEXML_INLINE
 ACEXML_Element_Tree_List_Stack::ACEXML_Element_Tree_List_Stack ()
-  : top_ (0)
+  : top_ (nullptr)
 {
 }
 
 ACEXML_INLINE ACEXML_Element_Tree_List_Node *
-ACEXML_Element_Tree_List_Stack::top ()
+ACEXML_Element_Tree_List_Stack::top () const
 {
   return this->top_;
 }
@@ -74,17 +74,17 @@ ACEXML_Element_Tree_List_Stack::push (ACEXML_Element_Tree_List_Node *n)
 ACEXML_INLINE ACEXML_Element_Tree_List_Node *
 ACEXML_Element_Tree_List_Stack::pop ()
 {
-  if (this->top_ != 0)
+  if (this->top_ != nullptr)
     {
       ACEXML_Element_Tree_List_Node *ptr = this->top_;
       this->top_ = this->top_->pop_next_;
       return ptr;
     }
-  return 0;
+  return nullptr;
 }
 
-ACEXML_INLINE int
-ACEXML_Element_Tree_List_Stack::empty ()
+ACEXML_INLINE bool
+ACEXML_Element_Tree_List_Stack::empty () const
 {
-  return this->top_ == 0;
+  return this->top_ == nullptr;
 }

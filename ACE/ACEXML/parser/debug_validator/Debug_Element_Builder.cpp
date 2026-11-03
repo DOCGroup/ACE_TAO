@@ -3,21 +3,18 @@
 
 ACEXML_Debug_Element_Builder::ACEXML_Debug_Element_Builder ()
   : type_ (CONTENT_TYPE::UNDEFINED),
-    root_ (nullptr)
+    root_ ()
 {
 }
 
-ACEXML_Debug_Element_Builder::~ACEXML_Debug_Element_Builder ()
-{
-  delete this->root_;
-}
+ACEXML_Debug_Element_Builder::~ACEXML_Debug_Element_Builder () = default;
 
 int
-ACEXML_Debug_Element_Builder::setElementName (const ACEXML_Char *,
-                                              const ACEXML_Char *,
-                                              const ACEXML_Char *qName)
+ACEXML_Debug_Element_Builder::setElementName (ACEXML_Char const *,
+                                              ACEXML_Char const *,
+                                              ACEXML_Char const *qName)
 {
-  this->element_.set (qName, 0);
+  this->element_.set (qName, false);
   return 0;
 }
 
@@ -34,47 +31,52 @@ ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type)
 }
 
 int
-ACEXML_Debug_Element_Builder::insertMixedElement (const ACEXML_Char *,
-                                                  const ACEXML_Char *,
-                                                  const ACEXML_Char *qName)
+ACEXML_Debug_Element_Builder::insertMixedElement (ACEXML_Char const *,
+                                                  ACEXML_Char const *,
+                                                  ACEXML_Char const *qName)
 {
-  ACEXML_Element_Tree_Name_Node *node = nullptr;
+  ACEXML_Element_Tree_Name_Node *raw_node = nullptr;
 
   // @@ We should "throw" an exception here instead of returning -1.
-  ACE_NEW_RETURN (node,
+  ACE_NEW_RETURN (raw_node,
                   ACEXML_Element_Tree_Name_Node (qName),
                   -1);
+  std::unique_ptr<ACEXML_Element_Tree_Name_Node> node (raw_node);
 
   if (this->root_ == nullptr)
-    // @@ Memory leak if fail?
-    ACE_NEW_RETURN (this->root_,
-                    ACEXML_Element_Tree_List_Node (),
-                    -1);
+    {
+      ACEXML_Element_Tree_List_Node *raw_root = nullptr;
+      ACE_NEW_RETURN (raw_root,
+                      ACEXML_Element_Tree_List_Node (),
+                      -1);
+      this->root_.reset (raw_root);
+    }
 
-
-  return this->root_->insert (node);
+  return this->root_->insert (node.release ());
 }
 
 int
 ACEXML_Debug_Element_Builder::startChildGroup ()
 {
-  ACEXML_Element_Tree_List_Node *lnode = nullptr;
+  ACEXML_Element_Tree_List_Node *raw_lnode = nullptr;
 
-  ACE_NEW_RETURN (lnode,
+  ACE_NEW_RETURN (raw_lnode,
                   ACEXML_Element_Tree_List_Node (),
                   -1);
+  std::unique_ptr<ACEXML_Element_Tree_List_Node> lnode (raw_lnode);
+  ACEXML_Element_Tree_List_Node * const lnode_ptr = lnode.get ();
 
   if (this->root_ == nullptr)
     {
-      this->root_ = lnode;
+      this->root_.reset (lnode.release ());
     }
   else
     {
       // @@ check error?
-      this->root_->insert (lnode);
+      this->root_->insert (lnode.release ());
     }
 
-  this->active_list_.push (lnode);
+  this->active_list_.push (lnode_ptr);
   return 0;
 }
 
@@ -88,30 +90,31 @@ ACEXML_Debug_Element_Builder::endChildGroup (CARDINALITY )
 int
 ACEXML_Debug_Element_Builder::setChoice ()
 {
-  this->active_list_.top ()->set (ACEXML_Element_Tree_List_Node::CHOICE);
+  this->active_list_.top ()->set (ACEXML_Element_Tree_List_Node::LIST_TYPE::CHOICE);
   return 0;
 }
 
 int
 ACEXML_Debug_Element_Builder::setSequence ()
 {
-  this->active_list_.top ()->set (ACEXML_Element_Tree_List_Node::SEQUENCE);
+  this->active_list_.top ()->set (ACEXML_Element_Tree_List_Node::LIST_TYPE::SEQUENCE);
   return 0;
 }
 
 int
-ACEXML_Debug_Element_Builder::insertElement  (const ACEXML_Char *,
-                                              const ACEXML_Char *,
-                                              const ACEXML_Char *qName)
+ACEXML_Debug_Element_Builder::insertElement (ACEXML_Char const *,
+                                             ACEXML_Char const *,
+                                             ACEXML_Char const *qName)
 {
-  ACEXML_Element_Tree_Name_Node *node = nullptr;
+  ACEXML_Element_Tree_Name_Node *raw_node = nullptr;
 
   // @@ We should "throw" an exception here instead of returning -1.
-  ACE_NEW_RETURN (node,
+  ACE_NEW_RETURN (raw_node,
                   ACEXML_Element_Tree_Name_Node (qName),
                   -1);
+  std::unique_ptr<ACEXML_Element_Tree_Name_Node> node (raw_node);
 
-  return this->active_list_.top ()->insert (node);
+  return this->active_list_.top ()->insert (node.release ());
 }
 
 void

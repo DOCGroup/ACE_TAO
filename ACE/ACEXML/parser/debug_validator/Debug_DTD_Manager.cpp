@@ -24,7 +24,7 @@ ACEXML_Debug_DTD_Manager::insertElement_Definition (ACEXML_Element_Def_Builder *
 {
   ACEXML_Element_Def_Builder::VAR ptr (def);
 
-  if (def != 0)
+  if (def != nullptr)
     {
       ptr->dump ();
       return 0;
@@ -39,7 +39,7 @@ ACEXML_Debug_DTD_Manager::getAttribute_Def_Builder ()
   ACEXML_Attributes_Def_Builder *tmp;
   ACE_NEW_RETURN (tmp,
                   ACEXML_Debug_Attributes_Builder (),
-                  0);
+                  nullptr);
   return tmp;
 }
 
@@ -47,7 +47,7 @@ int
 ACEXML_Debug_DTD_Manager::insertAttributes_Definition (ACEXML_Attributes_Def_Builder *def)
 {
   ACEXML_Attributes_Def_Builder::VAR ptr (def);
-  if (def != 0)
+  if (def != nullptr)
     {
       ptr->dump ();
       return 0;
@@ -57,9 +57,9 @@ ACEXML_Debug_DTD_Manager::insertAttributes_Definition (ACEXML_Attributes_Def_Bui
 }
 
 ACEXML_Validator *
-ACEXML_Debug_DTD_Manager::getValidator (const ACEXML_Char *,
-                                        const ACEXML_Char *,
-                                        const ACEXML_Char *)
+ACEXML_Debug_DTD_Manager::getValidator (ACEXML_Char const *,
+                                        ACEXML_Char const *,
+                                        ACEXML_Char const *)
 {
-  ACEXML_THROW_RETURN (ACEXML_SAXNotSupportedException (ACE_TEXT ("getValidator()")), 0);
+  ACEXML_THROW_RETURN (ACEXML_SAXNotSupportedException (ACE_TEXT ("getValidator()")), nullptr);
 }

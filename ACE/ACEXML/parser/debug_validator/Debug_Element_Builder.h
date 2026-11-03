@@ -19,6 +19,7 @@
 
 #include "ACEXML/common/Element_Def_Builder.h"
 #include "ACEXML/parser/debug_validator/Element_Tree.h"
+#include <memory>
 
 /**
  * @class ACEXML_Debug_Element_Builder Debug_Element_Builder.h "parser/debug_validator/Debug_Element_Builder.h"
@@ -45,9 +46,9 @@ public:
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  int setElementName (const ACEXML_Char *namespaceURI,
-                      const ACEXML_Char *localName,
-                      const ACEXML_Char *qName) override;
+  int setElementName (ACEXML_Char const *namespaceURI,
+                      ACEXML_Char const *localName,
+                      ACEXML_Char const *qName) override;
 
   /**
    * Define the content type of the element.
@@ -59,9 +60,9 @@ public:
   /**
    * Insert one more element into Mixed definition.
    */
-  int insertMixedElement (const ACEXML_Char *namespaceURI,
-                          const ACEXML_Char *localName,
-                          const ACEXML_Char *qName) override;
+  int insertMixedElement (ACEXML_Char const *namespaceURI,
+                          ACEXML_Char const *localName,
+                          ACEXML_Char const *qName) override;
 
   /**
    * Start a new group of children.
@@ -98,9 +99,9 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int insertElement (const ACEXML_Char *namespaceURI,
-                     const ACEXML_Char *localName,
-                     const ACEXML_Char *qName) override;
+  int insertElement (ACEXML_Char const *namespaceURI,
+                     ACEXML_Char const *localName,
+                     ACEXML_Char const *qName) override;
 
   /**
    * Dump the content of the attribute definition.
@@ -111,8 +112,9 @@ private:
 
   ACEXML_String element_;
 
-  ACEXML_Element_Tree_List_Node *root_;
+  std::unique_ptr<ACEXML_Element_Tree_List_Node> root_;
 
+  /// Non-owning stack of list nodes owned by root_.
   ACEXML_Element_Tree_List_Stack active_list_;
 };
 
