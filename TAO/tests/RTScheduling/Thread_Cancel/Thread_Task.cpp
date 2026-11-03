@@ -1,9 +1,9 @@
 #include "Thread_Task.h"
-#include "ace/Atomic_Op.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
+#include <atomic>
 
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_index;
+std::atomic<long> guid_index {0};
 
 RTScheduling::Current::IdType*
 Thread_Task::guids ()
@@ -50,9 +50,9 @@ Thread_Task::svc ()
 {
   try
     {
-      const char * name = 0;
-      CORBA::Policy_ptr sched_param = 0;
-      CORBA::Policy_ptr implicit_sched_param = 0;
+      char const * name = nullptr;
+      CORBA::Policy_ptr sched_param = nullptr;
+      CORBA::Policy_ptr implicit_sched_param = nullptr;
 
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Chamber of Secrets",

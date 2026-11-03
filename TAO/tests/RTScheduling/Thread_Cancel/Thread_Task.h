@@ -9,13 +9,20 @@
 class Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
+  Thread_Task () = default;
+  Thread_Task (Thread_Task const &) = delete;
+  Thread_Task (Thread_Task &&) = delete;
+  Thread_Task & operator= (Thread_Task const &) = delete;
+  Thread_Task & operator= (Thread_Task &&) = delete;
+
   int activate_task (CORBA::ORB_ptr orb);
 
   RTScheduling::Current::IdType* guids ();
 
  protected:
   /// task svc
-  virtual int svc ();
+  int svc () override;
+
  private:
   CORBA::ORB_var orb_;
   RTScheduling::Current_var current_;
