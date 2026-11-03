@@ -15,7 +15,7 @@ Hello::get_string (::Test::ThreadId caller_threadid)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
 
-  if (ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()) != caller_threadid)
+      if (ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()) != caller_threadid)
     {
       // this means a remote call was made
 
@@ -33,7 +33,7 @@ Hello::get_string (::Test::ThreadId caller_threadid)
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();
 
-          TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
+          TAO_ORB_Core_Auto_Ptr const tmp (orb_table->find ("server_orb"));
           if (tmp.get () == nullptr)
             {
               // We are running on a single ORB and this is an error.

@@ -2,21 +2,25 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/SString.h"
 #include "ace/Manual_Event.h"
 #include <ace/ARGV.h>
 #include <iostream>
+#include <string>
 
-const ACE_TCHAR *output = ACE_TEXT("test.ior");
-const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
-// static int named_orbs = 0;
-ACE_CString server_orb;
-ACE_CString client_orb;
+namespace
+{
+  // These argv-backed paths are borrowed until both worker threads complete.
+  ACE_TCHAR const *output = ACE_TEXT("test.ior");
+  ACE_TCHAR const *input = ACE_TEXT("file://test.ior");
+  std::string server_orb;
+  std::string client_orb;
+}
+
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:n"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -28,9 +32,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
         input = get_opts.opt_arg ();
         break;
       case 'n':
-        // named_orbs = 1;
-        server_orb.set ("server_orb");
-        client_orb.set ("client_orb");
+        server_orb = "server_orb";
+        client_orb = "client_orb";
         break;
       case '?':
       default:
@@ -42,10 +45,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc,
-                  argv) == -1)
+  if (parse_args (argc, argv) == -1)
     return -1;
 
   try
@@ -60,7 +62,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Argv_Type_Converter satc (argc, argv);
       // This eats all orb-specific options!
-      CORBA::ORB_var sorb =
+      CORBA::ORB_var const sorb =
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv (),
                          server_orb.c_str ());
@@ -85,10 +87,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       argc = orb_args.argc ();
       for (int i = 1; i < argc; ++i)
         {
+          // ACE_ARGV owns the copied arguments; its indexed accessor is const.
           argv[i] = const_cast<ACE_TCHAR*> (orb_args[i]);
         }
       ACE_Argv_Type_Converter catc (argc, argv);
-      CORBA::ORB_var corb =
+      CORBA::ORB_var const corb =
         CORBA::ORB_init (catc.get_argc(),
                          catc.get_TCHAR_argv(),
                          client_orb.c_str ());
@@ -114,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           corb->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions..
     }

@@ -27,9 +27,10 @@ public:
   int svc () override;
 
 private:
-  ACE_TCHAR const *input_;
+  /// Borrowed from the main thread; argv and the default literal outlive this task.
+  ACE_TCHAR const * const input_;
 
-  CORBA::ORB_var corb_;
+  CORBA::ORB_var const corb_;
 };
 
 #include /**/ "ace/post.h"

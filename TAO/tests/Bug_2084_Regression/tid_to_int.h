@@ -1,5 +1,7 @@
 // -*- C++ -*-
 
+#include <cstdint>
+
 /**
  * @file tid_to_int.h
  *
@@ -14,24 +16,36 @@ namespace
   template<typename thread_id_type, typename ace_thread_id_type>
   struct ACE_thread_t_to_integer_i
   {
-    thread_id_type operator() (ace_thread_id_type tid)
+    ACE_thread_t_to_integer_i () = default;
+    ACE_thread_t_to_integer_i (ACE_thread_t_to_integer_i const &) = delete;
+    ACE_thread_t_to_integer_i &operator= (ACE_thread_t_to_integer_i const &) = delete;
+    ACE_thread_t_to_integer_i (ACE_thread_t_to_integer_i &&) = delete;
+    ACE_thread_t_to_integer_i &operator= (ACE_thread_t_to_integer_i &&) = delete;
+
+    thread_id_type operator() (ace_thread_id_type tid) const
     {
       // We assume sizeof(thread_id_type) >= sizeof(ace_thread_id_type).
-      return (thread_id_type) (tid);
+      return static_cast<thread_id_type> (tid);
     }
   };
 
   template<typename thread_id_type, typename ace_thread_id_type>
   struct ACE_thread_t_to_integer_i<thread_id_type, ace_thread_id_type*>
   {
-    thread_id_type operator() (ace_thread_id_type* tid)
+    ACE_thread_t_to_integer_i () = default;
+    ACE_thread_t_to_integer_i (ACE_thread_t_to_integer_i const &) = delete;
+    ACE_thread_t_to_integer_i &operator= (ACE_thread_t_to_integer_i const &) = delete;
+    ACE_thread_t_to_integer_i (ACE_thread_t_to_integer_i &&) = delete;
+    ACE_thread_t_to_integer_i &operator= (ACE_thread_t_to_integer_i &&) = delete;
+
+    thread_id_type operator() (ace_thread_id_type *tid) const
     {
       // ACE_thread_t is a pointer.  Cast to an intermediate integer
       // type large enough to hold a pointer.
-      intptr_t const tmp = reinterpret_cast<intptr_t> (tid);
+      std::intptr_t const tmp = reinterpret_cast<std::intptr_t> (tid);
 
       // We assume sizeof(thread_id_type) >= sizeof(ace_thread_id_type).
-      return (thread_id_type) tmp;
+      return static_cast<thread_id_type> (tmp);
     }
   };
 

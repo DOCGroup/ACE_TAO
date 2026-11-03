@@ -34,14 +34,14 @@ public:
   int svc () override;
 
 private:
-  /// Output file for IOR
-  ACE_TCHAR const *output_;
+  /// Borrowed from the main thread; argv and the default literal outlive this task.
+  ACE_TCHAR const * const output_;
 
   /// Manual event to wake up the main thread to create a client
   /// thread.
   ACE_Manual_Event &me_;
 
-  CORBA::ORB_var sorb_;
+  CORBA::ORB_var const sorb_;
 };
 
 #include /**/ "ace/post.h"

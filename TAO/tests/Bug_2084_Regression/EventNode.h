@@ -22,14 +22,15 @@ public:
   EventNode &operator= (EventNode &&) = delete;
 
   // = The skeleton methods
-  void registerHello (::Test::Hello_ptr h) override;
+  // The Hello reference is borrowed for the duration of this upcall.
+  void registerHello (::Test::Hello_ptr hello) override;
 
   void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   ACE_thread_t const thr_id_;
 };
