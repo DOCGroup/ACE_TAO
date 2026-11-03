@@ -5,9 +5,6 @@
 
 #include "ace/Dynamic_Service.h"
 
-#include <new>
-#include <stdexcept>
-
 #if !defined(__ACE_INLINE__)
 #include "tao/Parser_Registry.inl"
 #endif /* __ACE_INLINE__ */
@@ -15,6 +12,11 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Parser_Registry::TAO_Parser_Registry () = default;
+
+TAO_Parser_Registry::~TAO_Parser_Registry ()
+{
+  delete [] this->parsers_;
+}
 
 int
 TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
@@ -34,42 +36,31 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
       return -1;
     }
 
-  std::vector<TAO_IOR_Parser *> parsers;
-  try
+  this->size_ = number_of_names;
+  ACE_NEW_RETURN (this->parsers_, TAO_IOR_Parser *[this->size_], -1);
+
+  for (size_t i = 0, index = 0; i != this->size_; ++i)
     {
-      parsers.reserve (static_cast<std::size_t> (number_of_names));
+      this->parsers_[index] =
+        ACE_Dynamic_Service<TAO_IOR_Parser>::instance (
+          orb_core->configuration (), names[i]);
 
-      for (int i = 0; i != number_of_names; ++i)
+      if (this->parsers_[index] == nullptr)
         {
-          TAO_IOR_Parser *parser =
-            ACE_Dynamic_Service<TAO_IOR_Parser>::instance (
-              orb_core->configuration (), names[i]);
-
-          if (parser == nullptr)
+          --number_of_names;
+          if (TAO_debug_level >= 1)
             {
-              if (TAO_debug_level >= 1)
-                {
-                  TAOLIB_DEBUG ((LM_DEBUG,
-                                 "TAO (%P|%t) Failed to find Service Object"
-                                 " for %C.\n",
-                                 names[i]));
-                }
-              continue;
+              TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) Failed to find Service Object"
+                            " for %C.\n", names[i]));
             }
-
-          parsers.push_back (parser);
+        }
+      else
+        {
+          ++index;
         }
     }
-  catch (std::bad_alloc const&)
-    {
-      return -1;
-    }
-  catch (std::length_error const&)
-    {
-      return -1;
-    }
 
-  this->parsers_.swap (parsers);
+  this->size_ = number_of_names;
   return 0;
 }
 

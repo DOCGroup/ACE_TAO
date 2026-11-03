@@ -20,7 +20,7 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include <vector>
+#include "ace/os_include/os_stddef.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,7 +44,7 @@ public:
   TAO_Parser_Registry ();
 
   /// Dstructor.
-  ~TAO_Parser_Registry () = default;
+  ~TAO_Parser_Registry ();
 
   /// Initialize the parser registry with the list of known protocols.
   /// Invoked by the ORB during startup.
@@ -55,7 +55,7 @@ public:
   TAO_IOR_Parser *match_parser (const char *ior_string);
 
   // = Iterator.
-  using Parser_Iterator = std::vector<TAO_IOR_Parser *>::const_iterator;
+  using Parser_Iterator = TAO_IOR_Parser **;
   Parser_Iterator begin () const;
   Parser_Iterator end () const;
 
@@ -67,8 +67,11 @@ private:
   TAO_Parser_Registry &operator= (TAO_Parser_Registry &&) = delete;
 
 private:
-  /// List of parsers
-  std::vector<TAO_IOR_Parser *> parsers_;
+  /// Non-owning parser pointers, stored in an array allocated with ACE_NEW_RETURN.
+  TAO_IOR_Parser **parsers_ {};
+
+  /// Number of parsers
+  size_t size_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

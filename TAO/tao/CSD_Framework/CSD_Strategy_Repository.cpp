@@ -2,9 +2,12 @@
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "tao/debug.h"
 
-#include <new>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_CSD_Strategy_Repository::~TAO_CSD_Strategy_Repository ()
+{
+  delete this->strategy_list_head_;
+}
 
 int
 TAO_CSD_Strategy_Repository::init(int, ACE_TCHAR **)
@@ -22,11 +25,11 @@ TAO_CSD_Strategy_Repository::init(int, ACE_TCHAR **)
 CSD_Framework::Strategy_ptr
 TAO_CSD_Strategy_Repository::find (ACE_CString const &name)
 {
-  std::string const key (name.c_str ());
-  Strategy_Map::const_iterator const iter = this->strategy_map_.find (key);
-  if (iter != this->strategy_map_.end ())
+  if (this->strategy_list_head_ != nullptr)
     {
-      return CSD_Framework::Strategy::_duplicate (iter->second.in ());
+      Strategy_Node *node = this->strategy_list_head_->find (name);
+      if (node != nullptr)
+        return CSD_Framework::Strategy::_duplicate (node->strategy_.in ());
     }
 
   return CSD_Framework::Strategy::_nil();
@@ -37,17 +40,12 @@ int
 TAO_CSD_Strategy_Repository::add_strategy (ACE_CString const &name,
                                            CSD_Framework::Strategy_ptr strat)
 {
-  try
-    {
-      std::string const key (name.c_str ());
-      CSD_Framework::Strategy_var strategy (
-        CSD_Framework::Strategy::_duplicate (strat));
-      this->strategy_map_.try_emplace (key, strategy);
-    }
-  catch (std::bad_alloc const &)
-    {
-      return -1;
-    }
+  Strategy_Node *node = nullptr;
+  ACE_NEW_RETURN (node, Strategy_Node (name, strat), -1);
+  if (this->strategy_list_head_ == nullptr)
+    this->strategy_list_head_ = node;
+  else
+    this->strategy_list_head_->add_node (node);
 
   if (TAO_debug_level > 3)
     {
@@ -56,6 +54,38 @@ TAO_CSD_Strategy_Repository::add_strategy (ACE_CString const &name,
                   name.c_str ()));
     }
   return 0;
+}
+
+TAO_CSD_Strategy_Repository::Strategy_Node::Strategy_Node (
+  ACE_CString const &name,
+  CSD_Framework::Strategy_ptr strategy)
+  : poa_name_ (name),
+    strategy_ (CSD_Framework::Strategy::_duplicate (strategy))
+{
+}
+
+TAO_CSD_Strategy_Repository::Strategy_Node::~Strategy_Node ()
+{
+  delete this->next_;
+}
+
+void
+TAO_CSD_Strategy_Repository::Strategy_Node::add_node (Strategy_Node *node)
+{
+  if (this->next_ != nullptr)
+    this->next_->add_node (node);
+  else
+    this->next_ = node;
+}
+
+TAO_CSD_Strategy_Repository::Strategy_Node *
+TAO_CSD_Strategy_Repository::Strategy_Node::find (ACE_CString const &name)
+{
+  if (this->poa_name_ == name)
+    return this;
+  if (this->next_ != nullptr)
+    return this->next_->find (name);
+  return nullptr;
 }
 
 /////////////////////////////////////////////////////////////////////
