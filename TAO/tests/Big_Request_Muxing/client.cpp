@@ -2,16 +2,15 @@
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
-
 namespace
 {
-  // There are 3 clients so the server should expect:
-  // 3 * NUM_MSGS * NUM_THRDS total messages.
-  int constexpr NUM_MSGS = 100;
-  int constexpr NUM_THRDS = 2;
-  int constexpr MSG_SIZE = 4096;
-}
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+
+// There are 3 clients so the server should expect:
+// 3 * NUM_MSGS * NUM_THRDS total messages.
+int constexpr NUM_MSGS = 100;
+int constexpr NUM_THRDS = 2;
+int constexpr MSG_SIZE = 4096;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -38,6 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
+}
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -46,7 +46,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
   {
-    CORBA::ORB_var orb =
+    CORBA::ORB_var const orb =
       CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
@@ -54,11 +54,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
       }
 
-    CORBA::Object_var tmp =
-      orb->string_to_object(ior);
+    CORBA::Object_var const tmp =
+      orb->string_to_object (ior);
 
-    Test::Payload_Receiver_var payload_receiver =
-      Test::Payload_Receiver::_narrow(tmp.in ());
+    Test::Payload_Receiver_var const payload_receiver =
+      Test::Payload_Receiver::_narrow (tmp.in ());
 
     if (CORBA::is_nil (payload_receiver.in ()))
     {
@@ -74,21 +74,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       MSG_SIZE,
       orb.in (),
       Messaging::SYNC_WITH_TARGET,
-      ACE_CString("Sync_With_Target"));
+      ACE_CString ("Sync_With_Target"));
     Client_Task task1 (ACE_Thread_Manager::instance (),
       payload_receiver.in (),
       NUM_MSGS,
       MSG_SIZE,
       orb.in (),
       Messaging::SYNC_WITH_TRANSPORT,
-      ACE_CString("Sync_With_Transport"));
+      ACE_CString ("Sync_With_Transport"));
     Client_Task task2 (ACE_Thread_Manager::instance (),
       payload_receiver.in (),
       NUM_MSGS,
       MSG_SIZE,
       orb.in (),
       Messaging::SYNC_NONE,
-      ACE_CString("Sync_None"));
+      ACE_CString ("Sync_None"));
 
     if (TAO_debug_level > 0)
     {
@@ -107,12 +107,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, "(%P) Client: Error activating %s task\n", task2.ID ()));
     }
 
-    ACE_Time_Value end_time = ACE_OS::gettimeofday() + ACE_Time_Value(30);
+    ACE_Time_Value const end_time = ACE_OS::gettimeofday () + ACE_Time_Value (30);
     while (ACE_OS::gettimeofday() < end_time)
     {
       ACE_Time_Value tv (0, 100 * 1000);
       orb->run (tv);
-      if (task0.done() && task1.done() && task2.done())
+      if (task0.done () && task1.done () && task2.done ())
         break;
     }
 
@@ -122,10 +122,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG, "(%P) Client: Threads finished posting\n"));
       }
 
-    while (orb->work_pending())
+    while (orb->work_pending ())
     {
-      ACE_Time_Value tv(0, 100 * 1000);
-      orb->run(tv);
+      ACE_Time_Value tv (0, 100 * 1000);
+      orb->run (tv);
     }
 
     if (TAO_debug_level > 0)

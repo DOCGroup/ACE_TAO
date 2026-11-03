@@ -48,24 +48,24 @@ private:
   Test::Payload_Receiver_var payload_receiver_;
 
   /// Total number of events
-  CORBA::Long event_count_;
+  CORBA::Long const event_count_;
 
   /// Size of each message
-  CORBA::ULong event_size_;
+  CORBA::ULong const event_size_;
 
   /// Keep a reference to the ORB, used to initialize the SyncScope
   /// policy
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// The SyncScope used in this Task
-  Messaging::SyncScope sync_scope_;
+  Messaging::SyncScope const sync_scope_;
 
   /// Track the number of tasks still running.
   std::atomic<unsigned long> tasks_running_ {0};
 
   std::atomic<bool> done_ {false};
 
-  ACE_CString id_;
+  ACE_CString const id_;
 };
 
 #include /**/ "ace/post.h"

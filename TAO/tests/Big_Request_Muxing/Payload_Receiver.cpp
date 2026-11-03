@@ -5,7 +5,7 @@ Payload_Receiver::more_data (
   Test::Payload const &payload,
   CORBA::Boolean maybe_lost)
 {
-  if (payload.length() > 0)
+  if (payload.length () > 0)
     {
       if (maybe_lost)
         {

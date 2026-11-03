@@ -1,4 +1,3 @@
-
 #include "Client_Task.h"
 #include "tao/AnyTypeCode/Any.h"
 
@@ -61,9 +60,9 @@ Client_Task::svc ()
     {
       this->validate_connection ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         this->orb_->resolve_initial_references ("PolicyCurrent");
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       CORBA::Any scope_as_any;
@@ -84,12 +83,12 @@ Client_Task::svc ()
                      this->ID (), this->event_count_));
         }
       int transient_count {};
-      for (int i = 0; i != this->event_count_; ++i)
+      for (CORBA::Long i = 0; i != this->event_count_; ++i)
         {
           try
             {
               this->payload_receiver_->more_data (payload, this->sync_scope_ != Messaging::SYNC_WITH_TARGET);
-              transient_count= 0;
+              transient_count = 0;
             }
           catch (CORBA::TRANSIENT const &)
             {
@@ -97,8 +96,9 @@ Client_Task::svc ()
                 {
                   if (transient_count == TRANSIENT_LIMIT / 2)
                     {
-                      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client_Task %s large TRANSIENTS encountered at payload %d/%d.\n",
-                                this->ID (), i+1, this->event_count_));
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "(%P|%t) Client_Task %s large TRANSIENTS encountered at payload %d/%d.\n",
+                                  this->ID (), i + 1, this->event_count_));
                     }
                   ACE_OS::sleep (TRANSIENT_HOLDOFF);
                   --i; // Re-try the same message
@@ -145,8 +145,8 @@ Client_Task::validate_connection ()
         {
           try
             {
-              this->payload_receiver_->ping();
-              transient_count= 0;
+              this->payload_receiver_->ping ();
+              transient_count = 0;
             }
           catch (CORBA::TRANSIENT const &)
             {
@@ -155,8 +155,8 @@ Client_Task::validate_connection ()
                   if (transient_count == TRANSIENT_LIMIT / 2)
                     {
                       ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Client Task %s large TRANSIENTS encountered at validation %d%%.\n",
-                        this->ID (), i+1));
+                                  "(%P|%t) Client Task %s large TRANSIENTS encountered at validation %d%%.\n",
+                                  this->ID (), i + 1));
                     }
                   ACE_OS::sleep (TRANSIENT_HOLDOFF);
                   --i; // Re-try the same message
