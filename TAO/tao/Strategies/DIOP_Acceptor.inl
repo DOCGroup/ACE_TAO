@@ -19,7 +19,7 @@ TAO_DIOP_Acceptor::endpoints ()
 {
   ACE_ASSERT (this->addrs_ != nullptr);
 
-  return this->addrs_;
+  return this->addrs_.get ();
 }
 
 ACE_INLINE const ACE_INET_Addr&

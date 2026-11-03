@@ -37,12 +37,9 @@ TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor ()
   delete this->concurrency_strategy_;
   delete this->accept_strategy_;
 
-  delete [] this->addrs_;
-
-  for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
-    CORBA::string_free (this->hosts_[i]);
-
-  delete [] this->hosts_;
+  if (this->hosts_ != nullptr)
+    for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
+      CORBA::string_free (this->hosts_[i]);
 }
 
 // TODO =
@@ -375,13 +372,18 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   // Number of endpoints equals the size of the hostname array.
   this->endpoint_count_ = hostnames.size();
 
-  ACE_NEW_RETURN (this->addrs_,
+  ACE_INET_Addr *addrs = nullptr;
+  ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[this->endpoint_count_],
                   -1);
+  this->addrs_.reset (addrs);
 
-  ACE_NEW_RETURN (this->hosts_,
+  char **hosts = nullptr;
+  ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
+  this->hosts_.reset (hosts);
+  std::fill_n (this->hosts_.get (), this->endpoint_count_, nullptr);
 
   // Copy the primary address to the first slot of the
   // addrs_ array.
@@ -389,7 +391,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   // Copy secondary addresses to the remaining slots of the
   // addrs_ array.
-  ACE_INET_Addr *secondary_addrs = this->addrs_;
+  ACE_INET_Addr *secondary_addrs = this->addrs_.get ();
   ++secondary_addrs;
   addr.get_secondary_addresses(secondary_addrs, num_secondary_ip_addrs);
 
@@ -730,15 +732,19 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   else
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 
-  ACE_NEW_RETURN (this->addrs_,
+  ACE_INET_Addr *addrs = nullptr;
+  ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[this->endpoint_count_],
                   -1);
+  this->addrs_.reset (addrs);
 
-  ACE_NEW_RETURN (this->hosts_,
+  char **hosts = nullptr;
+  ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
+  this->hosts_.reset (hosts);
 
-  std::fill_n (this->hosts_, this->endpoint_count_, nullptr);
+  std::fill_n (this->hosts_.get (), this->endpoint_count_, nullptr);
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
