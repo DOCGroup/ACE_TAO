@@ -38,6 +38,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/CORBA_macros.h"
+#include <cstdlib>
 #include <cstring>
 
 static const char ior_prefix[] = "IOR:";
@@ -827,7 +828,7 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
             ACE_OS::getenv (env_service_port[mcast_service_id]);
 
           if (port_number != nullptr)
-            port = static_cast<unsigned short> (ACE_OS::atoi (port_number));
+            port = static_cast<unsigned short> (std::atoi (port_number));
           else
             port = default_service_port[mcast_service_id];
         }
