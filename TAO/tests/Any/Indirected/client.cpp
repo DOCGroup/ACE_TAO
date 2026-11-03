@@ -4,15 +4,13 @@
 #include "tao/CDR.h"
 #include "tao/debug.h"
 
-#include "ace/OS_NS_string.h"
-
 #if TAO_HAS_MINIMUM_CORBA == 0
 
 bool
 recursive_union_test ()
 {
   constexpr size_t dump_limit = 512;
-  bool rc = true;
+  bool rc {true};
 
   ACE_DEBUG ((LM_INFO,
               "Executing recursive union test\n"));
@@ -23,7 +21,7 @@ recursive_union_test ()
   {
     CORBA::Any the_any, the_out_any;
 
-    static CORBA::Short const test_short = 23901;
+    constexpr CORBA::Short test_short = 23901;
     Test::RecursiveUnion3 foo3;
     foo3.a (test_short);
 
@@ -74,7 +72,7 @@ recursive_union_test ()
     {
       CORBA::Any the_any, the_out_any;
 
-      static CORBA::Short const test_short = 23901;
+      constexpr CORBA::Short test_short = 23901;
       Test::RecursiveUnion3 foo3;
       foo3.a (test_short);
 
@@ -137,7 +135,7 @@ recursive_union_test ()
   {
     CORBA::Any the_any, the_out_any, the_out_any2;
 
-    static CORBA::Short const test_short = 23901;
+    constexpr CORBA::Short test_short = 23901;
     Test::RecursiveUnion3 foo3;
     foo3.a (test_short);
 
@@ -195,17 +193,7 @@ recursive_union_test ()
       }
     }
 
-// Unfortunately this test in unreliable due to the memory management optimizations of ACE, particularly
-// concerning the non-initialization of allocated memory. When running with Valgrind all memory is forcibly
-// initialized to 0 and than this test passes.
-//
-//    if (out.length () != out2.length () || ACE_OS::memcmp (out.buffer (), out2.buffer (), out.length ()) != 0)
-//    {
-//      ACE_ERROR ((LM_ERROR,
-//                  "encoded representations of recursive typecodes differ\n"));
-//
-//      rc = false;
-//    }
+// A byte-for-byte re-encoding check was disabled because allocator initialization makes its result unreliable.
 
     TAO_InputCDR in2(out2);
 
@@ -246,7 +234,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
