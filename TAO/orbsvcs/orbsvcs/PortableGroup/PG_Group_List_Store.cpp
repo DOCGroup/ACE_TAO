@@ -10,6 +10,7 @@
 
 
 #include "orbsvcs/PortableGroup/PG_Group_List_Store.h"
+#include <string>
 
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
@@ -241,10 +242,10 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 TAO::Storable_Base *
 TAO::PG_Group_List_Store::create_stream (char const *mode)
 {
-  ACE_CString const file_name ("ObjectGroup_global");
+  std::string const file_name ("ObjectGroup_global");
 
   return this->storable_factory_.create_stream (
-    file_name.c_str (), mode);
+    file_name, mode);
 }
 
 bool

@@ -37,10 +37,10 @@ TAO::Storable_Base::use_backup ()
   return this->use_backup_;
 }
 
-ACE_CString
+std::string
 TAO::Storable_Base::state_as_string (Storable_State state)
 {
-  ACE_CString state_string;
+  std::string state_string;
   if (state == goodbit)
     state_string = "goodbit";
   else
@@ -56,14 +56,14 @@ TAO::Storable_Base::state_as_string (Storable_State state)
 }
 
 TAO::Storable_Exception::
-Storable_Exception (ACE_CString const &file_name)
+Storable_Exception (std::string const &file_name)
   : file_name_ (file_name)
 {
 }
 
 TAO::Storable_Exception::~Storable_Exception () = default;
 
-ACE_CString const &
+std::string const &
 TAO::Storable_Exception::get_file_name () const
 {
   return file_name_;
@@ -71,7 +71,7 @@ TAO::Storable_Exception::get_file_name () const
 
 TAO::Storable_Read_Exception::
 Storable_Read_Exception (Storable_Base::Storable_State state,
-                         ACE_CString const &file_name)
+                         std::string const &file_name)
   : Storable_Exception (file_name)
   , storable_state_ (state)
 {
@@ -86,7 +86,7 @@ TAO::Storable_Read_Exception::get_state () const
 
 TAO::Storable_Write_Exception::
 Storable_Write_Exception (Storable_Base::Storable_State state,
-                          ACE_CString const &file_name)
+                          std::string const &file_name)
   : Storable_Exception (file_name)
   , storable_state_ (state)
 {

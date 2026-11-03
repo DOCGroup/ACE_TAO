@@ -7,6 +7,7 @@
 //=============================================================================
 
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
+#include <string>
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
@@ -52,9 +53,9 @@ TAO_Storable_Naming_Context_Activator::incarnate (
 
   { // Does this already exist on disk?
 
-    ACE_CString file_name = poa_id.in ();
+    std::string file_name = poa_id.in ();
     std::unique_ptr<TAO::Storable_Base> fl (
-       persistence_factory_->create_stream (file_name.c_str (),
+       persistence_factory_->create_stream (file_name,
                                             "rw"));
 
     if (!fl->exists()) {

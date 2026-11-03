@@ -25,6 +25,7 @@
 #include "ace/Task.h"
 
 #include <set>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -81,7 +82,7 @@ public:
   int handle_exception (ACE_HANDLE) override;
 
   void stop ();
-  void send_context_update (ACE_CString const &ctx,
+  void send_context_update (std::string const &ctx,
                             FT_Naming::ChangeType update);
   void send_objgrp_update (PortableGroup::ObjectGroupId id,
                            FT_Naming::ChangeType update);

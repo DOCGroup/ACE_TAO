@@ -1,5 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "ace/SString.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
@@ -366,10 +367,10 @@ TAO::Storable_Base *
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::create_stream (char const *mode)
 {
-  ACE_CString file_name = context_->context_name_;
+  std::string const &file_name = context_->context_name_;
 
   // Create the stream
-  return context_->factory_->create_stream(file_name, mode);
+  return context_->factory_->create_stream (file_name, mode);
 }
 
 // Make shortcut to get to Method_Type enums
@@ -407,18 +408,18 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context ()
   if (this->destroyed_)
     {
       // Make sure we delete the associated stream
-      ACE_CString file_name = this->context_name_;
+      std::string const &file_name = this->context_name_;
 
       // Now delete the file
       std::unique_ptr<TAO::Storable_Base>
         fl (
-          this->factory_->create_stream(file_name.c_str(), "r")
+          this->factory_->create_stream (file_name, "r")
           );
       if (fl.get())
         {
           if (TAO_debug_level > 5)
             ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) NameService: removing file %s\n",
-                        file_name.fast_rep()));
+                        file_name.c_str ()));
           fl->remove ();
         }
     }
@@ -1069,9 +1070,9 @@ TAO_Storable_Naming_Context::recreate_all (
                       &new_context);
 
   // Now does this already exist on disk?
-  ACE_CString file_name = poa_id;
+  std::string file_name = poa_id;
   std::unique_ptr<TAO::Storable_Base> fl (
-    pers_factory->create_stream (file_name.c_str (), "r"));
+    pers_factory->create_stream (file_name, "r"));
   if (fl->exists ())
   {
     // Load the map from disk
@@ -1095,7 +1096,7 @@ TAO_Storable_Naming_Context::recreate_all (
   // Pass false for use_backup since access to this file is not wrapped
   // around a Storable_File_Guard derived class.
   gfl_.reset(pers_factory->
-             create_stream (file_name.c_str(),
+             create_stream (file_name,
                             "crw"));
   if (gfl_->open() != 0)
     {

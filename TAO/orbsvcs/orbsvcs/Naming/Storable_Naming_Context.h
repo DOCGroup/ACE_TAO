@@ -16,6 +16,7 @@
 #include "tao/Storable_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
 #include <memory>
+#include <string>
 
 #include "orbsvcs/Naming/Storable.h"
 
@@ -393,7 +394,7 @@ protected:
 
   /// The name of the context used as its object id when registered
   /// with the POA.
-  ACE_CString context_name_;
+  std::string context_name_;
 
   /// The POA that this context was registered with.
   PortableServer::POA_var poa_;
@@ -403,7 +404,7 @@ protected:
   TAO::Storable_Factory *factory_;
 
   /// The directory in which to store the files
-  ACE_CString persistence_directory_;
+  std::string persistence_directory_;
 
   /// Save the hash table initial size
   size_t hash_table_size_;

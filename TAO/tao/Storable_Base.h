@@ -17,7 +17,7 @@
 #include "tao/orbconf.h"
 #include "tao/CDR.h"
 
-#include "ace/SString.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -89,7 +89,7 @@ namespace TAO
 
     bool fail () const;
 
-    static ACE_CString state_as_string (Storable_State state);
+    static std::string state_as_string (Storable_State state);
 
     virtual void rewind () = 0;
 
@@ -99,8 +99,8 @@ namespace TAO
     /// Returns 0 on success, otherwise EOF
     virtual int sync () = 0;
 
-    virtual Storable_Base& operator << (ACE_CString const &) = 0;
-    virtual Storable_Base& operator >> (ACE_CString&) = 0;
+    virtual Storable_Base& operator << (std::string const &) = 0;
+    virtual Storable_Base& operator >> (std::string &) = 0;
     virtual Storable_Base& operator << (ACE_UINT32 ) = 0;
     virtual Storable_Base& operator >> (ACE_UINT32 &) = 0;
     virtual Storable_Base& operator << (ACE_UINT64 ) = 0;
@@ -136,14 +136,14 @@ namespace TAO
   class TAO_Export Storable_Exception
   {
   public:
-    explicit Storable_Exception (ACE_CString const &file_name);
+    explicit Storable_Exception (std::string const &file_name);
 
     virtual ~Storable_Exception ();
 
-    ACE_CString const & get_file_name () const;
+    std::string const & get_file_name () const;
 
   private:
-    ACE_CString file_name_;
+    std::string file_name_;
   };
 
   /// Exception thrown when an error is encountered
@@ -152,7 +152,7 @@ namespace TAO
   {
   public:
     Storable_Read_Exception (Storable_Base::Storable_State state,
-                             ACE_CString const &file_name);
+                             std::string const &file_name);
 
     Storable_Base::Storable_State get_state () const;
 
@@ -166,7 +166,7 @@ namespace TAO
   {
   public:
     Storable_Write_Exception (Storable_Base::Storable_State state,
-                              ACE_CString const &file_name);
+                              std::string const &file_name);
 
     Storable_Base::Storable_State get_state () const;
 

@@ -22,6 +22,7 @@
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
 #include "ace/OS_NS_stdio.h"
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +34,7 @@ namespace TAO
   class TAO_Export Storable_FlatFileStream : public Storable_Base
   {
   public:
-    Storable_FlatFileStream (ACE_CString const &file, char const *mode,
+    Storable_FlatFileStream (std::string const &file, char const *mode,
                             bool use_backup = Storable_Base::use_backup_default,
                             bool retry_on_ebadf = Storable_Base::retry_on_ebadf_default);
 
@@ -70,8 +71,8 @@ namespace TAO
     /// Returns 0 on success, otherwise EOF
     int sync () override;
 
-    Storable_Base& operator << (ACE_CString const &) override;
-    Storable_Base& operator >> (ACE_CString &) override;
+    Storable_Base& operator << (std::string const &) override;
+    Storable_Base& operator >> (std::string &) override;
     Storable_Base& operator << (ACE_UINT32) override;
     Storable_Base& operator >> (ACE_UINT32 &) override;
     Storable_Base& operator << (ACE_UINT64) override;
@@ -110,12 +111,12 @@ namespace TAO
     /// is not good due to a write error.
     void throw_on_write_error (Storable_State state);
 
-    ACE_CString backup_file_name ();
+    std::string backup_file_name ();
 
     ACE_OS::ace_flock_t filelock_;
     FILE *fl_ {};
-    ACE_CString file_;
-    ACE_CString mode_;
+    std::string file_;
+    std::string mode_;
   };
 
   class TAO_Export Storable_FlatFileFactory : public Storable_Factory
@@ -123,25 +124,25 @@ namespace TAO
   public:
     /// @param directory Directory to contain file passed in
     /// create_stream (). The directory is assumed to already exist.
-    explicit Storable_FlatFileFactory (ACE_CString const &directory,
+    explicit Storable_FlatFileFactory (std::string const &directory,
                              bool use_backup = Storable_Base::use_backup_default);
-    Storable_FlatFileFactory (ACE_CString const &directory,
+    Storable_FlatFileFactory (std::string const &directory,
                              bool use_backup,
                              bool retry_on_ebadf);
 
-    ACE_CString const & get_directory () const;
+    std::string const & get_directory () const;
 
     ~Storable_FlatFileFactory ();
 
   // Factory Methods
 
     /// Create the stream that can operate on a disk file
-    Storable_Base *create_stream (ACE_CString const &file,
+    Storable_Base *create_stream (std::string const &file,
                                   char const *mode,
                                   bool = false) override;
   private:
-    static bool is_nfs (ACE_CString const &dir);
-    ACE_CString directory_;
+    static bool is_nfs (std::string const &dir);
+    std::string directory_;
     bool use_backup_;
     bool retry_on_ebadf_;
   };

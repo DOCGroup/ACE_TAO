@@ -210,7 +210,7 @@ TAO::Storable_File_Guard::load ()
     }
   catch (const Storable_Read_Exception &ex)
     { // Failed to load from primary.
-      ACE_CString state_str = Storable_Base::state_as_string (ex.get_state());
+      std::string state_str = Storable_Base::state_as_string (ex.get_state());
 
       TAOLIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("TAO: (%P|%t) ERROR: State %s ")

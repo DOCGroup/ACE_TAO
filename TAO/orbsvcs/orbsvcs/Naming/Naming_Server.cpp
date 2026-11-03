@@ -18,6 +18,7 @@
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 
 #include "tao/Storable_FlatFileStream.h"
+#include <string>
 
 #endif /* CORBA_E_MICRO */
 
@@ -457,7 +458,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // of this Reader and Writer, let's just take something off the
           // command line for now.
           TAO::Storable_Factory* pf = nullptr;
-          ACE_CString directory (ACE_TEXT_ALWAYS_CHAR (persistence_location));
+          std::string directory (ACE_TEXT_ALWAYS_CHAR (persistence_location));
           ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory (directory), -1);
           std::unique_ptr<TAO::Storable_Factory> persFactory(pf);
 

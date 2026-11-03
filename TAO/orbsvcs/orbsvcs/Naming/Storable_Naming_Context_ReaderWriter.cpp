@@ -15,6 +15,7 @@
 
 #include "tao/Storable_Base.h"
 #include "tao/Storable_FlatFileStream.h"
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,7 +57,7 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
     {
       TAO_NS_Persistence_Record record;
 
-      ACE_CString name;
+      std::string name;
       CosNaming::BindingType bt = (*it).int_id_.type_;
       if (bt ==  CosNaming::ncontext)
         {
@@ -88,7 +89,7 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
             CORBA::String_var
               nm = PortableServer::ObjectId_to_string (oid.in ());
             char const *newname = nm.in ();
-            name.set (newname); // The local ObjectID (persistance filename)
+            name = newname; // The local ObjectID (persistance filename)
             record.type (TAO_NS_Persistence_Record::LOCAL_NCONTEXT);
           }
         else
@@ -101,23 +102,21 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
             // the contexts shares its objectID filename which is very likely).
             // [Simon Massey  (sma) of prismtech.com]
 
-            name.set ((*it).int_id_.ref_.in ()); // The federated context IOR
+            name = (*it).int_id_.ref_.in (); // The federated context IOR
             record.type (TAO_NS_Persistence_Record::REMOTE_NCONTEXT);
           }
       }
     else // if (bt == CosNaming::nobject) // shouldn't be any other, can there?
       {
-        name.set ((*it).int_id_.ref_.in ()); // The non-context object IOR
+        name = (*it).int_id_.ref_.in (); // The non-context object IOR
         record.type (TAO_NS_Persistence_Record::OBJREF);
       }
     record.ref(name);
 
-    char const *myid = (*it).ext_id_.id();
-    ACE_CString id(myid);
+    std::string id ((*it).ext_id_.id());
     record.id(id);
 
-    char const *mykind = (*it).ext_id_.kind();
-    ACE_CString kind(mykind);
+    std::string kind ((*it).ext_id_.kind());
     record.kind(kind);
 
     write_record (record);
@@ -231,15 +230,15 @@ TAO_Storable_Naming_Context_ReaderWriter::read_record (TAO_NS_Persistence_Record
     (TAO_NS_Persistence_Record::Record_Type) temp_type_in;
   record.type (type);
 
-  ACE_CString record_id;
+  std::string record_id;
   stream_ >> record_id;
   record.id (record_id);
 
-  ACE_CString record_kind;
+  std::string record_kind;
   stream_ >> record_kind;
   record.kind (record_kind);
 
-  ACE_CString record_ref;
+  std::string record_ref;
   stream_ >> record_ref;
   record.ref (record_ref);
 }

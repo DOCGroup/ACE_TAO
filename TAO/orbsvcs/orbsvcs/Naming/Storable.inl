@@ -54,38 +54,38 @@ TAO_NS_Persistence_Record::type (Record_Type type)
   this->type_ = type;
 }
 
-ACE_INLINE ACE_CString
+ACE_INLINE std::string const &
 TAO_NS_Persistence_Record::id () const
 {
   return this->id_;
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Record::id (ACE_CString const &id)
+TAO_NS_Persistence_Record::id (std::string const &id)
 {
   this->id_ = id;
 }
 
-ACE_INLINE ACE_CString
+ACE_INLINE std::string const &
 TAO_NS_Persistence_Record::kind () const
 {
   return this->kind_;
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Record::kind (ACE_CString const &kind)
+TAO_NS_Persistence_Record::kind (std::string const &kind)
 {
   this->kind_ = kind;
 }
 
-ACE_INLINE ACE_CString
+ACE_INLINE std::string const &
 TAO_NS_Persistence_Record::ref () const
 {
   return this->ref_;
 }
 
 ACE_INLINE void
-TAO_NS_Persistence_Record::ref (ACE_CString const &ref)
+TAO_NS_Persistence_Record::ref (std::string const &ref)
 {
   this->ref_ = ref;
 }

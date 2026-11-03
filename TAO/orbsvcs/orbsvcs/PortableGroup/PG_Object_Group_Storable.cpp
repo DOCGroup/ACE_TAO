@@ -6,6 +6,7 @@
 #include "tao/CDR.h"
 
 #include <cstdio>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -450,14 +451,14 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
 {
   stream.rewind ();
 
-  ACE_CString group_name;
+  std::string group_name;
   stream >> group_name;
 
-  PG_Object_Group::set_name(group_name.c_str());
+  PG_Object_Group::set_name (group_name.c_str ());
 
   stream >> this->distribute_;
 
-  ACE_CString role;
+  std::string role;
   stream >> role;
   this->role_ = role.c_str ();
 
@@ -465,7 +466,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
   read_cdr (stream, this->primary_location_);
 
   ///// reference_ /////
-  ACE_CString reference_ior;
+  std::string reference_ior;
   stream >> reference_ior;
   this->reference_ = this->orb_->string_to_object (reference_ior.c_str ());
 
@@ -502,7 +503,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
       read_cdr (stream, the_location);
 
       ///// member /////
-      ACE_CString member_ior;
+      std::string member_ior;
       stream >> member_ior;
       CORBA::Object_var member =
         this->orb_->string_to_object (member_ior.c_str ());
@@ -522,7 +523,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
       read_cdr (stream, location);
 
       ///// factory /////
-      ACE_CString factory_ior;
+      std::string factory_ior;
       stream >> factory_ior;
       CORBA::Object_var obj =
         this->orb_->string_to_object (factory_ior.c_str ());
@@ -558,10 +559,10 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
 {
   stream.rewind ();
 
-  ACE_CString group_name = PG_Object_Group::get_name ();
+  std::string group_name = PG_Object_Group::get_name ();
   stream << group_name;
   stream << this->distribute_;
-  ACE_CString role (this->role_.c_str ());
+  std::string role (this->role_.c_str ());
   stream << role;
 
   TAO_OutputCDR primary_location_cdr;

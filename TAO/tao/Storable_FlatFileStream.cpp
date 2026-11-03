@@ -126,7 +126,7 @@ namespace
 
 }
 
-TAO::Storable_FlatFileStream::Storable_FlatFileStream (ACE_CString const &file,
+TAO::Storable_FlatFileStream::Storable_FlatFileStream (std::string const &file,
                                                        char const *mode,
                                                        bool use_backup,
                                                        bool retry_on_ebadf)
@@ -405,7 +405,7 @@ TAO::Storable_FlatFileStream::sync ()
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator << (ACE_CString const &str)
+TAO::Storable_FlatFileStream::operator << (std::string const &str)
 {
   int const n =
     std::fprintf (this->fl_, ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "\n%s\n",
@@ -417,11 +417,11 @@ TAO::Storable_FlatFileStream::operator << (ACE_CString const &str)
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
+TAO::Storable_FlatFileStream::operator >> (std::string &str)
 {
   int bufSize = 0;
-  ACE_CString::size_type const max_buf_len =
-    ACE_Numeric_Limits<ACE_CString::size_type>::max ();
+  std::string::size_type const max_buf_len =
+    ACE_Numeric_Limits<std::string::size_type>::max ();
   int const max_int = ACE_Numeric_Limits<int>::max ();
   switch (std::fscanf (fl_, "%d\n", &bufSize))
     {
@@ -433,7 +433,7 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
     }
 
   if (bufSize < 0
-      || static_cast<ACE_CString::size_type> (bufSize) >= max_buf_len
+      || static_cast<std::string::size_type> (bufSize) >= max_buf_len
       || bufSize == max_int)
     {
       this->throw_on_read_error (badbit);
@@ -449,7 +449,7 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
       {
         this->throw_on_read_error (badbit);
       }
-    str = ACE_CString (str_array.get (), nullptr, false);
+    str.assign (str_array.get (), static_cast<std::string::size_type> (bufSize));
   }
 
   return *this;
@@ -563,7 +563,7 @@ TAO::Storable_FlatFileStream::read (size_t size, char * bytes)
   return ACE_OS::fread (bytes, size, 1, fl_);
 }
 
-ACE_CString
+std::string
 TAO::Storable_FlatFileStream::backup_file_name ()
 {
   return file_ + ".bak";
@@ -621,7 +621,7 @@ TAO::Storable_FlatFileStream::create_backup ()
 void
 TAO::Storable_FlatFileStream::remove_backup ()
 {
-  ACE_CString backup_name = this->backup_file_name ();
+  std::string backup_name = this->backup_file_name ();
 
   if (ACE_OS::access (backup_name.c_str (), F_OK) == 0)
     {
@@ -632,7 +632,7 @@ TAO::Storable_FlatFileStream::remove_backup ()
 int
 TAO::Storable_FlatFileStream::restore_backup ()
 {
-  ACE_CString backup_name = this->backup_file_name ().c_str ();
+  std::string backup_name = this->backup_file_name ();
 
   if (ACE_OS::access (backup_name.c_str (), F_OK))
     return -1;
@@ -677,7 +677,7 @@ TAO::Storable_FlatFileStream::throw_on_write_error (Storable_State state)
 
 //------------------------------------------------
 
-TAO::Storable_FlatFileFactory::Storable_FlatFileFactory (ACE_CString const &directory,
+TAO::Storable_FlatFileFactory::Storable_FlatFileFactory (std::string const &directory,
                                                         bool use_backup,
                                                         bool retry_on_ebadf)
   : Storable_Factory ()
@@ -687,7 +687,7 @@ TAO::Storable_FlatFileFactory::Storable_FlatFileFactory (ACE_CString const &dire
 {
 }
 
-TAO::Storable_FlatFileFactory::Storable_FlatFileFactory (ACE_CString const &directory,
+TAO::Storable_FlatFileFactory::Storable_FlatFileFactory (std::string const &directory,
                                                         bool use_backup)
   : Storable_Factory ()
   , directory_(directory)
@@ -698,7 +698,7 @@ TAO::Storable_FlatFileFactory::Storable_FlatFileFactory (ACE_CString const &dire
 }
 
 bool
-TAO::Storable_FlatFileFactory::is_nfs (ACE_CString const &directory)
+TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
 {
   bool ret = false;
 #if defined (ACE_HAS_MNTENT)
@@ -778,19 +778,19 @@ TAO::Storable_FlatFileFactory::is_nfs (ACE_CString const &directory)
 
 TAO::Storable_FlatFileFactory::~Storable_FlatFileFactory () = default;
 
-ACE_CString const &
+std::string const &
 TAO::Storable_FlatFileFactory::get_directory () const
 {
   return directory_;
 }
 
 TAO::Storable_Base *
-TAO::Storable_FlatFileFactory::create_stream (ACE_CString const &file,
+TAO::Storable_FlatFileFactory::create_stream (std::string const &file,
                                                char const *mode,
                                               bool )
 {
   TAO::Storable_Base *stream = nullptr;
-  ACE_CString path = this->directory_ + "/" + file;
+  std::string path = this->directory_ + "/" + file;
   ACE_NEW_RETURN (stream,
                   TAO::Storable_FlatFileStream(path,
                                                mode,

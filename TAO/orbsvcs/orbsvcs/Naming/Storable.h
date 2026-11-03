@@ -20,7 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Storable_Base.h"
-#include "ace/SString.h"
+#include <string>
 #include "orbsvcs/Naming/naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -53,20 +53,20 @@ class TAO_NS_Persistence_Record
   Record_Type type () const;
   void type (Record_Type type);
 
-  ACE_CString id () const;
-  void id (ACE_CString const &id);
+  std::string const & id () const;
+  void id (std::string const &id);
 
-  ACE_CString kind () const;
-  void kind (ACE_CString const &kind);
+  std::string const & kind () const;
+  void kind (std::string const &kind);
 
-  ACE_CString ref () const;
-  void ref (ACE_CString const &ior);
+  std::string const & ref () const;
+  void ref (std::string const &ior);
 
  private:
   Record_Type type_;
-  ACE_CString id_;
-  ACE_CString kind_;
-  ACE_CString ref_;
+  std::string id_;
+  std::string kind_;
+  std::string ref_;
 };
 
 class TAO_Naming_Serv_Export TAO_NS_Persistence_Global

@@ -33,6 +33,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/default_ports.h"
+#include <string>
 #include "tao/Storable_FlatFileStream.h"
 
 #include <utility>
@@ -210,17 +211,11 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
         }
 
       TAO::Storable_Factory * object_group_storable_factory;
-#if defined (ACE_USES_WCHAR)
-      ACE_CString alt_group_dir =
+      std::string const object_group_dir =
         ACE_TEXT_ALWAYS_CHAR (this->object_group_dir_.c_str());
       ACE_NEW_RETURN (object_group_storable_factory,
-                      TAO::Storable_FlatFileFactory (alt_group_dir),
+                      TAO::Storable_FlatFileFactory (object_group_dir),
                       -1);
-#else
-      ACE_NEW_RETURN (object_group_storable_factory,
-                      TAO::Storable_FlatFileFactory (this->object_group_dir_),
-                      -1);
-#endif /* ACE_USES_WCHAR */
 
       naming_manager_.set_object_group_storable_factory (
         object_group_storable_factory);

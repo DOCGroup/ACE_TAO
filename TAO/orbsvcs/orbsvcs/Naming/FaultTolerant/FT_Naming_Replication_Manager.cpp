@@ -290,7 +290,7 @@ TAO_FT_Naming_Replication_Manager::send_objgrp_update (PortableGroup::ObjectGrou
 }
 
 void
-TAO_FT_Naming_Replication_Manager::send_context_update (ACE_CString const &name,
+TAO_FT_Naming_Replication_Manager::send_context_update (std::string const &name,
                                     FT_Naming::ChangeType change)
 {
   if (this->reactor_ == nullptr)

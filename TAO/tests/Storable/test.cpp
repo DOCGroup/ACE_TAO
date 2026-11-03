@@ -10,6 +10,7 @@
 // if the file is stale.
 
 #include "Savable.h"
+#include <string>
 
 #include "tao/Storable_FlatFileStream.h"
 #include "tao/SystemException.h"
@@ -90,7 +91,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   TAO::Storable_FlatFileFactory factory ("./");
 
-  ACE_CString str_write_value = "test_string";
+  std::string str_write_value = "test_string";
   int int_write_value = -100;
   unsigned int unsigned_int_write_value = 100;
 
@@ -128,7 +129,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 {
                   ACE_ASSERT (int_read == int_write_value);
 
-                  const ACE_CString & str_read = savable.string_get(read_index);
+                  std::string const & str_read = savable.string_get(read_index);
                   if (str_read != str_write_value)
                     ACE_ERROR ((LM_ERROR,
                                 ACE_TEXT ("String read != num written.\n")));
