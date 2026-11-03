@@ -24,6 +24,7 @@
 #include <mntent.h>
 #endif /* ACE_HAS_MNTENT */
 
+#include <cstdio>
 #include <cstring>
 #include <memory>
 
@@ -41,7 +42,7 @@ namespace
                     FILE * fl)
   {
     char buf[BUFSIZ];
-    char * result = fgets (buf, BUFSIZ, fl);
+    char * result = std::fgets (buf, BUFSIZ, fl);
 
     if (result == nullptr)
       {
@@ -58,7 +59,7 @@ namespace
     /// do.
     if (buf[0] == '\n')
       {
-        result = fgets (buf, BUFSIZ, fl);
+        result = std::fgets (buf, BUFSIZ, fl);
       }
 
     if (result == nullptr)
@@ -406,9 +407,9 @@ TAO::Storable_FlatFileStream::sync ()
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (ACE_CString const &str)
 {
-  int n =
-    ACE_OS::fprintf(this->fl_, ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "\n%s\n",
-                    str.length(), str.c_str());
+  int const n =
+    std::fprintf (this->fl_, ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "\n%s\n",
+                  str.length (), str.c_str ());
   if (n < 0)
     this->throw_on_write_error (badbit);
 
@@ -422,7 +423,7 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
   ACE_CString::size_type const max_buf_len =
     ACE_Numeric_Limits<ACE_CString::size_type>::max ();
   int const max_int = ACE_Numeric_Limits<int>::max ();
-  switch (fscanf(fl_, "%d\n", &bufSize))
+  switch (std::fscanf (fl_, "%d\n", &bufSize))
     {
     case 0:
       this->throw_on_read_error (badbit);
@@ -439,11 +440,11 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
     }
   {
     int const strSize = bufSize + 1; // Account for newline
-    std::unique_ptr<char[]> str_array (new char[strSize]);
+    std::unique_ptr<char[]> str_array = std::make_unique<char[]> (strSize);
     str_array[0] = '\0';
-    if (ACE_OS::fgets (str_array.get (),
-                       strSize,
-                       this->fl_) == nullptr
+    if (std::fgets (str_array.get (),
+                    strSize,
+                    this->fl_) == nullptr
         && bufSize != 0)
       {
         this->throw_on_read_error (badbit);
@@ -458,7 +459,7 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (ACE_UINT32 i)
 {
   int const n =
-    ACE_OS::fprintf (this->fl_, ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n", i);
+    std::fprintf (this->fl_, ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
@@ -478,7 +479,7 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (ACE_UINT64 i)
 {
   int const n =
-    ACE_OS::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
+    std::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
@@ -498,7 +499,7 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (ACE_INT32 i)
 {
   int const n =
-    ACE_OS::fprintf (this->fl_, ACE_INT32_FORMAT_SPECIFIER_ASCII "\n", i);
+    std::fprintf (this->fl_, ACE_INT32_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
@@ -518,7 +519,7 @@ TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (ACE_INT64 i)
 {
   int const n =
-    ACE_OS::fprintf (this->fl_, ACE_INT64_FORMAT_SPECIFIER_ASCII "\n", i);
+    std::fprintf (this->fl_, ACE_INT64_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
