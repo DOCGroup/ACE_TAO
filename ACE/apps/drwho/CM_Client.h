@@ -33,11 +33,11 @@ public:
   /// Destructor.
   virtual ~CM_Client ();
 
-  virtual int mux (char *packet, int &packet_length)   = 0;
-  virtual int demux (char *packet, int &packet_length) = 0;
-  virtual int open (short port_number);
-  virtual int receive (int timeout = 0);
-  virtual int send ();
+  virtual int mux (char *packet, int &packet_length) override = 0;
+  virtual int demux (char *packet, int &packet_length) override = 0;
+  virtual int open (short port_number) override;
+  virtual int receive (int timeout = 0) override;
+  virtual int send () override;
 
 private:
   fd_set read_fd_;

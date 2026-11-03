@@ -36,7 +36,7 @@ PMS_Ruser::encode (char *packet, int &packet_length)
   // We only send back info on hosts that we actually see.
 
   for (;
-       (prp = this->get_next_friend ()) != 0;
+       (prp = this->get_next_friend ()) != nullptr;
        *buf_ptr++ = '\t')
     buf_ptr = this->handle_protocol_entries (ACE_OS::strecpy (buf_ptr,
                                                               prp->get_host ()),
@@ -94,11 +94,11 @@ PMS_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
     {
       passwd *pwent = ACE_OS::getpwnam (np->get_login_name ());
       char *cp =
-        (char *) std::strchr (np->set_real_name (pwent == 0
+        (char *) std::strchr (np->set_real_name (pwent == nullptr
                                                     ? np->get_login_name ()
                                                     : ACE::strnew (pwent->pw_gecos)),
                                  ',');
-      if (cp != 0)
+      if (cp != nullptr)
         *cp = '\0';
     }
 
@@ -114,7 +114,7 @@ char *
 PMS_Ruser::handle_protocol_entries (char *buf_ptr,
                                     Drwho_Node *np)
 {
-  for (; np != 0; np = np->next_)
+  for (; np != nullptr; np = np->next_)
     {
       std::sprintf (buf_ptr,
                        "%d %d ",

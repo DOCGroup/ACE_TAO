@@ -38,8 +38,8 @@ public:
   virtual int decode (char *packet, int &total_bytes) = 0;
 
 protected:
-  int total_users;
-  Search_Struct *ss;
+  int total_users {};
+  Search_Struct *ss {};
 
   int friend_count ();
 

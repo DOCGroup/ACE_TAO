@@ -21,8 +21,8 @@ class SM_Server : public Select_Manager, public CM_Server
 public:
   SM_Server ();
   virtual ~SM_Server ();
-  virtual int mux (char *packet, int &packet_length);
-  virtual int demux (char *packet, int &packet_length);
+  virtual int mux (char *packet, int &packet_length) override;
+  virtual int demux (char *packet, int &packet_length) override;
 
 private:
   PM_Server *pm_server;

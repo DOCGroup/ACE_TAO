@@ -12,7 +12,7 @@
 int
 CM_Server::open (short port_number)
 {
-  int max_packet_size = UDP_PACKET_SIZE;
+  const int max_packet_size = UDP_PACKET_SIZE;
 
   this->sokfd_ = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 

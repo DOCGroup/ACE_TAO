@@ -20,8 +20,8 @@ class SML_Client : public SM_Client
 public:
   SML_Client ();
   virtual ~SML_Client ();
-  virtual int receive (int timeout = 0);
-  virtual int send ();
+  virtual int receive (int timeout = 0) override;
+  virtual int send () override;
 
 private:
   SML_Server sml_server;

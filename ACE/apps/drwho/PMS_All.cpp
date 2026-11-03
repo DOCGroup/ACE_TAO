@@ -35,7 +35,7 @@ PMS_All::encode (char *packet, int &packet_length)
   // We only send back info on friends that we actually see logged in.
 
   for (;
-       (prp = this->get_next_friend ()) != 0;
+       (prp = this->get_next_friend ()) != nullptr;
        *buf_ptr++ = '\t')
     buf_ptr =
       this->handle_protocol_entries (ACE_OS::strecpy
@@ -87,11 +87,11 @@ PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
   Protocol_Record *prp = PM_Server::insert_protocol_info (protocol_record);
   passwd *pwent = ACE_OS::getpwnam (prp->get_login ());
   char *cp = (char *) std::strchr (prp->set_real
-                                      (pwent == 0
+                                      (pwent == nullptr
                                        ? prp->get_login () :
                                        ACE::strnew (pwent->pw_gecos)),
                                       ',');
-  if (cp != 0)
+  if (cp != nullptr)
     *cp = '\0';
 
   return prp;

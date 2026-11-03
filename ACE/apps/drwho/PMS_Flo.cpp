@@ -33,7 +33,7 @@ PMS_Flo::encode (char *packet, int &packet_length)
   // We only send back info on friends that we actually see logged in.
 
   for (;
-       (prp = this->get_next_friend ()) != 0;
+       (prp = this->get_next_friend ()) != nullptr;
        *buf_ptr++ = '\t')
     buf_ptr = this->handle_protocol_entries (ACE_OS::strecpy (buf_ptr,
                                                               prp->get_login ()),

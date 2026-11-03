@@ -13,7 +13,7 @@ u_int Options::option_word = 0;
 Options::Protocol_Types Options::protocol_type = Options::PROTO_FLO;
 
 // User name for quick lookups.
-char *Options::user_name = 0;
+char *Options::user_name = nullptr;
 
 // Port number for client/server.
 short Options::port_number = PORT_NUMBER;
@@ -64,7 +64,7 @@ Options::set_opt (Option_Types opt)
   Options::option_word |= opt;
 }
 
-int
+bool
 Options::get_opt (Option_Types opt)
 {
   return (Options::option_word & opt) != 0;
@@ -74,7 +74,7 @@ void
 Options::set_options (int argc, char *argv[])
 {
   int c;
-  int add_default_hosts = 1;
+  bool add_default_hosts = true;
 
   Options::program_name = argv[0];
 
@@ -110,11 +110,11 @@ Options::set_options (int argc, char *argv[])
                         "%p%a\n",
                         Options::program_name,
                         1));
-          add_default_hosts = 0;
+          add_default_hosts = false;
           break;
         case 'H':
           Multicast_Manager::add_host (getopt.opt_arg ());
-          add_default_hosts = 0;
+          add_default_hosts = false;
           break;
         case 'h':
           Options::print_usage_and_die (1);

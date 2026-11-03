@@ -13,7 +13,7 @@ Protocol_Record::~Protocol_Record ()
                 "disposing Protocol_Record\n"));
 
   for (Drwho_Node *np = this->get_drwho_list ();
-       np != 0; )
+       np != nullptr; )
     {
       Drwho_Node *t = np;
       np = np->next_;
@@ -22,30 +22,27 @@ Protocol_Record::~Protocol_Record ()
 }
 
 Protocol_Record::Protocol_Record ()
-  : key_name1_ (0),
-    key_name2_ (0),
-    drwho_list_ (0),
-    next_ (0),
-    is_active_ (0)
+  : key_name1_ (nullptr),
+    key_name2_ (nullptr),
+    drwho_list_ (nullptr),
+    next_ (nullptr)
 {
 }
 
 Protocol_Record::Protocol_Record (int)
-  : key_name1_ (0),
-    key_name2_ (0),
+  : key_name1_ (nullptr),
+    key_name2_ (nullptr),
     drwho_list_ (&Protocol_Record::drwho_node_),
-    next_ (0),
-    is_active_ (0)
+    next_ (nullptr)
 {
 }
 
 Protocol_Record::Protocol_Record (const char *kn1,
                                   Protocol_Record *next)
   : key_name1_ (kn1),
-    key_name2_ (0),
-    drwho_list_ (0),
-    next_ (next),
-    is_active_ (0)
+    key_name2_ (nullptr),
+    drwho_list_ (nullptr),
+    next_ (next)
 {
 }
 

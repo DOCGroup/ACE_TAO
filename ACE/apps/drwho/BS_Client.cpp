@@ -73,7 +73,7 @@ BS_Client::insert (const char *key_name, int)
         lo = mid + 1;
     }
 
-  return 0;
+  return nullptr;
 #endif /* 0 */
 }
 
@@ -81,10 +81,10 @@ Protocol_Record *
 BS_Client::get_each_entry ()
 {
   for (Protocol_Record *prp = Binary_Search::get_each_entry ();
-       prp != 0;
+       prp != nullptr;
        prp = Binary_Search::get_each_entry ())
-    if (prp->get_drwho_list () != 0)
+    if (prp->get_drwho_list () != nullptr)
       return prp;
 
-  return 0;
+  return nullptr;
 }

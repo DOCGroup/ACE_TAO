@@ -59,7 +59,7 @@ char *
 PM_Server::handle_protocol_entries (char *buf_ptr,
                                     Drwho_Node *np)
 {
-  for (; np != 0; np = np->next_)
+  for (; np != nullptr; np = np->next_)
     {
       std::sprintf (buf_ptr,
                        "%d %d %s",

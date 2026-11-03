@@ -25,7 +25,7 @@ class BS_Server : public Binary_Search
 {
 public:
   // = Initialization.
-  BS_Server (const char *packet);
+  explicit BS_Server (const char *packet);
 
   /**
    * This function is used to merge the <key_name> from server
@@ -33,7 +33,7 @@ public:
    * side.
    */
   virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN);
+                                   int max_len = MAXUSERIDNAMELEN) override;
 
   /**
    * An iterator, similar to Binary_Search::get_next_friend, though in
@@ -42,7 +42,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_next_entry ();
+  virtual Protocol_Record *get_next_entry () override;
 };
 
 #endif /* _BS_SERVER_H */

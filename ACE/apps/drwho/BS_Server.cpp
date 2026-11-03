@@ -109,10 +109,10 @@ Protocol_Record *
 BS_Server::get_next_entry ()
 {
   for (Protocol_Record *prp = Binary_Search::get_next_entry ();
-       prp != 0;
+       prp != nullptr;
        prp = Binary_Search::get_next_entry ())
-    if (prp->get_drwho_list () != 0)
+    if (prp->get_drwho_list () != nullptr)
       return prp;
 
-  return 0;
+  return nullptr;
 }

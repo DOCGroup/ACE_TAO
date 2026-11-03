@@ -28,7 +28,7 @@ PMC_Ruser::encode (char *packet, int &packet_length)
 
   char *buf_ptr = SKIP_PACKET_TYPE (packet);
 
-  *buf_ptr++ = char (Options::get_opt (Options::PRINT_LOGIN_NAME));
+  *buf_ptr++ = static_cast<char> (Options::get_opt (Options::PRINT_LOGIN_NAME));
 
   packet_length = buf_ptr - packet;
   return 1;
@@ -82,7 +82,7 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   Drwho_Node *np = this->get_drwho_node (ACE::strnnew (current_node->get_login_name (),
                                                        MAXUSERIDNAMELEN),
                                          prp->drwho_list_);
-  int length = std::strlen (prp->get_host ());
+  const int length = std::strlen (prp->get_host ());
 
   np->set_real_name (ACE::strnew (current_node->get_real_name ()));
 
@@ -127,7 +127,7 @@ PMC_Ruser::process ()
     get_name = &Drwho_Node::get_real_name;
 
   for (Protocol_Record *prp;
-       (prp = this->Protocol_Manager::get_each_friend ()) != 0;
+       (prp = this->Protocol_Manager::get_each_friend ()) != nullptr;
        )
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -157,7 +157,7 @@ PMC_Ruser::process ()
                         "*"));
 
           np = np->next_;
-          if (np == 0)
+          if (np == nullptr)
             break;
           else if (Options::get_opt (Options::PRINT_LOGIN_NAME))
             ACE_DEBUG ((LM_DEBUG,

@@ -23,7 +23,7 @@ PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
   if (np->get_active_count () < current_node->get_active_count ())
     {
       np->set_active_count (current_node->get_active_count ());
-      prp->is_active_ = 1;
+      prp->is_active_ = true;
     }
 
   if (np->get_inactive_count () < current_node->get_inactive_count())
@@ -46,7 +46,7 @@ PM_Client::process ()
     get_name = &Protocol_Record::get_real;
 
   int active_friends = 0;
-  int users = this->Protocol_Manager::get_total_users ();
+  const int users = this->Protocol_Manager::get_total_users ();
 
   ACE_DEBUG ((LM_DEBUG,
               "------------------------\n"));
@@ -58,11 +58,11 @@ PM_Client::process ()
   // out the associated information.
 
   for (Protocol_Record *prp = this->Protocol_Manager::get_each_friend ();
-       prp != 0;
+       prp != nullptr;
        prp = this->Protocol_Manager::get_each_friend ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%c%-*s [", (prp->is_active_ != 0 ? '*' : ' '),
+                  "%c%-*s [", (prp->is_active_ ? '*' : ' '),
                   this->max_key_length,
                   (prp->*get_name) ()));
 
@@ -90,7 +90,7 @@ PM_Client::process ()
                         "*"));
 
           np = np->next_;
-          if (np == 0)
+          if (np == nullptr)
             break;
           else
             ACE_DEBUG ((LM_DEBUG,

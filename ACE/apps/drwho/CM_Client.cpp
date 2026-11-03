@@ -124,7 +124,7 @@ CM_Client::send ()
 }
 
 CM_Client::CM_Client ()
-  : top_ (0)
+  : top_ (nullptr)
 {
 }
 

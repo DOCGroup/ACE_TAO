@@ -5,9 +5,6 @@
 #include <algorithm>
 
 Hash_Table::Hash_Table ()
-  : current_ptr (0),
-    current_index (0),
-    hash_table_size (HASH_TABLE_SIZE)
 {
   ACE_NEW (this->hash_table,
            Protocol_Record *[this->hash_table_size]);
@@ -24,10 +21,10 @@ Hash_Table::get_next_entry ()
   if (this->current_index == -1)
     this->current_index = 0;
 
-  if (this->current_ptr == 0)
+  if (this->current_ptr == nullptr)
     {
       for (; this->current_index < this->hash_table_size; this->current_index++)
-        if (this->hash_table[this->current_index] != 0)
+        if (this->hash_table[this->current_index] != nullptr)
           {
             Protocol_Record *prp = this->hash_table[this->current_index++];
             this->current_ptr  = prp->next_;
@@ -35,7 +32,7 @@ Hash_Table::get_next_entry ()
           }
 
       this->current_index = -1;
-      return 0;
+      return nullptr;
     }
   else
     {
@@ -61,7 +58,7 @@ Hash_Table::~Hash_Table ()
 
   for (int i = 0; i < this->hash_table_size; i++)
     for (Protocol_Record *prp = this->hash_table[i];
-         prp != 0; )
+         prp != nullptr; )
       {
         prp = prp->next_;
       }

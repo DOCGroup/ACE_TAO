@@ -15,15 +15,15 @@ Drwho_Node *
 Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
 {
   Drwho_Node **temp = &head;
-  for (; *temp != 0; temp = &(*temp)->next_)
+  for (; *temp != nullptr; temp = &(*temp)->next_)
     if (std::strcmp (key_name,
                      (*temp)->get_login_name ()) == 0)
       break;
 
-  if (*temp == 0)
+  if (*temp == nullptr)
     ACE_NEW_RETURN (head,
                     Drwho_Node (key_name, head),
-                    0);
+                    nullptr);
   else
     {
       Drwho_Node *t = *temp;
@@ -37,10 +37,7 @@ Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
   return head;
 }
 
-Protocol_Manager::Protocol_Manager ()
-  : total_users (0)
-{
-}
+Protocol_Manager::Protocol_Manager () = default;
 
 Protocol_Manager::~Protocol_Manager ()
 {

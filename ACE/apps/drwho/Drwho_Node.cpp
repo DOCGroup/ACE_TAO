@@ -2,23 +2,10 @@
 
 Drwho_Node::Drwho_Node (const char *h_name, Drwho_Node *n)
      : key_name1_ (h_name),
-       key_name2_ (0),
-       tty_name_ (0),
-       idle_time_ (0),
-       active_count_ (0),
-       inactive_count_ (0),
        next_ (n)
 {}
 
-Drwho_Node::Drwho_Node ()
-     : key_name1_ (0),
-       key_name2_ (0),
-       tty_name_ (0),
-       idle_time_ (0),
-       active_count_ (0),
-       inactive_count_ (0),
-       next_ (0)
-{}
+Drwho_Node::Drwho_Node () = default;
 
 const char *
 Drwho_Node::get_login_name ()

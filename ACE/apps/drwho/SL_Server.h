@@ -22,10 +22,10 @@
 class SL_Server : public Single_Lookup
 {
 public:
-  SL_Server (const char *packet);
+  explicit SL_Server (const char *packet);
   virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN);
-  virtual Protocol_Record *get_each_entry ();
+                                   int max_len = MAXUSERIDNAMELEN) override;
+  virtual Protocol_Record *get_each_entry () override;
 };
 
 #endif /* _SL_SERVER_H */

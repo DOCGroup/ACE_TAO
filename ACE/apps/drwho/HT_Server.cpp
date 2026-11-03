@@ -10,16 +10,16 @@
 Protocol_Record *
 HT_Server::insert (const char *key_name, int max_len)
 {
-  Protocol_Record **prpp = 0;
+  Protocol_Record **prpp = nullptr;
 
   // This is tricky...
 
   for (prpp = &this->hash_table[ACE::hash_pjw (key_name) % this->hash_table_size];
-       *prpp != 0 && std::strncmp ((*prpp)->get_login (), key_name, max_len) != 0;
+       *prpp != nullptr && std::strncmp ((*prpp)->get_login (), key_name, max_len) != 0;
        prpp = &(*prpp)->next_)
     continue;
 
-  if (*prpp == 0)
+  if (*prpp == nullptr)
     {
       // Remember, the server must be very careful about stuff it
       // receives from the rwho manager, since it may not be
@@ -29,7 +29,7 @@ HT_Server::insert (const char *key_name, int max_len)
                       Protocol_Record (ACE::strnnew (key_name,
                                                      max_len),
                                        *prpp),
-                      0);
+                      nullptr);
       this->count_++;
     }
 
