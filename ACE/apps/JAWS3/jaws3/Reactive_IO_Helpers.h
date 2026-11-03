@@ -23,15 +23,15 @@ class JAWS_IO_Reactive_Handler : public ACE_Event_Handler
 public:
   virtual void open ();
 
-  int handle_timeout (const ACE_Time_Value &, const void *);
+  int handle_timeout (const ACE_Time_Value &, const void *) override;
 
-  int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
-  int handle_exception (ACE_HANDLE);
+  int handle_exception (ACE_HANDLE) override;
 
-  ACE_HANDLE get_handle () const { return this->handle_; }
+  ACE_HANDLE get_handle () const override { return this->handle_; }
 
-  void set_handle (ACE_HANDLE handle) { this->handle_ = handle; }
+  void set_handle (ACE_HANDLE handle) override { this->handle_ = handle; }
 
 protected:
   virtual void close (int result);
@@ -86,7 +86,7 @@ class JAWS_IO_Reactive_Send : public JAWS_IO_Reactive_Handler
   friend class JAWS_Reactive_IO;
 
 public:
-  int handle_output (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle) override;
 
   static JAWS_IO_Reactive_Send * make ( ACE_HANDLE handle
                                       , ACE_Message_Block *mb
@@ -142,7 +142,7 @@ class JAWS_IO_Reactive_Recv : public JAWS_IO_Reactive_Handler
   friend class JAWS_Reactive_IO;
 
 public:
-  int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   static JAWS_IO_Reactive_Recv * make ( ACE_HANDLE handle
                                       , ACE_Message_Block *mb
@@ -198,11 +198,11 @@ class JAWS_IO_Reactive_Transmit : public JAWS_IO_Reactive_Handler
   friend class JAWS_Reactive_IO;
 
 public:
-  int handle_timeout (const ACE_Time_Value &, const void *);
+  int handle_timeout (const ACE_Time_Value &, const void *) override;
 
-  int handle_output (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle) override;
 
-  int handle_exception (ACE_HANDLE handle);
+  int handle_exception (ACE_HANDLE handle) override;
 
   static JAWS_IO_Reactive_Transmit * make ( ACE_HANDLE handle
                                           , ACE_HANDLE source
@@ -244,7 +244,7 @@ public:
   }
 
 protected:
-  void close (int result);
+  void close (int result) override;
 
   int handle_output_header (ACE_HANDLE handle);
 

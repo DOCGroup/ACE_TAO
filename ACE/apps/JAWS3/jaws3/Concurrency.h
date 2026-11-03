@@ -21,7 +21,7 @@ public:
 
   virtual int getq (JAWS_Protocol_Handler *&ph) = 0;
 
-  int svc ();
+  int svc () override;
 };
 
 

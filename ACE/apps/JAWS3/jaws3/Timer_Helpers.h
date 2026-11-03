@@ -23,10 +23,10 @@ public:
   {
   }
 
-  int handle_timeout (const ACE_Time_Value &tv, const void *act);
+  int handle_timeout (const ACE_Time_Value &tv, const void *act) override;
   // Called when timer expires.
 
-  int handle_close (ACE_HANDLE h, ACE_Reactor_Mask m);
+  int handle_close (ACE_HANDLE h, ACE_Reactor_Mask m) override;
   // Called directly when timer is canceled.
 
 private:

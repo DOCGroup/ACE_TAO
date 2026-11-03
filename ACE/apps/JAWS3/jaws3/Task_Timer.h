@@ -25,21 +25,21 @@ public:
                       , const ACE_Time_Value &delta
                       , JAWS_Event_Completer *completer
                       , void *act = 0
-                      );
+                      ) override;
 
   void schedule_absolute_timer ( long *timer_id
                                , const ACE_Time_Value &tv
                                , JAWS_Event_Completer *completer
                                , void *act = 0
-                               );
+                               ) override;
 
   void schedule_interval_timer ( long *timer_id
                                , const ACE_Time_Value &interval
                                , JAWS_Event_Completer *completer
                                , void *act = 0
-                               );
+                               ) override;
 
-  void cancel_timer (long timer_id);
+  void cancel_timer (long timer_id) override;
   // NOTE: Cancelling the timer causes handle_close to be called, but
   // not handle_timeout (of couse, I mean in the ACE_Event_Handler that
   // is being used as the timer helper).

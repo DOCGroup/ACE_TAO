@@ -25,13 +25,13 @@ public:
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
             , void *act = 0
-            );
+            ) override;
 
   void recv ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
             , void *act = 0
-            );
+            ) override;
 
   void transmit ( ACE_HANDLE handle
                 , ACE_HANDLE source
@@ -39,21 +39,21 @@ public:
                 , void *act = 0
                 , ACE_Message_Block *header = 0
                 , ACE_Message_Block *trailer = 0
-                );
+                ) override;
 
   void send ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
             , const ACE_Time_Value &tv
             , void *act = 0
-            );
+            ) override;
 
   void recv ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
             , const ACE_Time_Value &tv
             , void *act = 0
-            );
+            ) override;
 
   void transmit ( ACE_HANDLE handle
                 , ACE_HANDLE source
@@ -62,7 +62,7 @@ public:
                 , void *act = 0
                 , ACE_Message_Block *header = 0
                 , ACE_Message_Block *trailer = 0
-                );
+                ) override;
 };
 
 #endif /* JAWS_REACTIVE_IO_H */

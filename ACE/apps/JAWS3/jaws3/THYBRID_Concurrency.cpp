@@ -12,16 +12,15 @@
 
 
 JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
-  : getting_ (0)
-  , min_number_of_threads_ (1)
+  : min_number_of_threads_ (1)
   , max_number_of_threads_ (-1)
   , shutdown_task_ (0)
   , error_ (0)
 {
-  const char *value;
+  char const *value;
 
   value = JAWS_Options::instance ()->getenv ("JAWS_MIN_THYBRID_THREADS");
-  if (value != 0)
+  if (value != nullptr)
     this->min_number_of_threads_ = ACE_OS::atoi (value);
   else
     this->min_number_of_threads_ =
@@ -31,7 +30,7 @@ JAWS_THYBRID_Concurrency::JAWS_THYBRID_Concurrency ()
     this->min_number_of_threads_ = 1;
 
   value = JAWS_Options::instance ()->getenv ("JAWS_MAX_THYBRID_THREADS");
-  if (value != 0)
+  if (value != nullptr)
     this->max_number_of_threads_ = ACE_OS::atoi (value);
   else
     this->max_number_of_threads_ =
@@ -62,7 +61,7 @@ JAWS_THYBRID_Concurrency::putq (JAWS_Protocol_Handler *ph)
 
   if (result != -1)
     {
-      if (this->getting_ < this->min_number_of_threads_
+      if (this->getting_.load () < this->min_number_of_threads_
           && (this->max_number_of_threads_ < 0
               || this->thr_count () < (size_t) this->max_number_of_threads_))
         {
@@ -85,14 +84,14 @@ JAWS_THYBRID_Concurrency::putq (JAWS_Protocol_Handler *ph)
 int
 JAWS_THYBRID_Concurrency::getq (JAWS_Protocol_Handler *&ph)
 {
-  ph = 0;
+  ph = nullptr;
 
   JAWS_CONCURRENCY_TASK *task = this;
 
   if (this->shutdown_task_ && task->msg_queue ()->message_count () == 0)
     return -1;
 
-  int getting = ++(this->getting_);
+  int const getting = ++(this->getting_);
 
   if (getting > this->min_number_of_threads_)
     {
@@ -103,18 +102,18 @@ JAWS_THYBRID_Concurrency::getq (JAWS_Protocol_Handler *&ph)
         }
     }
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   int result = task->getq (mb);
 
   if (result != -1)
     {
       ph = (JAWS_Protocol_Handler *) mb->base ();
 
-      if (ph == 0)
+      if (ph == nullptr)
         {
           // Shutdown this task;
           this->shutdown_task_ = 1;
-          if (this->getting_ > 1)
+          if (this->getting_.load () > 1)
             {
               task->putq (mb);
               result = -1;

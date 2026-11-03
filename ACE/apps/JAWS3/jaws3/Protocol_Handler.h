@@ -51,7 +51,7 @@ protected:
   // The event completion routine that triggers the transition
   // to the next Protocol State.
 
-  void default_complete (const JAWS_Event_Result &result, void *act)
+  void default_complete (const JAWS_Event_Result &result, void *act) override
   {
     this->event_complete (result, act);
   }

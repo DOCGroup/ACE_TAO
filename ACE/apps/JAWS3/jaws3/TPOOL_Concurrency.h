@@ -9,9 +9,9 @@ class JAWS_Export JAWS_TPOOL_Concurrency : public JAWS_Concurrency_Impl
 public:
   JAWS_TPOOL_Concurrency ();
 
-  int putq (JAWS_Protocol_Handler *ph);
+  int putq (JAWS_Protocol_Handler *ph) override;
 
-  int getq (JAWS_Protocol_Handler *&ph);
+  int getq (JAWS_Protocol_Handler *&ph) override;
 
   static JAWS_TPOOL_Concurrency * instance ()
   {
