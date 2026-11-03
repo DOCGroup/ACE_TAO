@@ -16,10 +16,10 @@
 
 using ACE_TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 
-static const char *rwname = "reader/writer";
-static const char *mutexname = "mutex";
+static constexpr ACE_TCHAR const *rwname = ACE_TEXT ("reader/writer");
+static constexpr ACE_TCHAR const *mutexname = ACE_TEXT ("mutex");
 
-static void *
+static ACE_THR_FUNC_RETURN
 run_reader_writer (void *)
 {
   for (int x = 0; x < 50; x++)
@@ -62,10 +62,10 @@ run_reader_writer (void *)
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 run_mutex (void *)
 {
   for (int x = 0; x < 50; x++)
@@ -87,7 +87,7 @@ run_mutex (void *)
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -96,16 +96,16 @@ run_final_test ()
   ACE_DEBUG ((LM_DEBUG, "starting mutex tests 1 & 2\n"));
 
   // Mutex tests.
-  if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired ("testing mutex") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired (ACE_TEXT ("testing mutex")) == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "mutex test 1 failed.\n"), 0);
-  if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired ("testing mutex2") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired (ACE_TEXT ("testing mutex2")) == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "mutex test 2 failed.\n"), 0);
-  if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired ("testing mutex") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired (ACE_TEXT ("testing mutex")) == 0)
     ACE_DEBUG ((LM_DEBUG, "mutex test 1 succeeded.\n"));
   else
     ACE_ERROR_RETURN ((LM_ERROR, "mutex test 1 failed..\n"), 0);
 
-  if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired ("testing mutex2") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired (ACE_TEXT ("testing mutex2")) == 0)
     ACE_DEBUG ((LM_DEBUG, "mutex test 2 succeeded.\n"));
   else
     ACE_ERROR_RETURN ((LM_ERROR, "mutex test 2 failed..\n"), 0);
@@ -114,31 +114,31 @@ run_final_test ()
   ACE_DEBUG ((LM_DEBUG, "starting rwlock tests 1 & 2\n"));
 
   // Multiple readers.
-  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired ("testing rwlock") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired (ACE_TEXT ("testing rwlock")) == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "rwlock test 1 failed.\n"), 0);
-  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired ("testing rwlock 2") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired (ACE_TEXT ("testing rwlock 2")) == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "rwlock test 2 failed.\n"), 0);
-  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired ("testing rwlock") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired (ACE_TEXT ("testing rwlock")) == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "rwlock test 1 failed..\n"), 0);
-  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired ("testing rwlock 2") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired (ACE_TEXT ("testing rwlock 2")) == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "rwlock test 2 failed..\n"), 0);
 
   // Writer.
-  if (ACE_TOKEN_INVARIANTS::instance ()->writer_acquired ("testing rwlock") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->writer_acquired (ACE_TEXT ("testing rwlock")) == 0)
     ACE_DEBUG ((LM_ERROR, "rwlock test 1 succeded.\n"));
   else
     ACE_ERROR_RETURN ((LM_ERROR, "rwlock test 1 failed...\n"), 0);
 
   // Releasing reader.
-  ACE_TOKEN_INVARIANTS::instance ()->rwlock_releasing ("testing rwlock 2");
-  ACE_TOKEN_INVARIANTS::instance ()->rwlock_releasing ("testing rwlock 2");
+  ACE_TOKEN_INVARIANTS::instance ()->rwlock_releasing (ACE_TEXT ("testing rwlock 2"));
+  ACE_TOKEN_INVARIANTS::instance ()->rwlock_releasing (ACE_TEXT ("testing rwlock 2"));
 
   // Writer.
-  if (ACE_TOKEN_INVARIANTS::instance ()->writer_acquired ("testing rwlock 2") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->writer_acquired (ACE_TEXT ("testing rwlock 2")) == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "rwlock test 2 failed....\n"), 0);
 
   // Reader.
-  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired ("testing rwlock 2") == 0)
+  if (ACE_TOKEN_INVARIANTS::instance ()->reader_acquired (ACE_TEXT ("testing rwlock 2")) == 0)
     ACE_DEBUG ((LM_DEBUG, "rwlock test 2 succeeded.\n"));
   else
     ACE_ERROR_RETURN ((LM_ERROR, "rwlock test 2 failed.....\n"), 0);
@@ -152,8 +152,8 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   ACE_Thread_Manager mgr;
 
   // Run reader/writer test
-  if (mgr.spawn_n (2, ACE_THR_FUNC (run_reader_writer),
-                   (void *) 0,
+  if (mgr.spawn_n (2, run_reader_writer,
+                   nullptr,
                    THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
@@ -162,8 +162,8 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   ACE_OS::sleep (2);
 
   // Run mutex test.
-  if (mgr.spawn_n (2, ACE_THR_FUNC (run_mutex),
-                   (void *) 0,
+  if (mgr.spawn_n (2, run_mutex,
+                   nullptr,
                    THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
