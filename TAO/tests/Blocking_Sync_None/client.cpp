@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_time.h"
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int iterations = 1000;
 
@@ -11,7 +13,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,23 +39,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
+}
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (ior);
 
-      Test::Blocking_Sync_None_var blocking_sync_none =
-        Test::Blocking_Sync_None::_narrow(tmp.in ());
+      Test::Blocking_Sync_None_var const blocking_sync_none =
+        Test::Blocking_Sync_None::_narrow (tmp.in ());
 
       if (CORBA::is_nil (blocking_sync_none.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -61,10 +64,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            ior),
                           1);
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       if (CORBA::is_nil (policy_current.in ()))
@@ -75,7 +78,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Any scope_as_any;
       scope_as_any <<= Messaging::SYNC_NONE;
 
-      CORBA::PolicyList policies(1); policies.length (1);
+      CORBA::PolicyList policies (1);
+      policies.length (1);
       policies[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                             scope_as_any);
@@ -95,7 +99,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int blocked_calls = 0;
       for (int i = 0; i != iterations; ++i)
         {
-          ACE_Time_Value start = ACE_OS::gettimeofday ();
+          ACE_Time_Value const start = ACE_OS::gettimeofday ();
 
           blocking_sync_none->slow_operation (payload,
                                               sleep_microseconds);
