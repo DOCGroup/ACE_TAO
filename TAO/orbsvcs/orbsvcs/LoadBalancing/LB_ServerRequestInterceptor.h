@@ -50,7 +50,7 @@ class TAO_LoadBalancing_Export TAO_LB_ServerRequestInterceptor
 {
 public:
   /// Constructor.
-  TAO_LB_ServerRequestInterceptor (TAO_LB_LoadAlert & load_alert);
+  explicit TAO_LB_ServerRequestInterceptor (TAO_LB_LoadAlert & load_alert);
 
   /**
    * @name Methods Required by the ServerRequestInterceptor

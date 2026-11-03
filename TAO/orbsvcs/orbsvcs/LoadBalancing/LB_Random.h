@@ -39,7 +39,7 @@ public:
   /**
    * Seeds the OS' random number generator.
    */
-  TAO_LB_Random (PortableServer::POA_ptr poa);
+  explicit TAO_LB_Random (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods

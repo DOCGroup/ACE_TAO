@@ -12,9 +12,7 @@ TAO_LB_ServerRequestInterceptor::TAO_LB_ServerRequestInterceptor (
 {
 }
 
-TAO_LB_ServerRequestInterceptor::~TAO_LB_ServerRequestInterceptor ()
-{
-}
+TAO_LB_ServerRequestInterceptor::~TAO_LB_ServerRequestInterceptor () = default;
 
 char *
 TAO_LB_ServerRequestInterceptor::name ()

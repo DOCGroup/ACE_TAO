@@ -59,7 +59,7 @@ class TAO_LB_LoadAverage
 {
 public:
   /// Constructor.
-  TAO_LB_LoadAverage (PortableServer::POA_ptr poa);
+  explicit TAO_LB_LoadAverage (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods

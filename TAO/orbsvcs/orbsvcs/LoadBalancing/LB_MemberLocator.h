@@ -42,7 +42,7 @@ class TAO_LB_MemberLocator
 {
 public:
   /// Constructor
-  TAO_LB_MemberLocator (TAO_LB_LoadManager * load_balancer);
+  explicit TAO_LB_MemberLocator (TAO_LB_LoadManager * load_balancer);
 
   /**
    * @name The PortableServer::ServantLocator methods.

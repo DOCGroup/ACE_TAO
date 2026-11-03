@@ -17,9 +17,7 @@ TAO_LB_RoundRobin::TAO_LB_RoundRobin (PortableServer::POA_ptr poa)
 {
 }
 
-TAO_LB_RoundRobin::~TAO_LB_RoundRobin ()
-{
-}
+TAO_LB_RoundRobin::~TAO_LB_RoundRobin () = default;
 
 char *
 TAO_LB_RoundRobin::name ()

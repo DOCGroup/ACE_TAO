@@ -78,7 +78,7 @@ class TAO_LB_LoadMinimum
 {
 public:
   /// Constructor.
-  TAO_LB_LoadMinimum (PortableServer::POA_ptr poa);
+  explicit TAO_LB_LoadMinimum (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods

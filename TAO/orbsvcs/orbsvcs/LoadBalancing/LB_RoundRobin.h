@@ -41,7 +41,7 @@ class TAO_LB_RoundRobin
 {
 public:
   /// Constructor.
-  TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
+  explicit TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods
