@@ -1,3 +1,9 @@
+#include <atomic>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "tao/corba.h"
@@ -7,35 +13,37 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 
-int g_nthreads = 1;
-bool g_setTimeout = true;
-bool g_registerORBinitializer = true;
-bool g_initInMain = false;
-int g_argc;
-ACE_TCHAR ** g_argv;
+struct Test_Options
+{
+  int n_threads {1};
+  bool set_timeout {true};
+  bool register_orb_initializer {true};
+  bool init_in_main {};
+};
 
-int initORB (int threadID);
+int initORB (int thread_id, int argc, ACE_TCHAR *argv[], Test_Options const &options);
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Test_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("min:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("min:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'm':
-        g_initInMain = true;
+        options.init_in_main = true;
         break;
 
       case 'i':
-        g_registerORBinitializer = false;
+        options.register_orb_initializer = false;
         break;
 
       case 'n':
-        g_nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.n_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -49,18 +57,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker ();
+  Worker (int argc, ACE_TCHAR *argv[], Test_Options const &options);
+  Worker (Worker const &) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker &&) = delete;
 
   int svc () override;
 
 private:
+  int argc_;
+  ACE_TCHAR **argv_; // Borrowed from main; argv remains valid until the process exits.
+  Test_Options const options_;
 };
 
 class MyORBinitializer
@@ -68,144 +82,142 @@ class MyORBinitializer
   , public virtual CORBA::LocalObject
 {
 public:
-  MyORBinitializer (ACE_CString orbID)
-    : orbID_ (orbID)
+  explicit MyORBinitializer (std::string orb_id)
+    : orb_id_ (std::move (orb_id))
   {
   }
+  MyORBinitializer (MyORBinitializer const &) = delete;
+  MyORBinitializer &operator= (MyORBinitializer const &) = delete;
+  MyORBinitializer (MyORBinitializer &&) = delete;
+  MyORBinitializer &operator= (MyORBinitializer &&) = delete;
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "MyORBinitializer::pre_init() called for ORB \"%C\"\n",
-                orbID_.c_str ()));
+                this->orb_id_.c_str ()));
   }
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "MyORBinitializer::post_init() called for ORB \"%C\"\n",
-                orbID_.c_str ()));
+                this->orb_id_.c_str ()));
   }
 
 private:
-  ACE_CString orbID_;
+  std::string const orb_id_;
 };
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  g_argc = argc;
-  g_argv = argv;
+  Test_Options options;
 
   try
-  {
-    if (parse_args (argc, argv) != 0)
-      return 1;
+    {
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
 
-    if (g_initInMain)
-    {
-      initORB (0);
-    }
-//  Run in both main and background thread
-//    else
-    {
-      Worker worker;
-      if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           g_nthreads) != 0)
+      if (options.init_in_main)
+        initORB (0, argc, argv, options);
+
+      Worker worker (argc, argv, options);
+      if (worker.activate (THR_NEW_LWP | THR_JOINABLE, options.n_threads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate ORB thread(s)\n"),
                           1);
 
       worker.thr_mgr ()->wait ();
+      ACE_DEBUG ((LM_DEBUG, "Event loop finished\n"));
     }
-    ACE_DEBUG ((LM_DEBUG, "Event loop finished\n"));
-  }
   catch (CORBA::Exception const &ex)
-  {
-    ex._tao_print_exception ("Exception caught:");
-    return 1;
-  }
+    {
+      ex._tao_print_exception ("Exception caught:");
+      return 1;
+    }
 
   return 0;
 }
 
 // ****************************************************************
 
-Worker::Worker ()
+Worker::Worker (int argc, ACE_TCHAR *argv[], Test_Options const &options)
+  : argc_ (argc)
+  , argv_ (argv)
+  , options_ (options)
 {
 }
 
 int
 Worker::svc ()
 {
-  static int threadID = 0;
-
-  initORB (++threadID);
+  static std::atomic<int> thread_id {};
+  int const id = ++thread_id;
+  initORB (id, this->argc_, this->argv_, this->options_);
 
   return 0;
 }
 
 int
-initORB (int threadID)
+initORB (int thread_id, int argc, ACE_TCHAR *argv[], Test_Options const &options)
 {
   try
-  {
-    char ORBid[10];
-    ACE_OS::sprintf (ORBid, "ORB_%d", threadID);
-
-    ACE_DEBUG ((LM_DEBUG, "Initializing ORB \"%C\"\n", ORBid));
-
-    if (g_registerORBinitializer)
     {
-      ACE_DEBUG ((LM_DEBUG, "Creating ORB initializer\n"));
-      PortableInterceptor::ORBInitializer_var rCOI (
-        new MyORBinitializer (ORBid));
-      PortableInterceptor::register_orb_initializer (rCOI.in ());
+      std::string const orb_id = "ORB_" + std::to_string (thread_id);
+      std::vector<ACE_TCHAR *> argv_copy (argv, argv + argc);
+      argv_copy.push_back (nullptr);
+      int argc_copy = argc;
+
+      ACE_DEBUG ((LM_DEBUG, "Initializing ORB \"%C\"\n", orb_id.c_str ()));
+
+      if (options.register_orb_initializer)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Creating ORB initializer\n"));
+          PortableInterceptor::ORBInitializer_var const initializer (
+            new MyORBinitializer (orb_id));
+          PortableInterceptor::register_orb_initializer (initializer.in ());
+        }
+
+      ACE_DEBUG ((LM_DEBUG, "Creating TAO_ORB_Manager\n"));
+      std::unique_ptr<TAO_ORB_Manager> orb_manager = std::make_unique<TAO_ORB_Manager> ();
+
+      if (-1 == orb_manager->init (argc_copy, argv_copy.data (), orb_id.c_str ()))
+        {
+          ACE_DEBUG ((LM_DEBUG, "Failed to initialize ORB \"%C\"\n", orb_id.c_str ()));
+          throw CORBA::INTERNAL ();
+        }
+
+      ACE_DEBUG ((LM_DEBUG, "ORB \"%C\" initialized\n", orb_id.c_str ()));
+
+      if (options.set_timeout)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Setting connection timeout policy for ORB \"%C\"\n",
+                      orb_id.c_str ()));
+
+          TAO::Utils::PolicyList_Destroyer policy_list (1);
+          policy_list.length (1);
+
+          CORBA::ORB_var const orb = orb_manager->orb ();
+
+          TimeBase::TimeT const connection_timeout = 100 * 10000;
+          CORBA::Any any;
+          any <<= connection_timeout;
+
+          policy_list[0] = orb->create_policy (TAO::CONNECTION_TIMEOUT_POLICY_TYPE, any);
+
+          ACE_DEBUG ((LM_DEBUG, "Connection timeout policy set for ORB \"%C\"\n",
+                      orb_id.c_str ()));
+        }
+
+      orb_manager->fini ();
     }
-
-    ACE_DEBUG ((LM_DEBUG, "Creating TAO_ORB_Manager\n"));
-    TAO_ORB_Manager *pORBmgr = new TAO_ORB_Manager;
-
-    if (-1 == pORBmgr->init (g_argc, g_argv, ORBid))
-    {
-      ACE_DEBUG ((LM_DEBUG, "Failed to initialize ORB \"%C\"\n", ORBid));
-      throw CORBA::INTERNAL ();
-    }
-
-    ACE_DEBUG ((LM_DEBUG, "ORB \"%C\" initialized\n", ORBid));
-
-    if (g_setTimeout)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Setting connection timeout policy for ORB \"%C\"\n",
-                  ORBid));
-
-      CORBA::PolicyList policyList;
-
-      CORBA::ORB_var orb = pORBmgr->orb ();
-
-      TimeBase::TimeT const connectionTimeout = 100 * 10000;
-      CORBA::Any any;
-      any <<= connectionTimeout;
-
-      CORBA::ULong const l (policyList.length ());
-      policyList.length (l + 1);
-
-      policyList[l] = orb->create_policy (TAO::CONNECTION_TIMEOUT_POLICY_TYPE, any);
-
-      ACE_DEBUG ((LM_DEBUG, "Connection timeout policy set for ORB \"%C\"\n",
-                  ORBid));
-    }
-
-    pORBmgr->fini ();
-
-    delete pORBmgr;
-  }
   catch (CORBA::Exception const &ex)
-  {
-    ACE_ERROR ((LM_ERROR, "Caught exception: %C\n", ex._info ().c_str ()));
-    return 1;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Caught exception: %C\n", ex._info ().c_str ()));
+      return 1;
+    }
 
   return 0;
 }
