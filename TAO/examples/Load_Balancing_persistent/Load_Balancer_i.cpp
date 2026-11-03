@@ -1,40 +1,34 @@
 #include "Load_Balancer_i.h"
-#include <memory>
+#include <cstring>
 #include "ace/Hash_Map_Manager_T.h"
 
-const char *rr_name_bind = "RR_Group";
+constexpr char const *rr_name_bind = "RR_Group";
 // Name binding for the location of the Round Robin info in the mem pool
 
-const char *random_name_bind = "Random_Group";
+constexpr char const *random_name_bind = "Random_Group";
 // Name binding for the location of the Random info in the mem pool
 
-const char *flags_name_bind = "FLAGS";
+constexpr char const *flags_name_bind = "FLAGS";
 // Name binding for the location of the flags info in the mem pool
 
-const char *dll_name_bind = "DLL_LIST";
+constexpr char const *dll_name_bind = "DLL_LIST";
 // Name binding for the DLL_LIst in the me_pool;
 
-const char *server_id_name_bind = "server_id";
+constexpr char const *server_id_name_bind = "server_id";
 // Some cookie that is used for appending names
 
 Object_Group_Factory_i::Object_Group_Factory_i (CORBA::ORB_ptr orb,
                                                 PortableServer::POA_ptr poa)
   :orb_ (orb),
-   poa_ (PortableServer::POA::_duplicate (poa)),
-   random_groups_ (0),
-   rr_groups_ (0),
-   flags_ (0)
+   poa_ (PortableServer::POA::_duplicate (poa))
 {
   ACE_MMAP_Memory_Pool::OPTIONS options (ACE_DEFAULT_BASE_ADDR);
-  ACE_NEW (this->mem_pool_,
+  ALLOCATOR *mem_pool = nullptr;
+  ACE_NEW (mem_pool,
            ALLOCATOR ("Mem_Pool",
                       "Mem_Pool",
                       &options));
-}
-
-Object_Group_Factory_i::~Object_Group_Factory_i ()
-{
-  delete this->mem_pool_;
+  this->mem_pool_.reset (mem_pool);
 }
 
 PortableServer::POA_ptr
@@ -45,9 +39,9 @@ Object_Group_Factory_i::_default_POA ()
 
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_round_robin (const char * id)
+Object_Group_Factory_i::make_round_robin (char const *id)
 {
-  void *tmp_rr (0);
+  void *tmp_rr (nullptr);
 
   if (this->mem_pool_->find (rr_name_bind,
                              tmp_rr) == 0)
@@ -58,14 +52,14 @@ Object_Group_Factory_i::make_round_robin (const char * id)
     {
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
 
-      if (hash_map == 0)
+      if (hash_map == nullptr)
         throw CORBA::NO_MEMORY ();
 
-      this->rr_groups_ = new (hash_map) HASH_MAP (this->mem_pool_);
+      this->rr_groups_ = new (hash_map) HASH_MAP (this->mem_pool_.get ());
 
       // Bind it in the mem pool with a name
       if (this->mem_pool_->bind (rr_name_bind,
-                                 (void *)this->rr_groups_) != 0)
+                                 static_cast<void *> (this->rr_groups_)) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to bind\n"),
@@ -73,16 +67,16 @@ Object_Group_Factory_i::make_round_robin (const char * id)
         }
     }
 
-  return this->make_group (0,
+  return this->make_group (false,
                            id);
 }
 
 void
-Object_Group_Factory_i::unbind_round_robin (const char * id)
+Object_Group_Factory_i::unbind_round_robin (char const *id)
 {
-  if (this->rr_groups_ == 0)
+  if (this->rr_groups_ == nullptr)
     {
-      void *tmp_rr (0);
+      void *tmp_rr (nullptr);
 
       if (this->mem_pool_->find (rr_name_bind,
                                  tmp_rr) == -1)
@@ -91,25 +85,25 @@ Object_Group_Factory_i::unbind_round_robin (const char * id)
       this->rr_groups_ = reinterpret_cast <HASH_MAP *> (tmp_rr);
     }
 
-  char *int_id = 0;
+  char *int_id = nullptr;
 
   // Throw an exception if not found in the HASH MAP
   if (this->rr_groups_->find (const_cast<char *> (id),
-                              this->mem_pool_) < 0)
+                              this->mem_pool_.get ()) < 0)
     throw Load_Balancer::no_such_group ();
 
   // Unbind the entry
   this->rr_groups_->unbind (const_cast<char *> (id),
                             int_id,
-                            this->mem_pool_);
+                            this->mem_pool_.get ());
 
   // Free the memory from the pool
-  this->mem_pool_->free (int_id - (ACE_OS::strlen (id) + 1));
+  this->mem_pool_->free (int_id - (std::strlen (id) + 1));
 
   // Change the FLAGS variable
-  if (this->flags_ == 0)
+  if (this->flags_ == nullptr)
     {
-      void *tmp_flags (0);
+      void *tmp_flags (nullptr);
 
       if (this->mem_pool_->find (flags_name_bind,
                                  tmp_flags) == -1)
@@ -123,9 +117,9 @@ Object_Group_Factory_i::unbind_round_robin (const char * id)
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_random (const char * id)
+Object_Group_Factory_i::make_random (char const *id)
 {
-  void *tmp_random (0);
+  void *tmp_random (nullptr);
 
   if (this->mem_pool_->find (random_name_bind, tmp_random) == 0)
     {
@@ -135,14 +129,14 @@ Object_Group_Factory_i::make_random (const char * id)
     {
       void *hash_map = this->mem_pool_->malloc (sizeof (HASH_MAP));
 
-      if (hash_map == 0)
+      if (hash_map == nullptr)
         throw CORBA::NO_MEMORY ();
 
-      this->random_groups_ = new (hash_map) HASH_MAP (this->mem_pool_);
+      this->random_groups_ = new (hash_map) HASH_MAP (this->mem_pool_.get ());
 
       // Bind it in the mem pool with a name
       if (this->mem_pool_->bind (random_name_bind,
-                                 (void *)this->random_groups_) != 0)
+                                 static_cast<void *> (this->random_groups_)) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to bind\n"),
@@ -150,17 +144,17 @@ Object_Group_Factory_i::make_random (const char * id)
         }
     }
 
-  return this->make_group (1,
+  return this->make_group (true,
                            id);
 }
 
 
 void
-Object_Group_Factory_i::unbind_random (const char * id)
+Object_Group_Factory_i::unbind_random (char const *id)
 {
-  if (this->random_groups_ == 0)
+  if (this->random_groups_ == nullptr)
     {
-      void *tmp_random (0);
+      void *tmp_random (nullptr);
 
       if (this->mem_pool_->find (random_name_bind,
                                  tmp_random) == -1)
@@ -169,25 +163,25 @@ Object_Group_Factory_i::unbind_random (const char * id)
       this->random_groups_ = reinterpret_cast <HASH_MAP *> (tmp_random);
     }
 
-  char *int_id = 0;
+  char *int_id = nullptr;
 
   // Throw an exception if not found in the HASH MAP
   if (this->random_groups_->find (const_cast<char *> (id),
-                                  this->mem_pool_) < 0)
+                                  this->mem_pool_.get ()) < 0)
     throw Load_Balancer::no_such_group ();
 
   // Unbind the entry
   this->random_groups_->unbind (const_cast<char *> (id),
                                 int_id,
-                                this->mem_pool_);
+                                this->mem_pool_.get ());
 
   // Free the memory from the pool
-  this->mem_pool_->free (int_id - (ACE_OS::strlen (id) + 1));
+  this->mem_pool_->free (int_id - (std::strlen (id) + 1));
 
   // Change the FLAGS variable
-  if (this->flags_ == 0)
+  if (this->flags_ == nullptr)
     {
-      void *tmp_flags (0);
+      void *tmp_flags (nullptr);
 
       if (this->mem_pool_->find (flags_name_bind,
                                  tmp_flags) == -1)
@@ -201,14 +195,14 @@ Object_Group_Factory_i::unbind_random (const char * id)
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_group (int random,
-                                    const char * id)
+Object_Group_Factory_i::make_group (bool random,
+                                    char const *id)
 {
   // Store our result here for return.
   Load_Balancer::Object_Group_var group;
 
   // Create an appropriate servant.
-  Object_Group_i *group_servant = 0;
+  Object_Group_i *group_servant = nullptr;
 
   // Check to make sure we don't already have a group with the same
   // <id>.
@@ -216,13 +210,13 @@ Object_Group_Factory_i::make_group (int random,
   if (random)
     {
       if (this->random_groups_->find (const_cast<char *> (id),
-                                      this->mem_pool_) == 0)
+                                      this->mem_pool_.get ()) == 0)
         throw Load_Balancer::duplicate_group ();
     }
   else
     {
       if (this->rr_groups_->find (const_cast<char *> (id),
-                                  this->mem_pool_) == 0)
+                                  this->mem_pool_.get ()) == 0)
         throw Load_Balancer::duplicate_group ();
     }
 
@@ -250,19 +244,19 @@ Object_Group_Factory_i::make_group (int random,
 
   // Calculate and allocate the memory we need to store this name to
   // object binding.
-  size_t id_len = ACE_OS::strlen (id) + 1;
-  size_t kind_len = ACE_OS::strlen (ior.in ()) + 1;
+  size_t id_len = std::strlen (id) + 1;
+  size_t kind_len = std::strlen (ior.in ()) + 1;
 
-  char *ptr = (char *) this->mem_pool_->malloc (id_len + kind_len);
+  char *ptr = static_cast<char *> (this->mem_pool_->malloc (id_len + kind_len));
 
-  if (ptr == 0)
+  if (ptr == nullptr)
     throw CORBA::NO_MEMORY ();
 
   char * id_ptr =  ptr;
   char * ior_ptr = ptr + id_len;
 
-  ACE_OS::strcpy (id_ptr, id);
-  ACE_OS::strcpy (ior_ptr, ior.in ());
+  std::strcpy (id_ptr, id);
+  std::strcpy (ior_ptr, ior.in ());
 
   // Store the results here
   CORBA::Long result = 0;
@@ -272,13 +266,13 @@ Object_Group_Factory_i::make_group (int random,
     {
       result = this->random_groups_->bind (id_ptr,
                                            ior_ptr,
-                                           this->mem_pool_);
+                                           this->mem_pool_.get ());
     }
   else
     {
       result = this->rr_groups_->bind (id_ptr,
                                        ior_ptr,
-                                       this->mem_pool_);
+                                       this->mem_pool_.get ());
     }
 
 
@@ -289,7 +283,7 @@ Object_Group_Factory_i::make_group (int random,
     {
       // For some reason the  bind failed. Free our
       // dynamically allocated  memory.
-      this->mem_pool_->free ((void *) ptr);
+      this->mem_pool_->free (static_cast<void *> (ptr));
       throw Load_Balancer::duplicate_group ();
     }
 
@@ -301,7 +295,7 @@ Object_Group_Factory_i::make_group (int random,
 
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::resolve (const char * id)
+Object_Group_Factory_i::resolve (char const *id)
 {
 #if defined (DOORS_MEASURE_STATS)
   // Time the calls
@@ -318,7 +312,7 @@ Object_Group_Factory_i::resolve (const char * id)
   // MMAP file for the relevant info..
   if (!this->rr_groups_)
     {
-      void *tmp_rr (0);
+      void *tmp_rr (nullptr);
 
       if (this->mem_pool_->find (rr_name_bind,
                                  tmp_rr) == 0)
@@ -336,7 +330,7 @@ Object_Group_Factory_i::resolve (const char * id)
 
   if (!this->random_groups_)
     {
-      void *tmp_random (0);
+      void *tmp_random (nullptr);
 
       if (this->mem_pool_->find (random_name_bind,
                                  tmp_random) == 0)
@@ -354,7 +348,7 @@ Object_Group_Factory_i::resolve (const char * id)
 
   if (!this->flags_)
     {
-      void *tmp_flags (0);
+      void *tmp_flags (nullptr);
 
       this->mem_pool_->find (flags_name_bind,
                              tmp_flags);
@@ -363,14 +357,14 @@ Object_Group_Factory_i::resolve (const char * id)
       this->update_objects ();
     }
 
-  char *ior = 0;
+  char *ior = nullptr;
 
   if (rr_groups_->find (const_cast<char *> (id),
                         ior,
-                        this->mem_pool_) == -1
+                        this->mem_pool_.get ()) == -1
       && random_groups_->find (const_cast<char *> (id),
                                ior,
-                               this->mem_pool_) == -1)
+                               this->mem_pool_.get ()) == -1)
     throw Load_Balancer::no_such_group ();
 
   CORBA::Object_var objref =
@@ -398,7 +392,7 @@ Object_Group_Factory_i::resolve (const char * id)
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::list_groups (int random)
+Object_Group_Factory_i::list_groups (bool random)
 {
   Load_Balancer::Group_List * list;
 
@@ -425,7 +419,7 @@ Object_Group_Factory_i::list_groups (int random)
     group_iter = &rr_iter;
 
   // Iterate over groups and populate the list.
-  HASH_MAP::ENTRY *hash_entry = 0;
+  HASH_MAP::ENTRY *hash_entry = nullptr;
   for (CORBA::ULong i = 0; i < len; i++)
     {
       group_iter->next (hash_entry);
@@ -440,23 +434,23 @@ Object_Group_Factory_i::list_groups (int random)
 Load_Balancer::Group_List *
 Object_Group_Factory_i::round_robin_groups ()
 {
-  return list_groups (0);
+  return list_groups (false);
 }
 
 Load_Balancer::Group_List *
 Object_Group_Factory_i::random_groups ()
 {
-  return list_groups (1);
+  return list_groups (true);
 }
 
 
 void
-Object_Group_Factory_i::update_flags (int random)
+Object_Group_Factory_i::update_flags (bool random)
 {
   //First check whether we have memory for flags_
   if (!this->flags_)
     {
-      void *tmp_flags (0);
+      void *tmp_flags (nullptr);
 
       if (this->mem_pool_->find (flags_name_bind,
                                  tmp_flags) == 0)
@@ -468,14 +462,14 @@ Object_Group_Factory_i::update_flags (int random)
           void *value =
             this->mem_pool_->malloc (sizeof (CORBA::Short));
 
-          if (value == 0)
+          if (value == nullptr)
             throw CORBA::NO_MEMORY ();
 
           this->flags_ = new (value) CORBA::Short (0);
 
           // Initialize the variable
           this->mem_pool_->bind (flags_name_bind,
-                                 (void *)this->flags_);
+                                 static_cast<void *> (this->flags_));
         }
     }
 
@@ -503,8 +497,8 @@ void
 Object_Group_Factory_i::update_objects ()
 {
   // Create an appropriate servant.
-  Object_Group_i * group_servant = 0;
-  Object_Group_i *group_servant_rep = 0;
+  Object_Group_i *group_servant = nullptr;
+  Object_Group_i *group_servant_rep = nullptr;
 
   // Check the value of of flags_ & do the instantiation and
   // registration
@@ -544,22 +538,18 @@ Object_Group_Factory_i::update_objects ()
 }
 
 
-Object_Group_i::Object_Group_i (const char * id,
+Object_Group_i::Object_Group_i (char const *id,
                                 PortableServer::POA_ptr poa)
   :poa_ (PortableServer::POA::_duplicate (poa)),
-   member_id_list_ (0),
-   members_ (0),
-   id_ (id),
-   allocator_ (0)
+   id_ (id)
 {
-  if (!this->allocator_)
-    {
-      ACE_MMAP_Memory_Pool::OPTIONS options (ACE_DEFAULT_BASE_ADDR);
-      ACE_NEW (this->allocator_,
-               ALLOCATOR ("Mem_Pool",
-                          "Mem_Pool",
-                          &options));
-    }
+  ACE_MMAP_Memory_Pool::OPTIONS options (ACE_DEFAULT_BASE_ADDR);
+  ALLOCATOR *allocator = nullptr;
+  ACE_NEW (allocator,
+           ALLOCATOR ("Mem_Pool",
+                      "Mem_Pool",
+                      &options));
+  this->allocator_.reset (allocator);
 }
 
 
@@ -574,7 +564,6 @@ Object_Group_i::~Object_Group_i ()
       delete (iter.next ());
     } while (iter.advance ());
 
-  delete this->allocator_;
 }
 
 
@@ -592,15 +581,15 @@ Object_Group_i::id ()
 }
 
 void
-Object_Group_i::bind (const Load_Balancer::Member & member)
+Object_Group_i::bind (Load_Balancer::Member const &member)
 {
-  if (this->members_ == 0)
+  if (this->members_ == nullptr)
     {
       ACE_CString id = this->id ();
 
       id += server_id_name_bind;
 
-      void *tmp_members (0);
+      void *tmp_members (nullptr);
 
       if (this->allocator_->find (id.c_str (), tmp_members) == 0)
         {
@@ -610,14 +599,14 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
         {
           void *hash_map = this->allocator_->malloc (sizeof (HASH_MAP));
 
-          if (hash_map == 0)
+          if (hash_map == nullptr)
             throw CORBA::NO_MEMORY ();
 
-          this->members_ = new (hash_map) HASH_MAP (this->allocator_);
+          this->members_ = new (hash_map) HASH_MAP (this->allocator_.get ());
 
           // Bind it in the mem pool with a name
           if (this->allocator_->bind (id.c_str (),
-                                      (void *)this->members_) != 0)
+                                      static_cast<void *> (this->members_)) != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "Unable to bind\n"));
@@ -626,24 +615,24 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
     }
 
   // Check whether the element already exists..
-  if (this->members_->find (const_cast<char *> ((const char *) member.id),
-                            this->allocator_) == 0)
+  if (this->members_->find (const_cast<char *> (static_cast<char const *> (member.id)),
+                            this->allocator_.get ()) == 0)
     throw Load_Balancer::duplicate_member ();
 
-  size_t id_len = ACE_OS::strlen (member.id) + 1;
-  size_t ref_len = ACE_OS::strlen (member.obj) + 1;
+  size_t id_len = std::strlen (member.id) + 1;
+  size_t ref_len = std::strlen (member.obj) + 1;
 
-  char *mem_alloc = (char *)this->allocator_->malloc (id_len + ref_len);
+  char *mem_alloc = static_cast<char *> (this->allocator_->malloc (id_len + ref_len));
 
-  if (mem_alloc == 0)
+  if (mem_alloc == nullptr)
      throw CORBA::NO_MEMORY ();
 
-  char **id_ptr = (char **)this->allocator_->malloc (sizeof (char *));
+  char **id_ptr = static_cast<char **> (this->allocator_->malloc (sizeof (char *)));
   *id_ptr = mem_alloc;
   char *ior_ptr = mem_alloc + id_len;
 
-  ACE_OS::strcpy (*id_ptr, member.id);
-  ACE_OS::strcpy (ior_ptr, member.obj);
+  std::strcpy (*id_ptr, member.id);
+  std::strcpy (ior_ptr, member.obj);
 
 
   // Insert new member into <members_> and check for duplicates/failures.
@@ -662,7 +651,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
   id += this->id ();
 
 
-  void *tmp_id_list (0);
+  void *tmp_id_list (nullptr);
 
   if (this->allocator_->find (id.c_str (),
                               tmp_id_list)
@@ -674,14 +663,14 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
     {
       void *dll_list = this->allocator_->malloc (sizeof (LIST));
 
-      if (dll_list == 0)
+      if (dll_list == nullptr)
         throw CORBA::NO_MEMORY ();
 
-      this->member_id_list_ = new (dll_list) LIST (this->allocator_);
+      this->member_id_list_ = new (dll_list) LIST (this->allocator_.get ());
 
       // Bind it in the mem pool with a name
       if (this->allocator_->bind (id.c_str (),
-                                 (void *)this->member_id_list_) != 0)
+                                 static_cast<void *> (this->member_id_list_)) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "Unable to bind\n"));
@@ -698,16 +687,16 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
 }
 
 void
-Object_Group_i::unbind (const char * id)
+Object_Group_i::unbind (char const *id)
 {
   // Check whether the this->member_ is NULL
-  if (this->members_ == 0)
+  if (this->members_ == nullptr)
     {
       ACE_CString id = this->id ();
 
       id += server_id_name_bind;
 
-      void *tmp_members (0);
+      void *tmp_members (nullptr);
 
       if (this->allocator_->find (id.c_str (),
                                   tmp_members) == -1)
@@ -719,19 +708,19 @@ Object_Group_i::unbind (const char * id)
     }
   // Check to make sure we have it.
   if (this->members_->find (const_cast<char *> (id),
-                            this->allocator_) == -1)
+                            this->allocator_.get ()) == -1)
     throw Load_Balancer::no_such_member ();
 
   // Remove all entries for this member.
   this->members_->unbind (const_cast<char *> (id),
-                          this->allocator_);
+                          this->allocator_.get ());
 
-  if (this->member_id_list_ == 0)
+  if (this->member_id_list_ == nullptr)
     {
       ACE_CString id = dll_name_bind;
       id += this->id ();
 
-      void *tmp_id_list (0);
+      void *tmp_id_list (nullptr);
 
       if (this->allocator_->find (id.c_str (),
                                   tmp_id_list)
@@ -744,22 +733,22 @@ Object_Group_i::unbind (const char * id)
 
   Object_Group_i::ITERATOR iter (*(this->member_id_list_));
 
-  while (ACE_OS::strcmp (id,*(iter.next ())))
+  while (std::strcmp (id, *(iter.next ())))
     iter.advance ();
 
-  this->allocator_->free ((void *) iter.next ());
+  this->allocator_->free (static_cast<void *> (iter.next ()));
 
   iter.remove ();
 }
 
 char *
-Object_Group_i::resolve_with_id (const char * id)
+Object_Group_i::resolve_with_id (char const *id)
 {
   CORBA::String_var ior;
 
 
   if (this->members_->find (const_cast<char *> (id),
-                      ior.out (), this->allocator_) == -1)
+                      ior.out (), this->allocator_.get ()) == -1)
     throw Load_Balancer::no_such_member ();
 
   char *retn_ptr = CORBA::string_dup (ior.in ());
@@ -770,7 +759,7 @@ Object_Group_i::resolve_with_id (const char * id)
 Load_Balancer::Member_ID_List *
 Object_Group_i::members ()
 {
-  Load_Balancer::Member_ID_List * list = 0;
+  Load_Balancer::Member_ID_List *list = nullptr;
 
   this->read_from_memory ();
 
@@ -786,7 +775,7 @@ Object_Group_i::members ()
   // Create an iterator for <member_id_list_> to populate the list.
   Object_Group_i::ITERATOR id_iter (*this->member_id_list_);
 
-  char **item = 0;
+  char **item = nullptr;
   // Iterate over groups and populate the list.
   for (CORBA::ULong i = 0; i < len; i++)
     {
@@ -821,7 +810,7 @@ Object_Group_i::read_from_memory ()
     {
       id += server_id_name_bind;
 
-      void *tmp_members (0);
+      void *tmp_members (nullptr);
 
       if (this->allocator_->find (id.c_str (),
                                   tmp_members) == 0)
@@ -841,7 +830,7 @@ Object_Group_i::read_from_memory ()
       id = dll_name_bind;
       id += this->id ();
 
-      void *tmp_id_list (0);
+      void *tmp_id_list (nullptr);
 
       if (this->allocator_->find (id.c_str (),
                                   tmp_id_list) == 0)
@@ -858,7 +847,7 @@ Object_Group_i::read_from_memory ()
 }
 
 
-Random_Object_Group::Random_Object_Group (const char *id,
+Random_Object_Group::Random_Object_Group (char const *id,
                                           PortableServer::POA_ptr poa)
   : Object_Group_i (id, poa)
 {
@@ -879,22 +868,22 @@ Random_Object_Group::resolve ()
   size_t member = ACE_OS::rand() % group_size;
 
   // Get the id of the member to return to the client.
-  char **id = 0;
+  char **id = nullptr;
   this->member_id_list_->get (id, member);
   ACE_DEBUG ((LM_DEBUG, "In Random Group resolved to: %s\n",
               *id));
 
   // Return the object reference corresponding to the found id to the
   // client.
-  char *objref = 0;
+  char *objref = nullptr;
   this->members_->find (*id,
                         objref,
-                        this->allocator_);
+                        this->allocator_.get ());
   char *string_ptr = CORBA::string_dup (objref);
   return string_ptr;
 }
 
-RR_Object_Group::RR_Object_Group (const char *id,
+RR_Object_Group::RR_Object_Group (char const *id,
                                   PortableServer::POA_ptr poa)
   : Object_Group_i (id, poa),
     next_ (0)
@@ -904,7 +893,7 @@ RR_Object_Group::RR_Object_Group (const char *id,
 char *
 RR_Object_Group::resolve ()
 {
-  char *objref = 0;
+  char *objref = nullptr;
 
   this->read_from_memory ();
 
@@ -913,7 +902,7 @@ RR_Object_Group::resolve ()
     throw Load_Balancer::no_such_member ();
 
   // Get the id of the member to return to the client.
-  char **id = 0;
+  char **id = nullptr;
   this->member_id_list_->get (id, next_);
   ACE_DEBUG ((LM_DEBUG,
               "In RR Group resolved to: %s\n", *id));
@@ -925,7 +914,7 @@ RR_Object_Group::resolve ()
   // Return the object reference corresponding to the found id to the client.
   if (this->members_->find (*id,
                             objref,
-                            this->allocator_) == -1)
+                            this->allocator_.get ()) == -1)
     throw CORBA::INTERNAL ();
 
   char *retn_ptr = CORBA::string_dup (objref);
@@ -934,15 +923,15 @@ RR_Object_Group::resolve ()
 }
 
 void
-RR_Object_Group::unbind (const char *id)
+RR_Object_Group::unbind (char const *id)
 {
-  if (this->members_ == 0)
+  if (this->members_ == nullptr)
     {
       ACE_CString id = this->id ();
 
       id += server_id_name_bind;
 
-      void *tmp_members (0);
+      void *tmp_members (nullptr);
 
       if (this->allocator_->find (id.c_str (),
                                   tmp_members) == -1)
@@ -955,21 +944,21 @@ RR_Object_Group::unbind (const char *id)
 
   // Check to make sure we have it.
   if (this->members_->find (const_cast<char *> (id),
-                            this->allocator_) == -1)
+                            this->allocator_.get ()) == -1)
     throw Load_Balancer::no_such_member ();
 
   // Remove all entries for this member.
   this->members_->unbind (const_cast<char *> (id),
-                          this->allocator_);
+                          this->allocator_.get ());
 
   // As we remove the id from the <member_id_list>, we note the
   // position of the id in the list.
-  if (this->member_id_list_ == 0)
+  if (this->member_id_list_ == nullptr)
     {
       ACE_CString id = dll_name_bind;
       id += this->id ();
 
-      void *tmp_id_list (0);
+      void *tmp_id_list (nullptr);
 
       if (this->allocator_->find (id.c_str (),
                                   tmp_id_list)
@@ -981,7 +970,7 @@ RR_Object_Group::unbind (const char *id)
 
   size_t position = 0;
   Object_Group_i::ITERATOR iter (*member_id_list_);
-  while (ACE_OS::strcmp (id ,*(iter.next ())))
+  while (std::strcmp (id, *(iter.next ())))
     {
       iter.advance ();
       position++;
