@@ -1,28 +1,33 @@
 #include "Kokyu.h"
 #include "ace/Task.h"
-#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
 #include <memory>
+#include <string>
 
-ACE_CString sched_policy_str = "fifo";
+static std::string sched_policy_str = "fifo";
 
 int parse_args (int argc, ACE_TCHAR *argv[]);
 
 class MyCommand : public Kokyu::Dispatch_Command
 {
 public:
-  MyCommand(int i)
-    :Kokyu::Dispatch_Command(1),id_(i)
+  explicit MyCommand (int i)
+    : Kokyu::Dispatch_Command (true), id_ (i)
   {
   }
-  int execute ();
+  MyCommand (MyCommand const &) = delete;
+  MyCommand (MyCommand &&) = delete;
+  MyCommand &operator= (MyCommand const &) = delete;
+  MyCommand &operator= (MyCommand &&) = delete;
+
+  int execute () override;
 
 private:
   int id_;
 };
 
-int MyCommand::execute()
+int MyCommand::execute ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -49,27 +54,27 @@ int MyCommand::execute()
     return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR** argv)
+int ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   Kokyu::ConfigInfoSet config_info(3);
 
-  int  hi_prio, me_prio, lo_prio;
-  int sched_policy=ACE_SCHED_FIFO;
+  int hi_prio, me_prio, lo_prio;
+  int sched_policy = ACE_SCHED_FIFO;
 
   Kokyu::Dispatcher_Attributes attrs;
 
   if (parse_args (argc, argv) == -1)
     return 0;
 
-  if (ACE_OS::strcasecmp(sched_policy_str.c_str(), "fifo") == 0)
+  if (ACE_OS::strcasecmp (sched_policy_str.c_str (), "fifo") == 0)
     {
       sched_policy = ACE_SCHED_FIFO;
     }
-  else if (ACE_OS::strcasecmp(sched_policy_str.c_str(), "other") == 0)
+  else if (ACE_OS::strcasecmp (sched_policy_str.c_str (), "other") == 0)
     {
       sched_policy = ACE_SCHED_OTHER;
     }
-  else if (ACE_OS::strcasecmp(sched_policy_str.c_str(), "rr") == 0)
+  else if (ACE_OS::strcasecmp (sched_policy_str.c_str (), "rr") == 0)
     {
       sched_policy = ACE_SCHED_RR;
     }
@@ -83,7 +88,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR** argv)
                                                  me_prio);
 
   config_info[0].preemption_priority_ = 1;
-  config_info[0].thread_priority_ = hi_prio ;
+  config_info[0].thread_priority_ = hi_prio;
   config_info[0].dispatching_type_ = Kokyu::FIFO_DISPATCHING;
 
   config_info[1].preemption_priority_ = 2;
@@ -100,9 +105,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR** argv)
   std::unique_ptr<Kokyu::Dispatcher>
     disp (Kokyu::Dispatcher_Factory::create_dispatcher (attrs));
 
-  ACE_ASSERT (disp.get() != 0);
+  ACE_ASSERT (disp.get () != nullptr);
 
-  MyCommand cmd1(1), cmd2(2), cmd3(3);
+  MyCommand cmd1 (1), cmd2 (2), cmd3 (3);
 
   Kokyu::QoSDescriptor qos1, qos2, qos3;
 
@@ -146,7 +151,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'p':
-        sched_policy_str = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        sched_policy_str = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
 
       case '?':
