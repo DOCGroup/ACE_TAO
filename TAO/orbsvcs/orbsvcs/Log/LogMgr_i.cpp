@@ -4,20 +4,13 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"
 #include "orbsvcs/Log/LogStore.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LogMgr_i::TAO_LogMgr_i ()
-  : logstore_ (nullptr)
-{
-}
+TAO_LogMgr_i::TAO_LogMgr_i () = default;
 
-
-TAO_LogMgr_i::~TAO_LogMgr_i ()
-{
-  delete logstore_;
-}
+TAO_LogMgr_i::~TAO_LogMgr_i () = default;
 
 
 void
@@ -80,23 +73,23 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 #endif
 
   // Load Log Strategy
-  TAO_Log_Persistence_Strategy *strategy_ = nullptr;
-
-  strategy_ =
+  TAO_Log_Persistence_Strategy * strategy =
     ACE_Dynamic_Service<TAO_Log_Persistence_Strategy>::instance ("Log_Persistence");
-  if (strategy_ == nullptr)
-    {
-      strategy_ = new TAO_Hash_Persistence_Strategy;
-    }
 
-  logstore_ = strategy_->create_log_store (this);
+  if (strategy == nullptr)
+    {
+      TAO_Hash_Persistence_Strategy fallback;
+      this->logstore_.reset (fallback.create_log_store (this));
+    }
+  else
+    this->logstore_.reset (strategy->create_log_store (this));
 }
 
 PortableServer::ObjectId *
 TAO_LogMgr_i::create_objectid (DsLogAdmin::LogId id)
 {
   char buf[32];
-  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id));
+  std::sprintf (buf, "%lu", static_cast<unsigned long> (id));
 
   PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId(buf);
