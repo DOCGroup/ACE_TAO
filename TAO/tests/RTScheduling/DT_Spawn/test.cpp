@@ -48,12 +48,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             0,
                             0);
         }
-      catch (const CORBA::BAD_INV_ORDER& )
+      catch (CORBA::BAD_INV_ORDER const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Spawn should be in the context of a Scheduling Segment - Expected Exception\n"));
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("\n");
         }

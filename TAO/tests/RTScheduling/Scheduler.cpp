@@ -19,7 +19,7 @@ TAO_Scheduler::scheduling_policies ()
 }
 
 void
-TAO_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+TAO_Scheduler::scheduling_policies (CORBA::PolicyList const &)
 {
 }
 
@@ -36,7 +36,7 @@ TAO_Scheduler::scheduling_discipline_name ()
 }
 
 RTScheduling::ResourceManager_ptr
-TAO_Scheduler::create_resource_manager (const char *,
+TAO_Scheduler::create_resource_manager (char const *,
                                         CORBA::Policy_ptr)
 {
   return nullptr;
@@ -44,44 +44,44 @@ TAO_Scheduler::create_resource_manager (const char *,
 
 void
 TAO_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
-                                         const char *,
+                                         char const *,
                                          CORBA::Policy_ptr)
 {
 }
 
 void
-TAO_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &,
-                                             const char *,
+TAO_Scheduler::begin_new_scheduling_segment (RTScheduling::Current::IdType const &,
+                                             char const *,
                                              CORBA::Policy_ptr,
                                              CORBA::Policy_ptr)
 {
 }
 
 void
-TAO_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                const char *,
+TAO_Scheduler::begin_nested_scheduling_segment (RTScheduling::Current::IdType const &,
+                                                char const *,
                                                 CORBA::Policy_ptr,
                                                 CORBA::Policy_ptr)
 {
 }
 
 void
-TAO_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &,
-                                          const char *,
+TAO_Scheduler::update_scheduling_segment (RTScheduling::Current::IdType const &,
+                                          char const *,
                                           CORBA::Policy_ptr,
                                           CORBA::Policy_ptr)
 {
 }
 
 void
-TAO_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &,
-                                       const char *)
+TAO_Scheduler::end_scheduling_segment (RTScheduling::Current::IdType const &,
+                                       char const *)
 {
 }
 
 void
-TAO_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
-                                              const char *,
+TAO_Scheduler::end_nested_scheduling_segment (RTScheduling::Current::IdType const &,
+                                              char const *,
                                               CORBA::Policy_ptr)
 {
 }
@@ -133,7 +133,7 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 
       guid_out = guid.release ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Invalid Service Context\n"));
@@ -176,6 +176,6 @@ TAO_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
 }
 
 void
-TAO_Scheduler::cancel (const RTScheduling::Current::IdType &)
+TAO_Scheduler::cancel (RTScheduling::Current::IdType const &)
 {
 }

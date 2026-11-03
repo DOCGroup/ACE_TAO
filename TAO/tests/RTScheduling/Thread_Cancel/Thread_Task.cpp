@@ -2,6 +2,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 #include <atomic>
+#include <cstring>
 
 std::atomic<long> guid_index {0};
 
@@ -22,7 +23,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 
       this->current_ = RTScheduling::Current::_narrow (current_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
     }
@@ -59,11 +60,11 @@ Thread_Task::svc ()
                                                 sched_param,
                                                 implicit_sched_param);
 
-      size_t count = 0;
+      size_t count {};
       RTScheduling::Current::IdType_var id = this->current_->id ();
-      ACE_OS::memcpy (&count,
-                      id->get_buffer (),
-                      id->length ());
+      std::memcpy (&count,
+                   id->get_buffer (),
+                   id->length ());
 
 
       this->current_->begin_scheduling_segment ("Potter",
@@ -83,10 +84,10 @@ Thread_Task::svc ()
         RTScheduling::Current::NameList_var name_list = this->current_->current_scheduling_segment_names ();
 
         ACE_DEBUG ((LM_DEBUG,
-                    "Scheduling Segments for DT %d :\n",
+                    "Scheduling Segments for DT %B :\n",
                     count));
 
-        for (unsigned int i = 0; i < name_list->length ();++i)
+        for (CORBA::ULong i = 0; i < name_list->length (); ++i)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "Scheduling Segment Name - %C\n",
@@ -105,7 +106,7 @@ Thread_Task::svc ()
 
       this->current_->end_scheduling_segment (name);
     }
-  catch (const CORBA::THREAD_CANCELLED& )
+  catch (CORBA::THREAD_CANCELLED const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Distributable Thread Cancelled - Expected Exception\n"));
@@ -118,7 +119,7 @@ Thread_Task::svc ()
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }
