@@ -8,12 +8,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
+#include <memory>
+#include <utility>
 
-static const ACEXML_Char *test_string =
+static ACEXML_Char const *test_string =
 ACE_TEXT ("<?xml version='1.0'?> <ACE_Svc_Conf> <static id=\"ACE_Service_Manager\" params='-d -p 4911'/> <dynamic id=\"Test_Task\" type=\"service_object\"> &#65; &quot; <initializer path=\"CCM_App\" init='_make_Test_Task' params='-p 3000'/> </dynamic> </ACE_Svc_Conf>");
 
 static void
-usage (const ACE_TCHAR* program)
+usage (ACE_TCHAR const *program)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Usage: %s [-sl] [-f <filename> | -u <url> | -z <ZIP Archive>]\n")
@@ -28,13 +30,13 @@ usage (const ACE_TCHAR* program)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACEXML_Char* filename = 0;
-  int sax = 0;                  // Use SAXPrint handler or not.
-  int str = 0;
+  ACEXML_Char* filename = nullptr;
+  bool sax = false;             // Use SAXPrint handler or not.
+  bool str = false;
 #ifdef USE_ZZIP
-  int zip = 0;
+  bool zip = false;
 #endif
-  ACEXML_Char* url = 0;
+  ACEXML_Char* url = nullptr;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:z"));
   int c;
@@ -44,16 +46,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       switch (c)
         {
           case 's':
-            sax = 1;
+            sax = true;
             break;
           case 'l':
-            str = 1;
+            str = true;
             break;
           case 'f':
             filename = get_opt.opt_arg ();
             break;
           case 'u':
-            url = get_opt.opt_arg();
+            url = get_opt.opt_arg ();
             break;
           case 'z':
 #ifndef USE_ZZIP
@@ -63,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("information.\n")));
             return -1;
 #else
-            zip = 1;
+            zip = true;
             break;
 #endif /* USE_ZZIP */
           default:
@@ -72,86 +74,82 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if (str == 0 && filename == 0 && url == 0) {
-    usage(argv[0]);
-    return -1;
-  }
+  if (!str && filename == nullptr && url == nullptr)
+    {
+      usage (argv[0]);
+      return -1;
+    }
 
-  ACEXML_DefaultHandler *handler = 0;
-  ACEXML_CharStream *stm = 0;
-  ACEXML_FileCharStream *fstm = 0;
-  ACEXML_HttpCharStream *ustm = 0;
-  ACEXML_StrCharStream* sstm = 0;
+  std::unique_ptr<ACEXML_DefaultHandler> handler;
+  std::unique_ptr<ACEXML_CharStream> stm;
 #ifdef USE_ZZIP
-  ACEXML_ZipCharStream* zstm = 0;
+  std::unique_ptr<ACEXML_ZipCharStream> zstm;
 #endif /* USE_ZZIP */
-  if (filename != 0)
+  if (filename != nullptr)
     {
 #ifdef USE_ZZIP
       if (zip)
         {
-          ACE_NEW_RETURN (zstm, ACEXML_ZipCharStream(), -1);
+          zstm = std::make_unique<ACEXML_ZipCharStream> ();
           if (zstm->open (filename) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Failed to open XML file: %s\n"),
                                filename),
                               -1);
-          stm = zstm;
+          stm = std::move (zstm);
         }
       else
         {
 #endif /* USE_ZZIP */
-          ACE_NEW_RETURN (fstm, ACEXML_FileCharStream (), -1);
+          std::unique_ptr<ACEXML_FileCharStream> fstm =
+            std::make_unique<ACEXML_FileCharStream> ();
           if (fstm->open (filename) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Failed to open XML file: %s\n"),
                                filename),
                               -1);
-          stm = fstm;
+          stm = std::move (fstm);
 #ifdef USE_ZZIP
         }
 #endif /* USE_ZZIP */
     }
-  else if (url != 0)
+  else if (url != nullptr)
     {
-      ACE_NEW_RETURN (ustm, ACEXML_HttpCharStream (), -1);
+      std::unique_ptr<ACEXML_HttpCharStream> ustm =
+        std::make_unique<ACEXML_HttpCharStream> ();
       if (ustm->open (url) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Failed to open URL : %s\n"),
                            url),
                           -1);
-      stm = ustm;
+      stm = std::move (ustm);
     }
   else
     {
-      ACE_NEW_RETURN (sstm, ACEXML_StrCharStream, -1);
+      std::unique_ptr<ACEXML_StrCharStream> sstm =
+        std::make_unique<ACEXML_StrCharStream> ();
       if (sstm->open (test_string, ACE_TEXT ("test_string")) < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Failed to open string : %s\n"),
                            test_string),
                           -1);
-      stm = sstm;
+      stm = std::move (sstm);
     }
 
-  ACEXML_Char* name = (filename == 0) ? url : filename;
-  if (sax == 0)
-    ACE_NEW_RETURN (handler,
-                    ACEXML_Print_Handler (name),
-                    -1);
+  ACEXML_Char const *name = (filename == nullptr) ? url : filename;
+  if (!sax)
+    handler = std::make_unique<ACEXML_Print_Handler> (name);
   else
-    ACE_NEW_RETURN (handler,
-                    ACEXML_SAXPrint_Handler (name),
-                    -1);
-
-  std::unique_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
+    handler = std::make_unique<ACEXML_SAXPrint_Handler> (name);
 
   ACEXML_Parser parser;
-  ACEXML_InputSource input (stm);
+  ACEXML_InputSource input (stm.get ());
+  stm.release (); // ACEXML_InputSource takes ownership of the stream.
 
-  parser.setContentHandler (handler);
-  parser.setDTDHandler (handler);
-  parser.setErrorHandler (handler);
-  parser.setEntityResolver (handler);
+  parser.setContentHandler (handler.get ());
+  parser.setDTDHandler (handler.get ());
+  parser.setErrorHandler (handler.get ());
+  parser.setEntityResolver (handler.get ());
 
   try
   {
