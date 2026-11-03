@@ -32,6 +32,7 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <memory>
 #include "ace/OS_main.h"
 #include "asnmp/integer.h"
 #include "test_config.h"
@@ -78,9 +79,8 @@ static void TestInteger32()
    ACE_ASSERT(i6 == ni);
    SnmpInt32 i7(ui);
    ACE_ASSERT(i7 == static_cast<long> (ui));
-   SnmpInt32 *i8 = new SnmpInt32(i5);
-   ACE_ASSERT(i8 != 0);
-   delete i8;
+   std::unique_ptr<SnmpInt32> i8 = std::make_unique<SnmpInt32> (i5);
+   ACE_ASSERT(i8 != nullptr);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) i1(\"\") [%u]\n",
     (unsigned long)i1));
@@ -143,9 +143,8 @@ static void TestUnsignedInteger32()
    ACE_ASSERT(u6 == static_cast<unsigned long> (ni));
    SnmpUInt32 u7(ui);
    ACE_ASSERT(u7 == ui);
-   SnmpUInt32 *u8 = new SnmpUInt32(u5);
-   ACE_ASSERT(u8 != 0);
-   delete u8;
+   std::unique_ptr<SnmpUInt32> u8 = std::make_unique<SnmpUInt32> (u5);
+   ACE_ASSERT(u8 != nullptr);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) u1(\"\") [%u]\n",
     (unsigned long)u1));

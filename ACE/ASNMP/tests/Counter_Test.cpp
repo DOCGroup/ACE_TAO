@@ -32,6 +32,7 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <memory>
 #include "ace/OS_main.h"
 #include "asnmp/counter.h"
 #include "test_config.h"
@@ -83,9 +84,8 @@ static void  TestCounter()
    ACE_ASSERT(c6 == static_cast<unsigned long> (ni));
    Counter32 c7(ui);
    ACE_ASSERT(c7 == ui);
-   Counter32 *c8 = new Counter32(c5);
-   ACE_ASSERT(c8 != 0);
-   delete c8;
+   std::unique_ptr<Counter32> c8 = std::make_unique<Counter32> (c5);
+   ACE_ASSERT(c8 != nullptr);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%u]\n",
     (unsigned long)c1));

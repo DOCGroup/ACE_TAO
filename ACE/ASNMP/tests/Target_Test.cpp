@@ -33,6 +33,7 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <memory>
 #include "ace/OS_main.h"
 #include "asnmp/octet.h"
 #include "asnmp/target.h"
@@ -110,15 +111,14 @@ static void TestSnmpTarget()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c2(\"\") [%s]\n",
     c2.to_string()));
 
-  UdpTarget *c5 = new UdpTarget(c2);
-  ACE_ASSERT(c5 != 0);
+  std::unique_ptr<UdpTarget> c5 = std::make_unique<UdpTarget> (c2);
+  ACE_ASSERT(c5 != nullptr);
   ACE_ASSERT(c5->valid() == 1);
   c5->get_address (ga);
   ACE_ASSERT(ga.valid() == 1);
   ACE_ASSERT(c5->get_version() == version1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c5(\"\") [%s]\n",
     c5->to_string()));
-  delete c5;
 
 // these are not supported yet
 //   ACE_ASSERT(c5 == c5);

@@ -92,7 +92,7 @@ static void OidTest()
     d3.to_string()));
 
   unsigned long t[3] = {2,3,4};
-  Oid d4((unsigned long *)&t, sizeof(t)/sizeof(long));
+  Oid d4 (t, sizeof(t) / sizeof(t[0]));
   ACE_ASSERT(d4.valid() == 1);
   ACE_ASSERT(d4.length() == 3);
   ACE_ASSERT(d4[0] == (unsigned long) 2);

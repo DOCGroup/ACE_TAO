@@ -76,21 +76,21 @@ DAMAGES.
 
 static void TestOctet()
 {
-  const char *str = "A test of octet strings...!@@#$%^&*()_+|~{}:,./<>?";
+  char const *str = "A test of octet strings...!@@#$%^&*()_+|~{}:,./<>?";
   OctetStr o1;
   ACE_ASSERT(o1.valid() == 1);
   ACE_ASSERT(o1.length() == 0);
-  ACE_ASSERT(o1.data() != (unsigned char *)0);
+  ACE_ASSERT(o1.data() != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o1(\"\") [%s]\n",
     o1.to_string()));
-  o1.set_data((SmiBYTE *)str);
-  ACE_ASSERT(!ACE_OS::strcmp(str, (char *)o1.data()));
+  o1.set_data (reinterpret_cast<SmiBYTE const *> (str));
+  ACE_ASSERT (!ACE_OS::strcmp (str, reinterpret_cast<char const *> (o1.data ())));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o1(\"str\") [%s]\n",
     o1.to_string()));
 
   OctetStr o2(str);
   ACE_ASSERT(o2.valid() == 1);
-  ACE_ASSERT(o2.data() != (unsigned char *)0);
+  ACE_ASSERT(o2.data() != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o2(\"str\") [%s]\n",
     o2.to_string()));
 
