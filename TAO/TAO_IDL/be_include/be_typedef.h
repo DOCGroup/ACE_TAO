@@ -46,9 +46,9 @@ public:
 
   /// Overridden from class be_type.
   void gen_member_ostream_operator (TAO_OutStream *os,
-                                            std::string const& instance_name,
-                                            bool use_underscore,
-                                            bool accessor = false) override;
+                                    std::string const& instance_name,
+                                    bool use_underscore,
+                                    bool accessor = false) override;
 
   /// Cleanup function.
   void destroy () override;
