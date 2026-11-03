@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <functional>
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -35,6 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   // Successful command line parsing.
   return 0;
+}
 }
 
 template<typename T> void dump (T *); // Forward declaration.
@@ -112,7 +115,7 @@ perform_invocation (Test::Hello_ptr hello,
       CORBA::Any_var my_any =
         hello->get_any (the_any);
 
-      T const *my_foo = nullptr;
+      T const *my_foo {};
       if (!(my_any.in () >>= my_foo))
         throw Test::Demarshaling_From_Any_Failed ();
 
