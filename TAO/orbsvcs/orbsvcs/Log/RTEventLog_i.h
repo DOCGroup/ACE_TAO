@@ -29,6 +29,7 @@
 #include "orbsvcs/Log/RTEventLogConsumer.h"
 
 #include "orbsvcs/Log/rteventlog_serv_export.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -89,14 +90,14 @@ public:
 
  private:
   /// The EventChannel used.
-  TAO_EC_Event_Channel * event_channel_;
+  std::unique_ptr<TAO_EC_Event_Channel> event_channel_;
 
   /// The LogConsumer which logs the events the EventChannel above
   /// receives.
-  TAO_Rtec_LogConsumer * my_log_consumer_;
+  TAO_Rtec_LogConsumer * my_log_consumer_ {};
 
   /// The observer strategy
-  TAO_EC_ObserverStrategy * observer_strategy_;
+  TAO_EC_ObserverStrategy * observer_strategy_ {};
 
   PortableServer::POA_var poa_;
 

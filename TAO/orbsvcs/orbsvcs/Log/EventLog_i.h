@@ -31,6 +31,7 @@
 #include "orbsvcs/Log/EventLogConsumer.h"
 
 #include "orbsvcs/Log/eventlog_serv_export.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -93,11 +94,11 @@ protected:
 
 private:
   /// The Event Channel that the log uses.
-  TAO_CEC_EventChannel * event_channel_;
+  std::unique_ptr<TAO_CEC_EventChannel> event_channel_;
 
   /// The PushConsumer that consumes the events and stores them
   /// in the log.
-  TAO_Event_LogConsumer * my_log_consumer_;
+  TAO_Event_LogConsumer * my_log_consumer_ {};
 
   PortableServer::POA_var poa_;
 

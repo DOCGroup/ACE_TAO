@@ -23,24 +23,21 @@ TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
                                     TAO_LogNotification *log_notifier,
                                     DsLogAdmin::LogId id)
   : TAO_Log_i (orb, logmgr_i, factory, id, log_notifier),
-    event_channel_ (0),
-    my_log_consumer_ (0),
-    observer_strategy_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
     log_poa_ (PortableServer::POA::_duplicate (log_poa))
 {
   TAO_EC_Event_Channel_Attributes const attr (poa_.in(), poa_.in());
 
-  ACE_NEW_THROW_EX (this->event_channel_,
+  TAO_EC_Event_Channel * event_channel = nullptr;
+  ACE_NEW_THROW_EX (event_channel,
                     TAO_EC_Event_Channel(attr),
                     CORBA::NO_MEMORY ());
+  this->event_channel_.reset (event_channel);
 }
 
 TAO_RTEventLog_i::~TAO_RTEventLog_i ()
 {
   this->event_channel_->destroy ();
-
-  delete this->event_channel_;
 }
 
 
