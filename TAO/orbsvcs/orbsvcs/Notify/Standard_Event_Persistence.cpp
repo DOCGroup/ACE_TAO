@@ -23,28 +23,23 @@ Standard_Event_Persistence::get_factory ()
 {
   //@@todo guard? ; doublecheck?
   if (this->factory_ == nullptr)
-  {
-    ACE_NEW_NORETURN (
-      this->factory_,
-      Standard_Event_Persistence_Factory ());
-
-    if (this->factory_ != nullptr)
     {
-      if (!this->factory_->open (this->filename_.c_str ()))
-      {
-        this->factory_ = nullptr;
-      }
+      Standard_Event_Persistence_Factory *factory = nullptr;
+      ACE_NEW_NORETURN (factory,
+                        Standard_Event_Persistence_Factory ());
+
+      std::unique_ptr<Standard_Event_Persistence_Factory> new_factory (factory);
+      if (new_factory != nullptr && new_factory->open (this->filename_.c_str ()))
+        this->factory_.reset (new_factory.release ());
     }
-  }
-  return this->factory_;
+  return this->factory_.get ();
 }
 
 // release the current factory so a new one can be created
 void
 Standard_Event_Persistence::reset ()
 {
-  delete this->factory_;
-  this->factory_ = nullptr;
+  this->factory_.reset ();
 }
 
 int
@@ -101,8 +96,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
 int
 Standard_Event_Persistence::fini ()
 {
-  delete this->factory_;
-  this->factory_ = nullptr;
+  this->factory_.reset ();
   return 0;
 }
 

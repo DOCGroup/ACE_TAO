@@ -25,6 +25,7 @@
 #include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
 #include <ace/SString.h>
 
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -130,7 +131,7 @@ namespace TAO_Notify
 
     ACE_TString filename_;  // set via -file_path
     ACE_UINT32 block_size_ {512}; // set via -block_size
-    Standard_Event_Persistence_Factory * factory_ {};
+    std::unique_ptr<Standard_Event_Persistence_Factory> factory_;
   };
 }
 
