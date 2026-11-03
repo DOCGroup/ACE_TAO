@@ -2525,7 +2525,9 @@ TAO_CodeGen::gen_stub_src_includes ()
                            << "\"";
     }
 
-  if (idl_global->non_local_iface_seen_)
+  if (idl_global->interface_seen_
+      || idl_global->exception_seen_
+      || idl_global->union_seen_)
     {
       this->gen_system_include (this->client_stubs_, "cstring");
     }
