@@ -1,11 +1,10 @@
 #include "orbsvcs/Notify/Name_Value_Pair.h"
 #include "orbsvcs/Notify/Property_T.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 
-#include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <string>
 
 namespace
 {
@@ -42,18 +41,15 @@ namespace TAO_Notify
   NVP::NVP(const TAO_Notify_Property_Short& p)
     : name(p.name())
   {
-    char buf[64];
-    std::sprintf (buf, "%d", p.value ());
-    value = buf;
+    const std::string string_value = std::to_string (p.value ());
+    value = string_value.c_str ();
   }
 
   NVP::NVP(const TAO_Notify_Property_Long& p)
     : name(p.name())
   {
-    char buf[64];
-    long temp = static_cast<long> (p.value ());
-    std::sprintf (buf, "%ld", temp);
-    value = buf;
+    const std::string string_value = std::to_string (static_cast<long> (p.value ()));
+    value = string_value.c_str ();
   }
 
   NVP::NVP(const TAO_Notify_Property_Time& p)
@@ -74,10 +70,8 @@ namespace TAO_Notify
   NVP::NVP(const char * n, CORBA::Long v)
     : name(n)
   {
-    char buf[64];
-    long temp = v;
-    std::sprintf (buf, "%ld", temp);
-    value = buf;
+    const std::string string_value = std::to_string (static_cast<long> (v));
+    value = string_value.c_str ();
   }
 
   NVP::NVP(const char * n, const char * v)

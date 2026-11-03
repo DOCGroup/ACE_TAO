@@ -9,7 +9,7 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
-#include "ace/OS_NS_stdio.h"
+#include <string>
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -107,7 +107,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
 {
   bool ok = true;
   TAO_Notify_Method_Request_Dispatch_Queueable * result = nullptr;
-  ACE_CString textpath;
+  std::string textpath;
   CORBA::ULong count;
   if (cdr.read_ulong (count))
   {
@@ -119,9 +119,8 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       if ( cdr.read_long (id))
       {
         id_path.push_back (id);
-        char idbuf[20];
-        ACE_OS::snprintf (idbuf, sizeof(idbuf), "/%d", static_cast<int> (id));
-        textpath += idbuf;
+        textpath += '/';
+        textpath += std::to_string (id);
       }
       else
       {
