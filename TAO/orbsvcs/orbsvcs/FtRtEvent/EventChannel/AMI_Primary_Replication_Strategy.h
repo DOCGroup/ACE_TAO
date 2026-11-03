@@ -15,6 +15,7 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "ace/Task.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +36,7 @@ public:
   /**
    * @param mt Specifies whether multithreaded ORB is used.
    */
-  explicit AMI_Primary_Replication_Strategy(bool mt);
+  explicit AMI_Primary_Replication_Strategy (bool mt);
   ~AMI_Primary_Replication_Strategy() override;
   void replicate_request(FTRT::State const& state,
                                    RollbackOperation rollback,
@@ -48,10 +49,10 @@ public:
   PortableServer::POA_ptr poa() { return poa_.in(); }
   CORBA::ORB_ptr orb() { return orb_.in();}
 private:
-  AMI_Primary_Replication_Strategy(AMI_Primary_Replication_Strategy const&) = delete;
-  AMI_Primary_Replication_Strategy(AMI_Primary_Replication_Strategy&&) = delete;
-  AMI_Primary_Replication_Strategy& operator=(AMI_Primary_Replication_Strategy const&) = delete;
-  AMI_Primary_Replication_Strategy& operator=(AMI_Primary_Replication_Strategy&&) = delete;
+  AMI_Primary_Replication_Strategy (AMI_Primary_Replication_Strategy const &) = delete;
+  AMI_Primary_Replication_Strategy (AMI_Primary_Replication_Strategy &&) = delete;
+  AMI_Primary_Replication_Strategy & operator= (AMI_Primary_Replication_Strategy const &) = delete;
+  AMI_Primary_Replication_Strategy & operator= (AMI_Primary_Replication_Strategy &&) = delete;
 
   int svc () override;
   CORBA::ORB_var orb_;
@@ -60,7 +61,7 @@ private:
   PortableServer::POAManager_var mgr_;
   bool running_ {};
   UpdateableHandler handler_;
-  ACE_SYNCH_RW_MUTEX* mutex_;
+  std::unique_ptr<ACE_SYNCH_RW_MUTEX> mutex_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

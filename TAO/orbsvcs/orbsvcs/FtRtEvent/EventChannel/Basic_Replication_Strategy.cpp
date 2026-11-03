@@ -9,16 +9,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// The mutex has to be recursive; otherwise, if the second replicate_request() is
 /// called while the first replicate_request() is waiting for reply, we will get
 /// a deadlock.
-Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
-  : sequence_num_(0)
-  , mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : nullptr)
+Basic_Replication_Strategy::Basic_Replication_Strategy (bool mt)
+  : mutex_ (mt ? std::make_unique<ACE_SYNCH_RECURSIVE_MUTEX> ()
+               : std::unique_ptr<ACE_SYNCH_RECURSIVE_MUTEX> {})
 {
 }
 
-Basic_Replication_Strategy::~Basic_Replication_Strategy()
-{
-  delete mutex_;
-}
+Basic_Replication_Strategy::~Basic_Replication_Strategy () = default;
 
 void
 Basic_Replication_Strategy::check_validity()
