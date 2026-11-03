@@ -51,7 +51,7 @@ namespace TAO
       int init (int argc, ACE_TCHAR* argv[]) override;
 
       /// Verify prefix is a match
-      int match_prefix (const ACE_CString &prefix) override;
+      int match_prefix (std::string const &prefix) override;
 
       /// Returns the prefix used by the protocol.
       const char *prefix () const override;

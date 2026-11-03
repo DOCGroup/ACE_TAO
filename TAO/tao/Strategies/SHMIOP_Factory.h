@@ -47,7 +47,7 @@ public:
   int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Verify prefix is a match
-  int match_prefix (ACE_CString const &prefix) override;
+  int match_prefix (std::string const &prefix) override;
 
   /// Returns the prefix used by the protocol.
   char const *prefix () const override;

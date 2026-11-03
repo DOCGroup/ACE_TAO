@@ -20,9 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+#include <string>
 
 #include "ace/Service_Object.h"
-#include "ace/SStringfwd.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,7 +43,7 @@ public:
   CORBA::ULong tag () const;
 
   /// Verify prefix is a match
-  virtual int match_prefix (ACE_CString const &prefix) = 0;
+  virtual int match_prefix (std::string const &prefix) = 0;
 
   /// Returns the prefix used by the protocol.
   virtual char const *prefix () const = 0;
