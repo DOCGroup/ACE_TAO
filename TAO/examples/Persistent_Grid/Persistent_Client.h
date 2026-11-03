@@ -32,7 +32,7 @@ public:
   Persistent_Client_i () = default;
 
   /// Destructor
-  virtual ~Persistent_Client_i () = default;
+  ~Persistent_Client_i () = default;
 
   Persistent_Client_i (Persistent_Client_i const&) = delete;
   Persistent_Client_i (Persistent_Client_i&&) = delete;
@@ -40,10 +40,10 @@ public:
   Persistent_Client_i& operator= (Persistent_Client_i&&) = delete;
 
   /// Execute the methods.
-  virtual int run (char const *, int, ACE_TCHAR *[]);
+  int run (char const *, int, ACE_TCHAR *[]);
 
   /// Parses the command line arguments.
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
   /// Instantiate the client object.

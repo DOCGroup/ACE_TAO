@@ -7,6 +7,42 @@
 # include "ace/OS_NS_stdio.h"
 # include "ace/OS_NS_string.h"
 
+namespace
+{
+  class ACE_Handle_Guard
+  {
+  public:
+    explicit ACE_Handle_Guard (ACE_HANDLE handle)
+      : handle_ (handle)
+    {
+    }
+
+    ~ACE_Handle_Guard ()
+    {
+      if (this->handle_ != ACE_INVALID_HANDLE)
+        ACE_OS::close (this->handle_);
+    }
+
+    ACE_Handle_Guard (ACE_Handle_Guard const&) = delete;
+    ACE_Handle_Guard (ACE_Handle_Guard&&) = delete;
+    ACE_Handle_Guard& operator= (ACE_Handle_Guard const&) = delete;
+    ACE_Handle_Guard& operator= (ACE_Handle_Guard&&) = delete;
+
+  private:
+    ACE_HANDLE handle_;
+  };
+
+  struct Read_Buffer_Deleter
+  {
+    ACE_Allocator *allocator;
+
+    void operator() (char *buffer) const
+    {
+      this->allocator->free (buffer);
+    }
+  };
+}
+
 // Parse the command-line arguments and set options.
 
 template <class Servant> int
@@ -22,7 +58,7 @@ Server<Servant>::parse_args ()
         TAO_debug_level++;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
         if (this->ior_output_file_ == nullptr)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
@@ -68,7 +104,7 @@ Server<Servant>::init (char const *servant_name,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  int retval = this->parse_args ();
+  int const retval = this->parse_args ();
 
   if (retval != 0)
     return retval;
@@ -87,7 +123,7 @@ Server<Servant>::init (char const *servant_name,
   // macros?!
   try
     {
-      CORBA::String_var str  =
+      CORBA::String_var const str  =
         this->orb_manager_.activate_under_child_poa (servant_name,
                                                      &this->servant_);
 
@@ -97,10 +133,10 @@ Server<Servant>::init (char const *servant_name,
 
       if (this->ior_output_file_ != nullptr)
         {
-          ACE_OS::fprintf (this->ior_output_file_,
+          ACE_OS::fprintf (this->ior_output_file_.get (),
                            "%s",
                            str.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          this->ior_output_file_.reset ();
         }
 
     }
@@ -117,7 +153,7 @@ template <class Servant> int
 Server<Servant>::run ()
 {
     // Run the main event loop for the ORB.
-  int ret = this->orb_manager_.run ();
+  int const ret = this->orb_manager_.run ();
 
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -138,7 +174,7 @@ template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
-  ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
+  ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -146,18 +182,17 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
                        filename),
                       -1);
 
+  ACE_Handle_Guard const f_handle_guard (f_handle);
   ACE_Read_Buffer ior_buffer (f_handle);
-  char *data = ior_buffer.read ();
+  std::unique_ptr<char, Read_Buffer_Deleter> const data (
+    ior_buffer.read (), Read_Buffer_Deleter {ior_buffer.alloc ()});
 
   if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior: %p\n"),
                       -1);
 
-  this->ior_ = data;
-  ior_buffer.alloc ()->free (data);
-
-  ACE_OS::close (f_handle);
+  this->ior_ = data.get ();
 
   return 0;
 }
@@ -178,7 +213,14 @@ Client<InterfaceObj, Var>::parse_args ()
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        this->ior_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+        {
+          char const * const ior = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+          if (ior == nullptr)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to convert IOR argument to a narrow string\n"),
+                              -1);
+          this->ior_ = ior;
+        }
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.opt_arg ());
@@ -189,7 +231,7 @@ Client<InterfaceObj, Var>::parse_args ()
                             -1);
         break;
       case 'x': // read the flag for shutting down
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
       }
 
@@ -214,15 +256,15 @@ Client<InterfaceObj, Var>::init (char const * /*name*/,
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->ior_.has_value ())
+      if (!this->ior_.empty ())
         {
-          CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_->c_str ());
+          CORBA::Object_var const server_object =
+            this->orb_->string_to_object (this->ior_.c_str ());
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid ior <%C>\n",
-                               this->ior_->c_str ()),
+                               this->ior_.c_str ()),
                               -1);
           this->server_ = InterfaceObj::_narrow (server_object.in ());
         }

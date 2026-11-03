@@ -16,13 +16,13 @@ Grid_Client_i::parse_args (int argc,
     switch (c)
       {
       case 'w':
-        this->width_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->width_ = static_cast<u_int> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'h':
-        this->height_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->height_ = static_cast<u_int> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'v':
-        this->value_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->value_ = static_cast<u_int> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       }
 
@@ -52,8 +52,8 @@ Grid_Client_i::run (char const *name,
     {
       // Make the Grid.
 
-      Grid_ptr grid = client->make_grid (width_,
-                                         height_);
+      Grid_ptr const grid = client->make_grid (width_,
+                                               height_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid successfully\n"));

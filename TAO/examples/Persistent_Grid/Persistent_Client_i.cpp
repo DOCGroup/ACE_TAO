@@ -17,10 +17,10 @@ Persistent_Client_i::parse_args (int argc,
       switch (c)
       {
       case 'w':
-        this->width_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->width_ = static_cast<u_int> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'h':
-        this->height_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->height_ = static_cast<u_int> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'r':
         this->remove_ = true;
@@ -47,8 +47,8 @@ Persistent_Client_i::run (char const *name,
   try
     {
       // Make the Grid.
-      Grid_ptr grid = client->make_grid (width_,
-                                         height_);
+      Grid_ptr const grid = client->make_grid (width_,
+                                               height_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Made the grid successfully\n"));
@@ -58,8 +58,8 @@ Persistent_Client_i::run (char const *name,
         {
           for (CORBA::Short ctr = 0; ctr < width_; ctr++)
             {
-              CORBA::Long ret_val = grid->get (index_,
-                                               ctr);
+              CORBA::Long const ret_val = grid->get (index_,
+                                                     ctr);
 
               ACE_DEBUG ((LM_DEBUG,
                           "Grid value [%d][%d] =  %d\n",index_, ctr,ret_val));

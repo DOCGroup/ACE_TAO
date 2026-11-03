@@ -17,10 +17,13 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Malloc_T.h"
 
+#include <memory>
+#include <vector>
+
 using pool_t = ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 // Memory pool for the persistent stuff
 
-//class Grid_Factory_i;
+class Grid_i;
 /**
  * @class Grid_Factory_i
  *
@@ -32,7 +35,7 @@ public:
   /// Constructor.
   Grid_Factory_i () = default;
 
-  /// Destructor.
+  /// Out-of-line because grid_owners_ owns the forward-declared Grid_i.
   ~Grid_Factory_i ();
 
   Grid_Factory_i (Grid_Factory_i const&) = delete;
@@ -61,10 +64,17 @@ private:
   CORBA::ORB_var orb_;
 
   /// Name of the pool
-  ACE_TCHAR *pool_name_ {};
+  /// Borrowed from the server's command-line arguments.
+  ACE_TCHAR const *pool_name_ {};
 
-  /// Hold the pool of name pool_name_
+  /// Borrowed pointer to the latest pool wrapper, used by cleanup().
   pool_t *pool_t_ {};
+
+  /// Owns pool wrappers while Grid_i servants borrow pointers to them.
+  std::vector<std::unique_ptr<pool_t>> pool_owners_;
+
+  /// Keeps activated Grid_i servants alive for the factory's lifetime.
+  std::vector<std::unique_ptr<Grid_i>> grid_owners_;
 };
 
 
@@ -78,9 +88,6 @@ private:
 class Grid_i: public POA_Grid
 {
 public:
-  /// Constructor
-  Grid_i () = default;
-
   /// Constructor.
   Grid_i (CORBA::Short, CORBA::Short, pool_t *);
 
@@ -116,9 +123,6 @@ public:
   /// Destroy the grid.
   void destroy () override;
 
-  /// Set a pointer to the pool
-  void set_pool (pool_t *);
-
 private:
   /// Width of the grid.
   CORBA::Short width_ {};
@@ -126,10 +130,11 @@ private:
   /// Height of the grid.
   CORBA::Short height_ {};
 
-  /// Pointer to the matrix.  This is organized as an "array of arrays."
+  /// Pointers into persistent mapped storage, organized as an array of arrays.
+  /// Keep this representation because it is persisted in the memory pool.
   CORBA::Long **array_ {};
 
-  ///Pointer to the memory pool..
+  /// Borrowed pointer to a pool wrapper kept alive by Grid_Factory_i.
   pool_t *pool_t_ {};
 };
 

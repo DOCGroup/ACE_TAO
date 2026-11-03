@@ -15,9 +15,10 @@
 
 #include "tao/Utils/ORB_Manager.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Read_Buffer.h"
 
-#include <optional>
+#include <memory>
 #include <string>
 
 /**
@@ -70,16 +71,19 @@ public:
   /// registering objects.
   TAO_ORB_Manager orb_manager_;
 
+  using FILE_ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+
   /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_ {};
+  FILE_ptr ior_output_file_ {nullptr, &ACE_OS::fclose};
 
   /// Memory pool name that stores the state
+  /// Borrowed from argv and valid for the lifetime of this server.
   ACE_TCHAR const *mem_pool_name_ {};
 
   /// Number of command line arguments.
   int argc_ {};
 
-  /// The command line arguments.
+  /// Borrowed command-line argument vector, kept alive by main().
   ACE_TCHAR **argv_ {};
 };
 
@@ -138,14 +142,11 @@ protected:
   /// # of arguments on the command line.
   int argc_ {};
 
-  /// arguments from command line.
+  /// Borrowed command-line argument vector, kept alive by main().
   ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
-  std::optional<std::string> ior_ {};
-
-  /// Flag to use the naming service
-  bool naming_ {};
+  std::string ior_;
 
   /// Flag for shutting down the server
   bool shutdown_ {};

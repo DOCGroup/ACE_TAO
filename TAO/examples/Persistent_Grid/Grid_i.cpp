@@ -1,13 +1,17 @@
 // -*- C++ -*-
 #include "Grid_i.h"
 
+#include <new>
+#include <utility>
+
 //  Constructor.
 
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
                 pool_t *mem_pool)
   : width_ (x),
-    height_ (y)
+    height_ (y),
+    pool_t_ (mem_pool)
 {
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that
@@ -17,25 +21,20 @@ Grid_i::Grid_i (CORBA::Short x,
 
   if (mem_pool->find ("Array", tmp_array) != -1)
     {
-      array_ = reinterpret_cast <CORBA::Long **> (tmp_array);
+      array_ = static_cast<CORBA::Long **> (tmp_array);
     }
   else
     {
       // Allocate memory for the matrix.
       ACE_ALLOCATOR (array_,
                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
-      //array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
-
       if (array_ != nullptr)
         {
           for (int ctr = 0; ctr < y; ctr++)
             {
               ACE_ALLOCATOR (array_[ctr],
                              static_cast<CORBA::Long *> (mem_pool->malloc (x *
-                                                                sizeof (CORBA::Long ))));
-
-              //array_[ctr] = (CORBA::Long *)mem_pool->malloc (x *
-              //                                            sizeof (CORBA::Long));
+                                                                sizeof (CORBA::Long))));
             }
 
           mem_pool->bind ("Array", array_);
@@ -109,7 +108,6 @@ Grid_i::destroy ( )
   for (int i = 0; i < height_; i++)
     this->pool_t_->free (array_[i]);
 
-  //  delete [] array_;
   this->pool_t_->free (array_);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -117,17 +115,7 @@ Grid_i::destroy ( )
               "Grid has been destroyed"));
 }
 
-void
-Grid_i::set_pool (pool_t *pool)
-{
-  this->pool_t_ = pool;
-}
-// Destructor
-
-Grid_Factory_i::~Grid_Factory_i ()
-{
-  delete this->pool_t_;
-}
+Grid_Factory_i::~Grid_Factory_i () = default;
 
 // Make a <Grid>.
 
@@ -147,27 +135,37 @@ Grid_Factory_i::make_grid (CORBA::Short width,
     height = Grid_Factory::DEFAULT_HEIGHT;
 
   // Get a memory pool
-  ACE_NEW_THROW_EX (pool_t_,
+  pool_t *pool = nullptr;
+  ACE_NEW_THROW_EX (pool,
                     pool_t (pool_name_),
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<pool_t> pool_owner (pool);
+  try
+    {
+      this->pool_owners_.push_back (std::move (pool_owner));
+    }
+  catch (std::bad_alloc const&)
+    {
+      throw CORBA::NO_MEMORY ();
+    }
+  this->pool_t_ = this->pool_owners_.back ().get ();
 
-  //  pool_t_ = new pool_t (pool_name_);
-
-  // This attempts to create a new Grid_i and throws an exception and
-  // returns a null value if it fails
-  int prev_no = errno;
-  Grid_i *grid_ptr = new Grid_i (width,
-                                 height,
-                                 pool_t_);
-  if (errno == ENOMEM)
-    throw CORBA::NO_MEMORY ();
-
-  errno = prev_no;
-
-  grid_ptr->set_pool (pool_t_);
+  Grid_i *grid = nullptr;
+  ACE_NEW_THROW_EX (grid,
+                    Grid_i (width, height, this->pool_t_),
+                    CORBA::NO_MEMORY ());
+  std::unique_ptr<Grid_i> grid_owner (grid);
+  try
+    {
+      this->grid_owners_.push_back (std::move (grid_owner));
+    }
+  catch (std::bad_alloc const&)
+    {
+      throw CORBA::NO_MEMORY ();
+    }
 
   // Register the Grid pointer.
-  return grid_ptr->_this ();
+  return this->grid_owners_.back ()->_this ();
 }
 
 // Set the ORB pointer.
@@ -193,7 +191,7 @@ Grid_Factory_i::shutdown ()
 void
 Grid_Factory_i::cleanup ()
 {
-  char const *name = "Array";
+  char const * const name = "Array";
 
   if (this->pool_t_->unbind (name) == -1)
     ACE_DEBUG ((LM_DEBUG,
@@ -203,5 +201,5 @@ Grid_Factory_i::cleanup ()
 void
 Grid_Factory_i::pool_name (ACE_TCHAR const *name)
 {
-  this->pool_name_ = ACE_OS::strdup (name);
+  this->pool_name_ = name;
 }
