@@ -1,9 +1,6 @@
 #include "ServerRequestInterceptor.h"
 
-ServerRequestInterceptor::ServerRequestInterceptor ()
-  : request_count_ (0)
-{
-}
+ServerRequestInterceptor::ServerRequestInterceptor () = default;
 
 char *
 ServerRequestInterceptor::name ()
@@ -20,7 +17,7 @@ void
 ServerRequestInterceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr /* ri */)
 {
-  ++this->request_count_;
+  this->request_count_.fetch_add (1, std::memory_order_relaxed);
 }
 
 void
@@ -50,8 +47,8 @@ ServerRequestInterceptor::send_other (
 CORBA::Long
 ServerRequestInterceptor::request_count ()
 {
-  const CORBA::Long r = this->request_count_.value ();
-  this->request_count_ = 0;
+  CORBA::Long const r = static_cast<CORBA::Long> (
+    this->request_count_.exchange (0, std::memory_order_relaxed));
 
   return r;
 }
