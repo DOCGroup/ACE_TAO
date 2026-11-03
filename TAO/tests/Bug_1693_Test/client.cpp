@@ -8,29 +8,29 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc,
                          argv,
                          "my_orb");
 
       // Obtain a reference to the CodecFactory.
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("CodecFactory");
 
-      IOP::CodecFactory_var codec_factory =
+      IOP::CodecFactory_var const codec_factory =
         IOP::CodecFactory::_narrow (object.in ());
 
       // ----------------------------------------------------------
 
       // Set up a structure that contains information necessary to
       // create a GIOP 1.1 CDR encapsulation Codec.
-      IOP::Encoding encoding;
+      IOP::Encoding encoding {};
       encoding.format = IOP::ENCODING_CDR_ENCAPS;
       encoding.major_version = 1;
       encoding.minor_version = 1;
 
       // Obtain the CDR encapsulation Codec.
-      IOP::Codec_var codec =
+      IOP::Codec_var const codec =
         codec_factory->create_codec (encoding);
 
       // ----------------------------------------------------------
@@ -38,7 +38,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::OctetSeq_var encoded_data;
         CORBA::Any_var decoded_data;
 
-        Foo::type_ulong const l = 9192631;
+        constexpr Foo::type_ulong l = 9192631;
 
         CORBA::Any tmp;
 
