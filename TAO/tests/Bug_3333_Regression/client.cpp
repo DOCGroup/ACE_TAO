@@ -1,20 +1,18 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
-
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-ACE_TCHAR const *loop_forever_ior = ACE_TEXT ("file://forward_forever.ior");
-bool shutdown_only = false;
+#include "tao/Utils/PolicyList_Destroyer.h"
 
 
 int
-parse_args (int argc, ACE_TCHAR * argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior,
+            ACE_TCHAR const *&loop_forever_ior, bool &shutdown_only)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:s"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:l:s"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -34,29 +32,28 @@ parse_args (int argc, ACE_TCHAR * argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+  ACE_TCHAR const *loop_forever_ior = ACE_TEXT ("file://forward_forever.ior");
+  bool shutdown_only {};
   try
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - ORB_init()\n"));
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, loop_forever_ior, shutdown_only) != 0)
         return 1;
-
-      CORBA::Object_var tmp;
-      Test::Hello_var hello;
 
       if (!shutdown_only)
         {
-          tmp = orb->string_to_object (loop_forever_ior);
+          CORBA::Object_var const loop_object = orb->string_to_object (loop_forever_ior);
 
-          if (CORBA::is_nil (tmp.in ()))
+          if (CORBA::is_nil (loop_object.in ()))
             {
               ACE_ERROR_RETURN ((LM_DEBUG,
                                 "ERROR: Nil object from string_to_object of <%s>\n",
@@ -71,27 +68,20 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
           CORBA::Any timeout_as_any;
           timeout_as_any <<= timeout_period;
 
-          CORBA::PolicyList policy_list (1);
+          TAO::Utils::PolicyList_Destroyer policy_list (1);
           policy_list.length (1);
           policy_list[0] =
             orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                                       timeout_as_any);
-          tmp = tmp->_set_policy_overrides (policy_list,
-                                            CORBA::SET_OVERRIDE);
-
-          for (CORBA::ULong i = 0;
-              i < policy_list.length ();
-              ++i)
-            {
-              policy_list[i]->destroy ();
-            }
+          CORBA::Object_var const object_with_policy =
+            loop_object->_set_policy_overrides (policy_list, CORBA::SET_OVERRIDE);
 
           try
             {
               ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - loop_forever narrow\n"));
 
               // This should LOCATION_FORWARD loop until the timeout
-              hello = Test::Hello::_narrow(tmp.in ());
+              Test::Hello_var const hello = Test::Hello::_narrow (object_with_policy.in ());
 
               if (CORBA::is_nil (hello.in ()))
                 {
@@ -102,7 +92,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                 }
 
               ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - loop_forever call\n"));
-              CORBA::String_var the_string = hello->get_string ();
+              CORBA::String_var const the_string = hello->get_string ();
 
               ACE_ERROR_RETURN ((LM_ERROR,
                                   "ERROR - We have managed to invoke a server method. \n"),
@@ -116,11 +106,11 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - shutdown server\n"));
-      tmp = orb->string_to_object (ior);
+      CORBA::Object_var const shutdown_object = orb->string_to_object (ior);
 
-      hello = Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var const shutdown_hello = Test::Hello::_narrow (shutdown_object.in ());
 
-      if (CORBA::is_nil (hello.in ()))
+      if (CORBA::is_nil (shutdown_hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                         "ERROR: Nil hello from <%s>\n",
@@ -128,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                         1);
         }
 
-      hello->shutdown ();
+      shutdown_hello->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - End\n"));
       orb->destroy ();
