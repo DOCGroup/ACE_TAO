@@ -24,6 +24,7 @@
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/NotifyLog_i.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -153,7 +154,7 @@ protected:
   //CosEventChannelAdmin::ConsumerAdmin_var es_consumer_admin_;
 
   /// Used for log-generated events.
-  TAO_NotifyLogNotification * notifier_;
+  std::unique_ptr<TAO_NotifyLogNotification> notifier_;
 
   /// The EventChannelFactory used to create an EventChannel.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;

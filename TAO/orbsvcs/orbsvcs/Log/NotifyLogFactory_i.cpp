@@ -5,9 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i ()
-{
-}
+TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i () = default;
 
 TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
   CosNotifyChannelAdmin::EventChannelFactory_ptr event_channel_factory)
@@ -35,15 +33,14 @@ TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
 
   this->consumer_admin_->subscription_change (added, removed);
 
-    ACE_NEW_THROW_EX (this->notifier_,
-                  TAO_NotifyLogNotification(this->event_channel_.in ()),
-                   CORBA::NO_MEMORY ());
+  TAO_NotifyLogNotification *notifier = nullptr;
+  ACE_NEW_THROW_EX (notifier,
+                    TAO_NotifyLogNotification (this->event_channel_.in ()),
+                    CORBA::NO_MEMORY ());
+  this->notifier_.reset (notifier);
 }
 
-TAO_NotifyLogFactory_i::~TAO_NotifyLogFactory_i()
-{
-  // No-Op.
-}
+TAO_NotifyLogFactory_i::~TAO_NotifyLogFactory_i () = default;
 
 DsNotifyLogAdmin::NotifyLogFactory_ptr
 TAO_NotifyLogFactory_i::activate (CORBA::ORB_ptr orb,
@@ -156,7 +153,7 @@ TAO_NotifyLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
                                      *this,
                                      this->log_mgr_.in (),
                                      this->notify_factory_.in (),
-                                     this->notifier_,
+                                     this->notifier_.get (),
                                      id
                                      ),
                     CORBA::NO_MEMORY ());
