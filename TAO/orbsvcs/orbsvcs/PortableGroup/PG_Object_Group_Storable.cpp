@@ -5,6 +5,8 @@
 #include "tao/Storable_Factory.h"
 #include "tao/CDR.h"
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace
@@ -439,7 +441,7 @@ TAO::PG_Object_Group_Storable::create_stream (char const *mode)
 {
   char file_name[BUFSIZ];
   int const id = static_cast<int> (this->get_object_group_id ());
-  ACE_OS::sprintf (file_name, "ObjectGroup_%d", id);
+  std::sprintf (file_name, "ObjectGroup_%d", id);
   return this->storable_factory_.create_stream (file_name, mode);
 }
 

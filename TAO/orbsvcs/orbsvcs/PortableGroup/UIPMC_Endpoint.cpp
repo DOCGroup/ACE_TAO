@@ -6,10 +6,10 @@
 #include "ace/Guard_T.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 #include <cstring>
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/PortableGroup/UIPMC_Endpoint.inl"
@@ -76,12 +76,12 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
 
 #if defined (ACE_HAS_IPV6)
   if (this->object_addr_.get_type () == AF_INET6)
-    ACE_OS::sprintf (buffer, "[%s]:%u",
+    std::sprintf (buffer, "[%s]:%u",
                      tmp,
                      this->port_);
   else
 #endif /* ACE_HAS_IPV6 */
-  ACE_OS::sprintf (buffer, "%s:%u",
+  std::sprintf (buffer, "%s:%u",
                    tmp,
                    this->port_);
 

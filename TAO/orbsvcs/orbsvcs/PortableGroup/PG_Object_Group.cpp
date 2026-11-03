@@ -14,7 +14,7 @@
 #include "ace/Vector_T.h"
 
 #include <cstring>
-
+#include <cstdio>
 
 #define TODO int todo;
 
@@ -115,7 +115,7 @@ dump_ior (const char * base,
           const char * iogr)
 {
   char filename[1000];
-  ACE_OS::sprintf(filename, "%s_%lu.%s", base, version, ext );
+  std::sprintf (filename, "%s_%lu.%s", base, version, ext);
 
   FILE * iorfile = ACE_OS::fopen(filename, "w");
   ACE_OS::fwrite (iogr, 1, std::strlen (iogr), iorfile);

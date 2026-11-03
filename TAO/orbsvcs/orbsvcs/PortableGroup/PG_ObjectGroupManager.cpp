@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
+#include <cstdio>
 #include <memory>
 #include "ace/Reverse_Lock_T.h"
 
@@ -439,7 +440,7 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
   // This manager's map is keyed by the decimal ObjectId generated from
   // the 32-bit FactoryCreationId.
   char object_id_string[14] {};
-  ACE_OS::sprintf (object_id_string,
+  std::sprintf (object_id_string,
                    "%ul",
                    ACE_U64_TO_U32 (group_id));
   PortableServer::ObjectId_var oid =

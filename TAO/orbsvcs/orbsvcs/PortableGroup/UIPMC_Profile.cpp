@@ -8,6 +8,7 @@
 #include "tao/target_specification.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
+#include <cstdio>
 
 #include "orbsvcs/miopC.h"
 #include "orbsvcs/PortableGroupC.h"
@@ -551,7 +552,7 @@ TAO_UIPMC_Profile::to_string () const
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%c.%c-%s-"
                    ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                    ::the_prefix,
@@ -564,7 +565,7 @@ TAO_UIPMC_Profile::to_string () const
 
   if (this->has_ref_version_)
     {
-      ACE_OS::sprintf (&buf[std::strlen (buf)],
+      std::sprintf (&buf[std::strlen (buf)],
                        "-" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
                        this->ref_version_);
     }
@@ -572,14 +573,14 @@ TAO_UIPMC_Profile::to_string () const
 #if defined (ACE_HAS_IPV6)
   if (this->endpoint_.object_addr ().get_type () == AF_INET6)
     {
-      ACE_OS::sprintf (&buf[std::strlen (buf)],
+      std::sprintf (&buf[std::strlen (buf)],
                        "/[%s]:%d",
                        this->endpoint_.host (),
                        this->endpoint_.port ());
     }
   else
 #endif /* ACE_HAS_IPV6 */
-  ACE_OS::sprintf (&buf[std::strlen (buf)],
+  std::sprintf (&buf[std::strlen (buf)],
                    "/%s:%d",
                    this->endpoint_.host (),
                    this->endpoint_.port ());

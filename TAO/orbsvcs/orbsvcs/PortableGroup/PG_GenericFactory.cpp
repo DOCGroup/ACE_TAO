@@ -5,9 +5,9 @@
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 #include "orbsvcs/PortableGroup/PG_conf.h"
 
-#include "ace/OS_NS_stdio.h"
-
 #include "tao/ORB_Constants.h"
+
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -412,7 +412,7 @@ TAO_PG_GenericFactory::get_ObjectId (
   constexpr size_t MAX_OID_LEN = 14;
 
   char oid_str[MAX_OID_LEN] {};
-  ACE_OS::sprintf (oid_str,
+  std::sprintf (oid_str,
                    "%ul",
                    fcid);
 
