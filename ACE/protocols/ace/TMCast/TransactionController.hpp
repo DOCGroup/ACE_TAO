@@ -1,6 +1,5 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Synch.h"
 #include "ace/Bound_Ptr.h"
@@ -9,6 +8,7 @@
 #include "Messaging.hpp"
 
 #include <typeinfo>
+#include <cstring>
 
 namespace ACE_TMCast
 {
@@ -22,7 +22,7 @@ namespace ACE_TMCast
     Send (void const* msg, size_t size)
         : size_ (size)
     {
-      ACE_OS::memcpy (payload_, msg, size_);
+      std::memcpy (payload_, msg, size_);
     }
 
     void const*
@@ -42,9 +42,7 @@ namespace ACE_TMCast
     char payload_[Protocol::MAX_PAYLOAD_SIZE];
   };
 
-  typedef
-  ACE_Strong_Bound_Ptr<Send, ACE_SYNCH_MUTEX>
-  SendPtr;
+  using SendPtr = ACE_Strong_Bound_Ptr<Send, ACE_SYNCH_MUTEX>;
 
 
   class Recv : public virtual Message
@@ -53,7 +51,7 @@ namespace ACE_TMCast
     Recv (void const* msg, size_t size)
         : size_ (size)
     {
-      ACE_OS::memcpy (payload_, msg, size_);
+      std::memcpy (payload_, msg, size_);
     }
 
     void const*
@@ -73,9 +71,7 @@ namespace ACE_TMCast
     char payload_[Protocol::MAX_PAYLOAD_SIZE];
   };
 
-  typedef
-  ACE_Strong_Bound_Ptr<Recv, ACE_SYNCH_MUTEX>
-  RecvPtr;
+  using RecvPtr = ACE_Strong_Bound_Ptr<Recv, ACE_SYNCH_MUTEX>;
 
   class Aborted : public virtual Message {};
 
@@ -185,7 +181,7 @@ namespace ACE_TMCast
           // transfer payload
 
           size = send_->size ();
-          ACE_OS::memcpy (payload, send_->payload (), size);
+          std::memcpy (payload, send_->payload (), size);
 
           send_ = SendPtr ();
 
