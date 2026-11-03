@@ -2,8 +2,7 @@
 
 Reply_Handler::Reply_Handler (
     Test::Hello_ptr hello, CORBA::ORB_ptr orb)
-  : counter_ (1000)
-  , hello_ (Test::Hello::_duplicate (hello))
+  : hello_ (Test::Hello::_duplicate (hello))
   , orb_ (CORBA::ORB::_duplicate (orb))
 {
 }

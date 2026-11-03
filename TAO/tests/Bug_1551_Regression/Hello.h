@@ -6,6 +6,8 @@
 
 #include "TestS.h"
 
+#include <atomic>
+
 class Hello
   : public virtual POA_Test::Hello
 {
@@ -24,7 +26,7 @@ private:
 
   bool simulate_crashes_;
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,long> atomic_counter_;
+  std::atomic<long> atomic_counter_ {200};
 };
 
 #include /**/ "ace/post.h"

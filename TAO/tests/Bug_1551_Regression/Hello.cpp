@@ -6,7 +6,6 @@ Hello::Hello (
     bool simulate_crashes)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , simulate_crashes_ (simulate_crashes)
-  , atomic_counter_ (200)
 {
 }
 
