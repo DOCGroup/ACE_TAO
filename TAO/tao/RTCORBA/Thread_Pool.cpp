@@ -16,6 +16,7 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
+#include <cstdio>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -292,14 +293,14 @@ TAO_Thread_Lane::open ()
   TAO_EndpointSet endpoint_set;
 
   // Create a string just *:* which means all pools all thread id's
-  ACE_OS::sprintf (pool_lane_id,
+  std::sprintf (pool_lane_id,
                    "*:*");
 
   // Get the endpoints for all
   params->get_endpoint_set (pool_lane_id, endpoint_set);
 
   // Create a string with pool:* which means all lanes for this pool
-  ACE_OS::sprintf (pool_lane_id,
+  std::sprintf (pool_lane_id,
                    "%d:*",
                    this->pool ().id ());
 
@@ -307,7 +308,7 @@ TAO_Thread_Lane::open ()
   params->get_endpoint_set (pool_lane_id, endpoint_set);
 
   // Create a string with *:lane which means a lan of all pools
-  ACE_OS::sprintf (pool_lane_id,
+  std::sprintf (pool_lane_id,
                    "*:%d",
                    this->id ());
 
@@ -315,7 +316,7 @@ TAO_Thread_Lane::open ()
   params->get_endpoint_set (pool_lane_id, endpoint_set);
 
   // Create a string with the pool:thread id.
-  ACE_OS::sprintf (pool_lane_id,
+  std::sprintf (pool_lane_id,
                    "%d:%d",
                    this->pool ().id (),
                    this->id ());
