@@ -7,11 +7,12 @@
 
 #include "ace/Reactor.h"
 #include "ace/Naming_Context.h"
+#include <memory>
 
 class Dump_Restore : public ACE_Event_Handler
 {
 public:
-  enum Operation_Type
+  enum class Operation_Type
     {
       BIND,
       UNBIND,
@@ -22,13 +23,18 @@ public:
 
   ~Dump_Restore ();
 
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
   // Handle user entered commands
+
+  Dump_Restore (Dump_Restore const &) = delete;
+  Dump_Restore (Dump_Restore &&) = delete;
+  Dump_Restore &operator= (Dump_Restore const &) = delete;
+  Dump_Restore &operator= (Dump_Restore &&) = delete;
 
   void dump ();
 
 private:
-  ACE_TCHAR hostname_[MAXHOSTNAMELEN + 1];
+  ACE_TCHAR hostname_[MAXHOSTNAMELEN + 1] {};
   // Cache the hostname and port number for remote case
 
   void display_menu ();
@@ -62,21 +68,21 @@ private:
               const char *value,
               const char *type = "");
 
-  char filename_[MAXPATHLEN + 1];
-  char dump_filename_[MAXPATHLEN + 1];
+  char filename_[MAXPATHLEN + 1] {};
+  char dump_filename_[MAXPATHLEN + 1] {};
 
-  u_short port_;
+  u_short port_ {};
   // port server is listening on
 
-  ACE_Naming_Context *ns_context_;
+  std::unique_ptr<ACE_Naming_Context> ns_context_;
   // Current naming context
 
-  ACE_Naming_Context::Context_Scope_Type ns_scope_;
+  ACE_Naming_Context::Context_Scope_Type ns_scope_ {ACE_Naming_Context::PROC_LOCAL};
   // Defines the scope of the naming context
 
-  FILE *infile_;
+  FILE *infile_ {};
   // input file
 
-  ACE_Name_Options *name_options_;
-  // Name Options associated with the Naming Context
+  ACE_Name_Options *name_options_ {};
+  // Borrowed from ns_context_.
 };

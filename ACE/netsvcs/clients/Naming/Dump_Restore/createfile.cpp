@@ -4,15 +4,16 @@
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN(int, ACE_TCHAR *argv[])
 {
-  FILE *infile, *outfile;
+  FILE * const infile = ACE_OS::fopen (argv[1], "r");
   char buf[BUFSIZ];
 
-  if ((infile = ACE_OS::fopen (argv[1], "r")) == 0)
+  if (infile == nullptr)
     return -1;
 
-  if ((outfile = ACE_OS::fopen (argv[2], "w")) == 0)
+  FILE * const outfile = ACE_OS::fopen (argv[2], "w");
+  if (outfile == nullptr)
     return -1;
 
   int count = 0;
@@ -29,4 +30,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   ACE_OS::fclose (outfile);
   ACE_OS::fclose (infile);
+  return 0;
 }

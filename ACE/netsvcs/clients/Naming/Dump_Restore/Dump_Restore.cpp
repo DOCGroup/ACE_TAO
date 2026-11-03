@@ -13,11 +13,8 @@
 
 
 Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
-  : infile_ (0)
+  : ns_context_ (std::make_unique<ACE_Naming_Context> ())
 {
-  ACE_NEW (this->ns_context_,
-           ACE_Naming_Context);
-
   // Cache the name options
   this->name_options_ = this->ns_context_->name_options ();
   this->name_options_->parse_args (argc, argv);
@@ -63,7 +60,8 @@ Dump_Restore::~Dump_Restore ()
     (ACE_STDIN,
      ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 
-  ACE_OS::fclose (this->infile_);
+  if (this->infile_)
+    ACE_OS::fclose (this->infile_);
 }
 
 int
@@ -106,15 +104,15 @@ Dump_Restore::handle_input (ACE_HANDLE)
       break;
     case 'B' :
     case 'b' :
-      populate (Dump_Restore::BIND);
+      populate (Operation_Type::BIND);
       break;
     case 'U' :
     case 'u' :
-      populate (Dump_Restore::UNBIND);
+      populate (Operation_Type::UNBIND);
       break;
     case 'R' :
     case 'r' :
-      populate (Dump_Restore::REBIND);
+      populate (Operation_Type::REBIND);
       break;
     case 'D':
     case 'd':
@@ -197,21 +195,16 @@ Dump_Restore::display_menu ()
 int
 Dump_Restore::set_proc_local ()
 {
-  // Set Name Options
-  this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
-  this->name_options_->nameserver_port (0);
-
   // Set Naming Context scope
   this->ns_scope_ =
     ACE_Naming_Context::PROC_LOCAL;
 
   // Remove old naming context
-  delete this->ns_context_;
-
-  // Create new Naming Context
-  ACE_NEW_RETURN (this->ns_context_,
-                  ACE_Naming_Context,
-                  -1);
+  this->ns_context_ = std::make_unique<ACE_Naming_Context> ();
+  this->name_options_ = this->ns_context_->name_options ();
+  this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
+  this->name_options_->nameserver_port (0);
+  this->name_options_->context (ACE_Naming_Context::PROC_LOCAL);
 
   if (this->ns_context_->open (ACE_Naming_Context::PROC_LOCAL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -225,20 +218,15 @@ Dump_Restore::set_proc_local ()
 int
 Dump_Restore::set_node_local ()
 {
-  // Set Name Options
-  this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
-  this->name_options_->nameserver_port (0);
-
   // Set Naming Context scope
   this->ns_scope_ = ACE_Naming_Context::NODE_LOCAL;
 
   // Remove old naming context
-  delete this->ns_context_;
-
-  // Create new Naming Context
-  ACE_NEW_RETURN (this->ns_context_,
-                  ACE_Naming_Context,
-                  -1);
+  this->ns_context_ = std::make_unique<ACE_Naming_Context> ();
+  this->name_options_ = this->ns_context_->name_options ();
+  this->name_options_->nameserver_host (ACE_TEXT ("localhost"));
+  this->name_options_->nameserver_port (0);
+  this->name_options_->context (ACE_Naming_Context::NODE_LOCAL);
 
   if (ns_context_->open (ACE_Naming_Context::NODE_LOCAL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -252,10 +240,6 @@ int
 Dump_Restore::set_host (const ACE_TCHAR *hostname,
                         int port)
 {
-  // Set Name Options
-  this->name_options_->nameserver_host (hostname);
-  this->name_options_->nameserver_port (port);
-
   // Don't really need to do this but it's a hack to fix the problme
   // of Display () not printing the right hostname
   ACE_OS::strcpy (this->hostname_, hostname);
@@ -263,12 +247,11 @@ Dump_Restore::set_host (const ACE_TCHAR *hostname,
   this->ns_scope_ = ACE_Naming_Context::NET_LOCAL;
 
   // remove old naming context
-  delete this->ns_context_;
-
-  // Create new Naming Context
-  ACE_NEW_RETURN (this->ns_context_,
-                  ACE_Naming_Context,
-                  -1);
+  this->ns_context_ = std::make_unique<ACE_Naming_Context> ();
+  this->name_options_ = this->ns_context_->name_options ();
+  this->name_options_->nameserver_host (hostname);
+  this->name_options_->nameserver_port (port);
+  this->name_options_->context (ACE_Naming_Context::NET_LOCAL);
 
   // assume net_local context
   if (ns_context_->open (ACE_Naming_Context::NET_LOCAL) == -1)
@@ -289,17 +272,17 @@ Dump_Restore::doit (Dump_Restore::Operation_Type op,
 
   switch (op)
     {
-    case Dump_Restore::BIND:
+    case Operation_Type::BIND:
       {
         result = this->bind (name, value, type);
         break;
       }
-    case Dump_Restore::UNBIND:
+    case Operation_Type::UNBIND:
       {
         result = this->unbind (name);
         break;
       }
-    case Dump_Restore::REBIND:
+    case Operation_Type::REBIND:
       {
         result = this->rebind (name, value, type);
         break;
@@ -315,9 +298,9 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
   if (this->infile_)
     {
       int result = -1;
-      enum State { NAME, VALUE, TYPE };
+      enum class State { NAME, VALUE, TYPE };
 
-      State state = NAME;
+      State state = State::NAME;
       // reset file pointer
       ACE_OS::rewind (this->infile_);
 
@@ -327,35 +310,35 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
                                    0,
                                    allocator);
 
-      for (char *temp;
-           (temp = read_buffer.read ('\n')) != 0;
+      for (char *temp = nullptr;
+           (temp = read_buffer.read ('\n')) != nullptr;
            )
         {
-          char *name = 0;
-          const char *actual_name = 0;
-          char *value = 0;
-          const char *actual_value = 0;
-          char *type = 0;
-          const char *actual_type = 0;
+          char *name = nullptr;
+          char const *actual_name = nullptr;
+          char *value = nullptr;
+          char const *actual_value = nullptr;
+          char *type = nullptr;
+          char const *actual_type = nullptr;
 
           switch (state)
             {
-            case NAME:
+            case State::NAME:
               name = temp;
               ACE_OS::strtok (name, "=");
-              actual_name = ACE_OS::strtok (0, "=");
-              state = VALUE;
+              actual_name = ACE_OS::strtok (nullptr, "=");
+              state = State::VALUE;
               break;
-            case VALUE:
+            case State::VALUE:
               value = temp;
               ACE_OS::strtok (value, "=");
-              actual_value = ACE_OS::strtok (0, "=");
-              state = TYPE;
+              actual_value = ACE_OS::strtok (nullptr, "=");
+              state = State::TYPE;
               break;
-            case TYPE:
+            case State::TYPE:
               type = temp;
               ACE_OS::strtok (type, "=");
-              actual_type = ACE_OS::strtok (0, "=");
+              actual_type = ACE_OS::strtok (nullptr, "=");
 
               if (actual_type)
                 result = this->doit (op,
@@ -372,7 +355,7 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
                 allocator->free(value);
               if (type)
                 allocator->free(type);
-              state = NAME;
+              state = State::NAME;
               break;
             default:
               ACE_ERROR_RETURN ((LM_ERROR,
