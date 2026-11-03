@@ -35,10 +35,15 @@ class Identity_Server
 {
 public:
   /// Default constructor.
-  Identity_Server ();
+  Identity_Server () = default;
 
   /// Destructor.
-  ~Identity_Server ();
+  ~Identity_Server () = default;
+
+  Identity_Server (Identity_Server const &) = delete;
+  Identity_Server (Identity_Server &&) = delete;
+  Identity_Server &operator= (Identity_Server const &) = delete;
+  Identity_Server &operator= (Identity_Server &&) = delete;
 
   /// Performs all the initializations necessary before going into the
   /// ORB event loop.
@@ -65,15 +70,15 @@ private:
 
   /// The ior of the <Object_Group_Factory> object we shall use to
   /// create <Object_Group>s to load balance our <Identity> objects.
-  const ACE_TCHAR *group_factory_ior_;
+  ACE_TCHAR const *group_factory_ior_ {};
 
   /// Number of <Identity> objects to create for registering with
   /// the random <Object_Group>.  The default value is 5.
-  size_t random_objects_;
+  size_t random_objects_ {5};
 
   /// Number of <Identity> objects to create for registering with the
   /// round robin <Object_Group>.  The default value is 5.
-  size_t rr_objects_;
+  size_t rr_objects_ {5};
 };
 
 #endif /* IDENTITY_SERVER_H_ */

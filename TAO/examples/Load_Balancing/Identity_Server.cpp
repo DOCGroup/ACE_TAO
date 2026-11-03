@@ -13,13 +13,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Identity_Server::Identity_Server ()
-  : group_factory_ior_ (0),
-    random_objects_ (5),
-    rr_objects_ (5)
-{
-}
-
 int
 Identity_Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -123,7 +116,7 @@ Identity_Server::init (int argc,
       create_objects (rr_objects_,
                       rr_group.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Identity_Server::init");
       return -1;
@@ -147,7 +140,7 @@ Identity_Server::create_objects (size_t number_of_objects,
                        i);
 
       // Create and activate a servant.
-      Identity_i * identity_servant = 0;
+      Identity_i * identity_servant = nullptr;
       ACE_NEW_THROW_EX (identity_servant,
                         Identity_i (ACE_TEXT_ALWAYS_CHAR(id)),
                         CORBA::NO_MEMORY ());
@@ -176,10 +169,6 @@ Identity_Server::run ()
   return result;
 }
 
-Identity_Server::~Identity_Server ()
-{
-}
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -193,7 +182,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       result = server.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Identity_Server");
       return 1;

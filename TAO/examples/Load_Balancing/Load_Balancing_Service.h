@@ -31,10 +31,15 @@ class Load_Balancing_Service
 {
 public:
   /// Default constructor.
-  Load_Balancing_Service ();
+  Load_Balancing_Service () = default;
 
   /// Destructor.
-  ~Load_Balancing_Service ();
+  ~Load_Balancing_Service () = default;
+
+  Load_Balancing_Service (Load_Balancing_Service const &) = delete;
+  Load_Balancing_Service (Load_Balancing_Service &&) = delete;
+  Load_Balancing_Service &operator= (Load_Balancing_Service const &) = delete;
+  Load_Balancing_Service &operator= (Load_Balancing_Service &&) = delete;
 
   /// Initialize the <Load_Balancing_Service>: initializes the ORB, parses
   /// arguments, creates a servant ...
@@ -51,7 +56,7 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// File to output the <Object_Group_Factory> IOR.
-  FILE *ior_output_file_;
+  FILE *ior_output_file_ {};
 };
 
 #endif /* LOAD_BALANCING_SERVICE_H_ */

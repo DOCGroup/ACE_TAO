@@ -13,10 +13,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-Load_Balancing_Service::Load_Balancing_Service ()
-  : ior_output_file_ (0)
-{
-}
+#include <cstdio>
 
 int
 Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
@@ -34,7 +31,7 @@ Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
         this->ior_output_file_ =
           ACE_OS::fopen (get_opts.opt_arg (), "w");
 
-        if (this->ior_output_file_ == 0)
+        if (this->ior_output_file_ == nullptr)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
@@ -81,25 +78,23 @@ Load_Balancing_Service::init (int argc,
       PortableServer::ServantBase_var s = factory_servant;
       ior = orb_manager_.activate (factory_servant);
 
-      if (ior.in () == 0)
+      if (ior.in () == nullptr)
         return -1;
       else if (TAO_debug_level > 1)
         ACE_DEBUG ((LM_DEBUG,
                     "Load_Balancer: Object Group Factory ior is %C\n",
                     ior.in ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Load_Balancing_Service::init");
       return -1;
     }
 
-  if (this->ior_output_file_ != 0)
+  if (this->ior_output_file_ != nullptr)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       ior.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      std::fprintf (this->ior_output_file_, "%s", ior.in ());
+      std::fclose (this->ior_output_file_);
     }
   return 0;
 }
@@ -118,10 +113,6 @@ Load_Balancing_Service::run ()
   return result;
 }
 
-Load_Balancing_Service::~Load_Balancing_Service ()
-{
-}
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -135,7 +126,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       result = factory.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Load_Balancing_Service");
       return 1;

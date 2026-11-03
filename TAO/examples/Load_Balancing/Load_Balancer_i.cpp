@@ -8,20 +8,15 @@
 
 
 #include "Load_Balancer_i.h"
+
+#include <cstdlib>
 #include <memory>
+
 #include "ace/OS_NS_time.h"
 
-Object_Group_Factory_i::Object_Group_Factory_i ()
-{
-}
-
-Object_Group_Factory_i::~Object_Group_Factory_i ()
-{
-}
-
 void
-Object_Group_Factory_i::remove_group (const ACE_CString &id,
-                                      int random)
+Object_Group_Factory_i::remove_group (std::string const &id,
+                                      bool random)
 {
   // Remove the entry from the appropriate map of groups.
   if (random)
@@ -31,24 +26,24 @@ Object_Group_Factory_i::remove_group (const ACE_CString &id,
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_round_robin (const char * id)
+Object_Group_Factory_i::make_round_robin (char const * id)
 {
-  return make_group (0,
+  return make_group (false,
                      id);
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_random (const char * id)
+Object_Group_Factory_i::make_random (char const * id)
 {
-  return make_group (1,
+  return make_group (true,
                      id);
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::make_group (int random,
-                                    const char * id)
+Object_Group_Factory_i::make_group (bool random,
+                                    char const * id)
 {
-  ACE_CString group_id (id);
+  std::string group_id (id);
 
   // Check to make sure we don't already have a group with the same
   // <id>.
@@ -71,7 +66,7 @@ Object_Group_Factory_i::make_group (int random,
                           RR_Object_Group (id, this),
                           CORBA::NO_MEMORY ());
 
-      // Temporarily put the servant into the auto_ptr.
+      // Temporarily keep ownership of the servant in a unique_ptr.
       std::unique_ptr<Object_Group_i> temp (group_servant);
 
       // Register with the poa, begin using ref. counting.
@@ -104,9 +99,9 @@ Object_Group_Factory_i::make_group (int random,
 }
 
 Load_Balancer::Object_Group_ptr
-Object_Group_Factory_i::resolve (const char * id)
+Object_Group_Factory_i::resolve (char const * id)
 {
-  ACE_CString group_id (id);
+  std::string group_id (id);
   Load_Balancer::Object_Group_var group;
 
   if (rr_groups_.find (group_id, group) == -1
@@ -117,16 +112,14 @@ Object_Group_Factory_i::resolve (const char * id)
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::list_groups (int random)
+Object_Group_Factory_i::list_groups (bool random)
 {
   Load_Balancer::Group_List * list;
 
   // Figure out the length of the list.
-  CORBA::ULong len;
-  if (random)
-    len = random_groups_.current_size ();
-  else
-    len = rr_groups_.current_size ();
+  CORBA::ULong const len = random
+    ? random_groups_.current_size ()
+    : rr_groups_.current_size ();
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list,
@@ -135,20 +128,18 @@ Object_Group_Factory_i::list_groups (int random)
   list->length (len);
 
   // Create an iterator for group structure to populate the list.
-  Object_Group_Factory_i::HASH_MAP::ITERATOR *group_iter;
   Object_Group_Factory_i::HASH_MAP::ITERATOR random_iter (random_groups_);
   Object_Group_Factory_i::HASH_MAP::ITERATOR rr_iter (rr_groups_);
-  if (random)
-    group_iter = &random_iter;
-  else
-    group_iter = &rr_iter;
+  Object_Group_Factory_i::HASH_MAP::ITERATOR &group_iter = random
+    ? random_iter
+    : rr_iter;
 
   // Iterate over groups and populate the list.
-  Object_Group_Factory_i::HASH_MAP::ENTRY *hash_entry = 0;
-  for (CORBA::ULong i = 0; i < len; i++)
+  Object_Group_Factory_i::HASH_MAP::ENTRY * hash_entry = nullptr;
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
-      group_iter->next (hash_entry);
-      group_iter->advance ();
+      group_iter.next (hash_entry);
+      group_iter.advance ();
 
       (*list)[i] = hash_entry->ext_id_.c_str ();
     }
@@ -159,16 +150,16 @@ Object_Group_Factory_i::list_groups (int random)
 Load_Balancer::Group_List *
 Object_Group_Factory_i::round_robin_groups ()
 {
-  return list_groups (0);
+  return list_groups (false);
 }
 
 Load_Balancer::Group_List *
 Object_Group_Factory_i::random_groups ()
 {
-  return list_groups (1);
+  return list_groups (true);
 }
 
-Object_Group_i::Object_Group_i (const char * id,
+Object_Group_i::Object_Group_i (char const * id,
                                 Object_Group_Factory_i *my_factory)
   : id_ (id),
     my_factory_ (my_factory)
@@ -194,9 +185,9 @@ Object_Group_i::id ()
 }
 
 void
-Object_Group_i::bind (const Load_Balancer::Member & member)
+Object_Group_i::bind (Load_Balancer::Member const & member)
 {
-  ACE_CString member_id (member.id);
+  std::string member_id (member.id);
   CORBA::Object_var obj = CORBA::Object::_duplicate (member.obj.in ());
 
   // Insert new member into <members_> and check for duplicates/failures.
@@ -207,12 +198,14 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
     throw CORBA::INTERNAL ();
 
   // Insert new member's id into <member_id_list_>.
-  ACE_CString *new_id;
+  std::string *new_id = nullptr;
   ACE_NEW_THROW_EX (new_id,
-                    ACE_CString (member.id),
+                    std::string (member.id),
                     CORBA::NO_MEMORY ());
-  if (member_id_list_.insert_tail (new_id) == 0)
+  std::unique_ptr<std::string> new_id_guard (new_id);
+  if (member_id_list_.insert_tail (new_id) == nullptr)
     throw CORBA::NO_MEMORY ();
+  new_id_guard.release ();
 
   // Theoretically, we should deal with memory failures more
   // thoroughly.  But, practically, the whole system is going to be
@@ -225,9 +218,9 @@ Object_Group_i::bind (const Load_Balancer::Member & member)
 }
 
 void
-Object_Group_i::unbind (const char * id)
+Object_Group_i::unbind (char const * id)
 {
-  ACE_CString member_id (id);
+  std::string member_id (id);
 
   // Code below works if list and hash map states are consistent,
   // which is the case unless the system experienced major problems,
@@ -252,10 +245,10 @@ Object_Group_i::unbind (const char * id)
 }
 
 CORBA::Object_ptr
-Object_Group_i::resolve_with_id (const char * id)
+Object_Group_i::resolve_with_id (char const * id)
 {
   CORBA::Object_var obj;
-  ACE_CString member_id (id);
+  std::string member_id (id);
 
   if (members_.find (member_id, obj) == -1)
     throw Load_Balancer::no_such_member ();
@@ -281,7 +274,7 @@ Object_Group_i::members ()
   Object_Group_i::ITERATOR id_iter (member_id_list_);
 
   // Iterate over groups and populate the list.
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       (*list)[i] = id_iter.next ()->c_str ();
       id_iter.advance ();
@@ -307,16 +300,12 @@ Object_Group_i::destroy ()
               "with id <%C>\n", id_.c_str ()));
 }
 
-Random_Object_Group::Random_Object_Group (const char *id,
+Random_Object_Group::Random_Object_Group (char const *id,
                                           Object_Group_Factory_i *my_factory)
   : Object_Group_i (id, my_factory)
 {
   // Seed the random number generator.
-  ACE_OS::srand (static_cast<u_int> (ACE_OS::time ()));
-}
-
-Random_Object_Group::~Random_Object_Group ()
-{
+  std::srand (static_cast<unsigned int> (ACE_OS::time ()));
 }
 
 void
@@ -324,7 +313,7 @@ Random_Object_Group::destroy ()
 {
   //Deregisters this <Object_Group> with its
   // <Object_Group_Factory>.
-  my_factory_->remove_group (id_, 1);
+  my_factory_->remove_group (id_, true);
 
   Object_Group_i::destroy ();
 }
@@ -334,34 +323,29 @@ Random_Object_Group::resolve ()
 {
   CORBA::Object_var obj;
 
-  size_t group_size = members_.current_size ();
+  size_t const group_size = members_.current_size ();
   if (group_size == 0)
     throw Load_Balancer::no_such_member ();
 
   // Generate random number in the range [0, group_size - 1]
-  size_t member = ACE_OS::rand() % group_size;
+  size_t const member = std::rand () % group_size;
 
   // Get the id of the member to return to the client.
-  ACE_CString *id = 0;
+  std::string *id = nullptr;
   member_id_list_.get (id, member);
 
   ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%C> Group resolved to <%C>\n",
               id_.c_str (),
-              id->c_str()));
+              id->c_str ()));
 
   // Return the object reference corresponding to the found id to the client.
   members_.find (*id, obj);
   return obj._retn ();
 }
 
-RR_Object_Group::RR_Object_Group (const char *id,
+RR_Object_Group::RR_Object_Group (char const *id,
                                   Object_Group_Factory_i *my_factory)
-  : Object_Group_i (id, my_factory),
-    next_ (0)
-{
-}
-
-RR_Object_Group::~RR_Object_Group ()
+  : Object_Group_i (id, my_factory)
 {
 }
 
@@ -370,7 +354,7 @@ RR_Object_Group::destroy ()
 {
   //Deregisters this <Object_Group> with its
   // <Object_Group_Factory>.
-  my_factory_->remove_group (id_, 0);
+  my_factory_->remove_group (id_, false);
 
   Object_Group_i::destroy ();
 }
@@ -380,12 +364,12 @@ RR_Object_Group::resolve ()
 {
   CORBA::Object_var obj;
 
-  size_t group_size = members_.current_size ();
+  size_t const group_size = members_.current_size ();
   if (group_size == 0)
     throw Load_Balancer::no_such_member ();
 
   // Get the id of the member to return to the client.
-  ACE_CString *id = 0;
+  std::string *id = nullptr;
   member_id_list_.get (id, next_);
 
   ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%C> Group resolved to <%C>\n",
@@ -399,13 +383,13 @@ RR_Object_Group::resolve ()
   if (members_.find (*id, obj) == -1)
     throw CORBA::INTERNAL ();
 
-   return obj._retn ();
+  return obj._retn ();
 }
 
 void
-RR_Object_Group::unbind (const char *id)
+RR_Object_Group::unbind (char const *id)
 {
-  ACE_CString member_id (id);
+  std::string member_id (id);
 
   // Check to make sure we have it.
   if (members_.find (member_id) == -1)

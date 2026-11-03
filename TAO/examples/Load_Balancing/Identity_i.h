@@ -21,13 +21,18 @@ class Identity_i :
   //    This class implements Identity.idl interface.
 public:
   /// Constructor - initializes the name of this object.
-  Identity_i (const char *name);
+  explicit Identity_i (char const *name);
 
   /// Destructor.
-  ~Identity_i ();
+  ~Identity_i () override = default;
+
+  Identity_i (Identity_i const &) = delete;
+  Identity_i (Identity_i &&) = delete;
+  Identity_i &operator= (Identity_i const &) = delete;
+  Identity_i &operator= (Identity_i &&) = delete;
 
   /// Returns the name of this object.
-  virtual void get_name (CORBA::String_out name);
+  void get_name (CORBA::String_out name) override;
 
 private:
   /// Stores the name of this object.

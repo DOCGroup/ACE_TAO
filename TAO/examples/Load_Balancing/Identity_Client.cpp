@@ -14,14 +14,9 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
-Identity_Client::Identity_Client ()
-  : group_factory_ior_ (0),
-    number_of_invocations_ (5),
-    use_random_ (0)
-{
-}
+#include <cstring>
 
 int
 Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
@@ -44,7 +39,7 @@ Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
       case 'r': // flag signifying to obtain references to <Identity>
                 // objects from the random <Object_Group> rather than
                 // from the round robin one.
-        this->use_random_ = 1;
+        this->use_random_ = true;
         break;
       case '?':
       default:
@@ -80,7 +75,7 @@ Identity_Client::init (int argc,
       if (result < 0)
         return result;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Identity_Client::init");
       return -1;
@@ -106,11 +101,9 @@ Identity_Client::run ()
                        "Identity_Client: problems using the factory ior\n"),
                       -1);
 
-  const char *group_name = 0;
-  if (this->use_random_)
-    group_name = "Identity, Random";
-  else
-    group_name = "Identity, Round Robin";
+  char const *group_name = this->use_random_
+    ? "Identity, Random"
+    : "Identity, Round Robin";
 
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Client: Requesting Object Group "
@@ -121,7 +114,7 @@ Identity_Client::run ()
   // List <Object_Group>'s id.
   CORBA::String_var id = object_group->id ();
 
-  if (ACE_OS::strcmp (id.in (), group_name) != 0)
+  if (std::strcmp (id.in (), group_name) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Identity_Client: incorrect object group"
                        "returned from factory->resolve\n"),
@@ -140,7 +133,7 @@ Identity_Client::run ()
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
     ACE_DEBUG ((LM_DEBUG, "                 <%C>\n",
-                static_cast<char const*>((id_list[i]))));
+                static_cast<char const *> (id_list[i])));
 
   // Perform <number_of_invocations_> method calls on <Identity>
   // objects, which are members of the <Object_Group>.  Before each
@@ -176,10 +169,6 @@ Identity_Client::run ()
   return 0;
 }
 
-Identity_Client::~Identity_Client ()
-{
-}
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -193,7 +182,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       result = client.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Identity_Client");
       return 1;
