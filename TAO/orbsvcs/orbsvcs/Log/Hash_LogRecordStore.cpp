@@ -12,6 +12,7 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstdio>
 #include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -65,7 +66,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
     log_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID);
 
   char buf[32];
-  ACE_OS::snprintf (buf, sizeof (buf), "Log%d", (int) id_);
+  std::snprintf (buf, sizeof (buf), "Log%d", static_cast<int> (id_));
 
   PortableServer::POAManager_var const poa_manager =
     log_poa->the_POAManager ();
@@ -439,7 +440,7 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                                    DsLogAdmin::Iterator_out iter_out)
 {
   // Decide between forward vs backward retrieval.
-  char constraint[32];
+  char constraint[64];
   ACE_TCHAR uint64_formating[32];
 
   ACE_OS::sprintf (uint64_formating,
@@ -447,12 +448,12 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                    from_time);
 
   if (how_many >= 0)
-    ACE_OS::sprintf (constraint, "time >= %s",
-                     ACE_TEXT_ALWAYS_CHAR (uint64_formating));
+    std::snprintf (constraint, sizeof (constraint), "time >= %s",
+                   ACE_TEXT_ALWAYS_CHAR (uint64_formating));
   else
     {
-      ACE_OS::sprintf (constraint, "time < %s",
-                       ACE_TEXT_ALWAYS_CHAR (uint64_formating));
+      std::snprintf (constraint, sizeof (constraint), "time < %s",
+                     ACE_TEXT_ALWAYS_CHAR (uint64_formating));
       how_many = -(how_many);
     }
 
