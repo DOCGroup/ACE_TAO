@@ -40,7 +40,7 @@ class TAO_IFRService_Export TAO_EventPortDef_i
 {
 public:
   //// Constructor
-  TAO_EventPortDef_i (TAO_Repository_i *repo);
+  explicit TAO_EventPortDef_i (TAO_Repository_i *repo);
 
   //// Destructor
   ~TAO_EventPortDef_i () override;

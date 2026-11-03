@@ -43,7 +43,7 @@ class TAO_IFRService_Export TAO_HomeDef_i
   //
 public:
   /// Constructor
-  TAO_HomeDef_i (TAO_Repository_i *repo);
+  explicit TAO_HomeDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_HomeDef_i () override;

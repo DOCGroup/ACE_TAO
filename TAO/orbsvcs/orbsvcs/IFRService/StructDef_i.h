@@ -41,7 +41,7 @@ class TAO_IFRService_Export TAO_StructDef_i : public virtual TAO_TypedefDef_i,
   //
 public:
   /// Constructor
-  TAO_StructDef_i (TAO_Repository_i *repo);
+  explicit TAO_StructDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_StructDef_i () override;

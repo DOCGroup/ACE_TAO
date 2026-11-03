@@ -48,7 +48,7 @@ public:
 //  friend class TAO_Port_Utils;
 
   /// Constructor.
-  TAO_Container_i (TAO_Repository_i *repo);
+  explicit TAO_Container_i (TAO_Repository_i *repo);
 
   /// Destructor.
   ~TAO_Container_i () override;

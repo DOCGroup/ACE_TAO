@@ -40,7 +40,7 @@ class TAO_IFRService_Export TAO_ComponentContainer_i
   : public virtual TAO_Container_i
 {
 public:
-  TAO_ComponentContainer_i (TAO_Repository_i *repo);
+  explicit TAO_ComponentContainer_i (TAO_Repository_i *repo);
 
   ~TAO_ComponentContainer_i () override;
 

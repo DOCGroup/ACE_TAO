@@ -36,7 +36,7 @@ class TAO_IFRService_Export TAO_EnumDef_i : public virtual TAO_TypedefDef_i
 {
 public:
   /// Constructor
-  TAO_EnumDef_i (TAO_Repository_i *repo);
+  explicit TAO_EnumDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_EnumDef_i () override;

@@ -37,7 +37,7 @@ class TAO_IFRService_Export TAO_ExtAttributeDef_i
 {
 public:
   /// Constructor
-  TAO_ExtAttributeDef_i (TAO_Repository_i *repo);
+  explicit TAO_ExtAttributeDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_ExtAttributeDef_i () override;

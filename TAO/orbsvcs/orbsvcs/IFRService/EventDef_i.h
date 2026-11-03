@@ -41,7 +41,7 @@ class TAO_IFRService_Export TAO_EventDef_i : public virtual TAO_ExtValueDef_i
 {
 public:
   /// Constructor
-    TAO_EventDef_i (TAO_Repository_i *repo);
+    explicit TAO_EventDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_EventDef_i () override;

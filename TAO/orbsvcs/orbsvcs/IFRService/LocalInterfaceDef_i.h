@@ -40,7 +40,7 @@ class TAO_IFRService_Export TAO_LocalInterfaceDef_i : public virtual TAO_Interfa
 {
 public:
   /// Constructor
-  TAO_LocalInterfaceDef_i (TAO_Repository_i *repo);
+  explicit TAO_LocalInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_LocalInterfaceDef_i () override;

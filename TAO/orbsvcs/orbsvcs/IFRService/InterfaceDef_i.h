@@ -44,7 +44,7 @@ class TAO_IFRService_Export TAO_InterfaceDef_i
   //
 public:
   /// Constructor
-  TAO_InterfaceDef_i (TAO_Repository_i *repo);
+  explicit TAO_InterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_InterfaceDef_i () override;
