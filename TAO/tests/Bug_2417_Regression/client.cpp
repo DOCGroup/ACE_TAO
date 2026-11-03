@@ -3,13 +3,11 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://ior.out");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -31,11 +29,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 class ThreadPool : public ACE_Task_Base
 {
 public:
-  ThreadPool (CORBA::ORB_ptr orb);
+  explicit ThreadPool (CORBA::ORB_ptr orb);
   ThreadPool (ThreadPool const &) = delete;
   ThreadPool &operator= (ThreadPool const &) = delete;
   ThreadPool (ThreadPool &&) = delete;
@@ -43,41 +40,42 @@ public:
 
   int svc () override;
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior = ACE_TEXT ("file://ior.out");
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (
-      poa_object.in ());
-      PortableServer::POAManager_var poa_manager =
-      root_poa->the_POAManager();
+      PortableServer::POA_var const root_poa =
+        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var const poa_manager =
+        root_poa->the_POAManager ();
 
       Subscriber_impl subscriber (orb.in ());
-      PortableServer::ObjectId_var id =
-      root_poa->activate_object (&subscriber);
+      PortableServer::ObjectId_var const id =
+        root_poa->activate_object (&subscriber);
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
-      Subscriber_var subscriber_var = Subscriber::_narrow (object.in ());
+      Subscriber_var const subscriber_var = Subscriber::_narrow (object.in ());
 
       object = orb->string_to_object (ior);
-      Publisher_var publisher = Publisher::_narrow (object.in ());
+      Publisher_var const publisher = Publisher::_narrow (object.in ());
 
       publisher->subscribe (subscriber_var.in ());
 
@@ -93,7 +91,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
