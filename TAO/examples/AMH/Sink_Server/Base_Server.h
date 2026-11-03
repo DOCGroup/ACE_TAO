@@ -21,6 +21,8 @@
 
 #include "tao/ORB.h"
 
+#include <string>
+
 // Forward declaration of the kind of servant we are willing to handle
 // in this server
 class AMH_Servant;
@@ -80,8 +82,9 @@ public:
 
 protected:
   int& argc_;
+  /// Borrowed from the process entry point; valid for this server's lifetime.
   ACE_TCHAR **argv_;
-  ACE_TCHAR const *ior_output_file_;
+  std::basic_string<ACE_TCHAR> ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 

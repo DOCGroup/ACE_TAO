@@ -10,7 +10,7 @@
 Client_Task::Client_Task (int &argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_ (ACE_TEXT("file://test.ior"))
+  , ior_ (ACE_TEXT ("file://test.ior"))
   , iterations_ (1000)
 {
 }
@@ -85,7 +85,7 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
   try
     {
       CORBA::Object_var object =
-        orb->string_to_object (this->ior_);
+        orb->string_to_object (this->ior_.c_str ());
 
       this->roundtrip_ =
         Test::Roundtrip::_narrow (object.in ());
@@ -94,7 +94,7 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Nil Test::Roundtrip reference <%s>\n",
-                             this->ior_),
+                             this->ior_.c_str ()),
                             0);
         }
     }

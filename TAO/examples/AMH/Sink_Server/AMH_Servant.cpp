@@ -80,7 +80,8 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       //
       // Done.
 
-      // Handler will 'kill' itself when it is done.
+      // The reactor owns this callback after scheduling it; it self-deletes
+      // from handle_close when the timeout finishes.
       Timer_Handler *handler = new Timer_Handler (_tao_rh,
                                                   send_time);
 

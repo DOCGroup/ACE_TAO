@@ -2,6 +2,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 #include "AMH_Servant.h"
 #include "Base_Server.h"
 #include "tao/Strategies/advanced_resource.h"
@@ -15,7 +17,7 @@
 Base_Server::Base_Server (int &argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_output_file_ (ACE_TEXT("test.ior"))
+  , ior_output_file_ (ACE_TEXT ("test.ior"))
 {
 }
 
@@ -192,18 +194,18 @@ int
 Base_Server::write_ior_to_file (char const *ior)
 {
   // If the ior_output_file exists, output the ior to it
-  FILE *output_file =
-    ACE_OS::fopen (this->ior_output_file_, "w");
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Handle output_file (ACE_OS::fopen (this->ior_output_file_.c_str (), "w"),
+                           &ACE_OS::fclose);
 
-  if (output_file == nullptr)
+  if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
-                  this->ior_output_file_));
+                  this->ior_output_file_.c_str ()));
       return -1;
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior);
-  ACE_OS::fclose (output_file);
+  ACE_OS::fprintf (output_file.get (), "%s", ior);
   return 0;
 }

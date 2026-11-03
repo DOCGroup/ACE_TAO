@@ -43,6 +43,7 @@ public:
                     Test::Timestamp send_time) override;
 
 protected:
+  /// Borrowed from the ORB; the ORB owns the reactor.
   ACE_Reactor *reactor_ {};
   int sleep_time_ {};
 };

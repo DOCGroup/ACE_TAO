@@ -21,6 +21,8 @@
 
 #include "TestC.h"
 
+#include <string>
+
 // Helper class for common client functionality
 class Client_Task : public ACE_Task_Base
 {
@@ -59,8 +61,9 @@ private:
   ACE_Basic_Stats latency_;
 
   int& argc_;
+  /// Borrowed from the process entry point; valid until the client tasks finish.
   ACE_TCHAR **argv_;
-  ACE_TCHAR const *ior_;
+  std::basic_string<ACE_TCHAR> ior_;
   int iterations_ {};
 };
 

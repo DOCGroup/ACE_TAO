@@ -48,7 +48,7 @@ int
 Timer_Handler::handle_close (ACE_HANDLE,
                              ACE_Reactor_Mask)
 {
-  // deregister from the reactor and destruct
+  // The reactor calls this after the timeout; the callback deletes itself.
 
   delete this;
   return 0;
