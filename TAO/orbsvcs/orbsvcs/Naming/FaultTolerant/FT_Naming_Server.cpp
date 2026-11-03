@@ -26,16 +26,16 @@
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
 
-
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
 #include "tao/ORB_Core.h"
-
 #include "tao/debug.h"
 #include "tao/default_ports.h"
 #include "tao/Storable_FlatFileStream.h"
+
+#include <utility>
 
 #include "tao/debug.h"
 #include "tao/default_ports.h"
@@ -96,14 +96,14 @@ TAO_FT_Naming_Server::update_info_i ()
 {
   while (true)
     {
-      FT_Naming::UpdateInfoSeq_var block;
+      std::unique_ptr<FT_Naming::UpdateInfoSeq> block;
       {
         ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
         if (this->u_infos_.empty ())
           {
             break;
           }
-        block.out () = this->u_infos_.front ();
+        block = std::move (this->u_infos_.front ());
         this->u_infos_.pop_front ();
       }
 
@@ -128,12 +128,12 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
 {
   CORBA::ULong count = infos.length();
   FT_Naming::UpdateInfo* guts = infos.get_buffer(true);
-  FT_Naming::UpdateInfoSeq_var block = nullptr;
-  ACE_NEW(block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
+  FT_Naming::UpdateInfoSeq* block = nullptr;
+  ACE_NEW (block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
+  std::unique_ptr<FT_Naming::UpdateInfoSeq> block_owner (block);
   {
     ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
-    this->u_infos_.push_back (block.ptr ());
-    block._retn ();
+    this->u_infos_.push_back (std::move (block_owner));
   }
 
   this->orb_->orb_core ()->reactor ()->notify (&this->info_notifier_);

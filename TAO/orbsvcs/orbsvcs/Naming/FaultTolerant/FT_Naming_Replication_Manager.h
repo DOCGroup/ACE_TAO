@@ -110,6 +110,7 @@ private:
   CORBA::ULongLong replica_seq_num_;
   TAO_FT_Naming_Server &server_;
   CORBA::ORB_var orb_;
+  /// Borrowed from the ORB core; the core owns the reactor.
   ACE_Reactor *reactor_ {};
   TAO_SYNCH_MUTEX lock_;
   bool notified_;

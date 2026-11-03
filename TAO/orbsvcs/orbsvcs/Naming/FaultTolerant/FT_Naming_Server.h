@@ -25,6 +25,7 @@
 #include "orbsvcs/FT_NamingReplicationC.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include <deque>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -168,7 +169,8 @@ private:
 
 protected:
   /// The object that implements the FT_Naming::Replication_Manager
-  /// interface.
+  /// interface. The server owns it and stops it before deletion in fini();
+  /// contexts and the naming manager borrow this pointer.
   TAO_FT_Naming_Replication_Manager *replicator_ {};
 
   /// The Object Group Manager POA.
@@ -208,7 +210,7 @@ protected:
   TAO_FTNS_Notifier info_notifier_;
 
   std::deque<FT_Naming::ReplicaInfo> u_iors_;
-  std::deque<FT_Naming::UpdateInfoSeq*> u_infos_;
+  std::deque<std::unique_ptr<FT_Naming::UpdateInfoSeq>> u_infos_;
   TAO_SYNCH_MUTEX ior_lock_;
   TAO_SYNCH_MUTEX info_lock_;
 };

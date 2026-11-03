@@ -72,6 +72,7 @@ namespace TAO
       TAO::PG_Object_Group_Manipulator & manipulator,
       TAO::Storable_Factory & storable_factory) override;
 
+    /// Borrowed from the Naming server for outgoing replication updates.
     TAO_FT_Naming_Replication_Manager *replicator_ {};
 
   private:

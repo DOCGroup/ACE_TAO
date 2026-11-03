@@ -58,6 +58,7 @@ public:
     char const *poa_id,
     TAO::Storable_Factory *factory) override;
 
+  /// Borrowed from the Naming server; the factory does not own it.
   TAO_FT_Naming_Replication_Manager *replicator_;
 
 private:

@@ -100,6 +100,7 @@ namespace TAO
     /// so can know if we should propagate a change type of NEW.
     bool file_created_;
 
+    /// Borrowed from the Naming server.
     TAO_FT_Naming_Replication_Manager *replicator_;
     /**
      * Although it is assumed for replication that services

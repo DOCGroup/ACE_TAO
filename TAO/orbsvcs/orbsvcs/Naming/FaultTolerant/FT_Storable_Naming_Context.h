@@ -98,6 +98,7 @@ public:
 protected:
   static TAO_FT_Naming_Manager *naming_manager_;
   bool stale_;
+  /// Borrowed from the server-owned replication manager.
   TAO_FT_Naming_Replication_Manager *replicator_;
 
 private:
