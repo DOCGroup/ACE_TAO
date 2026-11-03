@@ -53,10 +53,10 @@ public:
   SnmpUInt32( const SnmpUInt32 &c);
 
   /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
-  virtual ~SnmpUInt32();
+  ~SnmpUInt32() override;
 
   /// syntax type
-  virtual SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// overloaded assignment
   SnmpUInt32& operator=( const unsigned long i);
@@ -68,16 +68,16 @@ public:
   operator unsigned long();
 
   /// get a printable ASCII value
-  virtual const char *to_string();
+  const char *to_string() override;
 
   /// create a new instance of this Value
-  virtual SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// did object construct properly
-  int valid() const;
+  int valid() const override;
 
 protected:
   /// contain string representation of object
@@ -102,10 +102,10 @@ public:
   SnmpInt32 (const SnmpInt32 &c);
 
   /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
-  virtual ~SnmpInt32();
+  ~SnmpInt32() override;
 
   /// syntax type
-  virtual SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// overloaded assignment
   SnmpInt32& operator=( const long i);
@@ -117,16 +117,16 @@ public:
   operator long();
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// get a printable ASCII value
   const char *to_string();
 
   /// logical state of object
-  int valid() const;
+  int valid() const override;
 
 protected:
   /// contain string representation of object

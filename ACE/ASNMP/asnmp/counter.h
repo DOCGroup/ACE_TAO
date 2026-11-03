@@ -55,13 +55,13 @@ public:
   Counter32( const Counter32 &c);
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// overloaded assignment
   Counter32& operator=( const Counter32 &uli);

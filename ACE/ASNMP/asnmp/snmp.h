@@ -71,7 +71,7 @@ class ASNMP_Export Snmp : public transaction_result
   unsigned hold_req_id_;
 public:
   Snmp(unsigned short port = INADDR_ANY);
-  virtual ~Snmp();
+  ~Snmp() override;
 
   /// retrieve data from a peer agent for a given list of oid values
   /// default port 161
@@ -101,7 +101,7 @@ public:
   const char * error_string();
 
   /// for async transaction results
-  void result(transaction * t, int rc);
+  void result(transaction * t, int rc) override;
 
   /// allow the host name to be overriden
   static void override_host_name(const char* name);

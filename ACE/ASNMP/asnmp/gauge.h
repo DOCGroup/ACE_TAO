@@ -53,13 +53,13 @@ public:
   Gauge32 ( const Gauge32 &g);
 
   /// destructor for a Gauge32 (ensure that Value::~Value() is overridden)
-  ~Gauge32();
+  ~Gauge32() override;
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// overloaded assignment
   Gauge32& operator=( const Gauge32 &uli);
@@ -71,6 +71,6 @@ public:
   operator unsigned long();
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 };
 #endif //GAUGE_

@@ -52,8 +52,8 @@ public:
 
   /// called by reactor when data is ready to be read in from OS memory
   /// used for resend in asynchronous run()
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_timeout (const ACE_Time_Value &, const void *);
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_timeout (const ACE_Time_Value &, const void *) override;
 
   /// transmit buffer command to network...
   int send();

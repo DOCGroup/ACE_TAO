@@ -77,7 +77,7 @@ public:
   virtual  SnmpSyntax * clone() const = 0;
 
   /// virtual destructor to ensure deletion of derived classes...
-  virtual ~SnmpSyntax() {};
+  virtual ~SnmpSyntax() = default;
 
   /// overloaded assignment operator
   /// This should be pure virtual, but WinNT compiler
