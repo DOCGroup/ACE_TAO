@@ -3,6 +3,7 @@
 
 #ifndef SNMP_AGENT_
 #define SNMP_AGENT_
+#include <memory>
 //=============================================================================
 /**
  *  @file    snmp_agent.h
@@ -27,8 +28,12 @@ class snmp_agent
 public:
   snmp_agent(); // uses port 161, public, private
   ~snmp_agent();
+  snmp_agent (snmp_agent const &) = delete;
+  snmp_agent (snmp_agent &&) = delete;
+  snmp_agent &operator= (snmp_agent const &) = delete;
+  snmp_agent &operator= (snmp_agent &&) = delete;
 
-  int valid() const;
+  bool valid () const;
   // did object construct ok
 
   int set_args(int argc, char *argv[]);
@@ -38,8 +43,7 @@ public:
   // begin processing requests
 
 private:
-  snmp_agent(const snmp_agent&);
-  agent_impl *agent_;
+  std::unique_ptr<agent_impl> agent_;
 };
 
 #endif // SNMP_AGENT_

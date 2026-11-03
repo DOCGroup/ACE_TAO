@@ -7,7 +7,7 @@
 
 #include "agent_impl.h"
 
-agent_impl::agent_impl(unsigned short port, const char *rd, const char *wr) :
+agent_impl::agent_impl (unsigned short port, char const *rd, char const *wr) :
 sagent(port)
 {
   ACE_TRACE("agent_impl::agent_impl");

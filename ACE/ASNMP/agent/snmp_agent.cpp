@@ -11,7 +11,7 @@
 #define WR_COM ACE_TEXT ("private")
 #define RD_COM ACE_TEXT ("public")
 
-snmp_agent::snmp_agent() : agent_(0)
+snmp_agent::snmp_agent ()
 {
   ACE_TRACE("snmp_agent::snmp_agent");
 }
@@ -19,22 +19,21 @@ snmp_agent::snmp_agent() : agent_(0)
 snmp_agent::~snmp_agent()
 {
   ACE_TRACE("snmp_agent::~snmp_agent");
-  delete agent_;
 }
 
 
-int snmp_agent::valid() const
+bool snmp_agent::valid () const
 {
   ACE_TRACE("snmp_agent::valid");
-  return (agent_ != 0);
+  return agent_ != nullptr;
 }
 
 int snmp_agent::set_args(int argc, char *argv[])
 {
   ACE_TRACE("snmp_agent::set_args");
   unsigned short port = SNMP_AGENT_PORT;
-  const ACE_TCHAR *rd = RD_COM;
-  const ACE_TCHAR *wr = WR_COM;
+  ACE_TCHAR const *rd = RD_COM;
+  ACE_TCHAR const *wr = WR_COM;
   ACE_Argv_Type_Converter to_tchar (argc, argv);
 
   ACE_Get_Opt get_opt
@@ -64,9 +63,9 @@ int snmp_agent::set_args(int argc, char *argv[])
         }
     }
 
-   agent_ = new agent_impl(port,
-                           ACE_TEXT_ALWAYS_CHAR (rd),
-                           ACE_TEXT_ALWAYS_CHAR (wr)); // opens OS IO port
+   agent_ = std::make_unique<agent_impl> (port,
+                                          ACE_TEXT_ALWAYS_CHAR (rd),
+                                          ACE_TEXT_ALWAYS_CHAR (wr)); // opens OS IO port
    return 0;
 }
 
