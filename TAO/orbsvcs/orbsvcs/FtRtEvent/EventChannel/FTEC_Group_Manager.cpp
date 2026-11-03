@@ -37,7 +37,7 @@ void print(const FTRT::Location& location)
 struct TAO_FTEC_Group_Manager_Impl
 {
   FTRT::ManagerInfoList info_list;
-  unsigned my_position;
+  unsigned my_position {};
 };
 
 TAO_FTEC_Group_Manager::TAO_FTEC_Group_Manager()

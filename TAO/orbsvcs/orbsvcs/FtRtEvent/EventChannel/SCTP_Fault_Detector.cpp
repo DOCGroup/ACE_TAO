@@ -16,10 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-SCTP_Connector::SCTP_Connector()
-: heart_beat_(0)
-{
-}
+SCTP_Connector::SCTP_Connector () = default;
 
 int
 SCTP_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,

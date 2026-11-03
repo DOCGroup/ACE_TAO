@@ -67,7 +67,7 @@ public:
   SCTP_Connector& operator=(SCTP_Connector const&) = delete;
   SCTP_Connector& operator=(SCTP_Connector&&) = delete;
 private:
-  int heart_beat_;
+  int heart_beat_ {};
 };
 
 class SCTP_Fault_Detector : public Fault_Detector_T<
