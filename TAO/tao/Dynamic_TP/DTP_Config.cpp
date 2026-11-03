@@ -28,21 +28,21 @@ TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
 }
 
 bool
-TAO_DTP_Config_Registry::find (ACE_CString const &name,
+TAO_DTP_Config_Registry::find (std::string const &name,
                                TAO_DTP_Definition &entry)
 {
   return registry_.find (name, entry) == 0;
 }
 
 int
-TAO_DTP_Config_Registry::bind (ACE_CString const &name,
+TAO_DTP_Config_Registry::bind (std::string const &name,
                                TAO_DTP_Definition &entry)
 {
   return registry_.bind (name, entry);
 }
 
 int
-TAO_DTP_Config_Registry::rebind (ACE_CString const &name,
+TAO_DTP_Config_Registry::rebind (std::string const &name,
                                  TAO_DTP_Definition &entry)
 {
   return registry_.rebind (name, entry);
@@ -189,7 +189,7 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
       return 0;
     }
 
-  ACE_CString name_str = ACE_TEXT_ALWAYS_CHAR (name);
+  std::string name_str = ACE_TEXT_ALWAYS_CHAR (name);
   ACE_Service_Gestalt *current = ACE_Service_Config::current();
   TAO_DTP_Config_Registry* registry =
     ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance

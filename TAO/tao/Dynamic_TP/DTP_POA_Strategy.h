@@ -31,6 +31,7 @@
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 #include "ace/OS_NS_strings.h"
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -61,7 +62,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   /// of a thread pool for POAs is initiated from a svc.conf file.
   /// A configuration name is passed in such that the object can
   /// lookup a configuration in a pre-populated repository.
-  explicit TAO_DTP_POA_Strategy(ACE_CString tp_config_name,
+  explicit TAO_DTP_POA_Strategy(std::string tp_config_name,
                               bool     serialize_servants = true);
 
   /// This constructor supports situations where explicit instantiation
@@ -186,7 +187,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   /// into a DTP_Config_Registry.  This is the key to the RB
   /// Tree entry.
 
-  ACE_CString dynamic_tp_config_name_;
+  std::string dynamic_tp_config_name_;
 
   /// This is the active object used by the worker threads.
   /// The request queue is owned/managed by the task object.

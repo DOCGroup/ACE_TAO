@@ -23,6 +23,7 @@
 #include "ace/Service_Config.h"
 #include "ace/RB_Tree.h"
 #include "ace/Synch.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -66,10 +67,10 @@ public:
   int init (int argc, ACE_TCHAR* []) override;
 
   /// initializes the supplied set value with the configuration associated with the name, or returns false.
-  bool find (ACE_CString const &name, TAO_DTP_Definition &entry);
+  bool find (std::string const &name, TAO_DTP_Definition &entry);
 
-  int bind (ACE_CString const &name, TAO_DTP_Definition &entry);
-  int rebind (ACE_CString const &name, TAO_DTP_Definition &entry);
+  int bind (std::string const &name, TAO_DTP_Definition &entry);
+  int rebind (std::string const &name, TAO_DTP_Definition &entry);
 
  private:
   TAO_DTP_Config_Registry (TAO_DTP_Config_Registry const &) = delete;
@@ -78,7 +79,7 @@ public:
   TAO_DTP_Config_Registry &operator= (TAO_DTP_Config_Registry &&) = delete;
 
   using Registry =
-    ACE_RB_Tree<ACE_CString, TAO_DTP_Definition, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
+    ACE_RB_Tree<std::string, TAO_DTP_Definition, ACE_Less_Than<std::string>, ACE_Null_Mutex>;
   Registry registry_;
 };
 
