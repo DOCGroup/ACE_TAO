@@ -6,32 +6,34 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *server_ior = ACE_TEXT("file://server.ior");
-ACE_TCHAR const *admin_ior = ACE_TEXT("file://admin.ior");
-int iterations = 20;
+namespace
+{
+ACE_TCHAR const* server_ior = ACE_TEXT("file://server.ior");
+ACE_TCHAR const* admin_ior = ACE_TEXT("file://admin.ior");
+int iterations {20};
 
-bool run_message_count_test = false;
-bool run_timeout_test = false;
-bool run_timeout_reactive_test = false;
-bool run_buffer_size_test = false;
+bool run_message_count_test {};
+bool run_timeout_test {};
+bool run_timeout_reactive_test {};
+bool run_buffer_size_test {};
 
-int constexpr PAYLOAD_LENGTH = 1024;
-int constexpr BUFFERED_MESSAGES_COUNT = 10;
-unsigned int constexpr TIMEOUT_MILLISECONDS = 50;
-int constexpr BUFFER_SIZE = 10 * PAYLOAD_LENGTH;
+constexpr int PAYLOAD_LENGTH = 1024;
+constexpr int BUFFERED_MESSAGES_COUNT = 10;
+constexpr unsigned int TIMEOUT_MILLISECONDS = 50;
+constexpr int BUFFER_SIZE = 10 * PAYLOAD_LENGTH;
 
 /// Allow a larger timeout to occur due to scheduler differences
-unsigned int constexpr TIMEOUT_TOLERANCE = 4 * TIMEOUT_MILLISECONDS;
+constexpr unsigned int TIMEOUT_TOLERANCE = 4 * TIMEOUT_MILLISECONDS;
 
 /// Check that no more than 10% of the messages are not sent.
-double constexpr LIVENESS_TOLERANCE = 0.9;
+constexpr double LIVENESS_TOLERANCE = 0.9;
 
 /// Limit the depth of the liveness test, avoid blowing up the stack
 /// on the server
-int constexpr LIVENESS_MAX_DEPTH = 256;
+constexpr int LIVENESS_MAX_DEPTH = 256;
 
 /// Factor in GIOP overhead in the buffer size test
-double constexpr GIOP_OVERHEAD = 0.9;
+constexpr double GIOP_OVERHEAD = 0.9;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -84,6 +86,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
+}
 }
 
 int
@@ -401,7 +404,7 @@ run_message_count (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = nullptr;
+  Reply_Handler *reply_handler_impl {};
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
@@ -512,7 +515,7 @@ run_timeout (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = nullptr;
+  Reply_Handler *reply_handler_impl {};
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
@@ -631,7 +634,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
   for (int j = 0; j != PAYLOAD_LENGTH; ++j)
     payload[j] = CORBA::Octet(j % 256);
 
-  Reply_Handler *reply_handler_impl = nullptr;
+  Reply_Handler *reply_handler_impl {};
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
@@ -752,7 +755,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
   Test::Payload payload (PAYLOAD_LENGTH);
   payload.length (PAYLOAD_LENGTH);
 
-  Reply_Handler *reply_handler_impl;
+  Reply_Handler *reply_handler_impl {};
   ACE_NEW_RETURN (reply_handler_impl,
                   Reply_Handler,
                   1);
