@@ -20,8 +20,8 @@ public:
   int handle_timeout (ACE_Time_Value const &current_time, void const *data) override;
 
 private:
-  CORBA::ORB_ptr m_orb;
-  Callee_var     m_callee;
+  CORBA::ORB_var const m_orb;
+  Callee_var m_callee;
 };
 
 #endif

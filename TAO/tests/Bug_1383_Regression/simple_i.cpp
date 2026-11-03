@@ -3,11 +3,12 @@
 #include "ace/Reactor.h"
 
 Simple_i::Simple_i (CORBA::ORB_ptr orb)
-  : m_orb (orb->_duplicate (orb))
+  : m_orb (CORBA::ORB::_duplicate (orb))
 {
 }
 
-void Simple_i::registerCallee (Callee_ptr value)
+void
+Simple_i::registerCallee (Callee_ptr value)
 {
   ACE_DEBUG ((LM_DEBUG, "registerCallee invoked\n"));
   // retain a reference so we can callback later
@@ -18,8 +19,9 @@ void Simple_i::registerCallee (Callee_ptr value)
   m_orb->orb_core ()->reactor ()->schedule_timer (this, nullptr, ACE_Time_Value (5));
 }
 
-int Simple_i::handle_timeout (ACE_Time_Value const &,
-                              void const *)
+int
+Simple_i::handle_timeout (ACE_Time_Value const &,
+                          void const *)
 {
   ACE_DEBUG ((LM_DEBUG, "timer expired\n"));
   m_callee->callback ("got timeout");

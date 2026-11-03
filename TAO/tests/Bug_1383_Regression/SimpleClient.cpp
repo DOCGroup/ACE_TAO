@@ -5,14 +5,19 @@
 #include "Callee_i.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 
-CORBA::ORB_var _orb;
+#include <memory>
 
-ACE_THR_FUNC_RETURN RunFunc(void *)
+namespace
+{
+CORBA::ORB_var client_orb;
+
+ACE_THR_FUNC_RETURN RunFunc (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "running the _orb\n"));
-  _orb->run();
+  client_orb->run ();
   ACE_DEBUG ((LM_DEBUG, "done running _orb\n"));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
+}
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -20,14 +25,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // initialize the ORB
-      _orb = CORBA::ORB_init (argc, argv);
+      client_orb = CORBA::ORB_init (argc, argv);
 
       // Get the "RootPOA"
-      CORBA::Object_var obj = _orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
+      CORBA::Object_var obj = client_orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
 
       // activate its managers so it can handle incoming requests
-      poa->the_POAManager()->activate();
+      poa->the_POAManager ()->activate ();
 
       // get a thread going to handle incoming requests
       ACE_Thread::spawn (RunFunc);
@@ -35,16 +40,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // we could also use the c_orbaloc syntax to get a reference to the
       // object. This will cause the _orb to talk directly to the other
       // _orb with no name service or common file involved.
-      obj = _orb->string_to_object ("c_orbaloc::localhost:9999/Simple");
+      obj = client_orb->string_to_object ("c_orbaloc::localhost:9999/Simple");
 
-      if (CORBA::is_nil(obj.in ()))
+      if (CORBA::is_nil (obj.in ()))
         {
           ACE_ERROR ((LM_ERROR, "could not get reference\n"));
           return 1;
         }
 
       // narrow the reference to the particular type we wish to deal with
-      Simple_var simple = Simple::_narrow(obj.in ());
+      Simple_var const simple = Simple::_narrow (obj.in ());
       if (CORBA::is_nil(simple.in ()))
         {
           ACE_ERROR ((LM_ERROR, "could not get reference\n"));
@@ -53,9 +58,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // create an object reference that has a bogus value for the first
       // profile
-      obj = _orb->resolve_initial_references ("IORManipulation");
-      TAO_IOP::TAO_IOR_Manipulation_var iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow(obj.in());
+      obj = client_orb->resolve_initial_references ("IORManipulation");
+      TAO_IOP::TAO_IOR_Manipulation_var const iorm =
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (obj.in ());
 
       // Status: The following scenarios appear to work:
       // - first profile invalid host name, second profile valid.
@@ -68,22 +73,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Note that he iormanip is being used since it is not practical
       // to have a test case that depends on a VPN being present.
       //
-      CORBA::Object_var name1 =
-        _orb->string_to_object ("c_orbaloc:iiop:10.0.2.3:6060/xyz");
-      CORBA::Object_var name2 =
-        _orb->string_to_object ("c_orbaloc:iiop:daisnot:7070/xyz");
-      CORBA::String_var name1_ior = _orb->object_to_string (name1.in ());
-      CORBA::String_var name2_ior = _orb->object_to_string (name2.in ());
-
+      CORBA::Object_var const name1 =
+        client_orb->string_to_object ("c_orbaloc:iiop:10.0.2.3:6060/xyz");
+      CORBA::Object_var const name2 =
+        client_orb->string_to_object ("c_orbaloc:iiop:daisnot:7070/xyz");
       // create a callback object
-      Callee_i *callee_i = new Callee_i;
+      PortableServer::ServantBase_var callee_i = new Callee_i;
       // get the CORBA reference
       PortableServer::ObjectId_var id =
-        poa->activate_object (callee_i);
+        poa->activate_object (callee_i.in ());
 
-      CORBA::Object_var object_act = poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = poa->id_to_reference (id.in ());
 
-      Callee_var callee = Callee::_narrow (object_act.in ());
+      Callee_var const callee = Callee::_narrow (object_act.in ());
 
       if (CORBA::is_nil (callee.in ()))
         {
@@ -92,14 +94,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       else
         {
-          CORBA::String_var str = _orb->object_to_string (callee.in ());
-          FILE *output_file = ACE_OS::fopen ("ior", "w");
-          if (output_file == nullptr)
+          CORBA::String_var const str = client_orb->object_to_string (callee.in ());
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (ACE_OS::fopen ("ior", "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                               "Cannot open output file for writing IOR: ior\n"),
                               1);
-          ACE_OS::fprintf (output_file, "%s", str.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", str.in ());
         }
 
       // create a reference with two profiles with the first on being
@@ -110,23 +111,23 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       iors [0] = name1;
       iors [1] = name2;
 
-      CORBA::Object_var merged = iorm->merge_iors (iors);
-      Callee_var double_callee = Callee::_unchecked_narrow (merged.in ());
+      CORBA::Object_var const merged = iorm->merge_iors (iors);
+      Callee_var const double_callee = Callee::_unchecked_narrow (merged.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Profile count is %d\n",
                   iorm->get_profile_count (merged.in ())));
 
       simple->registerCallee (double_callee.in ());
 
-      ACE_OS::sleep(120);
+      ACE_OS::sleep (120);
 
       ACE_DEBUG ((LM_DEBUG, "done sleeping\n"));
 
-      _orb->shutdown (true);
+      client_orb->shutdown (true);
     }
   catch (::CORBA::Exception const &ex)
     {
-      ex._tao_print_exception("Caught unexpected CORBA exception :");
+      ex._tao_print_exception ("Caught unexpected CORBA exception :");
     }
   return 0;
 }
