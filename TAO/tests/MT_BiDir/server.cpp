@@ -8,9 +8,12 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "ace/Manual_Event.h"
 
-const ACE_TCHAR *ior_output_file = 0;
-static int no_iterations = 10;
-static int no_clients = 2;
+namespace
+{
+  ACE_TCHAR const *ior_output_file = nullptr;
+  int no_iterations = 10;
+  int no_clients = 2;
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -51,13 +54,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -65,10 +68,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Policies for the childPOA to be created.
@@ -101,7 +104,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Manual_Event manual_event;
 
-      Sender_i *sender = 0;
+      Sender_i *sender = nullptr;
       ACE_NEW_RETURN (sender,
                       Sender_i (no_clients,
                                 manual_event),
@@ -112,19 +115,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var id =
         child_poa->activate_object (sender);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         child_poa->id_to_reference (id.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+          if (output_file == nullptr)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
@@ -135,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
       // Get the main thread id..
-      ACE_thread_t thr_id = ACE_Thread::self ();
+      ACE_thread_t const thr_id = ACE_Thread::self ();
 
       Server_Task server_task (sender,
                                manual_event,
@@ -165,7 +168,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

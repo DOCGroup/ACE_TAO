@@ -5,7 +5,10 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "Client_Task.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+namespace
+{
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -37,13 +40,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -51,10 +54,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Policies for the childPOA to be created.
@@ -85,10 +88,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (ior);
 
-      Sender_var sender =
+      Sender_var const sender =
         Sender::_narrow (object.in ());
 
       if (CORBA::is_nil (sender.in ()))
@@ -110,9 +113,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var id =
         root_poa->activate_object (receiver);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Receiver_var receiver_obj =
+      Receiver_var const receiver_obj =
         Receiver::_narrow (object_act.in ());
 
       // Send the callback object to the server
@@ -138,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

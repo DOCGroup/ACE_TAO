@@ -41,7 +41,7 @@ Server_Task::svc ()
 
       for (int i = 0; i != this->no_iterations_; ++i)
         {
-          if (i%50 == 0)
+          if (i % 50 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sending message ....\n"));
 
           this->sender_->send_message ();
@@ -62,7 +62,7 @@ Server_Task::svc ()
 
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception in iteration.\n");
     }

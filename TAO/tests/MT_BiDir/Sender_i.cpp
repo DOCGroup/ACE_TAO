@@ -1,16 +1,16 @@
 #include "Sender_i.h"
 #include "ace/Manual_Event.h"
+#include <new>
 
 Sender_i::Sender_i (CORBA::ULong no_clients,
                     ACE_Manual_Event &event)
   : event_ (event)
-  , receivers_ (0)
   , no_clients_ (no_clients)
-  , last_index_ (0)
   , payload_ (32768)
 {
-  ACE_NEW (this->receivers_,
-           Receiver_var [no_clients]);
+  this->receivers_.reset (new (std::nothrow) Receiver_var[no_clients]);
+  if (!this->receivers_)
+    throw CORBA::NO_MEMORY ();
 
   // Okay to have a magic number...
   this->payload_.length (32768);
@@ -19,17 +19,12 @@ Sender_i::Sender_i (CORBA::ULong no_clients,
     this->payload_[j] = (j % 256);
 }
 
-Sender_i::~Sender_i ()
-{
-  delete []this->receivers_;
-}
-
 CORBA::Long
 Sender_i::receiver_object (Receiver_ptr recv)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
-                    this->mutex_,-1);
+                    this->mutex_, -1);
 
   if (this->no_clients_ == this->last_index_)
     throw Sender::Table_Full ();
