@@ -1,23 +1,22 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
-int shutdown_server = 0;
+namespace
+{
+  ACE_TCHAR const *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
         ior = get_opts.opt_arg ();
-        break;
-      case 's':
-        shutdown_server = 1;
         break;
       case '?':
       default:
@@ -33,21 +32,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test_var server =
+      Test_var const server =
         Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
@@ -57,18 +55,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              ior),
                             1);
         }
-
-
       server->test_method ();
-      result = 0;
-
-
       orb->destroy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
-      result = 1;
+      return 1;
     }
 
-  return result;
+  return 0;
 }
