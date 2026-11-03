@@ -2,11 +2,11 @@
 
 #if (TAO_HAS_HTTP_PARSER == 1)
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "tao/debug.h"
 #include <cstring>
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -93,7 +93,7 @@ TAO_HTTP_Reader::send_request ()
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
-  int const len = ACE_OS::sprintf (mesg, "%s %s %s", request_prefix_,
+  int const len = std::sprintf (mesg, "%s %s %s", request_prefix_,
                                    ACE_TEXT_ALWAYS_CHAR (filename_),
                                    request_suffix_);
 

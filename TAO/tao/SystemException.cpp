@@ -8,7 +8,6 @@
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/Dynamic_Service.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -18,6 +17,7 @@
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
 #include <cstring>
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/SystemException.inl"
@@ -373,7 +373,7 @@ CORBA::SystemException::_info () const
         default:
           {
             // 7 bits of some other errno.
-            ACE_OS::sprintf (unknown_errno,
+            std::sprintf (unknown_errno,
                              "low 7 bits of errno: %3u %s",
                              minor_code, ACE_OS::strerror (minor_code));
 
@@ -382,7 +382,7 @@ CORBA::SystemException::_info () const
         }
 
       char buffer[BUFSIZ];
-      ACE_OS::sprintf (buffer,
+      std::sprintf (buffer,
                        "TAO exception, "
                        "minor code = %x (%s; %s), "
 #if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
@@ -415,7 +415,7 @@ CORBA::SystemException::_info () const
         minor_description = "*unknown description*";
 
       char buffer[BUFSIZ];
-      ACE_OS::sprintf (buffer,
+      std::sprintf (buffer,
                        "OMG minor code (%d), "
                        "described as '%s', "
 #if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
@@ -435,7 +435,7 @@ CORBA::SystemException::_info () const
   else
     {
       char buffer[BUFSIZ];
-      ACE_OS::sprintf (buffer,
+      std::sprintf (buffer,
                        "Unknown vendor minor code id (%x), "
 #if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
                        "minor code = %x, completed = %s; ",

@@ -13,6 +13,7 @@
 #include "tao/SystemException.h"
 #include "tao/ZIOP_Adapter.h"
 #include <algorithm>
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,7 +36,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   const int nibbles = 2 * sizeof (size_t);
   char hex_string[nibbles + 1];
-  ACE_OS::sprintf (hex_string,
+  std::sprintf (hex_string,
                    "%8.8X",
                    transport->id ());
   hex_string[nibbles] = '\0';
@@ -678,7 +679,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   if (TAO_debug_level > 9)
     {
       char buf[48];
-      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
+      std::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
                        transport->id ());
       //due to alignment data block has an offset which needs to be corrected
       this->dump_msg (buf,
@@ -799,7 +800,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (TAO_debug_level > 9)
     {
       char buf[48];
-      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
+      std::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
                        params.transport_->id ());
       this->dump_msg (buf,
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),

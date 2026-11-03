@@ -16,13 +16,13 @@
 # include "tao/IIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
 
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 #include <cstring>
+#include <cstdio>
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -199,11 +199,11 @@ TAO_IIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 
 #if defined (ACE_HAS_IPV6)
   if (this->is_ipv6_decimal_)
-    ACE_OS::sprintf (buffer, "[%s]:%d",
+    std::sprintf (buffer, "[%s]:%d",
                      this->host_.in (), this->port_);
   else
 #endif /* ACE_HAS_IPV6 */
-  ACE_OS::sprintf (buffer, "%s:%d",
+  std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
 
   return 0;
