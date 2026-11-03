@@ -17,6 +17,8 @@
 #include "orbsvcs/Trader/Offer_Iterators.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class LOCK_TYPE> class TAO_Service_Offer_Iterator;
@@ -83,11 +85,18 @@ public:
 
   struct Offer_Map_Entry
   {
-    TAO_Offer_Map* offer_map_;
+    Offer_Map_Entry () = default;
+    Offer_Map_Entry (Offer_Map_Entry const&) = delete;
+    Offer_Map_Entry& operator= (Offer_Map_Entry const&) = delete;
+    Offer_Map_Entry (Offer_Map_Entry&&) = delete;
+    Offer_Map_Entry& operator= (Offer_Map_Entry&&) = delete;
+
+    std::unique_ptr<TAO_Offer_Map> offer_map_;
     CORBA::ULong counter_;
     LOCK_TYPE lock_;
   };
 
+  // The database explicitly manages the lifetime of each map entry.
   using Offer_Database = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                                   Offer_Map_Entry*,
                                                   ACE_Hash<CORBA::String_var>,

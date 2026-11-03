@@ -39,8 +39,6 @@ TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database ()
             CosTrading::Offer* offer = (*offer_iter).int_id_;
             delete offer;
           }
-
-        delete offer_map_entry->offer_map_;
       }
 
       delete offer_map_entry;
@@ -63,7 +61,11 @@ insert_offer (const char* type, CosTrading::Offer* offer)
 
       Offer_Map_Entry* new_offer_map_entry = nullptr;
       ACE_NEW_RETURN (new_offer_map_entry, Offer_Map_Entry, 0);
-      ACE_NEW_RETURN (new_offer_map_entry->offer_map_, TAO_Offer_Map, 0);
+      // Keep ownership until the database map accepts the new entry.
+      std::unique_ptr<Offer_Map_Entry> new_offer_map_entry_owner (new_offer_map_entry);
+      TAO_Offer_Map* offer_map = nullptr;
+      ACE_NEW_RETURN (offer_map, TAO_Offer_Map, 0);
+      new_offer_map_entry->offer_map_.reset (offer_map);
       new_offer_map_entry->counter_ = 1;
 
       if (this->db_lock_.release () == -1)
@@ -72,9 +74,13 @@ insert_offer (const char* type, CosTrading::Offer* offer)
         {
           // Add the new entry; upgrade lock.
           ACE_WRITE_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
-          this->offer_db_.bind (service_type,
-                                new_offer_map_entry,
-                                database_entry);
+          int const bind_result = this->offer_db_.bind (service_type,
+                                                        new_offer_map_entry,
+                                                        database_entry);
+          if (bind_result == 0)
+            new_offer_map_entry_owner.release ();
+          else if (bind_result == -1)
+            return 0;
         }
 
       if (this->db_lock_.acquire_read () == -1)
@@ -138,7 +144,6 @@ remove_offer (const char* type, CORBA::ULong id)
                 return -1;
 
               // Delete the database resources for this type.
-              delete offer_map_entry->offer_map_;
               delete offer_map_entry;
             }
         }
