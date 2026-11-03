@@ -4,6 +4,8 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -30,6 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
+}
 }
 
 int
@@ -99,12 +102,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Callback_i *callback_impl = nullptr;
+      Callback_i *callback_impl {};
       ACE_NEW_THROW_EX (callback_impl,
                         Callback_i (orb.in ()),
                         CORBA::NO_MEMORY ());
 
-      PortableServer::ServantBase_var owner_transfer(callback_impl);
+      PortableServer::ServantBase_var owner_transfer (callback_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (callback_impl);
