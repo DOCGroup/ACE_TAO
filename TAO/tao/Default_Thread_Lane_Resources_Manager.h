@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Thread_Lane_Resources_Manager.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -76,7 +77,7 @@ private:
 
 protected:
   /// Default lane resources.
-  TAO_Thread_Lane_Resources * const lane_resources_;
+  std::unique_ptr<TAO_Thread_Lane_Resources> const lane_resources_;
 };
 
 /**

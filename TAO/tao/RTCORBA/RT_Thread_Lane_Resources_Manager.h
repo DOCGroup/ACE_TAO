@@ -23,6 +23,7 @@
 #include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "ace/Service_Config.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -83,11 +84,11 @@ private:
     TAO_RT_Thread_Lane_Resources_Manager &&) = delete;
 
 protected:
-  /// Default lane resources.
-  TAO_Thread_Lane_Resources *default_lane_resources_ {};
-
   /// Thread Pool Manager.
-  TAO_Thread_Pool_Manager *tp_manager_ {};
+  std::unique_ptr<TAO_Thread_Pool_Manager> tp_manager_ {};
+
+  /// Default lane resources.
+  std::unique_ptr<TAO_Thread_Lane_Resources> default_lane_resources_ {};
 };
 
 /**

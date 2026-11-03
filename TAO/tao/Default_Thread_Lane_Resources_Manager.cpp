@@ -9,15 +9,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Thread_Lane_Resources_Manager::TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
-    lane_resources_ (new TAO_Thread_Lane_Resources (orb_core))
+    lane_resources_ (std::make_unique<TAO_Thread_Lane_Resources> (orb_core))
 {
 }
 
-TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Manager ()
-{
-  // Delete the default resources.
-  delete this->lane_resources_;
-}
+TAO_Default_Thread_Lane_Resources_Manager::~TAO_Default_Thread_Lane_Resources_Manager () = default;
 
 int
 TAO_Default_Thread_Lane_Resources_Manager::open_default_resources ()

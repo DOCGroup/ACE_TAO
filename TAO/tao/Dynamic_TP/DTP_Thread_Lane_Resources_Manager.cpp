@@ -17,22 +17,19 @@ TAO_DTP_Thread_Lane_Resources_Manager::TAO_DTP_Thread_Lane_Resources_Manager
     : TAO_Thread_Lane_Resources_Manager (orb_core)
 {
   // Create the default resources.
-  ACE_NEW (this->default_lane_resources_,
+  TAO_Thread_Lane_Resources *default_lane_resources = nullptr;
+  ACE_NEW (default_lane_resources,
            TAO_Thread_Lane_Resources (orb_core));
+  this->default_lane_resources_.reset (default_lane_resources);
 
   // Create the thread-pool manager.
-  ACE_NEW (this->tp_manager_,
+  TAO_DTP_Thread_Pool_Manager *tp_manager = nullptr;
+  ACE_NEW (tp_manager,
            TAO_DTP_Thread_Pool_Manager (orb_core));
+  this->tp_manager_.reset (tp_manager);
 }
 
-TAO_DTP_Thread_Lane_Resources_Manager::~TAO_DTP_Thread_Lane_Resources_Manager ()
-{
-  // Delete the default resources.
-  delete this->default_lane_resources_;
-
-  // Delete the thread-pool manager.
-  delete this->tp_manager_;
-}
+TAO_DTP_Thread_Lane_Resources_Manager::~TAO_DTP_Thread_Lane_Resources_Manager () = default;
 
 int
 TAO_DTP_Thread_Lane_Resources_Manager::open_default_resources ()
