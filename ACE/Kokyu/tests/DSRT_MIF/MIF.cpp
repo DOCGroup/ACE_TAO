@@ -1,15 +1,15 @@
 #include "ace/ACE.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
-#include "ace/Atomic_Op.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Barrier.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Countdown_Time.h"
+#include <atomic>
 
 #include "Kokyu_dsrt.h"
 
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> guid=0;
+std::atomic<long> guid {0};
 
 struct mif_scheduler_traits
 {
@@ -34,7 +34,7 @@ struct mif_scheduler_traits
 
   struct Guid_Hash
   {
-    u_long operator () (const Guid_t& guid)
+    u_long operator () (Guid_t guid) const
     {
       return guid;
     }
@@ -49,18 +49,23 @@ public:
           Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher,
           mif_scheduler_traits::QoSDescriptor_t& qos,
           int exec_duration)
-    :barrier_ (bar),
+    : barrier_ (bar),
      dispatcher_ (dispatcher),
      qos_ (qos),
      guid_ (++guid),
      exec_duration_ (exec_duration)
   {}
 
-  int svc ();
+  MyTask (MyTask const &) = delete;
+  MyTask (MyTask &&) = delete;
+  MyTask &operator= (MyTask const &) = delete;
+  MyTask &operator= (MyTask &&) = delete;
+
+  int svc () override;
 
  private:
   ACE_Barrier& barrier_;
-  Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher_;
+  Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher_; // Non-owning.
   mif_scheduler_traits::QoSDescriptor_t qos_;
   mif_scheduler_traits::Guid_t guid_;
   int exec_duration_;
@@ -72,7 +77,7 @@ int MyTask::svc ()
   ACE_Thread::self (thr_handle);
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): task activated\n"));
-  ACE_ASSERT (dispatcher_ != 0);
+  ACE_ASSERT (dispatcher_ != nullptr);
 
   (void) dispatcher_->schedule (guid_, qos_);
 
@@ -118,7 +123,7 @@ int MyTask::svc ()
 
 
 
-int ACE_TMAIN (int,ACE_TCHAR**)
+int ACE_TMAIN (int, ACE_TCHAR **)
 {
   Kokyu::DSRT_ConfigInfo config_info;
 
@@ -137,7 +142,7 @@ int ACE_TMAIN (int,ACE_TCHAR**)
 
   ACE_DEBUG ((LM_DEBUG, "after create_dispatcher\n" ));
 
-  ACE_ASSERT (disp.get () != 0);
+  ACE_ASSERT (disp.get () != nullptr);
 
   mif_scheduler_traits::QoSDescriptor_t qos1, qos2, qos3;
 
