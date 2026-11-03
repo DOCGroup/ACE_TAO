@@ -180,6 +180,7 @@ char const * TAO::FT_FaultDetectorFactory_i::identity () const
 int TAO::FT_FaultDetectorFactory_i::idle (int & result)
 {
   ACE_UNUSED_ARG (result);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->internals_, 1);
   bool quit = this->quit_requested_;
   if (!quit && this->detectors_.size() == this->empty_slots_)
   {
