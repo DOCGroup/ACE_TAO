@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cstring>
+#include <memory>
 
 #include "HTBP_ID_Requestor.h"
 #include "HTBP_Environment.h"
@@ -78,12 +79,23 @@ ACE::HTBP::ID_Requestor::connect_to_server (ACE_SOCK_Stream *cli_stream)
 int
 ACE::HTBP::ID_Requestor::send_request (ACE_SOCK_Stream *cli_stream)
 {
-  char *buffer;
-  ACE_NEW_RETURN (buffer, char[this->url_.length()+16],-1);
-  std::unique_ptr<char[]> guard (buffer);
-  std::sprintf (buffer, "GET %s HTTP/1.0\n\n",
-                   ACE_TEXT_ALWAYS_CHAR(url_.c_str()));
-  int result = cli_stream->send_n (buffer, std::strlen (buffer));
+  char const *url = nullptr;
+#if defined (ACE_USES_WCHAR)
+  ACE_Wide_To_Ascii narrow_url (this->url_.c_str ());
+  url = narrow_url.char_rep ();
+#else
+  url = this->url_.c_str ();
+#endif
+  if (url == nullptr)
+    return -1;
+
+  size_t const buffer_size = std::strlen (url) + std::strlen ("GET  HTTP/1.0\n\n") + 1;
+  char *request_buffer = nullptr;
+  ACE_NEW_RETURN (request_buffer, char[buffer_size], -1);
+  std::unique_ptr<char[]> buffer (request_buffer);
+
+  std::snprintf (buffer.get (), buffer_size, "GET %s HTTP/1.0\n\n", url);
+  int result = cli_stream->send_n (buffer.get (), buffer_size - 1);
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P|%t) ACE::HTBP::ID_Requestor::")
