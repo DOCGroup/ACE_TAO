@@ -536,7 +536,7 @@ namespace ACE_RMCast
 
     Data (Header const& h, istream& is)
         : Profile (h),
-          buf_ (0),
+          buf_ (nullptr),
           size_ (h.size ()),
           capacity_ (size_)
     {
@@ -549,7 +549,7 @@ namespace ACE_RMCast
 
     Data (void const* buf, size_t s, size_t capacity = 0)
         : Profile (id),
-          buf_ (0),
+          buf_ (nullptr),
           size_ (s),
           capacity_ (capacity < size_ ? size_ : capacity)
     {
@@ -577,7 +577,7 @@ namespace ACE_RMCast
 
     Data (Data const& d)
         : Profile (d),
-          buf_ (0),
+          buf_ (nullptr),
           size_ (d.size_),
           capacity_ (d.capacity_)
     {

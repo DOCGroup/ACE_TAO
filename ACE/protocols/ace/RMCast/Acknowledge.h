@@ -61,7 +61,7 @@ namespace ACE_RMCast
       bool
       lost () const
       {
-        return m_.get () == 0;
+        return m_.get () == nullptr;
       }
 
     public:

@@ -28,7 +28,7 @@ namespace ACE_RMCast
         stop_ (false)
 
   {
-    ACE_OS::srand ((unsigned int) ACE_OS::time (0));
+    ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time (nullptr)));
 
 
     rsock_.set_option (IP_MULTICAST_LOOP, 0);
