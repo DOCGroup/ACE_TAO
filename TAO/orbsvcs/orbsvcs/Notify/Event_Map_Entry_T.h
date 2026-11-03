@@ -16,11 +16,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
 #include "tao/ORB_Constants.h"
 #include "tao/orbconf.h"
 
+#include <atomic>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -80,7 +80,7 @@ protected:
   int count_ {};
 
   /// Count of users accessing this entry.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> usage_count_;
+  std::atomic<int> usage_count_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

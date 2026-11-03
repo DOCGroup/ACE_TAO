@@ -14,6 +14,8 @@ TAO_Notify_AdminProperties::TAO_Notify_AdminProperties ()
   , max_suppliers_ (CosNotification::MaxSuppliers, 0)
   , reject_new_events_ (CosNotification::RejectNewEvents, 0)
   , global_queue_not_full_ (global_queue_lock_)
+  , consumers_ (0)
+  , suppliers_ (0)
 {
 }
 

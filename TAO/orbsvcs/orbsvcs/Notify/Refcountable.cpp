@@ -64,6 +64,7 @@ TAO_Notify_Refcountable::diagnostic_dump( const char* title )
 
 
 TAO_Notify_Refcountable::TAO_Notify_Refcountable ()
+  : refcount_ (0)
 {
 }
 
@@ -74,7 +75,7 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
   if ( e.obj != nullptr )
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d destroyed incorrectly.\n",
-        e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.value() ));
+        e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.load () ));
 
     if ( e.obj != this || e.obj->ref_id_ != this->ref_id_ )
     {
@@ -84,7 +85,7 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
     TAO_Notify_Tracker::get_instance().remove( this );
   }
 #endif
-  CORBA::ULong refcount = this->refcount_.value();
+  CORBA::ULong refcount = this->refcount_.load ();
   ACE_ASSERT( refcount == 0 );
   ACE_UNUSED_ARG(refcount);
 }
@@ -160,7 +161,7 @@ TAO_Notify_Tracker::dump( const char* title )
   while ( iter != map_.end() )
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d.\n",
-      iter->second.obj, iter->second.class_name, iter->first, iter->second.obj->refcount_.value() ));
+      iter->second.obj, iter->second.class_name, iter->first, iter->second.obj->refcount_.load () ));
     iter++;
   }
 

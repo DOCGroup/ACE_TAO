@@ -23,7 +23,6 @@
 
 #include "tao/orbconf.h"
 
-#include "ace/Atomic_Op.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Condition_Thread_Mutex.h"
 
