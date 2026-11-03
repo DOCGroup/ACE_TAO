@@ -1,6 +1,5 @@
 #include "testS.h"
-
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
+#include <memory>
 
 class Test_impl : public virtual POA_Test
 {
@@ -33,28 +32,30 @@ Test_impl::shutdown ()
 AnySeq *
 Test_impl::RunTest (AnySeq const &params)
 {
-  ACE_DEBUG ((LM_DEBUG, "RunTest: params.length == %d\n", params.length ()));
+  ACE_DEBUG ((LM_DEBUG, "RunTest: params.length == %d\n",
+              params.length ()));
   for (CORBA::ULong count = 0; count < params.length (); ++count)
   {
-    Container const *container = nullptr;
+    Container const *container {};
     if (!(params[count] >>= container))
     {
       ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
     }
     else
     {
-      Inner const *inner = nullptr;
+      Inner const *inner {};
       if (!(container->contents >>= inner))
       {
         ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
       }
       else
-        ACE_DEBUG ((LM_DEBUG, "%d %d %d %d %d\n", inner->value1, inner->value2, inner->value3, inner->value4, inner->value5));
+        ACE_DEBUG ((LM_DEBUG, "%d %d %d %d %d\n",
+                    inner->value1, inner->value2, inner->value3, inner->value4, inner->value5));
     }
   }
 
-  AnySeq *result = new AnySeq (params);
-  return result;
+  AnySeq_var result = new AnySeq (params);
+  return result._retn ();
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -62,47 +63,49 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      ACE_TCHAR const * const ior_output_file = ACE_TEXT ("server.ior");
 
       // Get reference to Root POA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
-      PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var const mgr = root_poa->the_POAManager ();
 
-      PortableServer::LifespanPolicy_var lifespan =
+      PortableServer::LifespanPolicy_var const lifespan =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
       CORBA::PolicyList policy_list;
       policy_list.length (1);
       policy_list[0] = PortableServer::LifespanPolicy::_duplicate (
                                                          lifespan.in ());
-      PortableServer::POA_var persistent_poa =
+      PortableServer::POA_var const persistent_poa =
         root_poa->create_POA ("PersistentPOA", mgr.in (),
                               policy_list);
       lifespan->destroy ();
 
-      Test_impl *test_servant = nullptr;
+      Test_impl *test_servant {};
       ACE_NEW_RETURN (test_servant,
                       Test_impl (orb.in ()),
                       1);
+      // The ServantBase_var takes ownership of the allocated servant.
       PortableServer::ServantBase_var receiver_owner_transfer (test_servant);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         persistent_poa->activate_object (test_servant);
 
-      obj =
-        persistent_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = persistent_poa->id_to_reference (id.in ());
 
-      CORBA::String_var ior = orb->object_to_string (obj.in ());
+      CORBA::String_var const ior = orb->object_to_string (object.in ());
 
-      // Output the IOR to the <ior_output_file>
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        // Output the IOR to the <ior_output_file>.
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s\n",
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       // Activate POA manager
       mgr->activate ();
@@ -110,16 +113,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Accept requests
       orb->run ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught: ");
       return 1;
     }
   return 0;
 }
-
-
-
-
-
 

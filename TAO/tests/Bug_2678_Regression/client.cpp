@@ -1,13 +1,11 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -30,18 +28,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      // The selected IOR points to either this literal or an argv entry.
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var const tmp = orb->string_to_object (ior);
 
-      Test_var hello = Test::_narrow (tmp.in ());
+      Test_var const hello = Test::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -63,33 +63,33 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       mycontainer.contents <<= myinner;
       myseq[0] <<= mycontainer;
       myseq[1] <<= mycontainer;
-      AnySeq_var params = hello->RunTest (myseq);
+      AnySeq_var const params = hello->RunTest (myseq);
 
       for (CORBA::ULong count = 0; count < params->length (); ++count)
       {
-        Container const *container = nullptr;
+        Container const *container {};
         if (!(params[count] >>= container))
         {
           ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
         }
         else
         {
-          Inner const *inner = nullptr;
+          Inner const *inner {};
           if (!(container->contents >>= inner))
           {
             ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
           }
           else
-            ACE_DEBUG ((LM_DEBUG, "%d %d %d %d %d\n", inner->value1, inner->value2, inner->value3, inner->value4, inner->value5));
+            ACE_DEBUG ((LM_DEBUG, "%d %d %d %d %d\n",
+                        inner->value1, inner->value2, inner->value3, inner->value4, inner->value5));
         }
       }
-
 
       hello->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
