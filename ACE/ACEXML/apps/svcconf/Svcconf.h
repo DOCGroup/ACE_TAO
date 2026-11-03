@@ -24,11 +24,15 @@ class ACEXML_Svcconf_Parser : public ACE_XML_Svc_Conf
 public:
   ACEXML_Svcconf_Parser ();
 
-  virtual ~ACEXML_Svcconf_Parser ();
+  ~ACEXML_Svcconf_Parser () override = default;
+  ACEXML_Svcconf_Parser (ACEXML_Svcconf_Parser const &) = delete;
+  ACEXML_Svcconf_Parser (ACEXML_Svcconf_Parser &&) = delete;
+  ACEXML_Svcconf_Parser &operator= (ACEXML_Svcconf_Parser const &) = delete;
+  ACEXML_Svcconf_Parser &operator= (ACEXML_Svcconf_Parser &&) = delete;
 
-  virtual int parse_file (const ACE_TCHAR file[]);
+  int parse_file (ACE_TCHAR const file[]) override;
 
-  virtual int parse_string (const ACE_TCHAR str[]);
+  int parse_string (ACE_TCHAR const str[]) override;
 
 protected:
   ACEXML_Parser parser_;
