@@ -3,12 +3,15 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
+namespace
+{
 ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
-CORBA::ULong peer_count    = 4;
-CORBA::ULong payload_size  = 1024;
-CORBA::ULong message_count = 1000;
-CORBA::ULong thread_count  = 4;
+CORBA::ULong peer_count {4};
+CORBA::ULong payload_size {1024};
+CORBA::ULong message_count {1000};
+CORBA::ULong thread_count {4};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -55,6 +58,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
+}
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -81,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Coordinator *coordinator_impl = nullptr;
+      Coordinator *coordinator_impl {};
       ACE_NEW_RETURN (coordinator_impl,
                       Coordinator (peer_count),
                       1);
@@ -101,14 +105,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (coordinator.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       ACE_DEBUG ((LM_DEBUG, "Waiting for peers . . . "));
       for (int i = 0;
@@ -129,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Building session list . . . "));
 
-      Session_Control *session_control_impl = nullptr;
+      Session_Control *session_control_impl {};
       ACE_NEW_RETURN (session_control_impl,
                       Session_Control (peer_count),
                       1);

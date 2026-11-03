@@ -34,7 +34,7 @@ Session::svc ()
         }
 
       // Get the number of peers just once.
-      CORBA::ULong session_count =
+      CORBA::ULong const session_count =
         this->other_sessions_.length ();
 
       this->validate_connections ();
@@ -82,7 +82,7 @@ Session::svc ()
 void
 Session::validate_connections ()
 {
-  CORBA::ULong session_count =
+  CORBA::ULong const session_count =
     this->other_sessions_.length ();
   for (CORBA::ULong i = 0; i != 100; ++i)
     {

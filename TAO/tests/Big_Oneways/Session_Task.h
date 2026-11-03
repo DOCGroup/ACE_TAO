@@ -26,7 +26,7 @@ public:
   int svc () override;
 
 private:
-  /// Reference to the test interface
+  /// Non-owning pointer to the Session that runs this task.
   Session *session_;
 };
 

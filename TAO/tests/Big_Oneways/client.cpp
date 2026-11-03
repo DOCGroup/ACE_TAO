@@ -2,6 +2,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 
+namespace
+{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -28,6 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
+}
 }
 
 int
@@ -69,11 +72,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Peer *peer_impl = nullptr;
+      Peer *peer_impl {};
       ACE_NEW_RETURN (peer_impl,
                       Peer (orb.in ()),
                       1);
-      PortableServer::ServantBase_var peer_owner_transfer(peer_impl);
+      PortableServer::ServantBase_var peer_owner_transfer (peer_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (peer_impl);
