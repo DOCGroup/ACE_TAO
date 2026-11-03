@@ -21,12 +21,7 @@
 
 // Constructor.p
 Options::Options ()
-  : ior_ (CORBA::string_dup ("file://test.ior")),
-    test_type_ (Options::Test_Type::None),
-    invoke_type_ (Options::Invoke_Type::SII),
-    loop_count_ (1),
-    debug_ (false),
-    shutdown_ (false)
+  : ior_ (CORBA::string_dup ("file://test.ior"))
 {
 }
 
@@ -52,7 +47,7 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
         break;
 
       case 'n':                 // loop count
-        this->loop_count_ = (CORBA::ULong) ACE_OS::atoi (get_opts.opt_arg ());
+        this->loop_count_ = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
 
       case 'f':
@@ -102,7 +97,7 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
 
 // Get the factory IOR from the file created by the server.
 int
-Options::read_ior (ACE_TCHAR *filename)
+Options::read_ior (ACE_TCHAR const* filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -146,13 +141,13 @@ Options::loop_count () const
   return this->loop_count_;
 }
 
-CORBA::Boolean
+bool
 Options::debug () const
 {
   return this->debug_;
 }
 
-CORBA::Boolean
+bool
 Options::shutdown () const
 {
   return this->shutdown_;

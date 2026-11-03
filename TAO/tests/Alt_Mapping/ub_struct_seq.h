@@ -46,15 +46,15 @@ public:
   int reset_parameters ();
 
   /// check if results are valid
-  CORBA::Boolean check_validity () const;
+  bool check_validity () const;
 
   /// print all the values
   void print_values () const;
 
 protected:
   /// compare
-  CORBA::Boolean compare (Alt_Mapping::StructSeq const &s1,
-                          Alt_Mapping::StructSeq const &s2) const;
+  bool compare (Alt_Mapping::StructSeq const &s1,
+                Alt_Mapping::StructSeq const &s2) const;
 
   /// print individual sequence
   void print_sequence (Alt_Mapping::StructSeq const &s) const;

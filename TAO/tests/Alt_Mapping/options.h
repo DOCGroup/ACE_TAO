@@ -65,23 +65,23 @@ public:
   CORBA::ULong loop_count () const;
 
   /// whether debug option is on or not
-  CORBA::Boolean debug () const;
+  bool debug () const;
 
   /// If we should request the server to shutdown.
-  CORBA::Boolean shutdown () const;
+  bool shutdown () const;
 
 private:
   /// Function to read the servant IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const* filename);
 
   /// IOR for the servant
   CORBA::String_var ior_;
 
   /// what test to run
-  Test_Type test_type_;
+  Test_Type test_type_ {Test_Type::None};
 
   /// whether SII or DII
-  Invoke_Type invoke_type_;
+  Invoke_Type invoke_type_ {Invoke_Type::SII};
 
   /// Number of times to do the "test_*" operations.
   CORBA::ULong loop_count_ {};

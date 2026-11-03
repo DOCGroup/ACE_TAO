@@ -46,14 +46,11 @@ Driver::init (int argc, ACE_TCHAR **argv)
   // environment to track exceptions
 
   // retrieve the instance of Options
-  Options *opt = OPTIONS::instance ();
-
-  char exception_string[256];
+  Options* opt = OPTIONS::instance ();
+  char const* exception_string = "ORB Initialization";
 
   try
     {
-      ACE_OS::strcpy (exception_string, "ORB Initialization");
-
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
@@ -66,7 +63,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
                            "parse_args failed\n"),
                           -1);
       // Retrieve a Param_Test object reference
-      ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
+      exception_string = "ORB::string_to_object() failed.";
 
       CORBA::Object_var temp =
         this->orb_->string_to_object (opt->param_test_ior ());
@@ -79,7 +76,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
                           -1);
 
       // Get the object reference
-      ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
+      exception_string = "Param_Test::_narrow () failed.";
 
       this->objref_ = Alt_Mapping::_narrow (temp.in());
     }
@@ -98,7 +95,7 @@ Driver::run ()
   // serves as a factory of Param_Client objects. It is also responsible to
   // start the test
 
-  Options *opt = OPTIONS::instance ();  // get the options object
+  Options const* opt = OPTIONS::instance ();  // get the options object
   int retstatus = -1;
 
   switch (opt->test_type ())

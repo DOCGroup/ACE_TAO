@@ -63,13 +63,13 @@ Test_Unbounded_String::run_sii_test (Alt_Mapping_ptr objref)
   return -1;
 }
 
-CORBA::Boolean
+bool
 Test_Unbounded_String::check_validity () const
 {
-  CORBA::ULong len = this->in_.length ();
+  CORBA::ULong const len = static_cast<CORBA::ULong> (this->in_.length ());
 
-  std::string first_half = this->inout_.substr (0, len);
-  std::string second_half = this->inout_.substr (len, len);
+  std::string const first_half = this->inout_.substr (0, len);
+  std::string const second_half = this->inout_.substr (len, len);
 
   return (this->in_ == this->out_
           && this->in_ == this->ret_
@@ -78,7 +78,7 @@ Test_Unbounded_String::check_validity () const
           && this->in_ == second_half);
 }
 
-CORBA::Boolean
+bool
 Test_Unbounded_String::check_validity (CORBA::Request_ptr ) const
 {
   // No need to retrieve anything because, for all the args and
@@ -91,10 +91,10 @@ Test_Unbounded_String::print_values () const
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"
-              "in with len (%d) = %s\n"
-              "inout with len (%d) = %s\n"
-              "out with len (%d) = %s\n"
-              "ret with len (%d) = %s\n"
+              "in with len (%B) = %s\n"
+              "inout with len (%B) = %s\n"
+              "out with len (%B) = %s\n"
+              "ret with len (%B) = %s\n"
               "\n=*=*=*=*=*=*\n",
               this->in_.length (),
               this->in_.c_str (),

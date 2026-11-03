@@ -45,10 +45,10 @@ public:
   int reset_parameters ();
 
   /// check if results are valid
-  CORBA::Boolean check_validity () const;
+  bool check_validity () const;
 
   /// check if results are valid. This is used for DII results
-  CORBA::Boolean check_validity (CORBA::Request_ptr req) const;
+  bool check_validity (CORBA::Request_ptr req) const;
 
   /// print all the values
   void print_values () const;

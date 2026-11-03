@@ -29,7 +29,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Alt_Mapping_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // Get some sequence length (not more than 10).
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = static_cast<CORBA::ULong> (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
   this->in_.resize (len);
@@ -76,7 +76,7 @@ Test_Unbounded_Struct_Sequence::run_sii_test (
   return -1;
 }
 
-CORBA::Boolean
+bool
 Test_Unbounded_Struct_Sequence::check_validity () const
 {
   return (this->compare (this->in_, this->inout_)
@@ -105,7 +105,7 @@ Test_Unbounded_Struct_Sequence::print_values () const
   this->print_sequence (this->ret_);
 }
 
-CORBA::Boolean
+bool
 Test_Unbounded_Struct_Sequence::compare (
   Alt_Mapping::StructSeq const &s1,
   Alt_Mapping::StructSeq const &s2) const
@@ -149,8 +149,8 @@ Test_Unbounded_Struct_Sequence::print_sequence (
   Alt_Mapping::StructSeq const &s) const
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %B\n"
+              "length = %B\n",
               s.capacity (),
               s.size ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));

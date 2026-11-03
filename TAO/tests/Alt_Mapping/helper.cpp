@@ -12,88 +12,60 @@
 
 
 #include "helper.h"
-#include "ace/OS_NS_ctype.h"
+#include <cctype>
+#include <cstdlib>
 
 CORBA::ULong constexpr TEST_BUFSIZE = 128;
 
-CORBA::Short
-Generator::gen_short ()
-{
-  return (CORBA::Short) (ACE_OS::rand () % TEST_BUFSIZE);
-}
-
 CORBA::Long
-Generator::gen_long ()
+Generator::gen_long () const
 {
-  return ::ACE_OS::rand () % TEST_BUFSIZE;
+  return static_cast<CORBA::Long> (std::rand () % TEST_BUFSIZE);
 }
 
-char *
-Generator::gen_string ()
+std::string
+Generator::gen_string () const
 {
   return gen_string (TEST_BUFSIZE);
 }
 
-char *
-Generator::gen_string (int max_length)
+std::string
+Generator::gen_string (CORBA::ULong max_length) const
 {
-  CORBA::ULong len = (CORBA::ULong) (::ACE_OS::rand () % max_length);
-  char *buf = CORBA::string_alloc (len);
-  CORBA::ULong i = 0;
-
-  while (i < len)
+  if (max_length == 0)
     {
-      int c = ACE_OS::rand () % 128;
-      if (ACE_OS::ace_isprint (c) && !ACE_OS::ace_isspace (c))
+      return {};
+    }
+
+  CORBA::ULong const len = static_cast<CORBA::ULong> (std::rand ()) % max_length;
+  std::string result;
+  result.reserve (len);
+
+  while (result.length () < len)
+    {
+      int const c = std::rand () % 128;
+      if (std::isprint (static_cast<unsigned char> (c)) &&
+          !std::isspace (static_cast<unsigned char> (c)))
         {
-          buf [i] = c;
-          i++;
+          result.push_back (static_cast<char> (c));
         }
     }
 
-  buf[i] = 0;
-  return buf;
-}
-
-CORBA::WChar *
-Generator::gen_wstring ()
-{
-  return gen_wstring (TEST_BUFSIZE);
-}
-
-CORBA::WChar *
-Generator::gen_wstring (int max_length)
-{
-  CORBA::ULong len = (CORBA::ULong) (::ACE_OS::rand () % max_length);
-  CORBA::WChar *buf = CORBA::wstring_alloc (len);
-  CORBA::ULong i = 0;
-  CORBA::WChar limit =
-    ACE_OutputCDR::wchar_maxbytes() == 1 ? ACE_OCTET_MAX : ACE_WCHAR_MAX;
-  while (i < len)
-    {
-      CORBA::WChar wc = ACE_OS::rand () % limit;
-      if (wc)
-        {
-          buf[i] = wc;
-          i++;
-        }
-    }
-
-  buf[i] = 0;
-  return buf;
+  return result;
 }
 
 Alt_Mapping::Fixed_Struct
-Generator::gen_fixed_struct ()
+Generator::gen_fixed_struct () const
 {
-  this->fixed_struct_.l = ACE_OS::rand ();
-  this->fixed_struct_.c = ACE_OS::rand () % 128;
-  this->fixed_struct_.s = (CORBA::Short) ACE_OS::rand ();
-  this->fixed_struct_.o = ACE_OS::rand () % 128;
-  this->fixed_struct_.f = (CORBA::Float) (ACE_OS::rand () * 1.0);
-  this->fixed_struct_.b = (CORBA::Boolean) (ACE_OS::rand () % 2);
-  this->fixed_struct_.d = (ACE_OS::rand () * 1.0);
-  return this->fixed_struct_;
+  Alt_Mapping::Fixed_Struct fixed_struct {};
+  fixed_struct.l = std::rand ();
+  fixed_struct.c = static_cast<CORBA::Char> (std::rand () % 128);
+  fixed_struct.s = static_cast<CORBA::Short> (std::rand ());
+  fixed_struct.o = static_cast<CORBA::Octet> (std::rand () % 128);
+  fixed_struct.f = static_cast<CORBA::Float> (std::rand () * 1.0);
+  fixed_struct.b = static_cast<CORBA::Boolean> (std::rand () % 2);
+  fixed_struct.d = std::rand () * 1.0;
+  return fixed_struct;
 }
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Generator,  ACE_Recursive_Thread_Mutex);
