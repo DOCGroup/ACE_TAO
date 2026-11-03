@@ -16,27 +16,28 @@
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
 using ACE_TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 
-static ACE_Token_Proxy *global_rlock;
-static ACE_Token_Proxy *global_wlock;
+static std::unique_ptr<ACE_Token_Proxy> global_rlock;
+static std::unique_ptr<ACE_Token_Proxy> global_wlock;
 
-static const char *server_host = ACE_DEFAULT_SERVER_HOST;
+static ACE_TCHAR const *server_host = ACE_DEFAULT_SERVER_HOST;
 static int server_port = ACE_DEFAULT_SERVER_PORT;
-static int ignore_deadlock = 0;
+static bool ignore_deadlock = false;
 static int threads = 2;
 static int iterations = 50;
-static int debug = 0;
-static int remote = 0;
+static bool debug = false;
+static bool remote = false;
 static int reads = 4;
-static int write_sleep = 0;
-static int renew = 0;
+static bool write_sleep = false;
+static bool renew = false;
 
-static void *
+static ACE_THR_FUNC_RETURN
 run_thread (void *)
 {
   for (int x = 0; x < iterations; x++)
@@ -52,10 +53,10 @@ run_thread (void *)
                   goto READ_DEADLOCK;
                 }
               else
-                return 0;
+                return ACE_THR_FUNC_RETURN_NULL;
             }
 
-          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_rlock) == 0)
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_rlock.get ()) == 0)
             ACE_ERROR_RETURN ((LM_ERROR, "reader acquire violated invariant.\n"), 0);
 
           ACE_DEBUG ((LM_DEBUG, "(%t) rlock acquired.\n"));
@@ -63,7 +64,7 @@ run_thread (void *)
 
       if (renew)
         {
-          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_rlock);
+          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_rlock.get ());
 
           if (global_rlock->renew () == -1)
             {
@@ -73,12 +74,12 @@ run_thread (void *)
                   goto READ_DEADLOCK;
                 }
               else
-                return 0;
+                return ACE_THR_FUNC_RETURN_NULL;
             }
 
           ACE_DEBUG ((LM_DEBUG, "(%t) rlock renewed.\n"));
 
-          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_rlock) == 0)
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_rlock.get ()) == 0)
             ACE_ERROR_RETURN ((LM_ERROR, "reader renew violated invariant.\n"), 0);
         }
 
@@ -86,7 +87,7 @@ run_thread (void *)
 
       for (; y > 0; y--)
         {
-          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_rlock);
+          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_rlock.get ());
           if (global_rlock->release () == 0)
             ACE_DEBUG ((LM_DEBUG, "(%t) r-released.\n"));
         }
@@ -99,12 +100,12 @@ run_thread (void *)
             ACE_OS::sleep (1);
           ACE_DEBUG ((LM_DEBUG, "\t\t(%t) wlock acquired.\n"));
 
-          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_wlock) == 0)
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_wlock.get ()) == 0)
             ACE_ERROR_RETURN ((LM_ERROR, "writer acquire violated invariant.\n"), 0);
 
           if (renew)
             {
-              ACE_TOKEN_INVARIANTS::instance ()->releasing (global_wlock);
+              ACE_TOKEN_INVARIANTS::instance ()->releasing (global_wlock.get ());
 
               if (global_wlock->renew () == -1)
                 {
@@ -113,16 +114,16 @@ run_thread (void *)
                     ACE_DEBUG ((LM_DEBUG, "wlock deadlock detected during renew\n"));
                   }
                   else
-                    return 0;
+                    return ACE_THR_FUNC_RETURN_NULL;
                 }
 
               ACE_DEBUG ((LM_DEBUG, "(%t) rlock renewed.\n"));
 
-              if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_wlock) == 0)
+              if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_wlock.get ()) == 0)
                 ACE_ERROR_RETURN ((LM_ERROR, "writer renew violated invariant.\n"), 0);
             }
 
-          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_wlock);
+          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_wlock.get ());
 
           if (global_wlock->release () == 0)
             ACE_DEBUG ((LM_DEBUG, "\t\t(%t) w-released.\n"));
@@ -130,7 +131,7 @@ run_thread (void *)
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) thread exiting.\n"));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -146,32 +147,32 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
         case 'h':  // specify the host machine on which the server is running
           server_host = get_opt.opt_arg ();
-          remote = 1;
+          remote = true;
           break;
         case 'p':  // specify the port on which the server is running
           server_port = ACE_OS::atoi (get_opt.opt_arg ());
-          remote = 1;
+          remote = true;
           break;
         case 't':
           threads = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'R':
-          renew = 1;
+          renew = true;
           break;
         case 'r':
           reads = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'd':
-          debug = 1;
+          debug = true;
           break;
         case 's':
-          write_sleep = 1;
+          write_sleep = true;
           break;
         case 'n':
           iterations = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'i':
-          ignore_deadlock = 1;
+          ignore_deadlock = true;
           break;
         case 'u':
           // usage same as unknown.
@@ -209,23 +210,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (remote)
     {
       ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port, server_host));
-      global_rlock = (ACE_Token_Proxy *) new
-                        ACE_Remote_RLock ("THE_TOKEN", ignore_deadlock, debug);
-      global_wlock = (ACE_Token_Proxy *) new
-                        ACE_Remote_WLock ("THE_TOKEN", ignore_deadlock, debug);
+      global_rlock = std::make_unique<ACE_Remote_RLock> (ACE_TEXT ("THE_TOKEN"),
+                                                        ignore_deadlock, debug);
+      global_wlock = std::make_unique<ACE_Remote_WLock> (ACE_TEXT ("THE_TOKEN"),
+                                                        ignore_deadlock, debug);
     }
   else
     {
-      global_rlock = (ACE_Token_Proxy *) new
-                        ACE_Local_RLock ("THE_TOKEN", ignore_deadlock, debug);
-      global_wlock = (ACE_Token_Proxy *) new
-                        ACE_Local_WLock ("THE_TOKEN", ignore_deadlock, debug);
+      global_rlock = std::make_unique<ACE_Local_RLock> (ACE_TEXT ("THE_TOKEN"),
+                                                       ignore_deadlock, debug);
+      global_wlock = std::make_unique<ACE_Local_WLock> (ACE_TEXT ("THE_TOKEN"),
+                                                       ignore_deadlock, debug);
     }
 
   ACE_Thread_Manager mgr;
 
-  if (mgr.spawn_n (threads, ACE_THR_FUNC (run_thread),
-                   (void *) 0,
+  if (mgr.spawn_n (threads, run_thread,
+                   nullptr,
                    THR_BOUND | SUSPEND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
