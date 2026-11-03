@@ -15,13 +15,14 @@ Echo_Caller::Echo_Caller (CORBA::ORB_ptr orb)
 void
 Echo_Caller::start_task (Test::Echo_ptr client)
 {
-  Server_Timer *task =
+  Server_Timer * const task =
     new Server_Timer (client, this->orb_->orb_core ()->reactor ());
+  // The reactor deletes each timer through handle_close after its timer is canceled.
   task->activate ();
 
-  task =
+  Server_Timer * const second_task =
     new Server_Timer (client, this->orb_->orb_core ()->reactor ());
-  task->activate ();
+  second_task->activate ();
 }
 
 void

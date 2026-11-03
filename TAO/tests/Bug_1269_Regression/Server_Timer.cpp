@@ -17,7 +17,7 @@ Server_Timer::Server_Timer (Test::Echo_ptr echo,
 void
 Server_Timer::activate ()
 {
-  ACE_Time_Value tv (0, 20000);
+  ACE_Time_Value const tv (0, 20000);
   this->reactor ()->schedule_timer (this, nullptr, tv);
 }
 
@@ -31,7 +31,7 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 
   try
     {
-      Test::Echo_var echo =
+      Test::Echo_var const echo =
         Test::Echo::_duplicate (this->echo_.in ());
 
       if (CORBA::is_nil (echo.in ()))
@@ -39,7 +39,7 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 
       echo->echo_payload (pload);
 
-      ACE_Time_Value tv (0, 20000);
+      ACE_Time_Value const tv (0, 20000);
       this->reactor ()->schedule_timer (this, nullptr, tv);
     }
     catch (CORBA::Exception const &)
@@ -57,6 +57,7 @@ Server_Timer::handle_timeout (ACE_Time_Value const &, void const *)
 int
 Server_Timer::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
+  // The reactor owns the timer handler and invokes this as its final callback.
   delete this;
   return 0;
 }
