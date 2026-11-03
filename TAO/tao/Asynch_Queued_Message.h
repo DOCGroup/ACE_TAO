@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Time_Value.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
@@ -118,7 +119,7 @@ private:
   size_t offset_;
 
   /// The buffer containing the complete message.
-  char *buffer_;
+  std::unique_ptr<char[]> buffer_;
 
   // Expiration time
   ACE_Time_Value abs_timeout_;

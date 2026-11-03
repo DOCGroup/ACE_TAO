@@ -30,14 +30,16 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
       this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
     }
   // @@ Use a pool for these guys!!
-  ACE_NEW (this->buffer_, char[this->size_]);
+  char *buffer = nullptr;
+  ACE_NEW (buffer, char[this->size_]);
+  this->buffer_.reset (buffer);
 
   size_t copy_offset = 0;
   for (ACE_Message_Block const *i = contents;
        i != nullptr;
        i = i->cont ())
     {
-      std::memcpy (this->buffer_ + copy_offset,
+      std::memcpy (this->buffer_.get () + copy_offset,
                    i->rd_ptr (),
                    i->length ());
       copy_offset += i->length ();
@@ -58,11 +60,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (char *buf,
 {
 }
 
-TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message ()
-{
-  // @@ Use a pool for these guys!
-  delete [] this->buffer_;
-}
+TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message () = default;
 
 size_t
 TAO_Asynch_Queued_Message::message_length () const
@@ -84,7 +82,7 @@ TAO_Asynch_Queued_Message::fill_iov (int iovcnt_max,
   ACE_ASSERT (iovcnt_max > iovcnt);
   ACE_UNUSED_ARG (iovcnt_max); // not used if ACE_ASSERT() is empty
 
-  iov[iovcnt].iov_base = this->buffer_ + this->offset_;
+  iov[iovcnt].iov_base = this->buffer_.get () + this->offset_;
   iov[iovcnt].iov_len  = static_cast<u_long> (this->size_ - this->offset_);
   ++iovcnt;
 }
@@ -127,7 +125,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                   nullptr);
 
   std::memcpy (buf,
-               this->buffer_ + this->offset_,
+               this->buffer_.get () + this->offset_,
                sz);
 
   TAO_Asynch_Queued_Message *qm = nullptr;
