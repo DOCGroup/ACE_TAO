@@ -58,9 +58,9 @@ ACE_TMAIN (
     //-----------------------------------------------------------------------
     CORBA::Long
        aL= 1,
-       bL,
+       bL {},
        cL= 3,
-       rL= 0;
+       rL {};
     ACE_DEBUG( (LM_INFO, ". Long()            "));
     rL= foo->TestLong( aL, bL, cL);
     ACE_DEBUG( (LM_INFO, "a is %d, b is %d, c is %d, r is %d:  ", aL, bL, cL, rL));
@@ -280,10 +280,10 @@ ACE_TMAIN (
     ACE_DEBUG( (LM_INFO, ". Any()             "));
     rA= foo->TestAny( aA.in(), bA.out(), cA.inout());
     CORBA::Boolean
-       aB,
-       bB,
-       cB,
-       rB;
+       aB {},
+       bB {},
+       cB {},
+       rB {};
     ACE_DEBUG( (LM_INFO, "a is "));
     if (0 != (aB= (aA>>= aL)))
        ACE_DEBUG( (LM_INFO, "%d", aL));
@@ -318,7 +318,7 @@ ACE_TMAIN (
 
     //-----------------------------------------------------------------------
     {
-      Test::MyArray arr_a;
+      Test::MyArray arr_a {};
       arr_a[0].length (1);
       arr_a[0][0] = 9;
       arr_a[1].length (1);
@@ -326,7 +326,7 @@ ACE_TMAIN (
 
       Test::MyArray_var arr_b;
 
-      Test::MyArray arr_c;
+      Test::MyArray arr_c {};
       arr_c[0].length (1);
       arr_c[0][0] = 23;
       arr_c[1].length (1);
@@ -334,7 +334,7 @@ ACE_TMAIN (
 
       ACE_DEBUG( (LM_INFO, ". MyArray()     "));
       Test::MyArray_var arr_ret = foo->TestArray (arr_a, arr_b.out (), arr_c);
-      CORBA::ULong zero (0), one (1); //Use ULong to avoid ambiguity
+      CORBA::ULong const zero (0), one (1); //Use ULong to avoid ambiguity
       if (arr_c[0].length () != 1 || arr_c[0][0] != 24)
         {
           ACE_DEBUG( (LM_ERROR, "arr_c[0] is wrong\n")); testFailed = 1;
@@ -378,12 +378,12 @@ ACE_TMAIN (
     orb->shutdown(true);
     orb->destroy();
   }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const & ex)
   {
     ex._tao_print_exception ("CORBA::SystemException: ");
     testFailed= 1;
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("CORBA::Exception: ");
     testFailed= 1;

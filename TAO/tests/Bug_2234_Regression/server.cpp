@@ -49,7 +49,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-CORBA::ORB_ptr orb = nullptr;
+CORBA::ORB_ptr orb {};
 
 // The test case code for the server always sends back to the client:
 // b(out)= a(in) *2
@@ -162,7 +162,7 @@ public:
 
     newret.val= static_cast<CORBA::Long>( 7);
 
-    Test::MyNonVarStruct *newval_p;
+    Test::MyNonVarStruct *newval_p {};
     ACE_NEW_RETURN( newval_p, Test::MyNonVarStruct, newret);
     Test::MyNonVarStruct_var
       newval= newval_p;
@@ -213,16 +213,16 @@ public:
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
-    char ca[2]= {0};
+    char ca[2] {};
     ca[0]= ('0' + ((*a.val.in() -'0') << 1));
 
     Test::MyVarStruct_var
       newval_p,
       newret_p;
-    ACE_NEW_RETURN( newval_p, Test::MyVarStruct(), 0);
+    ACE_NEW_RETURN( newval_p, Test::MyVarStruct(), nullptr);
     Test::MyVarStruct_var
       newval= newval_p;
-    ACE_NEW_RETURN( newret_p, Test::MyVarStruct(), 0);
+    ACE_NEW_RETURN( newret_p, Test::MyVarStruct(), nullptr);
     Test::MyVarStruct_var
       newret= newret_p;
 
@@ -268,7 +268,7 @@ public:
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
-    Test::MyNonVarUnion *newval_p;
+    Test::MyNonVarUnion *newval_p {};
     ACE_NEW_RETURN( newval_p, Test::MyNonVarUnion(), newret );
     Test::MyNonVarUnion_var
       newval= newval_p;
@@ -311,8 +311,8 @@ public:
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
-    Test::MyVarUnion *newval_p;
-    ACE_NEW_RETURN( newval_p, Test::MyVarUnion(), 0 );
+    Test::MyVarUnion *newval_p {};
+    ACE_NEW_RETURN( newval_p, Test::MyVarUnion(), nullptr );
     Test::MyVarUnion_var
       newval= newval_p;
 
@@ -321,7 +321,7 @@ public:
 
     Test::MyVarUnion_var
       newret_p;
-    ACE_NEW_RETURN( newret_p, Test::MyVarUnion(), 0);
+    ACE_NEW_RETURN( newret_p, Test::MyVarUnion(), nullptr);
     Test::MyVarUnion_var
       newret= newret_p;
     newret->valLong( static_cast<CORBA::Short>(7) );
@@ -359,8 +359,8 @@ public:
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
-    Test::MySeqOfLong *newval_p;
-    ACE_NEW_RETURN( newval_p, Test::MySeqOfLong(1), 0 );
+    Test::MySeqOfLong *newval_p {};
+    ACE_NEW_RETURN( newval_p, Test::MySeqOfLong(1), nullptr );
     Test::MySeqOfLong_var
       newval= newval_p;
 
@@ -368,8 +368,8 @@ public:
     newval[0]= a[0] << 1;
     c[0]+= 1;
 
-    Test::MySeqOfLong *newret_p;
-    ACE_NEW_RETURN( newret_p, Test::MySeqOfLong(1), 0 );
+    Test::MySeqOfLong *newret_p {};
+    ACE_NEW_RETURN( newret_p, Test::MySeqOfLong(1), nullptr );
     Test::MySeqOfLong_var
       newret= newret_p;
     newret->length( 1 );
@@ -387,8 +387,8 @@ public:
     CORBA::Any & c) override
   {
     ACE_DEBUG( (LM_INFO, ". in TestAny\n") );
-    CORBA::Long aL;
-    CORBA::Long cL;
+    CORBA::Long aL {};
+    CORBA::Long cL {};
     if (a >>= aL)
     {
       if (static_cast<CORBA::Long>(1) != aL)
@@ -416,16 +416,16 @@ public:
       throw CORBA::BAD_PARAM(0, CORBA::COMPLETED_NO);
     }
 
-    CORBA::Any *newval_p;
-    ACE_NEW_RETURN( newval_p, CORBA::Any(), 0 );
+    CORBA::Any *newval_p {};
+    ACE_NEW_RETURN( newval_p, CORBA::Any(), nullptr );
     CORBA::Any_var
       newval= newval_p;
 
     newval<<= aL << 1;
     c<<= cL + 1;
 
-    CORBA::Any *newret_p;
-    ACE_NEW_RETURN( newret_p, CORBA::Any(), 0 );
+    CORBA::Any *newret_p {};
+    ACE_NEW_RETURN( newret_p, CORBA::Any(), nullptr );
     CORBA::Any_var
       newret= newret_p;
     newret<<= static_cast<CORBA::Long>( 7 );
@@ -485,7 +485,7 @@ public:
       }
 
     b = Test::MyArray_alloc ();
-    CORBA::ULong idx (0);
+    CORBA::ULong idx {};
     b[idx].length (1);
     b[idx][0] = 8;
     ++idx;
@@ -551,14 +551,14 @@ public:
   // the any that we defined for this test.
   static void display_any (CORBA::Any const & arg)
   {
-    const CORBA::Any           *holding;
-    const Test::MyVarStruct    *vS;
-    const Test::MyNonVarStruct *fS;
-    const char                 *pString;
-    CORBA::Long                theLong;
-    const Test::MyVarUnion     *vU;
-    const Test::MyNonVarUnion  *fU;
-    const Test::MySeqOfLong    *sL;
+    const CORBA::Any           *holding {};
+    const Test::MyVarStruct    *vS {};
+    const Test::MyNonVarStruct *fS {};
+    const char                 *pString {};
+    CORBA::Long                theLong {};
+    const Test::MyVarUnion     *vU {};
+    const Test::MyNonVarUnion  *fU {};
+    const Test::MySeqOfLong    *sL {};
     Test::MyArray_forany       arr;
     CORBA::Object_var          obj;
 
@@ -661,7 +661,7 @@ public:
       ACE_DEBUG( (LM_INFO, "MyArray (") );
       for (CORBA::ULong a_idx = 0; a_idx < 2; ++a_idx)
         {
-          CORBA::ULong length = arr[a_idx].length ();
+          CORBA::ULong const length = arr[a_idx].length ();
           ACE_DEBUG( (LM_INFO, "[%u].length () == %u  ", a_idx, length));
         }
     }
@@ -770,7 +770,7 @@ public:
 
 private:
   // Non-owning; the stack interceptor outlives the ORB initializer.
-  AnInterceptor *interceptor_;
+  AnInterceptor *const interceptor_;
 };
 
 int
@@ -781,8 +781,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG( (LM_INFO, "Server start\n") );
     AnInterceptor
       interceptor;
-    PortableInterceptor::ORBInitializer_ptr
-      initialiser_p;
+    PortableInterceptor::ORBInitializer_ptr initialiser_p {};
     ACE_NEW_RETURN( initialiser_p, Initialiser( &interceptor ), -1 );
     PortableInterceptor::ORBInitializer_var
       initialiser= initialiser_p;
@@ -807,9 +806,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       phooeyObj= rootPOA->id_to_reference( phooeyId.in() );
     CORBA::String_var
       stringifiedObj= orb->object_to_string( phooeyObj.in() );
-    ofstream file( ACE_TEXT_ALWAYS_CHAR(ior_output_file) );
-    file << stringifiedObj;
-    file.close();
+    {
+      ofstream file (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+      file << stringifiedObj;
+    }
 
     rootPOAMgr->activate( );
 
