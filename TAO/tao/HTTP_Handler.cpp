@@ -6,7 +6,7 @@
 #include "ace/OS_NS_strings.h"
 #include "tao/debug.h"
 #include <cstring>
-#include <cstdio>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,21 +67,26 @@ TAO_HTTP_Reader::TAO_HTTP_Reader (ACE_Message_Block * mb,
 int
 TAO_HTTP_Reader::send_request ()
 {
-  char mesg [MAX_HEADER_SIZE];
+  size_t const request_size = std::strlen (request_prefix_)
+                              + ACE_OS::strlen (this->filename_.c_str ())
+                              + std::strlen (request_suffix_);
 
   // Check to see if the request is too big
-  if (MAX_HEADER_SIZE < (std::strlen (request_prefix_)
-                         + ACE_OS::strlen (this->filename_.c_str ())
-                         + std::strlen (request_suffix_) + 4))
+  if (MAX_HEADER_SIZE < request_size + 4)
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
-  int const len = std::sprintf (mesg, "%s %s %s", request_prefix_,
-                                   ACE_TEXT_ALWAYS_CHAR (this->filename_.c_str ()),
-                                   request_suffix_);
+  std::string message;
+  message.reserve (request_size + 2);
+  message += request_prefix_;
+  message += ' ';
+  message += ACE_TEXT_ALWAYS_CHAR (this->filename_.c_str ());
+  message += ' ';
+  message += request_suffix_;
+  int const len = static_cast<int> (message.size ());
 
   // Send the message to server
-  if (peer ().send_n (mesg, len) != len)
+  if (peer ().send_n (message.data (), len) != len)
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, error sending request\n"), -1);
 
   return 0;
