@@ -83,10 +83,10 @@ private:
 
 protected:
   /// Thread Pool Manager.
-  std::unique_ptr<TAO_DTP_Thread_Pool_Manager> tp_manager_ {};
+  std::unique_ptr<TAO_DTP_Thread_Pool_Manager> tp_manager_;
 
   /// Default lane resources.
-  std::unique_ptr<TAO_Thread_Lane_Resources> default_lane_resources_ {};
+  std::unique_ptr<TAO_Thread_Lane_Resources> default_lane_resources_;
 };
 
 /**
