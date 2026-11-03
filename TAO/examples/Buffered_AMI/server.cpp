@@ -2,7 +2,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "test_i.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT("ior");
+#include <memory>
+#include <string>
+
+static std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("ior")};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -60,14 +63,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
+      using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+      File_Handle output_file (ACE_OS::fopen (ior_output_file.c_str (), "w"),
+                               &ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
+                           ior_output_file.c_str ()),
                           -1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
 
       poa_manager->activate ();
 

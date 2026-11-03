@@ -17,8 +17,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
+#include <string>
+
 // Name of file contains ior.
-static ACE_TCHAR const *IOR = ACE_TEXT ("file://ior");
+static std::basic_string<ACE_TCHAR> IOR {ACE_TEXT ("file://ior")};
 
 // Default iterations.
 static CORBA::ULong iterations {20};
@@ -147,7 +149,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR == nullptr)
+  if (IOR.empty ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant\n"), -1);
 
@@ -243,7 +245,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
+      int const parse_args_result = parse_args (argc, argv);
       if (parse_args_result != 0)
         return parse_args_result;
 
@@ -254,7 +256,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (base.in ());
 
       // Get an object reference from the argument string.
-      base = orb->string_to_object (IOR);
+      base = orb->string_to_object (IOR.c_str ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
