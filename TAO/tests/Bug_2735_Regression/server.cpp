@@ -3,30 +3,28 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
-static ACE_TCHAR const *server_strat =
+static ACE_TCHAR const *const server_strat =
   ACE_STATIC_SERVICE_DIRECTIVE ("Server_Strategy_Factory",
                                 "-ORBConcurrency thread-per-connection");
-static ACE_TCHAR const *foo_strat =
+static ACE_TCHAR const *const foo_strat =
   ACE_STATIC_SERVICE_DIRECTIVE ("Foo_Strategy_Factory", "");
 
-enum Factory_Strategy { SERVER_STRATEGY, FOO_STRATEGY };
-
-static Factory_Strategy factory_strategy = SERVER_STRATEGY;
+enum class Factory_Strategy { server, foo };
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Factory_Strategy &factory_strategy)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("fs"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'f':
-        factory_strategy = FOO_STRATEGY;
+        factory_strategy = Factory_Strategy::foo;
         break;
       case 's':
-        factory_strategy = SERVER_STRATEGY;
+        factory_strategy = Factory_Strategy::server;
         break;
       case '?':
       default:
@@ -45,27 +43,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Factory_Strategy factory_strategy {Factory_Strategy::server};
   try
     {
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (argc, argv, factory_strategy) == -1)
         return -1;
 
-      int targc = 3;
+      int targc {3};
       ACE_TCHAR const *targv[] =
         { ACE_TEXT ("server"), ACE_TEXT ("-ORBSvcConfDirective"), nullptr, nullptr };
       switch (factory_strategy)
         {
-        case FOO_STRATEGY:
+        case Factory_Strategy::foo:
           targv[2] = foo_strat;
           break;
-        case SERVER_STRATEGY:
+        case Factory_Strategy::server:
           targv[2] = server_strat;
           break;
         }
-      CORBA::ORB_var orb = CORBA::ORB_init (targc, const_cast<ACE_TCHAR**> (targv));
+      CORBA::ORB_var const orb = CORBA::ORB_init (targc, const_cast<ACE_TCHAR **> (targv));
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
