@@ -13,7 +13,7 @@
 #include "ace/config-all.h"
 
 #include "tao/Versioned_Namespace.h"
-#include "ace/OS_NS_string.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,12 +35,12 @@ public:
     size_type bit_;
   };
 
-  explicit Dynamic_Bitset(size_type size = 0);
-  ~Dynamic_Bitset();
-  Dynamic_Bitset(Dynamic_Bitset const& other);
-  Dynamic_Bitset(Dynamic_Bitset&&) = delete;
-  Dynamic_Bitset& operator = (Dynamic_Bitset const& other);
-  Dynamic_Bitset& operator = (Dynamic_Bitset&&) = delete;
+  explicit Dynamic_Bitset (size_type size = 0);
+  ~Dynamic_Bitset ();
+  Dynamic_Bitset (Dynamic_Bitset const & other);
+  Dynamic_Bitset (Dynamic_Bitset &&) = delete;
+  Dynamic_Bitset & operator = (Dynamic_Bitset const & other);
+  Dynamic_Bitset & operator = (Dynamic_Bitset &&) = delete;
   Dynamic_Bitset& operator &=(Dynamic_Bitset const& other);
 
   reference operator[](size_type bit);
@@ -56,7 +56,7 @@ public:
 private:
   size_type buffer_size_;
   size_type bit_size_;
-  block* buffer_;
+  std::unique_ptr<block[]> buffer_;
 };
 
 bool operator == (Dynamic_Bitset const& lhs, Dynamic_Bitset const& rhs);

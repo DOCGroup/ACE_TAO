@@ -13,18 +13,15 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-Dynamic_Bitset::~Dynamic_Bitset()
-{
-  delete[] buffer_;
-}
+Dynamic_Bitset::~Dynamic_Bitset() = default;
 
 ACE_INLINE
 Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset const& other)
   : buffer_size_(other.buffer_size_)
   , bit_size_(other.bit_size_)
-  , buffer_(new block[other.buffer_size_])
+  , buffer_ (std::make_unique<block[]> (other.buffer_size_))
 {
-  std::memcpy (buffer_, other.buffer_, buffer_size_ * BYTES_PER_BLOCK);
+  std::memcpy (buffer_.get (), other.buffer_.get (), buffer_size_ * BYTES_PER_BLOCK);
 }
 
 ACE_INLINE
