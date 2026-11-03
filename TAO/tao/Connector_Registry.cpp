@@ -20,8 +20,6 @@ TAO_Connector_Registry::TAO_Connector_Registry () = default;
 TAO_Connector_Registry::~TAO_Connector_Registry ()
 {
   this->close_all ();
-
-  delete [] this->connectors_;
 }
 
 TAO_Connector *
@@ -49,9 +47,13 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
   // The array containing the TAO_Connectors will never contain more
   // than the number of loaded protocols in the ORB core.
   if (this->connectors_ == nullptr)
-    ACE_NEW_RETURN (this->connectors_,
-                    TAO_Connector *[pfs->size ()],
-                    -1);
+    {
+      TAO_Connector **connectors = nullptr;
+      ACE_NEW_RETURN (connectors,
+                      TAO_Connector *[pfs->size ()],
+                      -1);
+      this->connectors_.reset (connectors);
+    }
 
   // Open one connector for each loaded protocol!
   const TAO_ProtocolFactorySetItor end = pfs->end ();

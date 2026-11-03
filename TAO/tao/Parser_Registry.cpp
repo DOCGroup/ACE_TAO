@@ -13,10 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Parser_Registry::TAO_Parser_Registry () = default;
 
-TAO_Parser_Registry::~TAO_Parser_Registry ()
-{
-  delete [] this->parsers_;
-}
+TAO_Parser_Registry::~TAO_Parser_Registry () = default;
 
 int
 TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
@@ -37,7 +34,9 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
     }
 
   this->size_ = number_of_names;
-  ACE_NEW_RETURN (this->parsers_, TAO_IOR_Parser *[this->size_], -1);
+  TAO_IOR_Parser **parsers = nullptr;
+  ACE_NEW_RETURN (parsers, TAO_IOR_Parser *[this->size_], -1);
+  this->parsers_.reset (parsers);
 
   for (size_t i = 0, index = 0; i != this->size_; ++i)
     {

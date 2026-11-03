@@ -21,6 +21,7 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/os_include/os_stddef.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,8 +68,8 @@ private:
   TAO_Parser_Registry &operator= (TAO_Parser_Registry &&) = delete;
 
 private:
-  /// Non-owning parser pointers, stored in an array allocated with ACE_NEW_RETURN.
-  TAO_IOR_Parser **parsers_ {};
+  /// Non-owning parser pointers, stored in an owned pointer-array buffer.
+  std::unique_ptr<TAO_IOR_Parser *[]> parsers_;
 
   /// Number of parsers
   size_t size_ {};

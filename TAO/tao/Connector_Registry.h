@@ -22,6 +22,7 @@
 
 #include "tao/Basic_Types.h"
 #include "ace/Global_Macros.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -88,7 +89,7 @@ private:
 
 private:
   /// List of connectors that are currently open.
-  TAO_Connector **connectors_ {};
+  std::unique_ptr<TAO_Connector *[]> connectors_;
 
   /// Number of connectors that are currently open.
   size_t size_ {};
