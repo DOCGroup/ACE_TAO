@@ -7,8 +7,11 @@
 
 #include <string>
 
+namespace
+{
 std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
-int serverthreads = 4;
+int serverthreads {4};
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -49,13 +52,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -63,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
@@ -71,7 +74,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::ServantBase_var impl;
       {
-        Echo *tmp = nullptr;
+        Echo *tmp {};
         // ServantBase_var assumes ownership of the servant reference.
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
@@ -83,19 +86,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         impl = tmp;
       }
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (impl.in ());
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Test::Echo_var echo =
+      Test::Echo_var const echo =
         Test::Echo::_narrow (object_act.in ());
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior.c_str ());
 
-      Test::Echo_Caller_var server =
-        Test::Echo_Caller::_narrow(tmp.in ());
+      Test::Echo_Caller_var const server =
+        Test::Echo_Caller::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
@@ -123,7 +126,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // The reactor retains the scheduled reference until timer cancellation.
-      Client_Timer *task = new Client_Timer (orb->orb_core ()->reactor ());
+      Client_Timer * const task = new Client_Timer (orb->orb_core ()->reactor ());
       task->activate ();
       // Release the caller's initial reference after scheduling.
       task->remove_reference ();

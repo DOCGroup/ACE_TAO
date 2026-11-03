@@ -3,7 +3,10 @@
 
 #include <string>
 
+namespace
+{
 std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -15,17 +18,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
              "Starting shutdown\n"));
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior.c_str ());
 
-      Test::Echo_Caller_var server =
-        Test::Echo_Caller::_narrow(tmp.in ());
+      Test::Echo_Caller_var const server =
+        Test::Echo_Caller::_narrow (tmp.in ());
 
       if (CORBA::is_nil (server.in ()))
         {

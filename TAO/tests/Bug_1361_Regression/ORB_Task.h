@@ -20,7 +20,7 @@ public:
   int svc () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* TAO_REGRESSION_ORB_TASK_H*/

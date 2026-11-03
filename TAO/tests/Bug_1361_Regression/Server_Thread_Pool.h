@@ -34,6 +34,6 @@ public:
 private:
   int close (u_long) override;
   // Close hook.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   std::atomic<int> nt_;     // number of threads
 };

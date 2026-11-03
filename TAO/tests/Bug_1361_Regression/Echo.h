@@ -25,7 +25,7 @@ public:
   void echo_payload_out (Test::Payload_out data) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   std::atomic<int> abort_counter_;
 };

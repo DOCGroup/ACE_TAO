@@ -8,7 +8,10 @@
 #include <memory>
 #include <string>
 
+namespace
+{
 std::basic_string<ACE_TCHAR> ior_output_file = ACE_TEXT ("test.ior");
+}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);
@@ -18,13 +21,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -32,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
@@ -43,7 +46,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::ServantBase_var impl;
       {
-        Echo_Caller *tmp = nullptr;
+        Echo_Caller *tmp {};
         // ServantBase_var assumes ownership of the servant reference.
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
@@ -55,15 +58,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         impl = tmp;
       }
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (impl.in ());
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Test::Echo_Caller_var server =
+      Test::Echo_Caller_var const server =
         Test::Echo_Caller::_narrow (object_act.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the ior to it
