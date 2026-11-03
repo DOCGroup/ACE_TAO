@@ -6,7 +6,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/SHMIOP_Endpoint.inl"
@@ -121,7 +121,7 @@ TAO_SHMIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   if (length < actual_len)
     return -1;
 
-  ACE_OS::sprintf (buffer, "%s:%d",
+  std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
 
   return 0;

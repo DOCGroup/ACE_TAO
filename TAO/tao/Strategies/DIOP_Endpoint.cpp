@@ -6,7 +6,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/DIOP_Endpoint.inl"
@@ -126,11 +126,11 @@ TAO_DIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 
 #if defined (ACE_HAS_IPV6)
   if (this->is_ipv6_decimal_)
-    ACE_OS::sprintf (buffer, "[%s]:%d",
+    std::sprintf (buffer, "[%s]:%d",
                      this->host_.in (), this->port_);
   else
 #endif /* ACE_HAS_IPV6 */
-  ACE_OS::sprintf (buffer, "%s:%d",
+  std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
 
   return 0;

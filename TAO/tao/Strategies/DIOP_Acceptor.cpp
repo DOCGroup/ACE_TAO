@@ -19,6 +19,7 @@
 #include <cstring>
 #include <memory>
 #include <algorithm>
+#include <cstdlib>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -624,7 +625,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
       if (port_separator_loc != nullptr)
         {
           portno =
-            static_cast<u_short> (ACE_OS::atoi (port_separator_loc +
+            static_cast<u_short> (std::atoi (port_separator_loc +
                                                 sizeof (':')));
         }
       this->default_address_.set_port_number (portno);
@@ -1063,7 +1064,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
             }
           else if (name == "portspan")
             {
-              int const range = ACE_OS::atoi (value.c_str ());
+              int const range = std::atoi (value.c_str ());
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
                 TAOLIB_ERROR_RETURN ((LM_ERROR,

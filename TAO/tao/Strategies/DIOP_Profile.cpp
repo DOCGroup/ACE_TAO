@@ -9,10 +9,11 @@
 #include "tao/debug.h"
 #include "tao/IIOP_EndpointsC.h"
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 static const char the_prefix[] = "diop";
 
@@ -196,7 +197,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
       if (std::strspn (tmp.in (), "1234567890") == length_port)
         {
           this->endpoint_.port_ =
-            static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+            static_cast<CORBA::UShort> (std::atoi (tmp.in ()));
         }
       else
         {
@@ -415,7 +416,7 @@ TAO_DIOP_Profile::to_string () const
               tmp = tmp.substr (0, pos + 1);
               tmp[pos] = '\0';
             }
-          ACE_OS::sprintf (buf + std::strlen (buf),
+          std::sprintf (buf + std::strlen (buf),
                   "%s:%c.%c@[%s]:%d",
                   ::the_prefix,
                   digits [this->version_.major],
@@ -425,7 +426,7 @@ TAO_DIOP_Profile::to_string () const
         }
       else
 #endif
-      ACE_OS::sprintf (buf + std::strlen (buf),
+      std::sprintf (buf + std::strlen (buf),
               "%s:%c.%c@%s:%d",
               ::the_prefix,
               digits [this->version_.major],
@@ -433,7 +434,7 @@ TAO_DIOP_Profile::to_string () const
               endp->host (),
               endp->port ());
   }
-  ACE_OS::sprintf (buf + std::strlen (buf),
+  std::sprintf (buf + std::strlen (buf),
                    "%c%s",
                    this->object_key_delimiter_,
                    key.in ());

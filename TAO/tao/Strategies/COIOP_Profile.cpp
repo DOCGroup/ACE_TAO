@@ -9,9 +9,8 @@
 #include "tao/debug.h"
 #include "tao/Strategies/COIOP_EndpointsC.h"
 
-#include "ace/OS_NS_stdio.h"
-
 #include <cstring>
+#include <cstdio>
 
 static const char the_prefix[] = "niop";
 
@@ -223,7 +222,7 @@ TAO_COIOP_Profile::to_string () const
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s%c%s",
                    ::the_prefix,
                    digits [this->version_.major],

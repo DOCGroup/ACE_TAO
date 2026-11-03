@@ -6,8 +6,9 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/COIOP_Endpoint.inl"
@@ -39,7 +40,7 @@ TAO_COIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   if (length < actual_len)
     return -1;
 
-  ACE_OS::sprintf (buffer, "%s",
+  std::sprintf (buffer, "%s",
                    str->c_str());
 
   return 0;

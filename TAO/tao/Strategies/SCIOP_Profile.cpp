@@ -12,6 +12,8 @@
 #include "ace/os_include/os_netdb.h"
 
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 static const char prefix_[] = "sciop";
 
@@ -170,7 +172,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
       tmp[length_port] = '\0';
 
       this->endpoint_.port_ =
-        static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+        static_cast<CORBA::UShort> (std::atoi (tmp.in ()));
 
       length_host = cp_pos - ior;
     }
@@ -326,7 +328,7 @@ TAO_SCIOP_Profile::to_string () const
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],

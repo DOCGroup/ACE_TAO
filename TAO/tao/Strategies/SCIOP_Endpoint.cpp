@@ -11,9 +11,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 #include "ace/Synch.h"
-#include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
 #include <cstring>
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/SCIOP_Endpoint.inl"
@@ -119,7 +119,7 @@ TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   if (length < actual_len)
     return -1;
 
-  ACE_OS::sprintf (buffer, "%s:%d",
+  std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
 
   return 0;

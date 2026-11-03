@@ -9,10 +9,11 @@
 #include "tao/debug.h"
 #include "tao/IIOP_EndpointsC.h"
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 static const char prefix_[] = "shmiop";
 
@@ -163,7 +164,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
   if (std::strspn (tmp.in (), "1234567890") == length)
     {
       this->endpoint_.port_ =
-        static_cast <CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+        static_cast <CORBA::UShort> (std::atoi (tmp.in ()));
     }
   else
     {
@@ -340,7 +341,7 @@ TAO_SHMIOP_Profile::to_string () const
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],

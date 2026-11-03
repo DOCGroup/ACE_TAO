@@ -10,9 +10,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
+#include <cstdio>
 
 static const char prefix_[] = "uiop";
 
@@ -254,7 +254,7 @@ TAO_UIOP_Profile::to_string () const
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s%c%s",
                    ::prefix_,
                    digits [this->version_.major],
