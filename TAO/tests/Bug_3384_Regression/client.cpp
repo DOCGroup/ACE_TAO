@@ -5,17 +5,16 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Task.h"
-
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+#include "tao/Utils/PolicyList_Destroyer.h"
 
 int
-parse_args (int argc, ACE_TCHAR * argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -30,7 +29,6 @@ parse_args (int argc, ACE_TCHAR * argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -42,35 +40,37 @@ parse_args (int argc, ACE_TCHAR * argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr orb);
+  Worker (Worker const &) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker &&) = delete;
   // ctor
 
   int svc () override;
   // The thread entry point.
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   // The orb
 };
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-  int result = 1;
+  int result {1};
+  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+      CORBA::Object_var const server_object = orb->string_to_object (ior);
 
-      Test::Server_var test_server =
-        Test::Server::_narrow(tmp.in ());
+      Test::Server_var const test_server = Test::Server::_narrow (server_object.in ());
 
       if (CORBA::is_nil (test_server.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -78,21 +78,23 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                            ior),
                           1);
 
-      CORBA::Any scope_as_any;
-      scope_as_any <<= Messaging::SYNC_NONE;
+      CORBA::Object_var object_with_policy;
+      {
+        CORBA::Any scope_as_any;
+        scope_as_any <<= Messaging::SYNC_NONE;
 
-      CORBA::PolicyList policies (1);
-      policies.length (1);
-      policies[0] =
-        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any);
+        TAO::Utils::PolicyList_Destroyer policies (1);
+        policies.length (1);
+        policies[0] =
+          orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
+                              scope_as_any);
 
-      tmp = test_server->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+        object_with_policy =
+          test_server->_set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+      }
 
-      policies[0]->destroy ();
-
-      Test::Server_var test_server_no_sync =
-        Test::Server::_narrow(tmp.in ());
+      Test::Server_var const test_server_no_sync =
+        Test::Server::_narrow (object_with_policy.in ());
 
       if (CORBA::is_nil (test_server_no_sync.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -100,7 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                            ior),
                           1);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -108,10 +110,10 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
@@ -125,15 +127,15 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test starting . . .\n"));
 
+      // The RootPOA borrows this servant until it is destroyed.
       Client client_impl;
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&client_impl);
 
-      tmp = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const client_object = root_poa->id_to_reference (id.in ());
 
-      Test::Client_var test_client =
-        Test::Client::_narrow (tmp.in ());
+      Test::Client_var const test_client = Test::Client::_narrow (client_object.in ());
 
       // setup client callback at server
       test_server_no_sync->setup (test_client.in ());
