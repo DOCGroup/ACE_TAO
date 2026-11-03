@@ -36,12 +36,15 @@
 class walkapp {
 public:
   walkapp(int argc, char **argv); // process command line args
-  int valid() const;             // verify transaction can proceed
+  bool valid() const;            // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
 private:
-  walkapp(const walkapp&);
+  walkapp (walkapp const &) = delete;
+  walkapp (walkapp &&) = delete;
+  walkapp &operator= (walkapp const &) = delete;
+  walkapp &operator= (walkapp &&) = delete;
 
   UdpAddress address_;
   Pdu pdu_;                                // construct a request Pdu
@@ -49,7 +52,7 @@ private:
   OctetStr community_;
   Snmp snmp_;
   UdpTarget target_;
-  int valid_;
+  bool valid_;
 };
 
 
@@ -65,12 +68,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 1;
 }
 
-int walkapp::valid() const
+bool walkapp::valid() const
 {
  return valid_;
 }
 
-walkapp::walkapp(int argc, char *argv[]): valid_(0)
+walkapp::walkapp(int argc, char *argv[]): valid_(false)
 {
    Oid req, def_oid("1.3.6.1.2.1.1.1.0"); // default begin walk with MIBII
    if ( argc < 2)
@@ -123,7 +126,7 @@ walkapp::walkapp(int argc, char *argv[]): valid_(0)
   }
   pdu_ += vb;
   vb.get_oid(oid_); // store for later use
-  valid_ = 1;
+  valid_ = true;
 }
 
 void walkapp::usage()
@@ -144,20 +147,25 @@ class MibIter {
 public:
    // Pdu must contain initial oid to begin with
    MibIter(Snmp *snmp, Pdu& pdu, UdpTarget* target);
-   int next(Vb& vb, char *&err_reason);   // return next oid in mib
+   int next(Vb& vb, char const *&err_reason);   // return next oid in mib
 
  private:
+  MibIter (MibIter const &) = delete;
+  MibIter (MibIter &&) = delete;
+  MibIter &operator= (MibIter const &) = delete;
+  MibIter &operator= (MibIter &&) = delete;
+
+  // These pointers refer to the session and target owned by walkapp.
   Snmp *snmp_;
   UdpTarget *target_;
   Pdu pdu_;
   Vb vb_;
-  int first_;  // flag to obtain first entry
-  int valid_;  // flag to obtain first entry
+  bool first_;  // flag to obtain first entry
+  bool valid_;  // flag to obtain first entry
 };
 
 MibIter::MibIter(Snmp* snmp, Pdu& pdu, UdpTarget *target):
-  snmp_(snmp), target_(target), pdu_(pdu), first_(0),
- valid_(0)
+  snmp_(snmp), target_(target), pdu_(pdu), first_(false), valid_(false)
 {
   // verify we have a valid oid to begin iterating with
   Oid oid;
@@ -165,34 +173,34 @@ MibIter::MibIter(Snmp* snmp, Pdu& pdu, UdpTarget *target):
   pdu.get_vb(vb, 0);
   vb.get_oid(oid);
   if (oid.valid())
-    valid_ = 1;
+    valid_ = true;
 }
 
 // return vb of next oid in agent tree, return 1 else return 0, reason set
-int MibIter::next(Vb& vb, char *& reason)
+int MibIter::next(Vb& vb, char const *& reason)
 {
   int rc;
 
-  if (valid_ == 0) // not valid object
+  if (!valid_) // not valid object
      return -1;
 
   // 1. poll for value
-  if (first_ == 0) {
+  if (!first_) {
     rc = snmp_->get( pdu_, *target_);
-    first_++;
+    first_ = true;
   }
   else {
    rc = snmp_->get_next( pdu_, *target_);
   }
 
   if (rc != SNMP_CLASS_SUCCESS) {
-       reason = const_cast <char*> (snmp_->error_string());
+       reason = snmp_->error_string();
        return 0;
   }
 
   // 2. check for problems
   if (pdu_.get_error_status()) {
-     reason = const_cast <char*> (pdu_.agent_error_reason());
+     reason = pdu_.agent_error_reason();
      return 0;
   }
 
@@ -239,7 +247,7 @@ int walkapp::run()
          community_.to_string() << " ]"<< endl;
 
    MibIter iter(&snmp_, pdu_, &target_);
-   char *err_str = 0;
+   char const *err_str = nullptr;
    Vb vb;
    unsigned ctr = 0;
    while (iter.next(vb, err_str))  {
