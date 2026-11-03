@@ -83,8 +83,7 @@ public:
 
   AST_PredefinedType *create_predefined_type (
       AST_PredefinedType::PredefinedType t,
-      UTL_ScopedName *n
-    ) override;
+      UTL_ScopedName *n) override;
 
   AST_Module *create_module (UTL_Scope *s,
                                      UTL_ScopedName *n) override;
