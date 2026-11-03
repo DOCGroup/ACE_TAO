@@ -8,7 +8,8 @@
 #include "ace/Task.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Atomic_Op.h"
+
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,9 +61,9 @@ private:
   Messaging::SyncScope sync_scope_;
 
   /// Track the number of tasks still running.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> tasks_running_;
+  std::atomic<unsigned long> tasks_running_ {0};
 
-  bool done_;
+  std::atomic<bool> done_ {false};
 
   ACE_CString id_;
 };

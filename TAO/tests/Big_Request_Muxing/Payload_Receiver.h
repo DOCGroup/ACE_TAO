@@ -5,6 +5,8 @@
 
 #include "TestS.h"
 
+#include <atomic>
+
 /// Implement the Test::Payload_Receiver interface
 /**
  * Simply print count how many bytes were received.
@@ -28,8 +30,8 @@ public:
   int count (bool maybe_lost = false) const;
 
 private:
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> message_count_ {};
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> maybe_lost_count_ {};
+  std::atomic<int> message_count_ {0};
+  std::atomic<int> maybe_lost_count_ {0};
 };
 
 #include /**/ "ace/post.h"

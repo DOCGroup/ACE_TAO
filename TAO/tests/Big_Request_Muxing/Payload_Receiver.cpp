@@ -27,6 +27,6 @@ int
 Payload_Receiver::count (bool maybe_lost) const
 {
   return (maybe_lost) ?
-         maybe_lost_count_.value ()
-       : message_count_.value ();
+         maybe_lost_count_.load ()
+       : message_count_.load ();
 }

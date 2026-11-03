@@ -21,8 +21,6 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
   , event_size_ (event_size)
   , orb_ (CORBA::ORB::_duplicate (orb))
   , sync_scope_ (sync_scope)
-  , tasks_running_ (0)
-  , done_ (false)
   , id_ (ident)
 {
 }
@@ -30,8 +28,8 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
 bool
 Client_Task::done () const
 {
-  if (tasks_running_ == 0)
-    return done_;
+  if (this->tasks_running_.load () == 0)
+    return this->done_.load ();
 
   //else
   return false;
