@@ -45,6 +45,7 @@
 #define EC_MCAST_H
 
 #include "ace/SString.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -480,7 +481,7 @@ private:
   ECM_Federation* all_federations_[MAX_FEDERATIONS];
   // All the federations.
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,CORBA::ULong> federations_running_;
+  std::atomic<CORBA::ULong> federations_running_ {0};
   // Keep track of how many federations are active so we can shutdown
   // once they are all destroyed.
 

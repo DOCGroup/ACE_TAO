@@ -158,7 +158,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: activate_federations done\n"));
 
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: running the test\n"));
-      while (this->federations_running_ > 0)
+      while (this->federations_running_.load (std::memory_order_relaxed) > 0)
         this->orb_->perform_work ();
 
       this->dump_results ();
@@ -188,8 +188,15 @@ ECM_Driver::federation_has_shutdown (ECM_Local_Federation *federation)
 {
   ACE_DEBUG ((LM_DEBUG, "Federation <%s> shuting down\n",
               federation->name ()));
-  if (this->federations_running_ > 0)
-    this->federations_running_--;
+  CORBA::ULong count = this->federations_running_.load (std::memory_order_relaxed);
+  while (count > 0)
+    {
+      if (this->federations_running_.compare_exchange_weak (
+            count,
+            count - 1,
+            std::memory_order_relaxed))
+        break;
+    }
 }
 
 void
@@ -204,7 +211,8 @@ ECM_Driver::open_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
 void
 ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
 {
-  this->federations_running_ = this->local_federations_count_;
+  this->federations_running_.store (this->local_federations_count_,
+                                    std::memory_order_relaxed);
   RtecEventComm::Time interval = this->event_period_;
   interval *= 10;
   for (int i = 0; i < this->local_federations_count_; ++i)
