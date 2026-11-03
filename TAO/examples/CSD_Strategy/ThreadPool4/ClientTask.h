@@ -19,11 +19,16 @@ public:
   ClientTask(Foo_ptr foo,
               Callback_ptr callback);
 
-  virtual ~ClientTask();
+  ~ClientTask () override = default;
 
-  virtual int open(void* x = 0);
-  virtual int svc();
-  virtual int close(u_long);
+  ClientTask (ClientTask const &) = delete;
+  ClientTask (ClientTask &&) = delete;
+  ClientTask & operator= (ClientTask const &) = delete;
+  ClientTask & operator= (ClientTask &&) = delete;
+
+  int open(void* x = 0) override;
+  int svc() override;
+  int close(u_long) override;
 
 private:
   Foo_var foo_;

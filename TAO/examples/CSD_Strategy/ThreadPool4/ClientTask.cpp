@@ -16,10 +16,6 @@ ClientTask::ClientTask(Foo_ptr foo,
 {
 }
 
-ClientTask::~ClientTask()
-{
-}
-
 int
 ClientTask::open(void*)
 {

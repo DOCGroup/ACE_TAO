@@ -1,7 +1,8 @@
 #include "Foo_i.h"
 #include "OrbShutdownTask.h"
+#include <atomic>
 
-Foo_i::Foo_i(const char* servant_name)
+Foo_i::Foo_i (char const *servant_name)
 :   value_(0),
     count_op1_(0),
     count_op2_(0),
@@ -9,11 +10,6 @@ Foo_i::Foo_i(const char* servant_name)
     count_op4_(0),
     count_op5_(0),
     servant_name_(servant_name)
-{
-}
-
-
-Foo_i::~Foo_i()
 {
 }
 
@@ -74,7 +70,7 @@ Foo_i::op5()
 
 CORBA::Boolean
 Foo_i::op6 (
-  const char * user_name,
+  char const * user_name,
   char *& message
 )
 {
@@ -88,7 +84,7 @@ Foo_i::op6 (
 
 void
 Foo_i::test_unbounded_string_arg (
-  const char * message
+  char const * message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_string_arg ")
@@ -99,7 +95,7 @@ Foo_i::test_unbounded_string_arg (
 
 void
 Foo_i::test_bounded_string_arg (
-  const char * message
+  char const * message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_string_arg ")
@@ -110,7 +106,7 @@ Foo_i::test_bounded_string_arg (
 
 void
 Foo_i::test_fixed_array_arg (
-  const ::Fixed_Array message
+  ::Fixed_Array const message
 )
 {
   for (CORBA::ULong i = 0; i < 20; i++)
@@ -124,7 +120,7 @@ Foo_i::test_fixed_array_arg (
 
 void
 Foo_i::test_bounded_var_size_arg (
-  const ::Bounded_Var_Size & message
+  ::Bounded_Var_Size const & message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_var_size_arg ")
@@ -135,7 +131,7 @@ Foo_i::test_bounded_var_size_arg (
 
 void
 Foo_i::test_unbounded_var_size_arg (
-  const ::Unbounded_Var_Size & message
+  ::Unbounded_Var_Size const & message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_var_size_arg ")
@@ -146,7 +142,7 @@ Foo_i::test_unbounded_var_size_arg (
 
 void
 Foo_i::test_fixed_size_arg (
-  const ::TimeOfDay & t
+  ::TimeOfDay const & t
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_size_arg ")
@@ -156,7 +152,7 @@ Foo_i::test_fixed_size_arg (
 
 void
 Foo_i::test_fixed_size_arg_two_way (
-  const ::TimeOfDay & t
+  ::TimeOfDay const & t
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_size_arg_two_way ")
@@ -166,7 +162,7 @@ Foo_i::test_fixed_size_arg_two_way (
 
 void
 Foo_i::test_var_array_arg (
-  const ::Var_Array messages
+  ::Var_Array const messages
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
@@ -225,13 +221,13 @@ Foo_i::test_callback (
 void
 Foo_i::done()
 {
-  static ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients = 2;
+  static std::atomic<unsigned> num_clients {2};
 
-  num_clients --;
+  unsigned const num_clients_left = --num_clients;
 
-  if (num_clients == 0)
+  if (num_clients_left == 0)
     {
-      if (TheOrbShutdownTask::instance()->open(0) != 0)
+      if (TheOrbShutdownTask::instance()->open (nullptr) != 0)
         {
           ACE_ERROR((LM_ERROR, "(%P|%t)Foo_i::done: "
             "failed to create orb shutdown thread.\n"));

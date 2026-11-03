@@ -6,11 +6,6 @@ Callback_i::Callback_i()
 }
 
 
-Callback_i::~Callback_i ()
-{
-}
-
-
 void
 Callback_i::test_method (
 )
