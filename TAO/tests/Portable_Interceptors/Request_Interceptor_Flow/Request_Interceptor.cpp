@@ -2,9 +2,7 @@
 #include "Request_Interceptor.h"
 
 Request_Interceptor::Request_Interceptor (const char *name)
-  : name_ (name),
-    starting_interception_point_count_ (0),
-    ending_interception_point_count_ (0)
+  : name_ (name)
 {
 }
 
@@ -17,11 +15,11 @@ Request_Interceptor::name ()
 void
 Request_Interceptor::destroy ()
 {
-  CORBA::ULong s_count =
-    this->starting_interception_point_count_.value ();
+  CORBA::ULong const s_count =
+    this->starting_interception_point_count_.load ();
 
-  CORBA::ULong e_count =
-    this->ending_interception_point_count_.value ();
+  CORBA::ULong const e_count =
+    this->ending_interception_point_count_.load ();
 
   if (s_count == 0)
     {

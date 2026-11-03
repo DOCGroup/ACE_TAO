@@ -56,20 +56,20 @@ public:
    * methods required for all server request interceptors.
    */
   //@{
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
   //@}
 
 private:

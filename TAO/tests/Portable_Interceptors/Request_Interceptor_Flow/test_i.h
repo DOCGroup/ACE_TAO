@@ -30,14 +30,14 @@ public:
   test_i (CORBA::ORB_ptr orb);
 
   /// The client-side test operation.
-  virtual void client_test (Test::TestScenario scenario);
+  void client_test (Test::TestScenario scenario) override;
 
   /// The server-side test operation.
-  virtual void server_test (Test::TestScenario scenario,
-                            CORBA::ULongSeq_out myseq);
+  void server_test (Test::TestScenario scenario,
+                    CORBA::ULongSeq_out myseq) override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Pseudo-reference to the ORB.
