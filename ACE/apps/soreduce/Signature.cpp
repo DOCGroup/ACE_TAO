@@ -1,6 +1,6 @@
 #include "Signature.h"
 
-Signature::Signature (const ACE_CString &name)
+Signature::Signature (ACE_CString const &name)
   :name_(name),
    ref_count_ (1),
    used_ (0)
@@ -19,7 +19,7 @@ Signature::used_count() const
   return used_;
 }
 
-const ACE_CString &
+ACE_CString const &
 Signature::name() const
 {
   return name_;

@@ -14,6 +14,7 @@
 // for outputting a specialized mpc file to build the reduce footprint library.
 
 #include "Obj_Module.h"
+#include <memory>
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -25,16 +26,20 @@
 class MPC_Generator
 {
 public:
-  MPC_Generator (const ACE_CString& libname);
-  virtual ~MPC_Generator();
+  explicit MPC_Generator (ACE_CString const &libname);
+  virtual ~MPC_Generator () = default;
+  MPC_Generator (MPC_Generator const &) = delete;
+  MPC_Generator (MPC_Generator &&) = delete;
+  MPC_Generator &operator= (MPC_Generator const &) = delete;
+  MPC_Generator &operator= (MPC_Generator &&) = delete;
 
-  void write_prolog (const ACE_CString& );
-  void write_file (const ACE_CString& );
+  void write_prolog (ACE_CString const &);
+  void write_file (ACE_CString const &);
   void write_epilog ();
 
 protected:
-  virtual void write_baseprojects();
-  virtual void write_projectinfo();
+  virtual void write_baseprojects ();
+  virtual void write_projectinfo ();
 
   ofstream mpcfile_;
   ACE_CString libname_;
@@ -45,22 +50,22 @@ protected:
 class MPC_ACE_Dep_Lib : public MPC_Generator
 {
 public:
-  MPC_ACE_Dep_Lib (const ACE_CString& libname);
+  explicit MPC_ACE_Dep_Lib (ACE_CString const &libname);
 
 protected:
-  virtual void write_baseprojects();
-  virtual void write_projectinfo();
+  void write_baseprojects () override;
+  void write_projectinfo () override;
 };
 
 // Generates mpc files for libTAO_subset.so
 class MPC_TAO_Lib : public MPC_ACE_Dep_Lib
 {
 public:
-  MPC_TAO_Lib (const ACE_CString& libname);
+  explicit MPC_TAO_Lib (ACE_CString const &libname);
 
 protected:
-  virtual void write_baseprojects();
-  virtual void write_projectinfo();
+  void write_baseprojects () override;
+  void write_projectinfo () override;
 };
 
 // Generates makefiles for libs dependant on TAO.  This has a problem when
@@ -68,11 +73,11 @@ protected:
 class MPC_TAO_Dep_Lib : public MPC_TAO_Lib
 {
 public:
-  MPC_TAO_Dep_Lib (const ACE_CString& );
+  explicit MPC_TAO_Dep_Lib (ACE_CString const &);
 
 protected:
-  virtual void write_baseprojects();
-  virtual void write_projectinfo();
+  void write_baseprojects () override;
+  void write_projectinfo () override;
 };
 
 //----------------------------------------------------------------------------
@@ -80,10 +85,14 @@ protected:
 class Library
 {
 public:
-  Library (const ACE_TCHAR *name = 0 );
+  explicit Library (ACE_TCHAR const *name = nullptr);
   /// Constructor is responsible for loading all of the modules related to the
   /// library
   ~Library ();
+  Library (Library const &) = delete;
+  Library (Library &&) = delete;
+  Library &operator= (Library const &) = delete;
+  Library &operator= (Library &&) = delete;
 
   // Resolve interates over the supplied list of undefined signatures to locate
   // modules that contain definitions. Any symbol defined in a module marked as
@@ -93,33 +102,32 @@ public:
   void resolve (Sig_List &undefs);
 
   // Outputs a list of files suitable for inclusion in an mpc file to produce
-  // a subsetted library. If the argument is non-zero, reference countes for
-  // each module are also listed.
-  void write_export_list ( int );
+  // a subsetted library. If requested, reference counts for each module are
+  // also listed.
+  void write_export_list (bool);
 
   // set the path to find the .so files
-  void set_path (const ACE_TCHAR *p );
+  void set_path (ACE_TCHAR const *p);
 
   // Load the actual .so files from the path.
   void load_modules();
 
   // returns the library name
-  const ACE_CString &name () const;
+  ACE_CString const &name () const;
 
-  // returns non-zero if the module count is > 0.
-  int has_modules () const;
+  // Returns true if the module count is greater than zero.
+  bool has_modules () const;
 
 private:
   ACE_CString name_;
   ACE_CString path_;
 
   int num_modules_;
-  int num_exports_;
   int num_extrefs_;
 
-  Obj_Module **modules_;
+  std::unique_ptr<Obj_Module *[]> modules_;
   Sig_List exported_;
-  MPC_Generator *mpcfile_;
+  std::unique_ptr<MPC_Generator> mpcfile_;
 };
 
 #endif /* _LIBRARY_H_ */

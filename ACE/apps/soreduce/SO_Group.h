@@ -7,6 +7,7 @@
 #define _SO_GROUP_H_
 
 #include "Library.h"
+#include <memory>
 
 // A shared object group is a wrapper around all of the information needed to
 // analize a collection of applications so that common shared libraries can
@@ -17,12 +18,16 @@ class SO_Group
 public:
   SO_Group ();
   ~SO_Group ();
+  SO_Group (SO_Group const &) = delete;
+  SO_Group (SO_Group &&) = delete;
+  SO_Group &operator= (SO_Group const &) = delete;
+  SO_Group &operator= (SO_Group &&) = delete;
 
   // For each executable named, run ldd to get the dependances list, For each
   // library listed, see if there is a path to .shobj and add to the list of
   // libraries if found. Finally, add the undefined symbols from the executable
   // to the undefs collection.
-  void add_executable(const char * );
+  void add_executable (char const *);
 
   // Do the actual business of the program
   void analize ();
@@ -38,7 +43,7 @@ public:
 private:
   Obj_Module undef_wrapper_;
   Sig_List &undefs_;
-  Library **libs_;
+  std::unique_ptr<Library *[]> libs_;
   int max_libs_;
   int num_libs_;
 };

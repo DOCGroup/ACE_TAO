@@ -27,11 +27,15 @@ public:
     undef_
   };
 
-  Signature (const ACE_CString &);
+  explicit Signature (ACE_CString const &);
+  Signature (Signature const &) = delete;
+  Signature (Signature &&) = delete;
+  Signature &operator= (Signature const &) = delete;
+  Signature &operator= (Signature &&) = delete;
   void used ();
   int used_count() const;
 
-  const ACE_CString &name() const;
+  ACE_CString const &name() const;
 
   Signature *dup();
   void release();

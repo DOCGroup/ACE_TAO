@@ -12,26 +12,22 @@
 
 SO_Group::SO_Group ()
   : undef_wrapper_ ("nothing"),
-    undefs_(undef_wrapper_.imports()),
-    libs_ (0),
+    undefs_ (undef_wrapper_.imports()),
+    libs_ (nullptr),
     max_libs_ (128),
-    num_libs_(0)
+    num_libs_ (0)
 {
-  libs_ = new Library*[max_libs_];
+  libs_.reset (new Library *[max_libs_] ());
 }
 
 SO_Group::~SO_Group ()
 {
-  for (int i = 0; i < num_libs_; delete libs_[i++])
-    {
-      // No action.
-    }
-
-  delete [] libs_;
+  for (int i = 0; i < num_libs_; ++i)
+    delete libs_[i];
 }
 
 void
-SO_Group::add_executable (const char * path)
+SO_Group::add_executable (char const *path)
 {
   ACE_Process proc;
   ACE_Process_Options opts;
@@ -60,7 +56,7 @@ SO_Group::add_executable (const char * path)
     ACE_OS::memset (line,0,max_line_length);
     int len = 0;
     int nread = 0;
-    int bogus = 0;
+    bool bogus = false;
 
     // Skip initial whitespace.
     while ((nread = ACE_OS::read (pipe[0], line,1)) == 1
@@ -80,9 +76,9 @@ SO_Group::add_executable (const char * path)
     while ((nread = ACE_OS::read (pipe[0], line + len, 1)) == 1
            && (line[len] != ' '))
       {
-        if (! bogus && ++len == max_line_length)
+        if (!bogus && ++len == max_line_length)
           {
-            bogus = 1;
+            bogus = true;
             break;
           }
       }
@@ -92,27 +88,28 @@ SO_Group::add_executable (const char * path)
         break;
       }
 
-    line[len] = 0;
+    line[len] = '\0';
     char * dot = ACE_OS::strchr (line,'.');
 
-    if (dot != 0)
+    if (dot != nullptr)
       {
-        *dot = 0;
+        *dot = '\0';
       }
 
     char * libname = line + 3; // skip over "lib"
 
     // check to see if this is a new library
-    int found = 0;
+    bool found = false;
 
     for (int i = 0; !found && i < num_libs_; ++i)
       {
-        found = (libs_[i]->name() == libname);
+        found = libs_[i]->name() == libname;
       }
 
     if (!found)
     {
-      Library *nlib = new Library(libname);
+      std::unique_ptr<Library> nlib = std::make_unique<Library> (
+        ACE_TEXT_CHAR_TO_TCHAR (libname));
       ACE_OS::memset (line,0,max_line_length);
 
       // Skip over '=> '.
@@ -127,9 +124,9 @@ SO_Group::add_executable (const char * path)
       while ((nread = ACE_OS::read(pipe[0],line + len,1)) == 1 &&
              (line[len] != ' '))
         {
-          if (! bogus && ++len == max_line_length)
+          if (!bogus && ++len == max_line_length)
             {
-              bogus = 1;
+              bogus = true;
               break;
             }
         }
@@ -139,9 +136,9 @@ SO_Group::add_executable (const char * path)
           break;
         }
 
-      line[len] = 0;
+      line[len] = '\0';
       nlib->set_path (line);
-      libs_[num_libs_++] = nlib;
+      libs_[num_libs_++] = nlib.release ();
       ACE_ASSERT (num_libs_ < max_libs_); // grow max libs?
     }
 
@@ -160,7 +157,7 @@ SO_Group::add_executable (const char * path)
   proc.wait ();
   ACE_OS::close (pipe[0]);
 
-  undef_wrapper_.add_source(path,1);
+  undef_wrapper_.add_source (path, true);
   // now do the ldd, iterate over the results to add new libs, etc.
 }
 
@@ -184,7 +181,7 @@ SO_Group::analize ()
 void
 SO_Group::write_results ()
 {
-  for (int i = 0; i < num_libs_; libs_[i++]->write_export_list (1))
+  for (int i = 0; i < num_libs_; libs_[i++]->write_export_list (true))
     {
       // No action.
     }

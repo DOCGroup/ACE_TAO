@@ -15,23 +15,28 @@
 // of space.
 
 #include "Signature.h"
+#include <memory>
 
 class Sig_List {
 public:
-  Sig_List (int cap = 500);
+  explicit Sig_List (int cap = 500);
   ~Sig_List ();
-  void add (const ACE_CString &s);
-  void add (const Sig_List &other);
-  void remove (const Signature &s);
+  Sig_List (Sig_List const &) = delete;
+  Sig_List (Sig_List &&) = delete;
+  Sig_List &operator= (Sig_List const &) = delete;
+  Sig_List &operator= (Sig_List &&) = delete;
+  void add (ACE_CString const &s);
+  void add (Sig_List const &other);
+  void remove (Signature const &s);
   void remove_current ();
 
-  int index_of (const Signature *s);
-  int index_of (const ACE_CString &s);
-  int hasmore();
-  const Signature *first();
-  const Signature *next();
+  int index_of (Signature const *s);
+  int index_of (ACE_CString const &s);
+  bool hasmore ();
+  Signature const *first();
+  Signature const *next();
 
-  int modified ();
+  bool modified ();
   int size();
 
 private:
@@ -39,8 +44,8 @@ private:
   int capacity_;
   int index_;
   int has_nulls_;
-  int modified_;
-  Signature ** array_;
+  bool modified_;
+  std::unique_ptr<Signature *[]> array_;
 };
 
 

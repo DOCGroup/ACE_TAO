@@ -17,7 +17,7 @@
 
 //----------------------------------------------------------------------------
 
-Obj_Module::Obj_Module (const ACE_CString &name, int cap)
+Obj_Module::Obj_Module (ACE_CString const &name, int cap)
   : name_ (name),
     imports_(cap),
     exports_(cap),
@@ -66,7 +66,7 @@ Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block **buf)
 {
   int eoln = 0;
   //  ACE_Time_Value timeout (1,0);
-  if (buf == 0 || *buf == 0) {
+  if (buf == nullptr || *buf == nullptr) {
     char dummy;
     while (!eoln && ACE_OS::read(src,&dummy,1) == 1) {
       eoln = (dummy == '\n');
@@ -86,7 +86,7 @@ Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block **buf)
 }
 
 void
-Obj_Module::add_source(const char *p, int imports_only)
+Obj_Module::add_source(char const *p, bool imports_only)
 {
   ACE_Process nmproc;
   ACE_Process_Options nm_opts;
@@ -133,8 +133,8 @@ Obj_Module::add_source(const char *p, int imports_only)
   char dummy;
   int eoln = 1;
   //  ACE_Time_Value timeout (1,0);
-  int is_import = 1;
-  int is_export = 1;
+  bool is_import = true;
+  bool is_export = true;
 
   while (eoln == 1) {
     for (int i = 0; i < 10; i++) {
@@ -146,14 +146,14 @@ Obj_Module::add_source(const char *p, int imports_only)
     if (eoln == 2)
       break;
     is_import = dummy == 'U';
-    is_export = !imports_only && (ACE_OS::strchr("BCDRTVW",dummy) != 0);
+    is_export = !imports_only && ACE_OS::strchr ("BCDRTVW", dummy) != nullptr;
 
     //    if (ACE::recv(pipe[0],&dummy,1,&timeout) != 1)
     if (ACE_OS::read(pipe[0],&dummy,1) != 1)
       break;
 
     eoln = this->read_line (pipe[0], is_import ? &im_buf_cur :
-                            (is_export ? &ex_buf_cur : 0));
+                            (is_export ? &ex_buf_cur : nullptr));
     import_lines += is_import;
     export_lines += is_export;
   }
@@ -196,7 +196,7 @@ Obj_Module::populate_sig_list (Sig_List &siglist,
         {
           buf = buf->cont ();
 
-          if (buf == 0)
+          if (buf == nullptr)
             {
               siglist.add (temp);
             }
