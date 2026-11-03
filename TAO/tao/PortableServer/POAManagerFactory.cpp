@@ -4,9 +4,7 @@
 
 #include "ace/CORBA_macros.h"
 
-#include <algorithm>
 #include <cstring>
-#include <new>
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
@@ -90,11 +88,13 @@ TAO_POAManager_Factory::list ()
   poamanagers->length (number_of_poamanagers);
 
   CORBA::ULong index = 0;
-  for (::PortableServer::POAManager_ptr poamanager : this->poamanager_set_)
+  for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
+       iterator != this->poamanager_set_.end ();
+       ++iterator, ++index)
     {
+      ::PortableServer::POAManager_ptr poamanager = *iterator;
       poamanagers[index] =
         PortableServer::POAManager::_duplicate (poamanager);
-      ++index;
     }
 
   return poamanagers._retn ();
@@ -106,8 +106,11 @@ TAO_POAManager_Factory::find (const char * id)
   ::PortableServer::POAManager_ptr poamanager =
     ::PortableServer::POAManager::_nil();
 
-  for (::PortableServer::POAManager_ptr manager : this->poamanager_set_)
+  for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
+       iterator != this->poamanager_set_.end ();
+       ++iterator)
     {
+      ::PortableServer::POAManager_ptr manager = *iterator;
       CORBA::String_var poamanagerid = manager->get_id ();
 
       if (std::strcmp (id, poamanagerid.in()) == 0)
@@ -123,49 +126,36 @@ TAO_POAManager_Factory::find (const char * id)
 void
 TAO_POAManager_Factory::remove_all_poamanagers ()
 {
-  for (::PortableServer::POAManager_ptr poamanager : this->poamanager_set_)
+  for (POAMANAGERSET::iterator iterator = this->poamanager_set_.begin ();
+       iterator != this->poamanager_set_.end ();
+       ++iterator)
     {
+      ::PortableServer::POAManager_ptr poamanager = *iterator;
       CORBA::release (poamanager);
     }
-  this->poamanager_set_.clear ();
+  this->poamanager_set_.reset ();
 }
 
 int
 TAO_POAManager_Factory::remove_poamanager (
   ::PortableServer::POAManager_ptr poamanager)
 {
-  POAMANAGERSET::iterator const position =
-    std::find (this->poamanager_set_.begin (), this->poamanager_set_.end (), poamanager);
+  int const retval = this->poamanager_set_.remove (poamanager);
 
-  if (position == this->poamanager_set_.end ())
-    return -1;
+  if (retval == 0)
+    {
+      CORBA::release (poamanager);
+    }
 
-  this->poamanager_set_.erase (position);
-  CORBA::release (poamanager);
-  return 0;
+  return retval;
 }
 
 int
 TAO_POAManager_Factory::register_poamanager (
   ::PortableServer::POAManager_ptr poamanager)
 {
-  if (std::find (this->poamanager_set_.begin (), this->poamanager_set_.end (), poamanager)
-      != this->poamanager_set_.end ())
-    return -1;
-
-  ::PortableServer::POAManager_ptr duplicate =
-    PortableServer::POAManager::_duplicate (poamanager);
-  try
-    {
-      this->poamanager_set_.push_back (duplicate);
-    }
-  catch (std::bad_alloc const&)
-    {
-      CORBA::release (duplicate);
-      return -1;
-    }
-
-  return 0;
+  return this->poamanager_set_.insert (
+    PortableServer::POAManager::_duplicate (poamanager));
 }
 
 

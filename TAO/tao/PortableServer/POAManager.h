@@ -27,7 +27,7 @@
 #include "tao/LocalObject.h"
 #include "tao/PI_ForwardC.h"
 
-#include <vector>
+#include "ace/Unbounded_Set.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -132,7 +132,7 @@ protected:
 
   ACE_Lock &lock_;
 
-  using POA_COLLECTION = std::vector<TAO_Root_POA *>;
+  using POA_COLLECTION = ACE_Unbounded_Set<TAO_Root_POA *>;
 
   POA_COLLECTION poa_collection_;
 

@@ -51,12 +51,11 @@
 
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/Array_Base.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
-
-#include <vector>
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -687,7 +686,7 @@ protected:
 
   IOP::TaggedComponentSeq tagged_component_id_;
 
-  std::vector<IOP::ProfileId> profile_id_array_;
+  ACE_Array_Base <IOP::ProfileId> profile_id_array_;
 
   TAO_POA_Policy_Set policies_;
 
