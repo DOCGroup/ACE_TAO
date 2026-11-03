@@ -3,6 +3,7 @@
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
+#include <cstdlib>
 #include <memory>
 #include <vector>
 
@@ -560,7 +561,7 @@ TAO_Notify_ETCL_Filter::load_attrs(TAO_Notify::NVPList const &attrs)
   TAO_Notify_Object::load_attrs (attrs);
   if (attrs.find ("FilterId", value))
   {
-    ACE_ASSERT (this->id_ == ACE_OS::atoi (value));
+    ACE_ASSERT (this->id_ == std::atoi (value));
   }
 
   if (attrs.find ("Grammar", value))
@@ -579,7 +580,7 @@ TAO_Notify_ETCL_Filter::load_child (ACE_CString const &type,
     const char* value = nullptr;
     if (attrs.find ("ConstraintId", value))
     {
-      TAO_Notify_Object::ID id = ACE_OS::atoi (value);
+      TAO_Notify_Object::ID id = std::atoi (value);
       constraint_expr_ids_ = id;
 
       if (DEBUG_LEVEL)

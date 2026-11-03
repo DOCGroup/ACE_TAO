@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 
 #include <cstring>
+#include <cstdlib>
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -221,7 +222,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
     const char* value = nullptr;
     if (attrs.find ("FilterId", value))
     {
-      TAO_Notify_Object::ID const id = ACE_OS::atoi (value);
+      TAO_Notify_Object::ID const id = std::atoi (value);
       if (DEBUG_LEVEL)
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reload filter %d\n"),

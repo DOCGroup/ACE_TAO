@@ -8,6 +8,8 @@
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 #include "ace/Monitor_Base.h"
 
+#include <cstdio>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -99,7 +101,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
 
   this->base_stat_name_ = admin_->stat_name ();
   char name[64];
-  ACE_OS::sprintf(name, "%d", proxy_id);
+  std::sprintf (name, "%d", proxy_id);
   this->base_stat_name_ += name;
   this->base_stat_name_ += "/";
 

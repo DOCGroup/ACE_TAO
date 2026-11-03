@@ -8,6 +8,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
@@ -108,7 +110,7 @@ namespace TAO_Notify
     {
       FILE * const out = this->output_;
 
-      ACE_OS::fprintf (out, "<?xml version=\"1.0\"?>\n");
+      std::fprintf (out, "<?xml version=\"1.0\"?>\n");
 
       try
       {
@@ -158,12 +160,12 @@ namespace TAO_Notify
 
     FILE * const out = this->output_;
 
-    ACE_OS::fprintf (out, "%s%s%s", indent_.c_str(), "<", type.c_str());
+    std::fprintf (out, "%s%s%s", indent_.c_str(), "<", type.c_str());
     if (id != 0)
     {
       // not all ostreams know what to do with a CORBA::Long
       long const lid = id;
-      ACE_OS::fprintf (out, " %s%s%ld%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
+      std::fprintf (out, " %s%s%ld%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
     }
 
     ACE_TString::size_type const BUF_SIZE = 512;
@@ -172,11 +174,11 @@ namespace TAO_Notify
     {
       ACE_TString valuetmp (ACE_TEXT_CHAR_TO_TCHAR (attrs[idx].value.c_str()));
       ACEXML_escape_string(valuetmp, tmp);
-      ACE_OS::fprintf (out, "%s%s%s%s%s"," ",
+      std::fprintf (out, "%s%s%s%s%s"," ",
            attrs[idx].name.c_str (),
            "=\"", ACE_TEXT_ALWAYS_CHAR (tmp.c_str()), "\"");
     }
-    ACE_OS::fprintf (out, ">\n");
+    std::fprintf (out, ">\n");
     this->indent_ += "  ";
     return true;
   }
@@ -190,7 +192,7 @@ namespace TAO_Notify
     {
       this->indent_ = this->indent_.substr(2);
     }
-    ACE_OS::fprintf (out, "%s%s%s%s", indent_.c_str(), "</",
+    std::fprintf (out, "%s%s%s%s", indent_.c_str(), "</",
                      type.c_str(), ">\n");
   }
 } /* namespace TAO_Notify */

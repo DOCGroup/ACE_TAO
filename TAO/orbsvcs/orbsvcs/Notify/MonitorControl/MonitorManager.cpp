@@ -14,6 +14,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_MonitorManager::TAO_MonitorManager ()
@@ -260,7 +262,7 @@ TAO_MonitorManager::ORBTask::svc ()
               }
             else
               {
-                ACE_OS::fprintf (fp, "%s", ior.in ());
+                std::fprintf (fp, "%s", ior.in ());
                 ACE_OS::fclose (fp);
               }
           }

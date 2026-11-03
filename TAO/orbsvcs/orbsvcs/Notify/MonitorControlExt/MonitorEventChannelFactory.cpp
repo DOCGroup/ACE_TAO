@@ -8,6 +8,7 @@
 #include "ace/Monitor_Point_Registry.h"
 
 #include <cstring>
+#include <cstdio>
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -244,7 +245,7 @@ TAO_MonitorEventChannelFactory::create_channel (
   // Construct the name using the new id
   ACE_CString sname (this->name_ + "/");
   char name[64];
-  ACE_OS::sprintf(name, "%d", id);
+  std::sprintf (name, "%d", id);
   sname += name;
 
   ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);

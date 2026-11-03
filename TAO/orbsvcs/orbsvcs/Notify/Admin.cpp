@@ -14,6 +14,7 @@
 #include "orbsvcs/Notify/Save_Persist_Worker_T.h"
 
 #include <cstring>
+#include <cstdlib>
 #include "orbsvcs/Notify/Reconnect_Worker_T.h"
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/Supplier_Map.h"
@@ -164,7 +165,8 @@ TAO_Notify_Admin::load_attrs(TAO_Notify::NVPList const &attrs)
   const char* value = nullptr;
   if (attrs.find ("InterFilterGroupOperator", value))
     {
-      this->filter_operator_ = static_cast <CosNotifyChannelAdmin::InterFilterGroupOperator> (ACE_OS::atoi (value));
+      this->filter_operator_ = static_cast <CosNotifyChannelAdmin::InterFilterGroupOperator> (
+        std::atoi (value));
     }
 
   if (attrs.find ("default", value))

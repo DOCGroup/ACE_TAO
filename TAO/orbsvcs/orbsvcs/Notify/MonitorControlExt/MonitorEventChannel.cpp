@@ -15,6 +15,7 @@
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 
 #include <cstring>
+#include <cstdio>
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -883,7 +884,7 @@ TAO_MonitorEventChannel::named_new_for_consumers (
       if (name == nullptr)
         {
           char idname[64];
-          ACE_OS::sprintf (idname, "%d", id);
+          std::sprintf (idname, "%d", id);
           full += idname;
         }
       else
@@ -950,7 +951,7 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
       if (name == nullptr)
         {
           char idname[64];
-          ACE_OS::sprintf (idname, "%d", id);
+          std::sprintf (idname, "%d", id);
           full += idname;
         }
       else

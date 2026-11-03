@@ -11,6 +11,7 @@
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 
 #include <cstring>
+#include <cstdio>
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -163,7 +164,7 @@ TAO_MonitorConsumerAdmin::obtain_notification_push_supplier (
 
   // Next, map the proxy id to the name in the ec.
   char name[64];
-  ACE_OS::sprintf (name, "%d", proxy_id);
+  std::sprintf (name, "%d", proxy_id);
   ec->map_supplier_proxy (proxy_id, name);
 
   return proxy._retn ();

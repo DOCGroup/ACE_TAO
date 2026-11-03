@@ -3,6 +3,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
 namespace
@@ -41,7 +43,7 @@ namespace TAO_Notify
     : name(p.name())
   {
     char buf[64];
-    ACE_OS::sprintf (buf, "%d", p.value ());
+    std::sprintf (buf, "%d", p.value ());
     value = buf;
   }
 
@@ -50,7 +52,7 @@ namespace TAO_Notify
   {
     char buf[64];
     long temp = static_cast<long> (p.value ());
-    ACE_OS::sprintf (buf, "%ld", temp);
+    std::sprintf (buf, "%ld", temp);
     value = buf;
   }
 
@@ -74,7 +76,7 @@ namespace TAO_Notify
   {
     char buf[64];
     long temp = v;
-    ACE_OS::sprintf (buf, "%ld", temp);
+    std::sprintf (buf, "%ld", temp);
     value = buf;
   }
 
@@ -129,7 +131,7 @@ namespace TAO_Notify
     const char * v;
     if (find(p.name(), v))
     {
-      p.assign (static_cast<CORBA::Short> (ACE_OS::atoi(v)));
+      p.assign (static_cast<CORBA::Short> (std::atoi (v)));
     }
   }
 
@@ -138,7 +140,7 @@ namespace TAO_Notify
     const char * v;
     if (find(p.name(), v))
     {
-      p.assign (static_cast<CORBA::Long> (ACE_OS::atoi(v)));
+      p.assign (static_cast<CORBA::Long> (std::atoi (v)));
     }
   }
 
@@ -172,7 +174,7 @@ namespace TAO_Notify
     const char * val;
     if (find(n, val))
     {
-      v = static_cast<CORBA::Long> (ACE_OS::atoi(val));
+      v = static_cast<CORBA::Long> (std::atoi (val));
       return true;
     }
     return false;

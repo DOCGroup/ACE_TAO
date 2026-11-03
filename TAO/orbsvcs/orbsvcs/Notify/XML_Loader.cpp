@@ -12,6 +12,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <cstring>
+#include <cstdlib>
 #include <memory>
 
 //#define DEBUG_LEVEL 9
@@ -40,7 +41,7 @@ namespace {
       if (std::strcmp (name.c_str (),
                           TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
       {
-        id = ACE_OS::atoi (value.c_str ());
+        id = std::atoi (value.c_str ());
       }
       nvp.push_back (NVP (name.c_str (), value.c_str ()));
     }
