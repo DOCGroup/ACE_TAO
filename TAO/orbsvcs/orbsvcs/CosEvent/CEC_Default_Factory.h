@@ -25,6 +25,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -137,7 +139,7 @@ public:
 
 private:
   /// Parse an argument to set the type of collections used.
-  int parse_collection_arg (ACE_TCHAR* opt);
+  int parse_collection_arg (ACE_TCHAR const *opt);
 
 private:
   /// Several flags to control the kind of object created.
@@ -160,10 +162,7 @@ private:
   int reactive_pulling_period_;
 
   /// Use this ORB to locate global resources.
-  char *orbid_;
-
-  /// Indicate ORB ID has been duplicated (memory allocated).
-  bool orbid_dupped_ {};
+  std::string orbid_;
 
   /// The consumer and supplier control policies.
   bool consumer_control_;
