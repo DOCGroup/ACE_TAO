@@ -4,6 +4,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <atomic>
+
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 #define CA_FILTER "threshold < 20"
@@ -18,7 +20,7 @@ int EVENTS_EXPECTED_TO_RECEIVE = 9*4;  // 2 consumers get the same events from 2
 #define DOMAIN_NAME "*"
 #define TYPE_NAME "*"
 
-ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
+std::atomic<int> g_result_count {0};
 
 FilterClient::FilterClient ()
   :consumer_1 (0),
@@ -199,7 +201,7 @@ FilterClient::run_consumer ()
 {
   this->wait_ready ();
 
-  if (g_result_count != EVENTS_EXPECTED_TO_RECEIVE)
+  if (g_result_count.load (std::memory_order_relaxed) != EVENTS_EXPECTED_TO_RECEIVE)
     { // if we still need to wait for events, run the orb.
       while (!this->done_)
         if (this->orb_->work_pending ())
@@ -668,9 +670,11 @@ Filter_StructuredPushConsumer::push_structured_event
     my_name_.fast_rep (), val));
 
     ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("event count %d\n"), g_result_count.value ()));
+                ACE_TEXT ("event count %d\n"),
+                g_result_count.load (std::memory_order_relaxed)));
 
-    if (++g_result_count == EVENTS_EXPECTED_TO_RECEIVE)
+    if (g_result_count.fetch_add (1, std::memory_order_relaxed) + 1 ==
+        EVENTS_EXPECTED_TO_RECEIVE)
       this->filter_->done (); // all events received, we're done.
 }
 
