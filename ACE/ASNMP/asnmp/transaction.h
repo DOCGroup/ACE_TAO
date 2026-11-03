@@ -63,7 +63,7 @@ public:
   const ACE_INET_Addr& get_from_addr() const;
 
   /// Return session_ handle.
-  ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
 private:
   /// disallow copy construction

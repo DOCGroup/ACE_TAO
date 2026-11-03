@@ -53,16 +53,16 @@ public:
   ~TimeTicks();
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// get a printable ASCII value
-  const char *to_string();
+  const char *to_string() override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=(SnmpSyntax &val);
+  SnmpSyntax& operator=(SnmpSyntax &val) override;
 
   /// overloaded assignment
   TimeTicks& operator=( const TimeTicks &uli);

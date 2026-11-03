@@ -60,7 +60,7 @@ public:
   ~Counter64();
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// return a long double representation
   long double to_long_double() const;
@@ -87,16 +87,16 @@ public:
   Counter64& operator=( const Counter64 &rhs);
 
   /// get a printable ASCII representation
-  const char *to_string();
+  const char *to_string() override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// general validity test, always true
-  int valid() const;
+  int valid() const override;
 
   /// otherwise, behave like an ACE_UINT64
   operator ACE_UINT64();

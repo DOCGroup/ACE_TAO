@@ -63,7 +63,7 @@ public:
   ~Oid();
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// assignment to another oid object overloaded
   Oid& operator=( const Oid &oid);
@@ -134,17 +134,17 @@ public:
   int right_comparison( const unsigned long n, const Oid &o) const;
 
   /// is the Oid object valid
-  int valid() const;
+  int valid() const override;
 
   /// return dotted string value from the right
   /// where the user specifies how many positions to print
-  const char *to_string();
+  const char *to_string() override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
 protected:
   /// used for returning oid string

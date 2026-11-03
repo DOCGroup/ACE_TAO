@@ -65,6 +65,9 @@ typedef struct {                /* smiVALUE portion of VarBind */
 //
 class ASNMP_Export SnmpSyntax {
 public:
+  SnmpSyntax () = default;
+  SnmpSyntax (SnmpSyntax const &) = default;
+
   /// virtual function for getting a printable ASCII value for any SNMP Value
   virtual const char * to_string() = 0;
 

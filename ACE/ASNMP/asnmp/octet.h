@@ -52,7 +52,7 @@ public:
   ~OctetStr();
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// set octet from byte buffer, assume c style string if size == -1
   void set_data( const SmiBYTE* string, long int size = -1);
@@ -123,22 +123,22 @@ public:
   size_t length() const ;
 
   /// returns validity
-  int valid() const;
+  int valid() const override;
 
   /// returns pointer to internal data
   SmiBYTE *data() const;
 
   /// get a printable ASCII value
-  const char *to_string();
+  const char *to_string() override;
 
   /// get an ASCII formattted hex dump of the contents
   const char *to_string_hex();
 
   /// create a new instance of this Value
-  SnmpSyntax  *clone() const;
+  SnmpSyntax  *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
 protected:
   //----[ instance variables ]

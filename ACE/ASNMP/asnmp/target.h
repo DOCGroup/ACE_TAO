@@ -140,6 +140,7 @@ public:
 protected:
   ///     SnmpTarget(const SnmpTarget &);
   SnmpTarget();
+  SnmpTarget (SnmpTarget const &) = default;
 
   /// used by derived class instances
   int validity_;
@@ -181,6 +182,7 @@ class ASNMP_Export UdpTarget : public SnmpTarget
 {
 public:
   UdpTarget();
+  UdpTarget (UdpTarget const &) = default;
 
   /**
     * constructor with only address
@@ -193,7 +195,7 @@ public:
   UdpTarget( ACE_INET_Addr& ace_inet_addr);
 
   /// destructor
-  ~UdpTarget();
+  ~UdpTarget() override;
 
   // ** set ***
 
@@ -239,7 +241,7 @@ public:
   const char *to_string();
 
   /// clone from existing UdpTarget
-  SnmpTarget *clone() const;
+  SnmpTarget *clone() const override;
 
 protected:
   static OctetStr default_rd_community_;

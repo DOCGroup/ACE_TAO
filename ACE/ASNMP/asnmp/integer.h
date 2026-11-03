@@ -123,7 +123,7 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// get a printable ASCII value
-  const char *to_string();
+  const char *to_string() override;
 
   /// logical state of object
   int valid() const override;
