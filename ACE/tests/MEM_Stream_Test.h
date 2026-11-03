@@ -35,13 +35,13 @@ class Echo_Handler : public ACE_Svc_Handler<ACE_MEM_STREAM, ACE_SYNCH>
 {
 public:
   /// The Svc_Handler callbacks.
-  Echo_Handler (ACE_Thread_Manager *thr_mgr = 0);
-  virtual int open (void *);
+  explicit Echo_Handler (ACE_Thread_Manager *thr_mgr = nullptr);
+  int open (void *) override;
   static void reset_handler ();
-  virtual int handle_input (ACE_HANDLE h);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
-  virtual int svc ();
+  int handle_input (ACE_HANDLE h) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
+  int svc () override;
 
 private:
   ACE_TCHAR name_[MAXPATHLEN];

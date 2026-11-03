@@ -311,8 +311,8 @@ public:
   // = Factory method.
   /// Activate the @a svc_handler by registering it with the <Reactor>
   /// and then calling it's <open> hook.
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -375,8 +375,8 @@ public:
    * its <open> method and then calling its <activate> method to turn
    * it into an active object.
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
