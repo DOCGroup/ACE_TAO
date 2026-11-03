@@ -283,7 +283,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                                                       lanes[i]->resources ().acceptor_registry ());
         }
 
-      ACE_ASSERT (0);
+      ACE_ASSERT (false);
     }
 
   // If this POA has the CLIENT_PROPAGATED policy, create the IOR with
