@@ -344,7 +344,7 @@ class  ASNMP_Export UdpAddress : public IpAddress
 {
 public:
   /// default constructor with a dotted string in the form of addr:port
-  explicit UdpAddress( const char *inaddr = "");
+  UdpAddress( const char *inaddr = "");
 
   /// construct an Udp address with another Udp address
   UdpAddress( const UdpAddress &udpaddr);
