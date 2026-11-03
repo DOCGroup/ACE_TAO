@@ -77,7 +77,7 @@ private:
   CORBA::ORB_var orb_;
 
   /// Callback Object
-  Callback_var callback_;
+  Callback_var callback_ {};
 
   /// Number of times the callback needs to be called
   int no_iterations_;

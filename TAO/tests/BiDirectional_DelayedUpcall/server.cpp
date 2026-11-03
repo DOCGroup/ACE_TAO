@@ -3,9 +3,12 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
-ACE_TCHAR const *ior_output_file = nullptr;
-int no_iterations = 10;
+namespace
+{
+ACE_TCHAR const *ior_output_file {};
+int no_iterations {10};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -34,6 +37,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
+}
 }
 
 int
@@ -89,7 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Simple_Server_i *server_impl = nullptr;
+      Simple_Server_i *server_impl {};
 
       ACE_NEW_THROW_EX (server_impl,
                         Simple_Server_i (orb.in (),
@@ -112,16 +116,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
+      if (ior_output_file)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       // Run the event loop
@@ -131,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
