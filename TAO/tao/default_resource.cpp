@@ -38,19 +38,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Parameters::TAO_Codeset_Parameters ()
   : translators_ ()
-  , native_ (nullptr)
+  , native_ ()
+  , native_set_ (false)
 {
 }
 
-TAO_Codeset_Parameters::~TAO_Codeset_Parameters ()
-{
-  ACE_OS::free (this->native_);
-}
+TAO_Codeset_Parameters::~TAO_Codeset_Parameters () = default;
 
 const ACE_TCHAR*
 TAO_Codeset_Parameters::native ()
 {
-  return (this->native_);
+  return this->native_set_ ? this->native_.c_str () : nullptr;
 }
 
 void
@@ -59,7 +57,7 @@ TAO_Codeset_Parameters::apply_to (TAO_Codeset_Descriptor_Base *csd)
   if (csd == nullptr)
     return;
 
-  if (this->native () != nullptr)
+  if (this->native_set_)
       csd->ncs (this->native ());
 
   for (std::basic_string<ACE_TCHAR> const& translator : this->translators_)
@@ -71,8 +69,12 @@ TAO_Codeset_Parameters::apply_to (TAO_Codeset_Descriptor_Base *csd)
 void
 TAO_Codeset_Parameters::native (const ACE_TCHAR* n)
 {
-  ACE_OS::free (this->native_);
-  this->native_ = ACE_OS::strdup (n);
+  if (n == nullptr)
+    this->native_.clear ();
+  else
+    this->native_ = n;
+
+  this->native_set_ = n != nullptr;
 }
 
 void

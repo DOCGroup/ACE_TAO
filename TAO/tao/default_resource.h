@@ -85,7 +85,8 @@ private:
   TAO_Codeset_Parameters &operator= (TAO_Codeset_Parameters &&) = delete;
 
   std::vector<std::basic_string<ACE_TCHAR>> translators_;
-  ACE_TCHAR* native_;
+  std::basic_string<ACE_TCHAR> native_;
+  bool native_set_;
 };
 
 /**
