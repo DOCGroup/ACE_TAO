@@ -18,6 +18,8 @@
 #include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -65,7 +67,7 @@ protected:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
 
-  TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_ {};
+  std::unique_ptr<TAO_Optimized_Connection_Endpoint_Selector> oc_endpoint_selector_;
 
   int register_orb_initializer ();
 
