@@ -22,16 +22,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw;
         }
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("DynAnyFactory");
 
-      DynAnyFactory_var factory =
+      DynAnyFactory_var const factory =
         DynAnyFactory::_narrow (object.in ());
 
-      MyStruct my_struct;
-      MyStructAlias my_struct_alias;
-      MyUnion my_union;
-      MyUnionAlias my_union_alias;
+      MyStruct my_struct {};
+      MyStructAlias my_struct_alias {};
+      MyUnion my_union {};
+      MyUnionAlias my_union_alias {};
 
       CORBA::Any any_struct;
       CORBA::Any any_struct_alias;
@@ -49,10 +49,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       any_struct_alias.type (_tc_MyStructAlias);
       any_union_alias.type (_tc_MyUnionAlias);
 
-      CORBA::TypeCode_var tc_struct = any_struct.type ();
-      CORBA::TypeCode_var tc_struct_alias = any_struct_alias.type ();
-      CORBA::TypeCode_var tc_union = any_union.type ();
-      CORBA::TypeCode_var tc_union_alias = any_union_alias.type ();
+      CORBA::TypeCode_var const tc_struct = any_struct.type ();
+      CORBA::TypeCode_var const tc_struct_alias = any_struct_alias.type ();
+      CORBA::TypeCode_var const tc_union = any_union.type ();
+      CORBA::TypeCode_var const tc_union_alias = any_union_alias.type ();
 
       std::cout << "Type Code of the struct: " << tc_struct->kind () << std::endl;
       std::cout << "Type Code of the struct alias: "
@@ -81,12 +81,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           std::cout << "Type Codes are not equivalent" << std::endl;
         }
 
-      DynAny_var dynany_struct =
+      DynAny_var const dynany_struct =
         factory->create_dyn_any_from_type_code (tc_struct.in ());
 
       try
         {
-          DynAny_var dynany_struct_alias =
+          DynAny_var const dynany_struct_alias =
             factory->create_dyn_any_from_type_code (tc_struct_alias.in ());
         }
       catch (CORBA::UNKNOWN const &)
@@ -97,7 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       try
         {
-          DynAny_var dynany_struct_alias =
+          DynAny_var const dynany_struct_alias =
             factory->create_dyn_any (any_struct_alias);
         }
       catch (CORBA::UNKNOWN const &)
@@ -106,12 +106,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     << "create_dyn_any (any_struct_alias)" << std::endl;
         }
 
-      DynAny_var dynany_union =
+      DynAny_var const dynany_union =
         factory->create_dyn_any_from_type_code (tc_union.in ());
 
       try
         {
-          DynAny_var dynany_union_alias =
+          DynAny_var const dynany_union_alias =
             factory->create_dyn_any_from_type_code (tc_union_alias.in ());
         }
       catch (CORBA::UNKNOWN const &)
@@ -122,7 +122,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       try
         {
-          DynAny_var dynany_union_alias =
+          DynAny_var const dynany_union_alias =
             factory->create_dyn_any (any_union_alias);
         }
       catch (CORBA::UNKNOWN const &)
