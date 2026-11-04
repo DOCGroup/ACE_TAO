@@ -74,6 +74,31 @@ generated_address_suffix ()
   return option.cxx17 () ? ")" : "";
 }
 
+void
+output_return_type (char const *type, bool const is_const)
+{
+  if (option.cxx17 () && is_const)
+    {
+      char const * const pointer = std::strchr (type, '*');
+
+      if (pointer != nullptr)
+        {
+          ACE_OS::printf ("%.*sconst %s",
+                          static_cast<int> (pointer - type),
+                          type,
+                          pointer);
+        }
+      else
+        {
+          ACE_OS::printf ("%s const", type);
+        }
+    }
+  else
+    {
+      ACE_OS::printf ("%s%s", is_const ? "const " : "", type);
+    }
+}
+
 char *
 dup_string (const char *const str)
 {
@@ -836,7 +861,9 @@ Key_List::output_switch (int use_keyword_table)
       else // Nothing special required here.
         {
           int i = 0;
-          ACE_OS::printf ("              char *s;\n\n              switch (key - %d)\n                {\n",
+          ACE_OS::printf (option.cxx17 ()
+                  ? "              char const *s;\n\n              switch (key - %d)\n                {\n"
+                  : "              char *s;\n\n              switch (key - %d)\n                {\n",
                   lowest_case_value);
 
           for (temp = curr; temp && ++i <= number_of_cases; temp = temp->next)
@@ -1037,23 +1064,24 @@ Key_List::output_binary_search_function ()
 
   // Class definition if -M is *not* enabled.
   if (option[CPLUSPLUS] && !option[SKIPCLASS])
-    ACE_OS::printf ("class %s {\npublic:\n"
-            "  static %s%s%s (const char *str);\n};\n\n",
-            option.class_name (),
-            option[CONSTANT] ? "const " : "",
-            return_type,
-            option.function_name ());
+    {
+      ACE_OS::printf ("class %s {\npublic:\n  static ", option.class_name ());
+      output_return_type (return_type, option[CONSTANT]);
+      ACE_OS::printf (" %s (char const *str);\n};\n\n",
+                      option.function_name ());
+    }
 
   // Use the inline keyword to remove function overhead.
   if (option[INLINE])
     ACE_OS::printf ("inline\n");
 
-  ACE_OS::printf ("%s%s\n", option[CONSTANT] ? "const " : "", return_type);
+  output_return_type (return_type, option[CONSTANT]);
+  ACE_OS::printf ("\n");
   if (option[CPLUSPLUS])
     ACE_OS::printf ("%s::", option.class_name ());
 
   ACE_OS::printf (option[ANSI]
-          ? "%s (const char *str)\n{\n"
+          ? "%s (char const *str)\n{\n"
           : "%s (str)\n     char *str;\n{\n",
           option.function_name ());
 
@@ -1142,25 +1170,24 @@ Key_List::output_linear_search_function ()
 
   // Class definition if -M is *not* enabled.
   if (option[CPLUSPLUS] && !option[SKIPCLASS])
-    ACE_OS::printf ("class %s {\npublic:\n"
-            "  static %s%s%s (const char *str);\n};\n\n",
-            option.class_name (),
-            option[CONSTANT] ? "const " : "",
-            return_type,
-            option.function_name ());
+    {
+      ACE_OS::printf ("class %s {\npublic:\n  static ", option.class_name ());
+      output_return_type (return_type, option[CONSTANT]);
+      ACE_OS::printf (" %s (char const *str);\n};\n\n",
+                      option.function_name ());
+    }
 
   // Use the inline keyword to remove function overhead.
   if (option[INLINE])
     ACE_OS::printf ("inline\n");
 
-  ACE_OS::printf ("%s%s\n",
-          option[CONSTANT] ? "const " : "",
-          return_type);
+  output_return_type (return_type, option[CONSTANT]);
+  ACE_OS::printf ("\n");
   if (option[CPLUSPLUS])
     ACE_OS::printf ("%s::", option.class_name ());
 
   ACE_OS::printf (option[ANSI]
-          ? "%s (const char *str)\n{\n"
+          ? "%s (char const *str)\n{\n"
           : "%s (str)\n     char *str;\n{\n",
           option.function_name ());
 
@@ -1261,7 +1288,7 @@ Key_List::output_hash_function ()
     ACE_OS::printf ("%s::", option.class_name ());
 
   ACE_OS::printf (option[ANSI]
-                  ? "%s (const char *str, %s len)\n{\n"
+                  ? "%s (char const *str, %s len)\n{\n"
                   : "%s (str, len)\n     char *str;\n     %s len;\n{\n",
                   option.hash_name (), generated_size_type ());
 
@@ -1300,16 +1327,27 @@ Key_List::output_hash_function ()
   // Optimize special case of ``-k 1,$''
   if (option[DEFAULTCHARS])
     {
+      // Peer-provided input must be checked before indexing this ASCII-sized table.
+      ACE_OS::printf ("\n    };\n"
+                      "  unsigned char const last_char = ");
+
       if (option[STRCASECMP])
-        ACE_OS::printf ("\n    };\n  return %sasso_values[static_cast<unsigned char>(charmap["
-                        "static_cast<unsigned char>(str[len - 1])])] + "
-                        "asso_values[static_cast<unsigned char>(charmap["
-                        "static_cast<unsigned char>(str[0])])];\n}\n\n",
-                option[NOLENGTH] ? "" : "len + ");
+        ACE_OS::printf ("static_cast<unsigned char> (charmap["
+                        "static_cast<unsigned char> (str[len - 1])]);\n"
+                        "  unsigned char const first_char = "
+                        "static_cast<unsigned char> (charmap["
+                        "static_cast<unsigned char> (str[0])]);\n");
       else
-        ACE_OS::printf ("\n    };\n  return %sasso_values[static_cast<unsigned char>(str[len - 1])] + "
-                        "asso_values[static_cast<unsigned char>(str[0])];\n}\n\n",
-                option[NOLENGTH] ? "" : "len + ");
+        ACE_OS::printf ("static_cast<unsigned char> (str[len - 1]);\n"
+                        "  unsigned char const first_char = "
+                        "static_cast<unsigned char> (str[0]);\n");
+
+      ACE_OS::printf ("  if (last_char >= sizeof (asso_values) / sizeof (*asso_values)\n"
+                      "      || first_char >= sizeof (asso_values) / sizeof (*asso_values))\n"
+                      "    return %d;\n"
+                      "  return %sasso_values[last_char] + asso_values[first_char];\n}\n\n",
+                      max_hash_value + 1,
+                      option[NOLENGTH] ? "" : "len + ");
     }
   else
     {
@@ -1638,7 +1676,9 @@ Key_List::output_lookup_function ()
       else
         {
           ACE_OS::printf ("            {\n"
-                  "              %schar *s = wordlist[slot]", option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "");
+                          "              %s *s = wordlist[slot]",
+                          option[CONSTANT] || pointer_and_type_enabled == 0
+                            ? "char const" : "char");
           if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
             ACE_OS::printf (".%s", option.key_name ());
 
@@ -1741,7 +1781,9 @@ Key_List::output_lookup_function ()
         {
           int pointer_and_type_enabled = option[POINTER] && option[TYPE];
 
-          ACE_OS::printf ("          %schar *s = wordlist[key]", option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "");
+          ACE_OS::printf ("          %s *s = wordlist[key]",
+                          option[CONSTANT] || pointer_and_type_enabled == 0
+                            ? "char const" : "char");
 
           if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
             ACE_OS::printf (".%s", option.key_name ());
@@ -1860,17 +1902,19 @@ Key_List::output ()
 
       // Class definition if -M is *not* enabled.
       if (option[CPLUSPLUS] && !option[SKIPCLASS])
-        ACE_OS::printf ("class %s\n{\nprivate:\n"
-                "  static %s %s (const char *str, %s len);\npublic:\n"
-                "  static %s%s%s (const char *str, %s len);\n};\n\n",
-                option.class_name (),
-                generated_size_type (),
-                option.hash_name (),
-                generated_size_type (),
-                option[CONSTANT] ? "const " : "",
-                return_type,
-                option.function_name (),
-                generated_size_type ());
+        {
+          ACE_OS::printf ("class %s\n{\nprivate:\n"
+                          "  static %s %s (char const *str, %s len);\npublic:\n"
+                          "  static ",
+                          option.class_name (),
+                          generated_size_type (),
+                          option.hash_name (),
+                          generated_size_type ());
+          output_return_type (return_type, option[CONSTANT]);
+          ACE_OS::printf (" %s (char const *str, %s len);\n};\n\n",
+                          option.function_name (),
+                          generated_size_type ());
+        }
 
       output_hash_function ();
 
@@ -1915,14 +1959,21 @@ Key_List::output ()
 
       int pointer_and_type_enabled = option[POINTER] && option[TYPE];
 
-      ACE_OS::printf ("%s%s\n",
-                      option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
-                      return_type);
+      if (option[CONSTANT] || pointer_and_type_enabled == 0)
+        {
+          output_return_type (return_type,
+                              option[CONSTANT] || pointer_and_type_enabled == 0);
+        }
+      else
+        {
+          ACE_OS::printf ("%s", return_type);
+        }
+      ACE_OS::printf ("\n");
       if (option[CPLUSPLUS])
         ACE_OS::printf ("%s::", option.class_name ());
 
       ACE_OS::printf (option[ANSI]
-              ? "%s (const char *str, %s len)\n{\n"
+              ? "%s (char const *str, %s len)\n{\n"
               : "%s (str, len)\n     char *str;\n     %s len;\n{\n",
               option.function_name (), generated_size_type ());
 

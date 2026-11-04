@@ -107,7 +107,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << "/// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << "const " << node->name () << " &_tao_elem)"
+      << node->name () << " const &_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert_copy ("
@@ -138,8 +138,8 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   // Extraction to const pointer operator.
   *os << "/// Extraction to const pointer." << be_nl
       << "::CORBA::Boolean operator>>= (" << be_idt_nl
-      << "const ::CORBA::Any &_tao_any," << be_nl
-      << "const " << node->name () << " *&_tao_elem)"
+      << "::CORBA::Any const &_tao_any," << be_nl
+      << node->name () << " const *&_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "return TAO::Any_Dual_Impl_T<" << node->name () << ">::extract ("

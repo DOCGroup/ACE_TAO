@@ -137,7 +137,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (const " << fname
+  *os << "::" << ub->local_name () << " (" << fname << " const"
       << " val)" << be_nl
       << "{" << be_idt_nl;
   *os << fname << "_copy ("
@@ -147,7 +147,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   *os << "}" << be_nl;
 
   *os << "/// Retrieve the member." << be_nl
-      << this->pre_op () << "const " << fname << "_slice *" << be_nl;
+      << this->pre_op () << fname << "_slice const *" << be_nl;
 
   this->op_name (bu,
                  os);
@@ -582,7 +582,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   // IN parameter semantics call for 'const' qualifier except
   // for interface types, which here are Object and TypeCode.
   *os << "::" << ub->local_name ()
-      << " (" << (is_object ? "" : "const ") << bt->name ();
+      << " (" << bt->name () << (is_object ? "" : " const");
 
   if (is_object)
     {
@@ -645,7 +645,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_any:
       *os << "// Retrieve the member." << be_nl
-          << this->pre_op () << "const ::" << bt->name () << " &" << be_nl;
+          << this->pre_op () << "::" << bt->name () << " const &" << be_nl;
 
       this->op_name (bu, os);
 
@@ -752,7 +752,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl;
 
   *os << "this->"
@@ -762,7 +762,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
   *os << "}" << be_nl_2;
 
   *os << "/// Readonly get method." << be_nl
-      << this->pre_op () << "const " << bt->name () << " &" << be_nl;
+      << this->pre_op () << bt->name () << " const &" << be_nl;
 
   this->op_name (bu,
                  os);
@@ -991,7 +991,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl;
 
   *os << "this->"
@@ -1002,7 +1002,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   *os << "}" << be_nl;
 
   *os << "/// Readonly get method." << be_nl
-      << this->pre_op () << "const " << bt->name () << " &" << be_nl;
+      << this->pre_op () << bt->name () << " const &" << be_nl;
 
   this->op_name (bu,
                  os);
@@ -1106,14 +1106,14 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl;
   *os << "this->" << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix () << " = val;" << be_uidt_nl;
   *os << "}" << be_nl;
 
   *os << "/// Readonly get method." << be_nl
-      << this->pre_op () << "const " << bt->name () << " &" << be_nl;
+      << this->pre_op () << bt->name () << " const &" << be_nl;
 
   this->op_name (bu,
                  os);

@@ -76,6 +76,8 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
                              "codegen for argument list failed\n"),
                             -1);
         }
+
+      *os << be_nl;
     }
   else
     {

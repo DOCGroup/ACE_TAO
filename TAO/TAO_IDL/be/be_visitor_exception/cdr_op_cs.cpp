@@ -52,7 +52,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   *os << be_nl_2
       << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_aggregate)" << be_uidt
+      << node->name () << " const &_tao_aggregate)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
 

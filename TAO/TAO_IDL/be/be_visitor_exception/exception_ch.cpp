@@ -56,13 +56,13 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   // Constructors and destructor.
   *os << be_nl_2
       << node->local_name () << " ();" << be_nl
-      << node->local_name () << " (const " << node->local_name ()
-      << " &);" << be_nl
+      << node->local_name () << " (" << node->local_name ()
+      << " const &);" << be_nl
       << "~" << node->local_name () << " () override = default;\n" << be_nl;
 
   // Assignment operator.
-  *os << node->local_name () << " &operator= (const "
-      << node->local_name () << " &);" << be_nl_2;
+  *os << node->local_name () << " &operator= ("
+      << node->local_name () << " const &);" << be_nl_2;
 
   if (be_global->any_support ())
     {
@@ -71,8 +71,8 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   *os << "static " << node->local_name ()
       << " *_downcast (::CORBA::Exception *);" << be_nl
-      << "static const " << node->local_name ()
-      << " *_downcast (::CORBA::Exception const *);" << be_nl_2;
+      << "static " << node->local_name () << " const *"
+      << "_downcast (::CORBA::Exception const *);" << be_nl_2;
 
   *os << "static ::CORBA::Exception *_alloc ();" << be_nl_2;
 

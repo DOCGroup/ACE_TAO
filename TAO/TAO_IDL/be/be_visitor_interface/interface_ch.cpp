@@ -159,13 +159,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << be_nl << "static char const *_desc_interface_name ();";
     }
 
-  // The marshal method is not part of the abstract interface mapping.
+  *os << be_nl
+      << "virtual ::CORBA::Boolean marshal "
+      << "(TAO_OutputCDR &cdr)";
+
   if (!node->is_abstract ())
     {
-      *os << be_nl
-          << "::CORBA::Boolean marshal "
-          << "(TAO_OutputCDR &cdr) override;";
+      *os << " override";
     }
+
+  *os << ";";
 
   // If we are generating CORBA Policy we need to add some more methods
   if (node->full_name () == "CORBA::Policy")

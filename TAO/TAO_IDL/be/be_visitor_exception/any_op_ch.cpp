@@ -37,12 +37,12 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
   *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << be_nl_2
-      << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
-      << " &); // copying version" << be_nl;
+      << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
+      << " const &); // copying version" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
-      << node->name () << " *&);";
+  *os << macro << " ::CORBA::Boolean operator>>= (::CORBA::Any const &, "
+      << node->name () << " const *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;
 
