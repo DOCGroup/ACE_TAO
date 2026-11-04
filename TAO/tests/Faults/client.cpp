@@ -3,49 +3,52 @@
 
 #include "test_i.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 10;
-int do_shutdown = 0;
-int do_suicide = 0;
-int do_self_shutdown = 0;
-int do_abort = 0;
-int do_crash = 0;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+  int iterations {10};
+  bool shutdown {};
+  bool suicide {};
+  bool self_shutdown {};
+  bool abort_server {};
+  bool crash_server {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("acszxk:i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'a':
-        do_abort = 1;
+        options.abort_server = true;
         break;
 
       case 'c':
-        do_crash = 1;
+        options.crash_server = true;
         break;
 
       case 'x':
-        do_shutdown = 1;
+        options.shutdown = true;
         break;
 
       case 's':
-        do_suicide = 1;
+        options.suicide = true;
         break;
 
       case 'z':
-        do_self_shutdown = 1;
+        options.self_shutdown = true;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -66,12 +69,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -79,28 +83,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
-      Simple_Server_var server =
+      Simple_Server_var const server =
         Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
                             1);
         }
 
@@ -109,15 +113,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var id =
         root_poa->activate_object (&callback_impl);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Callback_var callback =
+      Callback_var const callback =
         Callback::_narrow (object_act.in ());
 
-      for (int i = 0; i != niterations; ++i)
+      for (int i {}; i != options.iterations; ++i)
         {
-          CORBA::Long r =
-            server->test_method (0, 0, callback.in ());
+          CORBA::Long const r =
+            server->test_method (false, false, callback.in ());
 
           if (r != 0)
             {
@@ -127,57 +131,57 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
         }
 
-      if (do_abort)
+      if (options.abort_server)
         {
           try
             {
-              server->shutdown_now (0);
+              server->shutdown_now (false);
             }
-          catch (const CORBA::COMM_FAILURE&)
+          catch (CORBA::COMM_FAILURE const &)
             {
               // Expected exception, continue....
             }
         }
-      else if (do_crash)
+      else if (options.crash_server)
         {
           try
             {
-              server->shutdown_now (1);
+              server->shutdown_now (true);
             }
-          catch (const CORBA::COMM_FAILURE&)
+          catch (CORBA::COMM_FAILURE const &)
             {
               // Expected exception, continue....
             }
         }
-      else if (do_suicide)
+      else if (options.suicide)
         {
-          (void) server->test_method (1, 0, callback.in ());
+          (void) server->test_method (true, false, callback.in ());
           // The shutdown callback could arrive after this twoway invocation
           // returned. Wait for it shutdown callback and abort,
           // otherwise it will timeout (in run_test.pl).
           ACE_OS::sleep (120);
         }
-      else if (do_self_shutdown)
+      else if (options.self_shutdown)
         {
-          (void) server->test_method (1, 1, callback.in ());
+          (void) server->test_method (true, true, callback.in ());
         }
 
-      if (do_shutdown)
+      if (options.shutdown)
         {
           server->shutdown ();
         }
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::COMM_FAILURE& x)
+  catch (CORBA::COMM_FAILURE const &x)
     {
       // For other case this is expected.
-      if (do_self_shutdown == 0)
+      if (!options.self_shutdown)
         {
           x._tao_print_exception ("ERROR: Unexpected exception\n");
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client:");
       return -1;

@@ -3,34 +3,37 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-int iterations = 60;
-int period = 10;
-int kill_on = 30;
-const ACE_TCHAR* ior = ACE_TEXT("file://ping.ior");
+struct Pong_Options
+{
+  int iterations {60};
+  int period {10};
+  int kill_on {30};
+  ACE_TString ior {ACE_TEXT ("file://ping.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Pong_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:p:k:t:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'p':
-        period = ACE_OS::atoi (get_opts.opt_arg ());
+        options.period = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 't':
-        kill_on = ACE_OS::atoi (get_opts.opt_arg ());
+        options.kill_on = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -52,15 +55,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
 void
 run_client (CORBA::ORB_ptr orb,
             PingObject_ptr server,
-            PingObject_ptr callback)
+            PingObject_ptr callback,
+            Pong_Options const &options)
 {
   // Run the client requests in a separate routine to isolate the
   // exceptions...
 
-  for (int i = 0; i != iterations; ++i)
+  for (int i {}; i != options.iterations; ++i)
     {
-      ACE_Time_Value tv (0, 1000 * period);
-      const char* reason = "";
+      ACE_Time_Value tv (0, 1000 * options.period);
+      char const *reason = "";
       try
         {
           reason = "Exception during ping call";
@@ -72,28 +76,28 @@ run_client (CORBA::ORB_ptr orb,
           // Terminate the client if:
           //   - This is the last iteration
           //   - The iteration is 0 modulo <kill_on>
-          if (i + 1 == iterations
-              || (kill_on != 0 && i > 0 && i % kill_on == 0))
+          if (i + 1 == options.iterations
+              || (options.kill_on != 0 && i > 0 && i % options.kill_on == 0))
             {
               ACE_DEBUG ((LM_DEBUG, "Shutting down server\n"));
               reason = "Exception during server shutdown";
               server->shutdown ();
             }
         }
-      catch (const CORBA::TRANSIENT&)
+      catch (CORBA::TRANSIENT const &)
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "Ignoring transient exception\n"));
           // ACE_PRINT_EXCEPTION (t, reason);
           ACE_OS::sleep (tv);
         }
-      catch (const CORBA::COMM_FAILURE&)
+      catch (CORBA::COMM_FAILURE const &)
         {
           ACE_DEBUG ((LM_DEBUG, "Ignoring comm failure exception\n"));
           // ACE_PRINT_EXCEPTION (f, reason);
           ACE_OS::sleep (tv);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception (reason);
           ACE_OS::sleep (tv);
@@ -104,32 +108,33 @@ run_client (CORBA::ORB_ptr orb,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  Pong_Options options;
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
       // create child poa with PERSISTENT policy
-      CORBA::PolicyList policies;
+      CORBA::PolicyList policies {};
       policies.length (2);
       policies[0] =
-        root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
       policies[1] =
-        root_poa->create_implicit_activation_policy(PortableServer::IMPLICIT_ACTIVATION);
+        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
       PortableServer::POA_var persistent_poa =
-        root_poa->create_POA("persistent",
+        root_poa->create_POA ("persistent",
                              poa_manager.in (),
                              policies);
       policies[0]->destroy ();
@@ -137,45 +142,43 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
-      PingObject_var server =
+      PingObject_var const server =
         PingObject::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
                             1);
         }
 
-      PingObject_i callback_impl (orb.in (),
-                            persistent_poa.in ());
+      PingObject_i callback_impl (orb.in (), persistent_poa.in ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&callback_impl);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      PingObject_var callback =
+      PingObject_var const callback =
         PingObject::_narrow (object_act.in ());
 
-
-      // If the ior_output_file exists, output the ior to it
       run_client (orb.in (),
                   server.in (),
-                  callback.in ());
+                  callback.in (),
+                  options);
 
       persistent_poa->destroy (true, true);
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

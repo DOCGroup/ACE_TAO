@@ -9,7 +9,7 @@
 void
 Callback_i::shutdown (CORBA::Boolean is_clean)
 {
-  if (is_clean == 0)
+  if (!is_clean)
     {
       ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n"));
 
@@ -42,7 +42,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback,
 void
 Simple_Server_i::shutdown_now (CORBA::Boolean is_clean)
 {
-  if (is_clean == 0)
+  if (!is_clean)
     {
       ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n"));
       ACE_OS::abort();
@@ -66,7 +66,7 @@ Middle_i::test_method (CORBA::Boolean do_callback,
                        CORBA::Boolean is_clean,
                        Callback_ptr callback)
 {
-  int i = 0;
+  int i {};
   for (; i != 10; ++i)
     {
       this->server_->test_method (0,
@@ -101,7 +101,7 @@ Middle_i::shutdown ()
     {
       this->server_->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // ignore them
     }
