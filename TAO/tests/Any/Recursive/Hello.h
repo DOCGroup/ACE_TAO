@@ -21,7 +21,7 @@ class Hello
 {
 public:
   /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
   Hello (Hello const &) = delete;
   Hello &operator= (Hello const &) = delete;
   Hello (Hello &&) = delete;
