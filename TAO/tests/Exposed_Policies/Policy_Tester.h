@@ -20,13 +20,17 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include <memory>
 
 class Policy_Tester
 {
 public:
   // Ctor/Dtor.
   Policy_Tester () = default;
-  ~Policy_Tester () = default;
+  Policy_Tester (Policy_Tester const &) = delete;
+  Policy_Tester (Policy_Tester &&) = delete;
+  Policy_Tester &operator= (Policy_Tester const &) = delete;
+  Policy_Tester &operator= (Policy_Tester &&) = delete;
 
   /// Runs the test.
   void run ();
@@ -35,20 +39,20 @@ public:
             ACE_TCHAR *argv[]);
 
   void shutdown ();
+
 private:
   // Helper method used internally.
   int create_objects ();
 
   CORBA::Boolean check_reference (CORBA::Object_ptr object,
-                                   const char *msg);
+                                  char const *msg);
 
-private:
-  RTCORBA::RTORB_var rt_orb_;
-  CORBA::ORB_var orb_;
-  PortableServer::POA_var poa_;
-  RTPortableServer::POA_var child_poa_;
-  RT_Properties *rt_object_properties_ {};
-  RT_Properties *rt_poa_properties_ {};
+  RTCORBA::RTORB_var rt_orb_ {};
+  CORBA::ORB_var orb_ {};
+  PortableServer::POA_var poa_ {};
+  RTPortableServer::POA_var child_poa_ {};
+  std::unique_ptr<RT_Properties> rt_object_properties_ {};
+  std::unique_ptr<RT_Properties> rt_poa_properties_ {};
 };
 
 

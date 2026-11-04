@@ -10,13 +10,13 @@
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  int status {};
 
   try
     {
       Policy_Verifier policy_verifier;
 
-      bool retval = policy_verifier.init (argc, argv);
+      bool const retval = policy_verifier.init (argc, argv);
 
       if (retval)
         {
@@ -27,12 +27,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ++status;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CORBA Exception Raised");
       ++status;
     }
-
-
   return status;
 }

@@ -14,30 +14,32 @@
 #define RT_PROPERTIES_H_
 
 #include "tao/RTCORBA/RTCORBA.h"
+#include <memory>
 
 class RT_Properties
 {
 public:
   // -- Ctor/Dtor --
-  RT_Properties ();
+  RT_Properties () = default;
   ~RT_Properties () = default;
 
-  static RT_Properties * read_from (const ACE_TCHAR *file_name);
+  static std::unique_ptr<RT_Properties> create ();
+  static std::unique_ptr<RT_Properties> read_from (ACE_TString const &file_name);
 
   // -- Accessor Methods --
   void priority (RTCORBA::Priority priority);
-  RTCORBA::Priority priority ();
+  RTCORBA::Priority priority () const;
 
-  void priority_bands (const RTCORBA::PriorityBands& priority_bands);
-  const RTCORBA::PriorityBands& priority_bands ();
+  void priority_bands (RTCORBA::PriorityBands const &priority_bands);
+  RTCORBA::PriorityBands const &priority_bands () const;
 
-  void ior_source (const ACE_TCHAR *s);
-  const ACE_TCHAR* ior_source ();
+  void ior_source (ACE_TString const &source);
+  ACE_TString const &ior_source () const;
 
 private:
-  RTCORBA::Priority priority_;
+  RTCORBA::Priority priority_ {10};
   RTCORBA::PriorityBands priority_bands_;
-  ACE_TString ior_source_;
+  ACE_TString ior_source_ {ACE_TEXT ("poa_default.ior")};
 };
 
 #endif /* RT_PROPERTIES_H_ */

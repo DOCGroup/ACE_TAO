@@ -15,11 +15,12 @@
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
+#include <memory>
 
 void
 Policy_Tester::run ()
 {
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     this->child_poa_->the_POAManager ();
 
   poa_manager->activate ();
@@ -48,53 +49,46 @@ Policy_Tester::init (int argc,
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = 0;
+      ACE_TCHAR const *arg {};
       // IOR File Name Option.
       if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-POAConfigFile"))))
         {
           this->rt_poa_properties_ =
-            RT_Properties::read_from (arg);
+            RT_Properties::read_from (ACE_TString (arg));
         }
       else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-ObjectConfigFile"))))
         {
           this->rt_object_properties_ =
-            RT_Properties::read_from (arg);
+            RT_Properties::read_from (ACE_TString (arg));
         }
       else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-BaseObjectIOR"))))
         {
-          if (this->rt_poa_properties_ == 0)
+          if (!this->rt_poa_properties_)
             {
-              ACE_NEW_THROW_EX (this->rt_poa_properties_,
-                                RT_Properties,
-                                CORBA::NO_MEMORY (TAO::VMCID,
-                                                  CORBA::COMPLETED_NO));
+              this->rt_poa_properties_ = RT_Properties::create ();
             }
-          this->rt_poa_properties_->ior_source (arg);
+          this->rt_poa_properties_->ior_source (ACE_TString (arg));
         }
       else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-OverriddenIOR"))))
         {
-          if (this->rt_object_properties_ == 0)
+          if (!this->rt_object_properties_)
             {
-              ACE_NEW_THROW_EX (this->rt_object_properties_,
-                                RT_Properties,
-                                CORBA::NO_MEMORY (TAO::VMCID,
-                                                  CORBA::COMPLETED_NO));
+              this->rt_object_properties_ = RT_Properties::create ();
             }
-          this->rt_object_properties_->ior_source (arg);
+          this->rt_object_properties_->ior_source (ACE_TString (arg));
         }
       else
         arg_shifter.consume_arg ();
     }
 
-  if ((this->rt_poa_properties_ == 0) || (this->rt_object_properties_ == 0))
+  if (!this->rt_poa_properties_ || !this->rt_object_properties_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Configuration file missing!")));
       return -1;
     }
 
-  int result =
-    this->create_objects ();
+  int const result = this->create_objects ();
 
   if (result != 0)
     return result;
@@ -104,37 +98,37 @@ Policy_Tester::init (int argc,
 
 CORBA::Boolean
 Policy_Tester::check_reference (CORBA::Object_ptr object,
-                                const char *msg)
+                                char const *msg)
 {
   if (CORBA::is_nil (object))
     {
       ACE_DEBUG ((LM_DEBUG, msg));
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
 
 
 int
 Policy_Tester::create_objects ()
 {
-  CORBA::PolicyList poa_policy_list;
+  CORBA::PolicyList poa_policy_list {};
   poa_policy_list.length (3);
 
   // Create the priority policy using the RT-ORB.
-  RTCORBA::Priority priority = this->rt_poa_properties_->priority ();
+  RTCORBA::Priority const priority = this->rt_poa_properties_->priority ();
   poa_policy_list[0] =
     this->rt_orb_->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
                                                  priority);
 
-      // Create priority Banded Connection Policy.
-  RTCORBA::PriorityBands poa_priority_bands =
+  // Create priority Banded Connection Policy.
+  RTCORBA::PriorityBands const poa_priority_bands =
     this->rt_poa_properties_->priority_bands ();
 
   poa_policy_list[1] =
     this->rt_orb_->create_priority_banded_connection_policy (poa_priority_bands);
 
-      // Client Protocol Policy.
+  // Client Protocol Policy.
   RTCORBA::ProtocolList protocol_list;
   protocol_list.length (1);
 
@@ -155,8 +149,7 @@ Policy_Tester::create_objects ()
   this->poa_ =
     PortableServer::POA::_narrow (object.in ());
 
-  PortableServer::POAManager_var poa_mgr =
-    PortableServer::POAManager::_nil ();
+  PortableServer::POAManager_var const poa_mgr {};
 
   object =
     this->poa_->create_POA ("Child_POA",
@@ -178,26 +171,29 @@ Policy_Tester::create_objects ()
                         "Unable to create Object!\n"))
     return -1;
 
-  Counter_var base_object = Counter::_narrow (object.in ());
+  Counter_var const base_object = Counter::_narrow (object.in ());
 
   if (!check_reference (base_object.in(),
                         "Unable to create a Object!\n"))
     return -1;
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     this->orb_->object_to_string (base_object.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated as <%C>\n"), ior.in ()));
 
-  FILE *output_file = ACE_OS::fopen (this->rt_poa_properties_->ior_source (), "w");
-  if (output_file == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                       this->rt_poa_properties_->ior_source ()),
-                      -1);
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
-  ACE_OS::fclose (output_file);
+  {
+    std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+      ACE_OS::fopen (this->rt_poa_properties_->ior_source ().c_str (), ACE_TEXT ("w")),
+      ACE_OS::fclose);
+    if (!output_file)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                         this->rt_poa_properties_->ior_source ().c_str ()),
+                        -1);
+    ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+  }
 
   // Now we create an object that overrides some of the policies
   // set at the POA level.
@@ -218,28 +214,30 @@ Policy_Tester::create_objects ()
                         "Unable to create a Counter Object!\n"))
     return -1;
 
-  Counter_var over_object = Counter::_narrow (object.in ());
+  Counter_var const over_object = Counter::_narrow (object.in ());
 
   if (!check_reference (over_object.in(),
                         "Unable to create Object!\n"))
     return -1;
 
 
-  CORBA::String_var o_ior =
+  CORBA::String_var const o_ior =
     this->orb_->object_to_string (over_object.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Activated as <%C>\n"), o_ior.in ()));
 
-  output_file = ACE_OS::fopen (this->rt_object_properties_->ior_source (), "w");
-
-  if (output_file == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                       this->rt_object_properties_->ior_source ()),
-                      -1);
-  ACE_OS::fprintf (output_file, "%s", o_ior.in ());
-  ACE_OS::fclose (output_file);
+  {
+    std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+      ACE_OS::fopen (this->rt_object_properties_->ior_source ().c_str (), ACE_TEXT ("w")),
+      ACE_OS::fclose);
+    if (!output_file)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                         this->rt_object_properties_->ior_source ().c_str ()),
+                        -1);
+    ACE_OS::fprintf (output_file.get (), "%s", o_ior.in ());
+  }
   return 0;
 }
 

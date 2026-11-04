@@ -1,22 +1,4 @@
 #include "Policy_Verifier.h"
-#include "ace/OS_NS_string.h"
-
-Policy_Verifier::Policy_Verifier ()
-  : rt_object_properties_ (0)
-  , rt_poa_properties_ (0)
-  , priority_bands_ (0)
-{
-  ACE_OS::strcpy (this->base_object_ref_,
-                  ACE_TEXT("file://default.ior"));
-  ACE_OS::strcpy (this->overridden_object_ref_,
-                  ACE_TEXT("file://overridden.ior"));
-}
-
-Policy_Verifier::~Policy_Verifier ()
-{
-  delete rt_object_properties_;
-  delete rt_poa_properties_;
-}
 
 bool
 Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
@@ -28,47 +10,39 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = 0;
+      ACE_TCHAR const *arg {};
       // IOR File Name Option.
       if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-POAConfigFile"))))
         {
           this->rt_poa_properties_ =
-            RT_Properties::read_from (arg);
+            RT_Properties::read_from (ACE_TString (arg));
           this->priority_bands_ =
             this->rt_poa_properties_->priority_bands ().length ();
         }
       else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-ObjectConfigFile"))))
         {
           this->rt_object_properties_ =
-            RT_Properties::read_from (arg);
+            RT_Properties::read_from (ACE_TString (arg));
         }
       else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-BaseObjectIOR"))))
         {
-          if (this->rt_poa_properties_ == 0)
+          if (!this->rt_poa_properties_)
             {
-              ACE_NEW_THROW_EX (this->rt_poa_properties_,
-                                RT_Properties,
-                                CORBA::NO_MEMORY (TAO::VMCID,
-                                                  CORBA::COMPLETED_NO));
+              this->rt_poa_properties_ = RT_Properties::create ();
             }
-          this->rt_poa_properties_->ior_source (arg);
-          ACE_OS::strcpy (this->base_object_ref_, ACE_TEXT("file://"));
-          ACE_OS::strcat (this->base_object_ref_,
-                          this->rt_poa_properties_->ior_source ());
+          this->rt_poa_properties_->ior_source (ACE_TString (arg));
+          this->base_object_ref_ = ACE_TEXT ("file://");
+          this->base_object_ref_ += this->rt_poa_properties_->ior_source ();
         }
       else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-OverriddenIOR"))))
         {
-          if (this->rt_object_properties_ == 0)
+          if (!this->rt_object_properties_)
             {
-              ACE_NEW_THROW_EX (this->rt_object_properties_,
-                                RT_Properties,
-                                CORBA::NO_MEMORY (TAO::VMCID,
-                                                  CORBA::COMPLETED_NO));
+              this->rt_object_properties_ = RT_Properties::create ();
             }
-          this->rt_object_properties_->ior_source (arg);
-          ACE_OS::strcpy (this->overridden_object_ref_, ACE_TEXT("file://"));
-          ACE_OS::strcat (this->overridden_object_ref_,
-                          this->rt_object_properties_->ior_source ());
+          this->rt_object_properties_->ior_source (ACE_TString (arg));
+          this->overridden_object_ref_ = ACE_TEXT ("file://");
+          this->overridden_object_ref_ += this->rt_object_properties_->ior_source ();
         }
       else
         {
@@ -76,7 +50,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if ((this->rt_poa_properties_ == 0) || (this->rt_object_properties_ == 0))
+  if (!this->rt_poa_properties_ || !this->rt_object_properties_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Configuration file missing!\n")));
@@ -84,7 +58,8 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
     }
 
   // Get the Object references.
-  CORBA::Object_var object = this->orb_->string_to_object (this->base_object_ref_);
+  CORBA::Object_var object = this->orb_->string_to_object (
+    ACE_TEXT_ALWAYS_CHAR (this->base_object_ref_.c_str ()));
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
     return false;
@@ -95,7 +70,8 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
                                          "Unable to convert the IOR to the proper object reference.\n"))
     return false;
 
-  object = this->orb_->string_to_object (this->overridden_object_ref_);
+  object = this->orb_->string_to_object (
+    ACE_TEXT_ALWAYS_CHAR (this->overridden_object_ref_.c_str ()));
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
     return false;
@@ -113,15 +89,15 @@ void
 Policy_Verifier::run ()
 {
   this->verify_reference (this->base_object_.in (),
-                          this->rt_poa_properties_);
+                          *this->rt_poa_properties_);
 
   this->verify_reference (this->overridden_object_.in (),
-                          this->rt_object_properties_);
+                          *this->rt_object_properties_);
 }
 
 void
 Policy_Verifier::verify_reference (Counter_ptr object,
-                                   RT_Properties *rt_properties)
+                                   RT_Properties const &rt_properties)
 {
   try
     {
@@ -130,13 +106,13 @@ Policy_Verifier::verify_reference (Counter_ptr object,
 
       if (Policy_Verifier::check_reference (policy_var.in (), "Unable to get Priority Policy.\n"))
         {
-          RTCORBA::PriorityModelPolicy_var priority_policy =
+          RTCORBA::PriorityModelPolicy_var const priority_policy =
             RTCORBA::PriorityModelPolicy::_narrow (policy_var.in ());
 
-          RTCORBA::PriorityModel priority_model =
+          RTCORBA::PriorityModel const priority_model =
             priority_policy->priority_model ();
 
-          RTCORBA::Priority priority =
+          RTCORBA::Priority const priority =
             priority_policy->server_priority ();
 
           if (priority_model == RTCORBA::SERVER_DECLARED)
@@ -151,7 +127,7 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                       ));
 
 
-          if (priority != rt_properties->priority ())
+          if (priority != rt_properties.priority ())
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Priority Value Mismatch.\n")));
         }
@@ -161,7 +137,7 @@ Policy_Verifier::verify_reference (Counter_ptr object,
       if (Policy_Verifier::check_reference (policy_var.in (),
                                           "Unable to get Priority Banded Policy\n"))
         {
-          RTCORBA::PriorityBandedConnectionPolicy_var priority_banded_policy =
+          RTCORBA::PriorityBandedConnectionPolicy_var const priority_banded_policy =
             RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy_var.in ());
 
 
@@ -170,14 +146,14 @@ Policy_Verifier::verify_reference (Counter_ptr object,
             {
               // Here we have a priority banded connection policy.
 
-              RTCORBA::PriorityBands_var pb =
+              RTCORBA::PriorityBands_var const pb =
                 priority_banded_policy->priority_bands ();
-              unsigned int band_num = pb->length ();
+              CORBA::ULong const band_num = pb->length ();
               if (band_num != this->priority_bands_)
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("Mismatching Number of Priority Bands!\n")));
 
-              for (unsigned int i = 0; i < band_num; ++i)
+              for (CORBA::ULong i {}; i < band_num; ++i)
                 {
                   ACE_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("Priority Band <%d>: (%d, %d)\n"),
@@ -187,9 +163,9 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                               ));
 
 
-                  if ((band_num == rt_properties->priority_bands ().length ()) &&
-                      ((pb[i].low !=  rt_properties->priority_bands ()[i].low) ||
-                       (pb[i].high !=  rt_properties->priority_bands ()[i].high)))
+                  if ((band_num == rt_properties.priority_bands ().length ()) &&
+                      ((pb[i].low != rt_properties.priority_bands ()[i].low) ||
+                       (pb[i].high != rt_properties.priority_bands ()[i].high)))
                     ACE_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("Mismatching Priority Band Range!\n")));
                 }
@@ -200,20 +176,20 @@ Policy_Verifier::verify_reference (Counter_ptr object,
       if (Policy_Verifier::check_reference (policy_var.in (),
                                             "Unable to get Client Protocol Policy\n"))
         {
-          RTCORBA::ClientProtocolPolicy_var client_protocol_policy =
+          RTCORBA::ClientProtocolPolicy_var const client_protocol_policy =
             RTCORBA::ClientProtocolPolicy::_narrow (policy_var.in ());
 
-          RTCORBA::ProtocolList_var protocol_list =
+          RTCORBA::ProtocolList_var const protocol_list =
             client_protocol_policy->protocols ();
 
-          for (unsigned int  i = 0; i < protocol_list->length (); i++)
+          for (CORBA::ULong i {}; i < protocol_list->length (); ++i)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\nThe Client Protocol Type: %d\n"),
                         protocol_list[i].protocol_type));
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CORBA Exception Raised");
     }
@@ -222,12 +198,12 @@ Policy_Verifier::verify_reference (Counter_ptr object,
 
 CORBA::Boolean
 Policy_Verifier::check_reference (CORBA::Object_ptr object,
-                                  const char *msg)
+                                  char const *msg)
 {
   if (CORBA::is_nil (object))
     {
       ACE_DEBUG ((LM_DEBUG, msg));
-      return 0;
+      return false;
     }
-  return 1;
+  return true;
 }
