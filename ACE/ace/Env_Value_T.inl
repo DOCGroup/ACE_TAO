@@ -7,10 +7,7 @@ ACE_Env_Value<T>::operator T ()
 }
 
 template <class T> ACE_INLINE
-ACE_Env_Value<T>::ACE_Env_Value ()
-  : varname_ (0)
-{
-}
+ACE_Env_Value<T>::ACE_Env_Value () = default;
 
 template <class T> ACE_INLINE
 ACE_Env_Value<T>::ACE_Env_Value (const ACE_TCHAR *varname,

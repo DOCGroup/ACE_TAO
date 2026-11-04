@@ -69,8 +69,8 @@ public:
 private:
   void fetch_value ();
 
-  const ACE_TCHAR *varname_;
-  T value_;
+  const ACE_TCHAR *varname_ {};
+  T value_ {};
 };
 
 /// Function to convert a string @a s into type @c T.
