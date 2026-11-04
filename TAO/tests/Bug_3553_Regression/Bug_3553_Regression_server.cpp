@@ -1,17 +1,16 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "tao/IORTable/IORTable.h"
-
-int cache_size = 512;
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], int &cache_size)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("c:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'c':
         cache_size = ACE_OS::atoi (get_opts.opt_arg ());
@@ -34,16 +33,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      int cache_size {512};
+
+      if (parse_args (argc, argv, cache_size) != 0)
           return 1;
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -51,31 +51,32 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      Hello *hello_impl = nullptr;
+      Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
                       1);
+      // ServantBase_var takes ownership of the servant pointer.
+      PortableServer::ServantBase_var servant_owner (hello_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (hello_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Test::Hello_var hello = Test::Hello::_narrow (object.in ());
+      Test::Hello_var const hello = Test::Hello::_narrow (object.in ());
 
-      CORBA::Object_var table_obj = orb->resolve_initial_references ("IORTable");
-      IORTable::Table_var table = IORTable::Table::_narrow (table_obj.in ());
-      for (int i = 1; i <= cache_size; ++i)
+      CORBA::Object_var const table_obj = orb->resolve_initial_references ("IORTable");
+      IORTable::Table_var const table = IORTable::Table::_narrow (table_obj.in ());
+      for (int iteration {1}; iteration <= cache_size; ++iteration)
         {
-          CORBA::String_var ior_string = orb->object_to_string (object.in ());
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Registering object %d with IOR string: %C\n"),
-            i, ior_string.in ()));
-          char identifier[256];
-          ACE_OS::sprintf (identifier, "TransportCacheTest%d", i);
-          table->bind (identifier, ior_string.in ());
+          CORBA::String_var const ior_string = orb->object_to_string (object.in ());
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Registering object %d with IOR string: %C\n"),
+                      iteration, ior_string.in ()));
+          std::string const identifier = "TransportCacheTest" + std::to_string (iteration);
+          table->bind (identifier.c_str (), ior_string.in ());
         }
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
       poa_manager->activate ();
 
       orb->run ();
