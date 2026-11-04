@@ -19,8 +19,8 @@ public:
 
   AMI_Manager (AMI_Manager const &) = delete;
   AMI_Manager (AMI_Manager &&) = delete;
-  AMI_Manager & operator= (AMI_Manager const &) = delete;
-  AMI_Manager & operator= (AMI_Manager &&) = delete;
+  AMI_Manager &operator= (AMI_Manager const &) = delete;
+  AMI_Manager &operator= (AMI_Manager &&) = delete;
 
 private:
   CORBA::ORB_var orb_;
@@ -41,8 +41,8 @@ public:
 
   Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;
-  Worker & operator= (Worker const &) = delete;
-  Worker & operator= (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
   // The service method
 
 private:
@@ -59,7 +59,7 @@ private:
 // ****************************************************************
 
 class Controller_Handler
-  :  public virtual POA_Test::AMI_ControllerHandler
+  : public virtual POA_Test::AMI_ControllerHandler
 {
 public:
   Controller_Handler (TAO_SYNCH_MUTEX *mutex,
@@ -73,12 +73,12 @@ public:
 
   Controller_Handler (Controller_Handler const &) = delete;
   Controller_Handler (Controller_Handler &&) = delete;
-  Controller_Handler & operator= (Controller_Handler const &) = delete;
-  Controller_Handler & operator= (Controller_Handler &&) = delete;
+  Controller_Handler &operator= (Controller_Handler const &) = delete;
+  Controller_Handler &operator= (Controller_Handler &&) = delete;
 
 private:
-  TAO_SYNCH_MUTEX *mutex_; // Non-owning; the worker owns the mutex.
-  int *pending_replies_; // Non-owning; the worker owns the counter.
+  TAO_SYNCH_MUTEX * const mutex_; // Non-owning; the worker owns the mutex.
+  int * const pending_replies_; // Non-owning; the worker owns the counter.
   // The pending replies is decremented each time a reply is
   // received.
   // The mutex is used to protect the access to the flag.

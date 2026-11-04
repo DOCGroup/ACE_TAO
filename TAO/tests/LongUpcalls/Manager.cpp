@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 
 static void
-validate_connection (Test::Controller_ptr controller)
+validate_connection (Test::Controller_ptr const controller)
 {
   try
     {
@@ -34,8 +34,7 @@ Manager::start_workers (CORBA::Short worker_count,
   validate_connection (controller);
 
   // ACE_DEBUG ((LM_DEBUG, "Starting %d workers\n", worker_count));
-  Worker worker (&thread_manager,
-                 controller, milliseconds);
+  Worker worker (&thread_manager, controller, milliseconds);
 
   worker.activate (THR_NEW_LWP | THR_JOINABLE, worker_count);
 
@@ -54,9 +53,9 @@ Manager::shutdown ()
 Worker::Worker (ACE_Thread_Manager *thr_mgr,
                 Test::Controller_ptr controller,
                 CORBA::Long milliseconds)
-  : ACE_Task_Base (thr_mgr)
-  , controller_ (Test::Controller::_duplicate (controller))
-  , milliseconds_ (milliseconds)
+  : ACE_Task_Base (thr_mgr),
+    controller_ (Test::Controller::_duplicate (controller)),
+    milliseconds_ (milliseconds)
 {
 }
 

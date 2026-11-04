@@ -7,7 +7,7 @@ Controller::dump_results ()
   if (this->start_count_ != this->finish_count_)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ERROR - mismatched count! (%d,%d)\n",
+                  "ERROR - mismatched count! (%u,%u)\n",
                   this->start_count_, this->finish_count_));
     }
 }

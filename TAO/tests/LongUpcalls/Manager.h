@@ -6,7 +6,7 @@
 #include "ace/Task.h"
 
 class Manager
-  :  public virtual POA_Test::Manager
+  : public virtual POA_Test::Manager
 {
 public:
   explicit Manager (CORBA::ORB_ptr orb);
@@ -20,8 +20,8 @@ public:
 
   Manager (Manager const &) = delete;
   Manager (Manager &&) = delete;
-  Manager & operator= (Manager const &) = delete;
-  Manager & operator= (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
 
 private:
   CORBA::ORB_var orb_;
@@ -41,8 +41,8 @@ public:
 
   Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;
-  Worker & operator= (Worker const &) = delete;
-  Worker & operator= (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
   // The service method
 
 private:

@@ -1,22 +1,23 @@
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "Controller.h"
 
-namespace
+struct Client_Options
 {
-  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-}
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -32,28 +33,29 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      if (CORBA::is_nil (object.in ()))
+      if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
       PortableServer::POA_var const root_poa =
-        PortableServer::POA::_narrow (object.in ());
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       Controller controller_impl;
@@ -66,17 +68,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Controller_var const controller =
         Test::Controller::_narrow (object_act.in ());
 
-      object = orb->string_to_object (ior);
+      CORBA::Object_var const manager_object =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
       Test::Manager_var const manager =
-        Test::Manager::_narrow (object.in ());
+        Test::Manager::_narrow (manager_object.in ());
 
       if (CORBA::is_nil (manager.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Manager is nil\n"),
                           1);
-
-
       poa_manager->activate ();
 
       CORBA::Short const worker_count = 10;

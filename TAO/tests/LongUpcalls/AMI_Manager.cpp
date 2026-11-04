@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 
 static void
-validate_connection (Test::Controller_ptr controller)
+validate_connection (Test::Controller_ptr const controller)
 {
   try
     {
@@ -34,9 +34,7 @@ AMI_Manager::start_workers (CORBA::Short worker_count,
   validate_connection (controller);
 
   // ACE_DEBUG ((LM_DEBUG, "Starting %d workers\n", worker_count));
-  Worker worker (&thread_manager,
-                 controller, milliseconds,
-                 this->orb_.in ());
+  Worker worker (&thread_manager, controller, milliseconds, this->orb_.in ());
 
   worker.activate (THR_NEW_LWP | THR_JOINABLE, worker_count);
 
@@ -55,10 +53,10 @@ Worker::Worker (ACE_Thread_Manager *thr_mgr,
                 Test::Controller_ptr controller,
                 CORBA::Long milliseconds,
                 CORBA::ORB_ptr orb)
-  : ACE_Task_Base (thr_mgr)
-  , controller_ (Test::Controller::_duplicate (controller))
-  , milliseconds_ (milliseconds)
-  , orb_ (CORBA::ORB::_duplicate (orb))
+  : ACE_Task_Base (thr_mgr),
+    controller_ (Test::Controller::_duplicate (controller)),
+    milliseconds_ (milliseconds),
+    orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -69,11 +67,11 @@ Worker::svc ()
   try
     {
       TAO_SYNCH_MUTEX mutex;
-      int pending_requests = 2;
+      int pending_requests {2};
       Test::AMI_ControllerHandler_var handler;
 
       {
-        Controller_Handler *handler_impl;
+        Controller_Handler *handler_impl {};
         ACE_NEW_RETURN (handler_impl,
                         Controller_Handler (&mutex,
                                             &pending_requests),
@@ -90,6 +88,7 @@ Worker::svc ()
 
         CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
+        // The servant var adopts the ACE_NEW_RETURN allocation until its upcalls finish.
         PortableServer::ServantBase_var auto_destroy (handler_impl);
         handler = Test::AMI_ControllerHandler::_narrow (object.in ());
       }
@@ -128,8 +127,8 @@ Worker::svc ()
 
 Controller_Handler::Controller_Handler (TAO_SYNCH_MUTEX *mutex,
                                         int *pending_replies)
-  :  mutex_ (mutex)
-  ,  pending_replies_ (pending_replies)
+  : mutex_ (mutex),
+    pending_replies_ (pending_replies)
 {
 }
 

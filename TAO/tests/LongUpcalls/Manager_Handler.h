@@ -6,7 +6,7 @@
 #include "ace/Task.h"
 
 class Manager_Handler
-  :  public virtual POA_Test::AMI_ManagerHandler
+  : public virtual POA_Test::AMI_ManagerHandler
 {
 public:
   Manager_Handler (Test::Manager_ptr manager,
@@ -19,8 +19,8 @@ public:
 
   Manager_Handler (Manager_Handler const &) = delete;
   Manager_Handler (Manager_Handler &&) = delete;
-  Manager_Handler & operator= (Manager_Handler const &) = delete;
-  Manager_Handler & operator= (Manager_Handler &&) = delete;
+  Manager_Handler &operator= (Manager_Handler const &) = delete;
+  Manager_Handler &operator= (Manager_Handler &&) = delete;
 
 private:
   Test::Manager_var manager_;
