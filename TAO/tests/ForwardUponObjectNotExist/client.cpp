@@ -1,33 +1,38 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include <atomic>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int nthreads = 1;
-bool do_shutdown = 0;
-static const ACE_TCHAR corbaloc_prefix[] = ACE_TEXT("corbaloc:");
-bool expected_object_not_exist = false;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+  int thread_count {1};
+  bool shutdown {};
+  bool expected_object_not_exist {};
+};
+
+constexpr ACE_TCHAR corbaloc_prefix[] = ACE_TEXT ("corbaloc:");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:e:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xk:e:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
       switch (c)
         {
         case 'x':
-          do_shutdown = true;
+          options.shutdown = true;
           break;
 
         case 'k':
-          ior = get_opts.opt_arg ();
+          options.ior = get_opts.opt_arg ();
           break;
 
         case 'e':
-          expected_object_not_exist = ACE_OS::atoi (get_opts.opt_arg ());
+          options.expected_object_not_exist = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
           break;
 
         case '?':
@@ -42,7 +47,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if (ACE_OS::strncmp (ior,
+  if (ACE_OS::strncmp (options.ior.c_str (),
                         corbaloc_prefix,
                         ACE_OS::strlen (corbaloc_prefix)) != 0)
     return 1;
@@ -55,20 +60,28 @@ class Worker : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Worker (CORBA::ORB_ptr orb);
+  Worker (CORBA::ORB_ptr orb, Client_Options const &options);
 
   /// The actual implementation of the test
-  virtual void run_test ();
+  void run_test ();
 
-  virtual int svc ();
+  int svc () override;
 
   /// Caught OBJECT_NOT_EXIST exception ?
   bool got_object_not_exist () const;
+  bool finished () const;
 
 private:
-  CORBA::ORB_var orb_;
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
+
+  CORBA::ORB_var orb_ {};
   // The ORB reference
-  bool got_object_not_exist_;
+  std::atomic_bool got_object_not_exist_ {};
+  std::atomic_bool finished_ {};
+  ACE_TString ior_ {};
 };
 
 int
@@ -76,35 +89,36 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      Client_Options options;
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      Worker worker (orb.in ());
+      Worker worker (orb.in (), options);
 
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.thread_count) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) Cannot activate worker threads\n"),
                           1);
 
-      int timeout = 30;
-      int now = 0;
-      while (now < timeout && worker.got_object_not_exist () != expected_object_not_exist)
-      {
-        now += 5;
-        ACE_Time_Value tv (5, 0);
-        orb->run (tv);
-      }
-
-      if (do_shutdown)
+      int const timeout = 30;
+      int now {};
+      while (now < timeout && !worker.finished ())
         {
-          CORBA::Object_var object =
-            orb->string_to_object (ior);
+          now += 5;
+          ACE_Time_Value tv (5, 0);
+          orb->run (tv);
+        }
 
-          Simple_Server_var server =
+      if (options.shutdown)
+        {
+          CORBA::Object_var const object = orb->string_to_object (
+            ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+
+          Simple_Server_var const server =
             Simple_Server::_narrow (object.in ());
 
           server->shutdown ();
@@ -116,18 +130,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      if (worker.got_object_not_exist () != expected_object_not_exist)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-          "(%P|%t)client: test failed.\n"),
-                          1);
-      }
-      else
-      {
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t)client: test passed.\n"));
-      }
+      if (worker.got_object_not_exist () != options.expected_object_not_exist)
+        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t)client: test failed.\n"), 1);
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)client: test passed.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in main:");
       return 1;
@@ -138,9 +146,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Worker::Worker (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb)),
-     got_object_not_exist_ (false)
+Worker::Worker (CORBA::ORB_ptr orb, Client_Options const &options)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    ior_ (options.ior)
 {
 }
 
@@ -151,38 +159,39 @@ Worker::svc ()
     {
       this->run_test ();
     }
-  catch (const CORBA::OBJECT_NOT_EXIST &)
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
-      got_object_not_exist_ = true;
+      this->got_object_not_exist_.store (true);
     }
   catch (...)
     {
     }
 
+  this->finished_.store (true);
   return 0;
 }
 
 void
 Worker::run_test ()
 {
-  CORBA::Object_var object =
-    this->orb_->string_to_object (ior);
+  CORBA::Object_var const object = this->orb_->string_to_object (
+    ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ()));
 
-  Simple_Server_var server =
+  Simple_Server_var const server =
     Simple_Server::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   "Object reference <%s> is nil.\n",
-                  ior));
+                  ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ())));
       return;
     }
 
-  CORBA::Boolean r =
+  CORBA::Boolean const r =
     server->test_is_a ("IDL:Foo:1.0");
 
-  if (r != 0)
+  if (r)
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) unexpected result = %d\n",
                 r));
@@ -191,5 +200,11 @@ Worker::run_test ()
 bool
 Worker::got_object_not_exist () const
 {
-  return got_object_not_exist_;
+  return this->got_object_not_exist_.load ();
+}
+
+bool
+Worker::finished () const
+{
+  return this->finished_.load ();
 }
