@@ -5,13 +5,14 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+#include <memory>
+#include <string>
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -22,9 +23,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s "
+                                     "-o <iorfile>"
+                                     "\n"),
                            argv [0]),
                           -1);
       }
@@ -37,37 +38,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("test.ior")};
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object {orb->resolve_initial_references ("RootPOA")};
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var const root_poa {PortableServer::POA::_narrow (poa_object.in ())};
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager {root_poa->the_POAManager ()};
 
       // Make all oneways "reliable."
       {
-        CORBA::Object_var manager_object =
-          orb->resolve_initial_references("ORBPolicyManager");
-        CORBA::PolicyManager_var policy_manager =
-          CORBA::PolicyManager::_narrow(manager_object.in());
+        CORBA::Object_var const manager_object {orb->resolve_initial_references ("ORBPolicyManager")};
+        CORBA::PolicyManager_var const policy_manager {
+          CORBA::PolicyManager::_narrow (manager_object.in ())};
 
         if (CORBA::is_nil (policy_manager.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              " (%P|%t) Panic: nil PolicyManager\n"),
                             1);
-        CORBA::Any policy_value;
+        CORBA::Any policy_value {};
         policy_value <<= Messaging::SYNC_WITH_SERVER;
-        CORBA::PolicyList policies(1); policies.length(1);
+        CORBA::PolicyList policies (1);
+        policies.length (1);
         policies[0] =
           orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                               policy_value);
@@ -78,35 +76,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         policies[0]->destroy ();
       }
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return 1;
 
-      Service *service_impl;
+      Service *service_impl {};
       ACE_NEW_RETURN (service_impl,
-                      Service(orb.in ()),
+                      Service (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(service_impl);
+      // The servant var owns the implementation while the POA uses it.
+      PortableServer::ServantBase_var owner_transfer (service_impl);
 
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (service_impl);
+      PortableServer::ObjectId_var const id {root_poa->activate_object (service_impl)};
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object {root_poa->id_to_reference (id.in ())};
 
-      Test::Service_var service =
-        Test::Service::_narrow (object.in ());
+      Test::Service_var const service {Test::Service::_narrow (object.in ())};
 
-      CORBA::String_var ior =
-        orb->object_to_string (service.in ());
+      CORBA::String_var const ior {orb->object_to_string (service.in ())};
 
-      // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        // Close the IOR file before entering the event loop.
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             ior_output_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
@@ -120,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

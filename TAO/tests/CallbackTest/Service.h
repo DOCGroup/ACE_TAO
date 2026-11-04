@@ -13,10 +13,10 @@ public:
   /// Constructor
   explicit Service (CORBA::ORB_ptr orb);
 
-  Service (Service const&) = delete;
-  Service (Service&&) = delete;
-  Service& operator= (Service const&) = delete;
-  Service& operator= (Service&&) = delete;
+  Service (Service const &) = delete;
+  Service (Service &&) = delete;
+  Service &operator= (Service const &) = delete;
+  Service &operator= (Service &&) = delete;
 
   /// Dump the results.
   /**
@@ -40,9 +40,8 @@ private:
    */
   int call_test_oneway (Test::Callback_ptr callback);
 
-private:
   /// Count the number of tests executed
-  int test_count_;
+  int test_count_ {};
 
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;

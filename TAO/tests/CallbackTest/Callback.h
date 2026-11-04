@@ -13,10 +13,10 @@ public:
   /// Constructor
   explicit Callback (CORBA::ORB_ptr orb);
 
-  Callback (Callback const&) = delete;
-  Callback (Callback&&) = delete;
-  Callback& operator= (Callback const&) = delete;
-  Callback& operator= (Callback&&) = delete;
+  Callback (Callback const &) = delete;
+  Callback (Callback &&) = delete;
+  Callback &operator= (Callback const &) = delete;
+  Callback &operator= (Callback &&) = delete;
 
   // = The skeleton methods
   CORBA::Boolean are_you_there (CORBA::String_out answer) override;

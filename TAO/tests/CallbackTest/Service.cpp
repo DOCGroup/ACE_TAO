@@ -1,8 +1,7 @@
 #include "Service.h"
 
 Service::Service (CORBA::ORB_ptr orb)
-  : test_count_ (0),
-    orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -19,26 +18,23 @@ Service::dump_results () const
 void
 Service::run_test (Test::Callback_ptr callback)
 {
-  int exceptions =
-    this->call_are_you_there (callback);
-
-  exceptions +=
-    this->call_test_oneway (callback);
+  int const exceptions = this->call_are_you_there (callback) + this->call_test_oneway (callback);
 
   if (exceptions != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ERROR: There were %d exceptions\n"));
+                  "ERROR: There were %d exceptions\n",
+                  exceptions));
     }
 
   /// Increment the number of tests completed
-  this->test_count_++;
+  ++this->test_count_;
 
   try
     {
       callback->shutdown ();
     }
-  catch (CORBA::Exception const&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_ERROR, "(%P|%t) - Service, client shutdown FAILED\n"));
     }
@@ -52,18 +48,18 @@ int
 Service::call_are_you_there (Test::Callback_ptr callback)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling are_you_there\n"));
-  int const iterations = 10;
+  int const iterations {10};
 
-  int exception_count = 0;
+  int exception_count {};
   for (int i = 0; i != iterations; ++i)
     {
-      CORBA::String_var outstr;
+      CORBA::String_var outstr {};
       CORBA::String_out out_str (outstr.out ());
       try
         {
           (void) callback->are_you_there (out_str);
         }
-      catch (CORBA::Exception const&)
+      catch (CORBA::Exception const &)
         {
           exception_count++;
         }
@@ -77,16 +73,16 @@ int
 Service::call_test_oneway (Test::Callback_ptr callback)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling test_oneway\n"));
-  int const iterations = 10;
+  int const iterations {10};
 
-  int exception_count = 0;
+  int exception_count {};
   for (int i = 0; i != iterations; ++i)
     {
       try
         {
-          (void) callback->test_oneway ();
+          callback->test_oneway ();
         }
-      catch (CORBA::Exception const&)
+      catch (CORBA::Exception const &)
         {
           exception_count++;
         }
