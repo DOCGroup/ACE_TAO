@@ -61,7 +61,7 @@ be_visitor_operation::has_param_type (be_operation *node,
 bool
 be_visitor_operation::is_amh_exception_holder (be_interface *node)
 {
-  bool is_an_amh_exception_holder = false;
+  bool is_an_amh_exception_holder {};
 
   if (node->local_name ().substr (0, 4) == "AMH_")
     {
@@ -83,7 +83,7 @@ int
 be_visitor_operation::gen_raise_exception (std::string const& exception_name,
                                            std::string const& exception_arguments)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "throw "
       << exception_name << "(" << exception_arguments << ");";
@@ -122,7 +122,7 @@ be_visitor_operation::gen_stub_operation_body (
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   be_visitor_context ctx;
 
   *os << be_nl << "{" << be_idt_nl;
@@ -177,7 +177,7 @@ be_visitor_operation::gen_stub_operation_body (
       << "{" << be_idt_nl
       << "std::addressof(_tao_retval)";
 
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
@@ -330,7 +330,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
                                              TAO_OutStream *os,
                                              bool ami)
 {
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
   UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
 
   if (ami)
@@ -381,7 +381,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
                                                    AST_Type *bt,
                                                    TAO_OutStream *os)
 {
-  AST_Typedef *alias = nullptr;
+  AST_Typedef *alias {};
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -389,7 +389,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
     }
 
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
-  ACE_CDR::ULong bound = 0;
+  ACE_CDR::ULong bound {};
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {

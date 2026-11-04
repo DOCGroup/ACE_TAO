@@ -36,7 +36,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   if (this->generate_shared_prologue (node, os, "") == -1)
@@ -92,7 +92,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
       be_visitor_args_marshal_ss marshal_visitor (&marshal_ctx);
       marshal_visitor.set_fixed_direction (AST_Argument::dir_IN);
-      int i = 0;
+      int i {};
 
       for (UTL_ScopeActiveIterator sj (node, UTL_Scope::IK_decls);
            !sj.is_done ();
@@ -185,7 +185,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 int
 be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   if (this->generate_shared_prologue (node, os, "_get_") == -1)
@@ -217,7 +217,7 @@ be_visitor_amh_operation_ss::visit_attribute (be_attribute *node)
                             node->field_type (),
                             node->name ());
 
-  int status = 0;
+  int status {};
 
   {
     be_visitor_context ctx (*this->ctx_);

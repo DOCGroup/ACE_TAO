@@ -29,7 +29,7 @@ be_visitor_operation_argument_invoke::~be_visitor_operation_argument_invoke () =
 int
 be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   be_argument *arg = dynamic_cast<be_argument*> (bd);
 

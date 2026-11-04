@@ -32,7 +32,7 @@ be_visitor_operation_argument_marshal::~be_visitor_operation_argument_marshal ()
 int
 be_visitor_operation_argument_marshal::pre_process (be_decl *bd)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   be_argument *arg = dynamic_cast<be_argument*> (bd);
 
@@ -184,7 +184,7 @@ be_visitor_args_decl::visit_argument (be_argument *node)
 int
 be_visitor_args_decl::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // retrieve the field node
   be_argument *f =

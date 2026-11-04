@@ -29,8 +29,8 @@ be_visitor_operation_ss::visit_operation (be_operation * node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {};
 
   this->ctx_->node (node);
 
@@ -62,7 +62,7 @@ be_visitor_operation_ss::visit_argument (be_argument *node)
 {
   // This method is used to generate the ParamData table entry.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the type for this argument.
   be_type *bt = dynamic_cast<be_type*> (node->field_type ());

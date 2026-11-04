@@ -20,7 +20,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -133,7 +133,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     be_operation *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "->" << node->local_name () << " ("
       << be_idt << be_idt << be_idt;
@@ -149,7 +149,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
       return 0;
     }
 
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
   int index = 1;
 
   for (; !si.is_done (); si.next (), ++index)

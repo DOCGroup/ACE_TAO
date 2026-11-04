@@ -23,7 +23,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 {
   if (be_global->gen_smart_proxies ())
     {
-      TAO_OutStream *os = this->ctx_->stream ();
+      TAO_OutStream * const os = this->ctx_->stream ();
 
       // We need the interface node in which this operation was defined. However,
       // if this operation node was an attribute node in disguise, we get this
@@ -140,7 +140,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 int be_visitor_operation_smart_proxy_cs::gen_invoke (be_visitor_context &ctx,
                                                      be_operation *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "->" << node->local_name () << " ("
       << be_idt << be_idt << "\n";

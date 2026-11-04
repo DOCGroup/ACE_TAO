@@ -44,7 +44,7 @@ be_visitor_operation_upcall_command_ss::visit (
                         -1);
     }
 
-  be_module *module = nullptr;
+  be_module *module {};
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -345,7 +345,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
       be_visitor_operation_exceptlist_cs exceplist (this->ctx ());
       exceplist.visit_operation (node);
 
-      unsigned int exceptions_count = 0;
+      unsigned int exceptions_count {};
 
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done (); ei.next ())
@@ -375,7 +375,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
 
   std::size_t const count = node->argument_count ();
 
-  for (unsigned int i = 0; i < count; ++i)
+  for (unsigned int i {}; i < count; ++i)
     {
       os << be_nl
          << (i == 0 ? "" : ", ") << "arg_" << i + 1;
