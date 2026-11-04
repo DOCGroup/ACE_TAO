@@ -80,7 +80,7 @@ protected:
   int count_ {};
 
   /// Count of users accessing this entry.
-  std::atomic<int> usage_count_;
+  std::atomic<int> usage_count_ {1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

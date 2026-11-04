@@ -14,10 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY>
-TAO_Notify_Event_Map_Entry_T<PROXY>::TAO_Notify_Event_Map_Entry_T ()
-  : usage_count_ (1)
-{
-}
+TAO_Notify_Event_Map_Entry_T<PROXY>::TAO_Notify_Event_Map_Entry_T () = default;
 
 template <class PROXY>
 TAO_Notify_Event_Map_Entry_T<PROXY>::~TAO_Notify_Event_Map_Entry_T () = default;
