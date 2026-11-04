@@ -27,7 +27,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 

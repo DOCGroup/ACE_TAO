@@ -25,8 +25,8 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  std::string const macro = this->ctx_->export_macro ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  const std::string macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

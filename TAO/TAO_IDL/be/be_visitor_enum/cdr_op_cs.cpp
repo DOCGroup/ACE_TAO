@@ -24,7 +24,7 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -40,8 +40,8 @@ be_visitor_enum_cdr_op_cs::visit_enum (be_enum *node)
   *os << "::CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " & _tao_enumerator)" << be_nl
       << "{" << be_idt_nl
-      << "::CORBA::ULong _tao_temp = 0;" << be_nl
-      << "::CORBA::Boolean const _tao_success = strm >> _tao_temp;" << be_nl
+      << "::CORBA::ULong _tao_temp {};" << be_nl
+      << "const ::CORBA::Boolean _tao_success = strm >> _tao_temp;" << be_nl
       << be_nl
       << "if (_tao_success)" << be_idt_nl
       << "{" << be_idt_nl
