@@ -28,8 +28,8 @@ be_visitor_union_fwd_ch::visit_union_fwd (be_union_fwd *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_union *fd = dynamic_cast<be_union*> (node->full_definition ());
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_union * const fd = dynamic_cast<be_union*> (node->full_definition ());
 
   // This will be a no-op if it has already been done for this node.
   fd->gen_common_varout (os);
