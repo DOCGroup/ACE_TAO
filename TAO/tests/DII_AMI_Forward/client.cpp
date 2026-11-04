@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-
 #include "tao/DynamicInterface/Request.h"  /* This must come first for
                                               G++ 3.4 or better */
 #include "tao/debug.h"
@@ -12,81 +9,78 @@
 #include "tao/PortableServer/POAC.h"
 #include "tao/PortableServer/POAManagerC.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
+#include <cstddef>
 
-int do_shutdown = 0;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://server.ior")};
+  bool do_shutdown {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xk:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'x':
-        do_shutdown = 1;
+        options.do_shutdown = true;
         break;
-
       case 'k':
-        ior = get_opts.optarg;
+        options.ior = get_opts.opt_arg ();
         break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-x "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -x -k <ior>\n"),
+                           argv[0]),
                           -1);
       }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 void
-do_primary_test (CORBA::Object_var &server,
-                 Messaging::ReplyHandler_var &callback)
+do_primary_test (CORBA::Object_var const &server,
+                 Messaging::ReplyHandler_var const &callback,
+                 ACE_TCHAR const *ior)
 {
-  try
-    {
-      CORBA::Request_var req = server->_request("do_forward");
-
-      if (CORBA::is_nil (server.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Object reference <%s> is nil.\n",
-                      ior));
-          return;
-        }
-
-      ACE_DEBUG((LM_DEBUG,"Client sending test string\n"));
-      CORBA::String_var test_string = CORBA::string_dup ("123 look at me");
-      req->add_in_arg ("text") <<=
-        CORBA::Any::from_string(test_string.in(),30);
-      req->sendc(callback.in());
-    }
-  catch (const CORBA::Exception &ex)
+  if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Client caught exception: %C\n",ex._name()));
+                  ACE_TEXT ("Object reference <%s> is nil.\n"),
+                  ior));
+      return;
+    }
+
+  try
+    {
+      CORBA::Request_var const req = server->_request ("do_forward");
+      ACE_DEBUG ((LM_DEBUG, "Client sending test string\n"));
+      CORBA::String_var const test_string = CORBA::string_dup ("123 look at me");
+      req->add_in_arg ("text") <<=
+        CORBA::Any::from_string (test_string.in (), 30);
+      req->sendc (callback.in ());
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ACE_ERROR ((LM_ERROR, "Client caught exception: %C\n", ex._name ()));
     }
 }
 
-int do_shutdown_test (CORBA::Object_var &server)
+int
+do_shutdown_test (CORBA::Object_var const &server)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "[client] invoking shutdown on the server \n"));
+  ACE_DEBUG ((LM_DEBUG, "[client] invoking shutdown on the server\n"));
   try
     {
-      CORBA::Request_var req = server->_request("shutdown");
-      req->invoke();
+      CORBA::Request_var const req = server->_request ("shutdown");
+      req->invoke ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client: exception caught during shutdown - ");
       return 1;
@@ -94,49 +88,52 @@ int do_shutdown_test (CORBA::Object_var &server)
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
+  Client_Options options;
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-      if (parse_args (argc, argv) != 0)
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      ACE_DEBUG ((LM_DEBUG,"Client using ior source %s\n", ior));
-      CORBA::Object_var server = orb->string_to_object (ior);
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Client using ior source %s\n"),
+                  options.ior.c_str ()));
+      CORBA::Object_var const server =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var root =
-        PortableServer::POA::_narrow (obj.in());
+      CORBA::Object_var const obj =
+        orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const root =
+        PortableServer::POA::_narrow (obj.in ());
+      PortableServer::POAManager_var const pm = root->the_POAManager ();
+      pm->activate ();
 
-      PortableServer::POAManager_var pm = root->the_POAManager();
-      pm->activate();
-      bool got_reply = false;
-      Messaging::ReplyHandler_var callback = new DII_ReplyHandler(got_reply);
+      bool got_reply {};
+      Messaging::ReplyHandler_var callback {};
+      ACE_NEW_THROW_EX (callback, DII_ReplyHandler (got_reply), CORBA::NO_MEMORY ());
+      do_primary_test (server, callback, options.ior.c_str ());
 
-      do_primary_test (server,callback);
-
-      for (int i = 0; i < 100 && !got_reply; i++)
+      for (std::size_t i = 0; i < 100 && !got_reply; ++i)
         {
-          ACE_Time_Value t(0,10000);
-          orb->perform_work(t);
+          ACE_Time_Value timeout (0, 10000);
+          orb->perform_work (timeout);
         }
 
-      if (do_shutdown)
+      if (options.do_shutdown)
         result = do_shutdown_test (server);
 
-      ACE_DEBUG ((LM_DEBUG,"Shutting down and destrying ORB.\n"));
-      orb->destroy();
-      ACE_DEBUG ((LM_DEBUG,"ORB destroyed\n"));
+      ACE_DEBUG ((LM_DEBUG, "Shutting down and destroying ORB.\n"));
+      orb->destroy ();
+      ACE_DEBUG ((LM_DEBUG, "ORB destroyed\n"));
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ex._tao_print_exception ("ERROR: unexpected CORBA exception caught:");
       ++result;
     }
   return result;

@@ -9,15 +9,16 @@ Forward_Test_i::Forward_Test_i (CORBA::ORB_ptr orb)
 {
 }
 
-char * Forward_Test_i::do_forward (const char *text)
+char *
+Forward_Test_i::do_forward (char const *text)
 {
-  ACE_DEBUG ((LM_DEBUG,"Server echoing test string\n"));
+  ACE_DEBUG ((LM_DEBUG, "Server echoing test string\n"));
   return CORBA::string_dup (text);
 }
 
 void
 Forward_Test_i::shutdown ()
 {
-  ACE_OS::sleep(2);
+  ACE_OS::sleep (2);
   this->orb_->shutdown (false);
 }

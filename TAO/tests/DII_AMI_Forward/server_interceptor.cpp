@@ -2,29 +2,23 @@
 #include "tao/OctetSeqC.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Thread.h"
+#include <cstring>
 
 ForwardTest_Request_Interceptor::ForwardTest_Request_Interceptor ()
   : myname_ ("ForwardTest_Interceptor"),
-    forward_location_ (CORBA::Object::_nil ()),
-    forward_location_done_ (false)
+    forward_location_ (CORBA::Object::_nil ())
 {
 }
 
 ForwardTest_Request_Interceptor::ForwardTest_Request_Interceptor (CORBA::Object_ptr forward_location)
   : myname_ ("ForwardTest_Interceptor"),
-    forward_location_ (CORBA::Object::_duplicate (forward_location)),
-    forward_location_done_ (false)
-{
-}
-
-ForwardTest_Request_Interceptor::~ForwardTest_Request_Interceptor ()
+    forward_location_ (CORBA::Object::_duplicate (forward_location))
 {
 }
 
 void
-ForwardTest_Request_Interceptor::forward_reference (CORBA::Object_ptr forward_location)
+ForwardTest_Request_Interceptor::forward_reference (
+  CORBA::Object_ptr forward_location)
 {
   if (CORBA::is_nil (forward_location))
     throw CORBA::INV_OBJREF (
@@ -50,7 +44,7 @@ void
 ForwardTest_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var operation = ri->operation ();
+  CORBA::String_var const operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "%C.receive_request_service_contexts from "
@@ -62,8 +56,8 @@ ForwardTest_Request_Interceptor::receive_request_service_contexts (
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
   // Same goes for the shutdown call
-  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0 ||
-      ACE_OS::strcmp ("shutdown", operation.in ()) == 0)
+  if (std::strcmp ("_is_a", operation.in ()) == 0 ||
+      std::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
   if (!forward_location_done_)
@@ -71,8 +65,7 @@ ForwardTest_Request_Interceptor::receive_request_service_contexts (
       forward_location_done_ = true;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Sending LOCATION_FORWARD, current thread %i\n",
-                  ACE_Thread::self ()));
+                  "Sending LOCATION_FORWARD, current thread %t\n"));
 
       throw PortableInterceptor::ForwardRequest (
         CORBA::Object::_duplicate (this->forward_location_.in ()));
@@ -106,14 +99,14 @@ ForwardTest_Request_Interceptor::send_other (
   // This will throw an exception if a location forward has not
   // occurred.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference ();
+  CORBA::Object_var const forward = ri->forward_reference ();
 
   if (CORBA::is_nil (forward.in ()))
     throw CORBA::INTERNAL ();
 }
 
 bool
-ForwardTest_Request_Interceptor::forward_location_done() const
+ForwardTest_Request_Interceptor::forward_location_done () const
 {
   return forward_location_done_;
 }

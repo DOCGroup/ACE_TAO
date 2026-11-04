@@ -12,13 +12,17 @@ class DII_ReplyHandler :
 {
 public:
   DII_ReplyHandler (bool &reply_notifier);
-  virtual ~DII_ReplyHandler ();
+  DII_ReplyHandler (DII_ReplyHandler const &) = delete;
+  DII_ReplyHandler (DII_ReplyHandler &&) = delete;
+  DII_ReplyHandler &operator= (DII_ReplyHandler const &) = delete;
+  DII_ReplyHandler &operator= (DII_ReplyHandler &&) = delete;
+  ~DII_ReplyHandler () override = default;
 
-  virtual void handle_response (TAO_InputCDR &incoming);
-  virtual void handle_excep (TAO_InputCDR &incoming,
-                             CORBA::ULong reply_status);
-  virtual void handle_location_forward (TAO_InputCDR &incoming,
-                                        CORBA::ULong reply_status);
+  void handle_response (TAO_InputCDR &incoming) override;
+  void handle_excep (TAO_InputCDR &incoming,
+                     CORBA::ULong reply_status) override;
+  void handle_location_forward (TAO_InputCDR &incoming,
+                                CORBA::ULong reply_status) override;
 private:
   bool &got_reply_;
 };

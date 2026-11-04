@@ -8,14 +8,9 @@
 #include "tao/AnyTypeCode/Any_Impl.h"
 
 DII_ReplyHandler::DII_ReplyHandler (bool &reply_notifier)
-  :got_reply_(reply_notifier)
+  : got_reply_ (reply_notifier)
 {
 }
-
-DII_ReplyHandler::~DII_ReplyHandler ()
-{
-}
-
 
 void
 DII_ReplyHandler::handle_response (TAO_InputCDR &incoming)
@@ -29,7 +24,7 @@ DII_ReplyHandler::handle_response (TAO_InputCDR &incoming)
       else
         ACE_ERROR ((LM_ERROR,"ERROR: Response is not a string!\n"));
     }
-  catch (const CORBA::SystemException &ex)
+  catch (CORBA::SystemException const &ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: DII_ReplyHandler::handle_response caught %C\n",
@@ -64,8 +59,8 @@ DII_ReplyHandler::handle_excep (TAO_InputCDR &incoming,
     }
   else if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)
     {
-      CORBA::ULong minor = 0;
-      CORBA::ULong completion = 0;
+      CORBA::ULong minor {};
+      CORBA::ULong completion {};
 
       if ((for_reading >> minor) == 0
           || (for_reading >> completion) == 0)
@@ -101,21 +96,21 @@ DII_ReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
       return;
     }
 
-  int argc = 0;
-  ACE_TCHAR **argv = 0;
-  CORBA::ORB_var  orb = CORBA::ORB_init(argc,argv);
+  int argc {};
+  ACE_TCHAR **argv {};
+  CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-  CORBA::String_var iorstr = orb->object_to_string(fwd.in ());
+  CORBA::String_var const iorstr = orb->object_to_string (fwd.in ());
 
-  bool is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
+  bool const is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
   ACE_DEBUG ((LM_DEBUG,
               "DII_ReplyHandler::handle_location_forward"
               " got %C, is_perm = %b\n",
               iorstr.in() ,is_perm));
 
-  CORBA::Request_var req = fwd->_request ("do_forward");
-  CORBA::String_var test_string = CORBA::string_dup ("123 look at me");
-  req->add_in_arg ("text") <<= CORBA::Any::from_string(test_string.in(),30);
-  req->sendc(this);
+  CORBA::Request_var const req = fwd->_request ("do_forward");
+  CORBA::String_var const test_string = CORBA::string_dup ("123 look at me");
+  req->add_in_arg ("text") <<= CORBA::Any::from_string (test_string.in (), 30);
+  req->sendc (this);
 
 }

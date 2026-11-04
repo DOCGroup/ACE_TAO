@@ -17,12 +17,16 @@ class Forward_Test_i : public POA_Forward::Test
 
 public:
   Forward_Test_i (CORBA::ORB_ptr orb);
+  Forward_Test_i (Forward_Test_i const &) = delete;
+  Forward_Test_i (Forward_Test_i &&) = delete;
+  Forward_Test_i &operator= (Forward_Test_i const &) = delete;
+  Forward_Test_i &operator= (Forward_Test_i &&) = delete;
 
-  char * do_forward (const char *text);
-  void shutdown ();
+  char * do_forward (char const *text) override;
+  void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* TEST_I_H */
