@@ -46,7 +46,7 @@ public:
 
   /// Default constructor (creates an invalid object, but needs to be here
   /// so timer queues using this functor can be constructed)
-  ACE_Timer_Hash_Upcall ();
+  ACE_Timer_Hash_Upcall () = default;
 
   /// Constructor that specifies a Timer_Hash to call up to
   explicit ACE_Timer_Hash_Upcall (ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash);
@@ -59,30 +59,30 @@ public:
   /// This method is called when a timer is registered.
   int registration (TIMER_QUEUE &timer_queue,
                     ACE_Event_Handler *handler,
-                    const void *arg);
+                    void const *arg);
 
   /// This method is called before the timer expires.
   int preinvoke (TIMER_QUEUE &timer_queue,
                  ACE_Event_Handler *handler,
-                 const void *arg,
+                 void const *arg,
                  int recurring_timer,
-                 const ACE_Time_Value &cur_time,
-                 const void *&upcall_act);
+                 ACE_Time_Value const &cur_time,
+                 void const *&upcall_act);
 
   /// This method is called when the timer expires.
   int timeout (TIMER_QUEUE &timer_queue,
                ACE_Event_Handler *handler,
-               const void *arg,
+               void const *arg,
                int recurring_timer,
-               const ACE_Time_Value &cur_time);
+               ACE_Time_Value const &cur_time);
 
   /// This method is called after the timer expires.
   int postinvoke (TIMER_QUEUE &timer_queue,
                   ACE_Event_Handler *handler,
-                  const void *arg,
+                  void const *arg,
                   int recurring_timer,
-                  const ACE_Time_Value &cur_time,
-                  const void *upcall_act);
+                  ACE_Time_Value const &cur_time,
+                  void const *upcall_act);
 
   /// This method is called when a handler is cancelled
   int cancel_type (TIMER_QUEUE &timer_queue,
@@ -100,11 +100,11 @@ public:
   /// the timer is still contained in it
   int deletion (TIMER_QUEUE &timer_queue,
                 ACE_Event_Handler *handler,
-                const void *arg);
+                void const *arg);
 
 private:
   /// Timer Queue to do the calling up to
-  ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash_;
+  ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash_ {};
 };
 
 /**
@@ -145,7 +145,7 @@ public:
 
 protected:
   /// Pointer to the ACE_Timer_Hash that we are iterating over.
-  Hash & timer_hash_;
+  Hash &timer_hash_;
 
   /// Current position in <timer_hash_>'s table
   size_t position_ {};
@@ -238,7 +238,7 @@ public:
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
-   * was returned from the <schedule> method).  If act is non-NULL
+   * was returned from the <schedule> method).  If act is nullptr
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If
@@ -314,7 +314,7 @@ private:
   void find_new_earliest ();
 
   /// Keeps track of the size of the queue
-  size_t size_;
+  size_t size_ {};
 
   /// Table of BUCKETS
   BUCKET **table_ {};
@@ -326,7 +326,7 @@ private:
   ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK> table_functor_;
 
   /// Index to the position with the earliest entry
-  size_t earliest_position_;
+  size_t earliest_position_ {};
 
   /// Iterator used to expire timers.
   HASH_ITERATOR *iterator_ {};
@@ -334,7 +334,7 @@ private:
 #if defined (ACE_WIN64)
   /// Part of a hack... see comments in schedule().
   /// This is, essentially, the upper 32 bits of a 64-bit pointer on Win64.
-  ptrdiff_t pointer_base_;
+  ptrdiff_t pointer_base_ {};
 #endif
 
   /// Hash_Token is usually allocated in schedule but its

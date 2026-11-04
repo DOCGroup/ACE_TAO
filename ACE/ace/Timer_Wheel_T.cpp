@@ -42,16 +42,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Wheel_T
-(FUNCTOR* upcall_functor
- , FreeList* freelist
- , TIME_POLICY const &time_policy
- )
+  (FUNCTOR *upcall_functor,
+   FreeList *freelist,
+   TIME_POLICY const &time_policy)
   : Base_Timer_Queue (upcall_functor, freelist, time_policy)
-, spoke_count_(0) // calculated in open_i
-, spoke_bits_(0)
-, res_bits_ (0)
-, earliest_spoke_ (0)
-, timer_count_(0)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::ACE_Timer_Wheel_T");
   this->open_i (0,
@@ -74,15 +68,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Wheel_T
   (u_int spoke_count,
    u_int resolution,
    size_t prealloc,
-   FUNCTOR* upcall_functor,
-   FreeList* freelist,
+   FUNCTOR *upcall_functor,
+   FreeList *freelist,
    TIME_POLICY const &time_policy)
-: Base_Timer_Queue (upcall_functor, freelist, time_policy)
-, spoke_count_ (0) // calculated in open_i
-, spoke_bits_ (0)
-, res_bits_ (0)
-, earliest_spoke_ (0)
-, timer_count_ (0)
+  : Base_Timer_Queue (upcall_functor, freelist, time_policy)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::ACE_Timer_Wheel_T");
   this->open_i (prealloc, spoke_count, resolution);
@@ -93,7 +82,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::power2bits (int n,
                                                         int min_bits,
                                                         int max_bits)
 {
-  int max = (1 << max_bits) - 1;
+  int const max = (1 << max_bits) - 1;
   if (n > max)
     return max_bits;
 
@@ -111,7 +100,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::power2bits (int n,
     return min_bits;
 
   // Which is nearest?
-  int a = (1 << i) - n;
+  int const a = (1 << i) - n;
   int b = (1 << (i - 1)) - n;
   if (b < 0)
     b = -b;
@@ -132,9 +121,9 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::open_i
 
   // Rather than waste bits in our timer id, we might as well round up
   // the spoke count to the next power of two - 1 . (i.e 1,3,7,15,...127,etc.)
-  const int MIN_SPOKE_BITS = 3;  // Allow between 8 and 4096 spokes
-  const int MAX_SPOKE_BITS = 12;
-  const int MAX_RES_BITS = 20;   // 20 is plenty, even on 64 bit platforms.
+  int const MIN_SPOKE_BITS = 3;  // Allow between 8 and 4096 spokes
+  int const MAX_SPOKE_BITS = 12;
+  int const MAX_RES_BITS = 20;   // 20 is plenty, even on 64 bit platforms.
 
   this->spoke_bits_ = power2bits (spokes, MIN_SPOKE_BITS, MAX_SPOKE_BITS);
   this->res_bits_ = power2bits (res, 1, MAX_RES_BITS);
@@ -204,12 +193,12 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close ()
 
 /// Searches for a node by timer_id within one spoke.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Node_T<TYPE>*
+ACE_Timer_Node_T<TYPE> *
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::find_spoke_node
   (u_int spoke, long timer_id) const
 {
-  ACE_Timer_Node_T<TYPE>* root = this->spokes_[spoke];
-  for (ACE_Timer_Node_T<TYPE>* n = root->get_next ();
+  ACE_Timer_Node_T<TYPE> *const root = this->spokes_[spoke];
+  for (ACE_Timer_Node_T<TYPE> *n = root->get_next ();
        n != root;
        n = n->get_next ())
     {
@@ -222,16 +211,16 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::find_spoke_node
 /// Searches all spokes for a node matching the specified timer_id
 /// Uses the spoke encoded in the timer_id as a starting place.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Node_T<TYPE>*
+ACE_Timer_Node_T<TYPE> *
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::find_node (long timer_id) const
 {
   if (timer_id == -1)
     return nullptr;
 
   // Search the spoke where timer_id was originally scheduled
-  u_int spoke_mask = this->spoke_count_ - 1;
-  u_int start = timer_id & spoke_mask;
-  ACE_Timer_Node_T<TYPE>* n = this->find_spoke_node (start, timer_id);
+  u_int const spoke_mask = this->spoke_count_ - 1;
+  u_int const start = timer_id & spoke_mask;
+  ACE_Timer_Node_T<TYPE> *n = this->find_spoke_node (start, timer_id);
   if (n != nullptr)
     return n;
 
@@ -272,7 +261,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_T
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time () const
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::earliest_time");
-  ACE_Timer_Node_T<TYPE>* n = this->get_first_i ();
+  ACE_Timer_Node_T<TYPE> *n = this->get_first_i ();
   if (n != nullptr)
     return n->get_timer_value ();
   return ACE_Time_Value::zero;
@@ -296,12 +285,12 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::calculate_spoke
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> long
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::generate_timer_id (u_int spoke)
 {
-  int cnt_bits = sizeof (long) * 8 - this->spoke_bits_;
+  int const cnt_bits = sizeof (long) * 8 - this->spoke_bits_;
   long max_cnt = ((long)1 << cnt_bits) - 1;
   if (spoke == this->spoke_count_)
     --max_cnt; // Because -1 is used as a special invalid timer_id.
 
-  ACE_Timer_Node_T<TYPE>* root = this->spokes_[spoke];
+  ACE_Timer_Node_T<TYPE> *root = this->spokes_[spoke];
 
   if (root == root->get_next ())
     root->set_act (nullptr);
@@ -336,8 +325,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::generate_timer_id (u_in
       // start over like new. So, when an empty spot is found, don't reset the
       // root node's timer_id - it stays at max until the spoke clears out and
       // starts over.
-      long id = (cnt << this->spoke_bits_) | spoke;
-      if (0 == this->find_spoke_node (spoke, id))
+      long const id = (cnt << this->spoke_bits_) | spoke;
+      if (this->find_spoke_node (spoke, id) == nullptr)
         return id;
     }
 
@@ -369,8 +358,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (TYPE const 
 
   if (n != nullptr)
     {
-      u_int spoke = calculate_spoke (future_time);
-      long id = generate_timer_id (spoke);
+      u_int const spoke = calculate_spoke (future_time);
+      long const id = generate_timer_id (spoke);
 
       //ACELIB_ERROR((LM_ERROR, "Scheduling %x spoke:%d id:%d\n", (long) n, spoke, id));
 
@@ -398,27 +387,27 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (TYPE const 
 * @param n The timer node to reschedule
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
-ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::reschedule (ACE_Timer_Node_T<TYPE>* n)
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::reschedule (ACE_Timer_Node_T<TYPE> *n)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::reschedule");
-  const ACE_Time_Value& expire = n->get_timer_value ();
-  u_int spoke = calculate_spoke (expire);
+  ACE_Time_Value const &expire = n->get_timer_value ();
+  u_int const spoke = calculate_spoke (expire);
   this->schedule_i (n, spoke, expire);
 }
 
 /// The shared scheduling functionality between schedule() and reschedule()
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i
-  (ACE_Timer_Node_T<TYPE>* n,
+  (ACE_Timer_Node_T<TYPE> *n,
    u_int spoke,
-   const ACE_Time_Value& expire)
+   ACE_Time_Value const &expire)
 {
   // See if we need to update the earliest time
   if (this->is_empty() || expire < this->earliest_time ())
     this->earliest_spoke_ = spoke;
 
-  ACE_Timer_Node_T<TYPE>* root = this->spokes_[spoke];
-  ACE_Timer_Node_T<TYPE>* last = root->get_prev ();
+  ACE_Timer_Node_T<TYPE> *const root = this->spokes_[spoke];
+  ACE_Timer_Node_T<TYPE> *const last = root->get_prev ();
 
   ++timer_count_;
 
@@ -434,7 +423,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i
   // We always want to search backwards from the tail of the list, because
   // this minimizes the search in the extreme case when lots of timers are
   // scheduled for exactly the same time
-  ACE_Timer_Node_T<TYPE>* p = root->get_prev ();
+  ACE_Timer_Node_T<TYPE> *p = root->get_prev ();
   while (p != root && p->get_timer_value () > expire)
     p = p->get_prev ();
 
@@ -498,7 +487,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (TYPE const &typ
   if (!this->is_empty ())
     {
       ACE_Timer_Node_T<TYPE>* first = this->get_first ();
-      ACE_Time_Value last = first->get_timer_value ();
+      ACE_Time_Value const last = first->get_timer_value ();
       int recalc = 0;
 
       for (u_int i = 0; i < this->spoke_count_; ++i)
@@ -578,9 +567,9 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (long timer_id,
   ACE_Timer_Node_T<TYPE>* n = this->find_node (timer_id);
   if (n != nullptr)
     {
-      ACE_Time_Value last = n->get_timer_value ();
+      ACE_Time_Value const last = n->get_timer_value ();
 
-      int recalc = (this->get_first_i () == n);
+      int const recalc = (this->get_first_i () == n);
 
       // Call the close hooks.
       int cookie = 0;
@@ -642,7 +631,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::recalc_earliest
       ACE_Timer_Node_T<TYPE>* n = root->get_next ();
       if (n != root)
         {
-          ACE_Time_Value t = n->get_timer_value ();
+          ACE_Time_Value const t = n->get_timer_value ();
           if (t < last + this->wheel_time_)
             {
               this->earliest_spoke_ = spoke;
@@ -750,8 +739,8 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Node_T<TYPE>*
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i () const
 {
-  ACE_Timer_Node_T<TYPE>* root = this->spokes_[this->earliest_spoke_];
-  ACE_Timer_Node_T<TYPE>* first = root->get_next ();
+  ACE_Timer_Node_T<TYPE> *const root = this->spokes_[this->earliest_spoke_];
+  ACE_Timer_Node_T<TYPE> *const first = root->get_next ();
   if (first != root)
     return first;
   return nullptr;
@@ -863,7 +852,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE,FUNCTOR,ACE_LOCK,TIME_POLICY>::~ACE_Timer_Wheel_
 * this entry and current_node_ will point to the first entry in that spoke.
 *
 * If the wheel is empty, spoke_ will be equal timer_wheel_.spoke_count_ and
-* current_node_ would be 0.
+* current_node_ would be nullptr.
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
 ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first ()
@@ -894,7 +883,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
 ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::goto_next (u_int start_spoke)
 {
   // Find the first non-empty entry.
-  u_int sc = this->timer_wheel_.spoke_count_;
+  u_int const sc = this->timer_wheel_.spoke_count_;
   for (u_int i = start_spoke; i < sc; ++i)
   {
     ACE_Timer_Node_T<TYPE>* root = this->timer_wheel_.spokes_[i];
@@ -912,7 +901,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::goto_next (u_i
 }
 
 /**
-* @return True when we there aren't any more items (when current_node_ == 0)
+* @return True when we there aren't any more items (when current_node_ == nullptr)
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> bool
 ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () const
@@ -921,7 +910,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () cons
 }
 
 /**
-* @return The node at the current spokeition in the sequence or 0 if the wheel
+* @return The node at the current spokeition in the sequence or nullptr if the wheel
 *         is empty
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *

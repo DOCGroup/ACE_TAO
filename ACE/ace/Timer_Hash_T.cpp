@@ -18,13 +18,12 @@ class Hash_Token
 {
 public:
   // This constructor is required by ACE_Locked_Free_List::alloc.
-  Hash_Token () :
-    act_ (nullptr),
-    pos_ (0),
-    orig_id_ (0),
-    next_ (nullptr)
-  {
-  }
+  Hash_Token () = default;
+
+  Hash_Token (Hash_Token const &) = delete;
+  Hash_Token (Hash_Token &&) = delete;
+  Hash_Token &operator= (Hash_Token const &) = delete;
+  Hash_Token &operator= (Hash_Token &&) = delete;
 
   Hash_Token<TYPE> *get_next ()
   {
@@ -36,10 +35,10 @@ public:
     this->next_ = next;
   }
 
-  void set (const void *act,
+  void set (void const *act,
             size_t pos,
             long orig_id,
-            const TYPE &type)
+            TYPE const &type)
   {
     this->act_ = act;
     this->pos_ = pos;
@@ -48,22 +47,13 @@ public:
     this->next_ = nullptr;
   }
 
-  void const *act_;
-  size_t pos_;
-  long orig_id_;
-  TYPE type_;
+  void const *act_ {};
+  size_t pos_ {};
+  long orig_id_ {};
+  TYPE type_ {};
   /// Pointer to next token.
-  Hash_Token<TYPE> *next_;
+  Hash_Token<TYPE> *next_ {};
 };
-
-// Default constructor
-
-template <class TYPE, class FUNCTOR, class ACE_LOCK>
-ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Hash_Upcall ()
-  : timer_hash_ (nullptr)
-{
-  // Nothing
-}
 
 // Constructor that specifies a Timer_Hash to call up to
 
@@ -79,7 +69,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::registration (
   TIMER_QUEUE &,
   ACE_Event_Handler *,
-  const void *)
+  void const *)
 {
   // Registration will be handled by the upcall functor of the timer
   // hash.
@@ -89,10 +79,10 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::registration (
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::preinvoke (TIMER_QUEUE &,
                                                            ACE_Event_Handler *,
-                                                           const void *,
+                                                           void const *,
                                                            int,
-                                                           const ACE_Time_Value &,
-                                                           const void *&)
+                                                           ACE_Time_Value const &,
+                                                           void const *&)
 {
   // This method should never be invoked since we don't invoke
   // expire() on the buckets.
@@ -104,10 +94,10 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::postinvoke (
   TIMER_QUEUE &,
   ACE_Event_Handler *,
-  const void *,
+  void const *,
   int,
-  const ACE_Time_Value &,
-  const void *)
+  ACE_Time_Value const &,
+  void const *)
 {
   // This method should never be invoked since we don't invoke
   // expire() on the buckets.
@@ -120,9 +110,9 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::timeout (
   TIMER_QUEUE &,
   ACE_Event_Handler *,
-  const void *,
+  void const *,
   int,
-  const ACE_Time_Value &)
+  ACE_Time_Value const &)
 {
   // This method should never be invoked since we don't invoke
   // expire() on the buckets.
@@ -158,7 +148,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>::deletion (
   TIMER_QUEUE &,
   ACE_Event_Handler *event_handler,
-  const void *arg)
+  void const *arg)
 {
   // Call up to the upcall functor of the timer hash since the timer
   // hash does not invoke deletion() on its upcall functor directly.
@@ -242,7 +232,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::next ()
     this->iter_->next ();
 }
 
-// Returns true when we are at the end (when bucket_item_ == 0)
+// Returns true when we are at the end (when bucket_item_ == nullptr)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY> bool
 ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::isdone () const
@@ -279,13 +269,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
   ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
   TIME_POLICY const &time_policy)
   : Base_Timer_Queue (upcall_functor, freelist, time_policy),
-    size_ (0),
     table_size_ (table_size),
-    table_functor_ (this),
-    earliest_position_ (0)
-#if defined (ACE_WIN64)
-  , pointer_base_ (0)
-#endif /* ACE_WIN64 */
+    table_functor_ (this)
   , token_list_ ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
@@ -314,13 +299,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
   ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
   TIME_POLICY const &time_policy)
   : Base_Timer_Queue (upcall_functor, freelist, time_policy),
-    size_ (0),
     table_size_ (ACE_DEFAULT_TIMER_HASH_TABLE_SIZE),
-    table_functor_ (this),
-    earliest_position_ (0)
-#if defined (ACE_WIN64)
-  , pointer_base_ (0)
-#endif /* ACE_WIN64 */
+    table_functor_ (this)
   , token_list_ ()
 {
   ACE_TRACE ("ACE_Timer_Hash_T::ACE_Timer_Hash_T");
@@ -507,7 +487,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::schedule_i (
   // size of a pointer is 64 bits, but a long is 32. Since this class
   // is not much used, I'm hacking this, at least for now. If it becomes
   // an issue, I'll look at it again then.
-  intptr_t hi = reinterpret_cast<intptr_t> (h);
+  intptr_t const hi = reinterpret_cast<intptr_t> (h);
   if (this->pointer_base_ == 0)
     this->pointer_base_ = hi & 0xffffffff00000000;
   return static_cast<long> (hi & 0xffffffff);

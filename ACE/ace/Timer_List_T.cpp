@@ -50,7 +50,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () const
   return this->current_node_ == nullptr;
 }
 
-// Returns the node at <position_> or 0 if we are at the end
+// Returns the node at <position_> or nullptr if we are at the end
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
 ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item ()
@@ -80,7 +80,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_List_T (FUNCTO
                     TIME_POLICY const &time_policy)
   : Base_Timer_Queue (uf, fl, time_policy)
   , head_ (new ACE_Timer_Node_T<TYPE>)
-  , id_counter_ (0)
 {
   ACE_TRACE ("ACE_Timer_List_T::ACE_Timer_List_T");
 
@@ -107,7 +106,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_T
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time () const
 {
   ACE_TRACE ("ACE_Timer_List_T::earliest_time");
-  ACE_Timer_Node_T<TYPE>* first = this->get_first_i();
+  ACE_Timer_Node_T<TYPE> *const first = this->get_first_i();
   if (first != nullptr)
     return first->get_timer_value ();
   return ACE_Time_Value::zero;
@@ -208,7 +207,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (TYPE const &
 
   if (n != nullptr)
   {
-    long id = this->id_counter_++;
+    long const id = this->id_counter_++;
 
     if (id != -1) {
       n->set (type, act, future_time, interval, nullptr, nullptr, id);
@@ -225,7 +224,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (TYPE const &
 /// The shared scheduling functionality between schedule() and reschedule()
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (ACE_Timer_Node_T<TYPE>* n,
-                                                       const ACE_Time_Value& expire)
+                                                                    ACE_Time_Value const &expire)
 {
   if (this->is_empty()) {
     n->set_prev(this->head_);
@@ -404,7 +403,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_T
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i () const
 {
   ACE_TRACE ("ACE_Timer_List_T::get_first_i");
-  ACE_Timer_Node_T<TYPE>* first = this->head_->get_next();
+  ACE_Timer_Node_T<TYPE> *const first = this->head_->get_next();
   if (first != this->head_) // Note : is_empty() uses get_first()
     return first;
   return nullptr;
@@ -417,7 +416,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_T
 ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::remove_first ()
 {
   ACE_TRACE ("ACE_Timer_List_T::remove_first");
-  ACE_Timer_Node_T<TYPE>* first = this->get_first();
+  ACE_Timer_Node_T<TYPE> *const first = this->get_first();
   if (first != nullptr) {
     this->unlink(first);
     return first;

@@ -113,8 +113,8 @@ public:
   ACE_Timer_Wheel_T (u_int spoke_count,
                      u_int resolution,
                      size_t prealloc = 0,
-                     FUNCTOR* upcall_functor = nullptr,
-                     FreeList* freelist = nullptr,
+                     FUNCTOR *upcall_functor = nullptr,
+                     FreeList *freelist = nullptr,
                      TIME_POLICY const &time_policy = TIME_POLICY());
 
   /// Destructor
@@ -186,18 +186,18 @@ protected:
 
 private:
   // The following are documented in the .cpp file.
-  ACE_Timer_Node_T<TYPE>* get_first_i () const;
-  ACE_Timer_Node_T<TYPE>* remove_first_expired (const ACE_Time_Value& now);
+  ACE_Timer_Node_T<TYPE> *get_first_i () const;
+  ACE_Timer_Node_T<TYPE> *remove_first_expired (ACE_Time_Value const &now);
   void open_i (size_t prealloc, u_int spokes, u_int res);
   void reschedule (ACE_Timer_Node_T<TYPE> *) override;
-  ACE_Timer_Node_T<TYPE>* find_spoke_node(u_int spoke, long timer_id) const;
-  ACE_Timer_Node_T<TYPE>* find_node(long timer_id) const;
-  u_int calculate_spoke(const ACE_Time_Value& expire) const;
-  long generate_timer_id(u_int spoke);
-  void schedule_i (ACE_Timer_Node_T<TYPE>* n, u_int spoke, const ACE_Time_Value& expire);
-  void cancel_i (ACE_Timer_Node_T<TYPE>* n);
-  void unlink (ACE_Timer_Node_T<TYPE>* n);
-  void recalc_earliest(const ACE_Time_Value& last);
+  ACE_Timer_Node_T<TYPE> *find_spoke_node (u_int spoke, long timer_id) const;
+  ACE_Timer_Node_T<TYPE> *find_node (long timer_id) const;
+  u_int calculate_spoke (ACE_Time_Value const &expire) const;
+  long generate_timer_id (u_int spoke);
+  void schedule_i (ACE_Timer_Node_T<TYPE> *n, u_int spoke, ACE_Time_Value const &expire);
+  void cancel_i (ACE_Timer_Node_T<TYPE> *n);
+  void unlink (ACE_Timer_Node_T<TYPE> *n);
+  void recalc_earliest (ACE_Time_Value const &last);
 
 private:
   int power2bits (int n, int min_bits, int max_bits);
@@ -205,19 +205,19 @@ private:
   /// Timing Wheel.
   ACE_Timer_Node_T<TYPE> **spokes_ {};
   /// Size of the timing wheel.
-  u_int spoke_count_;
+  u_int spoke_count_ {};
   /// Number of timer_id bits used for the spoke
-  int spoke_bits_;
+  int spoke_bits_ {};
   /// Resolution (in microsoconds) of the timing wheel.
-  int res_bits_;
+  int res_bits_ {};
   /// Index of the list with the earliest time
-  u_int earliest_spoke_;
+  u_int earliest_spoke_ {};
   /// Iterator used to expire timers.
   Iterator *iterator_ {};
   /// The total amount of time in one iteration of the wheel. (resolution * spoke_count)
-  ACE_Time_Value wheel_time_;
+  ACE_Time_Value wheel_time_ {};
   /// The total number of timers currently scheduled.
-  u_int timer_count_;
+  u_int timer_count_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

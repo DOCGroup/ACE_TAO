@@ -61,7 +61,7 @@ public:
 
 protected:
   /// Pointer to the ACE_Timer_List that we are iterating over.
-  List& list_;
+  List &list_;
 
   /// Current position in the ACE_Timer_List
   ACE_Timer_Node_T<TYPE> *current_node_ {};
@@ -108,6 +108,11 @@ public:
   explicit ACE_Timer_List_T (FUNCTOR *upcall_functor = nullptr, FreeList *freelist = nullptr,
                              TIME_POLICY const &time_policy = TIME_POLICY());
 
+  ACE_Timer_List_T (ACE_Timer_List_T const &) = delete;
+  ACE_Timer_List_T (ACE_Timer_List_T &&) = delete;
+  ACE_Timer_List_T &operator= (ACE_Timer_List_T const &) = delete;
+  ACE_Timer_List_T &operator= (ACE_Timer_List_T &&) = delete;
+
   /// Destructor
   ~ACE_Timer_List_T () override;
 
@@ -138,7 +143,7 @@ public:
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
-   * was returned from the <schedule> method).  If act is non-NULL
+   * was returned from the <schedule> method).  If act is nullptr
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If <dont_call> is
@@ -191,19 +196,19 @@ private:
                    ACE_Time_Value const &future_time,
                    ACE_Time_Value const &interval) override;
 
-  void schedule_i(ACE_Timer_Node_T<TYPE>* n, const ACE_Time_Value& exp);
+  void schedule_i (ACE_Timer_Node_T<TYPE> *n, ACE_Time_Value const &exp);
 
-  ACE_Timer_Node_T<TYPE>* find_node(long timer_id) const;
+  ACE_Timer_Node_T<TYPE> *find_node (long timer_id) const;
 
-  void cancel_i (ACE_Timer_Node_T<TYPE>* n);
+  void cancel_i (ACE_Timer_Node_T<TYPE> *n);
 
-  void unlink (ACE_Timer_Node_T<TYPE>* n);
+  void unlink (ACE_Timer_Node_T<TYPE> *n);
 
-  ACE_Timer_Node_T<TYPE>* get_first_i() const;
+  ACE_Timer_Node_T<TYPE> *get_first_i () const;
 
 private:
   /// Pointer to linked list of <ACE_Timer_Handles>.
-  ACE_Timer_Node_T<TYPE>* head_;
+  ACE_Timer_Node_T<TYPE> *head_;
 
   /// Iterator used to expire timers.
   Iterator *iterator_ {};
@@ -213,12 +218,7 @@ private:
    * This id can be used to cancel a timer via the <cancel(long)>
    * method.
    */
-  long id_counter_;
-
-  ACE_Timer_List_T (ACE_Timer_List_T const &) = delete;
-  ACE_Timer_List_T (ACE_Timer_List_T &&) = delete;
-  ACE_Timer_List_T &operator= (ACE_Timer_List_T const &) = delete;
-  ACE_Timer_List_T &operator= (ACE_Timer_List_T &&) = delete;
+  long id_counter_ {};
 };
 
 #include "ace/Timer_List_T.cpp"
