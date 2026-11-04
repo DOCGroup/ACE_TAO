@@ -37,10 +37,10 @@ Middle_i::call_delay(CORBA::Short sec)
 
   ACE_hthread_t thr;
   ACE_Thread::self (thr);
-  bool recursive = false;
+  bool recursive {};
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-    int result = this->threads_.insert (thr);
+    int const result = this->threads_.insert (thr);
     ACE_ASSERT (result != -1);
     if (result == 1)
       {
@@ -57,7 +57,7 @@ Middle_i::call_delay(CORBA::Short sec)
   if (!recursive)
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-      int result = this->threads_.remove (thr);
+      int const result = this->threads_.remove (thr);
       if (result == -1)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) Middle_i::call_delay, ")

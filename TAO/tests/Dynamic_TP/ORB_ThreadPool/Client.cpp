@@ -6,10 +6,14 @@ class MT_Requestor : public virtual ACE_Task_Base
 {
 public:
   MT_Requestor (Test::Middle_ptr m, CORBA::Short sec);
+  MT_Requestor (MT_Requestor const &) = delete;
+  MT_Requestor (MT_Requestor &&) = delete;
+  MT_Requestor &operator= (MT_Requestor const &) = delete;
+  MT_Requestor &operator= (MT_Requestor &&) = delete;
 
-  virtual int svc ();
+  int svc () override;
 private:
-  Test::Middle_var middle_;
+  Test::Middle_var const middle_;
   CORBA::Short seconds_;
 };
 
@@ -23,7 +27,7 @@ MT_Requestor::MT_Requestor (Test::Middle_ptr m, CORBA::Short sec)
 int
 MT_Requestor::svc ()
 {
-  int retries = 5;
+  int retries {5};
   while (retries-- > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -47,31 +51,34 @@ MT_Requestor::svc ()
   return 0;
 }
 
-const ACE_TCHAR *ior = ACE_TEXT("file://middle.ior");
-bool do_shutdown = false;
-CORBA::Short sec = 2;
-int num_threads = 1;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT("file://middle.ior")};
+  bool do_shutdown {};
+  CORBA::Short seconds {2};
+  int num_threads {1};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:s:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'n':
-        num_threads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.num_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 's':
-        sec = ACE_OS::atoi (get_opts.opt_arg ());
+        options.seconds = static_cast<CORBA::Short> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'x':
-        do_shutdown = true;
+        options.do_shutdown = true;
         break;
       case '?':
       default:
@@ -89,35 +96,36 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (options.ior.c_str ());
 
-      Test::Middle_var middle =
-        Test::Middle::_narrow(tmp.in ());
+      Test::Middle_var const middle =
+        Test::Middle::_narrow (tmp.in ());
 
       if (CORBA::is_nil (middle.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Middle reference <%s>\n",
-                             ior),
+                             options.ior.c_str ()),
                             1);
         }
 
-      MT_Requestor requestor (middle.in(), sec);
-      requestor.activate (THR_NEW_LWP | THR_JOINABLE, num_threads);
+      MT_Requestor requestor (middle.in (), options.seconds);
+      requestor.activate (THR_NEW_LWP | THR_JOINABLE, options.num_threads);
       requestor.wait ();
 
-      if (do_shutdown)
+      if (options.do_shutdown)
       {
         middle->shutdown();
       }
