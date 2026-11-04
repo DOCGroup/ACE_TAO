@@ -4,44 +4,45 @@
 #include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 
 // Creates DynUnion using typecodes generated through IDL compiler.
-int runStatic(CORBA::ORB_ptr orb)
+int
+runStatic (CORBA::ORB_ptr orb)
 {
   try
     {
-        CORBA::Object_var obj =
-          orb->resolve_initial_references("DynAnyFactory");
+      CORBA::Object_var const obj =
+        orb->resolve_initial_references ("DynAnyFactory");
 
-        DynamicAny::DynAnyFactory_var dfact =
-          DynamicAny::DynAnyFactory::_narrow(obj.in ());
+      DynamicAny::DynAnyFactory_var const dfact =
+        DynamicAny::DynAnyFactory::_narrow (obj.in ());
 
-        if (CORBA::is_nil (dfact.in ()))
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Nil dynamic any factory after narrow\n"),
-                              -1);
-          }
+      if (CORBA::is_nil (dfact.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
 
-        DynamicAny::DynAny_var dany =
-           dfact->create_dyn_any_from_type_code(DynAnyTest::_tc_EventData);
+      DynamicAny::DynAny_var const dany =
+        dfact->create_dyn_any_from_type_code (DynAnyTest::_tc_EventData);
 
-        DynamicAny::DynUnion_var dunion =
-          DynamicAny::DynUnion::_narrow(dany.in ());
+      DynamicAny::DynUnion_var const dunion =
+        DynamicAny::DynUnion::_narrow (dany.in ());
 
-        DynamicAny::DynAny_var disc = dunion->get_discriminator();
+      DynamicAny::DynAny_var const disc = dunion->get_discriminator ();
 
-        DynamicAny::DynEnum_var denum =
-          DynamicAny::DynEnum::_narrow(disc.in ());
+      DynamicAny::DynEnum_var const denum =
+        DynamicAny::DynEnum::_narrow (disc.in ());
 
-        if (CORBA::is_nil (denum.in ()))
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Nil dynamic enum after narrow\n"),
-                              -1);
-          }
+      if (CORBA::is_nil (denum.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic enum after narrow\n"),
+                            -1);
+        }
 
-        ACE_DEBUG ((LM_DEBUG, "Static Test Passed\n"));
+      ACE_DEBUG ((LM_DEBUG, "Static Test Passed\n"));
     }
-  catch (const CORBA::Exception & ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("runStatic");
       return -1;
@@ -52,109 +53,108 @@ int runStatic(CORBA::ORB_ptr orb)
 
 // Creates DynUnion from typecode created programmatically
 
-int runDynamic(CORBA::ORB_ptr orb)
+int
+runDynamic (CORBA::ORB_ptr orb)
 {
   try
     {
-        // Create typecode for EventKind.
+      // Create typecode for EventKind.
 
-        CORBA::EnumMemberSeq eseq;
+      CORBA::EnumMemberSeq eseq {};
 
-        eseq.length(2);
+      eseq.length (2);
 
-        eseq[0] = CORBA::string_dup("ALARM_EVENT");
-        eseq[1] = CORBA::string_dup("LOG_EVENT");
+      eseq[0] = CORBA::string_dup ("ALARM_EVENT");
+      eseq[1] = CORBA::string_dup ("LOG_EVENT");
 
-        CORBA::TypeCode_var eventKindTc;
+      CORBA::TypeCode_var const eventKindTc =
+        orb->create_enum_tc ("IDL:DynAnyTest/EventKind:1.0", "EventKind", eseq);
 
-        eventKindTc = orb->create_enum_tc("IDL:DynAnyTest/EventKind:1.0",
-                                          "EventKind",
-                                          eseq);
+      // Create typecode for EventData. EventKind tc is used.
 
-        // Create typecode for EventData. EventKind tc is used.
+      CORBA::Any label {};
+      CORBA::UnionMemberSeq useq {};
 
-        CORBA::Any label;
-        CORBA::UnionMemberSeq useq;
+      useq.length (2);
 
-        useq.length(2);
+      label <<= DynAnyTest::ALARM_EVENT;
+      useq[0].name = CORBA::string_dup ("ev_data");
+      useq[0].label = label;
+      useq[0].type = CORBA::TypeCode::_duplicate (CORBA::_tc_any);
+      useq[0].type_def = CORBA::IDLType::_nil ();
 
-        label <<= DynAnyTest::ALARM_EVENT;
-        useq[0].name = CORBA::string_dup("ev_data");
-        useq[0].label = label;
-        useq[0].type = CORBA::TypeCode::_duplicate(CORBA::_tc_any);
-        useq[0].type_def = CORBA::IDLType::_nil ();
+      label <<= DynAnyTest::LOG_EVENT;
+      useq[1].name = CORBA::string_dup ("ev_desc");
+      useq[1].label = label;
+      useq[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_string);
+      useq[1].type_def = CORBA::IDLType::_nil ();
 
-        label <<= DynAnyTest::LOG_EVENT;
-        useq[1].name = CORBA::string_dup("ev_desc");
-        useq[1].label = label;
-        useq[1].type = CORBA::TypeCode::_duplicate(CORBA::_tc_string);
-        useq[1].type_def = CORBA::IDLType::_nil ();
+      CORBA::TypeCode_var const eventDataTc =
+        orb->create_union_tc ("IDL:DynAnyTest/EventData:1.0",
+                              "EventData",
+                              eventKindTc.in (),
+                              useq);
 
-        CORBA::TypeCode_var eventDataTc;
+      // Now create DynUnion
 
-        eventDataTc = orb->create_union_tc("IDL:DynAnyTest/EventData:1.0",
-                                           "EventData",
-                                           eventKindTc.in (),
-                                           useq);
+      CORBA::Object_var const obj =
+        orb->resolve_initial_references ("DynAnyFactory");
 
-        // Now create DynUnion
+      DynamicAny::DynAnyFactory_var const dfact =
+        DynamicAny::DynAnyFactory::_narrow (obj.in ());
 
-        CORBA::Object_var obj = orb->resolve_initial_references("DynAnyFactory");
+      if (CORBA::is_nil (dfact.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
 
-        DynamicAny::DynAnyFactory_var dfact =
-                    DynamicAny::DynAnyFactory::_narrow(obj.in ());
+      DynamicAny::DynAny_var const dany =
+        dfact->create_dyn_any_from_type_code (eventDataTc.in ());
 
-        if (CORBA::is_nil (dfact.in ()))
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Nil dynamic any factory after narrow\n"),
-                              -1);
-          }
+      DynamicAny::DynUnion_var const dunion =
+        DynamicAny::DynUnion::_narrow (dany.in ());
 
-        DynamicAny::DynAny_var dany =
-                    dfact->create_dyn_any_from_type_code(eventDataTc.in ());
+      DynamicAny::DynAny_var const disc = dunion->get_discriminator ();
 
-        DynamicAny::DynUnion_var dunion =
-          DynamicAny::DynUnion::_narrow(dany.in ());
+      DynamicAny::DynEnum_var const denum =
+        DynamicAny::DynEnum::_narrow (disc.in ());
 
-        DynamicAny::DynAny_var disc = dunion->get_discriminator();
+      // This fails. The type of discriminator is ulong
+      if (CORBA::is_nil (denum.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil dynamic enum after narrow\n"),
+                            -1);
+        }
 
-        DynamicAny::DynEnum_var denum =
-          DynamicAny::DynEnum::_narrow(disc.in ());
+      ACE_DEBUG ((LM_DEBUG, "Dynamic Test Passed\n"));
 
-        // This fails. The type of discriminator is ulong
-        if (CORBA::is_nil (denum.in ()))
-          {
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Nil dynamic enum after narrow\n"),
-                              -1);
-          }
-
-        ACE_DEBUG ((LM_DEBUG, "Dynamic Test Passed\n"));
-
-        denum->destroy();
-        dunion->destroy();
+      denum->destroy ();
+      dunion->destroy ();
     }
-  catch (const CORBA::Exception & ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Dynamic Test Failed with exception");
     }
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (runStatic(orb.in()) != 0)
+      if (runStatic (orb.in ()) != 0)
         return -1;
 
-      if (runDynamic(orb.in()) != 0)
+      if (runDynamic (orb.in ()) != 0)
         return -1;
   }
-  catch (const CORBA::Exception & ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Tests failed with exception");
       return 1;
