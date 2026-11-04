@@ -48,18 +48,16 @@ namespace XML
     if (runtime_started)
       xercesc::XMLPlatformUtils::Terminate ();
 
-    if (release_resolver_)
+    if (owned_resolver_)
     {
-      delete resolver_;
       resolver_ = nullptr;
-      release_resolver_ = false;
+      owned_resolver_.reset ();
     }
 
-    if (release_e_handler_)
+    if (owned_e_handler_)
     {
-      delete e_handler_;
       e_handler_ = nullptr;
-      release_e_handler_ = false;
+      owned_e_handler_.reset ();
     }
   }
 
@@ -75,14 +73,14 @@ namespace XML
     {
       if (!resolver_)
       {
-        resolver_ = new Resolver ();
-        release_resolver_ = true;
+        owned_resolver_ = std::make_unique<Resolver> ();
+        resolver_ = owned_resolver_.get ();
       }
 
       if (!e_handler_)
       {
-        e_handler_ = new Error ();
-        release_e_handler_ = true;
+        owned_e_handler_ = std::make_unique<Error> ();
+        e_handler_ = owned_e_handler_.get ();
       }
 
       xercesc::XMLPlatformUtils::Initialize ();
@@ -100,7 +98,7 @@ namespace XML
     catch (const xercesc::XMLException &e)
     {
       char *const message (xercesc::XMLString::transcode (e.getMessage ()));
-      std::unique_ptr<char[]> cleanup_message (message);
+      detail::Transcoded_String cleanup_message (message);
       ACELIB_ERROR ((LM_ERROR, "Caught Xerces exception while initializing XML parser: %C\n",
                      message != nullptr ? message : "Unable to transcode Xerces exception"));
       this->cleanup_parser (runtime_started);
@@ -150,7 +148,7 @@ namespace XML
     try
     {
       if (!this->parser_)
-        this->parser_.reset ((new xercesc::XercesDOMParser ()));
+        this->parser_ = std::make_unique<xercesc::XercesDOMParser> ();
 
       // Perform Namespace processing.
       this->parser_->setDoNamespaces (true);
@@ -207,7 +205,7 @@ namespace XML
       if (xercesc::DOMImplementation::loadDOMExceptionMsg (e.code, errText, maxChars))
       {
         char *const text (xercesc::XMLString::transcode (errText));
-        std::unique_ptr<char[]> cleanup_text (text);
+        detail::Transcoded_String cleanup_text (text);
         if (text != nullptr)
           message = text;
       }
@@ -220,7 +218,7 @@ namespace XML
     catch (const xercesc::XMLException &e)
     {
       char *const message (xercesc::XMLString::transcode (e.getMessage ()));
-      std::unique_ptr<char[]> cleanup_message (message);
+      detail::Transcoded_String cleanup_message (message);
       throw std::runtime_error (message != nullptr ? message : "Xerces XML parsing failed");
     }
     catch (...)
@@ -242,16 +240,16 @@ namespace XML
     {
       this->parser_.reset (nullptr);
 
-      if (release_resolver_)
+      if (owned_resolver_)
       {
-        delete resolver_;
         resolver_ = nullptr;
+        owned_resolver_.reset ();
       }
 
-      if (release_e_handler_)
+      if (owned_e_handler_)
       {
-        delete e_handler_;
         e_handler_ = nullptr;
+        owned_e_handler_.reset ();
       }
 
       this->impl_ = nullptr;
@@ -261,7 +259,7 @@ namespace XML
     catch (const xercesc::XMLException &e)
     {
       char *const message (xercesc::XMLString::transcode (e.getMessage ()));
-      std::unique_ptr<char[]> cleanup_message (message);
+      detail::Transcoded_String cleanup_message (message);
       ACELIB_ERROR ((LM_ERROR, "Caught Xerces exception while terminating XML parser: %C\n",
                      message != nullptr ? message : "Unable to transcode Xerces exception"));
       throw;
@@ -332,8 +330,8 @@ namespace XML
       if (ser_config->canSetParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true))
         ser_config->setParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true);
 
-      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> format_target (
-        new XERCES_CPP_NAMESPACE::LocalFileFormatTarget (ACE_TEXT_ALWAYS_CHAR (file)));
+      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> format_target =
+        std::make_unique<XERCES_CPP_NAMESPACE::LocalFileFormatTarget> (ACE_TEXT_ALWAYS_CHAR (file));
 
       output->setByteStream (format_target.get ());
 
@@ -344,10 +342,10 @@ namespace XML
     catch (const xercesc::XMLException &e)
     {
       char *const message (xercesc::XMLString::transcode (e.getMessage ()));
-      std::unique_ptr<char[]> cleanup_message (message);
+      detail::Transcoded_String cleanup_message (message);
 
       char *const name (xercesc::XMLString::transcode (e.getType ()));
-      std::unique_ptr<char[]> cleanup_name (name);
+      detail::Transcoded_String cleanup_name (name);
       char const *const source_file (e.getSrcFile ());
 
       ACELIB_ERROR ((LM_ERROR,

@@ -84,10 +84,10 @@ namespace XML
     XERCES_CPP_NAMESPACE::DOMImplementation *impl_{};
     mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_{};
 
+    std::unique_ptr<Resolver> owned_resolver_{};
     Resolver *resolver_{};
-    bool release_resolver_{};
+    std::unique_ptr<Error_Handler> owned_e_handler_{};
     Error_Handler *e_handler_{};
-    bool release_e_handler_{};
   };
 }
 

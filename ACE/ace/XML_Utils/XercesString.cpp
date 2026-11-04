@@ -173,11 +173,8 @@ namespace XML
 
   std::ostream &operator<< (std::ostream &o, XStr const &str)
   {
-    char *s = xercesc::XMLString::transcode (str);
-
-    o << s;
-
-    xercesc::XMLString::release (std::addressof (s)); // idiots?
+    detail::Transcoded_String const s (xercesc::XMLString::transcode (str));
+    o << s.get ();
     return o;
   }
 
