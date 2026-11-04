@@ -456,7 +456,9 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
           }
 
           local_addr->set (local_addr->get_port_number (),
-                           local_addr->get_host_name ());
+                           local_addr->get_host_name (),
+                           1,
+                           local_addr->get_type ());
 
           if (is_default_addr)
             {
@@ -828,7 +830,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
             ACE_OS::perror("SO_RCVBUF");
         }
       ACE_NEW_RETURN (local_addr,
-                      ACE_INET_Addr ("0"),
+                      ACE_INET_Addr ("0", inet_addr->get_type ()),
                       -1);
 
       if (ct == ACCEPTOR)
@@ -838,7 +840,9 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
             ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
 
           local_addr->set (local_addr->get_port_number (),
-                           local_addr->get_host_name ());
+                           local_addr->get_host_name (),
+                           1,
+                           local_addr->get_type ());
           handler->set_peer_addr (local_addr);
         }
     }
@@ -886,7 +890,9 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
       result = handler->get_socket ()->get_local_addr (*local_addr);
 
       local_addr->set (local_addr->get_port_number (),
-                       local_addr->get_host_name ());
+                       local_addr->get_host_name (),
+                       1,
+                       local_addr->get_type ());
 
       ACE_TCHAR buf [BUFSIZ];
       local_addr->addr_to_string (buf, BUFSIZ);

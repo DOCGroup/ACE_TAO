@@ -245,7 +245,8 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                     this->control_address_ = inet_addr;
                   }
 
-                if (IN_CLASSD (inet_addr->get_ip_address ()))
+                if (inet_addr->get_type () == AF_INET
+                    && IN_CLASSD (inet_addr->get_ip_address ()))
                   {
                     if (TAO_debug_level > 0)
                       ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
@@ -281,12 +282,8 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                       "AV BOTH %s\n",
                       protocol_tokenizer[1]));
 
-          TAO_Tokenizer address_tokenizer (protocol_tokenizer[1], ':');
-          TAO_Tokenizer port_tokenizer (address_tokenizer[1], ';');
-          ACE_CString addr;
-          addr += address_tokenizer[0];
-          addr += ":";
-          addr += port_tokenizer[0];
+          TAO_Tokenizer port_tokenizer (protocol_tokenizer[1], ';');
+          ACE_CString addr (port_tokenizer[0]);
 
           if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
             {
@@ -307,21 +304,6 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                     }
                   num_local_sec_addrs_ = port_tokenizer.num_tokens () - 1;
                 }
-            }
-
-          short control_port = static_cast<short> (std::atoi (port_tokenizer[0])) + 1;
-          char control_port_str[7];
-          std::sprintf (control_port_str, "%d", control_port);
-
-          ACE_CString control_addr = "";
-          if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
-            {
-              control_addr += address_tokenizer[0];
-              control_addr += ":";
-              if (port_tokenizer[1] != nullptr)
-                control_addr += port_tokenizer[1];
-              else
-                control_addr += control_port_str;
             }
 
           switch (this->protocol_)
@@ -346,13 +328,20 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                   {
                     ACE_INET_Addr *control_inet_addr;
                     ACE_NEW_RETURN (control_inet_addr,
-                                    ACE_INET_Addr (control_addr.c_str() ),
+                                    ACE_INET_Addr (*inet_addr),
                                     -1);
+                    u_short control_port =
+                      static_cast<u_short> (inet_addr->get_port_number () + 1);
+                    if (port_tokenizer[1] != nullptr)
+                      control_port = static_cast<u_short> (
+                        std::atoi (port_tokenizer[1]));
+                    control_inet_addr->set_port_number (control_port);
                     this->clean_up_control_address_ = true;
                     this->control_address_ = control_inet_addr;
                   }
 
-                if (IN_CLASSD (inet_addr->get_ip_address ()))
+                if (inet_addr->get_type () == AF_INET
+                    && IN_CLASSD (inet_addr->get_ip_address ()))
                   {
                     if (TAO_debug_level > 0)
                       ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
