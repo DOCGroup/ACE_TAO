@@ -42,22 +42,27 @@ public:
   using Node = ACE_Timer_Node_T<TYPE>;
 
   /// Constructor
-  ACE_Timer_Wheel_Iterator_T (Wheel &);
+  explicit ACE_Timer_Wheel_Iterator_T (Wheel &);
 
   /// Destructor
-  virtual ~ACE_Timer_Wheel_Iterator_T ();
+  ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_Iterator_T const &) = delete;
+  ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_Iterator_T &&) = delete;
+  ACE_Timer_Wheel_Iterator_T &operator= (ACE_Timer_Wheel_Iterator_T const &) = delete;
+  ACE_Timer_Wheel_Iterator_T &operator= (ACE_Timer_Wheel_Iterator_T &&) = delete;
+
+  ~ACE_Timer_Wheel_Iterator_T () override;
 
   /// Positions the iterator at the earliest node in the Timer Queue
-  virtual void first ();
+  void first () override;
 
   /// Positions the iterator at the next node in the Timer Queue
-  virtual void next ();
+  void next () override;
 
   /// Returns true when there are no more nodes in the sequence
-  virtual bool isdone () const;
+  bool isdone () const override;
 
   /// Returns the node at the current position in the sequence
-  virtual ACE_Timer_Node_T<TYPE>* item ();
+  ACE_Timer_Node_T<TYPE> *item () override;
 
 protected:
   /// Pointer to the ACE_Timer_List that we are iterating over.
@@ -67,7 +72,7 @@ protected:
   u_int spoke_;
 
   /// Pointer to the position in the the <pos_>th list
-  ACE_Timer_Node_T<TYPE>* current_node_;
+  ACE_Timer_Node_T<TYPE> *current_node_ {};
 private:
   void goto_next(u_int start_spoke);
 };
@@ -101,8 +106,8 @@ public:
   using FreeList = ACE_Free_List<Node>;
 
   /// Default constructor
-  ACE_Timer_Wheel_T (FUNCTOR* upcall_functor = nullptr, FreeList* freelist = nullptr,
-                     TIME_POLICY const & time_policy = TIME_POLICY());
+  explicit ACE_Timer_Wheel_T (FUNCTOR *upcall_functor = nullptr, FreeList *freelist = nullptr,
+                              TIME_POLICY const &time_policy = TIME_POLICY());
 
   /// Constructor with opportunities to set the wheelsize and resolution
   ACE_Timer_Wheel_T (u_int spoke_count,
@@ -110,76 +115,81 @@ public:
                      size_t prealloc = 0,
                      FUNCTOR* upcall_functor = nullptr,
                      FreeList* freelist = nullptr,
-                     TIME_POLICY const & time_policy = TIME_POLICY());
+                     TIME_POLICY const &time_policy = TIME_POLICY());
 
   /// Destructor
-  virtual ~ACE_Timer_Wheel_T ();
+  ACE_Timer_Wheel_T (ACE_Timer_Wheel_T const &) = delete;
+  ACE_Timer_Wheel_T (ACE_Timer_Wheel_T &&) = delete;
+  ACE_Timer_Wheel_T &operator= (ACE_Timer_Wheel_T const &) = delete;
+  ACE_Timer_Wheel_T &operator= (ACE_Timer_Wheel_T &&) = delete;
+
+  ~ACE_Timer_Wheel_T () override;
 
   /// True if queue is empty, else false.
-  virtual bool is_empty () const;
+  bool is_empty () const override;
 
   /// Returns the time of the earlier node in the ACE_Timer_Wheel.
   /// Must be called on a non-empty queue.
-  virtual const ACE_Time_Value& earliest_time () const;
+  ACE_Time_Value const &earliest_time () const override;
 
   /// Changes the interval of a timer (and can make it periodic or non
   /// periodic by setting it to ACE_Time_Value::zero or not).
-  virtual int reset_interval (long timer_id,
-                              const ACE_Time_Value& interval);
+  int reset_interval (long timer_id,
+                      ACE_Time_Value const &interval) override;
 
   /// Cancel all timer associated with @a type.  If @a dont_call_handle_close is
   /// 0 then the <functor> will be invoked.  Returns number of timers
   /// cancelled.
-  virtual int cancel (const TYPE& type,
-                      int dont_call_handle_close = 1);
+  int cancel (TYPE const &type,
+              int dont_call_handle_close = 1) override;
 
   // Cancel a timer, storing the magic cookie in act (if nonzero).
   // Calls the functor if dont_call_handle_close is 0 and returns 1
   // on success
-  virtual int cancel (long timer_id,
-                      const void** act = nullptr,
-                      int dont_call_handle_close = 1);
+  int cancel (long timer_id,
+              void const **act = nullptr,
+              int dont_call_handle_close = 1) override;
 
   /**
    * Destroy timer queue. Cancels all timers.
    */
-  virtual int close ();
+  int close () override;
 
   /// Run the <functor> for all timers whose values are <=
   /// <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
   /// the number of timers canceled.
-  virtual int expire ();
+  int expire () override;
 
   // Run the <functor> for all timers whose values are <= @a current_time.
   // This does not account for <timer_skew>.  Returns the number of
   // timers canceled.
-  int expire (const ACE_Time_Value& current_time);
+  int expire (ACE_Time_Value const &current_time) override;
 
   /// Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE> & iter ();
+  ACE_Timer_Queue_Iterator_T<TYPE> &iter () override;
 
   /// Removes the earliest node from the queue and returns it
-  virtual ACE_Timer_Node_T<TYPE>* remove_first ();
+  ACE_Timer_Node_T<TYPE> *remove_first () override;
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Reads the earliest node from the queue and returns it.
-  virtual ACE_Timer_Node_T<TYPE>* get_first ();
+  ACE_Timer_Node_T<TYPE> *get_first () override;
 
 protected:
   /// Schedules a timer.
-  virtual long schedule_i (const TYPE& type,
-                           const void* act,
-                           const ACE_Time_Value& future_time,
-                           const ACE_Time_Value& interval);
+  long schedule_i (TYPE const &type,
+                   void const *act,
+                   ACE_Time_Value const &future_time,
+                   ACE_Time_Value const &interval) override;
 
 private:
   // The following are documented in the .cpp file.
   ACE_Timer_Node_T<TYPE>* get_first_i () const;
   ACE_Timer_Node_T<TYPE>* remove_first_expired (const ACE_Time_Value& now);
   void open_i (size_t prealloc, u_int spokes, u_int res);
-  virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
+  void reschedule (ACE_Timer_Node_T<TYPE> *) override;
   ACE_Timer_Node_T<TYPE>* find_spoke_node(u_int spoke, long timer_id) const;
   ACE_Timer_Node_T<TYPE>* find_node(long timer_id) const;
   u_int calculate_spoke(const ACE_Time_Value& expire) const;
@@ -193,7 +203,7 @@ private:
   int power2bits (int n, int min_bits, int max_bits);
 
   /// Timing Wheel.
-  ACE_Timer_Node_T<TYPE>** spokes_;
+  ACE_Timer_Node_T<TYPE> **spokes_ {};
   /// Size of the timing wheel.
   u_int spoke_count_;
   /// Number of timer_id bits used for the spoke
@@ -203,7 +213,7 @@ private:
   /// Index of the list with the earliest time
   u_int earliest_spoke_;
   /// Iterator used to expire timers.
-  Iterator* iterator_;
+  Iterator *iterator_ {};
   /// The total amount of time in one iteration of the wheel. (resolution * spoke_count)
   ACE_Time_Value wheel_time_;
   /// The total number of timers currently scheduled.
