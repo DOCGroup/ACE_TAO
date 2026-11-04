@@ -83,10 +83,10 @@ private:
 
 private:
   /// The integer portion of the value.
-  ACE_UINT32 whole_;
+  ACE_UINT32 whole_ {};
 
   /// The fractional portion of the value.
-  ACE_UINT32 fractional_;
+  ACE_UINT32 fractional_ {};
 
   /**
    * The number of decimal digits of precision represented by

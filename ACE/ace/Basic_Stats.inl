@@ -2,15 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Basic_Stats::ACE_Basic_Stats ()
-  : samples_count_ (0)
-  , min_ (0)
-  , min_at_ (0)
-  , max_ (0)
-  , max_at_ (0)
-  , sum_ (0)
-{
-}
+ACE_Basic_Stats::ACE_Basic_Stats () = default;
 
 ACE_INLINE ACE_UINT32
 ACE_Basic_Stats::samples_count () const
