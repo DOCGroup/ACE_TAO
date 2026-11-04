@@ -104,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("Client using ior source %s\n"),
                   options.ior.c_str ()));
       CORBA::Object_var const server =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+        orb->string_to_object (options.ior.c_str ());
 
       CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
