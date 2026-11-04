@@ -75,8 +75,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "_Proxy_Factory_Adapter ();" << be_nl
       << "TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter &operator= (" << be_idt << be_idt_nl
-      << "const TAO_" << node->flat_name ()
-      << "_Proxy_Factory_Adapter &" << be_uidt_nl
+      << "TAO_" << node->flat_name ()
+      << "_Proxy_Factory_Adapter const &" << be_uidt_nl
       << ");" << be_uidt_nl
       << "TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory *proxy_factory_;" << be_nl

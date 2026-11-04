@@ -45,7 +45,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
       << "_ptr); // copying" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
+  *os << macro << " ::CORBA::Boolean operator>>= (::CORBA::Any const &, "
       << node->name () << "_ptr &);";
 
   *os << be_global->anyops_versioning_end () << be_nl;

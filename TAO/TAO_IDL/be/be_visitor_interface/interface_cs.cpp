@@ -86,7 +86,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
-          << "const " << node->name () << "_ptr p,"
+          << node->name () << "_ptr const p,"
           << "TAO_OutputCDR & cdr)" << be_nl
           << "{" << be_idt_nl
           << "return ";
@@ -278,7 +278,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   *os << "::CORBA::Boolean" << be_nl
-      << node->full_name () << "::_is_a (const char *value)" << be_nl;
+      << node->full_name () << "::_is_a (char const *value)" << be_nl;
 
   *os << "{" << be_idt_nl
       << "if (" << be_idt << be_idt;
@@ -313,7 +313,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
-  *os << "const char* " << node->full_name ()
+  *os << "char const *" << node->full_name ()
       << "::_interface_repository_id () const"
       << be_nl
       << "{" << be_idt_nl
@@ -323,7 +323,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (be_global->gen_static_desc_operations ())
     {
-      *os << be_nl_2 << "const char* " << node->full_name ()
+      *os << be_nl_2 << "char const *" << node->full_name ()
           << "::_desc_repository_id ()"
           << be_nl
           << "{" << be_idt_nl
@@ -331,7 +331,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "\";" << be_uidt_nl
           << "}";
 
-      *os << be_nl_2 << "const char* " << node->full_name ()
+      *os << be_nl_2 << "char const *" << node->full_name ()
           << "::_desc_interface_name ()"
           << be_nl
           << "{" << be_idt_nl

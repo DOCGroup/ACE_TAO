@@ -67,9 +67,9 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       *os << be_global->impl_class_prefix () << node->flat_name ()
           << be_global->impl_class_suffix () << "& "
           << be_global->impl_class_prefix () << node->flat_name ()
-          << be_global->impl_class_suffix () << "::operator=(const "
+          << be_global->impl_class_suffix () << "::operator=("
           << be_global->impl_class_prefix () << node->flat_name ()
-          << be_global->impl_class_suffix () << "& t)" <<be_idt_nl
+          << be_global->impl_class_suffix () << " const &t)" << be_idt_nl
           << "{" << be_idt_nl
           << "return *this;" << be_uidt_nl
           << "}" << be_nl << be_uidt_nl;
