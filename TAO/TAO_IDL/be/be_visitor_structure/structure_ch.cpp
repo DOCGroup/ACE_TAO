@@ -34,7 +34,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
   std::vector<AST_Type *> list;
   (void) node->in_recursion (list);
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Generate the _var and _out typedefs.
   node->gen_common_varout (os);

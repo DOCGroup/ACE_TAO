@@ -42,7 +42,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -51,9 +51,9 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  bool const empty = node->nfields () == 0;
-  std::string const strm = empty ? "" : "strm";
-  std::string const tao_aggregate = empty ? "" : "_tao_aggregate";
+  const bool empty = node->nfields () == 0;
+  const std::string strm = empty ? "" : "strm";
+  const std::string tao_aggregate = empty ? "" : "_tao_aggregate";
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &" << strm << "," << be_nl
       << node->name () << " const &" << tao_aggregate << ")" << be_uidt
@@ -157,7 +157,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 int
 be_visitor_structure_cdr_op_cs::post_process (be_decl *bd)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (bd->node_type () != AST_Decl::NT_enum_val)
     {

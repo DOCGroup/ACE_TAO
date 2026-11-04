@@ -31,8 +31,8 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  std::string const macro = this->ctx_->export_macro ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  const std::string macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -63,7 +63,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 int
 be_visitor_structure_any_op_ch::visit_field (be_field *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // First generate the type information.
   bt = dynamic_cast<be_type*> (node->field_type ());
