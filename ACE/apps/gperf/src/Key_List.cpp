@@ -600,14 +600,14 @@ Key_List::output_cpp17_constants (bool static_storage)
 
   if (use_word_lengths)
     {
-      ACE_OS::printf ("%sconstexpr std::size_t MIN_HASH_VALUE {%d};\n",
+      ACE_OS::printf ("%sconstexpr int MIN_HASH_VALUE {%d};\n",
                       storage, min_hash_value);
       emitted = true;
     }
 
   if (use_word_lengths || use_duplicate_table)
     {
-      ACE_OS::printf ("%sconstexpr std::size_t MAX_HASH_VALUE {%d};\n",
+      ACE_OS::printf ("%sconstexpr int MAX_HASH_VALUE {%d};\n",
                       storage, max_hash_value);
       emitted = true;
     }
@@ -1652,7 +1652,7 @@ Key_List::output_lookup_function ()
                   pointer_and_type_enabled ? generated_address_prefix () : "",
                   pointer_and_type_enabled ? "wordlist[slot]" : "s",
                   pointer_and_type_enabled ? generated_address_suffix () : "");
-          ACE_OS::printf ("          else if (slot < 0 && slot >= -static_cast<int> (MAX_HASH_VALUE))\n"
+          ACE_OS::printf ("          else if (slot < 0 && slot >= -MAX_HASH_VALUE)\n"
                   "            return %s;\n", generated_null_pointer ());
         }
       ACE_OS::printf ("          else\n            {\n");
