@@ -5,11 +5,9 @@
 #include "ace/Log_Msg.h"
 
 Client_Request_Interceptor::Client_Request_Interceptor (
-  char const *orb_id,
-  char const *forward_str)
+  char const *const orb_id,
+  char const *const forward_str)
   : orb_id_ (CORBA::string_dup (orb_id)),
-    orb_ (),
-    request_count_ {},
     forward_str_ (CORBA::string_dup (forward_str))
 {
 }
@@ -34,7 +32,7 @@ Client_Request_Interceptor::send_request (
 
   ++this->request_count_;
 
-  CORBA::Boolean response_expected =
+  CORBA::Boolean const response_expected =
     ri->response_expected ();
 
   if (!response_expected)   // A one-way request.
@@ -55,10 +53,10 @@ Client_Request_Interceptor::send_request (
                                         this->orb_id_.in ());
         }
 
-      CORBA::Object_var forward =
+      CORBA::Object_var const forward =
         this->orb_->string_to_object (this->forward_str_.in ());
 
-      CORBA::String_var forward_str =
+      CORBA::String_var const forward_str =
         this->orb_->object_to_string (forward.in ());
 
       ACE_DEBUG ((LM_DEBUG,
@@ -101,7 +99,7 @@ Client_Request_Interceptor::receive_other (
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("CRI: in receive_other\n")));
 
-  CORBA::Boolean response_expected =
+  CORBA::Boolean const response_expected =
     ri->response_expected ();
 
   // Oneway

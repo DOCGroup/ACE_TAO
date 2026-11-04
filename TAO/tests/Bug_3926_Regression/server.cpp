@@ -4,16 +4,17 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_TCHAR const *ior_file {};
+#include <memory>
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         ior_file = get_opts.opt_arg ();
@@ -30,14 +31,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -45,29 +45,31 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("SERVER: Unable to initialize the POA.\n")),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (::parse_args (argc, argv) != 0)
+      std::basic_string<ACE_TCHAR> ior_file {};
+      if (::parse_args (argc, argv, ior_file) != 0)
         return -1;
 
       // Servant
-      test_i *servant = nullptr;
+      test_i *servant {};
       ACE_NEW_RETURN (servant,
                       test_i (0, orb.in ()),
                       -1);
+      // The servant var takes ownership of the new servant reference.
       PortableServer::ServantBase_var safe (servant);
 
-      PortableServer::ObjectId_var oid =
+      PortableServer::ObjectId_var const oid =
         root_poa->activate_object (servant);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         root_poa->servant_to_reference (servant);
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG,
@@ -77,16 +79,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // IOR
-      FILE *output_file = ACE_OS::fopen (ior_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("SERVER: Cannot open output file <%s> ")
-                           ACE_TEXT ("for writting IOR: %C"),
-                           ior_file,
-                           ior.in ()),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (ior_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("SERVER: Cannot open output file <%s> ")
+                             ACE_TEXT ("for writing IOR: %C"),
+                             ior_file.c_str (),
+                             ior.in ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       // Run the ORB event loop.
       orb->run ();
