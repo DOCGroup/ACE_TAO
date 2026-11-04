@@ -12,10 +12,8 @@ namespace ACE
   namespace Monitor_Control
   {
     Linux_Network_Interface_Monitor::Linux_Network_Interface_Monitor (
-      const char *scan_format)
-      : value_ (0UL),
-        start_ (0UL),
-        scan_format_ (scan_format)
+      char const *scan_format)
+      : scan_format_ (scan_format)
     {
       this->init ();
     }
@@ -23,9 +21,9 @@ namespace ACE
     void
     Linux_Network_Interface_Monitor::update_i ()
     {
-      char buf[1024];
-      FILE* fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
-                                ACE_TEXT ("r"));
+      char buf[1024] {};
+      FILE* const fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
+                                      ACE_TEXT ("r"));
 
       if (fp == nullptr)
         {
@@ -37,14 +35,12 @@ namespace ACE
 
       /// Ignore the first 2 lines of the file, which are file
       /// and column headers.
-      void* dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
-      ACE_UNUSED_ARG (dummy);
-      dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
-      ACE_UNUSED_ARG (dummy);
+      (void) ACE_OS::fgets (buf, sizeof (buf), fp);
+      (void) ACE_OS::fgets (buf, sizeof (buf), fp);
 
-      unsigned long iface_value = 0UL;
-      ACE_UINT32 iface_index = 0UL;
-      ACE_UINT64 total_value = 0UL;
+      unsigned long iface_value {};
+      ACE_UINT32 iface_index {};
+      ACE_UINT64 total_value {};
 
       while (ACE_OS::fgets (buf, sizeof (buf), fp) != nullptr)
         {
@@ -82,9 +78,9 @@ namespace ACE
       /// Read the file once to get a base value that we can subtract
       /// from subsequent readings to get bytes sent since we started
       /// monitoring.
-      char buf[1024];
-      FILE* fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
-                                ACE_TEXT ("r"));
+      char buf[1024] {};
+      FILE* const fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
+                                      ACE_TEXT ("r"));
 
       if (fp == nullptr)
         {
@@ -96,20 +92,15 @@ namespace ACE
 
       /// Ignore the first 2 lines of the file, which are file
       /// and column headers.
-      void* dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
-      ACE_UNUSED_ARG (dummy);
-      dummy = ACE_OS::fgets (buf, sizeof (buf), fp);
-      ACE_UNUSED_ARG (dummy);
+      (void) ACE_OS::fgets (buf, sizeof (buf), fp);
+      (void) ACE_OS::fgets (buf, sizeof (buf), fp);
 
-      unsigned long iface_value = 0UL;
-      ACE_UINT32 iface_index = 0UL;
+      unsigned long iface_value {};
 
       while (ACE_OS::fgets (buf, sizeof (buf), fp) != nullptr)
         {
           sscanf (buf, this->scan_format_.c_str (), &iface_value);
           this->start_ += iface_value;
-
-          ++iface_index;
         }
 
       (void) ACE_OS::fclose (fp);

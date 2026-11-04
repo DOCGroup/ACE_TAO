@@ -57,12 +57,12 @@ namespace ACE
     class MONITOR_CONTROL_Export Monitor_Query
     {
     public:
-      Monitor_Query (const char* monitor_name);
+      explicit Monitor_Query (char const* monitor_name);
 
-      void query ();
+      void query () const;
 
     private:
-      Monitor_Base* monitor_;
+      Monitor_Base* monitor_ {};
     };
   }
 }

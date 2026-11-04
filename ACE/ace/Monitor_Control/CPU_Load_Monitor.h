@@ -45,13 +45,13 @@ namespace ACE
 #endif
     {
     public:
-      CPU_Load_Monitor (const char* name);
+      explicit CPU_Load_Monitor (char const* name);
 
       /// Implementation of the pure virtual method.
       void update () override;
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name ();
+      static char const* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
@@ -66,20 +66,20 @@ namespace ACE
 #endif
 
     private:
-      static const char* default_name_;
+      static char const* default_name_;
 
       /// Linux implementation
 #if defined (ACE_LINUX)
-      unsigned long user_;
-      unsigned long wait_;
-      unsigned long kernel_;
-      unsigned long idle_;
-      unsigned long prev_idle_;
-      double prev_total_;
+      unsigned long user_ {};
+      unsigned long wait_ {};
+      unsigned long kernel_ {};
+      unsigned long idle_ {};
+      unsigned long prev_idle_ {};
+      double prev_total_ {};
 #endif
 #if defined (ACE_LINUX)
-      FILE *file_ptr_;
-      char buf_[1024];
+      FILE *file_ptr_ {};
+      char buf_[1024] {};
 #endif
     };
   }

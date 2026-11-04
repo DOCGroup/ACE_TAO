@@ -6,10 +6,7 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Null_Network_Interface_Monitor::Null_Network_Interface_Monitor ()
-      : value_ (0UL)
-    {
-    }
+    Null_Network_Interface_Monitor::Null_Network_Interface_Monitor () = default;
 
     void
     Null_Network_Interface_Monitor::update_i ()

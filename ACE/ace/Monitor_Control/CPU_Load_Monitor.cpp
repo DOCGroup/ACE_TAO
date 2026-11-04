@@ -17,24 +17,13 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    const char* CPU_Load_Monitor::default_name_ =
+    char const* CPU_Load_Monitor::default_name_ =
       "OS/Processor/CPULoad";
 
-    CPU_Load_Monitor::CPU_Load_Monitor (const char* name)
+    CPU_Load_Monitor::CPU_Load_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT("\\Processor(_Total)\\% Processor Time"))
-#endif
-#if defined (ACE_LINUX)
-      , user_ (0)
-      , wait_ (0)
-      , kernel_ (0)
-      , idle_ (0)
-      , prev_idle_ (0)
-      , prev_total_ (0.0)
-#endif
-#if defined (ACE_LINUX)
-      , file_ptr_ (nullptr)
 #endif
     {
       this->init ();
@@ -53,10 +42,10 @@ namespace ACE
 #endif
 
 #if defined (ACE_LINUX)
-      double delta_idle = this->idle_ - this->prev_idle_;
-      double total =
+      double const delta_idle = this->idle_ - this->prev_idle_;
+      double const total =
         this->user_ + this->wait_ + this->kernel_ + this->idle_;
-      double delta_total = total - this->prev_total_;
+      double const delta_total = total - this->prev_total_;
 
       if (ACE::is_equal (delta_total, 0.0))
         {
@@ -65,7 +54,7 @@ namespace ACE
           return;
         }
 
-      double percent_cpu_load = 100.0 - (delta_idle / delta_total * 100.0);
+      double const percent_cpu_load = 100.0 - (delta_idle / delta_total * 100.0);
 
       /// Stores value and timestamp with thread-safety.
       this->receive (percent_cpu_load);
@@ -75,7 +64,7 @@ namespace ACE
 #endif
     }
 
-    const char*
+    char const*
     CPU_Load_Monitor::default_name ()
     {
       return CPU_Load_Monitor::default_name_;
@@ -120,8 +109,8 @@ namespace ACE
           return;
         }
 
-      char const *item = nullptr;
-      char const *arg = nullptr;
+      char const *item {};
+      char const *arg {};
 
       while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != nullptr)
         {

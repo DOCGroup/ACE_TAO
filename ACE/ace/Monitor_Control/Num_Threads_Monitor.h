@@ -45,25 +45,25 @@ namespace ACE
 #endif
     {
     public:
-      Num_Threads_Monitor (const char* name);
+      explicit Num_Threads_Monitor (char const* name);
 
       /// Implementation of the pure virtual method.
       void update () override;
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name ();
+      static char const* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
       void clear_i () override;
 
     private:
-      static const char* default_name_;
+      static char const* default_name_;
 
 #if defined (ACE_LINUX)
-      FILE *file_ptr_;
-      char buf_[1024];
-      unsigned long nthreads_;
+      FILE *file_ptr_ {};
+      char buf_[1024] {};
+      unsigned long nthreads_ {};
 #endif
     };
   }

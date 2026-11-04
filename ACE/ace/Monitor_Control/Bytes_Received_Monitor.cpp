@@ -8,10 +8,10 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    const char* Bytes_Received_Monitor::default_name_ =
+    char const* Bytes_Received_Monitor::default_name_ =
       "OS/Network/BytesReceived";
 
-    Bytes_Received_Monitor::Bytes_Received_Monitor (const char* name)
+    Bytes_Received_Monitor::Bytes_Received_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Multi_Instance_Monitor (
@@ -36,7 +36,7 @@ namespace ACE
       this->receive (static_cast<double> (this->value_));
     }
 
-    const char*
+    char const*
     Bytes_Received_Monitor::default_name ()
     {
       return Bytes_Received_Monitor::default_name_;

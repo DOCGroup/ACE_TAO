@@ -8,7 +8,7 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Monitor_Group::Monitor_Group (const char* name)
+    Monitor_Group::Monitor_Group (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_GROUP)
     {}
 
@@ -23,7 +23,7 @@ namespace ACE
     {
       for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())
         {
-          Monitor_Base **member;
+          Monitor_Base **member {};
           i.next (member);
           (*member)->update ();
         }
@@ -52,7 +52,7 @@ namespace ACE
     {
       for (MEMBERS_ITERATOR i (this->members_); !i.done (); i.advance ())
         {
-          Monitor_Base **member = nullptr;
+          Monitor_Base **member {};
           i.next (member);
           (*member)->clear ();
         }

@@ -37,7 +37,7 @@ namespace ACE
     class MONITOR_CONTROL_Export Monitor_Group : public Monitor_Base
     {
     public:
-      Monitor_Group (const char* name);
+      explicit Monitor_Group (char const* name);
 
       void add_member (Monitor_Base* member);
 

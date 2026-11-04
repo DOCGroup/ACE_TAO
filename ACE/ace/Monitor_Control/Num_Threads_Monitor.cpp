@@ -17,16 +17,13 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    const char* Num_Threads_Monitor::default_name_ =
+    char const* Num_Threads_Monitor::default_name_ =
       "OS/System/NumThreads";
 
-    Num_Threads_Monitor::Num_Threads_Monitor (const char* name)
+    Num_Threads_Monitor::Num_Threads_Monitor (char const* name)
       : Monitor_Base (name, Monitor_Control_Types::MC_NUMBER)
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Monitor (ACE_TEXT ("\\System\\Threads"))
-#elif defined (ACE_LINUX)
-      , file_ptr_ (nullptr)
-      , nthreads_ (0UL)
 #endif
     {
     }
@@ -49,8 +46,8 @@ namespace ACE
           return;
         }
 
-      char const *item = nullptr;
-      char const *arg = nullptr;
+      char const *item {};
+      char const *arg {};
 
       while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != nullptr)
         {
@@ -76,7 +73,7 @@ namespace ACE
 #endif
     }
 
-    const char*
+    char const*
     Num_Threads_Monitor::default_name ()
     {
       return Num_Threads_Monitor::default_name_;
