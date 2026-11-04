@@ -41,7 +41,7 @@ public:
   // down the connection.
   int handle_destroy () override;
 
-  void dump_samples (const char* file);
+  int dump_samples (ACE_TCHAR const* file);
 
 private:
   /// Keeping a count of the incoming frames.
@@ -81,10 +81,10 @@ class Receiver
 {
 public:
   /// Constructor
-  Receiver ();
+  Receiver () = default;
 
   /// Destructor.
-  ~Receiver ();
+  ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
@@ -103,6 +103,6 @@ protected:
   TAO_AV_Endpoint_Reactive_Strategy_B
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
-  /// Receiver MMDevice.
-  TAO_MMDevice *mmdevice_;
+  /// Receiver servant reference borrowed from the POA after activation.
+  TAO_MMDevice *mmdevice_ {};
 };

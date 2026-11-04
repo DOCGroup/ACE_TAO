@@ -1,20 +1,23 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include <array>
+#include <memory>
 
-static FILE *output_file = nullptr;
+static FILE *output_file {};
 // File handle of the file into which received data is written.
 
-static const ACE_TCHAR *output_file_name = ACE_TEXT ("output");
+static ACE_TString output_file_name = ACE_TEXT ("output");
 // File name of the file into which received data is written.
 
-static const ACE_TCHAR *stats_file_name = ACE_TEXT ("Stats.dat");
+static ACE_TString stats_file_name = ACE_TEXT ("Stats.dat");
 
-int stats [1000010];
-long stats_index = 0;
+static constexpr std::size_t max_stats_samples {1000010};
+static std::array<int, max_stats_samples> stats {};
+static std::size_t stats_index {};
 
-int start = 1;
-ACE_Time_Value start_time;
+static bool start {true};
+static ACE_Time_Value start_time {};
 
 int
 Receiver_StreamEndPoint::get_callback (const char *,
@@ -47,11 +50,15 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   if (start)
     {
       start_time = ACE_OS::gettimeofday ();
-      start = 0;
+      start = false;
     }
   else
     {
       ACE_Time_Value elapsed_time = ACE_OS::gettimeofday () - start_time;
+      if (stats_index == stats.size ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Receiver statistics capacity exceeded\n"),
+                          -1);
       stats [stats_index++] = elapsed_time.msec ();
       start_time = ACE_OS::gettimeofday ();
     }
@@ -60,14 +67,13 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      size_t result =
+      std::size_t const result =
         ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
                         1,
+                        frame->length (),
                         output_file);
 
-
-      if (result == frame->length ())
+      if (result != frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
@@ -78,40 +84,32 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   return 0;
 }
 
-void
-Receiver_Callback::dump_samples (const char* file)
+int
+Receiver_Callback::dump_samples (ACE_TCHAR const* file)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Dumping Stats.....\n"));
 
-  FILE* stats_file = ACE_OS::fopen (file, "wb");
+  std::unique_ptr<FILE, int (*) (FILE *)> stats_file (
+    ACE_OS::fopen (file, "wb"), ACE_OS::fclose);
 
-  if (stats_file == nullptr)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Stats.dat cannot be opened\n"));
-    }
+  if (!stats_file)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Stats file cannot be opened\n")),
+                      -1);
 
-  int i;
-  for (i = 0; i < stats_index; i++)
-    {
-      stats_.sample ((ACE_UINT64)stats [i]);
-    }
+  for (std::size_t i = 0; i < stats_index; ++i)
+    this->stats_.sample (static_cast<ACE_UINT64> (stats [i]));
 
-  stats_.dump_results (ACE_TEXT("Inter Frame Arrival Time Statistics "),
-                       stats_file,
-                       1);
-  //  ACE_High_Res_Timer::global_scale_factor ());
+  this->stats_.dump_results (
+    ACE_TEXT ("Inter Frame Arrival Time Statistics "), stats_file.get (), 1);
 
-  for (i = 0; i < stats_index; i++)
-    {
-      ACE_OS::fprintf (stats_file, "%d\n",stats [i]);
-    }
-
-  ACE_OS::fclose (stats_file);
+  for (std::size_t i = 0; i < stats_index; ++i)
+    ACE_OS::fprintf (stats_file.get (), "%d\n", stats [i]);
 
   ACE_DEBUG ((LM_DEBUG,
               "Done\n"));
+  return 0;
 }
 
 int
@@ -121,7 +119,8 @@ Receiver_Callback::handle_destroy ()
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
 
-  dump_samples (ACE_TEXT_ALWAYS_CHAR (stats_file_name));
+  if (this->dump_samples (stats_file_name.c_str ()) != 0)
+    return -1;
 
   try
     {
@@ -134,15 +133,6 @@ Receiver_Callback::handle_destroy ()
     }
 
   return 0;
-}
-
-Receiver::Receiver ()
-  : mmdevice_ (0)
-{
-}
-
-Receiver::~Receiver ()
-{
 }
 
 int
@@ -252,12 +242,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
 
       // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file_owner (
+        ACE_OS::fopen (output_file_name.c_str (), "w"), ACE_OS::fclose);
+      output_file = output_file_owner.get ();
       if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           output_file_name),
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file %s\n"),
+                           output_file_name.c_str ()),
                           -1);
 
       else
@@ -284,8 +275,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("receiver::init");
       return -1;
     }
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }

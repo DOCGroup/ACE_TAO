@@ -6,10 +6,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
 
 $status = 0;
 $debug = 0;
+$local_address = "";
+$peer_address = "";
 
 my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $sv = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -50,6 +51,10 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
         print STDERR "\t-d: Debug Level defaults to 0";
 
+        print STDERR "\n\t-l: Optional local address in host:port format";
+
+        print STDERR "\n\t-a: Optional peer address in host:port format";
+
         print STDERR "\n";
 
         exit;
@@ -60,6 +65,14 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
     elsif ($ARGV[$i] eq "-d") {
         $debug = $ARGV[$i + 1];
+        $i++;
+    }
+    elsif ($ARGV[$i] eq "-l") {
+        $local_address = $ARGV[$i + 1];
+        $i++;
+    }
+    elsif ($ARGV[$i] eq "-a") {
+        $peer_address = $ARGV[$i + 1];
         $i++;
     }
 }
@@ -107,6 +120,14 @@ for $protocol (@protocols) {
         $protocol = "RTP/UDP";
     }
 
+    my $address_args = "";
+    if ($local_address ne "") {
+        $address_args .= "-l $local_address ";
+    }
+    if ($peer_address ne "") {
+        $address_args .= "-a $peer_address ";
+    }
+
     my $sv_outputfile = $sv->LocalFile ($outputfile);
     $ns->DeleteFile ($outputfile);
 
@@ -119,6 +140,7 @@ for $protocol (@protocols) {
                               "-ORBInitRef NameService=file://$cl_nsiorfile ".
                               "-ORBDebugLevel $debug ".
                               "-p $protocol ".
+                              $address_args.
                               "-f $cl_inputfile");
 
     print STDERR "Using ".$protocol."\n";
@@ -144,6 +166,15 @@ for $protocol (@protocols) {
     $SV_status = $SV->TerminateWaitKill ($sv->ProcessStopWaitInterval()+185);
     if ($SV_status != 0) {
         print STDERR "ERROR: server returned $SV_status\n";
+        $status = 1;
+    }
+
+    if ($sv->GetFile ($outputfile) == -1) {
+        print STDERR "ERROR: cannot retrieve output file <$sv_outputfile>\n";
+        $status = 1;
+    }
+    elsif (! -s $outputfile) {
+        print STDERR "ERROR: receiver did not write any data\n";
         $status = 1;
     }
 
