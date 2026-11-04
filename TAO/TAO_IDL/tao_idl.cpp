@@ -101,7 +101,7 @@ DRV_version ()
   ACE_DEBUG ((LM_DEBUG,
               "%C\n"
               "TAO_IDL_FE, version %s%s (Based on Sun IDL FE, version %s)\n",
-              idl_global->prog_name ().data (),
+              idl_global->prog_name ().c_str (),
               ACE_TEXT (TAO_VERSION),
               ACE_TEXT (TAO_PATCH),
               ACE_TEXT (SUN_IDL_FE_VERSION)));
@@ -188,7 +188,7 @@ DRV_drive (std::string const& s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: preprocessing %C\n"),
-                  idl_global->prog_name ().data (),
+                  idl_global->prog_name ().c_str (),
                   s.c_str ()));
     }
 
@@ -206,7 +206,7 @@ DRV_drive (std::string const& s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: parsing %C\n"),
-                  idl_global->prog_name ().data (),
+                  idl_global->prog_name ().c_str (),
                   s.c_str ()));
     }
 
@@ -236,7 +236,7 @@ DRV_drive (std::string const& s)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("%C: %C: found %d error%s\n"),
-                  idl_global->prog_name ().data (),
+                  idl_global->prog_name ().c_str (),
                   s.c_str (),
                   idl_global->err_count (),
                   (idl_global->err_count () > 1
@@ -253,7 +253,7 @@ DRV_drive (std::string const& s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: dump %C\n"),
-                  idl_global->prog_name ().data (),
+                  idl_global->prog_name ().c_str (),
                   s.c_str ()));
     }
 
@@ -276,7 +276,7 @@ DRV_drive (std::string const& s)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT("%C: BE processing on %C\n"),
-                  idl_global->prog_name ().data (),
+                  idl_global->prog_name ().c_str (),
                   s.c_str ()));
     }
 

@@ -721,7 +721,7 @@ FE_Utils::original_local_name (Identifier *local_name)
         static_cast<unsigned int> (lname.size () - 5);
 
       TAO_IDL_CPP_Keyword_Entry const *entry =
-        cpp_key_tbl.lookup (lname.data () + 5, len);
+        cpp_key_tbl.lookup (lname.c_str () + 5, len);
 
       if (entry != nullptr)
         {

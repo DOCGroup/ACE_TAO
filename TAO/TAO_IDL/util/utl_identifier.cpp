@@ -135,7 +135,7 @@ Identifier::preprocess_and_replace_string (std::string const& s)
           unsigned int len =
             static_cast<unsigned int> (keyword_length);
           TAO_IDL_CPP_Keyword_Entry const *entry =
-            cpp_key_tbl.lookup (s.data () + keyword_offset, len);
+            cpp_key_tbl.lookup (s.c_str () + keyword_offset, len);
 
           if (entry != nullptr)
             {
