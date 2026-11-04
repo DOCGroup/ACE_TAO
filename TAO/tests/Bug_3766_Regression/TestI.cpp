@@ -30,29 +30,29 @@
 #include "TestI.h"
 
 // Implementation skeleton constructor
-Test_i::Test_i (CORBA::ORB_ptr o)
+Test_i::Test_i (CORBA::ORB_ptr const orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
-  this->orb_ = CORBA::ORB::_duplicate (o);
 }
 
 void Test_i::do_something_FixedLength (
-  ::FixedLengthInfo_out my_info)
+  ::FixedLengthInfo_out info)
 {
   // Add your implementation here
-  my_info.a = 1;
-  my_info.b = 2;
-  my_info.c = 3;
+  info.a = 1;
+  info.b = 2;
+  info.c = 3;
 }
 
 void Test_i::do_something_VariableLength (
-  ::VariableLengthInfo_out my_info)
+  ::VariableLengthInfo_out info)
 {
-  // Add your implementation here
-  my_info = new ::VariableLengthInfo;
-  my_info->a = 1;
-  my_info->b = 2;
-  my_info->c = 3;
-  my_info->d = ::CORBA::string_dup("Howdy");
+  ::VariableLengthInfo_var variable_info {new ::VariableLengthInfo};
+  variable_info->a = 1;
+  variable_info->b = 2;
+  variable_info->c = 3;
+  variable_info->d = ::CORBA::string_dup ("Howdy");
+  info = variable_info._retn ();
 }
 
 void Test_i::shutdown ()
