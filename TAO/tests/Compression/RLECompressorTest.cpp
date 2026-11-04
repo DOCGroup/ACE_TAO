@@ -7,6 +7,8 @@
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/rle/RLECompressor_Factory.h"
 
+#include <cstddef>
+#include <cstring>
 #include <memory>
 
 /* This test produces the following output (RLECompressor)
@@ -187,6 +189,7 @@ struct HRTimer : ACE_High_Res_Timer
     }
 
   private:
+    // The caller passes static ACE_TEXT messages; this pointer is non-owning.
     ACE_TCHAR const *msg_;
 };
 
@@ -216,7 +219,8 @@ static int init_compressor(::CORBA::ORB_ptr orb)
     return 0;
 }
 
-static int  test256_compressor(const ::Compression::Compressor_var &compressor)
+static int
+test256_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TEST256 (Compress/Expand Data)\n")));
 
@@ -232,7 +236,7 @@ static int  test256_compressor(const ::Compression::Compressor_var &compressor)
                     ));
 
     ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(sizeof(test256_array));
-    const ::CORBA::Octet* in_buf = reinterpret_cast<const CORBA::Octet*>(test256_array);
+    ::CORBA::Octet const* in_buf = reinterpret_cast<::CORBA::Octet const*> (test256_array);
 
     ::Compression::Buffer in_data(in_len, in_len, const_cast<CORBA::Octet*>(in_buf), false);
 
@@ -259,7 +263,7 @@ static int  test256_compressor(const ::Compression::Compressor_var &compressor)
     }
 
     // Make sure we got back the original OK.
-    if (ACE_OS::memcmp( in_data.get_buffer(), decomp_out.get_buffer(), in_data.length()))
+    if (std::memcmp (in_data.get_buffer (), decomp_out.get_buffer (), in_data.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test256) correctly.\n")),-1);
@@ -268,7 +272,8 @@ static int  test256_compressor(const ::Compression::Compressor_var &compressor)
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TEST256 - OK!\n")), 0);
 }
 
-static int  testArray_compressor(const ::Compression::Compressor_var &compressor)
+static int
+testArray_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TESTArray (Compress/Expand on Progressive Boundaries)\n")));
 
@@ -305,7 +310,7 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
 
     ACE_HEX_DUMP((LM_INFO, comp_data, (sizeof(comp_data) - 1), ACE_TEXT("Compression Data")));
 
-    for (size_t i = 0; i < sizeof(comp_data); i++) {
+    for (std::size_t i = 0; i < sizeof(comp_data); i++) {
         COMP_RESULT const &result = comp_result[i]; // Get a reference to our result for testing output
 
         Compression::Buffer in_data (
@@ -325,11 +330,11 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
 
         // Now Make sure all is good and we can also expand back to what we had
         if (out_len == result.len) {    // Expected result length?
-            if (ACE_OS::memcmp(out_ptr, result.hex, out_len) == 0) { // Make sure its what we expected
+            if (std::memcmp (out_ptr, result.hex, out_len) == 0) { // Make sure its what we expected
                 Compression::Buffer out_buf(i);     // Set maximum out space (exactly -> Ignored by TAO)
                 compressor->decompress(out_data, out_buf);
                 if (out_buf.length() == i) {        // Make sure we got our length back
-                    if (ACE_OS::memcmp(comp_data, out_buf.get_buffer(), i) == 0) {
+                    if (std::memcmp (comp_data, out_buf.get_buffer (), i) == 0) {
                         continue; // It is what we expected.
                     }
                 }
@@ -342,7 +347,8 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TESTArray - OK!\n")), 0);
 }
 
-static int  test128_compressor(const ::Compression::Compressor_var &compressor)
+static int
+test128_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TEST128 (Compress Boundary)\n")));
 
@@ -353,7 +359,7 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
 
     std::unique_ptr<ACE_Byte[]> buff_128 = std::make_unique<ACE_Byte[]> (BUFF_128_SIZE);
 
-    ACE_OS::memset(buff_128.get(), 0, BUFF_128_SIZE);  // Set Buffer to zero.
+    std::memset (buff_128.get (), 0, BUFF_128_SIZE);
 
     ACE_HEX_DUMP((  LM_INFO,
                     reinterpret_cast<const char*>(buff_128.get()),
@@ -382,7 +388,7 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
                     ));
 
     if (comp_out.length() != sizeof(comp_128_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_128_out, comp_out.length()))
+        || std::memcmp (comp_out.get_buffer (), comp_128_out, comp_out.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test128) correctly.\n")),-1);
@@ -396,7 +402,7 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
     }
 
     // Make sure we got back the original OK.
-    if (ACE_OS::memcmp( in_data.get_buffer(), decomp_out.get_buffer(), in_data.length()))
+    if (std::memcmp (in_data.get_buffer (), decomp_out.get_buffer (), in_data.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test128) correctly.\n")),-1);
@@ -405,7 +411,8 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TEST128 - OK!\n")), 0);
 }
 
-static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
+static int
+test129A_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TEST129A (Compress Boundary Extended)\n")));
 
@@ -416,7 +423,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
 
     std::unique_ptr<ACE_Byte[]> const buff_129 = std::make_unique<ACE_Byte[]> (BUFF_129_SIZE);
 
-    ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
+    std::memset (buff_129.get (), 0, BUFF_129_SIZE);
 
     ACE_HEX_DUMP((  LM_INFO,
                     reinterpret_cast<const char*>(buff_129.get()),
@@ -445,7 +452,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
                 ));
 
     if (comp_out.length() != sizeof(comp_129A_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_129A_out, comp_out.length()))
+        || std::memcmp (comp_out.get_buffer (), comp_129A_out, comp_out.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129A) correctly.\n")),-1);
@@ -459,7 +466,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
     }
 
     // Make sure we got back the original OK.
-    if (ACE_OS::memcmp( in_data.get_buffer(), decomp_out.get_buffer(), in_data.length()))
+    if (std::memcmp (in_data.get_buffer (), decomp_out.get_buffer (), in_data.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129A) correctly.\n")),-1);
@@ -468,7 +475,8 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TEST129A - OK!\n")), 0);
 }
 
-static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
+static int
+test129B_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TEST129B (Compress Boundary NonExtend)\n")));
 
@@ -479,7 +487,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
 
     std::unique_ptr<ACE_Byte[]> const buff_129 = std::make_unique<ACE_Byte[]> (BUFF_129_SIZE);
 
-    ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
+    std::memset (buff_129.get (), 0, BUFF_129_SIZE);
 
     buff_129.get()[128] = comp_129B_char; // Add a non Repeat Character
 
@@ -510,7 +518,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
                 ));
 
     if (comp_out.length() != sizeof(comp_129B_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_129B_out, comp_out.length()))
+        || std::memcmp (comp_out.get_buffer (), comp_129B_out, comp_out.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129B) correctly.\n")),-1);
@@ -524,7 +532,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
     }
 
     // Make sure we got back the original OK.
-    if (ACE_OS::memcmp( in_data.get_buffer(), decomp_out.get_buffer(), in_data.length()))
+    if (std::memcmp (in_data.get_buffer (), decomp_out.get_buffer (), in_data.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129B) correctly.\n")),-1);
@@ -581,7 +589,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG((LM_INFO, ACE_TEXT("TAO::RLECompression Ratio = %f : 1\n"), tao_ratio));
 
         orb->shutdown ();
-    } catch (const CORBA::Exception& ex) {
+    } catch (CORBA::Exception const& ex) {
         ex._tao_print_exception ("RLECompressorTest: UNEXPECTED exception - ");
         return -1;
     }

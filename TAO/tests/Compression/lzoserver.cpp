@@ -1,11 +1,10 @@
-#include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
+#include "ace/Log_Msg.h"
 #include "tao/ORB.h"
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/lzo/LzoCompressor_Factory.h"
 
 bool
-test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
+test_invalid_compression_factory (Compression::CompressionManager_ptr const cm)
 {
   bool succeed {};
   try
@@ -14,19 +13,18 @@ test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
       Compression::CompressorFactory_var factory =
         cm->get_factory (100);
     }
-  catch (const Compression::UnknownCompressorId& ex)
+  catch (Compression::UnknownCompressorId const&)
     {
-      ACE_UNUSED_ARG (ex);
       succeed = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
   if (!succeed)
   {
     ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, get invalid compression factory failed\n"));
+                ACE_TEXT ("(%t) ERROR, get invalid compression factory failed\n")));
   }
 
   return succeed;
@@ -35,8 +33,8 @@ test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
 
 bool
 test_duplicate_compression_factory (
-  Compression::CompressionManager_ptr cm,
-  Compression::CompressorFactory_ptr cf)
+  Compression::CompressionManager_ptr const cm,
+  Compression::CompressorFactory_ptr const cf)
 {
   bool succeed {};
   try
@@ -44,18 +42,18 @@ test_duplicate_compression_factory (
       // Register duplicate
       cm->register_factory (cf);
     }
-  catch (const Compression::FactoryAlreadyRegistered&)
+  catch (Compression::FactoryAlreadyRegistered const&)
     {
       succeed = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
   if (!succeed)
   {
     ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, register duplicate factory failed\n"));
+                ACE_TEXT ("(%t) ERROR, register duplicate factory failed\n")));
   }
 
   return succeed;
@@ -63,37 +61,37 @@ test_duplicate_compression_factory (
 
 bool
 test_register_nil_compression_factory (
-  Compression::CompressionManager_ptr cm)
+  Compression::CompressionManager_ptr const cm)
 {
   bool succeed {};
   try
     {
       // Register nil factory
-      cm->register_factory (Compression::CompressorFactory::_nil());
+      cm->register_factory (Compression::CompressorFactory::_nil ());
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (CORBA::BAD_PARAM const& ex)
     {
-      if ((ex.minor() & 0xFFFU) == 44)
+      if ((ex.minor () & 0xFFFU) == 44)
         {
           succeed = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
   if (!succeed)
   {
     ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, register nill factory failed\n"));
+                ACE_TEXT ("(%t) ERROR, register nill factory failed\n")));
   }
 
   return succeed;
 }
 
 bool
-test_compression (CORBA::ULong nelements,
-              Compression::CompressionManager_ptr cm)
+test_compression (CORBA::ULong const nelements,
+                  Compression::CompressionManager_ptr const cm)
 {
   bool succeed {};
 
@@ -104,11 +102,11 @@ test_compression (CORBA::ULong nelements,
       mytest[j] = 'a';
     }
 
-  Compression::Compressor_var compressor = cm->get_compressor (
+  Compression::Compressor_var const compressor = cm->get_compressor (
     ::Compression::COMPRESSORID_LZO, 6);
 
   CORBA::OctetSeq myout;
-  myout.length ((CORBA::ULong)(mytest.length() * 1.1));
+  myout.length (static_cast<CORBA::ULong> (mytest.length () * 1.1));
 
   compressor->compress (mytest, myout);
 
@@ -119,40 +117,41 @@ test_compression (CORBA::ULong nelements,
 
   if (decompress != mytest)
     {
-      ACE_ERROR ((LM_ERROR, "Error, decompress not working\n"));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error, decompress not working\n")));
     }
   else
     {
       succeed = true;
-      ACE_DEBUG ((LM_DEBUG, "Compression worked with lzo, original "
-                            "size %d, compressed size %d\n",
-                            mytest.length(), myout.length ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Compression worked with lzo, original "
+                                      "size %d, compressed size %d\n"),
+                  mytest.length (), myout.length ()));
     }
   return succeed;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int retval {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var compression_manager =
-        orb->resolve_initial_references("CompressionManager");
+      CORBA::Object_var const compression_manager =
+        orb->resolve_initial_references ("CompressionManager");
 
-      Compression::CompressionManager_var manager =
+      Compression::CompressionManager_var const manager =
         Compression::CompressionManager::_narrow (compression_manager.in ());
 
-      if (CORBA::is_nil(manager.in ()))
+      if (CORBA::is_nil (manager.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil compression manager\n"),
+                           ACE_TEXT (" (%P|%t) Panic: nil compression manager\n")),
                           1);
 
-      Compression::CompressorFactory_var compr_fact = new TAO::Lzo_CompressorFactory ();
-      manager->register_factory(compr_fact.in ());
+      Compression::CompressorFactory_var const compr_fact =
+        new TAO::Lzo_CompressorFactory ();
+      manager->register_factory (compr_fact.in ());
 
       if (!test_duplicate_compression_factory (manager.in (), compr_fact.in ()))
         retval = 1;
@@ -171,7 +170,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       retval = 1;
