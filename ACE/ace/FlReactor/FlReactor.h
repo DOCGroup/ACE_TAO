@@ -46,45 +46,50 @@ class ACE_FlReactor_Export ACE_FlReactor : public ACE_Select_Reactor
 public:
   ACE_FlReactor (size_t size = DEFAULT_SIZE,
                  bool restart = false,
-                 ACE_Sig_Handler * = 0);
-  virtual ~ACE_FlReactor ();
+                 ACE_Sig_Handler * = nullptr);
+  ~ACE_FlReactor () override;
+
+  ACE_FlReactor (ACE_FlReactor const &) = delete;
+  ACE_FlReactor (ACE_FlReactor &&) = delete;
+  ACE_FlReactor &operator = (ACE_FlReactor const &) = delete;
+  ACE_FlReactor &operator = (ACE_FlReactor &&) = delete;
 
   // = Timer operations.
-  virtual long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval);
-  virtual int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval);
-  virtual int cancel_timer (ACE_Event_Handler *handler,
-                            int dont_call_handle_close = 1);
-  virtual int cancel_timer (long timer_id,
-                            const void **arg = 0,
-                            int dont_call_handle_close = 1);
+  long schedule_timer (ACE_Event_Handler *event_handler,
+                       void const *arg,
+                       ACE_Time_Value const &delay,
+                       ACE_Time_Value const &interval) override;
+  int reset_timer_interval (long timer_id,
+                            ACE_Time_Value const &interval) override;
+  int cancel_timer (ACE_Event_Handler *handler,
+                    int dont_call_handle_close = 1) override;
+  int cancel_timer (long timer_id,
+                    void const **arg = nullptr,
+                    int dont_call_handle_close = 1) override;
 
 protected:
   // = Register timers/handles with Fl.
   /// Register a single @a handler.
-  virtual int register_handler_i (ACE_HANDLE handle,
-                                  ACE_Event_Handler *handler,
-                                  ACE_Reactor_Mask mask);
+  int register_handler_i (ACE_HANDLE handle,
+                          ACE_Event_Handler *handler,
+                          ACE_Reactor_Mask mask) override;
 
   /// Register a set of <handlers>.
-  virtual int register_handler_i (const ACE_Handle_Set &handles,
-                                  ACE_Event_Handler *handler,
-                                  ACE_Reactor_Mask mask);
+  int register_handler_i (ACE_Handle_Set const &handles,
+                          ACE_Event_Handler *handler,
+                          ACE_Reactor_Mask mask) override;
 
   /// Remove the <handler> associated with this @a handle.
-  virtual int remove_handler_i (ACE_HANDLE handle,
-                                ACE_Reactor_Mask mask);
+  int remove_handler_i (ACE_HANDLE handle,
+                        ACE_Reactor_Mask mask) override;
 
   /// Remove a set of <handles>.
-  virtual int remove_handler_i (const ACE_Handle_Set &handles,
-                                ACE_Reactor_Mask);
+  int remove_handler_i (ACE_Handle_Set const &handles,
+                        ACE_Reactor_Mask) override;
 
   /// Wait for events to occur.
-  virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
-                                        ACE_Time_Value *);
+  int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
+                                ACE_Time_Value *) override;
 
 private:
   /// This method ensures there's an Fl timeout for the first timeout
@@ -94,10 +99,6 @@ private:
   // = Integrate with the FL callback function mechanism.
   static void fl_io_proc (int fd, void*);
   static void fl_timeout_proc (void*);
-
-  /// Deny access since member-wise won't work...
-  ACE_FlReactor (const ACE_FlReactor &);
-  ACE_FlReactor &operator = (const ACE_FlReactor &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

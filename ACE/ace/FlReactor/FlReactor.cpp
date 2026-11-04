@@ -53,7 +53,7 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
       // Check to make sure our handle's are all usable.
       ACE_Select_Reactor_Handle_Set temp_set = handle_set;
 
-      ACE_Time_Value zero = ACE_Time_Value::zero;
+      ACE_Time_Value const zero (ACE_Time_Value::zero);
       if (ACE_OS::select (width,
                           temp_set.rd_mask_,
                           temp_set.wr_mask_,
@@ -65,8 +65,8 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
       // to wait for one or more events...
 
       // Wait for something to happen.
-      double t = 0;
-      if (max_wait_time != 0)
+      double t {};
+      if (max_wait_time != nullptr)
         t = max_wait_time->sec () + max_wait_time->usec () / 1000000.0F;
 
       while (t > 0) {
@@ -78,7 +78,6 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
 
       // Now actually read the result needed by the <Select_Reactor>
       // using <select>.
-      zero = ACE_Time_Value::zero;
       nfound = ACE_OS::select (width,
                                handle_set.rd_mask_,
                                handle_set.wr_mask_,
@@ -100,11 +99,10 @@ ACE_FlReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
 void
 ACE_FlReactor::fl_io_proc (int fd, void* reactor)
 {
-  ACE_FlReactor *self = static_cast<ACE_FlReactor *> (reactor);
-  ACE_HANDLE handle = (ACE_HANDLE)fd; //reinterpret_cast<ACE_HANDLE> (fd);
+  ACE_FlReactor *const self = static_cast<ACE_FlReactor *> (reactor);
+  ACE_HANDLE const handle = static_cast<ACE_HANDLE> (fd);
 
-  // my copy isn't const.
-  ACE_Time_Value zero = ACE_Time_Value::zero;
+  ACE_Time_Value const zero (ACE_Time_Value::zero);
 
   ACE_Select_Reactor_Handle_Set wait_set;
 
@@ -118,10 +116,10 @@ ACE_FlReactor::fl_io_proc (int fd, void* reactor)
   if (self->wait_set_.ex_mask_.is_set (handle))
     wait_set.ex_mask_.set_bit (handle);
 
-  int result = ACE_OS::select (fd + 1,
-                               wait_set.rd_mask_,
-                               wait_set.wr_mask_,
-                               wait_set.ex_mask_, &zero);
+  int const result = ACE_OS::select (fd + 1,
+                                     wait_set.rd_mask_,
+                                     wait_set.wr_mask_,
+                                     wait_set.ex_mask_, &zero);
 
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
@@ -142,7 +140,7 @@ ACE_FlReactor::fl_io_proc (int fd, void* reactor)
 void
 ACE_FlReactor::fl_timeout_proc (void* reactor)
 {
-  ACE_FlReactor *self = static_cast<ACE_FlReactor *> (reactor);
+  ACE_FlReactor *const self = static_cast<ACE_FlReactor *> (reactor);
 
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
@@ -158,12 +156,12 @@ ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_FlReactor::register_handler_i");
 
-  int result = ACE_Select_Reactor::register_handler_i (handle,
-                                                       handler, mask);
+  int const result = ACE_Select_Reactor::register_handler_i (handle,
+                                                             handler, mask);
   if (result == -1)
     return -1;
 
-  int condition = 0;
+  int condition {};
 
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (condition, FL_READ);
@@ -181,7 +179,7 @@ ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
 
   if (condition != 0)
     {
-      Fl::add_fd ((int)handle, // reinterpret_cast<int> (handle),
+      Fl::add_fd (static_cast<int> (handle),
                   ACE_FlReactor::fl_io_proc,
                   this);
     }
@@ -189,7 +187,7 @@ ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
 }
 
 int
-ACE_FlReactor::register_handler_i (const ACE_Handle_Set &handles,
+ACE_FlReactor::register_handler_i (ACE_Handle_Set const &handles,
                                    ACE_Event_Handler *handler,
                                    ACE_Reactor_Mask mask)
 {
@@ -209,7 +207,7 @@ ACE_FlReactor::remove_handler_i (ACE_HANDLE handle,
   // in reverse order.
 
   // First clean up the corresponding X11Input.
-  Fl::remove_fd ((int)handle); // reinterpret_cast<int> (handle);
+  Fl::remove_fd (static_cast<int> (handle));
 
   // Now let the reactor do its work.
   return ACE_Select_Reactor::remove_handler_i (handle,
@@ -217,7 +215,7 @@ ACE_FlReactor::remove_handler_i (ACE_HANDLE handle,
 }
 
 int
-ACE_FlReactor::remove_handler_i (const ACE_Handle_Set &handles,
+ACE_FlReactor::remove_handler_i (ACE_Handle_Set const &handles,
                                  ACE_Reactor_Mask mask)
 {
   return ACE_Select_Reactor::remove_handler_i (handles,
@@ -230,12 +228,12 @@ ACE_FlReactor::remove_handler_i (const ACE_Handle_Set &handles,
 void
 ACE_FlReactor::reset_timeout ()
 {
-  ACE_Time_Value *max_wait_time =
+  ACE_Time_Value const *max_wait_time =
     this->timer_queue_->calculate_timeout (0);
 
-  if (max_wait_time != 0)
+  if (max_wait_time != nullptr)
     {
-      float t = max_wait_time->sec ()
+      float const t = max_wait_time->sec ()
         + max_wait_time->usec () / 1000000.0F;
       Fl::add_timeout (t,
                        ACE_FlReactor::fl_timeout_proc,
@@ -246,7 +244,7 @@ ACE_FlReactor::reset_timeout ()
 int
 ACE_FlReactor::reset_timer_interval
   (long timer_id,
-   const ACE_Time_Value &interval)
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_FlReactor::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
@@ -266,9 +264,9 @@ ACE_FlReactor::reset_timer_interval
 
 long
 ACE_FlReactor::schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval)
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_FlReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
@@ -304,7 +302,7 @@ ACE_FlReactor::cancel_timer (ACE_Event_Handler *handler,
 
 int
 ACE_FlReactor::cancel_timer (long timer_id,
-                             const void **arg,
+                             void const **arg,
                              int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_FlReactor::cancel_timer");
