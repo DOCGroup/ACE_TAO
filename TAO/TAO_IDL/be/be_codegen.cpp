@@ -2614,13 +2614,12 @@ TAO_CodeGen::gen_stub_src_includes ()
         }
     }
 
-  // strcmp() is used with interfaces and exceptions.
+  // std::strcmp() is used by generated _is_a() implementations.
   if (idl_global->interface_seen_
       || idl_global->exception_seen_
       || idl_global->union_seen_)
     {
-      // Needed for _narrow(), which is now template-based.
-      this->gen_standard_include (this->client_stubs_, "ace/OS_NS_string.h");
+      this->gen_system_include (this->client_stubs_, "cstring");
     }
 }
 
@@ -2729,7 +2728,6 @@ TAO_CodeGen::gen_skel_src_includes ()
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_, "ace/Malloc_Allocator.h");
 
-  this->gen_standard_include (this->server_skeletons_, "ace/OS_NS_string.h");
 }
 
 void
