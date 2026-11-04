@@ -4,17 +4,11 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
-ACE_TCHAR const *ior =
-  ACE_TEXT("corbaloc:iiop:192.3.47/10007/RandomObject");
-
-ACE_Profile_Timer profile_timer;
-constexpr TimeBase::TimeT timeout_period = 1000000;
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -37,26 +31,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-test_timeout (CORBA::Object_ptr object)
+test_timeout (CORBA::Object_ptr object, ACE_TString const &ior)
 {
+  ACE_Profile_Timer profile_timer;
+
   // Start the timer
   profile_timer.start ();
 
   try
     {
       // First connection happens here..
-      Test::Hello_var hello =
+      Test::Hello_var const hello =
         Test::Hello::_narrow (object);
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
-      CORBA::String_var the_string =
+      CORBA::String_var const the_string =
         hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
@@ -96,25 +92,27 @@ test_timeout (CORBA::Object_ptr object)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int retval = 1;
+  int retval {1};
 
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      ACE_TString ior (ACE_TEXT("corbaloc:iiop:192.3.47/10007/RandomObject"));
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (ior.c_str ());
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
+      constexpr TimeBase::TimeT timeout_period = 1000000;
       CORBA::Any timeout_as_any;
       timeout_as_any <<= timeout_period;
 
@@ -134,7 +132,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           policy_list[l]->destroy ();
         }
 
-      retval = test_timeout (tmp.in ());
+      retval = test_timeout (tmp.in (), ior);
 
       orb->destroy ();
     }
