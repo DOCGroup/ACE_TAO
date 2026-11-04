@@ -10,17 +10,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Properties::TAO_Notify_Properties ()
-  : factory_ (nullptr)
-  , builder_ (nullptr)
-  , orb_ (nullptr)
-  , dispatching_orb_ (nullptr)
-  , asynch_updates_ (false)
-  , allow_reconnect_ (false)
-  , validate_client_ (false)
-  , separate_dispatching_orb_ (false)
-  , updates_ (true)
-  , defaultConsumerAdminFilterOp_ (CosNotifyChannelAdmin::OR_OP)
-  , defaultSupplierAdminFilterOp_ (CosNotifyChannelAdmin::OR_OP)
 {
   // In case no conf. file is specified, the EC will default to reactive concurrency.
   NotifyExt::ThreadPoolParams tp_params =
