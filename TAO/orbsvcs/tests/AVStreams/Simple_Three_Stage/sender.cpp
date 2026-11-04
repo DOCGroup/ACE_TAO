@@ -8,7 +8,7 @@
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
-typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
+using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 int
 Sender_StreamEndPoint::get_callback (const char *,
@@ -51,14 +51,14 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 }
 
 Sender::Sender ()
-  : sender_mmdevice_ (0),
-    streamctrl_ (0),
+  : sender_mmdevice_ (nullptr),
+    streamctrl_ (nullptr),
     frame_count_ (0),
-    filename_ ("input"),
-    input_file_ (0),
+    filename_ (ACE_TEXT ("input")),
+    input_file_ (nullptr, ACE_OS::fclose),
     frame_rate_ (10.0),
     mb_ (BUFSIZ),
-    protocol_object_ (0)
+    protocol_object_ (nullptr)
 {
 }
 
@@ -91,7 +91,7 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->filename_ = opts.opt_arg ();
           break;
         case 'r':
           this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
@@ -132,13 +132,12 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+  this->input_file_.reset (
+    ACE_OS::fopen (this->filename_.c_str (), "r"));
 
-  if (this->input_file_ == 0)
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open input file %C\n",
+                       ACE_TEXT ("Cannot open input file %s\n"),
                        this->filename_.c_str ()),
                       -1);
   else
@@ -192,7 +191,7 @@ Sender::pace_data ()
       ACE_High_Res_Timer elapsed_timer;
 
       // If we have a receiver, send to it.
-      while (this->protocol_object_ == 0)
+      while (this->protocol_object_ == nullptr)
         {
           // Run the orb for the wait time so the sender can
           // continue other orb requests.
@@ -207,9 +206,9 @@ Sender::pace_data ()
           size_t n = ACE_OS::fread (this->mb_.wr_ptr (),
                                     1,
                                     this->mb_.size (),
-                                    this->input_file_);
+                                    this->input_file_.get ());
 
-          if (n == 0 && ferror (this->input_file_))
+          if (n == 0 && std::ferror (this->input_file_.get ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Sender::pace_data fread failed\n"),
                               -1);
@@ -283,7 +282,7 @@ Sender::pace_data ()
         } // end while
 
       // If a stream was setup, destroy it.
-      if (this->streamctrl_)
+      if (this->streamctrl_.in () != nullptr)
         {
           // File reading is complete, destroy the stream.
           AVStreams::flowSpec stop_spec;

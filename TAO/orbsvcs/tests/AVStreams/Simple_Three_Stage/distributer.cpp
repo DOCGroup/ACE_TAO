@@ -6,7 +6,7 @@
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
 
-typedef ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
+using DISTRIBUTER = ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>;
 
 int
 Distributer_Sender_StreamEndPoint::get_callback (const char *,
@@ -82,7 +82,7 @@ Distributer_Receiver_Callback::handle_destroy ()
       DISTRIBUTER::instance ()->receiver_streamctrl ()->destroy (stop_spec);
 
       // We can close down now.
-      DISTRIBUTER::instance ()->done (1);
+      DISTRIBUTER::instance ()->done (true);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -110,16 +110,12 @@ Distributer::sender_protocol_object ()
 }
 
 Distributer::Distributer ()
-  : distributer_receiver_mmdevice_ (0),
-    distributer_sender_mmdevice_ (0),
-    sender_protocol_object_ (0),
-    receiver_streamctrl_ (0),
+  : distributer_receiver_mmdevice_ (nullptr),
+    distributer_sender_mmdevice_ (nullptr),
+    sender_protocol_object_ (nullptr),
+    receiver_streamctrl_ (nullptr),
     protocol_ ("UDP"),
-    done_ (0)
-{
-}
-
-Distributer::~Distributer ()
+    done_ (false)
 {
 }
 
@@ -235,7 +231,7 @@ Distributer::init (int /*argc*/,
                                            this->protocol_.c_str (),
                                            0);
 
-  TAO_StreamCtrl* sender_streamctrl = 0;
+  TAO_StreamCtrl* sender_streamctrl = nullptr;
   // Video stream controller for the stream between sender and distributer
 
   ACE_NEW_RETURN (sender_streamctrl,
@@ -268,14 +264,14 @@ Distributer::receiver_streamctrl ()
   return this->receiver_streamctrl_;
 }
 
-int
+bool
 Distributer::done () const
 {
   return this->done_;
 }
 
 void
-Distributer::done (int done)
+Distributer::done (bool done)
 {
   this->done_ = done;
 }
@@ -334,5 +330,6 @@ ACE_TMAIN (int argc,
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>::singleton_;
+template ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> *
+ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
