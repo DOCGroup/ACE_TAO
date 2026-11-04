@@ -34,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       ACE_TString ior (ACE_TEXT ("server.ior"));
@@ -42,7 +42,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       bool done {};
-      test_var holder;
+      test_var holder {};
       for (int i = 0; !done; ++i)
         {
           ACE_TCHAR number[64] {};
