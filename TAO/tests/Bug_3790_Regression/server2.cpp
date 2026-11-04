@@ -6,24 +6,26 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-ACE_TCHAR const *testIOR = ACE_TEXT ("corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY");
-ACE_TCHAR const *anotherIOR = ACE_TEXT ("file://test.ior");
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &test_ior,
+            std::basic_string<ACE_TCHAR> &another_ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:a:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:a:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'a':
-        testIOR = get_opts.opt_arg ();
+        test_ior = get_opts.opt_arg ();
         break;
 
       case 'k':
-        anotherIOR = get_opts.opt_arg ();
+        another_ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -46,7 +48,8 @@ class Task
     public virtual CORBA::LocalObject
 {
 public:
-  explicit Task (CORBA::ORB_ptr orb);
+  explicit Task (CORBA::ORB_ptr const orb,
+                 std::basic_string<ACE_TCHAR> const &another_ior);
   Task (Task const &) = delete;
   Task (Task &&) = delete;
   Task &operator= (Task const &) = delete;
@@ -55,42 +58,48 @@ public:
   char *locate (char const *) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
+  std::basic_string<ACE_TCHAR> another_ior_;
 };
 
 char *
 Task::locate (char const *)
 {
-  CORBA::Object_var fwdObj = orb_->string_to_object (anotherIOR);
-  CORBA::String_var fwdString = orb_->object_to_string (fwdObj.in ());
+  CORBA::Object_var const forward_object =
+    orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (this->another_ior_.c_str ()));
+  CORBA::String_var forward_string = orb_->object_to_string (forward_object.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "IN LOCATOR!  Forwarding client to: %C\n",
-              fwdString.in ()));
+              forward_string.in ()));
 
-  return fwdString._retn ();
+  return forward_string._retn ();
 }
 
-Task::Task (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
+Task::Task (CORBA::ORB_ptr const orb,
+            std::basic_string<ACE_TCHAR> const &another_ior)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    another_ior_ (another_ior)
 {
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "MY_TEST_ORB");
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv, "MY_TEST_ORB")};
 
-      if (parse_args (argc, argv) != 0)
+      std::basic_string<ACE_TCHAR> test_ior {
+        ACE_TEXT ("corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY")};
+      std::basic_string<ACE_TCHAR> another_ior {ACE_TEXT ("file://test.ior")};
+      if (parse_args (argc, argv, test_ior, another_ior) != 0)
         return 1;
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -101,25 +110,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Run ORB Event loop.
       poa_manager->activate ();
 
       // Create task.
-      Task *task = nullptr;
+      // Transfer the task pointer to the reference-counted locator owner below.
+      Task *task {};
       ACE_NEW_RETURN (task,
-                      Task (orb.in ()),
+                      Task (orb.in (), another_ior),
                       1);
-      IORTable::Locator_var owner_transfer (task);
+      IORTable::Locator_var const owner_transfer (task);
 
       // Resolve the IORTable and set the locator
-      CORBA::Object_var iorTableObj =
+      CORBA::Object_var const ior_table_object =
         orb->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var local_ior_table =
-        IORTable::Table::_narrow (iorTableObj.in ());
+      IORTable::Table_var const local_ior_table =
+        IORTable::Table::_narrow (ior_table_object.in ());
 
       local_ior_table->set_locator (task);
 
@@ -129,12 +139,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "OK, now try to resolve a co-located "
                       "IORTable entry...\n"));
 
-          CORBA::Object_var clientObj = orb->string_to_object (testIOR);
+          CORBA::Object_var const client_object =
+            orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (test_ior.c_str ()));
 
-          simple::SimpleTest_T_var simpleTestClient =
-            simple::SimpleTest_T::_narrow (clientObj.in ());
+          simple::SimpleTest_T_var const simple_test_client =
+            simple::SimpleTest_T::_narrow (client_object.in ());
 
-          if (CORBA::is_nil (simpleTestClient.in ()))
+          if (CORBA::is_nil (simple_test_client.in ()))
             {
               ACE_ERROR ((LM_ERROR,
                           "Simpe client is nil!\n"));
@@ -144,7 +155,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "We narrowed the object, now let's invoke it!\n"));
 
-          simpleTestClient->shutdown ();
+          simple_test_client->shutdown ();
         }
       catch (CORBA::OBJ_ADAPTER const &objAdapter)
         {
