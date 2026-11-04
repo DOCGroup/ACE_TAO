@@ -5,10 +5,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
-
-ACE_TCHAR const *ior = ACE_TEXT ("file://middle.ior");
-bool verbose = true;
-long timeout = 2;
+#include <string>
 
 void
 usage (ACE_TCHAR const *cmd,
@@ -25,14 +22,18 @@ usage (ACE_TCHAR const *cmd,
 }
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior,
+            bool &verbose,
+            long &timeout)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("vk:t:"));
-  int c {};
+  int option {};
   ACE_TCHAR const *stimeout {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'v':
         verbose = true;
@@ -71,39 +72,42 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://middle.ior")};
+  bool verbose {true};
+  long timeout {2};
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, verbose, timeout) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var tmp = orb->string_to_object (ior.c_str ());
 
       // one second in TimeT units
       TimeBase::TimeT const second = 10 * TimeBase::TimeT (1000000);
 
-      CORBA::Any timeout_as_any;
-      timeout_as_any <<= TimeBase::TimeT(timeout * second);
+      CORBA::Any timeout_as_any {};
+      timeout_as_any <<= TimeBase::TimeT (timeout * second);
 
       TAO::Utils::PolicyList_Destroyer plist (1);
       plist.length (1);
       plist[0] =
-          orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                              timeout_as_any);
+        orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                            timeout_as_any);
 
-      tmp = tmp->_set_policy_overrides(plist, CORBA::SET_OVERRIDE);
+      tmp = tmp->_set_policy_overrides (plist, CORBA::SET_OVERRIDE);
 
-      Bug_3647_Regression::Middle_var middle =
-          Bug_3647_Regression::Middle::_narrow(tmp.in ());
+      Bug_3647_Regression::Middle_var const middle =
+        Bug_3647_Regression::Middle::_narrow (tmp.in ());
 
       if (CORBA::is_nil (middle.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                   "client(%P|%t) - nil "
                   "Bug_3647_Regression::Middle reference <%s>\n",
-                  ior),
-              1);
+                  ior.c_str ()),
+                            1);
         }
 
       // Startup the tests ...
@@ -115,13 +119,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int const interval = iterations / 20;
       ACE_DEBUG ((LM_DEBUG, "client(%P|%t) - running pings"));
       for (int i = 0; i != iterations; ++i)
-      {
-        middle->ping ();
-        if (i % interval == 0 && i > 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "."));
+          middle->ping ();
+          if (i % interval == 0 && i > 0)
+            ACE_DEBUG ((LM_DEBUG, "."));
         }
-      }
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       middle->shutdown ();

@@ -8,16 +8,12 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-bool verbose = false;
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("middle.ior");
-ACE_TCHAR const *ior = ACE_TEXT ("file://backend.ior");
-Messaging::SyncScope scope = Messaging::SYNC_NONE;
-long timeout = 2;
+#include <memory>
+#include <string>
 
 void
-usage(ACE_TCHAR const *cmd,
-      ACE_TCHAR const *msg)
+usage (ACE_TCHAR const *cmd,
+       ACE_TCHAR const *msg)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT("Usage:  %s ")
@@ -32,15 +28,21 @@ usage(ACE_TCHAR const *cmd,
 }
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior_output_file,
+            std::basic_string<ACE_TCHAR> &ior,
+            bool &verbose,
+            Messaging::SyncScope &scope,
+            long &timeout)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vo:k:s:t:"));
-  int c {};
-  ACE_TCHAR const *sname = ACE_TEXT("NONE");
-  ACE_TCHAR const *stimeout = nullptr;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("vo:k:s:t:"));
+  int option {};
+  ACE_TCHAR const *sname {ACE_TEXT ("NONE")};
+  ACE_TCHAR const *stimeout {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'v':
         verbose = true;
@@ -59,40 +61,41 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 't':
-        stimeout = get_opts.opt_arg();
+        stimeout = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
-        usage(argv[0], ACE_TEXT("unknown argument"));
+        usage (argv[0], ACE_TEXT ("unknown argument"));
         return -1;
       }
 
-  if (ACE_OS::strcmp(sname, ACE_TEXT("NONE")) == 0) {
+  if (ACE_OS::strcmp (sname, ACE_TEXT ("NONE")) == 0)
     scope = Messaging::SYNC_NONE;
-  } else if (ACE_OS::strcmp(sname, ACE_TEXT("TRANSPORT")) == 0) {
+  else if (ACE_OS::strcmp (sname, ACE_TEXT ("TRANSPORT")) == 0)
     scope = Messaging::SYNC_WITH_TRANSPORT;
-  } else if (ACE_OS::strcmp(sname, ACE_TEXT("SERVER")) == 0) {
+  else if (ACE_OS::strcmp (sname, ACE_TEXT ("SERVER")) == 0)
     scope = Messaging::SYNC_WITH_SERVER;
-  } else if (ACE_OS::strcmp(sname, ACE_TEXT("TARGET")) == 0) {
+  else if (ACE_OS::strcmp (sname, ACE_TEXT ("TARGET")) == 0)
     scope = Messaging::SYNC_WITH_TARGET;
-  } else if (ACE_OS::strcmp(sname, ACE_TEXT("DELAYED")) == 0) {
+  else if (ACE_OS::strcmp (sname, ACE_TEXT ("DELAYED")) == 0)
     scope = TAO::SYNC_DELAYED_BUFFERING;
-  } else {
-    usage(argv[0], ACE_TEXT("Invalid scope value"));
-    return -1;
-  }
+  else
+    {
+      usage (argv[0], ACE_TEXT ("Invalid scope value"));
+      return -1;
+    }
 
   if (stimeout != nullptr)
     {
-      ACE_TCHAR *end;
-      long tmp = ACE_OS::strtol(stimeout, &end, 10);
+      ACE_TCHAR *end {};
+      long const value = ACE_OS::strtol (stimeout, &end, 10);
       if (end == nullptr || *end != '\0')
         {
-          usage(argv[0], ACE_TEXT("Invalid timeout value"));
+          usage (argv[0], ACE_TEXT ("Invalid timeout value"));
           return -1;
         }
-      timeout = tmp;
+      timeout = value;
     }
 
   // Indicates successful parsing of the command line
@@ -102,94 +105,91 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  bool verbose {};
+  std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("middle.ior")};
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://backend.ior")};
+  Messaging::SyncScope scope {Messaging::SYNC_NONE};
+  long timeout {2};
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-      {
         ACE_ERROR_RETURN ((LM_ERROR,
-                "backend_server(%P|%t) - panic: nil RootPOA\n"),
-            1);
-      }
+                           "backend_server(%P|%t) - panic: nil RootPOA\n"),
+                          1);
 
-      PortableServer::POAManager_var poa_manager =
-          root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file, ior, verbose, scope, timeout) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object(ior);
+      CORBA::Object_var const tmp = orb->string_to_object (ior.c_str ());
 
       // one second in TimeT units
-      TimeBase::TimeT const second = 10 * TimeBase::TimeT(1000000);
+      TimeBase::TimeT const second = 10 * TimeBase::TimeT (1000000);
 
-      CORBA::Any timeout_as_any;
-      timeout_as_any <<= TimeBase::TimeT(timeout * second);
+      CORBA::Any timeout_as_any {};
+      timeout_as_any <<= TimeBase::TimeT (timeout * second);
 
-      CORBA::Any scope_as_any;
+      CORBA::Any scope_as_any {};
       scope_as_any <<= scope;
 
-      TAO::Utils::PolicyList_Destroyer plist(1);
-      plist.length(2);
+      TAO::Utils::PolicyList_Destroyer plist (1);
+      plist.length (2);
       plist[0] =
-          orb->create_policy(Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-              timeout_as_any);
+        orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                            timeout_as_any);
       plist[1] =
-          orb->create_policy(Messaging::SYNC_SCOPE_POLICY_TYPE,
-              scope_as_any);
+        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
+                            scope_as_any);
 
-      CORBA::PolicyCurrent_var policy_current =
-          TAO::Utils::RIR_Narrow<CORBA::PolicyCurrent>::narrow(
-               orb.in (),
-               "PolicyCurrent");
+      CORBA::PolicyCurrent_var const policy_current =
+        TAO::Utils::RIR_Narrow<CORBA::PolicyCurrent>::narrow (orb.in (), "PolicyCurrent");
 
-      policy_current->set_policy_overrides(
-          plist, CORBA::ADD_OVERRIDE);
+      policy_current->set_policy_overrides (plist, CORBA::ADD_OVERRIDE);
 
-      Bug_3647_Regression::Backend_var backend =
-          Bug_3647_Regression::Backend::_narrow(tmp.in ());
+      Bug_3647_Regression::Backend_var const backend =
+        Bug_3647_Regression::Backend::_narrow (tmp.in ());
 
       if (CORBA::is_nil (backend.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                   "middle_server(%P|%t) - nil backend reference <%s>\n",
-                  ior),
-              1);
+                  ior.c_str ()),
+                            1);
         }
 
       using namespace Bug_3647_Regression;
-      PortableServer::ServantBase_var impl(
-          new Middle_Impl(backend.in(), orb.in(), verbose));
+      PortableServer::ServantBase_var const impl (
+        new Middle_Impl (backend.in (), orb.in (), verbose));
 
-      PortableServer::ObjectId_var id =
-          root_poa->activate_object (impl.in());
+      PortableServer::ObjectId_var const id = root_poa->activate_object (impl.in ());
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
+      Bug_3647_Regression::Middle_var const middle =
+        Bug_3647_Regression::Middle::_narrow (object.in ());
 
-      Bug_3647_Regression::Middle_var middle =
-          Bug_3647_Regression::Middle::_narrow (object.in ());
-
-      CORBA::String_var ior = orb->object_to_string (middle.in ());
+      CORBA::String_var const ior_string = orb->object_to_string (middle.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                "middle_server(%P|%t) - Cannot open output file "
-                "for writing IOR: %s\n",
-                ior_output_file),
-            1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "middle_server(%P|%t) - Cannot open output file "
+                             "for writing IOR: %s\n",
+                             ior_output_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior_string.in ());
+      }
 
       poa_manager->activate ();
 

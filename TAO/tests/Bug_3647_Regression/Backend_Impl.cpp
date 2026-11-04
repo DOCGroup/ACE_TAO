@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 
 Bug_3647_Regression::Backend_Impl::
-Backend_Impl (CORBA::ORB_ptr orb, bool verbose)
+Backend_Impl (CORBA::ORB_ptr const orb, bool const verbose)
   : POA_Bug_3647_Regression::Backend()
   , orb_ (CORBA::ORB::_duplicate (orb))
   , verbose_(verbose)
@@ -32,7 +32,7 @@ ping (Bug_3647_Regression::Payload const &p)
 }
 
 void Bug_3647_Regression::Backend_Impl::
-freeze (CORBA::ULong seconds)
+freeze (CORBA::ULong const seconds)
 {
   if (verbose_)
   {

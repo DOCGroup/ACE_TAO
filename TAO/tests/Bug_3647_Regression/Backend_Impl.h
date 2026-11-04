@@ -13,7 +13,7 @@ namespace Bug_3647_Regression
 class Backend_Impl : public POA_Bug_3647_Regression::Backend
 {
 public:
-  Backend_Impl (CORBA::ORB_ptr orb, bool verbose);
+  Backend_Impl (CORBA::ORB_ptr const orb, bool const verbose);
   Backend_Impl (Backend_Impl const &) = delete;
   Backend_Impl (Backend_Impl &&) = delete;
   Backend_Impl &operator= (Backend_Impl const &) = delete;
@@ -22,13 +22,13 @@ public:
 
   void startup_test () override;
   void ping (Payload const &the_payload) override;
-  void freeze (CORBA::ULong seconds) override;
+  void freeze (CORBA::ULong const seconds) override;
 
   void shutdown () override;
 
 private:
   /// Keep a reference to the ORB so we can shutdown the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// Use this flag to decide if the program should produce any output.
   bool const verbose_;

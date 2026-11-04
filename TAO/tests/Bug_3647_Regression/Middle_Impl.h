@@ -14,9 +14,9 @@ class Middle_Impl : public POA_Bug_3647_Regression::Middle
 {
 public:
   Middle_Impl (
-      Backend_ptr backend,
-      CORBA::ORB_ptr orb,
-      bool verbose);
+      Backend_ptr const backend,
+      CORBA::ORB_ptr const orb,
+      bool const verbose);
   Middle_Impl (Middle_Impl const &) = delete;
   Middle_Impl (Middle_Impl &&) = delete;
   Middle_Impl &operator= (Middle_Impl const &) = delete;
@@ -30,10 +30,10 @@ public:
 
 private:
   /// Keep a reference to the backend so we can call it, shutdown, etc.
-  Backend_var backend_;
+  Backend_var const backend_;
 
   /// Keep a reference to the ORB so we can shutdown the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// Use this flag to decide if the program should produce any output.
   bool const verbose_;
