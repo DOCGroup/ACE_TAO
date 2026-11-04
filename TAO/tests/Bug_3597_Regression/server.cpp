@@ -3,14 +3,14 @@
 #include "ace/Log_Msg_Backend.h"
 #include "ace/Log_Record.h"
 #include <array>
+#include <string>
 
-ACE_TCHAR const *mykey = ACE_TEXT ("KEY");
+ACE_TCHAR const mykey[] = ACE_TEXT ("KEY");
 
 class Backend : public ACE_Log_Msg_Backend
 {
 public:
-  Backend ()
-    : ok_ (false) {}
+  Backend () = default;
   Backend (Backend const &) = delete;
   Backend (Backend &&) = delete;
   Backend &operator= (Backend const &) = delete;
@@ -27,7 +27,7 @@ public:
   bool ok () const;
 
 private:
-  bool ok_;
+  bool ok_ {};
 };
 
 int
@@ -65,17 +65,17 @@ Backend::ok () const
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
   Backend b;
-  ACE_Log_Msg_Backend *old_b = ACE_Log_Msg::msg_backend (&b);
+  ACE_Log_Msg_Backend *const old_backend = ACE_Log_Msg::msg_backend (&b);
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::CUSTOM);
 
-  std::array<ACE_TCHAR *, 3> my_argv {};
-  my_argv[0] = argv[0];
-  my_argv[1] = const_cast<ACE_TCHAR *> (ACE_TEXT ("-ORBServiceConfigLoggerKey"));
-  my_argv[2] = const_cast<ACE_TCHAR *> (mykey);
-  int my_argc = 3;
+  std::array<std::basic_string<ACE_TCHAR>, 2> orb_options {
+    ACE_TEXT ("-ORBServiceConfigLoggerKey"), mykey
+  };
+  std::array<ACE_TCHAR *, 4> orb_argv {argv[0], orb_options[0].data (), orb_options[1].data (), nullptr};
+  int orb_argc {3};
 
-  CORBA::ORB_var orb2_ = CORBA::ORB_init (my_argc, my_argv.data (), "ServerORB1");
+  CORBA::ORB_var const orb = CORBA::ORB_init (orb_argc, orb_argv.data (), "ServerORB1");
 
   if (!b.ok ())
     {
@@ -83,7 +83,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
     }
 
   // Reset the backend to avoid references to our soon-to-be-destroyed one.
-  ACE_Log_Msg::msg_backend (old_b);
+  ACE_Log_Msg::msg_backend (old_backend);
 
   return 0;
 }
