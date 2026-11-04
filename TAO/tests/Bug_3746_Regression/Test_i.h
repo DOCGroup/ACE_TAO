@@ -11,7 +11,7 @@ class BoundSequences
 {
 public:
   /// Constructor
-  explicit BoundSequences (CORBA::ORB_ptr orb);
+  explicit BoundSequences (CORBA::ORB_ptr const orb);
   BoundSequences (BoundSequences const &) = delete;
   BoundSequences (BoundSequences &&) = delete;
   BoundSequences &operator= (BoundSequences const &) = delete;
@@ -19,15 +19,15 @@ public:
 
   // = The skeleton methods
   ::CORBA::ULong SendSequenceOf10Long (
-    ::CORBA::ULong LengthSent,
-    ::Test::BoundSequences::SequenceOf10Long const &inSeq) override;
+    ::CORBA::ULong length_sent,
+    ::Test::BoundSequences::SequenceOf10Long const &in_seq) override;
 
   void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #include /**/ "ace/post.h"
