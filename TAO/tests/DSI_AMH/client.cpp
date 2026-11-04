@@ -1,41 +1,42 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/SString.h"
 #include "tao/debug.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 100;
-int do_shutdown = 1;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+  int iterations {100};
+  bool do_shutdown {true};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'x':
-        do_shutdown = 0;
+        options.do_shutdown = false;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "-x (disable shutdown) "
-                           "\n",
+                           ACE_TEXT ("usage: %s -k <ior> -i <niterations> "
+                                     "-x (disable shutdown)\n"),
                            argv [0]),
                           -1);
       }
@@ -44,34 +45,35 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
-      Test::Roundtrip_var roundtrip =
+      Test::Roundtrip_var const roundtrip =
         Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil Test::Roundtrip reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Nil Test::Roundtrip reference <%C>\n"),
+                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
                             1);
         }
 
-      for (int i = 0; i < niterations; ++i)
+      for (int i {}; i < options.iterations; ++i)
         {
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
-          ACE_hrtime_t retval =  roundtrip->test_method (start);
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
+          ACE_hrtime_t const retval = roundtrip->test_method (start);
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "test return value: %Q\n", retval));
@@ -81,12 +83,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
 
 
-      if (do_shutdown)
+      if (options.do_shutdown)
         {
           roundtrip->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

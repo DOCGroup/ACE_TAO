@@ -5,6 +5,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
+#include <cstring>
 
 #include "Roundtrip.h"
 
@@ -17,16 +18,16 @@ void
 Roundtrip::invoke (CORBA::ServerRequest_ptr request,
                    TAO_AMH_DSI_Response_Handler_ptr rh)
 {
-  if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
+  if (std::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (false);
 
       return;
     }
 
-  else if (ACE_OS::strcmp ("_is_a", request->operation ()) == 0)
+  else if (std::strcmp ("_is_a", request->operation ()) == 0)
     {
-      CORBA::NVList_ptr list;
+      CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
 
       CORBA::Any type_id;
@@ -38,30 +39,30 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
       // list still has ownership of the item
       CORBA::NamedValue_ptr nv = list->item (0);
 
-      const char *arg;
+      char const *arg {};
       *(nv->value ()) >>= arg;
 
-      CORBA::Boolean type_matches = false;
-      if (ACE_OS::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
-          || ACE_OS::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
-          || ACE_OS::strcmp (arg, "") == 0)
+      CORBA::Boolean type_matches {};
+      if (std::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
+          || std::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
+          || std::strcmp (arg, "") == 0)
         type_matches = true;
 
-      CORBA::Any result_any;
+      CORBA::Any result_any {};
       result_any <<= CORBA::Any::from_boolean (type_matches);
 
       // AMH way of replying
-      CORBA::NamedValue_var result = 0;
-      this->orb_->create_named_value (result.out());
-      *(result->value()) = result_any;
+      CORBA::NamedValue_var result {};
+      this->orb_->create_named_value (result.out ());
+      *(result->value ()) = result_any;
       rh->invoke_reply (list, result.in ());
 
       return;
     }
 
-  else if (ACE_OS::strcmp ("test_method", request->operation ()) == 0)
+  else if (std::strcmp ("test_method", request->operation ()) == 0)
     {
-      CORBA::NVList_ptr list; // will become property of the arguments list
+      CORBA::NVList_ptr list {}; // will become property of the arguments list
       this->orb_->create_list (0, list);
 
       CORBA::Any send_time;
@@ -78,7 +79,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
       return;
     }
 
-  CORBA::Any bad_operation;
+  CORBA::Any bad_operation {};
   CORBA::BAD_OPERATION exception;
   bad_operation <<= exception;
   request->set_exception (bad_operation);
@@ -117,21 +118,21 @@ Roundtrip::_dispatch (TAO_ServerRequest &request,
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = 0;
-  ACE_NEW (dsi_request,
-           CORBA::ServerRequest (request));
+  // ACE_NEW needs a raw output pointer; the CORBA var adopts it immediately.
+  CORBA::ServerRequest *dsi_request_ptr {};
+  ACE_NEW (dsi_request_ptr, CORBA::ServerRequest (request));
+  CORBA::ServerRequest_var dsi_request (dsi_request_ptr);
 
   try
     {
-      TAO_AMH_DSI_Response_Handler_ptr rh_ptr;
-      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler(request));
-      TAO_AMH_DSI_Response_Handler_var rh(rh_ptr);
-      rh->init (request, 0);
+      TAO_AMH_DSI_Response_Handler_ptr rh_ptr {};
+      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler (request));
+      TAO_AMH_DSI_Response_Handler_var rh (rh_ptr);
+      rh->init (request, nullptr);
       // Delegate to user.
-      this->invoke (dsi_request, rh.in());
+      this->invoke (dsi_request.in (), rh.in ());
     }
-  catch (const CORBA::Exception& ex)
-
+  catch (CORBA::Exception const &ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -140,11 +141,10 @@ Roundtrip::_dispatch (TAO_ServerRequest &request,
         }
     }
 
-  CORBA::release (dsi_request);
 }
 
 void
 Roundtrip::invoke (CORBA::ServerRequest_ptr)
 {
-  throw CORBA::NO_IMPLEMENT();
+  throw CORBA::NO_IMPLEMENT ();
 }

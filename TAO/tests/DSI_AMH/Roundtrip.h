@@ -20,26 +20,30 @@ class Roundtrip
 {
 public:
   /// Constructor
-  Roundtrip (CORBA::ORB_ptr orb);
+  explicit Roundtrip (CORBA::ORB_ptr orb);
+  Roundtrip (Roundtrip const &) = delete;
+  Roundtrip (Roundtrip &&) = delete;
+  Roundtrip &operator= (Roundtrip const &) = delete;
+  Roundtrip &operator= (Roundtrip &&) = delete;
 
   // = The DSI methods
 
   /// Turns around and calls invoke, but using AMH style handler
-  virtual void _dispatch (TAO_ServerRequest &request,
-                          TAO::Portable_Server::Servant_Upcall *context);
+  void _dispatch (TAO_ServerRequest &request,
+                  TAO::Portable_Server::Servant_Upcall *context) override;
 
-  void invoke (CORBA::ServerRequest_ptr request);
+  void invoke (CORBA::ServerRequest_ptr request) override;
 
-  virtual void invoke (CORBA::ServerRequest_ptr request,
-                       TAO_AMH_DSI_Response_Handler_ptr rh);
-  virtual CORBA::RepositoryId _primary_interface (
+  void invoke (CORBA::ServerRequest_ptr request,
+               TAO_AMH_DSI_Response_Handler_ptr rh);
+  CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa);
+      PortableServer::POA_ptr poa) override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #if defined(_MSC_VER)
