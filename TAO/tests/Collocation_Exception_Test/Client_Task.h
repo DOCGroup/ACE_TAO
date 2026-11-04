@@ -3,6 +3,7 @@
 #define COLLOCATED_TEST_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +34,7 @@ private:
   void test_user_exception_expected (Test::Hello_ptr hello_ptr);
   void test_user_exception_not_expected (Test::Hello_ptr hello_ptr);
 
-  ACE_TCHAR const *input_;
+  std::basic_string<ACE_TCHAR> input_;
 
   CORBA::ORB_var corb_;
 };

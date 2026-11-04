@@ -11,6 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Manual_Event;
@@ -36,7 +37,7 @@ public:
 
 private:
   /// Output file for IOR
-  ACE_TCHAR const *output_;
+  std::basic_string<ACE_TCHAR> output_;
 
   /// Manual event to wake up the main thread to create a client
   /// thread.
