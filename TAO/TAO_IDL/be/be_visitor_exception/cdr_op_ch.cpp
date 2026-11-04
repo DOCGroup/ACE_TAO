@@ -29,7 +29,7 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 

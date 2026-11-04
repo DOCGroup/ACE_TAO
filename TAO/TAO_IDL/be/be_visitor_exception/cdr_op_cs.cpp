@@ -40,7 +40,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -189,7 +189,7 @@ be_visitor_exception_cdr_op_cs::post_process (be_decl *bd)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {

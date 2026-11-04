@@ -28,8 +28,8 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  std::string macro = this->ctx_->export_macro ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  std::string const macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -63,7 +63,7 @@ int
 be_visitor_exception_any_op_ch::visit_field (be_field *node)
 {
   // First generate the type information.
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

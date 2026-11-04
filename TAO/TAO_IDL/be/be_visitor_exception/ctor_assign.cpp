@@ -46,7 +46,7 @@ be_visitor_exception_ctor_assign::visit_field (be_field *node)
   this->ctx_->node (node);
 
   // Retrieve the type.
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -75,8 +75,8 @@ be_visitor_exception_ctor_assign::visit_field (be_field *node)
 int
 be_visitor_exception_ctor_assign::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
@@ -110,8 +110,8 @@ be_visitor_exception_ctor_assign::visit_array (be_array *node)
 int
 be_visitor_exception_ctor_assign::visit_enum (be_enum *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
@@ -132,8 +132,8 @@ be_visitor_exception_ctor_assign::visit_enum (be_enum *)
 int
 be_visitor_exception_ctor_assign::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
@@ -157,8 +157,8 @@ int
 be_visitor_exception_ctor_assign::visit_interface_fwd (
   be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
@@ -198,8 +198,8 @@ int
 be_visitor_exception_ctor_assign::visit_predefined_type (
   be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
   AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   *os << be_nl;
@@ -254,8 +254,8 @@ be_visitor_exception_ctor_assign::visit_predefined_type (
 int
 be_visitor_exception_ctor_assign::visit_sequence (be_sequence *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
@@ -276,8 +276,8 @@ be_visitor_exception_ctor_assign::visit_sequence (be_sequence *)
 int
 be_visitor_exception_ctor_assign::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
@@ -318,8 +318,8 @@ be_visitor_exception_ctor_assign::visit_string (be_string *node)
 int
 be_visitor_exception_ctor_assign::visit_structure (be_structure *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
@@ -341,7 +341,7 @@ int
 be_visitor_exception_ctor_assign::visit_structure_fwd (
   be_structure_fwd *node)
 {
-  be_structure *s =
+  be_structure * const s =
     dynamic_cast<be_structure*> (node->full_definition ());
 
   return this->visit_structure (s);
@@ -350,8 +350,8 @@ be_visitor_exception_ctor_assign::visit_structure_fwd (
 int
 be_visitor_exception_ctor_assign::visit_union (be_union *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
@@ -372,7 +372,7 @@ be_visitor_exception_ctor_assign::visit_union (be_union *)
 int
 be_visitor_exception_ctor_assign::visit_union_fwd (be_union_fwd *node)
 {
-  be_union *u =
+  be_union * const u =
     dynamic_cast<be_union*> (node->full_definition ());
 
   return this->visit_union (u);
@@ -399,8 +399,8 @@ be_visitor_exception_ctor_assign::visit_typedef (be_typedef *node)
 int
 be_visitor_exception_ctor_assign::emit_valuetype_common (be_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_decl *bd = this->ctx_->node ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_decl * const bd = this->ctx_->node ();
 
   *os << be_nl;
 
