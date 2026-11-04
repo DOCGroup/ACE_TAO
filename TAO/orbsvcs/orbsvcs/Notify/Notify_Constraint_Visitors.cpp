@@ -176,7 +176,7 @@ TAO_Notify_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
     {
       if (any.impl () != nullptr)
         {
-          this->queue_.push_front (TAO_ETCL_Literal_Constraint (&any));
+          this->queue_.emplace_front (&any);
           return_value = 0;
         }
     }
@@ -868,7 +868,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
         return -1;
       }
 
-      this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+      this->queue_.emplace_front (result);
 
       return 0;
     }
@@ -894,14 +894,17 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
       case ETCL_NOT:
         pop_queue_front (this->queue_, subexpr_result);
         result = ! (CORBA::Boolean) subexpr_result;
-        this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+        this->queue_.emplace_front (result);
         return 0;
       case ETCL_MINUS:
         // The leading '-' was parsed separately, so we have to pull
         // the literal constraint off the queue, apply the class' own
         // unary minus operator, and put it back.
         pop_queue_front (this->queue_, subexpr_result);
-        this->queue_.push_front (-subexpr_result);
+        {
+          TAO_ETCL_Literal_Constraint result = -subexpr_result;
+          this->queue_.push_front (result);
+        }
         return 0;
       case ETCL_PLUS:
         // Leave the literal constraint on the queue. The leading
@@ -986,7 +989,7 @@ TAO_Notify_Constraint_Visitor::visit_or (
 
   if (return_value == 0)
     {
-      this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+      this->queue_.emplace_front (result);
     }
 
   return return_value;
@@ -1026,7 +1029,7 @@ TAO_Notify_Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
 
   if (return_value == 0)
     {
-      this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+      this->queue_.emplace_front (result);
     }
 
   return return_value;
@@ -1058,39 +1061,51 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (ETCL_Binary_Expr *binary,
           {
           case ETCL_LT:
             result = left_operand < right_operand;
-            this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+            this->queue_.emplace_front (result);
             break;
           case ETCL_LE:
             result = left_operand <= right_operand;
-            this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+            this->queue_.emplace_front (result);
             break;
           case ETCL_GT:
             result = left_operand > right_operand;
-            this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+            this->queue_.emplace_front (result);
             break;
           case ETCL_GE:
             result = left_operand >= right_operand;
-            this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+            this->queue_.emplace_front (result);
             break;
           case ETCL_EQ:
             result = left_operand == right_operand;
-            this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+            this->queue_.emplace_front (result);
             break;
           case ETCL_NE:
             result = left_operand != right_operand;
-            this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+            this->queue_.emplace_front (result);
             break;
           case ETCL_PLUS:
-            this->queue_.push_front (left_operand + right_operand);
+            {
+              TAO_ETCL_Literal_Constraint result = left_operand + right_operand;
+              this->queue_.push_front (result);
+            }
             break;
           case ETCL_MINUS:
-            this->queue_.push_front (left_operand - right_operand);
+            {
+              TAO_ETCL_Literal_Constraint result = left_operand - right_operand;
+              this->queue_.push_front (result);
+            }
             break;
           case ETCL_MULT:
-            this->queue_.push_front (left_operand * right_operand);
+            {
+              TAO_ETCL_Literal_Constraint result = left_operand * right_operand;
+              this->queue_.push_front (result);
+            }
             break;
           case ETCL_DIV:
-            this->queue_.push_front (left_operand / right_operand);
+            {
+              TAO_ETCL_Literal_Constraint result = left_operand / right_operand;
+              this->queue_.push_front (result);
+            }
             break;
           default:
             return_value = -1;
@@ -1121,7 +1136,7 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (ETCL_Binary_Expr *binary)
           CORBA::Boolean result =
             (std::strstr ((const char *) right,
                              (const char *) left) != nullptr);
-          this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+          this->queue_.emplace_front (result);
           return_value = 0;
         }
     }
@@ -1198,7 +1213,7 @@ TAO_Notify_Constraint_Visitor::visit_in (ETCL_Binary_Expr *binary)
                 return return_value;
               }
 
-              this->queue_.push_front (TAO_ETCL_Literal_Constraint (result));
+              this->queue_.emplace_front (result);
               return_value = 0;
             }
         }
