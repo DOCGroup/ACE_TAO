@@ -3,6 +3,8 @@
 
 #include "ace/Timer_Hash_T.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -614,14 +616,15 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (TYPE con
 
   size_t i; // loop variable.
 
-  Hash_Token<TYPE> **timer_ids = nullptr;
+  Hash_Token<TYPE> **raw_timer_ids = nullptr;
   size_t pos = 0;
 
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
-  ACE_NEW_RETURN (timer_ids,
+  ACE_NEW_RETURN (raw_timer_ids,
                   Hash_Token<TYPE> *[this->size_],
                   -1);
+  std::unique_ptr<Hash_Token<TYPE> *[]> const timer_ids (raw_timer_ids);
 
   for (i = 0;
        i < this->table_size_;
@@ -657,8 +660,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (TYPE con
 
       --this->size_;
     }
-
-  delete [] timer_ids;
 
   this->find_new_earliest ();
 
