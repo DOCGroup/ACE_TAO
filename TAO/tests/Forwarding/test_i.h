@@ -31,14 +31,14 @@ public:
 
   void shutdown () override;
 
-  Simple_Server_i (Simple_Server_i const&) = delete;
-  Simple_Server_i (Simple_Server_i&&) = delete;
-  Simple_Server_i& operator= (Simple_Server_i const&) = delete;
-  Simple_Server_i& operator= (Simple_Server_i&&) = delete;
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
 private:
   /// The ORB
-  CORBA::ORB_var const orb_;
+  CORBA::ORB_var const orb_ {};
 };
 
 #if defined(__ACE_INLINE__)
