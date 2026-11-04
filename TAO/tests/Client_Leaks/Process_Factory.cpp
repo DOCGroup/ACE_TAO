@@ -4,7 +4,6 @@
 
 Process_Factory::Process_Factory (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , shutdown_received_ (false)
 {
 }
 
@@ -17,29 +16,25 @@ Process_Factory::shutdown_received () const
 Test::Process_ptr
 Process_Factory::create_new_process ()
 {
-  Startup_Callback *startup_callback_impl;
+  Startup_Callback *startup_callback_impl {};
   ACE_NEW_THROW_EX (startup_callback_impl,
                     Startup_Callback,
                     CORBA::NO_MEMORY ());
 
+  // The servant var owns the callback until the POA deactivates it.
   PortableServer::ServantBase_var owner_transfer (startup_callback_impl);
 
-  CORBA::Object_var poa_object =
-    this->orb_->resolve_initial_references ("RootPOA");
+  CORBA::Object_var const poa_object {this->orb_->resolve_initial_references ("RootPOA")};
 
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (poa_object.in ());
+  PortableServer::POA_var const root_poa {PortableServer::POA::_narrow (poa_object.in ())};
 
-  PortableServer::ObjectId_var id =
-    root_poa->activate_object (startup_callback_impl);
+  PortableServer::ObjectId_var const id {root_poa->activate_object (startup_callback_impl)};
 
-  CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+  CORBA::Object_var const object {root_poa->id_to_reference (id.in ())};
 
-  Test::Startup_Callback_var startup_callback =
-    Test::Startup_Callback::_narrow (object.in ());
+  Test::Startup_Callback_var const startup_callback {Test::Startup_Callback::_narrow (object.in ())};
 
-  CORBA::String_var ior =
-    this->orb_->object_to_string (startup_callback.in ());
+  CORBA::String_var const ior {this->orb_->object_to_string (startup_callback.in ())};
 
   ACE_TCHAR const *argv[3] = {
     ACE_TEXT("child"),
@@ -53,7 +48,7 @@ Process_Factory::create_new_process ()
   options.command_line (argv);
 
   ACE_Process child_process;
-  pid_t pid =
+  pid_t const pid =
     child_process.spawn (options);
 
   if (pid == -1)
@@ -65,8 +60,8 @@ Process_Factory::create_new_process ()
       throw Test::Spawn_Failed ();
     }
 
-  bool process_has_started = false;
-  Test::Process_var the_process;
+  bool process_has_started {};
+  Test::Process_var the_process {};
   for (int i = 0; i != 500 && !process_has_started; ++i)
     {
       ACE_Time_Value interval (0, 10000);
@@ -78,13 +73,13 @@ Process_Factory::create_new_process ()
 
   try
     {
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         startup_callback_impl->_default_POA ();
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->servant_to_id (startup_callback_impl);
       poa->deactivate_object (id.in ());
     }
-  catch (CORBA::Exception const&)
+  catch (CORBA::Exception const &)
     {
     }
 

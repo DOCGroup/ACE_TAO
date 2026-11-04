@@ -16,12 +16,12 @@ class Client_Task : public ACE_Task_Base
 public:
   /// Constructor
   Client_Task (Test::Process_Factory_ptr process_Factory,
-               int iterations);
+               int const iterations);
 
-  Client_Task (Client_Task const&) = delete;
-  Client_Task (Client_Task&&) = delete;
-  Client_Task& operator= (Client_Task const&) = delete;
-  Client_Task& operator= (Client_Task&&) = delete;
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Return the total number of successful calls
   int successful_calls () const;
@@ -41,10 +41,10 @@ private:
   Test::Process_Factory_var process_factory_;
 
   /// Total number of processes created by each thread
-  int iterations_;
+  int const iterations_;
 
   /// At least some calls must be successful
-  int successful_calls_;
+  int successful_calls_ {};
 
   /// Implement the Monitor Object Pattern.
   TAO_SYNCH_MUTEX mutex_;

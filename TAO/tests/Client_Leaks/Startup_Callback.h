@@ -13,10 +13,10 @@ public:
   /// Constructor
   Startup_Callback () = default;
 
-  Startup_Callback (Startup_Callback const&) = delete;
-  Startup_Callback (Startup_Callback&&) = delete;
-  Startup_Callback& operator= (Startup_Callback const&) = delete;
-  Startup_Callback& operator= (Startup_Callback&&) = delete;
+  Startup_Callback (Startup_Callback const &) = delete;
+  Startup_Callback (Startup_Callback &&) = delete;
+  Startup_Callback &operator= (Startup_Callback const &) = delete;
+  Startup_Callback &operator= (Startup_Callback &&) = delete;
 
   /// Return true if the process has started already
   /**

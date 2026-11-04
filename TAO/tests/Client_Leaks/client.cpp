@@ -1,15 +1,16 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
+#include <string>
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-int iterations = 100;
-int threads = 12;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior,
+            int &iterations,
+            int &threads)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:n:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:i:n:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -29,11 +30,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-i <iterations> "
-                           "-i <threads> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s "
+                                     "-k <ior> "
+                                     "-i <iterations> "
+                                     "-n <threads> "
+                                     "\n"),
                            argv [0]),
                           -1);
       }
@@ -46,23 +47,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+      int iterations {100};
+      int threads {12};
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, iterations, threads) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+      CORBA::Object_var const tmp {
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ())) };
 
-      Test::Process_Factory_var process_factory =
-        Test::Process_Factory::_narrow(tmp.in ());
+      Test::Process_Factory_var const process_factory {
+        Test::Process_Factory::_narrow (tmp.in ())};
 
       if (CORBA::is_nil (process_factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil process reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Nil process reference <%s>\n"),
+                             ior.c_str ()),
                             1);
         }
 
@@ -86,8 +89,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR,
                       "ERROR: no calls were successful\n"));
         }
-    }
-  catch (CORBA::Exception const& ex)
+  }
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -13,10 +13,10 @@ public:
   /// Constructor
   explicit Process (CORBA::ORB_ptr orb);
 
-  Process (Process const&) = delete;
-  Process (Process&&) = delete;
-  Process& operator= (Process const&) = delete;
-  Process& operator= (Process&&) = delete;
+  Process (Process const &) = delete;
+  Process (Process &&) = delete;
+  Process &operator= (Process const &) = delete;
+  Process &operator= (Process &&) = delete;
 
   // = The skeleton methods
   CORBA::Long get_process_id () override;

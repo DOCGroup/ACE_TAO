@@ -2,10 +2,9 @@
 #include "Client_Task.h"
 
 Client_Task::Client_Task (Test::Process_Factory_ptr process_factory,
-                          int iterations)
+                          int const iterations)
   : process_factory_ (Test::Process_Factory::_duplicate (process_factory))
   , iterations_ (iterations)
-  , successful_calls_ (0)
 {
 }
 
@@ -20,7 +19,7 @@ Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  int successful_calls = 0;
+  int successful_calls {};
 
   try
     {
@@ -28,10 +27,10 @@ Client_Task::svc ()
 
       for (int i = 0; i != this->iterations_; ++i)
         {
-          int retval = this->one_iteration ();
+          int const retval = this->one_iteration ();
 
           if (retval != 0)
-            successful_calls++;
+            ++successful_calls;
 
           if (i % 10 == 0)
             {
@@ -41,7 +40,7 @@ Client_Task::svc ()
             }
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -63,8 +62,8 @@ Client_Task::validate_connection ()
         {
           (void) this->process_factory_->noop ();
         }
-    }
-  catch (CORBA::TRANSIENT const&)
+  }
+  catch (CORBA::TRANSIENT const &)
     {
       // Ignore transient exceptions
     }
@@ -84,12 +83,12 @@ Client_Task::one_iteration ()
 
       return 1;
     }
-  catch (Test::Spawn_Failed const&)
+  catch (Test::Spawn_Failed const &)
     {
       // Ignore this exception, it is usually caused by a transient
       // condition
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
