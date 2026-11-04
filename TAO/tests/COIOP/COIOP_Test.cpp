@@ -2,26 +2,26 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/SString.h"
 #include "ace/Manual_Event.h"
 #include "tao/Strategies/advanced_resource.h"
+#include <string>
 
-ACE_TCHAR const *output = ACE_TEXT ("test.ior");
-ACE_TCHAR const *input = ACE_TEXT ("file://test.ior");
-ACE_CString server_orb;
-ACE_CString client_orb;
-CORBA::Boolean result {};
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &output,
+            std::basic_string<ACE_TCHAR> &input,
+            std::string &server_orb,
+            std::string &client_orb,
+            bool &result)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("sk:o:n"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("sk:o:n"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 's' :
+      case 's':
         result = true;
         break;
       case 'o':
@@ -31,32 +31,34 @@ parse_args (int argc, ACE_TCHAR *argv[])
         input = get_opts.opt_arg ();
         break;
       case 'n':
-        server_orb.set ("server_orb");
-        client_orb.set ("client_orb");
+        server_orb = "server_orb";
+        client_orb = "client_orb";
         break;
       case '?':
       default:
         // This is a hack but that is okay!
         return 0;
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc,
-                  argv) == -1)
+  std::basic_string<ACE_TCHAR> output {ACE_TEXT ("test.ior")};
+  std::basic_string<ACE_TCHAR> input {ACE_TEXT ("file://test.ior")};
+  std::string server_orb;
+  std::string client_orb;
+  bool result {};
+
+  if (parse_args (argc, argv, output, input, server_orb, client_orb, result) == -1)
     return -1;
 
   try
     {
       ACE_Argv_Type_Converter satc (argc, argv);
-      CORBA::ORB_var sorb =
-        CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv (),
-                         server_orb.c_str ());
+      CORBA::ORB_var const sorb {
+        CORBA::ORB_init (satc.get_argc (), satc.get_TCHAR_argv (), server_orb.c_str ())};
 
       ACE_Manual_Event me;
       Server_Task server_task (output,
@@ -75,10 +77,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       me.wait ();
 
       ACE_Argv_Type_Converter catc (argc, argv);
-      CORBA::ORB_var corb =
-        CORBA::ORB_init (catc.get_argc (),
-                         catc.get_TCHAR_argv (),
-                         client_orb.c_str ());
+      CORBA::ORB_var const corb {
+        CORBA::ORB_init (catc.get_argc (), catc.get_TCHAR_argv (), client_orb.c_str ())};
 
       Client_Task client_task (input,
                                corb.in (),
