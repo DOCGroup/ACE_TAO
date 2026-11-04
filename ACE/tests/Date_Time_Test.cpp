@@ -23,15 +23,15 @@ run_main (int, ACE_TCHAR *[])
 
   int error = 0;
 
-  ACE_Date_Time dt;
+  ACE_Date_Time const dt;
 
-  long month   = dt.month ();
-  long day     = dt.day ();
-  long year    = dt.year ();
-  long hour    = dt.hour ();
-  long minute  = dt.minute ();
-  long seconds = dt.second ();
-  long usec    = dt.microsec ();
+  long const month   = dt.month ();
+  long const day     = dt.day ();
+  long const year    = dt.year ();
+  long const hour    = dt.hour ();
+  long const minute  = dt.minute ();
+  long const seconds = dt.second ();
+  long const usec    = dt.microsec ();
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("ACE_Date_Time (m/d/y, h:m:s.u): %d/%d/%d, %d:%d:%d.%d\n"),
               month, day, year, hour, minute, seconds, usec));
