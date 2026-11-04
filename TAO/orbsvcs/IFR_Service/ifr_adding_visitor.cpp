@@ -1,6 +1,7 @@
 /* -*- c++ -*- */
-#include <string>
+#include <cstdint>
 #include <memory>
+#include <string>
 
 #include "orbsvcs/Log_Macros.h"
 #include "ast_argument.h"
@@ -53,6 +54,188 @@
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 
 #include "ace/Vector_T.h"
+
+static bool
+append_wide_codepoint (std::uint32_t codepoint,
+                       CORBA::WChar *target,
+                       size_t target_size,
+                       size_t &target_index)
+{
+  if (codepoint > 0x10ffff || (codepoint >= 0xd800 && codepoint <= 0xdfff))
+    return false;
+
+  if (sizeof (CORBA::WChar) == 2 && codepoint > 0xffff)
+    {
+      if (target_index + 2 > target_size)
+        return false;
+
+      codepoint -= 0x10000;
+      target[target_index++] = static_cast<CORBA::WChar> (0xd800 + (codepoint >> 10));
+      target[target_index++] = static_cast<CORBA::WChar> (0xdc00 + (codepoint & 0x3ff));
+    }
+  else
+    {
+      if (target_index >= target_size)
+        return false;
+
+      target[target_index++] = static_cast<CORBA::WChar> (codepoint);
+    }
+
+  return true;
+}
+
+static bool
+read_hex_escape (std::string const &source,
+                 size_t &source_index,
+                 size_t max_digits,
+                 std::uint32_t &codepoint)
+{
+  size_t digits = 0;
+  while (source_index < source.size () && digits < max_digits)
+    {
+      unsigned char const ch = static_cast<unsigned char> (source[source_index]);
+      std::uint32_t value = 0;
+      if (ch >= '0' && ch <= '9')
+        value = ch - '0';
+      else if (ch >= 'a' && ch <= 'f')
+        value = ch - 'a' + 10;
+      else if (ch >= 'A' && ch <= 'F')
+        value = ch - 'A' + 10;
+      else
+        break;
+      if (codepoint > (0x10ffff - value) / 16)
+        return false;
+      codepoint = codepoint * 16 + value;
+      ++source_index;
+      ++digits;
+    }
+
+  return digits != 0;
+}
+
+static bool
+decode_wide_literal (std::string const &source,
+                     CORBA::WChar *target,
+                     size_t target_size,
+                     size_t &target_length)
+{
+  size_t source_index = 0;
+  target_length = 0;
+
+  while (source_index < source.size ())
+    {
+      std::uint32_t codepoint = 0;
+      unsigned char const first = static_cast<unsigned char> (source[source_index++]);
+
+      if (first == '\\' && source_index < source.size ())
+        {
+          char const escape = source[source_index++];
+          switch (escape)
+            {
+            case 'n': codepoint = '\n'; break;
+            case 't': codepoint = '\t'; break;
+            case 'v': codepoint = '\v'; break;
+            case 'b': codepoint = '\b'; break;
+            case 'r': codepoint = '\r'; break;
+            case 'f': codepoint = '\f'; break;
+            case 'a': codepoint = '\a'; break;
+            case '\\': codepoint = '\\'; break;
+            case '\'': codepoint = '\''; break;
+            case '"': codepoint = '"'; break;
+            case '?': codepoint = '?'; break;
+            case 'x':
+              {
+                if (!read_hex_escape (source, source_index, source.size (), codepoint))
+                  codepoint = 'x';
+                break;
+              }
+            case 'u':
+              if (!read_hex_escape (source, source_index, 4, codepoint))
+                return false;
+              if (codepoint >= 0xd800 && codepoint <= 0xdbff)
+                {
+                  if (source_index + 2 >= source.size ()
+                      || source[source_index] != '\\'
+                      || source[source_index + 1] != 'u')
+                    return false;
+                  size_t next_index = source_index + 2;
+                  std::uint32_t low_surrogate = 0;
+                  if (read_hex_escape (source, next_index, 4, low_surrogate)
+                      && low_surrogate >= 0xdc00 && low_surrogate <= 0xdfff)
+                    {
+                      codepoint = 0x10000 + ((codepoint - 0xd800) << 10)
+                                  + (low_surrogate - 0xdc00);
+                      source_index = next_index;
+                    }
+                  else
+                    return false;
+                }
+              else if (codepoint >= 0xdc00 && codepoint <= 0xdfff)
+                return false;
+              break;
+            default:
+              if (escape >= '0' && escape <= '7')
+                {
+                  codepoint = escape - '0';
+                  size_t digits = 1;
+                  while (source_index < source.size () && digits < 3
+                         && source[source_index] >= '0' && source[source_index] <= '7')
+                    {
+                      codepoint = codepoint * 8 + source[source_index++] - '0';
+                      ++digits;
+                    }
+                }
+              else
+                codepoint = static_cast<unsigned char> (escape);
+              break;
+            }
+        }
+      else if (first < 0x80)
+        codepoint = first;
+      else
+        {
+          unsigned int continuation_count = 0;
+          if (first >= 0xc2 && first <= 0xdf)
+            {
+              codepoint = first & 0x1f;
+              continuation_count = 1;
+            }
+          else if (first >= 0xe0 && first <= 0xef)
+            {
+              codepoint = first & 0x0f;
+              continuation_count = 2;
+            }
+          else if (first >= 0xf0 && first <= 0xf4)
+            {
+              codepoint = first & 0x07;
+              continuation_count = 3;
+            }
+          else
+            return false;
+
+          for (unsigned int i = 0; i < continuation_count; ++i)
+            {
+              if (source_index >= source.size ())
+                return false;
+
+              unsigned char const next = static_cast<unsigned char> (source[source_index++]);
+              if ((next & 0xc0) != 0x80)
+                return false;
+              codepoint = (codepoint << 6) | (next & 0x3f);
+            }
+
+          if ((continuation_count == 1 && codepoint < 0x80)
+              || (continuation_count == 2 && codepoint < 0x800)
+              || (continuation_count == 3 && codepoint < 0x10000))
+            return false;
+        }
+
+      if (!append_wide_codepoint (codepoint, target, target_size, target_length))
+        return false;
+    }
+
+  return true;
+}
 
 ifr_adding_visitor::ifr_adding_visitor (
       AST_Decl *scope,
@@ -2669,12 +2852,15 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
         std::unique_ptr<CORBA::WChar[]> wstr =
           std::make_unique<CORBA::WChar[]> (len + 1);
 
-        for (size_t i = 0; i < len; ++i)
+        size_t wstr_length = 0;
+        if (!decode_wide_literal (str, wstr.get (), len, wstr_length))
           {
-            wstr[i] = static_cast<CORBA::WChar> (str[i]);
+            ORBSVCS_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Invalid wide string literal in Interface Repository input: %s\n"),
+                            str.c_str ()));
+            BE_abort ();
           }
-
-        wstr[len] = 0;
+        wstr[wstr_length] = 0;
         any <<= wstr.get ();
         break;
       }
