@@ -14,12 +14,12 @@
 #include "SimpleNamingServiceC.h"
 
 #include "ace/Thread_Manager.h"
-#include "ace/SString.h"
+#include <cstddef>
 
 namespace
 {
-  constexpr size_t N_THREADS = 20;
-  constexpr size_t N_ITERATIONS = 100;
+  constexpr std::size_t N_THREADS = 20;
+  constexpr std::size_t N_ITERATIONS = 100;
 }
 
 class A_i : public virtual POA_A
@@ -64,16 +64,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Normal corba init
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var const poa_object =
-        orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const poa_object {orb->resolve_initial_references ("RootPOA")};
       PortableServer::POA_var const poa = PortableServer::POA::_narrow (poa_object.in ());
       PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
       poa_manager->activate ();
 
-      CORBA::Object_var const naming_service_object =
-        orb->resolve_initial_references ("SimpleNamingService");
-      SimpleNamingService_var const naming_service =
-        SimpleNamingService::_narrow (naming_service_object.in ());
+      CORBA::Object_var const naming_service_object {
+        orb->resolve_initial_references ("SimpleNamingService")};
+      SimpleNamingService_var const naming_service {
+        SimpleNamingService::_narrow (naming_service_object.in ())};
 
       if (CORBA::is_nil (naming_service.in ()))
         {
@@ -86,9 +85,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb_thread.spawn (OrbRunThread, orb.in (), THR_NEW_LWP | THR_DETACHED);
 
       // Setup
-      PortableServer::ServantBase_var servant = new B_i (poa.in ());
-      PortableServer::ObjectId_var const id = poa->activate_object (servant.in ());
-      CORBA::Object_var const b = poa->servant_to_reference (servant.in ());
+      PortableServer::ServantBase_var const servant {new B_i (poa.in ())};
+      PortableServer::ObjectId_var const id {poa->activate_object (servant.in ())};
+      CORBA::Object_var const b {poa->servant_to_reference (servant.in ())};
 
       naming_service->bind (b.in ());
 
@@ -115,8 +114,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 ACE_THR_FUNC_RETURN
 OrbRunThread (void *arg)
 {
-  CORBA::ORB_var const orb =
-    CORBA::ORB::_duplicate (reinterpret_cast<CORBA::ORB_ptr> (arg));
+  CORBA::ORB_var const orb {
+    CORBA::ORB::_duplicate (reinterpret_cast<CORBA::ORB_ptr> (arg))};
 
   try
     {
@@ -134,16 +133,16 @@ OrbRunThread (void *arg)
 ACE_THR_FUNC_RETURN
 TestThread (void *arg)
 {
-  SimpleNamingService_var const naming_service =
-    SimpleNamingService::_duplicate (reinterpret_cast<SimpleNamingService_ptr> (arg));
+  SimpleNamingService_var const naming_service {
+    SimpleNamingService::_duplicate (reinterpret_cast<SimpleNamingService_ptr> (arg))};
 
   try
     {
-      for (size_t i (0); i < N_ITERATIONS; ++i)
+      for (std::size_t i {}; i < N_ITERATIONS; ++i)
         {
-          CORBA::Object_var const obj = naming_service->resolve ();
-          C_var const b = C::_narrow (obj.in ());
-          A_var const a = b->makeA ();
+          CORBA::Object_var const obj {naming_service->resolve ()};
+          C_var const b {C::_narrow (obj.in ())};
+          A_var const a {b->makeA ()};
           if (i % 50 == 0)
             ACE_DEBUG ((LM_INFO, "(%t) collocated call returned\n"));
         }

@@ -12,6 +12,9 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Sig_Handler.h"
+#include "ace/OS_NS_stdio.h"
+#include <memory>
+#include <string>
 
 class TestShutdown : public ACE_Event_Handler
 {
@@ -54,11 +57,6 @@ private:
   ACE_Sig_Handler shutdown_;
 };
 
-namespace
-{
-  ACE_TCHAR const *iorFileName = ACE_TEXT ("SimpleNamingService.ior");
-}
-
 class SimpleNamingService_i : public virtual POA_SimpleNamingService
 {
 public:
@@ -86,29 +84,28 @@ private:
   CORBA::Object_var obj_;
 };
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c = 0;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        iorFileName = get_opts.opt_arg ();
+        ior_file = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage: %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -118,33 +115,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      std::basic_string<ACE_TCHAR> ior_file {ACE_TEXT ("SimpleNamingService.ior")};
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
       TestShutdown killer (orb.in ());
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_file) != 0)
         return 1;
 
-      CORBA::Object_var const poa_object =
-        orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var const poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      CORBA::Object_var const poa_object {orb->resolve_initial_references ("RootPOA")};
+      PortableServer::POA_var const poa {PortableServer::POA::_narrow (poa_object.in ())};
       PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
       poa_manager->activate ();
 
-      PortableServer::ServantBase_var const servant = new SimpleNamingService_i;
-      PortableServer::ObjectId_var const oid = poa->activate_object (servant.in ());
-      CORBA::Object_var const obj = poa->id_to_reference (oid.in ());
-      CORBA::String_var const str = orb->object_to_string (obj.in ());
+      PortableServer::ServantBase_var const servant {new SimpleNamingService_i};
+      PortableServer::ObjectId_var const oid {poa->activate_object (servant.in ())};
+      CORBA::Object_var const obj {poa->id_to_reference (oid.in ())};
+      CORBA::String_var const str {orb->object_to_string (obj.in ())};
 
-      FILE *output_file = ACE_OS::fopen (iorFileName, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           iorFileName),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", str.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                             ior_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+      }
 
       orb->run ();
     }
