@@ -73,8 +73,8 @@ public:
    *                structure will be copied to make it at least
    *                logically independent of the supplied @a context.
    */
-  ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
-                       ACE_SSL_Context::instance ());
+  explicit ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
+                                ACE_SSL_Context::instance ());
 
   /// Destructor
   ~ACE_SSL_SOCK_Stream ();

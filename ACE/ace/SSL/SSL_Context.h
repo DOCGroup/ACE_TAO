@@ -52,7 +52,7 @@ private:
   ACE_CString file_name_;
 
   /// The type, used by the SSL library to parse the file contents.
-  int type_;
+  int type_ {-1};
 };
 
 // ****************************************************************
@@ -380,10 +380,10 @@ private:
   void ssl_library_fini ();
 
   /// The SSL_CTX structure
-  SSL_CTX *context_;
+  SSL_CTX *context_ {};
 
   /// Cache the mode so we can answer fast
-  int mode_;
+  int mode_ {-1};
 
   /// The private key, certificate, and Diffie-Hellman parameters files
   ACE_SSL_Data_File private_key_;
@@ -391,19 +391,13 @@ private:
   ACE_SSL_Data_File dh_params_;
 
   /// The default verify mode.
-  int default_verify_mode_;
+  int default_verify_mode_ {SSL_VERIFY_NONE};
 
   /// The default verify callback.
-  extern_C_CallBackVerify_t  default_verify_callback_;
+  extern_C_CallBackVerify_t default_verify_callback_ {};
 
   /// count of successful CA load attempts
-  int have_ca_;
-
-#if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
-  /// Array of mutexes used internally by OpenSSL when the SSL
-  /// application is multithreaded.
-  static lock_type * locks_;
-#endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
+  int have_ca_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

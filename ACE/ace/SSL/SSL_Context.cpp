@@ -30,12 +30,13 @@
 #include <openssl/safestack.h>
 
 #include <cstring>
+#include <memory>
 
 namespace
 {
   /// Reference count of the number of times the ACE_SSL_Context was
   /// initialized.
-  int ssl_library_init_count = 0;
+  int ssl_library_init_count {};
 
   // @@ This should also be done with a singleton, otherwise it is not
   //    thread safe and/or portable to some weird platforms...
@@ -43,7 +44,7 @@ namespace
 #if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
-  ACE_SSL_Context::lock_type * ssl_locks = nullptr;
+  std::unique_ptr<ACE_SSL_Context::lock_type[]> ssl_locks;
 
   // @@ This should also be managed by a singleton.
 #endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
@@ -102,16 +103,7 @@ extern "C"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
-ACE_SSL_Context::lock_type * ACE_SSL_Context::locks_ = nullptr;
-#endif  /* ACE_HAS_THREADS  && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
-
 ACE_SSL_Context::ACE_SSL_Context ()
-  : context_ (nullptr),
-    mode_ (-1),
-    default_verify_mode_ (SSL_VERIFY_NONE),
-    default_verify_callback_ (nullptr),
-    have_ca_ (0)
 {
   ACE_TRACE ("ACE_SSL_Context::ACE_SSL_Context");
 
@@ -163,8 +155,7 @@ ACE_SSL_Context::ssl_library_init ()
 #if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
       int const num_locks = ::CRYPTO_num_locks ();
 
-      this->locks_ = new lock_type[num_locks];
-      ssl_locks    = this->locks_;
+      ssl_locks.reset (new lock_type[num_locks]);
 
 # if !defined (WIN32)
       // This call isn't necessary on some platforms.  See the CRYPTO
@@ -234,10 +225,7 @@ ACE_SSL_Context::ssl_library_fini ()
       // cleaned up.
 #ifdef ACE_HAS_THREADS
       ::CRYPTO_set_locking_callback (nullptr);
-      ssl_locks = nullptr;
-
-      delete [] this->locks_;
-      this->locks_ = nullptr;
+      ssl_locks.reset ();
 #endif /* ACE_HAS_THREADS &&  */
 #endif /* OPENSSL_VERSION_NUMBER < 0x10100000L */
     }
@@ -257,9 +245,9 @@ ACE_SSL_Context::set_mode (int mode)
     return -1;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000002
-  const SSL_METHOD *method = nullptr;
+  SSL_METHOD const *method {};
 #else
-  SSL_METHOD *method = nullptr;
+  SSL_METHOD *method {};
 #endif
 
   /* these openssl macros negotiate highest available SSL/TLS version */
