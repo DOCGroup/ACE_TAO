@@ -4,8 +4,9 @@
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
-#include "ace/Atomic_Op.h"
 
+#include <atomic>
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -20,6 +21,11 @@ public:
   Test_Task ();
   ~Test_Task () override;
 
+  Test_Task (Test_Task const &) = delete;
+  Test_Task (Test_Task &&) = delete;
+  Test_Task &operator= (Test_Task const &) = delete;
+  Test_Task &operator= (Test_Task &&) = delete;
+
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *args = nullptr) override;
   int close (u_long flags = 0) override;
@@ -32,19 +38,18 @@ public:
                             ACE_Reactor_Mask close_mask) override;
 
 private:
-  int handled_;
+  int handled_ {};
 
   static int task_count_;
 };
 
 int Test_Task::task_count_ = 0;
 
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count = MAX_TASKS * 2;
+static std::atomic<int> done_count {MAX_TASKS * 2};
 
 static ACE_Recursive_Thread_Mutex reclock_;
 
 Test_Task::Test_Task ()
-  : handled_ (0)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, reclock_);
 
@@ -120,7 +125,7 @@ Test_Task::handle_input (ACE_HANDLE)
       done_count--;
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) handle_input, handled_ = %d, done_count = %d\n",
-                  this->handled_, done_count.value ()));
+                  this->handled_, done_count.load ()));
     }
 
   ACE_OS::thr_yield ();
@@ -130,7 +135,7 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-  ACE_Reactor *reactor = (ACE_Reactor *) args;
+  ACE_Reactor * const reactor = static_cast<ACE_Reactor *> (args);
 
   reactor->owner (ACE_Thread::self ());
 
@@ -159,15 +164,15 @@ worker (void *args)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_Reactor *react1 = ACE_Reactor::instance ();
-  ACE_Reactor *react2 = new ACE_Reactor ();
-  Test_Task tt1[MAX_TASKS];
-  Test_Task tt2[MAX_TASKS];
+  ACE_Reactor * const react1 = ACE_Reactor::instance ();
+  std::unique_ptr<ACE_Reactor> const react2 = std::make_unique<ACE_Reactor> ();
+  Test_Task tt1[MAX_TASKS] {};
+  Test_Task tt2[MAX_TASKS] {};
 
   for (int i = 0; i < MAX_TASKS; i++)
     {
       tt1[i].open (react1);
-      tt2[i].open (react2);
+      tt2[i].open (react2.get ());
     }
 
   if (ACE_Thread_Manager::instance ()->spawn
@@ -175,7 +180,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   else if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (worker), (void *) react2, THR_NEW_LWP) == -1)
+      (ACE_THR_FUNC (worker), static_cast<void *> (react2.get ()), THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   ACE_Thread_Manager::instance ()->wait ();
