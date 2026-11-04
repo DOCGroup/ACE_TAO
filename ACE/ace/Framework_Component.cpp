@@ -271,7 +271,6 @@ ACE_Framework_Repository::dump () const
 }
 
 ACE_Framework_Repository::ACE_Framework_Repository (int size)
-  : current_size_ (0)
 {
   ACE_TRACE ("ACE_Framework_Repository::ACE_Framework_Repository");
 

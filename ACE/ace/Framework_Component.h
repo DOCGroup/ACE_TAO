@@ -170,7 +170,7 @@ private:
   ACE_Framework_Component **component_vector_ {};
 
   /// Current number of components.
-  int current_size_;
+  int current_size_ {};
 
   /// Maximum number of components.
   int total_size_;
