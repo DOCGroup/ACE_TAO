@@ -10,8 +10,6 @@ ACE_Compressor::ACE_Compressor (ACE_CompressorId compressor_id,
                                ACE_UINT32 compression_level)
     : compressor_id_        (compressor_id)
     , compression_level_    (compression_level)
-    , compressed_bytes_     (0)
-    , uncompressed_bytes_   (0)
 {}
 
 ACE_UINT64

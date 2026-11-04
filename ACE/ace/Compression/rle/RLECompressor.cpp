@@ -5,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_RLECompressor::ACE_RLECompressor ()
-    : ACE_Compressor(ACE_COMPRESSORID_RLE)
+    : ACE_Compressor (ACE_COMPRESSORID_RLE)
 {
 }
 
@@ -16,16 +16,16 @@ ACE_RLECompressor::compress (void const *in_ptr,
                             void *out_ptr,
                             ACE_UINT64 max_out_len)
 {
-    ACE_Byte const *in_p    = static_cast<ACE_Byte const *> (in_ptr);
-    ACE_Byte *out_p         = static_cast<ACE_Byte *>(out_ptr);
+    ACE_Byte const *in_p {static_cast<ACE_Byte const *> (in_ptr)};
+    ACE_Byte *out_p {static_cast<ACE_Byte *> (out_ptr)};
 
-    ACE_UINT64 const src_len = in_len;  // Save for stats
-    ACE_UINT64 out_index    = 0;
-    ACE_UINT64 out_base     = 0;
-    size_t     run_count    = 0;
-    bool       run_code     = false;
+    ACE_UINT64 const src_len {in_len};  // Save for stats
+    ACE_UINT64 out_index {};
+    ACE_UINT64 out_base {};
+    size_t run_count {};
+    bool run_code {};
 
-    if (in_p && out_p && in_len) {
+    if (in_p != nullptr && out_p != nullptr && in_len != 0) {
         while (in_len-- > 0) {
             ACE_Byte const cur_byte = *in_p++;
 
@@ -91,12 +91,12 @@ ACE_RLECompressor::decompress (void const *in_ptr,
                               void *out_ptr,
                               ACE_UINT64 max_out_len)
 {
-    ACE_UINT64  out_len     = 0;
+    ACE_UINT64 out_len {};
 
-    ACE_Byte const *in_p    = static_cast<ACE_Byte const *> (in_ptr);
-    ACE_Byte *out_p         = static_cast<ACE_Byte *>(out_ptr);
+    ACE_Byte const *in_p {static_cast<ACE_Byte const *> (in_ptr)};
+    ACE_Byte *out_p {static_cast<ACE_Byte *> (out_ptr)};
 
-    if (in_p && out_p) while(in_len-- > 0) {
+    if (in_p != nullptr && out_p != nullptr) while(in_len-- > 0) {
         ACE_Byte const cur_byte = *in_p++;
         ACE_UINT32 const cpy_len = static_cast<ACE_UINT32> ((cur_byte & ACE_CHAR_MAX) + 1);
 

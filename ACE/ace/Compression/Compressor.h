@@ -118,8 +118,8 @@ private:
   // Ensure we can lock with immutability (i.e. const)
   mutable ACE_SYNCH_MUTEX mutex_;
 
-  ACE_UINT64          compressed_bytes_;
-  ACE_UINT64          uncompressed_bytes_;
+  ACE_UINT64          compressed_bytes_ {};
+  ACE_UINT64          uncompressed_bytes_ {};
 
   ACE_Compressor (ACE_Compressor const &) = delete;
   ACE_Compressor (ACE_Compressor &&) = delete;
