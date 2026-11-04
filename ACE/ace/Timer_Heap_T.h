@@ -42,7 +42,12 @@ class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE>
 public:
   using Heap = ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   /// Constructor.
-  ACE_Timer_Heap_Iterator_T (Heap &);
+  explicit ACE_Timer_Heap_Iterator_T (Heap &);
+
+  ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_Iterator_T const &) = delete;
+  ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_Iterator_T &&) = delete;
+  ACE_Timer_Heap_Iterator_T &operator= (ACE_Timer_Heap_Iterator_T const &) = delete;
+  ACE_Timer_Heap_Iterator_T &operator= (ACE_Timer_Heap_Iterator_T &&) = delete;
 
   /// Destructor.
   ~ACE_Timer_Heap_Iterator_T () override = default;
@@ -67,7 +72,7 @@ protected:
   Heap & timer_heap_;
 
   /// Position in the array where the iterator is at
-  size_t position_;
+  size_t position_ {};
 };
 
 /**
@@ -95,7 +100,7 @@ public:
 
   /**
    * The Constructor creates a heap with specified number of elements.
-   * This can also take in a upcall functor and freelist (if 0, then
+   * This can also take in a upcall functor and freelist (if nullptr, then
    * defaults will be created).
    *
    * @param size The maximum number of timers that can be
@@ -105,24 +110,29 @@ public:
    * time and is more predictable (though it requires more space).
    * Otherwise, timer nodes are allocated as needed.
    * @param freelist is the freelist of timer nodes.
-   * @param upcall_functor If 0 Timer Heap will create a default FUNCTOR.
+   * @param upcall_functor If nullptr Timer Heap will create a default FUNCTOR.
    */
-  ACE_Timer_Heap_T (size_t size,
-                    bool preallocated = false,
-                    FUNCTOR *upcall_functor = nullptr,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
-                    TIME_POLICY const & time_policy = TIME_POLICY());
+  explicit ACE_Timer_Heap_T (size_t size,
+                             bool preallocated = false,
+                             FUNCTOR *upcall_functor = nullptr,
+                             ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
+                             TIME_POLICY const &time_policy = TIME_POLICY());
 
   /**
    * Default constructor. @c upcall_functor is the instance of the
-   * FUNCTOR to be used by the queue. If @c upcall_functor is 0, Timer
+   * FUNCTOR to be used by the queue. If @c upcall_functor is nullptr, Timer
    * Heap will create a default FUNCTOR.  @c freelist is the freelist of
-   * timer nodes.  If 0, then a default freelist will be created.  The default
+   * timer nodes.  If nullptr, then a default freelist will be created.  The default
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
-  ACE_Timer_Heap_T (FUNCTOR *upcall_functor = nullptr,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
-                    TIME_POLICY const & time_policy = TIME_POLICY());
+  explicit ACE_Timer_Heap_T (FUNCTOR *upcall_functor = nullptr,
+                             ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
+                             TIME_POLICY const &time_policy = TIME_POLICY());
+
+  ACE_Timer_Heap_T (ACE_Timer_Heap_T const &) = delete;
+  ACE_Timer_Heap_T (ACE_Timer_Heap_T &&) = delete;
+  ACE_Timer_Heap_T &operator= (ACE_Timer_Heap_T const &) = delete;
+  ACE_Timer_Heap_T &operator= (ACE_Timer_Heap_T &&) = delete;
 
   /// Destructor.
   ~ACE_Timer_Heap_T () override;
@@ -132,7 +142,7 @@ public:
 
   /// Returns the time of the earliest node in the Timer_Queue.
   /// Must be called on a non-empty queue.
-  const ACE_Time_Value &earliest_time () const override;
+  ACE_Time_Value const &earliest_time () const override;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -142,19 +152,19 @@ public:
    * timer.  Returns 0 if successful, -1 if not.
    */
   int reset_interval (long timer_id,
-                      const ACE_Time_Value &interval) override;
+                      ACE_Time_Value const &interval) override;
 
   /**
    * Cancel all timers associated with @a type.  If @a dont_call_handle_close
    * is 0 then the <functor> will be invoked.  Returns number of timers
    * cancelled.
    */
-  int cancel (const TYPE &type,
+  int cancel (TYPE const &type,
               int dont_call_handle_close = 1) override;
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
-   * was returned from the <schedule> method).  If act is non-NULL
+   * was returned from the <schedule> method).  If act is nullptr
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks. If @a dont_call_handle_close
@@ -162,7 +172,7 @@ public:
    * succeeded and 0 if the @a timer_id wasn't found.
    */
   int cancel (long timer_id,
-              const void **act = nullptr,
+              void const **act = nullptr,
               int dont_call_handle_close = 1) override;
 
   /**
@@ -209,10 +219,10 @@ protected:
    * wrong timer.  Returns -1 on failure (which is guaranteed never to
    * be a valid <timer_id>).
    */
-  long schedule_i (const TYPE &type,
-                     const void *act,
-                     const ACE_Time_Value &future_time,
-                     const ACE_Time_Value &interval) override;
+  long schedule_i (TYPE const &type,
+                   void const *act,
+                   ACE_Time_Value const &future_time,
+                   ACE_Time_Value const &interval) override;
 
   /// Reschedule an "interval" ACE_Timer_Node.
   void reschedule (ACE_Timer_Node_T<TYPE> *) override;
@@ -282,7 +292,7 @@ private:
   size_t cur_limbo_;
 
   /// Iterator used to expire timers.
-  HEAP_ITERATOR *iterator_;
+  HEAP_ITERATOR *iterator_ {};
 
   /**
    * Current contents of the Heap, which is organized as a "heap" of
@@ -290,7 +300,7 @@ private:
    * ordered, almost complete" binary tree, which is stored in an
    * array.
    */
-  ACE_Timer_Node_T<TYPE> **heap_;
+  ACE_Timer_Node_T<TYPE> **heap_ {};
 
   /**
    * An array of "pointers" that allows each ACE_Timer_Node in the
@@ -302,7 +312,7 @@ private:
    * indications of free timer IDs, whereas positive values are
    * "pointers" into the <heap_> array for assigned timer IDs.
    */
-  ssize_t *timer_ids_;
+  ssize_t *timer_ids_ {};
 
   /// "Pointer" to the element in the <timer_ids_> array that was
   /// last given out as a timer ID.
@@ -314,16 +324,16 @@ private:
   size_t timer_ids_min_free_;
 
   /**
-   * If this is non-0, then we preallocate <max_size_> number of
+   * If this is not nullptr, then we preallocate <max_size_> number of
    * ACE_Timer_Node objects in order to reduce dynamic allocation
    * costs.  In auto-growing implementation, this points to the
    * last array of nodes allocated.
    */
-  ACE_Timer_Node_T<TYPE> *preallocated_nodes_;
+  ACE_Timer_Node_T<TYPE> *preallocated_nodes_ {};
 
   /// This points to the head of the <preallocated_nodes_> freelist,
   /// which is organized as a stack.
-  ACE_Timer_Node_T<TYPE> *preallocated_nodes_freelist_;
+  ACE_Timer_Node_T<TYPE> *preallocated_nodes_freelist_ {};
 
   /// Set of pointers to the arrays of preallocated timer nodes.
   /// Used to delete the allocated memory when required.
