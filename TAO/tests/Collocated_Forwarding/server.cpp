@@ -1,7 +1,7 @@
 // -*- C++ -*-
 #include "ace/Get_Opt.h"
 #include "test_i.h"
-#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 
 #if TAO_HAS_INTERCEPTORS
 
@@ -12,13 +12,11 @@
 
 constexpr CORBA::ULong passes_before_forward = 6;
 
-bool direct_collocation = false;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], bool &direct_collocation)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("d"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -28,16 +26,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
-                           "-d\n",
-                           argv[0]),
+                           ACE_TEXT ("Usage: %s -d\n"),
+                           argv [0]),
                           -1);
       }
-
   return 0;
 }
 
-void test_colocal (Collocated_ForwardRequestTest::test_ptr server)
+static void
+test_colocal (Collocated_ForwardRequestTest::test_ptr const server)
 {
   CORBA::ULong number {};
   for (int i = 1; i <= 10; ++i)
@@ -45,9 +42,7 @@ void test_colocal (Collocated_ForwardRequestTest::test_ptr server)
       ACE_DEBUG ((LM_INFO,
                   "CLIENT: Issuing colocal request %d.\n",
                   i));
-      CORBA::ULong retval =
-        server->collocated_call ();
-
+      CORBA::ULong const retval = server->collocated_call ();
       number += retval;
     }
 
@@ -62,61 +57,54 @@ void test_colocal (Collocated_ForwardRequestTest::test_ptr server)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  bool direct_collocation {};
   try
     {
-      Server_ORBInitializer *temp_initializer = nullptr;
+      Server_ORBInitializer *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer (passes_before_forward),
                       -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+      // The initializer var takes ownership of the newly allocated object.
+      PortableInterceptor::ORBInitializer_var const orb_initializer {temp_initializer};
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "Server ORB");
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv, "Server ORB")};
 
-      if (::parse_args (argc, argv) != 0)
+      if (::parse_args (argc, argv, direct_collocation) != 0)
         return -1;
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const poa_object {orb->resolve_initial_references ("RootPOA")};
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var const root_poa {PortableServer::POA::_narrow (poa_object.in ())};
 
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager {root_poa->the_POAManager ()};
 
-      test_i servant1 (1, orb.in ());
-      test_i servant2 (2, orb.in ());
+      test_i servant1 (1);
+      test_i servant2 (2);
 
-      PortableServer::ObjectId_var oid1 =
-        root_poa->activate_object (&servant1);
+      PortableServer::ObjectId_var const oid1 {root_poa->activate_object (&servant1)};
 
-      PortableServer::ObjectId_var oid2 =
-        root_poa->activate_object (&servant2);
+      PortableServer::ObjectId_var const oid2 {root_poa->activate_object (&servant2)};
 
-      CORBA::Object_var obj1 =
-        root_poa->servant_to_reference (&servant1);
+      CORBA::Object_var const obj1 {root_poa->servant_to_reference (&servant1)};
 
-      CORBA::Object_var obj2 =
-        root_poa->servant_to_reference (&servant2);
+      CORBA::Object_var const obj2 {root_poa->servant_to_reference (&servant2)};
 
       poa_manager->activate ();
 
       // Set the forward references in the server request interceptor.
-      PortableInterceptor::ServerRequestInterceptor_var
-        server_interceptor = temp_initializer->server_interceptor ();
+      PortableInterceptor::ServerRequestInterceptor_var const server_interceptor {
+        temp_initializer->server_interceptor ()};
 
-      Collocated_ForwardRequestTest::ServerRequestInterceptor_var interceptor =
+      Collocated_ForwardRequestTest::ServerRequestInterceptor_var const interceptor {
         Collocated_ForwardRequestTest::ServerRequestInterceptor::_narrow (
-          server_interceptor.in ());
+          server_interceptor.in ())};
 
       if (CORBA::is_nil (interceptor.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -135,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Run co-local test
       {
-        Collocated_ForwardRequestTest::test_var server =
+        Collocated_ForwardRequestTest::test_var const server =
           Collocated_ForwardRequestTest::test::_narrow (obj1.in ());
         test_colocal (server.in ());
       }
@@ -146,7 +134,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

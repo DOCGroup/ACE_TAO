@@ -7,7 +7,6 @@
 
 Server_Request_Interceptor::Server_Request_Interceptor (CORBA::ULong request_pass_count)
   : request_pass_count_ (request_pass_count)
-  , request_count_ (0)
   , to_ (CORBA::Object::_nil ())
 {
 }
@@ -23,14 +22,13 @@ Server_Request_Interceptor::forward (
         EINVAL),
       CORBA::COMPLETED_NO);
 
-  ACE_TCHAR *argv[] = {nullptr};
-  int   argc = 0;
+  ACE_TCHAR *argv[1] {};
+  int argc {};
 
   // Fetch the ORB having been initialized in main()
-  CORBA::ORB_var orb =
-    CORBA::ORB_init (argc, argv, "Server ORB");
+  CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv, "Server ORB")};
 
-  CORBA::String_var s_to = orb->object_to_string (to);
+  CORBA::String_var const s_to {orb->object_to_string (to)};
 
   this->to_ = orb->string_to_object (s_to.in ());
 }
@@ -44,14 +42,14 @@ Server_Request_Interceptor::name ()
 void
 Server_Request_Interceptor::destroy ()
 {
-  CORBA::release (this->to_);
+  this->to_ = CORBA::Object::_nil ();
 }
 
 void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-  this->request_count_++;
+  ++this->request_count_;
 }
 
 void
@@ -61,13 +59,13 @@ Server_Request_Interceptor::receive_request (
   if (this->request_count_ == this->request_pass_count_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "SERVER: Request %d will be forwarded "
+                  "SERVER: Request %u will be forwarded "
                   "to object 'to'\nSERVER: via "
                   "receive_request_service_contexts().\n",
                   this->request_count_));
 
       // Throw forward exception
-      throw PortableInterceptor::ForwardRequest (this->to_);
+      throw PortableInterceptor::ForwardRequest (this->to_.in ());
     }
 }
 

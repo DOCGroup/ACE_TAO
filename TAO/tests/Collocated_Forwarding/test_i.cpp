@@ -3,13 +3,9 @@
 #include "test_i.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 
-test_i::test_i (CORBA::Short id,
-                CORBA::ORB_ptr orb)
+test_i::test_i (CORBA::Short const id)
   : id_ (id)
-  , orb_ (CORBA::ORB::_duplicate (orb))
   , to_ (CORBA::Object::_nil ())
-  , request_pass_count_ (0)
-  , request_count_ (0)
 {
 }
 
@@ -24,7 +20,7 @@ test_i::forward (CORBA::Object_ptr to,
 CORBA::Short
 test_i::collocated_call ()
 {
-  this->request_count_++;
+  ++this->request_count_;
 
   ACE_DEBUG ((LM_DEBUG,
               "Collocated call is executed in object with id %d.\n",

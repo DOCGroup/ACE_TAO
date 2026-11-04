@@ -15,13 +15,12 @@ class test_i : public virtual POA_Collocated_ForwardRequestTest::test
 {
 public:
   /// Constructor.
-  test_i (CORBA::Short id,
-          CORBA::ORB_ptr orb);
+  explicit test_i (CORBA::Short id);
 
-  test_i (test_i const&) = delete;
-  test_i (test_i&&) = delete;
-  test_i& operator= (test_i const&) = delete;
-  test_i& operator= (test_i&&) = delete;
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// A way to setup forwarding in case of direct collocation.
   void forward (CORBA::Object_ptr to,
@@ -34,17 +33,14 @@ private:
   /// Id of this instance.
   CORBA::Short const id_;
 
-  /// Pseudo-reference to the ORB.
-  CORBA::ORB_var orb_;
-
   /// A place where to forward.
   CORBA::Object_var to_;
 
   /// How much requests to pass thru before forwarding.
-  CORBA::ULong request_pass_count_;
+  CORBA::ULong request_pass_count_ {};
 
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 };
 
 #endif  /* TEST_I_H */

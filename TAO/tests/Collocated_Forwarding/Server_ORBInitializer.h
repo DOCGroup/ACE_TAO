@@ -33,10 +33,10 @@ public:
   /// Constructor.
   explicit Server_ORBInitializer (CORBA::ULong request_pass_count);
 
-  Server_ORBInitializer (Server_ORBInitializer const&) = delete;
-  Server_ORBInitializer (Server_ORBInitializer&&) = delete;
-  Server_ORBInitializer& operator= (Server_ORBInitializer const&) = delete;
-  Server_ORBInitializer& operator= (Server_ORBInitializer&&) = delete;
+  Server_ORBInitializer (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer (Server_ORBInitializer &&) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer &&) = delete;
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 

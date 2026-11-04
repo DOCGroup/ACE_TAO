@@ -29,10 +29,10 @@ public:
   /// Constructor.
   explicit Server_Request_Interceptor (CORBA::ULong request_pass_count);
 
-  Server_Request_Interceptor (Server_Request_Interceptor const&) = delete;
-  Server_Request_Interceptor (Server_Request_Interceptor&&) = delete;
-  Server_Request_Interceptor& operator= (Server_Request_Interceptor const&) = delete;
-  Server_Request_Interceptor& operator= (Server_Request_Interceptor&&) = delete;
+  Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
+  Server_Request_Interceptor &operator= (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor &operator= (Server_Request_Interceptor &&) = delete;
 
   /// Set the references to which requests will be forwarded.
   void forward (CORBA::Object_ptr to) override;
@@ -72,10 +72,10 @@ private:
   CORBA::ULong const request_pass_count_;
 
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 
   /// References to the object used in this test.
-  CORBA::Object_ptr to_;
+  CORBA::Object_var to_;
 };
 
 #if defined(_MSC_VER)
