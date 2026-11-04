@@ -120,55 +120,59 @@ public:
         bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
-    virtual ~ACE_QtReactor ();
+    ~ACE_QtReactor () override;
+
+    ACE_QtReactor (ACE_QtReactor const &) = delete;
+    ACE_QtReactor (ACE_QtReactor &&) = delete;
+    ACE_QtReactor &operator = (ACE_QtReactor const &) = delete;
+    ACE_QtReactor &operator = (ACE_QtReactor &&) = delete;
 
     void qapplication (QApplication *qapp);
 
     // = Timer operations.
-    virtual long schedule_timer (ACE_Event_Handler *handler,
-        const void *arg,
-        const ACE_Time_Value &delay_time,
-        const ACE_Time_Value &interval);
+    long schedule_timer (ACE_Event_Handler *handler,
+        void const *arg,
+        ACE_Time_Value const &delay_time,
+        ACE_Time_Value const &interval) override;
 
-    virtual int  cancel_timer (ACE_Event_Handler *handler,
-        int dont_call_handle_close = 1);
+    int cancel_timer (ACE_Event_Handler *handler,
+        int dont_call_handle_close = 1) override;
 
-    virtual int  cancel_timer (long timer_id,
-        const void **arg = nullptr,
-        int dont_call_handle_close = 1);
+    int cancel_timer (long timer_id,
+        void const **arg = nullptr,
+        int dont_call_handle_close = 1) override;
 
 protected:
     /// Register a single @a handler.
-    virtual int register_handler_i (ACE_HANDLE handle,
+    int register_handler_i (ACE_HANDLE handle,
         ACE_Event_Handler *handler,
-        ACE_Reactor_Mask mask);
+        ACE_Reactor_Mask mask) override;
 
     /// Register a set of <handlers> with Qt.
-    virtual int register_handler_i (const ACE_Handle_Set &handles,
+    int register_handler_i (ACE_Handle_Set const &handles,
         ACE_Event_Handler *handler,
-        ACE_Reactor_Mask mask);
-
+        ACE_Reactor_Mask mask) override;
 
     /// Remove the <handler> associated with this @a handle.
-    virtual int remove_handler_i (ACE_HANDLE handle,
-        ACE_Reactor_Mask mask);
+    int remove_handler_i (ACE_HANDLE handle,
+        ACE_Reactor_Mask mask) override;
 
     /// Remove a set of <handles>.
-    virtual int remove_handler_i (const ACE_Handle_Set &handles,
-        ACE_Reactor_Mask mask);
+    int remove_handler_i (ACE_Handle_Set const &handles,
+        ACE_Reactor_Mask mask) override;
 
     /// Wait for events to occur.
-    virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
-        ACE_Time_Value *max_wait_time);
+    int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
+        ACE_Time_Value *max_wait_time) override;
 
     virtual int QtWaitForMultipleEvents (int width,
         ACE_Select_Reactor_Handle_Set &wait_set,
         ACE_Time_Value *max_wait_time);
 
-    virtual int bit_ops (ACE_HANDLE handle,
+    int bit_ops (ACE_HANDLE handle,
         ACE_Reactor_Mask mask,
         ACE_Select_Reactor_Handle_Set &handle_set,
-        int ops);
+        int ops) override;
 
     int set_enable_flag_by_mask (int flag_value, ACE_HANDLE handle, ACE_Reactor_Mask mask);
     void create_notifiers_for_handle (ACE_HANDLE handle);
@@ -177,7 +181,7 @@ protected:
     // Wait for Qt events to occur
 
     /// Some Qt stuff that we need to have
-    QApplication *qapp_ ;
+    QApplication *qapp_ {}; // Borrowed from the application owner.
 
     /// Typedef of a map.
     using MAP = ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
@@ -192,7 +196,7 @@ protected:
     MAP exception_notifier_;
 
     /// The timer class that would provide timer-signals & single-shot timers
-    QTimer *qtime_ ;
+    QTimer *qtime_ {}; // Owned timer, recreated when the next timeout changes.
 
 private:
     /// This method ensures there's an Qt timeout for the first timeout
@@ -206,10 +210,6 @@ private:
     /// Must be called from a Qt slot method.
     ACE_HANDLE handle_from_sender () const;
 #endif
-
-    /// Deny access since member-wise won't work...
-    ACE_QtReactor (const ACE_QtReactor &);
-    ACE_QtReactor &operator= (const ACE_QtReactor &);
 
 private slots:
     // These are all part of the communication mechanism adopted in Qt.
