@@ -8,10 +8,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   mls.length (2);
   mls[0] = 0;
   mls[1] = 1;
-  CORBA::Any a;
+  CORBA::Any a {};
   a <<= mls;
 
-  CORBA::TypeCode_var tc = a.type ();
+  CORBA::TypeCode_var const tc = a.type ();
   if (!tc->equivalent (CORBA::_tc_LongSeq) || tc->equal (CORBA::_tc_LongSeq))
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: Test precondition not met\n")));
