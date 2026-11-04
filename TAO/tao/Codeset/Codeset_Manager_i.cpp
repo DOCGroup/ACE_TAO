@@ -434,7 +434,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                         ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                         ACE_TEXT ("init_ccs, Unable to load ")
                         ACE_TEXT ("code set translator <%s>, %m\n"),
-                        tlist->name_));
+                        tlist->name_.c_str ()));
           continue;
         }
 
@@ -445,7 +445,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                         ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                         ACE_TEXT ("init_ccs, codeset translator <%s> ")
                         ACE_TEXT ("has wrong ncs (%d), %m\n"),
-                        tlist->name_,
+                        tlist->name_.c_str (),
                         tlist->translator_factory_->ncs()));
           tlist->translator_factory_ = nullptr;
           continue;
@@ -463,7 +463,7 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                       ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                       ACE_TEXT ("init_ccs, Loaded Codeset translator ")
                       ACE_TEXT ("<%s>, ncs = %08x tcs = %08x\n"),
-                      tlist->name_,
+                      tlist->name_.c_str (),
                       tlist->translator_factory_->ncs(),
                       tlist->translator_factory_->tcs()
                       ));
