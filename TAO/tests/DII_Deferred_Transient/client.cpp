@@ -4,28 +4,31 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/SString.h"
+#include <cstddef>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage: %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -34,18 +37,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var obj = orb->string_to_object(ior);
+      CORBA::Object_var const obj =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
-      const char* the_string = 0;
+      // The string is borrowed from the request's return Any, which owns it.
+      char const *the_string {};
 
       ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Deferred twoway DII (using get_response())\n"));
 
@@ -66,13 +72,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       req->send_oneway ();
 
-      ACE_OS::sleep(1); // give it some time
+      ACE_OS::sleep (1); // Give the server time to terminate.
 
       ACE_DEBUG ((LM_INFO, "(%P|%t) - #### Multiple deferred twoway DII (with discarded replies)\n"));
 
-      int iterations = 10;
-      int exceptions = 0;
-      for (int i=0; i<iterations ;++i)
+      int const iterations = 10;
+      int exceptions {};
+      for (int i {}; i < iterations; ++i)
       {
         try
         {
@@ -86,7 +92,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           ACE_DEBUG ((LM_INFO, "(%P|%t) - sent deferred\n"));
         }
-        catch (const CORBA::Exception&)
+        catch (CORBA::Exception const &)
         {
           ++exceptions;
         }
@@ -103,7 +109,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
