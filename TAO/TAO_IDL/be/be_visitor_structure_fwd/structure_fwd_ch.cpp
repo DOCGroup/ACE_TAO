@@ -27,9 +27,9 @@ be_visitor_structure_fwd_ch::visit_structure_fwd (be_structure_fwd *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
-  be_structure *fd =
+  be_structure * const fd =
     dynamic_cast<be_structure*> (node->full_definition ());
 
   // This will be a no-op if it has already been done for this node.
