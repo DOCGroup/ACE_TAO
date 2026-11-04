@@ -2,20 +2,24 @@
 #include "Global.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+#include "ace/SString.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://server.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -32,53 +36,52 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  int status {};
+  Client_Options options;
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
-      Test::LongDoubleTest_var longDoubleTest =
-        Test::LongDoubleTest::_narrow (tmp.in ());
+      Test::LongDoubleTest_var const long_double_test =
+        Test::LongDoubleTest::_narrow (object.in ());
 
-      if (CORBA::is_nil (longDoubleTest.in ()))
+      if (CORBA::is_nil (long_double_test.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::LongDoubleTest reference <%s>\n",
-                             ior),
+                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
                             1);
         }
 
-      CORBA::LongDouble ld =
-        longDoubleTest->get_long_double ();
+      CORBA::LongDouble const ld = long_double_test->get_long_double ();
 
       if (ld == Global::get_long_double ())
         {
-          cout << "Received: " << ld << endl;
+          std::cout << "Received: " << ld << std::endl;
         }
       else
         {
           ACE_ERROR ((LM_DEBUG,
                       "Client did not receive "
                       "expected CORBA::LongDouble\n"));
-          cerr << "Received: " << ld << " instead of "
-               << Global::get_long_double () << endl;
+          std::cerr << "Received: " << ld << " instead of "
+                    << Global::get_long_double () << std::endl;
           status = 1;
         }
 
-      longDoubleTest->shutdown ();
+      long_double_test->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       status = 1;
