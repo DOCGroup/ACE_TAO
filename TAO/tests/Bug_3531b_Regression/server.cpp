@@ -14,8 +14,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-int nthreads = 4;
-bool debug = false;
+static bool debug {};
 
 // TEST_ASSERT is exactly the same as ACE_ASSERT except it is active
 // for both debug and *release* builds.
@@ -32,11 +31,11 @@ bool debug = false;
 
 class Worker;
 
-int
-parse_args (int argc, ACE_TCHAR * argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("d"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -61,7 +60,14 @@ parse_args (int argc, ACE_TCHAR * argv[])
 class Command: public ACE_Message_Block
 {
 public:
+  Command () = default;
+
   virtual int execute (Worker *) = 0;
+
+  Command (Command const &) = delete;
+  Command (Command &&) = delete;
+  Command &operator= (Command const &) = delete;
+  Command &operator= (Command &&) = delete;
 };
 
 
@@ -73,8 +79,12 @@ class Worker: public ACE_Task<ACE_SYNCH>
 {
 public:
   Worker ()
-    : shutdown_ (false)
-  {}
+    : shutdown_ (false) {}
+
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
   int svc () override;
   int close (u_long = 0) override;
@@ -87,7 +97,7 @@ private:
   bool shutdown_;
 };
 
-ACE_TSS<Worker> *workers_p = nullptr;
+static ACE_TSS<Worker> *workers_p {};
 #define workers (*workers_p)
 
 int Worker::svc ()
@@ -95,8 +105,8 @@ int Worker::svc ()
   if (debug)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Worker thread starting up.\n")));
   // Register this worker
-  workers.ts_object (const_cast<Worker*> (this));
-  int retval = 0;
+  workers.ts_object (this);
+  int retval {};
   while (!shutdown_ && retval != -1)
     {
       retval = this->process_cmd ();
@@ -115,12 +125,13 @@ int Worker::close (u_long)
 
 int Worker::put (ACE_Message_Block * mblk, ACE_Time_Value * tv)
 {
+  // On success the queue owns mblk; process_cmd releases each command after execution.
   return this->putq (mblk, tv);
 }
 
 int Worker::process_cmd ()
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   if (this->getq (mb, nullptr) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error calling getq: $!\n")));
@@ -129,7 +140,7 @@ int Worker::process_cmd ()
         return 0;
       return -1;
     }
-  Command* cmd = dynamic_cast <Command*> (mb);
+  Command *const cmd = dynamic_cast<Command *> (mb);
   ACE_ASSERT (cmd != nullptr);
   cmd->execute (this);
   cmd->release ();
@@ -150,13 +161,12 @@ class Test_Reactor: public ACE_TP_Reactor
 {
 public:
   Test_Reactor (size_t max_number_of_handles,
-                  bool restart = false,
-                  ACE_Sig_Handler *sh = nullptr,
-                  ACE_Timer_Queue *tq = nullptr,
-                  bool mask_signals = true,
-                  int s_queue = ACE_Select_Reactor_Token::FIFO)
+                bool restart = false,
+                ACE_Sig_Handler *sh = nullptr,
+                ACE_Timer_Queue *tq = nullptr,
+                bool mask_signals = true,
+                int s_queue = ACE_Select_Reactor_Token::FIFO)
     : ACE_TP_Reactor (max_number_of_handles, restart, sh, tq, mask_signals, s_queue) {}
-
 
   // This is the method that the Leader_Follower object calls.
   int handle_events (ACE_Time_Value * = nullptr) override
@@ -181,7 +191,7 @@ public:
     // give the leader follower multiple chances to hand off to an
     // event loop thread.  This is not ideal but it will have to do
     // until the leader follower code is fixed (if possible)
-    while (!workers->shutdown())
+    while (!workers->shutdown ())
       // call this thread's (worker's) process_cmd method
       workers->process_cmd ();
     return 0;
@@ -198,12 +208,9 @@ public:
 class Test_Resource_Factory: public TAO_Default_Resource_Factory
 {
 public:
-  Test_Resource_Factory ()
-  {}
-
   ACE_Reactor_Impl *allocate_reactor_impl () const override
   {
-    ACE_Reactor_Impl *impl = nullptr;
+    ACE_Reactor_Impl *impl {};
     ACE_NEW_RETURN (impl,
                     Test_Reactor (ACE::max_handles (),
                                     1,
@@ -211,11 +218,10 @@ public:
                                     nullptr,
                                     this->reactor_mask_signals_,
                                     ACE_Select_Reactor_Token::LIFO),
-                    0);
+                    nullptr);
     return impl;
   }
 
-private:
 };
 
 // force export flag otherwise Windows will complain
@@ -231,15 +237,12 @@ ACE_STATIC_SVC_DEFINE (Test_Resource_Factory,
                        0)
 ACE_STATIC_SVC_REQUIRE (Test_Resource_Factory);
 
-int load_test_resources =
+int const load_test_resources =
 ACE_Service_Config::process_directive (ace_svc_desc_Test_Resource_Factory);
 
 class Test_LF_Event: public TAO_LF_Event
 {
 public:
-  Test_LF_Event()
-  {}
-
   void complete_event (TAO_Leader_Follower &lf)
   {
     if (debug)
@@ -276,15 +279,15 @@ protected:
 class Test_Transport : public TAO_Transport
 {
 public:
-  Test_Transport (CORBA::ULong tag,
-                  TAO_ORB_Core *orb_core)
+  Test_Transport (CORBA::ULong const tag,
+                  TAO_ORB_Core *const orb_core)
     : TAO_Transport (tag, orb_core)
   {}
 
   int send_message (TAO_OutputCDR &,
                     TAO_Stub * = nullptr,
                     TAO_ServerRequest * = nullptr,
-                            TAO_Message_Semantics  = TAO_Message_Semantics (),
+                    TAO_Message_Semantics = TAO_Message_Semantics (),
                     ACE_Time_Value * = nullptr) override
   {
     return 0;
@@ -312,13 +315,13 @@ public:
 
   ACE_Event_Handler *event_handler_i () override
   {
-    return 0;
+    return nullptr;
   }
 
 protected:
   TAO_Connection_Handler *connection_handler_i () override
   {
-    return 0;
+    return nullptr;
   }
 
   int send_request (TAO_Stub *,
@@ -334,7 +337,7 @@ protected:
 class Shutdown: public Command
 {
 public:
-  virtual int execute (Worker* worker)
+  int execute (Worker *worker) override
   {
     if (debug)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Shutdown cmd\n")));
@@ -346,49 +349,49 @@ public:
 class TSS_Assert: public Command
 {
 public:
-  TSS_Assert (TAO_ORB_Core* orb_core,
-              int elt_count,
-              int clt_count,
-              bool leader_available)
+  TSS_Assert (TAO_ORB_Core *orb_core,
+              int const elt_count,
+              int const clt_count,
+              bool const leader_available)
     : orb_core_ (orb_core),
       elt_count_ (elt_count),
       clt_count_ (clt_count),
       leader_available_ (leader_available)
   {}
 
-  virtual int execute (Worker*)
+  int execute (Worker *) override
   {
     if (debug)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing TSS_Assert(%d,%d,%d) cmd\n"),
                   elt_count_, clt_count_, leader_available_));
     TAO_Leader_Follower &leader_follower = orb_core_->leader_follower ();
-    TAO_ORB_Core_TSS_Resources* tss = orb_core_->get_tss_resources ();
+    TAO_ORB_Core_TSS_Resources *const tss = orb_core_->get_tss_resources ();
     TSS_ASSERT (tss, leader_follower,
                 elt_count_, clt_count_, leader_available_);
     return 0;
   }
 private:
-  TAO_ORB_Core*        orb_core_;
-  const int            elt_count_;
-  const int            clt_count_;
-  const bool           leader_available_;
+  TAO_ORB_Core *const orb_core_;
+  int const elt_count_;
+  int const clt_count_;
+  bool const leader_available_;
 };
 
 class Wait_For_Event: public Command
 {
 public:
-  Wait_For_Event (Test_LF_Event& event,
-                  Test_Transport& transport,
-                  TAO_Leader_Follower& lf)
+  Wait_For_Event (Test_LF_Event &event,
+                  Test_Transport &transport,
+                  TAO_Leader_Follower &lf)
     : event_ (event),
       transport_ (transport),
       lf_ (lf)
   {}
-  virtual int execute (Worker*)
+  int execute (Worker *) override
   {
     if (debug)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Wait_For_Event cmd\n")));
-    int retval = lf_.wait_for_event (&event_, &transport_, 0);
+    int const retval = lf_.wait_for_event (&event_, &transport_, 0);
     // The worker has probably been shutdown in order for the client
     // leader event loop to exit - reactivate the worker so it from
     // process msgs once we return
@@ -396,9 +399,9 @@ public:
     return retval;
   }
 private:
-  Test_LF_Event&       event_;
-  Test_Transport&      transport_;
-  TAO_Leader_Follower& lf_;
+  Test_LF_Event &event_;
+  Test_Transport &transport_;
+  TAO_Leader_Follower &lf_;
 };
 
 class Cond_Signal: public Command
@@ -410,22 +413,22 @@ public:
       ref_count_ (2)
   {}
 
-  virtual int execute (Worker*)
+  int execute (Worker *) override
   {
     if (debug)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Cond_Signal cmd\n")));
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard ,this->cond_.mutex (), 0);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->cond_.mutex (), 0);
     return this->cond_.signal ();
   }
-  TAO_SYNCH_MUTEX& lock ()
+  TAO_SYNCH_MUTEX &lock ()
   {
     return lock_;
   }
-  ACE_Condition_Thread_Mutex& cond ()
+  ACE_Condition_Thread_Mutex &cond ()
   {
     return cond_;
   }
-  virtual ACE_Message_Block *release ()
+  ACE_Message_Block *release () override
   {
     // we need to only release once both the main and worker thread
     // are done with this object - each signals this by calling this
@@ -445,17 +448,17 @@ private:
 class Event_Loop_Thread: public Command
 {
 public:
-  Event_Loop_Thread(TAO_Leader_Follower& lf,
-                    TAO_LF_Strategy& lf_strategy)
+  Event_Loop_Thread (TAO_Leader_Follower &lf,
+                     TAO_LF_Strategy &lf_strategy)
     : lf_ (lf), lf_strategy_ (lf_strategy)
   {}
 
-  virtual int execute (Worker* worker)
+  int execute (Worker *worker) override
   {
     if (debug)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Event_Loop_Thread cmd\n")));
     TAO_LF_Event_Loop_Thread_Helper elt (lf_, lf_strategy_, 0);
-    while (!worker->shutdown())
+    while (!worker->shutdown ())
       worker->process_cmd ();
     // The worker has been shutdown in order for this event loop
     // thread to exit - reactivate the worker so it from process msgs
@@ -464,18 +467,18 @@ public:
     return 0;
   }
 private:
-  TAO_Leader_Follower& lf_;
-  TAO_LF_Strategy&     lf_strategy_;
+  TAO_Leader_Follower &lf_;
+  TAO_LF_Strategy &lf_strategy_;
 };
 
 class Set_Upcall_Thread: public Command
 {
 public:
-  Set_Upcall_Thread (TAO_Leader_Follower& lf)
+  explicit Set_Upcall_Thread (TAO_Leader_Follower &lf)
     : lf_ (lf)
   {}
 
-  virtual int execute (Worker*)
+  int execute (Worker *) override
   {
     if (debug)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Set_Upcall_Thread cmd\n")));
@@ -484,14 +487,13 @@ public:
   }
 
 private:
-  TAO_Leader_Follower& lf_;
+  TAO_Leader_Follower &lf_;
 };
 
-void synch_with_worker (Worker& worker)
+void synch_with_worker (Worker &worker)
 {
-  // This object is released by the worker thread after it has
-  // executed the cmd
-  Cond_Signal* cond = new Cond_Signal;
+  // The command is shared by this thread and the worker; its reference count tracks both lifetimes.
+  Cond_Signal *const cond = new Cond_Signal;
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, cond->lock ());
     worker.put (cond);
@@ -502,88 +504,88 @@ void synch_with_worker (Worker& worker)
 }
 
 // 1 - Simple event loop thread test
-void Test_1 (TAO_ORB_Core* orb_core)
+void Test_1 (TAO_ORB_Core *const orb_core)
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  TAO_ORB_Core_TSS_Resources* tss = orb_core->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources *const tss = orb_core->get_tss_resources ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #1 - Simple Event Loop call\n")));
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
-    elt (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
-                                             lf_strategy,
-                                             0));
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper> elt {
+    std::make_unique<TAO_LF_Event_Loop_Thread_Helper> (leader_follower,
+                                                        lf_strategy,
+                                                        nullptr)};
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
 
-  elt.reset (0);
+  elt.reset ();
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 }
 
 // 2 - Nested event loop threads - no set_upcall_thread call
-void Test_2 (TAO_ORB_Core* orb_core)
+void Test_2 (TAO_ORB_Core *const orb_core)
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  TAO_ORB_Core_TSS_Resources* tss = orb_core->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources *const tss = orb_core->get_tss_resources ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #2 - 2 nested Event Loop calls\n")));
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
-    elt1 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
-                                              lf_strategy, 0));
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper> elt1 {
+    std::make_unique<TAO_LF_Event_Loop_Thread_Helper> (leader_follower,
+                                                       lf_strategy, nullptr)};
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
 
-  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
-    elt2 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
-                                              lf_strategy, 0));
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper> elt2 {
+    std::make_unique<TAO_LF_Event_Loop_Thread_Helper> (leader_follower,
+                                                       lf_strategy, nullptr)};
   TSS_ASSERT (tss, leader_follower, 2, 0, true);
 
-  elt2.reset (0);
+  elt2.reset ();
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
 
-  elt1.reset (0);
+  elt1.reset ();
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 }
 
 // 3 - Nested event loop threads - with set_upcall_thread call
-void Test_3 (TAO_ORB_Core* orb_core)
+void Test_3 (TAO_ORB_Core *const orb_core)
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
-  TAO_ORB_Core_TSS_Resources* tss = orb_core->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources *const tss = orb_core->get_tss_resources ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TEST #3 - 2 nested Event Loop calls with set_upcall_thread\n")));
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
-    elt1 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
-                                              lf_strategy, 0));
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper> elt1 {
+    std::make_unique<TAO_LF_Event_Loop_Thread_Helper> (leader_follower,
+                                                        lf_strategy, nullptr)};
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
 
   leader_follower.set_upcall_thread ();
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
-    elt2 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
-                                              lf_strategy, 0));
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper> elt2 {
+    std::make_unique<TAO_LF_Event_Loop_Thread_Helper> (leader_follower,
+                                                        lf_strategy, nullptr)};
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
 
-  elt2.reset (0);
+  elt2.reset ();
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  elt1.reset (0);
+  elt1.reset ();
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 }
 
 // 4 - client leader thread
-void Test_4 (TAO_ORB_Core* orb_core)
+void Test_4 (TAO_ORB_Core *const orb_core)
 {
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
@@ -622,7 +624,7 @@ void Test_4 (TAO_ORB_Core* orb_core)
 }
 
 // 5 - nested client leader thread
-void Test_5 (TAO_ORB_Core* orb_core)
+void Test_5 (TAO_ORB_Core *const orb_core)
 {
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
@@ -683,7 +685,7 @@ void Test_5 (TAO_ORB_Core* orb_core)
 }
 
 // 6 - nested client leader thread with set_upcall_thread
-void Test_6 (TAO_ORB_Core* orb_core)
+void Test_6 (TAO_ORB_Core *const orb_core)
 {
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
@@ -748,7 +750,7 @@ void Test_6 (TAO_ORB_Core* orb_core)
 }
 
 // 7 - 2 client leader threads with set_upcall_thread
-void Test_7 (TAO_ORB_Core* orb_core)
+void Test_7 (TAO_ORB_Core *const orb_core)
 {
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("==========\n")));
@@ -816,7 +818,7 @@ void Test_7 (TAO_ORB_Core* orb_core)
 }
 
 // 8 - client becomes leader when event loop thread dispatched
-void Test_8 (TAO_ORB_Core* orb_core)
+void Test_8 (TAO_ORB_Core *const orb_core)
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
@@ -881,7 +883,7 @@ void Test_8 (TAO_ORB_Core* orb_core)
 }
 
 // 9 - client leader thread then event loop thread
-void Test_9 (TAO_ORB_Core* orb_core)
+void Test_9 (TAO_ORB_Core *const orb_core)
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
@@ -962,7 +964,7 @@ void Test_9 (TAO_ORB_Core* orb_core)
 }
 
 // 10 - ET1437460 (second problem)
-void Test_10 (TAO_ORB_Core* orb_core )
+void Test_10 (TAO_ORB_Core *const orb_core)
 {
   TAO_LF_Strategy &lf_strategy = orb_core->lf_strategy ();
   TAO_Leader_Follower &leader_follower = orb_core->leader_follower ();
@@ -1051,24 +1053,24 @@ void Test_10 (TAO_ORB_Core* orb_core )
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // scope TSS holder within main scope
   // so we're certain it gets destroyed before the
   // ACE object manager
-  ACE_TSS<Worker> workers_;
+  ACE_TSS<Worker> workers_ {};
   // provide global access
   workers_p = &workers_;
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
       if (parse_args (argc, argv) != 0)
         return 1;
 
       // Make sure the reactor is initialised in the leader_follower
-      ACE_Reactor* reactor = orb->orb_core ()->leader_follower ().reactor ();
-      TEST_ASSERT ((reactor != 0));
+      ACE_Reactor *const reactor = orb->orb_core ()->leader_follower ().reactor ();
+      TEST_ASSERT ((reactor != nullptr));
 
       // Ready to go
       Test_1 (orb->orb_core ());
@@ -1087,7 +1089,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // cleanup
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -1099,7 +1101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #else
 
 int
-ACE_TMAIN(int /*argc*/, ACE_TCHAR * /*argv*/ [])
+ACE_TMAIN (int /*argc*/, ACE_TCHAR * /*argv*/ [])
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This test only makes sense in an MT build.\n")));
 
