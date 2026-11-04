@@ -62,7 +62,12 @@ public:
 
 
   /// to shutup g++.
-  virtual ~ACE_QoS_Session () {};
+  virtual ~ACE_QoS_Session () = default;
+
+  ACE_QoS_Session (ACE_QoS_Session const &) = delete;
+  ACE_QoS_Session &operator= (ACE_QoS_Session const &) = delete;
+  ACE_QoS_Session (ACE_QoS_Session &&) = delete;
+  ACE_QoS_Session &operator= (ACE_QoS_Session &&) = delete;
 
   /// Open a QoS session [dest IP, dest port, Protocol ID].
   virtual int open (ACE_INET_Addr dest_addr,
@@ -147,27 +152,27 @@ public:
 
 protected:
   /// Source port if this is a Sender session. Used for rapi_sender ().
-  u_short source_port_;
+  u_short source_port_ {};
 
   /// session id for the session.
-  int session_id_;
+  int session_id_ {};
 
   /// Destination address for this session.
-  ACE_INET_Addr dest_addr_;
+  ACE_INET_Addr dest_addr_ {};
 
   /// Source address for this session.
-  ACE_INET_Addr* src_addr_;
+  ACE_INET_Addr *src_addr_ {};
 
   /// Is this a TCP or a UDP session.
-  ACE_Protocol_ID protocol_id_;
+  ACE_Protocol_ID protocol_id_ {};
 
   /// QoS for this session.
-  ACE_QoS qos_;
+  ACE_QoS qos_ {};
 
   /// Specifies if this is a sending/receiving/both session.
-  ACE_End_Point_Type flags_;
+  ACE_End_Point_Type flags_ {ACE_QOS_SENDER};
 
-  RSVP_Event_Type rsvp_event_type_;
+  RSVP_Event_Type rsvp_event_type_ {RSVP_PATH_EVENT};
   //Has the last rsvp event that occurred
 };
 

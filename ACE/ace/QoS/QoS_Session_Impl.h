@@ -38,26 +38,31 @@ class ACE_QoS_Export ACE_RAPI_Session : public ACE_QoS_Session
 {
 public:
   /// Default destructor.
-  ~ACE_RAPI_Session ();
+  ~ACE_RAPI_Session () override;
+
+  ACE_RAPI_Session (ACE_RAPI_Session const &) = delete;
+  ACE_RAPI_Session &operator= (ACE_RAPI_Session const &) = delete;
+  ACE_RAPI_Session (ACE_RAPI_Session &&) = delete;
+  ACE_RAPI_Session &operator= (ACE_RAPI_Session &&) = delete;
 
   /// Error handling for RSVP callback
   static int rsvp_error;
 
   /// Open a RAPI QoS session [dest IP, dest port, Protocol ID].
-  virtual int open (ACE_INET_Addr dest_addr,
-                    ACE_Protocol_ID protocol_id);
+  int open (ACE_INET_Addr dest_addr,
+            ACE_Protocol_ID protocol_id) override;
 
   /// Close the RAPI QoS Session.
-  virtual int close ();
+  int close () override;
 
   /// Returns the QoS for this RAPI session.
-  virtual ACE_QoS qos () const;
+  ACE_QoS qos () const override;
 
   /// Set QoS for this RAPI session. The socket parameter is used to confirm if
   /// this QoS session was subscribed to by the socket.
-  virtual int qos (ACE_SOCK *socket,
-                   ACE_QoS_Manager *qos_manager,
-                   const ACE_QoS &ace_qos);
+  int qos (ACE_SOCK *socket,
+           ACE_QoS_Manager *qos_manager,
+           ACE_QoS const &ace_qos) override;
 
   /**
    * Sets the QoS for this session object to ace_qos. Does not interfere with the
@@ -66,56 +71,56 @@ public:
    * the previous qos () method e.g. inside the dgram_mcast.subscribe () where the
    * QoS for the socket is set through ACE_OS::join_leaf ().
    */
-  virtual void qos (const ACE_QoS &ace_qos);
+  void qos (ACE_QoS const &ace_qos) override;
 
   /**
    * Calls rapi_dispatch () that further triggers the call back function.
    * It is a mechanism of updating the QoS for this session asynchronously, as
    * RSVP events occur.
    */
-  virtual int update_qos ();
+  int update_qos () override;
 
   /// Get methods for the flags_.
-  virtual ACE_End_Point_Type flags () const;
+  ACE_End_Point_Type flags () const override;
 
   /// Set methods for the flags_.
-  virtual void flags (const ACE_End_Point_Type flags);
+  void flags (ACE_End_Point_Type flags) override;
 
   /// Get the RAPI session id.
-  virtual int session_id () const;
+  int session_id () const override;
 
   /// Set the RAPI session id.
-  virtual void session_id (const int session_id);
+  void session_id (int session_id) override;
 
   /// Get the RAPI file descriptor for RSVP events.
-  virtual ACE_HANDLE rsvp_events_handle ();
+  ACE_HANDLE rsvp_events_handle () override;
 
   ///Set the RAPI event that last occurred
-  virtual void  rsvp_event_type (RSVP_Event_Type event_type);
+  void rsvp_event_type (RSVP_Event_Type event_type) override;
 
   ///Get the RAPI event that last occurred
-  virtual RSVP_Event_Type rsvp_event_type ();
+  RSVP_Event_Type rsvp_event_type () override;
 
   /// Get the destination address for this RAPI session.
-  virtual ACE_INET_Addr dest_addr () const;
+  ACE_INET_Addr dest_addr () const override;
 
   /// Set the destination address for this RAPI session.
-  virtual void dest_addr (const ACE_INET_Addr &dest_addr);
+  void dest_addr (ACE_INET_Addr const &dest_addr) override;
 
   /// Get the source port for this session.
-  virtual u_short source_port () const;
+  u_short source_port () const override;
 
   /// Set the source port for this session.
-  virtual void source_port (const u_short &source_port);
+  void source_port (u_short const &source_port) override;
 
   //Set the source host
-  virtual ACE_INET_Addr* source_addr () const;
+  ACE_INET_Addr *source_addr () const override;
 
   /// Set the source port for this session.
-  virtual void source_addr (ACE_INET_Addr* source_addr);
+  void source_addr (ACE_INET_Addr *source_addr) override;
 
   /// RAPI version. Returned value = 100 * major-version + minor-version.
-  virtual int version ();
+  int version () override;
 
   /// The factory is a friend so it can create this object through
   /// the only private constructor.
@@ -159,27 +164,32 @@ class ACE_QoS_Export ACE_GQoS_Session : public ACE_QoS_Session
 {
 public:
   /// Default destructor.
-  ~ACE_GQoS_Session ();
+  ~ACE_GQoS_Session () override;
+
+  ACE_GQoS_Session (ACE_GQoS_Session const &) = delete;
+  ACE_GQoS_Session &operator= (ACE_GQoS_Session const &) = delete;
+  ACE_GQoS_Session (ACE_GQoS_Session &&) = delete;
+  ACE_GQoS_Session &operator= (ACE_GQoS_Session &&) = delete;
 
   /// This is a session ID generator. It does a lot more than expected
   /// from an int!.
   static int GQoS_session_id;
 
   /// Open a GQoS session [dest IP, dest port, Protocol ID].
-  virtual int open (ACE_INET_Addr dest_addr,
-                    ACE_Protocol_ID protocol_id);
+  int open (ACE_INET_Addr dest_addr,
+            ACE_Protocol_ID protocol_id) override;
 
   /// Close the GQoS Session.
-  virtual int close ();
+  int close () override;
 
   /// Returns the QoS for this GQoS session.
-  virtual ACE_QoS qos () const;
+  ACE_QoS qos () const override;
 
   /// Set QoS for this GQoS session. The socket parameter is used to confirm if
   /// this QoS session was subscribed to by the socket.
-  virtual int qos (ACE_SOCK *socket,
-                   ACE_QoS_Manager *qos_manager,
-                   const ACE_QoS &ace_qos);
+  int qos (ACE_SOCK *socket,
+           ACE_QoS_Manager *qos_manager,
+           ACE_QoS const &ace_qos) override;
 
   /**
    * Sets the QoS for this session object to ace_qos. Does not interfere with the
@@ -188,51 +198,51 @@ public:
    * the previous qos () method e.g. inside the dgram_mcast.subscribe () where the
    * QoS for the socket is set through ACE_OS::join_leaf ().
    */
-  virtual void qos (const ACE_QoS &ace_qos);
+  void qos (ACE_QoS const &ace_qos) override;
 
   /// Calls the ioctl (ACE_SIO_GET_QOS). It is a mechanism of updating the
   /// QoS for this session asynchronously, as RSVP events occur.
-  virtual int update_qos ();
+  int update_qos () override;
 
   /// Get/Set methods for the flags_.
-  virtual ACE_End_Point_Type flags () const;
-  virtual void flags (const ACE_End_Point_Type flags);
+  ACE_End_Point_Type flags () const override;
+  void flags (ACE_End_Point_Type flags) override;
 
   /// Get the destination address for this GQoS session.
-  virtual ACE_INET_Addr dest_addr () const;
+  ACE_INET_Addr dest_addr () const override;
 
   /// Set the destination address for this GQoS session.
-  virtual void dest_addr (const ACE_INET_Addr &dest_addr);
+  void dest_addr (ACE_INET_Addr const &dest_addr) override;
 
   /// Get the source port for this session.
-  virtual u_short source_port () const;
+  u_short source_port () const override;
 
   /// Set the source port for this session.
-  virtual void source_port (const u_short &source_port);
+  void source_port (u_short const &source_port) override;
 
   //Set the source host
-  virtual ACE_INET_Addr* source_addr () const;
+  ACE_INET_Addr *source_addr () const override;
 
   /// Set the source port for this session.
-  virtual void source_addr (ACE_INET_Addr* source_addr);
+  void source_addr (ACE_INET_Addr *source_addr) override;
 
   /// Get the GQoS session id.
-  virtual int session_id () const;
+  int session_id () const override;
 
   /// Set the GQoS session id.
-  virtual void session_id (const int session_id);
+  void session_id (int session_id) override;
 
   /// Get the file descriptor of the underlying socket.
-  virtual ACE_HANDLE rsvp_events_handle ();
+  ACE_HANDLE rsvp_events_handle () override;
 
-  virtual void  rsvp_event_type (RSVP_Event_Type event_type);
+  void rsvp_event_type (RSVP_Event_Type event_type) override;
   ///Set the RAPI event that last occurred
 
-  virtual RSVP_Event_Type rsvp_event_type ();
+  RSVP_Event_Type rsvp_event_type () override;
   ///Get the RAPI event that last occurred
 
   /// GQoS version.
-  virtual int version ();
+  int version () override;
 
   /// The factory is a friend so it can create this object through
   /// the only private constructor.
