@@ -8,21 +8,21 @@
 #include "ace/Thread.h"
 #include "ace/Get_Opt.h"
 
+#include <string>
+
 TAO_SYNCH_MUTEX test_lock;
 ACE_Condition<TAO_SYNCH_MUTEX> cond (test_lock);
 bool is_ok {};
-CORBA::ORB_var orb;
-
-ACE_TCHAR const *ior = ACE_TEXT ("corbaloc::localhost:5678/Test");
+CORBA::ORB_var orb {};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -31,13 +31,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
+                           "usage:  %s -k <ior>\n",
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -56,20 +53,23 @@ ACE_THR_FUNC_RETURN failsafe (void *)
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
-int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("corbaloc::localhost:5678/Test")};
+      if (parse_args (argc, argv, ior) != 0)
+        return 1;
+
       orb = CORBA::ORB_init (argc, argv);
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       // Set the tcp protocol properties
-      RTCORBA::TCPProtocolProperties_var tcp_properties =
+      RTCORBA::TCPProtocolProperties_var const tcp_properties =
         rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 1, 0, 1, 0);
@@ -88,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         rt_orb->create_client_protocol_policy (protocols);
       object = orb->resolve_initial_references ("ORBPolicyManager");
 
-      CORBA::PolicyManager_var policy_manager =
+      CORBA::PolicyManager_var const policy_manager =
         CORBA::PolicyManager::_narrow (object.in ());
 
       policy_manager->set_policy_overrides (policy_list,
@@ -99,8 +99,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Thread::spawn (failsafe);
 
-      object = orb->string_to_object ("corbaloc::localhost:5678/Test");
-      Test::Hello_var hello = Test::Hello::_narrow (object.in ());
+      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
+      Test::Hello_var const hello = Test::Hello::_narrow (object.in ());
 
       is_ok = true;
       test_lock.acquire ();
@@ -108,7 +108,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_lock.release ();
       ACE_DEBUG ((LM_DEBUG, "SUCCESS: test did not spin.\n"));
 
-      CORBA::String_var the_string = hello->get_string ();
+      CORBA::String_var const the_string = hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
                   the_string.in ()));
