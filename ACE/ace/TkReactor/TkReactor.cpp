@@ -11,9 +11,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_TkReactor)
 ACE_TkReactor::ACE_TkReactor (size_t size,
                               bool restart,
                               ACE_Sig_Handler *h)
-  : ACE_Select_Reactor (size, restart, h),
-    ids_ (0),
-    timeout_ (0)
+  : ACE_Select_Reactor (size, restart, h)
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
   // pipe and registers it with the register_handler_i() method. The
@@ -32,15 +30,23 @@ ACE_TkReactor::ACE_TkReactor (size_t size,
 #endif /* ACE_MT_SAFE */
 }
 
+ACE_TkReactorID::~ACE_TkReactorID () = default;
+
 ACE_TkReactor::~ACE_TkReactor ()
 {
-  // Delete the remaining items in the linked list.
-
-  while (this->ids_)
+  if (this->timeout_ != nullptr)
     {
-      ACE_TkReactorID *TkID = this->ids_->next_;
+      ::Tk_DeleteTimerHandler (this->timeout_);
+      this->timeout_ = nullptr;
+    }
+
+  // Delete the remaining items in the linked list.
+  while (this->ids_ != nullptr)
+    {
+      ::Tk_DeleteFileHandler (this->ids_->handle_);
+      ACE_TkReactorID *const next = this->ids_->next_;
       delete this->ids_;
-      this->ids_ = TkID;
+      this->ids_ = next;
     }
 }
 
@@ -81,8 +87,8 @@ ACE_TkReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
 void
 ACE_TkReactor::TimerCallbackProc (ClientData cd)
 {
-  ACE_TkReactor *self = (ACE_TkReactor *) cd;
-  self->timeout_ = 0;
+  ACE_TkReactor *const self = static_cast<ACE_TkReactor *> (cd);
+  self->timeout_ = nullptr;
 
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
@@ -102,12 +108,12 @@ void
 ACE_TkReactor::InputCallbackProc (ClientData cd,
                                   int /* mask */)
 {
-  ACE_TkReactor_Input_Callback *callback = (ACE_TkReactor_Input_Callback *) cd;
-  ACE_TkReactor *self = callback->reactor_;
-  ACE_HANDLE handle = callback->handle_;
+  ACE_TkReactor_Input_Callback *const callback =
+    static_cast<ACE_TkReactor_Input_Callback *> (cd);
+  ACE_TkReactor *const self = callback->reactor_;
+  ACE_HANDLE const handle = callback->handle_;
 
-  // my copy isn't const.
-  ACE_Time_Value zero = ACE_Time_Value::zero;
+  ACE_Time_Value const zero (ACE_Time_Value::zero);
 
   ACE_Select_Reactor_Handle_Set wait_set;
 
@@ -121,10 +127,11 @@ ACE_TkReactor::InputCallbackProc (ClientData cd,
   if (self->wait_set_.ex_mask_.is_set (handle))
     wait_set.ex_mask_.set_bit (handle);
 
-  int result = ACE_OS::select (handle + 1,
-                               wait_set.rd_mask_,
-                               wait_set.wr_mask_,
-                               wait_set.ex_mask_, &zero);
+  int const result = ACE_OS::select (handle + 1,
+                                     wait_set.rd_mask_,
+                                     wait_set.wr_mask_,
+                                     wait_set.ex_mask_,
+                                     &zero);
 
   ACE_Select_Reactor_Handle_Set dispatch_set;
 
@@ -154,7 +161,7 @@ ACE_TkReactor::TkWaitForMultipleEvents (int width,
                       temp_set.rd_mask_,
                       temp_set.wr_mask_,
                       temp_set.ex_mask_,
-                      (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+                      &ACE_Time_Value::zero) == -1)
     return -1; // Bad file arguments...
 
   // Instead of waiting using <select>, just use the Tk mechanism to
@@ -172,7 +179,7 @@ ACE_TkReactor::TkWaitForMultipleEvents (int width,
                          wait_set.rd_mask_,
                          wait_set.wr_mask_,
                          wait_set.ex_mask_,
-                         (ACE_Time_Value *) &ACE_Time_Value::zero);
+                         &ACE_Time_Value::zero);
 }
 
 int
@@ -182,14 +189,15 @@ ACE_TkReactor::register_handler_i (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_TkReactor::register_handler_i");
 
-  int result = ACE_Select_Reactor::register_handler_i (handle,
-                                                       handler, mask);
+  int const result = ACE_Select_Reactor::register_handler_i (handle,
+                                                             handler,
+                                                             mask);
   if (result == -1)
     return -1;
 
-  int condition = 0;
+  int condition {};
 
-#if !defined ACE_WIN32
+#if !defined (ACE_WIN32)
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (condition, TK_READABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
@@ -198,74 +206,80 @@ ACE_TkReactor::register_handler_i (ACE_HANDLE handle,
     ACE_SET_BITS (condition, TK_EXCEPTION);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
     ACE_SET_BITS (condition, TK_READABLE);
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)){
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
+    {
       ACE_SET_BITS (condition, TK_READABLE); // connected, you may write
       ACE_SET_BITS (condition, TK_WRITABLE);  // connected, you have data/err
-  }
+    }
 #else
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (condition, TK_READABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
     ACE_SET_BITS (condition, TK_WRITABLE);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_NOTSUP_RETURN(-1);
+    ACE_NOTSUP_RETURN (-1);
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
     ACE_SET_BITS (condition, TK_READABLE);
-  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)){
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
+    {
       ACE_SET_BITS (condition, TK_READABLE); // connected, you may write
       ACE_SET_BITS (condition, TK_WRITABLE);  // connected, you have data/err
-  }
+    }
 #endif /* !ACE_WIN32 */
 
   if (condition != 0)
     {
-      ACE_TkReactorID *TkID = this->ids_;
+      ACE_TkReactorID *tk_id = this->ids_;
 
-      while(TkID)
+      while (tk_id != nullptr)
         {
-          if (TkID->handle_ == handle)
+          if (tk_id->handle_ == handle)
             {
-              ::Tk_DeleteFileHandler (TkID->handle_);
+              ::Tk_DeleteFileHandler (tk_id->handle_);
 
-              ACE_TkReactor_Input_Callback *callback;
+              ACE_TkReactor_Input_Callback *callback {};
               ACE_NEW_RETURN (callback,
                               ACE_TkReactor_Input_Callback,
                               -1);
-              callback->reactor_ = this;
-              callback->handle_ = handle;
-              ::Tk_CreateFileHandler ((int) handle,
+              tk_id->callback_.reset (callback);
+              tk_id->callback_->reactor_ = this;
+              tk_id->callback_->handle_ = handle;
+              ::Tk_CreateFileHandler (static_cast<int> (handle),
                                       condition,
                                       InputCallbackProc,
-                                      (ClientData) callback);
+                                      tk_id->callback_.get ());
               return 0;
             }
           else
-            TkID = TkID->next_;
+            tk_id = tk_id->next_;
         }
 
-      ACE_NEW_RETURN (TkID,
+      ACE_TkReactorID *new_tk_id {};
+      ACE_NEW_RETURN (new_tk_id,
                       ACE_TkReactorID,
                       -1);
-      TkID->next_ = this->ids_;
-      TkID->handle_ = handle;
-      ACE_TkReactor_Input_Callback *callback;
+      std::unique_ptr<ACE_TkReactorID> tk_id_owner (new_tk_id);
+      tk_id_owner->next_ = this->ids_;
+      tk_id_owner->handle_ = handle;
+      ACE_TkReactor_Input_Callback *callback {};
       ACE_NEW_RETURN (callback,
                       ACE_TkReactor_Input_Callback,
                       -1);
-      callback->reactor_ = this;
-      callback->handle_ = handle;
+      tk_id_owner->callback_.reset (callback);
+      tk_id_owner->callback_->reactor_ = this;
+      tk_id_owner->callback_->handle_ = handle;
 
-      ::Tk_CreateFileHandler ((int) handle,
+      ::Tk_CreateFileHandler (static_cast<int> (handle),
                               condition,
                               InputCallbackProc,
-                              (ClientData) callback);
-      this->ids_ = TkID;
+                              tk_id_owner->callback_.get ());
+      this->ids_ = tk_id_owner.release ();
     }
   return 0;
 }
 
 int
-ACE_TkReactor::register_handler_i (const ACE_Handle_Set &handles,
+ACE_TkReactor::register_handler_i (ACE_Handle_Set const &handles,
                                    ACE_Event_Handler *handler,
                                    ACE_Reactor_Mask mask)
 {
@@ -297,40 +311,40 @@ ACE_TkReactor::remove_TkFileHandler (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_TkReactor::remove_TkFileHandler");
 
-  ACE_TkReactorID *TkID = this->ids_;
+  ACE_TkReactorID *tk_id = this->ids_;
 
-  if (TkID)
+  if (tk_id != nullptr)
     {
-      if (TkID->handle_ == handle)
+      if (tk_id->handle_ == handle)
         {
-          ::Tk_DeleteFileHandler (TkID->handle_);
-          this->ids_ = TkID->next_;
-          delete TkID;
+          ::Tk_DeleteFileHandler (tk_id->handle_);
+          this->ids_ = tk_id->next_;
+          delete tk_id;
           return;
         }
 
-      ACE_TkReactorID *NextID = TkID->next_;
+      ACE_TkReactorID *next_id = tk_id->next_;
 
-      while (NextID)
+      while (next_id != nullptr)
         {
-          if (NextID->handle_ == handle)
+          if (next_id->handle_ == handle)
             {
-              ::Tk_DeleteFileHandler (NextID->handle_);
-              TkID->next_ = NextID->next_;
-              delete NextID;
+              ::Tk_DeleteFileHandler (next_id->handle_);
+              tk_id->next_ = next_id->next_;
+              delete next_id;
               return;
             }
           else
             {
-              TkID = NextID;
-              NextID = NextID->next_;
+              tk_id = next_id;
+              next_id = next_id->next_;
             }
         }
     }
 }
 
 int
-ACE_TkReactor::remove_handler_i (const ACE_Handle_Set &handles,
+ACE_TkReactor::remove_handler_i (ACE_Handle_Set const &handles,
                                  ACE_Reactor_Mask mask)
 {
   return ACE_Select_Reactor::remove_handler_i (handles,
@@ -343,28 +357,28 @@ ACE_TkReactor::remove_handler_i (const ACE_Handle_Set &handles,
 void
 ACE_TkReactor::reset_timeout ()
 {
-  if (this->timeout_)
+  if (this->timeout_ != nullptr)
     ::Tk_DeleteTimerHandler (this->timeout_);
-  timeout_ = 0;
+  this->timeout_ = nullptr;
 
-  ACE_Time_Value *max_wait_time =
+  ACE_Time_Value const *max_wait_time =
     this->timer_queue_->calculate_timeout (0);
 
-  if (max_wait_time)
-    timeout_ = ::Tk_CreateTimerHandler (max_wait_time->msec (),
-                                        TimerCallbackProc,
-                                        (ClientData) this);
+  if (max_wait_time != nullptr)
+    this->timeout_ = ::Tk_CreateTimerHandler (max_wait_time->msec (),
+                                              TimerCallbackProc,
+                                              this);
 }
 
 int
 ACE_TkReactor::reset_timer_interval
   (long timer_id,
-   const ACE_Time_Value &interval)
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_TkReactor::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  int result = ACE_Select_Reactor::timer_queue_->reset_interval
+  int const result = ACE_Select_Reactor::timer_queue_->reset_interval
     (timer_id,
      interval);
 
@@ -379,17 +393,17 @@ ACE_TkReactor::reset_timer_interval
 
 long
 ACE_TkReactor::schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval)
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_TkReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  long result = ACE_Select_Reactor::schedule_timer (event_handler,
-                                                    arg,
-                                                    delay,
-                                                    interval);
+  long const result = ACE_Select_Reactor::schedule_timer (event_handler,
+                                                          arg,
+                                                          delay,
+                                                          interval);
   if (result == -1)
     return -1;
   else
@@ -417,7 +431,7 @@ ACE_TkReactor::cancel_timer (ACE_Event_Handler *handler,
 
 int
 ACE_TkReactor::cancel_timer (long timer_id,
-                             const void **arg,
+                             void const **arg,
                              int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_TkReactor::cancel_timer");
