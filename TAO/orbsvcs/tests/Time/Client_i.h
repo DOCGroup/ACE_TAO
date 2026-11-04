@@ -15,6 +15,8 @@
 #include "orbsvcs/TimeServiceC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
+#include <string>
+
 /**
  * @class Client_i
  *
@@ -28,10 +30,15 @@ class Client_i
 {
 public:
   /// Constructor.
-  Client_i ();
+  Client_i () = default;
 
   /// Destructor.
-  ~Client_i ();
+  ~Client_i () = default;
+
+  Client_i (Client_i const &) = delete;
+  Client_i &operator= (Client_i const &) = delete;
+  Client_i (Client_i &&) = delete;
+  Client_i &operator= (Client_i &&) = delete;
 
   /// Execute client example code.
   int run ();
@@ -60,28 +67,22 @@ public:
 
 private:
   /// Function to read the server IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args ();
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// To initialize the naming service and get a clerk IOR.
-   int obtain_initial_references ();
-
-  /// # of arguments on the command line.
-  int argc_;
-
-  /// arguments from command line.
-  ACE_TCHAR **argv_;
+  int obtain_initial_references ();
 
   /// IOR of the obj ref of the server.
-  char *ior_;
+  std::string ior_;
 
   /// Number of times to invoke the <time> operation.
-  u_int loop_count_;
+  u_int loop_count_ {10};
 
   /// Flag for server shutdown.
-  int shutdown_;
+  bool shutdown_ {};
 
   /// Time Service Server object ptr.
   CosTime::TimeService_var clerk_;
