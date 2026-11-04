@@ -5,17 +5,19 @@
 #include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-bool shutdown_server {};
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior,
+            bool &shutdown_server)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:x"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -40,7 +42,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Client : public ACE_Task_Base
 {
 public:
-  explicit Client (CORBA::ORB_ptr server);
+  explicit Client (CORBA::ORB_ptr const server);
   Client (Client const &) = delete;
   Client (Client &&) = delete;
   Client &operator= (Client const &) = delete;
@@ -49,24 +51,24 @@ public:
   int svc () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      if (parse_args (argc, argv) != 0)
+      std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+      bool shutdown_server {};
+      if (parse_args (argc, argv, ior, shutdown_server) != 0)
         return 1;
 
-      // Set round-trip timeout
-      int const timeout_secs {5};
-
-      CORBA::Object_var obj = orb->resolve_initial_references ("ORBPolicyManager");
-      CORBA::PolicyManager_var policy_manager =
+      constexpr int timeout_secs = 5;
+      CORBA::Object_var const obj = orb->resolve_initial_references ("ORBPolicyManager");
+      CORBA::PolicyManager_var const policy_manager =
         CORBA::PolicyManager::_narrow (obj.in ());
 
       CORBA::PolicyList policy_list;
@@ -82,15 +84,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       policy_manager->set_policy_overrides (policy_list, CORBA::SET_OVERRIDE);
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
 
-      Test::Hello_var hello = Test::Hello::_narrow (tmp.in ());
+      Test::Hello_var const hello = Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
@@ -108,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               "Cannot activate client threads\n"),
                               1);
 
-          CORBA::String_var the_string;
+          CORBA::String_var the_string {};
           try
             {
               the_string = hello->get_string ();
@@ -141,7 +144,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Client::Client (CORBA::ORB_ptr orb)
+Client::Client (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -154,7 +157,7 @@ Client::svc ()
       ACE_OS::sleep (2);
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Shutting down ORB\n"));
-      orb_->shutdown (true);
+      this->orb_->shutdown (true);
     }
   catch (CORBA::Exception const &)
     {
