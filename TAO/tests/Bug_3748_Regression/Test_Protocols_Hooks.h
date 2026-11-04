@@ -68,8 +68,7 @@ public:
   CORBA::Long get_dscp_codepoint () override;
 
   void get_selector_hook (CORBA::Policy *model_policy,
-                          CORBA::Boolean
-                          &is_client_propagated,
+                          CORBA::Boolean &is_client_propagated,
                           CORBA::Short &server_priority) override;
 
   void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
