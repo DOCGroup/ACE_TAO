@@ -34,11 +34,11 @@ be_visitor_native_ch::visit_native (be_native *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
-  std::string const node_name = node->full_name ();
+  const std::string node_name = node->full_name ();
 
   if (node_name == "PortableServer::ServantLocator::Cookie")
     {
@@ -63,13 +63,13 @@ be_visitor_native_ch::visit_native (be_native *node)
 
       // strip  the "Seq" ending to get the sample's name
       constexpr std::size_t max_name_length = 2000;
-      std::size_t const node_name_length = node_name.size ();
+      const std::size_t node_name_length = node_name.size ();
       if (node_name_length >= max_name_length ||
           node_name_length <= 3)
         {
           return -1;
         }
-      std::string const sample_name =
+      const std::string sample_name =
         node_name.substr (0, node_name_length - 3);
 
       *os << be_nl_2
