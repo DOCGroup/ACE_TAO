@@ -29,7 +29,7 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
     be_valuetype_fwd *node
   )
 {
-  AST_Interface *fd = node->full_definition ();
+  AST_Interface * const fd = node->full_definition ();
 
   // Only a forward declared interface that is not defined in the same file
   // needs to have this generated here. The Any operators are needed by
@@ -45,8 +45,8 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  std::string macro = this->ctx_->export_macro ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  const std::string macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 
