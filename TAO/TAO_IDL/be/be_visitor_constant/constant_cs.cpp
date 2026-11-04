@@ -46,7 +46,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
                                  || etype == AST_Expression::EV_double
                                  || etype == AST_Expression::EV_longdouble));
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
