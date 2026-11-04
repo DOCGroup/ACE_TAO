@@ -1,4 +1,5 @@
 #include "test_i.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
 test_i::test_i (CORBA::ORB_ptr orb)
@@ -13,16 +14,15 @@ test_i::shutdown ()
 }
 
 CORBA::ULong
-test_i::method (CORBA::ULong work)
+test_i::method (CORBA::ULong const work)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Server: Working for %d milli seconds @ %T\n",
+              ACE_TEXT ("Server: Working for %u milli seconds @ %T\n"),
               work));
 
   // Time required to process this request. <work> is time units in
   // milli seconds.
-  ACE_Time_Value work_time (0,
-                            work * 1000);
+  ACE_Time_Value const work_time (0, work * 1000);
 
   ACE_OS::sleep (work_time);
 
