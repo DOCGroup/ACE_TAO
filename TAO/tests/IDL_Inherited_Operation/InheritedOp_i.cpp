@@ -1,7 +1,7 @@
 #include "InheritedOp_i.h"
 
 Derived_i::Derived_i (CORBA::ORB_ptr orb)
-  : orb_ (orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 

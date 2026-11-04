@@ -2,21 +2,23 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include <memory>
-#include <string>
 
-std::basic_string<ACE_TCHAR> ior_output_file = ACE_TEXT ("test.ior");
+struct Server_Options
+{
+  ACE_TString ior_output_file {ACE_TEXT ("test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -39,6 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
+      Server_Options options;
 
       CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -54,11 +57,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       // Keep the raw servant pointer until ownership transfers to ServantBase_var.
-      Derived_i *derived_impl = nullptr;
+      Derived_i *derived_impl {};
       ACE_NEW_RETURN (derived_impl,
                       Derived_i (orb.in ()),
                       1);
@@ -78,12 +81,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file>
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
+          ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output ")
                              ACE_TEXT ("file for writing IOR: %s\n"),
-                             ior_output_file.c_str ()),
+                             options.ior_output_file.c_str ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
@@ -95,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server - Exception caught:");
       return 1;

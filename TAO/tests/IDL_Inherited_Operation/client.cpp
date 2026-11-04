@@ -1,20 +1,22 @@
 #include "InheritedOpC.h"
 #include "ace/Get_Opt.h"
-#include <string>
 
-std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -33,17 +35,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  CORBA::ORB_var orb;
-  Outer::Derived_var target;
+  CORBA::ORB_var orb {};
+  Outer::Derived_var target {};
 
   try
     {
+      Client_Options options;
       orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var const tmp = orb->string_to_object (ior.c_str ());
+      CORBA::Object_var const tmp = orb->string_to_object (options.ior.c_str ());
 
       target = Outer::Derived::_narrow (tmp.in ());
 
@@ -52,7 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("Nil Outer::Derived ")
                              ACE_TEXT ("reference <%s>\n"),
-                             ior.c_str ()),
+                             options.ior.c_str ()),
                             1);
         }
 
@@ -61,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::BAD_OPERATION const&)
+  catch (CORBA::BAD_OPERATION const &)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("client - target operation ")
@@ -70,7 +73,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy  ();
       return 1;
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client - Exception caught:");
       target->shutdown ();
