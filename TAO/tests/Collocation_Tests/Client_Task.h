@@ -3,6 +3,7 @@
 #define COLLOCATED_TEST_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,14 +22,14 @@ public:
 
   Client_Task (Client_Task const &) = delete;
   Client_Task (Client_Task &&) = delete;
-  Client_Task & operator= (Client_Task const &) = delete;
-  Client_Task & operator= (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Thread entry point
   int svc () override;
 
 private:
-  ACE_TCHAR const * const input_;
+  std::basic_string<ACE_TCHAR> const input_;
 
   CORBA::ORB_var corb_;
 };

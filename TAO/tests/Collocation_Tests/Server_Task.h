@@ -11,6 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Manual_Event;
@@ -28,15 +29,15 @@ public:
 
   Server_Task (Server_Task const &) = delete;
   Server_Task (Server_Task &&) = delete;
-  Server_Task & operator= (Server_Task const &) = delete;
-  Server_Task & operator= (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
 
   /// Thread entry point
   int svc () override;
 
 private:
   /// Output file for IOR
-  ACE_TCHAR const * const output_;
+  std::basic_string<ACE_TCHAR> const output_;
 
   /// Manual event to wake up the main thread to create a client
   /// thread.

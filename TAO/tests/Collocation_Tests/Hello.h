@@ -21,15 +21,15 @@ public:
 
   Hello (Hello const &) = delete;
   Hello (Hello &&) = delete;
-  Hello & operator= (Hello const &) = delete;
-  Hello & operator= (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 
-  ACE_thread_t thr_id_;
+  ACE_thread_t const thr_id_;
 };
 
 #include /**/ "ace/post.h"
