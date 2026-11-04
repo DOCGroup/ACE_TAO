@@ -2,42 +2,40 @@
 #include "tao/DynamicAny/DynCommon.h"
 
 DynAnyAnalyzer::DynAnyAnalyzer (int argc, ACE_TCHAR *argv[])
-  : level_ (1u),
-    orb_ (CORBA::ORB_init (argc, argv)),
-    dany_fact_ (0)
+  : orb_ (CORBA::ORB_init (argc, argv))
 {
   if (CORBA::is_nil (orb_.in ()))
     {
       ACE_DEBUG ((LM_ERROR, "Could not init orb\n"));
-      throw 0;
+      throw CORBA::INITIALIZE ();
     }
 
-  CORBA::Object_var
-    obj (orb_->resolve_initial_references ("DynAnyFactory"));
-  dany_fact_ = DynamicAny::DynAnyFactory::_narrow(obj.in ());
+  CORBA::Object_var const obj (
+    orb_->resolve_initial_references ("DynAnyFactory"));
+  this->dany_fact_ = DynamicAny::DynAnyFactory::_narrow (obj.in ());
   if (CORBA::is_nil (dany_fact_.in ()))
     {
       ACE_DEBUG ((LM_ERROR, "Nil dynamic any factory after narrow\n"));
-      throw 0;
+      throw CORBA::INITIALIZE ();
     }
 }
 
 DynamicAny::DynAny_ptr
-DynAnyAnalyzer::DynAny_NoTrunc (const CORBA::Any &any)
+DynAnyAnalyzer::DynAny_NoTrunc (CORBA::Any const &any)
 {
   return this->dany_fact_
              ->create_dyn_any_without_truncation (any);
 }
 
 DynamicAny::DynAny_ptr
-DynAnyAnalyzer::DynAny (const CORBA::Any &any)
+DynAnyAnalyzer::DynAny (CORBA::Any const &any)
 {
   return this->dany_fact_
              ->create_dyn_any (any);
 }
 
 DynamicAny::DynAny_ptr
-DynAnyAnalyzer::DynAny (const CORBA::TypeCode_ptr &tc)
+DynAnyAnalyzer::DynAny (CORBA::TypeCode_ptr const &tc)
 {
   return this->dany_fact_
              ->create_dyn_any_from_type_code (tc);
@@ -45,17 +43,16 @@ DynAnyAnalyzer::DynAny (const CORBA::TypeCode_ptr &tc)
 
 void
 DynAnyAnalyzer::register_factory (
-  CORBA::ValueFactoryBase_var factory)
+  CORBA::ValueFactoryBase_var const &factory)
 {
-  factory_id * new_fact (
-    dynamic_cast<factory_id *> (factory.in()));
-  if (new_fact)
+  factory_id const * const new_fact =
+    dynamic_cast<factory_id const *> (factory.in ());
+  if (new_fact != nullptr)
     {
-      tab("Registering factory for ValueType ");
+      this->tab ("Registering factory for ValueType ");
       ACE_DEBUG ((LM_DEBUG, "%C\n", new_fact->id ()));
-      CORBA::ValueFactoryBase_var old_fact (
-        orb_->register_value_factory (
-          new_fact->id (), factory.in () ));
+      CORBA::ValueFactoryBase_var const old_fact (
+        this->orb_->register_value_factory (new_fact->id (), factory.in ()));
     }
 }
 
@@ -68,37 +65,34 @@ DynAnyAnalyzer::get_base_types (
   // First initialize to the fully derived type we are
   // starting with.
 
-  CORBA::ULong numberOfBases = 1u;
-  base_types.resize (numberOfBases);
+  base_types.resize (1);
   base_types[0] = TAO_DynAnyFactory::strip_alias (tc);
-  if (total_member_count)
+  if (total_member_count != nullptr)
     {
       *total_member_count = base_types[0]->member_count ();
     }
 
   // Obtain each derived type's basetype and add this to the list
 
-  CORBA::TypeCode_var
-    base (base_types[0]->concrete_base_type());
-  while (base.in() != nullptr &&
+  CORBA::TypeCode_var base (base_types[0]->concrete_base_type ());
+  while (base.in () != nullptr &&
          CORBA::tk_value ==
-         (base = TAO_DynAnyFactory::strip_alias (base.in()))
+         (base = TAO_DynAnyFactory::strip_alias (base.in ()))
          ->kind ())
     {
-      if (total_member_count)
+      if (total_member_count != nullptr)
         {
           *total_member_count += base->member_count ();
         }
 
-      base_types.resize (numberOfBases + 1);
-      base_types[numberOfBases++] = CORBA::TypeCode::_duplicate (base.in ());
-      base = base->concrete_base_type();
+      base_types.push_back (CORBA::TypeCode::_duplicate (base.in ()));
+      base = base->concrete_base_type ();
     }
 }
 
 CORBA::TypeCode_ptr
 DynAnyAnalyzer::get_correct_base_type (
-  const BaseTypesList_t &base_types,
+  BaseTypesList_t const &base_types,
   CORBA::ULong &index)
 {
   // We work backwards through the list of derived types,
@@ -108,9 +102,8 @@ DynAnyAnalyzer::get_correct_base_type (
   // derived type until that type's members are exhausted
   // and so on until we reach the member we have asked for.
 
-  CORBA::ULong
-    currentBase = base_types.size ();
-  if (!currentBase)
+  std::size_t current_base = base_types.size ();
+  if (current_base == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO_DynValue_i::get_correct_base_type () ")
@@ -118,10 +111,10 @@ DynAnyAnalyzer::get_correct_base_type (
       return nullptr;
     }
 
-  while (base_types[--currentBase]->member_count () <= index)
+  while (base_types[--current_base]->member_count () <= index)
     {
-      index -= base_types[currentBase]->member_count ();
-      if (!currentBase)
+      index -= base_types[current_base]->member_count ();
+      if (current_base == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("TAO_DynValue_i::get_correct_base_type () ")
@@ -132,7 +125,7 @@ DynAnyAnalyzer::get_correct_base_type (
 
   // Note that the "index" has now been reduced to the range
   // of the returning base_type.
-  return base_types[currentBase].in ();
+  return base_types[current_base].in ();
 }
 
 #define CASEE(type,CT,str) case CORBA::tk_##type: {\
@@ -145,12 +138,11 @@ DynAnyAnalyzer::get_correct_base_type (
 void
 DynAnyAnalyzer::analyze (
   DynamicAny::DynAny_ptr da,
-  CORBA::Boolean newline)
+  bool newline)
 {
-  CORBA::TypeCode_var tc (da->type ());
+  CORBA::TypeCode_var const tc (da->type ());
   CORBA::TCKind kind (tc->kind ());
-  CORBA::TypeCode_var
-    dup (CORBA::TypeCode::_duplicate (tc.in ()));
+  CORBA::TypeCode_var dup (CORBA::TypeCode::_duplicate (tc.in ()));
 
   // strip aliases
   while (CORBA::tk_alias == kind)
@@ -163,7 +155,7 @@ DynAnyAnalyzer::analyze (
     {
     case CORBA::tk_value_box:
       {
-        DynamicAny::DynValueBox_var
+        DynamicAny::DynValueBox_var const
           box (DynamicAny::DynValueBox::_narrow (da));
 
         if (!newline)
@@ -182,7 +174,7 @@ DynAnyAnalyzer::analyze (
           }
         else
           {
-            DynamicAny::DynAny_var
+            DynamicAny::DynAny_var const
               cc (box->current_component ());
             this->analyze (cc.in (), true);
           }
@@ -191,7 +183,7 @@ DynAnyAnalyzer::analyze (
 
     case CORBA::tk_value:
       {
-        DynamicAny::DynValue_var
+        DynamicAny::DynValue_var const
           dvt (DynamicAny::DynValue::_narrow (da));
 
         if (!newline)
@@ -206,7 +198,7 @@ DynAnyAnalyzer::analyze (
         BaseTypesList_t base_types;
         get_base_types (tc.in (), base_types);
 
-        for (CORBA::ULong i= 0u; i < base_types.size(); ++i)
+        for (std::size_t i = 0; i < base_types.size (); ++i)
           {
             if (i)
               {
@@ -240,7 +232,7 @@ DynAnyAnalyzer::analyze (
                         base_types[i]->id ()  ));
             ++level_;
           }
-         level_ -= base_types.size();
+        level_ -= base_types.size ();
 
         if (!(dvt->is_null ()))
           {
@@ -248,22 +240,22 @@ DynAnyAnalyzer::analyze (
             ++level_;
             if (da->seek (0)) do
               {
-                DynamicAny::DynAny_var
+                DynamicAny::DynAny_var const
                   cc (dvt->current_component ());
-                DynamicAny::FieldName_var
+                DynamicAny::FieldName_var const
                   fn (dvt->current_member_name ());
                 CORBA::ULong sub_member_number = member_number;
-                const CORBA::TypeCode_ptr
+                CORBA::TypeCode_ptr const
                   base = get_correct_base_type (
                            base_types,
                            sub_member_number);
-                const char *const visability =
+                char const * const visibility =
                   ((CORBA::PRIVATE_MEMBER ==
                     base->member_visibility (sub_member_number)) ?
                     "Private" : "Public ");
                 tab ("[");
                 ACE_DEBUG ((LM_DEBUG, "%03u] %C \"%C\": ",
-                  ++member_number, visability, fn.in ()   ));
+                  ++member_number, visibility, fn.in () ));
                 if (CORBA::is_nil (cc.in ()))
                   {
                     ACE_DEBUG ((LM_DEBUG, " {Null}\n"));
@@ -284,7 +276,7 @@ DynAnyAnalyzer::analyze (
 
     case CORBA::tk_struct:
       {
-        DynamicAny::DynStruct_var
+        DynamicAny::DynStruct_var const
           ds (DynamicAny::DynStruct::_narrow (da));
 
         if (newline)
@@ -300,9 +292,9 @@ DynAnyAnalyzer::analyze (
             ++level_;
             do
               {
-                DynamicAny::DynAny_var
+                DynamicAny::DynAny_var const
                   cc (ds->current_component ());
-                DynamicAny::FieldName_var
+                DynamicAny::FieldName_var const
                   fn (ds->current_member_name ());
 
                 tab ("Member = ");
@@ -330,7 +322,7 @@ DynAnyAnalyzer::analyze (
         tab ("Union: ");
         ACE_DEBUG ((LM_DEBUG, "%C \"%C\"",
                     tc->name (), tc->id () ));
-        DynamicAny::DynUnion_var
+        DynamicAny::DynUnion_var const
           value (DynamicAny::DynUnion::_narrow (da));
         if (value->has_no_active_member ())
           {
@@ -339,7 +331,7 @@ DynAnyAnalyzer::analyze (
         else
           {
             ACE_DEBUG ((LM_DEBUG, "\n"));
-            DynamicAny::DynAny_var disc (value->member ());
+            DynamicAny::DynAny_var const disc (value->member ());
             if (!CORBA::is_nil (disc.in ()))
               {
                 ++level_;
@@ -352,7 +344,7 @@ DynAnyAnalyzer::analyze (
 
     case CORBA::tk_enum:
       {
-        DynamicAny::DynEnum_var
+        DynamicAny::DynEnum_var const
           value (DynamicAny::DynEnum::_narrow (da));
 
         if (newline)
@@ -362,7 +354,7 @@ DynAnyAnalyzer::analyze (
         tab ("Enum: ");
         ACE_DEBUG ((LM_DEBUG, "%C \"%C\"",
                     tc->name (), tc->id () ));
-        CORBA::String_var s (value->get_as_string ());
+        CORBA::String_var const s (value->get_as_string ());
         ACE_DEBUG ((LM_DEBUG, " value %C\n", s.in()));
       }
       break; // end tk_enum
@@ -376,10 +368,10 @@ DynAnyAnalyzer::analyze (
           }
         else
           {
-            DynamicAny::DynSequence_var
+            DynamicAny::DynSequence_var const
               ds (DynamicAny::DynSequence::_narrow (da));
 
-            int i = 0;
+            CORBA::ULong i {};
             if (newline)
               {
                 ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -391,8 +383,8 @@ DynAnyAnalyzer::analyze (
                 do
                   {
                     tab ("");
-                    ACE_DEBUG ((LM_DEBUG, "[%03d]\n", i));
-                    DynamicAny::DynAny_var
+                    ACE_DEBUG ((LM_DEBUG, "[%03u]\n", i));
+                    DynamicAny::DynAny_var const
                       cc (ds->current_component ());
                     if (!CORBA::is_nil (cc.in ()))
                       {
@@ -419,8 +411,8 @@ DynAnyAnalyzer::analyze (
         for (CORBA::ULong i = 0u; i < len; ++i)
           {
             tab ("");
-            ACE_DEBUG ((LM_DEBUG, "[%03d]\n", i));
-            DynamicAny::DynAny_var
+            ACE_DEBUG ((LM_DEBUG, "[%03u]\n", i));
+            DynamicAny::DynAny_var const
               cc (da->current_component());
             if (!CORBA::is_nil (cc.in ()))
               {
@@ -435,8 +427,8 @@ DynAnyAnalyzer::analyze (
     case CORBA::tk_any:
       {
         tab ("Any\n");
-        CORBA::Any_var any (da->get_any ());
-        DynamicAny::DynAny_var
+        CORBA::Any_var const any (da->get_any ());
+        DynamicAny::DynAny_var const
           dynany (DynAny (any.in ()));
         if (!CORBA::is_nil (dynany.in ()))
           {
@@ -461,7 +453,7 @@ DynAnyAnalyzer::analyze (
 
     case CORBA::tk_string:
       {
-        CORBA::String_var b (da->get_string ());
+        CORBA::String_var const b (da->get_string ());
         if (!newline)
           {
             tab("");
@@ -473,8 +465,7 @@ DynAnyAnalyzer::analyze (
 
     case CORBA::tk_TypeCode:
       {
-        const CORBA::TCKind
-          kind =da->get_typecode ()->kind ();
+        CORBA::TCKind const kind = da->get_typecode ()->kind ();
         if (!newline)
           {
             tab("");
@@ -486,8 +477,7 @@ DynAnyAnalyzer::analyze (
 
     default:
       {
-        const CORBA::TCKind
-          kind = tc->kind ();
+        CORBA::TCKind const kind = tc->kind ();
         if (newline)
           {
             ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -501,12 +491,12 @@ DynAnyAnalyzer::analyze (
 }
 
 #define CASEBS(type,CT,str) case CORBA::tk_##type: {\
-  CORBA::CT##Seq_var seq (da->get_##type##_seq ());\
-  ++level_; CORBA::ULong len = seq->length ();\
+  CORBA::CT##Seq_var const seq (da->get_##type##_seq ());\
+  ++level_; CORBA::ULong const len = seq->length ();\
   tab ("length = "); ACE_DEBUG ((LM_DEBUG, "%u\n", len));\
   for (CORBA::ULong i = 0; i < len; ++i) {\
-    CORBA::CT b = seq[i];\
-    tab (""); ACE_DEBUG ((LM_DEBUG, "[%3d] ", i));\
+    CORBA::CT const b = seq[i];\
+    tab (""); ACE_DEBUG ((LM_DEBUG, "[%3u] ", i));\
     ACE_DEBUG ((LM_DEBUG, str, b)); }\
   --level_;\
 } break;
@@ -516,8 +506,8 @@ DynAnyAnalyzer::analyze_basic_seq (
   CORBA::TypeCode_ptr tc,
   DynamicAny::DynAny_ptr da)
 {
-  CORBA::TypeCode_var ct (tc->content_type ());
-  CORBA::TCKind tk = ct->kind ();
+  CORBA::TypeCode_var const ct (tc->content_type ());
+  CORBA::TCKind const tk = ct->kind ();
 
   tab ("BASIC Type Sequence - ");
   switch (tk)

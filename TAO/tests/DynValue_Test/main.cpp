@@ -1,7 +1,8 @@
 #include "Analyzer.h"
 
 //============= Test main() ============
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -11,16 +12,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // DynValue_Test::BoxedLong
       ////////////////////////////////////////////
 
-      const CORBA::Long l1= -157;
+      CORBA::Long const l1 = -157;
 
       ACE_DEBUG ((LM_DEBUG,
                   "%N:%l Creating DynValue_Test::BoxedLong\n"));
-      DynValue_Test::BoxedLong *p_myBoxedLong =0;
+      DynValue_Test::BoxedLong_var myBoxedLong {};
       ACE_NEW_THROW_EX (
-        p_myBoxedLong,
+        myBoxedLong,
         DynValue_Test::BoxedLong (l1),
         CORBA::NO_MEMORY ());
-      DynValue_Test::BoxedLong_var myBoxedLong (p_myBoxedLong);
       ACE_DEBUG ((LM_DEBUG,
                   "..%N:%l checking value, long is %d\n",
                   myBoxedLong->_value ()           ));
@@ -32,7 +32,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Inserting into an any\n"));
-      CORBA::Any myAny;
+      CORBA::Any myAny {};
       myAny <<= myBoxedLong.in ();
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Extracting from an any\n"));
@@ -67,10 +67,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Creating dynamic any from any\n"));
-      DynamicAny::DynAny_var dany_boxed (analyzer.DynAny (myAny));
+      DynamicAny::DynAny_var const dany_boxed (analyzer.DynAny (myAny));
       analyzer.analyze (dany_boxed.in ());
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-null\n"));
+      // Borrowed interface pointer; the owning DynAny_var remains in scope.
       DynamicAny::DynValueCommon *dvc =
         dynamic_cast<DynamicAny::DynValueCommon *> (dany_boxed.in ());
       if (!dvc)
@@ -257,17 +258,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // DynValue_Test::NestedValue
       ////////////////////////////////////////////
 
-      const CORBA::Short s1= -17;
-      const CORBA::Short s2= -23;
+      CORBA::Short const s1 = -17;
+      CORBA::Short const s2 = -23;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n%N:%l Creating DynValue_Test::NestedValue\n"));
-      DynValue_Test::NestedValue *p_myNestedValue =0;
+      DynValue_Test::NestedValue_var myNestedValue {};
       ACE_NEW_THROW_EX (
-        p_myNestedValue,
-        NestedValue_impl(s1, s2),
+        myNestedValue,
+        NestedValue_impl (s1, s2),
         CORBA::NO_MEMORY ());
-      DynValue_Test::NestedValue_var myNestedValue (p_myNestedValue);
       ACE_DEBUG ((LM_DEBUG,
                   "..%N:%l checking value, shorts are %hd, %hd\n",
                   myNestedValue->Nested_s1 (),
@@ -317,7 +317,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Creating dynamic any from any\n"));
-      DynamicAny::DynAny_var dany_nested = analyzer.DynAny (myAny);
+      DynamicAny::DynAny_var const dany_nested = analyzer.DynAny (myAny);
       analyzer.analyze (dany_nested.in ());
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-Null\n"));
@@ -492,12 +492,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               return 1;
             }
         }
-      catch (const CORBA::MARSHAL &)
+      catch (CORBA::MARSHAL const &)
         {
           // Expected with no factory registered
         }
 
-      CORBA::ValueFactoryBase *vf = nullptr;
+      CORBA::ValueFactoryBase_var vf {};
       ACE_NEW_THROW_EX (vf, NestedValue_Factory, CORBA::NO_MEMORY ());
       analyzer.register_factory (vf);
 
@@ -558,9 +558,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ////////////////////////////////////////////
 
       ACE_DEBUG ((LM_DEBUG, "\n%N:%l Creating DynValue_Test::NullValue\n"));
-      DynValue_Test::NullValue *p_myNullValue =0;
-      ACE_NEW_THROW_EX (p_myNullValue, NullValue_impl, CORBA::NO_MEMORY ());
-      DynValue_Test::NullValue_var myNullValue (p_myNullValue);
+      DynValue_Test::NullValue_var myNullValue {};
+      ACE_NEW_THROW_EX (myNullValue, NullValue_impl, CORBA::NO_MEMORY ());
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Inserting into an any\n"));
       myAny <<= myNullValue.in ();
@@ -586,7 +585,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Creating dynamic any from any\n"));
-      DynamicAny::DynAny_var dany_null (analyzer.DynAny (myAny));
+      DynamicAny::DynAny_var const dany_null (analyzer.DynAny (myAny));
       analyzer.analyze (dany_null.in ());
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-Null\n"));
@@ -722,7 +721,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               return 1;
             }
         }
-      catch (const CORBA::MARSHAL &)
+      catch (CORBA::MARSHAL const &)
         {
           // Expected with no factory registered
         }
@@ -760,17 +759,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // DynValue_Test::Trunc
       ////////////////////////////////////////////
 
-      const CORBA::Short us1= 12345;
-      const CORBA::Short us2= 321;
+      CORBA::Short const us1 = 12345;
+      CORBA::Short const us2 = 321;
 
-      DynValue_Test::NullValue *p_myNullValue2 =0;
-      ACE_NEW_THROW_EX (p_myNullValue2, NullValue_impl, CORBA::NO_MEMORY ());
-      DynValue_Test::NullValue_var myNullValue2 (p_myNullValue2);
+      DynValue_Test::NullValue_var myNullValue2 {};
+      ACE_NEW_THROW_EX (myNullValue2, NullValue_impl, CORBA::NO_MEMORY ());
 
       ACE_DEBUG ((LM_DEBUG, "\n%N:%l Creating DynValue_Test::Trunc\n"));
-      DynValue_Test::Trunc *p_myTrunc =0;
+      DynValue_Test::Trunc_var myTrunc {};
       ACE_NEW_THROW_EX (
-        p_myTrunc,
+        myTrunc,
         Trunc_impl (
           us1,
           us2,
@@ -780,7 +778,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           dynamic_cast<NullValue_impl *> (myNullValue.in ()),
           dynamic_cast<NullValue_impl *> (myNullValue2.in ())     ),
         CORBA::NO_MEMORY ());
-      DynValue_Test::Trunc_var myTrunc (p_myTrunc);
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l checking embedded values, "));
       myTrunc->print ();
@@ -823,7 +820,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Creating dynamic any from any\n"));
-      DynamicAny::DynAny_var dany_trunc (analyzer.DynAny (myAny));
+      DynamicAny::DynAny_var const dany_trunc (analyzer.DynAny (myAny));
       analyzer.analyze (dany_trunc.in ());
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-Null\n"));
@@ -1034,7 +1031,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               return 1;
             }
         }
-      catch (const CORBA::MARSHAL &)
+      catch (CORBA::MARSHAL const &)
         {
           // Expected with no factory registered
         }
@@ -1095,7 +1092,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ///////////////////////////////////////////////////
 
       ACE_DEBUG ((LM_DEBUG, "\n%N:%l Placing DynValue_Test::Trunc into DynValue_Test::BaseValue\n"));
-      DynValue_Test::BaseValue::_ptr_type p_myBaseValue = myTrunc.in ();
+      DynValue_Test::BaseValue::_ptr_type const p_myBaseValue = myTrunc.in ();
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l checking values, "));
       p_myBaseValue->print ();
@@ -1136,7 +1133,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Creating dynamic any from any\n"));
-      DynamicAny::DynAny_var dany_base (analyzer.DynAny (myAny_trunc));
+      DynamicAny::DynAny_var const dany_base (analyzer.DynAny (myAny_trunc));
       analyzer.analyze (dany_base.in ());
 
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Testing dynamic any for non-Null\n"));
@@ -1195,27 +1192,28 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Creating dynamic any from truncted any (no truncation allowed)\n"));
       try
         {
-          DynamicAny::DynAny_var dany_base (analyzer.DynAny_NoTrunc (myAny_trunc));
+          DynamicAny::DynAny_var const dany_base (
+            analyzer.DynAny_NoTrunc (myAny_trunc));
           ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED, obtained Dynamic any\n"));
           analyzer.analyze (dany_base.in ());
           return 1;
         }
-      catch (const DynamicAny::MustTruncate &)
+      catch (DynamicAny::MustTruncate const &)
         {
           ACE_DEBUG ((LM_DEBUG, "..%N:%l obtained MustTruncate as expected\n"));
         }
 
       ACE_DEBUG ((LM_DEBUG, "\nAll tests passed\n"));
     }
-  catch (const CORBA::TRANSIENT &)
+  catch (CORBA::TRANSIENT const &)
     {
       ACE_DEBUG ((LM_INFO, "Transient\n"));
     }
-  catch (const CORBA::COMM_FAILURE &)
+  catch (CORBA::COMM_FAILURE const &)
     {
       ACE_DEBUG ((LM_INFO, "COMM_FAILURE\n"));
     }
-  catch (const CORBA::Exception & ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Tests failed with CORBA exception:");
       return 1;

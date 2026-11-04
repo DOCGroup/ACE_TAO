@@ -6,7 +6,7 @@
 CORBA::ValueBase *
 BaseValue_impl::_copy_value ()
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   ACE_NEW_THROW_EX (
     vb,
     BaseValue_impl (this->Base_us1 (), this->Base_us2 ()),
@@ -22,23 +22,26 @@ BaseValue_impl::print ()
               this->Base_us2 () ));
 }
 
-const char * BaseValue_Factory::id () const
+char const *
+BaseValue_Factory::id () const
 {
   return DynValue_Test::_tc_BaseValue->id ();
 }
 
-CORBA::ValueBase * BaseValue_Factory::create_for_unmarshal ()
+CORBA::ValueBase *
+BaseValue_Factory::create_for_unmarshal ()
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   ACE_NEW_THROW_EX (vb, BaseValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
 
 //============= "Nested" Value Type implimentation =======
 
-CORBA::ValueBase * NestedValue_impl::_copy_value ()
+CORBA::ValueBase *
+NestedValue_impl::_copy_value ()
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   ACE_NEW_THROW_EX (
     vb,
     NestedValue_impl (this->Nested_s1 (), this->Nested_s2 ()),
@@ -46,49 +49,55 @@ CORBA::ValueBase * NestedValue_impl::_copy_value ()
   return vb;
 }
 
-const char * NestedValue_Factory::id () const
+char const *
+NestedValue_Factory::id () const
 {
   return DynValue_Test::_tc_NestedValue->id ();
 }
 
-CORBA::ValueBase * NestedValue_Factory::create_for_unmarshal ()
+CORBA::ValueBase *
+NestedValue_Factory::create_for_unmarshal ()
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   ACE_NEW_THROW_EX (vb, NestedValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
 
 //============= "Null" Value Type implimentation =======
 
-CORBA::ValueBase * NullValue_impl::_copy_value ()
+CORBA::ValueBase *
+NullValue_impl::_copy_value ()
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   ACE_NEW_THROW_EX (vb, NullValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
 
-const char * NullValue_Factory::id () const
+char const *
+NullValue_Factory::id () const
 {
   return DynValue_Test::_tc_NullValue->id ();
 }
 
-CORBA::ValueBase * NullValue_Factory::create_for_unmarshal ()
+CORBA::ValueBase *
+NullValue_Factory::create_for_unmarshal ()
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   ACE_NEW_THROW_EX (vb, NullValue_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
 
 //============= "Trunc" Value Type implimentation =======
 
-CORBA::ValueBase * Trunc_impl::_copy_value ()
+CORBA::ValueBase *
+Trunc_impl::_copy_value ()
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   ACE_NEW_THROW_EX (
     vb,
     Trunc_impl (
-      this->Base_us1(),
-      this->Base_us2(),
+      this->Base_us1 (),
+      this->Base_us2 (),
       dynamic_cast<DynValue_Test::BoxedLong *>
         (this->Trunc_bl ()->_copy_value()),
       dynamic_cast<NestedValue_impl *>
@@ -110,25 +119,27 @@ Trunc_impl::print ()
               ACE_TEXT ("BaseValue (Base_us1 %u, Base_us2 %u) ")
               ACE_TEXT ("Trunc (Trunc_bl (long %d), ")
               ACE_TEXT ("Trunc_nested (Nested_s1 %d, Nested_s2 %d), ")
-              ACE_TEXT ("3xTrunc_null (%x %x %x))\n"),
+              ACE_TEXT ("3xTrunc_null (%d %d %d))\n"),
               this->Base_us1 (),
               this->Base_us2 (),
-              this->Trunc_bl()->_value (),
-              this->Trunc_nested()->Nested_s1 (),
-              this->Trunc_nested()->Nested_s2 (),
-              (void *) this->Trunc_null1(),
-              (void *) this->Trunc_null2(),
-              (void *) this->Trunc_null3()  ));
+              this->Trunc_bl ()->_value (),
+              this->Trunc_nested ()->Nested_s1 (),
+              this->Trunc_nested ()->Nested_s2 (),
+              this->Trunc_null1 () != nullptr,
+              this->Trunc_null2 () != nullptr,
+              this->Trunc_null3 () != nullptr));
 }
 
-const char * Trunc_Factory::id () const
+char const *
+Trunc_Factory::id () const
 {
   return DynValue_Test::_tc_Trunc->id ();
 }
 
-CORBA::ValueBase * Trunc_Factory::create_for_unmarshal ()
+CORBA::ValueBase *
+Trunc_Factory::create_for_unmarshal ()
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   ACE_NEW_THROW_EX (vb, Trunc_impl (), CORBA::NO_MEMORY ());
   return vb;
 }
