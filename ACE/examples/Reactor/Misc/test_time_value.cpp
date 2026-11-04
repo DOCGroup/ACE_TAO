@@ -5,7 +5,7 @@
 #include "ace/Time_Value.h"
 
 
-inline int my_abs (int d) { return d > 0 ? d : -d; }
+constexpr int my_abs (int d) { return d > 0 ? d : -d; }
 
 ostream &
 operator<< (ostream &stream, const ACE_Time_Value &tv)
@@ -22,12 +22,12 @@ operator<< (ostream &stream, const ACE_Time_Value &tv)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_Time_Value tv1;
-  ACE_Time_Value tv2 (2);
-  ACE_Time_Value tv3 (100);
-  ACE_Time_Value tv4 (1, 1000000);
-  ACE_Time_Value tv5 (2);
-  ACE_Time_Value tv6 (1, -1000000);
+  ACE_Time_Value const tv1;
+  ACE_Time_Value const tv2 (2);
+  ACE_Time_Value const tv3 (100);
+  ACE_Time_Value const tv4 (1, 1000000);
+  ACE_Time_Value const tv5 (2);
+  ACE_Time_Value const tv6 (1, -1000000);
 
   ACE_ASSERT (tv1 == ACE_Time_Value (0));
   ACE_ASSERT (tv2 < tv3);
