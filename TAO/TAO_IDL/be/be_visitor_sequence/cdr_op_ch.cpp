@@ -40,7 +40,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  be_type *base_type = dynamic_cast<be_type*> (node->base_type ());
+  be_type * const base_type = dynamic_cast<be_type*> (node->base_type ());
 
   // If our base type is an anonymous sequence, generate code for it here.
   if (base_type->node_type () == AST_Decl::NT_sequence)
@@ -54,10 +54,10 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
-  be_type *bt = dynamic_cast<be_type*> (node);
-  be_typedef *tdef = dynamic_cast<be_typedef*> (bt);
+  be_type * const bt = dynamic_cast<be_type*> (node);
+  be_typedef * const tdef = dynamic_cast<be_typedef*> (bt);
 
   TAO_INSERT_COMMENT (os);
 
@@ -70,7 +70,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
           << "\n#define _TAO_CDR_OP_" << node->flat_name () << "_H_";
     }
 
-  bool alt = be_global->alt_mapping ();
+  bool const alt = be_global->alt_mapping ();
   std::string sequence_type;
 
   if (alt)

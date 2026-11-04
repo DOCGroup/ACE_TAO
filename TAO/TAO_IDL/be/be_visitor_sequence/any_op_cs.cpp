@@ -36,7 +36,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -48,7 +48,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
       if (bt->node_type () == AST_Decl::NT_typedef)
         {
-          be_typedef *td = dynamic_cast<be_typedef*> (bt);
+          be_typedef * const td = dynamic_cast<be_typedef*> (bt);
           bt = td->primitive_base_type ();
         }
 
@@ -180,7 +180,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   // If this is non-zero, we want to call its tc_name()
   // for the TypeCode to pass to the Any operator impls.
-  be_typedef *td = this->ctx_->tdef ();
+  be_typedef * const td = this->ctx_->tdef ();
 
   *os << be_global->anyops_versioning_begin () << be_nl;
 
