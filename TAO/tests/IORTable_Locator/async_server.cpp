@@ -7,11 +7,13 @@
 #include "tao/IORTable/IORTable.h"
 #include "tao/LocalObject.h"
 #include "tao/PortableServer/PortableServer.h"
+#include <string>
 
-CORBA::String_var testIOR;
-
-ACE_CString ior_table_name = "IORTable";
-bool use_async_locator = false;
+struct Server_Options
+{
+  std::string ior_table_name {"IORTable"};
+  bool use_async_locator {};
+};
 
 //*************************************************************************
 class AsyncLocatorTask
@@ -19,41 +21,46 @@ class AsyncLocatorTask
     public virtual CORBA::LocalObject
 {
 public:
-  AsyncLocatorTask (CORBA::ORB_ptr orb);
+  explicit AsyncLocatorTask (CORBA::ORB_ptr orb, std::string const &test_ior);
+  AsyncLocatorTask (AsyncLocatorTask const &) = delete;
+  AsyncLocatorTask (AsyncLocatorTask &&) = delete;
+  AsyncLocatorTask &operator= (AsyncLocatorTask const &) = delete;
+  AsyncLocatorTask &operator= (AsyncLocatorTask &&) = delete;
 
-  void async_locate (IORTable::Locate_ResponseHandler rh, const char *);
-  char * locate (const char *);
+  void async_locate (IORTable::Locate_ResponseHandler rh, char const *) override;
+  char *locate (char const *) override;
 
 private:
   CORBA::ORB_var orb_;
+  std::string test_ior_;
 };
 
 void
-AsyncLocatorTask::async_locate (IORTable::Locate_ResponseHandler rh, const char * id)
+AsyncLocatorTask::async_locate (IORTable::Locate_ResponseHandler rh, char const *id)
 {
-  CORBA::Object_var fwdObj = orb_->string_to_object(testIOR.in ());
-  CORBA::String_var fwdString = orb_->object_to_string(fwdObj.in ());
+  CORBA::Object_var const fwd_object = this->orb_->string_to_object (this->test_ior_.c_str ());
+  CORBA::String_var fwd_string = this->orb_->object_to_string (fwd_object.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("in async_locate!  Forwarding client %C to: %C\n"),
-              id, fwdString.in ()));
+              id, fwd_string.in ()));
 
-  rh->forward_ior (fwdString._retn(), false);
+  rh->forward_ior (fwd_string._retn (), false);
 }
 
 char *
-AsyncLocatorTask::locate (const char * id)
+AsyncLocatorTask::locate (char const *id)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("In async locator::locate, id = %C, throwing\n"),
               id));
   throw IORTable::NotFound ();
-  return 0;
 }
 
 
-AsyncLocatorTask::AsyncLocatorTask (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
+AsyncLocatorTask::AsyncLocatorTask (CORBA::ORB_ptr orb, std::string const &test_ior)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    test_ior_ (test_ior)
 {
 }
 
@@ -63,47 +70,53 @@ class SyncLocatorTask
     public virtual CORBA::LocalObject
 {
 public:
-  SyncLocatorTask (CORBA::ORB_ptr orb);
+  explicit SyncLocatorTask (CORBA::ORB_ptr orb, std::string const &test_ior);
+  SyncLocatorTask (SyncLocatorTask const &) = delete;
+  SyncLocatorTask (SyncLocatorTask &&) = delete;
+  SyncLocatorTask &operator= (SyncLocatorTask const &) = delete;
+  SyncLocatorTask &operator= (SyncLocatorTask &&) = delete;
 
-  char * locate (const char *);
+  char *locate (char const *) override;
 
 private:
   CORBA::ORB_var orb_;
+  std::string test_ior_;
 };
 
 char *
-SyncLocatorTask::locate (const char * id)
+SyncLocatorTask::locate (char const *id)
 {
-  CORBA::Object_var fwdObj = orb_->string_to_object(testIOR.in ());
-  CORBA::String_var fwdString = orb_->object_to_string(fwdObj.in ());
+  CORBA::Object_var const fwd_object = this->orb_->string_to_object (this->test_ior_.c_str ());
+  CORBA::String_var fwd_string = this->orb_->object_to_string (fwd_object.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("in synch locate: Forwarding client %C to: %C\n"),
               id,
-              fwdString.in ()));
+              fwd_string.in ()));
 
-  return fwdString._retn();
+  return fwd_string._retn ();
 }
 
-SyncLocatorTask::SyncLocatorTask (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
+SyncLocatorTask::SyncLocatorTask (CORBA::ORB_ptr orb, std::string const &test_ior)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    test_ior_ (test_ior)
 {
 }
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   for (int c = 1; c < argc; c++)
     {
       if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-aa")) == 0)
         {
-          ior_table_name = "AsyncIORTable";
-          use_async_locator = true;
+          options.ior_table_name = "AsyncIORTable";
+          options.use_async_locator = true;
         }
       else if (ACE_OS::strcasecmp (argv[c], ACE_TEXT ("-as")) == 0)
         {
-          ior_table_name = "AsyncIORTable";
-          use_async_locator = false;
+          options.ior_table_name = "AsyncIORTable";
+          options.use_async_locator = false;
         }
       else
         {
@@ -114,20 +127,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      Server_Options options;
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (argc, argv, options) == -1)
         return -1;
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -135,53 +147,52 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      Simple_Test_i *test_impl = 0;
+      Simple_Test_i *test_impl {};
       ACE_NEW_RETURN (test_impl,
                       Simple_Test_i (orb.in ()),
                       1);
       PortableServer::ServantBase_var owner_transfer (test_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (test_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      simple::SimpleTest_T_var theServer =
+      simple::SimpleTest_T_var const the_server =
         simple::SimpleTest_T::_narrow (object.in ());
 
-      testIOR = orb->object_to_string (theServer.in ());
+      CORBA::String_var const test_ior = orb->object_to_string (the_server.in ());
 
       poa_manager->activate ();
 
       // Create task.
-      IORTable::Locator_ptr iorloc_ptr;
-      if (use_async_locator)
+      IORTable::Locator_ptr iorloc_ptr {};
+      if (options.use_async_locator)
         {
           ACE_NEW_RETURN (iorloc_ptr,
-                          AsyncLocatorTask (orb.in ()),
+                          AsyncLocatorTask (orb.in (), test_ior.in ()),
                           1);
         }
       else
         {
           ACE_NEW_RETURN (iorloc_ptr,
-                          SyncLocatorTask (orb.in ()),
+                          SyncLocatorTask (orb.in (), test_ior.in ()),
                           1);
         }
-      IORTable::Locator_var iorloc = iorloc_ptr;
+      IORTable::Locator_var const iorloc (iorloc_ptr);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Server - using ior table object: %C\n"),
-                  ior_table_name.c_str()));
+                  options.ior_table_name.c_str()));
       // Resolve the IORTable and set the locator
-      CORBA::Object_var iorTableObj =
-        orb->resolve_initial_references(ior_table_name.c_str());
+      CORBA::Object_var const ior_table_object =
+        orb->resolve_initial_references (options.ior_table_name.c_str ());
 
-      IORTable::Table_var local_ior_table =
-        IORTable::Table::_narrow (iorTableObj.in ());
+      IORTable::Table_var const local_ior_table = IORTable::Table::_narrow (ior_table_object.in ());
 
-      local_ior_table->set_locator (iorloc.in());
+      local_ior_table->set_locator (iorloc.in ());
 
       orb->run ();
 
@@ -192,7 +203,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Server - Exception caught:"));
       return 1;

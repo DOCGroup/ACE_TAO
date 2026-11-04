@@ -2,19 +2,22 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-const ACE_TCHAR *testIOR = ACE_TEXT ("corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY");
+struct Client_Options
+{
+  ACE_TString test_ior {ACE_TEXT ("corbaloc:iiop:localhost:15989/SIMPLE_TEST_KEY")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'a':
-        testIOR = get_opts.opt_arg ();
+        options.test_ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -31,14 +34,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "MY_TEST_ORB");
+      Client_Options options;
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, "MY_TEST_ORB");
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       try
@@ -47,12 +50,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "OK, now try to resolve a remote "
                       "IORTable::Locator entry...\n"));
 
-          CORBA::Object_var clientObj = orb->string_to_object (testIOR);
+          CORBA::Object_var const client_object =
+            orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.test_ior.c_str ()));
 
-          simple::SimpleTest_T_var simpleTestClient =
-            simple::SimpleTest_T::_narrow (clientObj.in ());
+          simple::SimpleTest_T_var const simple_test_client =
+            simple::SimpleTest_T::_narrow (client_object.in ());
 
-          if (CORBA::is_nil (simpleTestClient.in ()))
+          if (CORBA::is_nil (simple_test_client.in ()))
             {
               ACE_ERROR ((LM_ERROR,
                           "Simpe client is nil!\n"));
@@ -62,15 +66,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "We narrowed the object, now let's invoke it!\n"));
 
-          simpleTestClient->shutdown ();
+          simple_test_client->shutdown ();
         }
-      catch(const CORBA::OBJ_ADAPTER &objAdapter)
+      catch (CORBA::OBJ_ADAPTER const &obj_adapter)
         {
-          objAdapter._tao_print_exception ("CAUGHT OBJ_ADAPTER!!!");
+          obj_adapter._tao_print_exception ("CAUGHT OBJ_ADAPTER!!!");
         }
-      catch(const CORBA::OBJECT_NOT_EXIST &objNE)
+      catch (CORBA::OBJECT_NOT_EXIST const &obj_not_exist)
         {
-          objNE._tao_print_exception ("CAUGHT OBJECT NOT EXIST!!!");
+          obj_not_exist._tao_print_exception ("CAUGHT OBJECT NOT EXIST!!!");
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -78,7 +82,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("CAUGHT EXCEPTION: ");
       return -1;
