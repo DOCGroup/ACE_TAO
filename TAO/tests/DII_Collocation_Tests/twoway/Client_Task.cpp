@@ -4,6 +4,9 @@
 #include "Client_Task.h"
 #include "TestC.h"
 #include "tao/Object.h"
+#include <cstring>
+#include <memory>
+#include <string>
 
 char TEST_STR[] = "This is a DII collocation test.";
 char NULL_STR[] = "";
@@ -21,7 +24,7 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
     , input_ (ior)
     , simple_test_input_ (simple_test_ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
-    , error_count_ (0)
+    , error_count_ {}
 {
 }
 
@@ -30,29 +33,29 @@ Client_Task::svc ()
 {
   try
     {
-      CORBA::Object_var obj =
-        this->corb_->string_to_object (input_);
+      CORBA::Object_var const obj =
+        this->corb_->string_to_object (input_.c_str ());
 
       if (CORBA::is_nil (obj.in ()))
       {
         ACE_ERROR_RETURN ((LM_DEBUG,
           "Nil Test::Hello reference <%s>\n",
-          input_),
+          input_.c_str ()),
           1);
       }
 
-      CORBA::Object_var simple_test_obj =
-        this->corb_->string_to_object (simple_test_input_);
+      CORBA::Object_var const simple_test_obj =
+        this->corb_->string_to_object (simple_test_input_.c_str ());
 
       if (CORBA::is_nil (simple_test_obj.in ()))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
           "Nil Test::Simple_Test reference <%s>\n",
-          simple_test_input_),
+          simple_test_input_.c_str ()),
           1);
       }
 
-      Test::Simple_Test_var simple_test
+      Test::Simple_Test_var const simple_test
         = Test::Simple_Test::_narrow (simple_test_obj.in ());
       CORBA::Long l = 200;
       CORBA::Request_var req (obj->_request ("test_basic_arg"));
@@ -64,9 +67,9 @@ Client_Task::svc ()
         for (CORBA::ULong count=0; count<req->arguments ()->count (); ++count)
         {
             CORBA::NamedValue_ptr arg = req->arguments ()->item (count);
-            if (ACE_OS::strcmp (arg->name (), "x") == 0)
+            if (std::strcmp (arg->name (), "x") == 0)
             {
-              CORBA::Long y = 0;
+              CORBA::Long y {};
               if (*(arg->value()) >>= y)
                 {
                   if (y != 10)
@@ -112,12 +115,12 @@ Client_Task::svc ()
         for (CORBA::ULong count=0; count<req->arguments ()->count (); ++count)
         {
             CORBA::NamedValue_ptr arg = req->arguments ()->item (count);
-            if (ACE_OS::strcmp (arg->name (), "x") == 0)
+            if (std::strcmp (arg->name (), "x") == 0)
             {
-              const char * ystring = 0;
+              char const *ystring {};
               if (*(arg->value()) >>= ystring)
                 {
-                  if (ACE_OS::strcmp(ystring, TEST_STR) != 0)
+                  if (std::strcmp (ystring, TEST_STR) != 0)
                   {
                     ++error_count_;
                     ACE_ERROR_RETURN ((LM_ERROR, "Invalid out value, received %s\n", ystring), 1);
@@ -139,8 +142,7 @@ Client_Task::svc ()
 
       req = obj->_request ("test_bounded_string_arg");
 
-      ACE_CString bs (TEST_STR);
-      bs = bs.substr (0, ::Test::BOUNDED_STRING_SIZE);
+      std::string const bs = std::string (TEST_STR).substr (0, ::Test::BOUNDED_STRING_SIZE);
 
       req->add_in_arg ("bd_string")
         <<= CORBA::Any::from_string (bs.c_str (), ::Test::BOUNDED_STRING_SIZE);
@@ -149,7 +151,7 @@ Client_Task::svc ()
 
       req = obj->_request ("test_fixed_array_arg");
 
-      ::Test::Fixed_Array fixed_array;
+      ::Test::Fixed_Array fixed_array {};
 
       for (CORBA::ULong m = 0 ; m < ::Test::FIX_ARRAY_SIZE; m ++)
       {
@@ -162,7 +164,7 @@ Client_Task::svc ()
 
       req = obj->_request ("test_var_array_arg");
 
-      ::Test::Var_Array var_array;
+      ::Test::Var_Array var_array {};
 
       for (CORBA::ULong i = 0; i < ::Test::VAR_ARRAY_SIZE; ++i)
       {
@@ -175,34 +177,34 @@ Client_Task::svc ()
 
       req = obj->_request ("test_bounded_var_size_arg");
 
-      ACE_CString bvs (TEST_STR);
-      bvs = bvs.substr (0, ::Test::BOUNDED_VAR_SIZE);
+      std::string bvs = std::string (TEST_STR).substr (0, ::Test::BOUNDED_VAR_SIZE);
 
-      ::Test::Bounded_Var_Size_Arg* bd_var_size
-        = new ::Test::Bounded_Var_Size_Arg();
+      std::unique_ptr<::Test::Bounded_Var_Size_Arg> bd_var_size (
+        new ::Test::Bounded_Var_Size_Arg {});
 
       bd_var_size->replace (::Test::BOUNDED_VAR_SIZE,
-        const_cast <CORBA::Char*> (bvs.c_str ()));
+        bvs.data ());
 
-      req->add_in_arg ("bd_var_size") <<= bd_var_size;
+      // The generated noncopying Any insertion takes ownership of each value.
+      req->add_in_arg ("bd_var_size") <<= bd_var_size.release ();
       req->invoke ();
 
 
       req = obj->_request ("test_unbounded_var_size_arg");
 
-      ::Test::Unbounded_Var_Size_Arg* ub_var_size
-        = new ::Test::Unbounded_Var_Size_Arg();
+      std::unique_ptr<::Test::Unbounded_Var_Size_Arg> ub_var_size (
+        new ::Test::Unbounded_Var_Size_Arg {});
       ub_var_size->replace (ub_var_size->maximum (),
-        ACE_OS::strlen (TEST_STR),
+        std::strlen (TEST_STR),
         TEST_STR);
 
-      req->add_in_arg ("ub_var_size") <<= ub_var_size;
+      req->add_in_arg ("ub_var_size") <<= ub_var_size.release ();
       req->invoke ();
 
 
       req = obj->_request ("test_fixed_size_arg");
 
-      ::Test::TimeOfDay t;
+      ::Test::TimeOfDay t {};
       t.hour = TEST_HOUR;
       t.minute = TEST_MINUTE;
       t.second = TEST_SECOND;
@@ -247,15 +249,13 @@ Client_Task::svc ()
 
       req = obj->_request ("test_args_3");
 
-      bd_var_size
-        = new ::Test::Bounded_Var_Size_Arg();
+      bd_var_size.reset (new ::Test::Bounded_Var_Size_Arg {});
       bd_var_size->replace (::Test::BOUNDED_VAR_SIZE,
-        const_cast <CORBA::Char*> (bvs.c_str ()));
+        bvs.data ());
 
-      ub_var_size
-        = new ::Test::Unbounded_Var_Size_Arg();
+      ub_var_size.reset (new ::Test::Unbounded_Var_Size_Arg {});
       ub_var_size->replace (ub_var_size->maximum (),
-        ACE_OS::strlen (TEST_STR),
+        std::strlen (TEST_STR),
         TEST_STR);
 
       for (CORBA::ULong j = 0; j < ::Test::VAR_ARRAY_SIZE; ++j)
@@ -266,8 +266,8 @@ Client_Task::svc ()
       req->add_in_arg ("arg1")
         <<= CORBA::Any::from_string (bs.c_str (), ::Test::BOUNDED_STRING_SIZE);
 
-      req->add_in_arg ("arg2") <<= bd_var_size;
-      req->add_in_arg ("arg3") <<= ub_var_size;
+      req->add_in_arg ("arg2") <<= bd_var_size.release ();
+      req->add_in_arg ("arg3") <<= ub_var_size.release ();
       req->add_in_arg ("arg4") <<= var_array;
       req->invoke ();
 
@@ -276,7 +276,7 @@ Client_Task::svc ()
 
       req->send_oneway ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ++error_count_;
       ex._tao_print_exception ("Exception caught:");

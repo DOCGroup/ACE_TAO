@@ -8,7 +8,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/ORB.h"
-
+#include "ace/SString.h"
 
 /// Implement a Task to run the client as a thread
 class Client_Task : public ACE_Task_Base
@@ -19,15 +19,19 @@ public:
                const ACE_TCHAR *simple_test_ior,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
   CORBA::ULong error_count () const;
 
 private:
-  const ACE_TCHAR *input_;
-  const ACE_TCHAR *simple_test_input_;
+  ACE_TString input_;
+  ACE_TString simple_test_input_;
 
   CORBA::ORB_var corb_;
   CORBA::ULong error_count_;

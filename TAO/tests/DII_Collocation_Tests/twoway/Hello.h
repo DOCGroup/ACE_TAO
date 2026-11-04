@@ -9,14 +9,14 @@ class  Test_Simple_Test_i
   : public virtual POA_Test::Simple_Test
 {
 public:
-  //Constructor
-  Test_Simple_Test_i ();
+  Test_Simple_Test_i () = default;
+  Test_Simple_Test_i (Test_Simple_Test_i const &) = delete;
+  Test_Simple_Test_i (Test_Simple_Test_i &&) = delete;
+  Test_Simple_Test_i &operator= (Test_Simple_Test_i const &) = delete;
+  Test_Simple_Test_i &operator= (Test_Simple_Test_i &&) = delete;
+  ~Test_Simple_Test_i () override = default;
 
-  //Destructor
-  virtual ~Test_Simple_Test_i ();
-
-  virtual
-  void test_method (::CORBA::ULong & error_count);
+  void test_method (::CORBA::ULong &error_count) override;
 };
 
 /// Implement the Test::Hello interface
@@ -27,88 +27,76 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb,
          ACE_thread_t thr_id);
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 
   // = The skeleton methods
-  virtual
   void test_basic_arg (
       ::CORBA::Long basic,
-      ::CORBA::Long_out x);
+      ::CORBA::Long_out x) override;
 
-  virtual
-  void test_unbounded_string_arg (const char * message);
+  void test_unbounded_string_arg (char const *message) override;
 
-  virtual
   void test_unbounded_string_arg_out (
-      const char * message,
-      ::CORBA::String_out out_message);
+      char const *message,
+      ::CORBA::String_out out_message) override;
 
-  virtual
   void test_bounded_string_arg (
-      const char * message);
+      char const *message) override;
 
-  virtual
   void test_fixed_array_arg (
-      const ::Test::Fixed_Array message);
+      ::Test::Fixed_Array const message) override;
 
-  virtual
   void test_var_array_arg (
-      const ::Test::Var_Array messages);
+      ::Test::Var_Array const messages) override;
 
-  virtual
   void test_bounded_var_size_arg (
-      const ::Test::Bounded_Var_Size_Arg & message);
+      ::Test::Bounded_Var_Size_Arg const &message) override;
 
-  virtual
   void test_unbounded_var_size_arg (
-      const ::Test::Unbounded_Var_Size_Arg & message);
+      ::Test::Unbounded_Var_Size_Arg const &message) override;
 
-  virtual
-  void test_fixed_size_arg (const ::Test::TimeOfDay & t);
+  void test_fixed_size_arg (::Test::TimeOfDay const &t) override;
 
-  virtual
-  void test_special_basic_arg (::CORBA::Char value);
+  void test_special_basic_arg (::CORBA::Char value) override;
 
-  virtual
-  void test_objref_arg (::Test::Simple_Test_ptr test);
+  void test_objref_arg (::Test::Simple_Test_ptr test) override;
 
-  virtual
-  void test_object_arg (::CORBA::Object_ptr o);
+  void test_object_arg (::CORBA::Object_ptr o) override;
 
-  virtual
   void test_args_1 (
       ::CORBA::Object_ptr arg1,
       ::CORBA::Char arg2,
-      ::Test::Simple_Test_ptr arg3);
+      ::Test::Simple_Test_ptr arg3) override;
 
-  virtual
   void test_args_2 (
-      const char * arg1,
-      const ::Test::Fixed_Array arg2,
-      const ::Test::TimeOfDay & arg3);
+      char const *arg1,
+      ::Test::Fixed_Array const arg2,
+      ::Test::TimeOfDay const &arg3) override;
 
-  virtual
   void test_args_3 (
-      const char * arg1,
-      const ::Test::Bounded_Var_Size_Arg & arg2,
-      const ::Test::Unbounded_Var_Size_Arg & arg3,
-      const ::Test::Var_Array arg4);
+      char const *arg1,
+      ::Test::Bounded_Var_Size_Arg const &arg2,
+      ::Test::Unbounded_Var_Size_Arg const &arg3,
+      ::Test::Var_Array const arg4) override;
 
-  virtual char * get_string ();
+  char *get_string () override;
 
-  virtual
   char * test_unbounded_string (
-      const char * s1,
-      char *& s2,
+      char const *s1,
+      char *&s2,
       CORBA::String_out s3);
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   CORBA::ULong error_count () const;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   ACE_thread_t thr_id_;
 
