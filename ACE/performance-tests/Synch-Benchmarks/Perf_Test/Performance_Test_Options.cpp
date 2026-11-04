@@ -2,12 +2,14 @@
 #include "Performance_Test_Options.h"
 #include "ace/OS_NS_strings.h"
 
+#include <algorithm>
+
 #if defined (ACE_HAS_THREADS)
 // Manages the options.
 Performance_Test_Options performance_test_options;
 
 size_t
-Performance_Test_Options::count ()
+Performance_Test_Options::count () const
 {
   size_t total = 0;
 
@@ -30,42 +32,10 @@ Performance_Test_Options::count ()
 void
 Performance_Test_Options::init ()
 {
-  for (int i = 0; i < this->thr_wc_size; i++)
-    this->thr_work_count[i] = 0;
+  std::fill (this->thr_work_count.begin (), this->thr_work_count.end (), 0);
 }
 
-Performance_Test_Options::Performance_Test_Options ()
-                 : thr_wc_size (10000),
-                   _service_entry (0),
-                   _mapped_file (0),
-                   _pipe_addr (const_cast<ACE_TCHAR *> (ACE_DEFAULT_RENDEZVOUS)),
-                   _sleep_time (100),
-                   _n_lwps (0),
-                   _thr_count (4),
-                   _t_flags (0),
-                   _high_water_mark (8 * 1024),
-                   _low_water_mark (1024),
-                   _msg_size (128),
-                   _initial_queue_length (0),
-                   _logical_connections (1),
-                   _physical_connections (1),
-                   _iterations (100000),
-                   _generate (0),
-                   _udp (0),
-                   _debugging (0),
-                   _verbosity (0),
-                   _ack (1),
-                   _checksum (1),
-                   _xdr (1),
-                   _free_memory (1),
-                   _zero_copy (0),
-                   _print_summary (0),
-                   _consecutive_ports (1),
-                   _eager_exit (0)
-{
-  this->thr_work_count = new int[this->thr_wc_size];
-  this->init ();
-}
+Performance_Test_Options::Performance_Test_Options () = default;
 
 void
 Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
@@ -102,7 +72,7 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->_checksum = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
         break;
       case 'd':                 // Not used.  (Enable debugging.)
-        this->_debugging = 1;
+        this->_debugging = true;
         break;
       case 'D':                 // Create thread with THR_DETACHED.
         this->t_flags (THR_DETACHED);
@@ -164,10 +134,10 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->thr_count (ACE_OS::atoi (get_opt.opt_arg ()));
         break;
       case 'u':                 // Not used.  (use udp.)
-        this->_udp = 1;
+        this->_udp = true;
         break;
       case 'v':                 // Not used.  (set display verbosely)
-        this->_verbosity = 1;
+        this->_verbosity = true;
         break;
       case 'X':                 // Not used.  (Use xdr conversion.)
         this->_xdr = ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("ON")) == 0;
@@ -207,7 +177,7 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
                    "\t[-X] (enable xdr conversion)\n"
                    "\t[-Z] (enable zero-copy driver)\n%a",
                    argv[0],
-                   this->pipe_addr (),
+                   this->pipe_addr ().c_str (),
                    this->iterations (),
                    this->thr_count (),
                    1));
@@ -229,8 +199,8 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
                   this->logical_connections (),
                   this->physical_connections (),
                   this->msg_size (),
-                  this->do_checksum () != 0,
-                  this->do_xdr() != 0,
+                  this->do_checksum (),
+                  this->do_xdr (),
                   this->n_lwps (),
                ACE_Thread::getconcurrency ()));
   else if (this->verbose ())
@@ -265,14 +235,14 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
                 this->msg_size (),
                 this->initial_queue_length (),
                 this->consecutive_ports (),
-                this->do_checksum () != 0,
-                this->do_xdr() != 0,
-                this->do_zero_copy () != 0,
-                this->do_delete () != 0,
-                this->do_print_summary () != 0,
-                this->do_eager_exit () != 0,
-                this->do_udp () != 0,
-                this->do_ack () != 0,
+                this->do_checksum (),
+                this->do_xdr (),
+                this->do_zero_copy (),
+                this->do_delete (),
+                this->do_print_summary (),
+                this->do_eager_exit (),
+                this->do_udp (),
+                this->do_ack (),
                 (this->t_flags () & THR_DETACHED) != 0,
                 (this->t_flags () & THR_BOUND) != 0,
                 (this->t_flags () & THR_NEW_LWP) != 0,

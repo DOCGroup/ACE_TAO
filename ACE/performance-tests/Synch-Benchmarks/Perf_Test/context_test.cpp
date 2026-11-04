@@ -7,7 +7,7 @@
 class ACE_Svc_Export Context_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  int svc () override;
 };
 
 int

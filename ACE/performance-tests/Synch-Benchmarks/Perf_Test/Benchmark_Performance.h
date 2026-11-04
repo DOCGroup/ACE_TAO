@@ -19,6 +19,11 @@ class ACE_Svc_Export Benchmark_Performance_Test_Base : public Benchmark_Base
   //     This class identifies itself as Benmarking Performance Test class.
 protected:
   Benchmark_Performance_Test_Base ();
+
+  Benchmark_Performance_Test_Base (Benchmark_Performance_Test_Base const &) = delete;
+  Benchmark_Performance_Test_Base (Benchmark_Performance_Test_Base &&) = delete;
+  Benchmark_Performance_Test_Base &operator= (Benchmark_Performance_Test_Base const &) = delete;
+  Benchmark_Performance_Test_Base &operator= (Benchmark_Performance_Test_Base &&) = delete;
 };
 
 class ACE_Svc_Export Benchmark_Performance : public Benchmark_Performance_Test_Base
@@ -28,9 +33,9 @@ class ACE_Svc_Export Benchmark_Performance : public Benchmark_Performance_Test_B
 public:
   // = Hooks inherited from ACE_Service_Object.
   virtual int svc () = 0;
-  virtual int init (int, ACE_TCHAR *[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  int init (int, ACE_TCHAR *[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
   static void *svc_run (Benchmark_Performance *bp);
 
   // = Set/get flag that controls how the tests are shut down

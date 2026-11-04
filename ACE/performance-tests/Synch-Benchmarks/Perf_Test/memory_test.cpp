@@ -9,7 +9,7 @@
 class ACE_Svc_Export Memory_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  int svc () override;
 };
 
 int

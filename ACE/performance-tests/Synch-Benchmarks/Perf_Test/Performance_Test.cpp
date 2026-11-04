@@ -10,11 +10,7 @@
 #include "ace/Service_Repository.h"
 #include "ace/Reactor.h"
 
-Performance_Test::Performance_Test ()
-  : n_lwps_ (0),
-    orig_n_lwps_ (0)
-{
-}
+Performance_Test::Performance_Test () = default;
 
 // Initialize and run the benchmarks tests.
 

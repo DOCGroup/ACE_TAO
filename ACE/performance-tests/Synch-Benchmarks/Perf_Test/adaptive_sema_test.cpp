@@ -9,7 +9,7 @@
 class ACE_Svc_Export Adaptive_Sema_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]);
+  int init (int, ACE_TCHAR *[]) override;
 
 private:
   static ACE_Semaphore sema;

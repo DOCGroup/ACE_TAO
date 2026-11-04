@@ -10,10 +10,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <string>
+#include <vector>
+
 #include "ace/Profile_Timer.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Atomic_Op.h"
 #include "ace/svc_export.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -22,6 +24,10 @@ class ACE_Svc_Export Performance_Test_Options
 {
 public:
   Performance_Test_Options ();
+  Performance_Test_Options (Performance_Test_Options const &) = delete;
+  Performance_Test_Options (Performance_Test_Options &&) = delete;
+  Performance_Test_Options &operator= (Performance_Test_Options const &) = delete;
+  Performance_Test_Options &operator= (Performance_Test_Options &&) = delete;
   void   parse_args (int argc, ACE_TCHAR *argv[]);
 
   void   init ();
@@ -30,97 +36,96 @@ public:
   void   stop_timer ();
 
   void   thr_count (size_t count);
-  size_t thr_count ();
+  size_t thr_count () const;
 
-  void   pipe_addr (ACE_TCHAR pipe[]);
-  ACE_TCHAR *pipe_addr ();
+  void pipe_addr (std::basic_string<ACE_TCHAR> const &pipe);
+  std::basic_string<ACE_TCHAR> const &pipe_addr () const;
 
-  void   mapped_file (ACE_TCHAR filename[]);
-  ACE_TCHAR *mapped_file ();
+  void mapped_file (std::basic_string<ACE_TCHAR> const &filename);
+  std::basic_string<ACE_TCHAR> const &mapped_file () const;
 
-  void   service_entry (ACE_TCHAR *service_entry);
-  ACE_TCHAR *service_entry ();
+  void service_entry (std::basic_string<ACE_TCHAR> const &service_entry);
+  std::basic_string<ACE_TCHAR> const &service_entry () const;
 
   void   sleep_time (size_t count);
-  size_t sleep_time ();
+  size_t sleep_time () const;
 
   void   logical_connections (size_t count);
-  size_t logical_connections ();
+  size_t logical_connections () const;
 
   void   physical_connections (size_t count);
-  size_t physical_connections ();
+  size_t physical_connections () const;
 
   void   consecutive_ports (size_t count);
-  size_t consecutive_ports ();
+  size_t consecutive_ports () const;
 
   void   initial_queue_length (size_t length);
-  size_t initial_queue_length ();
+  size_t initial_queue_length () const;
 
   void   high_water_mark (size_t size);
-  size_t high_water_mark ();
+  size_t high_water_mark () const;
 
   void   low_water_mark (size_t size);
-  size_t low_water_mark ();
+  size_t low_water_mark () const;
 
   void   msg_size (size_t size);
-  size_t msg_size ();
+  size_t msg_size () const;
 
   void   iterations (size_t n);
-  size_t iterations ();
+  size_t iterations () const;
 
   void   n_lwps (size_t n);
-  size_t n_lwps ();
+  size_t n_lwps () const;
 
   void   t_flags (long flag);
-  long   t_flags ();
+  long   t_flags () const;
 
-  size_t count ();
+  size_t count () const;
 
-  int    debug ();
-  int    verbose ();
-  int    do_checksum ();
-  int    do_generate ();
-  int    do_ack ();
-  int    do_delete ();
-  int    do_eager_exit ();
-  int    do_print_summary ();
-  int    do_udp ();
-  int    do_xdr ();
-  int    do_zero_copy ();
+  bool debug () const;
+  bool verbose () const;
+  bool do_checksum () const;
+  bool do_generate () const;
+  bool do_ack () const;
+  bool do_delete () const;
+  bool do_eager_exit () const;
+  bool do_print_summary () const;
+  bool do_udp () const;
+  bool do_xdr () const;
+  bool do_zero_copy () const;
   void   print_results ();
 
-  ACE_Atomic_Op<ACE_Thread_Mutex, size_t> msg_count;        // Keep track of number of messages atomically.
-  int *thr_work_count;  // Count activity per-thread.
-  int thr_wc_size;           // Max number of threads.
+  std::vector<int> thr_work_count = std::vector<int> (10000);
+  int thr_wc_size {10000};  // Max number of threads.
 
 private:
   ACE_Profile_Timer _itimer;            // Keep track of time.
-  ACE_TCHAR     *_service_entry;        // Name of the shared object file and shared object.
-  ACE_TCHAR     *_mapped_file;          // Name of the mapped file.
-  ACE_TCHAR     *_pipe_addr;            // Name of the STREAM pipe.
-  size_t        _sleep_time;            // Time to sleep.
-  size_t        _n_lwps;                // Number of LWPs.
-  size_t        _thr_count;             // Number of threads to spawn.
-  long          _t_flags;               // Flags to thr_create().
-  size_t        _high_water_mark;       // ACE_Queue high water mark.
-  size_t        _low_water_mark;        // ACE_Queue low water mark.
-  size_t        _msg_size;              // Size of a message.
-  size_t        _initial_queue_length;  // Initial number of items in the queue.
-  size_t        _logical_connections;   // Number of logical connections.
-  size_t        _physical_connections;  // Number of physical connections.
-  size_t        _iterations;            // Number of iterations to run the test program.
-  int           _generate;              // Generate the data.
-  int           _udp;                   // Use UDP format.
-  int           _debugging;             // Extra debugging info.
-  int           _verbosity;             // Extra verbose messages.
-  int           _ack;                   // Do an acknowledgement.
-  int           _checksum;              // Is checksumming enabled?.
-  int           _xdr;                   // Is xdr conversion enabled?.
-  int           _free_memory;           // Are we freeing up memory?.
-  int           _zero_copy;             // Implement a zero-copy driver?.
-  int           _print_summary;         // Print a summary of the results only.
-  size_t        _consecutive_ports;     // Number of consecutive messages from same port.
-  int           _eager_exit;            // Exit eagerly, without cleaning up.
+  std::basic_string<ACE_TCHAR> _service_entry; // Name of the shared object file and shared object.
+  std::basic_string<ACE_TCHAR> _mapped_file;   // Name of the mapped file.
+  std::basic_string<ACE_TCHAR> _pipe_addr {ACE_DEFAULT_RENDEZVOUS}; // Name of the STREAM pipe.
+  size_t _sleep_time {100}; // Time to sleep.
+  size_t _n_lwps {};
+  size_t _thr_count {4}; // Number of threads to spawn.
+  long _t_flags {}; // Flags to thr_create().
+  size_t _high_water_mark {8 * 1024}; // ACE_Queue high water mark.
+  size_t _low_water_mark {1024}; // ACE_Queue low water mark.
+  size_t _msg_size {128}; // Size of a message.
+  size_t _initial_queue_length {};
+  size_t _logical_connections {1};
+  size_t _physical_connections {1};
+  size_t _iterations {100000}; // Number of iterations to run the test program.
+  bool _generate {};
+  bool _udp {};
+  bool _debugging {};
+  bool _verbosity {};
+  bool _ack {true};
+  bool _checksum {true};
+  bool _xdr {true};
+  bool _free_memory {true};
+  bool _zero_copy {};
+  bool _print_summary {};
+  size_t _consecutive_ports {1};
+  bool _eager_exit {};
 };
 
 // Make this available to any code that wants to see it!

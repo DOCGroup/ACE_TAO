@@ -9,8 +9,8 @@
 class ACE_Svc_Export Pipe_Proc_Test : public Benchmark_Performance
 {
 public:
-  int init (int, ACE_TCHAR **);
-  virtual int svc ();
+  int init (int, ACE_TCHAR **) override;
+  int svc () override;
 
 private:
   ACE_HANDLE pipe_handles[2];

@@ -8,7 +8,7 @@
 class ACE_Svc_Export Sema_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  int svc () override;
 
 private:
   static ACE_Semaphore sema;

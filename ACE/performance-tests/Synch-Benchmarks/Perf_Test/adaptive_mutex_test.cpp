@@ -8,7 +8,7 @@
 class ACE_Svc_Export Adaptive_Mutex_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]);
+  int init (int, ACE_TCHAR *[]) override;
 };
 
 int

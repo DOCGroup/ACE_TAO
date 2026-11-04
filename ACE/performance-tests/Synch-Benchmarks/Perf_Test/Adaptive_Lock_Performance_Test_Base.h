@@ -7,9 +7,15 @@
 class ACE_Svc_Export Adaptive_Lock_Performance_Test_Base : public Benchmark_Performance
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]) = 0;
-  virtual int fini ();
-  virtual int svc ();
+  Adaptive_Lock_Performance_Test_Base () = default;
+  Adaptive_Lock_Performance_Test_Base (Adaptive_Lock_Performance_Test_Base const &) = delete;
+  Adaptive_Lock_Performance_Test_Base (Adaptive_Lock_Performance_Test_Base &&) = delete;
+  Adaptive_Lock_Performance_Test_Base &operator= (Adaptive_Lock_Performance_Test_Base const &) = delete;
+  Adaptive_Lock_Performance_Test_Base &operator= (Adaptive_Lock_Performance_Test_Base &&) = delete;
+
+  int init (int, ACE_TCHAR *[]) override = 0;
+  int fini () override;
+  int svc () override;
 
   int set_lock (ACE_Lock *lock);
 
