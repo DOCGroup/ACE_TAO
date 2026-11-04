@@ -16,23 +16,34 @@
 #include "tao/ORB_Core.h"
 
 #include <atomic>
+#include <string>
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-int nthreads = 1;
-int niterations = 1;
-bool debug = true;
-std::atomic<long> number_of_replies {0};
+struct Client_State
+{
+  Client_State () = default;
+  Client_State (Client_State const &) = delete;
+  Client_State (Client_State &&) = delete;
+  Client_State &operator= (Client_State const &) = delete;
+  Client_State &operator= (Client_State &&) = delete;
 
-bool parameter_corruption {};
+  std::atomic<long> number_of_replies {};
+  std::atomic<bool> parameter_corruption {};
+  bool debug {true};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior,
+            int &nthreads,
+            int &niterations,
+            bool &debug)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("dk:n:i:"));
-  int c {};
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'd':
         debug = true;
@@ -74,7 +85,10 @@ class Client : public ACE_Task_Base
 {
 public:
   /// ctor
-  Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr handler);
+  Client (A::AMI_Test_ptr const server,
+          int const niterations,
+          A::AMI_AMI_TestHandler_ptr const handler,
+          Client_State &state);
   Client (Client const &) = delete;
   Client (Client &&) = delete;
   Client &operator= (Client const &) = delete;
@@ -91,16 +105,21 @@ private:
   A::AMI_Test_var ami_test_var_;
 
   /// The number of iterations on each client thread.
-  int niterations_;
+  int const niterations_;
 
   /// Var for AMI_AMI_Test_ReplyHandler object.
   A::AMI_AMI_TestHandler_var the_handler_var_;
+
+  Client_State &state_;
 };
 
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler () = default;
+  explicit Handler (Client_State &state)
+    : state_ (state)
+  {
+  }
   Handler (Handler const &) = delete;
   Handler (Handler &&) = delete;
   Handler &operator= (Handler const &) = delete;
@@ -112,10 +131,10 @@ public:
       if (result == 0)
         {
           ACE_ERROR ((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
-          parameter_corruption = true;
+          state_.parameter_corruption.store (true);
         }
 
-      if (debug)
+      if (state_.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P | %t) : Callback method called: result <%d>, out_arg <%d>\n",
@@ -123,7 +142,7 @@ public:
                       out_l));
         }
 
-      --number_of_replies;
+      --state_.number_of_replies;
     };
 
   void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -141,35 +160,39 @@ public:
     };
 
   ~Handler () override = default;
+
+private:
+  Client_State &state_;
 };
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+  int nthreads {1};
+  int niterations {1};
+  Client_State state;
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, nthreads, niterations, state.debug) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
-      A::AMI_Test_var server =  A::AMI_Test::_narrow (object.in ());
+      CORBA::Object_var object = orb->string_to_object (ior.c_str ());
+      A::AMI_Test_var server = A::AMI_Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
       // Activate POA to handle the call back.
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -185,10 +208,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
-      Handler *handler = nullptr;
+      Handler *handler {};
       ACE_NEW_RETURN (handler,
-                      Handler,
+                      Handler (state),
                       1);
+      // ServantBase_var takes ownership of the allocated callback servant.
       PortableServer::ServantBase_var owner_transfer (handler);
 
       PortableServer::ObjectId_var id =
@@ -201,7 +225,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown (); // oneway, so returns here immediately but server waits 5 sec
 
-      Client client (server.in (), niterations, hello.in ());
+      Client client (server.in (), niterations, hello.in (), state);
+      state.number_of_replies = nthreads * niterations;
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -210,24 +235,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
-      number_of_replies = nthreads *niterations;
-
-      if (debug)
+      if (state.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies.load ()));
+                      state.number_of_replies.load ()));
         }
 
       // ORB loop.
       ACE_Time_Value tv (1, 0);
       orb->run (tv);
 
-      if (debug)
+      if (state.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads * niterations) - number_of_replies.load ()));
+                      (nthreads * niterations) - state.number_of_replies.load ()));
         }
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
@@ -257,7 +280,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (ref_count > 1)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Refcount orb %d\n"), ref_count));
-          parameter_corruption = true;
+          state.parameter_corruption.store (true);
         }
       else
         {
@@ -265,7 +288,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (core != nullptr)
             {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Core <> null\n")));
-              parameter_corruption = true;
+              state.parameter_corruption.store (true);
             }
         }
       orb = CORBA::ORB::_nil ();
@@ -276,7 +299,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return parameter_corruption;
+  return state.parameter_corruption.load ();
 }
 
 // ****************************************************************
@@ -288,12 +311,14 @@ Client::clear ()
   the_handler_var_ = A::AMI_AMI_TestHandler::_nil ();
 }
 
-Client::Client (A::AMI_Test_ptr server,
-                int niterations,
-                A::AMI_AMI_TestHandler_ptr handler)
+Client::Client (A::AMI_Test_ptr const server,
+                int const niterations,
+                A::AMI_AMI_TestHandler_ptr const handler,
+                Client_State &state)
   : ami_test_var_ (A::AMI_Test::_duplicate (server))
   , niterations_ (niterations)
   , the_handler_var_ (A::AMI_AMI_TestHandler::_duplicate (handler))
+  , state_ (state)
 {
 }
 
@@ -306,11 +331,11 @@ Client::svc ()
         {
           ami_test_var_->sendc_foo (the_handler_var_.in ());
         }
-      if (debug)
+      if (this->state_.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P | %t):<%d> Asynchronous methods issued\n",
-                      niterations));
+                      this->niterations_));
         }
     }
   catch (CORBA::Exception const &ex)

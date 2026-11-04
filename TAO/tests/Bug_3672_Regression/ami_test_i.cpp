@@ -15,7 +15,7 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
-AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
+AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }

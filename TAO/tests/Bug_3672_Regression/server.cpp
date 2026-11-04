@@ -15,17 +15,17 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
-
-ACE_TCHAR const *ior_output_file = nullptr;
+#include <memory>
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:d"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
@@ -49,54 +49,49 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  std::basic_string<ACE_TCHAR> ior_output_file;
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return 1;
 
       AMI_Test_i ami_test_i (orb.in ());
 
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (&ami_test_i);
+      PortableServer::ObjectId_var const id = root_poa->activate_object (&ami_test_i);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      A::AMI_Test_var ami_test_var =
-        A::AMI_Test::_narrow (object.in ());
+      A::AMI_Test_var const ami_test_var = A::AMI_Test::_narrow (object.in ());
 
-      CORBA::String_var ior =
-        orb->object_to_string (ami_test_var.in ());
+      CORBA::String_var const ior = orb->object_to_string (ami_test_var.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
+      if (!ior_output_file.empty ())
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+            ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               ior_output_file.c_str ()),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       poa_manager->activate ();
