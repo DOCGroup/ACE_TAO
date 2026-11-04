@@ -11,8 +11,8 @@
 class Diamond_Export Top_i : public POA_Diamond::Top
 {
 public:
-  Top_i ();
-  ~Top_i () override;
+  Top_i () = default;
+  ~Top_i () override = default;
 
   Top_i (Top_i const &) = delete;
   Top_i (Top_i &&) = delete;
@@ -26,8 +26,8 @@ public:
 class Diamond_Export Left_i : public POA_Diamond::Left
 {
 public:
-  Left_i ();
-  ~Left_i () override;
+  Left_i () = default;
+  ~Left_i () override = default;
 
   Left_i (Left_i const &) = delete;
   Left_i (Left_i &&) = delete;
@@ -44,8 +44,8 @@ public:
 class Diamond_Export Right_i : public POA_Diamond::Right
 {
 public:
-  Right_i ();
-  ~Right_i () override;
+  Right_i () = default;
+  ~Right_i () override = default;
 
   Right_i (Right_i const &) = delete;
   Right_i (Right_i &&) = delete;
@@ -62,8 +62,8 @@ public:
 class Diamond_Export Buttom_i : public POA_Diamond::Buttom
 {
 public:
-  Buttom_i ();
-  ~Buttom_i () override;
+  Buttom_i () = default;
+  ~Buttom_i () override = default;
 
   Buttom_i (Buttom_i const &) = delete;
   Buttom_i (Buttom_i &&) = delete;

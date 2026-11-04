@@ -1,18 +1,10 @@
 #include "Diamond_i.h"
 
-Top_i::Top_i () = default;
-
-Top_i::~Top_i () = default;
-
 char *
 Top_i::shape ()
 {
   return CORBA::string_dup ("a point.");
 }
-
-Left_i::Left_i () = default;
-
-Left_i::~Left_i () = default;
 
 char *
 Left_i::shape ()
@@ -26,10 +18,6 @@ Left_i::color ()
   return CORBA::string_dup ("black");
 }
 
-Right_i::Right_i () = default;
-
-Right_i::~Right_i () = default;
-
 char *
 Right_i::shape ()
 {
@@ -41,10 +29,6 @@ Right_i::width ()
 {
   return 0;
 }
-
-Buttom_i::Buttom_i () = default;
-
-Buttom_i::~Buttom_i () = default;
 
 char *
 Buttom_i::shape ()
