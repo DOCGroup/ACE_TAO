@@ -10,12 +10,14 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::timer_queue () const
 template<class TQ, class TYPE> ACE_INLINE int
 ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::timer_queue (TQ *tq)
 {
-  if (this->delete_timer_queue_)
-    delete this->timer_queue_;
-  else if (this->timer_queue_)
+  if (tq == this->timer_queue_)
+    return 0;
+
+  if (this->owned_timer_queue_)
+    this->owned_timer_queue_.reset ();
+  else if (this->timer_queue_ != nullptr)
     this->timer_queue_->close ();
   this->timer_queue_ = tq;
-  this->delete_timer_queue_ = false;
   return 0;
 }
 
