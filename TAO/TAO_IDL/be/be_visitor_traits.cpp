@@ -122,8 +122,8 @@ be_visitor_traits::visit_interface (be_interface *node)
 
       *os << be_nl_2
           << "template<>" << be_nl
-          << "struct " << be_global->stub_export_macro () << " Objref_Traits<"
-          << " ::" << fname << ">" << be_nl
+          << "struct " << be_global->stub_export_macro () << " Objref_Traits<::"
+          << fname << ">" << be_nl
           << "{" << be_idt_nl
           << "static ::" << fname << "_ptr duplicate ("
           << "::" << fname << "_ptr p);" << be_nl

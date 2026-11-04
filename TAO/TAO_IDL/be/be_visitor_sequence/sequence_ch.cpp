@@ -276,7 +276,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
               << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
               << node->local_name () << " (::CORBA::ULong length, ACE_Message_Block const *mb)"
               << be_idt_nl
-              << ": ::TAO::unbounded_value_sequence< ::CORBA::Octet>"
+              << ": ::TAO::unbounded_value_sequence<::CORBA::Octet>"
               << " (length, mb) {}" << be_uidt_nl
               << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
         }

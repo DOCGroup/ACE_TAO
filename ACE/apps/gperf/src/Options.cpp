@@ -63,7 +63,7 @@ ACE_CString Options::delimiters_;
 Options option;
 
 /// Current program version.
-extern const char *version_string;
+extern char const *version_string;
 
 /// Size to jump on a collision.
 static constexpr int DEFAULT_JUMP_VALUE = 5;

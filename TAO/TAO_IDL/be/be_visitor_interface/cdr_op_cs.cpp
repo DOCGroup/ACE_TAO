@@ -111,12 +111,12 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   if (!node->is_abstract ())
     {
-      *os << "TAO::Narrow_Utils< ::" << node->name () << ">::unchecked_narrow ("
+      *os << "TAO::Narrow_Utils<::" << node->name () << ">::unchecked_narrow ("
           << "obj.in ());";
     }
   else
     {
-      *os << "TAO::AbstractBase_Narrow_Utils< ::" << node->name () << ">::unchecked_narrow ("
+      *os << "TAO::AbstractBase_Narrow_Utils<::" << node->name () << ">::unchecked_narrow ("
           << "obj.in ());";
     }
 

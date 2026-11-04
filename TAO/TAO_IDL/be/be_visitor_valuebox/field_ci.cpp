@@ -210,7 +210,7 @@ be_visitor_valuebox_field_ci::visit_interface (be_interface *node)
       << " (" << bt->name () << "_ptr val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
-      << " = " << "TAO::Objref_Traits< ::" << bt->name ()
+      << " = " << "TAO::Objref_Traits<::" << bt->name ()
       << ">::duplicate (val);" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
@@ -255,7 +255,7 @@ be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
       << " (" << bt->name () << "_ptr val)"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value->" << field->local_name ()
-      << " = " << "TAO::Objref_Traits< ::" << bt->name ()
+      << " = " << "TAO::Objref_Traits<::" << bt->name ()
       << ">::duplicate (val);" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 

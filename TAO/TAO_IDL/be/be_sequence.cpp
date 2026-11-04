@@ -760,7 +760,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                 }
 
               *os
-                << "::TAO::" << (unbounded () ? "un" : "") << "bounded_value_sequence< "
+                << "::TAO::" << (unbounded () ? "un" : "") << "bounded_value_sequence<"
                 << elem->nested_type_name (ctx_scope);
               if (!unbounded ())
                 *os << "," << this->max_size ()->ev ()->u.ulval;

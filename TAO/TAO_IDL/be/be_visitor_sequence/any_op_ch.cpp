@@ -54,7 +54,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       be_type *bt =
         dynamic_cast<be_type*> (node->base_type ());
 
-      name = "std::vector< ::";
+      name = "std::vector<::";
       name += bt->full_name ();
       name += ">";
     }

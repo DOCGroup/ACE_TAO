@@ -158,7 +158,7 @@ be_visitor_operation::gen_stub_operation_body (
     }
 
   // Declare return type helper class.
-  *os << "TAO::Arg_Traits< ";
+  *os << "TAO::Arg_Traits<";
 
   this->gen_arg_template_param_name (node,
                                      return_type,
@@ -344,7 +344,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
       arg = dynamic_cast<AST_Argument*> (arg_decl_iter.item ());
 
       *os << be_nl
-          << "TAO::Arg_Traits< ";
+          << "TAO::Arg_Traits<";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),

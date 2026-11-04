@@ -205,7 +205,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   // Declare return type helper class.
 
-  *os << "TAO::SArg_Traits< ";
+  *os << "TAO::SArg_Traits<";
 
   this->gen_arg_template_param_name (node,
                                      return_type,
@@ -305,7 +305,7 @@ be_visitor_operation_ss::gen_skel_body_arglist (be_operation * node,
         dynamic_cast<AST_Argument*> (arg_decl_iter.item ());
 
       *os << be_nl
-          << "TAO::SArg_Traits< ";
+          << "TAO::SArg_Traits<";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),

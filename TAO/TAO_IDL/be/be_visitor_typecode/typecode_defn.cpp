@@ -297,7 +297,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
   for (std::size_t i = 0; i < ndims; ++i)
     {
-      os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *, "
+      os << "TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *, "
             "TAO::Null_RefCount_Policy>"
          << " " << node->flat_name ();
 
@@ -454,7 +454,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 
   this->gen_begin_NS_for_anon ();
 
-  os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *, "
+  os << "TAO::TypeCode::Sequence<::CORBA::TypeCode_ptr const *, "
         "TAO::Null_RefCount_Policy>"
      << " " << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
      << " (" << be_idt_nl << "::CORBA::tk_sequence, std::addressof (";

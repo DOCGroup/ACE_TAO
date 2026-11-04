@@ -148,7 +148,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << " " << this->S_ << "Arg_Traits< ::"
+      << " " << this->S_ << "Arg_Traits<::"
       << node->name () << ">" << be_idt_nl
       << ": public "
       << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
@@ -243,7 +243,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
   os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits< ::"
+      << this->S_ << "Arg_Traits<::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
@@ -303,7 +303,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
   os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits< ::"
+      << this->S_ << "Arg_Traits<::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
@@ -668,7 +668,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   *os << be_nl_2
       << "template<>" << be_nl
-      << "class " << this->S_ << "Arg_Traits< ::" << sn << ">"
+      << "class " << this->S_ << "Arg_Traits<::" << sn << ">"
       << be_idt_nl
       << ": public" << be_idt << be_idt_nl
       << (use_vec ? "Vector_" : "Var_Size_")
@@ -814,7 +814,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits< ::"
+      << this->S_ << "Arg_Traits<::"
       << node->name () << "_tag>" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
@@ -862,7 +862,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits< ::"
+      << this->S_ << "Arg_Traits<::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
@@ -904,7 +904,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits< ::"
+      << this->S_ << "Arg_Traits<::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
@@ -1014,7 +1014,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
   *os << be_nl_2
       << "template<>" << be_nl
       << "class "
-      << this->S_ << "Arg_Traits< ::"
+      << this->S_ << "Arg_Traits<::"
       << node->name () << ">" << be_idt_nl
       << ": public" << be_idt << be_idt_nl;
 
@@ -1148,7 +1148,7 @@ be_visitor_arg_traits::visit_fixed (be_fixed *)
   // own Any operators before interceptor values can be represented.
   *os << be_nl_2
       << "template<>" << be_nl
-      << "class " << this->S_ << "Arg_Traits< ::ACE_CDR::Fixed>" << be_idt_nl
+      << "class " << this->S_ << "Arg_Traits<::ACE_CDR::Fixed>" << be_idt_nl
       << ": public Basic_" << this->S_ << "Arg_Traits_T<" << be_idt_nl
       << "::ACE_CDR::Fixed," << be_nl
       << "TAO::Any_Insert_Policy_Noop" << be_uidt_nl

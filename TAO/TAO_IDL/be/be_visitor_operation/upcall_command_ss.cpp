@@ -141,7 +141,7 @@ be_visitor_operation_upcall_command_ss::visit (
 
   if (!node->void_return_type ())
     {
-      os << "TAO::SArg_Traits< ";
+      os << "TAO::SArg_Traits<";
 
 
       this->gen_arg_template_param_name (node,
@@ -152,7 +152,7 @@ be_visitor_operation_upcall_command_ss::visit (
 
       if (be_global->gen_thru_poa_collocation ())
         {
-          os << "TAO::Portable_Server::get_ret_arg< ";
+          os << "TAO::Portable_Server::get_ret_arg<";
 
           this->gen_arg_template_param_name (node,
                                              node->return_type (),
@@ -164,7 +164,7 @@ be_visitor_operation_upcall_command_ss::visit (
         }
       else
         {
-          os << "static_cast<TAO::SArg_Traits< ";
+          os << "static_cast<TAO::SArg_Traits<";
 
           this->gen_arg_template_param_name (node,
                                              node->return_type (),
@@ -252,7 +252,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
             }
         }
 
-      os << "TAO::SArg_Traits< ";
+      os << "TAO::SArg_Traits<";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),
@@ -294,7 +294,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
               break;
             }
 
-          os << "_arg< ";
+          os << "_arg<";
 
           this->gen_arg_template_param_name (arg,
                                              arg->field_type (),
@@ -307,7 +307,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
         }
       else
         {
-          os << "static_cast<TAO::SArg_Traits< ";
+          os << "static_cast<TAO::SArg_Traits<";
 
           this->gen_arg_template_param_name (arg,
                                              arg->field_type (),
