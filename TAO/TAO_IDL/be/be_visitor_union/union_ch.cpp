@@ -34,7 +34,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Generate _var and _out class typedefs.
   node->gen_common_varout (os);
@@ -58,7 +58,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       << node->local_name () << " const &);";
 
   // Retrieve the disriminant type.
-  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {
@@ -100,7 +100,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
     }
 
   // Now check if we need to generate the _default () method.
-  be_union::DefaultValue dv;
+  be_union::DefaultValue dv {};
 
   if (node->default_value (dv) == -1)
     {

@@ -20,9 +20,11 @@ be_visitor_union_cdr_op_cs::be_visitor_union_cdr_op_cs (
 
 namespace {
   void
-  serialize_disc (TAO_OutStream *os, AST_Expression::ExprType disc_type, bool out)
+  serialize_disc (TAO_OutStream * const os,
+                  AST_Expression::ExprType disc_type,
+                  bool out)
   {
-  char const *tmp_suffix = nullptr;
+    char const *tmp_suffix {};
     switch (disc_type)
       {
         case AST_Expression::EV_bool:
@@ -47,11 +49,11 @@ namespace {
           break;
       }
 
-  char const *val = out ? "_tao_union._d ()" : "_tao_discriminant";
+    char const *val = out ? "_tao_union._d ()" : "_tao_discriminant";
     if (tmp_suffix)
       {
         *os << (out ? "::ACE_OutputCDR::from_" : "::ACE_InputCDR::to_")
-          << tmp_suffix << " tmp (" << val << ");" << be_nl;
+            << tmp_suffix << " tmp (" << val << ");" << be_nl;
         val = "tmp";
       }
 
@@ -60,7 +62,7 @@ namespace {
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl_2;
+      << "::CORBA::Boolean result {true};" << be_nl_2;
   }
 }
 
@@ -83,9 +85,9 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
        !si.is_done ();
        si.next ())
     {
-      AST_Decl *d = si.item ();
+      AST_Decl * const d = si.item ();
 
-      be_enum *e = dynamic_cast<be_enum*> (d);
+      be_enum * const e = dynamic_cast<be_enum*> (d);
       if (e != nullptr)
         {
           be_visitor_enum_cdr_op_cs visitor (&ctx);
@@ -111,7 +113,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -172,12 +174,12 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       << be_uidt_nl
       << "{" << be_idt_nl;
 
-  be_type* disc_type =
+  be_type * const disc_type =
     dynamic_cast<be_type*> (node->disc_type ());
 
   // Generate a temporary to store the discriminant
   *os << disc_type->full_name ()
-      << " " << "_tao_discriminant;" << be_nl;
+      << " _tao_discriminant {};" << be_nl;
 
   serialize_disc (os, node->udisc_type (), false /* in */);
 
@@ -185,13 +187,13 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
     {
       if (node->gen_empty_default_label ())
         {
-          bool true_branch = false;
+          bool true_branch {};
 
           for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
                !si.is_done ();
                si.next ())
             {
-              be_union_branch *branch =
+              be_union_branch * const branch =
                 dynamic_cast<be_union_branch*> (si.item ());
 
               if (branch != nullptr
@@ -249,7 +251,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << "return result;" << be_uidt_nl
       << "}" << be_nl;
 
-  bool use_underscore = (this->ctx_->tdef () == nullptr);
+  bool const use_underscore = (this->ctx_->tdef () == nullptr);
 
   if (be_global->gen_ostream_operators ())
     {

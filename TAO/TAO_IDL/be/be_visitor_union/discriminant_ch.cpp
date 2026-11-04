@@ -22,21 +22,13 @@ int
 be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
 {
   // Get the enclosing union backend.
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type * const bt = this->ctx_->alias ()
+    ? static_cast<be_type*> (this->ctx_->alias ())
+    : static_cast<be_type*> (node);
 
-  // Check if we are visiting this node via a visit to a typedef node.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
    // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -76,21 +68,13 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
                                                          *node)
 {
   // get the enclosing union backend.
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type * const bt = this->ctx_->alias ()
+    ? static_cast<be_type*> (this->ctx_->alias ())
+    : static_cast<be_type*> (node);
 
-  // Check if we are visiting this node via a visit to a typedef node.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -109,7 +93,7 @@ be_visitor_union_discriminant_ch::visit_typedef (be_typedef *node)
   this->ctx_->alias (node);
 
   // The node to be visited in the base primitve type that gets typedefed.
-  be_type *bt = node->primitive_base_type ();
+  be_type * const bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))
     {

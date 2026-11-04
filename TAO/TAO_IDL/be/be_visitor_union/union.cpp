@@ -107,11 +107,11 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
 be_visitor_union::Bool_Union_Branch
 be_visitor_union::boolean_branch (be_union_branch *b)
 {
-  be_union *u = dynamic_cast<be_union*> (b->defined_in ());
+  be_union * const u = dynamic_cast<be_union*> (b->defined_in ());
   if (!u || u->udisc_type () != AST_Expression::EV_bool)
     return Bool_Union_Branch::None;
 
-  bool br_d = false, br_t = false, br_f = false;
+  bool br_d {}, br_t {}, br_f {};
   for (std::size_t i = 0; i < b->label_list_length (); ++i)
     if (b->label (i)->label_kind () == AST_UnionLabel::UL_default)
       br_d = true;
@@ -121,14 +121,14 @@ be_visitor_union::boolean_branch (be_union_branch *b)
   if ((br_t && br_f) || (u->nfields () == 1 && br_d))
     return Bool_Union_Branch::Unconditional;
 
-  bool has_other = false, other_val = false;
+  bool has_other {}, other_val {};
   for (unsigned int i = 0; br_d && i < u->nfields (); ++i)
     {
-      AST_Field *f = nullptr;
+      AST_Field *f {};
       u->field (f, i);
       if (f != b)
         {
-          AST_UnionBranch *other = dynamic_cast<AST_UnionBranch*> (f);
+          AST_UnionBranch * const other = dynamic_cast<AST_UnionBranch*> (f);
           for (std::size_t j = 0; j < other->label_list_length (); ++j)
             {
               has_other = true;
@@ -144,11 +144,11 @@ be_visitor_union::boolean_branch (be_union_branch *b)
 int
 be_visitor_union::branch_index (be_union_branch *b)
 {
-  be_union *u = dynamic_cast<be_union*> (b->defined_in ());
+  be_union * const u = dynamic_cast<be_union*> (b->defined_in ());
 
   for (unsigned long i = 0; u != nullptr && i < u->nfields (); ++i)
     {
-      AST_Field *field = nullptr;
+      AST_Field *field {};
 
       if (u->field (field, i) != 0 || field == nullptr)
         {
@@ -180,9 +180,9 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
-  be_union_branch* b =
+  be_union_branch * const b =
     dynamic_cast<be_union_branch*> (bd);
 
   // Could be a type decl.
@@ -248,7 +248,7 @@ be_visitor_union_cdr_op_cs::post_process (be_decl *bd)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   switch (this->latest_branch_)
     {
