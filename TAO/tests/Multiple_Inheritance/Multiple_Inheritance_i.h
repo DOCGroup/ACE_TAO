@@ -5,19 +5,19 @@ class Multiple_Inheritance_i : public POA_D
 public:
   Multiple_Inheritance_i ();
 
-  virtual char* method1 ()
+  char* method1 () override
     {
       return CORBA::string_dup ("method1");
     }
-  virtual char* method2 ()
+  char* method2 () override
     {
       return CORBA::string_dup ("method2");
     }
-  virtual char* method3 ()
+  char* method3 () override
     {
       return CORBA::string_dup ("method3");
     }
-  virtual char* method4 ()
+  char* method4 () override
     {
       return CORBA::string_dup ("method4");
     }
