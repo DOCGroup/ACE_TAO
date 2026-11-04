@@ -14,9 +14,9 @@
 // Network interface to subscribe to.  This is hardware specific.  use
 // netstat(1M) to find whether your interface is le0 or ie0
 
-static const ACE_TCHAR *INTERFACE = nullptr;
-static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
-static const u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
+static ACE_TCHAR const *INTERFACE {};
+static constexpr char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
+static constexpr u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
 class Handler : public ACE_Event_Handler
 {
@@ -24,18 +24,22 @@ class Handler : public ACE_Event_Handler
   //     Handle both multicast and stdin events.
 public:
   Handler (u_short udp_port,
-           const char *ip_addr,
-           const ACE_TCHAR *a_interface,
+           char const *ip_addr,
+           ACE_TCHAR const *a_interface,
            ACE_Reactor & );
   // Constructor.
 
   ~Handler () override;
   // Destructor.
 
+  Handler (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler &operator= (Handler &&) = delete;
+
   // Event demuxer hooks.
   int handle_input (ACE_HANDLE) override;
-  int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   ACE_HANDLE get_handle () const override;
 
 private:
@@ -59,7 +63,7 @@ Handler::handle_input (ACE_HANDLE h)
 
   if (h == ACE_STDIN)
     {
-      ssize_t result = ACE_OS::read (h, buf, BUFSIZ);
+      ssize_t const result = ACE_OS::read (h, buf, BUFSIZ);
 
       if (result > 0)
         {
@@ -86,9 +90,9 @@ Handler::handle_input (ACE_HANDLE h)
       ACE_INET_Addr remote_addr;
 
       // Receive message from multicast group.
-      ssize_t result = this->mcast_.recv (buf,
-                                          sizeof buf,
-                                          remote_addr);
+      ssize_t const result = this->mcast_.recv (buf,
+                                                sizeof buf,
+                                                remote_addr);
 
       if (result != -1)
         {
@@ -139,8 +143,8 @@ Handler::~Handler ()
 }
 
 Handler::Handler (u_short udp_port,
-                  const char *ip_addr,
-                  const ACE_TCHAR *a_interface,
+                  char const *ip_addr,
+                  ACE_TCHAR const *a_interface,
                   ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
