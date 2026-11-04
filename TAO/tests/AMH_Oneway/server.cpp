@@ -4,7 +4,7 @@
 #include "TestS.h"
 #include <atomic>
 #include <memory>
-int num_calls = 10; // total calls client is going to make
+int num_calls {10}; // total calls client is going to make
 
 // This should equal num_calls within 'sleep * num_calls' seconds
 std::atomic<int> calls_received {};
@@ -13,7 +13,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -107,9 +107,9 @@ public:
   CORBA::ORB_ptr orb () const { return this->orb_.in (); }
 
 protected:
-  int *argc_;
-  ACE_TCHAR **argv_;
-  ACE_TCHAR const* ior_output_file_ {ACE_TEXT ("test.ior")};
+  int * const argc_;
+  ACE_TCHAR ** const argv_;
+  ACE_TCHAR const * const ior_output_file_ {ACE_TEXT ("test.ior")};
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
@@ -139,7 +139,6 @@ ST_AMH_Server::cleanup ()
     {
       ex._tao_print_exception ("Exception caught:");
     }
-
 }
 
 int
@@ -150,8 +149,8 @@ ST_AMH_Server::start_orb_and_poa ()
       this->orb_ = CORBA::ORB_init (*(this->argc_),
                                     this->argv_);
 
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -160,7 +159,7 @@ ST_AMH_Server::start_orb_and_poa ()
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         this->root_poa_->the_POAManager ();
 
       poa_manager->activate ();
@@ -179,21 +178,21 @@ ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 {
   try
     {
-      CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        this->orb_->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (servant);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Test::Roundtrip_var roundtrip =
+      Test::Roundtrip_var const roundtrip =
         Test::Roundtrip::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         this->orb_->object_to_string (roundtrip.in ());
 
       (void) this->write_ior_to_file (ior);
@@ -243,11 +242,12 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var const& ior)
 
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ST_AMH_Server amh_server (&argc, argv);
 
-  amh_server.start_orb_and_poa ();
+  if (amh_server.start_orb_and_poa () == -1)
+    return 1;
 
   if (parse_args (argc, argv) != 0)
     return 1;

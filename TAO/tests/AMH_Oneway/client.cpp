@@ -1,14 +1,14 @@
 #include "ace/Get_Opt.h"
 #include "TestC.h"
 #include "ace/OS_NS_unistd.h"
-ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
-int num_calls = 10;
+ACE_TCHAR const * const ior = ACE_TEXT ("file://test.ior");
+int num_calls {10};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("n:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -23,20 +23,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (ior);
 
-      Test::Roundtrip_var roundtrip =
+      Test::Roundtrip_var const roundtrip =
         Test::Roundtrip::_narrow (object.in ());
 
       if (CORBA::is_nil (roundtrip.in ()))
@@ -50,7 +50,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Do a couple of calls on the server. If the sever is trying to
       // do something stupid like sending an exception to us, then it
       // won't be able to handle more than 1 request from us.
-      Test::Timestamp time = 10;
+      Test::Timestamp time {10};
       for (int i = 0; i < num_calls; ++i)
         {
           roundtrip->test_method (time);
