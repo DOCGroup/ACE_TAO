@@ -23,13 +23,13 @@ class ACE_Timer_Node_Dispatch_Info_T
 {
 public:
   /// The type of object held in the queue
-  TYPE type_;
+  TYPE type_ {};
 
   /// Asynchronous completion token associated with the timer.
-  const void *act_;
+  void const *act_ {};
 
   /// Flag to check if the timer is recurring.
-  int recurring_timer_;
+  int recurring_timer_ {};
 };
 
 /**
@@ -44,6 +44,11 @@ public:
   /// Default constructor
   ACE_Timer_Node_T ();
 
+  ACE_Timer_Node_T (ACE_Timer_Node_T const &) = delete;
+  ACE_Timer_Node_T (ACE_Timer_Node_T &&) = delete;
+  ACE_Timer_Node_T &operator= (ACE_Timer_Node_T const &) = delete;
+  ACE_Timer_Node_T &operator= (ACE_Timer_Node_T &&) = delete;
+
   /// Destructor
   ~ACE_Timer_Node_T ();
 
@@ -51,18 +56,18 @@ public:
   using DISPATCH_INFO = ACE_Timer_Node_Dispatch_Info_T<TYPE>;
 
   /// Singly linked list
-  void set (const TYPE &type,
-            const void *a,
-            const ACE_Time_Value &t,
-            const ACE_Time_Value &i,
+  void set (TYPE const &type,
+            void const *a,
+            ACE_Time_Value const &t,
+            ACE_Time_Value const &i,
             ACE_Timer_Node_T<TYPE> *n,
             long timer_id);
 
   /// Doubly linked list version
-  void set (const TYPE &type,
-            const void *a,
-            const ACE_Time_Value &t,
-            const ACE_Time_Value &i,
+  void set (TYPE const &type,
+            void const *a,
+            ACE_Time_Value const &t,
+            ACE_Time_Value const &i,
             ACE_Timer_Node_T<TYPE> *p,
             ACE_Timer_Node_T<TYPE> *n,
             long timer_id);
@@ -73,34 +78,34 @@ public:
   TYPE &get_type ();
 
   /// Set the type.
-  void set_type (TYPE &type);
+  void set_type (TYPE const &type);
 
   /// Get the asynchronous completion token.
-  const void *get_act ();
+  void const *get_act () const;
 
   /// Set the asynchronous completion token.
-  void set_act (void *act);
+  void set_act (void const *act);
 
   /// Get the timer value.
-  const ACE_Time_Value &get_timer_value () const;
+  ACE_Time_Value const &get_timer_value () const;
 
   /// Set the timer value.
-  void set_timer_value (const ACE_Time_Value &timer_value);
+  void set_timer_value (ACE_Time_Value const &timer_value);
 
   /// Get the timer interval.
-  const ACE_Time_Value &get_interval () const;
+  ACE_Time_Value const &get_interval () const;
 
   /// Set the timer interval.
-  void set_interval (const ACE_Time_Value &interval);
+  void set_interval (ACE_Time_Value const &interval);
 
   /// Get the previous pointer.
-  ACE_Timer_Node_T<TYPE> *get_prev ();
+  ACE_Timer_Node_T<TYPE> *get_prev () const;
 
   /// Set the previous pointer.
   void set_prev (ACE_Timer_Node_T<TYPE> *prev);
 
   /// Get the next pointer.
-  ACE_Timer_Node_T<TYPE> *get_next ();
+  ACE_Timer_Node_T<TYPE> *get_next () const;
 
   /// Set the next pointer.
   void set_next (ACE_Timer_Node_T<TYPE> *next);
@@ -116,7 +121,7 @@ public:
   /// deleting data along the criticl path.
   /// @todo We may want to have a copying version too, so that our
   /// interface will be complete..
-  void get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T <TYPE> &info);
+  void get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T <TYPE> &info) const;
 
   /// Dump the state of an TYPE.
   void dump () const;
@@ -126,26 +131,26 @@ public:
 
 private:
   /// Type of object stored in the Queue
-  TYPE type_;
+  TYPE type_ {};
 
   /// Asynchronous completion token associated with the timer.
-  const void *act_;
+  void const *act_ {};
 
   /// Time until the timer expires.
-  ACE_Time_Value timer_value_;
+  ACE_Time_Value timer_value_ {};
 
   /// If this is a periodic timer this holds the time until the next
   /// timeout.
-  ACE_Time_Value interval_;
+  ACE_Time_Value interval_ {};
 
   /// Pointer to previous timer.
-  ACE_Timer_Node_T<TYPE> *prev_;
+  ACE_Timer_Node_T<TYPE> *prev_ {};
 
   /// Pointer to next timer.
-  ACE_Timer_Node_T<TYPE> *next_;
+  ACE_Timer_Node_T<TYPE> *next_ {};
 
   /// Id of this timer (used to cancel timers before they expire).
-  long timer_id_;
+  long timer_id_ {-1};
 };
 
 /**
@@ -164,6 +169,11 @@ class ACE_Timer_Queue_Iterator_T
 public:
   /// Constructor.
   ACE_Timer_Queue_Iterator_T () = default;
+
+  ACE_Timer_Queue_Iterator_T (ACE_Timer_Queue_Iterator_T const &) = delete;
+  ACE_Timer_Queue_Iterator_T (ACE_Timer_Queue_Iterator_T &&) = delete;
+  ACE_Timer_Queue_Iterator_T &operator= (ACE_Timer_Queue_Iterator_T const &) = delete;
+  ACE_Timer_Queue_Iterator_T &operator= (ACE_Timer_Queue_Iterator_T &&) = delete;
 
   /// Destructor.
   virtual ~ACE_Timer_Queue_Iterator_T ();

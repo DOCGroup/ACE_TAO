@@ -2,10 +2,10 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
-                             const void *a,
-                             const ACE_Time_Value &t,
-                             const ACE_Time_Value &i,
+ACE_Timer_Node_T<TYPE>::set (TYPE const &type,
+                             void const *a,
+                             ACE_Time_Value const &t,
+                             ACE_Time_Value const &i,
                              ACE_Timer_Node_T<TYPE> *n,
                              long timer_id)
 {
@@ -18,10 +18,10 @@ ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
-                             const void *a,
-                             const ACE_Time_Value &t,
-                             const ACE_Time_Value &i,
+ACE_Timer_Node_T<TYPE>::set (TYPE const &type,
+                             void const *a,
+                             ACE_Time_Value const &t,
+                             ACE_Time_Value const &i,
                              ACE_Timer_Node_T<TYPE> *p,
                              ACE_Timer_Node_T<TYPE> *n,
                              long timer_id)
@@ -42,49 +42,49 @@ ACE_Timer_Node_T<TYPE>::get_type ()
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set_type (TYPE &type)
+ACE_Timer_Node_T<TYPE>::set_type (TYPE const &type)
 {
   this->type_ = type;
 }
 
-template <class TYPE> ACE_INLINE const void *
-ACE_Timer_Node_T<TYPE>::get_act ()
+template <class TYPE> ACE_INLINE void const *
+ACE_Timer_Node_T<TYPE>::get_act () const
 {
   return this->act_;
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set_act (void *act)
+ACE_Timer_Node_T<TYPE>::set_act (void const *act)
 {
   this->act_ = act;
 }
 
-template <class TYPE> ACE_INLINE const ACE_Time_Value &
+template <class TYPE> ACE_INLINE ACE_Time_Value const &
 ACE_Timer_Node_T<TYPE>::get_timer_value () const
 {
   return this->timer_value_;
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set_timer_value (const ACE_Time_Value &timer_value)
+ACE_Timer_Node_T<TYPE>::set_timer_value (ACE_Time_Value const &timer_value)
 {
   this->timer_value_ = timer_value;
 }
 
-template <class TYPE> ACE_INLINE const ACE_Time_Value &
+template <class TYPE> ACE_INLINE ACE_Time_Value const &
 ACE_Timer_Node_T<TYPE>::get_interval () const
 {
   return this->interval_;
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set_interval (const ACE_Time_Value &interval)
+ACE_Timer_Node_T<TYPE>::set_interval (ACE_Time_Value const &interval)
 {
   this->interval_ = interval;
 }
 
 template <class TYPE> ACE_INLINE ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Node_T<TYPE>::get_prev ()
+ACE_Timer_Node_T<TYPE>::get_prev () const
 {
   return this->prev_;
 }
@@ -96,7 +96,7 @@ ACE_Timer_Node_T<TYPE>::set_prev (ACE_Timer_Node_T<TYPE> *prev)
 }
 
 template <class TYPE> ACE_INLINE ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Node_T<TYPE>::get_next ()
+ACE_Timer_Node_T<TYPE>::get_next () const
 {
   return this->next_;
 }
@@ -120,7 +120,7 @@ ACE_Timer_Node_T<TYPE>::set_timer_id (long timer_id)
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info)
+ACE_Timer_Node_T<TYPE>::get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info) const
 {
   // Yes, do a copy
   info.type_ = this->type_;
