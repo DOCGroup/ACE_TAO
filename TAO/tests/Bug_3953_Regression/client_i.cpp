@@ -1,7 +1,7 @@
 #include "client_i.h"
 
-client_i::client_i (bool quiet,
-                    server_ptr s)
+client_i::client_i (bool const quiet,
+                    server_ptr const s)
   : quiet_ (quiet),
     server_ (server::_duplicate (s))
 {

@@ -4,10 +4,14 @@
 #include "ace/Task.h"
 #include "tao/Messaging/Messaging.h"
 
+#include <cstring>
+#include <memory>
+#include <string>
+
 static bool quiet {};
 // The test is quiet...
 
-static ACE_TCHAR const *ior_file = ACE_TEXT ("test.ior");
+static std::basic_string<ACE_TCHAR> ior_file {ACE_TEXT ("test.ior")};
 // File of file to which the ior is written
 
 static int number_of_threads {1};
@@ -16,7 +20,7 @@ static int number_of_threads {1};
 class Server_Task : public ACE_Task_Base
 {
 public:
-  explicit Server_Task (CORBA::ORB_ptr orb);
+  explicit Server_Task (CORBA::ORB_ptr const orb);
   Server_Task (Server_Task const &) = delete;
   Server_Task (Server_Task &&) = delete;
   Server_Task &operator= (Server_Task const &) = delete;
@@ -24,10 +28,10 @@ public:
   int svc () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
-Server_Task::Server_Task (CORBA::ORB_ptr orb)
+Server_Task::Server_Task (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -37,13 +41,13 @@ Server_Task::svc ()
 {
   try
     {
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         this->orb_->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
-      TimeBase::TimeT timeout_period = 100 * 100000;
+      TimeBase::TimeT const timeout_period = 100 * 100000;
 
       CORBA::Any timeout_as_any;
       timeout_as_any <<= timeout_period;
@@ -69,29 +73,23 @@ Server_Task::svc ()
 }
 
 static int
-write_ior_to_file (const char *ior)
+write_ior_to_file (char const *const ior)
 {
-  FILE *output_file = ACE_OS::fopen (ior_file, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+    ACE_OS::fopen (ior_file.c_str (), "w"), ACE_OS::fclose);
 
-  if (output_file == 0)
+  if (!output_file)
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IOR: %s\n",
-                       ior_file),
+                       ior_file.c_str ()),
                       -1);
 
-  int result {};
-
-  result = ACE_OS::fprintf (output_file,
-                            "%s",
-                            ior);
-  if (result < 0 ||
-      static_cast<size_t> (result) != ACE_OS::strlen (ior))
+  int const result = ACE_OS::fprintf (output_file.get (), "%s", ior);
+  if (result < 0 || static_cast<size_t> (result) != std::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        ior,
-                       ior_file),
+                       ior_file.c_str ()),
                       -1);
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }
@@ -100,11 +98,11 @@ static int
 parse_args (int argc,
             ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("q:f:t:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("q:f:t:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'q':
         quiet = true;
@@ -136,22 +134,21 @@ parse_args (int argc,
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
-  int result = 0;
-
+  int result {};
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
       result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
-      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const object {orb->resolve_initial_references ("RootPOA")};
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
@@ -159,14 +156,14 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       server_i server_servant (quiet,
                                orb.in ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&server_servant);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      server_var server_object = server::_narrow (object_act.in ());
+      server_var const server_object = server::_narrow (object_act.in ());
 
-      CORBA::String_var ior = orb->object_to_string (server_object.in ());
+      CORBA::String_var const ior = orb->object_to_string (server_object.in ());
 
       result = write_ior_to_file (ior.in ());
       if (result != 0)

@@ -1,7 +1,7 @@
 #include "server_i.h"
 
-server_i::server_i (bool quiet,
-                    CORBA::ORB_ptr orb)
+server_i::server_i (bool const quiet,
+                    CORBA::ORB_ptr const orb)
   : quiet_ (quiet),
     orb_ (CORBA::ORB::_duplicate (orb))
 {

@@ -2,7 +2,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-static ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+#include <string>
+
+static std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
 // Server IOR.
 
 static bool shutdown_server {};
@@ -17,23 +19,21 @@ static bool quiet {};
 class Client_Task
 {
 public:
-  Client_Task (client_ptr c,
-               server_ptr s);
+  Client_Task (client_ptr const c,
+               server_ptr const s);
   Client_Task (Client_Task const &) = delete;
   Client_Task (Client_Task &&) = delete;
   Client_Task &operator= (Client_Task const &) = delete;
   Client_Task &operator= (Client_Task &&) = delete;
   int svc ();
 
-  bool exception () const;
-
 private:
-  client_var client_;
-  server_var server_;
+  client_var client_ {};
+  server_var server_ {};
 };
 
-Client_Task::Client_Task (client_ptr c,
-                          server_ptr s)
+Client_Task::Client_Task (client_ptr const c,
+                          server_ptr const s)
   : client_ (client::_duplicate (c)),
     server_ (server::_duplicate (s))
 {
@@ -65,11 +65,11 @@ static int
 parse_args (int argc,
             ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("qxn:k:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("qxn:k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'q':
         quiet = true;
@@ -100,56 +100,48 @@ parse_args (int argc,
                           -1);
       }
 
-  if (ior == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s: no nested up calls server ior specified\n",
-                       argv[0]),
-                      -1);
-
   // Indicates successful parsing of command line.
   return 0;
 }
 
 int
 ACE_TMAIN (int argc,
-      ACE_TCHAR **argv)
+           ACE_TCHAR **argv)
 {
-  int result {};
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      result = parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
-      CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var object {orb->resolve_initial_references ("RootPOA")};
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      object = orb->string_to_object (ior);
+      object = orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
 
-      server_var server = server::_narrow (object.in ());
+      server_var const server = server::_narrow (object.in ());
 
       // Create an client object to hand to the other side...
       client_i client_servant (quiet,
                                server.in ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&client_servant);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      client_var client_object = client::_narrow (object_act.in ());
+      client_var const client_object = client::_narrow (object_act.in ());
 
-      Client_Task client_tasks (client_object.in (),
-                                server.in ());
+      Client_Task client_tasks (client_object.in (), server.in ());
 
       client_tasks.svc ();
 
@@ -167,5 +159,5 @@ ACE_TMAIN (int argc,
       ex._tao_print_exception ("client::main");
       return -1;
     }
-  return result;
+  return 0;
 }
