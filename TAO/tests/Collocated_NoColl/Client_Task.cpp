@@ -8,35 +8,31 @@ Client_Task::Client_Task (ACE_TCHAR const *ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-    , input_ (ior)
-    , corb_ (CORBA::ORB::_duplicate (corb))
-
+  , input_ (ior)
+  , corb_ (CORBA::ORB::_duplicate (corb))
 {
 }
 
 int
 Client_Task::svc ()
 {
-  int status = 0;
+  int status {};
 
   try
     {
-      CORBA::Object_var tmp =
-        this->corb_->string_to_object (input_);
+      CORBA::Object_var const tmp {this->corb_->string_to_object (this->input_.c_str ())};
 
-      Test::Hello_var hello =
-        Test::Hello::_narrow (tmp.in ());
+      Test::Hello_var const hello {Test::Hello::_narrow (tmp.in ())};
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             input_),
-                             1);
+                             ACE_TEXT ("Nil Test::Hello reference <%s>\n"),
+                             this->input_.c_str ()),
+                           1);
         }
 
-      CORBA::String_var the_string =
-        hello->get_string ();
+      CORBA::String_var const the_string {hello->get_string ()};
 
       if (std::strcmp (the_string.in (), "Hello there!") != 0)
         {
@@ -50,7 +46,7 @@ Client_Task::svc ()
 
       hello->shutdown ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       status = 1;
