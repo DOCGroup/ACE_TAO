@@ -143,12 +143,10 @@ ACE_Unbounded_Stack<T>::dump () const
 
 template<class T>
 ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (ACE_Allocator *alloc)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc)
+  : allocator_ (alloc)
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack");
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -200,11 +198,9 @@ ACE_Unbounded_Stack<T>::copy_all_nodes (const ACE_Unbounded_Stack<T> &s)
 
 template<class T>
 ACE_Unbounded_Stack<T>::ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (s.allocator_)
+  : allocator_ (s.allocator_)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -924,8 +920,6 @@ ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
 
 template <class T, size_t ACE_SIZE>
 ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set ()
-  : cur_size_ (0),
-    max_size_ (ACE_SIZE)
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set");
 }
@@ -1202,8 +1196,7 @@ ACE_Bounded_Set<T>::~ACE_Bounded_Set ()
 
 template <class T>
 ACE_Bounded_Set<T>::ACE_Bounded_Set ()
-  : cur_size_ (0),
-    max_size_ (static_cast<size_t> (ACE_Bounded_Set<T>::DEFAULT_SIZE))
+  : max_size_ (static_cast<size_t> (ACE_Bounded_Set<T>::DEFAULT_SIZE))
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
 
@@ -1220,8 +1213,7 @@ ACE_Bounded_Set<T>::size () const
 
 template <class T>
 ACE_Bounded_Set<T>::ACE_Bounded_Set (const ACE_Bounded_Set<T> &bs)
-  : cur_size_ (bs.cur_size_),
-    max_size_ (bs.max_size_)
+  : max_size_ (bs.max_size_)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
 
@@ -1256,8 +1248,7 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
 
 template <class T>
 ACE_Bounded_Set<T>::ACE_Bounded_Set (size_t size)
-  : cur_size_ (0),
-    max_size_ (size)
+  : max_size_ (size)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::ACE_Bounded_Set");
   ACE_NEW (this->search_structure_,

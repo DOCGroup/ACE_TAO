@@ -484,10 +484,10 @@ private:
   void copy_all_nodes (const ACE_Unbounded_Stack<T> &s);
 
   /// Head of the linked list of Nodes.
-  ACE_Node<T> *head_;
+  ACE_Node<T> *head_ {};
 
   /// Current size of the stack.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Allocation strategy of the stack.
   ACE_Allocator *allocator_;
@@ -1459,10 +1459,10 @@ private:
   } search_structure_[ACE_SIZE];
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Maximum size of the set.
-  size_t max_size_;
+  size_t max_size_ {ACE_SIZE};
 };
 
 // Forward declaration.
@@ -1663,10 +1663,10 @@ private:
   };
 
   /// Holds the contents of the set.
-  Search_Structure *search_structure_;
+  Search_Structure *search_structure_ {};
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Maximum size of the set.
   size_t max_size_;
