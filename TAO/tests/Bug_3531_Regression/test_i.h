@@ -12,7 +12,7 @@
 class Simple_Server_i : public POA_Simple_Server, public ACE_Event_Handler
 {
 public:
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
   // ctor
 
   Simple_Server_i (Simple_Server_i const &) = delete;
@@ -33,9 +33,9 @@ public:
 private:
   CORBA::ORB_var orb_;
   // The ORB
-  TAO_SYNCH_MUTEX     lock_;
+  TAO_SYNCH_MUTEX lock_;
   TAO_SYNCH_CONDITION cond_;
-  bool                timer_registed_;
+  bool timer_registed_ {};
 };
 
 #if defined(__ACE_INLINE__)

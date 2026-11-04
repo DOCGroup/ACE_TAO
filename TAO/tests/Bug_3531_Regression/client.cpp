@@ -3,8 +3,7 @@
 #include "testS.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
-int do_shutdown = 0;
+#include <string>
 
 /**
  * Simpler Server Client implementation
@@ -14,13 +13,16 @@ int do_shutdown = 0;
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  Simple_Server_i (CORBA::ORB_ptr orb)
-    : orb_ (CORBA::ORB::_duplicate (orb))
-  {};
-  // ctor
+  explicit Simple_Server_i (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb)) {}
+
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
   // = The Simple_Server methods.
-  char *test_method (Simple_Server_ptr objref)
+  char *test_method (Simple_Server_ptr objref) override
   {
     ACE_DEBUG ((LM_DEBUG, "Client test_method() - sleeping\n"));
     ACE_OS::sleep (3);
@@ -38,7 +40,7 @@ public:
     ACE_ERROR ((LM_ERROR, "Unexpected call\n"));
   }
 
-  void shutdown ()
+  void shutdown () override
   {
   }
 
@@ -48,17 +50,20 @@ private:
 };
 
 
-int
-parse_args (int argc, ACE_TCHAR * argv[])
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior,
+            bool &do_shutdown)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:s:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xk:s:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'x':
-        do_shutdown = 1;
+        do_shutdown = true;
         break;
 
       case 'k':
@@ -68,10 +73,10 @@ parse_args (int argc, ACE_TCHAR * argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage: %s "
-                           "-k <ior> "
-                           "[-x]"
-                           "\n",
+                           ACE_TEXT ("usage: %s "
+                                     "-k <ior> "
+                                     "[-x]"
+                                     "\n"),
                            argv [0]),
                           -1);
       }
@@ -87,8 +92,11 @@ parse_args (int argc, ACE_TCHAR * argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
-  // ctor
+  explicit Worker (CORBA::ORB_ptr orb);
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
   int svc () override;
   // The thread entry point.
@@ -99,51 +107,50 @@ private:
 };
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR * argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+      bool do_shutdown {};
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object {orb->resolve_initial_references ("RootPOA")};
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var const root_poa {PortableServer::POA::_narrow (poa_object.in ())};
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager {root_poa->the_POAManager ()};
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior, do_shutdown) != 0)
         return 1;
 
       Simple_Server_i server_impl (orb.in ());
 
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (&server_impl);
+      PortableServer::ObjectId_var const id {root_poa->activate_object (&server_impl)};
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object {root_poa->id_to_reference (id.in ())};
 
-      Simple_Server_var server = Simple_Server::_narrow (object.in ());
+      Simple_Server_var const server {Simple_Server::_narrow (object.in ())};
 
-      CORBA::String_var local_ior = orb->object_to_string (server.in ());
+      CORBA::String_var const local_ior {orb->object_to_string (server.in ())};
       ACE_DEBUG ((LM_DEBUG,
                   "Client interface started on <%C>\n",
                   local_ior.in ()));
-      CORBA::Object_var remote_object = orb->string_to_object (ior);
+      CORBA::Object_var const remote_object {
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ())) };
 
-      Simple_Server_var remote_server =
-        Simple_Server::_narrow (remote_object.in ());
+      Simple_Server_var const remote_server {Simple_Server::_narrow (remote_object.in ())};
 
       if (CORBA::is_nil (remote_server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             ior), 1);
+                             ACE_TEXT ("Object reference <%s> is nil\n"),
+                             ior.c_str ()), 1);
         }
 
       if (do_shutdown)
@@ -160,7 +167,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                                "Cannot activate client thread\n"),
                               1);
           ACE_DEBUG ((LM_DEBUG, "ORB Thread started\n"));
-          CORBA::String_var str = remote_server->test_method (server.in ());
+          CORBA::String_var const str {remote_server->test_method (server.in ())};
           ACE_DEBUG ((LM_DEBUG, "Received \"%C\"\n", str.in ()));
           orb->shutdown (true);
           worker.thr_mgr ()->wait ();
@@ -192,7 +199,7 @@ Worker::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;

@@ -3,16 +3,18 @@
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT("file://test.ior");
-ACE_TCHAR const *srv_shutdown_file = ACE_TEXT("server_terminated");
+#include <memory>
+#include <string>
 
-int nthreads = 4;
-
-int
-parse_args (int argc, ACE_TCHAR * argv[])
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior_output_file,
+            std::basic_string<ACE_TCHAR> &srv_shutdown_file,
+            int &nthreads)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:n:x:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:n:x:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -32,9 +34,9 @@ parse_args (int argc, ACE_TCHAR * argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s "
+                                     "-o <iorfile>"
+                                     "\n"),
                            argv [0]),
                           -1);
       }
@@ -50,8 +52,11 @@ parse_args (int argc, ACE_TCHAR * argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
-  // ctor
+  explicit Worker (CORBA::ORB_ptr orb);
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
   int svc () override;
   // The thread entry point.
@@ -62,53 +67,52 @@ private:
 };
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR * argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("file://test.ior")};
+      std::basic_string<ACE_TCHAR> srv_shutdown_file {ACE_TEXT ("server_terminated")};
+      int nthreads {4};
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object {orb->resolve_initial_references ("RootPOA")};
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var const root_poa {PortableServer::POA::_narrow (poa_object.in ())};
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager {root_poa->the_POAManager ()};
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file, srv_shutdown_file, nthreads) != 0)
         return 1;
 
       Simple_Server_i server_impl (orb.in ());
 
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (&server_impl);
+      PortableServer::ObjectId_var const id {root_poa->activate_object (&server_impl)};
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object {root_poa->id_to_reference (id.in ())};
 
-      Simple_Server_var server = Simple_Server::_narrow (object.in ());
+      Simple_Server_var const server {Simple_Server::_narrow (object.in ())};
 
-      CORBA::String_var ior = orb->object_to_string (server.in ());
+      CORBA::String_var const ior {orb->object_to_string (server.in ())};
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
-      // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
-        {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
-                              1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
-        }
+      {
+        // Close the IOR file before waiting for clients.
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             ior_output_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
@@ -123,14 +127,16 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      FILE *output_file = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(srv_shutdown_file), "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing: ",
-                           ACE_TEXT_ALWAYS_CHAR(srv_shutdown_file)),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", "OK\n");
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+          ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR (srv_shutdown_file.c_str ()), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing: %s"),
+                             ACE_TEXT_ALWAYS_CHAR (srv_shutdown_file.c_str ())),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", "OK\n");
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -144,7 +150,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 // ****************************************************************
 
 Worker::Worker (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -155,7 +161,7 @@ Worker::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;

@@ -26,14 +26,14 @@ Simple_Server_i::test_method (Simple_Server_ptr objref)
               {
                 ACE_DEBUG ((LM_DEBUG, "(%P|%t) Scheduling timeout...\n"));
                 ACE_Time_Value timeout (2, 0);
-                ACE_Reactor * reactor = this->orb_->orb_core ()->reactor ();
-                reactor->schedule_timer (this, (void*)0, timeout);
+                ACE_Reactor *const reactor = this->orb_->orb_core ()->reactor ();
+                reactor->schedule_timer (this, nullptr, timeout);
                 this->timer_registed_ = true;
               }
           }
           ACE_DEBUG ((LM_DEBUG, "(%P|%t)  Calling test_method() on client, "
                       "which will sleep for 3 seconds\n"));
-          CORBA::String_var str = objref->test_method (_this());
+          CORBA::String_var const str {objref->test_method (this->_this ())};
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) Received \"%C\"\n", str.in ()));
         }
       catch (...)
@@ -42,7 +42,7 @@ Simple_Server_i::test_method (Simple_Server_ptr objref)
         }
     }
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) leaving test_method\n"));
-  return CORBA::string_dup("Hello world");
+  return CORBA::string_dup ("Hello world");
 }
 
 void
@@ -60,7 +60,7 @@ Simple_Server_i::handle_timeout (ACE_Time_Value const &,
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   // We are the (client) leader.  Signal the leader-follower pattern to
   // elect a new leader
-  TAO_ORB_Core *oc = orb_->orb_core();
+  TAO_ORB_Core *const oc = orb_->orb_core ();
   oc->lf_strategy ().set_upcall_thread (oc->leader_follower ());
   // Block until another thread is elected leader and handles a *new* event.
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) handle_timeout () called - waiting...\n"));
