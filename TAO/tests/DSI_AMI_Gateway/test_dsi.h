@@ -31,36 +31,40 @@ public:
   DSI_Simple_Server (CORBA::ORB_ptr orb,
                      CORBA::Object_ptr target,
                      PortableServer::POA_ptr poa);
+  DSI_Simple_Server (DSI_Simple_Server const &) = delete;
+  DSI_Simple_Server (DSI_Simple_Server &&) = delete;
+  DSI_Simple_Server &operator= (DSI_Simple_Server const &) = delete;
+  DSI_Simple_Server &operator= (DSI_Simple_Server &&) = delete;
 
   /**
    * Turns around and calls invoke, but using AMH style handler
    * = The DynamicImplementation methods.
    *
    */
-  virtual void _dispatch (TAO_ServerRequest &request,
-                          TAO::Portable_Server::Servant_Upcall *context);
+  void _dispatch (TAO_ServerRequest &request,
+                  TAO::Portable_Server::Servant_Upcall *context) override;
 
   // we need this because it is a pure virtual method in
   // its parent class
-  virtual void invoke (CORBA::ServerRequest_ptr request);
-  virtual void invoke (CORBA::ServerRequest_ptr request,
-                       TAO_AMH_DSI_Response_Handler_ptr rh);
+  void invoke (CORBA::ServerRequest_ptr request) override;
+  void invoke (CORBA::ServerRequest_ptr request,
+               TAO_AMH_DSI_Response_Handler_ptr rh);
 
-  virtual CORBA::RepositoryId _primary_interface (
+  CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
-      PortableServer::POA_ptr poa);
+      PortableServer::POA_ptr poa) override;
 
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   /// The ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   /// Target object, forward requests to it...
-  CORBA::Object_var target_;
+  CORBA::Object_var const target_;
 
   /// The POA
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var const poa_;
 };
 
 #if defined(__ACE_INLINE__)

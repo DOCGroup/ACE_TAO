@@ -6,13 +6,15 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "My_DII_Reply_Handler.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "test_dsi.inl"
 #endif /* __ACE_INLINE__ */
 
 void
-DSI_Simple_Server::_dispatch (TAO_ServerRequest &request, TAO::Portable_Server::Servant_Upcall *)
+DSI_Simple_Server::_dispatch (TAO_ServerRequest &request,
+                              TAO::Portable_Server::Servant_Upcall *)
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())
@@ -36,22 +38,22 @@ DSI_Simple_Server::_dispatch (TAO_ServerRequest &request, TAO::Portable_Server::
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = 0;
-  ACE_NEW (dsi_request,
-           CORBA::ServerRequest (request));
+  // ACE_NEW needs a raw output pointer; the CORBA var adopts it immediately.
+  CORBA::ServerRequest *dsi_request_ptr {};
+  ACE_NEW (dsi_request_ptr, CORBA::ServerRequest (request));
+  CORBA::ServerRequest_var dsi_request (dsi_request_ptr);
 
   try
     {
-      TAO_AMH_DSI_Response_Handler_ptr rh_ptr;
-      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler(request));
+      TAO_AMH_DSI_Response_Handler_ptr rh_ptr {};
+      ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler (request));
 
-      TAO_AMH_DSI_Response_Handler_var rh(rh_ptr);
-      rh->init (request, 0);
+      TAO_AMH_DSI_Response_Handler_var rh (rh_ptr);
+      rh->init (request, nullptr);
       // Delegate to user.
-      this->invoke (dsi_request, rh.in());
+      this->invoke (dsi_request.in (), rh.in ());
     }
-  catch (const CORBA::Exception& ex)
-
+  catch (CORBA::Exception const &ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -60,7 +62,6 @@ DSI_Simple_Server::_dispatch (TAO_ServerRequest &request, TAO::Portable_Server::
         }
     }
 
-  CORBA::release (dsi_request);
 }
 
 void
@@ -72,19 +73,19 @@ void
 DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
                            TAO_AMH_DSI_Response_Handler * rph)
 {
-  CORBA::NVList_ptr opList;
+  CORBA::NVList_ptr opList {};
   this->orb_->create_list (0, opList);
 
   request->arguments (opList);
 
-  CORBA::Request_var target_request;
+  CORBA::Request_var target_request {};
 
-  this->target_->_create_request (0, // ctx
+  this->target_->_create_request (nullptr, // ctx
                                   request->operation (),
                                   opList,
-                                  0, // result
-                                  0, // exception_list,
-                                  0, // context_list,
+                                  nullptr, // result
+                                  nullptr, // exception_list,
+                                  nullptr, // context_list,
                                   target_request.inout (),
                                   0);
 
@@ -96,12 +97,13 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
   try
     {
       // Updates the byte order state, if necessary.
-      TAO_DII_Reply_Handler_ptr rh_ptr;
+      // ACE_NEW needs a raw output pointer; the CORBA var adopts it immediately.
+      TAO_DII_Reply_Handler_ptr rh_ptr {};
       ACE_NEW (rh_ptr, My_DII_Reply_Handler (rph, this->orb_));
-      TAO_DII_Reply_Handler_var rh(rh_ptr);
-      target_request->sendc (rh.in());
+      TAO_DII_Reply_Handler_var rh (rh_ptr);
+      target_request->sendc (rh.in ());
     }
-  catch (const CORBA::UNKNOWN&)
+  catch (CORBA::UNKNOWN const &)
     {
       // Outgoing reply must have the same byte order as the incoming one.
       request->_tao_reply_byte_order (target_request->_tao_byte_order ());
@@ -116,7 +118,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
   // The DII AMI reply handler must propagate the incoming reply
   // byte order to the DSI AMH reply handler
 
-  if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
+  if (std::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (false);
     }
