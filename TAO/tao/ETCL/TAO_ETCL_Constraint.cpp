@@ -46,11 +46,11 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
   switch (this->type_)
     {
     case ACE_ETCL_SIGNED:
-      this->op_.integer_ = 0;
+      this->op_.integer_ = {};
 
       if (corba_type == CORBA::tk_short)
         {
-          CORBA::Short sh;
+          CORBA::Short sh {};
           any_ref >>= sh;
           this->op_.integer_ = static_cast<CORBA::Long> (sh);
         }
@@ -61,11 +61,11 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
 
       break;
     case ACE_ETCL_UNSIGNED:
-      this->op_.uinteger_ = 0;
+      this->op_.uinteger_ = {};
 
       if (corba_type == CORBA::tk_ushort)
         {
-          CORBA::UShort sh;
+          CORBA::UShort sh {};
           any_ref >>= sh;
           this->op_.uinteger_ = static_cast<CORBA::ULong> (sh);
         }
@@ -105,7 +105,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
     case ACE_ETCL_DOUBLE:
       if (corba_type == CORBA::tk_float)
         {
-          CORBA::Float fl;
+          CORBA::Float fl {};
           (*any) >>= fl;
           this->op_.double_ = static_cast<CORBA::Double> (fl);
         }
@@ -123,7 +123,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
       break;
     case ACE_ETCL_STRING:
       {
-        const char* s;
+        char const* s {};
         any_ref >>= s;
         this->op_.str_ = CORBA::string_dup (s);
       }
