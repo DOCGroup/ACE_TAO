@@ -28,7 +28,6 @@ namespace TAO_Notify
   const char REGISTRY_CALLBACK_TYPE[] = "reconnect_callback";
 
   Reconnection_Registry::Reconnection_Registry (Topology_Parent & parent)
-    : highest_id_(0)
   {
     // not the best technique, here.  Take advantage of "protected"
     Topology_Object::topology_parent_ = &parent;

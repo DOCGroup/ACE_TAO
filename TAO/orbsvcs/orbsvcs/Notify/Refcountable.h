@@ -83,7 +83,7 @@ private:
 
   /// Use a signed counter so that we can more easily detect
   /// boundary conditions such as too many _decr_refcnt() calls.
-  std::atomic<CORBA::Long> refcount_;
+  std::atomic<CORBA::Long> refcount_ {};
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   friend class TAO_Notify_Tracker;

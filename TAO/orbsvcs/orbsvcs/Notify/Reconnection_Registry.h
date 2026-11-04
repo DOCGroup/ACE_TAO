@@ -84,7 +84,7 @@ namespace TAO_Notify
     void release () override;
 
     Reconnection_Registry_Type reconnection_registry_;
-    ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_;
+    ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_ {};
   };
 } // namespace TAO_Notify
 

@@ -96,8 +96,7 @@ TAO_Notify_Constraint_Expr::release ()
 TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
                                                 const char *constraint_grammar,
                                                 const TAO_Notify_Object::ID& id)
-  :constraint_expr_ids_ (0),
-   poa_ (PortableServer::POA::_duplicate (poa)),
+  : poa_ (PortableServer::POA::_duplicate (poa)),
    id_ (id),
    grammar_ (constraint_grammar)
 {

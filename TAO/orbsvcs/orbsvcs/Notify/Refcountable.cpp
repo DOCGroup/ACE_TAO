@@ -64,7 +64,6 @@ TAO_Notify_Refcountable::diagnostic_dump( const char* title )
 
 
 TAO_Notify_Refcountable::TAO_Notify_Refcountable ()
-  : refcount_ (0)
 {
 }
 
