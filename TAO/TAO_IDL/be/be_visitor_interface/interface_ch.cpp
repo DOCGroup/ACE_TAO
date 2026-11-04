@@ -159,8 +159,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << be_nl << "static char const *_desc_interface_name ();";
     }
 
-  *os << be_nl
-      << "virtual ::CORBA::Boolean marshal "
+  *os << be_nl;
+  if (node->is_abstract ())
+    {
+      *os << "virtual ";
+    }
+  *os << "::CORBA::Boolean marshal "
       << "(TAO_OutputCDR &cdr)";
 
   if (!node->is_abstract ())
