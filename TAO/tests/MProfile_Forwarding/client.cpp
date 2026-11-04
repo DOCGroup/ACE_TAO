@@ -3,19 +3,22 @@
 #include "ace/OS_NS_unistd.h"
 #include "testC.h"
 
-const ACE_TCHAR *ior_input_file = 0;
+struct Client_Options
+{
+  ACE_TString ior_input_file;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_input_file = get_opts.opt_arg ();
+        options.ior_input_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -31,30 +34,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-run_test (Simple_Server_ptr server);
+run_test (Simple_Server_ptr const server);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      Client_Options options;
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (argc, argv, options) == -1)
         return -1;
 
-      CORBA::Object_var objref =
-        orb->string_to_object (ior_input_file);
+      CORBA::Object_var const objref =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior_input_file.c_str ()));
 
-      if (objref.in () == 0)
+      if (objref.in () == nullptr)
         {
           ACE_ERROR_RETURN  ((LM_ERROR,
                               "The received objref is nullptr\n"),
                              -1);
         }
 
-      Simple_Server_var server =
+      Simple_Server_var const server =
         Simple_Server::_narrow (objref.in ());
 
       if (CORBA::is_nil (server.in ()))
@@ -66,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       run_test (server.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught an exception\n");
       return -1;
@@ -74,9 +77,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void run_test (Simple_Server_ptr server)
+void
+run_test (Simple_Server_ptr const server)
 {
-  for (int loop = 0; loop < 10; loop++)
+  for (int loop {}; loop < 10; ++loop)
     {
       try
         {
@@ -96,21 +100,21 @@ void run_test (Simple_Server_ptr server)
           server->shutdown ();
           ACE_OS::sleep (23);
         }
-      catch (const CORBA::UserException& x)
+      catch (CORBA::UserException const &x)
         {
           x._tao_print_exception ("Caught an ");
         }
-      catch (const CORBA::TRANSIENT& t)
+      catch (CORBA::TRANSIENT const &t)
         {
           t._tao_print_exception ("Caught Exception");
         }
-      catch (const CORBA::COMM_FAILURE& f)
+      catch (CORBA::COMM_FAILURE const &f)
         {
           f._tao_print_exception ("A (sort of) expected COMM_FAILURE");
           ACE_DEBUG ((LM_DEBUG,
                       "Automagically re-issuing request on COMM_FAILURE\n"));
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Unexpected exception");
           throw;

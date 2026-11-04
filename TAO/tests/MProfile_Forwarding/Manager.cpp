@@ -5,32 +5,28 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-const ACE_TCHAR *first_ior = 0;
-const ACE_TCHAR *second_ior = 0;
-const ACE_TCHAR *third_ior = 0;
-const ACE_TCHAR *ior_output_file = 0;
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Manager_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:d:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("a:b:c:d:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'a':
-        first_ior = get_opts.opt_arg ();
+        options.first_ior = get_opts.opt_arg ();
         break;
       case 'b':
-        second_ior = get_opts.opt_arg ();
+        options.second_ior = get_opts.opt_arg ();
         break;
       case 'c':
-        third_ior = get_opts.opt_arg ();
+        options.third_ior = get_opts.opt_arg ();
         break;
       case 'd':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -51,22 +47,23 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Manager manager;
+  Manager_Options options;
 
   try
     {
       // Initilaize the ORB, POA etc.
       manager.init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (argc, argv, options) == -1)
         return -1;
 
       manager.activate_servant ();
 
-      manager.make_iors_register ();
+      manager.make_iors_register (options);
 
       manager.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught");
       return -1;
@@ -75,28 +72,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Manager::Manager ()
-  :orb_ (0),
-   new_poa_var_ (0)
-{
-  //no-op
-}
-
 int
 Manager::init (int argc, ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
   // Obtain the RootPOA.
-  CORBA::Object_var obj_var =
+  CORBA::Object_var const obj_var =
     this->orb_->resolve_initial_references ("RootPOA");
 
   // Get the POA_var object from Object_var.
-  PortableServer::POA_var root_poa_var =
+  PortableServer::POA_var const root_poa_var =
     PortableServer::POA::_narrow (obj_var.in ());
 
   // Get the POAManager of the RootPOA.
-  PortableServer::POAManager_var poa_manager_var =
+  PortableServer::POAManager_var const poa_manager_var =
     root_poa_var->the_POAManager ();
 
   poa_manager_var->activate ();
@@ -122,7 +112,7 @@ Manager::init (int argc, ACE_TCHAR *argv[])
   policies[3] =
     root_poa_var->create_servant_retention_policy (PortableServer::NON_RETAIN);
 
-  ACE_CString name = "newPOA";
+  ACE_CString const name = "newPOA";
 
   new_poa_var_ =
     root_poa_var->create_POA (name.c_str (),
@@ -134,7 +124,7 @@ Manager::init (int argc, ACE_TCHAR *argv[])
        i < policies.length ();
        ++i)
     {
-      CORBA::Policy_ptr policy = policies[i];
+      CORBA::Policy_ptr const policy = policies[i];
       policy->destroy ();
     }
 
@@ -145,14 +135,14 @@ int
 Manager::activate_servant ()
 {
   ACE_NEW_THROW_EX (this->servant_locator_,
-                    Servant_Locator (this->orb_.in ()),
+                    Servant_Locator (),
                     CORBA::NO_MEMORY ());
 
   this->servant_locator_var_ = this->servant_locator_;
 
   // Set ServantLocator object as the servant Manager of
   // secondPOA.
-  this->new_poa_var_->set_servant_manager (this->servant_locator_);
+  this->new_poa_var_->set_servant_manager (this->servant_locator_var_.in ());
 
   // Try to create a reference with user created ID in new_poa
   // which uses ServantLocator.
@@ -168,77 +158,74 @@ Manager::activate_servant ()
 }
 
 int
-Manager::make_iors_register ()
+Manager::make_iors_register (Manager_Options const &options)
 {
   // First  server
-  CORBA::Object_var object_primary =
-    this->orb_->string_to_object (first_ior);
+  CORBA::Object_var const object_primary =
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.first_ior.c_str ()));
 
-  //Second server
-  CORBA::Object_var object_secondary =
-    this->orb_->string_to_object (second_ior);
+  // Second server
+  CORBA::Object_var const object_secondary =
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.second_ior.c_str ()));
 
-  if (third_ior == 0)
+  if (options.third_ior.empty ())
     ACE_DEBUG ((LM_DEBUG,
                 "Here is the culprit\n"));
   // Third Server
-  CORBA::Object_var object_tertiary =
-    this->orb_->string_to_object (third_ior);
+  CORBA::Object_var const object_tertiary =
+    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.third_ior.c_str ()));
 
   // Get an object reference for the ORBs IORManipultion object!
-  CORBA::Object_ptr IORM =
+  CORBA::Object_var const iorm_object =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                            0);
+                                            {});
 
-  TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
-
+  TAO_IOP::TAO_IOR_Manipulation_var const iorm =
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
   // Create the list
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (3);
-  iors.length(3);
+  iors.length (3);
   iors [0] = CORBA::Object::_duplicate (object_primary.in ());
   iors [1] = CORBA::Object::_duplicate (object_secondary.in ());
   iors [2] = CORBA::Object::_duplicate (this->new_manager_ior_.in ());
 
   // Create a merged set 1;
-  CORBA::Object_var merged_set1 =
-    iorm->merge_iors (iors);
+  CORBA::Object_var const merged_set1 = iorm->merge_iors (iors);
 
-  if (object_secondary.in () == 0)
+  if (object_secondary.in () == nullptr)
     ACE_DEBUG ((LM_DEBUG,
                 " There is a problem 1 "));
 
-  if (object_tertiary.in () == 0)
+  if (object_tertiary.in () == nullptr)
     ACE_DEBUG ((LM_DEBUG,
                 " There is a problem\n"));
 
   TAO_IOP::TAO_IOR_Manipulation::IORList iors_again (3);
-  iors_again.length(3);
+  iors_again.length (3);
   iors_again [0] = CORBA::Object::_duplicate (object_secondary.in ());
   iors_again [1] = CORBA::Object::_duplicate (object_tertiary.in ());
   iors_again [2] = CORBA::Object::_duplicate (this->new_manager_ior_.in ());
 
   // Create merged set 2
-  CORBA::Object_var merged_set2 =
-    iorm->merge_iors (iors_again);
+  CORBA::Object_var const merged_set2 = iorm->merge_iors (iors_again);
 
-  CORBA::String_var iorref1 =
-    this->orb_->object_to_string (merged_set1.in ());
+  CORBA::String_var const iorref1 = this->orb_->object_to_string (merged_set1.in ());
 
-  if (ior_output_file != 0)
+  if (!options.ior_output_file.empty ())
     {
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
+        ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
+                           ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ())),
                           1);
-      ACE_OS::fprintf (output_file, "%s", iorref1.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", iorref1.in ());
     }
 
-  this->servant_locator_->set (merged_set2);
+  this->servant_locator_->set (merged_set2.in ());
 
   return 0;
 }
