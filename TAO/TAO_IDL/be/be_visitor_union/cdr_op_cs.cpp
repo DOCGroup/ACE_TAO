@@ -22,7 +22,7 @@ namespace {
   void
   serialize_disc (TAO_OutStream *os, AST_Expression::ExprType disc_type, bool out)
   {
-  char const *tmp_suffix = nullptr;
+    char const *tmp_suffix {};
     switch (disc_type)
       {
         case AST_Expression::EV_bool:
@@ -83,9 +83,9 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
        !si.is_done ();
        si.next ())
     {
-      AST_Decl *d = si.item ();
+      AST_Decl * const d = si.item ();
 
-      be_enum *e = dynamic_cast<be_enum*> (d);
+      be_enum * const e = dynamic_cast<be_enum*> (d);
       if (e != nullptr)
         {
           be_visitor_enum_cdr_op_cs visitor (&ctx);
@@ -111,7 +111,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -172,7 +172,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       << be_uidt_nl
       << "{" << be_idt_nl;
 
-  be_type* disc_type =
+  be_type * const disc_type =
     dynamic_cast<be_type*> (node->disc_type ());
 
   // Generate a temporary to store the discriminant
@@ -185,13 +185,13 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
     {
       if (node->gen_empty_default_label ())
         {
-          bool true_branch = false;
+          bool true_branch {};
 
           for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
                !si.is_done ();
                si.next ())
             {
-              be_union_branch *branch =
+              be_union_branch * const branch =
                 dynamic_cast<be_union_branch*> (si.item ());
 
               if (branch != nullptr

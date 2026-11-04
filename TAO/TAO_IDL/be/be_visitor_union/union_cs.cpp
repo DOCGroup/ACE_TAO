@@ -25,14 +25,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   be_visitor_context ctx (*this->ctx_);
   // The discriminant type may have to be defined here if it was an enum
   // declaration inside of the union statement. We need to generate its
   // typecode.
 
-  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {
@@ -84,28 +84,28 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << "this->disc_ = ";
 
   UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-  be_union_branch *ub = nullptr;
+  be_union_branch *ub {};
 
   // In case we have some bogus enum values from an enum declared
   // in our scope.
   while (ub == nullptr)
     {
       // Just get the union's first member.
-      AST_Decl *d = si.item ();
+      AST_Decl * const d = si.item ();
 
       ub = dynamic_cast<be_union_branch*> (d);
       si.next ();
     }
 
   // Get the first label in its list.
-  AST_UnionLabel *ul = ub->label (0);
+  AST_UnionLabel * const ul = ub->label (0);
 
   AST_Union::DefaultValue dv;
   // This can indicate an error in the return value, but it is
   // caught elsewhere.
   (void) node->default_value (dv);
 
-  bool test = dv.computed_ == 0
+  bool const test = dv.computed_ == 0
               && ul->label_kind () == AST_UnionLabel::UL_label;
 
   if (test)
@@ -127,7 +127,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
            !default_si.is_done () && active_branch == nullptr;
            default_si.next ())
         {
-          be_union_branch *branch =
+          be_union_branch * const branch =
             dynamic_cast<be_union_branch*> (default_si.item ());
 
           for (std::size_t i = 0;
@@ -251,11 +251,11 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // The reset method.
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
 
-  bool requires_reset = false;
+  bool requires_reset {};
 
   for (unsigned long i = 0; i < node->nfields (); ++i)
     {
-      AST_Field *field = nullptr;
+      AST_Field *field {};
 
       if (node->field (field, i) != 0 || field == nullptr)
         {
@@ -266,8 +266,8 @@ int be_visitor_union_cs::visit_union (be_union *node)
                             -1);
         }
 
-      be_union_branch *branch = dynamic_cast<be_union_branch*> (field);
-      be_type *branch_type =
+      be_union_branch * const branch = dynamic_cast<be_union_branch*> (field);
+      be_type * const branch_type =
         branch != nullptr
         ? dynamic_cast<be_type*> (branch->field_type ())
         : nullptr;
