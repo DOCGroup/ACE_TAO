@@ -5,25 +5,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      test::event0_init *ev0_fac = nullptr;
+      test::event0_init *ev0_fac {};
       ACE_NEW_RETURN (ev0_fac,
                       test::event0_init,
                       -1);
-      CORBA::ValueFactoryBase_var ev0_fac_owner (ev0_fac);
+      // The var takes ownership of the factory's initial reference.
+      CORBA::ValueFactoryBase_var const ev0_fac_owner (ev0_fac);
 
-      test::event1_init *ev1_fac = nullptr;
+      test::event1_init *ev1_fac {};
       ACE_NEW_RETURN (ev1_fac,
                       test::event1_init,
                       -1);
-      CORBA::ValueFactoryBase_var ev1_fac_owner (ev1_fac);
+      // The var takes ownership of the factory's initial reference.
+      CORBA::ValueFactoryBase_var const ev1_fac_owner (ev1_fac);
 
       orb->register_value_factory (ev0_fac->tao_repository_id (), ev0_fac);
       orb->register_value_factory (ev1_fac->tao_repository_id (), ev1_fac);
 
-      test::event0_var ev0;
+      test::event0_var ev0 {};
       ACE_NEW_RETURN (ev0,
                       OBV_test::event0,
                       -1);
@@ -56,14 +57,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
            i != nullptr;
            i = i->cont ())
         {
-          CORBA::ULong len = i->length ();
+          CORBA::ULong const len = i->length ();
           ACE_OS::memcpy (buffer, i->rd_ptr (), static_cast<size_t> (len));
           buffer += len;
         }
 
       // Use TAO_InputCDR for unmarshalling
       buffer = safe_octet_seq.get_buffer ();
-      size_t char_len = safe_octet_seq.length () * sizeof (CORBA::Octet);
+      size_t const char_len = safe_octet_seq.length () * sizeof (CORBA::Octet);
       TAO_InputCDR input (reinterpret_cast<char const *> (buffer),
                           char_len,
                           ACE_CDR_BYTE_ORDER,
@@ -73,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Read ev1 from CDR, this should fail (we actually encoded a ev0),
       // but *NOT* leak memory.
-      test::event1_var ev1;
+      test::event1_var ev1 {};
       if (input >> ev1.out ())
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
