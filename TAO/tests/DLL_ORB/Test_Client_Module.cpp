@@ -5,14 +5,13 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+#include "ace/SString.h"
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -77,7 +76,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
       for (int i = new_argc - argc, j = 0;
            j < argc;
            ++i, ++j)
-        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[j]));
+        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (argv[j]));
 
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
@@ -89,11 +88,12 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
 
       ACE_Argv_Type_Converter converter (new_argc, new_argv.get_buffer ());
 
-      if (::parse_args (new_argc, converter.get_TCHAR_argv ()) != 0)
+      ACE_TString ior {ACE_TEXT ("file://test.ior")};
+      if (::parse_args (new_argc, converter.get_TCHAR_argv (), ior) != 0)
         return 1;
 
-      CORBA::Object_var obj =
-        this->orb_->string_to_object (ior);
+      CORBA::Object_var const obj =
+        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
 
       this->test_ =
         Test::_narrow (obj.in ());
@@ -102,11 +102,11 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("Nil Test reference <%s>\n"),
-                             ior),
+                             ACE_TEXT_ALWAYS_CHAR (ior.c_str ())),
                             1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Test_Client_Module::init"));
 

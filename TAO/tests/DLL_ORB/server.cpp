@@ -13,7 +13,7 @@
 #include "ace/Thread_Manager.h"
 
 int
-ACE_TMAIN(int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Process a Service Configurator directive that will cause the test
   // server module to be dynamically loaded.
@@ -26,7 +26,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
   // In the process of doing this, the Test CORBA object will be
   // activated, and the ORB will be run.
   if (ACE_Service_Config::process_directive (
-        ACE_DYNAMIC_SERVICE_DIRECTIVE("Server_Module",
+        ACE_DYNAMIC_SERVICE_DIRECTIVE ("Server_Module",
           "Test_Server_Module", "_make_Test_Server_Module", "")) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

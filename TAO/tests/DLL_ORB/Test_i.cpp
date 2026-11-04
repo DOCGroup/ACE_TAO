@@ -2,7 +2,7 @@
 #include "Test_i.h"
 
 Test_i::Test_i ()
-  : orb_ ()
+  : orb_ {}
 {
 }
 
