@@ -1,6 +1,7 @@
 #include "test_dsi.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "test_dsi.inl"
@@ -9,19 +10,19 @@
 void
 DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
 {
-  CORBA::NVList_ptr list;
+  CORBA::NVList_ptr list {};
   this->orb_->create_list (0, list);
 
   request->arguments (list);
 
-  CORBA::Request_var target_request;
+  CORBA::Request_var target_request {};
 
-  this->target_->_create_request (0, // ctx
+  this->target_->_create_request (nullptr, // ctx
                                   request->operation (),
                                   list,
-                                  0, // result
-                                  0, // exception_list,
-                                  0, // context_list,
+                                  nullptr, // result
+                                  nullptr, // exception_list,
+                                  nullptr, // context_list,
                                   target_request.inout (),
                                   0);
 
@@ -35,7 +36,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
       // Updates the byte order state, if necessary.
       target_request->invoke ();
     }
-  catch (const CORBA::UNKNOWN&)
+  catch (CORBA::UNKNOWN const &)
     {
       // Outgoing reply must have the same byte order as the incoming one.
       request->_tao_reply_byte_order (target_request->_tao_byte_order ());
@@ -48,7 +49,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
   // Outgoing reply must have the same byte order as the incoming one.
   request->_tao_reply_byte_order (target_request->_tao_byte_order ());
 
-  if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
+  if (std::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (false);
     }

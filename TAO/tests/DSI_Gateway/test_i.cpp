@@ -7,11 +7,12 @@
 
 CORBA::Long
 Simple_Server_i::test_method (CORBA::Long x,
-                              const Structure& the_in_structure,
+                              Structure const &the_in_structure,
                               Structure_out the_out_structure,
                               char *&name)
 {
-  Structure *tmp = 0;
+  // The generated _out parameter takes ownership of this allocated result.
+  Structure *tmp {};
   ACE_NEW_RETURN (tmp, Structure (the_in_structure), -1);
   the_out_structure = tmp;
 

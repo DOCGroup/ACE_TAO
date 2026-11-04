@@ -2,52 +2,50 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "ace/SString.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://gateway.ior");
-int niterations = 5;
-int do_shutdown = 0;
-int test_user_exception = 0;
-int test_system_exception = 0;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://gateway.ior")};
+  int iterations {5};
+  bool do_shutdown {};
+  bool test_user_exception {};
+  bool test_system_exception {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xusk:i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'x':
-        do_shutdown = 1;
+        options.do_shutdown = true;
         break;
 
       case 'u':
-        test_user_exception = 1;
+        options.test_user_exception = true;
         break;
 
       case 's':
-        test_system_exception = 1;
+        options.test_system_exception = true;
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-x "
-                           "-u "
-                           "-s "
-                           "-k <ior> "
-                           "-i <niterations> "
-                           "\n",
+                           ACE_TEXT ("usage: %s -x -u -s -k <ior> -i <niterations>\n"),
                            argv [0]),
                           -1);
       }
@@ -57,69 +55,70 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
-      Simple_Server_var server =
+      Simple_Server_var const server =
         Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%C> is nil.\n"),
+                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
                             1);
         }
 
-      Structure the_in_structure;
+      Structure the_in_structure {};
       the_in_structure.seq.length (10);
 
-      if (test_user_exception == 1)
+      if (options.test_user_exception)
         {
           server->raise_user_exception ();
         }
-      else if (test_system_exception == 1)
+      else if (options.test_system_exception)
         {
           server->raise_system_exception ();
         }
       else
         {
-          for (int i = 0; i != niterations; ++i)
+          for (int i {}; i != options.iterations; ++i)
             {
               CORBA::Long const tv = i + 100;
-              server->test_val(tv);
+              server->test_val (tv);
               CORBA::Long const rtv = server->test_val ();
 
               if (TAO_debug_level > 0)
                 {
-                   ACE_DEBUG ((LM_DEBUG,
-                               "DSI_Simpler_Server ==== Expected result = %d for %d\n",
-                               rtv, tv));
+                  ACE_DEBUG ((LM_DEBUG,
+                              "DSI_Simpler_Server ==== Expected result = %d for %d\n",
+                              rtv, tv));
                 }
 
               if (rtv != tv)
                 {
-                   ACE_ERROR ((LM_ERROR,
-                             "(%P|%t) ERROR: unexpected result = %d for %d\n",
-                             rtv, tv));
-               }
+                  ACE_ERROR ((LM_ERROR,
+                              "(%P|%t) ERROR: unexpected result = %d for %d\n",
+                              rtv, tv));
+                }
 
-             the_in_structure.i = i;
-             CORBA::String_var name = CORBA::string_dup ("the name");
+              the_in_structure.i = i;
+              CORBA::String_var name = CORBA::string_dup ("the name");
 
-             Structure_var the_out_structure;
+              Structure_var the_out_structure {};
 
              CORBA::Long const r =
                 server->test_method (i,
@@ -144,20 +143,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               if (r != i)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              "(%P|%t) ERROR: unexpected result = %d for %d",
+                              "(%P|%t) ERROR: unexpected result = %d for %d\n",
                               r, i));
                 }
             }
         }
 
-      if (do_shutdown)
+      if (options.do_shutdown)
         {
           server->shutdown ();
         }
     }
-  catch (const test_exception& ex)
+  catch (test_exception const &ex)
     {
-      if (test_user_exception == 1)
+      if (options.test_user_exception)
         ACE_DEBUG ((LM_DEBUG,
                     "Client: caught expected user exception: %C\n",
                     ex._name()));
@@ -172,19 +171,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ex.error_message.in (),
                   ex.status_message.in ()));
 
-      return test_user_exception == 1 ? 0 : 1;
+      return options.test_user_exception ? 0 : 1;
     }
-  catch (const CORBA::NO_PERMISSION& ex)
+  catch (CORBA::NO_PERMISSION const &ex)
     {
-      if (test_system_exception == 1)
+      if (options.test_system_exception)
         ACE_DEBUG ((LM_DEBUG,
                     "Client: caught expected system exception: %C\n",
                     ex._name()));
       else
         ex._tao_print_exception ("Client: exception caught - ");
-      return test_system_exception == 1 ? 0 : 1;
+      return options.test_system_exception ? 0 : 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client: exception caught - ");
       return 1;
