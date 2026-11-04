@@ -47,7 +47,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->tdef ())
     {
@@ -138,10 +138,10 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_ch::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Is the base type an alias to an array node or an actual array node.
   if (this->ctx_->alias ())
@@ -160,7 +160,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
   // check for cli_hdr_gen() to the IF statement keeps it in. Subsequent
   // layers of typedef, if any, assign the context alias to bt, so we go
   // straight to the ELSE branch.
-  if (bt->node_type () == AST_Decl::NT_array && bt->cli_hdr_gen () == 0)
+  if (bt->node_type () == AST_Decl::NT_array && !bt->cli_hdr_gen ())
     {
       // Let the base class visitor handle this case.
       if (this->be_visitor_typedef::visit_array (node) == -1)
@@ -200,7 +200,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       // we can have only one call to it from any instantiation per stream
       // output statement.
 
-      AST_Module *tdef_scope = dynamic_cast<AST_Module *> (tdef->defined_in ());
+      AST_Module * const tdef_scope = dynamic_cast<AST_Module *> (tdef->defined_in ());
 
       // If the typedef is not declared globally or in a module, the
       // associated array memory management function must be static.
@@ -252,10 +252,10 @@ be_visitor_typedef_ch::visit_array (be_array *node)
 int
 be_visitor_typedef_ch::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -295,10 +295,10 @@ be_visitor_typedef_ch::visit_enum (be_enum *node)
 int
 be_visitor_typedef_ch::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -343,10 +343,10 @@ be_visitor_typedef_ch::visit_interface_fwd (be_interface_fwd *)
 int
 be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -364,7 +364,7 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
   *os << "using " << tdef->nested_type_name (scope) << " = "
       << bt->nested_type_name (scope) << ";" << be_nl;
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  const AST_PredefinedType::PredefinedType pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_pseudo
       || pt == AST_PredefinedType::PT_any
@@ -387,9 +387,9 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_typedef_ch::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -418,9 +418,9 @@ be_visitor_typedef_ch::visit_string (be_string *node)
 int
 be_visitor_typedef_ch::visit_fixed (be_fixed *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
 
   TAO_INSERT_COMMENT (os);
   *os << "using " << tdef->nested_type_name (scope) << " = ::ACE_CDR::Fixed;";
@@ -431,10 +431,10 @@ be_visitor_typedef_ch::visit_fixed (be_fixed *)
 int
 be_visitor_typedef_ch::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -478,10 +478,10 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_ch::visit_map (be_map *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -525,10 +525,10 @@ be_visitor_typedef_ch::visit_map (be_map *node)
 int
 be_visitor_typedef_ch::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -570,10 +570,10 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
 int
 be_visitor_typedef_ch::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -615,10 +615,10 @@ be_visitor_typedef_ch::visit_union (be_union *node)
 int
 be_visitor_typedef_ch::visit_valuebox (be_valuebox *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
@@ -650,10 +650,10 @@ be_visitor_typedef_ch::visit_valuebox (be_valuebox *node)
 int
 be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_typedef *tdef = this->ctx_->tdef ();
-  be_decl *scope = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_typedef * const tdef = this->ctx_->tdef ();
+  be_decl * const scope = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())

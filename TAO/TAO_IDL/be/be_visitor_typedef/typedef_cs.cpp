@@ -45,7 +45,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = nullptr; // base type
+  be_type *bt {}; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -133,7 +133,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_typedef_cs::visit_sequence (be_sequence *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Typedef of a typedef?
   if (this->ctx_->alias ())
