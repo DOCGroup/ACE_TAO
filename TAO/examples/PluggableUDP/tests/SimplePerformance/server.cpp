@@ -89,11 +89,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != nullptr)
               {
-                FILE *output_file = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR (ior_output_file), "w");
+                FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT ("w"));
                 if (output_file == nullptr)
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Cannot open output file for writing IOR: %s",
-                                     ACE_TEXT_ALWAYS_CHAR(ior_output_file)),
+                                     ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                                     ior_output_file),
                                     1);
                 ACE_OS::fprintf (output_file, "%s", ior.in ());
                 ACE_OS::fclose (output_file);
