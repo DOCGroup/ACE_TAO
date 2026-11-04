@@ -71,7 +71,7 @@ int be_visitor_args_arglist::visit_array (be_array *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node);
+      *os << this->type_name (node) << " const";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node);
@@ -184,7 +184,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const " << this->type_name (node) << " &";
+          *os << this->type_name (node) << " const &";
           break;
         case AST_Argument::dir_INOUT:
           *os << this->type_name (node) << " &";
@@ -272,7 +272,7 @@ int be_visitor_args_arglist::visit_fixed (be_fixed *node)
 
   if (this->direction () == AST_Argument::dir_IN)
     {
-      *os << "const " << type << " &";
+      *os << type << " const &";
     }
   else
     {
@@ -305,7 +305,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " &";
+      *os << this->type_name (node) << " const &";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " &";
@@ -351,7 +351,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       switch (this->direction ())
         {
           case AST_Argument::dir_IN:
-            *os << "const std::string";
+            *os << "std::string const";
             break;
           default:
             *os << "std::string &";
@@ -366,7 +366,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const char *";
+          *os << "char const *";
           break;
         case AST_Argument::dir_INOUT:
           *os << "char *&";
@@ -381,7 +381,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const ::CORBA::WChar *";
+          *os << "::CORBA::WChar const *";
           break;
         case AST_Argument::dir_INOUT:
           *os << "::CORBA::WChar *&";
@@ -402,7 +402,7 @@ int be_visitor_args_arglist::visit_structure (be_structure *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " &";
+      *os << this->type_name (node) << " const &";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " &";
@@ -422,7 +422,7 @@ int be_visitor_args_arglist::visit_union (be_union *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " &";
+      *os << this->type_name (node) << " const &";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " &";
