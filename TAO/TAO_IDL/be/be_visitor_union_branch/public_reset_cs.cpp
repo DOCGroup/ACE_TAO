@@ -78,7 +78,7 @@ int
 be_visitor_union_branch_public_reset_cs::visit_union_branch (
     be_union_branch *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
@@ -137,7 +137,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -186,7 +186,7 @@ be_visitor_union_branch_public_reset_cs::visit_array (be_array *node)
       fname = bt->full_name ();
     }
 
-    TAO_OutStream *os = this->ctx_->stream ();
+    TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << fname << "_free (this->u_." << ub->local_name ()
       << "_);" << be_nl
@@ -232,7 +232,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
@@ -259,7 +259,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
@@ -287,7 +287,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuebox (
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
@@ -315,7 +315,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype (
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
@@ -343,7 +343,7 @@ be_visitor_union_branch_public_reset_cs::visit_valuetype_fwd (
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
@@ -372,7 +372,7 @@ be_visitor_union_branch_public_reset_cs::visit_predefined_type (
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   switch (node->pt ())
     {
@@ -435,7 +435,7 @@ be_visitor_union_branch_public_reset_cs::visit_seq_map_common ()
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl
@@ -464,7 +464,7 @@ be_visitor_union_branch_public_reset_cs::visit_string (
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (node->width () == sizeof (char))
     {
@@ -491,7 +491,7 @@ be_visitor_union_branch_public_reset_cs::visit_structure (
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -511,7 +511,7 @@ be_visitor_union_branch_public_reset_cs::visit_structure (
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (bt->size_type () == be_type::VARIABLE
       || node->has_constructor ())
@@ -575,7 +575,7 @@ be_visitor_union_branch_public_reset_cs::visit_union (
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "delete this->u_."
       << ub->local_name () << "_;" << be_nl

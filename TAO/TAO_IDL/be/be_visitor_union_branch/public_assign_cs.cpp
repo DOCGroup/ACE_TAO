@@ -35,7 +35,7 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
     be_union_branch *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   int const index = be_visitor_union::branch_index (node);
 
@@ -89,7 +89,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -110,7 +110,7 @@ be_visitor_union_branch_public_assign_cs::visit_array (be_array *node)
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // for anonymous arrays, the type name has a _ prepended. We compute the
   // full_name with or without the underscore and use it later on.
@@ -169,7 +169,7 @@ be_visitor_union_branch_public_assign_cs::visit_enum (be_enum *)
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // set the discriminant to the appropriate label
   // valid label
@@ -187,7 +187,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -208,7 +208,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   bool bt_is_defined = node->is_defined ();
 
@@ -284,7 +284,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -305,7 +305,7 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   bool bt_is_defined = node->full_definition ()->is_defined ();
 
@@ -399,7 +399,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -420,7 +420,7 @@ be_visitor_union_branch_public_assign_cs::emit_valuetype_common (be_type *node)
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "if (!u.u_." << ub->local_name () << "_)" << be_idt_nl
       << "{" << be_idt_nl
@@ -469,7 +469,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -490,7 +490,7 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // set the discriminant to the appropriate label
   switch (node->pt ())
@@ -593,7 +593,7 @@ be_visitor_union_branch_public_assign_cs::visit_seq_map_common (be_type *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -614,7 +614,7 @@ be_visitor_union_branch_public_assign_cs::visit_seq_map_common (be_type *node)
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {
@@ -668,7 +668,7 @@ be_visitor_union_branch_public_assign_cs::visit_string (be_string *node)
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // set the discriminant to the appropriate label
   *os << "this->u_." << ub->local_name () << "_ = ";
@@ -694,7 +694,7 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -715,7 +715,7 @@ be_visitor_union_branch_public_assign_cs::visit_structure (be_structure *node)
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (bt->size_type () == be_type::VARIABLE || node->has_constructor ())
     {
@@ -800,7 +800,7 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -821,7 +821,7 @@ be_visitor_union_branch_public_assign_cs::visit_union (be_union *node)
                          ), -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_UNION_COPY_CONSTRUCTOR)
     {

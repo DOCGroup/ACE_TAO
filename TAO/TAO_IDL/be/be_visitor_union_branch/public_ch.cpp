@@ -61,7 +61,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -82,7 +82,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -141,7 +141,7 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -162,7 +162,7 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -202,7 +202,7 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -223,7 +223,7 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -244,7 +244,7 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -265,7 +265,7 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -286,7 +286,7 @@ be_visitor_union_branch_public_ch::visit_valuebox (be_valuebox *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -307,7 +307,7 @@ be_visitor_union_branch_public_ch::visit_valuebox (be_valuebox *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -328,7 +328,7 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -349,7 +349,7 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -370,7 +370,7 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -391,7 +391,7 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -412,7 +412,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
   be_typedef *td = this->ctx_->alias ();
 
   // Check if we are visiting this via a visit to a typedef node.
@@ -434,7 +434,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -495,7 +495,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -516,7 +516,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -524,7 +524,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      char const *kind = nullptr;
+      char const *kind {};
       switch (node->node_type ())
       {
         case AST_Decl::NT_sequence:
@@ -600,7 +600,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -636,7 +636,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -657,7 +657,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -727,7 +727,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
 {
   be_decl *ub = this->ctx_->node ();
   be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -749,7 +749,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef

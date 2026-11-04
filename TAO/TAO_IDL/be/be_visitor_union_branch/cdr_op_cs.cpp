@@ -80,7 +80,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
@@ -171,7 +171,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 int
 be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node
   be_union_branch *f =
@@ -246,7 +246,7 @@ be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
@@ -326,7 +326,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
 int
 be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
@@ -411,7 +411,7 @@ be_visitor_union_branch_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 int
 be_visitor_union_branch_cdr_op_cs::emit_valuetype_common (be_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
@@ -469,7 +469,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
@@ -686,7 +686,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
   // Now generate the CDR stream operators for the sequence as a
   // union branch.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
@@ -756,7 +756,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
@@ -879,7 +879,7 @@ be_visitor_union_branch_cdr_op_cs::visit_structure (be_structure *node)
   // How generate the CDR stream operators for the structure as
   // a union branch.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
@@ -976,7 +976,7 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
   // Now generate the CDR stream operators for the union as
   // a union branch.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
   be_union_branch *f =
