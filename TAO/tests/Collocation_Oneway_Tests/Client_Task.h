@@ -3,6 +3,7 @@
 #define COLLOCATED_TEST_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -14,17 +15,18 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-enum ClientSyncModeEnum {
-   MODE_NONE,
-   MODE_TRANSPORT,
-   MODE_SERVER,
-   MODE_TARGET
-};
+  enum class SyncMode
+  {
+    none,
+    transport,
+    server,
+    target
+  };
 
   /// Constructor
-  Client_Task (const ACE_TCHAR *input,
+  Client_Task (ACE_TCHAR const *input,
                CORBA::ORB_ptr corb,
-               ClientSyncModeEnum syncMode,
+               SyncMode sync_mode,
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
@@ -32,15 +34,15 @@ enum ClientSyncModeEnum {
 
   Client_Task (Client_Task const &) = delete;
   Client_Task (Client_Task &&) = delete;
-  Client_Task & operator= (Client_Task const &) = delete;
-  Client_Task & operator= (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
 private:
-  ACE_TCHAR const *input_;
+  std::basic_string<ACE_TCHAR> input_;
 
   CORBA::ORB_var corb_;
 
-  ClientSyncModeEnum syncMode_;
+  SyncMode const sync_mode_;
 };
 
 #include /**/ "ace/post.h"

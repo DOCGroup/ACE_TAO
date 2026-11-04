@@ -2,23 +2,20 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/SString.h"
 #include "ace/Manual_Event.h"
+#include <string>
 
-const ACE_TCHAR *output = ACE_TEXT("test.ior");
-const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
-const ACE_TCHAR *mode = ACE_TEXT("SYNC_NONE");
-
-Client_Task::ClientSyncModeEnum syncMode = Client_Task::MODE_NONE;
-
-// static int named_orbs = 0;
-ACE_CString server_orb;
-ACE_CString client_orb;
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &output,
+            std::basic_string<ACE_TCHAR> &input,
+            Client_Task::SyncMode &sync_mode,
+            std::string &server_orb,
+            std::string &client_orb)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:n:m:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:o:nm:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -30,59 +27,56 @@ parse_args (int argc, ACE_TCHAR *argv[])
         input = get_opts.opt_arg ();
         break;
       case 'n':
-        // named_orbs = 1;
-        server_orb.set ("server_orb");
-        client_orb.set ("client_orb");
+        server_orb = "server_orb";
+        client_orb = "client_orb";
         break;
       case 'm':
-        mode = get_opts.opt_arg ();
-        // cout << "mode = " << mode << endl;
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) - mode set to <%C> for collocated oneway test\n", mode));
-        if(mode) {
-             if(!ACE_OS::strcmp(ACE_TEXT("none"), mode)) {
-                syncMode = Client_Task::MODE_NONE;
-             }
-             else if (!ACE_OS::strcmp(ACE_TEXT("transport"), mode)) {
-                syncMode = Client_Task::MODE_TRANSPORT;
-             }
-             else if (!ACE_OS::strcmp(ACE_TEXT("server"), mode)) {
-                syncMode = Client_Task::MODE_SERVER;
-             }
-             else if (!ACE_OS::strcmp(ACE_TEXT("target"), mode)) {
-                syncMode = Client_Task::MODE_TARGET;
-             }
-          }
-          else {
-             // same hack used in original test!
-             return 0;
-          }
+        {
+          ACE_TCHAR const *mode = get_opts.opt_arg ();
+          if (mode == nullptr)
+            return 0;
+
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) - mode set to <%s> for collocated oneway test\n"),
+                      mode));
+          if (ACE_OS::strcmp (ACE_TEXT ("none"), mode) == 0)
+            sync_mode = Client_Task::SyncMode::none;
+          else if (ACE_OS::strcmp (ACE_TEXT ("transport"), mode) == 0)
+            sync_mode = Client_Task::SyncMode::transport;
+          else if (ACE_OS::strcmp (ACE_TEXT ("server"), mode) == 0)
+            sync_mode = Client_Task::SyncMode::server;
+          else if (ACE_OS::strcmp (ACE_TEXT ("target"), mode) == 0)
+            sync_mode = Client_Task::SyncMode::target;
+        }
         break;
       case '?':
       default:
-        // This is a hack but that is okay!
         return 0;
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc,
-                  argv) == -1)
+  std::basic_string<ACE_TCHAR> output {ACE_TEXT ("test.ior")};
+  std::basic_string<ACE_TCHAR> input {ACE_TEXT ("file://test.ior")};
+  Client_Task::SyncMode sync_mode {Client_Task::SyncMode::none};
+  std::string server_orb;
+  std::string client_orb;
+  if (parse_args (argc, argv, output, input, sync_mode, server_orb, client_orb) == -1)
     return -1;
 
   try
     {
       ACE_Argv_Type_Converter satc (argc, argv);
-      CORBA::ORB_var sorb =
+      CORBA::ORB_var const sorb {
         CORBA::ORB_init (satc.get_argc (),
                          satc.get_TCHAR_argv (),
-                         server_orb.c_str ());
+                         server_orb.c_str ())};
 
       ACE_Manual_Event me;
-      Server_Task server_task (output,
+      Server_Task server_task (output.c_str (),
                                sorb.in (),
                                me,
                                ACE_Thread_Manager::instance ());
@@ -98,14 +92,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       me.wait ();
 
       ACE_Argv_Type_Converter catc (argc, argv);
-      CORBA::ORB_var corb =
+      CORBA::ORB_var const corb {
         CORBA::ORB_init (catc.get_argc (),
                          catc.get_TCHAR_argv (),
-                         client_orb.c_str ());
+                         client_orb.c_str ())};
 
-      Client_Task client_task (input,
+      Client_Task client_task (input.c_str (),
                                corb.in (),
-                               syncMode,
+                               sync_mode,
                                ACE_Thread_Manager::instance ());
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
@@ -117,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions..
     }
