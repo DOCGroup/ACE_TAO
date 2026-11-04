@@ -28,20 +28,16 @@ ACE_INLINE
 ETCL_Union_Value::ETCL_Union_Value (int sign,
                                     ETCL_Constraint *integer)
   : sign_ (sign),
-    string_ (0)
-{
-  this->integer_ =
-    dynamic_cast<ETCL_Literal_Constraint*> (integer);
-}
+    integer_ (dynamic_cast<ETCL_Literal_Constraint*> (integer)),
+    string_ {}
+{}
 
 ACE_INLINE
 ETCL_Union_Value::ETCL_Union_Value (ETCL_Constraint *string)
-  :  sign_ (0),
-     integer_ (0)
-{
-  this->string_ =
-    dynamic_cast<ETCL_Literal_Constraint*> (string);
-}
+  : sign_ {},
+    integer_ {},
+    string_ (dynamic_cast<ETCL_Literal_Constraint*> (string))
+{}
 
 ACE_INLINE int
 ETCL_Union_Value::sign () const
@@ -66,11 +62,9 @@ ETCL_Union_Value::string () const
 ACE_INLINE
 ETCL_Union_Pos::ETCL_Union_Pos (ETCL_Constraint *union_value,
                                 ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->union_value_ =
-    dynamic_cast<ETCL_Union_Value*> (union_value);
-}
+  : union_value_ (dynamic_cast<ETCL_Union_Value*> (union_value)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Union_Value *
 ETCL_Union_Pos::union_value () const
@@ -90,11 +84,9 @@ ACE_INLINE
 ETCL_Component_Pos::ETCL_Component_Pos (
     ETCL_Constraint *integer,
     ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->integer_ =
-    dynamic_cast<ETCL_Literal_Constraint*> (integer);
-}
+  : integer_ (dynamic_cast<ETCL_Literal_Constraint*> (integer)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Literal_Constraint *
 ETCL_Component_Pos::integer () const
@@ -114,11 +106,9 @@ ACE_INLINE
 ETCL_Component_Assoc::ETCL_Component_Assoc (
     ETCL_Constraint *identifier,
     ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->identifier_ =
-    dynamic_cast<ETCL_Identifier*> (identifier);
-}
+  : identifier_ (dynamic_cast<ETCL_Identifier*> (identifier)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Identifier *
 ETCL_Component_Assoc::identifier () const
@@ -138,11 +128,9 @@ ACE_INLINE
 ETCL_Component_Array::ETCL_Component_Array (
     ETCL_Constraint *integer,
     ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->integer_ =
-    dynamic_cast<ETCL_Literal_Constraint*> (integer);
-}
+  : integer_ (dynamic_cast<ETCL_Literal_Constraint*> (integer)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Literal_Constraint *
 ETCL_Component_Array::integer () const
@@ -174,11 +162,9 @@ ETCL_Special::type () const
 ACE_INLINE
 ETCL_Component::ETCL_Component (ETCL_Constraint *identifier,
                                 ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->identifier_ =
-    dynamic_cast<ETCL_Identifier*> (identifier);
-}
+  : identifier_ (dynamic_cast<ETCL_Identifier*> (identifier)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Identifier *
 ETCL_Component::identifier () const
