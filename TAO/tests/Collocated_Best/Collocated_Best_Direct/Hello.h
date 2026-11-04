@@ -29,7 +29,7 @@ private:
   /// the application.
   CORBA::ORB_var orb_;
 
-  ACE_thread_t thr_id_;
+  ACE_thread_t const thr_id_;
 };
 
 #include /**/ "ace/post.h"
