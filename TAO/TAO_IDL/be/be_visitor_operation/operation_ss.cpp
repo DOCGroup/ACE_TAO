@@ -271,8 +271,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "upcall_wrapper.upcall (server_request" << be_nl
       << "                       , args" << be_nl
       << "                       , " << (node->argument_count () + 1) << be_nl
-      << "                       , command"
-      << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+      << "                       , command" << be_nl
+      << "#if TAO_HAS_INTERCEPTORS == 1" << be_nl
       << "                       , servant_upcall" << be_nl;
 
   if (node->exceptions () && be_global->tc_support ())
@@ -286,7 +286,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
           << "                       , 0";
     }
 
-  *os << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
+  *os << be_nl << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
       << "                       );" << be_uidt_nl
       << "}" << be_nl_2;
 

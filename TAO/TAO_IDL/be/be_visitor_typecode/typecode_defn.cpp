@@ -310,7 +310,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
       os << " (" << be_idt_nl
          << "::CORBA::tk_array," << be_nl
-         << "&";
+         << "std::addressof (";
 
       if (i == 0)
         {
@@ -335,7 +335,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
         }
 
-      os << "," << be_nl
+      os << ")," << be_nl
          << node->dims ()[inner_ndims].get () << ");" << be_uidt_nl
          << be_uidt_nl;
 
@@ -354,14 +354,14 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
       os << " ="
          << be_idt_nl
-         << "&" << node->flat_name ();
+         << "std::addressof (" << node->flat_name ();
 
       for (unsigned long n = inner_ndims; n < ndims; ++n)
         {
           os << "_" << node->dims ()[n]->ev ()->u.ulval;
         }
 
-      os << ";" << be_uidt;
+      os << ");" << be_uidt;
 
       if (i < ndims - 1)
         {
@@ -457,7 +457,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
   os << "TAO::TypeCode::Sequence< ::CORBA::TypeCode_ptr const *, "
         "TAO::Null_RefCount_Policy>"
      << " " << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
-     << " (" << be_idt_nl << "::CORBA::tk_sequence, &";
+     << " (" << be_idt_nl << "::CORBA::tk_sequence, std::addressof (";
 
   if (this->gen_base_typecode_name (base) != 0)
     {
@@ -469,14 +469,15 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
                         -1);
     }
 
-  os << ", " << node->max_size () << ");" << be_uidt_nl
+  os << "), " << node->max_size () << ");" << be_uidt_nl
      << be_uidt_nl;
 
   os << "::CORBA::TypeCode_ptr const tc_"
      << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval << " ="
      << be_idt_nl
-     << "&" << node->flat_name () << "_" << node->max_size()->ev ()->u.ulval
-     << ";" << be_uidt;
+     << "std::addressof (" << node->flat_name () << "_"
+     << node->max_size()->ev ()->u.ulval
+     << ");" << be_uidt;
 
   // Namespace end.
   this->gen_end_NS_for_anon ();
@@ -533,7 +534,7 @@ be_visitor_typecode_defn::visit_string (be_string * node)
   os << "::CORBA::TypeCode_ptr const tc_"
      << node->flat_name () << " ="
      << be_idt_nl
-     << "&" << node->flat_name () << ";" << be_uidt;
+     << "std::addressof (" << node->flat_name () << ");" << be_uidt;
 
   // Namespace end.
   this->gen_end_NS_for_anon ();
@@ -560,7 +561,7 @@ be_visitor_typecode_defn::visit_fixed (be_fixed * node)
      << digits << "," << be_nl
      << scale << ");" << be_uidt_nl
      << "static ::CORBA::TypeCode_ptr const _tao_tc_fixed_"
-     << digits << "_" << scale << "_ptr = &_tao_tc_fixed_"
+     << digits << "_" << scale << "_ptr = std::addressof (_tao_tc_fixed_"
      << digits << "_" << scale << ";" << be_nl
      << "#endif /* _TAO_TYPECODE_FIXED_" << digits << "_" << scale << "_GUARD */" << be_nl_2;
 

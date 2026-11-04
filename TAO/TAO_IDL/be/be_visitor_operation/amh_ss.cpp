@@ -379,10 +379,7 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
       << "> buffer_allocator (amh_allocator);"
       << be_uidt_nl << be_nl
       << response_handler_implementation_name
-      << "_ptr _tao_rh_ptr = "
-      << be_idt_nl
-      << "buffer_allocator.allocate();"
-      << be_uidt_nl << be_nl
+      << "_ptr _tao_rh_ptr = buffer_allocator.allocate();" << be_nl
       << "if (!_tao_rh_ptr)" << be_idt_nl << "throw ::CORBA::NO_MEMORY ();"
       << be_uidt_nl;
 

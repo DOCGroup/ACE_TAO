@@ -102,7 +102,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
     {
       // Should only be possible for user exceptions with no fields.
       os << " * const" << be_idt_nl
-         << fields_name << " = nullptr;" << be_uidt << be_uidt << be_nl_2;
+         << fields_name << " {};" << be_uidt << be_uidt << be_nl_2;
     }
   else
     {
@@ -228,7 +228,7 @@ TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
 
       os << "{ "
          << "\"" << member_decl->original_local_name () << "\", "
-         << "&"  << member_type->tc_name ()
+         << "std::addressof (" << member_type->tc_name () << ")"
          << " }";
 
       if (i < count - 1)

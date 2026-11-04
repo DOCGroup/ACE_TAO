@@ -34,7 +34,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
   // the typecodes of the user exceptions this operation can throw.
   if (node->exceptions () && be_global->tc_support ())
     {
-      *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
+      *os << "#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
 
       *os << "static ::CORBA::TypeCode_ptr const exceptions[] =" << be_idt_nl;
       *os << "{" << be_idt_nl;
@@ -59,7 +59,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
 
       *os << be_uidt_nl << "};" << be_uidt_nl;
 
-      *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl_2;
+      *os << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl_2;
     }
 
   return 0;
