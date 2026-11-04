@@ -87,7 +87,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   *os << "::CORBA::ValueBase *" << be_nl
       << node->name () << "::_copy_value ()" << be_nl
       << "{" << be_idt_nl
-      << "::CORBA::ValueBase *result = nullptr;" << be_nl
+      << "::CORBA::ValueBase *result {};" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "result," << be_nl
       << node->local_name () << " (*this)," << be_nl
@@ -153,7 +153,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   // Make sure we are generating to *C.cpp regardless of the above.
   os = tao_cg->client_stubs ();
 
-  AST_Type * at = node->boxed_type()->unaliased_type();
+  AST_Type * const at = node->boxed_type()->unaliased_type();
   be_type *bt = dynamic_cast<be_type*> (at);
 
   if (!bt)
@@ -230,8 +230,8 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << node->local_name () << " *&vb_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::CORBA::Boolean is_null_object = false;" << be_nl
-      << "::CORBA::Boolean is_indirected = false;" << be_nl
+      << "::CORBA::Boolean is_null_object {};" << be_nl
+      << "::CORBA::Boolean is_indirected {};" << be_nl
       << "TAO_InputCDR indrected_strm ((size_t) 0);" << be_nl
       << "if (::CORBA::ValueBase::_tao_validate_box_type (" << be_idt
       << be_idt << be_idt_nl
@@ -429,10 +429,10 @@ be_visitor_valuebox_cs::visit_predefined_type (be_predefined_type * node)
 int
 be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the node being visited by this be_visitor_valuebox_cs.
-  be_decl * vb_node = this->ctx_->node ();
+  be_decl * const vb_node = this->ctx_->node ();
 
   if (node->anonymous ())
     { // Our sequence is anonymous so we must generate a declaration
