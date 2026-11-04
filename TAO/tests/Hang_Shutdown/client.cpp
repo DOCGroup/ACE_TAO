@@ -6,34 +6,31 @@
 
 namespace Test
 {
-  const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
-
-  ACE_Profile_Timer profile_timer;
-  bool blocked = false;
+  struct Client_Options
+  {
+    ACE_TString ior {ACE_TEXT ("file://server.ior")};
+    bool blocked {};
+  };
 
   bool
-  parse_args (int argc, ACE_TCHAR *argv[])
+  parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   {
-    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:k:"));
-    int c;
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("b:k:"));
+    int c {};
 
     while ((c = get_opts ()) != -1)
       switch (c)
         {
         case 'b':
           {
-            int tmp =
+            int const tmp =
               ACE_OS::atoi (get_opts.opt_arg ());
-
-            if (tmp)
-              blocked = true;
-            else
-              blocked = false;
+            options.blocked = tmp != 0;
           }
           break;
         case 'k':
           {
-            ior = get_opts.opt_arg ();
+            options.ior = get_opts.opt_arg ();
           }
           break;
         case '?':
@@ -53,11 +50,16 @@ namespace Test
   class Client_Task : public ACE_Task_Base
   {
   public:
-    Client_Task (Hang_ptr h)
+    explicit Client_Task (Hang_ptr h)
       : h_ (Hang::_duplicate (h))
     {}
 
-    virtual int svc ()
+    Client_Task (Client_Task const &) = delete;
+    Client_Task (Client_Task &&) = delete;
+    Client_Task &operator= (Client_Task const &) = delete;
+    Client_Task &operator= (Client_Task &&) = delete;
+
+    int svc () override
     {
       try
         {
@@ -70,7 +72,7 @@ namespace Test
           this->h_->send_stuff ("Testing",
                                 true);
         }
-      catch (const CORBA::COMM_FAILURE& f)
+      catch (CORBA::COMM_FAILURE const &f)
         {
           ACE_UNUSED_ARG (f);
           ACE_DEBUG ((LM_DEBUG,
@@ -81,7 +83,7 @@ namespace Test
 
           return 0;
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Caught CORBA Exception\n");
 
@@ -104,17 +106,23 @@ namespace Test
     }
 
   private:
-    Hang_var h_;
+    Hang_var h_ {};
   };
 
   class Shutdown_Task : public ACE_Task_Base
   {
   public:
-    Shutdown_Task (CORBA::ORB_ptr o)
-      : o_ (CORBA::ORB::_duplicate (o))
+    Shutdown_Task (CORBA::ORB_ptr o, bool blocked)
+      : o_ (CORBA::ORB::_duplicate (o)),
+        blocked_ (blocked)
     {}
 
-    virtual int svc ()
+    Shutdown_Task (Shutdown_Task const &) = delete;
+    Shutdown_Task (Shutdown_Task &&) = delete;
+    Shutdown_Task &operator= (Shutdown_Task const &) = delete;
+    Shutdown_Task &operator= (Shutdown_Task &&) = delete;
+
+    int svc () override
     {
       try
         {
@@ -126,16 +134,16 @@ namespace Test
           ACE_OS::sleep (4);
 
           // Start the timer
-          profile_timer.start ();
+          this->profile_timer_.start ();
 
-          this->o_->shutdown (blocked);
+          this->o_->shutdown (this->blocked_);
 
           // Stop the timer
-          profile_timer.stop ();
+          this->profile_timer_.stop ();
 
           // Get the elampsed time
-          ACE_Profile_Timer::ACE_Elapsed_Time el;
-          profile_timer.elapsed_time (el);
+          ACE_Profile_Timer::ACE_Elapsed_Time el {};
+          this->profile_timer_.elapsed_time (el);
 
           // The elapsed time is in secs
           if (el.real_time > 1)
@@ -161,7 +169,9 @@ namespace Test
       return 0;
     }
   private:
-    CORBA::ORB_var o_;
+    CORBA::ORB_var o_ {};
+    bool blocked_ {};
+    ACE_Profile_Timer profile_timer_;
   };
 
   static int
@@ -169,23 +179,24 @@ namespace Test
   {
     try
       {
-        CORBA::ORB_var orb =
+        Client_Options options;
+        CORBA::ORB_var const orb =
           CORBA::ORB_init (argc, argv);
 
-        if (parse_args (argc, argv) == false)
+        if (!parse_args (argc, argv, options))
           return -1;
 
-        CORBA::Object_var tmp =
-          orb->string_to_object (ior);
+        CORBA::Object_var const tmp = orb->string_to_object (
+          ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
-        Hang_var test =
+        Hang_var const test =
           Hang::_narrow (tmp.in ());
 
         if (CORBA::is_nil (test.in ()))
           {
             ACE_ERROR_RETURN ((LM_DEBUG,
                                "Nil test reference <%s>\n",
-                               ior),
+                               ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
                               1);
           }
 
@@ -199,7 +210,7 @@ namespace Test
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) Activating shutdown thread\n"));
 
-        Shutdown_Task st (orb.in ());
+        Shutdown_Task st (orb.in (), options.blocked);
 
         if (st.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -210,7 +221,7 @@ namespace Test
 
         orb->destroy ();
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("CORBA Exception caught\n");
         ACE_ERROR ((LM_ERROR,

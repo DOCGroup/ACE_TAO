@@ -12,9 +12,15 @@ namespace Test
     : public virtual POA_Test::Hang
   {
   public:
+    test_i () = default;
+    test_i (test_i const &) = delete;
+    test_i (test_i &&) = delete;
+    test_i &operator= (test_i const &) = delete;
+    test_i &operator= (test_i &&) = delete;
+
     // = The skeleton methods
-    virtual void send_stuff (const char* str,
-                             CORBA::Boolean flag)
+    void send_stuff (char const *str,
+                     CORBA::Boolean flag) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) - [%C]\n", str));
@@ -27,9 +33,7 @@ namespace Test
                       "TAO (%P|%t) - Returning from send_stuff\n", str));
         }
 
-      return;
     }
-  private:
   };
 }
 
