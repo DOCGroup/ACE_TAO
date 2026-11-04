@@ -40,8 +40,8 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  std::string macro = this->ctx_->export_macro ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  std::string const macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 

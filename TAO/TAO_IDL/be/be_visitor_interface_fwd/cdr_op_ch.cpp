@@ -39,7 +39,7 @@ be_visitor_interface_fwd_cdr_op_ch::visit_interface_fwd (be_interface_fwd *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
