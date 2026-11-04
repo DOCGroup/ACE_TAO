@@ -1,6 +1,6 @@
 #include "UDP_Client_i.h"
-#include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
+#include <string>
 
 // This is the interface program that accesses the remote object
 
@@ -8,69 +8,57 @@
 UDP_Client_i::UDP_Client_i (CORBA::ORB_ptr orb,
                             UDP_ptr udp,
                             UDP_ptr udpHandler,
-                            ACE_UINT32 msec,
-                            ACE_UINT32 iterations)
-: orb_ (CORBA::ORB::_duplicate (orb))
-, udp_ (UDP::_duplicate (udp))
-, udpHandler_ (UDP::_duplicate (udpHandler))
-, delay_ (msec)
-, iterations_ (iterations)
+                            unsigned int msec,
+                            std::size_t iterations)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , udp_ (UDP::_duplicate (udp))
+  , udpHandler_ (UDP::_duplicate (udpHandler))
+  , delay_ (msec)
+  , iterations_ (iterations)
 {
-}
-
-//Destructor.
-UDP_Client_i::~UDP_Client_i ()
-{
-  //no-op
 }
 
 int
 UDP_Client_i::svc ()
 {
-  ACE_CString client_name ("UDP");
-
-  char pid[256];
-  ACE_OS::sprintf (pid,
-                   "%u",
-                   static_cast<u_int> (ACE_OS::getpid ()));
-  client_name += "_";
-  client_name += pid;
-
+  std::string const client_name = "UDP_" + std::to_string (ACE_OS::getpid ());
 
   try
     {
-      CORBA::String_var corba_client_name =
+      CORBA::String_var const corba_client_name =
         CORBA::string_dup (client_name.c_str ());
 
-      for (ACE_UINT32 i = 0;
+      for (std::size_t i = 0;
            i < iterations_;
            i++)
         {
+          CORBA::Long const request_id = static_cast<CORBA::Long> (i);
           udp_->invoke (corba_client_name.in (),
                         udpHandler_.inout (),
-                        i);
+                        request_id);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "invoked %C %d, going to wait %d ms\n",
+                      "invoked %C %d, going to wait %u ms\n",
                       corba_client_name.in (),
-                      i,
+                      request_id,
                       delay_));
-          ACE_Time_Value tv (0, delay_ * 1000);
-          ACE_OS::sleep (tv);  // wait to not flood the server
+          ACE_Time_Value const timeout (0, delay_ * 1000);
+          ACE_OS::sleep (timeout); // Avoid flooding the server.
         }
 
       // shut down remote ORB
-      for (int c = 0; c < 10; ++c)
+      int constexpr shutdown_retries = 10;
+      for (int c {}; c < shutdown_retries; ++c)
         udp_->shutdown ();
 
-      ACE_Time_Value tv (0, 500); // 50ms
-      ACE_OS::sleep (tv);  // let the previous request go through
+      ACE_Time_Value const timeout (0, 500); // 0.5 ms
+      ACE_OS::sleep (timeout); // Let the previous request complete.
 
       // Shut down local ORB, trigger the end of the ORB event loop
           // in the main thread.
       orb_->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\tException");
       return -1;

@@ -16,6 +16,7 @@
 
 #include "ace/Task.h"
 #include "tao/ORB.h"
+#include <cstddef>
 
 #include "UDPC.h"
 
@@ -33,26 +34,30 @@ public:
   UDP_Client_i (CORBA::ORB_ptr orb,
                 UDP_ptr udp,
                 UDP_ptr udpHandler,
-                ACE_UINT32 msec,
-                ACE_UINT32 iterations);
+                unsigned int msec,
+                std::size_t iterations);
+  UDP_Client_i (UDP_Client_i const &) = delete;
+  UDP_Client_i (UDP_Client_i &&) = delete;
+  UDP_Client_i &operator= (UDP_Client_i const &) = delete;
+  UDP_Client_i &operator= (UDP_Client_i &&) = delete;
 
   /// Destructor
-  virtual ~UDP_Client_i ();
+  ~UDP_Client_i () override = default;
 
 private:
   // Runs in a separate thread.
-  virtual int svc ();
+  int svc () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
-  UDP_var udp_;
+  UDP_var const udp_;
 
   UDP_var udpHandler_;
 
-  ACE_UINT32 delay_;
+  unsigned int delay_;
 
-  ACE_UINT32 iterations_;
+  std::size_t iterations_;
 };
 
 

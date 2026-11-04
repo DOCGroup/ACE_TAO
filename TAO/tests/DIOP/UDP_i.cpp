@@ -1,18 +1,13 @@
 #include "UDP_i.h"
 
 // Constructor
-UDP_i::UDP_i (CORBA::ORB_ptr o) :
-  orb_(CORBA::ORB::_duplicate (o))
-{
-}
-
-// Destructor
-UDP_i::~UDP_i ()
+UDP_i::UDP_i (CORBA::ORB_ptr o)
+  : orb_ (CORBA::ORB::_duplicate (o))
 {
 }
 
 void
-UDP_i::invoke (const char * client_name,
+UDP_i::invoke (char const *client_name,
                UDP_ptr udpHandler,
                CORBA::Long request_id)
 {
@@ -23,7 +18,7 @@ UDP_i::invoke (const char * client_name,
                   client_name,
                   request_id));
 
-      CORBA::Long last_request_id = 0;
+      CORBA::Long last_request_id {};
       if (request_id_table_.find (client_name,
                                   last_request_id) != -1)
         {
@@ -46,7 +41,7 @@ UDP_i::invoke (const char * client_name,
         }
 
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
        ACE_ERROR ((LM_ERROR,
                    "UDP_i::svc: Received exception\n"));
