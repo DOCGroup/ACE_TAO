@@ -3,17 +3,16 @@
 #include "tao/Transport.h"
 
 #include "ace/Get_Opt.h"
-
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -34,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 // This function does what TAO does in order to get a transport.
 CORBA::Boolean
-first_request_flag (CORBA::Object_ptr obj)
+first_request_flag (CORBA::Object_ptr const obj)
 {
   TAO_Stub *const stub = obj->_stubobj ();
   if (stub == nullptr)
@@ -48,7 +47,7 @@ first_request_flag (CORBA::Object_ptr obj)
 
   resolver.resolve (nullptr);
 
-  TAO_Transport *transport = resolver.transport ();
+  TAO_Transport *const transport = resolver.transport ();
   if (transport == nullptr)
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
@@ -62,24 +61,27 @@ first_request_flag (CORBA::Object_ptr obj)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int result {};
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var const tmp = orb->string_to_object (ior.c_str ());
 
       // No remote calls, first request flag is on.
       if (!first_request_flag (tmp.in ()))
         {
           ACE_ERROR ((LM_ERROR,
                       "Test FAILED at the beginning (why?)\n"));
+          result = 1;
         }
 
       // This call must issue LocateRequest message.
-      CORBA::PolicyList_var pl;
+      CORBA::PolicyList_var pl {};
       tmp->_validate_connection (pl.out ());
 
       // There was a LocateRequest call, first request flag
@@ -88,19 +90,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       "Test FAILED after LocateRequest (bug#3676 is not fixed)!!\n"));
+          result = 1;
         }
 
-      Test::Hello_var hello = Test::Hello::_narrow (tmp.in ());
+      Test::Hello_var const hello = Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
-      CORBA::String_var the_string = hello->get_string ();
+      CORBA::String_var const the_string = hello->get_string ();
 
       // Either _narrow or get_string issued a remote call,
       // first request flag is off.
@@ -108,6 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       "Test FAILED after normal request (why?)\n"));
+          result = 1;
         }
 
       hello->shutdown ();
@@ -120,5 +124,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return 0;
+  return result;
 }
