@@ -91,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       CORBA::Object_var const object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+        orb->string_to_object (options.ior.c_str ());
 
       Sender_var const sender =
         Sender::_narrow (object.in ());
@@ -99,8 +99,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (sender.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior.c_str ()),
                             1);
         }
       // The servant reference is owned by owner_transfer below.
