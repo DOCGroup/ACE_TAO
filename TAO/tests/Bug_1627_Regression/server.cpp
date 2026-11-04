@@ -4,11 +4,7 @@
 
 #include "tao/IORTable/IORTable.h"
 #include <memory>
-
-namespace
-{
   ACE_TCHAR const *ior_output_file = ACE_TEXT("server.ior");
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

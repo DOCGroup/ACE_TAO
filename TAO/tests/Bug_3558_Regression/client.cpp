@@ -9,9 +9,6 @@
 #include "tao/Transport_Cache_Manager.h"
 #include <string>
 #include <vector>
-
-namespace
-{
   struct Client_Context
   {
     Client_Context (CORBA::ORB_ptr orb, ACE_TCHAR const *ior1, ACE_TCHAR const *ior2)
@@ -33,7 +30,6 @@ namespace
     Client_Context &context;
     int server_number;
   };
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior1, ACE_TCHAR const *&ior2,

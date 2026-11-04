@@ -6,9 +6,6 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 
 #include <memory>
-
-namespace
-{
 CORBA::ORB_var client_orb;
 
 ACE_THR_FUNC_RETURN RunFunc (void *)
@@ -17,7 +14,6 @@ ACE_THR_FUNC_RETURN RunFunc (void *)
   client_orb->run ();
   ACE_DEBUG ((LM_DEBUG, "done running _orb\n"));
   return ACE_THR_FUNC_RETURN_NULL;
-}
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])

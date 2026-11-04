@@ -6,15 +6,11 @@
 #include <ace/ARGV.h>
 #include <iostream>
 #include <string>
-
-namespace
-{
   // These argv-backed paths are borrowed until both worker threads complete.
   ACE_TCHAR const *output = ACE_TEXT("test.ior");
   ACE_TCHAR const *input = ACE_TEXT("file://test.ior");
   std::string server_orb;
   std::string client_orb;
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

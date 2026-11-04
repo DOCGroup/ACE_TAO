@@ -6,9 +6,6 @@
 #include "ace/Service_Config.h"
 #include "ace/CORBA_macros.h"
 #include "ace/OS_NS_unistd.h"
-
-namespace
-{
   struct Service_Destroyer
   {
     void operator() (ACE_DLL_Service *service) const
@@ -17,7 +14,6 @@ namespace
         service->destroy ();
     }
   };
-}
 
 //
 // main

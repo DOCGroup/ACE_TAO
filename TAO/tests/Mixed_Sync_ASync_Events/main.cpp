@@ -127,8 +127,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ())),
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file.c_str ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
@@ -150,8 +150,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (opponent.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot resolve opponent IOR: %s",
-                           ACE_TEXT_ALWAYS_CHAR (options.input_ior.c_str ())),
+                           ACE_TEXT ("Cannot resolve opponent IOR: %s"),
+                           options.input_ior.c_str ()),
                           1);
 
       // register opponent

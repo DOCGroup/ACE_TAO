@@ -1,10 +1,6 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-
-namespace
-{
   ACE_TCHAR const *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

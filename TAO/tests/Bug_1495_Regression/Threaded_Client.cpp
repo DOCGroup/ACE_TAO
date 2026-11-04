@@ -18,12 +18,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Manual_Event.h"
-
-namespace
-{
 ACE_TCHAR const *ior_input_file = ACE_TEXT("test.ior");
 ACE_TCHAR const *ior_output_file = ACE_TEXT("thr_server.ior");
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

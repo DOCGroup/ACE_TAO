@@ -1,8 +1,5 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-
-namespace
-{
 ACE_TCHAR const *ior = ACE_TEXT("corbaloc:iiop:localhost:12345/Name\\2dwith\\2dhyphens");
 bool shutdown_server {};
 
@@ -32,7 +29,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
-}
 }
 
 int

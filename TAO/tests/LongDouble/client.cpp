@@ -56,8 +56,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (long_double_test.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::LongDoubleTest reference <%s>\n",
-                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
+                             ACE_TEXT ("Nil Test::LongDoubleTest reference <%s>\n"),
+                             options.ior.c_str ()),
                             1);
         }
 

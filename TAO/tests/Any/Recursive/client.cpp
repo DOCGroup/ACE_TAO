@@ -6,9 +6,6 @@
 
 #include <algorithm>
 #include <functional>
-
-namespace
-{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -37,7 +34,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
   // Successful command line parsing.
   return 0;
-}
 }
 
 template<typename T> void dump (T *); // Forward declaration.

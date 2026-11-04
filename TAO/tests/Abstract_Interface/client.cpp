@@ -1,9 +1,6 @@
 // -*- C++ -*-
 #include "testC.h"
 #include "ace/Get_Opt.h"
-
-namespace
-{
 ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://test.ior");
 bool debug = false;
 
@@ -16,7 +13,6 @@ enum class Test_Selection
 };
 
 Test_Selection which_test = Test_Selection::All;
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

@@ -1,11 +1,7 @@
 // -*- C++ -*-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-
-namespace
-{
 ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

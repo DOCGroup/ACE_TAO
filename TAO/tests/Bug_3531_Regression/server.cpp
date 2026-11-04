@@ -133,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing: %s"),
-                             ACE_TEXT_ALWAYS_CHAR (srv_shutdown_file.c_str ())),
+                             srv_shutdown_file.c_str ()),
                             1);
         ACE_OS::fprintf (output_file.get (), "%s", "OK\n");
       }

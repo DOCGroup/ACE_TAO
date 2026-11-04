@@ -4,12 +4,8 @@
 #include "ace/ARGV.h"
 
 #include <string>
-
-namespace
-{
 constexpr char const first_orb_name[] = "first_orb";
 constexpr char const second_orb_name[] = "second_orb";
-}
 
 int
 parse_args (int argc,

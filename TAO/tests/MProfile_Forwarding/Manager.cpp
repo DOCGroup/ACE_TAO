@@ -219,8 +219,8 @@ Manager::make_iors_register (Manager_Options const &options)
         ACE_OS::fclose);
       if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ())),
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                           options.ior_output_file.c_str ()),
                           1);
       ACE_OS::fprintf (output_file.get (), "%s", iorref1.in ());
     }

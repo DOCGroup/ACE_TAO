@@ -17,9 +17,6 @@
 
 #include <cstring>
 #include <memory>
-
-namespace
-{
 struct Message_Block_Release
 {
   void operator() (ACE_Message_Block *message_block) const
@@ -29,7 +26,6 @@ struct Message_Block_Release
 };
 
 using Message_Block_Ptr = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
-}
 
 void
 dump (char const *const msg,

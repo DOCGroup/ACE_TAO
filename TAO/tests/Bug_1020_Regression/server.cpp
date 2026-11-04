@@ -3,11 +3,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
-
-namespace
-{
 ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);

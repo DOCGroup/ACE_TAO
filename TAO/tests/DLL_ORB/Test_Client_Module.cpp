@@ -102,7 +102,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              ACE_TEXT ("Nil Test reference <%s>\n"),
-                             ACE_TEXT_ALWAYS_CHAR (ior.c_str ())),
+                             ior.c_str ()),
                             1);
         }
     }

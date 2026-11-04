@@ -26,15 +26,11 @@
      ((defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)) || \
      (defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))) || \
      (defined (ACE_HAS_CLOCK_GETTIME) && defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)))
-
-namespace
-{
 #if defined(TAO_USE_HR_TIME_POLICY_STRATEGY)
   bool uses_hr_time = true;
 #else
   bool uses_hr_time = false;
 #endif
-}
 
 class TestHandler
   : public ACE_Event_Handler

@@ -17,8 +17,6 @@
 #include <memory>
 
 // Parses the command line arguments and returns an error status.
-namespace
-{
 ACE_TCHAR const* ior_output_filename = ACE_TEXT("test.ior");
 
 int
@@ -45,7 +43,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
 
   return 0;  // Indicates successful parsing of command line
-}
 }
 
 // Standard command line parsing utilities used.

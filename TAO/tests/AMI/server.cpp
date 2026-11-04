@@ -16,9 +16,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 #include <memory>
-
-namespace
-{
 ACE_TCHAR const* ior_output_file {};
 
 int
@@ -47,7 +44,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
-}
 }
 
 int

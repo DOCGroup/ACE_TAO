@@ -1,8 +1,5 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
-
-namespace
-{
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 bool server_shutdown {};
 
@@ -33,7 +30,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
-}
 }
 
 int

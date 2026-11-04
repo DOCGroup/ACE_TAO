@@ -4,9 +4,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include <memory>
-
-namespace
-{
 ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 CORBA::ULong peer_count {4};
 CORBA::ULong payload_size {1024};
@@ -57,7 +54,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
-}
 }
 
 int

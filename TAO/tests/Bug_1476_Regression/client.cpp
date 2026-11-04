@@ -8,13 +8,9 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/AnyTypeCode/Any.h"
-
-namespace
-{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int number_of_oneways = 10;
 int number_of_client_tasks = 2;
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

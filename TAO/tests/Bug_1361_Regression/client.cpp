@@ -6,12 +6,8 @@
 #include "ace/OS_NS_signal.h"
 
 #include <string>
-
-namespace
-{
 std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
 int serverthreads {4};
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);

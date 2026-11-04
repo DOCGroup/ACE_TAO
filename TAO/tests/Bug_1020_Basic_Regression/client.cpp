@@ -3,9 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
-
-namespace
-{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -32,7 +29,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
-}
 }
 
 int

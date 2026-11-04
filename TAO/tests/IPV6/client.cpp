@@ -57,8 +57,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Hello reference <%s>\n",
-                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
+                             ACE_TEXT ("Nil Test::Hello reference <%s>\n"),
+                             options.ior.c_str ()),
                             1);
         }
 

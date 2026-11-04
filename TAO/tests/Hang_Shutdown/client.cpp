@@ -195,8 +195,8 @@ namespace Test
         if (CORBA::is_nil (test.in ()))
           {
             ACE_ERROR_RETURN ((LM_DEBUG,
-                               "Nil test reference <%s>\n",
-                               ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
+                               ACE_TEXT ("Nil test reference <%s>\n"),
+                               options.ior.c_str ()),
                               1);
           }
 

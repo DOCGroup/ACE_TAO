@@ -15,9 +15,6 @@
 
 #include <atomic>
 #include <string>
-
-namespace
-{
   struct Client_Options
   {
     std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
@@ -34,7 +31,6 @@ namespace
 
   constexpr CORBA::Long in_number = 931232;
   char const in_str[] = "Let's talk AMI.";
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)

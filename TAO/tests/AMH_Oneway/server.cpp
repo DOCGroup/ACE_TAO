@@ -4,9 +4,6 @@
 #include "TestS.h"
 #include <atomic>
 #include <memory>
-
-namespace
-{
 int num_calls = 10; // total calls client is going to make
 
 // This should equal num_calls within 'sleep * num_calls' seconds
@@ -28,7 +25,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       }
   return 0;
-}
 }
 
 

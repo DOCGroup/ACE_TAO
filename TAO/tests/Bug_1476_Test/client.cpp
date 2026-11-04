@@ -11,9 +11,6 @@
 #include "tao/Transport.h"
 
 #include "ace/Get_Opt.h"
-
-namespace
-{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 enum class Policy_Level
@@ -31,7 +28,6 @@ enum class Synchronization
 
 Policy_Level policy_level = Policy_Level::object;
 Synchronization synchronization = Synchronization::none;
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

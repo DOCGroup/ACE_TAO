@@ -51,8 +51,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (echo.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Nil Echo reference <%s>\n",
-                           ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
+                           ACE_TEXT ("Nil Echo reference <%s>\n"),
+                           options.ior.c_str ()),
                           -1);
 
       Echo::List_var list = echo->return_list ();

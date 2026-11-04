@@ -2,11 +2,7 @@
 #include "ace/Get_Opt.h"
 
 #include <string>
-
-namespace
-{
 std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[]);

@@ -1,9 +1,6 @@
 #include "ace/Get_Opt.h"
 #include "TestC.h"
 #include "ace/OS_NS_unistd.h"
-
-namespace
-{
 ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
 int num_calls = 10;
 
@@ -23,7 +20,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       }
   return 0;
-}
 }
 
 int

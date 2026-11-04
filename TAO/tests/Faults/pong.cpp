@@ -154,8 +154,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior.c_str ()),
                             1);
         }
 

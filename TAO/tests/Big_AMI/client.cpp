@@ -16,9 +16,6 @@
 #include "ami_testS.h"
 
 #include <atomic>
-
-namespace
-{
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int niterations {5};
 bool shutdown_flag {};
@@ -63,7 +60,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
-}
 }
 
 class Handler : public POA_A::AMI_AMI_TestHandler

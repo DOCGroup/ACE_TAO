@@ -171,8 +171,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_HANDLE const input_file = ACE_OS::open (options.ior_file.c_str (), 0);
       if (input_file == ACE_INVALID_HANDLE)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open input file for reading IOR: %s\n",
-                           ACE_TEXT_ALWAYS_CHAR (options.ior_file.c_str ())),
+                           ACE_TEXT ("Cannot open input file for reading IOR: %s\n"),
+                           options.ior_file.c_str ()),
                           -1);
       ACE_Read_Buffer ior_buffer (input_file, true);
       std::unique_ptr<char, Read_Buffer_Deleter> data (

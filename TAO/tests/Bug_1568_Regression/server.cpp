@@ -75,11 +75,7 @@ Simple_C::shutdown (Baz::AMH_CResponseHandler_ptr)
 }
 
 // ****************************************************************
-
-namespace
-{
   ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

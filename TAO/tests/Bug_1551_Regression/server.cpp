@@ -3,13 +3,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include <memory>
-
-namespace
-{
   ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
   bool simulate_crashes {true};
   int nthreads {1};
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

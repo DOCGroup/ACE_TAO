@@ -2,12 +2,8 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
-
-namespace
-{
   ACE_TCHAR const *hostname = ACE_TEXT ("localhost");
   ACE_TCHAR const *port = ACE_TEXT ("12345");
-}
 
 class AdderCallback
   : public POA_AMI_test::AMI_adderHandler,

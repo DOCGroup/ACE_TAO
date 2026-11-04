@@ -5,9 +5,6 @@
 #include "tao/AnyTypeCode/TAOA.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
-
-namespace
-{
 ACE_TCHAR const* server_ior = ACE_TEXT("file://server.ior");
 ACE_TCHAR const* admin_ior = ACE_TEXT("file://admin.ior");
 int iterations {20};
@@ -86,7 +83,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   // Indicates successful parsing of the command line
   return 0;
-}
 }
 
 int

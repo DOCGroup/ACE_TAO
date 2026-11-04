@@ -2,13 +2,9 @@
 #include "Object_Factory_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-
-namespace
-{
   int msglen = 100; // Default length of reply message is 100 bytes.
   int nthreads = 2;
   ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
-}
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
