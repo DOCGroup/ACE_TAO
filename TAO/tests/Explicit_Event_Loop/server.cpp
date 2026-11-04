@@ -17,22 +17,27 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_time.h"
+#include "ace/SString.h"
 #include <memory>
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 bool done {};
 
+struct Server_Options
+{
+  ACE_TString ior_output_file {ACE_TEXT ("server.ior")};
+};
+
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
         TAO_debug_level++;
@@ -40,9 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage: %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
@@ -63,41 +66,42 @@ get_gmt ()
   tod.minute = time_p->tm_min;
   tod.second = time_p->tm_sec;
 
-  done = 1;
+  done = true;
 
   return tod;
 }
 
-void do_something_else()
+void
+do_something_else ()
 {
   // Sleep a bit so we don't eat up
   // a ton of cpu
-  ACE_OS::sleep(3);
+  ACE_OS::sleep (3);
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Server_Options options;
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
 
       // Get reference to Root POA.
-      CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const obj =
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var poa
-        = PortableServer::POA::_narrow (obj.in ());
+      PortableServer::POA_var const poa =
+        PortableServer::POA::_narrow (obj.in ());
 
       // Activate POA manager.
-      PortableServer::POAManager_var mgr
-        = poa->the_POAManager ();
+      PortableServer::POAManager_var const mgr = poa->the_POAManager ();
 
       mgr->activate ();
 
@@ -105,31 +109,30 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Time_impl time_servant;
 
       // Write its stringified reference to stdout.
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->activate_object (&time_servant);
 
-      CORBA::Object_var object = poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = poa->id_to_reference (id.in ());
 
-      Time_var tm = Time::_narrow (object.in ());
+      Time_var const tm = Time::_narrow (object.in ());
 
-      CORBA::String_var str = orb->object_to_string (tm.in ());
+      CORBA::String_var const str = orb->object_to_string (tm.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
                   str.in ()));
 
-      if (ior_output_file != nullptr)
+      if (!options.ior_output_file.empty ())
         {
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+            ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
 
           if (!output_file)
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
-                  "Cannot open output file for writing IOR: %s",
-                  ior_output_file
-                ),
+                  ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                  options.ior_output_file.c_str ()),
                 1);
             }
 
@@ -155,7 +158,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
     }
 
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server: a CORBA exception occurred");
       return 1;
