@@ -8,7 +8,7 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  explicit Worker (CORBA::ORB_ptr orb)
+  explicit Worker (CORBA::ORB_ptr const orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
@@ -25,7 +25,7 @@ public:
   }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 /// Implement the Test::TestCallback interface
@@ -34,7 +34,7 @@ class TestCallback
 {
 public:
   /// Constructor
-  explicit TestCallback (CORBA::ORB_ptr orb);
+  explicit TestCallback (CORBA::ORB_ptr const orb);
   TestCallback (TestCallback const &) = delete;
   TestCallback (TestCallback &&) = delete;
   TestCallback &operator= (TestCallback const &) = delete;

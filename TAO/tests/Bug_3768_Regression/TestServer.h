@@ -23,7 +23,7 @@ public:
   void shutdown_client ();
 
 private:
-  Test::TestCallback_var callback_;
+  Test::TestCallback_var callback_ {};
 };
 
 #include /**/ "ace/post.h"
