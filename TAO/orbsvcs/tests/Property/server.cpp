@@ -22,7 +22,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object = orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -40,7 +40,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Create PropertySetDef object and register.
-      TAO_PropertySetDef *propsetdef_impl = 0;
+      // The RootPOA retains the servant after _this () activates it.
+      TAO_PropertySetDef *propsetdef_impl {};
       ACE_NEW_RETURN (propsetdef_impl,
                       TAO_PropertySetDef,
                       -1);
@@ -57,8 +58,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Make this IOR as one of the properties in there.
       any_val <<= propsetdef.in ();
 
-      CORBA::Object_var ior = CosPropertyService::PropertySetDef::_duplicate (propsetdef.in());
-      CORBA::Object_ptr ior_ptr = ior.in ();
+      CORBA::Object_var ior =
+        CosPropertyService::PropertySetDef::_duplicate (propsetdef.in ());
+      CORBA::Object_ptr const ior_ptr = ior.in ();
       any_val <<= ior_ptr;
 
       propsetdef_impl->define_property_with_mode ("PropertySetDef_IOR",
@@ -66,7 +68,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                                   CosPropertyService::fixed_readonly);
 
       // Create PropertySet factory and then register.
-      TAO_PropertySetFactory *propset_factory_impl;
+      // The RootPOA retains the servant after _this () activates it.
+      TAO_PropertySetFactory *propset_factory_impl {};
       ACE_NEW_RETURN (propset_factory_impl,
                       TAO_PropertySetFactory,
                       -1);

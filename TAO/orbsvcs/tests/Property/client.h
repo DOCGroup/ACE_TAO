@@ -20,9 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Task.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Get_Opt.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "orbsvcs/Naming/Naming_Client.h"
@@ -38,7 +35,11 @@ class Client
 {
 public:
   /// Constructor.
-  Client ();
+  Client () = default;
+  Client (Client const&) = delete;
+  Client& operator= (Client const&) = delete;
+  Client (Client&&) = delete;
+  Client& operator= (Client&&) = delete;
 
   /// Initialize the ORB etc, and bind the MMDevices.
   int init (int argc,
@@ -76,7 +77,7 @@ protected:
   int test_get_all_properties ();
 
   /// Testing delete_property.
-  int test_delete_property (const char *property_name);
+  int test_delete_property (char const* property_name);
 
   /// Testing delete_properties.
   int test_delete_properties ();
