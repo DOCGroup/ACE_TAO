@@ -106,7 +106,7 @@ be_visitor_root_cs::gen_obv_defns (be_root *node)
 int
 be_visitor_root_cs::gen_any_ops (be_root *node)
 {
-  int status = 0;
+  int status {};
 
   if (be_global->any_support ())
     {
@@ -129,7 +129,7 @@ be_visitor_root_cs::gen_any_ops (be_root *node)
 int
 be_visitor_root_cs::gen_cdr_ops (be_root *node)
 {
-  int status = 0;
+  int status {};
 
   if (be_global->cdr_support ())
     {
