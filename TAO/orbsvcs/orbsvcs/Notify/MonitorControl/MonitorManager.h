@@ -60,13 +60,13 @@ private:
     ACE_ARGV_T<ACE_TCHAR> argv_;
     CORBA::ORB_var orb_;
     ACE_TString ior_output_;
-    bool use_name_svc_;
+    bool use_name_svc_ {true};
     ACE_Barrier startup_barrier_;
-    ACE_TString mc_orb_name_;
+    ACE_TString mc_orb_name_ {ACE_TEXT ("TAO_MonitorAndControl")};
   };
 
-  bool run_;
-  bool initialized_;
+  bool run_ {};
+  bool initialized_ {};
   ORBTask task_;
 };
 

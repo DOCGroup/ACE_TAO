@@ -19,8 +19,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_MonitorManager::TAO_MonitorManager ()
-  : run_ (false)
-  , initialized_ (false)
 {
 }
 
@@ -173,9 +171,7 @@ TAO_MonitorManager::shutdown ()
 }
 
 TAO_MonitorManager::ORBTask::ORBTask ()
- : use_name_svc_ (true)
-   , startup_barrier_ (2) // synch the parent with the single child thread
-   , mc_orb_name_ (ACE_TEXT("TAO_MonitorAndControl"))
+  : startup_barrier_ (2) // synch the parent with the single child thread
 {
 }
 
