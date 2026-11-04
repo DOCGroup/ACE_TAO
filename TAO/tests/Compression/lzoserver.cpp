@@ -7,7 +7,7 @@
 bool
 test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
 {
-  bool succeed = false;
+  bool succeed {};
   try
     {
       // Get an invalid compression factory
@@ -38,7 +38,7 @@ test_duplicate_compression_factory (
   Compression::CompressionManager_ptr cm,
   Compression::CompressorFactory_ptr cf)
 {
-  bool succeed = false;
+  bool succeed {};
   try
     {
       // Register duplicate
@@ -65,7 +65,7 @@ bool
 test_register_nil_compression_factory (
   Compression::CompressionManager_ptr cm)
 {
-  bool succeed = false;
+  bool succeed {};
   try
     {
       // Register nil factory
@@ -95,7 +95,7 @@ bool
 test_compression (CORBA::ULong nelements,
               Compression::CompressionManager_ptr cm)
 {
-  bool succeed = false;
+  bool succeed {};
 
   CORBA::OctetSeq mytest;
   mytest.length (nelements);
@@ -134,7 +134,7 @@ test_compression (CORBA::ULong nelements,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  int retval = 0;
+  int retval {};
   try
     {
       CORBA::ORB_var orb =
@@ -151,11 +151,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil compression manager\n"),
                           1);
 
-      Compression::CompressorFactory_ptr compressor_factory;
-
-      ACE_NEW_RETURN (compressor_factory, TAO::Lzo_CompressorFactory (), 1);
-
-      Compression::CompressorFactory_var compr_fact = compressor_factory;
+      Compression::CompressorFactory_var compr_fact = new TAO::Lzo_CompressorFactory ();
       manager->register_factory(compr_fact.in ());
 
       if (!test_duplicate_compression_factory (manager.in (), compr_fact.in ()))
