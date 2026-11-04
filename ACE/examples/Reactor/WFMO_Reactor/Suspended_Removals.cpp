@@ -20,7 +20,13 @@
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  ACE_HANDLE get_handle () const
+  Event_Handler () = default;
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
+
+  ACE_HANDLE get_handle () const override
   {
     return this->event_.handle ();
   }

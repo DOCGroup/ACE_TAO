@@ -17,28 +17,36 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Auto_Event.h"
+#include <memory>
+#include <new>
 
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  int handle_signal (int signum,
-                     siginfo_t * = 0,
-                     ucontext_t * = 0);
+  Event_Handler () = default;
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
 
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg = 0);
+  int handle_signal (int signum,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
+
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
   ACE_Auto_Event handle_;
-  ACE_Process_Mutex *mutex_;
-  int iterations_;
+  std::unique_ptr<ACE_Process_Mutex> mutex_;
+  int iterations_ {};
 };
 
-static int abandon = 1;
+static constexpr int abandon = 1;
 
 static ACE_THR_FUNC_RETURN
 worker (void *data)
 {
-  Event_Handler *handler = (Event_Handler *) data;
+  Event_Handler *const handler = static_cast<Event_Handler *> (data);
 
   handler->handle_.signal ();
   handler->mutex_->acquire ();
@@ -54,7 +62,7 @@ Event_Handler::handle_signal (int,
                               siginfo_t *s,
                               ucontext_t *)
 {
-  ACE_HANDLE handle = s->si_handle_;
+  ACE_HANDLE const handle = s->si_handle_;
   if (handle == this->handle_.handle ())
     ACE_Reactor::instance ()->register_handler (this,
                                                 this->mutex_->lock ().proc_mutex_);
@@ -62,15 +70,15 @@ Event_Handler::handle_signal (int,
     {
       ACE_Reactor::instance ()->remove_handler (this->mutex_->lock ().proc_mutex_,
                                                 ACE_Event_Handler::DONT_CALL);
-      delete this->mutex_;
+      this->mutex_.reset ();
     }
 
   return 0;
 }
 
 int
-Event_Handler::handle_timeout (const ACE_Time_Value &,
-                               const void *)
+Event_Handler::handle_timeout (ACE_Time_Value const &,
+                               void const *)
 {
   --this->iterations_;
   ACE_DEBUG ((LM_DEBUG,
@@ -88,10 +96,10 @@ Event_Handler::handle_timeout (const ACE_Time_Value &,
     }
   else
     {
-      ACE_NEW_RETURN (this->mutex_,
-                      ACE_Process_Mutex,
-                      -1);
-      int result = ACE_Thread_Manager::instance ()->spawn (&worker, this);
+      ACE_Process_Mutex *mutex {};
+      ACE_NEW_RETURN (mutex, ACE_Process_Mutex, -1);
+      this->mutex_.reset (mutex);
+      int const result = ACE_Thread_Manager::instance ()->spawn (&worker, this);
       ACE_TEST_ASSERT (result != -1);
     }
 

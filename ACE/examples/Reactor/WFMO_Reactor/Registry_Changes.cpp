@@ -17,19 +17,24 @@
 #include "ace/Registry.h"
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
+#include <atomic>
 
-static int stop_test = 0;
+static std::atomic<bool> stop_test {};
 static HKEY context_to_monitor = HKEY_CURRENT_USER;
-static const ACE_TCHAR *temp_context_name = ACE_TEXT ("ACE temporary context");
+static ACE_TCHAR const temp_context_name[] = ACE_TEXT ("ACE temporary context");
 
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  Event_Handler (ACE_Reactor &reactor);
-  ~Event_Handler ();
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  explicit Event_Handler (ACE_Reactor &reactor);
+  ~Event_Handler () override = default;
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask close_mask);
+                    ACE_Reactor_Mask close_mask) override;
   ACE_Registry::Naming_Context &context ();
 
 private:
@@ -53,10 +58,6 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
   if (this->reactor ()->register_handler (this,
                                           this->event_.handle ()) != 0)
     ACE_ERROR ((LM_ERROR, "Registration with Reactor could not be done\n"));
-}
-
-Event_Handler::~Event_Handler ()
-{
 }
 
 int
@@ -89,9 +90,10 @@ Event_Handler::context ()
   return this->context_;
 }
 
-void
-worker (Event_Handler *event_handler)
+static ACE_THR_FUNC_RETURN
+worker (void *data)
 {
+  Event_Handler *event_handler = static_cast<Event_Handler *> (data);
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread creation\n"));
   ACE_DEBUG ((LM_DEBUG, "(%t) Thread creating temporary registry entry\n"));
 
@@ -110,6 +112,7 @@ worker (Event_Handler *event_handler)
       stop_test = 1;
       event_handler->context ().unbind_context (temp_context_name);
     }
+  return 0;
 }
 
 int
@@ -118,10 +121,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Reactor reactor;
   Event_Handler handler (reactor);
 
-  int result = ACE_OS::thr_create ((ACE_THR_FUNC) worker, &handler, 0, 0);
-  ACE_TEST_ASSERT (result == 0);
+  int const thread_result = ACE_OS::thr_create (worker, &handler, nullptr, 0);
+  ACE_TEST_ASSERT (thread_result == 0);
 
-  for (result = 0; result != -1; result = reactor.handle_events ())
+  for (int result = 0; result != -1; result = reactor.handle_events ())
     continue;
 
   return 0;

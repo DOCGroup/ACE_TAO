@@ -22,52 +22,57 @@
 #include <memory>
 
 // Use the WFMO_Reactor
-static int opt_wfmo_reactor = 0;
+static bool opt_wfmo_reactor {};
 
 // Use the Select_Reactor
-static int opt_select_reactor = 0;
+static bool opt_select_reactor {};
 
 // Make pipe readable in main()
-static int write_to_pipe_in_main = 0;
+static bool write_to_pipe_in_main {};
 
 // Cancel reads
-static int cancel_reads = 0;
+static bool cancel_reads {};
 
 // Write some data to the pipe.  This will cause handle_input to get
 // called.
-void
+static void
 write_to_pipe (ACE_Pipe &pipe)
 {
-  const char *data = "hello";
-  size_t len = ACE_OS::strlen (data);
+  char const *data = "hello";
+  size_t const len = ACE_OS::strlen (data);
 
-  ssize_t result = ACE::send (pipe.write_handle (),
-                              data,
-                              len);
-  ACE_TEST_ASSERT ((size_t)result == len);
+  ssize_t const result = ACE::send (pipe.write_handle (),
+                                   data,
+                                   len);
+  ACE_TEST_ASSERT (static_cast<size_t> (result) == len);
 }
 
 // Simple handler class
 class Handler : public ACE_Event_Handler
 {
 public:
-  Handler (ACE_Pipe &pipe)
+  explicit Handler (ACE_Pipe &pipe)
     : pipe_ (pipe)
   {
   }
 
-  ~Handler ()
+  Handler (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler &operator= (Handler &&) = delete;
+
+  ~Handler () override
   {
-    this->reactor (0);
+    this->reactor (nullptr);
   }
 
-  ACE_HANDLE get_handle () const
+  ACE_HANDLE get_handle () const override
   {
     return this->pipe_.read_handle ();
   }
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask close_mask)
+                    ACE_Reactor_Mask close_mask) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Handler::handle_close called with mask = %d\n",
@@ -75,7 +80,7 @@ public:
     return 0;
   }
 
-  int handle_input (ACE_HANDLE)
+  int handle_input (ACE_HANDLE) override
   {
     ACE_DEBUG ((LM_DEBUG, "Handler::handle_input\n"));
 
@@ -83,7 +88,7 @@ public:
     return -1;
   }
 
-  int handle_output (ACE_HANDLE handle)
+  int handle_output (ACE_HANDLE handle) override
   {
     ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG, "Handler::handle_output\n"));
@@ -111,23 +116,28 @@ protected:
 class Different_Handler : public ACE_Event_Handler
 {
 public:
-  Different_Handler (ACE_Pipe &pipe)
+  explicit Different_Handler (ACE_Pipe &pipe)
     : pipe_ (pipe)
   {
   }
 
-  ~Different_Handler ()
+  Different_Handler (Different_Handler const &) = delete;
+  Different_Handler (Different_Handler &&) = delete;
+  Different_Handler &operator= (Different_Handler const &) = delete;
+  Different_Handler &operator= (Different_Handler &&) = delete;
+
+  ~Different_Handler () override
   {
-    this->reactor (0);
+    this->reactor (nullptr);
   }
 
-  ACE_HANDLE get_handle () const
+  ACE_HANDLE get_handle () const override
   {
     return this->pipe_.read_handle ();
   }
 
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask close_mask)
+                    ACE_Reactor_Mask close_mask) override
   {
     ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG,
@@ -136,7 +146,7 @@ public:
     return 0;
   }
 
-  int handle_input (ACE_HANDLE handle)
+  int handle_input (ACE_HANDLE handle) override
   {
     ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG, "Different_Handler::handle_input\n"));
@@ -149,7 +159,7 @@ public:
     return 0;
   }
 
-  int handle_output (ACE_HANDLE handle)
+  int handle_output (ACE_HANDLE handle) override
   {
     ACE_UNUSED_ARG (handle);
     ACE_DEBUG ((LM_DEBUG, "Different_Handler::handle_output\n"));
@@ -160,7 +170,7 @@ public:
                                              ACE_Reactor::ADD_MASK);
     ACE_TEST_ASSERT (result != -1);
 
-    ACE_Reactor_Mask old_masks =
+    ACE_Reactor_Mask const old_masks =
       ACE_Event_Handler::WRITE_MASK |
       ACE_Event_Handler::EXCEPT_MASK;
 
@@ -173,7 +183,7 @@ public:
                                          ACE_Reactor::GET_MASK);
     ACE_TEST_ASSERT (result != -1);
 
-    ACE_Reactor_Mask current_masks =
+    ACE_Reactor_Mask const current_masks =
       ACE_Event_Handler::READ_MASK |
       ACE_Event_Handler::WRITE_MASK |
       ACE_Event_Handler::EXCEPT_MASK;
@@ -182,7 +192,7 @@ public:
                 static_cast<ACE_Reactor_Mask> (result));
 
     // Remove for writing
-    ACE_Reactor_Mask mask = ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::DONT_CALL;
+    ACE_Reactor_Mask const mask = ACE_Event_Handler::WRITE_MASK | ACE_Event_Handler::DONT_CALL;
     result = this->reactor ()->remove_handler (this,
                                                mask);
     ACE_TEST_ASSERT (result == 0);
@@ -205,43 +215,45 @@ protected:
 ACE_Reactor *
 create_reactor ()
 {
-  ACE_Reactor_Impl *impl = 0;
+  ACE_Reactor_Impl *impl_raw {};
 
   if (opt_wfmo_reactor)
     {
 #if defined (ACE_WIN32)
-      ACE_NEW_RETURN (impl,
+      ACE_NEW_RETURN (impl_raw,
                       ACE_WFMO_Reactor,
-                      0);
+                      nullptr);
 #endif /* ACE_WIN32 */
     }
   else if (opt_select_reactor)
     {
-      ACE_NEW_RETURN (impl,
+      ACE_NEW_RETURN (impl_raw,
                       ACE_Select_Reactor,
-                      0);
+                      nullptr);
     }
   else
     {
       ACE_Reactor *singleton_reactor =
         ACE_Reactor::instance ();
-      ACE_Reactor::instance (0);
+      ACE_Reactor::instance (nullptr);
       return singleton_reactor;
     }
 
-  ACE_Reactor *reactor = 0;
-  ACE_NEW_RETURN (reactor,
-                  ACE_Reactor (impl,
+  std::unique_ptr<ACE_Reactor_Impl> impl (impl_raw);
+  ACE_Reactor *reactor_raw {};
+  ACE_NEW_RETURN (reactor_raw,
+                  ACE_Reactor (impl.get (),
                                1),
-                  0);
+                  nullptr);
+  impl.release ();
 
-  return reactor;
+  return reactor_raw;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Parse args
@@ -252,16 +264,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 's':
-        opt_select_reactor = 1;
+        opt_select_reactor = true;
         break;
       case 'w':
-        opt_wfmo_reactor = 1;
+        opt_wfmo_reactor = true;
         break;
       case 'm':
-        write_to_pipe_in_main = 1;
+        write_to_pipe_in_main = true;
         break;
       case 'c':
-        cancel_reads = 1;
+        cancel_reads = true;
         break;
       }
 
