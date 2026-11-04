@@ -48,7 +48,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
 
       CORBA::Object_var const objref =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior_input_file.c_str ()));
+        orb->string_to_object (options.ior_input_file.c_str ());
 
       if (objref.in () == nullptr)
         {

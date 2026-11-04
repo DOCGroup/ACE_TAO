@@ -162,18 +162,18 @@ Manager::make_iors_register (Manager_Options const &options)
 {
   // First  server
   CORBA::Object_var const object_primary =
-    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.first_ior.c_str ()));
+    this->orb_->string_to_object (options.first_ior.c_str ());
 
   // Second server
   CORBA::Object_var const object_secondary =
-    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.second_ior.c_str ()));
+    this->orb_->string_to_object (options.second_ior.c_str ());
 
   if (options.third_ior.empty ())
     ACE_DEBUG ((LM_DEBUG,
                 "Here is the culprit\n"));
   // Third Server
   CORBA::Object_var const object_tertiary =
-    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.third_ior.c_str ()));
+    this->orb_->string_to_object (options.third_ior.c_str ());
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_var const iorm_object =
