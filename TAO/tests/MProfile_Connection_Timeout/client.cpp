@@ -62,11 +62,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Primary server
       CORBA::Object_var const object_primary =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.primary_ior.c_str ()));
+        orb->string_to_object (options.primary_ior.c_str ());
 
       // Secondary server
       CORBA::Object_var const object_secondary =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.secondary_ior.c_str ()));
+        orb->string_to_object (options.secondary_ior.c_str ());
 
       // Get an object reference for the ORBs IORManipultion object!
       CORBA::Object_var const iorm_object =
@@ -114,8 +114,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ACE_TEXT_ALWAYS_CHAR (options.primary_ior.c_str ())),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.primary_ior.c_str ()),
                             1);
         }
 
