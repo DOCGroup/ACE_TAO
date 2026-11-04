@@ -124,7 +124,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
     {
       CORBA::StructDef_var struct_def;
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -147,9 +147,9 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           // First create the named structure without any members.
           struct_def =
             current_scope->create_struct (
-                IFR_C_String (node->repoID ()),
+                node->repoID ().c_str (),
                 node->local_name ()->get_string ().c_str (),
-                IFR_C_String (node->version ()),
+                node->version ().c_str (),
                 dummyMembers
               );
 
@@ -262,7 +262,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
     {
       // Is this enum already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -288,9 +288,9 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
 
           this->ir_current_ =
             be_global->repository ()->create_enum (
-                                          IFR_C_String (node->repoID ()),
+                                          node->repoID ().c_str (),
                                           node->local_name ()->get_string ().c_str (),
-                                          IFR_C_String (node->version ()),
+                                          node->version ().c_str (),
                                           members
                                         );
 
@@ -333,7 +333,7 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
     {
       // Is this union already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (IFR_C_String (node->repoID ()));
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))

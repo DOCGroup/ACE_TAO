@@ -192,7 +192,8 @@ public:
 
       ExprType et {EV_none};
       Value u {};
-      std::string strval;
+      std::string strval;  // Narrow string literal contents.
+      std::string wstrval; // Wide string literal contents, including preserved escape sequences.
     };
 
  // Operations.

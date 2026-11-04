@@ -1,0 +1,6 @@
+module WString_Constant_Test
+{
+  const wstring unicode_value = L"é";
+  const wstring escaped_value = L"\u00e9";
+  const wstring concatenated_value = L"é" L"\u00e9";
+};

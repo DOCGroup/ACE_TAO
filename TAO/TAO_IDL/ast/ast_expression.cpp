@@ -203,7 +203,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
           return;
         }
 
-      this->pd_ev->strval = v->pd_ev->strval;
+      this->pd_ev->wstrval = v->pd_ev->wstrval;
       this->pd_ev->et = EV_wstring;
     }
   else
@@ -553,7 +553,7 @@ AST_Expression::AST_Expression (std::string sv, ExprType t)
     }
   else if (t == EV_wstring)
     {
-      this->pd_ev->strval = std::move (sv);
+      this->pd_ev->wstrval = std::move (sv);
     }
 }
 
@@ -2478,7 +2478,7 @@ AST_Expression::coerce (AST_Expression::ExprType t)
       copy->strval = this->pd_ev->strval;
       break;
     case EV_wstring:
-      copy->strval = this->pd_ev->strval;
+      copy->wstrval = this->pd_ev->wstrval;
       break;
     case EV_fixed:
       copy->u.fixedval = this->pd_ev->u.fixedval;
@@ -2622,7 +2622,7 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_string:
       return pd_ev->strval == vc->ev ()->strval;
     case EV_wstring:
-      return pd_ev->strval == vc->ev ()->strval;
+      return pd_ev->wstrval == vc->ev ()->wstrval;
     case EV_longlong:
       return pd_ev->u.llval == vc->ev ()->u.llval;
     case EV_ulonglong:
