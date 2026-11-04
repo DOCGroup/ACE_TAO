@@ -1,11 +1,11 @@
-# include "Echo_Client_i.h"
+#include "Echo_Client_i.h"
 
 // The client program for the application.
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Echo_Client_i client;
+  Echo_Client_i client {};
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nEcho client\n\n")));

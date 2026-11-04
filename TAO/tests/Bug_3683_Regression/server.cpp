@@ -4,9 +4,9 @@
 // This is the main driver program for the time and date server.
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Server<Echo_i> server;
+  Server<Echo_i> server {};
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\tEcho server\n\n")));

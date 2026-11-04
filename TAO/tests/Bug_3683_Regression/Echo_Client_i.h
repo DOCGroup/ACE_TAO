@@ -39,13 +39,13 @@ public:
   Echo_Client_i &operator= (Echo_Client_i &&) = delete;
 
   /// Execute the methods
-  int run (const char *, int, ACE_TCHAR **);
+  int run (char const *, int, ACE_TCHAR **);
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Instantiate the client object.
-  Client<Echo> client_;
+  Client<Echo> client_ {};
 
   size_t payload_length_ {};
 };

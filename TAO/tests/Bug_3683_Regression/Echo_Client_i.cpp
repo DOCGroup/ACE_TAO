@@ -1,9 +1,9 @@
 #include "Echo_Client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_unistd.h"
 #include "tao/Messaging/Messaging.h"
 
+#include <cstring>
 #include <string>
 
 // This is the interface program that accesses the remote object
@@ -12,10 +12,10 @@ int
 Echo_Client_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
-  int c {};
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'p':
         this->payload_length_ = ACE_OS::atoi (get_opts.opt_arg ()) * 1000000;
@@ -40,29 +40,29 @@ Echo_Client_i::run (char const *name,
 
   try
     {
-      CORBA::PolicyList policyList;
-      policyList.length (1);
-      CORBA::Any objectTimeout;
+      CORBA::PolicyList policy_list {};
+      policy_list.length (1);
+      CORBA::Any object_timeout {};
       TimeBase::TimeT to {50000};
       to *= 365 * 24 * 3600;
       to *= 100;
-      objectTimeout <<= to;
-      policyList[0] = client_.orb ()->create_policy (
+      object_timeout <<= to;
+      policy_list[0] = client_.orb ()->create_policy (
         Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-        objectTimeout);
-      CORBA::Object_var object =
-        client_->_set_policy_overrides (policyList, CORBA::ADD_OVERRIDE);
+        object_timeout);
+      CORBA::Object_var const object =
+        client_->_set_policy_overrides (policy_list, CORBA::ADD_OVERRIDE);
 
-      Echo_var srv (Echo::_narrow (object.in ()));
+      Echo_var const srv (Echo::_narrow (object.in ()));
 
       std::string const buf (this->payload_length_, 'a');
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sending len: %B \n"), buf.length ()));
 
-      CORBA::String_var s = srv->echo_string (buf.c_str ());
+      CORBA::String_var const s = srv->echo_string (buf.c_str ());
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nString echoed by client has len %B\n"),
-                  ACE_OS::strlen (s.in ())));
+                  std::strlen (s.in ())));
 
       if (client_.do_shutdown ())
         client_->shutdown ();

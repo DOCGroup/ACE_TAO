@@ -49,12 +49,11 @@ public:
   void shutdown () override;
 
   /// Set the ORB pointer.
-  void orb (CORBA::ORB_ptr o);
+  void orb (CORBA::ORB_ptr const o);
 
 private:
   /// ORB pointer.
-  CORBA::ORB_var orb_;
-
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* ECHO_I_H */

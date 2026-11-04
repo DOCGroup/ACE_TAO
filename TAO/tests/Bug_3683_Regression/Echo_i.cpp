@@ -3,7 +3,7 @@
 // Set the ORB pointer.
 
 void
-Echo_i::orb (CORBA::ORB_ptr o)
+Echo_i::orb (CORBA::ORB_ptr const o)
 {
   this->orb_ = CORBA::ORB::_duplicate (o);
 }
@@ -13,10 +13,10 @@ Echo_i::orb (CORBA::ORB_ptr o)
 Echo::List *
 Echo_i::echo_list (char const *)
 {
-  Echo::List_var list;
+  Echo::List_var list {};
 
   {
-    Echo::List *tmp = nullptr;
+    Echo::List *tmp {};
     ACE_NEW_RETURN (tmp,
                     Echo::List (3),
                     0);
@@ -45,7 +45,7 @@ Echo_i::echo_list (char const *)
 char *
 Echo_i::echo_string (char const *mesg)
 {
-  // The pointer mesg was NULL, return.
+  // The pointer mesg was null, return.
   if (mesg == nullptr)
     return nullptr;
 
