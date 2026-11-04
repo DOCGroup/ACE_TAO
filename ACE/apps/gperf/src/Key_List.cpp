@@ -612,13 +612,6 @@ Key_List::output_cpp17_constants (bool static_storage)
       emitted = true;
     }
 
-  if (use_duplicate_table)
-    {
-      ACE_OS::printf ("%sconstexpr std::size_t WORDLIST_SIZE {%d};\n",
-                      storage, total_keys + min_hash_value);
-      emitted = true;
-    }
-
   if (emitted)
     {
       ACE_OS::printf ("\n");
@@ -1634,8 +1627,10 @@ Key_List::output_lookup_function ()
       ACE_OS::printf (option.cxx17 ()
               ? "          int const slot = lookup[key];\n\n"
               : "          int slot = lookup[key];\n\n");
-      ACE_OS::printf (
-              "          if (slot >= 0 && slot < static_cast<int> (WORDLIST_SIZE))\n");
+      ACE_OS::printf (option.cxx17 ()
+              ? "          if (slot >= 0 && slot < static_cast<int> (sizeof (wordlist) / "
+                "sizeof (*wordlist)))\n"
+              : "          if (slot >= 0 && slot < static_cast<int> (WORDLIST_SIZE))\n");
       if (option[OPTIMIZE])
         ACE_OS::printf ("            return %swordlist[slot]%s;\n",
                         pointer_and_type_enabled ? generated_address_prefix () : "",
