@@ -21,7 +21,7 @@ class Hello
 {
 public:
   /// Constructor
-  explicit Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr const orb);
   Hello (Hello const &) = delete;
   Hello (Hello &&) = delete;
   Hello &operator= (Hello const &) = delete;
@@ -34,7 +34,7 @@ public:
 
 private:
   /// The ORB which will be shutdown by Hello::shutdown().
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* HELLO_H */

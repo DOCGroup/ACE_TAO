@@ -4,19 +4,17 @@
 
 #include "ace/Get_Opt.h"
 
-#include <algorithm>
-#include <functional>
-
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+#include <array>
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -37,35 +35,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-template <typename T> void dump (T *); // Forward declaration.
-
 template <typename T>
 void
 perform_invocation (Test::Hello_ptr hello,
                     CORBA::Any const & the_any)
 {
-  // Execute more than once to help verify that mutable recursive
-  // TypeCode state is managed correctly.
-  for (unsigned int n {}; n < 2; ++n)
+  constexpr unsigned int invocation_count = 2;
+  for (unsigned int n {}; n < invocation_count; ++n)
     {
       CORBA::Any_var my_any =
         hello->get_any (the_any);
 
-      T const *my_foo = nullptr;
+      T const *my_foo {};
       if (!(my_any.in () >>= my_foo))
         throw Test::Demarshaling_From_Any_Failed ();
 
-      CORBA::TypeCode_var the_tc = the_any.type ();
-      CORBA::TypeCode_var my_tc  = my_any->type ();
+      CORBA::TypeCode_var const the_tc = the_any.type ();
+      CORBA::TypeCode_var const my_tc = my_any->type ();
 
-      CORBA::Boolean const equal_tc =
-        the_tc->equal (my_tc.in ());
+      CORBA::Boolean const equal_tc = the_tc->equal (my_tc.in ());
 
       if (!equal_tc)
         throw Test::Recursive_Type_In_Any_Test_Failed ();
 
-      CORBA::Boolean const equiv_tc =
-        the_tc->equivalent (my_tc.in ());
+      CORBA::Boolean const equiv_tc = the_tc->equivalent (my_tc.in ());
 
       if (!equiv_tc)
         throw Test::Recursive_Type_In_Any_Test_Failed ();
@@ -73,8 +66,7 @@ perform_invocation (Test::Hello_ptr hello,
 }
 
 void
-recursive_typecode_test (CORBA::ORB_ptr /* orb */,
-                              Test::Hello_ptr hello)
+recursive_typecode_test (CORBA::ORB_ptr /* orb */, Test::Hello_ptr hello)
 {
   ACE_DEBUG ((LM_INFO,
               "Executing recursive typecode test\n"));
@@ -84,29 +76,29 @@ recursive_typecode_test (CORBA::ORB_ptr /* orb */,
   Test::MyAttRefSequence test;
 
   Test::MyAttRef attr;
-  attr.attRefName="attr";
-  attr.attRefValue.attrValue("value");
-  attr.attRefQualifier="atrQ1";
+  attr.attRefName = "attr";
+  attr.attRefValue.attrValue ("value");
+  attr.attRefQualifier = "atrQ1";
 
   Test::MyAttRef attr2;
-  attr2.attRefName="attr2";
-  attr2.attRefValue.attrValue("value2");
-  attr2.attRefQualifier="atrQ2";
+  attr2.attRefName = "attr2";
+  attr2.attRefValue.attrValue ("value2");
+  attr2.attRefQualifier = "atrQ2";
 
   Test::MyAttRef comp;
-  comp.attRefName="comp1";
-  comp.attRefQualifier="compQ";
+  comp.attRefName = "comp1";
+  comp.attRefQualifier = "compQ";
 
-  Test::MyAttRef::MyAttRefValue::_compValue_seq compSeq(1);
-  compSeq.length(1);
-  compSeq[0]=attr2;
-  comp.attRefValue.compValue(compSeq);
+  Test::MyAttRef::MyAttRefValue::_compValue_seq comp_seq (1);
+  comp_seq.length (1);
+  comp_seq[0] = attr2;
+  comp.attRefValue.compValue (comp_seq);
 
   Test::MyAttRef inti;
-  inti.attRefName="intval";
-  inti.attRefValue.intValue(0xAFFEAFFE);
+  inti.attRefName = "intval";
+  inti.attRefValue.intValue (0xAFFEAFFE);
 
-  test.length(3);
+  test.length (3);
   test[0] = comp;
   test[1] = inti;
   test[2] = attr;
@@ -117,8 +109,7 @@ recursive_typecode_test (CORBA::ORB_ptr /* orb */,
 }
 
 void
-nested_recursive_typecode_test (CORBA::ORB_ptr /* orb */,
-                              Test::Hello_ptr hello)
+nested_recursive_typecode_test (CORBA::ORB_ptr /* orb */, Test::Hello_ptr hello)
 {
   ACE_DEBUG ((LM_INFO,
               "Executing nested recursive typecode test\n"));
@@ -128,29 +119,29 @@ nested_recursive_typecode_test (CORBA::ORB_ptr /* orb */,
   Test2::MyAttRefSeqStruct test;
 
   Test::MyAttRef attr;
-  attr.attRefName="attr";
-  attr.attRefValue.attrValue("value");
-  attr.attRefQualifier="atrQ1";
+  attr.attRefName = "attr";
+  attr.attRefValue.attrValue ("value");
+  attr.attRefQualifier = "atrQ1";
 
   Test::MyAttRef attr2;
-  attr2.attRefName="attr2";
-  attr2.attRefValue.attrValue("value2");
-  attr2.attRefQualifier="atrQ2";
+  attr2.attRefName = "attr2";
+  attr2.attRefValue.attrValue ("value2");
+  attr2.attRefQualifier = "atrQ2";
 
   Test::MyAttRef comp;
-  comp.attRefName="comp1";
-  comp.attRefQualifier="compQ";
+  comp.attRefName = "comp1";
+  comp.attRefQualifier = "compQ";
 
-  Test::MyAttRef::MyAttRefValue::_compValue_seq compSeq(1);
-  compSeq.length(1);
-  compSeq[0]=attr2;
-  comp.attRefValue.compValue(compSeq);
+  Test::MyAttRef::MyAttRefValue::_compValue_seq comp_seq (1);
+  comp_seq.length (1);
+  comp_seq[0] = attr2;
+  comp.attRefValue.compValue (comp_seq);
 
   Test::MyAttRef inti;
-  inti.attRefName="intval";
-  inti.attRefValue.intValue(0xAFFEAFFE);
+  inti.attRefName = "intval";
+  inti.attRefValue.intValue (0xAFFEAFFE);
 
-  test.attRefSeq.length(3);
+  test.attRefSeq.length (3);
   test.attRefSeq[0] = comp;
   test.attRefSeq[1] = inti;
   test.attRefSeq[2] = attr;
@@ -168,80 +159,76 @@ nested_recursive_typecode_test (CORBA::ORB_ptr /* orb */,
  * Test method invocation functor.
  */
 template <typename T>
-struct Caller : public std::function<void(T)>
+struct Caller
 {
   /// Constructor.
-  Caller (CORBA::ORB_ptr o, Test::Hello_ptr h)
+  explicit Caller (CORBA::ORB_ptr const o, Test::Hello_ptr const h)
     : orb (CORBA::ORB::_duplicate (o))
     , hello (Test::Hello::_duplicate (h))
     , success {true}
   {
   }
 
+  Caller (Caller const &) = delete;
+  Caller (Caller &&) = delete;
+  Caller &operator= (Caller const &) = delete;
+  Caller &operator= (Caller &&) = delete;
+
   /// Function call operator overload.
-  void operator() (T f)
+  void operator() (T const f)
   {
     try
       {
-        f (orb.in (),
-           hello.in ());
+        f (this->orb.in (), this->hello.in ());
       }
     catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("Exception thrown:");
 
-        success = false;
+        this->success = false;
       }
   }
 
-  CORBA::ORB_var orb;
-  Test::Hello_var hello;
-  bool success;
+  CORBA::ORB_var orb {};
+  Test::Hello_var hello {};
+  bool success {};
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      if (parse_args (argc, argv) != 0)
+      std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
 
-      Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var const hello = Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
       using test_func = void (*) (CORBA::ORB_ptr, Test::Hello_ptr);
+      std::array<test_func, 2> const tests {{
+        recursive_typecode_test,
+        nested_recursive_typecode_test
+      }};
 
-      static test_func const tests[] =
-        {
-          recursive_typecode_test,
-          nested_recursive_typecode_test
-        };
+      Caller<test_func> caller (orb.in (), hello.in ());
+      for (test_func const test : tests)
+        caller (test);
 
-      static size_t const test_count = sizeof (tests) / sizeof (test_func);
-
-      // Have some fun with the STL.  :-)
-      Caller<test_func> c =
-        std::for_each (tests,
-                       tests + test_count,
-                       Caller<test_func> (orb.in (),
-                                          hello.in ()));
-
-      if (!c.success)
+      if (!caller.success)
         throw Test::Recursive_Type_In_Any_Test_Failed ();
 
       hello->shutdown ();
