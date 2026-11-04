@@ -4,22 +4,26 @@
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Get_Opt.h"
+#include <memory>
 
 #include "bogus_i.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+struct Server_Options
+{
+  ACE_TString ior_output_file {ACE_TEXT ("test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -36,48 +40,53 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      Server_Options options;
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var rp =
-        PortableServer::POA::_narrow(poa_object.in());
-      if  (CORBA::is_nil (rp.in()))
+      PortableServer::POA_var const rp =
+        PortableServer::POA::_narrow (poa_object.in ());
+      if (CORBA::is_nil (rp.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) panic: nil root poa\n"), 1);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      bogus* bogus_impl = new bogus();
-      PortableServer::ServantBase_var owner_transfer(bogus_impl);
-      PortableServer::ObjectId_var id =
+      bogus *bogus_impl {};
+      ACE_NEW_RETURN (bogus_impl, bogus (), 1);
+      // ServantBase_var takes ownership of this reference-counted TAO servant.
+      PortableServer::ServantBase_var const owner_transfer (bogus_impl);
+      PortableServer::ObjectId_var const id =
         rp->activate_object (bogus_impl);
 
-      CORBA::Object_var object = rp->id_to_reference (id.in ());
+      CORBA::Object_var const object = rp->id_to_reference (id.in ());
 
-      Test::bogus_var b = Test::bogus::_narrow (object.in ());
-      CORBA::String_var ior =
-        orb->object_to_string (b.in());
+      Test::bogus_var const b = Test::bogus::_narrow (object.in ());
+      CORBA::String_var const ior = orb->object_to_string (b.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s\n",
+                             ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ())),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
-      orb->shutdown();
-      orb->destroy();
+      orb->shutdown ();
+      orb->destroy ();
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("Caught exception:");
     }
