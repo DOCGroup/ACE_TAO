@@ -6,6 +6,7 @@
 #include "tao/AnyTypeCode_Adapter.h"
 
 #include "ace/Malloc.h"
+#include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Dynamic_Service.h"
 
@@ -212,7 +213,7 @@ CORBA::SystemException::_tao_print_system_exception (FILE *) const
               this->_info ().c_str ()));
 }
 
-std::string
+ACE_CString
 CORBA::SystemException::_info () const
 {
   // @@ there are a few other "user exceptions" in the CORBA scope,
@@ -221,7 +222,7 @@ CORBA::SystemException::_info () const
   // (preferably) to represent the exception type directly in the
   // exception value so it can be queried.
 
-  std::string info = "system exception, ID '";
+  ACE_CString info = "system exception, ID '";
   info += this->_rep_id ();
 #if defined (TAO_SUPPRESS_NEW_LINE_IN_EXCEPTION_LOGGING)
   info += "'; ";

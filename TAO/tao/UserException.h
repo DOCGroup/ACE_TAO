@@ -65,7 +65,7 @@ namespace CORBA
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    std::string _info () const override;
+    ACE_CString _info () const override;
 
   protected:
     /// Default constructor.

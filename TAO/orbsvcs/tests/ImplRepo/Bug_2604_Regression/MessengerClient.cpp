@@ -4,8 +4,6 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 
-#include <string>
-
 const ACE_TCHAR *ior = ACE_TEXT("file://messenger.ior");
 
 int
@@ -65,7 +63,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
           catch (const CORBA::Exception &ex)
             {
-              std::string str = ex._info ();
+              ACE_CString str = ex._info ();
               ACE_ERROR_RETURN ((LM_ERROR,
                                 ACE_TEXT ("Client send_message () caught: %C\n"),
                                  str.c_str ()), -1);
@@ -78,7 +76,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception &ex)
     {
-      std::string str = ex._info ();
+      ACE_CString str = ex._info ();
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Client main() caught: %C\n"),
                          str.c_str ()), -1);
     }

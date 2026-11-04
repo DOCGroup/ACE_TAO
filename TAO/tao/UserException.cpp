@@ -1,5 +1,6 @@
 #include "tao/UserException.h"
 
+#include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
@@ -22,13 +23,13 @@ CORBA::UserException::_tao_type () const
   return nullptr;
 }
 
-std::string
+ACE_CString
 CORBA::UserException::_info () const
 {
   // @@ we can use the exception's typecode to dump all the data held
   // within it ...
 
-  std::string user_exception_info = "user exception, ID '";
+  ACE_CString user_exception_info = "user exception, ID '";
   user_exception_info += this->_rep_id ();
   user_exception_info += "'";
   return user_exception_info;
