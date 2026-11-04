@@ -12,11 +12,11 @@ FXIMPLEMENT(ACE_FoxReactor,FXObject,ACE_FoxReactorMap,ARRAYNUMBER(ACE_FoxReactor
 ACE_ALLOC_HOOK_DEFINE (ACE_FoxReactor)
 
 // Must be called with lock held
-ACE_FoxReactor::ACE_FoxReactor (FXApp* a,
+ACE_FoxReactor::ACE_FoxReactor (FXApp *a,
                                 size_t size,
                                 bool restart,
                                 ACE_Sig_Handler *h)
-  : ACE_Select_Reactor (size, restart, h), fxapp(a)
+  : ACE_Select_Reactor (size, restart, h), fxapp (a)
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
   // pipe and registers it with the register_handler_i() method. The
@@ -37,9 +37,9 @@ ACE_FoxReactor::ACE_FoxReactor (FXApp* a,
 
 ACE_FoxReactor::~ACE_FoxReactor () = default;
 
-void ACE_FoxReactor::fxapplication(FXApp *a)
+void ACE_FoxReactor::fxapplication (FXApp *a)
 {
-   fxapp=a;
+  this->fxapp = a;
 }
 
 // This is just the <wait_for_multiple_events> from ace/Reactor.cpp
@@ -49,9 +49,9 @@ int
 ACE_FoxReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
                                          ACE_Time_Value *max_wait_time)
 {
-  ACE_TRACE( "ACE_FoxReactor::wait_for_multiple_events" );
+  ACE_TRACE ("ACE_FoxReactor::wait_for_multiple_events");
 
-  int nfound = 0;
+  int nfound {};
   do
   {
     max_wait_time = this->timer_queue_->calculate_timeout (max_wait_time);
@@ -80,20 +80,21 @@ ACE_FoxReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_
 
 int
 ACE_FoxReactor::FoxWaitForMultipleEvents (int width,
-                                        ACE_Select_Reactor_Handle_Set &wait_set,
-                                        ACE_Time_Value */*max_wait_time*/)
+                                          ACE_Select_Reactor_Handle_Set &wait_set,
+                                          ACE_Time_Value * /*max_wait_time*/)
 {
   // Check to make sure our handle's are all usable.
   ACE_Select_Reactor_Handle_Set temp_set = wait_set;
+  ACE_Time_Value const zero (ACE_Time_Value::zero);
 
   if (ACE_OS::select (width,
                       temp_set.rd_mask_,
                       temp_set.wr_mask_,
                       temp_set.ex_mask_,
-                      (ACE_Time_Value *) &ACE_Time_Value::zero ) == -1)
+                      &zero) == -1)
     return -1; // Bad file arguments...
 
-  // Qt processing.
+  // Fox processing.
   this->fxapp->runOneEvent () ;
 
   // Reset the width, in case it changed during the upcalls.
@@ -101,42 +102,51 @@ ACE_FoxReactor::FoxWaitForMultipleEvents (int width,
 
   // Now actually read the result needed by the <Select_Reactor> using
   // <select>.
-  return ACE_OS::select(width,
-                        wait_set.rd_mask_,
-                        wait_set.wr_mask_,
-                        wait_set.ex_mask_,
-                        (ACE_Time_Value *) &ACE_Time_Value::zero);
+  return ACE_OS::select (width,
+                         wait_set.rd_mask_,
+                         wait_set.wr_mask_,
+                         wait_set.ex_mask_,
+                         &zero);
 }
 
 
-long ACE_FoxReactor::onFileEvents(FXObject* /* ob */, FXSelector se, void* handle){
-  FXSelector sel=FXSELTYPE(se);
+long ACE_FoxReactor::onFileEvents (FXObject * /* ob */, FXSelector se, void *handle)
+{
+  FXSelector const sel = FXSELTYPE (se);
   ACE_Select_Reactor_Handle_Set dispatch_set;
-  bool f=false;
-  if(sel==SEL_IO_READ){
-    dispatch_set.rd_mask_.set_bit(ACE_HANDLE(reinterpret_cast<FXival>(handle)));
-    f=true;
-  }
-  else
-  if(sel==SEL_IO_WRITE){
-    dispatch_set.wr_mask_.set_bit(ACE_HANDLE(reinterpret_cast<FXival>(handle)));
-    f=true;
-  }
-  else
-  if(sel==SEL_IO_EXCEPT){
-    dispatch_set.ex_mask_.set_bit(ACE_HANDLE(reinterpret_cast<FXival>(handle)));
-    f=true;
-  };
-  if(f) dispatch (1, dispatch_set);
+  bool recognized {};
+  ACE_HANDLE const ace_handle =
+    static_cast<ACE_HANDLE> (reinterpret_cast<FXival> (handle));
+
+  if (sel == SEL_IO_READ)
+    {
+      dispatch_set.rd_mask_.set_bit (ace_handle);
+      recognized = true;
+    }
+  else if (sel == SEL_IO_WRITE)
+    {
+      dispatch_set.wr_mask_.set_bit (ace_handle);
+      recognized = true;
+    }
+  else if (sel == SEL_IO_EXCEPT)
+    {
+      dispatch_set.ex_mask_.set_bit (ace_handle);
+      recognized = true;
+    }
+
+  if (recognized)
+    this->dispatch (1, dispatch_set);
 
   return 1;
 }
 
-long ACE_FoxReactor::onTimerEvents(FXObject* /* ob */, FXSelector /* sel */, void* /* handle */)
+long ACE_FoxReactor::onTimerEvents (FXObject * /* ob */,
+                                   FXSelector /* sel */,
+                                   void * /* handle */)
 {
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
-  this->dispatch (0, handle_set );
+  this->dispatch (0, handle_set);
 
   // Set next timeout signal
   this->reset_timeout ();
@@ -156,7 +166,7 @@ ACE_FoxReactor::register_handler_i (ACE_HANDLE handle,
   if (result == -1)
     return -1;
 
-  unsigned long condition = 0;
+  unsigned long condition {};
 
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (condition, FX::INPUT_READ);
@@ -174,13 +184,13 @@ ACE_FoxReactor::register_handler_i (ACE_HANDLE handle,
 
   if (condition != 0)
     {
-     fxapp->addInput(handle, condition, this, 0);
+      this->fxapp->addInput (handle, condition, this, 0);
     }
   return 0;
 }
 
 int
-ACE_FoxReactor::register_handler_i (const ACE_Handle_Set &handles,
+ACE_FoxReactor::register_handler_i (ACE_Handle_Set const &handles,
                                     ACE_Event_Handler *handler,
                                     ACE_Reactor_Mask mask)
 {
@@ -196,7 +206,7 @@ ACE_FoxReactor::remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask)
   // ACE_Select_Reactor and then with X.  Now we are now doing things
   // in reverse order.
 
-  int condition = 0;
+  int condition {};
 
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (condition, FX::INPUT_READ);
@@ -213,15 +223,15 @@ ACE_FoxReactor::remove_handler_i (ACE_HANDLE handle, ACE_Reactor_Mask mask)
     }
 
   // First clean up the corresponding X11Input.
-  fxapp->removeInput ((int)handle,condition); // ACE_reinterpret_cast(int,handle));
+  this->fxapp->removeInput (static_cast<int> (handle), condition);
 
   // Now let the reactor do its work.
   return ACE_Select_Reactor::remove_handler_i (handle, mask);
 }
 
 int
-ACE_FoxReactor::remove_handler_i (const ACE_Handle_Set &handles,
-                               ACE_Reactor_Mask mask)
+ACE_FoxReactor::remove_handler_i (ACE_Handle_Set const &handles,
+                                  ACE_Reactor_Mask mask)
 {
   return ACE_Select_Reactor::remove_handler_i (handles, mask);
 }
@@ -232,21 +242,21 @@ ACE_FoxReactor::remove_handler_i (const ACE_Handle_Set &handles,
 void
 ACE_FoxReactor::reset_timeout ()
 {
-  ACE_Time_Value *max_wait_time =
+  ACE_Time_Value const *max_wait_time =
     this->timer_queue_->calculate_timeout (0);
 
-  if (max_wait_time != 0)
+  if (max_wait_time != nullptr)
     {
-      float t = max_wait_time->sec () +
+      float const t = max_wait_time->sec () +
         max_wait_time->usec () / 1000000.0F;
-      fxapp->addTimeout (this, 0, t*1000);
+      this->fxapp->addTimeout (this, 0, t * 1000);
     }
 }
 
 int
 ACE_FoxReactor::reset_timer_interval
   (long timer_id,
-   const ACE_Time_Value &interval)
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_FoxReactor::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
@@ -266,17 +276,17 @@ ACE_FoxReactor::reset_timer_interval
 
 long
 ACE_FoxReactor::schedule_timer (ACE_Event_Handler *event_handler,
-                                const void *arg,
-                                const ACE_Time_Value &delay,
-                                const ACE_Time_Value &interval)
+                                void const *arg,
+                                ACE_Time_Value const &delay,
+                                ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_FoxReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
-  long result = ACE_Select_Reactor::schedule_timer (event_handler,
-                                                    arg,
-                                                    delay,
-                                                    interval);
+  long const result = ACE_Select_Reactor::schedule_timer (event_handler,
+                                                          arg,
+                                                          delay,
+                                                          interval);
   if (result == -1)
     return -1;
   else
@@ -304,7 +314,7 @@ ACE_FoxReactor::cancel_timer (ACE_Event_Handler *handler,
 
 int
 ACE_FoxReactor::cancel_timer (long timer_id,
-                              const void **arg,
+                              void const **arg,
                               int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_FoxReactor::cancel_timer");
