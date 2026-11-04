@@ -2,16 +2,16 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -31,64 +31,69 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try {
-    // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+  try
+    {
+      // Initialize orb
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
+      std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-    // Destringify ior
-    CORBA::Object_var obj = orb->string_to_object(ior);
+      // Destringify ior
+      CORBA::Object_var const obj =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
 
-    // Narrow
-    Messenger_var messenger = Messenger::_narrow( obj.in());
-    if(CORBA::is_nil( messenger.in())) {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil reference\n"),
-                          1);
-      }
+      // Narrow
+      Messenger_var const messenger = Messenger::_narrow (obj.in ());
+      if (CORBA::is_nil (messenger.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil reference\n"),
+                            1);
+        }
 
-    // Obtain a reference to the CodecFactory.
-    CORBA::Object_var obj2 =
-      orb->resolve_initial_references ("CodecFactory");
+      // Obtain a reference to the CodecFactory.
+      CORBA::Object_var const obj2 =
+        orb->resolve_initial_references ("CodecFactory");
 
-    IOP::CodecFactory_var codec_factory =
-      IOP::CodecFactory::_narrow (obj2.in ());
+      IOP::CodecFactory_var const codec_factory =
+        IOP::CodecFactory::_narrow (obj2.in ());
 
-    // Set up a structure that contains information necessary to
-    // create a GIOP 1.2 CDR encapsulation Codec.
-    IOP::Encoding encoding;
-    encoding.format = IOP::ENCODING_CDR_ENCAPS;
-    encoding.major_version = 1;
-    encoding.minor_version = 2;
+      // Set up a structure that contains information necessary to
+      // create a GIOP 1.2 CDR encapsulation Codec.
+      IOP::Encoding encoding;
+      encoding.format = IOP::ENCODING_CDR_ENCAPS;
+      encoding.major_version = 1;
+      encoding.minor_version = 2;
 
-    // Obtain the CDR encapsulation Codec.
-    IOP::Codec_var codec =
-       codec_factory->create_codec (encoding);
+      // Obtain the CDR encapsulation Codec.
+      IOP::Codec_var const codec = codec_factory->create_codec (encoding);
 
-    CORBA::String_var user_name = CORBA::string_dup ("Ru");
+      CORBA::String_var const user_name = CORBA::string_dup ("Ru");
 
-    CORBA::Any user_name_as_any;
-    user_name_as_any <<= user_name.in ();
+      CORBA::Any user_name_as_any {};
+      user_name_as_any <<= user_name.in ();
 
-    CORBA::OctetSeq_var client_user_name = codec->encode (user_name_as_any);
+      CORBA::OctetSeq_var const client_user_name = codec->encode (user_name_as_any);
 
-    messenger->send_message (client_user_name.in ());
+      messenger->send_message (client_user_name.in ());
 
-    messenger->shutdown ();
+      messenger->shutdown ();
 
-    orb->destroy ();
-  }
-  catch( const CORBA::SystemException &ex) {
-    ex._tao_print_exception ("Caught CORBA exception: ");
-    return 1;
-  }
-  catch( ...) {
-    return 1;
-  }
+      orb->destroy ();
+    }
+  catch (CORBA::SystemException const &ex)
+    {
+      ex._tao_print_exception ("Caught CORBA exception: ");
+      return 1;
+    }
+  catch (...)
+    {
+      return 1;
+    }
 
   return 0;
 }
