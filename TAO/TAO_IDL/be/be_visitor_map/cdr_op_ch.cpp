@@ -31,7 +31,7 @@ be_visitor_map_cdr_op_ch::visit_map (be_map *node)
       return 0;
     }
 
-  be_type *key_type = dynamic_cast<be_type*> (node->key_type ());
+  be_type * const key_type = dynamic_cast<be_type*> (node->key_type ());
 
   // If our base type is an anonymous map, generate code for it here.
   if (key_type->node_type () == AST_Decl::NT_map)
@@ -45,7 +45,7 @@ be_visitor_map_cdr_op_ch::visit_map (be_map *node)
         }
     }
 
-  be_type *value_type = dynamic_cast<be_type*> (node->value_type ());
+  be_type * const value_type = dynamic_cast<be_type*> (node->value_type ());
 
   // If our base type is an anonymous map, generate code for it here.
   if (value_type->node_type () == AST_Decl::NT_map)
@@ -59,10 +59,10 @@ be_visitor_map_cdr_op_ch::visit_map (be_map *node)
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
-  be_type *bt = dynamic_cast<be_type*> (node);
-  be_typedef *tdef = dynamic_cast<be_typedef*> (bt);
+  be_type * const bt = dynamic_cast<be_type*> (node);
+  be_typedef * const tdef = dynamic_cast<be_typedef*> (bt);
 
   TAO_INSERT_COMMENT(os);
 
