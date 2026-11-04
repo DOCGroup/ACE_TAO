@@ -22,9 +22,9 @@ public:
   int fini () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
-  PortableServer::POA_var root_poa_;
+  PortableServer::POA_var root_poa_ {};
 };
 
 ACE_DLL_SERVICE_DECL (ACE_DLL_TAO_SERVICE_Export, _make_ACE_DLL_TAO_Service);

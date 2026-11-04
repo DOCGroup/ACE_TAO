@@ -10,7 +10,12 @@ public:
 
   virtual ~ACE_DLL_Service ();
 
-  virtual int init (int , ACE_TCHAR * []);
+  ACE_DLL_Service (ACE_DLL_Service const &) = delete;
+  ACE_DLL_Service (ACE_DLL_Service &&) = delete;
+  ACE_DLL_Service &operator= (ACE_DLL_Service const &) = delete;
+  ACE_DLL_Service &operator= (ACE_DLL_Service &&) = delete;
+
+  virtual int init (int, ACE_TCHAR *[]);
 
   virtual int fini ();
 
@@ -24,7 +29,7 @@ public:
 #define ACE_DLL_SERVICE_IMPL(classname, symbol) \
   ACE_DLL_Service * symbol () \
   { \
-    classname * service = nullptr; \
+    classname * service {}; \
     ACE_NEW_RETURN (service, classname (), 0); \
     return service; \
   }
