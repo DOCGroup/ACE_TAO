@@ -3,10 +3,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/Strategies/advanced_resource.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("server.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
   int c {};
@@ -39,14 +37,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      ACE_TString ior (ACE_TEXT ("server.ior"));
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      bool done = false;
+      bool done {};
       test_var holder;
       for (int i = 0; !done; ++i)
         {
-          ACE_TCHAR number[64];
+          ACE_TCHAR number[64] {};
           ACE_TString iorfile (ior);
 
           ACE_OS::sprintf (number, ACE_TEXT(".%d"), i);
@@ -55,17 +54,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (ACE_OS::access (iorfile.c_str (), R_OK) == 0)
             {
               iorfile = ACE_TEXT ("file://") + iorfile;
-              CORBA::Object_var tmp =
+              CORBA::Object_var const tmp =
                 orb->string_to_object (iorfile.c_str ());
 
-              test_var test =
+              test_var const test =
                 test::_narrow (tmp.in ());
 
               if (CORBA::is_nil (test.in ()))
                 {
                   ACE_ERROR_RETURN ((LM_DEBUG,
                                      "Nil test reference <%s>\n",
-                                     ior),
+                                     ior.c_str ()),
                                     1);
                 }
 

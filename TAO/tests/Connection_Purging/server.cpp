@@ -1,11 +1,11 @@
 #include "test_i.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/Strategies/advanced_resource.h"
-
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c {};
@@ -38,7 +38,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      ACE_TString ior_output_file (ACE_TEXT ("server.ior"));
+      if (parse_args (argc, argv, ior_output_file) != 0)
+        return 1;
+
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
@@ -52,35 +56,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
-      test_i *test_impl;
-      ACE_NEW_RETURN (test_impl,
-                      test_i (),
-                      1);
-      PortableServer::ServantBase_var owner_transfer (test_impl);
+      std::unique_ptr<test_i> test_impl = std::make_unique<test_i> ();
+      PortableServer::ServantBase_var owner_transfer (test_impl.release ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (test_impl);
+        root_poa->activate_object (owner_transfer.in ());
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      test_var test =
+      test_var const test =
         test::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (test.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
