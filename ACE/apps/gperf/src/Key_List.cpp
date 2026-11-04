@@ -557,16 +557,14 @@ Key_List::output_min_max ()
             max_hash_value, max_hash_value - min_hash_value + 1,
             total_duplicates ? total_duplicates + 1 : 0, total_keys + min_hash_value);
   else if (option[GLOBAL])
-    ACE_OS::printf (option.cxx17 ()
-            ? "[[maybe_unused]] static constexpr std::size_t TOTAL_KEYWORDS {%d};\n"
-              "[[maybe_unused]] static constexpr std::size_t MIN_WORD_LENGTH {%d};\n"
-              "[[maybe_unused]] static constexpr std::size_t MAX_WORD_LENGTH {%d};\n"
-              "[[maybe_unused]] static constexpr std::size_t MIN_HASH_VALUE {%d};\n"
-              "[[maybe_unused]] static constexpr std::size_t MAX_HASH_VALUE {%d};\n"
-              "[[maybe_unused]] static constexpr std::size_t HASH_VALUE_RANGE {%d};\n"
-              "[[maybe_unused]] static constexpr std::size_t DUPLICATES {%d};\n"
-              "[[maybe_unused]] static constexpr std::size_t WORDLIST_SIZE {%d};\n\n"
-            : "enum\n{\n"
+    {
+      if (option.cxx17 ())
+        {
+          this->output_cpp17_constants (true);
+        }
+      else
+        {
+          ACE_OS::printf ("enum\n{\n"
             "  TOTAL_KEYWORDS = %d,\n"
             "  MIN_WORD_LENGTH = %d,\n"
             "  MAX_WORD_LENGTH = %d,\n"
@@ -578,6 +576,53 @@ Key_List::output_min_max ()
             total_keys, min_key_len, max_key_len, min_hash_value,
             max_hash_value, max_hash_value - min_hash_value + 1,
             total_duplicates ? total_duplicates + 1 : 0, total_keys + min_hash_value);
+        }
+    }
+}
+
+void
+Key_List::output_cpp17_constants (bool static_storage)
+{
+  char const *storage = static_storage ? "static " : "  ";
+  bool const use_word_lengths = !option[OPTIMIZE];
+  bool const use_duplicate_table = option[DUP]
+    && total_duplicates > 0
+    && !option[SWITCH];
+  bool emitted = false;
+
+  if (use_word_lengths)
+    {
+      ACE_OS::printf ("%sconstexpr std::size_t MIN_WORD_LENGTH {%d};\n"
+                      "%sconstexpr std::size_t MAX_WORD_LENGTH {%d};\n",
+                      storage, min_key_len, storage, max_key_len);
+      emitted = true;
+    }
+
+  if (use_word_lengths)
+    {
+      ACE_OS::printf ("%sconstexpr std::size_t MIN_HASH_VALUE {%d};\n",
+                      storage, min_hash_value);
+      emitted = true;
+    }
+
+  if (use_word_lengths || use_duplicate_table)
+    {
+      ACE_OS::printf ("%sconstexpr std::size_t MAX_HASH_VALUE {%d};\n",
+                      storage, max_hash_value);
+      emitted = true;
+    }
+
+  if (use_duplicate_table)
+    {
+      ACE_OS::printf ("%sconstexpr std::size_t WORDLIST_SIZE {%d};\n",
+                      storage, total_keys + min_hash_value);
+      emitted = true;
+    }
+
+  if (emitted)
+    {
+      ACE_OS::printf ("\n");
+    }
 }
 
 // Generates the output using a C switch.  This trades increased
@@ -1586,7 +1631,10 @@ Key_List::output_lookup_function ()
     {
       int pointer_and_type_enabled = option[POINTER] && option[TYPE];
 
-      ACE_OS::printf ("          int slot = lookup[key];\n\n"
+      ACE_OS::printf (option.cxx17 ()
+              ? "          int const slot = lookup[key];\n\n"
+              : "          int slot = lookup[key];\n\n");
+      ACE_OS::printf (
               "          if (slot >= 0 && slot < static_cast<int> (WORDLIST_SIZE))\n");
       if (option[OPTIMIZE])
         ACE_OS::printf ("            return %swordlist[slot]%s;\n",
@@ -1620,20 +1668,50 @@ Key_List::output_lookup_function ()
       else
         ACE_OS::printf ("              unsigned int offset = key + slot + "
                         "(slot > 0 ? -MAX_HASH_VALUE : MAX_HASH_VALUE);\n");
-      ACE_OS::printf (
-              "              %s%s%s*base = %swordlist[-lookup[offset]]%s;\n"
-              "              %s%s%s*ptr = base + -lookup[offset + 1];\n\n"
-              "              while (--ptr >= base)\n                ",
-              option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
-              struct_tag,
-              option.cxx17 () && option[CONSTANT] &&
-                std::strcmp (array_type_, Key_List::default_array_type) == 0 ? "const " : "",
-              generated_address_prefix (),
-              generated_address_suffix (),
-              option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
-              struct_tag,
-              option.cxx17 () && option[CONSTANT] &&
-                std::strcmp (array_type_, Key_List::default_array_type) == 0 ? "const " : "");
+      if (option.cxx17 ()
+          && std::strcmp (array_type_, Key_List::default_array_type) == 0)
+        {
+          char const *base_type = option[CONSTANT]
+            ? "char const * const * const"
+            : pointer_and_type_enabled ? "char ** const" : "char const ** const";
+          char const *ptr_type = option[CONSTANT]
+            ? "char const * const *"
+            : pointer_and_type_enabled ? "char **" : "char const **";
+          ACE_OS::printf ("              %s base = %swordlist[-lookup[offset]]%s;\n"
+                          "              %s ptr = base + -lookup[offset + 1];\n\n"
+                          "              while (--ptr >= base)\n                ",
+                          base_type,
+                          generated_address_prefix (),
+                          generated_address_suffix (),
+                          ptr_type);
+        }
+      else if (option.cxx17 ())
+        {
+          char const *element_const = option[CONSTANT] || pointer_and_type_enabled == 0
+            ? "const " : "";
+          ACE_OS::printf ("              %s%s* const base = %swordlist[-lookup[offset]]%s;\n"
+                          "              %s%s*ptr = base + -lookup[offset + 1];\n\n"
+                          "              while (--ptr >= base)\n                ",
+                          struct_tag,
+                          element_const,
+                          generated_address_prefix (),
+                          generated_address_suffix (),
+                          struct_tag,
+                          element_const);
+        }
+      else
+        ACE_OS::printf (
+                "              %s%s%s*base = %swordlist[-lookup[offset]]%s;\n"
+                "              %s%s%s*ptr = base + -lookup[offset + 1];\n\n"
+                "              while (--ptr >= base)\n                ",
+                option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
+                struct_tag,
+                "",
+                generated_address_prefix (),
+                generated_address_suffix (),
+                option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
+                struct_tag,
+                "");
       if (std::strcmp (array_type_, Key_List::default_array_type) != 0)
         {
           if (option[COMP])
@@ -1854,16 +1932,14 @@ Key_List::output ()
               option.function_name (), generated_size_type ());
 
       if (option[ENUM] && !option[GLOBAL])
-        ACE_OS::printf (option.cxx17 ()
-                ? "  [[maybe_unused]] constexpr std::size_t TOTAL_KEYWORDS {%d};\n"
-                  "  [[maybe_unused]] constexpr std::size_t MIN_WORD_LENGTH {%d};\n"
-                  "  [[maybe_unused]] constexpr std::size_t MAX_WORD_LENGTH {%d};\n"
-                  "  [[maybe_unused]] constexpr std::size_t MIN_HASH_VALUE {%d};\n"
-                  "  [[maybe_unused]] constexpr std::size_t MAX_HASH_VALUE {%d};\n"
-                  "  [[maybe_unused]] constexpr std::size_t HASH_VALUE_RANGE {%d};\n"
-                  "  [[maybe_unused]] constexpr std::size_t DUPLICATES {%d};\n"
-                  "  [[maybe_unused]] constexpr std::size_t WORDLIST_SIZE {%d};\n\n"
-                : "  enum\n    {\n"
+        {
+          if (option.cxx17 ())
+            {
+              this->output_cpp17_constants (false);
+            }
+          else
+            {
+              ACE_OS::printf ("  enum\n    {\n"
                 "      TOTAL_KEYWORDS = %d,\n"
                 "      MIN_WORD_LENGTH = %d,\n"
                 "      MAX_WORD_LENGTH = %d,\n"
@@ -1875,6 +1951,8 @@ Key_List::output ()
                 total_keys, min_key_len, max_key_len, min_hash_value,
                 max_hash_value, max_hash_value - min_hash_value + 1,
                 total_duplicates ? total_duplicates + 1 : 0, total_keys + min_hash_value);
+            }
+        }
       // Use the switch in place of lookup table.
       if (option[SWITCH])
         output_switch ();

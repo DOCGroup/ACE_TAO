@@ -100,6 +100,7 @@ private:
   // replaced by the use of the Strategy/Bridge pattern so that we can
   // easily add new languages.
   void output_min_max ();
+  void output_cpp17_constants (bool static_storage);
   void output_switch (int use_keyword_table = 0);
   void output_keyword_table ();
   void output_keylength_table ();

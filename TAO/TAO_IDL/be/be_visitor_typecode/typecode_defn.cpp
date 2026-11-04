@@ -284,8 +284,8 @@ be_visitor_typecode_defn::visit_array (be_array *node)
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler
   //       itself?
-  os << "\n#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
-     << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+  os << be_nl << "#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+     << be_nl << "#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
      << be_nl;
 
   os << be_global->core_versioning_begin () << be_nl;
@@ -374,7 +374,7 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 
   os << be_global->core_versioning_end ();
 
-  os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
+  os << be_nl << "#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
      << be_nl;
 
   return 0;
@@ -444,8 +444,8 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler
   //       itself?
-  os << "\n#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
-     << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+  os << be_nl << "#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+     << be_nl << "#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
      << be_nl;
 
   // Namespace begin.
@@ -484,7 +484,7 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 
   os << be_global->core_versioning_end ();
 
-  os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
+  os << be_nl << "#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
      << be_nl_2;
 
   return 0; // this->gen_typecode_ptr (node);
@@ -512,8 +512,8 @@ be_visitor_typecode_defn::visit_string (be_string * node)
   // Multiple definition guards.
   // @todo Can we automate duplicate detection within the IDL compiler
   //       itself?
-  os << "\n#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
-     << "\n#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD" << be_nl;
+  os << be_nl << "#ifndef _TAO_TYPECODE_" << node->flat_name () << "_GUARD"
+     << be_nl << "#define _TAO_TYPECODE_" << node->flat_name () << "_GUARD" << be_nl;
 
   // Namespace begin.
 
@@ -541,7 +541,7 @@ be_visitor_typecode_defn::visit_string (be_string * node)
 
   os << be_global->core_versioning_end ();
 
-  os << "\n#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
+  os << be_nl << "#endif /* _TAO_TYPECODE_" << node->flat_name () << "_GUARD */"
      << be_nl_2;
 
   return 0;

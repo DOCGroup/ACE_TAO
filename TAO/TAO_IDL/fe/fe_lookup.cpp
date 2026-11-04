@@ -35,14 +35,10 @@ TAO_IDL_CPP_Keyword_Table::hash (char const *str, std::size_t len)
 TAO_IDL_CPP_Keyword_Entry const *
 TAO_IDL_CPP_Keyword_Table::lookup (char const *str, std::size_t len)
 {
-  [[maybe_unused]] constexpr std::size_t TOTAL_KEYWORDS {74};
-  [[maybe_unused]] constexpr std::size_t MIN_WORD_LENGTH {2};
-  [[maybe_unused]] constexpr std::size_t MAX_WORD_LENGTH {16};
-  [[maybe_unused]] constexpr std::size_t MIN_HASH_VALUE {6};
-  [[maybe_unused]] constexpr std::size_t MAX_HASH_VALUE {251};
-  [[maybe_unused]] constexpr std::size_t HASH_VALUE_RANGE {246};
-  [[maybe_unused]] constexpr std::size_t DUPLICATES {0};
-  [[maybe_unused]] constexpr std::size_t WORDLIST_SIZE {80};
+  constexpr std::size_t MIN_WORD_LENGTH {2};
+  constexpr std::size_t MAX_WORD_LENGTH {16};
+  constexpr std::size_t MIN_HASH_VALUE {6};
+  constexpr std::size_t MAX_HASH_VALUE {251};
 
   static constexpr struct TAO_IDL_CPP_Keyword_Entry wordlist[] =
     {
