@@ -2342,18 +2342,15 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
       *os << "std::strcmp (value, \"IDL:omg.org/CORBA/LocalObject:1.0\") == 0";
     }
 
-  if (this->has_mixed_parentage () || this->is_local ())
+  if (! this->is_abstract ()
+      && (this->has_mixed_parentage () || this->is_local ()))
     {
       *os << " ||" << be_nl;
-    }
-  else if (this->is_abstract ())
-    {
-      *os << be_nl;
     }
 
   if (! this->is_abstract ())
     {
-      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0" << be_nl;
+      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
     }
 
   return 0;

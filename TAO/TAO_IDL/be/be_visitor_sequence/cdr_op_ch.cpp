@@ -71,48 +71,76 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
     }
 
   bool alt = be_global->alt_mapping ();
+  std::string sequence_type;
+
+  if (alt)
+    {
+      sequence_type = "std::vector<" + base_type->full_name () + ">";
+    }
+  else
+    {
+      sequence_type = node->full_name ();
+    }
 
   *os << be_global->core_versioning_begin ();
 
-  *os << be_nl_2
-      << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &strm," << be_nl;
+  std::string declaration = be_global->stub_export_macro ();
+  declaration += " ::CORBA::Boolean operator<< (TAO_OutputCDR &strm, ";
+  declaration += sequence_type;
+  declaration += " const &_tao_sequence);";
 
-  if (alt)
+  *os << be_nl_2;
+  if (declaration.size () <= 120)
     {
-      *os << "std::vector<" << base_type->name () << ">";
+      *os << declaration;
     }
   else
     {
-      *os << node->name ();
+      *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+          << " operator<< (" << be_idt << be_nl
+          << "TAO_OutputCDR &strm," << be_nl
+          << sequence_type << " const &_tao_sequence);" << be_uidt;
     }
 
-  *os << " const &_tao_sequence);" << be_uidt << be_uidt_nl;
+  *os << be_nl;
 
-  *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
-      << " operator>> (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &strm," << be_nl;
+  declaration = be_global->stub_export_macro ();
+  declaration += " ::CORBA::Boolean operator>> (TAO_InputCDR &strm, ";
+  declaration += sequence_type;
+  declaration += " &_tao_sequence);";
 
-  if (alt)
+  if (declaration.size () <= 120)
     {
-      *os << "std::vector<" << base_type->name () << ">";
+      *os << declaration;
     }
   else
     {
-      *os << node->name ();
+      *os << be_global->stub_export_macro () << " ::CORBA::Boolean"
+          << " operator>> (" << be_idt << be_nl
+          << "TAO_InputCDR &strm," << be_nl
+          << sequence_type << " &_tao_sequence);" << be_uidt;
     }
 
-  *os << " &_tao_sequence);" << be_uidt << be_uidt;
+  *os << be_nl;
 
   if (be_global->gen_ostream_operators ())
     {
-      *os << be_nl_2
-          << be_global->stub_export_macro () << " std::ostream&"
-          << " operator<< (" << be_idt_nl
-          << "std::ostream &strm," << be_nl
-          << node->name () << " const &_tao_sequence);"
-          << be_uidt;
+      declaration = be_global->stub_export_macro ();
+      declaration += " std::ostream &operator<< (std::ostream &strm, ";
+      declaration += node->full_name ();
+      declaration += " const &_tao_sequence);";
+
+      *os << be_nl_2;
+      if (declaration.size () <= 120)
+        {
+          *os << declaration;
+        }
+      else
+        {
+          *os << be_global->stub_export_macro () << " std::ostream &operator<< ("
+              << be_idt << be_nl << "std::ostream &strm," << be_nl
+              << node->name () << " const &_tao_sequence);" << be_uidt;
+        }
     }
 
   *os << be_nl

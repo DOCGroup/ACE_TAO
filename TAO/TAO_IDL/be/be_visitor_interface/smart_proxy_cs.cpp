@@ -76,10 +76,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
         *os << "::";
 
       *os << "TAO_" << node->flat_name ()
-          << "_Default_Proxy_Factory::create_proxy (" << be_idt << be_idt_nl
-          << "::" << node->full_name ()
-          << "_ptr proxy" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
+          << "_Default_Proxy_Factory::create_proxy (::" << node->full_name ()
+          << "_ptr proxy)" << be_nl
           << "{" << be_idt_nl
           << "return proxy;" << be_uidt_nl
           << "}";
@@ -118,10 +116,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "// Making sure the factory which the adapter"
           << " has is destroyed with it."
           << be_nl
-          << "if (this->proxy_factory_ != nullptr)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "delete this->proxy_factory_;" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl
+          << "std::unique_ptr<TAO_" << node->flat_name ()
+          << "_Default_Proxy_Factory> proxy_factory (this->proxy_factory_);"
+          << be_uidt_nl
           << "}\n\n";
 
       os->indent ();
@@ -135,11 +132,10 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
         }
 
       *os << "TAO_" << node->flat_name ()
-          << "_Proxy_Factory_Adapter::register_proxy_factory (" << be_idt << be_idt_nl
+          << "_Proxy_Factory_Adapter::register_proxy_factory (" << be_idt_nl
           << "TAO_" << node->flat_name ()
-          << "_Default_Proxy_Factory *df," << be_nl
-          << "bool one_shot_factory" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
+          << "_Default_Proxy_Factory *df, bool one_shot_factory)"
+          << be_uidt_nl
           << "{" << be_idt_nl
           << "ACE_MT (" << be_idt << be_idt_nl
           << "ACE_GUARD (" << be_idt << be_idt_nl

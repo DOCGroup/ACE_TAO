@@ -464,7 +464,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
             *os << "::ACE_InputCDR::to_int8";
             return;
           case AST_PredefinedType::PT_void:
-            break;
+            *os << "void";
+            return;
           default:
             *os << "::";
             break;

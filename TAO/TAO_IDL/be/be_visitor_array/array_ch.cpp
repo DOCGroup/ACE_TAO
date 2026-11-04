@@ -180,35 +180,29 @@ int be_visitor_array_ch::visit_array (be_array *node)
       if (node->size_type () == AST_Type::VARIABLE)
         {
           *os << be_nl_2
-              << "using " << node->local_name () << "_var =" << be_idt_nl
-              << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
-              << ">;" << be_uidt;
+              << "using " << node->local_name () << "_var = TAO_VarArray_Var_T<"
+              << node->local_name () << ", "
+              << node->local_name () << "_slice, "
+              << node->local_name () << "_tag>;";
 
           *os << be_nl_2
-              << "using " << node->local_name () << "_out =" << be_idt_nl
-              << "TAO_Array_Out_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_var," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
-              << ">;" << be_uidt;
+              << "using " << node->local_name () << "_out = TAO_Array_Out_T<"
+              << node->local_name () << ", "
+              << node->local_name () << "_var, "
+              << node->local_name () << "_slice, "
+              << node->local_name () << "_tag>;";
         }
       else
         {
           *os << be_nl_2
-              << "using " << node->local_name () << "_var =" << be_idt_nl
-              << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
-              << ">;" << be_uidt;
+              << "using " << node->local_name () << "_var = TAO_FixedArray_Var_T<"
+              << node->local_name () << ", "
+              << node->local_name () << "_slice, "
+              << node->local_name () << "_tag>;";
 
           *os << be_nl_2
               << "using " << node->local_name () << "_out = "
-              << node->local_name () << ";" << be_uidt;
+              << node->local_name () << ";";
         }
     }
 

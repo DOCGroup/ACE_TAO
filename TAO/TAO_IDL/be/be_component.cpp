@@ -335,7 +335,7 @@ be_component::gen_is_a_ancestors (TAO_OutStream *os)
       ancestor = ancestor->base_component ();
     }
 
-  *os << "std::strcmp (value, \"IDL:omg.org/Components/CCMObject:1.0\") == 0" << be_nl;
+  *os << "std::strcmp (value, \"IDL:omg.org/Components/CCMObject:1.0\") == 0";
 
   return 0;
 }

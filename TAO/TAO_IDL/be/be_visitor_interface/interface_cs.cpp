@@ -281,7 +281,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->full_name () << "::_is_a (const char *value)" << be_nl;
 
   *os << "{" << be_idt_nl
-      << "if (" << be_idt << be_idt_nl;
+      << "if (" << be_idt << be_idt;
 
   int status = node->gen_is_a_ancestors (os);
 
@@ -433,9 +433,7 @@ be_visitor_interface_cs::gen_xxx_narrow (std::string const& pre,
   else if (be_global->gen_smart_proxies () &&
            !node->is_abstract ())
     {
-      *os << node->full_name () << " *proxy = nullptr;"
-      << be_nl_2
-          << "proxy = TAO::Narrow_Utils<"
+      *os << node->full_name () << " *proxy = TAO::Narrow_Utils<"
           << node->local_name () << ">::" << pre << " (";
 
       *os << be_idt << be_idt_nl;
