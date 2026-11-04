@@ -47,7 +47,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var const obj =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+        orb->string_to_object (options.ior.c_str ());
 
       // The string is borrowed from the request's return Any, which owns it.
       char const *the_string {};
