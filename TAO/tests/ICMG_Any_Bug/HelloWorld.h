@@ -11,10 +11,13 @@ class HelloWorld
   : public virtual POA_Test::HelloWorld
 {
 public:
-  HelloWorld ();
-  /// Constructor
-
-  virtual char * get_string ();
+  /// Constructor.
+  HelloWorld () = default;
+  HelloWorld (HelloWorld const &) = delete;
+  HelloWorld (HelloWorld &&) = delete;
+  HelloWorld &operator= (HelloWorld const &) = delete;
+  HelloWorld &operator= (HelloWorld &&) = delete;
+  char * get_string () override;
 };
 
 #include /**/ "ace/post.h"
