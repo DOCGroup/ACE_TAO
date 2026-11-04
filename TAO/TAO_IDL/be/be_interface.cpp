@@ -1335,7 +1335,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                     }
                   else
                     {
-                      *os << " 0";
+                      *os << " nullptr";
                     }
                 }
               else
