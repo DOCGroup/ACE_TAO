@@ -32,7 +32,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -139,7 +139,7 @@ int
 be_visitor_structure_any_op_cs::visit_field (be_field *node)
 {
   // First generate the type information.
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

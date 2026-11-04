@@ -32,7 +32,7 @@ be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 

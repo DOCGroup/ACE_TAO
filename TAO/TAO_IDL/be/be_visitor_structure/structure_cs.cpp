@@ -46,7 +46,7 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
 
   if (be_global->any_support ())
     {
-      TAO_OutStream *os = this->ctx_->stream ();
+      TAO_OutStream * const os = this->ctx_->stream ();
 
       *os << be_nl_2;
       TAO_INSERT_COMMENT (os);

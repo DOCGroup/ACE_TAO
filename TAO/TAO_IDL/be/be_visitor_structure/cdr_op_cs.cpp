@@ -42,7 +42,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -157,7 +157,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 int
 be_visitor_structure_cdr_op_cs::post_process (be_decl *bd)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (bd->node_type () != AST_Decl::NT_enum_val)
     {
