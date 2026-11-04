@@ -20,16 +20,15 @@
 #include "tao/Object.h"
 #include "tao/SystemException.h"
 
-#include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
-#include "ace/CORBA_macros.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // First initialize the ORB, that will remove some arguments...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // There must be at least one argument, the file that has to be
@@ -37,38 +36,39 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       if (argc < 2)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Usage: %s <ior>\n",
+                      ACE_TEXT ("Usage: %s <ior>\n"),
                       argv[0]));
 
-          return -1;
+          return 1;
         }
 
       // Use the first argument to create the object reference.
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (argv[1]);
 
       // Check if this object reference is a valid one..
-      CORBA::Boolean not_exists =
+      CORBA::Boolean const not_exists =
         object->_non_existent ();
 
       if (not_exists)
         {
           // Object reference was not of an existing object
-          ACE_DEBUG ((LM_ERROR,
-                      "The Object is non existent\n"));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("The Object is non existent\n")));
         }
       else
         {
           // The Object exists
           ACE_DEBUG ((LM_DEBUG,
-                      "The object exists!!!\n"));
+                      ACE_TEXT ("The object exists!!!\n")));
         }
 
     }
-  catch (const CORBA::SystemException&)
+  catch (CORBA::SystemException const &)
     {
-      ACE_DEBUG ((LM_ERROR,
-                  "CORBA System Exception Raised!\n"));
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("CORBA System Exception Raised!\n")));
+      return 1;
     }
 
   return 0;
