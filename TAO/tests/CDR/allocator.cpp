@@ -40,8 +40,8 @@ class Application_Simulator
 public:
   /// Constructor, limits the amount of fragmentation and memory this
   /// class takes.
-  Application_Simulator (int max_fragments,
-                    int max_fragment_size);
+  Application_Simulator (int const max_fragments,
+                         int const max_fragment_size);
 
   Application_Simulator (Application_Simulator const&) = delete;
   Application_Simulator (Application_Simulator&&) = delete;
@@ -53,46 +53,45 @@ public:
    * releases some memory too, the amount of memory allocated and the
    * number of allocations is random.
    */
-  void upcall (unsigned int* seed);
+  void upcall (unsigned int *const seed);
 
 private:
   /// The allocated buffers.
   std::vector<std::unique_ptr<char[]>> buffers_;
 
   /// The size of the <buffers_> array.
-  int max_fragments_;
+  int const max_fragments_;
 
   /// The maximum size of any element of <buffers_>
-  int max_fragment_size_;
+  int const max_fragment_size_;
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
-      int tss = 0;
-      int iterations = 500;
-      int repeat = 100;
-      int max_fragments = 2048;
-      int max_fragment_size = 1024;
-      int max_arguments = 16;
-      int max_argument_size = 1024;
-      int quiet = 0;
-      unsigned int seed = static_cast<unsigned int> (ACE_OS::time(0));
+      bool tss {};
+      int iterations {500};
+      int repeat {100};
+      int max_fragments {2048};
+      int max_fragment_size {1024};
+      int max_arguments {16};
+      int max_argument_size {1024};
+      bool quiet {};
+      unsigned int seed {static_cast<unsigned int> (ACE_OS::time (nullptr))};
 
-      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("tn:f:m:s:a:b:r:q"));
-      int opt;
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("tn:f:m:s:a:b:r:q"));
+      int opt {};
 
       while ((opt = get_opt ()) != EOF)
         {
           switch (opt)
             {
             case 't':
-              tss = 1;
+              tss = true;
               break;
             case 'n':
               iterations = ACE_OS::atoi (get_opt.opt_arg ());
@@ -116,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               max_argument_size = ACE_OS::atoi (get_opt.opt_arg ());
               break;
             case 'q':
-              quiet = 1;
+              quiet = true;
               break;
             case '?':
             default:
@@ -137,9 +136,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "SEED = %d\n", seed));
 
-      ACE_Allocator* buffer_allocator =
+      ACE_Allocator *buffer_allocator =
         ACE_Allocator::instance ();
-      ACE_Allocator* dblock_allocator =
+      ACE_Allocator *dblock_allocator =
         ACE_Allocator::instance ();
       if (tss)
         {
@@ -160,7 +159,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (!argument_sizes)
         return 1;
 
-      int n = ACE_OS::rand_r (&seed) % max_arguments + 1;
+      int const n = ACE_OS::rand_r (&seed) % max_arguments + 1;
       for (int k = 0; k < n; ++k)
         argument_sizes[k] = ACE_OS::rand_r (&seed) % max_argument_size + 1;
 
@@ -175,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               cdr_encoding.start_incr ();
 
               char buffer[default_buffer_size];
-              ACE_OutputCDR cdr (buffer, sizeof(buffer),
+              ACE_OutputCDR cdr (buffer, sizeof (buffer),
                                 TAO_ENCAP_BYTE_ORDER,
                                 buffer_allocator,
                                 dblock_allocator);
@@ -194,7 +193,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_hrtime_t usecs = tv.sec ();
           usecs *= static_cast<ACE_UINT32> (ACE_ONE_SECOND_IN_USECS);
           usecs += tv.usec ();
-          double average =
+          double const average =
             static_cast<double> (ACE_HRTIME_CONVERSION(usecs)) / repeat;
 
           if (!quiet)
@@ -202,7 +201,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             i, average);
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught unexpected CORBA exception:");
 
@@ -211,16 +210,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Application_Simulator::Application_Simulator (int max_fragments,
-                                    int max_fragment_size)
-  :  buffers_ (max_fragments),
-     max_fragments_ (max_fragments),
-     max_fragment_size_ (max_fragment_size)
+Application_Simulator::Application_Simulator (int const max_fragments,
+                                              int const max_fragment_size)
+  : buffers_ (max_fragments),
+    max_fragments_ (max_fragments),
+    max_fragment_size_ (max_fragment_size)
 {
 }
 
 void
-Application_Simulator::upcall (unsigned int* seed)
+Application_Simulator::upcall (unsigned int *const seed)
 {
   for (int i = 0; i < this->max_fragments_; ++i)
     {
@@ -234,7 +233,7 @@ Application_Simulator::upcall (unsigned int* seed)
         {
           if (ACE_OS::rand_r (seed) % 10000 < 5000)
             {
-              int size = ACE_OS::rand_r (seed) %
+              int const size = ACE_OS::rand_r (seed) %
                 this->max_fragment_size_ + 1;
               buffer.reset (new (std::nothrow) char[size]);
               if (!buffer)

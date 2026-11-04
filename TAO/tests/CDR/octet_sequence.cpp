@@ -16,12 +16,26 @@
 #include "tao/CDR.h"
 
 #include <cstring>
+#include <memory>
 
-ACE_Message_Block * m1;
-ACE_Message_Block * m2;
-ACE_Message_Block * m3;
+namespace
+{
+struct Message_Block_Release
+{
+  void operator() (ACE_Message_Block *message_block) const
+  {
+    ACE_Message_Block::release (message_block);
+  }
+};
 
-void dump (const char * msg)
+using Message_Block_Ptr = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
+}
+
+void
+dump (char const *const msg,
+      ACE_Message_Block const *const m1,
+      ACE_Message_Block const *const m2,
+      ACE_Message_Block const *const m3)
 {
   ACE_DEBUG ((LM_INFO,
               "%C\n"
@@ -38,35 +52,37 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // setup mb's
   char buf[1024];
-  m1=new ACE_Message_Block(1024);
+  Message_Block_Ptr const m1 (new ACE_Message_Block (1024));
+  Message_Block_Ptr m2 (new ACE_Message_Block (1024));
+  Message_Block_Ptr m3 (new ACE_Message_Block (1024));
+  // Non-owning aliases remain valid while m1 owns the chained message blocks.
+  ACE_Message_Block *const m2_alias = m2.get ();
+  ACE_Message_Block *const m3_alias = m3.get ();
   std::memset (buf, '1', 512);
-  m1->copy(buf,512);
-  m2=new ACE_Message_Block(1024);
+  m1->copy (buf, 512);
+  m1->cont (m2.release ());
   std::memset (buf, '2', 512);
-  m2->copy(buf,512);
-  m3=new ACE_Message_Block(1024);
+  m2_alias->copy (buf, 512);
+  m2_alias->cont (m3.release ());
   std::memset (buf, '3', 512);
-  m3->copy(buf,512);
+  m3_alias->copy (buf, 512);
 
-  m1->cont(m2);
-  m2->cont(m3);
-  dump("expect 1,1,1");
-
-  ACE_Message_Block* m = ACE_Message_Block::duplicate (m1);
-  dump("expect 2,2,2");
+  dump ("expect 1,1,1", m1.get (), m2_alias, m3_alias);
 
   {
-    TAO_OutputCDR cdr;
-    cdr.write_octet_array_mb(m1);
-    dump("expect 3,3,3"); // that's what I expected, anyway
-    ACE_DEBUG ((LM_INFO, "total cdr length is %u\n",
-                static_cast<u_int> (cdr.total_length())));
-  }
-  dump("expect 2,2,2"); // that's what I expected, anyway
+    Message_Block_Ptr const m (ACE_Message_Block::duplicate (m1.get ()));
+    dump ("expect 2,2,2", m1.get (), m2_alias, m3_alias);
 
-  ACE_Message_Block::release (m);
-  dump("expect 1,1,1"); // that's what I expected, anyway
-  ACE_Message_Block::release (m1);
+    {
+      TAO_OutputCDR cdr;
+      cdr.write_octet_array_mb (m1.get ());
+      dump ("expect 3,3,3", m1.get (), m2_alias, m3_alias);
+      ACE_DEBUG ((LM_INFO, "total cdr length is %u\n",
+                  static_cast<unsigned int> (cdr.total_length ())));
+    }
+    dump ("expect 2,2,2", m1.get (), m2_alias, m3_alias);
+  }
+  dump ("expect 1,1,1", m1.get (), m2_alias, m3_alias);
 
   return 0;
 }

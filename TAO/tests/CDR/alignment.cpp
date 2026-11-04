@@ -17,7 +17,7 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int status = 0;
+  int status {};
 
   for (CORBA::ULong i = 16; i != 64; ++i)
     {
@@ -25,7 +25,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_CDR::mb_align (&mb);
       mb.wr_ptr (i);
 
-      CORBA::Double dbl = i;
+      CORBA::Double const dbl = i;
 
       TAO_OutputCDR cdr;
       cdr.write_ulong (i); // length
@@ -70,13 +70,13 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
               ACE_HEX_DUMP ((LM_DEBUG,
                              j->rd_ptr (),
                              j->length (),
-                             ACE_TEXT("Output CDR stream")));
+                             ACE_TEXT ("Output CDR stream")));
             }
           TAO_InputCDR debug (cdr);
           ACE_HEX_DUMP ((LM_DEBUG,
                          debug.rd_ptr (),
                          debug.length (),
-                         ACE_TEXT("Input CDR stream")));
+                         ACE_TEXT ("Input CDR stream")));
         }
     }
 

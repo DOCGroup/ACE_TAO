@@ -21,9 +21,9 @@
 #include "ace/OS_NS_stdio.h"
 
 static int
-test_write (TAO_OutputCDR &cdr, int n)
+test_write (TAO_OutputCDR &cdr, int const n)
 {
-  CORBA::Long l = 0xdeadbeef;
+  CORBA::Long const l = 0xdeadbeef;
 
   for (int i = 0; i < n; ++i)
     {
@@ -38,7 +38,7 @@ test_write (TAO_OutputCDR &cdr, int n)
 }
 
 static int
-test_read (TAO_InputCDR &cdr, int n)
+test_read (TAO_InputCDR &cdr, int const n)
 {
   CORBA::Long xl {};
 
@@ -55,16 +55,16 @@ test_read (TAO_InputCDR &cdr, int n)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int n = 100;
-  int low = 64;
-  int hi = 4096;
-  int s = 4;
-  int quiet = 0;
+  int n {100};
+  int low {64};
+  int hi {4096};
+  int s {4};
+  bool quiet {};
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:l:h:s:q"));
-  int opt;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dn:l:h:s:q"));
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -86,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           s = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'q':
-          quiet = 1;
+          quiet = true;
           break;
         case '?':
         default:
@@ -134,7 +134,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
           reading.stop_incr ();
         }
-      double m = n * x;
+      double const m = n * x;
 
       ACE_Time_Value wtv;
       writing.elapsed_time_incr (wtv);
@@ -148,8 +148,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       rusecs *= static_cast<ACE_UINT32> (ACE_ONE_SECOND_IN_USECS);
       rusecs += rtv.usec ();
 
-      double write_average = ACE_HRTIME_CONVERSION(wusecs) / m;
-      double read_average = ACE_HRTIME_CONVERSION(rusecs) / m;
+      double const write_average = ACE_HRTIME_CONVERSION(wusecs) / m;
+      double const read_average = ACE_HRTIME_CONVERSION(rusecs) / m;
       if (!quiet)
         ACE_OS::printf ("AVE: %d %f %f\n",
                         x, write_average, read_average);

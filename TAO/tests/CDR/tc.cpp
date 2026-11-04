@@ -26,7 +26,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
       static CORBA::TypeCode_ptr const tcs[] =
       {
@@ -90,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (CORBA::TypeCode_ptr const tc : tcs)
         {
-          CORBA::TCKind k = tc->kind ();
+          CORBA::TCKind const k = tc->kind ();
 
           switch (k)
             {
@@ -101,11 +101,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             case CORBA::tk_alias:
             case CORBA::tk_except:
               {
-                char const *id = tc->id ();
+                char const *const id = tc->id ();
 
-                char const *name = tc->name ();
+                char const *const name = tc->name ();
 
-                CORBA::ULong length {};
+                CORBA::ULong const length {};
 
                 if (TAO_debug_level > 0)
                   {
@@ -133,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TC");
       return 1;
