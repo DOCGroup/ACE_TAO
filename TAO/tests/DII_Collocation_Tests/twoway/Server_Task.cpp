@@ -14,7 +14,6 @@ Server_Task::Server_Task (const ACE_TCHAR *output,
     , simple_test_output_ (simple_test_output)
     , me_ (me)
     , sorb_ (CORBA::ORB::_duplicate (sorb))
-    , error_count_ (0)
 {
 }
 

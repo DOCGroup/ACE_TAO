@@ -34,7 +34,7 @@ private:
   ACE_TString simple_test_input_;
 
   CORBA::ORB_var corb_;
-  CORBA::ULong error_count_;
+  CORBA::ULong error_count_ {};
 };
 
 #include /**/ "ace/post.h"

@@ -100,7 +100,7 @@ private:
 
   ACE_thread_t thr_id_;
 
-  CORBA::ULong error_count_;
+  CORBA::ULong error_count_ {};
 };
 
 

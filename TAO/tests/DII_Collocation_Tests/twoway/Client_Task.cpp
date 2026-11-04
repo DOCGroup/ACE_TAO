@@ -24,7 +24,6 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
     , input_ (ior)
     , simple_test_input_ (simple_test_ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
-    , error_count_ {}
 {
 }
 

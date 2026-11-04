@@ -32,7 +32,6 @@ Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))
     , thr_id_ (thrid)
-    , error_count_ {}
 {
 }
 

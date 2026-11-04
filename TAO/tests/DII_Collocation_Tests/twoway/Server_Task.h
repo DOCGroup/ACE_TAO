@@ -46,7 +46,7 @@ private:
 
   CORBA::ORB_var sorb_;
 
-  CORBA::ULong error_count_;
+  CORBA::ULong error_count_ {};
 };
 
 #include /**/ "ace/post.h"
