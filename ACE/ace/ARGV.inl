@@ -5,12 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename CHAR_TYPE> ACE_INLINE
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T ()
-  : arg_(0),
-    quote_arg_(false)
-{
-  // No-op
-}
+ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T () = default;
 
 template <typename CHAR_TYPE> ACE_INLINE
 ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T (const CHAR_TYPE *arg,

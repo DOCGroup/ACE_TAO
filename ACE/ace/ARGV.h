@@ -70,10 +70,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Pointer to the argument.
-  const CHAR_TYPE * arg_;
+  const CHAR_TYPE * arg_ {};
 
   /// The argument need to be quoted while adding to the vector.
-  bool quote_arg_;
+  bool quote_arg_ {};
 };
 
 /**

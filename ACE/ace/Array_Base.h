@@ -224,7 +224,7 @@ public:
 
 private:
   /// Pointer to the current item in the iteration.
-  size_t current_;
+  size_t current_ {};
 
   /// Pointer to the Array we're iterating over.
   ACE_Array_Base<T> &array_;
