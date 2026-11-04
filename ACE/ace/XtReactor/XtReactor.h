@@ -36,14 +36,21 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_XtReactor_Export ACE_XtReactorID
 {
 public:
+  ACE_XtReactorID () = default;
+
+  ACE_XtReactorID (ACE_XtReactorID const &) = delete;
+  ACE_XtReactorID (ACE_XtReactorID &&) = delete;
+  ACE_XtReactorID &operator = (ACE_XtReactorID const &) = delete;
+  ACE_XtReactorID &operator = (ACE_XtReactorID &&) = delete;
+
   /// Magic cookie.
-  XtInputId id_;
+  XtInputId id_ {};
 
   /// Underlying handle.
-  ACE_HANDLE handle_;
+  ACE_HANDLE handle_ {};
 
   /// Pointer to next node in the linked list.
-  ACE_XtReactorID *next_;
+  ACE_XtReactorID *next_ {}; // Non-owning link; ACE_XtReactor deletes the list nodes.
 };
 
 /**
@@ -55,73 +62,78 @@ public:
 class ACE_XtReactor_Export ACE_XtReactor : public ACE_Select_Reactor
 {
 public:
-  ACE_XtReactor (XtAppContext context = 0,
+  ACE_XtReactor (XtAppContext context = nullptr,
                  size_t size = DEFAULT_SIZE,
                  bool restart = false,
-                 ACE_Sig_Handler * = 0);
-  virtual ~ACE_XtReactor ();
+                 ACE_Sig_Handler * = nullptr);
+  ~ACE_XtReactor () override;
+
+  ACE_XtReactor (ACE_XtReactor const &) = delete;
+  ACE_XtReactor (ACE_XtReactor &&) = delete;
+  ACE_XtReactor &operator = (ACE_XtReactor const &) = delete;
+  ACE_XtReactor &operator = (ACE_XtReactor &&) = delete;
 
   XtAppContext context () const;
   void context (XtAppContext);
 
   // = Timer operations.
-  virtual long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval);
-  virtual int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval);
-  virtual int cancel_timer (ACE_Event_Handler *handler,
-                            int dont_call_handle_close = 1);
+  long schedule_timer (ACE_Event_Handler *event_handler,
+                       void const *arg,
+                       ACE_Time_Value const &delay,
+                       ACE_Time_Value const &interval) override;
+  int reset_timer_interval (long timer_id,
+                            ACE_Time_Value const &interval) override;
+  int cancel_timer (ACE_Event_Handler *handler,
+                    int dont_call_handle_close = 1) override;
 
-  virtual int cancel_timer (long timer_id,
-                            const void **arg = 0,
-                            int dont_call_handle_close = 1);
+  int cancel_timer (long timer_id,
+                    void const **arg = nullptr,
+                    int dont_call_handle_close = 1) override;
 
 protected:
   // = Register timers/handles with Xt.
   /// Register a single @a handler.
-  virtual int register_handler_i (ACE_HANDLE handle,
-                                  ACE_Event_Handler *handler,
-                                  ACE_Reactor_Mask mask);
+  int register_handler_i (ACE_HANDLE handle,
+                          ACE_Event_Handler *handler,
+                          ACE_Reactor_Mask mask) override;
 
   /// Register a set of <handlers>.
-  virtual int register_handler_i (const ACE_Handle_Set &handles,
-                                  ACE_Event_Handler *handler,
-                                  ACE_Reactor_Mask mask);
+  int register_handler_i (ACE_Handle_Set const &handles,
+                          ACE_Event_Handler *handler,
+                          ACE_Reactor_Mask mask) override;
 
   /// Remove the @a handler associated with this @a handle.
-  virtual int remove_handler_i (ACE_HANDLE handle,
-                                ACE_Reactor_Mask mask);
+  int remove_handler_i (ACE_HANDLE handle,
+                        ACE_Reactor_Mask mask) override;
 
   /// Remove a set of <handles>.
-  virtual int remove_handler_i (const ACE_Handle_Set &handles,
-                                ACE_Reactor_Mask);
+  int remove_handler_i (ACE_Handle_Set const &handles,
+                        ACE_Reactor_Mask) override;
 
   /// Suspend the <Event_Handler> associated with @a handle
-  virtual int suspend_i (ACE_HANDLE handle);
+  int suspend_i (ACE_HANDLE handle) override;
 
   /// Resume the <Event_Handler> associated with @a handle
-  virtual int resume_i (ACE_HANDLE handle);
+  int resume_i (ACE_HANDLE handle) override;
 
   /// Synchronize XtInputHandler for @a handle
-  virtual void synchronize_XtInput(ACE_HANDLE handle);
+  virtual void synchronize_XtInput (ACE_HANDLE handle);
 
   /// Compute needed Xt condition by looking at base class wait set.
-  virtual int compute_Xt_condition(ACE_HANDLE handle);
+  virtual int compute_Xt_condition (ACE_HANDLE handle);
 
   /// Wait for events to occur.
-  virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
-                                        ACE_Time_Value *);
+  int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
+                                ACE_Time_Value *) override;
 
   ///Wait for Xt events to occur.
   virtual int XtWaitForMultipleEvents (int,
-                                       ACE_Select_Reactor_Handle_Set &,
-                                       ACE_Time_Value *);
+                                      ACE_Select_Reactor_Handle_Set &,
+                                      ACE_Time_Value *);
 
-  XtAppContext context_;
-  ACE_XtReactorID *ids_;
-  XtIntervalId timeout_;
+  XtAppContext context_ {}; // Borrowed from the X toolkit application.
+  ACE_XtReactorID *ids_ {}; // Head of the manually managed linked list.
+  XtIntervalId timeout_ {};
 
 private:
   /// This method ensures there's an Xt timeout for the first timeout
@@ -130,11 +142,9 @@ private:
 
   // = Integrate with the X callback function mechanism.
   static void TimerCallbackProc (XtPointer closure, XtIntervalId *id);
-  static void InputCallbackProc (XtPointer closure, int* source, XtInputId *id);
-
-  /// Deny access since member-wise won't work...
-  ACE_XtReactor (const ACE_XtReactor &);
-  ACE_XtReactor &operator = (const ACE_XtReactor &);
+  static void InputCallbackProc (XtPointer closure,
+                                 int *source,
+                                 XtInputId *id);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
