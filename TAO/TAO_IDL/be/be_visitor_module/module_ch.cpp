@@ -26,8 +26,8 @@ be_visitor_module_ch::visit_module (be_module *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  TAO_OutStream *aos = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  TAO_OutStream *aos {};
 
   TAO_INSERT_COMMENT (os);
 
