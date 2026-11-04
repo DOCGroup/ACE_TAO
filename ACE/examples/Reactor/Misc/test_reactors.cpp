@@ -71,7 +71,7 @@ Test_Task::~Test_Task ()
 int
 Test_Task::open (void *args)
 {
-  this->reactor ((ACE_Reactor *) args);
+  this->reactor (static_cast<ACE_Reactor *> (args));
   return this->activate (THR_NEW_LWP);
 }
 
@@ -176,7 +176,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (worker), (void *) react1, THR_NEW_LWP) == -1)
+      (ACE_THR_FUNC (worker), static_cast<void *> (react1), THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
   else if (ACE_Thread_Manager::instance ()->spawn

@@ -25,10 +25,10 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Mumber of seconds this test should run
-  int runtime_in_seconds = 10;
+  constexpr int runtime_in_seconds = 10;
 
   // Iterations
-  int iterations = runtime_in_seconds * 10;
+  constexpr int iterations = runtime_in_seconds * 10;
 
   // 100 millisecond timeout
   ACE_Time_Value timeout (0, 100000);
@@ -68,21 +68,27 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       starting_time_of_day = ACE_OS::gettimeofday ();
 
       // Wait for timeout
-      result = ACE_OS::select (ACE_Utils::truncate_cast<int> ((intptr_t)dummy_pipe.read_handle ()), dummy_handle_set, nullptr, nullptr, &timeout);
+      result = ACE_OS::select (
+        ACE_Utils::truncate_cast<int> (
+          static_cast<intptr_t> (dummy_pipe.read_handle ())),
+        dummy_handle_set,
+        nullptr,
+        nullptr,
+        &timeout);
       ACE_ASSERT (result == 0);
 
       // Note the time after select
       ending_time_of_day = ACE_OS::gettimeofday ();
 
       // Expected ending time
-      ACE_Time_Value expected_ending_time_of_day =
+      ACE_Time_Value const expected_ending_time_of_day =
         starting_time_of_day + timeout;
 
       // If the timer expired early
       if (ending_time_of_day < expected_ending_time_of_day)
         {
           // How early
-          ACE_Time_Value early_timeout = expected_ending_time_of_day - ending_time_of_day;
+          ACE_Time_Value const early_timeout = expected_ending_time_of_day - ending_time_of_day;
 
           // Increment number of early timers
           no_of_early_timers++;
@@ -101,7 +107,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
               "The max early timeout was: %dsec %dusec\n",
               no_of_early_timers,
               iterations,
-              float (no_of_early_timers) / iterations * 100,
+              static_cast<float> (no_of_early_timers) / iterations * 100,
               maximum_early_timeout.sec (),
               maximum_early_timeout.usec ()));
   //FUZZ: enable check_for_lack_ACE_OS

@@ -38,12 +38,11 @@ public:
     return 0;
   }
 
-  int handle_timeout (const ACE_Time_Value &,
-                              const void *arg) override
+  int handle_timeout (ACE_Time_Value const &, void const *arg) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "%s\n",
-                (const char *) arg));
+                static_cast<char const *> (arg)));
     return 0;
   }
 };
@@ -83,8 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Set up a non-ACE signal handler.  When this goes off, the Reactor
   // should return from its <run_event_loop> method.
-  ACE_Sig_Action sig ((ACE_SignalHandler) my_signal_function,
-                      SIGQUIT);
+  ACE_Sig_Action sig (&my_signal_function, SIGQUIT);
   ACE_UNUSED_ARG (sig);
 
   ACE_DEBUG ((LM_DEBUG,
