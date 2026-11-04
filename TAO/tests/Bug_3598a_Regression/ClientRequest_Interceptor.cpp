@@ -4,7 +4,7 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-  CORBA::Boolean
+  bool
   ClientRequest_Interceptor::success_flag_ {};
 
   ClientRequest_Interceptor::ClientRequest_Interceptor ()
@@ -30,7 +30,7 @@
     )
   {
     // Print debug
-    CORBA::String_var op =
+    CORBA::String_var const op =
       ri->operation ();
 
     ACE_DEBUG ((LM_DEBUG,
@@ -43,7 +43,7 @@
     PortableInterceptor::ClientRequestInfo_ptr ri)
   {
     // Print debug
-    CORBA::String_var op =
+    CORBA::String_var const op =
       ri->operation ();
 
     ACE_DEBUG ((LM_DEBUG,
@@ -70,7 +70,7 @@
     PortableInterceptor::ClientRequestInfo_ptr ri)
   {
     // Print debug
-    CORBA::String_var op =
+    CORBA::String_var const op =
       ri->operation ();
 
     ACE_DEBUG ((LM_DEBUG,

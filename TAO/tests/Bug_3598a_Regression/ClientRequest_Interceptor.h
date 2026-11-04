@@ -51,7 +51,7 @@ public:
 
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-static CORBA::Boolean success_flag_;
+static bool success_flag_;
 
 private:
 /// Name of the interceptor
