@@ -30,7 +30,7 @@ public:
 
 private:
   /// Reference to the ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

@@ -45,7 +45,7 @@ private:
   std::unique_ptr<Receiver_var[]> receivers_ {};
 
   /// Size of the <this->receivers_> array
-  CORBA::ULong no_clients_;
+  CORBA::ULong const no_clients_;
 
   /// Receiver index
   CORBA::ULong last_index_ {};

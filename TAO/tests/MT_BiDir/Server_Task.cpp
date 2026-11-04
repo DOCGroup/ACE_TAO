@@ -28,18 +28,14 @@ Server_Task::svc ()
   /// Yes, wait on event twice. One for making sure that we have got
   /// all the clients  come and register with us.
   this->event_.wait ();
-
-
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start doing some work....\n"));
-
-
   try
     {
       // Before start
       CORBA::ULong connection_no =
         this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size ();
 
-      for (int i = 0; i != this->no_iterations_; ++i)
+      for (int i {}; i != this->no_iterations_; ++i)
         {
           if (i % 50 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) Sending message ....\n"));

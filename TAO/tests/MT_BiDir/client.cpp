@@ -1,26 +1,27 @@
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "Receiver_i.h"
 #include "SenderC.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "Client_Task.h"
 
-namespace
+struct Client_Options
 {
-  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-}
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        options.ior = get_opts.optarg;
         break;
       case '?':
       default:
@@ -36,14 +37,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var const poa_object =
@@ -73,13 +75,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Create POA as child of RootPOA with the above policies.  This POA
       // will receive request in the same connection in which it sent
       // the request
-      PortableServer::POA_var child_poa =
+      PortableServer::POA_var const child_poa =
         root_poa->create_POA ("childPOA",
                               poa_manager.in (),
                               policies);
 
       // Creation of childPOA is over. Destroy the Policy objects.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < policies.length ();
            ++i)
         {
@@ -89,7 +91,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       CORBA::Object_var const object =
-        orb->string_to_object (ior);
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
 
       Sender_var const sender =
         Sender::_narrow (object.in ());
@@ -98,19 +100,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
                             1);
         }
-
-
-      Receiver_i *receiver;
+      // The servant reference is owned by owner_transfer below.
+      Receiver_i *receiver {};
       ACE_NEW_RETURN (receiver,
                       Receiver_i (),
                       -1);
 
       PortableServer::ServantBase_var owner_transfer (receiver);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (receiver);
 
       CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
@@ -132,8 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
 
-      CORBA::Long count =
-        receiver->get_event_count ();
+      CORBA::Long const count = receiver->get_event_count ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Number of events received.. [%d]\n",

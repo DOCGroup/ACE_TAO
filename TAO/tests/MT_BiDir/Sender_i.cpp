@@ -15,7 +15,7 @@ Sender_i::Sender_i (CORBA::ULong no_clients,
   // Okay to have a magic number...
   this->payload_.length (32768);
 
-  for (CORBA::ULong j = 0; j != this->payload_.length (); ++j)
+  for (CORBA::ULong j {}; j != this->payload_.length (); ++j)
     this->payload_[j] = (j % 256);
 }
 
@@ -48,7 +48,7 @@ Sender_i::send_message ()
 {
   // NOTE:No synchronization with purpose. Synchrnozing this is
   // going to spoil the whole purpose of this test.
-  CORBA::ULong send_to =
+  CORBA::ULong const send_to =
     static_cast<CORBA::ULong> (ACE_OS::rand () % this->no_clients_);
 
   this->receivers_[send_to]->receive_payload (this->payload_);
