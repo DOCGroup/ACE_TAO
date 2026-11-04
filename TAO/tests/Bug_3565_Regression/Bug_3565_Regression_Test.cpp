@@ -31,49 +31,47 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       };
 
       std::vector<ACE_TCHAR *> largv (argc + extra_argc);
-      for (int i = 0; i < argc; ++i)
-        largv[i] = argv[i];
+      for (int index {}; index < argc; ++index)
+        largv[index] = argv[index];
 
       std::vector<ACE_TCHAR *> second_largv (argc + extra_argc);
-      for (int i = 0; i < argc; ++i)
-        second_largv[i] = argv[i];
+      for (int index {}; index < argc; ++index)
+        second_largv[index] = argv[index];
 
-      for (size_t i = 0; i < extra_argc; ++i)
+      for (size_t index {}; index < extra_argc; ++index)
         {
-          largv[argc+i] = extra[i].data ();
+          largv[argc + index] = extra[index].data ();
         }
-      for (size_t i = 0; i < extra_argc; ++i)
+      for (size_t index {}; index < extra_argc; ++index)
         {
-          second_largv[argc+i] = second_extra[i].data ();
+          second_largv[argc + index] = second_extra[index].data ();
         }
 
       int largc = argc + extra_argc;
       int second_largc = argc + extra_argc;
 
-      CORBA::ORB_var orb = CORBA::ORB_init (largc, largv.data (), "FirstORB");
-
-      if (orb->orb_core ()->client_factory ()->reply_dispatcher_table_size () != 333)
         {
-          ++result;
+          CORBA::ORB_var const orb = CORBA::ORB_init (largc, largv.data (), "FirstORB");
+
+          if (orb->orb_core ()->client_factory ()->reply_dispatcher_table_size () != 333)
+            ++result;
+
+          orb->destroy ();
         }
 
-      orb->destroy ();
-      orb = CORBA::ORB::_nil ();
+      {
+        CORBA::ORB_var const second_orb = CORBA::ORB_init (second_largc, second_largv.data (), "SecondORB");
 
-      CORBA::ORB_var second_orb = CORBA::ORB_init (second_largc, second_largv.data (), "SecondORB");
-
-      if (second_orb->orb_core ()->client_factory ()->reply_dispatcher_table_size () != 666)
-        {
+        if (second_orb->orb_core ()->client_factory ()->reply_dispatcher_table_size () != 666)
           ++result;
-        }
 
-      second_orb->destroy ();
-      second_orb = CORBA::ORB::_nil ();
-
+        second_orb->destroy ();
+      }
     }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
+      ++result;
     }
 
   if (result == 0)
