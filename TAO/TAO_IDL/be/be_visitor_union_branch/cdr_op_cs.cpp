@@ -35,7 +35,7 @@ be_visitor_union_branch_cdr_op_cs::~be_visitor_union_branch_cdr_op_cs () = defau
 int
 be_visitor_union_branch_cdr_op_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -80,10 +80,10 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -108,7 +108,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
       // the parents's name.
       if (node->is_nested ())
         {
-          be_decl *parent =
+          be_decl * const parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           fname = parent->full_name ();
           fname += "::_";
@@ -171,10 +171,10 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 int
 be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -246,10 +246,10 @@ be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -326,10 +326,10 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
 int
 be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -411,10 +411,10 @@ be_visitor_union_branch_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
 int
 be_visitor_union_branch_cdr_op_cs::emit_valuetype_common (be_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -469,10 +469,10 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -686,10 +686,10 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
   // Now generate the CDR stream operators for the sequence as a
   // union branch.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -710,7 +710,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
         // If the typedef'd sequence is included from another
         // file, node->name() won't work. The following works
         // for all typedefs, external or not.
-        be_typedef *td = this->ctx_->alias ();
+        be_typedef * const td = this->ctx_->alias ();
 
         if (td)
           {
@@ -756,10 +756,10 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -879,10 +879,10 @@ be_visitor_union_branch_cdr_op_cs::visit_structure (be_structure *node)
   // How generate the CDR stream operators for the structure as
   // a union branch.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
@@ -936,7 +936,7 @@ be_visitor_union_branch_cdr_op_cs::visit_typedef (be_typedef *node)
   this->ctx_->alias (node);
 
   // The node to be visited in the base primitve type that gets typedefed.
-  be_type *bt = node->primitive_base_type ();
+  be_type * const bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))
     {
@@ -976,10 +976,10 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
   // Now generate the CDR stream operators for the union as
   // a union branch.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the union_branch node.
-  be_union_branch *f =
+  be_union_branch * const f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == nullptr)
