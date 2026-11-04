@@ -4,14 +4,13 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -33,14 +32,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      ACE_TString ior_output_file (ACE_TEXT("test.ior"));
+      if (parse_args (argc, argv, ior_output_file) != 0)
+        return 1;
+
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references("RootPOA");
 
       PortableServer::POA_var root_poa =
@@ -56,9 +59,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Make all oneways "reliable."
       {
-        CORBA::Object_var manager_object =
+        CORBA::Object_var const manager_object =
           orb->resolve_initial_references("ORBPolicyManager");
-        CORBA::PolicyManager_var policy_manager =
+        CORBA::PolicyManager_var const policy_manager =
           CORBA::PolicyManager::_narrow(manager_object.in());
 
         if (CORBA::is_nil (policy_manager.in ()))
@@ -67,7 +70,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         CORBA::Any policy_value;
         policy_value <<= Messaging::SYNC_WITH_SERVER;
-        CORBA::PolicyList policies(1); policies.length(1);
+        CORBA::PolicyList policies(1);
+        policies.length(1);
         policies[0] =
           orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                               policy_value);
@@ -78,37 +82,35 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         policies[0]->destroy ();
       }
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
-      Service *service_impl = nullptr;
-      ACE_NEW_RETURN (service_impl,
-                      Service,
-                      1);
-      PortableServer::ServantBase_var owner_transfer(service_impl);
+      std::unique_ptr<Service> service_impl = std::make_unique<Service> ();
 
       service_impl->orb_ = CORBA::ORB::_duplicate (orb.in());
+      // This non-owning alias remains valid while owner_transfer owns the servant.
+      Service * const service_impl_alias = service_impl.get ();
+      PortableServer::ServantBase_var owner_transfer (service_impl.release ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (service_impl);
+        root_poa->activate_object (owner_transfer.in ());
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Test::Service_var service =
+      Test::Service_var const service =
         Test::Service::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (service.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file.c_str ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
@@ -117,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished\n"));
 
-      service_impl->dump_results ();
+      service_impl_alias->dump_results ();
 
       root_poa->destroy (true, true);
 

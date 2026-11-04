@@ -1,11 +1,5 @@
 #include "Service.h"
 
-Service::Service ()
-  : orb_ (CORBA::ORB::_nil ()),
-    test_count_ (0)
-{
-}
-
 void
 Service::dump_results ()
 {
@@ -19,11 +13,8 @@ Service::dump_results ()
 void
 Service::run_test (Test::Crashed_Callback_ptr callback)
 {
-  int pre_crash_exceptions =
-    this->call_are_you_there (callback);
-
-  pre_crash_exceptions +=
-    this->call_test_oneway (callback);
+  std::size_t const pre_crash_exceptions =
+    this->call_are_you_there (callback) + this->call_test_oneway (callback);
 
   try
     {
@@ -33,13 +24,14 @@ Service::run_test (Test::Crashed_Callback_ptr callback)
     }
   catch (CORBA::Exception const&) {}
 
-  int pos_crash_exceptions =
+  std::size_t const pos_crash_exceptions =
     this->call_test_oneway (callback);
 
   if (pre_crash_exceptions != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ERROR: There were %d exceptions before crash\n"));
+                  "ERROR: There were %B exceptions before crash\n",
+                  pre_crash_exceptions));
     }
 
   if (pos_crash_exceptions == 0)
@@ -50,7 +42,7 @@ Service::run_test (Test::Crashed_Callback_ptr callback)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Good!! %d exceptions raised after crash\n",
+                  "Good!! %B exceptions raised after crash\n",
                   pos_crash_exceptions));
       orb_->shutdown (false);
     }
@@ -59,14 +51,14 @@ Service::run_test (Test::Crashed_Callback_ptr callback)
   this->test_count_++;
 }
 
-int
+std::size_t
 Service::call_are_you_there (Test::Crashed_Callback_ptr callback)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling are_you_there\n"));
-  constexpr int iterations = 50;
+  constexpr std::size_t iterations = 50;
 
-  int exception_count {};
-  for (int i = 0; i != iterations; ++i)
+  std::size_t exception_count {};
+  for (std::size_t i = 0; i != iterations; ++i)
     {
       try
         {
@@ -80,14 +72,14 @@ Service::call_are_you_there (Test::Crashed_Callback_ptr callback)
   return exception_count;
 }
 
-int
+std::size_t
 Service::call_test_oneway (Test::Crashed_Callback_ptr callback)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, calling test_oneway\n"));
-  constexpr int iterations = 50;
+  constexpr std::size_t iterations = 50;
 
-  int exception_count {};
-  for (int i = 0; i != iterations; ++i)
+  std::size_t exception_count {};
+  for (std::size_t i = 0; i != iterations; ++i)
     {
       try
         {
