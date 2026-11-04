@@ -2,16 +2,17 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/Codeset/Codeset.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
-
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
+#include <cstring>
 #include <memory>
 
 using WString = std::unique_ptr<CORBA::WChar, decltype (&CORBA::wstring_free)>;
 
 WString
-gen_wstring (CORBA::ULong max_length)
+gen_wstring (CORBA::ULong const max_length)
 {
   CORBA::ULong const len = max_length;
   WString buf (CORBA::wstring_alloc (len), &CORBA::wstring_free);
@@ -20,7 +21,7 @@ gen_wstring (CORBA::ULong max_length)
     ACE_OutputCDR::wchar_maxbytes() == 1 ? ACE_OCTET_MAX : ACE_WCHAR_MAX;
   while (i < len)
     {
-      CORBA::WChar wc = ACE_OS::rand () % limit;
+      CORBA::WChar const wc = ACE_OS::rand () % limit;
       if (wc)
         {
           buf.get ()[i] = wc;
@@ -33,7 +34,7 @@ gen_wstring (CORBA::ULong max_length)
 }
 
 int
-verify_data (Foo::Bar const *original, Foo::Bar const *extracted)
+verify_data (Foo::Bar const *const original, Foo::Bar const *const extracted)
 {
   if (!original || !extracted)
     return -1;
@@ -63,7 +64,7 @@ verify_data (Foo::Bar const *original, Foo::Bar const *extracted)
   if (original->A != extracted->A
       || original->B != extracted->B
       || original->C != extracted->C
-      || (ACE_OS::strcmp (original->D, extracted->D) != 0)
+      || (std::strcmp (original->D, extracted->D) != 0)
       || (ACE_OS::strcmp (original->E, extracted->E) != 0))
     return -1;
 
@@ -71,7 +72,7 @@ verify_data (Foo::Bar const *original, Foo::Bar const *extracted)
 }
 
 int
-test_codec (IOP::Codec_ptr codec)
+test_codec (IOP::Codec_ptr const codec)
 {
   // ----------------------------------------------------------
 
@@ -80,24 +81,24 @@ test_codec (IOP::Codec_ptr codec)
   constexpr CORBA::Long B = -3427;
   constexpr CORBA::ULongLong C = ACE_UINT64_LITERAL (2001);
   CORBA::Char const D[] = "I'm Batman.";
-  WString E = gen_wstring (25);
+  WString const E = gen_wstring (25);
 
   // Create the structure to be encoded.
-  Foo::Bar value;
+  Foo::Bar value {};
   value.A = A;
   value.B = B;
   value.C = C;
   value.D = CORBA::string_dup (D);
   value.E = CORBA::wstring_dup (E.get ());
 
-  CORBA::Any data;
+  CORBA::Any data {};
   data <<= value;
 
   // ----------------------------------------------------------
 
-  CORBA::OctetSeq_var encoded_data;
-  CORBA::Any_var decoded_data;
-  Foo::Bar const *extracted_value = nullptr;
+  CORBA::OctetSeq_var encoded_data {};
+  CORBA::Any_var decoded_data {};
+  Foo::Bar const *extracted_value {};
 
   // Encode the structure into an octet sequence using the CDR
   // enscapsulation Codec.
@@ -112,13 +113,13 @@ test_codec (IOP::Codec_ptr codec)
 
   if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
           % ACE_CDR::MAX_ALIGNMENT) == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "\nData for decoding are already aligned "
-                    "on MAX_ALIGNMENT.\n\n"));
+    ACE_DEBUG ((LM_DEBUG,
+                "\nData for decoding are already aligned "
+                "on MAX_ALIGNMENT.\n\n"));
   // Extract the data from the octet sequence.
   decoded_data = codec->decode (encoded_data.in ());
 
-  if (!(decoded_data.in() >>= extracted_value))
+  if (!(decoded_data.in () >>= extracted_value))
     ACE_ERROR_RETURN ((LM_ERROR,
                         "ERROR: Unable to extract decoded data "
                         "from Any\n"),
@@ -133,7 +134,7 @@ test_codec (IOP::Codec_ptr codec)
                         "original data.\n"),
                       -1);
 
-      ACE_DEBUG ((LM_DEBUG,
+  ACE_DEBUG ((LM_DEBUG,
               "Testing CDR encapsulation Codec "
               "encode_value()/decode_value()\n"
               "================================"
@@ -145,16 +146,16 @@ test_codec (IOP::Codec_ptr codec)
 
   if ((reinterpret_cast<ptrdiff_t> (encoded_data->get_buffer ())
           % ACE_CDR::MAX_ALIGNMENT) == 0)
-        ACE_DEBUG ((LM_WARNING,
-                    "\n"
-                    "WARNING: Data to be decoded is already aligned "
-                    "on MAX_ALIGNMENT.\n\n"));
+    ACE_DEBUG ((LM_WARNING,
+                "\n"
+                "WARNING: Data to be decoded is already aligned "
+                "on MAX_ALIGNMENT.\n\n"));
 
   // Extract the data from the octet sequence.
   decoded_data = codec->decode_value (encoded_data.in (),
                                       Foo::_tc_Bar);
 
-  if (!(decoded_data.in() >>= extracted_value))
+  if (!(decoded_data.in () >>= extracted_value))
     ACE_ERROR_RETURN ((LM_ERROR,
                         "ERROR: Unable to extract decoded data "
                         "from Any\n"),
@@ -175,24 +176,19 @@ test_codec (IOP::Codec_ptr codec)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int retval = 0;
+  int retval {};
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         "my_orb");
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv, "my_orb")};
 
       // Obtain a reference to the CodecFactory.
-      CORBA::Object_var obj =
-        orb->resolve_initial_references ("CodecFactory");
+      CORBA::Object_var const obj {orb->resolve_initial_references ("CodecFactory")};
 
-      IOP::CodecFactory_var codec_factory =
-        IOP::CodecFactory::_narrow (obj.in ());
+      IOP::CodecFactory_var const codec_factory {IOP::CodecFactory::_narrow (obj.in ())};
 
       // Set up a structure that contains information necessary to
       // create a GIOP 1.1 CDR encapsulation Codec.
-      IOP::Encoding_1_2 encoding_1_2;
+      IOP::Encoding_1_2 encoding_1_2 {};
       encoding_1_2.format = IOP::ENCODING_CDR_ENCAPS;
       encoding_1_2.major_version = 1;
       encoding_1_2.minor_version = 2;
@@ -200,8 +196,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       encoding_1_2.wchar_codeset = 0x00010109U;
 
       // Obtain the CDR encapsulation Codec.
-      IOP::Codec_var codec_1_2 =
-        codec_factory->create_codec_with_codesets (encoding_1_2);
+      IOP::Codec_var const codec_1_2 {
+        codec_factory->create_codec_with_codesets (encoding_1_2)};
 
       retval = test_codec (codec_1_2.in ());
 
@@ -209,18 +205,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Set up a structure that contains information necessary to
       // create a GIOP 1.1 CDR encapsulation Codec.
-      IOP::Encoding encoding;
+      IOP::Encoding encoding {};
       encoding.format = IOP::ENCODING_CDR_ENCAPS;
       encoding.major_version = 1;
       encoding.minor_version = 1;
 
       // Obtain the CDR encapsulation Codec.
-      IOP::Codec_var codec =
-        codec_factory->create_codec (encoding);
+      IOP::Codec_var const codec {codec_factory->create_codec (encoding)};
 
       retval = test_codec (codec.in ());
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Codec test:");
       return -1;
