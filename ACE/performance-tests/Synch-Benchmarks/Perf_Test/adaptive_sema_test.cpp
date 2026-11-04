@@ -20,12 +20,12 @@ ACE_Semaphore Adaptive_Sema_Test::sema (1);
 int
 Adaptive_Sema_Test::init (int, ACE_TCHAR *[])
 {
-  ACE_Lock *lock;
+  ACE_Lock *lock {};
   ACE_NEW_RETURN (lock,
                   ACE_Lock_Adapter<ACE_Semaphore> (Adaptive_Sema_Test::sema),
                   -1);
 
-  return this->set_lock (lock);
+  return this->set_lock (std::unique_ptr<ACE_Lock> {lock});
 }
 
 ACE_SVC_FACTORY_DECLARE (Adaptive_Sema_Test)

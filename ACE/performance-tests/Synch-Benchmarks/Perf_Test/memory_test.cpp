@@ -4,6 +4,8 @@
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Memory_Test : public Benchmark_Performance
@@ -15,16 +17,16 @@ public:
 int
 Memory_Test::svc ()
 {
-  int ni = this->thr_id ();
-  size_t length = performance_test_options.msg_size ();
-  char *from  = new char[length];
-  char *to    = new char[length];
+  int const ni = this->thr_id ();
+  size_t const length = performance_test_options.msg_size ();
+  std::unique_ptr<char[]> from = std::make_unique<char[]> (length);
+  std::unique_ptr<char[]> to = std::make_unique<char[]> (length);
 
   synch_count = 1;
 
   while (!this->done ())
     {
-      ACE_OS::memcpy (to, from, length);
+      ACE_OS::memcpy (to.get (), from.get (), length);
       performance_test_options.thr_work_count[ni]++;
     }
   /* NOTREACHED */

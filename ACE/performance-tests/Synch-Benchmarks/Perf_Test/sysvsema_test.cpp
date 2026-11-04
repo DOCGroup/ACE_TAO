@@ -3,6 +3,8 @@
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export SYSVSema_Test : public Benchmark_Performance
@@ -13,17 +15,19 @@ public:
   int svc () override;
 
 private:
-  static ACE_SV_Semaphore_Simple *sema;
+  static std::unique_ptr<ACE_SV_Semaphore_Simple> sema;
 };
 
 
-ACE_SV_Semaphore_Simple *SYSVSema_Test::sema = 0;
+std::unique_ptr<ACE_SV_Semaphore_Simple> SYSVSema_Test::sema;
 
 int
 SYSVSema_Test::init (int, ACE_TCHAR *[])
 {
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_NEW_RETURN (SYSVSema_Test::sema, ACE_SV_Semaphore_Simple ((key_t) 1234), -1);
+  ACE_SV_Semaphore_Simple *sema {};
+  ACE_NEW_RETURN (sema, ACE_SV_Semaphore_Simple (static_cast<key_t> (1234)), -1);
+  SYSVSema_Test::sema.reset (sema);
   return 0;
 #else
   ACE_ERROR_RETURN ((LM_ERROR, "SysV Semaphore not supported on this platform.\n"), -1);
@@ -33,7 +37,7 @@ SYSVSema_Test::init (int, ACE_TCHAR *[])
 int
 SYSVSema_Test::fini ()
 {
-  delete SYSVSema_Test::sema;
+  SYSVSema_Test::sema.reset ();
   return 0;
 }
 

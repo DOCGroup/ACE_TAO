@@ -4,6 +4,8 @@
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Pipe_Proc_Test : public Benchmark_Performance
@@ -13,7 +15,7 @@ public:
   int svc () override;
 
 private:
-  ACE_HANDLE pipe_handles[2];
+  ACE_HANDLE pipe_handles[2] {};
 
   void reader (ACE_HANDLE handle);
 };
@@ -43,13 +45,14 @@ Pipe_Proc_Test::init (int, ACE_TCHAR **)
 void
 Pipe_Proc_Test::reader (ACE_HANDLE handle)
 {
-  int  ni = this->thr_id ();
-  int length = performance_test_options.msg_size ();
-  char *to;
+  int const ni = this->thr_id ();
+  int const length = performance_test_options.msg_size ();
+  char *buffer {};
 
-  ACE_NEW (to, char[length]);
+  ACE_NEW (buffer, char[length]);
+  std::unique_ptr<char[]> to {buffer};
 
-  while (ACE_OS::read (handle, to, length) > 0)
+  while (ACE_OS::read (handle, to.get (), length) > 0)
     performance_test_options.thr_work_count[ni]++;
 }
 
@@ -58,14 +61,15 @@ int
 Pipe_Proc_Test::svc ()
 {
   ssize_t length = performance_test_options.msg_size ();
-  int ni = this->thr_id ();
+  int const ni = this->thr_id ();
   ACE_HANDLE handle = this->pipe_handles[1];
-  char *from;
+  char *buffer {};
 
-  ACE_NEW_RETURN (from, char[length], -1);
+  ACE_NEW_RETURN (buffer, char[length], -1);
+  std::unique_ptr<char[]> from {buffer};
 
   while (!this->done ())
-    if (ACE_OS::write (handle, from, length) == length)
+    if (ACE_OS::write (handle, from.get (), length) == length)
       performance_test_options.thr_work_count[ni]++;
     else
       ACE_OS::perror (ACE_TEXT("write"));
