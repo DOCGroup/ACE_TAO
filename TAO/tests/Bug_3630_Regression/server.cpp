@@ -17,13 +17,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_TEXT ("TAO Conf File.conf")
       };
 
-      std::vector<ACE_TCHAR *> largv (argc + extra_argc);
+      std::vector<ACE_TCHAR *> largv (argc + extra_argc + 1);
       for (int i = 0; i < argc; ++i)
         largv[i] = argv[i];
 
-
       for (size_t i = 0; i < extra_argc; ++i)
         largv[argc + i] = extra[i].data ();
+      largv[argc + extra_argc] = {};
 
       int largc = argc + extra_argc;
 
@@ -43,11 +43,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_TEXT ("-ORBSvcConf"),
         ACE_TEXT ("TAO_Conf_File.conf")
       };
-      std::vector<ACE_TCHAR *> second_largv (argc + extra_argc);
+      std::vector<ACE_TCHAR *> second_largv (argc + extra_argc + 1);
       for (int i = 0; i < argc; ++i)
         second_largv[i] = argv[i];
       for (size_t i = 0; i < extra_argc; ++i)
         second_largv[argc + i] = second_extra[i].data ();
+      second_largv[argc + extra_argc] = {};
 
       int second_largc = argc + extra_argc;
 
@@ -62,11 +63,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       second_orb->destroy ();
       second_orb = CORBA::ORB::_nil ();
-
     }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
+      result = -1;
     }
 
   if (result == 0)
