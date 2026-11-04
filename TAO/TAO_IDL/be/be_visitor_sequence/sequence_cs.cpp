@@ -70,7 +70,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       // Temporarily make the context's tdef node 0 so the nested call
       // to create_name will not get confused and give our anonymous
       // sequence element type the same name as we have.
-  be_typedef * const tmp = this->ctx_->tdef ();
+      be_typedef * const tmp = this->ctx_->tdef ();
       this->ctx_->tdef (nullptr);
 
       if (bt->accept (this) != 0)
