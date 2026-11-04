@@ -85,7 +85,7 @@ private:
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -104,7 +104,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "(%P|%t) Cannot activate worker threads\n"),
                           1);
 
-      int const timeout = 30;
+      int const timeout {30};
       int now {};
       while (now < timeout && !worker.finished ())
         {
@@ -115,8 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (options.shutdown)
         {
-          CORBA::Object_var const object = orb->string_to_object (
-            ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+          CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
 
           Simple_Server_var const server =
             Simple_Server::_narrow (object.in ());
@@ -174,8 +173,7 @@ Worker::svc ()
 void
 Worker::run_test ()
 {
-  CORBA::Object_var const object = this->orb_->string_to_object (
-    ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ()));
+  CORBA::Object_var const object = this->orb_->string_to_object (this->ior_.c_str ());
 
   Simple_Server_var const server =
     Simple_Server::_narrow (object.in ());
@@ -183,8 +181,8 @@ Worker::run_test ()
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Object reference <%s> is nil.\n",
-                  ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ())));
+                  ACE_TEXT ("Object reference <%s> is nil.\n"),
+                  this->ior_.c_str ()));
       return;
     }
 

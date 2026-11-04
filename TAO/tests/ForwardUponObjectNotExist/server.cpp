@@ -36,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -83,8 +83,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the IORTable.\n"),
                           1);
       table->bind ("Simple_Server", ior.in ());
-
-      //ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       {
         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
