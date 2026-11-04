@@ -3,16 +3,14 @@
 #include "ace/Synch.h"
 #include "testC.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR * argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -21,7 +19,7 @@ parse_args (int argc, ACE_TCHAR * argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-v ")
+                           ACE_TEXT ("-k <iorfile> ")
                            ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
@@ -32,28 +30,28 @@ parse_args (int argc, ACE_TCHAR * argv[])
 int
 call_method (::Test::A_ptr server,
              ::Test::A::FailOn where,
-             const char * arg1,
+             char const *arg1,
              ::CORBA::String_out & arg2,
              char *& arg3,
-             const char * error_message)
+             char const *error_message)
 {
   try
     {
-      CORBA::String_var res = server->method (where,
-                                              arg1,
-                                              arg2,
-                                              arg3);
+      CORBA::String_var const res = server->method (where,
+                                                    arg1,
+                                                    arg2,
+                                                    arg3);
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -67,28 +65,28 @@ call_method (::Test::A_ptr server,
 int
 call_method_s (::Test::A_ptr server,
                ::Test::A::FailOn where,
-               const char * arg1,
+               char const *arg1,
                ::CORBA::String_out & arg2,
                char *& arg3,
-               const char * error_message)
+               char const *error_message)
 {
   try
     {
-      CORBA::String_var res = server->method_s (where,
-                                                arg1,
-                                                arg2,
-                                                arg3);
+      CORBA::String_var const res = server->method_s (where,
+                                                      arg1,
+                                                      arg2,
+                                                      arg3);
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -102,14 +100,14 @@ call_method_s (::Test::A_ptr server,
 int
 call_seq_method (::Test::A_ptr server,
                  ::Test::A::FailOn where,
-                 const ::Test::seq_bd_str & arg1,
+                 ::Test::seq_bd_str const &arg1,
                  ::Test::seq_bd_str_out & arg2,
                  ::Test::seq_bd_str & arg3,
-                 const char * error_message)
+                 char const *error_message)
 {
   try
     {
-      ::Test::seq_bd_str_var res =
+      ::Test::seq_bd_str_var const res =
         server->seq_method (where,
                             arg1,
                             arg2,
@@ -120,11 +118,11 @@ call_seq_method (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -138,14 +136,14 @@ call_seq_method (::Test::A_ptr server,
 int
 call_seq_method_s (::Test::A_ptr server,
                    ::Test::A::FailOn where,
-                   const ::Test::seq_bds_str & arg1,
+                   ::Test::seq_bds_str const &arg1,
                    ::Test::seq_bds_str_out & arg2,
                    ::Test::seq_bds_str & arg3,
-                   const char * error_message)
+                   char const *error_message)
 {
   try
     {
-      ::Test::seq_bds_str_var res =
+      ::Test::seq_bds_str_var const res =
         server->seq_method_s (where,
                               arg1,
                               arg2,
@@ -156,11 +154,11 @@ call_seq_method_s (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -174,14 +172,14 @@ call_seq_method_s (::Test::A_ptr server,
 int
 call_arr_method (::Test::A_ptr server,
                  ::Test::A::FailOn where,
-                 const ::Test::arr_bd_str & arg1,
+                 ::Test::arr_bd_str const &arg1,
                  ::Test::arr_bd_str_out & arg2,
                  ::Test::arr_bd_str & arg3,
-                 const char * error_message)
+                 char const *error_message)
 {
   try
     {
-      ::Test::arr_bd_str_var res =
+      ::Test::arr_bd_str_var const res =
         server->arr_method (where,
                             arg1,
                             arg2,
@@ -192,11 +190,11 @@ call_arr_method (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -210,14 +208,14 @@ call_arr_method (::Test::A_ptr server,
 int
 call_arr_method_s (::Test::A_ptr server,
                    ::Test::A::FailOn where,
-                   const ::Test::arr_bds_str & arg1,
+                   ::Test::arr_bds_str const &arg1,
                    ::Test::arr_bds_str_out & arg2,
                    ::Test::arr_bds_str & arg3,
-                   const char * error_message)
+                   char const *error_message)
 {
   try
     {
-      ::Test::arr_bds_str_var res =
+      ::Test::arr_bds_str_var const res =
         server->arr_method_s (where,
                               arg1,
                               arg2,
@@ -228,11 +226,11 @@ call_arr_method_s (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -246,14 +244,14 @@ call_arr_method_s (::Test::A_ptr server,
 int
 call_sct_method (::Test::A_ptr server,
                  ::Test::A::FailOn where,
-                 const ::Test::sct & arg1,
+                 ::Test::sct const &arg1,
                  ::Test::sct_out & arg2,
                  ::Test::sct & arg3,
-                 const char * error_message)
+                 char const *error_message)
 {
   try
     {
-      ::Test::sct_var res =
+      ::Test::sct_var const res =
         server->sct_method (where,
                             arg1,
                             arg2,
@@ -264,11 +262,11 @@ call_sct_method (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -282,14 +280,14 @@ call_sct_method (::Test::A_ptr server,
 int
 call_unn_method (::Test::A_ptr server,
                  ::Test::A::FailOn where,
-                 const ::Test::unn & arg1,
+                 ::Test::unn const &arg1,
                  ::Test::unn_out & arg2,
                  ::Test::unn & arg3,
-                 const char * error_message)
+                 char const *error_message)
 {
   try
     {
-      ::Test::unn_var res =
+      ::Test::unn_var const res =
         server->unn_method (where,
                             arg1,
                             arg2,
@@ -300,11 +298,11 @@ call_unn_method (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -321,11 +319,11 @@ call_vbx_method (::Test::A_ptr server,
                  ::Test::val_bd_str * arg1,
                  ::Test::val_bd_str_out arg2,
                  ::Test::val_bd_str *& arg3,
-                 const char * error_message)
+                 char const *error_message)
 {
   try
     {
-      ::Test::val_bd_str_var res =
+      ::Test::val_bd_str_var const res =
         server->vbx_method (where,
                             arg1,
                             arg2,
@@ -336,11 +334,11 @@ call_vbx_method (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -357,11 +355,11 @@ call_vbx_method_s (::Test::A_ptr server,
                    ::Test::val_bds_str * arg1,
                    ::Test::val_bds_str_out arg2,
                    ::Test::val_bds_str *& arg3,
-                   const char * error_message)
+                   char const *error_message)
 {
   try
     {
-      ::Test::val_bds_str_var res =
+      ::Test::val_bds_str_var const res =
         server->vbx_method_s (where,
                               arg1,
                               arg2,
@@ -372,11 +370,11 @@ call_vbx_method_s (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -393,11 +391,11 @@ call_vtp_method (::Test::A_ptr server,
                  ::Test::vtp * arg1,
                  ::Test::vtp_out arg2,
                  ::Test::vtp *& arg3,
-                 const char * error_message)
+                 char const *error_message)
 {
   try
     {
-      ::Test::vtp_var res =
+      ::Test::vtp_var const res =
         server->vtp_method (where,
                             arg1,
                             arg2,
@@ -408,11 +406,11 @@ call_vtp_method (::Test::A_ptr server,
                   error_message));
       return 1;
     }
-  catch (const CORBA::BAD_PARAM &)
+  catch (CORBA::BAD_PARAM const &)
     {
       // it's ok
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
@@ -425,7 +423,7 @@ call_vtp_method (::Test::A_ptr server,
 
 int test_strings (::Test::A_ptr server)
 {
-  int status = 0;
+  int status {};
 
   {
     CORBA::String_var arg2, arg3;
@@ -538,7 +536,7 @@ int test_strings (::Test::A_ptr server)
 
 int test_sequences (::Test::A_ptr server)
 {
-  int status = 0;
+  int status {};
 
   {
     ::Test::seq_bd_str arg1;
@@ -718,7 +716,7 @@ int test_sequences (::Test::A_ptr server)
 
 int test_arrays (::Test::A_ptr server)
 {
-  int status = 0;
+  int status {};
 
   {
     ::Test::arr_bd_str arg1;
@@ -879,7 +877,7 @@ int test_arrays (::Test::A_ptr server)
 
 int test_structs (::Test::A_ptr server)
 {
-  int status = 0;
+  int status {};
 
   {
     ::Test::sct arg1;
@@ -965,7 +963,7 @@ int test_structs (::Test::A_ptr server)
 
 int test_unions (::Test::A_ptr server)
 {
-  int status = 0;
+  int status {};
 
   {
     ::Test::unn arg1;
@@ -1051,7 +1049,7 @@ int test_unions (::Test::A_ptr server)
 
 int test_valueboxes (::Test::A_ptr server)
 {
-  int status = 0;
+  int status {};
 
   {
     ::Test::val_bd_str_var arg1;
@@ -1220,7 +1218,7 @@ int test_valueboxes (::Test::A_ptr server)
 
 int test_valuetypes (::Test::A_ptr server, ::Test::vtp_init *vtp_factory)
 {
-  int status = 0;
+  int status {};
 
   {
     ::Test::vtp_var arg1 =
@@ -1309,14 +1307,14 @@ int test_valuetypes (::Test::A_ptr server, ::Test::vtp_init *vtp_factory)
 
 int test_exceptions (::Test::A_ptr server)
 {
-  int status = 0;
+  int status {};
 
-  ::Test::string_field all[] = {
+  ::Test::string_field const all[] = {
     ::Test::BOUNDED,
     ::Test::TYPEDEFED
   };
 
-  for (unsigned int i = 0;
+  for (unsigned int i {};
        i < sizeof (all) / sizeof (::Test::string_field);
        ++i)
     {
@@ -1324,17 +1322,17 @@ int test_exceptions (::Test::A_ptr server)
         {
           server->exc_method (all[i]);
         }
-      catch (const ::Test::exc &)
+      catch (::Test::exc const &)
         {
           status |= 1;
           ACE_ERROR ((LM_ERROR,
                       "ERROR: Illegal exception is thrown.\n"));
         }
-      catch (const CORBA::BAD_PARAM &)
+      catch (CORBA::BAD_PARAM const &)
         {
           // it's ok
         }
-      catch (const CORBA::Exception &)
+      catch (CORBA::Exception const &)
         {
           status |= 1;
           ACE_ERROR ((LM_ERROR,
@@ -1348,29 +1346,30 @@ int test_exceptions (::Test::A_ptr server)
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
-  int status = 0;
+  int status {};
 
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      ::Test::vtp_init *vtp_factory = nullptr;
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+      if (parse_args (argc, argv, ior) != 0)
+        return 1;
+
+      ::Test::vtp_init *vtp_factory {};
       ACE_NEW_THROW_EX (vtp_factory,
                         ::Test::vtp_init,
                         CORBA::NO_MEMORY ());
-      CORBA::ValueFactoryBase_var vtp_factory_owner = vtp_factory;
+      // Keep the factory alive while the client uses its raw pointer.
+      CORBA::ValueFactoryBase_var const vtp_factory_owner = vtp_factory;
 
       orb->register_value_factory (vtp_factory->tao_repository_id (),
                                    vtp_factory);
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (ior);
 
-      Test::A_var server =
+      Test::A_var const server =
         Test::A::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
