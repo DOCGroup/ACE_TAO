@@ -6,9 +6,15 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include <memory>
+#include <string>
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
-static const int nthreads = 2;
+struct Server_Options
+{
+  ACE_TString ior_output_file {ACE_TEXT ("ior")};
+};
+
+constexpr int nthreads = 2;
 
 
 /**
@@ -19,29 +25,33 @@ static const int nthreads = 2;
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
+  explicit Worker (CORBA::ORB_ptr orb);
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
   // ctor
 
-  virtual int svc ();
+  int svc () override;
   // The thread entry point.
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // The orb
 };
 
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
         TAO_debug_level++;
@@ -65,9 +75,10 @@ parse_args (int argc, ACE_TCHAR **argv)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  ACE_HANDLE handle = ACE_OS::open ("big.txt",
-                                    O_RDWR | O_CREAT,
-                                    ACE_DEFAULT_FILE_PERMS);
+  Server_Options options;
+  ACE_HANDLE const handle = ACE_OS::open ("big.txt",
+                                          O_RDWR | O_CREAT,
+                                          ACE_DEFAULT_FILE_PERMS);
 
   ACE_OS::lseek (handle, 1024*1024*10, SEEK_SET);
   ACE_OS::write (handle, "", 1);
@@ -76,24 +87,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      int const result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
       // Obtain the RootPOA.
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
       // Narrow the object reference to a POA reference
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::PolicyList policies (5);
+      CORBA::PolicyList policies {};
       policies.length (5);
 
       // ID Assignment Policy
@@ -116,47 +127,49 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies[4] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
-      ACE_CString name = "firstPOA";
-      PortableServer::POA_var first_poa =
+      std::string const name = "firstPOA";
+      PortableServer::POA_var const first_poa =
         root_poa->create_POA (name.c_str (),
                               poa_manager.in (),
                               policies);
 
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < policies.length ();
            ++i)
         {
-          CORBA::Policy_ptr policy = policies[i];
+          CORBA::Policy_ptr const policy = policies[i];
           policy->destroy ();
         }
 
       // Create a File System Implementation object in first_poa
       FileImpl::System file_system_impl (first_poa.in ());
 
-      PortableServer::ObjectId_var file_system_oid =
+      PortableServer::ObjectId_var const file_system_oid =
         PortableServer::string_to_ObjectId ("FileSystem");
 
       first_poa->activate_object_with_id (file_system_oid.in (),
                                           &file_system_impl);
 
-      CORBA::Object_var file_system =
+      CORBA::Object_var const file_system =
         first_poa->id_to_reference (file_system_oid.in ());
 
       // Get the IOR for the "FileSystem" object
-      CORBA::String_var file_system_ior =
+      CORBA::String_var const file_system_ior =
         orb->object_to_string (file_system.in ());
 
       ACE_DEBUG ((LM_DEBUG,"%C\n",
                   file_system_ior.in ()));
 
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
+        ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
+                           ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ())),
                           -1);
-      ACE_OS::fprintf (output_file, "%s", file_system_ior.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", file_system_ior.in ());
+      output_file.reset ();
 
       // set the state of the poa_manager to active i.e ready to
       // process requests
@@ -171,13 +184,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       worker.thr_mgr ()->wait ();
 
-      first_poa->destroy(1, 1);
+      first_poa->destroy (true, true);
 
-      root_poa->destroy(1, 1);
+      root_poa->destroy (true, true);
 
-      orb->destroy();
+      orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("EXCEPTION CAUGHT");
       return -1;
@@ -203,7 +216,7 @@ Worker::svc ()
       ACE_Time_Value tv (75, 0);
       this->orb_->run (tv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Worker::svc");
       return -1;

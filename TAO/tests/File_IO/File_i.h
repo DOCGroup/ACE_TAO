@@ -32,31 +32,35 @@ public:
   {
   public:
     /// Constructor
-    Descriptor (PortableServer::POA_ptr poa);
+    explicit Descriptor (PortableServer::POA_ptr poa);
+    Descriptor (Descriptor const &) = delete;
+    Descriptor (Descriptor &&) = delete;
+    Descriptor &operator= (Descriptor const &) = delete;
+    Descriptor &operator= (Descriptor &&) = delete;
 
     /// Destructor
-    ~Descriptor ();
+    ~Descriptor () override = default;
 
     /// Returns the default POA of this object
-    PortableServer::POA_ptr _default_POA ();
+    PortableServer::POA_ptr _default_POA () override;
 
     /// write buffer to File corresponding to this Descriptor
-    virtual CORBA::Long write (const File::Descriptor::DataBuffer &buffer);
+    CORBA::Long write (File::Descriptor::DataBuffer const &buffer) override;
 
-    virtual File::Descriptor::DataBuffer *read (CORBA::Long num_bytes);
+    File::Descriptor::DataBuffer *read (CORBA::Long num_bytes) override;
 
     /// seek to the offset in file from whence
-    virtual CORBA::ULong lseek (CORBA::ULong offset,
-                                CORBA::Long whence);
+    CORBA::ULong lseek (CORBA::ULong offset,
+                        CORBA::Long whence) override;
 
     /// closes the file corresponding to the requested ObjectID
-    virtual void destroy ();
+    void destroy () override;
 
   private:
     /// Extracts the ACE_HANDLE from the objectID
     ACE_HANDLE fd ();
 
-    PortableServer::POA_var poa_;
+    PortableServer::POA_var poa_ {};
   };
 
   /**
@@ -69,21 +73,25 @@ public:
   public:
     /// Constructor, Creates a single File Descriptor Servant and
     /// registers it with the POA as the Default Servant
-    System (PortableServer::POA_ptr poa);
+    explicit System (PortableServer::POA_ptr poa);
+    System (System const &) = delete;
+    System (System &&) = delete;
+    System &operator= (System const &) = delete;
+    System &operator= (System &&) = delete;
 
     ///Destructor
-    ~System ();
+    ~System () override = default;
 
     ///Returns the default POA of this object
-    PortableServer::POA_ptr _default_POA ();
+    PortableServer::POA_ptr _default_POA () override;
 
     /// Opens a file ,creates a Descriptor reference with the
     /// ACE_HANDLE and returns that reference
-    File::Descriptor_ptr open (const char *file_name,
-                               CORBA::Long flags);
+    File::Descriptor_ptr open (char const *file_name,
+                               CORBA::Long flags) override;
 
   private:
-    PortableServer::POA_var poa_;
+    PortableServer::POA_var poa_ {};
 
     /// The single File Descriptor servant which serves requests for
     /// any Descriptor object under poa_.
