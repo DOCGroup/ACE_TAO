@@ -264,10 +264,10 @@ protected:
   void copy_nodes (const ACE_Unbounded_Queue<T> &);
 
   /// Pointer to the dummy node in the circular linked Queue.
-  ACE_Node<T> *head_;
+  ACE_Node<T> *head_ {};
 
   /// Current size of the queue.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Allocation Strategy of the queue.
   ACE_Allocator *allocator_;

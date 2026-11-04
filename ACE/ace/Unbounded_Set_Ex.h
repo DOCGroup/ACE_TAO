@@ -338,10 +338,10 @@ private:
   void copy_nodes (const ACE_Unbounded_Set_Ex<T, C> &);
 
   /// Head of the linked list of Nodes.
-  NODE *head_;
+  NODE *head_ {};
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Allocation strategy of the set.
   ACE_Allocator *allocator_;

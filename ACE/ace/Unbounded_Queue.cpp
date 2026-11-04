@@ -21,9 +21,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Unbounded_Queue)
 
 template <class T>
 ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
-  : head_ (nullptr),
-    cur_size_ (0),
-    allocator_ (alloc)
+  : allocator_ (alloc)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue ()");
 
@@ -39,9 +37,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
 
 template <class T>
 ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
-  : head_ (nullptr),
-    cur_size_ (0),
-    allocator_ (us.allocator_)
+  : allocator_ (us.allocator_)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
 

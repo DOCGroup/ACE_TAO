@@ -125,18 +125,16 @@ ACE_Unbounded_Set_Ex<T, C>::~ACE_Unbounded_Set_Ex ()
                          this->allocator_->free,
                          ACE_Node,
                          T, C);
-  this->head_ = 0;
+  this->head_ = nullptr;
 }
 
 template <class T, class C>
 ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (ACE_Allocator *alloc)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc)
+  : allocator_ (alloc)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -149,14 +147,12 @@ ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (ACE_Allocator *alloc)
 template <class T, class C>
 ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (const C &comp,
                                             ACE_Allocator *alloc)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc),
+  : allocator_ (alloc),
     comp_ (comp)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
@@ -168,14 +164,12 @@ ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (const C &comp,
 
 template <class T, class C>
 ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (const ACE_Unbounded_Set_Ex<T, C> &us)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (us.allocator_),
+  : allocator_ (us.allocator_),
     comp_ (us.comp_)
 {
   ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_NEW_MALLOC (this->head_,
