@@ -13,7 +13,7 @@ class  Demo_HelloWorld_i
 {
 public:
   // Constructor
-  explicit Demo_HelloWorld_i (CORBA::ORB_ptr orb);
+  explicit Demo_HelloWorld_i (CORBA::ORB_ptr const orb);
   Demo_HelloWorld_i (Demo_HelloWorld_i const &) = delete;
   Demo_HelloWorld_i (Demo_HelloWorld_i &&) = delete;
   Demo_HelloWorld_i &operator= (Demo_HelloWorld_i const &) = delete;
@@ -27,7 +27,7 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 

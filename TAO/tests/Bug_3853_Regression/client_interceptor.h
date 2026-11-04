@@ -7,6 +7,8 @@
 #include "tao/LocalObject.h"
 #include "tao/ORB.h"
 
+#include <string>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -48,7 +50,7 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  char const *const myname_;
+  std::string const myname_;
 };
 
 #if defined(_MSC_VER)
