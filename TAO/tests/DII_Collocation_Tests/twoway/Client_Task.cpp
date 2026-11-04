@@ -56,7 +56,7 @@ Client_Task::svc ()
 
       Test::Simple_Test_var const simple_test
         = Test::Simple_Test::_narrow (simple_test_obj.in ());
-      CORBA::Long l = 200;
+      CORBA::Long l {200};
       CORBA::Request_var req (obj->_request ("test_basic_arg"));
       req->add_in_arg ("basic") <<= TEST_BASIC_VALUE;
       req->add_out_arg ("x") <<= l;
@@ -178,8 +178,8 @@ Client_Task::svc ()
 
       std::string bvs = std::string (TEST_STR).substr (0, ::Test::BOUNDED_VAR_SIZE);
 
-      std::unique_ptr<::Test::Bounded_Var_Size_Arg> bd_var_size (
-        new ::Test::Bounded_Var_Size_Arg {});
+      std::unique_ptr<::Test::Bounded_Var_Size_Arg> bd_var_size =
+        std::make_unique<::Test::Bounded_Var_Size_Arg> ();
 
       bd_var_size->replace (::Test::BOUNDED_VAR_SIZE,
         bvs.data ());
@@ -191,8 +191,8 @@ Client_Task::svc ()
 
       req = obj->_request ("test_unbounded_var_size_arg");
 
-      std::unique_ptr<::Test::Unbounded_Var_Size_Arg> ub_var_size (
-        new ::Test::Unbounded_Var_Size_Arg {});
+      std::unique_ptr<::Test::Unbounded_Var_Size_Arg> ub_var_size =
+        std::make_unique<::Test::Unbounded_Var_Size_Arg> ();
       ub_var_size->replace (ub_var_size->maximum (),
         std::strlen (TEST_STR),
         TEST_STR);
@@ -248,11 +248,11 @@ Client_Task::svc ()
 
       req = obj->_request ("test_args_3");
 
-      bd_var_size.reset (new ::Test::Bounded_Var_Size_Arg {});
+      bd_var_size = std::make_unique<::Test::Bounded_Var_Size_Arg> ();
       bd_var_size->replace (::Test::BOUNDED_VAR_SIZE,
         bvs.data ());
 
-      ub_var_size.reset (new ::Test::Unbounded_Var_Size_Arg {});
+      ub_var_size = std::make_unique<::Test::Unbounded_Var_Size_Arg> ();
       ub_var_size->replace (ub_var_size->maximum (),
         std::strlen (TEST_STR),
         TEST_STR);

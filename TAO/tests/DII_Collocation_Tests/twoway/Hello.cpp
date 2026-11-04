@@ -322,13 +322,13 @@ Hello::test_unbounded_string (
     CORBA::String_out s3
   )
 {
-  char *retstr = CORBA::string_dup (s1);
+  CORBA::String_var retstr (CORBA::string_dup (s1));
   s3 = CORBA::string_dup (s1);
-  char *tmp {CORBA::string_alloc (2 * std::strlen (s2))};
-  std::sprintf (tmp, "%s%s", s2, s2);
+  CORBA::String_var tmp (CORBA::string_alloc (2 * std::strlen (s2) + 1));
+  std::sprintf (tmp.inout (), "%s%s", s2, s2);
   CORBA::string_free (s2);
-  s2 = tmp;
-  return retstr;
+  s2 = tmp._retn ();
+  return retstr._retn ();
 }
 
 void
