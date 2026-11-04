@@ -22,10 +22,10 @@ AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb,
                         char const *in_str,
                         bool check_params)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-     yadda_ (140474),
-     in_l_ (in_l),
-     in_str_ (CORBA::string_dup (in_str)),
-     check_params_ (check_params)
+    yadda_ (140474),
+    in_l_ (in_l),
+    in_str_ (CORBA::string_dup (in_str)),
+    check_params_ (check_params)
 {
 }
 
@@ -46,7 +46,7 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Throwing Exception: A::DidTheRightThing\n"));
-      throw A::DidTheRightThing(42, "Hello world");
+      throw A::DidTheRightThing (42, "Hello world");
     }
 
   if (check_params_)

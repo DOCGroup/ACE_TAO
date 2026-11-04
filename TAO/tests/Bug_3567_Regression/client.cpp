@@ -16,36 +16,46 @@
 #include <atomic>
 #include <string>
 
-std::basic_string<ACE_TCHAR> ior = ACE_TEXT ("file://test.ior");
-int nthreads = 5;
-int niterations = 10;
-bool debug {};
-std::atomic<long> number_of_replies {0};
+namespace
+{
+  struct Client_Options
+  {
+    std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+    int thread_count {5};
+    int iterations {10};
+    bool debug {};
+  };
 
-CORBA::Long const in_number = 931232;
-char const in_str[] = "Let's talk AMI.";
-bool parameter_corruption {};
+  struct Client_State
+  {
+    std::atomic<long> replies {};
+    std::atomic<bool> parameter_corruption {};
+  };
+
+  constexpr CORBA::Long in_number = 931232;
+  char const in_str[] = "Let's talk AMI.";
+}
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("dk:n:i:"));
-  int c {};
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'd':
-        debug = true;
+        options.debug = true;
         break;
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.thread_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -71,7 +81,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  explicit Worker (CORBA::ORB_ptr orb);
+  Worker (CORBA::ORB_ptr orb, Client_State &state);
   Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;
   Worker &operator= (Worker const &) = delete;
@@ -82,8 +92,8 @@ public:
   // The thread entry point.
 
 private:
-  CORBA::ORB_var orb_;
-  // The orb
+  CORBA::ORB_var const orb_;
+  Client_State &state_;
 };
 
 
@@ -98,7 +108,10 @@ class Client : public ACE_Task_Base
 {
 public:
   /// ctor
-  Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr hnd);
+  Client (A::AMI_Test_ptr server,
+          int iterations,
+          A::AMI_AMI_TestHandler_ptr handler,
+          bool debug);
   Client (Client const &) = delete;
   Client (Client &&) = delete;
   Client &operator= (Client const &) = delete;
@@ -111,19 +124,24 @@ public:
 
 private:
   /// Var for the AMI_Test object.
-  A::AMI_Test_var ami_test_var_;
+  A::AMI_Test_var const ami_test_var_;
 
   /// The number of iterations on each client thread.
-  int niterations_;
+  int const iterations_;
 
   /// Var for AMI_AMI_Test_ReplyHandler object.
-  A::AMI_AMI_TestHandler_var the_handler_var_;
+  A::AMI_AMI_TestHandler_var const handler_var_;
+  bool const debug_;
 };
 
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler () = default;
+  Handler (Client_State &state, bool debug)
+    : state_ (state),
+      debug_ (debug)
+  {
+  }
   Handler (Handler const &) = delete;
   Handler (Handler &&) = delete;
   Handler &operator= (Handler const &) = delete;
@@ -140,10 +158,10 @@ public:
       if (result == 0)
         {
           ACE_ERROR ((LM_ERROR, "ERROR: Callback method detected parameter corruption.\n"));
-          parameter_corruption = true;
+          state_.parameter_corruption.store (true);
         }
 
-      if (debug)
+      if (debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P | %t) : Callback method called: result <%d>, out_arg <%d>\n",
@@ -153,7 +171,7 @@ public:
       ACE_OS::sleep (1);
       ami_test_var_->sendc_set_yadda (0, 5);
 
-      --number_of_replies;
+      --state_.replies;
     }
 
    void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -206,98 +224,94 @@ public:
   {
   }
 
+private:
+  Client_State &state_;
   A::AMI_Test_var ami_test_var_;
+  bool const debug_;
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_State state;
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      Client_Options options;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      A::AMI_Test_var server;
-
-      CORBA::Object_var object =
-        orb->string_to_object (ior.c_str ());
-      server =  A::AMI_Test::_narrow (object.in ());
+      CORBA::Object_var const object = orb->string_to_object (options.ior.c_str ());
+      A::AMI_Test_var const server = A::AMI_Test::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior.c_str ()),
+                             options.ior.c_str ()),
                             1);
         }
 
       // Activate POA to handle the call back.
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
       // Let the client perform the test in a separate thread
-      Handler handler;
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (&handler);
+      state.replies.store (options.thread_count * options.iterations);
+      Handler handler (state, options.debug);
+      PortableServer::ObjectId_var const id = root_poa->activate_object (&handler);
 
-      CORBA::Object_var hnd_object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const hnd_object = root_poa->id_to_reference (id.in ());
 
-      A::AMI_AMI_TestHandler_var the_handler_var =
+      A::AMI_AMI_TestHandler_var const the_handler_var =
         A::AMI_AMI_TestHandler::_narrow (hnd_object.in ());
 
       handler.set_ami_test (server.in ());
 
-      Client client (server.in (), niterations, the_handler_var.in ());
-      if (client.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+      Client client (server.in (), options.iterations, the_handler_var.in (), options.debug);
+      if (client.activate (THR_NEW_LWP | THR_JOINABLE, options.thread_count) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"),
                           1);
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
-      number_of_replies = nthreads *niterations;
-
-      if (debug)
+      if (options.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Entering perform_work loop to receive <%d> replies\n",
-                      number_of_replies.load ()));
+                      static_cast<int> (state.replies.load ())));
         }
 
       // ORB loop.
 
-      Worker worker (orb.in ());
-      if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+      Worker worker (orb.in (), state);
+      if (worker.activate (THR_NEW_LWP | THR_JOINABLE, options.thread_count) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"),
                           1);
 
       worker.thr_mgr ()->wait ();
 
-      if (debug)
+      if (options.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
-                      (nthreads*niterations) - number_of_replies.load ()));
+                      static_cast<int> ((options.thread_count * options.iterations)
+                                        - state.replies.load ())));
         }
 
       client.thr_mgr ()->wait ();
@@ -306,8 +320,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown ();
 
-      root_poa->destroy (true,  // ethernalize objects
-                         false); // wait for completion
+      root_poa->destroy (true, false);
 
       orb->destroy ();
     }
@@ -317,17 +330,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return parameter_corruption;
+  return state.parameter_corruption.load () ? 1 : 0;
 }
 
 // ****************************************************************
 
 Client::Client (A::AMI_Test_ptr server,
-                int niterations,
-                A::AMI_AMI_TestHandler_ptr hnd)
+                int iterations,
+                A::AMI_AMI_TestHandler_ptr handler,
+                bool debug)
   : ami_test_var_ (A::AMI_Test::_duplicate (server))
-  , niterations_ (niterations)
-  , the_handler_var_ (A::AMI_AMI_TestHandler::_duplicate (hnd))
+  , iterations_ (iterations)
+  , handler_var_ (A::AMI_AMI_TestHandler::_duplicate (handler))
+  , debug_ (debug)
 {
 }
 
@@ -336,15 +351,15 @@ Client::svc ()
 {
   try
     {
-      for (int i = 0; i < this->niterations_; ++i)
+      for (int iteration {}; iteration < this->iterations_; ++iteration)
         {
-          ami_test_var_->sendc_foo (the_handler_var_.in (), in_number, in_str);
+          this->ami_test_var_->sendc_foo (this->handler_var_.in (), in_number, in_str);
         }
-      if (debug)
+      if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) <%d> Asynchronous methods issued\n",
-                      niterations));
+                      this->iterations_));
         }
     }
   catch (CORBA::Exception const &ex)
@@ -354,15 +369,16 @@ Client::svc ()
   return 0;
 }
 
-Worker::Worker (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
+Worker::Worker (CORBA::ORB_ptr orb, Client_State &state)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    state_ (state)
 {
 }
 
 int
 Worker::svc ()
 {
-  while (number_of_replies.load () > 0)
+  while (this->state_.replies.load () > 0)
     {
       CORBA::Boolean const pending = this->orb_->work_pending ();
 

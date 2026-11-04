@@ -47,15 +47,15 @@ public:
   void inout_arg_test (char *&str) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   CORBA::Long yadda_;
 
-  CORBA::Long in_l_;
+  CORBA::Long const in_l_;
 
-  CORBA::String_var in_str_;
+  CORBA::String_var const in_str_;
 
-  bool check_params_;
+  bool const check_params_;
 };
 
 #endif /* TAO_AMI_TEST_I_H */
