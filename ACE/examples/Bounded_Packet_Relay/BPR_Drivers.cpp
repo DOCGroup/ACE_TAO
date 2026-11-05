@@ -15,7 +15,6 @@
 
 
 #include "ace/OS_NS_sys_time.h"
-#include <memory>
 #include "BPR_Drivers.h"
 
 
@@ -91,7 +90,7 @@ Input_Device_Wrapper_Base::svc ()
        )
     {
       // Create an input message to send.
-      std::unique_ptr<ACE_Message_Block> message_owner (create_input_message ());
+      ACE_Message_Block_Unique_Ptr message_owner {create_input_message ()};
       if (!message_owner)
         {
           if (is_active_)
@@ -197,7 +196,7 @@ Bounded_Packet_Relay::~Bounded_Packet_Relay ()
       ACE_Message_Block *msg {};
       if (queue_.dequeue_head (msg) < 0)
         break;
-      std::unique_ptr<ACE_Message_Block> message (msg);
+      ACE_Message_Block_Unique_Ptr message {msg};
     }
 
 }
@@ -266,7 +265,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
       ACE_Message_Block *msg {};
       if (queue_.dequeue_head (msg) < 0)
         break;
-      std::unique_ptr<ACE_Message_Block> message (msg);
+      ACE_Message_Block_Unique_Ptr message {msg};
     }
 
   // Initialize the output device.
@@ -364,7 +363,7 @@ Bounded_Packet_Relay::end_transmission (Transmission_Status status)
       ACE_Message_Block *msg {};
       if (queue_.dequeue_head (msg) < 0)
         break;
-      std::unique_ptr<ACE_Message_Block> message (msg);
+      ACE_Message_Block_Unique_Ptr message {msg};
     }
 
   // If all went well, set passed status, stamp end time, print a

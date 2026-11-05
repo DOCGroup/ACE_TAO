@@ -72,8 +72,8 @@ Text_Input_Device_Wrapper::create_input_message ()
     }
 
   // Construct a new message block to send.
-  std::unique_ptr<ACE_Message_Block> mb (
-    new (std::nothrow) ACE_Message_Block (read_buffer.size ()));
+  ACE_Message_Block_Unique_Ptr mb {
+    new (std::nothrow) ACE_Message_Block (read_buffer.size ())};
   if (!mb)
     {
       errno = ENOMEM;
@@ -110,7 +110,7 @@ Text_Output_Device_Wrapper::Text_Output_Device_Wrapper (int logging)
 int
 Text_Output_Device_Wrapper::write_output_message (ACE_Message_Block *message)
 {
-  std::unique_ptr<ACE_Message_Block> message_block (message);
+  ACE_Message_Block_Unique_Ptr message_block {message};
   if (message_block)
     {
       ++packet_count_;
