@@ -20,7 +20,6 @@
 
 #include "ace/Log_Record.h"
 
-#include <memory>
 #include <new>
 
 #include "server_loggerd.h"
@@ -94,8 +93,8 @@ Logging_Handler::handle_input (ACE_HANDLE)
   // don't support framing natively.  Allocate a message block for the
   // payload; initially at least large enough to hold the header, but
   // needs some room for alignment.
-  std::unique_ptr<ACE_Message_Block> header (
-    new (std::nothrow) ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+  ACE_Message_Block_Unique_Ptr header {
+    new (std::nothrow) ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE)};
   if (!header)
     {
       errno = ENOMEM;
@@ -144,8 +143,8 @@ Logging_Handler::handle_input (ACE_HANDLE)
   // Extract the length
   header_cdr >> length;
 
-  std::unique_ptr<ACE_Message_Block> payload (
-    new (std::nothrow) ACE_Message_Block (length));
+  ACE_Message_Block_Unique_Ptr payload {
+    new (std::nothrow) ACE_Message_Block (length)};
   if (!payload)
     {
       errno = ENOMEM;
