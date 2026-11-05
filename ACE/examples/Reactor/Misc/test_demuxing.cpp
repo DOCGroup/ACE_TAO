@@ -15,19 +15,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
-#include <memory>
-
-struct Message_Block_Release
-{
-  void operator() (ACE_Message_Block *message_block) const
-  {
-    if (message_block != nullptr)
-      {
-        message_block->release ();
-      }
-  }
-};
-
 // Default is to have a 2 second timeout.
 static int timeout {2};
 
@@ -318,7 +305,7 @@ Message_Handler::svc ()
     {
       ACE_Message_Block *message_block {};
       ACE_NEW_RETURN (message_block, ACE_Message_Block (1), 0);
-      std::unique_ptr<ACE_Message_Block, Message_Block_Release> mb (message_block);
+      ACE_Message_Block_Unique_Ptr mb {message_block};
 
       mb->msg_priority (i);
       ACE_OS::sleep (1);
