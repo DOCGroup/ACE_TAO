@@ -24,7 +24,9 @@
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Manager.h"
+#include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
+#include <memory>
 
 class ExitHandler : public ACE_Event_Handler
 {
@@ -44,7 +46,7 @@ public:
   ExitHandler &operator= (ExitHandler const &) = delete;
   ExitHandler &operator= (ExitHandler &&) = delete;
 private:
-  char const *name_;
+  char const * const name_ {};
 };
 
 ExitHandler::ExitHandler (char const *name)
@@ -92,7 +94,20 @@ ExitHandler::handle_close (ACE_HANDLE,
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t@%T) ExitHandler \"%s\" handle_close\n",
               name_));
+  // ACE_Process_Manager calls handle_close when it releases the registered
+  // handler; this callback owns the final deletion.
   delete this;
+  return 0;
+}
+
+static int
+register_handler (std::unique_ptr<ExitHandler> handler,
+                  pid_t pid = ACE_INVALID_PID)
+{
+  if (ACE_Process_Manager::instance ()->register_handler (handler.get (), pid) == -1)
+    return -1;
+
+  handler.release ();
   return 0;
 }
 
@@ -186,8 +201,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               "(%P|%t@%T) Process_Manager test.  Expect output from"
               "2 or 3 processes...\n"));
 
-  ACE_Process_Manager::instance ()->register_handler
-    (new ExitHandler ("default"));
+  if (register_handler (std::make_unique<ExitHandler> ("default")) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "failed to register default process handler\n"), 1);
 
   pid_t pid1 = respawn_self (argv[0],
                              n_iterations,
@@ -206,8 +221,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 #endif /* ACE_WIN32 */
 
-  ACE_Process_Manager::instance ()->register_handler (new ExitHandler ("specific"),
-                                                      pid2);
+  if (register_handler (std::make_unique<ExitHandler> ("specific"), pid2) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "failed to register specific process handler\n"), 1);
 
   if (pid1 == ACE_INVALID_PID || pid2 == ACE_INVALID_PID)
     ACE_ERROR_RETURN ((LM_ERROR,

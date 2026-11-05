@@ -25,6 +25,8 @@
 #include "ace/Activation_Queue.h"
 #include <atomic>
 #include <memory>
+#include <string>
+#include <utility>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -50,8 +52,13 @@ class Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-  Scheduler (const char *, Scheduler * = nullptr);
+  explicit Scheduler (std::string name, Scheduler *scheduler = nullptr);
   ~Scheduler () override;
+
+  Scheduler (Scheduler const &) = delete;
+  Scheduler (Scheduler &&) = delete;
+  Scheduler &operator= (Scheduler const &) = delete;
+  Scheduler &operator= (Scheduler &&) = delete;
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// The method that is used to start the active object.
@@ -61,7 +68,7 @@ public:
   // = Here are the methods exported by the class. They return an
   // <ACE_Future>.
   ACE_Future<u_long> work (u_long param, int count = 1);
-  ACE_Future<char*> name ();
+  ACE_Future<std::string> name ();
   void end ();
 
 private:
@@ -74,12 +81,13 @@ private:
   int svc () override;
 
   // = Implementation methods.
-  u_long work_i (u_long, int);
-  char *name_i ();
+  u_long work_i (u_long, int) const;
+  std::string name_i () const;
+  int enqueue (std::unique_ptr<ACE_Method_Request> request);
 
-  char *name_;
+  std::string const name_;
   ACE_Activation_Queue activation_queue_;
-  Scheduler *scheduler_;
+  Scheduler * const scheduler_ {}; // Non-owning delegate; it must outlive this scheduler.
 };
 
 /**
@@ -94,14 +102,19 @@ public:
   ~Method_Request_work () override;
   int call () override;
 
+  Method_Request_work (Method_Request_work const &) = delete;
+  Method_Request_work (Method_Request_work &&) = delete;
+  Method_Request_work &operator= (Method_Request_work const &) = delete;
+  Method_Request_work &operator= (Method_Request_work &&) = delete;
+
 private:
-  Scheduler *scheduler_;
-  u_long param_;
-  int count_;
+  Scheduler * const scheduler_ {}; // Non-owning; its owner outlives the queued request.
+  u_long const param_ {};
+  int const count_ {};
   ACE_Future<u_long> future_result_;
 };
 
-Method_Request_work::Method_Request_work (Scheduler* new_Scheduler,
+Method_Request_work::Method_Request_work (Scheduler *new_Scheduler,
                                         u_long new_param,
                                         int new_count,
                                         ACE_Future<u_long> &new_result)
@@ -128,18 +141,23 @@ Method_Request_work::call ()
 class Method_Request_name : public ACE_Method_Request
 {
 public:
-  Method_Request_name (Scheduler *, ACE_Future<char*> &);
+  Method_Request_name (Scheduler *, ACE_Future<std::string> &);
   ~Method_Request_name () override;
   int call () override;
 
+  Method_Request_name (Method_Request_name const &) = delete;
+  Method_Request_name (Method_Request_name &&) = delete;
+  Method_Request_name &operator= (Method_Request_name const &) = delete;
+  Method_Request_name &operator= (Method_Request_name &&) = delete;
+
 private:
-  Scheduler *scheduler_;
-  ACE_Future<char*> future_result_;
+  Scheduler * const scheduler_ {}; // Non-owning; its owner outlives the queued request.
+  ACE_Future<std::string> future_result_;
 };
 
 
 Method_Request_name::Method_Request_name (Scheduler *new_scheduler,
-                                        ACE_Future<char*> &new_result)
+                                         ACE_Future<std::string> &new_result)
   : scheduler_ (new_scheduler),
     future_result_ (new_result)
 {
@@ -167,42 +185,42 @@ Method_Request_name::call ()
 class Method_Request_end : public ACE_Method_Request
 {
 public:
-  Method_Request_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
+  Method_Request_end () = default;
   ~Method_Request_end () override = default;
   int call () override { return -1; }
 
-private:
-  /// Keep track of our scheduler.
-  Scheduler *scheduler_;
+  Method_Request_end (Method_Request_end const &) = delete;
+  Method_Request_end (Method_Request_end &&) = delete;
+  Method_Request_end &operator= (Method_Request_end const &) = delete;
+  Method_Request_end &operator= (Method_Request_end &&) = delete;
 };
 
 // constructor
-Scheduler::Scheduler (const char *newname, Scheduler *new_Scheduler)
+Scheduler::Scheduler (std::string name, Scheduler *scheduler)
+  : name_ (std::move (name)),
+    scheduler_ (scheduler)
 {
-  ACE_NEW (this->name_, char[ACE_OS::strlen (newname) + 1]);
-  ACE_OS::strcpy ((char *) this->name_, newname);
-  this->scheduler_ = new_Scheduler;
-  ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s created\n", this->name_));
+  ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s created\n", this->name_.c_str ()));
 }
 
 // Destructor
 Scheduler::~Scheduler ()
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s will be destroyed\n", this->name_));
+  ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s will be destroyed\n", this->name_.c_str ()));
 }
 
 int
 Scheduler::open (void *)
 {
   scheduler_open_count.fetch_add (1, std::memory_order_relaxed);
-  ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s open\n", this->name_));
+  ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s open\n", this->name_.c_str ()));
   return this->activate (THR_BOUND);
 }
 
 int
 Scheduler::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s close\n", this->name_));
+  ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s close\n", this->name_.c_str ()));
   scheduler_open_count.fetch_sub (1, std::memory_order_relaxed);
   return 0;
 }
@@ -216,6 +234,9 @@ Scheduler::svc ()
       // Dequeue the next method object (we use an unique pointer in
       // case an exception is thrown in the <call>).
       std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
+
+      if (!mo)
+        break;
 
       ACE_DEBUG ((LM_DEBUG, " (%t) calling method object\n"));
       // Call it.
@@ -231,31 +252,36 @@ Scheduler::svc ()
 void
 Scheduler::end ()
 {
-  this->activation_queue_.enqueue (new Method_Request_end (this));
+  if (this->enqueue (std::make_unique<Method_Request_end> ()) == -1)
+    ACE_ERROR ((LM_ERROR, " (%t) failed to enqueue end request\n"));
 }
 
 // Here's where the Work takes place.
 u_long
 Scheduler::work_i (u_long param,
-                   int count)
+                   int count) const
 {
   ACE_UNUSED_ARG (count);
 
   return ACE::is_prime (param, 2, param / 2);
 }
 
-char *
-Scheduler::name_i ()
+std::string
+Scheduler::name_i () const
 {
-  char *the_name;
-
-  ACE_NEW_RETURN (the_name, char[ACE_OS::strlen (this->name_) + 1], nullptr);
-  ACE_OS::strcpy (the_name, this->name_);
-
-  return the_name;
+  return this->name_;
 }
 
-ACE_Future<char *>
+int
+Scheduler::enqueue (std::unique_ptr<ACE_Method_Request> request)
+{
+  int const result = this->activation_queue_.enqueue (request.get ());
+  if (result != -1)
+    request.release ();
+  return result;
+}
+
+ACE_Future<std::string>
 Scheduler::name ()
 {
   if (this->scheduler_)
@@ -263,21 +289,23 @@ Scheduler::name ()
     return this->scheduler_->name ();
   else
     {
-      ACE_Future<char*> new_future;
+      ACE_Future<std::string> new_future;
 
       if (this->thr_count () == 0)
         {
           // This scheduler is inactive... so we execute the user
           // request right away...
-          std::unique_ptr<ACE_Method_Request> mo (new Method_Request_name (this, new_future));
+          std::unique_ptr<ACE_Method_Request> mo =
+            std::make_unique<Method_Request_name> (this, new_future);
 
           mo->call ();
           // Smart pointer destructor automatically deletes mo.
         }
       else
-        // @@ What happens if new fails here?
-        this->activation_queue_.enqueue
-          (new Method_Request_name (this, new_future));
+        {
+          if (this->enqueue (std::make_unique<Method_Request_name> (this, new_future)) == -1)
+            ACE_ERROR ((LM_ERROR, " (%t) failed to enqueue name request\n"));
+        }
 
       return new_future;
     }
@@ -294,14 +322,17 @@ Scheduler::work (u_long newparam, int newcount)
 
       if (this->thr_count () == 0)
         {
-          std::unique_ptr<ACE_Method_Request> mo
-            (new Method_Request_work (this, newparam, newcount, new_future));
+          std::unique_ptr<ACE_Method_Request> mo =
+            std::make_unique<Method_Request_work> (this, newparam, newcount, new_future);
           mo->call ();
           // Smart pointer destructor automatically deletes it.
         }
       else
-        this->activation_queue_.enqueue
-          (new Method_Request_work (this, newparam, newcount, new_future));
+        {
+          if (this->enqueue (std::make_unique<Method_Request_work> (
+                this, newparam, newcount, new_future)) == -1)
+            ACE_ERROR ((LM_ERROR, " (%t) failed to enqueue work request\n"));
+        }
 
       return new_future;
     }
@@ -313,9 +344,7 @@ determine_iterations ()
   int n_iterations;
 
   ACE_DEBUG ((LM_DEBUG," (%t) determining the number of iterations...\n"));
-  Scheduler *worker_a;
-
-  ACE_NEW_RETURN (worker_a, Scheduler ("worker A"), -1);
+  Scheduler worker_a ("worker A");
 
   ACE_Time_Value tstart (ACE_OS::gettimeofday ());
   ACE_Time_Value tend (ACE_OS::gettimeofday ());
@@ -329,7 +358,7 @@ determine_iterations ()
     {
       tstart = ACE_OS::gettimeofday ();
 
-      worker_a->work (9013, n_iterations);
+      worker_a.work (9013, n_iterations);
 
       tend = ACE_OS::gettimeofday ();
     }
@@ -337,8 +366,6 @@ determine_iterations ()
   ACE_DEBUG ((LM_DEBUG," (%t) n_iterations %d\n",
               (int) n_iterations));
 
-  worker_a->end ();
-  // @@ Can we safely delete worker_a here?
   return n_iterations;
 }
 
@@ -351,14 +378,10 @@ test_active_object (int n_iterations)
   // A simple example for the use of the active object pattern and
   // futures to return values from an active object.
 
-  Scheduler *worker_a;
-  Scheduler *worker_b;
-  Scheduler *worker_c;
-
-  ACE_NEW (worker_a, Scheduler ("worker A"));
-  ACE_NEW (worker_b, Scheduler ("worker B"));
+  Scheduler worker_a ("worker A");
+  Scheduler worker_b ("worker B");
   // Have worker_c delegate his work to worker_a.
-  ACE_NEW (worker_c, Scheduler ("worker C", worker_a));
+  Scheduler worker_c ("worker C", &worker_a);
 
   // loop 0:
   // test the Schedulers when they are not active.
@@ -372,14 +395,14 @@ test_active_object (int n_iterations)
     {
       if (i == 1)
         {
-          worker_a->open ();
-          worker_b->open ();
-          worker_c->open ();
+          worker_a.open ();
+          worker_b.open ();
+          worker_c.open ();
         }
 
-      ACE_Future<u_long> fresulta = worker_a->work (9013);
-      ACE_Future<u_long> fresultb = worker_b->work (9013);
-      ACE_Future<u_long> fresultc = worker_c->work (9013);
+      ACE_Future<u_long> fresulta = worker_a.work (9013);
+      ACE_Future<u_long> fresultb = worker_b.work (9013);
+      ACE_Future<u_long> fresultc = worker_c.work (9013);
 
       if (i == 0)
         {
@@ -398,37 +421,35 @@ test_active_object (int n_iterations)
       u_long resultb = fresultb;
       u_long resultc = fresultc;
 
-      ACE_Future<char *> fnamea = worker_a->name ();
-      ACE_Future<char *> fnameb = worker_b->name ();
-      ACE_Future<char *> fnamec = worker_c->name ();
+      ACE_Future<std::string> fnamea = worker_a.name ();
+      ACE_Future<std::string> fnameb = worker_b.name ();
+      ACE_Future<std::string> fnamec = worker_c.name ();
 
-      char *namea = fnamea;
-      char *nameb = fnameb;
-      char *namec = fnamec;
+      std::string const namea = fnamea;
+      std::string const nameb = fnameb;
+      std::string const namec = fnamec;
 
       ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
-                  namea, (u_int) resulta));
+                  namea.c_str (), (u_int) resulta));
       ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
-                  nameb, (u_int) resultb));
+                  nameb.c_str (), (u_int) resultb));
       ACE_DEBUG ((LM_DEBUG, " (%t) result from %s %u\n",
-                  namec, (u_int) resultc));
+                  namec.c_str (), (u_int) resultc));
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d before end ()\n",
               scheduler_open_count.load (std::memory_order_relaxed)));
 
-  worker_a->end ();
-  worker_b->end ();
-  worker_c->end ();
+  worker_a.end ();
+  worker_b.end ();
+  worker_c.end ();
+  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d immediately after end ()\n",
               scheduler_open_count.load (std::memory_order_relaxed)));
 
-  ACE_OS::sleep (2);
-
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d after waiting\n",
               scheduler_open_count.load (std::memory_order_relaxed)));
-  // @@ Can we safely delete worker_a, worker_b, and worker_c?
 }
 
 static void
@@ -438,11 +459,10 @@ test_cancellation (int n_iterations)
 
   // Now test the cancelling a future.
 
-  Scheduler *worker_a;
-  ACE_NEW (worker_a, Scheduler ("worker A"));
-  worker_a->open ();
+  Scheduler worker_a ("worker A");
+  worker_a.open ();
 
-  ACE_Future<u_long> fresulta = worker_a->work (9013, n_iterations);
+  ACE_Future<u_long> fresulta = worker_a.work (9013, n_iterations);
 
   // save the result by copying the future
   ACE_Future<u_long> fresultb = fresulta;
@@ -465,26 +485,24 @@ test_cancellation (int n_iterations)
 
   ACE_DEBUG ((LM_DEBUG, " (%t) true result %u\n", (u_int) resulta));
 
-  worker_a->end ();
-  // @@ Can we safely delete worker_a here?
+  worker_a.end ();
+  ACE_Thread_Manager::instance ()->wait ();
 }
 
 static void
 test_timeout (int n_iterations)
 {
   ACE_DEBUG ((LM_DEBUG," (%t) testing timeout on waiting for the result...\n"));
-  Scheduler *worker_a;
-  ACE_NEW (worker_a, Scheduler ("worker A"));
-  worker_a->open ();
+  Scheduler worker_a ("worker A");
+  worker_a.open ();
 
-  ACE_Future<u_long> fresulta = worker_a->work (9013, 2 * n_iterations);
+  ACE_Future<u_long> fresulta = worker_a.work (9013, 2 * n_iterations);
 
   // Should immediately return... and we should see an error...
-  ACE_Time_Value *delay;
-  ACE_NEW (delay, ACE_Time_Value (1));
+  ACE_Time_Value delay (1);
 
   u_long resulta = 0;
-  fresulta.get (resulta, delay);
+  fresulta.get (resulta, &delay);
 
   if (fresulta.ready ())
     ACE_DEBUG ((LM_DEBUG," (%t) ERROR: future A is should not be ready!!!\n"));
@@ -495,8 +513,8 @@ test_timeout (int n_iterations)
   fresulta.get (resulta);
   ACE_DEBUG ((LM_DEBUG, " (%t) result %u\n", (u_int) resulta));
 
-  worker_a->end ();
-  // @@ Can we safely delete worker_a here?
+  worker_a.end ();
+  ACE_Thread_Manager::instance ()->wait ();
 }
 
 int

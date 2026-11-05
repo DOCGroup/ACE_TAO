@@ -16,6 +16,7 @@
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 #include "ace/Truncate.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -24,6 +25,17 @@ static int n_iterations = 100;
 
 // Controls whether the input is generated "manually" or automatically.
 static int manual = 0;
+
+struct Message_Block_Release
+{
+  void operator() (ACE_Message_Block *message_block) const
+  {
+    if (message_block != nullptr)
+      message_block->release ();
+  }
+};
+
+using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
 
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -36,6 +48,11 @@ public:
 
   ~Thread_Pool () override;
   // Destructor...
+
+  Thread_Pool (Thread_Pool const &) = delete;
+  Thread_Pool (Thread_Pool &&) = delete;
+  Thread_Pool &operator= (Thread_Pool const &) = delete;
+  Thread_Pool &operator= (Thread_Pool &&) = delete;
 
   int svc () override;
   // Iterate <n_iterations> time printing off a message and "waiting"
@@ -80,6 +97,7 @@ int
 Thread_Pool::put (ACE_Message_Block *mb,
                   ACE_Time_Value *tv)
 {
+  // The queue owns the message block after a successful enqueue.
   return this->putq (mb, tv);
 }
 
@@ -99,7 +117,7 @@ Thread_Pool::svc ()
 
   for (;; count++)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) in iteration %d before getq ()\n",
@@ -113,6 +131,7 @@ Thread_Pool::svc ()
           break;
         }
 
+      Message_Block_Owner message_block {mb};
       size_t length = mb->length ();
 
       if (length > 0)
@@ -122,9 +141,6 @@ Thread_Pool::svc ()
                     length,
                     length - 1,
                     mb->rd_ptr ()));
-
-      // We're responsible for deallocating this.
-      mb->release ();
 
       if (length == 0)
         {
@@ -153,9 +169,10 @@ producer (Thread_Pool &thread_pool)
   for (int n; ;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW (mb,
                ACE_Message_Block (BUFSIZ));
+      Message_Block_Owner message_block {mb};
 
       if (manual)
         {
@@ -191,9 +208,9 @@ producer (Thread_Pool &thread_pool)
 
           // Pass the message to the Thread_Pool.
           if (thread_pool.put (mb) == -1)
-                  ACE_ERROR ((LM_ERROR,
-                              " (%t) %p\n",
-                              "put"));
+            ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+          else
+            message_block.release ();
         }
       else
         {
@@ -212,13 +229,14 @@ producer (Thread_Pool &thread_pool)
 
               // Enqueue a NULL message to flag each consumer to
               // shutdown.
-              ACE_Message_Block *mb = nullptr;
+              ACE_Message_Block *mb {};
               ACE_NEW (mb,
                        ACE_Message_Block);
+              Message_Block_Owner message_block {mb};
               if (thread_pool.put (mb) == -1)
-                      ACE_ERROR ((LM_ERROR,
-                                  " (%t) %p\n",
-                                  "put"));
+                ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+              else
+                message_block.release ();
             }
 
           ACE_DEBUG ((LM_DEBUG,

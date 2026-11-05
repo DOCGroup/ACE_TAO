@@ -24,6 +24,11 @@ public:
   Test_Task ();
   ~Test_Task ();
 
+  Test_Task (Test_Task const &) = delete;
+  Test_Task (Test_Task &&) = delete;
+  Test_Task &operator= (Test_Task const &) = delete;
+  Test_Task &operator= (Test_Task &&) = delete;
+
   int open (void *arg);
 
   static void *svc (void *arg);

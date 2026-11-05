@@ -13,12 +13,24 @@
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
+#include <memory>
 
 
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Null_Barrier.h"
 #define BARRIER_TYPE ACE_Null_Barrier
+
+struct Message_Block_Release
+{
+  void operator() (ACE_Message_Block *message_block) const
+  {
+    if (message_block != nullptr)
+      message_block->release ();
+  }
+};
+
+using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
 
 template <class BARRIER>
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -28,10 +40,15 @@ public:
                int n_threads,
                int inp_serialize = 1);
 
+  Worker_Task (Worker_Task const &) = delete;
+  Worker_Task (Worker_Task &&) = delete;
+  Worker_Task &operator= (Worker_Task const &) = delete;
+  Worker_Task &operator= (Worker_Task &&) = delete;
+
   virtual int producer ();
   // produce input for workers
 
-  virtual int input (ACE_Message_Block *mb);
+  virtual int input (Message_Block_Owner &mb);
   // Fill one message block via a certain input strategy.
 
   virtual int output (ACE_Message_Block *mb);
@@ -43,6 +60,7 @@ public:
 
 private:
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv=nullptr) override;
+  int put_owned (Message_Block_Owner &mb);
 
   int svc () override;
   // Iterate <n_iterations> time printing off a message and "waiting"
@@ -149,9 +167,10 @@ Worker_Task<BARRIER>::svc ()
 
   for (int iter = 1; ;iter++)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       int result = this->getq (mb);
+      Message_Block_Owner message_block {mb};
 
       if (result == -1)
         {
@@ -170,14 +189,12 @@ Worker_Task<BARRIER>::svc ()
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) in iteration %d got quit, exit!\n",
                       iter));
-                      mb->release ();
           break;
         }
 
       this->barrier_.wait ();
       this->output (mb);
 
-      mb->release ();
     }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us
@@ -194,13 +211,14 @@ Worker_Task<BARRIER>::producer ()
   for (;;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ),
                       -1);
+      Message_Block_Owner message_block {mb};
 
-      if (this->input (mb) == -1)
+      if (this->input (message_block) == -1)
         return -1;
     }
 
@@ -214,9 +232,18 @@ Worker_Task<BARRIER>::output (ACE_Message_Block *mb)
 }
 
 template <class BARRIER> int
-Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
+Worker_Task<BARRIER>::put_owned (Message_Block_Owner &mb)
 {
-  ACE_Message_Block *mb1;
+  int const result = this->put (mb.get ());
+  if (!this->inp_serialize_ || result != -1)
+    mb.release ();
+  return result;
+}
+
+template <class BARRIER> int
+Worker_Task<BARRIER>::input (Message_Block_Owner &message_block)
+{
+  ACE_Message_Block *mb = message_block.get ();
 
 #if !defined (manual)
   static int l = 0;
@@ -251,12 +278,14 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
                       "(%t) eof, sending block for thread=%d\n",
                       i + 1));
 
-          ACE_NEW_RETURN (mb1,
+          ACE_Message_Block *raw_mb1 {};
+          ACE_NEW_RETURN (raw_mb1,
                           ACE_Message_Block (2),
                           -1);
+          Message_Block_Owner mb1 {raw_mb1};
           mb1->length (0);
 
-          if (this->put (mb1) == -1)
+          if (this->put_owned (mb1) == -1)
             ACE_ERROR ((LM_ERROR,
                         "(%t) %p\n",
                         "put"));
@@ -273,7 +302,7 @@ Worker_Task<BARRIER>::input (ACE_Message_Block *mb)
       // producing.
       mb->wr_ptr (n);
 
-      if (this->put (mb) == -1)
+      if (this->put_owned (message_block) == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%t) %p\n",
                     "put"));
