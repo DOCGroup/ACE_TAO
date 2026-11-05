@@ -30,7 +30,7 @@ Quoter_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, this->argv_.get (), ACE_TEXT("n:d:lx"));
   int opt;
-  int exit_code = 0;
+  int exit_code {};
 
   while ((opt = get_opts ()) != -1)
     switch (opt)
@@ -210,7 +210,6 @@ Quoter_Client::init_naming_service ()
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Got a proper reference of a factory.\n"));
 
-
       // Get the first object reference to a factory.
       CORBA::Object_var quoter_FactoryObj_var;
 
@@ -259,7 +258,7 @@ Quoter_Client::init (int argc, ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   // Make a copy of argv since ORB_init will change it.
-  ACE_TCHAR **argv_copy = nullptr;
+  ACE_TCHAR **argv_copy {};
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
 
@@ -321,7 +320,6 @@ Quoter_Client::init (int argc, ACE_TCHAR **argv)
 
   return 0;
 }
-
 
 // This function runs the test.
 

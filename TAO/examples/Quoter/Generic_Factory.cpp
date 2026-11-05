@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Generic_Factory.cpp
@@ -8,7 +7,6 @@
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #include "Generic_Factory.h"
 
@@ -41,7 +39,7 @@ Quoter_Generic_Factory_Server::init (int argc,
                                      ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
-  ACE_TCHAR **argv_copy = nullptr;
+  ACE_TCHAR **argv_copy {};
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
   for (int i = 0; i < argc; i++)
@@ -51,7 +49,7 @@ Quoter_Generic_Factory_Server::init (int argc,
 
   try
     {
-      int result = 0;
+      int result {};
       // Initialize the ORB Manager
       exception_message = "While initing the orb_manager";
       result = this->orb_manager_.init (argc, argv);
@@ -69,7 +67,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       if (this->parse_args () != 0)
         return -1;
 
-      Quoter_Generic_Factory_i *factory = nullptr;
+      Quoter_Generic_Factory_i *factory {};
       ACE_NEW_RETURN (factory,
                       Quoter_Generic_Factory_i (this->debug_level_),
                       -1);
@@ -106,7 +104,6 @@ Quoter_Generic_Factory_Server::init (int argc,
       if (CORBA::is_nil (namingContext_var.in ()))
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
-
 
       if (this->debug_level_ >= 2)
         ACE_DEBUG ((LM_DEBUG,
@@ -190,8 +187,6 @@ Quoter_Generic_Factory_Server::init (int argc,
         "Quoter_Generic_Factory_Server::init");
       return -1;
     }
-
-
   return 0;
 }
 
@@ -213,8 +208,8 @@ u_int
 Quoter_Generic_Factory_Server::parse_args ()
 {
   ACE_Get_Opt get_opt (this->argc_, this->argv_.get (), ACE_TEXT("l?d:"));
-  int opt;
-  int exit_code = 0;
+  int opt {};
+  int exit_code {};
 
   while ((opt = get_opt ()) != EOF)
     switch (opt)

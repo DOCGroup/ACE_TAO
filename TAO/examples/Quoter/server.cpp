@@ -7,8 +7,6 @@
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu) Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================
-
-
 #include "server.h"
 #include "tao/ORB_Core.h"
 
@@ -38,11 +36,9 @@ Quoter_Server::parse_args ()
                           1);
       }
 
-
   // Indicates successful parsing of command line.
   return 0;
 }
-
 
 //Initialize the Quoter Server
 
@@ -51,7 +47,7 @@ Quoter_Server::init (int argc,
                     ACE_TCHAR* argv[])
 {
   this->argc_ = argc;
-  ACE_TCHAR **argv_copy = nullptr;
+  ACE_TCHAR **argv_copy {};
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
   for (int i = 0; i < argc; i++)
@@ -89,7 +85,7 @@ Quoter_Server::init (int argc,
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Quoter_Factory_i *factory = nullptr;
+      Quoter_Factory_i *factory {};
       ACE_NEW_RETURN (factory,
                       Quoter_Factory_i (static_cast<size_t> (this->num_of_objs_),
                                         root_poa.in ()),
@@ -132,7 +128,6 @@ Quoter_Server::init (int argc,
 
   return this->init_naming_service ();
 }
-
 
 // Initialization of Naming Service and register IDL_Quoter Context
 // and Quoter_factory object.
