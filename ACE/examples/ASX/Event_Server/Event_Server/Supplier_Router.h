@@ -43,6 +43,10 @@ class Supplier_Router : public Peer_Router
   //     the protected section.
 public:
   explicit Supplier_Router (Peer_Router_Context *prc);
+  Supplier_Router (Supplier_Router const &) = delete;
+  Supplier_Router (Supplier_Router &&) = delete;
+  Supplier_Router &operator= (Supplier_Router const &) = delete;
+  Supplier_Router &operator= (Supplier_Router &&) = delete;
   // Initialization method.
 
 protected:

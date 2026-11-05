@@ -30,7 +30,7 @@ Consumer_Router::open (void *)
       // Make this an active object to handle the error cases in a
       // separate thread.  This is mostly just for illustration, i.e.,
       // it's probably overkill to use a thread for this!
-      return this->activate (Options::instance ()->t_flags ());
+      return this->activate (Options::instance ().t_flags ());
     }
   else // if (this->is_reader ())
 
@@ -65,7 +65,7 @@ Consumer_Router::svc ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) starting svc in Consumer_Router\n")));
 
-  for (ACE_Message_Block *mb = nullptr;
+  for (ACE_Message_Block *mb {};
        this->getq (mb) >= 0;
        )
     {
@@ -130,7 +130,7 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr  addr;
-  const ACE_TCHAR *module_name = this->name ();
+  ACE_TCHAR const * const module_name = this->name ();
 
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
     return -1;
