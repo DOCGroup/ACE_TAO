@@ -29,7 +29,7 @@ class ACE_Allocator;
 template<typename T>
 struct ACE_Unbounded_Set_Default_Comparator
 {
-  bool operator() (const T&lhs, const T&rhs) const;
+  bool operator() (T const &lhs, T const &rhs) const;
 };
 
 template<typename T>
@@ -46,9 +46,9 @@ class ACE_Unbounded_Set_Iterator : public
 public:
   using base_type = ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>;
 
-  ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, bool end = false);
+  explicit ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, bool end = false);
 
-  ACE_Unbounded_Set_Iterator (const base_type &s);
+  explicit ACE_Unbounded_Set_Iterator (base_type const &s);
 };
 
 /**
@@ -62,10 +62,10 @@ class ACE_Unbounded_Set_Const_Iterator : public
 public:
   using base_type = ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>;
 
-  ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
-                                    bool end = false);
+  explicit ACE_Unbounded_Set_Const_Iterator (ACE_Unbounded_Set<T> const &s,
+                                             bool end = false);
 
-  ACE_Unbounded_Set_Const_Iterator (const base_type &s);
+  explicit ACE_Unbounded_Set_Const_Iterator (base_type const &s);
 };
 
 /**
@@ -77,7 +77,7 @@ class ACE_Unbounded_Set : public
   ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T> >
 {
 public:
-  ACE_Unbounded_Set (ACE_Allocator *alloc = nullptr);
+  explicit ACE_Unbounded_Set (ACE_Allocator *alloc = nullptr);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
