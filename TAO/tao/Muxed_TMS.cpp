@@ -5,7 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 
-#include <vector>
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -255,7 +255,7 @@ TAO_Muxed_TMS::clear_cache_i ()
   REQUEST_DISPATCHER_TABLE::ITERATOR const end =
     this->dispatcher_table_.end ();
 
-  std::vector<ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher>> dispatchers;
+  std::deque<ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher>> dispatchers;
 
   for (REQUEST_DISPATCHER_TABLE::ITERATOR i =
          this->dispatcher_table_.begin ();
