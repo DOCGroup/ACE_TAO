@@ -28,7 +28,7 @@ Grid_i::Grid_i (CORBA::Short x,
       // Allocate memory for the matrix.
       ACE_ALLOCATOR (array_,
                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
-      if (array_ != nullptr)
+      if (array_)
         {
           for (int ctr = 0; ctr < y; ctr++)
             {
@@ -135,31 +135,25 @@ Grid_Factory_i::make_grid (CORBA::Short width,
     height = Grid_Factory::DEFAULT_HEIGHT;
 
   // Get a memory pool
-  pool_t *pool = nullptr;
-  ACE_NEW_THROW_EX (pool,
-                    pool_t (pool_name_),
-                    CORBA::NO_MEMORY ());
-  std::unique_ptr<pool_t> pool_owner (pool);
+  std::unique_ptr<pool_t> pool_owner;
   try
     {
+      pool_owner = std::make_unique<pool_t> (pool_name_);
       this->pool_owners_.push_back (std::move (pool_owner));
     }
-  catch (std::bad_alloc const&)
+  catch (std::bad_alloc const &)
     {
       throw CORBA::NO_MEMORY ();
     }
   this->pool_t_ = this->pool_owners_.back ().get ();
 
-  Grid_i *grid = nullptr;
-  ACE_NEW_THROW_EX (grid,
-                    Grid_i (width, height, this->pool_t_),
-                    CORBA::NO_MEMORY ());
-  std::unique_ptr<Grid_i> grid_owner (grid);
+  std::unique_ptr<Grid_i> grid_owner;
   try
     {
+      grid_owner = std::make_unique<Grid_i> (width, height, this->pool_t_);
       this->grid_owners_.push_back (std::move (grid_owner));
     }
-  catch (std::bad_alloc const&)
+  catch (std::bad_alloc const &)
     {
       throw CORBA::NO_MEMORY ();
     }

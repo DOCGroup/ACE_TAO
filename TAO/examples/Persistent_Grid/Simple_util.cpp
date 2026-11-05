@@ -5,28 +5,27 @@
 # include "ace/OS_NS_fcntl.h"
 # include "ace/OS_NS_unistd.h"
 # include "ace/OS_NS_stdio.h"
-# include "ace/OS_NS_string.h"
 
-namespace
+namespace Persistent_Grid_Detail
 {
-  class ACE_Handle_Guard
+  class Handle_Guard
   {
   public:
-    explicit ACE_Handle_Guard (ACE_HANDLE handle)
+    explicit Handle_Guard (ACE_HANDLE handle)
       : handle_ (handle)
     {
     }
 
-    ~ACE_Handle_Guard ()
+    ~Handle_Guard ()
     {
       if (this->handle_ != ACE_INVALID_HANDLE)
         ACE_OS::close (this->handle_);
     }
 
-    ACE_Handle_Guard (ACE_Handle_Guard const&) = delete;
-    ACE_Handle_Guard (ACE_Handle_Guard&&) = delete;
-    ACE_Handle_Guard& operator= (ACE_Handle_Guard const&) = delete;
-    ACE_Handle_Guard& operator= (ACE_Handle_Guard&&) = delete;
+    Handle_Guard (Handle_Guard const&) = delete;
+    Handle_Guard (Handle_Guard&&) = delete;
+    Handle_Guard& operator= (Handle_Guard const&) = delete;
+    Handle_Guard& operator= (Handle_Guard&&) = delete;
 
   private:
     ACE_HANDLE handle_;
@@ -49,7 +48,7 @@ template <class Servant> int
 Server<Servant>::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:m:"));
-  int c = 0;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -59,7 +58,7 @@ Server<Servant>::parse_args ()
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
-        if (this->ior_output_file_ == nullptr)
+        if (!this->ior_output_file_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
@@ -131,7 +130,7 @@ Server<Servant>::init (char const *servant_name,
                   "The IOR is: <%C>\n",
                   str.in ()));
 
-      if (this->ior_output_file_ != nullptr)
+      if (this->ior_output_file_)
         {
           ACE_OS::fprintf (this->ior_output_file_.get (),
                            "%s",
@@ -174,20 +173,20 @@ template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
-  ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
+  ACE_HANDLE const f_handle = ACE_OS::open (filename, O_RDONLY);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
+                       "Unable to open %s for reading: %p\n",
                        filename),
                       -1);
 
-  ACE_Handle_Guard const f_handle_guard (f_handle);
+  Persistent_Grid_Detail::Handle_Guard const f_handle_guard (f_handle);
   ACE_Read_Buffer ior_buffer (f_handle);
-  std::unique_ptr<char, Read_Buffer_Deleter> const data (
-    ior_buffer.read (), Read_Buffer_Deleter {ior_buffer.alloc ()});
+  std::unique_ptr<char, Persistent_Grid_Detail::Read_Buffer_Deleter> const data (
+    ior_buffer.read (), Persistent_Grid_Detail::Read_Buffer_Deleter {ior_buffer.alloc ()});
 
-  if (data == nullptr)
+  if (!data)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior: %p\n"),
                       -1);
@@ -203,8 +202,8 @@ template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:k:x"));
-  int c = 0;
-  int result = 0;
+  int c {};
+  int result {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -215,7 +214,7 @@ Client<InterfaceObj, Var>::parse_args ()
       case 'k':  // ior provide on command line
         {
           char const * const ior = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
-          if (ior == nullptr)
+          if (!ior)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to convert IOR argument to a narrow string\n"),
                               -1);
@@ -285,16 +284,16 @@ Client<InterfaceObj, Var>::init (char const * /*name*/,
 
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::shutdown ()
+Client<InterfaceObj, Var>::shutdown () const
 {
-  // Returns the shutdwon flag
+  // Returns the shutdown flag.
   return shutdown_;
 }
 
 template <class InterfaceObj, class Var> void
 Client<InterfaceObj, Var>::shutdown (int flag)
 {
-  // Fills the flag
+  // Sets the shutdown flag.
   shutdown_ = flag != 0;
 }
 
