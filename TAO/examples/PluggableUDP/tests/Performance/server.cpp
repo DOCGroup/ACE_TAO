@@ -138,19 +138,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
-      // If the ior_output_file exists, output the ior to it
-      if (options.ior_output_file != nullptr)
-        {
-          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-            ACE_OS::fopen (options.ior_output_file, "w"),
-            ACE_OS::fclose);
-          if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                               options.ior_output_file),
-                              1);
-          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
-        }
+      // Write the IOR to the output file.
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 

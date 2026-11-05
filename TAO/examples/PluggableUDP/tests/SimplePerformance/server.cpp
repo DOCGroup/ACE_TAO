@@ -9,8 +9,10 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
+
+#include <cstdio>
+#include <memory>
 
 #include "test_i.h"
 
@@ -18,11 +20,13 @@
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
 
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file { ACE_TEXT ("test.ior") };
+};
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (Server_Options &options, int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
@@ -31,15 +35,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
@@ -56,7 +58,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          argv,
                          "ORB_Test_Server");
 
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (options, argc, argv) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
@@ -75,29 +78,29 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Simple_Server_i server_impl (orb.in ());
 
-      PortableServer::ObjectId_var oidServer = root_poa->activate_object (&server_impl);
+      PortableServer::ObjectId_var oidServer =
+        root_poa->activate_object (&server_impl);
 
-      CORBA::Object_var objOne = root_poa->id_to_reference (oidServer.in ());
+      CORBA::Object_var objOne =
+        root_poa->id_to_reference (oidServer.in ());
 
       Simple_Server_var server = Simple_Server::_narrow (objOne.in ());
 
-      CORBA::String_var ior =
-              orb->object_to_string (server.in ());
+      CORBA::String_var ior = orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
-      // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
-              {
-                FILE *output_file = ACE_OS::fopen (ior_output_file, ACE_TEXT ("w"));
-                if (output_file == nullptr)
-                  ACE_ERROR_RETURN ((LM_ERROR,
-                                     ACE_TEXT ("Cannot open output file for writing IOR: %s"),
-                                     ior_output_file),
-                                    1);
-                ACE_OS::fprintf (output_file, "%s", ior.in ());
-                ACE_OS::fclose (output_file);
-              }
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
