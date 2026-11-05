@@ -13,24 +13,11 @@
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
-#include <memory>
-
 
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Null_Barrier.h"
 #define BARRIER_TYPE ACE_Null_Barrier
-
-struct Message_Block_Release
-{
-  void operator() (ACE_Message_Block *message_block) const
-  {
-    if (message_block != nullptr)
-      message_block->release ();
-  }
-};
-
-using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
 
 template <class BARRIER>
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -48,7 +35,7 @@ public:
   virtual int producer ();
   // produce input for workers
 
-  virtual int input (Message_Block_Owner &mb);
+  virtual int input (ACE_Message_Block_Unique_Ptr &mb);
   // Fill one message block via a certain input strategy.
 
   virtual int output (ACE_Message_Block *mb);
@@ -60,7 +47,7 @@ public:
 
 private:
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv=nullptr) override;
-  int put_owned (Message_Block_Owner &mb);
+  int put_owned (ACE_Message_Block_Unique_Ptr &mb);
 
   int svc () override;
   // Iterate <n_iterations> time printing off a message and "waiting"
@@ -170,7 +157,7 @@ Worker_Task<BARRIER>::svc ()
       ACE_Message_Block *mb {};
 
       int result = this->getq (mb);
-      Message_Block_Owner message_block {mb};
+      ACE_Message_Block_Unique_Ptr message_block {mb};
 
       if (result == -1)
         {
@@ -216,7 +203,7 @@ Worker_Task<BARRIER>::producer ()
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ),
                       -1);
-      Message_Block_Owner message_block {mb};
+      ACE_Message_Block_Unique_Ptr message_block {mb};
 
       if (this->input (message_block) == -1)
         return -1;
@@ -232,7 +219,7 @@ Worker_Task<BARRIER>::output (ACE_Message_Block *mb)
 }
 
 template <class BARRIER> int
-Worker_Task<BARRIER>::put_owned (Message_Block_Owner &mb)
+Worker_Task<BARRIER>::put_owned (ACE_Message_Block_Unique_Ptr &mb)
 {
   int const result = this->put (mb.get ());
   if (!this->inp_serialize_ || result != -1)
@@ -241,7 +228,7 @@ Worker_Task<BARRIER>::put_owned (Message_Block_Owner &mb)
 }
 
 template <class BARRIER> int
-Worker_Task<BARRIER>::input (Message_Block_Owner &message_block)
+Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
 {
   ACE_Message_Block *mb = message_block.get ();
 
@@ -282,7 +269,7 @@ Worker_Task<BARRIER>::input (Message_Block_Owner &message_block)
           ACE_NEW_RETURN (raw_mb1,
                           ACE_Message_Block (2),
                           -1);
-          Message_Block_Owner mb1 {raw_mb1};
+          ACE_Message_Block_Unique_Ptr mb1 {raw_mb1};
           mb1->length (0);
 
           if (this->put_owned (mb1) == -1)

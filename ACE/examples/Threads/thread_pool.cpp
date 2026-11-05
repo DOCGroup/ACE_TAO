@@ -16,7 +16,6 @@
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 #include "ace/Truncate.h"
-#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -25,17 +24,6 @@ static int n_iterations = 100;
 
 // Controls whether the input is generated "manually" or automatically.
 static int manual = 0;
-
-struct Message_Block_Release
-{
-  void operator() (ACE_Message_Block *message_block) const
-  {
-    if (message_block != nullptr)
-      message_block->release ();
-  }
-};
-
-using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
 
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -131,7 +119,7 @@ Thread_Pool::svc ()
           break;
         }
 
-      Message_Block_Owner message_block {mb};
+      ACE_Message_Block_Unique_Ptr message_block {mb};
       size_t length = mb->length ();
 
       if (length > 0)
@@ -172,7 +160,7 @@ producer (Thread_Pool &thread_pool)
       ACE_Message_Block *mb {};
       ACE_NEW (mb,
                ACE_Message_Block (BUFSIZ));
-      Message_Block_Owner message_block {mb};
+      ACE_Message_Block_Unique_Ptr message_block {mb};
 
       if (manual)
         {
@@ -232,7 +220,7 @@ producer (Thread_Pool &thread_pool)
               ACE_Message_Block *mb {};
               ACE_NEW (mb,
                        ACE_Message_Block);
-              Message_Block_Owner message_block {mb};
+              ACE_Message_Block_Unique_Ptr message_block {mb};
               if (thread_pool.put (mb) == -1)
                 ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
               else
