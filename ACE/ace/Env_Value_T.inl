@@ -1,17 +1,14 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE
-ACE_Env_Value<T>::operator T ()
+ACE_Env_Value<T>::operator T () const
 {
   return value_;
 }
 
 template <class T> ACE_INLINE
-ACE_Env_Value<T>::ACE_Env_Value () = default;
-
-template <class T> ACE_INLINE
-ACE_Env_Value<T>::ACE_Env_Value (const ACE_TCHAR *varname,
-                                 const T &defval)
+ACE_Env_Value<T>::ACE_Env_Value (ACE_TCHAR const *varname,
+                                 T const &defval)
   : varname_ (varname),
     value_(defval)
 {
@@ -19,8 +16,8 @@ ACE_Env_Value<T>::ACE_Env_Value (const ACE_TCHAR *varname,
 }
 
 template <class T> ACE_INLINE void
-ACE_Env_Value<T>::open (const ACE_TCHAR *varname,
-                        const T &defval)
+ACE_Env_Value<T>::open (ACE_TCHAR const *varname,
+                        T const &defval)
 {
   this->varname_ = varname;
   this->value_ = defval;
@@ -31,17 +28,17 @@ template <class T> ACE_INLINE void
 ACE_Env_Value<T>::fetch_value ()
 {
 #if defined (ACE_WIN32)
-  const ACE_TCHAR *env = ACE_OS::getenv (this->varname_);
-  if (env != 0)
+  ACE_TCHAR const *env = ACE_OS::getenv (this->varname_);
+  if (env != nullptr)
     ACE_Convert (env, value_);
 #else
   char *nenv = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (this->varname_));
-  if (nenv != 0)
+  if (nenv != nullptr)
     ACE_Convert (ACE_TEXT_CHAR_TO_TCHAR (nenv), this->value_);
 #endif
 }
 
-template <class T> ACE_INLINE const ACE_TCHAR*
+template <class T> ACE_INLINE ACE_TCHAR const *
 ACE_Env_Value<T>::varname () const
 {
   return this->varname_;
