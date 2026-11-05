@@ -1,6 +1,6 @@
 #include "websvcs/lib/URL_Addr.h"
 #include "ace/Log_Msg.h"
-
+#include <memory>
 
 void test_http_addr ();
 void test_ftp_addr ();
@@ -44,10 +44,10 @@ int ACE_TMAIN (int, ACE_TCHAR*[])
 
 void test_http_addr ()
 {
-  static const ACE_TCHAR *addresses[] = {
+  static ACE_TCHAR const *const addresses[] = {
     HTTP_TEST_ARRAY
   };
-  static int naddresses = sizeof(addresses)/sizeof(addresses[0]);
+  static constexpr int naddresses = sizeof (addresses) / sizeof (addresses[0]);
   for (int i = 0; i < naddresses; ++i)
     {
       ACE_HTTP_Addr addr;
@@ -61,7 +61,7 @@ void test_http_addr ()
         }
 
       ACE_TCHAR buffer[BUFSIZ];
-      if (addr.addr_to_string (buffer, BUFSIZ, i%2) == 0)
+      if (addr.addr_to_string (buffer, BUFSIZ, i % 2) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "HTTP[%d]\n"
@@ -84,10 +84,10 @@ void test_http_addr ()
 
 void test_ftp_addr ()
 {
-  static const ACE_TCHAR *addresses[] = {
+  static ACE_TCHAR const *const addresses[] = {
     FTP_TEST_ARRAY
   };
-  static int naddresses = sizeof(addresses)/sizeof(addresses[0]);
+  static constexpr int naddresses = sizeof (addresses) / sizeof (addresses[0]);
   for (int i = 0; i < naddresses; ++i)
     {
       ACE_FTP_Addr addr;
@@ -101,7 +101,7 @@ void test_ftp_addr ()
         }
 
       ACE_TCHAR buffer[BUFSIZ];
-      if (addr.addr_to_string (buffer, BUFSIZ, i%2) == 0)
+      if (addr.addr_to_string (buffer, BUFSIZ, i % 2) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "FTP[%d]\n"
@@ -124,10 +124,10 @@ void test_ftp_addr ()
 
 void test_mailto_addr ()
 {
-  static const ACE_TCHAR *addresses[] = {
+  static ACE_TCHAR const *const addresses[] = {
     MAILTO_TEST_ARRAY
   };
-  static int naddresses = sizeof(addresses)/sizeof(addresses[0]);
+  static constexpr int naddresses = sizeof (addresses) / sizeof (addresses[0]);
   for (int i = 0; i < naddresses; ++i)
     {
       ACE_Mailto_Addr addr;
@@ -141,7 +141,7 @@ void test_mailto_addr ()
         }
 
       ACE_TCHAR buffer[BUFSIZ];
-      if (addr.addr_to_string (buffer, BUFSIZ, i%2) == 0)
+      if (addr.addr_to_string (buffer, BUFSIZ, i % 2) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Mailto[%d]\n"
@@ -164,18 +164,19 @@ void test_mailto_addr ()
 
 void test_url_addr ()
 {
-  static const ACE_TCHAR *addresses[] = {
+  static ACE_TCHAR const *const addresses[] = {
     HTTP_TEST_ARRAY,
     FTP_TEST_ARRAY,
     MAILTO_TEST_ARRAY,
     URL_TEST_ARRAY
   };
-  static int naddresses = sizeof(addresses)/sizeof(addresses[0]);
+  static constexpr int naddresses = sizeof (addresses) / sizeof (addresses[0]);
   for (int i = 0; i < naddresses; ++i)
     {
-      ACE_URL_Addr* addr =
-        ACE_URL_Addr::create_address (addresses[i]);
-      if (addr == 0)
+      std::unique_ptr<ACE_URL_Addr> const addr {
+        ACE_URL_Addr::create_address (addresses[i])
+      };
+      if (!addr)
         {
           ACE_ERROR ((LM_ERROR,
                       "URL[%d]\n"
@@ -185,7 +186,7 @@ void test_url_addr ()
         }
 
       ACE_TCHAR buffer[BUFSIZ];
-      if (addr->addr_to_string (buffer, BUFSIZ, i%2) == 0)
+      if (addr->addr_to_string (buffer, BUFSIZ, i % 2) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "URL[%d]\n"
