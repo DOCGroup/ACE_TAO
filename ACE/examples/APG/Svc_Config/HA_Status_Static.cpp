@@ -14,13 +14,13 @@
 int
 HA_Status::init (int argc, ACE_TCHAR *argv[])
 {
-  static const ACE_TCHAR options[] = ACE_TEXT (":f:");
+  static constexpr ACE_TCHAR options[] = ACE_TEXT (":f:");
   ACE_Get_Opt cmd_opts (argc, argv, options, 0);
   if (cmd_opts.long_option
       (ACE_TEXT ("config"), 'f', ACE_Get_Opt::ARG_REQUIRED) == -1)
     return -1;
-  int option;
-  ACE_TCHAR config_file[MAXPATHLEN];
+  int option {};
+  ACE_TCHAR config_file[MAXPATHLEN] {};
   ACE_OS::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
   while ((option = cmd_opts ()) != EOF)
     switch (option)
@@ -40,16 +40,16 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
           ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
       }
 
-  ACE_Configuration_Heap config;
+  ACE_Configuration_Heap config {};
   config.open ();
-  ACE_Registry_ImpExp config_importer (config);
+  ACE_Registry_ImpExp config_importer {config};
   if (config_importer.import_config (config_file) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        config_file),
                       -1);
 
-  ACE_Configuration_Section_Key status_section;
+  ACE_Configuration_Section_Key status_section {};
   if (config.open_section (config.root_section (),
                            ACE_TEXT ("HAStatus"),
                            0,
@@ -59,7 +59,7 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("Can't open HAStatus section")),
                       -1);
 
-  u_int status_port;
+  u_int status_port {};
   if (config.get_integer_value (status_section,
                                 ACE_TEXT ("ListenPort"),
                                 status_port) == -1)
@@ -91,16 +91,16 @@ HA_Status::fini ()
 // Listing 3 code/ch19
 int
 HA_Status::info (ACE_TCHAR **str, size_t len) const
-  {
-    ACE_TCHAR buf[BUFSIZ];
-    ACE_OS::sprintf (buf, ACE_TEXT ("HAStatus listening on port %hu\n"),
-                     this->listen_addr_.get_port_number ());
-    if (*str == nullptr)
-      *str = ACE::strnew (buf);
-    else
-      ACE_OS::strncpy (*str, buf, len);
-    return static_cast<int> (ACE_OS::strlen (*str));
-  }
+{
+  ACE_TCHAR buffer[BUFSIZ] {};
+  ACE_OS::sprintf (buffer, ACE_TEXT ("HAStatus listening on port %hu\n"),
+                   this->listen_addr_.get_port_number ());
+  if (*str == nullptr)
+    *str = ACE::strnew (buffer);
+  else
+    ACE_OS::strncpy (*str, buffer, len);
+  return static_cast<int> (ACE_OS::strlen (*str));
+}
 // Listing 3
 
 // Listing 4 code/ch19

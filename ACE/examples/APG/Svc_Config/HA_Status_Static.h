@@ -18,19 +18,32 @@
 class ClientHandler :
       public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-    // ... Same as previous examples.
+public:
+  ClientHandler () = default;
+  ClientHandler (ClientHandler const &) = delete;
+  ClientHandler (ClientHandler &&) = delete;
+  ClientHandler &operator= (ClientHandler const &) = delete;
+  ClientHandler &operator= (ClientHandler &&) = delete;
+
+  // ... Same as previous examples.
 };
 
 class HA_Status : public ACE_Service_Object
 {
-  public:
-    int init (int argc, ACE_TCHAR *argv[]) override;
-    int fini () override;
-    int info (ACE_TCHAR **str, size_t len) const override;
+public:
+  HA_Status () = default;
+  HA_Status (HA_Status const &) = delete;
+  HA_Status (HA_Status &&) = delete;
+  HA_Status &operator= (HA_Status const &) = delete;
+  HA_Status &operator= (HA_Status &&) = delete;
 
-  private:
-    ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR> acceptor_;
-    ACE_INET_Addr listen_addr_;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
+  int info (ACE_TCHAR **str, size_t len) const override;
+
+private:
+  ACE_Acceptor<ClientHandler, ACE_SOCK_ACCEPTOR> acceptor_;
+  ACE_INET_Addr listen_addr_;
 };
 // Listing 1
 
