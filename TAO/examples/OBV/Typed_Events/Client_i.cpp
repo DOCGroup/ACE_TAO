@@ -74,10 +74,10 @@ Checkpoint_Client_i::run (char const *name,
           i.next ()-> do_print ();
         }
 
-      if (checkpoint.shutdown () == 1)
+      if (checkpoint.shutdown ())
         checkpoint->shutdown ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\n Exception in RMI");
       return -1;
