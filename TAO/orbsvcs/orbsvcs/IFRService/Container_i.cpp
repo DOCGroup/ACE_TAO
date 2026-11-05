@@ -7,7 +7,6 @@
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "ace/SString.h"
-#include <memory>
 #include <deque>
 #include <cstring>
 
@@ -836,7 +835,7 @@ TAO_Container_i::create_constant_i (char const *id,
       TAO_InputCDR in (out);
       mb = in.steal_contents ();
     }
-  std::unique_ptr<ACE_Message_Block> safe (mb);
+  ACE_Message_Block_Unique_Ptr safe {mb};
 
   CORBA::TypeCode_var val_tc = value.type ();
 
