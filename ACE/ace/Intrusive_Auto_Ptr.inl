@@ -8,15 +8,16 @@ template <class X> ACE_INLINE
 ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (X *p, bool addref)
   : rep_ (p)
 {
-  if (rep_ != 0  && addref)
+  if (rep_ != nullptr && addref)
     X::intrusive_add_ref (rep_);
 }
 
 template <class X> ACE_INLINE
-ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (const ACE_Intrusive_Auto_Ptr<X> &r)
+ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (
+  ACE_Intrusive_Auto_Ptr<X> const &r)
   : rep_ (r.rep_)
 {
-  if (rep_ != 0)
+  if (rep_ != nullptr)
     X::intrusive_add_ref (rep_);
 }
 
@@ -43,7 +44,7 @@ template<class X> ACE_INLINE X *
 ACE_Intrusive_Auto_Ptr<X>::release ()
 {
   X *p = this->rep_;
-  if (this->rep_ != 0)
+  if (this->rep_ != nullptr)
     X::intrusive_remove_ref (this->rep_);
 
   this->rep_ = nullptr;
@@ -58,35 +59,36 @@ ACE_Intrusive_Auto_Ptr<X>::reset (X *p)
   if (this->rep_ == p)
     return;
 
-  X *old_rep = this->rep_;
+  X * const old_rep = this->rep_;
   this->rep_ = p;
 
-  if (this->rep_ != 0)
+  if (this->rep_ != nullptr)
     X::intrusive_add_ref (this->rep_);
 
-  if (old_rep != 0)
+  if (old_rep != nullptr)
     X::intrusive_remove_ref (old_rep);
 
   return;
 }
 
 template <class X> ACE_INLINE void
-ACE_Intrusive_Auto_Ptr<X>::operator = (const ACE_Intrusive_Auto_Ptr<X> &rhs)
+ACE_Intrusive_Auto_Ptr<X>::operator = (ACE_Intrusive_Auto_Ptr<X> const &rhs)
 {
   // do nothing when aliasing
   if (this->rep_ == rhs.rep_)
     return;
 
   // assign a zero
-  if (rhs.rep_  == 0)
+  if (rhs.rep_ == nullptr)
     {
-      X::intrusive_remove_ref (this->rep_);
+      if (this->rep_ != nullptr)
+        X::intrusive_remove_ref (this->rep_);
       this->rep_ = nullptr;
       return;
     }
 
   //  bind <this> to the same <ACE_Intrusive_Auto_Ptr_Rep> as <rhs>.
-  X *old_rep = this->rep_;
+  X * const old_rep = this->rep_;
   this->rep_ = rhs.rep_;
   X::intrusive_add_ref (this->rep_);
   X::intrusive_remove_ref (old_rep);
@@ -94,12 +96,14 @@ ACE_Intrusive_Auto_Ptr<X>::operator = (const ACE_Intrusive_Auto_Ptr<X> &rhs)
 
 // Copy derived class constructor
 template<class X> template <class U> ACE_INLINE
-ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (const ACE_Intrusive_Auto_Ptr<U> & rhs)
+ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (
+  ACE_Intrusive_Auto_Ptr<U> const &rhs)
 {
   // note implicit cast from U* to T* so illegal copy will generate a
   // compiler warning here
-  this->rep_ = rhs.operator-> ();
-  X::intrusive_add_ref(this->rep_);
+  this->rep_ = rhs.get ();
+  if (this->rep_ != nullptr)
+    X::intrusive_add_ref (this->rep_);
 }
 
   /// Equality operator that returns @c true if both
@@ -109,33 +113,41 @@ ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (const ACE_Intrusive_Auto_Ptr<
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-template<class T, class U> ACE_INLINE bool operator==(ACE_Intrusive_Auto_Ptr<T> const & a, ACE_Intrusive_Auto_Ptr<U> const & b)
+template<class T, class U> ACE_INLINE bool
+operator== (ACE_Intrusive_Auto_Ptr<T> const &a,
+            ACE_Intrusive_Auto_Ptr<U> const &b)
 {
     return a.get() == b.get();
 }
 
 /// Inequality operator, which is the opposite of equality.
-template<class T, class U> ACE_INLINE bool operator!=(ACE_Intrusive_Auto_Ptr<T> const & a, ACE_Intrusive_Auto_Ptr<U> const & b)
+template<class T, class U> ACE_INLINE bool
+operator!= (ACE_Intrusive_Auto_Ptr<T> const &a,
+            ACE_Intrusive_Auto_Ptr<U> const &b)
 {
     return a.get() != b.get();
 }
 
-template<class T, class U> ACE_INLINE bool operator==(ACE_Intrusive_Auto_Ptr<T> const & a, U * b)
+template<class T, class U> ACE_INLINE bool
+operator== (ACE_Intrusive_Auto_Ptr<T> const &a, U *b)
 {
     return a.get() == b;
 }
 
-template<class T, class U> ACE_INLINE bool operator!=(ACE_Intrusive_Auto_Ptr<T> & a, U * b)
+template<class T, class U> ACE_INLINE bool
+operator!= (ACE_Intrusive_Auto_Ptr<T> const &a, U *b)
 {
     return a.get() != b;
 }
 
-template<class T, class U> ACE_INLINE bool operator==(T * a, ACE_Intrusive_Auto_Ptr<U> const & b)
+template<class T, class U> ACE_INLINE bool
+operator== (T *a, ACE_Intrusive_Auto_Ptr<U> const &b)
 {
     return a == b.get();
 }
 
-template<class T, class U> ACE_INLINE bool operator!=(T * a, ACE_Intrusive_Auto_Ptr<U> const & b)
+template<class T, class U> ACE_INLINE bool
+operator!= (T *a, ACE_Intrusive_Auto_Ptr<U> const &b)
 {
     return a != b.get();
 }
