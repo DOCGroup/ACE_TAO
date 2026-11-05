@@ -13,22 +13,22 @@
 class KeyType
 {
 public:
-  KeyType () : val_(0) {}
+  KeyType () = default;
 
-  KeyType (int i) : val_(i) {}
+  explicit KeyType (int const i) : val_ (i) {}
 
-  KeyType (const KeyType& kt) { this->val_ = kt.val_; };
+  KeyType (KeyType const &) = default;
 
-  operator int () const { return val_; };
+  operator int () const { return this->val_; }
 
 private:
-  int val_;
+  int val_ {};
 };
 
 template<>
 int
 ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::equal
-(const KeyType& r1, const KeyType &r2)
+(KeyType const &r1, KeyType const &r2)
 {
   return (r1 == r2);
 }
@@ -38,7 +38,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<>
 int
 ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::equal
-(const KeyType& r1, const KeyType &r2)
+(KeyType const &r1, KeyType const &r2)
 {
   return (r1 == r2);
 }
@@ -69,17 +69,17 @@ int Map_Example::run ()
 {
   ACE_TRACE ("Map_Example::run");
 
-  // Corresponding KeyType objects are created on the fly.
-  for (int i = 0; i < 100; i++)
+  // Construct explicit KeyType values for the integer keys.
+  for (int i = 0; i < 100; ++i)
     {
-      map_.bind (i, DataElement (i));
+      map_.bind (KeyType (i), DataElement (i));
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Map has\n")));
-  for (int j = 0; j < 100; j++)
+  for (int j = 0; j < 100; ++j)
     {
       DataElement d;
-      int result = map_.find (j,d);
+      int const result = map_.find (KeyType (j), d);
       if (result == 0)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), d.getData ()));
@@ -110,7 +110,7 @@ void Map_Example::iterate_forward ()
   for (ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::iterator
        iter = map_.begin ();
        iter!= map_.end ();
-       iter++)
+       ++iter)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), (*iter).int_id_.getData ()));
     }
@@ -125,7 +125,7 @@ void Map_Example::iterate_reverse ()
   for (ACE_Map_Manager<KeyType, DataElement, ACE_Null_Mutex>::reverse_iterator
        iter = map_.rbegin ();
        iter!= map_.end ();
-       iter++)
+       ++iter)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), (*iter).int_id_.getData ()));
     }
@@ -139,9 +139,9 @@ void Map_Example::remove_all ()
   // Note that we can't use the iterators here
   // as they are invalidated after deletions
   // or insertions.
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < 100; ++i)
     {
-      map_.unbind (i);
+      map_.unbind (KeyType (i));
     }
 }
 

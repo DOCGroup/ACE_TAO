@@ -7,16 +7,16 @@
 class KeyType
 {
 public:
-  KeyType () : val_(0) {}
+  KeyType () = default;
 
-  KeyType (int i) : val_(i) {}
+  explicit KeyType (int const i) : val_ (i) {}
 
-  KeyType (const KeyType& kt) { this->val_ = kt.val_; }
+  KeyType (KeyType const &) = default;
 
-  operator int () const { return val_; }
+  operator int () const { return this->val_; }
 
 private:
-  int val_;
+  int val_ {};
 };
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -26,10 +26,9 @@ template<>
 class ACE_Hash<KeyType>
 {
 public:
-  u_long operator() (const KeyType kt) const
+  u_long operator() (KeyType const &key) const
   {
-    int val = kt;
-    return (u_long)val;
+    return static_cast<u_long> (static_cast<int> (key));
   }
 };
 
@@ -39,12 +38,10 @@ template<>
 class ACE_Equal_To<KeyType>
 {
 public:
-  int operator() (const KeyType& kt1,
-                  const KeyType& kt2) const
+  int operator() (KeyType const &key1,
+                  KeyType const &key2) const
   {
-    int val1 = kt1;
-    int val2 = kt2;
-    return (val1 == val2);
+    return static_cast<int> (key1) == static_cast<int> (key2);
   }
 };
 

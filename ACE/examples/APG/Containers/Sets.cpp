@@ -2,6 +2,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Containers.h"
 #include "DataElement.h"
+#include <memory>
 
 class SetExample
 {
@@ -39,7 +40,7 @@ int SetExample::runBoundedSet ()
   ACE_Bounded_Set<DataElement> bset (100);
 
   DataElement elem[100];
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < 100; ++i)
     {
       elem[i].setData (i);
 
@@ -63,7 +64,7 @@ int SetExample::runBoundedSet ()
                   elem1.getData (), elem2.getData ()));
     }
 
-  for (int j = 0; j < 50; j++)
+  for (int j = 0; j < 50; ++j)
     {
       bset.remove (elem[j]);  // Remove the element from the set.
       ACE_DEBUG
@@ -87,10 +88,11 @@ int SetExample::runUnboundedSet ()
   ACE_TRACE ("SetExample::runUnboundedSet");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Using an unbounded set.\n")));
   ACE_Unbounded_Set<DataElement*> uset;
-  for (int m = 0; m < 100; m++)
+  for (int m = 0; m < 100; ++m)
     {
-      DataElement *elem;
+      DataElement *elem {};
       ACE_NEW_RETURN (elem, DataElement (m), -1);
+      // The ACE set stores raw pointers; this example owns each element.
       uset.insert (elem);
     }
   DataElement deBegin (0), deEnd (99);
@@ -102,11 +104,10 @@ int SetExample::runUnboundedSet ()
   // Iterate and destroy the elements in the set.
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting the elements\n")));
   ACE_Unbounded_Set_Iterator<DataElement*> iter (uset);
-  for (iter = uset.begin (); iter != uset.end (); iter++)
+  for (iter = uset.begin (); iter != uset.end (); ++iter)
     {
-      DataElement* elem = (*iter);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), elem->getData ()));
-      delete elem;
+      std::unique_ptr<DataElement> element_owner {*iter};
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), element_owner->getData ()));
     }
 
   return 0;
