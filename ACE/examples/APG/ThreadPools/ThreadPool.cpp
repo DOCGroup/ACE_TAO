@@ -1,7 +1,6 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Task.h"
 #include "ace/Containers.h"
@@ -11,12 +10,21 @@
 #include "ace/Future.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Condition_T.h"
+#include <array>
+#include <memory>
+#include <cstring>
 
 class Worker;
 
 class IManager
 {
 public:
+  IManager () = default;
+  IManager (IManager const &) = delete;
+  IManager (IManager &&) = delete;
+  IManager &operator= (IManager const &) = delete;
+  IManager &operator= (IManager &&) = delete;
+
   virtual ~IManager () = default;
 
   virtual int return_to_work (Worker *worker) = 0;
@@ -27,14 +35,18 @@ class Worker : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   explicit Worker (IManager *manager) : manager_ (manager) { }
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
   int svc () override
   {
-    ACE_Thread_ID id;
-    thread_id_ = id;
-    while (1)
+    ACE_Thread_ID const id {};
+    this->thread_id_ = id;
+    while (true)
       {
-        ACE_Message_Block *mb = nullptr;
+        ACE_Message_Block *mb {};
         if (this->getq (mb) == -1)
           ACE_ERROR_BREAK
             ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
@@ -55,7 +67,7 @@ public:
   }
   // Listing 2
 
-  const ACE_Thread_ID &thread_id () const
+  ACE_Thread_ID const &thread_id () const
   {
     return this->thread_id_;
   }
@@ -64,8 +76,8 @@ private:
   void process_message (ACE_Message_Block *mb)
   {
     ACE_TRACE ("Worker::process_message");
-    int msgId;
-    ACE_OS::memcpy (&msgId, mb->rd_ptr (), sizeof(int));
+    int msgId {};
+    std::memcpy (&msgId, mb->rd_ptr (), sizeof (int));
     mb->release ();
 
     ACE_DEBUG ((LM_DEBUG,
@@ -77,21 +89,25 @@ private:
                 msgId));
   }
 
-  IManager *manager_;
-  ACE_Thread_ID thread_id_;
+  IManager *const manager_; // Borrowed; Manager owns the pool and outlives its workers.
+  ACE_Thread_ID thread_id_ {};
 };
 
 // Listing 1 code/ch16
-class Manager: public ACE_Task<ACE_MT_SYNCH>, private IManager
+class Manager : public ACE_Task<ACE_MT_SYNCH>, private IManager
 {
 public:
   enum {POOL_SIZE = 5, MAX_TIMEOUT = 5};
 
   Manager ()
-    : shutdown_ (false), workers_lock_ (), workers_cond_ (workers_lock_)
+    : workers_cond_ (workers_lock_)
   {
     ACE_TRACE ("Manager::Manager");
   }
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
 
   int svc () override
   {
@@ -104,8 +120,8 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = nullptr;
-        ACE_Time_Value tv ((long)MAX_TIMEOUT);
+        ACE_Message_Block *mb {};
+        ACE_Time_Value tv {static_cast<long> (MAX_TIMEOUT)};
         tv += ACE_OS::time (nullptr);
 
         // Get a message request.
@@ -116,7 +132,7 @@ public:
           }
 
         // Choose a worker.
-        Worker *worker = nullptr;
+        Worker *worker {};
         {
           ACE_GUARD_RETURN (ACE_Thread_Mutex,
                             worker_mon, this->workers_lock_, -1);
@@ -127,7 +143,7 @@ public:
           this->workers_.dequeue_head (worker);
         }
 
-        // Ask the worker to do the job.
+        // On success, the worker queue owns the message block.
         worker->putq (mb);
       }
 
@@ -136,7 +152,7 @@ public:
 
   int shut_down ();
 
-  const ACE_Thread_ID &thread_id (Worker *worker) const;
+  ACE_Thread_ID const &thread_id (Worker *worker) const;
 
   int return_to_work (Worker *worker) override
   {
@@ -157,12 +173,15 @@ private:
                       worker_mon,
                       this->workers_lock_,
                       -1);
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < POOL_SIZE; ++i)
       {
-        Worker *worker = nullptr;
-        ACE_NEW_RETURN (worker, Worker (this), -1);
-        this->workers_.enqueue_tail (worker);
-        worker->activate ();
+        Worker *worker_raw {};
+        ACE_NEW_RETURN (worker_raw, Worker (this), -1);
+        std::unique_ptr<Worker> worker {worker_raw};
+        if (this->workers_.enqueue_tail (worker.get ()) == -1)
+          return -1;
+        worker.release ();
+        worker_raw->activate ();
       }
 
     return 0;
@@ -171,10 +190,10 @@ private:
   bool done () const;
 
 private:
-  bool shutdown_;
+  bool shutdown_ {};
   ACE_Thread_Mutex workers_lock_;
   ACE_Condition<ACE_Thread_Mutex> workers_cond_;
-  ACE_Unbounded_Queue<Worker* > workers_;
+  ACE_Unbounded_Queue<Worker *> workers_; // Manager owns the workers while queued.
 };
 // Listing 1
 
@@ -187,22 +206,22 @@ int
 Manager::shut_down ()
 {
   ACE_TRACE ("Manager::shut_down");
-  ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
+  ACE_Unbounded_Queue<Worker *>::ITERATOR iter =
     this->workers_.begin ();
-  Worker **worker_ptr = nullptr;
+  Worker **worker_ptr {};
   do
     {
       iter.next (worker_ptr);
-      Worker *worker = (*worker_ptr);
-      ACE_Thread_ID id = thread_id (worker);
-      char buf [65];
-      id.to_string (buf);
+      Worker *const worker = *worker_ptr;
+      ACE_Thread_ID const &id = thread_id (worker);
+      std::array<char, 65> buf {};
+      id.to_string (buf.data (), buf.size ());
       ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("(%t) Attempting shutdown of %C\n"),
-                 buf));
+                 buf.data ()));
 
       // Send the hangup message.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN
         (mb,
          ACE_Message_Block(0,
@@ -216,8 +235,8 @@ Manager::shut_down ()
       ACE_ASSERT (worker->msg_queue ()->is_empty ());
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Worker %C shut down.\n"),
-                  buf));
-      delete worker;
+                  buf.data ()));
+      std::unique_ptr<Worker> worker_owner {worker};
     }
   while (iter.advance ());
 
@@ -241,13 +260,13 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = nullptr;
-  for (int i = 0; i < 30; i++)
+  ACE_Message_Block *mb {};
+  for (int i = 0; i < 30; ++i)
     {
       ACE_NEW_RETURN
         (mb, ACE_Message_Block(sizeof(int)), -1);
 
-      ACE_OS::memcpy (mb->wr_ptr (), &i, sizeof(int));
+      std::memcpy (mb->wr_ptr (), &i, sizeof (int));
 
       ACE_OS::sleep (tv);
 

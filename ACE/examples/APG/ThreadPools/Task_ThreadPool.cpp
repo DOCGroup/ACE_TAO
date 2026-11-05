@@ -1,23 +1,27 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
 #include "ace/SString.h"
+#include <cstring>
 
 // Listing 2 code/ch16
 class Workers : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Workers () = default;
+  Workers (Workers const &) = delete;
+  Workers (Workers &&) = delete;
+  Workers &operator= (Workers const &) = delete;
+  Workers &operator= (Workers &&) = delete;
 
   int svc () override
   {
-    while (1)
+    while (true)
       {
-        ACE_Message_Block *mb = nullptr;
+        ACE_Message_Block *mb {};
         if (this->getq (mb) == -1)
           {
             ACE_DEBUG ((LM_INFO,
@@ -37,8 +41,8 @@ private:
   void process_message (ACE_Message_Block *mb)
   {
     ACE_TRACE ("Workers::process_message");
-    int msgId;
-    ACE_OS::memcpy (&msgId, mb->rd_ptr (), sizeof(int));
+    int msgId {};
+    std::memcpy (&msgId, mb->rd_ptr (), sizeof (int));
     mb->release ();
 
     ACE_DEBUG ((LM_DEBUG,
@@ -57,10 +61,14 @@ class Manager : public ACE_Task<ACE_MT_SYNCH>
 public:
   enum {POOL_SIZE = 5, MAX_TIMEOUT = 5};
 
-  Manager () : shutdown_ (false)
+  Manager ()
   {
     ACE_TRACE ("Manager::Manager");
   }
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
 
   int svc () override
   {
@@ -74,8 +82,8 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = nullptr;
-        ACE_Time_Value tv ((long)MAX_TIMEOUT);
+        ACE_Message_Block *mb {};
+        ACE_Time_Value tv {static_cast<long> (MAX_TIMEOUT)};
         tv += ACE_OS::time (nullptr);
 
         // Get a message request.
@@ -86,7 +94,7 @@ public:
             break;
           }
 
-        // Ask the worker pool to do the job.
+        // On success, the worker queue owns the message block and releases it.
         pool.putq (mb);
       }
 
@@ -96,7 +104,7 @@ public:
 private:
   bool done () const;
 
-  bool shutdown_;
+  bool shutdown_ {};
 };
 // Listing 1
 
@@ -115,17 +123,17 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = nullptr;
-  for (int i = 0; i < 30; i++)
+  ACE_Message_Block *mb {};
+  for (int i = 0; i < 30; ++i)
     {
       ACE_NEW_RETURN
         (mb, ACE_Message_Block(sizeof(int)), -1);
 
-      ACE_OS::memcpy (mb->wr_ptr (), &i, sizeof(int));
+      std::memcpy (mb->wr_ptr (), &i, sizeof (int));
 
       ACE_OS::sleep (tv);
 
-      // Add a new work item.
+      // On success, the manager queue owns the message block.
       tp.putq (mb);
     }
 

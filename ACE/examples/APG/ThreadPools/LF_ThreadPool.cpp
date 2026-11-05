@@ -1,22 +1,26 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task.h"
 #include "ace/Containers.h"
 #include "ace/Synch.h"
 #include "ace/Condition_T.h"
+#include <memory>
+#include <cstring>
 
 // Listing 4 code/ch16
 class Follower
 {
 public:
-  Follower (ACE_Thread_Mutex &leader_lock)
-    : cond_(leader_lock)
+  explicit Follower (ACE_Thread_Mutex &leader_lock)
+    : cond_ (leader_lock), owner_ (ACE_Thread::self ())
   {
-    owner_ = ACE_Thread::self ();
   }
+  Follower (Follower const &) = delete;
+  Follower (Follower &&) = delete;
+  Follower &operator= (Follower const &) = delete;
+  Follower &operator= (Follower &&) = delete;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int wait ()
@@ -30,24 +34,28 @@ public:
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  ACE_thread_t owner ()
+  ACE_thread_t owner () const
   {
     return this->owner_;
   }
 
 private:
   ACE_Condition<ACE_Thread_Mutex> cond_;
-  ACE_thread_t owner_;
+  ACE_thread_t owner_ {};
 };
 // Listing 4
 // Listing 1 code/ch16
 class LF_ThreadPool : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  LF_ThreadPool () : shutdown_ (false), current_leader_ (0)
+  LF_ThreadPool ()
   {
     ACE_TRACE ("LF_ThreadPool::TP");
   }
+  LF_ThreadPool (LF_ThreadPool const &) = delete;
+  LF_ThreadPool (LF_ThreadPool &&) = delete;
+  LF_ThreadPool &operator= (LF_ThreadPool const &) = delete;
+  LF_ThreadPool &operator= (LF_ThreadPool &&) = delete;
 
   int svc () override;
 
@@ -69,7 +77,7 @@ private:
     return this->current_leader_ != 0;
   }
 
-  void leader_active (ACE_thread_t leader)
+  void leader_active (ACE_thread_t const leader)
   {
     ACE_TRACE ("LF_ThreadPool::leader_active");
     this->current_leader_ = leader;
@@ -83,12 +91,12 @@ private:
   }
 
 private:
-  bool shutdown_;
-  ACE_thread_t current_leader_;
+  bool shutdown_ {};
+  ACE_thread_t current_leader_ {};
   ACE_Thread_Mutex leader_lock_;
-  ACE_Unbounded_Queue<Follower*> followers_;
+  ACE_Unbounded_Queue<Follower *> followers_; // Borrowed; each waiting thread owns its follower.
   ACE_Thread_Mutex followers_lock_;
-  static long LONG_TIME;
+  static constexpr long LONG_TIME = 5L;
 };
 // Listing 1
 // Listing 2 code/ch16
@@ -100,8 +108,8 @@ LF_ThreadPool::svc ()
     {
       become_leader ();  // Block until this thread is the leader.
 
-      ACE_Message_Block *mb = nullptr;
-      ACE_Time_Value tv (LONG_TIME);
+      ACE_Message_Block *mb {};
+      ACE_Time_Value tv {LONG_TIME};
       tv += ACE_OS::gettimeofday ();
 
       // Get a message, elect new leader, then process message.
@@ -129,14 +137,15 @@ LF_ThreadPool::become_leader ()
     (ACE_Thread_Mutex, leader_mon, this->leader_lock_, -1);
   if (leader_active ())
     {
-      Follower *fw = make_follower ();
+      std::unique_ptr<Follower> fw {make_follower ()};
+      if (!fw)
+        return -1;
       {
         // Wait until told to do so.
         while (leader_active ())
           fw->wait ();
       }
 
-      delete fw;
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Becoming the leader\n")));
@@ -153,10 +162,12 @@ LF_ThreadPool::make_follower ()
 
   ACE_GUARD_RETURN
     (ACE_Thread_Mutex, follower_mon, this->followers_lock_, nullptr);
-  Follower *fw;
-  ACE_NEW_RETURN (fw, Follower (this->leader_lock_), nullptr);
-  this->followers_.enqueue_tail (fw);
-  return fw;
+  Follower *follower_raw {};
+  ACE_NEW_RETURN (follower_raw, Follower (this->leader_lock_), nullptr);
+  std::unique_ptr<Follower> follower {follower_raw};
+  if (this->followers_.enqueue_tail (follower.get ()) == -1)
+    return nullptr;
+  return follower.release ();
 }
 // Listing 3
 // Listing 5 code/ch16
@@ -177,7 +188,7 @@ LF_ThreadPool::elect_new_leader ()
                         this->followers_lock_,
                         -1);
       // Get the old follower.
-      Follower *fw;
+      Follower *fw {};
       if (this->followers_.dequeue_head (fw) != 0)
         return -1;
       ACE_DEBUG ((LM_DEBUG,
@@ -198,8 +209,8 @@ void
 LF_ThreadPool::process_message (ACE_Message_Block *mb)
 {
   ACE_TRACE ("LF_ThreadPool::process_message");
-  int msgId;
-  ACE_OS::memcpy (&msgId, mb->rd_ptr (), sizeof(int));
+  int msgId {};
+  std::memcpy (&msgId, mb->rd_ptr (), sizeof (int));
   mb->release ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -211,8 +222,6 @@ LF_ThreadPool::process_message (ACE_Message_Block *mb)
               msgId));
 }
 
-long LF_ThreadPool::LONG_TIME = 5L;
-
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   LF_ThreadPool tp;
@@ -222,11 +231,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_OS::sleep (2);
   ACE_Time_Value tv (1L);
 
-  ACE_Message_Block *mb = nullptr;
-  for (int i = 0; i < 30; i++)
+  ACE_Message_Block *mb {};
+  for (int i = 0; i < 30; ++i)
     {
-      ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof(int)), -1);
-      ACE_OS::memcpy (mb->wr_ptr (), &i, sizeof(int));
+      ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof (int)), -1);
+      std::memcpy (mb->wr_ptr (), &i, sizeof (int));
       ACE_OS::sleep (tv);
 
       // Add a new work item.

@@ -1,7 +1,6 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Task.h"
 #include "ace/Unbounded_Queue.h"
@@ -11,21 +10,29 @@
 #include "ace/Future.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Condition_T.h"
+#include <array>
+#include <memory>
 
-#define OUTSTANDING_REQUESTS 20
+constexpr int OUTSTANDING_REQUESTS = 20;
 
 // Listing 2 code/ch16
-class CompletionCallBack: public ACE_Future_Observer<ACE_CString*>
+class CompletionCallBack : public ACE_Future_Observer<ACE_CString *>
 {
 public:
-  void update (const ACE_Future<ACE_CString*> & future) override
+  CompletionCallBack () = default;
+  CompletionCallBack (CompletionCallBack const &) = delete;
+  CompletionCallBack (CompletionCallBack &&) = delete;
+  CompletionCallBack &operator= (CompletionCallBack const &) = delete;
+  CompletionCallBack &operator= (CompletionCallBack &&) = delete;
+
+  void update (ACE_Future<ACE_CString *> const &future) override
   {
-    ACE_CString *result = nullptr;
+    ACE_CString *result {};
 
     // Block for the result.
     future.get (result);
-    ACE_DEBUG ((LM_INFO, ACE_TEXT("%C\n"), result->c_str ()));
-    delete result;
+    std::unique_ptr<ACE_CString> result_owner {result};
+    ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"), result_owner->c_str ()));
   }
 };
 // Listing 2
@@ -33,6 +40,12 @@ public:
 class LongWork : public ACE_Method_Request
 {
 public:
+  LongWork () = default;
+  LongWork (LongWork const &) = delete;
+  LongWork (LongWork &&) = delete;
+  LongWork &operator= (LongWork const &) = delete;
+  LongWork &operator= (LongWork &&) = delete;
+
   int call () override
   {
     ACE_TRACE ("LongWork::call");
@@ -40,16 +53,16 @@ public:
       ((LM_INFO, ACE_TEXT ("(%t) Attempting long work task\n")));
     ACE_OS::sleep (1);
 
-    char buf[1024];
-    ACE_OS::strcpy (buf, "Completed assigned task\n");
-    ACE_CString *msg;
-    ACE_NEW_RETURN
-      (msg, ACE_CString (buf, ACE_OS::strlen (buf) + 1), -1);
-    result_.set (msg);
+    ACE_CString *msg {};
+    ACE_NEW_RETURN (msg, ACE_CString ("Completed assigned task\n"), -1);
+    std::unique_ptr<ACE_CString> msg_owner {msg};
+    if (result_.set (msg_owner.get ()) == -1)
+      return -1;
+    msg_owner.release ();
     return 0;
   }
 
-  ACE_Future<ACE_CString*> &future ()
+  ACE_Future<ACE_CString *> &future ()
   {
     ACE_TRACE ("LongWork::future");
     return result_;
@@ -61,13 +74,19 @@ public:
   }
 
 private:
-  ACE_Future<ACE_CString*> result_;
+  ACE_Future<ACE_CString *> result_;
 };
 // Listing 1
 
 class Exit : public ACE_Method_Request
 {
 public:
+  Exit () = default;
+  Exit (Exit const &) = delete;
+  Exit (Exit &&) = delete;
+  Exit &operator= (Exit const &) = delete;
+  Exit &operator= (Exit &&) = delete;
+
   int call () override
   {
     ACE_TRACE ("Exit::call");
@@ -80,36 +99,47 @@ class Worker;
 class IManager
 {
 public:
+  IManager () = default;
+  IManager (IManager const &) = delete;
+  IManager (IManager &&) = delete;
+  IManager &operator= (IManager const &) = delete;
+  IManager &operator= (IManager &&) = delete;
+
   virtual ~IManager () = default;
 
   virtual int return_to_work (Worker *worker) = 0;
 };
 
 // Listing 3 code/ch16
-class Worker: public ACE_Task<ACE_MT_SYNCH>
+class Worker : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   explicit Worker (IManager *manager)
     : manager_ (manager), queue_ (msg_queue ())
   { }
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
   int perform (ACE_Method_Request *req)
   {
     ACE_TRACE ("Worker::perform");
+    // The caller retains ownership of the request until it has been processed.
     return this->queue_.enqueue (req);
   }
 
   int svc () override
   {
-    thread_id_ = ACE_Thread::self ();
-    while (1)
+    this->thread_id_ = ACE_Thread::self ();
+    while (true)
       {
-        ACE_Method_Request *request = this->queue_.dequeue();
+        ACE_Method_Request *request = this->queue_.dequeue ();
         if (request == nullptr)
           return -1;
 
-        // Invoke the request
-        int result = request->call ();
+        // Requests are borrowed; the caller keeps them alive until processing finishes.
+        int const result = request->call ();
         if (result == -1)
           break;
 
@@ -120,16 +150,16 @@ public:
     return 0;
   }
 
-  ACE_thread_t thread_id ();
+  ACE_thread_t thread_id () const;
 
 private:
-  IManager *manager_;
-  ACE_thread_t thread_id_;
+  IManager *const manager_; // Borrowed; Manager owns the pool and outlives its workers.
+  ACE_thread_t thread_id_ {};
   ACE_Activation_Queue queue_;
 };
 // Listing 3
 
-ACE_thread_t Worker::thread_id ()
+ACE_thread_t Worker::thread_id () const
 {
   return thread_id_;
 }
@@ -141,14 +171,19 @@ public:
   enum {POOL_SIZE = 5, MAX_TIMEOUT = 5};
 
   Manager ()
-    : shutdown_ (false), workers_lock_ (), workers_cond_ (workers_lock_)
+    : workers_cond_ (workers_lock_)
   {
     ACE_TRACE ("Manager");
   }
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
 
   int perform (ACE_Method_Request *req)
   {
     ACE_TRACE ("perform");
+    // Requests remain caller-owned while they pass through both queues.
     return this->queue_.enqueue (req);
   }
 
@@ -163,7 +198,7 @@ public:
 
     while (!done ())
       {
-        ACE_Time_Value tv ((long)MAX_TIMEOUT);
+        ACE_Time_Value tv {static_cast<long> (MAX_TIMEOUT)};
         tv += ACE_OS::time (nullptr);
 
         // Get the next message
@@ -175,7 +210,7 @@ public:
           }
 
         // Choose a worker.
-        Worker *worker = choose_worker ();
+        Worker *const worker = choose_worker ();
 
         // Ask the worker to do the job.
         worker->perform (request);
@@ -207,7 +242,7 @@ private:
       while (this->workers_.is_empty ())
         workers_cond_.wait ();
 
-    Worker *worker = nullptr;
+    Worker *worker {};
     this->workers_.dequeue_head (worker);
     return worker;
   }
@@ -216,12 +251,15 @@ private:
   {
     ACE_GUARD_RETURN
       (ACE_Thread_Mutex, worker_mon, this->workers_lock_, -1);
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < POOL_SIZE; ++i)
       {
-        Worker *worker;
-        ACE_NEW_RETURN (worker, Worker (this), -1);
-        this->workers_.enqueue_tail (worker);
-        worker->activate ();
+        Worker *worker_raw {};
+        ACE_NEW_RETURN (worker_raw, Worker (this), -1);
+        std::unique_ptr<Worker> worker {worker_raw};
+        if (this->workers_.enqueue_tail (worker.get ()) == -1)
+          return -1;
+        worker.release ();
+        worker_raw->activate ();
       }
 
     return 0;
@@ -238,10 +276,10 @@ private:
   }
 
 private:
-  bool shutdown_;
+  bool shutdown_ {};
   ACE_Thread_Mutex workers_lock_;
   ACE_Condition<ACE_Thread_Mutex> workers_cond_;
-  ACE_Unbounded_Queue<Worker* > workers_;
+  ACE_Unbounded_Queue<Worker *> workers_; // Manager owns workers until their threads stop.
   ACE_Activation_Queue queue_;
 };
 // Listing 4
@@ -250,20 +288,21 @@ int
 Manager::shut_down ()
 {
   ACE_TRACE ("Manager::shut_down");
-  ACE_Unbounded_Queue<Worker* >::ITERATOR iter = this->workers_.begin ();
-  Worker **worker_ptr = nullptr;
+  ACE_Unbounded_Queue<Worker *>::ITERATOR iter = this->workers_.begin ();
+  Worker **worker_ptr {};
   do
     {
       iter.next (worker_ptr);
-      Worker *worker = (*worker_ptr);
+      Worker *const worker = *worker_ptr;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Attempting shutdown of %d\n"),
                   thread_id (worker)));
 
-      Exit *req;
-      ACE_NEW_RETURN (req, Exit(), -1);
+      Exit *req {};
+      ACE_NEW_RETURN (req, Exit (), -1);
+      std::unique_ptr<Exit> request {req};
 
       // Send the hangup message
-      worker->perform (req);
+      worker->perform (request.get ());
 
       // Wait for the exit.
       worker->wait ();
@@ -271,9 +310,8 @@ Manager::shut_down ()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Worker %d shut down.\n"),
                   thread_id (worker)));
+      std::unique_ptr<Worker> worker_owner {worker};
 
-      delete req;
-      delete worker;
     }
   while (iter.advance ());
 
@@ -293,12 +331,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Wait for a few seconds every time you send a message.
   CompletionCallBack cb;
-  LongWork workArray[OUTSTANDING_REQUESTS];
-  for (int i = 0; i < OUTSTANDING_REQUESTS; i++)
+  std::array<LongWork, OUTSTANDING_REQUESTS> work_array {};
+  for (int i = 0; i < OUTSTANDING_REQUESTS; ++i)
     {
-      workArray[i].attach (&cb);
+      work_array[i].attach (&cb);
       ACE_OS::sleep (tv);
-      tp.perform (&workArray[i]);
+      tp.perform (&work_array[i]);
     }
 
   ACE_Thread_Manager::instance ()->wait ();

@@ -17,36 +17,36 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Truncate.h"
+#include <array>
 
 #include "Request_Handler.h"
 
 // Accepting end point.  This is actually "localhost:10010", but some
 // platform couldn't resolve the name so we use the IP address
 // directly here.
-static const ACE_TCHAR *rendezvous = ACE_TEXT ("127.0.0.1:10010");
+ACE_TCHAR const *const rendezvous = ACE_TEXT ("127.0.0.1:10010");
 
 // Total number of server threads.
-static size_t svr_thrno = 5;
+constexpr size_t svr_thrno = 5;
 
 // Total number of client threads.
-static size_t cli_runs = 2;
+constexpr size_t cli_runs = 2;
 
 // Total connection attempts of a client thread.
-static size_t cli_conn_no = 2;
+constexpr size_t cli_conn_no = 2;
 
 // Total requests a client thread sends.
-static size_t cli_req_no = 5;
+constexpr size_t cli_req_no = 5;
 
 // Delay before a thread sending the next request (in msec.)
-static int req_delay = 50;
+constexpr int req_delay = 50;
 
 
 using ACCEPTOR = ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
 
 
 Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
-    : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr),
-    nr_msgs_rcvd_(0)
+    : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr)
 {
   this->reactor (ACE_Reactor::instance ());
 }
@@ -54,12 +54,12 @@ Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
 int
 Request_Handler::handle_input (ACE_HANDLE fd)
 {
-  ACE_TCHAR buffer[BUFSIZ];
-  ACE_TCHAR len = 0;
-  ssize_t result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
+  std::array<ACE_TCHAR, BUFSIZ> buffer {};
+  ACE_TCHAR len {};
+  ssize_t const result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
 
   if (result > 0
-      && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR))
+      && this->peer ().recv_n (buffer.data (), len * sizeof (ACE_TCHAR))
       == static_cast<ssize_t> (len * sizeof (ACE_TCHAR)))
     {
       ++this->nr_msgs_rcvd_;
@@ -67,9 +67,9 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) svr input; fd: 0x%x; input: %s\n"),
                   fd,
-                  buffer));
-      if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
-        ACE_Reactor::instance()->end_reactor_event_loop ();
+                  buffer.data ()));
+      if (ACE_OS::strcmp (buffer.data (), ACE_TEXT ("shutdown")) == 0)
+        ACE_Reactor::instance ()->end_reactor_event_loop ();
       return 0;
     }
   else
@@ -88,12 +88,13 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
               this->nr_msgs_rcvd_));
 
   if (this->nr_msgs_rcvd_ != cli_req_no)
-    ACE_ERROR((LM_ERROR,
+    ACE_ERROR ((LM_ERROR,
                ACE_TEXT ("(%t) Handler 0x%x: Expected %d messages; got %d\n"),
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));
 
+  // The acceptor's service-handler lifecycle owns this and calls handle_close once.
   this->destroy ();
   return 0;
 }
@@ -111,12 +112,18 @@ reactor_event_hook (ACE_Reactor *)
 class ServerTP : public ACE_Task_Base
 {
 public:
+  ServerTP () = default;
+  ServerTP (ServerTP const &) = delete;
+  ServerTP (ServerTP &&) = delete;
+  ServerTP &operator= (ServerTP const &) = delete;
+  ServerTP &operator= (ServerTP &&) = delete;
+
   int svc () override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Running the event loop\n")));
 
-    int result =
+    int const result =
       ACE_Reactor::instance ()->run_reactor_event_loop
         (&reactor_event_hook);
 
@@ -134,41 +141,42 @@ public:
 };
 // Listing 2
 
-class Client: public ACE_Task_Base
+class Client : public ACE_Task_Base
+{
+public:
+  Client () : addr_ (rendezvous) {}
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
+
+  int svc () override
   {
-  public:
-    Client()
-        :addr_(rendezvous)
-    {}
+    ACE_OS::sleep (3);
+    ACE_TCHAR const *const msg =
+      ACE_TEXT ("Message from Connection worker");
 
-    int svc() override
-    {
-      ACE_OS::sleep (3);
-      const ACE_TCHAR *msg =
-        ACE_TEXT ("Message from Connection worker");
+    std::array<ACE_TCHAR, BUFSIZ> buf {};
+    buf[0] = ACE_Utils::truncate_cast<ACE_TCHAR> (ACE_OS::strlen (msg) + 1);
+    ACE_OS::strcpy (&buf[1], msg);
 
-      ACE_TCHAR buf [BUFSIZ];
-      buf[0] =
-        ACE_Utils::truncate_cast<ACE_TCHAR> (ACE_OS::strlen (msg) + 1);
-      ACE_OS::strcpy (&buf[1], msg);
+    for (size_t i = 0; i < cli_runs; ++i)
+      this->send_work_to_server (buf.data ());
 
-      for (size_t i = 0; i < cli_runs; i++)
-        send_work_to_server(buf);
+    this->shut_down ();
 
-      shut_down();
+    return 0;
+  }
 
-      return 0;
-    }
-
-  private:
-    void send_work_to_server(ACE_TCHAR* arg)
-    {
+private:
+  void send_work_to_server (ACE_TCHAR const *arg)
+  {
       ACE_SOCK_Stream stream;
       ACE_SOCK_Connector connect;
-      ACE_Time_Value delay (0, req_delay);
-      size_t len = * reinterpret_cast<ACE_TCHAR *> (arg);
+      ACE_Time_Value delay {0, req_delay};
+      size_t const len = static_cast<size_t> (arg[0]);
 
-      for (size_t i = 0 ; i < cli_conn_no; i++)
+      for (size_t i = 0; i < cli_conn_no; ++i)
         {
           if (connect.connect (stream, addr_) < 0)
             {
@@ -178,12 +186,12 @@ class Client: public ACE_Task_Base
               continue;
             }
 
-          for (size_t j = 0; j < cli_req_no; j++)
+          for (size_t j = 0; j < cli_req_no; ++j)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Sending work to server on handle 0x%x, req %d\n"),
                           stream.get_handle (),
-                          j+1));
+                          j + 1));
               if (stream.send_n (arg,
                                  (len + 1) * sizeof (ACE_TCHAR)) == -1)
                 {
@@ -198,10 +206,10 @@ class Client: public ACE_Task_Base
           stream.close ();
         }
 
-    }
+  }
 
-    void shut_down()
-    {
+  void shut_down ()
+  {
       ACE_SOCK_Stream stream;
       ACE_SOCK_Connector connect;
 
@@ -210,7 +218,7 @@ class Client: public ACE_Task_Base
                     ACE_TEXT ("(%t) %p Error while connecting\n"),
                     ACE_TEXT ("connect")));
 
-      const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
+      ACE_TCHAR const *const sbuf = ACE_TEXT ("\011shutdown");
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("shutdown stream handle = %x\n"),
@@ -222,10 +230,11 @@ class Client: public ACE_Task_Base
                     ACE_TEXT ("send_n")));
 
       stream.close ();
-    }
-  private:
-    ACE_INET_Addr addr_;
-  };
+  }
+
+private:
+  ACE_INET_Addr addr_;
+};
 // Listing 1 code/ch16
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
