@@ -2,6 +2,8 @@
 #include "ace/Token_Manager.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_time.h"
+#include <array>
+#include <memory>
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -11,21 +13,20 @@ class Device;
 class HA_Device_Repository
 {
 public:
-  enum { N_DEVICES = 100 };
+  static constexpr int N_DEVICES {100};
 
   HA_Device_Repository ()
   {
-    for (int i = 0; i < N_DEVICES; i++)
-      tokens_[i] = new ACE_Local_Mutex (0, 0, 1);
+    for (int i = 0; i < N_DEVICES; ++i)
+      tokens_[i] = std::make_unique<ACE_Local_Mutex> (0, 0, 1);
   }
 
-  ~HA_Device_Repository ()
-  {
-    for (int i = 0; i < N_DEVICES; i++)
-      delete tokens_[i];
-  }
+  HA_Device_Repository (HA_Device_Repository const &) = delete;
+  HA_Device_Repository (HA_Device_Repository &&) = delete;
+  HA_Device_Repository &operator= (HA_Device_Repository const &) = delete;
+  HA_Device_Repository &operator= (HA_Device_Repository &&) = delete;
 
-  int update_device (int device_id, char *commands)
+  int update_device (int device_id, char const *commands)
   {
     this->tokens_[device_id]->acquire ();
 
@@ -40,9 +41,9 @@ public:
   void internal_do (Device *device);
 
 private:
-  Device *devices_[N_DEVICES];
-  ACE_Local_Mutex *tokens_[N_DEVICES];
-  unsigned int seed_;
+  std::array<Device *, N_DEVICES> devices_ {};
+  std::array<std::unique_ptr<ACE_Local_Mutex>, N_DEVICES> tokens_ {};
+  unsigned int seed_ {};
 };
 // Listing 1
 
@@ -50,8 +51,8 @@ void
 HA_Device_Repository::internal_do (Device *device)
 {
   ACE_UNUSED_ARG (device);    // Real code would use this.
-  ACE_Time_Value tv (0, ACE_OS::rand_r (&this->seed_) % 10000);
-  timespec_t t  = (timespec_t)tv;
+  ACE_Time_Value const tv (0, ACE_OS::rand_r (&this->seed_) % 10000);
+  timespec_t t = static_cast<timespec_t> (tv);
   ACE_OS::nanosleep (&t);
 }
 
@@ -59,14 +60,17 @@ HA_Device_Repository::internal_do (Device *device)
 class HA_CommandHandler : public ACE_Task_Base
 {
 public:
-  enum { N_THREADS = 5 };
+  static constexpr int N_THREADS {5};
 
-  HA_CommandHandler (HA_Device_Repository &rep) : rep_(rep)
-  { }
+  explicit HA_CommandHandler (HA_Device_Repository &rep) : rep_ (rep) {}
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
 
-  int svc ()
+  int svc () override
   {
-    for (int i = 0; i < HA_Device_Repository::N_DEVICES; i++)
+    for (int i = 0; i < HA_Device_Repository::N_DEVICES; ++i)
       rep_.update_device (i, "");
     return 0;
   }

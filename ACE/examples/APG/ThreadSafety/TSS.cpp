@@ -5,17 +5,16 @@
 #include "ace/Task.h"
 #include "ClientContext.h"
 
-
 void*
-ClientContext::get_attribute (const char *name)
+ClientContext::get_attribute (char const *name)
 {
-  void *value = nullptr;
+  void *value {};
   attributeMap_.find (name, value);
   return value;
 }
 
 void
-ClientContext::set_attribute (const char *name, void *value)
+ClientContext::set_attribute (char const *name, void *value)
 {
   attributeMap_.bind (name, value);
 }
@@ -24,6 +23,12 @@ ClientContext::set_attribute (const char *name, void *value)
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  HA_CommandHandler () = default;
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
+
   int svc () override
   {
     ACE_thread_t tid = this->thr_mgr ()->thr_self ();
@@ -31,15 +36,16 @@ public:
     this->tss_ctx_->set_attribute ("thread_id", &tid);
 
     while (handle_requests () > 0)
-      ;
+      {
+      }
 
     return 0;
   }
 
   int handle_requests ()
   {
-    ACE_thread_t *tid =
-      (ACE_thread_t*)this->tss_ctx_->get_attribute ("thread_id");
+    ACE_thread_t const *tid =
+      static_cast<ACE_thread_t *> (this->tss_ctx_->get_attribute ("thread_id"));
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) TSS TID: %d\n"),
                 *tid));
 
