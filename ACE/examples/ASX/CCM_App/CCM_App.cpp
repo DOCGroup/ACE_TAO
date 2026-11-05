@@ -13,6 +13,8 @@ using MT_Module = ACE_Module<ACE_SYNCH>;
 class ACE_Svc_Export Test_Task : public MT_Task
 {
 public:
+  Test_Task () = default;
+
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *) override;
   int close (u_long) override;
@@ -22,6 +24,11 @@ public:
   int fini () override;
   int suspend () override;
   int resume () override;
+
+  Test_Task (Test_Task const &) = delete;
+  Test_Task (Test_Task &&) = delete;
+  Test_Task &operator= (Test_Task const &) = delete;
+  Test_Task &operator= (Test_Task &&) = delete;
 };
 
 int
@@ -92,6 +99,8 @@ extern "C" ACE_Svc_Export MT_Module *make_da ();
 extern "C" ACE_Svc_Export MT_Module *make_ea ();
 extern "C" ACE_Svc_Export MT_Module *make_mr ();
 
+// These factories transfer ownership of their raw pointers to ACE's service
+// configuration and stream/module lifecycle.
 MT_Stream *
 make_stream ()
 {
