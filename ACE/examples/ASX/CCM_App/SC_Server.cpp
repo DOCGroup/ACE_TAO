@@ -32,7 +32,7 @@ int
 Event_Handler::handle_input (ACE_HANDLE handle)
 {
   char buf[BUFSIZ];
-  ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
+  ssize_t const n = ACE_OS::read (handle, buf, sizeof buf);
 
   if (n == -1)
     return -1;
