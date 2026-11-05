@@ -5,6 +5,8 @@
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstdio>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -35,16 +37,16 @@ namespace ACE
 
       /// Ignore the first 2 lines of the file, which are file
       /// and column headers.
-      (void) ACE_OS::fgets (buf, sizeof (buf), fp);
-      (void) ACE_OS::fgets (buf, sizeof (buf), fp);
+      (void) std::fgets (buf, sizeof (buf), fp);
+      (void) std::fgets (buf, sizeof (buf), fp);
 
       unsigned long iface_value {};
       ACE_UINT32 iface_index {};
       ACE_UINT64 total_value {};
 
-      while (ACE_OS::fgets (buf, sizeof (buf), fp) != nullptr)
+      while (std::fgets (buf, sizeof (buf), fp) != nullptr)
         {
-          sscanf (buf, this->scan_format_.c_str (), &iface_value);
+          std::sscanf (buf, this->scan_format_.c_str (), &iface_value);
 
           /// If the monitor runs long enough, the system counters will
           /// wrap around, the statement below is an attempt to correct
@@ -58,7 +60,7 @@ namespace ACE
         }
 
       this->value_ = total_value - this->start_;
-      (void) ACE_OS::fclose (fp);
+      (void) std::fclose (fp);
     }
 
     void
@@ -92,18 +94,18 @@ namespace ACE
 
       /// Ignore the first 2 lines of the file, which are file
       /// and column headers.
-      (void) ACE_OS::fgets (buf, sizeof (buf), fp);
-      (void) ACE_OS::fgets (buf, sizeof (buf), fp);
+      (void) std::fgets (buf, sizeof (buf), fp);
+      (void) std::fgets (buf, sizeof (buf), fp);
 
       unsigned long iface_value {};
 
-      while (ACE_OS::fgets (buf, sizeof (buf), fp) != nullptr)
+      while (std::fgets (buf, sizeof (buf), fp) != nullptr)
         {
-          sscanf (buf, this->scan_format_.c_str (), &iface_value);
+          std::sscanf (buf, this->scan_format_.c_str (), &iface_value);
           this->start_ += iface_value;
         }
 
-      (void) ACE_OS::fclose (fp);
+      (void) std::fclose (fp);
     }
   }
 }

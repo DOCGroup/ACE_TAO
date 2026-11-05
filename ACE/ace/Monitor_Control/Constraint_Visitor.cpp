@@ -14,14 +14,14 @@ namespace ACE
   namespace Monitor_Control
   {
     Constraint_Visitor::Constraint_Visitor (
-      const Monitor_Control_Types::Data& data)
+      Monitor_Control_Types::Data const& data)
       : data_ (data)
     {}
 
     ACE_CDR::Boolean
     Constraint_Visitor::evaluate_constraint (ETCL_Constraint *root)
     {
-      ACE_CDR::Boolean result = false;
+      ACE_CDR::Boolean result {};
       this->queue_.reset ();
 
       // Evaluate the constraint in root_;
@@ -65,14 +65,14 @@ namespace ACE
     int
     Constraint_Visitor::visit_unary_expr (ETCL_Unary_Expr *unary_expr)
     {
-      ETCL_Constraint *subexpression = unary_expr->subexpr ();
+      ETCL_Constraint *const subexpression = unary_expr->subexpr ();
 
       /// Call to accept() puts the subexpression's evaluation on our queue.
       if (subexpression->accept (this) == 0)
         {
           ETCL_Literal_Constraint subexpr_result;
-          ACE_CDR::Boolean result = 0;
-          int op_type = unary_expr->type ();
+          ACE_CDR::Boolean result {};
+          int const op_type = unary_expr->type ();
 
           switch (op_type)
           {
@@ -105,7 +105,7 @@ namespace ACE
     int
     Constraint_Visitor::visit_binary_expr (ETCL_Binary_Expr *binary_expr)
     {
-      int bin_op_type = binary_expr->type ();
+      int const bin_op_type = binary_expr->type ();
 
       switch (bin_op_type)
         {
@@ -136,8 +136,8 @@ namespace ACE
     Constraint_Visitor::visit_or (ETCL_Binary_Expr *binary)
     {
       int return_value = -1;
-      ACE_CDR::Boolean result = false;
-      ETCL_Constraint *lhs = binary->lhs ();
+      ACE_CDR::Boolean result {};
+      ETCL_Constraint *const lhs = binary->lhs ();
 
       /// Call to accept() puts the lhs (or its evaluation) on our queue.
       if (lhs->accept (this) == 0)
@@ -149,7 +149,7 @@ namespace ACE
           /// Short-circuiting OR.
           if (!result)
             {
-              ETCL_Constraint *rhs = binary->rhs ();
+              ETCL_Constraint *const rhs = binary->rhs ();
 
               if (rhs->accept (this) == 0)
               {
@@ -177,8 +177,8 @@ namespace ACE
     Constraint_Visitor::visit_and (ETCL_Binary_Expr *binary)
     {
       int return_value = -1;
-      ACE_CDR::Boolean result = false;
-      ETCL_Constraint *lhs = binary->lhs ();
+      ACE_CDR::Boolean result {};
+      ETCL_Constraint *const lhs = binary->lhs ();
 
       /// Call to accept() puts the lhs (or its evaluation) on our queue.
       if (lhs->accept (this) == 0)
@@ -190,7 +190,7 @@ namespace ACE
           /// Short-circuiting AND.
           if (result == true)
             {
-              ETCL_Constraint *rhs = binary->rhs ();
+              ETCL_Constraint *const rhs = binary->rhs ();
 
               if (rhs->accept (this) == 0)
               {
@@ -219,8 +219,8 @@ namespace ACE
                                          int op_type)
     {
       int return_value = -1;
-      ETCL_Constraint *lhs = binary->lhs ();
-      ACE_CDR::Boolean result = false;
+      ETCL_Constraint *const lhs = binary->lhs ();
+      ACE_CDR::Boolean result {};
 
       /// Perform an operation on the results of evaluating the left and
       /// right branches of this subtree. The evaluations go on our queue.
@@ -228,7 +228,7 @@ namespace ACE
         {
           ETCL_Literal_Constraint left_operand;
           this->queue_.dequeue_head (left_operand);
-          ETCL_Constraint *rhs = binary->rhs ();
+          ETCL_Constraint *const rhs = binary->rhs ();
 
           if (rhs->accept (this) == 0)
             {

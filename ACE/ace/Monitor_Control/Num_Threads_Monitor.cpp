@@ -9,6 +9,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstdio>
 #include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -49,10 +50,10 @@ namespace ACE
       char const *item {};
       char const *arg {};
 
-      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != nullptr)
+      while (std::fgets (buf_, sizeof (buf_), file_ptr_) != nullptr)
         {
-          item = ACE_OS::strtok (this->buf_, " \t\n");
-          arg = ACE_OS::strtok (nullptr, "\n");
+          item = std::strtok (this->buf_, " \t\n");
+          arg = std::strtok (nullptr, "\n");
 
           if (item == nullptr || arg == nullptr)
             {
@@ -61,7 +62,7 @@ namespace ACE
 
           if (std::strcmp (item, "Threads:") == 0)
             {
-              sscanf (arg, "%lu", &this->nthreads_);
+              std::sscanf (arg, "%lu", &this->nthreads_);
               break;
             }
         }
@@ -69,7 +70,7 @@ namespace ACE
       /// Stores value and timestamp with thread-safety.
       this->receive (static_cast<double> (this->nthreads_));
 
-      ACE_OS::fclose (this->file_ptr_);
+      std::fclose (this->file_ptr_);
 #endif
     }
 
