@@ -5,23 +5,25 @@
 #include "ace/CORBA_macros.h"
 #include "tao/Environment.h"
 
-
 class ClientApp
 {
   public:
-    ClientApp();
-    ~ClientApp();
+    ClientApp () = default;
+    ~ClientApp () = default;
 
-    int run(int argc, ACE_TCHAR* argv[]);
+    ClientApp (ClientApp const &) = delete;
+    ClientApp (ClientApp &&) = delete;
+    ClientApp &operator= (ClientApp const &) = delete;
+    ClientApp &operator= (ClientApp &&) = delete;
 
+    int run (int argc, ACE_TCHAR *argv[]);
 
   private:
-    int parse_args(int argc, ACE_TCHAR* argv[]);
-    void usage_statement();
+    int parse_args (int argc, ACE_TCHAR *argv[]);
+    void usage_statement () const;
 
-    ACE_TString ior_;
-
-    ACE_TString exe_name_;
+    ACE_TString ior_ {};
+    ACE_TString exe_name_ {};
 };
 
 #endif
