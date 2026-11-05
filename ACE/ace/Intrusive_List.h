@@ -62,6 +62,11 @@ public:
   /// Destructor.
   ~ACE_Intrusive_List () = default;
 
+  ACE_Intrusive_List (ACE_Intrusive_List const &) = delete;
+  ACE_Intrusive_List (ACE_Intrusive_List &&) = delete;
+  ACE_Intrusive_List<T> &operator= (ACE_Intrusive_List const &) = delete;
+  ACE_Intrusive_List<T> &operator= (ACE_Intrusive_List &&) = delete;
+
   // = Check boundary conditions.
 
   /// Returns true if the container is empty, otherwise returns false.
@@ -92,7 +97,7 @@ public:
   void remove (T *node);
 
   /// Swap two lists
-  void swap(ACE_Intrusive_List<T> & rhs);
+  void swap (ACE_Intrusive_List<T> &rhs);
 
   /// Remove a element from the list without checking
   /**
@@ -100,17 +105,6 @@ public:
    * list.  The effects of removing an invalid element are unspecified
    */
   void unsafe_remove (T *node);
-
-private:
-  /** @name Disallow copying and moving
-   *
-   */
-  //@{
-  ACE_Intrusive_List (ACE_Intrusive_List const &) = delete;
-  ACE_Intrusive_List (ACE_Intrusive_List &&) = delete;
-  ACE_Intrusive_List<T> &operator= (ACE_Intrusive_List const &) = delete;
-  ACE_Intrusive_List<T> &operator= (ACE_Intrusive_List &&) = delete;
-  //@}
 
 private:
   /// Head of the list
