@@ -16,7 +16,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 
 /**
@@ -38,10 +38,15 @@ public:
 
 private:
   /// Flag for testing verbose logging.
-  bool verbose_logging_ = false;
+  bool verbose_logging_ {};
 
   /// Flag for testing recursive callback logging.
   bool recursive_;
+
+  Logger (Logger const &) = delete;
+  Logger (Logger &&) = delete;
+  Logger &operator= (Logger const &) = delete;
+  Logger &operator= (Logger &&) = delete;
 };
 
 void
@@ -73,16 +78,16 @@ Logger::log (ACE_Log_Record &log_record)
                     "Logger::log->%s",
                     log_record.msg_data ()));
       else
-        ACE_OS::printf ("Recursive Logger callback = %s",
-                        ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ()));
+        std::printf ("Recursive Logger callback = %s",
+                     ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ()));
     }
   else
     {
-      ACE_TCHAR verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
-      int result = log_record.format_msg (ACE_LOG_MSG->local_host (),
-                                          ACE_LOG_MSG->flags (),
-                                          verbose_msg,
-                                          ACE_Log_Record::MAXVERBOSELOGMSGLEN);
+      ACE_TCHAR verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN] {};
+      int const result = log_record.format_msg (ACE_LOG_MSG->local_host (),
+                                                ACE_LOG_MSG->flags (),
+                                                verbose_msg,
+                                                ACE_Log_Record::MAXVERBOSELOGMSGLEN);
       if (result == 0)
         {
           if (use_log_msg)
@@ -90,8 +95,8 @@ Logger::log (ACE_Log_Record &log_record)
                         "Logger::log->%s",
                         verbose_msg));
           else
-            ACE_OS::printf ("Recursive Logger callback = %s",
-                            ACE_TEXT_ALWAYS_CHAR (verbose_msg));
+            std::printf ("Recursive Logger callback = %s",
+                         ACE_TEXT_ALWAYS_CHAR (verbose_msg));
         }
     }
 
