@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <memory>
+
 #include "ace/Default_Constants.h"
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
@@ -658,6 +660,23 @@ private:
   ACE_Message_Block &operator= (const ACE_Message_Block &);
   ACE_Message_Block (const ACE_Message_Block &);
 };
+
+/**
+ * @class ACE_Message_Block_Unique_Ptr_Deleter
+ *
+ * @brief Releases a heap-allocated ACE_Message_Block and its continuation chain.
+ */
+struct ACE_Message_Block_Unique_Ptr_Deleter
+{
+  void operator() (ACE_Message_Block *message_block) const
+  {
+    ACE_Message_Block::release (message_block);
+  }
+};
+
+/// Unique ownership of an ACE_Message_Block using release() for cleanup.
+using ACE_Message_Block_Unique_Ptr =
+  std::unique_ptr<ACE_Message_Block, ACE_Message_Block_Unique_Ptr_Deleter>;
 
 /**
  * @class ACE_Data_Block
