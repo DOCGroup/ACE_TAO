@@ -9,6 +9,11 @@ static constexpr int NCHILDREN = 2;
 class DeathHandler: public ACE_Event_Handler
 {
 public:
+  DeathHandler (DeathHandler const &) = delete;
+  DeathHandler (DeathHandler &&) = delete;
+  DeathHandler &operator= (DeathHandler const &) = delete;
+  DeathHandler &operator= (DeathHandler &&) = delete;
+
   DeathHandler ()
   {
     ACE_TRACE ("DeathHandler::DeathHandler");

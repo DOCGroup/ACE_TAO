@@ -8,6 +8,7 @@
 #include "ace/OS_NS_pwd.h"
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
+#include <array>
 #include <string>
 
 // Listing 1 code/ch10
@@ -19,6 +20,11 @@ public:
   {
     ACE_TRACE ("Manager::Manager");
   }
+
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
 
   int doWork ()
   {
@@ -52,16 +58,19 @@ private:
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                          ACE_TEXT ("lseek")), -1);
 
-    char buf[1024];
-    ssize_t length = 0;
+    std::array<char, 1024> buffer {};
 
     // Read the contents of the error stream written
     // by the child and print it out.
-    while ((length = ACE_OS::read (this->outputfd_,
-                                   buf, sizeof(buf)-1)) > 0)
+    for (;;)
       {
-        buf[length] = 0;
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), buf));
+        ssize_t const length = ACE_OS::read (this->outputfd_,
+                                             buffer.data (),
+                                             buffer.size () - 1);
+        if (length <= 0)
+          break;
+        buffer[static_cast<size_t> (length)] = '\0';
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), buffer.data ()));
       }
 
     ACE_OS::close (this->outputfd_);
@@ -110,7 +119,7 @@ private:
   int setUserID (ACE_Process_Options &options)
   {
     ACE_TRACE ("Manager::setUserID");
-    passwd* pw = ACE_OS::getpwnam ("nobody");
+    struct passwd const *pw = ACE_OS::getpwnam ("nobody");
     if (pw == nullptr)
       return -1;
     options.seteuid (pw->pw_uid);
@@ -120,7 +129,7 @@ private:
 #endif /* !ACE_LACKS_PWD_FUNCTIONS */
 
 private:
-  ACE_HANDLE outputfd_;
+  ACE_HANDLE outputfd_ {ACE_INVALID_HANDLE};
   std::basic_string<ACE_TCHAR> program_name_;
 };
 
@@ -145,13 +154,13 @@ public:
                 ACE_TEXT ("(%P) the private environment is %s\n"),
                 ACE_OS::getenv ("PRIVATE_VAR")));
 
-    ACE_TCHAR str[128];
-    ACE_OS::sprintf (str, ACE_TEXT ("(%d) Enter your command\n"),
+    std::array<ACE_TCHAR, 128> str {};
+    ACE_OS::sprintf (str.data (), ACE_TEXT ("(%d) Enter your command\n"),
                      static_cast<int>(ACE_OS::getpid ()));
-    ACE_OS::write (ACE_STDOUT, str, ACE_OS::strlen (str));
-    this->readLine (str);
+    ACE_OS::write (ACE_STDOUT, str.data (), ACE_OS::strlen (str.data ()));
+    this->readLine (str.data ());
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Executed: %C\n"),
-                str));
+                str.data ()));
     return 0;
   }
 // Listing 4
@@ -160,21 +169,23 @@ public:
   {
     ACE_TRACE ("Slave::showWho");
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
-    passwd *pw = ::getpwuid (ACE_OS::geteuid ());
+    struct passwd const *pw = ::getpwuid (ACE_OS::geteuid ());
+    if (pw == nullptr)
+      return;
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%P) Running this process as:%s\n"),
                 pw->pw_name));
 #endif
   }
 
-  ACE_TCHAR* readLine (ACE_TCHAR* str)
+  ACE_TCHAR *readLine (ACE_TCHAR *str)
   {
     ACE_TRACE ("Slave::readLine");
 
-    int i = 0;
+    int i {};
     while (true)
       {
-        ssize_t retval = ACE_OS::read (ACE_STDIN, &str[i], 1);
+        ssize_t const retval = ACE_OS::read (ACE_STDIN, &str[i], 1);
         if (retval > 0)
           {
             if (str[i] == '\n')

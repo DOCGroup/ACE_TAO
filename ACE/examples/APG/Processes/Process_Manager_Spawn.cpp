@@ -15,7 +15,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else             // Running as a parent.
     {
       // Get the processwide process manager.
-      ACE_Process_Manager* pm = ACE_Process_Manager::instance ();
+      ACE_Process_Manager *const pm = ACE_Process_Manager::instance ();
 
       // Specify the options for the new processes
       // to be spawned.
@@ -30,7 +30,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       pm->terminate (pids[0]);
 
       // Wait for the child we just terminated.
-      ACE_exitcode status;
+      ACE_exitcode status {};
       pm->wait (pids[0], &status);
 
       // Get the results of the termination.

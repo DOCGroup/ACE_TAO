@@ -7,20 +7,26 @@
 class GResourceUser
 {
 public:
-  explicit GResourceUser (ACE_Process_Mutex &mutex) : gmutex_(mutex)
+  explicit GResourceUser (ACE_Process_Mutex &mutex)
+    : gmutex_ (mutex)
   {
     ACE_TRACE ("GResourceUser::GResourceUser");
   }
+
+  GResourceUser (GResourceUser const &) = delete;
+  GResourceUser (GResourceUser &&) = delete;
+  GResourceUser &operator= (GResourceUser const &) = delete;
+  GResourceUser &operator= (GResourceUser &&) = delete;
 
   void run ()
   {
     ACE_TRACE ("GResourceUser::run");
 
-    int count = 0;
+    int count {};
     while (count++ < 10)
       {
-        int result = this->gmutex_.acquire ();
-        ACE_TEST_ASSERT (result == 0);
+        int const acquire_result = this->gmutex_.acquire ();
+        ACE_TEST_ASSERT (acquire_result == 0);
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P| %t) has the mutex\n")));
@@ -28,8 +34,8 @@ public:
         // Access Global resource
         ACE_OS::sleep (1);
 
-        result = this->gmutex_.release ();
-        ACE_TEST_ASSERT (result == 0);
+        int const release_result = this->gmutex_.release ();
+        ACE_TEST_ASSERT (release_result == 0);
         ACE_OS::sleep (1);     // Give other process a chance.
       }
   }
@@ -63,11 +69,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("Spawned processes; pids %d:%d\n"),
                   pida, pidb));
 
-      if (processa.wait() == -1)
+      if (processa.wait () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("processa wait")), -1);
 
-      if (processb.wait() == -1)
+      if (processb.wait () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("processb wait")), -1);
     }
