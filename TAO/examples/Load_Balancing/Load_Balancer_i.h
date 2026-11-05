@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef LOAD_BALANCER_I_H_
 #define LOAD_BALANCER_I_H_
 
@@ -220,7 +219,7 @@ protected:
                                         CORBA::Object_var,
                                         ACE_Null_Mutex>;
 
-  /// List of ids of all the members of this group.
+  /// ACE_DLList stores pointers; this class owns and deletes each member id.
   LIST member_id_list_;
 
   /// Mapping of member_id to obj for all the members of this group.
@@ -245,7 +244,6 @@ protected:
    */
   Object_Group_Factory_i *my_factory_;
 };
-
 
 /**
  * @class Random_Object_Group

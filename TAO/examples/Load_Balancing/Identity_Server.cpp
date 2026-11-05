@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "Identity_Server.h"
 #include "Identity_i.h"
 #include "tao/debug.h"
@@ -17,7 +16,7 @@ int
 Identity_Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("di:a:o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -29,11 +28,11 @@ Identity_Server::parse_args (int argc, ACE_TCHAR *argv[])
         this->group_factory_ior_ = get_opts.opt_arg ();
         break;
       case 'a': // number of objects to create/register with the random group.
-        random_objects_ = ACE_OS::atoi (get_opts.opt_arg ());
+        this->random_objects_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'o': // number of objects to create/register with round
                 //robin group.
-        rr_objects_ = ACE_OS::atoi (get_opts.opt_arg ());
+        this->rr_objects_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -56,7 +55,7 @@ int
 Identity_Server::init (int argc,
                        ACE_TCHAR* argv[])
 {
-  int result;
+  int result {};
 
   try
     {
@@ -72,7 +71,7 @@ Identity_Server::init (int argc,
 
       // Contact the <Object_Group_Factory> to create 2
       // <Object_Group>s, one random and one rr.
-      CORBA::ORB_var orb = orb_manager_.orb ();
+      CORBA::ORB_var orb = this->orb_manager_.orb ();
       CORBA::Object_var obj =
         orb->string_to_object (this->group_factory_ior_);
       Load_Balancer::Object_Group_Factory_var factory =
@@ -103,18 +102,18 @@ Identity_Server::init (int argc,
       // <Object_Group>s.
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Identity_Server: Registering %d object(s) "
-                  "with <Identity, Random> Object Group\n",
-                    random_objects_));
-      create_objects (random_objects_,
-                      random_group.in ());
+                  ACE_TEXT ("Identity_Server: Registering %B object(s) with ")
+                  ACE_TEXT ("<Identity, Random> Object Group\n"),
+                  this->random_objects_));
+      this->create_objects (this->random_objects_,
+                            random_group.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Identity_Server: Registering %d object(s) "
-                  "with <Identity, Round Robin> Object Group\n",
-                    random_objects_));
-      create_objects (rr_objects_,
-                      rr_group.in ());
+                  ACE_TEXT ("Identity_Server: Registering %B object(s) with ")
+                  ACE_TEXT ("<Identity, Round Robin> Object Group\n"),
+                  this->rr_objects_));
+      this->create_objects (this->rr_objects_,
+                            rr_group.in ());
     }
   catch (CORBA::Exception const &ex)
     {
@@ -131,7 +130,7 @@ Identity_Server::create_objects (size_t number_of_objects,
 {
   // Create the specified number of servants, and register each one
   // with the provided <Object_Group>.
-  for (size_t i = 0; i < number_of_objects; ++i)
+  for (size_t i {}; i < number_of_objects; ++i)
     {
       // Create an id for this servant.
       ACE_TCHAR id[BUFSIZ];
@@ -140,12 +139,12 @@ Identity_Server::create_objects (size_t number_of_objects,
                        i);
 
       // Create and activate a servant.
-      Identity_i * identity_servant = nullptr;
+      Identity_i * identity_servant {};
       ACE_NEW_THROW_EX (identity_servant,
                         Identity_i (ACE_TEXT_ALWAYS_CHAR(id)),
                         CORBA::NO_MEMORY ());
       PortableServer::ServantBase_var s = identity_servant;
-      orb_manager_.activate (identity_servant);
+      this->orb_manager_.activate (identity_servant);
 
       Load_Balancer::Member member;
       member.id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(id));
@@ -162,17 +161,13 @@ Identity_Server::run ()
   ACE_DEBUG ((LM_DEBUG,
               "Identity_Server: Initialized\n"));
 
-  int result;
-
-  result = this->orb_manager_.run ();
-
-  return result;
+  return this->orb_manager_.run ();
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
   Identity_Server server;
 
   if (server.init (argc, argv) == -1)
@@ -190,6 +185,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (result == -1)
     return 1;
-  else
-    return 0;
+  return 0;
 }

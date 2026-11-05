@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "Identity_Client.h"
 #include "IdentityC.h"
 #include "Load_BalancerC.h"
@@ -22,7 +21,7 @@ int
 Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("di:n:r"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -62,7 +61,7 @@ int
 Identity_Client::init (int argc,
                        ACE_TCHAR* argv[])
 {
-  int result;
+  int result {};
 
   try
     {
@@ -90,7 +89,7 @@ Identity_Client::run ()
   ACE_DEBUG ((LM_DEBUG, "Identity_Client: Initialized\n"));
 
   // Contact the <Object_Group_Factory> to obtain an <Object_Group>.
-  CORBA::ORB_var orb = orb_manager_.orb ();
+  CORBA::ORB_var orb = this->orb_manager_.orb ();
   CORBA::Object_var obj =
     orb->string_to_object (this->group_factory_ior_);
   Load_Balancer::Object_Group_Factory_var factory =
@@ -129,9 +128,9 @@ Identity_Client::run ()
     object_group->members ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Identity_Client: The Group contains %d members:\n",
+              "Identity_Client: The Group contains %u members:\n",
               id_list->length ()));
-  for (CORBA::ULong i = 0; i < id_list->length (); ++i)
+  for (CORBA::ULong i {}; i < id_list->length (); ++i)
     ACE_DEBUG ((LM_DEBUG, "                 <%C>\n",
                 static_cast<char const *> (id_list[i])));
 
@@ -143,14 +142,14 @@ Identity_Client::run ()
   CORBA::String_var identity;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Identity_Client: Performing %d invocation(s), "
-              "consulting the <%C> Group\n"
-              "                 for Identity object "
-              "to use before each invocation\n",
+              ACE_TEXT ("Identity_Client: Performing %B invocation(s), ")
+              ACE_TEXT ("consulting the <%C> Group\n")
+              ACE_TEXT ("                 for Identity object ")
+              ACE_TEXT ("to use before each invocation\n"),
               this->number_of_invocations_,
               group_name));
 
-  for (size_t ind = 0; ind < this->number_of_invocations_; ++ind)
+  for (size_t ind {}; ind < this->number_of_invocations_; ++ind)
     {
       obj = object_group->resolve ();
 
@@ -170,9 +169,9 @@ Identity_Client::run ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
   Identity_Client client;
 
   if (client.init (argc, argv) == -1)
@@ -190,6 +189,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (result == -1)
     return 1;
-  else
-    return 0;
+  return 0;
 }
