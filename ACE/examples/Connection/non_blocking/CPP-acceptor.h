@@ -18,7 +18,11 @@ class Svc_Handler : public ACE_Svc_Handler <PEER_STREAM, ACE_NULL_SYNCH>
   //     This class does the work once the <ACE_Oneshot_Acceptor> has
   //     accepted a connection.
 public:
-  Svc_Handler (ACE_Reactor *r);
+  explicit Svc_Handler (ACE_Reactor *r);
+  Svc_Handler (Svc_Handler const &) = delete;
+  Svc_Handler (Svc_Handler &&) = delete;
+  Svc_Handler &operator= (Svc_Handler const &) = delete;
+  Svc_Handler &operator= (Svc_Handler &&) = delete;
 
   int open (void *) override;
   // Perform the work of the SVC_HANDLER.
@@ -29,7 +33,7 @@ public:
   int close (u_long) override;
   // Called if ACE_Svc_Handler is closed down unexpectedly.
 
-  int handle_timeout (const ACE_Time_Value &, const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &, void const *arg) override;
   // Handles acceptor timeouts.
 
 private:
@@ -45,9 +49,11 @@ public:
   IPC_Server ();
   // Constructor.
 
-  ~IPC_Server ();
-  // Destructor.
-
+  ~IPC_Server () override = default;
+  IPC_Server (IPC_Server const &) = delete;
+  IPC_Server (IPC_Server &&) = delete;
+  IPC_Server &operator= (IPC_Server const &) = delete;
+  IPC_Server &operator= (IPC_Server &&) = delete;
   // = Demultiplexing hooks.
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask mask) override;

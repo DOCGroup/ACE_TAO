@@ -23,6 +23,11 @@ class Peer_Handler : public ACE_Svc_Handler<PEER_STREAM, ACE_SYNCH>
   //   track of how it interacts with the user and the server.
 public:
   explicit Peer_Handler (ACE_Reactor *r = nullptr);
+  ~Peer_Handler () override = default;
+  Peer_Handler (Peer_Handler const &) = delete;
+  Peer_Handler (Peer_Handler &&) = delete;
+  Peer_Handler &operator= (Peer_Handler const &) = delete;
+  Peer_Handler &operator= (Peer_Handler &&) = delete;
 
   int open (void * = nullptr) override;
   // Activate the handler when connection is established.
@@ -38,8 +43,8 @@ public:
   int handle_signal (int signum,
                      siginfo_t * = nullptr,
                      ucontext_t * = nullptr) override;
-  int handle_timeout (const ACE_Time_Value &time,
-                      const void *) override;
+  int handle_timeout (ACE_Time_Value const &time,
+                      void const *) override;
 protected:
   // = These methods implement the State pattern.
   int uninitialized ();
@@ -59,9 +64,11 @@ public:
   IPC_Client ();
   // Constructor.
 
-  ~IPC_Client ();
-  // Destructor.
-
+  ~IPC_Client () override = default;
+  IPC_Client (IPC_Client const &) = delete;
+  IPC_Client (IPC_Client &&) = delete;
+  IPC_Client &operator= (IPC_Client const &) = delete;
+  IPC_Client &operator= (IPC_Client &&) = delete;
   // = Dynamic linking hooks.
   int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialize the IPC client.

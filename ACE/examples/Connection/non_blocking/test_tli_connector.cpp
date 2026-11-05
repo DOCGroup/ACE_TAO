@@ -3,8 +3,6 @@
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"
 #include "CPP-connector.h"
-
-
 #if defined (ACE_HAS_TLI)
 
 using PEER_HANDLER = Peer_Handler<ACE_TLI_STREAM>;

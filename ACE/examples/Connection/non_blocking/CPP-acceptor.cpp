@@ -33,7 +33,7 @@ template <typename PEER_STREAM> int
 Svc_Handler<PEER_STREAM>::open (void *)
 {
   typename PEER_STREAM::PEER_ADDR client_addr;
-  ACE_TCHAR buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ] {};
 
   if (this->peer ().get_remote_addr (client_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -68,17 +68,18 @@ Svc_Handler<PEER_STREAM>::handle_input (ACE_HANDLE)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in handle_input\n")));
 
-  for (ssize_t r_bytes;
-       (r_bytes = this->peer ().recv (buf,
-                                      sizeof buf)) > 0;
-       )
-    if (ACE_OS::write (ACE_STDOUT,
-                       buf,
-                       r_bytes) != r_bytes)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("ACE::send_n")),
-                        -1);
+  while (true)
+    {
+      ssize_t const r_bytes = this->peer ().recv (buf, sizeof buf);
+      if (r_bytes <= 0)
+        break;
+
+      if (ACE_OS::write (ACE_STDOUT, buf, r_bytes) != r_bytes)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE::send_n")),
+                          -1);
+    }
   // Send back ack.
   if (this->peer ().send_n ("",
                             1) != 1)
@@ -90,8 +91,8 @@ Svc_Handler<PEER_STREAM>::handle_input (ACE_HANDLE)
 }
 
 template <typename PEER_STREAM> int
-Svc_Handler<PEER_STREAM>::handle_timeout (const ACE_Time_Value &,
-                                      const void *)
+Svc_Handler<PEER_STREAM>::handle_timeout (ACE_Time_Value const &,
+                                          void const *)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"), ACE_TEXT ("handle_timeout")));
   return 0;
@@ -100,13 +101,13 @@ Svc_Handler<PEER_STREAM>::handle_timeout (const ACE_Time_Value &,
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::init (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *local_addr = argc > 1
+  ACE_TCHAR const * const local_addr = argc > 1
     ? argv[1]
     : ACE_DEFAULT_SERVER_PORT_STR;
-  ACE_Time_Value timeout (argc > 2
-                          ? ACE_OS::atoi (argv[2])
-                          : ACE_DEFAULT_TIMEOUT);
-  int use_reactor = argc > 3
+  ACE_Time_Value const timeout (argc > 2
+                                ? ACE_OS::atoi (argv[2])
+                                : ACE_DEFAULT_TIMEOUT);
+  int const use_reactor = argc > 3
     ? ACE_Synch_Options::USE_REACTOR
     : 0;
 
@@ -162,12 +163,9 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::fini ()
   return 0;
 }
 
-template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::~IPC_Server () = default;
-
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE handle,
-                                       ACE_Reactor_Mask mask)
+                                                       ACE_Reactor_Mask mask)
 {
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (mask);
@@ -182,7 +180,7 @@ IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE handle,
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 IPC_Server<SVC_HANDLER, PEER_ACCEPTOR>::svc ()
 {
-  ACE_TCHAR buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ] {};
 
   if (this->server_addr_.addr_to_string (buf,
                                          sizeof buf) == -1)
