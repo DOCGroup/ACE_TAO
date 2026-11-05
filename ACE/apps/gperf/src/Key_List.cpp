@@ -26,6 +26,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
+#include <cctype>
 #include <cstdio>
 #include <cstring>
 #include <memory>
@@ -977,15 +978,23 @@ Key_List::output_keyword_table ()
     ? (option[CONSTANT] ? "constexpr " : "")
     : (option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "");
   if (option.cxx17 ())
-    ACE_OS::printf (option[TYPE]
-                    ? "%sstatic %sstd::array<%s, %d> wordlist =\n%s%s{{\n"
-                    : "%sstatic %sstd::array<%s, %d> wordlist =\n%s%s{\n",
-                    indent,
-                    qualifier,
-                    struct_tag,
-                    wordlist_size,
-                    indent,
-                    indent);
+    {
+      size_t element_type_length = ACE_OS::strlen (struct_tag);
+      while (element_type_length > 0
+             && std::isspace (static_cast<unsigned char> (struct_tag[element_type_length - 1])))
+        --element_type_length;
+
+      ACE_OS::printf (option[TYPE]
+                      ? "%sstatic %sstd::array<%.*s, %d> wordlist =\n%s%s{{\n"
+                      : "%sstatic %sstd::array<%.*s, %d> wordlist =\n%s%s{\n",
+                      indent,
+                      qualifier,
+                      static_cast<int> (element_type_length),
+                      struct_tag,
+                      wordlist_size,
+                      indent,
+                      indent);
+    }
   else
     ACE_OS::printf ("%sstatic %s%s%swordlist[] =\n%s%s{\n",
                     indent,

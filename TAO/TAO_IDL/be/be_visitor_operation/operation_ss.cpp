@@ -191,7 +191,11 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt;
+  if (!node->exceptions () || !be_global->tc_support ())
+    {
+      *os << be_nl;
+    }
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -271,8 +275,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
       << "upcall_wrapper.upcall (server_request" << be_nl
       << "                       , args" << be_nl
       << "                       , " << (node->argument_count () + 1) << be_nl
-      << "                       , command" << be_nl
-      << "#if TAO_HAS_INTERCEPTORS == 1" << be_nl
+      << "                       , command"
+      << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
       << "                       , servant_upcall" << be_nl;
 
   if (node->exceptions () && be_global->tc_support ())
@@ -286,7 +290,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
           << "                       , 0";
     }
 
-  *os << be_nl << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
+  *os << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
       << "                       );" << be_uidt_nl
       << "}" << be_nl_2;
 
