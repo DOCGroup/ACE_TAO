@@ -8,6 +8,12 @@
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  HA_CommandHandler () = default;
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
+
   int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));

@@ -7,8 +7,8 @@
 #define __SECURITYCONTEXT_H_
 
 struct SecurityContext
-  {
-    char const *user {};
-  };
+{
+  char const *user {};
+};
 
 #endif /* __SECURITYCONTEXT_H_ */

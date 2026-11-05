@@ -12,6 +12,10 @@ class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 public:
   explicit HA_CommandHandler (char const *name) : name_ (name)
   { }
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
 
   int svc () override
   {
@@ -19,7 +23,7 @@ public:
                 name_));
 
     ACE_OS::sleep (2);
-    ACE_Message_Block *mb = nullptr;
+    ACE_Message_Block *mb {};
     while (this->getq (mb) != -1)
       {
         if (mb->msg_type () == ACE_Message_Block::MB_BREAK)
@@ -39,12 +43,12 @@ public:
                 ACE_TEXT ("(%t) Processing message %C\n"),
                 name_));
     // Simulate compute bound task.
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 100; ++i)
       ;
   }
 
 private:
-  char const *name_;
+  char const *const name_;
 };
 // Listing 2
 
@@ -70,18 +74,20 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                        1, 1, ACE_THR_PRI_OTHER_DEF);
 
   ACE_Message_Block mb;
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < 100; ++i)
     {
-      ACE_Message_Block *mb_hp, *mb_lp;
-      mb_hp = mb.clone ();
-      mb_lp = mb.clone ();
+      // putq takes ownership of each clone; the handlers release them after dequeue.
+      ACE_Message_Block *const mb_hp = mb.clone ();
+      ACE_Message_Block *const mb_lp = mb.clone ();
       hp_handler.putq (mb_hp);
       lp_handler.putq (mb_lp);
     }
 
-  ACE_Message_Block stop (0, ACE_Message_Block::MB_BREAK);
-  hp_handler.putq (stop.clone ());
-  lp_handler.putq (stop.clone ());
+  ACE_Message_Block stop {0, ACE_Message_Block::MB_BREAK};
+  ACE_Message_Block *const hp_stop = stop.clone ();
+  ACE_Message_Block *const lp_stop = stop.clone ();
+  hp_handler.putq (hp_stop);
+  lp_handler.putq (lp_stop);
   hp_handler.wait ();
   lp_handler.wait ();
 
