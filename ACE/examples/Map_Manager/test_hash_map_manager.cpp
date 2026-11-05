@@ -6,6 +6,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/os_include/os_assert.h"
+#include <array>
 
 constexpr int MAX_KEY_LEN = 1000;
 
@@ -15,54 +16,62 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 4)
-    ACE_ERROR_RETURN ((LM_ERROR, "usage: %s tablesize file1 file2\n",
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("usage: %s tablesize file1 file2\n"),
                        argv[0]), -1);
   else
     {
-      int total = ACE_OS::atoi (argv[1]);
+      int const total = ACE_OS::atoi (argv[1]);
 
       if (!ACE_OS::freopen (argv[2], ACE_TEXT("r"), stdin))
-        ACE_OS::perror (argv[0]), ACE_OS::exit (1);
+        {
+          ACE_OS::perror (argv[0]);
+          return 1;
+        }
 
       MAP_MANAGER hash (total);
 
-      ACE_TCHAR key[MAX_KEY_LEN];
+      std::array<ACE_TCHAR, MAX_KEY_LEN> key {};
 
-      while (ACE_OS::fgets (key, sizeof key, stdin))
+      while (ACE_OS::fgets (key.data (), static_cast<int> (key.size ()), stdin))
         // stream ops are just too slow!!
         {
-          ACE_TString string (key);
+          ACE_TString const string (key.data ());
           hash.bind (string, string);
         }
-
-      ACE_OS::fclose (stdin);
 
       MAP_MANAGER::ITERATOR iterator (hash);
 
       for (MAP_MANAGER::ENTRY *entry {};
            iterator.next (entry) != 0;
            iterator.advance ())
-        ACE_DEBUG ((LM_DEBUG, "%s %s\n",
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s %s\n"),
                     entry->ext_id_.fast_rep (),
                     entry->int_id_.fast_rep ()));
 
       if (!ACE_OS::freopen (argv[3], ACE_TEXT("r"), stdin))
-        ACE_OS::perror (argv[0]), ACE_OS::exit (1);
-
-      while (ACE_OS::fgets (key, sizeof key, stdin))
         {
-          ACE_TString name (key);
+          ACE_OS::perror (argv[0]);
+          return 1;
+        }
+
+      while (ACE_OS::fgets (key.data (), static_cast<int> (key.size ()), stdin))
+        {
+          ACE_TString const name (key.data ());
           ACE_TString value;
           assert (hash.find (name, value) != -1);
           assert (name == value);
         }
 
       if (!ACE_OS::freopen (argv[3], ACE_TEXT("r"), stdin))
-        ACE_OS::perror (argv[0]), ACE_OS::exit (1);
-
-      while (ACE_OS::fgets (key, sizeof key, stdin))
         {
-          ACE_TString string (key);
+          ACE_OS::perror (argv[0]);
+          return 1;
+        }
+
+      while (ACE_OS::fgets (key.data (), static_cast<int> (key.size ()), stdin))
+        {
+          ACE_TString const string (key.data ());
           assert (hash.unbind (string) != -1);
         }
 
