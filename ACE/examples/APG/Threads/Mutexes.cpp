@@ -10,7 +10,12 @@ class HA_Device_Repository
 public:
   HA_Device_Repository () = default;
 
-  void update_device (int device_id)
+  HA_Device_Repository (HA_Device_Repository const &) = delete;
+  HA_Device_Repository (HA_Device_Repository &&) = delete;
+  HA_Device_Repository &operator= (HA_Device_Repository const &) = delete;
+  HA_Device_Repository &operator= (HA_Device_Repository &&) = delete;
+
+  void update_device (int const device_id)
   {
     mutex_.acquire ();
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Updating device %d\n"),
@@ -20,29 +25,32 @@ public:
   }
 
 private:
-  ACE_Thread_Mutex mutex_;
+  ACE_Thread_Mutex mutex_ {};
 };
 // Listing 1
 // Listing 2 code/ch12
 class HA_CommandHandler : public ACE_Task_Base
 {
 public:
-  enum {NUM_USES = 10};
+  static constexpr int NUM_USES {10};
 
-  HA_CommandHandler (HA_Device_Repository& rep) : rep_(rep)
-  { }
+  explicit HA_CommandHandler (HA_Device_Repository &rep) : rep_ (rep) {}
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
 
   int svc () override
   {
     ACE_DEBUG
       ((LM_DEBUG, ACE_TEXT ("(%t) Handler Thread running\n")));
-    for (int i=0; i < NUM_USES; i++)
+    for (int i = 0; i < NUM_USES; ++i)
       this->rep_.update_device (i);
     return 0;
   }
 
 private:
-  HA_Device_Repository & rep_;
+  HA_Device_Repository &rep_;
 };
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
