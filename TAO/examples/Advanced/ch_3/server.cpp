@@ -12,13 +12,8 @@
 
 
 #include "server.h"
-#include <ace/streams.h>
 #include <ace/OS_NS_time.h>
-
-// The following headers are #included automatically by ACE+TAO.
-// Therefore, they don't need to be included explicitly.
-//#include <time.h>
-//#include <iostream.h>
+#include <iostream>
 
 TimeOfDay
 Time_impl::get_gmt ()
@@ -62,21 +57,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Write its stringified reference to stdout
       Time_var tm = time_servant._this ();
       CORBA::String_var str = orb->object_to_string (tm.in ());
-      cout << str.in () << endl;
+      std::cout << str.in () << std::endl;
 
       // Accept requests
       orb->run ();
     }
   catch (CORBA::Exception const&)
     {
-      cerr << "Uncaught CORBA exception" << endl;
+      std::cerr << "Uncaught CORBA exception" << std::endl;
       return 1;
     }
   return 0;
 }
-
-
-
-
-
-
