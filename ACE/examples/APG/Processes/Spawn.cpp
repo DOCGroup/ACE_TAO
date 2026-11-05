@@ -1,6 +1,8 @@
+#include <array>
+#include <string>
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_pwd.h"
 #include "ace/os_include/os_pwd.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
@@ -8,8 +10,6 @@
 #include "ace/OS_NS_pwd.h"
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"
-#include <array>
-#include <string>
 
 // Listing 1 code/ch10
 class Manager : public ACE_Process
@@ -31,8 +31,8 @@ public:
     ACE_TRACE ("Manager::doWork");
 
     // Spawn the new process; prepare() hook is called first.
-    ACE_Process_Options options;
-    pid_t pid = this->spawn (options);
+    ACE_Process_Options options {};
+    pid_t const pid = this->spawn (options);
     if (pid == ACE_INVALID_PID)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("%p\n"),
                         ACE_TEXT ("spawn")), -1);
@@ -62,7 +62,7 @@ private:
 
     // Read the contents of the error stream written
     // by the child and print it out.
-    for (;;)
+    while (true)
       {
         ssize_t const length = ACE_OS::read (this->outputfd_,
                                              buffer.data (),
@@ -142,7 +142,7 @@ public:
     ACE_TRACE ("Slave::Slave");
   }
 
-  int doWork ()
+  int doWork () const
   {
     ACE_TRACE ("Slave::doWork");
 
@@ -165,7 +165,7 @@ public:
   }
 // Listing 4
 
-  void showWho ()
+  void showWho () const
   {
     ACE_TRACE ("Slave::showWho");
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
@@ -173,12 +173,12 @@ public:
     if (pw == nullptr)
       return;
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("(%P) Running this process as:%s\n"),
+                ACE_TEXT ("(%P) Running this process as:%C\n"),
                 pw->pw_name));
 #endif
   }
 
-  ACE_TCHAR *readLine (ACE_TCHAR *str)
+  ACE_TCHAR *readLine (ACE_TCHAR *str) const
   {
     ACE_TRACE ("Slave::readLine");
 

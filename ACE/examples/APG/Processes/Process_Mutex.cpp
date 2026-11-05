@@ -51,19 +51,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (argc > 1)      // Run as the child.
     {
       // Create or get the global mutex.
-      ACE_Process_Mutex mutex ("GlobalMutex");
+      ACE_Process_Mutex mutex {"GlobalMutex"};
 
-      GResourceUser acquirer (mutex);
+      GResourceUser acquirer {mutex};
       acquirer.run ();
     }
   else              // Run as the parent.
     {
-      ACE_Process_Options options;
+      ACE_Process_Options options {};
       options.command_line (ACE_TEXT ("%s a"), argv[0]);
-      ACE_Process processa, processb;
+      ACE_Process processa {};
+      ACE_Process processb {};
 
-      pid_t pida = processa.spawn (options);
-      pid_t pidb = processb.spawn (options);
+      pid_t const pida = processa.spawn (options);
+      pid_t const pidb = processb.spawn (options);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Spawned processes; pids %d:%d\n"),

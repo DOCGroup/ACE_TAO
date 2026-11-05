@@ -1,7 +1,8 @@
+#include <array>
+
 #include "ace/Log_Msg.h"
 #include "ace/Process_Manager.h"
 #include "ace/Reactor.h"
-#include <array>
 
 static constexpr int NCHILDREN = 2;
 
@@ -19,7 +20,7 @@ public:
     ACE_TRACE ("DeathHandler::DeathHandler");
   }
 
-  int handle_exit (ACE_Process * process) override
+  int handle_exit (ACE_Process * const process) override
   {
     ACE_TRACE ("DeathHandler::handle_exit");
 
@@ -46,13 +47,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Instantiate a process manager with space for
   // 10 processes.
-  ACE_Process_Manager pm (10, ACE_Reactor::instance ());
+  ACE_Process_Manager pm {10, ACE_Reactor::instance ()};
 
   // Create a process termination handler.
-  DeathHandler handler;
+  DeathHandler handler {};
 
   // Specify the options for the new processes to be spawned.
-  ACE_Process_Options options;
+  ACE_Process_Options options {};
   options.command_line (ACE_TEXT ("%s a"), argv[0]);
 
   // Spawn two child processes.
@@ -60,7 +61,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   pm.spawn_n (NCHILDREN, options, pids.data ());
 
   // Register handler to be called when these processes exit.
-  for (int i = 0; i < NCHILDREN; i++)
+  for (int i {}; i < NCHILDREN; ++i)
     pm.register_handler (&handler, pids[i]);
 
   // Run the reactor event loop waiting for events to occur.

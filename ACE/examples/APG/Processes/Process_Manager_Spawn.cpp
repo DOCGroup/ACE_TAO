@@ -1,6 +1,7 @@
+#include <array>
+
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
-#include <array>
 // Listing 0 code/ch10
 #include "ace/Process_Manager.h"
 
@@ -19,7 +20,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Specify the options for the new processes
       // to be spawned.
-      ACE_Process_Options options;
+      ACE_Process_Options options {};
       options.command_line (ACE_TEXT ("%s a"), argv[0]);
 
       // Spawn two child processes.
