@@ -82,7 +82,6 @@ Server<Servant>::parse_args ()
   return 0;
 }
 
-
 // Initialize the server.
 template <class Servant> int
 Server<Servant>::init (char const *servant_name,
@@ -98,7 +97,6 @@ Server<Servant>::init (char const *servant_name,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -161,7 +159,6 @@ Server<Servant>::run ()
 
   return 0;
 }
-
 
 /////////////////////////////////////////////////////////////////
 //      Client code Starts here
@@ -278,10 +275,8 @@ Client<InterfaceObj, Var>::init (char const * /*name*/,
       return -1;
     }
 
-
   return 0;
 }
-
 
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::shutdown () const

@@ -3,7 +3,7 @@
 // The client program for the application.
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Grid_Client_i client;
 
@@ -15,5 +15,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   else
     return 0;
 }
-
-
