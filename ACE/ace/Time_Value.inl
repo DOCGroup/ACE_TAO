@@ -38,7 +38,7 @@ ACE_Time_Value::ACE_Time_Value (struct timeval const &tv)
 ACE_INLINE
 ACE_Time_Value::operator timeval const * () const
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator const timeval *");
+  // ACE_OS_TRACE ("ACE_Time_Value::operator timeval const *");
 #if defined (ACE_HAS_TIME_T_LONG_MISMATCH)
   // Recall that on some Windows we substitute another type for timeval in tv_
   this->ext_tv_.tv_sec = ACE_Utils::truncate_cast<long> (this->tv_.tv_sec);

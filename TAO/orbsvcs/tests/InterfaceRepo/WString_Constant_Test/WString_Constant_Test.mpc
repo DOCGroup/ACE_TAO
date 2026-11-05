@@ -1,5 +1,5 @@
 // -*- MPC -*-
-project(*WString_Constant_Test): taoclient, ifr_client {
+project(WStringConstantTest): taoclient, ifr_client {
   exename = WString_Constant_Test
   Source_Files {
     client.cpp
