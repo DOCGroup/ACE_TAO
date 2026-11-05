@@ -25,6 +25,8 @@
 #include "ace/os_include/os_limits.h"  /* For MAXPATHLEN. */
 #include "ace/MMAP_Memory_Pool.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<ACE_MEM_POOL_1, class ACE_LOCK> class ACE_Malloc;
@@ -54,10 +56,14 @@ public:
   enum Sync_Mode { Jump, Adjust };
 
   /// Default constructor.
-  ACE_System_Time (const ACE_TCHAR *poolname = nullptr);
+  ACE_System_Time (ACE_TCHAR const *poolname = nullptr);
 
   /// Default destructor.
   ~ACE_System_Time ();
+  ACE_System_Time (ACE_System_Time const &) = delete;
+  ACE_System_Time (ACE_System_Time &&) = delete;
+  ACE_System_Time &operator= (ACE_System_Time const &) = delete;
+  ACE_System_Time &operator= (ACE_System_Time &&) = delete;
 
   /// Get the local system time, i.e., the value returned by
   /// ACE_OS::time().
@@ -82,13 +88,13 @@ private:
   using ALLOCATOR = ACE_Allocator_Adapter<MALLOC>;
 
   /// Our allocator (used for obtaining system time from shared memory).
-  ALLOCATOR * shmem_;
+  std::unique_ptr<ALLOCATOR> shmem_ {};
 
   /// The name of the pool used by the allocator.
   ACE_TCHAR poolname_[MAXPATHLEN + 1];
 
   /// Pointer to delta time kept in shared memory.
-  long * delta_time_;
+  long *delta_time_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
