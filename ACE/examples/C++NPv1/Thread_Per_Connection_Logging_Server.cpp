@@ -25,7 +25,7 @@ ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 
   thread_args->server_->handle_data (&thread_args->logging_peer_);
   thread_args->logging_peer_.close ();
-  return 0;    // Return value is ignored
+  return ACE_THR_FUNC_RETURN_NULL; // Return value is ignored
 }
 
 
@@ -69,7 +69,7 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 
   // Keep handling log records until client closes connection
   // or this thread is asked to cancel itself.
-  ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
+  ACE_Thread_Manager * const mgr = ACE_Thread_Manager::instance ();
   ACE_thread_t const me = ACE_Thread::self ();
   while (!mgr->testcancel (me) &&
          logging_handler.log_record () != -1)
@@ -83,8 +83,7 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register to receive the <SIGTERM> signal.
-  ACE_Sig_Action sa (static_cast<ACE_SignalHandler> (sigterm_handler),
-                     SIGTERM);
+  ACE_Sig_Action sa (sigterm_handler, SIGTERM);
 
   Thread_Per_Connection_Logging_Server server;
 

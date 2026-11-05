@@ -85,7 +85,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   u_short const logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : 0;
   char const *const logger_host =
     argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
-  int result;
+  int result {};
 
   ACE_INET_Addr server_addr;
 
