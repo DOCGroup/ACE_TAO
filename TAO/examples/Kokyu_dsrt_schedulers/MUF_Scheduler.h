@@ -10,9 +10,9 @@
 
 struct MUF_Scheduler_Traits
 {
-  typedef RTScheduling::Current::IdType Guid_t;
+  using Guid_t = RTScheduling::Current::IdType;
 
-  typedef TimeBase::TimeT Time_t;
+  using Time_t = TimeBase::TimeT;
   class _Now
   {
   public:
@@ -25,30 +25,30 @@ struct MUF_Scheduler_Traits
 
   struct _QoSDescriptor_t
   {
-    typedef long Criticality_t;
+    using Criticality_t = long;
 
-    typedef TimeBase::TimeT Time_t;
-    typedef _Now Now;
+    using Time_t = TimeBase::TimeT;
+    using Now = _Now;
 
     Criticality_t criticality_;
     Time_t deadline_;
     Time_t exec_time_;
   };
 
-  typedef _QoSDescriptor_t QoSDescriptor_t;
+  using QoSDescriptor_t = _QoSDescriptor_t;
 
-  typedef Kokyu::MUF_Comparator<QoSDescriptor_t> QoSComparator_t;
+  using QoSComparator_t = Kokyu::MUF_Comparator<QoSDescriptor_t>;
 
   class _Guid_Hash
   {
   public:
-    u_long operator () (const Guid_t& id)
+    u_long operator () (Guid_t const &id)
       {
-        return ACE::hash_pjw ((const char *) id.get_buffer (),
+        return ACE::hash_pjw (reinterpret_cast<char const *> (id.get_buffer ()),
                               id.length ());
       }
   };
-  typedef _Guid_Hash Guid_Hash;
+  using Guid_Hash = _Guid_Hash;
 };
 
 class Kokyu_DSRT_Schedulers_Export MUF_Sched_Param_Policy:

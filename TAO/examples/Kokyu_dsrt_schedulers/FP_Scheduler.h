@@ -10,29 +10,29 @@
 
 struct FP_Scheduler_Traits
 {
-  typedef RTScheduling::Current::IdType Guid_t;
+  using Guid_t = RTScheduling::Current::IdType;
 
   struct _QoSDescriptor_t
   {
-    typedef long Priority_t;
+    using Priority_t = long;
     Priority_t priority_;
   };
 
-  typedef _QoSDescriptor_t QoSDescriptor_t;
+  using QoSDescriptor_t = _QoSDescriptor_t;
 
-  typedef Kokyu::Fixed_Priority_Comparator<QoSDescriptor_t> QoSComparator_t;
+  using QoSComparator_t = Kokyu::Fixed_Priority_Comparator<QoSDescriptor_t>;
 
   class _Guid_Hash
   {
   public:
-    u_long operator () (const Guid_t& id)
+    u_long operator () (Guid_t const &id)
       {
-        return ACE::hash_pjw ((const char *) id.get_buffer (),
+        return ACE::hash_pjw (reinterpret_cast<char const *> (id.get_buffer ()),
                               id.length ());
       }
   };
 
-  typedef _Guid_Hash Guid_Hash;
+  using Guid_Hash = _Guid_Hash;
 };
 
 class Kokyu_DSRT_Schedulers_Export FP_Segment_Sched_Param_Policy:
