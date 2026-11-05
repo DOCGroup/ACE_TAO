@@ -1,22 +1,23 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_unistd.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Method_Request.h"
 #include "ace/Task.h"
 #include "ace/Future.h"
 #include <array>
+#include <chrono>
 #include <memory>
+#include <thread>
 
 class HA_ControllerAgent
 {
   // Proxy to the HA_Controller that is on the network.
 public:
   HA_ControllerAgent () = default;
-  HA_ControllerAgent (HA_ControllerAgent const &) = delete;
+  HA_ControllerAgent (const HA_ControllerAgent &) = delete;
   HA_ControllerAgent (HA_ControllerAgent &&) = delete;
-  HA_ControllerAgent &operator= (HA_ControllerAgent const &) = delete;
+  HA_ControllerAgent &operator= (const HA_ControllerAgent &) = delete;
   HA_ControllerAgent &operator= (HA_ControllerAgent &&) = delete;
 
   int status_update ()
@@ -27,7 +28,7 @@ public:
                 ACE_TEXT ("thread of control\n")));
     // Simulate sending message to controller
     // and getting status.
-    ACE_OS::sleep (2);
+    std::this_thread::sleep_for (std::chrono::seconds (2));
     return next_result_id ();
   }
 
@@ -44,9 +45,9 @@ private:
 class StatusUpdate : public ACE_Method_Request
 {
 public:
-  StatusUpdate (StatusUpdate const &) = delete;
+  StatusUpdate (const StatusUpdate &) = delete;
   StatusUpdate (StatusUpdate &&) = delete;
-  StatusUpdate &operator= (StatusUpdate const &) = delete;
+  StatusUpdate &operator= (const StatusUpdate &) = delete;
   StatusUpdate &operator= (StatusUpdate &&) = delete;
 
   StatusUpdate (HA_ControllerAgent &controller,
@@ -74,9 +75,9 @@ class ExitMethod : public ACE_Method_Request
 {
 public:
   ExitMethod () = default;
-  ExitMethod (ExitMethod const &) = delete;
+  ExitMethod (const ExitMethod &) = delete;
   ExitMethod (ExitMethod &&) = delete;
-  ExitMethod &operator= (ExitMethod const &) = delete;
+  ExitMethod &operator= (const ExitMethod &) = delete;
   ExitMethod &operator= (ExitMethod &&) = delete;
 
   int call () override
@@ -89,8 +90,8 @@ public:
 class Scheduler : public ACE_Task_Base
 {
 public:
-  Scheduler (Scheduler const &) = delete;
-  Scheduler &operator= (Scheduler const &) = delete;
+  Scheduler (const Scheduler &) = delete;
+  Scheduler &operator= (const Scheduler &) = delete;
   Scheduler (Scheduler &&) = delete;
   Scheduler &operator= (Scheduler &&) = delete;
 
@@ -120,7 +121,7 @@ public:
   int enqueue (std::unique_ptr<ACE_Method_Request> request)
   {
     ACE_TRACE ("Scheduler::enqueue");
-    int const result = this->activation_queue_.enqueue (request.get ());
+    const int result = this->activation_queue_.enqueue (request.get ());
     if (result != -1)
       request.release ();
     return result;
@@ -135,8 +136,8 @@ class HA_ControllerAgentProxy
   // This acts as a Proxy to the controller impl object.
 public:
   HA_ControllerAgentProxy () = default;
-  HA_ControllerAgentProxy (HA_ControllerAgentProxy const &) = delete;
-  HA_ControllerAgentProxy &operator = (HA_ControllerAgentProxy const &) = delete;
+  HA_ControllerAgentProxy (const HA_ControllerAgentProxy &) = delete;
+  HA_ControllerAgentProxy &operator = (const HA_ControllerAgentProxy &) = delete;
   HA_ControllerAgentProxy (HA_ControllerAgentProxy &&) = delete;
   HA_ControllerAgentProxy &operator = (HA_ControllerAgentProxy &&) = delete;
 
@@ -175,12 +176,12 @@ public:
     : proxy_ (proxy)
   { }
 
-  CompletionCallBack (CompletionCallBack const &) = delete;
-  CompletionCallBack &operator = (CompletionCallBack const &) = delete;
+  CompletionCallBack (const CompletionCallBack &) = delete;
+  CompletionCallBack &operator = (const CompletionCallBack &) = delete;
   CompletionCallBack (CompletionCallBack &&) = delete;
   CompletionCallBack &operator = (CompletionCallBack &&) = delete;
 
-  void update (ACE_Future<int> const &future) override
+  void update (const ACE_Future<int> &future) override
   {
     int result {};
     future.get (result);
