@@ -2684,6 +2684,7 @@ TAO_CodeGen::gen_skel_src_includes ()
         break;
     }
 
+  this->gen_system_include (this->server_skeletons_, "array");
   this->gen_system_include (this->server_skeletons_, "cstddef");
   this->gen_system_include (this->server_skeletons_, "cstring");
   this->gen_system_include (this->server_skeletons_, "memory");

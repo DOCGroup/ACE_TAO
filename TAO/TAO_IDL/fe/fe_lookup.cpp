@@ -1,16 +1,17 @@
 #include "fe_private.h"
+#include <array>
+#include <cstddef>
 #include <cstring>
+#include <memory>
 
-/* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: ace_gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p
+/* C++ code produced by gperf version 2.8 (ACE version 8.0.8) */
+/* Command-line: ace_gperf -M -J -Q -c -C -D -E -T -f 0 -a -o -t -p
  * -K keyword_ -L C++17 -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat */
 
-#include <cstddef>
-#include <memory>
 std::size_t
 TAO_IDL_CPP_Keyword_Table::hash (char const *str, std::size_t len)
 {
-  static constexpr unsigned char asso_values[] =
+  static constexpr std::array<unsigned char, 128> asso_values =
     {
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
@@ -27,21 +28,21 @@ TAO_IDL_CPP_Keyword_Table::hash (char const *str, std::size_t len)
       95,  55, 252, 252, 252, 252, 252, 252,
     };
   return len
-    + asso_values[static_cast<int>(str[1])]
-    + asso_values[static_cast<int>(str[0])]
-    + asso_values[static_cast<int>(str[len - 1])];
+    + asso_values[static_cast<unsigned char> (str[1]) % asso_values.size ()]
+    + asso_values[static_cast<unsigned char> (str[0]) % asso_values.size ()]
+    + asso_values[static_cast<unsigned char> (str[len - 1]) % asso_values.size ()];
 }
 
-TAO_IDL_CPP_Keyword_Entry const *
+struct TAO_IDL_CPP_Keyword_Entry const *
 TAO_IDL_CPP_Keyword_Table::lookup (char const *str, std::size_t len)
 {
   constexpr std::size_t MIN_WORD_LENGTH {2};
   constexpr std::size_t MAX_WORD_LENGTH {16};
-  constexpr std::size_t MIN_HASH_VALUE {6};
-  constexpr std::size_t MAX_HASH_VALUE {251};
+  constexpr int MIN_HASH_VALUE {6};
+  constexpr int MAX_HASH_VALUE {251};
 
-  static constexpr struct TAO_IDL_CPP_Keyword_Entry wordlist[] =
-    {
+  static constexpr std::array<struct TAO_IDL_CPP_Keyword_Entry , 252> wordlist =
+    {{
       {"", nullptr},
       {"", nullptr},
       {"", nullptr},
@@ -294,7 +295,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (char const *str, std::size_t len)
       {"", nullptr},
       {"", nullptr},
       {"static_cast",  "_cxx_static_cast"},
-    };
+    }};
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
