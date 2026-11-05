@@ -12,6 +12,10 @@ class MySignalHandler : public ACE_Event_Handler
 {
 public:
   MySignalHandler () = default;
+  MySignalHandler (MySignalHandler const &) = delete;
+  MySignalHandler (MySignalHandler &&) = delete;
+  MySignalHandler &operator= (MySignalHandler const &) = delete;
+  MySignalHandler &operator= (MySignalHandler &&) = delete;
 
   // Listing A code/ch11
   int handle_signal (int signum,
@@ -137,7 +141,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   MySignalHandler h1;
   ACE_Reactor::instance ()->register_handler (signalSet, &h1);
-  pid_t childPid = ACE_OS::fork ();
+  pid_t const childPid = ACE_OS::fork ();
   if (childPid == 0)      // This is the parent process.
     {
       // Exclude B

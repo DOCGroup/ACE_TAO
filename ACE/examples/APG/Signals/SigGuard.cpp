@@ -5,14 +5,22 @@
 
 // Listing 1
 class MySignalHandler : public ACE_Event_Handler
+{
+public:
+  MySignalHandler () = default;
+  MySignalHandler (MySignalHandler const &) = delete;
+  MySignalHandler (MySignalHandler &&) = delete;
+  MySignalHandler &operator= (MySignalHandler const &) = delete;
+  MySignalHandler &operator= (MySignalHandler &&) = delete;
+
+  int handle_signal (int signo,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override
   {
-  public:
-    int handle_signal(int signo, siginfo_t * = nullptr, ucontext_t * = nullptr) override
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal %d\n"), signo));
-      return 0;
-    }
-  };
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal %d\n"), signo));
+    return 0;
+  }
+};
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
