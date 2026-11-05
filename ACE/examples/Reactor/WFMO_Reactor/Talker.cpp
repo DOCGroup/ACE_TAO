@@ -137,7 +137,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
-#include <memory>
 
 
 using MT_TASK = ACE_Task<ACE_MT_SYNCH>;
@@ -275,17 +274,6 @@ private:
   /// Handle of our thread.
   ACE_HANDLE thr_handle_ {};
 };
-
-struct Message_Block_Release
-{
-  void operator() (ACE_Message_Block *message_block) const
-  {
-    if (message_block != nullptr)
-      message_block->release ();
-  }
-};
-
-using Message_Block_Ptr = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
 
 Peer_Handler::Peer_Handler (int argc, ACE_TCHAR *argv[])
   : strategy_ (ACE_Reactor::instance (),
@@ -440,7 +428,7 @@ Peer_Handler::handle_output (ACE_HANDLE)
   // Forward the message to the remote peer receiver.
   if (this->getq (raw_message_block, &tv) != -1)
     {
-      Message_Block_Ptr message_block (raw_message_block);
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
       if (this->wr_stream_.write (*message_block,
                                   message_block->length ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p Write initiate.\n", "Peer_Handler"), -1);
@@ -497,7 +485,7 @@ STDIN_Handler::svc ()
     {
       ACE_Message_Block *raw_message_block {};
       ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (BUFSIZ), -1);
-      Message_Block_Ptr message_block (raw_message_block);
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
 
       // Read from stdin into the new message block.
       int read_result = ACE_OS::read (ACE_STDIN,
