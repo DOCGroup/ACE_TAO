@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BUFFERED_AMI_TEST_I_H
 #define TAO_BUFFERED_AMI_TEST_I_H
 
@@ -37,7 +36,7 @@ public:
 
 private:
   /// The ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* TAO_BUFFERED_AMI_TEST_I_H */
