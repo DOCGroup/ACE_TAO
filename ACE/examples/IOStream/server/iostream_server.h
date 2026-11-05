@@ -29,9 +29,9 @@ class Handler : public ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_NULL_SYNCH>
 {
 public:
   Handler ();
-  Handler (const Handler &) = delete;
+  Handler (Handler const &) = delete;
   Handler (Handler &&) = delete;
-  Handler &operator= (const Handler &) = delete;
+  Handler &operator= (Handler const &) = delete;
   Handler &operator= (Handler &&) = delete;
   ~Handler () override;
 
