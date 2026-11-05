@@ -3,6 +3,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Malloc_Base.h"
 #include <array>
 #include <memory>
 
@@ -10,8 +11,22 @@ constexpr char UPTIME[] = "uptime";
 constexpr char HUMIDITY[] = "humidity";
 constexpr char TEMPERATURE[] = "temperature";
 
-void addCommand (iovec [], const char *)
+void addCommand (iovec [], char const *)
 {}
+
+struct Iovec_Buffer_Deleter
+{
+  void operator() (char *buffer) const
+  {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+    ACE_Allocator::instance ()->free (buffer);
+#else
+    delete [] buffer;
+#endif
+  }
+};
+
+using Iovec_Buffer_Owner = std::unique_ptr<char, Iovec_Buffer_Deleter>;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -21,7 +36,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_ASSERT (connector.connect (peer, srvr) != -1);
 
-  ssize_t bc;
+  ssize_t bc {};
 
   // Listing 1 code/ch06
   char up[] = "up";
@@ -78,7 +93,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   peer.send_n ("uptime\n", 7);
   iovec response {};
   peer.recvv (&response);
-  std::unique_ptr<char[]> response_buffer (static_cast<char *> (response.iov_base));
+  Iovec_Buffer_Owner response_buffer (static_cast<char *> (response.iov_base));
   ACE_OS::write (ACE_STDOUT, response_buffer.get (), response.iov_len);
   // Listing 5
 

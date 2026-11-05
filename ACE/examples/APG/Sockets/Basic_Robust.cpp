@@ -25,45 +25,45 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
    */
 
   ACE_INET_Addr addr;
-  ACE_TCHAR peerAddress[64];
+  ACE_TCHAR peer_address[64] {};
 
   // Listing 2 code/ch06
-  addr.set (ACE_TEXT("HAStatus"), ACE_LOCALHOST);
-  if (addr.addr_to_string (peerAddress,
-                           sizeof(peerAddress), 0) == 0)
+  addr.set (ACE_TEXT ("HAStatus"), ACE_LOCALHOST);
+  if (addr.addr_to_string (peer_address,
+                           sizeof (peer_address), 0) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Connecting to %s\n"),
-                  peerAddress));
+                  peer_address));
     }
   // Listing 2
 
   // Listing 3 code/ch06
   ACE_SOCK_Stream status;
-  ACE_OS::last_error(0);
+  ACE_OS::last_error (0);
   ACE_SOCK_Connector statusConnector (status, addr);
-  if (ACE_OS::last_error())
+  if (ACE_OS::last_error ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("status")), 100);
   // Listing 3
 
-  addr.set (ACE_TEXT("HALog"), ACE_LOCALHOST);
-  if (addr.addr_to_string (peerAddress,
-                           sizeof(peerAddress), 0) == 0)
+  addr.set (ACE_TEXT ("HALog"), ACE_LOCALHOST);
+  if (addr.addr_to_string (peer_address,
+                           sizeof (peer_address), 0) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Connecting to %s\n"),
-                  peerAddress ));
+                  peer_address));
     }
 
   // Listing 4 code/ch06
   ACE_SOCK_Connector logConnector;
-  ACE_Time_Value timeout (10);
+  ACE_Time_Value const timeout (10);
   ACE_SOCK_Stream log;
   if (logConnector.connect (log, addr, &timeout) == -1)
     {
-      if (ACE_OS::last_error() == ETIME)
+      if (ACE_OS::last_error () == ETIME)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Timeout while ")
@@ -75,7 +75,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("log")));
         }
-      return (101);
+      return 101;
     }
   // Listing 4
 
@@ -92,13 +92,13 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     }
    */
 
-  char buf[64];
+  char buffer[64] {};
 
   // Listing 6 code/ch06
-  ACE_Time_Value sendTimeout (0, 5);
-  if (status.send_n ("uptime\n", 7, &sendTimeout) == -1)
+  ACE_Time_Value const send_timeout (0, 5);
+  if (status.send_n ("uptime\n", 7, &send_timeout) == -1)
     {
-      if (ACE_OS::last_error() == ETIME)
+      if (ACE_OS::last_error () == ETIME)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Timeout while sending ")
@@ -111,25 +111,25 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("send_n")));
         }
-      return (102);
+      return 102;
     }
 
   // Listing 7 code/ch06
-  ssize_t bc ;
-  ACE_Time_Value recvTimeout (0, 1);
-  if ((bc = status.recv (buf, sizeof(buf), &recvTimeout)) == -1)
+  ACE_Time_Value const recv_timeout (0, 1);
+  ssize_t const bytes_received = status.recv (buffer, sizeof (buffer), &recv_timeout);
+  if (bytes_received == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
                   ACE_TEXT ("recv")));
-      return (103);
+      return 103;
     }
 
-  log.send_n (buf, bc);
+  log.send_n (buffer, bytes_received);
   // Listing 7
 
   status.close ();
   log.close ();
 
-  return (0);
+  return 0;
 }
