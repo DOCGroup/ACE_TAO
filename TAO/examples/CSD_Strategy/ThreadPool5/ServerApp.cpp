@@ -10,24 +10,6 @@
 #include "tao/PI/PI.h"
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
-
-ServerApp::ServerApp()
-  : ior_filename_(ACE_TEXT("foo")),
-    num_servants_(1),
-    num_csd_threads_ (1),
-    num_clients_(1),
-    num_orb_threads_ (1),
-    collocated_test_ (0),
-    servant_to_deactivate_ (-1)
-{
-}
-
-
-ServerApp::~ServerApp()
-{
-}
-
-
 int
 ServerApp::run (int argc, ACE_TCHAR* argv[])
 {
@@ -37,16 +19,16 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
   // * Raises -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args (argc, argv);
+  int const result = this->parse_args (argc, argv);
   if (result != 0)
     {
       return result;
     }
 
-  TheOrbShutdownTask::instance()->orb (orb.in ());
+  TheOrbShutdownTask::instance ()->orb (orb.in ());
 
   CORBA::Object_var obj
-    = orb->resolve_initial_references("RootPOA");
+    = orb->resolve_initial_references ("RootPOA");
 
   if (CORBA::is_nil(obj.in()))
     {
@@ -56,7 +38,7 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
     }
 
   PortableServer::POA_var root_poa
-    = PortableServer::POA::_narrow(obj.in());
+    = PortableServer::POA::_narrow (obj.in ());
 
   if (CORBA::is_nil(root_poa.in()))
     {
@@ -66,7 +48,7 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
     }
 
   PortableServer::POAManager_var poa_manager
-    = root_poa->the_POAManager();
+    = root_poa->the_POAManager ();
 
   // Create the child POA.
   CORBA::PolicyList policies(1);
@@ -94,7 +76,7 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
   TAO_Intrusive_Ref_Count_Handle<TAO::CSD::TP_Strategy> csd_tp_strategy =
                                                  new TAO::CSD::TP_Strategy();
 
-  csd_tp_strategy->set_num_threads(this->num_csd_threads_);
+  csd_tp_strategy->set_num_threads (this->options_.num_csd_threads);
 
   // Tell the strategy to apply itself to the child poa.
   if (csd_tp_strategy->apply_to(child_poa.in()) == false)
@@ -104,11 +86,11 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
       throw TestException();
     }
 
-  FooServantList servants(this->ior_filename_.c_str(),
-                          this->num_servants_,
-                          this->num_clients_,
-                          this->collocated_test_,
-                          this->servant_to_deactivate_,
+  FooServantList servants (this->options_.ior_filename.c_str (),
+                          this->options_.num_servants,
+                          this->options_.num_clients,
+                          this->options_.collocated_test,
+                          this->options_.servant_to_deactivate,
                           orb.in());
 
   // Activate the POA Manager before start the ClientTask thread so that
@@ -116,27 +98,26 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
   // collocated test.
   poa_manager->activate();
 
-  servants.create_and_activate(orb.in (),
-                               child_poa.in());
+  servants.create_and_activate (child_poa.in ());
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is ready.\n"));
 
-  // If the num_orb_threads_ is exactly one, then just use the current
+  // If num_orb_threads is exactly one, then just use the current
   // (mainline) thread to run the ORB event loop.
-  if (this->num_orb_threads_ == 1)
+  if (this->options_.num_orb_threads == 1)
     {
-      // Since the num_orb_threads_ is exactly one, we just use the current
+      // Since num_orb_threads is exactly one, we just use the current
       // (mainline) thread to run the ORB event loop.
       orb->run();
     }
   else
     {
-      // The num_orb_threads_ is greater than 1, so we will use an OrbTask
-      // (active object) to run the ORB event loop in (num_orb_threads_ - 1)
+      // num_orb_threads is greater than 1, so we will use an OrbTask
+      // (active object) to run the ORB event loop in (num_orb_threads - 1)
       // threads.  We use the current (mainline) thread as the other thread
       // running the ORB event loop.
-      OrbTask orb_task(orb.in(), this->num_orb_threads_ - 1);
+      OrbTask orb_task (orb.in (), this->options_.num_orb_threads - 1);
 
       // Activate the OrbTask worker threads
       if (orb_task.open() != 0)
@@ -162,7 +143,7 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
   // before cleanup.
   ACE_OS::sleep (2);
 
-  if (collocated_test_)
+  if (this->options_.collocated_test)
     {
       servants.collocated_client ()->wait ();
     }
@@ -184,17 +165,14 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
 int
-ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
+ServerApp::parse_args (int argc, ACE_TCHAR *argv[])
 {
   this->exe_name_ = argv[0];
 
-  ACE_Get_Opt get_opts(argc, argv, ACE_TEXT("p:s:c:t:l:d:n:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:s:c:t:l:d:n:"));
 
   int c;
-  int tmp;
-
   while ((c = get_opts()) != -1)
     {
       int parse_error = 0;
@@ -202,85 +180,109 @@ ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
       switch (c)
       {
         case 'p':
-          this->ior_filename_ = get_opts.opt_arg();
+          this->options_.ior_filename = get_opts.opt_arg();
           break;
 
         case 's':
-          tmp = ACE_OS::atoi(get_opts.opt_arg());
-          if (tmp < 1)
-            {
-              ACE_ERROR((LM_ERROR,
-                         "(%P|%t) Error.  -s must be followed by an integer "
-                         "value greater than 0.\n"));
-              parse_error = 1;
-            }
-
-          this->num_servants_ = tmp;
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 1)
+              {
+                ACE_ERROR((LM_ERROR,
+                           "(%P|%t) Error.  -s must be followed by an integer "
+                           "value greater than 0.\n"));
+                parse_error = 1;
+              }
+            else
+              {
+                this->options_.num_servants = static_cast<unsigned> (value);
+              }
+          }
           break;
 
         case 'c':
-          tmp = ACE_OS::atoi(get_opts.opt_arg());
-          if (tmp < 1)
-            {
-              ACE_ERROR((LM_ERROR,
-                         "(%P|%t) Error.  -c must be followed by an integer "
-                         "value greater than 0.\n"));
-              parse_error = 1;
-            }
-
-          this->num_clients_ = tmp;
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 1)
+              {
+                ACE_ERROR((LM_ERROR,
+                           "(%P|%t) Error.  -c must be followed by an integer "
+                           "value greater than 0.\n"));
+                parse_error = 1;
+              }
+            else
+              {
+                this->options_.num_clients = static_cast<unsigned> (value);
+              }
+          }
           break;
 
         case 't':
-          tmp = ACE_OS::atoi(get_opts.opt_arg());
-          if (tmp < 1)
-            {
-              ACE_ERROR((LM_ERROR,
-                         "(%P|%t) Error.  -t must be followed by an integer "
-                         "value greater than 0.\n"));
-              parse_error = 1;
-            }
-
-          this->num_orb_threads_ = tmp;
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 1)
+              {
+                ACE_ERROR((LM_ERROR,
+                           "(%P|%t) Error.  -t must be followed by an integer "
+                           "value greater than 0.\n"));
+                parse_error = 1;
+              }
+            else
+              {
+                this->options_.num_orb_threads = static_cast<unsigned> (value);
+              }
+          }
           break;
 
         case 'n':
-          tmp = ACE_OS::atoi(get_opts.opt_arg());
-          if (tmp < 1)
-            {
-              ACE_ERROR((LM_ERROR,
-                         "(%P|%t) Error.  -n must be followed by an integer "
-                         "value greater than 0.\n"));
-              parse_error = 1;
-            }
-
-          this->num_csd_threads_ = tmp;
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 1)
+              {
+                ACE_ERROR((LM_ERROR,
+                           "(%P|%t) Error.  -n must be followed by an integer "
+                           "value greater than 0.\n"));
+                parse_error = 1;
+              }
+            else
+              {
+                this->options_.num_csd_threads = static_cast<unsigned> (value);
+              }
+          }
           break;
 
         case 'l':
-          tmp = ACE_OS::atoi(get_opts.opt_arg());
-          if (tmp < 0)
-            {
-              ACE_ERROR((LM_ERROR,
-                         "(%P|%t) Error.  -l must be followed by an integer "
-                         "value greater than -1.\n"));
-              parse_error = 1;
-            }
-
-          this->collocated_test_ = tmp;
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 0)
+              {
+                ACE_ERROR((LM_ERROR,
+                           "(%P|%t) Error.  -l must be followed by an integer "
+                           "value greater than -1.\n"));
+                parse_error = 1;
+              }
+            else
+              {
+                this->options_.collocated_test = value != 0;
+              }
+          }
           break;
 
         case 'd':
-          tmp = ACE_OS::atoi(get_opts.opt_arg());
-          if (tmp < 0)
-            {
-              ACE_ERROR((LM_ERROR,
-                         "(%P|%t) Error.  -d must be followed by an integer "
-                         "value >= 0.\n"));
-              parse_error = 1;
-            }
-
-          this->servant_to_deactivate_ = tmp;
+          {
+            int const value = ACE_OS::atoi (get_opts.opt_arg ());
+            if (value < 0)
+              {
+                ACE_ERROR((LM_ERROR,
+                           "(%P|%t) Error.  -d must be followed by an integer "
+                           "value >= 0.\n"));
+                parse_error = 1;
+              }
+            else
+              {
+                this->options_.servant_to_deactivate = value;
+              }
+          }
           break;
 
         case '?':
@@ -302,37 +304,36 @@ ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
   // The deadlock will happen with the collocated callback test
   // when we have one working thread, so create at least one more
   // working thread would resolve the deadlock.
-  if (this->collocated_test_ == 1 && this->num_csd_threads_ == 1)
+  if (this->options_.collocated_test && this->options_.num_csd_threads == 1)
     {
       ACE_ERROR((LM_ERROR,
-                 "(%P|%t) Error. The num_csd_threads_ should be "
-                 ">= 1.\n"));
+                 "(%P|%t) Error. Collocated testing requires more than one "
+                 "CSD worker thread.\n"));
       return -1;
     }
 
   return 0;
 }
 
-
 void
-ServerApp::usage_statement()
+ServerApp::usage_statement () const
 {
   ACE_ERROR((LM_ERROR,
-              "(%P|%t) usage:  %s\n"
-              "\t[-p <ior_filename_prefix>]\n"
-              "\t[-s <num_servants>]\n"
-              "\t[-c <num_clients>]\n"
-              "\t[-n <num_csd_threads>]\n"
-              "\t[-t <num_orb_threads>]\n"
-              "\t[-l <collocation_test>]\n"
-              "\t[-d <servant_to_deactivate>]\n"
-              "Default ior_filename_prefix is 'foo'.\n"
-              "Default num_servants is 1.\n"
-              "Default num_clients is 1.\n"
-              "Default num_orb_threads is 1.\n"
-              "Default collocation_test flag is 0.\n"
-              "Default servant_to_deactivate is -1 means not deactivate servant.\n"
-              "   0  means deactivate all servant.\n"
-              "   >0 means the index (servant_to_deactivate-1) of the servant in the servant list.\n",
-              this->exe_name_.c_str ()));
+             ACE_TEXT("(%P|%t) usage:  %s\n")
+             ACE_TEXT("\t[-p <ior_filename_prefix>]\n")
+             ACE_TEXT("\t[-s <num_servants>]\n")
+             ACE_TEXT("\t[-c <num_clients>]\n")
+             ACE_TEXT("\t[-n <num_csd_threads>]\n")
+             ACE_TEXT("\t[-t <num_orb_threads>]\n")
+             ACE_TEXT("\t[-l <collocation_test>]\n")
+             ACE_TEXT("\t[-d <servant_to_deactivate>]\n")
+             ACE_TEXT("Default ior_filename_prefix is 'foo'.\n")
+             ACE_TEXT("Default num_servants is 1.\n")
+             ACE_TEXT("Default num_clients is 1.\n")
+             ACE_TEXT("Default num_orb_threads is 1.\n")
+             ACE_TEXT("Default collocation_test flag is 0.\n")
+             ACE_TEXT("Default servant_to_deactivate is -1 means not deactivate servant.\n")
+             ACE_TEXT("   0  means deactivate all servant.\n")
+             ACE_TEXT("   >0 means the index (servant_to_deactivate-1) of the servant in the servant list.\n"),
+             this->exe_name_.c_str ()));
 }

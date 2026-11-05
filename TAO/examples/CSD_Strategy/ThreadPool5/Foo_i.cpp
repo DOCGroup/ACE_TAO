@@ -1,34 +1,25 @@
 #include "Foo_i.h"
 #include "FooServantList.h"
+#include "ace/Guard_T.h"
+#include <string>
 
-Foo_i::Foo_i(const char* servant_name,FooServantList* mgr)
-  : servant_name_(servant_name),
-    mgr_(mgr)
+Foo_i::Foo_i (FooServantList *mgr)
+  : mgr_ (mgr)
 {
 }
-
-
-Foo_i::~Foo_i()
-{
-}
-
 
 void
 Foo_i::op1()
 {
-  ++this->count_op1_;
   // Sleep for 10 milliseconds (10,000 microseconds)
   //ACE_OS::sleep(ACE_Time_Value(0,10000));
 }
 
-
 void
 Foo_i::op2(CORBA::Long value)
 {
-  ++this->count_op2_;
   this->value_ = value;
 }
-
 
 CORBA::Long
 Foo_i::op3()
@@ -43,32 +34,25 @@ Foo_i::op3()
   return this->value_.load ();
 }
 
-
 void
 Foo_i::op4(CORBA::Long value)
 {
   ++this->count_op4_;
   this->value_ = value;
 
-  if (this->count_op4_.load () % 1 == 0)
-    {
-      ACE_DEBUG((LM_DEBUG,
-                 "(%P|%t) op4() has been called %d times now.  value == %d\n",
-                 this->count_op4_.load (), this->value_.load ()));
-    }
+  ACE_DEBUG((LM_DEBUG,
+             "(%P|%t) op4() has been called %u times now.  value == %d\n",
+             this->count_op4_.load (), this->value_.load ()));
 
   // Sleep for 10 milliseconds (10,000 microseconds)
   //ACE_OS::sleep(ACE_Time_Value(0,10000));
 }
 
-
 void
 Foo_i::op5()
 {
-  ++this->count_op5_;
   throw FooException();
 }
-
 
 CORBA::Boolean
 Foo_i::op6 (
@@ -76,13 +60,13 @@ Foo_i::op6 (
   char *& message
 )
 {
-  ACE_CString str(message);
-  str += user_name;
+  std::string result (message);
+  result += user_name;
+  CORBA::String_var replacement = CORBA::string_dup (result.c_str ());
   CORBA::string_free (message);
-  message = CORBA::string_dup (str.c_str ());
-  return 1;
+  message = replacement._retn ();
+  return true;
 }
-
 
 void
 Foo_i::test_unbounded_string_arg (
@@ -90,10 +74,9 @@ Foo_i::test_unbounded_string_arg (
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_string_arg ")
-                       ACE_TEXT("got unbounded string %s\n"),
+                       ACE_TEXT("got unbounded string %C\n"),
                        message));
 }
-
 
 void
 Foo_i::test_bounded_string_arg (
@@ -101,17 +84,16 @@ Foo_i::test_bounded_string_arg (
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_string_arg ")
-                       ACE_TEXT("got bounded string %s\n"),
+                       ACE_TEXT("got bounded string %C\n"),
                        message));
 }
-
 
 void
 Foo_i::test_fixed_array_arg (
   ::Fixed_Array const message
 )
 {
-  for (CORBA::ULong i = 0; i < 20; i++)
+  for (CORBA::ULong i = 0; i < 20; ++i)
     {
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_fixed_array_arg ")
                            ACE_TEXT("got fixed_array[i] = %d\n"),
@@ -119,17 +101,15 @@ Foo_i::test_fixed_array_arg (
     }
 }
 
-
 void
 Foo_i::test_bounded_var_size_arg (
   ::Bounded_Var_Size const & message
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_var_size_arg ")
-                       ACE_TEXT("got var array chars %s\n"),
+                       ACE_TEXT("got var array chars %C\n"),
                        message.get_buffer ()));
 }
-
 
 void
 Foo_i::test_unbounded_var_size_arg (
@@ -137,10 +117,9 @@ Foo_i::test_unbounded_var_size_arg (
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_var_size_arg ")
-                       ACE_TEXT("got var array chars %s\n"),
+                       ACE_TEXT("got var array chars %C\n"),
                        message.get_buffer ()));
 }
-
 
 void
 Foo_i::test_fixed_size_arg (
@@ -168,13 +147,12 @@ Foo_i::test_var_array_arg (
 )
 {
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
-                       ACE_TEXT(" %s\n"), messages[0].in ()));
+                       ACE_TEXT(" %C\n"), messages[0].in ()));
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
-                       ACE_TEXT(" %s\n"), messages[1].in ()));
+                       ACE_TEXT(" %C\n"), messages[1].in ()));
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_var_array_arg ")
-                       ACE_TEXT(" %s\n"), messages[2].in ()));
+                       ACE_TEXT(" %C\n"), messages[2].in ()));
 }
-
 
 void
 Foo_i::test_special_basic_arg (
@@ -185,23 +163,23 @@ Foo_i::test_special_basic_arg (
                        ACE_TEXT(" got special basic arg: %d\n"), value));
 }
 
-
 void
 Foo_i::test_objref_arg (
   ::Callback_ptr cb
 )
 {
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->callback_lock_);
   this->callback_ = Callback::_duplicate (cb);
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_objref_arg ")
                        ACE_TEXT(" got callback object.\n")));
 }
-
 
 void
 Foo_i::callback_object (
   ::Callback_ptr cb
 )
 {
+  ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->callback_lock_);
   this->callback_ = Callback::_duplicate (cb);
 }
 
@@ -209,16 +187,21 @@ void
 Foo_i::test_callback (
 )
 {
-  if (CORBA::is_nil (this->callback_.in ()))
+  Callback_var callback;
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->callback_lock_);
+    callback = Callback::_duplicate (this->callback_.in ());
+  }
+
+  if (CORBA::is_nil (callback.in ()))
     {
       throw FooException ();
     }
   else
     {
-      this->callback_->test_method ();
+      callback->test_method ();
     }
 }
-
 
 void
 Foo_i::done()
@@ -226,18 +209,15 @@ Foo_i::done()
   this->mgr_->client_done();
 }
 
-
 void
-Foo_i::active (bool flag)
+Foo_i::active (bool const flag)
 {
   active_ = flag;
 }
 
-
 bool
-Foo_i::active ()
+Foo_i::active () const
 {
   return active_.load ();
 }
-
 
