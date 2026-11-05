@@ -4,6 +4,7 @@
 
 #include "ace/os_include/os_stddef.h"
 #include "ace/os_include/os_limits.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,8 +22,8 @@ public:
   // Parse the arguments.
 
   // = Accessor methods.
-  const char *program_name () const;
-  const char *slave_name () const;
+  std::string const &program_name () const;
+  std::string const &slave_name () const;
   bool debug () const;
   bool exec_slave () const;
   size_t iteration_count () const;
@@ -35,54 +36,51 @@ public:
   bool child () const;
 
 private:
-  Options ();
+  Options () = default;
   // Ensure Singleton.
 
-  Options (const Options &) = delete;
+  Options (Options const &) = delete;
   Options (Options &&) = delete;
-  Options &operator= (const Options &) = delete;
+  Options &operator= (Options const &) = delete;
   Options &operator= (Options &&) = delete;
-
-  static Options *instance_;
-  // Singleton.
 
   void print_usage_and_die ();
   // Explain usage and exit.
 
-  char program_name_[MAXPATHLEN];
+  std::string program_name_ {};
   // Name of the program.
 
-  char slave_name_[MAXPATHLEN];
+  std::string slave_name_ { "slave" };
   // Name of slave process.
 
-  bool debug_;
+  bool debug_ {};
   // Flag to indicate if we are debugging.
 
-  bool exec_slave_;
+  bool exec_slave_ {};
   // Flag to indicate if we should exec after forking.
 
-  size_t iteration_count_;
+  size_t iteration_count_ { 100 };
   // Number of iterations to call malloc_recurse().
 
-  bool use_sbrk_;
+  bool use_sbrk_ {};
   // Should we use sbrk(2)?
 
-  bool use_shmem_;
+  bool use_shmem_ {};
   // Should we use Shared Memory?
 
-  size_t max_msg_size_;
+  size_t max_msg_size_ { 127 };
   // Maximum number of bytes to malloc.
 
-  size_t spawn_count_;
+  size_t spawn_count_ { 1 };
   // Number of threads.
 
-  bool spawn_threads_;
+  bool spawn_threads_ { true };
   // Spawn threads vs. processes.
 
-  bool use_mmap_;
+  bool use_mmap_ {};
   // Use mmap() as the backing store.
 
-  bool child_;
+  bool child_ {};
   // We're a child process.
 };
 

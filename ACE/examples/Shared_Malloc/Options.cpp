@@ -2,27 +2,21 @@
 #include "Options.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
-
-// Static Singleton instance.
-Options *Options::instance_ = nullptr;
 
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == nullptr)
-    Options::instance_ = new Options ();
-
-  return Options::instance_;
+  static Options instance;
+  return &instance;
 }
 
-const char *
+std::string const &
 Options::program_name () const
 {
   return this->program_name_;
 }
 
-const char *
+std::string const &
 Options::slave_name () const
 {
   return this->slave_name_;
@@ -112,37 +106,22 @@ Options::print_usage_and_die ()
   /* NOTREACHED */
 }
 
-Options::Options ()
-  : debug_ (false),
-    exec_slave_ (false),
-    iteration_count_ (100),
-    use_sbrk_ (false),
-    use_shmem_ (false),
-    max_msg_size_ (127),
-    spawn_count_ (1),
-    spawn_threads_ (true),
-    use_mmap_ (false),
-    child_ (false)
-{
-  ACE_OS::strcpy (this->slave_name_, "slave");
-}
-
 void
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dehlL:mn:pst:T"));
 
-  ACE_OS::strcpy (this->program_name_, ACE_TEXT_ALWAYS_CHAR (argv[0]));
+  this->program_name_ = ACE_TEXT_ALWAYS_CHAR (argv[0]);
   ACE_LOG_MSG->open (argv[0]);
 
   // Put in a special-case check for child process.
-  if (ACE_OS::strcmp (this->program_name_, slave_name_) == 0)
+  if (this->program_name_ == this->slave_name_)
     {
       this->child_ = true;
       this->use_mmap_ = true;
     }
 
-  for (int c;
+  for (int c {};
        (c = get_opt ()) != -1;
        )
     {
