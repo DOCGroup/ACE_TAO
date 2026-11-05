@@ -19,30 +19,16 @@
 
 #include <string>
 
-// Name of file contains ior.
-static std::basic_string<ACE_TCHAR> IOR {ACE_TEXT ("file://ior")};
-
-// Default iterations.
-static CORBA::ULong iterations {20};
-
-// Default number of invocations to buffer before flushing.
-static CORBA::Long message_count {static_cast<CORBA::Long> (iterations / 4)};
-
-// Time interval between invocation (in milli seconds).
-static long interval {1000};
-
-// Flag indicates whether to shutdown remote server or not upon client
-// shutdown.
-static bool shutdown_server {};
-
-// AMI call or regular call.
-static bool invoke_ami_style {true};
-
-// Setup buffering or not.
-static bool setup_buffering {true};
-
-// Flag indicates that all replies have been received
-static bool received_all_replies {};
+struct Client_Options
+{
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://ior")};
+  CORBA::ULong iterations {20};
+  CORBA::Long message_count {5};
+  long interval {1000};
+  bool shutdown_server {};
+  bool invoke_ami_style {true};
+  bool setup_buffering {true};
+};
 
 class Reply_Handler : public POA_AMI_testHandler
 {
@@ -52,7 +38,16 @@ public:
   Reply_Handler& operator= (Reply_Handler const&) = delete;
   Reply_Handler& operator= (Reply_Handler&&) = delete;
 
-  Reply_Handler () = default;
+  Reply_Handler (CORBA::ULong iterations, bool invoke_ami_style)
+    : iterations_ (iterations),
+      all_replies_received_ (!invoke_ami_style)
+  {
+  }
+
+  bool all_replies_received () const
+  {
+    return this->all_replies_received_;
+  }
 
   void method (CORBA::ULong reply_number) override
   {
@@ -61,8 +56,8 @@ public:
                 reply_number));
 
     // Last reply flips the flag.
-    if (reply_number == iterations)
-      received_all_replies = true;
+    if (reply_number == this->iterations_)
+      this->all_replies_received_ = true;
   }
 
   void method_excep (::Messaging::ExceptionHolder *holder) override
@@ -94,10 +89,14 @@ public:
         ex._tao_print_exception ("Reply_Handler::shutdown_excep: ");
       }
   }
+
+private:
+  CORBA::ULong const iterations_;
+  bool all_replies_received_;
 };
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:k:m:i:t:x"));
   int c {};
@@ -106,31 +105,31 @@ parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'm':
-        message_count = ACE_OS::atoi (get_opts.opt_arg ());
+        options.message_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'a':
-        invoke_ami_style = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
+        options.invoke_ami_style = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'b':
-        setup_buffering = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
+        options.setup_buffering = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        interval = ACE_OS::atoi (get_opts.opt_arg ());
+        options.interval = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        shutdown_server = true;
+        options.shutdown_server = true;
         break;
 
       case '?':
@@ -149,19 +148,15 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR.empty ())
+  if (options.ior.empty ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant\n"), -1);
-
-  // Without AMI, replies are immediate.
-  if (!invoke_ami_style)
-    received_all_replies = true;
 
   // Message count must be a multiple of iterations; otherwise we'll
   // have some unsent messages left in the buffered queue.  Even
   // though we can explicitly flush the queue, I am being lazy and
   // forcing the user to give the right numbers.
-  if ((iterations % message_count) != 0)
+  if ((options.iterations % options.message_count) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "<message_count> must be a multiple <iterations> "
@@ -174,7 +169,7 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 void
-setup_buffering_constraints (CORBA::ORB_ptr orb)
+setup_buffering_constraints (CORBA::ORB_ptr orb, CORBA::Long message_count)
 {
   // Obtain PolicyCurrent.
   CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent");
@@ -245,7 +240,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      int const parse_args_result = parse_args (argc, argv);
+      Client_Options options;
+      int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
         return parse_args_result;
 
@@ -256,7 +252,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (base.in ());
 
       // Get an object reference from the argument string.
-      base = orb->string_to_object (IOR.c_str ());
+      base = orb->string_to_object (options.ior.c_str ());
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
@@ -266,21 +262,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Try to narrow the object reference to a <test> reference.
       test_var test_object = test::_narrow (base.in ());
 
-      Reply_Handler reply_handler_servant;
+      Reply_Handler reply_handler_servant (options.iterations,
+                                           options.invoke_ami_style);
       AMI_testHandler_var reply_handler_object = reply_handler_servant._this ();
 
-      if (setup_buffering)
+      if (options.setup_buffering)
         {
-          setup_buffering_constraints (orb.in ());
+          setup_buffering_constraints (orb.in (), options.message_count);
         }
 
-      for (CORBA::ULong i = 1; i <= iterations; ++i)
+      for (CORBA::ULong i = 1; i <= options.iterations; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "client: Iteration %d @ %T\n",
                       i));
 
-          if (invoke_ami_style)
+          if (options.invoke_ami_style)
             {
               // Invoke the AMI method.
               test_object->sendc_method (reply_handler_object.in (),
@@ -301,19 +298,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           // Interval between successive calls.
           ACE_Time_Value sleep_interval (0,
-                                         interval * 1000);
+                                         options.interval * 1000);
 
           orb->run (sleep_interval);
         }
 
       // Loop until all replies have been received.
-      while (!received_all_replies)
+      while (!reply_handler_servant.all_replies_received ())
         {
           orb->perform_work ();
         }
 
       // Shutdown server.
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           test_object->shutdown ();
         }
