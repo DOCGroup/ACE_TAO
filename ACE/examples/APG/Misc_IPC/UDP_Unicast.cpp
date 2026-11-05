@@ -7,13 +7,14 @@
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram.h"
+#include <array>
 
-int send_unicast (const ACE_INET_Addr &to)
+int send_unicast (ACE_INET_Addr const &to)
 {
   constexpr char message[] = "this is the message!\n";
   ACE_INET_Addr my_addr (static_cast<u_short> (10101));
   ACE_SOCK_Dgram udp (my_addr);
-  ssize_t sent = udp.send (message, sizeof (message), to);
+  ssize_t const sent = udp.send (message, sizeof (message), to);
   udp.close ();
   if (sent == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -28,13 +29,12 @@ void echo_dgram ()
   ACE_INET_Addr my_addr (static_cast<u_short> (10102));
   ACE_INET_Addr your_addr;
   ACE_SOCK_Dgram udp (my_addr);
-  char buff[BUFSIZ];
-  size_t buflen = sizeof (buff);
-  ssize_t recv_cnt = udp.recv (buff, buflen, your_addr);
+  std::array<char, BUFSIZ> buff {};
+  size_t buflen = buff.size ();
+  ssize_t const recv_cnt = udp.recv (buff.data (), buflen, your_addr);
   if (recv_cnt > 0)
-    udp.send (buff, static_cast<size_t> (buflen), your_addr);
+    udp.send (buff.data (), static_cast<size_t> (buflen), your_addr);
   udp.close ();
-  return;
 }
 // Listing 2
 
@@ -43,10 +43,10 @@ void echo_dgram ()
 // Exclude 3
 static void show_codgram ()
 {
-  char buff[BUFSIZ];
-  size_t buflen = sizeof (buff);
+  std::array<char, BUFSIZ> buff {};
+  size_t const buflen = buff.size ();
   // Exclude 3
-  const ACE_TCHAR *peer = ACE_TEXT ("other_host:8042");
+  ACE_TCHAR const *peer = ACE_TEXT ("other_host:8042");
   ACE_INET_Addr peer_addr (peer);
   ACE_SOCK_CODgram udp;
   if (0 != udp.open (peer_addr))
@@ -54,7 +54,7 @@ static void show_codgram ()
 
   // ...
 
-  if (-1 == udp.send (buff, buflen))
+  if (-1 == udp.send (buff.data (), buflen))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
   // Listing 3
 }
