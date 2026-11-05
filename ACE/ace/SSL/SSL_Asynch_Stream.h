@@ -115,7 +115,7 @@ protected:
 class ACE_SSL_Asynch_Result : public A_RESULT
 {
 public:
-    ACE_SSL_Asynch_Result (ACE_Handler &handler);
+    explicit ACE_SSL_Asynch_Result (ACE_Handler &handler);
 
     void complete (size_t bytes_transferred,
                    int success,

@@ -38,7 +38,7 @@ ACE_SSL_SOCK::set_option (int level,
 //     default:
       return ACE_OS::setsockopt (this->get_handle (),
                                  level,
-                                 option, (char *) optval,
+                                 option, static_cast<char *> (optval),
                                  optlen);
 //    }
 }
@@ -60,7 +60,7 @@ ACE_SSL_SOCK::get_option (int level,
 //    default:
       return ACE_OS::getsockopt (this->get_handle (),
                                  level,
-                                 option, (char *) optval,
+                                 option, static_cast<char *> (optval),
                                  optlen);
 //    }
 }
