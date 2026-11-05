@@ -52,6 +52,11 @@ public:
   Input_Handler (ACE_Timer_Queue *tq,
                  Reactor_Timer_Queue_Test_Driver &timer_queue_driver);
 
+  Input_Handler (Input_Handler const &) = delete;
+  Input_Handler (Input_Handler &&) = delete;
+  Input_Handler &operator= (Input_Handler const &) = delete;
+  Input_Handler &operator= (Input_Handler &&) = delete;
+
   /// Hook method for the <ACE_Reactor> to call whenever there is input
   /// ready to be read.
   int handle_input (ACE_HANDLE) override;
@@ -61,7 +66,7 @@ public:
    * exiting the program.A value of 0 indicates that we are NOT done,
    * 1 otherwise.
    */
-  int done ();
+  bool done () const;
 
   // = Hook methods to be called from <Reactor_Timer_Queue_Test_Driver>
 
@@ -81,12 +86,11 @@ public:
   int shutdown_timer (void *argument);
 
 private:
-  /// Keep a pointer to the timer queue we are using so we can traverse
-  /// the queue.
-  ACE_Timer_Queue *tq_;
+  /// Observes the timer queue so this handler can traverse it.
+  ACE_Timer_Queue *tq_ {};
 
   /// Flag used to close down program.
-  int done_;
+  bool done_ {};
 
   /// Test driver.  Used to call hook methods that are common code for
   /// all drivers.
@@ -102,7 +106,10 @@ private:
  * This class implements the logic to test the reactor
  * implementation of timer queue, using an <ACE_Timer_Heap>.
  */
-class ACE_Svc_Export Reactor_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
+class ACE_Svc_Export Reactor_Timer_Queue_Test_Driver
+  : public Timer_Queue_Test_Driver<ACE_Timer_Heap,
+                                   Input_Handler,
+                                   Input_Handler::ACTION>
 {
 public:
   /**
@@ -115,7 +122,7 @@ public:
   Reactor_Timer_Queue_Test_Driver ();
 
   /// Default destructor
-  virtual ~Reactor_Timer_Queue_Test_Driver ();
+  ~Reactor_Timer_Queue_Test_Driver () override;
 
   /// Prints the menu of options.
   int display_menu () override;
@@ -143,17 +150,24 @@ private:
 class Reactor_Timer_Handler : public ACE_Event_Handler
 {
 public:
+  Reactor_Timer_Handler () = default;
+
   /// Hook method that is called by the reactor when a timer expires.
   /// It prints the timer ID and the time it expired.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *) override;
 
   /// Sets the timer id for this handler <tid_> to <tid>
   void set_timer_id (long tid);
 
 private:
   /// timer ID.
-  long tid_;
+  long tid_ {};
+
+  Reactor_Timer_Handler (Reactor_Timer_Handler const &) = delete;
+  Reactor_Timer_Handler (Reactor_Timer_Handler &&) = delete;
+  Reactor_Timer_Handler &operator= (Reactor_Timer_Handler const &) = delete;
+  Reactor_Timer_Handler &operator= (Reactor_Timer_Handler &&) = delete;
 };
 
 #endif /* _REACTOR_TIMER_QUEUE_TEST_H_ */
