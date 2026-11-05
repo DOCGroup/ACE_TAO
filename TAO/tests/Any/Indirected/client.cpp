@@ -6,48 +6,61 @@
 
 #if TAO_HAS_MINIMUM_CORBA == 0
 
+static void
+dump_cdr (TAO_OutputCDR const &cdr,
+          size_t dump_limit,
+          ACE_TCHAR const *single_message,
+          ACE_TCHAR const *first_message,
+          ACE_TCHAR const *second_message)
+{
+  if (TAO_debug_level >= 2)
+    {
+      if (cdr.length () > dump_limit)
+        {
+          ACE_HEX_DUMP ((LM_INFO, cdr.buffer (), dump_limit, first_message));
+          ACE_HEX_DUMP ((LM_INFO,
+                         cdr.buffer () + dump_limit,
+                         cdr.length () - dump_limit,
+                         second_message));
+        }
+      else
+        {
+          ACE_HEX_DUMP ((LM_INFO, cdr.buffer (), cdr.length (), single_message));
+        }
+    }
+}
+
 bool
 recursive_union_test ()
 {
   constexpr size_t dump_limit = 512;
+  constexpr CORBA::Short test_short = 23901;
   bool rc {true};
 
   ACE_DEBUG ((LM_INFO,
               "Executing recursive union test\n"));
-
-
   ACE_DEBUG ((LM_INFO,
               "* Simple marshaling -> demarshaling\n"));
   {
-    CORBA::Any the_any, the_out_any;
+    CORBA::Any the_any {}, the_out_any {};
 
-    constexpr CORBA::Short test_short = 23901;
-    Test::RecursiveUnion3 foo3;
+    Test::RecursiveUnion3 foo3 {};
     foo3.a (test_short);
 
     the_any <<= foo3;
 
-    TAO_OutputCDR out;
+    TAO_OutputCDR out {};
 
     out << the_any;
 
     out.consolidate ();
 
-    if (TAO_debug_level >= 2)
-    {
-      if (out.length () > dump_limit)
-      {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), dump_limit, ACE_TEXT ("Encoded union (1):")));
-        ACE_HEX_DUMP ((LM_INFO, out.buffer () + dump_limit, out.length () - dump_limit,
-                       ACE_TEXT ("Encoded union (2):")));
-      }
-      else
-      {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), ACE_TEXT ("Encoded union:")));
-      }
-    }
+    dump_cdr (out, dump_limit,
+              ACE_TEXT ("Encoded union:"),
+              ACE_TEXT ("Encoded union (1):"),
+              ACE_TEXT ("Encoded union (2):"));
 
-    TAO_InputCDR in(out);
+    TAO_InputCDR in (out);
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
@@ -67,38 +80,28 @@ recursive_union_test ()
   ACE_DEBUG ((LM_INFO,
               "* Marshaling -> demarshaling with external reference\n"));
   {
-    CORBA::TypeCode_var tc;
+    CORBA::TypeCode_var tc {};
 
     {
-      CORBA::Any the_any, the_out_any;
+      CORBA::Any the_any {}, the_out_any {};
 
-      constexpr CORBA::Short test_short = 23901;
-      Test::RecursiveUnion3 foo3;
+      Test::RecursiveUnion3 foo3 {};
       foo3.a (test_short);
 
       the_any <<= foo3;
 
-      TAO_OutputCDR out;
+      TAO_OutputCDR out {};
 
       out << the_any;
 
       out.consolidate ();
 
-      if (TAO_debug_level >= 2)
-      {
-        if (out.length () > dump_limit)
-        {
-          ACE_HEX_DUMP ((LM_INFO, out.buffer (), dump_limit, ACE_TEXT ("Encoded union (1):")));
-          ACE_HEX_DUMP ((LM_INFO, out.buffer () + dump_limit, out.length () - dump_limit,
-                         ACE_TEXT ("Encoded union (2):")));
-        }
-        else
-        {
-          ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), ACE_TEXT ("Encoded union:")));
-        }
-      }
+      dump_cdr (out, dump_limit,
+                ACE_TEXT ("Encoded union:"),
+                ACE_TEXT ("Encoded union (1):"),
+                ACE_TEXT ("Encoded union (2):"));
 
-      TAO_InputCDR in(out);
+      TAO_InputCDR in (out);
 
       if (TAO_debug_level >= 1)
         ACE_DEBUG ((LM_INFO,
@@ -129,39 +132,28 @@ recursive_union_test ()
     ACE_DEBUG ((LM_INFO,
                 "> External Indirected_Type typecode reference destructed\n"));
 
-
   ACE_DEBUG ((LM_INFO,
               "* Marshaling -> demarshaling -> marshaling -> demarshaling\n"));
   {
-    CORBA::Any the_any, the_out_any, the_out_any2;
+    CORBA::Any the_any {}, the_out_any {}, the_out_any2 {};
 
-    constexpr CORBA::Short test_short = 23901;
-    Test::RecursiveUnion3 foo3;
+    Test::RecursiveUnion3 foo3 {};
     foo3.a (test_short);
 
     the_any <<= foo3;
 
-    TAO_OutputCDR out;
+    TAO_OutputCDR out {};
 
     out << the_any;
 
     out.consolidate ();
 
-    if (TAO_debug_level >= 2)
-    {
-      if (out.length () > dump_limit)
-      {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), dump_limit, ACE_TEXT ("Encoded union (1):")));
-        ACE_HEX_DUMP ((LM_INFO, out.buffer () + dump_limit, out.length () - dump_limit,
-                       ACE_TEXT ("Encoded union (2):")));
-      }
-      else
-      {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), ACE_TEXT ("Encoded union:")));
-      }
-    }
+    dump_cdr (out, dump_limit,
+              ACE_TEXT ("Encoded union:"),
+              ACE_TEXT ("Encoded union (1):"),
+              ACE_TEXT ("Encoded union (2):"));
 
-    TAO_InputCDR in(out);
+    TAO_InputCDR in (out);
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
@@ -173,29 +165,19 @@ recursive_union_test ()
       ACE_DEBUG ((LM_INFO,
                   "> Extracted any\n"));
 
-    TAO_OutputCDR out2;
+    TAO_OutputCDR out2 {};
 
     out2 << the_out_any;
 
     out2.consolidate ();
 
-    if (TAO_debug_level >= 2)
-    {
-      if (out2.length () > dump_limit)
-      {
-        ACE_HEX_DUMP ((LM_INFO, out2.buffer (), dump_limit, ACE_TEXT ("Re-encoded union (1):")));
-        ACE_HEX_DUMP ((LM_INFO, out2.buffer () + dump_limit, out2.length () - dump_limit,
-                       ACE_TEXT ("Re-encoded union (2):")));
-      }
-      else
-      {
-        ACE_HEX_DUMP ((LM_INFO, out2.buffer (), out2.length (), ACE_TEXT ("Re-encoded union:")));
-      }
-    }
+    dump_cdr (out2, dump_limit,
+              ACE_TEXT ("Re-encoded union:"),
+              ACE_TEXT ("Re-encoded union (1):"),
+              ACE_TEXT ("Re-encoded union (2):"));
 
-// A byte-for-byte re-encoding check was disabled because allocator initialization makes its result unreliable.
-
-    TAO_InputCDR in2(out2);
+    // Allocator initialization makes a byte-for-byte check unreliable.
+    TAO_InputCDR in2 (out2);
 
     if (TAO_debug_level >= 1)
       ACE_DEBUG ((LM_INFO,
@@ -208,11 +190,11 @@ recursive_union_test ()
                   "> Re-extracted any\n"));
 
     if (!the_out_any._tao_get_typecode ()->equal (the_out_any2._tao_get_typecode ()))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "extracted recursive typecodes differ\n"));
-      rc = false;
-    }
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "extracted recursive typecodes differ\n"));
+        rc = false;
+      }
   }
   // Any's typecodes out of scope
   if (TAO_debug_level >= 1)
@@ -223,16 +205,16 @@ recursive_union_test ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      recursive_union_test ();
-
+      bool const result = recursive_union_test ();
       orb->destroy ();
+      return result ? 0 : 1;
     }
   catch (CORBA::Exception const &ex)
     {
@@ -246,7 +228,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 #else
 
 int
-ACE_TMAIN(int , ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   return 0;
 }
