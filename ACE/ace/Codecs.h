@@ -27,6 +27,8 @@
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
 
+#include <array>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -49,23 +51,23 @@ public:
    * @param input_len Length of the byte stream.
    * @param output_len Length of the encoded Base64 byte stream.
    * @param is_chunked If true, terminate 72 character blocks with newline
-   * @return Encoded Base64 data in byte stream or NULL if input data cannot
+   * @return Encoded Base64 data in byte stream or nullptr if input data cannot
    *         be encoded.
    */
-  static ACE_Byte* encode (const ACE_Byte* input,
-                           const size_t input_len,
-                           size_t* output_len,
+  static ACE_Byte *encode (ACE_Byte const *input,
+                           size_t const input_len,
+                           size_t *output_len,
                            bool is_chunked = true);
   /**
    * Decodes a stream of Base64 to bytes data
    *
    * @param input Encoded Base64 data in byte stream.
    * @param output_len Length of the binary byte stream.
-   * @return Binary data in byte stream or NULL if input data cannot
+   * @return Binary data in byte stream or nullptr if input data cannot
    *         be encoded.
    */
-  static ACE_Byte* decode (const ACE_Byte* input,
-                           size_t* output_len);
+  static ACE_Byte *decode (ACE_Byte const *input,
+                           size_t *output_len);
 
   /**
    * Return the length of the encoded input data
@@ -74,7 +76,7 @@ public:
    * @return Length of the encoded Base64 data.
    *
    */
-  static size_t length (const ACE_Byte* input);
+  static size_t length (ACE_Byte const *input);
 
   //@}
 
@@ -91,11 +93,11 @@ private:
 
 private:
   /// Alphabet used for decoding i.e decoder_[alphabet_[i = 0..63]] = i
-  static ACE_Byte decoder_[];
+  static std::array<ACE_Byte, 256> decoder_;
 
   /// Alphabet used to check valid range of encoded input i.e
   /// member_[alphabet_[0..63]] = 1
-  static ACE_Byte member_[];
+  static std::array<ACE_Byte, 256> member_;
 
   /// Boolean to denote whether initialization is complete
   static bool init_;
