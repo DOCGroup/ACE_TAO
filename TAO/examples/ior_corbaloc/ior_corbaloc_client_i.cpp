@@ -11,10 +11,7 @@
  */
 //=============================================================================
 
-
 #include "ior_corbaloc_client_i.h"
-#include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
 
 int
 IOR_corbaloc_Client_i::run ()
@@ -37,7 +34,7 @@ IOR_corbaloc_Client_i::run ()
       if (CORBA::is_nil (factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference is nil for: %s\n",
+                             ACE_TEXT ("Object reference is nil for: %s\n"),
                              this->corbaloc_url_.c_str ()),
                             1);
         }
@@ -49,20 +46,24 @@ IOR_corbaloc_Client_i::run ()
       if (ret_value)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "The server has not been contacted. Error!!\n"));
+                      ACE_TEXT ("The server has not been contacted. Error!!\n")));
+          return -1;
         }
     }
   catch (CosNaming::NamingContext::NotFound const &ex)
     {
       ex._tao_print_exception ("CosNaming::NamingContext::NotFound");
+      return -1;
     }
   catch (CORBA::SystemException const &ex)
     {
       ex._tao_print_exception ("A system exception on client side");
+      return -1;
     }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
+      return -1;
     }
 
   return 0;
@@ -80,10 +81,10 @@ IOR_corbaloc_Client_i::init (int& argc,
 
       if (argc < 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "\nUsage:\n  %s [corbaloc URL for NameService]\n",
-                      argv[0]));
-          ACE_OS::exit (-1);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("\nUsage:\n  %s [corbaloc URL for NameService]\n"),
+                      argv [0]));
+          return -1;
         }
 
       corbaloc_url_ = argv[1];
@@ -94,7 +95,7 @@ IOR_corbaloc_Client_i::init (int& argc,
 
       if (CORBA::is_nil (naming_context_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot resolve Naming Service\n : client"),
+                           ACE_TEXT ("Cannot resolve Naming Service\n : client")),
                           -1);
 
       // Narrow to get the correct reference
@@ -103,7 +104,7 @@ IOR_corbaloc_Client_i::init (int& argc,
 
       if (CORBA::is_nil (this->naming_context_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot narrow Naming Service\n :client"),
+                           ACE_TEXT ("Cannot narrow Naming Service\n :client")),
                           -1);
     }
   catch (CORBA::SystemException const &ex)
@@ -114,6 +115,7 @@ IOR_corbaloc_Client_i::init (int& argc,
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
+      return -1;
     }
 
   return 0;

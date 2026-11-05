@@ -2,7 +2,8 @@
 #define STATUS_I_H
 
 #include "corbalocS.h"
-#include "ace/SString.h"
+
+#include <string>
 
 class corbaloc_Status_i : public POA_corbaloc::Status
 {
@@ -16,10 +17,10 @@ public:
 
   CORBA::Boolean print_status () override;
 
-  void set_name (char const *name) { server_name_ = name; }
+  void set_name (std::string const &name) { server_name_ = name; }
 
 private:
-  ACE_CString server_name_ {};
+  std::string server_name_ {};
 };
 
 #endif /* STATUS_I_H */

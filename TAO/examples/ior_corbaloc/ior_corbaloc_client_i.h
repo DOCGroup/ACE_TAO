@@ -12,14 +12,13 @@
  */
 //=============================================================================
 
-
 #if !defined (IOR_CORBALOC_CLIENT_I_H)
 #define IOR_CORBALOC_CLIENT_I_H
 
 #include "corbalocC.h"
 #include "orbsvcs/CosNamingC.h"
 
-#include "ace/SString.h"
+#include <string>
 
 /**
  * @class IOR_corbaloc_Client_i
@@ -46,7 +45,7 @@ class IOR_corbaloc_Client_i
 
  private:
   /// corbaloc url to test
-  ACE_TString corbaloc_url_;
+  std::basic_string<ACE_TCHAR> corbaloc_url_;
 
   /// Naming context
   CosNaming::NamingContextExt_var naming_context_ {};
