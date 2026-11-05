@@ -3,21 +3,28 @@
  * Copyright 2003 Addison-Wesley. All Rights Reserved.
  */
 
+#include <string>
+
 #include "ace/Configuration.h"
 #include "ace/Configuration_Import_Export.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/Service_Object.h"
-#include <string>
 
 class HA_Status : public ACE_Service_Object
 {
 public:
+  HA_Status () = default;
+  HA_Status (HA_Status const &) = delete;
+  HA_Status (HA_Status &&) = delete;
+  HA_Status &operator= (HA_Status const &) = delete;
+  HA_Status &operator= (HA_Status &&) = delete;
+
   int init (int argc, ACE_TCHAR *argv[]) override;
 
 private:
-  ACE_INET_Addr listen_addr_;
+  ACE_INET_Addr listen_addr_ {};
 };
 
 
@@ -33,34 +40,35 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
   if (cmd_opts.long_option
       (ACE_TEXT ("config"), 'f', ACE_Get_Opt::ARG_REQUIRED) == -1)
     return -1;
-  int option;
+  int option {};
   std::basic_string<ACE_TCHAR> config_file {ACE_TEXT ("HAStatus.conf")};
   while ((option = cmd_opts ()) != EOF)
-    switch (option) {
-    case 'f':
-      config_file = cmd_opts.opt_arg ();
-      break;
-    case ':':
-      ACE_ERROR_RETURN
-        ((LM_ERROR, ACE_TEXT ("-%c requires an argument\n"),
-          cmd_opts.opt_opt ()), -1);
-    default:
-      ACE_ERROR_RETURN
-        ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
-    }
+    switch (option)
+      {
+      case 'f':
+        config_file = cmd_opts.opt_arg ();
+        break;
+      case ':':
+        ACE_ERROR_RETURN
+          ((LM_ERROR, ACE_TEXT ("-%c requires an argument\n"),
+            cmd_opts.opt_opt ()), -1);
+      default:
+        ACE_ERROR_RETURN
+          ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
+      }
   // Listing 1
 
   // Listing 2 code/ch04
-  ACE_Configuration_Heap config;
+  ACE_Configuration_Heap config {};
   if (config.open () == -1)
     ACE_ERROR_RETURN
       ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("config")), -1);
-  ACE_Registry_ImpExp config_importer (config);
+  ACE_Registry_ImpExp config_importer {config};
   if (config_importer.import_config (config_file.c_str ()) == -1)
     ACE_ERROR_RETURN
       ((LM_ERROR, ACE_TEXT ("%p\n"), config_file.c_str ()), -1);
 
-  ACE_Configuration_Section_Key status_section;
+  ACE_Configuration_Section_Key status_section {};
   if (config.open_section (config.root_section (),
                            ACE_TEXT ("HAStatus"),
                            0,
@@ -86,7 +94,7 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  HA_Status status;
+  HA_Status status {};
   status.init (argc, argv);
   return 0;
 }

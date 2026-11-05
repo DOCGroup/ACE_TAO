@@ -3,9 +3,10 @@
  * Programmer's Guide, Copyright 2003 Addison-Wesley. All Rights Reserved.
  */
 
+#include <string>
+
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include <string>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -20,34 +21,34 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   cmd_opts.long_option (ACE_TEXT ("the_answer"), 42);
   // Listing 1
 
-  int option;
+  int option {};
   std::basic_string<ACE_TCHAR> config_file {ACE_TEXT ("HAStatus.conf")};
   while ((option = cmd_opts ()) != EOF)
-    switch (option) {
-    case 'f':
-      config_file = cmd_opts.opt_arg ();
-      break;
+    switch (option)
+      {
+      case 'f':
+        config_file = cmd_opts.opt_arg ();
+        break;
 
       // Listing 2 code/ch04
-    case 0:
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Yes, very cool.\n")));
-      break;
+      case 0:
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Yes, very cool.\n")));
+        break;
 
-    case 42:
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("the_answer is 42\n")));
-      break;
+      case 42:
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("the_answer is 42\n")));
+        break;
       // Listing 2
 
-    case ':':
-      ACE_ERROR_RETURN
-        ((LM_ERROR, ACE_TEXT ("-%c requires an argument\n"),
-          cmd_opts.opt_opt ()), -1);
+      case ':':
+        ACE_ERROR_RETURN
+          ((LM_ERROR, ACE_TEXT ("-%c requires an argument\n"),
+            cmd_opts.opt_opt ()), -1);
 
-
-    default:
-      ACE_ERROR_RETURN
-        ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
-    }
+      default:
+        ACE_ERROR_RETURN
+          ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
+      }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config file: %s\n"), config_file.c_str ()));
   return 0;
