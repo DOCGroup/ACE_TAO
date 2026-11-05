@@ -9,7 +9,6 @@
 #include "ace/Truncate.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_NS_string.h"
-#include <memory>
 #include <new>
 
 #include "Logging_Handler.h"
@@ -19,18 +18,6 @@
 
 #include "ace/os_include/os_netdb.h"
 
-namespace
-{
-  void release_message_block (ACE_Message_Block *message_block)
-  {
-    if (message_block != nullptr)
-      message_block->release ();
-  }
-}
-
-using Message_Block_Owner = std::unique_ptr<ACE_Message_Block,
-                                            void (*) (ACE_Message_Block *)>;
-
 int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
 {
   mblk = nullptr;
@@ -38,9 +25,8 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   // Put <logging_peer>'s hostname in new message block.
   ACE_INET_Addr peer_addr;
   logging_peer_.get_remote_addr (peer_addr);
-  Message_Block_Owner record (
-    new (std::nothrow) ACE_Message_Block (MAXHOSTNAMELEN + 1),
-    &release_message_block);
+  ACE_Message_Block_Unique_Ptr record {
+    new (std::nothrow) ACE_Message_Block (MAXHOSTNAMELEN + 1)};
   if (!record)
     {
       errno = ENOMEM;
@@ -52,9 +38,8 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
   // Allocate a message block for the payload; initially at least
   // large enough to hold the header, but needs some room for
   // alignment.
-  Message_Block_Owner payload (
-    new (std::nothrow) ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
-    &release_message_block);
+  ACE_Message_Block_Unique_Ptr payload {
+    new (std::nothrow) ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE)};
   if (!payload)
     {
       errno = ENOMEM;
@@ -128,7 +113,7 @@ int Logging_Handler::log_record ()
   if (recv_log_record (mblk) == -1)
     return -1;
   else {
-    Message_Block_Owner owner (mblk, &release_message_block);
+    ACE_Message_Block_Unique_Ptr owner {mblk};
     int const result = write_log_record (owner.get ());
     return result == -1 ? -1 : 0;
   }
