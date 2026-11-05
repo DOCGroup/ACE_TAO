@@ -3,13 +3,12 @@
  * Programmer's Guide, Copyright 2003 Addison-Wesley. All Rights Reserved.
  */
 
-#include "ace/os_include/os_netdb.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
 // Listing 1 code/ch04
 #include "ace/ARGV.h"
 #include "ace/Get_Opt.h"
+#include <string>
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -25,22 +24,16 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 // Listing 1
 
   int option;
-  ACE_TCHAR config_file[MAXPATHLEN];
-  ACE_TCHAR hostname[MAXHOSTNAMELEN];
-  ACE_OS::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
-  ACE_OS::strcpy (hostname, ACE_TEXT ("not set"));
+  std::basic_string<ACE_TCHAR> config_file {ACE_TEXT ("HAStatus.conf")};
+  std::basic_string<ACE_TCHAR> hostname {ACE_TEXT ("not set")};
   while ((option = cmd_opts ()) != EOF)
     switch (option) {
     case 'f':
-      ACE_OS::strncpy (config_file,
-                              cmd_opts.opt_arg (),
-                              MAXPATHLEN);
+      config_file = cmd_opts.opt_arg ();
       break;
 
     case 'h':
-      ACE_OS::strncpy (hostname,
-                              cmd_opts.opt_arg (),
-                              MAXHOSTNAMELEN);
+      hostname = cmd_opts.opt_arg ();
       break;
 
     case ':':
@@ -54,7 +47,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
         ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config file: %s\n"), config_file));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Hostname: %s\n"), hostname));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config file: %s\n"), config_file.c_str ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Hostname: %s\n"), hostname.c_str ()));
   return 0;
 }

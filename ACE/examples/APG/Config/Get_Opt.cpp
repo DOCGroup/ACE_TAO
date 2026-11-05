@@ -3,9 +3,9 @@
  * Programmer's Guide, Copyright 2003 Addison-Wesley. All Rights Reserved.
  */
 
-#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include <string>
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -21,14 +21,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Listing 1
 
   int option;
-  ACE_TCHAR config_file[MAXPATHLEN];
-  ACE_OS::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
+  std::basic_string<ACE_TCHAR> config_file {ACE_TEXT ("HAStatus.conf")};
   while ((option = cmd_opts ()) != EOF)
     switch (option) {
     case 'f':
-      ACE_OS::strncpy (config_file,
-                              cmd_opts.opt_arg (),
-                              MAXPATHLEN);
+      config_file = cmd_opts.opt_arg ();
       break;
 
       // Listing 2 code/ch04
@@ -52,5 +49,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ((LM_ERROR, ACE_TEXT ("Parse error.\n")), -1);
     }
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Config file: %s\n"), config_file.c_str ()));
   return 0;
 }
