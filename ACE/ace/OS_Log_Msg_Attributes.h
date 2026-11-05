@@ -53,26 +53,26 @@ protected:
   friend class ACE_Log_Msg;
 
   /// Ostream where the new TSS Log_Msg will use.
-  ACE_OSTREAM_TYPE *ostream_;
-  void *ostream_refcount_;
+  ACE_OSTREAM_TYPE *ostream_ {};
+  void *ostream_refcount_ {};
 
   /// Priority_mask to be used in new TSS Log_Msg.
-  unsigned long priority_mask_;
+  unsigned long priority_mask_ {};
 
   /// Are we allowing tracing in this thread?
-  bool tracing_enabled_;
+  bool tracing_enabled_ {};
 
   /// Indicates whether we should restart system calls that are
   /// interrupted.
-  bool restart_;
+  bool restart_ {true};
 
   /// Depth of the nesting for printing traces.
-  int trace_depth_;
+  int trace_depth_ {};
 
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   /// Structured exception handling Callbacks, only used under Win32
-  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
-  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
+  ACE_SEH_EXCEPT_HANDLER seh_except_selector_ {};
+  ACE_SEH_EXCEPT_HANDLER seh_except_handler_ {};
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 };
 

@@ -381,7 +381,7 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
   this->is_opened_ = false;
-  this->instance_ = tmp;
+  this->instance_.reset (tmp);
   this->threadkey_.set (tmp);
 
   ACE_Service_Config::signum_ = signum;
@@ -400,7 +400,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
   this->is_opened_ = false;
-  this->instance_ = tmp;
+  this->instance_.reset (tmp);
   this->threadkey_.set (tmp);
 
   if (this->open (program_name,
