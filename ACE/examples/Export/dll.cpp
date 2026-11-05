@@ -10,7 +10,7 @@ test_function ()
 }
 
 int
-test_class::method ()
+test_class::method () const
 {
   return RETVAL;
 }

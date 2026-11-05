@@ -7,7 +7,7 @@
 #include "ace/Singleton.h"
 #include "ace/Null_Mutex.h"
 
-constexpr int RETVAL = 42;
+constexpr int RETVAL {42};
 
 // To expose a function outside of a DLL, use the *_Export
 // at the beginning of the function declaration.
@@ -26,7 +26,13 @@ extern Test_Export int test_variable;
 class Test_Export test_class
 {
 public:
-  int method ();
+  test_class () = default;
+  test_class (test_class const &) = delete;
+  test_class (test_class &&) = delete;
+  test_class &operator= (test_class const &) = delete;
+  test_class &operator= (test_class &&) = delete;
+
+  int method () const;
 };
 
 // ACE_Singleton and its relatives are special cases.  The problem is
@@ -64,4 +70,5 @@ TEST_SINGLETON_DECLARE (ACE_Singleton, test_class, ACE_Null_Mutex)
 
 using TEST_SINGLETON = ACE_Singleton<test_class, ACE_Null_Mutex>;
 
+// The returned singleton pointer is owned by ACE_Singleton.
 Test_Export test_class *get_dll_singleton ();

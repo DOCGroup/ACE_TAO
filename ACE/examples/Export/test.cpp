@@ -1,11 +1,11 @@
 #include "dll.h"
-#include <ace/streams.h>
+#include "ace/streams.h"
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int failure_count {};
-  test_class my_test_class;
+  test_class const my_test_class;
 
   // Tet out the export of a class.  I don't see
   // How this can fail at runtime (rather it would
@@ -42,7 +42,6 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
   else
     cout << "Succeeded" << endl;
-
 
   // Test out the ACE_Singleton export by checking to see
   // that we have the same instance pointer as the DLL does.
