@@ -16,7 +16,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE> TYPE *
-ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name)
+ACE_Dynamic_Service<TYPE>::instance (ACE_TCHAR const *name)
 {
   ACE_Service_Object * svc_obj =
     static_cast<ACE_Service_Object *>
@@ -25,7 +25,7 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name)
 }
 
 template <class TYPE> TYPE *
-ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name,
+ACE_Dynamic_Service<TYPE>::instance (ACE_TCHAR const *name,
                                      bool no_global)
 {
   ACE_Service_Object * svc_obj =
@@ -35,8 +35,8 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_TCHAR *name,
 }
 
 template <class TYPE> TYPE *
-ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
-                                     const ACE_TCHAR *name)
+ACE_Dynamic_Service<TYPE>::instance (ACE_Service_Gestalt const *conf,
+                                     ACE_TCHAR const *name)
 {
   ACE_Service_Object * svc_obj =
     static_cast<ACE_Service_Object *>
@@ -45,8 +45,8 @@ ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
 }
 
 template <class TYPE> TYPE *
-ACE_Dynamic_Service<TYPE>::instance (const ACE_Service_Gestalt* conf,
-                                     const ACE_TCHAR *name,
+ACE_Dynamic_Service<TYPE>::instance (ACE_Service_Gestalt const *conf,
+                                     ACE_TCHAR const *name,
                                      bool no_global)
 {
   ACE_Service_Object * svc_obj =
