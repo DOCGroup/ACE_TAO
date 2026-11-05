@@ -5,21 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "Options.h"
 #include "Peer_Router.h"
-#include <memory>
-
-namespace
-{
-  struct Message_Block_Release
-  {
-    void operator() (ACE_Message_Block *message_block) const
-    {
-      if (message_block != nullptr)
-        message_block->release ();
-    }
-  };
-
-  using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
-}
 
 
 // Send the <ACE_Message_Block> to all the peers.  Note that in a
@@ -30,7 +15,7 @@ namespace
 int
 Peer_Router_Context::send_peers (ACE_Message_Block *mb)
 {
-  Message_Block_Owner message {mb};
+  ACE_Message_Block_Unique_Ptr message {mb};
   PEER_ITERATOR map_iter = this->peer_map_;
   int bytes {};
   int iterations {};
@@ -203,7 +188,7 @@ int
 Peer_Handler::put (ACE_Message_Block *mb,
                    ACE_Time_Value *tv)
 {
-  Message_Block_Owner message {mb};
+  ACE_Message_Block_Unique_Ptr message {mb};
 #if 0
   // If we're running as Active Objects just enqueue the message here.
   int const result = this->putq (mb, tv);
@@ -280,7 +265,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
   ACE_Message_Block *db {};
 
   ACE_NEW_RETURN (db, ACE_Message_Block (BUFSIZ), -1);
-  Message_Block_Owner data_block {db};
+  ACE_Message_Block_Unique_Ptr data_block {db};
 
   ACE_Message_Block *hb {};
   ACE_NEW_RETURN (hb,
@@ -288,7 +273,7 @@ Peer_Handler::handle_input (ACE_HANDLE h)
                                      ACE_Message_Block::MB_PROTO,
                                      db),
                   -1);
-  Message_Block_Owner header {hb};
+  ACE_Message_Block_Unique_Ptr header {hb};
   data_block.release ();
 
   ssize_t const n = this->peer ().recv (db->rd_ptr (),
