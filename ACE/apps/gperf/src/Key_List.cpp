@@ -996,10 +996,9 @@ Key_List::output_keyword_table ()
                       indent);
     }
   else
-    ACE_OS::printf ("%sstatic %s%s%swordlist[] =\n%s%s{\n",
+    ACE_OS::printf ("%sstatic %s%swordlist[] =\n%s%s{\n",
                     indent,
                     qualifier,
-                    (option[CONSTANT] || pointer_and_type_enabled == 0) ? "const " : "",
                     struct_tag,
                     indent,
                     indent);
