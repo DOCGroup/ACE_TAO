@@ -748,10 +748,10 @@ Key_List::output_switch (int use_keyword_table)
         {
           int i = 0;
 
-          ACE_OS::printf ("              %s%s *resword; %s\n\n",
+          ACE_OS::printf ("              %s%s *resword;%s\n\n",
                   option[CONSTANT] || pointer_and_type_enabled == 0 ? "const " : "",
                   pointer_and_type_enabled ? struct_tag : "char",
-                  option[LENTABLE] && !option[DUP] ? "unsigned int key_len;" : "");
+                  option[LENTABLE] && !option[DUP] ? " unsigned int key_len;" : "");
           if (total_switches == 1)
             {
               ACE_OS::printf ("              switch (key)\n                {\n");
@@ -1748,10 +1748,13 @@ Key_List::output_lookup_array ()
                             *lookup_ptr,
                             (int)(lookup_ptr - lookup_array));
           else
-            ACE_OS::printf ("%*d, %s",
-                            Key_List::field_width,
-                            *lookup_ptr,
-                            ++column % (max_column - 1) ? "" : "\n      ");
+            {
+              ACE_OS::printf ("%*d,",
+                              Key_List::field_width,
+                              *lookup_ptr);
+              if (lookup_ptr + 1 < lookup_array + max_hash_value + 1)
+                ACE_OS::printf (++column % (max_column - 1) ? " " : "\n      ");
+            }
         }
       ACE_OS::printf ("%s%s%s};\n\n", option[DEBUGGING] ? "" : "\n", indent, indent);
 
