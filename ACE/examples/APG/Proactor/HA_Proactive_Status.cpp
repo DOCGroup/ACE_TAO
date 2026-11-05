@@ -3,12 +3,13 @@
 ** Copyright 2003 Addison-Wesley. All Rights Reserved.
 */
 
+#include <memory>
+
 #include "HA_Proactive_Status.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Proactor.h"
 #include "ace/os_include/arpa/os_inet.h"
-#include <memory>
 
 static void
 release_message_block (ACE_Message_Block *message_block)
@@ -27,8 +28,7 @@ void
 HA_Proactive_Service::open (ACE_HANDLE h, ACE_Message_Block&)
 {
   this->handle (h);
-  if (this->reader_.open (*this) != 0 ||
-      this->writer_.open (*this) != 0   )
+  if (this->reader_.open (*this) != 0 || this->writer_.open (*this) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                   ACE_TEXT ("HA_Proactive_Service open")));
@@ -37,7 +37,7 @@ HA_Proactive_Service::open (ACE_HANDLE h, ACE_Message_Block&)
       return;
     }
 
-  ACE_Message_Block *raw_message_block = nullptr;
+  ACE_Message_Block *raw_message_block {};
   ACE_NEW_NORETURN (raw_message_block, ACE_Message_Block (1024));
   if (raw_message_block == nullptr)
     {
@@ -46,7 +46,7 @@ HA_Proactive_Service::open (ACE_HANDLE h, ACE_Message_Block&)
       return;
     }
 
-  Message_Block_Ptr mb (raw_message_block, release_message_block);
+  Message_Block_Ptr mb {raw_message_block, release_message_block};
   if (this->reader_.read (*mb, mb->space ()) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -82,15 +82,16 @@ HA_Proactive_Service::handle_read_stream
         }
       else
         {
-          ACE_Message_Block *raw_message_block = nullptr;
+          ACE_Message_Block *raw_message_block {};
           ACE_NEW_NORETURN (raw_message_block, ACE_Message_Block (1024));
           if (raw_message_block == nullptr)
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                         ACE_TEXT ("allocating read block")));
           else
             {
-              Message_Block_Ptr new_message_block (raw_message_block,
-                                                   release_message_block);
+              Message_Block_Ptr new_message_block {
+                raw_message_block,
+                release_message_block};
               if (this->reader_.read (*new_message_block,
                                       new_message_block->space ()) != 0)
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -133,10 +134,10 @@ HA_Proactive_Acceptor::validate_connection (
    ACE_INET_Addr const &remote,
    ACE_INET_Addr const &local)
 {
-  struct in_addr const *remote_addr =
-    reinterpret_cast<struct in_addr const *> (remote.get_addr ());
-  struct in_addr const *local_addr =
-    reinterpret_cast<struct in_addr const *> (local.get_addr ());
+  in_addr const *const remote_addr =
+    reinterpret_cast<in_addr const *> (remote.get_addr ());
+  in_addr const *const local_addr =
+    reinterpret_cast<in_addr const *> (local.get_addr ());
   if (inet_netof (*local_addr) == inet_netof (*remote_addr))
     return 0;
 
@@ -150,23 +151,23 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Listing 5 code/ch08
-  ACE_INET_Addr listen_addr {};  // Set up with listen port
-  HA_Proactive_Acceptor aio_acceptor;
-  if (0 != aio_acceptor.open (listen_addr,
-                              0,     // bytes_to_read
-                              false, // pass_addresses
-                              ACE_DEFAULT_ASYNCH_BACKLOG,
-                              true,  // reuse_addr
-                              nullptr,     // proactor
-                              true)) // validate_new_connection
+  ACE_INET_Addr listen_addr {}; // Set up with listen port
+  HA_Proactive_Acceptor aio_acceptor {};
+  if (aio_acceptor.open (listen_addr,
+                         0,     // bytes_to_read
+                         false, // pass_addresses
+                         ACE_DEFAULT_ASYNCH_BACKLOG,
+                         true,  // reuse_addr
+                         nullptr, // proactor
+                         true) != 0) // validate_new_connection
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("acceptor open")), 1);
   // Listing 5
 
 #if 0
   // Listing 6 code/ch08
-  ACE_INET_Addr peer_addr;    // Set up peer addr
-  ACE_Asynch_Connector<HA_Proactive_Service> aio_connect;
+  ACE_INET_Addr peer_addr {}; // Set up peer addr
+  ACE_Asynch_Connector<HA_Proactive_Service> aio_connect {};
   aio_connect.connect (peer_addr);
   // Listing 6
 #endif
