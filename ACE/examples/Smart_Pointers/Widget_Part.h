@@ -10,6 +10,8 @@
 #ifndef WIDGET_PART_H
 #define WIDGET_PART_H
 
+#include <memory>
+
 /**
  * @class Widget_Part
  *
@@ -32,7 +34,7 @@ public:
   virtual void print_info () = 0;
 
   /// Ask the part to remove itself from the widget that contains it.
-  virtual void remove_from_owner () = 0;
+  virtual std::unique_ptr<Widget_Part> remove_from_owner () = 0;
 };
 
 #endif /* WIDGET_PART_H */

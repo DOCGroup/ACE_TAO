@@ -15,9 +15,6 @@
 #include "Widget_Part.h"
 
 #include "ace/Unbounded_Queue.h"
-#include "ace/Refcounted_Auto_Ptr.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
 
 /**
  * @class Widget_Impl
@@ -40,32 +37,20 @@ public:
 
   /// Add a new part to the widget. The widget takes ownership of the part
   /// object.
-  void add_part (Widget_Part *part) override;
+  void add_part (std::unique_ptr<Widget_Part> part) override;
 
   /// Remove a random part from the widget. Ownership of the part is returned
   /// to the caller.
-  Widget_Part *remove_part () override;
+  std::unique_ptr<Widget_Part> remove_part () override;
 
   /// Ask the widget to print information about the parts that it contains.
   void list_parts () override;
 
 private:
-  /// The parts which make up this widget. The set actually contains instances
-  /// of ACE_Refcounted_Auto_Ptr to automatically manage the lifetimes of the
-  /// constituent parts.
-  ///
-  /// Some things to note about the choice of ACE_Refcounted_Auto_Ptr:
-  /// - We cannot use auto_ptr to manage the objects, since auto_ptr does not
-  ///   support the copying and assignment semantics necessary for storage in
-  ///   a container.
-  /// - The ACE_Strong_Bound_Ptr reference counted pointer could be used to
-  ///   store objects in a container, however (for reasons of safety) it
-  ///   provides no way to release ownership of the object from the smart
-  ///   pointer. We need to be able to release ownership to implement the
-  ///   remove_part method.
-  /// - ACE_Refcounted_Ptr can both be stored in containers and allows us to
-  ///   release ownership of the pointer that it contains.
-  ACE_Unbounded_Queue<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> > parts_;
+  /// The queue owns its raw part pointers. add_part() transfers ownership
+  /// from a unique_ptr, remove_part() returns it, and the destructor cleans
+  /// up any parts that remain in the queue.
+  ACE_Unbounded_Queue<Widget_Part *> parts_;
 };
 
 #endif /* WIDGET_IMPL_H */
