@@ -15,6 +15,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class Logging_Server
 {
 public:
+  Logging_Server () = default;
+  Logging_Server (Logging_Server const &) = delete;
+  Logging_Server (Logging_Server &&) = delete;
+  Logging_Server &operator= (Logging_Server const &) = delete;
+  Logging_Server &operator= (Logging_Server &&) = delete;
+
   // Template Method that runs logging server's event loop.
   virtual int run (int argc, char *argv[]);
 
@@ -27,7 +33,7 @@ protected:
   virtual int handle_data (ACE_SOCK_Stream * = nullptr) = 0;
 
   // The following helper method can be used by the hook methods.
-  int make_log_file (ACE_FILE_IO &, ACE_SOCK_Stream * = nullptr);
+  int make_log_file (ACE_FILE_IO &, ACE_SOCK_Stream const * = nullptr);
 
   // Close the socket endpoint.
   virtual ~Logging_Server () { acceptor_.close (); }

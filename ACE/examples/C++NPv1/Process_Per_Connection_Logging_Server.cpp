@@ -12,17 +12,19 @@
 #include "Logging_Handler.h"
 
 #include <errno.h>
+#include <memory>
+#include <new>
 
 namespace {
   extern "C" void sigterm_handler (int /* signum */) { /* No-op. */ }
 }
 
 
-Logging_Process::Logging_Process (const char *prog_name,
-                                  const ACE_SOCK_Stream &logging_peer)
-    : logging_peer_ (logging_peer.get_handle ())
+Logging_Process::Logging_Process (char const *prog_name,
+                                  ACE_SOCK_Stream const &logging_peer)
+  : prog_name_ (prog_name),
+    logging_peer_ (logging_peer.get_handle ())
 {
-  ACE_OS::strcpy (prog_name_, prog_name);
 }
 
 // Set up the process options here. If the decision to do a fork
@@ -43,7 +45,7 @@ Logging_Process::prepare (ACE_Process_Options &options)
 {
   if (options.pass_handle (logging_peer_.get_handle ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "pass_handle"), -1);
-  options.command_line ("%s", prog_name_);
+  options.command_line ("%s", this->prog_name_.c_str ());
   options.avoid_zombies (1);
   options.creation_flags (ACE_Process_Options::NO_EXEC);
   return 0;
@@ -55,6 +57,7 @@ Logging_Process::prepare (ACE_Process_Options &options)
 void
 Logging_Process::unmanage ()
 {
+  // ACE_Process_Manager calls this after it has finished tracking the process.
   delete this;
 }
 
@@ -68,24 +71,33 @@ Process_Per_Connection_Logging_Server::handle_connections ()
   if (acceptor ().accept (logging_peer) == -1)
     return -1;
 
-  Logging_Process *logger =
-      new Logging_Process (prog_name_, logging_peer);
+  std::unique_ptr<Logging_Process> logger (
+    new (std::nothrow) Logging_Process (this->prog_name_.c_str (),
+                                        logging_peer));
+  if (!logger)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+
   ACE_Process_Options options;
-  pid_t pid;
-  pid = ACE_Process_Manager::instance ()->spawn (logger,
-                                                 options);
+  pid_t const pid = ACE_Process_Manager::instance ()->spawn (logger.get (),
+                                                              options);
   // If we came back with pid 0 from the spawn(), this is a
   // POSIX fork system - we are in the child process. Handle the
   // logging records, then exit.
   if (pid == 0) {
     acceptor().close ();
     handle_data (&logging_peer);
-    delete logger;
+    logger.reset ();
     ACE_OS::exit (0);
   }
   logging_peer.close ();
   if (pid == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn()"), -1);
+
+  // ACE_Process_Manager calls unmanage() when it no longer tracks the process.
+  logger.release ();
 
   // See if there are any child processes that have
   // exited - reap their status and clean up handles held
@@ -115,8 +127,7 @@ Process_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 int
 Process_Per_Connection_Logging_Server::run (int argc, char *argv[])
 {
-  ACE_OS::strncpy (prog_name_, argv[0], MAXPATHLEN);
-  prog_name_[MAXPATHLEN] = '\0'; // Ensure NUL-termination.
+  this->prog_name_ = argv[0];
   // If there are 2 command line arguments after prog_name_, this
   // is a spawned worker process. Else run as the master.
   if (argc == 3)
@@ -128,9 +139,7 @@ Process_Per_Connection_Logging_Server::run (int argc, char *argv[])
 int
 Process_Per_Connection_Logging_Server::run_master (int argc, char *argv[])
 {
-  u_short logger_port = 0;
-  if (argc == 2)
-    logger_port = ACE_OS::atoi (argv[1]);
+  u_short const logger_port = argc == 2 ? ACE_OS::atoi (argv[1]) : 0;
   if (this->open (logger_port) == -1)
     return -1;
 
@@ -147,11 +156,11 @@ Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
   // The handle value is passed as a hex pointer value on Windows and a
   // decimal number everywhere else. See ace/Process.cpp for info.
 #if defined (ACE_WIN32)
-  intptr_t client_handle_i = 0;
+  intptr_t client_handle_i {};
 #  if defined (ACE_WIN64)
-  const char *fmt = "%I64x";
+  char const *const fmt = "%I64x";
 #  else
-  const char *fmt = "%x";
+  char const *const fmt = "%x";
 #  endif /* ACE_WIN64 */
 #  if defined (ACE_HAS_TR24731_2005_CRT)
   if (::sscanf_s (argv[2], fmt, &client_handle_i) == 0)

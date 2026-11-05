@@ -12,6 +12,7 @@
 #include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
+#include <array>
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -27,15 +28,21 @@ private:
   ACE_SOCK_Stream logging_peer_;
 
 public:
+  Logging_Client () = default;
+  Logging_Client (Logging_Client const &) = delete;
+  Logging_Client (Logging_Client &&) = delete;
+  Logging_Client &operator= (Logging_Client const &) = delete;
+  Logging_Client &operator= (Logging_Client &&) = delete;
+
   ACE_SOCK_Stream &peer () { return logging_peer_; }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int send (const ACE_Log_Record &log_record) {
+  int send (ACE_Log_Record const &log_record) {
   //FUZZ: enable check_for_lack_ACE_OS
 
     // Serialize the log record using a CDR stream, allocate
     // enough space for the complete <ACE_Log_Record>.
-    const size_t max_payload_size =
+    size_t const max_payload_size =
      4 // type()
      + 8 // timestamp
      + 4 // process id
@@ -48,7 +55,7 @@ public:
     payload << log_record;
 
     // Get the number of bytes used by the CDR stream.
-    ACE_CDR::ULong length =
+    ACE_CDR::ULong const length =
       ACE_Utils::truncate_cast<ACE_CDR::ULong> (payload.total_length ());
 
     // Send a header so the receiver can determine the byte
@@ -59,14 +66,14 @@ public:
     // Store the size of the payload that follows
     header << ACE_CDR::ULong (length);
     // Use an iovec to send both buffer and payload simultaneously.
-    iovec iov[2];
+    std::array<iovec, 2> iov {};
     iov[0].iov_base = header.begin ()->rd_ptr ();
     iov[0].iov_len  = 8;
     iov[1].iov_base = payload.begin ()->rd_ptr ();
     iov[1].iov_len  = length;
 
     // Send header and payload efficiently using "gather-write".
-    return logging_peer_.sendv_n (iov, 2);
+    return logging_peer_.sendv_n (iov.data (), static_cast<int> (iov.size ()));
   }
 
   ~Logging_Client () { logging_peer_.close (); }
@@ -75,8 +82,8 @@ public:
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  u_short logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : 0;
-  const char *logger_host =
+  u_short const logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : 0;
+  char const *const logger_host =
     argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
   int result;
 
@@ -103,7 +110,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (!gets (user_input))
       break;
 
-    ACE_Time_Value now (ACE_OS::gettimeofday ());
+    ACE_Time_Value const now (ACE_OS::gettimeofday ());
     ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());
     log_record.msg_data (user_input);
     if (logging_client.send (log_record) == -1)
@@ -120,7 +127,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     if (!cin || cin.eof ()) break;
 
-    ACE_Time_Value now (ACE_OS::gettimeofday ());
+    ACE_Time_Value const now (ACE_OS::gettimeofday ());
     ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());
     log_record.msg_data (user_input.c_str ());
     if (logging_client.send (log_record) == -1)

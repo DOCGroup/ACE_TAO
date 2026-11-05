@@ -12,6 +12,7 @@
 
 #include <errno.h>
 #include <memory>
+#include <new>
 
 namespace {
   extern "C" void sigterm_handler (int /* signum */) { /* No-op. */ }
@@ -22,7 +23,7 @@ ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
   std::unique_ptr<Thread_Args> thread_args (static_cast<Thread_Args *> (arg));
 
-  thread_args->this_->handle_data (&thread_args->logging_peer_);
+  thread_args->server_->handle_data (&thread_args->logging_peer_);
   thread_args->logging_peer_.close ();
   return 0;    // Return value is ignored
 }
@@ -31,7 +32,13 @@ ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 int
 Thread_Per_Connection_Logging_Server::handle_connections ()
 {
-  std::unique_ptr<Thread_Args> thread_args (new Thread_Args (this));
+  std::unique_ptr<Thread_Args> thread_args (
+    new (std::nothrow) Thread_Args (this));
+  if (!thread_args)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   if (acceptor ().accept (thread_args->logging_peer_) == -1)
     return -1;
@@ -39,10 +46,10 @@ Thread_Per_Connection_Logging_Server::handle_connections ()
                    // Pointer to function entry point.
                   Thread_Per_Connection_Logging_Server::run_svc,
                    // <run_svc> parameter.
-                  static_cast<void *> (thread_args.get ()),
+                  thread_args.get (),
                   THR_DETACHED | THR_SCOPE_SYSTEM) == -1)
     return -1;
-  thread_args.release ();   // Spawned thread now owns memory
+  thread_args.release ();   // Spawned thread now owns the arguments.
   return 0;
 }
 
@@ -63,7 +70,7 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
   // Keep handling log records until client closes connection
   // or this thread is asked to cancel itself.
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
-  ACE_thread_t me = ACE_Thread::self ();
+  ACE_thread_t const me = ACE_Thread::self ();
   while (!mgr->testcancel (me) &&
          logging_handler.log_record () != -1)
     continue;
@@ -76,7 +83,7 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register to receive the <SIGTERM> signal.
-  ACE_Sig_Action sa ((ACE_SignalHandler) sigterm_handler,
+  ACE_Sig_Action sa (static_cast<ACE_SignalHandler> (sigterm_handler),
                      SIGTERM);
 
   Thread_Per_Connection_Logging_Server server;

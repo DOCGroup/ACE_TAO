@@ -12,9 +12,14 @@ class Thread_Per_Connection_Logging_Server : public Logging_Server
 {
 private:
   struct Thread_Args {
-    explicit Thread_Args (Thread_Per_Connection_Logging_Server *lsp) : this_ (lsp) {}
+    explicit Thread_Args (Thread_Per_Connection_Logging_Server *server)
+      : server_ (server) {}
+    Thread_Args (Thread_Args const &) = delete;
+    Thread_Args (Thread_Args &&) = delete;
+    Thread_Args &operator= (Thread_Args const &) = delete;
+    Thread_Args &operator= (Thread_Args &&) = delete;
 
-    Thread_Per_Connection_Logging_Server *this_;
+    Thread_Per_Connection_Logging_Server *const server_;
     ACE_SOCK_Stream logging_peer_;
   };
 
@@ -26,6 +31,12 @@ protected:
   int handle_data (ACE_SOCK_Stream * = nullptr) override;
 
 public:
+  Thread_Per_Connection_Logging_Server () = default;
+  Thread_Per_Connection_Logging_Server (Thread_Per_Connection_Logging_Server const &) = delete;
+  Thread_Per_Connection_Logging_Server (Thread_Per_Connection_Logging_Server &&) = delete;
+  Thread_Per_Connection_Logging_Server &operator= (Thread_Per_Connection_Logging_Server const &) = delete;
+  Thread_Per_Connection_Logging_Server &operator= (Thread_Per_Connection_Logging_Server &&) = delete;
+
   // Template Method that runs logging server's event loop. Need to
   // reimplement this here because the threads spawned from handle_connections
   // call handle_data; therefore, this method must not.

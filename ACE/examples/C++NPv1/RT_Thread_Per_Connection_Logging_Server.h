@@ -12,6 +12,13 @@
 class RT_Thread_Per_Connection_Logging_Server :
   public Thread_Per_Connection_Logging_Server
 {
+public:
+  RT_Thread_Per_Connection_Logging_Server () = default;
+  RT_Thread_Per_Connection_Logging_Server (RT_Thread_Per_Connection_Logging_Server const &) = delete;
+  RT_Thread_Per_Connection_Logging_Server (RT_Thread_Per_Connection_Logging_Server &&) = delete;
+  RT_Thread_Per_Connection_Logging_Server &operator= (RT_Thread_Per_Connection_Logging_Server const &) = delete;
+  RT_Thread_Per_Connection_Logging_Server &operator= (RT_Thread_Per_Connection_Logging_Server &&) = delete;
+
 protected:
   int open (u_short port) override;
   int handle_data (ACE_SOCK_Stream * = nullptr) override;
