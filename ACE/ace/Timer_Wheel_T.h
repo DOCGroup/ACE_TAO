@@ -14,6 +14,8 @@
 
 #include "ace/Timer_Queue_T.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -203,7 +205,7 @@ private:
   int power2bits (int n, int min_bits, int max_bits);
 
   /// Timing Wheel.
-  ACE_Timer_Node_T<TYPE> **spokes_ {};
+  std::unique_ptr<ACE_Timer_Node_T<TYPE> *[]> spokes_ {};
   /// Size of the timing wheel.
   u_int spoke_count_ {};
   /// Number of timer_id bits used for the spoke

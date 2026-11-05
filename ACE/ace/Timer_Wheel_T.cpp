@@ -134,12 +134,14 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::open_i
 
   this->wheel_time_.msec (1 << (this->res_bits_));
 
-  ACE_NEW (this->spokes_, ACE_Timer_Node_T<TYPE>* [this->spoke_count_]);
+  ACE_Timer_Node_T<TYPE> **spoke_array {};
+  ACE_NEW (spoke_array, ACE_Timer_Node_T<TYPE> *[this->spoke_count_]);
+  this->spokes_.reset (spoke_array);
 
   // Create the root nodes. These will be treated specially
   for (u_int i = 0; i < this->spoke_count_; ++i)
   {
-    ACE_Timer_Node_T<TYPE>* root = this->alloc_node ();
+    ACE_Timer_Node_T<TYPE> *root = this->alloc_node ();
     root->set (0, nullptr, ACE_Time_Value::zero, ACE_Time_Value::zero, root, root, 0);
     this->spokes_[i] = root;
   }
@@ -159,11 +161,9 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Wheel_T ()
   for (u_int i = 0; i < this->spoke_count_; ++i)
   {
     // Free all the nodes starting at the root
-    ACE_Timer_Node_T<TYPE>* root = this->spokes_[i];
+    ACE_Timer_Node_T<TYPE> *root = this->spokes_[i];
     this->free_node (root);
   }
-
-  delete[] this->spokes_;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
