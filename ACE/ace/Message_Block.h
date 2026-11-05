@@ -24,6 +24,8 @@
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration.
@@ -658,6 +660,17 @@ private:
   ACE_Message_Block &operator= (const ACE_Message_Block &);
   ACE_Message_Block (const ACE_Message_Block &);
 };
+
+struct ACE_Message_Block_Release
+{
+  void operator() (ACE_Message_Block *message_block) const
+  {
+    ACE_Message_Block::release (message_block);
+  }
+};
+
+using ACE_Message_Block_Unique_Ptr =
+  std::unique_ptr<ACE_Message_Block, ACE_Message_Block_Release>;
 
 /**
  * @class ACE_Data_Block

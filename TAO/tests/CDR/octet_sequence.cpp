@@ -16,16 +16,6 @@
 #include "tao/CDR.h"
 
 #include <cstring>
-#include <memory>
-struct Message_Block_Release
-{
-  void operator() (ACE_Message_Block *message_block) const
-  {
-    ACE_Message_Block::release (message_block);
-  }
-};
-
-using Message_Block_Ptr = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
 
 void
 dump (char const *const msg,
@@ -48,9 +38,9 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // setup mb's
   char buf[1024];
-  Message_Block_Ptr const m1 (new ACE_Message_Block (1024));
-  Message_Block_Ptr m2 (new ACE_Message_Block (1024));
-  Message_Block_Ptr m3 (new ACE_Message_Block (1024));
+  ACE_Message_Block_Unique_Ptr const m1 (new ACE_Message_Block (1024));
+  ACE_Message_Block_Unique_Ptr m2 (new ACE_Message_Block (1024));
+  ACE_Message_Block_Unique_Ptr m3 (new ACE_Message_Block (1024));
   // Non-owning aliases remain valid while m1 owns the chained message blocks.
   ACE_Message_Block *const m2_alias = m2.get ();
   ACE_Message_Block *const m3_alias = m3.get ();
@@ -66,7 +56,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   dump ("expect 1,1,1", m1.get (), m2_alias, m3_alias);
 
   {
-    Message_Block_Ptr const m (ACE_Message_Block::duplicate (m1.get ()));
+    ACE_Message_Block_Unique_Ptr const m (ACE_Message_Block::duplicate (m1.get ()));
     dump ("expect 2,2,2", m1.get (), m2_alias, m3_alias);
 
     {
