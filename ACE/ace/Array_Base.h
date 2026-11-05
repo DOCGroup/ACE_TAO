@@ -59,20 +59,21 @@ public:
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
   /// Dynamically create an uninitialized array.
-  ACE_Array_Base (size_type size = 0,
-                  ACE_Allocator * the_allocator = nullptr);
+  explicit ACE_Array_Base (size_type size = 0,
+                           ACE_Allocator *the_allocator = nullptr);
 
   /// Dynamically initialize the entire array to the @a default_value.
   ACE_Array_Base (size_type size,
-                  T const & default_value,
-                  ACE_Allocator * the_allocator = nullptr);
+                  T const &default_value,
+                  ACE_Allocator *the_allocator = nullptr);
 
   /**
    * The copy constructor performs initialization by making an exact
    * copy of the contents of parameter @a s, i.e., *this == s will
    * return true.
    */
-  ACE_Array_Base (ACE_Array_Base<T> const & s);
+  ACE_Array_Base (ACE_Array_Base<T> const &s);
+  ACE_Array_Base (ACE_Array_Base<T> &&) = delete;
 
   /**
    * Assignment operator performs an assignment by making an exact
@@ -82,7 +83,8 @@ public:
    * <max_size_> is < <s.max_size_> we must delete the <array_>,
    * reallocate a new <array_>, and then copy the contents of <s>.
    */
-  void operator= (ACE_Array_Base<T> const & s);
+  void operator= (ACE_Array_Base<T> const &s);
+  void operator= (ACE_Array_Base<T> &&) = delete;
 
   /// Clean up the array (e.g., delete dynamically allocated memory).
   ~ACE_Array_Base ();
@@ -99,7 +101,7 @@ public:
 
   /// Set an item in the array at location @a slot.  Returns
   /// -1 if @a slot is not in range, else returns 0.
-  int set (T const & new_item, size_type slot);
+  int set (T const &new_item, size_type slot);
 
   /**
    * Get an item in the array at location @a slot.  Returns -1 if
@@ -107,7 +109,7 @@ public:
    * copies the item.  If you want to avoid the copy, you can use
    * the const operator [], but then you'll be responsible for range checking.
    */
-  int get (T & item, size_type slot) const;
+  int get (T &item, size_type slot) const;
 
   /// Returns the <cur_size_> of the array.
   size_type size () const;
@@ -165,7 +167,7 @@ protected:
 
   /// Maximum size of the array, i.e., the total number of @c T elements
   /// in @c array_.
-  size_type max_size_;
+  size_type max_size_ {};
 
   /**
    * Current size of the array.  This starts out being == to
@@ -174,13 +176,13 @@ protected:
    * keeping track of both sizes is to avoid reallocating memory if we
    * don't have to.
    */
-  size_type cur_size_;
+  size_type cur_size_ {};
 
   /// Pointer to the array's storage buffer.
-  value_type * array_;
+  value_type *array_ {};
 
   /// Allocation strategy of the ACE_Array_Base.
-  ACE_Allocator * allocator_;
+  ACE_Allocator *allocator_ {};
 
   friend class ACE_Array_Iterator<T>;
 };
@@ -201,7 +203,7 @@ template <class T>
 class ACE_Array_Iterator
 {
 public:
-  ACE_Array_Iterator (ACE_Array_Base<T> &);
+  explicit ACE_Array_Iterator (ACE_Array_Base<T> &);
 
   // = Iteration methods.
 
