@@ -10,6 +10,9 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_ctype.h"
+#if defined (ACE_HAS_WCHAR)
+# include "ace/OS_NS_wchar.h"
+#endif /* ACE_HAS_WCHAR */
 
 #include <cstring>
 
@@ -267,6 +270,39 @@ ACE_OS::malloc (size_t nbytes)
 {
   return ACE_MALLOC_FUNC (nbytes);
 }
+
+#if !defined (ACE_LACKS_MKTEMP) && !defined (ACE_DISABLE_MKTEMP)
+char *
+ACE_OS::mktemp (char *s)
+{
+  ACE_OS_TRACE ("ACE_OS::mktemp");
+#  if defined (ACE_WIN32)
+  return ::_mktemp (s);
+#  else
+  return ::mktemp (s);
+#  endif
+}
+
+#  if defined (ACE_HAS_WCHAR)
+wchar_t *
+ACE_OS::mktemp (wchar_t *s)
+{
+  ACE_OS_TRACE ("ACE_OS::mktemp");
+#    if defined (ACE_WIN32)
+  return ::_wmktemp (s);
+#    else
+  // For narrow-char filesystems, convert the wide-char input to a narrow-char
+  // string for mktemp (), then convert the name back for the caller.
+  ACE_Wide_To_Ascii narrow_s (s);
+  if (::mktemp (narrow_s.char_rep ()) == 0)
+    return nullptr;
+  ACE_Ascii_To_Wide wide_s (narrow_s.char_rep ());
+  ACE_OS::strcpy (s, wide_s.wchar_rep ());
+  return s;
+#    endif
+}
+#  endif /* ACE_HAS_WCHAR */
+#endif /* !ACE_LACKS_MKTEMP && !ACE_DISABLE_MKTEMP */
 
 #if defined (ACE_LACKS_MKTEMP) && !defined (ACE_DISABLE_MKTEMP)
 ACE_TCHAR *
