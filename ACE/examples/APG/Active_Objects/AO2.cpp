@@ -13,10 +13,11 @@ class HA_ControllerAgent
 {
   // Proxy to the HA_Controller that is on the network.
 public:
-  HA_ControllerAgent ()
-  {
-    ACE_TRACE("HA_ControllerAgent::HA_ControllerAgent");
-  }
+  HA_ControllerAgent () = default;
+  HA_ControllerAgent (HA_ControllerAgent const &) = delete;
+  HA_ControllerAgent (HA_ControllerAgent &&) = delete;
+  HA_ControllerAgent &operator= (HA_ControllerAgent const &) = delete;
+  HA_ControllerAgent &operator= (HA_ControllerAgent &&) = delete;
 
   int status_update ()
   {
@@ -72,6 +73,12 @@ private:
 class ExitMethod : public ACE_Method_Request
 {
 public:
+  ExitMethod () = default;
+  ExitMethod (ExitMethod const &) = delete;
+  ExitMethod (ExitMethod &&) = delete;
+  ExitMethod &operator= (ExitMethod const &) = delete;
+  ExitMethod &operator= (ExitMethod &&) = delete;
+
   int call () override
   {
     // Cause exit.
@@ -83,9 +90,9 @@ class Scheduler : public ACE_Task_Base
 {
 public:
   Scheduler (Scheduler const &) = delete;
-  Scheduler &operator = (Scheduler const &) = delete;
+  Scheduler &operator= (Scheduler const &) = delete;
   Scheduler (Scheduler &&) = delete;
-  Scheduler &operator = (Scheduler &&) = delete;
+  Scheduler &operator= (Scheduler &&) = delete;
 
   Scheduler ()
   {
@@ -97,10 +104,10 @@ public:
   {
     ACE_TRACE ("Scheduler::svc");
 
-    while (1)
+    while (true)
       {
         // Dequeue the next method object
-        std::unique_ptr<ACE_Method_Request> request (this->activation_queue_.dequeue ());
+        std::unique_ptr<ACE_Method_Request> request {this->activation_queue_.dequeue ()};
 
         // Invoke the method request.
         if (request == nullptr || request->call () == -1)
@@ -135,7 +142,7 @@ public:
 
   ACE_Future<int> status_update ()
   {
-    ACE_TRACE("HA_ControllerAgentProxy::status_update");
+    ACE_TRACE ("HA_ControllerAgentProxy::status_update");
     ACE_Future<int> result;
 
     // Create and enqueue a method request on the scheduler.
@@ -188,13 +195,15 @@ private:
 };
 // Listing 1
 // Listing 2 code/ch15
+constexpr int status_update_count = 10;
+
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   HA_ControllerAgentProxy controller;
-  std::array<ACE_Future<int>, 10> results;
+  std::array<ACE_Future<int>, status_update_count> results {};
   CompletionCallBack cb (controller);
 
-  for (int i = 0 ; i < 10; i++)
+  for (int i = 0; i < status_update_count; ++i)
     {
       results[i] = controller.status_update ();
       results[i].attach (&cb);
