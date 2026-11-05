@@ -18,7 +18,7 @@ pid_t timerTask (int initialDelay,
   if (initialDelay < 1 && interval < 1)
     return -1;
 
-  pid_t pid = ACE_OS::fork ();
+  pid_t const pid = ACE_OS::fork ();
 
   if (pid < 0)
     return -1;
@@ -32,9 +32,9 @@ pid_t timerTask (int initialDelay,
   if (interval < 1)
     return 0;
 
-  while (1)
+  while (true)
     {
-      (*task) ();
+      task ();
       ACE_OS::sleep (interval);
     }
 
@@ -45,7 +45,7 @@ pid_t timerTask (int initialDelay,
 // Listing 2 code/ch07
 void foo ()
 {
-  time_t now = ACE_OS::time (nullptr);
+  time_t const now = ACE_OS::time (nullptr);
   cerr << "The time is " << ACE_OS::ctime (&now) << endl;
 }
 // Listing 2
@@ -58,7 +58,7 @@ void programMainLoop ()
 // Listing 3 code/ch07
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  pid_t timerId = timerTask (3, 5, foo);
+  pid_t const timerId = timerTask (3, 5, foo);
   programMainLoop ();
   ACE_OS::kill (timerId, SIGINT);
   return 0;

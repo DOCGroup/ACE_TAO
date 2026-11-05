@@ -1,20 +1,38 @@
+#include <memory>
+
 #include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_netdb.h"
 
 // Listing 1 code/ch07
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
+#include "ace/Message_Block.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Reactor.h"
-#include <memory>
+
+static void
+release_message_block (ACE_Message_Block *message_block)
+{
+  if (message_block != nullptr)
+    message_block->release ();
+}
+
+using Message_Block_Ptr = std::unique_ptr<ACE_Message_Block,
+                                          void (*) (ACE_Message_Block *)>;
 
 class ClientAcceptor : public ACE_Event_Handler
 {
 public:
+  ClientAcceptor () = default;
+  ClientAcceptor (ClientAcceptor const &) = delete;
+  ClientAcceptor (ClientAcceptor &&) = delete;
+  ClientAcceptor &operator= (ClientAcceptor const &) = delete;
+  ClientAcceptor &operator= (ClientAcceptor &&) = delete;
+
   ~ClientAcceptor () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (const ACE_INET_Addr &listen_addr);
+  int open (ACE_INET_Addr const &listen_addr);
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
@@ -29,7 +47,7 @@ public:
                             ACE_Reactor_Mask close_mask) override;
 
 protected:
-  ACE_SOCK_Acceptor acceptor_;
+  ACE_SOCK_Acceptor acceptor_ {};
 };
 // Listing 1
 
@@ -42,6 +60,12 @@ protected:
 class ClientService : public ACE_Event_Handler
 {
 public:
+  ClientService () = default;
+  ClientService (ClientService const &) = delete;
+  ClientService (ClientService &&) = delete;
+  ClientService &operator= (ClientService const &) = delete;
+  ClientService &operator= (ClientService &&) = delete;
+
   ACE_SOCK_Stream &peer () { return this->sock_; }
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -63,8 +87,8 @@ public:
                             ACE_Reactor_Mask close_mask) override;
 
 protected:
-  ACE_SOCK_Stream sock_;
-  ACE_Message_Queue<ACE_NULL_SYNCH> output_queue_;
+  ACE_SOCK_Stream sock_ {};
+  ACE_Message_Queue<ACE_NULL_SYNCH> output_queue_ {};
 };
 // Listing 6
 
@@ -77,7 +101,7 @@ ClientAcceptor::~ClientAcceptor ()
 
 // Listing 2 code/ch07
 int
-ClientAcceptor::open (const ACE_INET_Addr &listen_addr)
+ClientAcceptor::open (ACE_INET_Addr const &listen_addr)
 {
   if (this->acceptor_.open (listen_addr, 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -93,9 +117,9 @@ ClientAcceptor::open (const ACE_INET_Addr &listen_addr)
 int
 ClientAcceptor::handle_input (ACE_HANDLE)
 {
-  ClientService *client = nullptr;
-  ACE_NEW_RETURN (client, ClientService, -1);
-  std::unique_ptr<ClientService> p (client);
+  ClientService *raw_client {};
+  ACE_NEW_RETURN (raw_client, ClientService, -1);
+  std::unique_ptr<ClientService> client {raw_client};
 
   if (this->acceptor_.accept (client->peer ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -103,10 +127,11 @@ ClientAcceptor::handle_input (ACE_HANDLE)
                        ACE_TEXT ("Failed to accept ")
                        ACE_TEXT ("client connection")),
                       -1);
-  p.release ();
   client->reactor (this->reactor ());
-  if (client->open () == -1)
-    client->handle_close (ACE_INVALID_HANDLE, 0);
+  // The registered handler owns the accepted service from here onward.
+  ClientService *const accepted_client = client.release ();
+  if (accepted_client->open () == -1)
+    accepted_client->handle_close (ACE_INVALID_HANDLE, 0);
   return 0;
 }
 // Listing 3
@@ -130,8 +155,8 @@ ClientAcceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 ClientService::open ()
 {
-  ACE_TCHAR peer_name[MAXHOSTNAMELEN];
-  ACE_INET_Addr peer_addr;
+  ACE_TCHAR peer_name[MAXHOSTNAMELEN] {};
+  ACE_INET_Addr peer_addr {};
   if (this->sock_.get_remote_addr (peer_addr) == 0 &&
       peer_addr.addr_to_string (peer_name, MAXHOSTNAMELEN) == 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -146,9 +171,10 @@ ClientService::open ()
 int
 ClientService::handle_input (ACE_HANDLE)
 {
-  const size_t INPUT_SIZE = 4096;
-  char buffer[INPUT_SIZE];
-  ssize_t recv_cnt, send_cnt;
+  constexpr size_t INPUT_SIZE = 4096;
+  char buffer[INPUT_SIZE] {};
+  ssize_t recv_cnt {};
+  ssize_t send_cnt {};
 
   if ((recv_cnt = this->sock_.recv (buffer, sizeof(buffer))) <= 0)
     {
@@ -168,21 +194,23 @@ ClientService::handle_input (ACE_HANDLE)
                       0);
   if (send_cnt == -1)
     send_cnt = 0;
-  ACE_Message_Block *mb = nullptr;
-  size_t remaining =
+  ACE_Message_Block *raw_message_block {};
+  size_t const remaining =
     static_cast<size_t> ((recv_cnt - send_cnt));
-  ACE_NEW_RETURN (mb, ACE_Message_Block (remaining), -1);
-  mb->copy (&buffer[send_cnt], remaining);
-  int output_off = this->output_queue_.is_empty ();
-  ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-  if (this->output_queue_.enqueue_tail (mb, &nowait) == -1)
+  ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (remaining), -1);
+  Message_Block_Ptr message_block {raw_message_block,
+                                   release_message_block};
+  message_block->copy (&buffer[send_cnt], remaining);
+  int const output_off = this->output_queue_.is_empty ();
+  ACE_Time_Value nowait {ACE_OS::gettimeofday ()};
+  if (this->output_queue_.enqueue_tail (message_block.get (), &nowait) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p; discarding data\n"),
                   ACE_TEXT ("enqueue failed")));
-      mb->release ();
       return 0;
     }
+  message_block.release ();
   if (output_off)
     return this->reactor ()->register_handler
       (this, ACE_Event_Handler::WRITE_MASK);
@@ -194,25 +222,28 @@ ClientService::handle_input (ACE_HANDLE)
 int
 ClientService::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *mb = nullptr;
-  ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-  while (0 <= this->output_queue_.dequeue_head
-                                    (mb, &nowait))
+  ACE_Message_Block *raw_message_block {};
+  ACE_Time_Value nowait {ACE_OS::gettimeofday ()};
+  while (this->output_queue_.dequeue_head (raw_message_block, &nowait) != -1)
     {
-      ssize_t send_cnt =
-        this->sock_.send (mb->rd_ptr (), mb->length ());
+      Message_Block_Ptr message_block {raw_message_block,
+                                       release_message_block};
+      ssize_t const send_cnt =
+        this->sock_.send (message_block->rd_ptr (),
+                          message_block->length ());
       if (send_cnt == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send")));
       else
-        mb->rd_ptr (static_cast<size_t> (send_cnt));
-      if (mb->length () > 0)
+        message_block->rd_ptr (static_cast<size_t> (send_cnt));
+      if (message_block->length () > 0)
         {
-          this->output_queue_.enqueue_head (mb);
+          if (this->output_queue_.enqueue_head (message_block.get ()) == -1)
+            return -1;
+          message_block.release ();
           break;
         }
-      mb->release ();
     }
   return (this->output_queue_.is_empty ()) ? -1 : 0;
 }
@@ -229,6 +260,7 @@ ClientService::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
   this->reactor ()->remove_handler (this, mask);
   this->sock_.close ();
   this->output_queue_.flush ();
+  // ClientAcceptor allocated this service for reactor-managed callbacks.
   delete this;
   return 0;
 }
@@ -238,7 +270,11 @@ ClientService::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 class LoopStopper : public ACE_Event_Handler
 {
 public:
-  LoopStopper (int signum = SIGINT);
+  explicit LoopStopper (int signum = SIGINT);
+  LoopStopper (LoopStopper const &) = delete;
+  LoopStopper (LoopStopper &&) = delete;
+  LoopStopper &operator= (LoopStopper const &) = delete;
+  LoopStopper &operator= (LoopStopper &&) = delete;
 
   // Called when object is signaled by OS.
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
@@ -264,6 +300,10 @@ class LogSwitcher : public ACE_Event_Handler
 {
 public:
   LogSwitcher (int on_sig, int off_sig);
+  LogSwitcher (LogSwitcher const &) = delete;
+  LogSwitcher (LogSwitcher &&) = delete;
+  LogSwitcher &operator= (LogSwitcher const &) = delete;
+  LogSwitcher &operator= (LogSwitcher &&) = delete;
 
   // Called when object is signaled by OS.
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
@@ -276,7 +316,7 @@ private:
 
   int on_sig_;       // Signal to turn logging on
   int off_sig_;      // Signal to turn logging off
-  int on_off_;       // 1 == turn on, 0 == turn off
+  int on_off_ {};    // 1 == turn on, 0 == turn off
 };
 
 LogSwitcher::LogSwitcher (int on_sig, int off_sig)
