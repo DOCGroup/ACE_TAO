@@ -50,15 +50,11 @@ ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::dump () const
 template<ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE, class TIME_POLICY>
 ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::ACE_Task_Ex (ACE_Thread_Manager *thr_man,
                                    ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY> *mq)
-  : ACE_Task_Base (thr_man),
-    msg_queue_ (0),
-    delete_msg_queue_ (false),
-    mod_ (0),
-    next_ (0)
+  : ACE_Task_Base (thr_man)
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::ACE_Task_Ex");
 
-  if (mq == 0)
+  if (mq == nullptr)
     {
       ACE_NEW (mq,
                (ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>));
@@ -85,21 +81,15 @@ ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::sibling ()
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::sibling");
   /// @todo FIXME Need to impl ACE_Moudle to support ACE_Task as well.
-  /// Now always return 0 for sibling
-  return 0;
-/*
-  if (this->mod_ == 0)
-    return 0;
-  else
-    return this->mod_->sibling (this);
-*/
+  // Now always return nullptr for sibling.
+  return nullptr;
 }
 
-template<ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE, class TIME_POLICY> const ACE_TCHAR *
+template<ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE, class TIME_POLICY> ACE_TCHAR const *
 ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::name () const
 {
   ACE_TRACE ("ACE_Task_Ex<ACE_SYNCH_USE, ACE_MESSAGE_TYPE, TIME_POLICY>::name");
-  if (this->mod_ == 0)
+  if (this->mod_ == nullptr)
     return nullptr;
   else
     return this->mod_->name ();

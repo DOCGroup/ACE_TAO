@@ -70,11 +70,11 @@ public:
    * then we'll allocate one dynamically.  Otherwise, we'll use the
    * one passed as a parameter.
    */
-  ACE_Task_Ex (ACE_Thread_Manager *thr_mgr = nullptr, MESSAGE_QUEUE_EX *mq = nullptr);
+  explicit ACE_Task_Ex (ACE_Thread_Manager *thr_mgr = nullptr, MESSAGE_QUEUE_EX *mq = nullptr);
 
-  ACE_Task_Ex (const ACE_Task_Ex &) = delete;
+  ACE_Task_Ex (ACE_Task_Ex const &) = delete;
   ACE_Task_Ex (ACE_Task_Ex &&) = delete;
-  ACE_Task_Ex &operator= (const ACE_Task_Ex &) = delete;
+  ACE_Task_Ex &operator= (ACE_Task_Ex const &) = delete;
   ACE_Task_Ex &operator= (ACE_Task_Ex &&) = delete;
 
   /// Destructor.
@@ -129,8 +129,8 @@ public: // Should be protected:
 
   // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated
-  /// with the Task, else returns 0.
-  const ACE_TCHAR *name () const;
+  /// with the Task, else returns nullptr.
+  ACE_TCHAR const *name () const;
 
   // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
   /// Get next Task pointer.
@@ -139,10 +139,10 @@ public: // Should be protected:
   /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *);
 
-  /// Always return 0. @todo FIXME
+  /// Always return nullptr. @todo FIXME
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling ();
 
-  /// Return the Task's Module if there is one, else returns 0.
+  /// Return the Task's Module if there is one, else returns nullptr.
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module () const;
 
   /**
@@ -159,16 +159,16 @@ public: // Should be protected:
   void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);
 
   /// Queue of messages on the ACE_Task..
-  MESSAGE_QUEUE_EX *msg_queue_;
+  MESSAGE_QUEUE_EX *msg_queue_ {};
 
   /// true if should delete Message_Queue, false otherwise.
-  bool delete_msg_queue_;
+  bool delete_msg_queue_ {};
 
   /// Back-pointer to the enclosing module.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod_ {};
 
   /// Pointer to adjacent ACE_Task.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next_;
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next_ {};
 
   /// Dump the state of an object.
   void dump () const;
