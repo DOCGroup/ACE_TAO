@@ -44,10 +44,15 @@ class ACE_Export ACE_Method_Request
 {
 public:
   /// Constructor.
-  ACE_Method_Request (unsigned long priority = 0);
+  explicit ACE_Method_Request (unsigned long priority = 0);
 
   /// Destructor.
   virtual ~ACE_Method_Request () = default;
+
+  ACE_Method_Request (ACE_Method_Request const &) = delete;
+  ACE_Method_Request &operator= (ACE_Method_Request const &) = delete;
+  ACE_Method_Request (ACE_Method_Request &&) = delete;
+  ACE_Method_Request &operator= (ACE_Method_Request &&) = delete;
 
   // = Accessors.
   /// Get priority.
@@ -77,12 +82,6 @@ public:
    *         if needed.
    */
   virtual int call () = 0;
-
-private:
-  ACE_Method_Request (ACE_Method_Request const &) = delete;
-  ACE_Method_Request &operator= (ACE_Method_Request const &) = delete;
-  ACE_Method_Request (ACE_Method_Request &&) = delete;
-  ACE_Method_Request &operator= (ACE_Method_Request &&) = delete;
 
 protected:
   /// The priority of the request.
