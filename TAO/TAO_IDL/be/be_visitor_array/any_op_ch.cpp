@@ -33,9 +33,9 @@ be_visitor_array_any_op_ch::visit_array (be_array *node)
 
   *os << be_global->anyops_versioning_begin () << be_nl;
 
-  *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
-      << "_forany &);" << be_nl;
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
+  *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
+      << "_forany const &);" << be_nl;
+  *os << macro << " ::CORBA::Boolean operator>>= (::CORBA::Any const &, "
       << node->name () << "_forany &);";
 
   *os << be_global->anyops_versioning_end () << be_nl;

@@ -54,7 +54,7 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
       << " operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
   *os << macro << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, "
+      << " operator>>= (::CORBA::Any const &, "
       << node->name () << " *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;

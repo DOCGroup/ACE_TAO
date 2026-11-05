@@ -53,8 +53,7 @@ be_visitor_map_cdr_op_cs::visit_map (be_map *node)
 
   *os << "::CORBA::Boolean operator<< (" << be_idt_nl
           << "TAO_OutputCDR &," << be_nl
-          << "const "
-          <<  node->name() << "&)"
+          << node->name() << " const &)"
           << be_uidt_nl
           << "{" << be_idt_nl
           << "throw ::CORBA::NO_IMPLEMENT ();" << be_uidt_nl

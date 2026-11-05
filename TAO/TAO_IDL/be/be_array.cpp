@@ -235,14 +235,14 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
   arg_name += "::";
   arg_name += use_underscore ? "_" : "";
   arg_name += this->local_name ()->get_string ();
-  arg_name += "_forany &_tao_array";
+  arg_name += "_forany const &_tao_array";
 
   // Using 'const' with xxx_forany here prevents the compiler from
   // automatically converting back to xxx_slice *.
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
       << "std::ostream &strm," << be_nl
-      << "const " << arg_name << be_uidt_nl
+      << arg_name << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "\";" <<  be_nl_2;

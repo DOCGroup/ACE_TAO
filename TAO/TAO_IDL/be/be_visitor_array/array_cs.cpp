@@ -82,8 +82,8 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   // dup method.
   *os << fname << "_slice *" << be_nl
-      << fname << "_dup (const " << fname
-      << "_slice *_tao_src_array)" << be_nl;
+      << fname << "_dup (" << fname
+      << "_slice const *_tao_src_array)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << fname << "_slice *_tao_dup_array = "
       << fname << "_alloc ();" << be_nl << be_nl;
@@ -135,7 +135,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "void" << be_nl;
   *os << fname << "_copy (" << be_idt << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
-      << "const " << fname << "_slice *_tao_from)" << be_uidt
+      << fname << "_slice const *_tao_from)" << be_uidt
       << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << "// Copy each individual element." << be_nl;

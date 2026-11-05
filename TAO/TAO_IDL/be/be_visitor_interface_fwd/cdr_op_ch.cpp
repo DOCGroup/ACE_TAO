@@ -46,8 +46,8 @@ be_visitor_interface_fwd_cdr_op_ch::visit_interface_fwd (be_interface_fwd *node)
   *os << be_global->core_versioning_begin () << be_nl;
 
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean "
-      << "operator<< (TAO_OutputCDR &, const " << node->full_name ()
-      << "_ptr );" << be_nl;
+      << "operator<< (TAO_OutputCDR &, " << node->full_name ()
+      << "_ptr const );" << be_nl;
   *os << be_global->stub_export_macro () << " ::CORBA::Boolean "
       << "operator>> (TAO_InputCDR &, "
       << node->full_name () << "_ptr &);\n";

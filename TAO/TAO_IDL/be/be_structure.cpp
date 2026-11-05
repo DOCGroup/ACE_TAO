@@ -96,7 +96,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
       << "std::ostream &strm," << be_nl
-      << "const " << this->name () << " &";
+      << this->name () << " const &";
 
   std::size_t const n = this->pd_decls.size ();
 

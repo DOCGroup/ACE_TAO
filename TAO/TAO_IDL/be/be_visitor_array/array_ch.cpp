@@ -251,12 +251,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << " *_tao_slice);" << be_nl_2;
       *os << storage_class << node->nested_type_name (scope, "_slice")
           << " *" << node->nested_type_name (scope, "_dup")
-          << " (const " << node->nested_type_name (scope, "_slice")
-          << " *_tao_slice);" << be_nl_2;
+          << " (" << node->nested_type_name (scope, "_slice")
+          << " const *_tao_slice);" << be_nl_2;
       *os << storage_class << "void "
           << node->nested_type_name (scope, "_copy")
-          << " (" << node->nested_type_name (scope, "_slice") << " *_tao_to, const "
-          << node->nested_type_name (scope, "_slice") << " *_tao_from);";
+          << " (" << node->nested_type_name (scope, "_slice") << " *_tao_to, "
+          << node->nested_type_name (scope, "_slice") << " const *_tao_from);";
     }
   else
     {
@@ -270,13 +270,13 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << " *_tao_slice);" << be_nl_2;
       *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *" << node->nested_type_name (scope, "_dup", "_")
-          << " (const " << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice);" << be_nl_2;
+          << " (" << node->nested_type_name (scope, "_slice", "_")
+          << " const *_tao_slice);" << be_nl_2;
       *os << storage_class << "void "
           << node->nested_type_name (scope, "_copy", "_")
           << " (" << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_to, const " << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_from);";
+          << " *_tao_to, " << node->nested_type_name (scope, "_slice", "_")
+          << " const *_tao_from);";
     }
 
   node->cli_hdr_gen (true);
