@@ -34,7 +34,7 @@ cleanup (void *ptr)
 
 // This worker function is the entry point for each thread.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *c)
 {
   intptr_t count = reinterpret_cast<intptr_t> (c);
@@ -175,7 +175,7 @@ worker (void *c)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) exiting\n"));
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 extern "C" void

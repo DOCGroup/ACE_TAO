@@ -67,7 +67,7 @@ Test_Task::~Test_Task ()
               Test_Task::count_.load (std::memory_order_relaxed)));
 }
 
-void *
+ACE_THR_FUNC_RETURN
 Test_Task::svc (void *arg)
 {
   // The task array in main retains ownership until all worker threads finish.
@@ -100,7 +100,7 @@ Test_Task::svc (void *arg)
 #endif
 
   Test_Task::wait_count_.fetch_sub (1, std::memory_order_relaxed);
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int

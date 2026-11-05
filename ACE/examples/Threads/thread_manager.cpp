@@ -18,7 +18,7 @@ handler (int signum)
   ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d\n", signum));
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *arg)
 {
   intptr_t const iterations = reinterpret_cast<intptr_t> (arg);
@@ -41,7 +41,7 @@ worker (void *arg)
     }
 
   // Destructor removes thread from Thread_Manager.
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static constexpr int DEFAULT_THREADS = ACE_DEFAULT_THREADS;

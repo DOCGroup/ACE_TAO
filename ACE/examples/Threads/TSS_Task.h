@@ -31,7 +31,7 @@ public:
 
   int open (void *arg);
 
-  static void *svc (void *arg);
+  static ACE_THR_FUNC_RETURN svc (void *arg);
 
   static std::atomic<int> wait_count_;
   static std::atomic<int> max_count_;

@@ -86,7 +86,7 @@ Test_Task::~Test_Task ()
 int
 Test_Task::open (void *args)
 {
-  this->r_ = reinterpret_cast<ACE_Reactor *> (args);
+  this->r_ = static_cast<ACE_Reactor *> (args);
   return ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP);
 }
 
@@ -149,7 +149,7 @@ Test_Task::handle_input (ACE_HANDLE)
   return -1;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 dispatch (void *arg)
 {
   // every thread must register the same stream to write to file
@@ -161,8 +161,8 @@ dispatch (void *arg)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) Dispatcher Thread started!\n")));
   // The caller-owned reactor remains alive until the process is terminated.
-  ACE_Reactor *r = reinterpret_cast<ACE_Reactor *> (arg);
-  int result;
+  ACE_Reactor * const r = static_cast<ACE_Reactor *> (arg);
+  int result {};
 
   r->owner (ACE_OS::thr_self ());
 
@@ -176,7 +176,7 @@ dispatch (void *arg)
                     result));
     }
 
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return ACE_THR_FUNC_RETURN_NULL);
 }
 
 extern "C" void

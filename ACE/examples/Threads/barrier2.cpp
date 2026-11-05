@@ -101,7 +101,7 @@ template <class BARRIER> int
 Worker_Task<BARRIER>::put (ACE_Message_Block *mb,
                            ACE_Time_Value *tv)
 {
-  int result;
+  int result {};
 
   if (this->inp_serialize_)
     result = this->putq (mb, tv);
