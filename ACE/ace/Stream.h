@@ -62,7 +62,7 @@ public:
   // = Initializatation and termination methods.
   /**
    * Create a Stream consisting of @a head and @a tail as the Stream
-   * head and Stream tail, respectively.  If these are 0 then the
+   * head and Stream tail, respectively.  If these are nullptr then the
    * ACE_Stream_Head and ACE_Stream_Tail are used, respectively.
    * @a arg is the value past in to the <open> methods of the tasks.
    */
@@ -72,7 +72,7 @@ public:
 
   /**
    * Create a Stream consisting of @a head and @a tail as the Stream
-   * head and Stream tail, respectively.  If these are 0 then the
+   * head and Stream tail, respectively.  If these are nullptr then the
    * ACE_Stream_Head and ACE_Stream_Tail are used, respectively.
    * @a arg is the value past in to the @c open() methods of the tasks.
    */
@@ -103,17 +103,17 @@ public:
   virtual int top (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *&mod);
 
   /// Insert a new module @a mod below the named module @a prev_name.
-  virtual int insert (const ACE_TCHAR *prev_name,
+  virtual int insert (ACE_TCHAR const *prev_name,
                       ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod);
 
   /// Replace the named module @a replace_name with a new module @a mod.
-  virtual int replace (const ACE_TCHAR *replace_name,
+  virtual int replace (ACE_TCHAR const *replace_name,
                        ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod,
                        int flags = M_DELETE);
 
   /// Remove the named module @a mod from the stream.  This bypasses the
   /// strict LIFO ordering of @c push and @c pop.
-  virtual int remove (const ACE_TCHAR *mod,
+  virtual int remove (ACE_TCHAR const *mod,
                       int flags = M_DELETE);
 
   /// Return current stream head.
@@ -123,7 +123,7 @@ public:
   virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail ();
 
   /// Find a particular ACE_Module.
-  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *find (const ACE_TCHAR *mod);
+  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *find (ACE_TCHAR const *mod);
 
   /// Create a pipe between two Streams.
   virtual int link (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &);
@@ -164,13 +164,13 @@ public:
 
 protected:
   /// Pointer to the head of the stream.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_head_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_head_ {};
 
   /// Pointer to the tail of the stream.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_tail_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_tail_ {};
 
   /// Pointer to an adjoining linked stream.
-  ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> *linked_us_;
+  ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> *linked_us_ {};
 
   // = Synchronization objects used for thread-safe streams.
   /// Protect the stream against race conditions.
@@ -211,13 +211,14 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Stream_Iterator
 {
 public:
-  ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &sr);
+  explicit ACE_Stream_Iterator (
+    ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> const &sr);
 
   // = Iteration methods.
 
   /// Pass back the @a next_item that hasn't been seen in the set.
   /// Returns 0 when all items have been seen, else 1.
-  int next (const ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *&next_item);
+  int next (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> const *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
   int done () const;
@@ -228,7 +229,7 @@ public:
 
 private:
   /// Next ACE_Module that we haven't yet seen.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

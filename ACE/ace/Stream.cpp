@@ -110,20 +110,20 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::top (ACE_Module<ACE_SYNCH_USE, TIME_POLI
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::insert (const ACE_TCHAR *prev_name,
+ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::insert (ACE_TCHAR const *prev_name,
                                    ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::insert");
 
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev_mod = this->stream_head_;
-       prev_mod != 0;
+       prev_mod != nullptr;
        prev_mod = prev_mod->next ())
     if (ACE_OS::strcmp (prev_mod->name (), prev_name) == 0)
       {
         ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_mod = prev_mod->next ();
 
         // We can't insert a module below <stream_tail_>.
-        if (next_mod == 0)
+        if (next_mod == nullptr)
           return -1;
 
         mod->link (next_mod);
@@ -142,15 +142,15 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::insert (const ACE_TCHAR *prev_name,
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::replace (const ACE_TCHAR *replace_name,
+ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::replace (ACE_TCHAR const *replace_name,
                                     ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod,
                                     int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::replace");
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev_mod = nullptr;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev_mod {};
 
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *rep_mod = this->stream_head_;
-       rep_mod != 0;
+       rep_mod != nullptr;
        rep_mod = rep_mod->next ())
     if (ACE_OS::strcmp (rep_mod->name (), replace_name) == 0)
       {
@@ -160,8 +160,8 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::replace (const ACE_TCHAR *replace_name,
           mod->link (next_mod);
         else // In case the <next_mod> is <stream_tail_>.
           {
-            mod->writer ()->next (0);
-            mod->next (0);
+            mod->writer ()->next (nullptr);
+            mod->next (nullptr);
             this->stream_tail_ = mod;
           }
 
@@ -169,7 +169,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::replace (const ACE_TCHAR *replace_name,
           prev_mod->link (mod);
         else // In case the <rep_mod> is <stream_head_>.
           {
-            mod->reader ()->next (0);
+            mod->reader ()->next (nullptr);
             this->stream_head_ = mod;
           }
 
@@ -228,14 +228,14 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::pop (int flags)
 // ACE_Stream.
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove (const ACE_TCHAR *name,
+ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove (ACE_TCHAR const *name,
                                    int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove");
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev = nullptr;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *prev {};
 
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod = this->stream_head_;
-       mod != 0;
+       mod != nullptr;
        mod = mod->next ())
   {
 #ifndef ACE_NLOGGING
@@ -250,7 +250,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove (const ACE_TCHAR *name,
 
     if (ACE_OS::strcmp (mod->name (), name) == 0)
       {
-        if (prev == 0) // Deleting ACE_Stream Head
+        if (prev == nullptr) // Deleting ACE_Stream Head
           this->stream_head_->link (mod->next ());
         else
           prev->link (mod->next ());
@@ -276,16 +276,16 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::remove (const ACE_TCHAR *name,
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *
-ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::find (const ACE_TCHAR *name)
+ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::find (ACE_TCHAR const *name)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::find");
   for (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod = this->stream_head_;
-       mod != 0;
+       mod != nullptr;
        mod = mod->next ())
     if (ACE_OS::strcmp (mod->name (), name) == 0)
         return mod;
 
-  return 0;
+  return nullptr;
 }
 
 // Actually push a module onto the stack...
@@ -298,8 +298,8 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push_module (ACE_Module<ACE_SYNCH_USE, T
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push_module");
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *nt_reader = new_top->reader ();
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *nt_writer = new_top->writer ();
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_reader = nullptr;
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_writer = nullptr;
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_reader {};
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *ct_writer {};
 
   if (current_top)
     {
@@ -316,7 +316,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::push_module (ACE_Module<ACE_SYNCH_USE, T
         head->link (new_top);
     }
   else
-    nt_reader->next (0);
+    nt_reader->next (nullptr);
 
   new_top->next (current_top);
 
@@ -336,10 +336,10 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (void *a,
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *h1 = nullptr, *h2 = nullptr;
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *t1 = nullptr, *t2 = nullptr;
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *h1 {}, *h2 {};
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *t1 {}, *t2 {};
 
-  if (head == 0)
+  if (head == nullptr)
     {
       using STREAM_HEAD_TYPE = ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (h1,
@@ -354,7 +354,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (void *a,
                                      M_DELETE));
     }
 
-  if (tail == 0)
+  if (tail == nullptr)
     {
       using STREAM_TAIL_TYPE = ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW_NORETURN (t1,
@@ -370,8 +370,8 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::open (void *a,
     }
 
   // Make sure *all* the allocation succeeded!
-  if ((head == 0 && (h1 == 0 || h2 == 0))
-      || (tail == 0 && (t1 == 0 || t2 == 0)))
+  if ((head == nullptr && (h1 == nullptr || h2 == nullptr))
+      || (tail == nullptr && (t1 == nullptr || t2 == nullptr)))
     {
       delete h1;
       delete h2;
@@ -402,8 +402,8 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::close (int flags)
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  if (this->stream_head_ != 0
-      && this->stream_tail_ != 0)
+  if (this->stream_head_ != nullptr
+      && this->stream_tail_ != nullptr)
     {
       // Don't bother checking return value here.
       this->unlink_i ();
@@ -426,8 +426,8 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::close (int flags)
       delete this->stream_head_;
       delete this->stream_tail_;
 
-      this->stream_head_ = 0;
-      this->stream_tail_ = 0;
+      this->stream_head_ = nullptr;
+      this->stream_tail_ = nullptr;
 
       // Tell all threads waiting on the close that we are done.
       this->final_close_.broadcast ();
@@ -443,7 +443,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cm
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control");
   ACE_IO_Cntl_Msg ioc (cmd);
 
-  ACE_Message_Block *db = nullptr;
+  ACE_Message_Block *db {};
 
   // Try to create a data block that contains the user-supplied data.
   ACE_NEW_RETURN (db,
@@ -455,7 +455,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cm
   // Try to create a control block <cb> that contains the control
   // field and a pointer to the data block <db> in <cb>'s continuation
   // field.
-  ACE_Message_Block *cb = nullptr;
+  ACE_Message_Block *cb {};
 
   ACE_NEW_NORETURN (cb,
                     ACE_Message_Block (sizeof ioc,
@@ -505,7 +505,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::link_i (ACE_Stream<ACE_SYNCH_USE, TIME_P
 
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *my_tail = this->stream_head_;
 
-  if (my_tail == 0)
+  if (my_tail == nullptr)
     return -1;
 
   // Locate the module just above our Stream tail.
@@ -514,7 +514,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::link_i (ACE_Stream<ACE_SYNCH_USE, TIME_P
 
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *other_tail = us.stream_head_;
 
-  if (other_tail == 0)
+  if (other_tail == nullptr)
     return -1;
 
   // Locate the module just above the other Stream's tail.
@@ -546,7 +546,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i ()
 
   // Only try to unlink if we are in fact still linked!
 
-  if (this->linked_us_ != 0)
+  if (this->linked_us_ != nullptr)
     {
       ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *my_tail = this->stream_head_;
 
@@ -565,7 +565,7 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i ()
         this->linked_us_->stream_head_;
 
       // Only fiddle with the other side if it in fact still remains.
-      if (other_tail != 0)
+      if (other_tail != nullptr)
         {
           while (other_tail->next () != this->linked_us_->stream_tail_)
             other_tail = other_tail->next ();
@@ -574,9 +574,9 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::unlink_i ()
         }
 
       // Make sure the other side is also aware that it's been unlinked!
-      this->linked_us_->linked_us_ = 0;
+      this->linked_us_->linked_us_ = nullptr;
 
-      this->linked_us_ = 0;
+      this->linked_us_ = nullptr;
       return 0;
     }
   else
@@ -595,13 +595,10 @@ template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream (void * a,
                                        ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head,
                                        ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail)
-  : stream_head_ (0),
-    stream_tail_ (0),
-    linked_us_ (0),
 #if defined (ACE_HAS_THREADS)
-    final_close_ (lock_, cond_attr_)
+  : final_close_ (lock_, cond_attr_)
 #else
-    final_close_ (lock_)
+  : final_close_ (lock_)
 #endif
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream");
@@ -616,12 +613,13 @@ ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Stream ()
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Stream");
 
-  if (this->stream_head_ != 0)
+  if (this->stream_head_ != nullptr)
     this->close ();
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
-ACE_Stream_Iterator<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &sr)
+ACE_Stream_Iterator<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream_Iterator (
+  ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> const &sr)
   : next_ (sr.stream_head_)
 {
   ACE_TRACE ("ACE_Stream_Iterator<ACE_SYNCH_USE, TIME_POLICY>::ACE_Stream_Iterator");
