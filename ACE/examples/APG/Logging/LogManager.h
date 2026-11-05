@@ -14,36 +14,37 @@ class LogManager
 public:
   LogManager () = default;
   ~LogManager () = default;
-  LogManager (const LogManager &) = delete;
+  LogManager (LogManager const &) = delete;
   LogManager (LogManager &&) = delete;
-  LogManager &operator= (const LogManager &) = delete;
+  LogManager &operator= (LogManager const &) = delete;
   LogManager &operator= (LogManager &&) = delete;
 
   void redirectToDaemon
-    (const ACE_TCHAR *prog_name = ACE_TEXT (""));
+    (ACE_TCHAR const *prog_name = ACE_TEXT (""));
   void redirectToSyslog
-    (const ACE_TCHAR *prog_name = ACE_TEXT (""));
+    (ACE_TCHAR const *prog_name = ACE_TEXT (""));
   void redirectToOStream (ACE_OSTREAM_TYPE *output);
-  void redirectToFile (const char *filename);
+  void redirectToFile (char const *filename);
   void redirectToStderr ();
-  ACE_Log_Msg_Callback * redirectToCallback
+  ACE_Log_Msg_Callback *redirectToCallback
     (ACE_Log_Msg_Callback *callback);
 
   // Exclude 1
 private:
-  std::unique_ptr<ofstream> log_stream_;
+  std::unique_ptr<ofstream> log_stream_ {};
+  // ACE_Log_Msg retains this borrowed stream pointer while OSTREAM logging is active.
   ACE_OSTREAM_TYPE *output_stream_ {};
   // Exclude 1
 };
 // Listing 1
 
 // Listing 2 code/ch03
-void LogManager::redirectToSyslog (const ACE_TCHAR *prog_name)
+void LogManager::redirectToSyslog (ACE_TCHAR const *prog_name)
 {
   ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::SYSLOG, prog_name);
 }
 
-void LogManager::redirectToDaemon (const ACE_TCHAR *prog_name)
+void LogManager::redirectToDaemon (ACE_TCHAR const *prog_name)
 {
   ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER,
                      ACE_DEFAULT_LOGGER_KEY);
@@ -58,7 +59,7 @@ void LogManager::redirectToOStream (ACE_OSTREAM_TYPE *output)
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 }
 
-void LogManager::redirectToFile (const char *filename)
+void LogManager::redirectToFile (char const *filename)
 {
   log_stream_ = std::make_unique<ofstream> ();
   log_stream_->open (filename, ios::out | ios::app);
@@ -73,7 +74,7 @@ void LogManager::redirectToStderr ()
 }
 
 ACE_Log_Msg_Callback *
-LogManager::redirectToCallback (ACE_Log_Msg_Callback * callback)
+LogManager::redirectToCallback (ACE_Log_Msg_Callback *callback)
 {
   ACE_Log_Msg_Callback *previous =
     ACE_LOG_MSG->msg_callback (callback);

@@ -18,42 +18,42 @@ class Callback : public ACE_Log_Msg_Callback
 public:
   Callback ()
     : logger_ (std::make_unique<ACE_SOCK_Stream> ())
-    {
-      ACE_SOCK_Connector connector;
-      ACE_INET_Addr addr (LOGGER_PORT, ACE_DEFAULT_SERVER_HOST);
+  {
+    ACE_SOCK_Connector connector;
+    ACE_INET_Addr const addr (LOGGER_PORT, ACE_DEFAULT_SERVER_HOST);
 
-      if (connector.connect (*(this->logger_), addr) == -1)
-        this->logger_.reset ();
-    }
+    if (connector.connect (*(this->logger_), addr) == -1)
+      this->logger_.reset ();
+  }
 
-  Callback (const Callback &) = delete;
+  Callback (Callback const &) = delete;
   Callback (Callback &&) = delete;
-  Callback &operator= (const Callback &) = delete;
+  Callback &operator= (Callback const &) = delete;
   Callback &operator= (Callback &&) = delete;
 
   ~Callback () override
-    {
-      if (this->logger_)
-        this->logger_->close ();
-    }
+  {
+    if (this->logger_)
+      this->logger_->close ();
+  }
 
   void log (ACE_Log_Record &log_record) override
-    {
-      if (!this->logger_)
-        {
+  {
+    if (!this->logger_)
+      {
 #  if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-          log_record.print (ACE_TEXT (""), ACE_Log_Msg::VERBOSE, stderr);
+        log_record.print (ACE_TEXT (""), ACE_Log_Msg::VERBOSE, stderr);
 #  else
-          log_record.print(ACE_TEXT (""), ACE_Log_Msg::VERBOSE, cerr);
+        log_record.print (ACE_TEXT (""), ACE_Log_Msg::VERBOSE, cerr);
 #  endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-          return;
-        }
+        return;
+      }
 
-      ACE_OutputCDR cdr;
-      cdr << log_record;
-      if (this->logger_->send_n (cdr.begin ()) == -1)
-        this->logger_.reset ();
-    }
+    ACE_OutputCDR cdr;
+    cdr << log_record;
+    if (this->logger_->send_n (cdr.begin ()) == -1)
+      this->logger_.reset ();
+  }
 
 private:
   std::unique_ptr<ACE_SOCK_Stream> logger_;

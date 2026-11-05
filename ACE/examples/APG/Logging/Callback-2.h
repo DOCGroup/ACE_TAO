@@ -11,13 +11,19 @@
 class Callback : public ACE_Log_Msg_Callback
 {
 public:
+  Callback () = default;
+  Callback (Callback const &) = delete;
+  Callback (Callback &&) = delete;
+  Callback &operator= (Callback const &) = delete;
+  Callback &operator= (Callback &&) = delete;
+
   void log (ACE_Log_Record &log_record) override
     {
       cerr << "Log Message Received:" << endl;
-      unsigned long msg_severity = log_record.type ();
-      ACE_Log_Priority prio =
+      unsigned long const msg_severity = log_record.type ();
+      ACE_Log_Priority const prio =
         static_cast<ACE_Log_Priority> (msg_severity);
-      const ACE_TCHAR *prio_name =
+      ACE_TCHAR const *prio_name =
         ACE_Log_Record::priority_name (prio);
       cerr << "\tType:        "
            << ACE_TEXT_ALWAYS_CHAR (prio_name)
@@ -25,7 +31,7 @@ public:
 
       cerr << "\tLength:      " << log_record.length () << endl;
 
-      const time_t epoch = log_record.time_stamp ().sec ();
+      time_t const epoch = log_record.time_stamp ().sec ();
       cerr << "\tTime_Stamp:  "
            << ACE_TEXT_ALWAYS_CHAR (ACE_OS::ctime (&epoch))
            << flush;

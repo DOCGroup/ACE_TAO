@@ -7,68 +7,69 @@
 class Trace
 {
 public:
-  Trace (const ACE_TCHAR *prefix,
-   const ACE_TCHAR *name,
-   int line,
-   const ACE_TCHAR *file)
-    {
-      this->prefix_ = prefix;
-      this->name_   = name;
-      this->line_   = line;
-      this->file_   = file;
+  Trace (ACE_TCHAR const *prefix,
+         ACE_TCHAR const *name,
+         int line,
+         ACE_TCHAR const *file)
+    : prefix_ (prefix), name_ (name), file_ (file), line_ (line)
+  {
+    ACE_Log_Msg *const lm = ACE_LOG_MSG;
+    if (lm->tracing_enabled ()
+        && lm->trace_active () == 0)
+      {
+        lm->trace_active (1);
+        ACE_DEBUG
+          ((LM_TRACE,
+            ACE_TEXT ("%s%*s(%t) calling %s in file `%s'")
+            ACE_TEXT (" on line %d\n"),
+            this->prefix_,
+            Trace::nesting_indent_ * lm->inc (),
+            ACE_TEXT (""),
+            this->name_,
+            this->file_,
+            this->line_));
+        lm->trace_active (0);
+      }
+  }
 
-      ACE_Log_Msg *lm = ACE_LOG_MSG;
-      if (lm->tracing_enabled ()
-          && lm->trace_active () == 0)
-        {
-          lm->trace_active (1);
-          ACE_DEBUG
-            ((LM_TRACE,
-              ACE_TEXT ("%s%*s(%t) calling %s in file `%s'")
-              ACE_TEXT (" on line %d\n"),
-              this->prefix_,
-              Trace::nesting_indent_ * lm->inc (),
-              ACE_TEXT (""),
-              this->name_,
-              this->file_,
-              this->line_));
-          lm->trace_active (0);
-        }
-    }
+  Trace (Trace const &) = delete;
+  Trace (Trace &&) = delete;
+  Trace &operator= (Trace const &) = delete;
+  Trace &operator= (Trace &&) = delete;
 
   void setLine (int line)
-    {
-      this->line_ = line;
-    }
+  {
+    this->line_ = line;
+  }
 
   ~Trace ()
-    {
-      ACE_Log_Msg *lm = ACE_LOG_MSG;
-      if (lm->tracing_enabled ()
-          && lm->trace_active () == 0)
-        {
-          lm->trace_active (1);
-          ACE_DEBUG
-            ((LM_TRACE,
-              ACE_TEXT ("%s%*s(%t) leaving %s in file `%s'")
-              ACE_TEXT (" on line %d\n"),
-              this->prefix_,
-              Trace::nesting_indent_ * lm->dec (),
-              ACE_TEXT (""),
-              this->name_,
-              this->file_,
-              this->line_));
-          lm->trace_active (0);
-        }
-    }
+  {
+    ACE_Log_Msg *const lm = ACE_LOG_MSG;
+    if (lm->tracing_enabled ()
+        && lm->trace_active () == 0)
+      {
+        lm->trace_active (1);
+        ACE_DEBUG
+          ((LM_TRACE,
+            ACE_TEXT ("%s%*s(%t) leaving %s in file `%s'")
+            ACE_TEXT (" on line %d\n"),
+            this->prefix_,
+            Trace::nesting_indent_ * lm->dec (),
+            ACE_TEXT (""),
+            this->name_,
+            this->file_,
+            this->line_));
+        lm->trace_active (0);
+      }
+  }
 
 private:
-  enum { nesting_indent_ = 3 };
+  static constexpr int nesting_indent_ {3};
 
-  const ACE_TCHAR *prefix_;
-  const ACE_TCHAR *name_;
-  const ACE_TCHAR *file_;
-  int line_;
+  ACE_TCHAR const *prefix_ {};
+  ACE_TCHAR const *name_ {};
+  ACE_TCHAR const *file_ {};
+  int line_ {};
 };
 // Listing 1
 

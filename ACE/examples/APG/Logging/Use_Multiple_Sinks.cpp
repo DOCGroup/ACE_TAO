@@ -9,7 +9,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
 
   ACE_TRACE ("main");
 
-  std::unique_ptr<ofstream> output = std::make_unique<ofstream> ("ostream.output.test");
+  std::unique_ptr<ofstream> output {std::make_unique<ofstream> ("ostream.output.test")};
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%IThis will go to STDERR\n")));
 
