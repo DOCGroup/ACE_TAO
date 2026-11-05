@@ -15,7 +15,7 @@ HA_CommandHandler::svc ()
       ACE_Message_Block *raw_message_block {};
       if (this->getq (raw_message_block) == -1)
         break;
-      Message_Block_Owner message_block {raw_message_block};
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
       if (message_block->msg_type () == ACE_Message_Block::MB_HANGUP)
         break;
 
@@ -36,14 +36,14 @@ HA_CommandHandler::svc ()
 // Listing 5
 
 // Listing 4 code/ch12
-Message_Block_Owner
+ACE_Message_Block_Unique_Ptr
 Message_Receiver::shut_down_message ()
 {
   ACE_Message_Block *raw_message_block {};
   ACE_NEW_RETURN
     (raw_message_block,
      ACE_Message_Block (0, ACE_Message_Block::MB_HANGUP), nullptr);
-  return Message_Block_Owner {raw_message_block};
+  return ACE_Message_Block_Unique_Ptr {raw_message_block};
 }
 // Listing 4
 
@@ -83,7 +83,7 @@ Message_Receiver::handle_input (ACE_HANDLE)
   if (dch.deviceId_ < 0)
     {
       // Handle shutdown.
-      Message_Block_Owner shutdown_message {this->shut_down_message ()};
+      ACE_Message_Block_Unique_Ptr shutdown_message {this->shut_down_message ()};
       if (!shutdown_message
           || this->handler_->putq (shutdown_message.get ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to enqueue shutdown\n")),
@@ -95,7 +95,7 @@ Message_Receiver::handle_input (ACE_HANDLE)
   ACE_Message_Block *raw_message_block {};
   ACE_NEW_RETURN
     (raw_message_block, ACE_Message_Block (dch.length_ + sizeof dch), -1);
-  Message_Block_Owner message_block {raw_message_block};
+  ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
   // Copy the header.
   message_block->copy (reinterpret_cast<char const *> (&dch), sizeof dch);
   // Copy the payload.

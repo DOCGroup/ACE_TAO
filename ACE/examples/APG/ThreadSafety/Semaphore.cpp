@@ -5,17 +5,6 @@
 #include "ace/Synch.h"
 #include <atomic>
 #include <cstring>
-#include <memory>
-
-struct Message_Block_Deleter
-{
-  void operator() (ACE_Message_Block *message_block) const
-  {
-    message_block->release ();
-  }
-};
-
-using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Deleter>;
 
 // Listing 2 code/ch14
 class Consumer : public ACE_Task<ACE_MT_SYNCH>
@@ -46,7 +35,7 @@ public:
         if (this->getq (raw_message_block) == -1)
           return;
 
-        Message_Block_Owner message_block (raw_message_block);
+        ACE_Message_Block_Unique_Ptr message_block (raw_message_block);
         if (message_block->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
             this->shutdown ();
@@ -110,7 +99,7 @@ public:
 
   int produce_item (int const item)
   {
-    Message_Block_Owner message_block (
+    ACE_Message_Block_Unique_Ptr message_block (
       new ACE_Message_Block (sizeof (item), ACE_Message_Block::MB_DATA));
     psema_.acquire ();
     std::memcpy (message_block->wr_ptr (), &item, sizeof (item));
@@ -129,7 +118,7 @@ public:
 
   int hang_up ()
   {
-    Message_Block_Owner message_block (
+    ACE_Message_Block_Unique_Ptr message_block (
       new ACE_Message_Block (0, ACE_Message_Block::MB_HANGUP));
     psema_.acquire ();
     if (this->consumer_.putq (message_block.get ()) == -1)

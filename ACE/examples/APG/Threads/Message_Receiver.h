@@ -12,17 +12,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
-#include <memory>
-
-struct Message_Block_Deleter
-{
-  void operator() (ACE_Message_Block *message_block) const
-  {
-    message_block->release ();
-  }
-};
-
-using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Deleter>;
 
 // Listing 1 code/ch12
 struct DeviceCommandHeader
@@ -78,7 +67,7 @@ public:
   Message_Receiver &operator= (Message_Receiver const &) = delete;
   Message_Receiver &operator= (Message_Receiver &&) = delete;
 
-  Message_Block_Owner shut_down_message ();
+  ACE_Message_Block_Unique_Ptr shut_down_message ();
 
   int handle_input (ACE_HANDLE) override;
 

@@ -1,5 +1,3 @@
-#include <memory>
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_netdb.h"
 
@@ -9,16 +7,6 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Reactor.h"
-
-static void
-release_message_block (ACE_Message_Block *message_block)
-{
-  if (message_block != nullptr)
-    message_block->release ();
-}
-
-using Message_Block_Ptr = std::unique_ptr<ACE_Message_Block,
-                                          void (*) (ACE_Message_Block *)>;
 
 class ClientAcceptor : public ACE_Event_Handler
 {
@@ -198,8 +186,7 @@ ClientService::handle_input (ACE_HANDLE)
   size_t const remaining =
     static_cast<size_t> ((recv_cnt - send_cnt));
   ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (remaining), -1);
-  Message_Block_Ptr message_block {raw_message_block,
-                                   release_message_block};
+  ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
   message_block->copy (&buffer[send_cnt], remaining);
   int const output_off = this->output_queue_.is_empty ();
   ACE_Time_Value nowait {ACE_OS::gettimeofday ()};
@@ -226,8 +213,7 @@ ClientService::handle_output (ACE_HANDLE)
   ACE_Time_Value nowait {ACE_OS::gettimeofday ()};
   while (this->output_queue_.dequeue_head (raw_message_block, &nowait) != -1)
     {
-      Message_Block_Ptr message_block {raw_message_block,
-                                       release_message_block};
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
       ssize_t const send_cnt =
         this->sock_.send (message_block->rd_ptr (),
                           message_block->length ());

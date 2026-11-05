@@ -2,23 +2,11 @@
  * A simple client program using ACE_Svc_Handler and ACE_Connector.
  */
 
-#include <memory>
-
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "Client.h"
-
-static void
-release_message_block (ACE_Message_Block *message_block)
-{
-  if (message_block != nullptr)
-    message_block->release ();
-}
-
-using Message_Block_Ptr = std::unique_ptr<ACE_Message_Block,
-                                          void (*) (ACE_Message_Block *)>;
 
 // Listing 2 code/ch07
 int Client::open (void *p)
@@ -66,7 +54,7 @@ int Client::handle_timeout (ACE_Time_Value const &, void const *)
 
   ACE_Message_Block *raw_message_block {};
   ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (128), -1);
-  Message_Block_Ptr message_block {raw_message_block, release_message_block};
+  ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
   int const nbytes = ACE_OS::sprintf
     (message_block->wr_ptr (), "Iteration %d\n", this->iterations_);
   ACE_ASSERT (nbytes > 0);
@@ -85,8 +73,7 @@ int Client::handle_output (ACE_HANDLE)
   ACE_Time_Value nowait {ACE_OS::gettimeofday ()};
   while (this->getq (raw_message_block, &nowait) != -1)
     {
-      Message_Block_Ptr message_block {raw_message_block,
-                                       release_message_block};
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
       ssize_t const send_cnt =
         this->peer ().send (message_block->rd_ptr (),
                             message_block->length ());

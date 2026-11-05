@@ -5,17 +5,6 @@
 #include <cstddef>
 #include <cstdio>
 #include <cstring>
-#include <memory>
-
-struct Message_Block_Deleter
-{
-  void operator() (ACE_Message_Block *message_block) const
-  {
-    message_block->release ();
-  }
-};
-
-using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Deleter>;
 
 int ACE_TMAIN (int, ACE_TCHAR **)
 {
@@ -25,7 +14,7 @@ int ACE_TMAIN (int, ACE_TCHAR **)
 // Listing 1 code/ch12
   ACE_Message_Block *raw_message_block {};
   ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (128), -1);
-  Message_Block_Owner mb {raw_message_block};
+  ACE_Message_Block_Unique_Ptr mb {raw_message_block};
 
   char const *device_addr = "Dev#12";
   mb->copy (device_addr, std::strlen (device_addr) + 1);
@@ -34,7 +23,7 @@ int ACE_TMAIN (int, ACE_TCHAR **)
 // Listing 2 code/ch12
   ACE_Message_Block *raw_message_block {};
   ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (128), -1);
-  Message_Block_Owner mb {raw_message_block};
+  ACE_Message_Block_Unique_Ptr mb {raw_message_block};
 
   char const *command_sequence = "CommandSeq#14";
   int const written = std::snprintf (mb->wr_ptr (), mb->space (), "%s",

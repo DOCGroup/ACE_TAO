@@ -3,23 +3,11 @@
 ** Copyright 2003 Addison-Wesley. All Rights Reserved.
 */
 
-#include <memory>
-
 #include "HA_Proactive_Status.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Proactor.h"
 #include "ace/os_include/arpa/os_inet.h"
-
-static void
-release_message_block (ACE_Message_Block *message_block)
-{
-  if (message_block != nullptr)
-    message_block->release ();
-}
-
-using Message_Block_Ptr = std::unique_ptr<ACE_Message_Block,
-                                          void (*) (ACE_Message_Block *)>;
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
@@ -46,7 +34,7 @@ HA_Proactive_Service::open (ACE_HANDLE h, ACE_Message_Block&)
       return;
     }
 
-  Message_Block_Ptr mb {raw_message_block, release_message_block};
+  ACE_Message_Block_Unique_Ptr mb {raw_message_block};
   if (this->reader_.read (*mb, mb->space ()) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -89,9 +77,7 @@ HA_Proactive_Service::handle_read_stream
                         ACE_TEXT ("allocating read block")));
           else
             {
-              Message_Block_Ptr new_message_block {
-                raw_message_block,
-                release_message_block};
+              ACE_Message_Block_Unique_Ptr new_message_block {raw_message_block};
               if (this->reader_.read (*new_message_block,
                                       new_message_block->space ()) != 0)
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
