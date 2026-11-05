@@ -1,14 +1,13 @@
+#include "PCB.h"
 #include "ace/Log_Msg.h"
 #include "PCB.h"
 #include "PTimerDispatcher.h"
 
-PCB::~PCB() = default;
-
-int PCB::handleEvent (const void *arg)
+int PCB::handleEvent (void const *arg)
 {
   ACE_TRACE ("PCB::handleEvent");
 
-  const int *val = static_cast<const int*> (arg);
+  int const *val = static_cast<int const *> (arg);
   ACE_ASSERT ((*val) == timerID_);
 
   ACE_UNUSED_ARG (val);
