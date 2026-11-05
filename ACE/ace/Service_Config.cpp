@@ -98,7 +98,7 @@ using ACE_SERVICE_CONFIG_SINGLETON = ACE_Unmanaged_Singleton<ACE_Service_Config,
 
 
 /// ctor
-ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
+ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt *psg)
   : saved_ (ACE_Service_Config::current ())
 {
   if (ACE::debug ())
@@ -116,7 +116,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
 
 ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
 {
-  ACE_Service_Gestalt* s = this->saved_.get ();
+  ACE_Service_Gestalt *s = this->saved_.get ();
   ACE_ASSERT (s != nullptr);
 
   ACE_Service_Config::current (s);
@@ -376,30 +376,28 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
-  ACE_Service_Gestalt* tmp = nullptr;
+  ACE_Service_Gestalt *tmp {};
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
-  this->is_opened_ = false;
   this->instance_.reset (tmp);
   this->threadkey_.set (tmp);
 
   ACE_Service_Config::signum_ = signum;
 }
 
-ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
-                                        const ACE_TCHAR *logger_key)
+ACE_Service_Config::ACE_Service_Config (ACE_TCHAR const program_name[],
+                                        ACE_TCHAR const *logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
-  ACE_Service_Gestalt* tmp = nullptr;
+  ACE_Service_Gestalt *tmp {};
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
-  this->is_opened_ = false;
   this->instance_.reset (tmp);
   this->threadkey_.set (tmp);
 
