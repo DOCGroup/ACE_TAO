@@ -29,17 +29,17 @@ int Map_Example::run ()
 {
   ACE_TRACE ("Map_Example::run");
 
-  // Corresponding KeyType objects are created on the fly.
-  for (int i = 0; i < 100; i++)
+  // Construct explicit KeyType values for the integer keys.
+  for (int i = 0; i < 100; ++i)
     {
-      map_.bind (i, DataElement (i));
+      map_.bind (KeyType (i), DataElement (i));
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Map has\n")));
-  for (int j = 0; j < 100; j++)
+  for (int j = 0; j < 100; ++j)
     {
       DataElement d;
-      map_.find (j,d);
+      map_.find (KeyType (j), d);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), d.getData ()));
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
@@ -70,7 +70,7 @@ void Map_Example::iterate_forward ()
                        ACE_Null_Mutex>::iterator
        iter = map_.begin ();
        iter != map_.end ();
-       iter++)
+       ++iter)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"),
                   (*iter).int_id_.getData ()));
@@ -88,7 +88,7 @@ void Map_Example::iterate_reverse ()
                        ACE_Null_Mutex>::reverse_iterator
        iter = map_.rbegin ();
        iter != map_.end ();
-       iter++)
+       ++iter)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"),
                   (*iter).int_id_.getData ()));
