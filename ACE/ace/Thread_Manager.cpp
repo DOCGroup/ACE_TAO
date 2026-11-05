@@ -1556,8 +1556,9 @@ ACE_Thread_Manager::wait_grp (int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::wait_grp");
 
-  int copy_count = 0;
-  ACE_Thread_Descriptor_Base *copy_table = nullptr;
+  int copy_count {};
+  ACE_Thread_Descriptor_Base *copy_table_raw {};
+  std::unique_ptr<ACE_Thread_Descriptor_Base[]> copy_table;
 
   // We have to make sure that while we wait for these threads to
   // exit, we do not have the lock.  Therefore we make a copy of all
@@ -1566,15 +1567,16 @@ ACE_Thread_Manager::wait_grp (int grp_id)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
 #if !defined (ACE_HAS_VXTHREADS)
-    ACE_NEW_RETURN (copy_table,
+    ACE_NEW_RETURN (copy_table_raw,
                     ACE_Thread_Descriptor_Base [this->thr_list_.size ()
                                                + this->terminated_thr_list_.size ()],
                     -1);
 #else
-    ACE_NEW_RETURN (copy_table,
+    ACE_NEW_RETURN (copy_table_raw,
                     ACE_Thread_Descriptor_Base [this->thr_list_.size ()],
                     -1);
 #endif /* !ACE_HAS_VXTHREADS */
+    copy_table.reset (copy_table_raw);
 
     using iter_t = ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
     for (iter_t iter (this->thr_list_); !iter.done (); iter.advance ())
@@ -1599,7 +1601,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
         // can't help much.
         if (biter.next ()->grp_id_ == grp_id)
           {
-            ACE_Thread_Descriptor_Base *tdb = biter.advance_and_remove (false);
+            ACE_Thread_Descriptor_Base *const tdb = biter.advance_and_remove (false);
             copy_table[copy_count++] = *tdb;
             delete tdb;
           }
@@ -1612,7 +1614,6 @@ ACE_Thread_Manager::wait_grp (int grp_id)
       {
         if (this->join_cond_.wait () == -1)
           {
-            delete[] copy_table;
             return -1;
           }
 
@@ -1630,17 +1631,15 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   }
 
   // Now actually join() with all the threads in this group.
-  int result = 0;
+  int result {};
 
-  for (int i = 0;
+  for (int i {};
        i < copy_count && result != -1;
-       i++)
+       ++i)
     {
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;
     }
-
-  delete [] copy_table;
 
   return result;
 }
@@ -1845,8 +1844,9 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
 int
 ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 {
-  int copy_count = 0;
-  ACE_Thread_Descriptor_Base *copy_table = nullptr;
+  int copy_count {};
+  ACE_Thread_Descriptor_Base *copy_table_raw {};
+  std::unique_ptr<ACE_Thread_Descriptor_Base[]> copy_table;
 
   // We have to make sure that while we wait for these threads to
   // exit, we do not have the lock.  Therefore we make a copy of all
@@ -1855,15 +1855,16 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
 #if !defined (ACE_HAS_VXTHREADS)
-    ACE_NEW_RETURN (copy_table,
+    ACE_NEW_RETURN (copy_table_raw,
                     ACE_Thread_Descriptor_Base [this->thr_list_.size ()
                                                 + this->terminated_thr_list_.size ()],
                     -1);
 #else
-    ACE_NEW_RETURN (copy_table,
+    ACE_NEW_RETURN (copy_table_raw,
                     ACE_Thread_Descriptor_Base [this->thr_list_.size ()],
                     -1);
 #endif /* !ACE_HAS_VXTHREADS */
+    copy_table.reset (copy_table_raw);
 
     using iter_t = ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
     for (iter_t iter (this->thr_list_); !iter.done (); iter.advance ())
@@ -1880,7 +1881,6 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
             if (ACE_OS::thr_equal (iter.next ()->thr_id_, ACE_OS::thr_self ()))
               {
                 errno = EDEADLK;
-                delete[] copy_table;
                 return -1;
               }
 # endif
@@ -1898,7 +1898,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
         // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
         if (titer.next ()->task_ == task)
           {
-            ACE_Thread_Descriptor_Base *tdb = titer.advance_and_remove (false);
+            ACE_Thread_Descriptor_Base *const tdb = titer.advance_and_remove (false);
 # ifndef ACE_LACKS_PTHREAD_JOIN
             copy_table[copy_count++] = *tdb;
 # endif
@@ -1913,7 +1913,6 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
       {
         if (this->join_cond_.wait () == -1)
           {
-            delete[] copy_table;
             return -1;
           }
 
@@ -1931,17 +1930,15 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
   }
 
   // Now to do the actual work
-  int result = 0;
+  int result {};
 
-  for (int i = 0;
+  for (int i {};
        i < copy_count && result != -1;
-       i++)
+       ++i)
     {
       if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
         result = -1;
     }
-
-  delete [] copy_table;
 
   return result;
 }
