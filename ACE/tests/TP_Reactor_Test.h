@@ -47,12 +47,12 @@ public:
   long get_total_r   () { return this->total_r_; }
 
   // virtual from ACE_Svc_Handler<>
-  virtual int open (void * pVoid);
+  int open (void * pVoid) override;
 
   // virtual from ACE_Event_Handler
-  virtual int handle_input (ACE_HANDLE h);
-  virtual int handle_output (ACE_HANDLE h);
-  virtual int handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask);
+  int handle_input (ACE_HANDLE h) override;
+  int handle_output (ACE_HANDLE h) override;
+  int handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask) override;
 
 private:
   int  terminate_io (ACE_Reactor_Mask mask);
@@ -89,7 +89,7 @@ public:
   int start (const ACE_INET_Addr & addr);
 
   // virtual from ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
-  virtual int make_svc_handler (Receiver * & sh);
+  int make_svc_handler (Receiver * & sh) override;
 
 private:
   ACE_Recursive_Thread_Mutex mutex_;
@@ -126,12 +126,12 @@ public:
   long get_total_r   () { return this->total_r_; }
 
   // virtual from ACE_Svc_Handler<>
-  virtual int open (void * pVoid);
+  int open (void * pVoid) override;
 
   // virtual from ACE_Event_Handler
-  virtual int handle_input (ACE_HANDLE h);
-  virtual int handle_output (ACE_HANDLE h);
-  virtual int handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask);
+  int handle_input (ACE_HANDLE h) override;
+  int handle_output (ACE_HANDLE h) override;
+  int handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask) override;
 
 private:
   int  terminate_io (ACE_Reactor_Mask mask);
@@ -172,7 +172,7 @@ public:
   int  start (const ACE_INET_Addr & addr , int num);
 
   // virtual from ACE_Connector<>
-  virtual int make_svc_handler (Sender * & sh);
+  int make_svc_handler (Sender * & sh) override;
 
 private:
   ACE_Recursive_Thread_Mutex mutex_;

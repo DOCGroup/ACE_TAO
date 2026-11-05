@@ -64,7 +64,7 @@ public:
 
   /// Mark as closed (non-locking version). This is used during the cleanup of the
   /// connections purged.
-  virtual int mark_as_closed_i (const void *recycling_act);
+  int mark_as_closed_i (const void *recycling_act) override;
 
   /**
    * Since g++ version < 2.8 arent happy with templates, this special
@@ -96,19 +96,19 @@ protected:
             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry);
 
   /// Remove from cache (non-locking version).
-  virtual int purge_i (const void *recycling_act);
+  int purge_i (const void *recycling_act) override;
 
   /// Add to cache (non-locking version).
-  virtual int cache_i (const void *recycling_act);
+  int cache_i (const void *recycling_act) override;
 
   /// Get/Set recycle_state (non-locking version).
-  virtual int recycle_state_i (const void *recycling_act,
-                               ACE_Recyclable_State new_state);
-  virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
+  int recycle_state_i (const void *recycling_act,
+                       ACE_Recyclable_State new_state) override;
+  ACE_Recyclable_State recycle_state_i (const void *recycling_act) const override;
 
   /// Cleanup hint and reset @c *act_holder to zero if @a act_holder != 0.
-  virtual int cleanup_hint_i (const void *recycling_act,
-                              void **act_holder);
+  int cleanup_hint_i (const void *recycling_act,
+                      void **act_holder) override;
 
   // = Helpers
   int check_hint_i (SVC_HANDLER *&sh,
@@ -131,14 +131,14 @@ protected:
                                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
                                     int &found);
 
-  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
-                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                                     ACE_Time_Value *timeout,
-                                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                     bool reuse_addr,
-                                     int flags,
-                                     int perms,
-                                     int &found);
+  int connect_svc_handler_i (SVC_HANDLER *&sh,
+                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                             ACE_Time_Value *timeout,
+                             const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                             bool reuse_addr,
+                             int flags,
+                             int perms,
+                             int &found) override;
 
   /**
    * Connection of the svc_handler with the remote host.  This method

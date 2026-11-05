@@ -297,8 +297,8 @@ public:
    * bytes to exceed the maximum buffer size or if the timeout period
    * has elapsed.
    */
-  virtual int put (ACE_Message_Block *message_block,
-                   ACE_Time_Value *timeout = nullptr);
+  int put (ACE_Message_Block *message_block,
+           ACE_Time_Value *timeout = nullptr) override;
 
   /// Flush the ACE_Message_Queue, which writes all the queued
   /// ACE_Message_Blocks to the <PEER_STREAM>.
@@ -306,8 +306,8 @@ public:
 
   /// This method is not currently implemented -- this is where the
   /// integration with the <Reactor> would occur.
-  virtual int handle_timeout (const ACE_Time_Value &time,
-                              const void *);
+  int handle_timeout (const ACE_Time_Value &time,
+                      const void *) override;
 
   /// Dump the state of an object.
   void dump () const;

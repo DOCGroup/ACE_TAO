@@ -111,7 +111,7 @@ public:
   {
   };
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// keep a reference to the time calculation class
@@ -137,7 +137,7 @@ public:
   {
   };
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// keep a reference to the time calculation class
