@@ -17,7 +17,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::arg (void *a)
   this->arg_ = a;
 }
 
-template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE const ACE_TCHAR *
+template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE ACE_TCHAR const *
 ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::name () const
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::name");
@@ -25,7 +25,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::name () const
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE void
-ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::name (const ACE_TCHAR *n)
+ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::name (ACE_TCHAR const *n)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::name");
   ACE_OS::strsncpy (this->name_, n, MAXPATHLEN);
