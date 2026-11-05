@@ -21,7 +21,7 @@ class AIO_CLD_Acceptor;
 class AIO_Input_Handler : public ACE_Service_Handler {
 public:
   explicit AIO_Input_Handler (AIO_CLD_Acceptor *acc = nullptr)
-    : acceptor_ (acc), mblk_ (nullptr) {}
+    : acceptor_ (acc) {}
 
   AIO_Input_Handler (const AIO_Input_Handler &) = delete;
   AIO_Input_Handler (AIO_Input_Handler &&) = delete;
@@ -37,7 +37,7 @@ public:
 protected:
   enum { LOG_HEADER_SIZE = 8 };   // Length of CDR header
   AIO_CLD_Acceptor *acceptor_;    // Our creator
-  ACE_Message_Block *mblk_;       // Block to receive log record
+  ACE_Message_Block_Unique_Ptr mblk_ {}; // Block to receive log record
   ACE_Asynch_Read_Stream reader_; // Async read factory
 
   // Handle input from logging clients.

@@ -10,14 +10,17 @@
 int TP_Logging_Handler::handle_input (ACE_HANDLE) {
   ACE_Message_Block *mblk = nullptr;
   if (logging_handler_.recv_log_record (mblk) != -1) {
+    ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
     ACE_Message_Block *log_blk = nullptr;
     ACE_NEW_RETURN
       (log_blk, ACE_Message_Block
                   (reinterpret_cast<char *> (this)), -1);
-    log_blk->cont (mblk);
+    ACE_Message_Block_Unique_Ptr log_blk_owner {log_blk};
+    log_blk_owner->cont (mblk_owner.release ());
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
-    if (TP_LOGGING_TASK::instance ()->put (log_blk) == -1)
-    { log_blk->release (); return -1; }
+    if (TP_LOGGING_TASK::instance ()->put (log_blk_owner.get ()) == -1)
+      return -1;
+    log_blk_owner.release ();
     ++queued_count_;
     return 0;
   } else return -1;
@@ -48,11 +51,11 @@ TP_Logging_Handler::handle_close (ACE_HANDLE handle,
 
 int TP_Logging_Task::svc () {
   for (ACE_Message_Block *log_blk; getq (log_blk) != -1; ) {
+    ACE_Message_Block_Unique_Ptr log_blk_owner {log_blk};
     TP_Logging_Handler *tp_handler = reinterpret_cast<TP_Logging_Handler *> (log_blk->rd_ptr ());
     Logging_Handler logging_handler (tp_handler->log_file ());
     logging_handler.write_log_record (log_blk->cont ());
 
-    log_blk->release ();
     tp_handler->handle_close (ACE_INVALID_HANDLE, 0);
   }
   return 0;

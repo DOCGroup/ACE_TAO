@@ -23,6 +23,7 @@
 #include "ace/Thread_Manager.h"
 #include "Logging_Acceptor.h"
 #include "CLD_export.h"
+#include <array>
 
 #if !defined (FLUSH_TIMEOUT)
 #define FLUSH_TIMEOUT 120 /* 120 seconds == 2 minutes. */
@@ -55,7 +56,9 @@ protected:
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Send the buffered log records using a gather-write operation.
-  virtual int send (ACE_Message_Block *chunk[], size_t &count);
+  virtual int send (
+    std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
+    size_t &count);
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Entry point into forwarder thread of control.
@@ -128,15 +131,12 @@ int CLD_Handler::handle_input (ACE_HANDLE handle)
 
   if (logging_handler.recv_log_record (mblk) != -1)
     {
-      if (msg_queue_.enqueue_tail (mblk->cont ()) != -1)
+      ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
+      ACE_Message_Block * const payload = mblk_owner->cont ();
+      if (msg_queue_.enqueue_tail (payload) != -1)
         {
-          mblk->cont (0);
-          mblk->release ();
+          mblk_owner->cont (nullptr);
           return 0; // Success return.
-        }
-      else
-        {
-          mblk->release ();
         }
     }
 
@@ -167,7 +167,7 @@ ACE_THR_FUNC_RETURN CLD_Handler::run_svc (void *arg) {
 
 
 ACE_THR_FUNC_RETURN CLD_Handler::forward () {
-  ACE_Message_Block *chunk[ACE_IOV_MAX];
+  std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> chunk {};
   size_t message_index = 0;
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
   ACE_Time_Value timeout;
@@ -185,10 +185,11 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
       if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
     } else {
+      ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
       if (mblk->size () == 0
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
-        { mblk->release (); break; }
-      chunk[message_index] = mblk;
+        break;
+      chunk[message_index].reset (mblk_owner.release ());
       ++message_index;
     }
     if (message_index >= ACE_IOV_MAX ||
@@ -208,12 +209,14 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
 }
 
 
-int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
+int CLD_Handler::send (
+  std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
+  size_t &count) {
   iovec iov[ACE_IOV_MAX];
-  size_t iov_size;
+  size_t iov_size = 0;
   int result = 0;
 
-  for (iov_size = 0; iov_size < count; ++iov_size) {
+  for (; iov_size < count; ++iov_size) {
     iov[iov_size].iov_base = chunk[iov_size]->rd_ptr ();
     iov[iov_size].iov_len =
       ACE_Utils::truncate_cast<u_long> (chunk[iov_size]->length ());
@@ -224,10 +227,9 @@ int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
       break;
     }
 
-  while (iov_size > 0) {
-    chunk[--iov_size]->release (); chunk[iov_size] = nullptr;
-  }
-  count = iov_size;
+  for (size_t i = 0; i < count; ++i)
+    chunk[i].reset ();
+  count = 0;
   return result;
 }
 
@@ -237,7 +239,10 @@ int CLD_Handler::close () {
   ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
-  msg_queue_.enqueue_tail (shutdown_message);
+  ACE_Message_Block_Unique_Ptr shutdown_owner {shutdown_message};
+  if (msg_queue_.enqueue_tail (shutdown_message) == -1)
+    return -1;
+  shutdown_owner.release ();
   return thr_mgr_.wait ();
 }
 
