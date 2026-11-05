@@ -14,11 +14,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::unlink (ACE_DEFAULT_RENDEZVOUS);
   ACE_FIFO_Recv_Msg server (ACE_DEFAULT_RENDEZVOUS);
-  char buf[BUFSIZ];
+  char buf[BUFSIZ] {};
   ACE_Str_Buf msg (buf, 0, sizeof buf);
-  int flags = MSG_ANY;
-  int band = 0;
-  int n;
+  int flags {MSG_ANY};
+  int band {};
+  int n {};
 
   while ((n = server.recv (&band, &msg, nullptr, &flags)) >= 0)
     {
