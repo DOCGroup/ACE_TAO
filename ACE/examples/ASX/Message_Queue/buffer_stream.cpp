@@ -16,23 +16,12 @@
 #include "ace/Module.h"
 #include "ace/Task.h"
 #include "ace/Truncate.h"
-#include <memory>
-
 
 #if defined (ACE_HAS_THREADS)
 
 namespace
 {
-  struct Message_Block_Release
-  {
-    void operator() (ACE_Message_Block *message_block) const
-    {
-      if (message_block != nullptr)
-        message_block->release ();
-    }
-  };
-
-  using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
+  using Message_Block_Owner = ACE_Message_Block_Unique_Ptr;
 }
 
 using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;

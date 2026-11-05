@@ -7,24 +7,8 @@
 #include "ace/Truncate.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
-#include <memory>
-
 
 #if defined (ACE_HAS_THREADS)
-
-namespace
-{
-  struct Message_Block_Release
-  {
-    void operator() (ACE_Message_Block *message_block) const
-    {
-      if (message_block != nullptr)
-        message_block->release ();
-    }
-  };
-
-  using Message_Block_Owner = std::unique_ptr<ACE_Message_Block, Message_Block_Release>;
-}
 
 // The producer reads data from the stdin stream, creates a message,
 // and then queues the message in the message list, where it is
@@ -45,7 +29,7 @@ producer (void *arg)
       ACE_Message_Block *mb {};
 
       ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ), ACE_THR_FUNC_RETURN_NULL);
-      Message_Block_Owner message {mb};
+      ACE_Message_Block_Unique_Ptr message {mb};
 
       int const n = ACE_OS::read (ACE_STDIN, mb->wr_ptr (), mb->size ());
 
@@ -104,7 +88,7 @@ consumer (void *arg)
       if (result == -1)
         break;
 
-      Message_Block_Owner message {mb};
+      ACE_Message_Block_Unique_Ptr message {mb};
       int const length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
