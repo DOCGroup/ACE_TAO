@@ -5,7 +5,10 @@
 #include "Callback_Handler.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_string.h"
+
+#include <array>
+#include <ctime>
+#include <string>
 
 Web_Server::Metadata_Type *
 Push_Iterator_Factory_i::register_callback
@@ -14,6 +17,9 @@ Push_Iterator_Factory_i::register_callback
 {
   if (CORBA::is_nil (client_callback))  // @@ Will it ever be nil?
     throw CORBA::BAD_PARAM ();
+
+  if (pathname == nullptr)
+    throw Web_Server::Error_Result (500);
 
   // What goes on in this method is a bit strange at first glance
   // since the client can potentially receive all of the data before
@@ -26,119 +32,98 @@ Push_Iterator_Factory_i::register_callback
               ACE_TEXT ("Received request for file: <%s>\n"),
               pathname));
 
-  // Send the file to the client asynchronously.  This allows the
-  // server to service multiple file requests from clients.
-  Callback_Handler *handler = nullptr;
-  ACE_NEW_THROW_EX (handler,
-                    Callback_Handler (pathname,
-                                      client_callback),
-                    CORBA::NO_MEMORY ());
-
-  // Transfer ownership to the POA.
-  PortableServer::ServantBase_var tmp (handler);
-
-  // Start sending data to the client callback object.
-  handler->run ();
-
+  std::string const filename (pathname);
   ACE_stat file_status {};
-  if (ACE_OS::stat (pathname,
-                    &file_status) == -1)
+  if (ACE_OS::stat (filename.c_str (), &file_status) == -1)
     // HTTP 1.1 "Internal Server Error".
     throw Web_Server::Error_Result (500);
 
-  Web_Server::Metadata_Type *meta_tmp = nullptr;
-  ACE_NEW_THROW_EX (meta_tmp,
+  Web_Server::Metadata_Type *metadata_ptr {};
+  ACE_NEW_THROW_EX (metadata_ptr,
                     Web_Server::Metadata_Type,
                     CORBA::NO_MEMORY ());
+  Web_Server::Metadata_Type_var metadata (metadata_ptr);
 
-  Web_Server::Metadata_Type_var metadata = meta_tmp;
-
-  if (this->modification_date (&file_status,
-                               metadata.inout ()) != 0)
+  if (this->modification_date (file_status,
+                               *metadata) != 0)
     // HTTP 1.1 "Internal Server Error.
     throw Web_Server::Error_Result (500);
 
-  if (this->content_type (pathname,
-                          metadata.inout ()) != 0)
+  if (this->content_type (filename,
+                          *metadata) != 0)
     // HTTP 1.1 "Internal Server Error.
     throw Web_Server::Error_Result (500);
+
+  // Start pushing data asynchronously so the server can handle other requests.
+  Callback_Handler *handler {};
+  ACE_NEW_THROW_EX (handler,
+                    Callback_Handler (filename.c_str (), client_callback),
+                    CORBA::NO_MEMORY ());
+  PortableServer::ServantBase_var servant_owner (handler);
+  handler->run ();
 
   return metadata._retn ();
 }
 
 int
 Push_Iterator_Factory_i::modification_date
-  (ACE_stat const *file_status,
+  (ACE_stat const& file_status,
    Web_Server::Metadata_Type & metadata)
 {
   // Get the modification time from the file status structure/
-  struct tm const *t_gmt = ACE_OS::gmtime (&(file_status->st_mtime));
+  struct tm const *const t_gmt = ACE_OS::gmtime (&file_status.st_mtime);
+  if (t_gmt == nullptr)
+    return -1;
 
   // A time string is probably never going to exceed 256 bytes.
   constexpr size_t buflen = 256;
-  char buf[buflen] {};
+  std::array<char, buflen> buf {};
 
   // Format the time to conform to RFC 1123.
-  if (ACE_OS::strftime (buf,
-                        buflen,
-                        "%a, %d %b %Y %H:%M:%S GMT",
-                        t_gmt) == 0)
+  if (std::strftime (buf.data (),
+                     buf.size (),
+                     "%a, %d %b %Y %H:%M:%S GMT",
+                     t_gmt) == 0)
     return -1;
-  else
-    metadata.modification_date = CORBA::string_dup (buf);
+
+  metadata.modification_date = CORBA::string_dup (buf.data ());
 
   return 0;
 }
 
 int
-Push_Iterator_Factory_i::content_type (char const *filename,
+Push_Iterator_Factory_i::content_type (std::string const& filename,
                                        Web_Server::Metadata_Type &metadata)
 {
-  if (filename == nullptr)
-    return -1;
+  size_t const extension_start = filename.find_last_of ('.');
+  std::string const extension =
+    filename.substr (extension_start == std::string::npos ? 0 : extension_start + 1);
 
-  // Search for extension
-  // Handle the case where multiple periods exists in the filename,
-  // e.g.:  foo.bar.ps
-  char const *extension = nullptr;
-  for (char const *tmp = filename;
-       tmp != nullptr;
-       )
-    {
-      tmp = ACE_OS::strchr (tmp, '.');
-
-      if (tmp != nullptr)
-        extension = ++tmp;  // Skip over the '.'
-    }
-
-  if (extension == nullptr)
-    extension = filename;  // No extension!
-
-  if (ACE_OS::strcasecmp (extension, "htm") == 0
-      || ACE_OS::strcasecmp (extension, "html") == 0)
+  if (ACE_OS::strcasecmp (extension.c_str (), "htm") == 0
+      || ACE_OS::strcasecmp (extension.c_str (), "html") == 0)
     metadata.content_type = CORBA::string_dup ("text/html");
-  else if (ACE_OS::strcasecmp (extension,
+  else if (ACE_OS::strcasecmp (extension.c_str (),
                                "txt") == 0)
     metadata.content_type = CORBA::string_dup ("text/plain");
-  else if (ACE_OS::strcasecmp (extension,
+  else if (ACE_OS::strcasecmp (extension.c_str (),
                                "ps") == 0)
     metadata.content_type =
       CORBA::string_dup ("application/postscript");
-  else if (ACE_OS::strcasecmp (extension,
+  else if (ACE_OS::strcasecmp (extension.c_str (),
                                "pdf") == 0)
     metadata.content_type = CORBA::string_dup ("application/pdf");
-  else if (ACE_OS::strcasecmp (extension,
+  else if (ACE_OS::strcasecmp (extension.c_str (),
                                "jpeg") == 0
-           || ACE_OS::strcasecmp (extension,
+           || ACE_OS::strcasecmp (extension.c_str (),
                                   "jpg") == 0)
     metadata.content_type = CORBA::string_dup ("image/jpeg");
-  else if (ACE_OS::strcasecmp (extension,
+  else if (ACE_OS::strcasecmp (extension.c_str (),
                                "tiff") == 0)
     metadata.content_type = CORBA::string_dup ("image/tiff");
-  else if (ACE_OS::strcasecmp (extension,
+  else if (ACE_OS::strcasecmp (extension.c_str (),
                                "gif") == 0)
     metadata.content_type = CORBA::string_dup ("image/gif");
-  else if (ACE_OS::strcasecmp (extension,
+  else if (ACE_OS::strcasecmp (extension.c_str (),
                                "png") == 0)
     metadata.content_type = CORBA::string_dup ("image/png");
   else

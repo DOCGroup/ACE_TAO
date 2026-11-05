@@ -7,6 +7,8 @@
 #include "Push_Web_ServerC.h"
 #include "Push_Iterator_Handler.h"
 
+#include <atomic>
+
 // Obtain reference to Iterator_Factory
 Web_Server::Iterator_Factory_ptr
 get_iterator (CORBA::ORB_ptr orb);
@@ -14,7 +16,7 @@ get_iterator (CORBA::ORB_ptr orb);
 // Perform file requests
 void invoke_requests (int argc,
                       ACE_TCHAR *argv[],
-                      int *request_count,
+                      std::atomic<int>& request_count,
                       Web_Server::Iterator_Factory_ptr f);
 
 int
@@ -60,12 +62,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Variable used to keep track of when file retrieval has
       // completed.
-      int request_count {};
+      std::atomic<int> request_count {0};
 
       // Activate and run the reply handlers.
       ::invoke_requests (argc,
                          argv,
-                         &request_count,
+                         request_count,
                          factory.in ());
 
       // 1 millisecond delay to reduce "busy waiting" in ORB event
@@ -73,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Time_Value const tv (0, 1000);
 
       // Run the ORB event loop.
-      while (request_count > 0)
+      while (request_count.load () > 0)
         {
           bool const more_work = orb->work_pending ();
 
@@ -87,7 +89,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->shutdown (false);
 
-      //orb->destroy ();
     }
   catch (Web_Server::Error_Result const& exc)
     {
@@ -146,7 +147,7 @@ get_iterator (CORBA::ORB_ptr o)
 
 void invoke_requests (int argc,
                       ACE_TCHAR *argv[],
-                      int *request_count,
+                      std::atomic<int>& request_count,
                       Web_Server::Iterator_Factory_ptr f)
 {
   Web_Server::Iterator_Factory_var factory =
@@ -157,7 +158,7 @@ void invoke_requests (int argc,
        i < argc - 1;  // Don't include the program name.
        ++i)
     {
-      Push_Iterator_Handler *handler = nullptr;
+      Push_Iterator_Handler *handler {};
       ACE_NEW_THROW_EX (handler,
                         Push_Iterator_Handler,
                         CORBA::NO_MEMORY ());
@@ -167,7 +168,7 @@ void invoke_requests (int argc,
 
       // This ends up being an AMI call, so it won't block.
       handler->run (request_count,
-                    ACE_TEXT_ALWAYS_CHAR(argv[i + 1]),
+                    ACE_TEXT_ALWAYS_CHAR (argv[i + 1]),
                     factory.in ());
     }
 }

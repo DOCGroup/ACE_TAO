@@ -17,20 +17,22 @@ Push_Iterator_Handler::register_callback
 }
 
 void
-Push_Iterator_Handler::run (int *request_count,
+Push_Iterator_Handler::run (std::atomic<int>& request_count,
                             char const *pathname,
                             Web_Server::Iterator_Factory_ptr factory)
 {
-  ACE_NEW_THROW_EX (this->callback_servant_,
+  Callback_i *callback_servant {};
+  ACE_NEW_THROW_EX (callback_servant,
                     Callback_i (request_count),
                     CORBA::NO_MEMORY ());
+  this->callback_servant_ = callback_servant;
 
   // Pass ownership of the Callback servant to the POA.
-  PortableServer::ServantBase_var tmp (this->callback_servant_);
+  PortableServer::ServantBase_var tmp (callback_servant);
 
   // Activate the Callback.
   this->callback_ =
-    this->callback_servant_->_this ();
+    callback_servant->_this ();
 
   // Activate this Reply Handler.
   this->ami_handler_ =

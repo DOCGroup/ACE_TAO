@@ -16,6 +16,8 @@
 
 #include "Push_Web_ServerS.h"
 
+#include <atomic>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -65,7 +67,7 @@ public:
    * incremented when file retrieval begins, and decremented when file
    * retrieval completes.
    */
-  void run (int *request_count,
+  void run (std::atomic<int>& request_count,
             char const *pathname,
             Web_Server::Iterator_Factory_ptr factory);
 
@@ -85,7 +87,7 @@ private:
   void deactivate ();
 
 private:
-  /// The servant that accepts data pushed from the content server.
+  /// Non-owning reference to the POA-managed servant, kept until metadata arrives.
   Callback_i *callback_servant_ {};
 
   /// Reference to the callback object the server sends data to.

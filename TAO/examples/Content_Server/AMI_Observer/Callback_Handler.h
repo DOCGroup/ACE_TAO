@@ -81,12 +81,7 @@ public:
 
   void next_chunk_excep (::Messaging::ExceptionHolder *) override;
 
-  /**
-   * Activate and run this Reply Handler.  The contents (not the
-   * pointer itself) of the <request_count> parameter will be
-   * incremented when file retrieval begins, and decremented when file
-   * retrieval completes.
-   */
+  /// Activate this Reply Handler and begin sending file chunks asynchronously.
   void run ();
 
 private:
