@@ -20,14 +20,15 @@ Event_Analyzer::close (u_long)
 int
 Event_Analyzer::control (ACE_Message_Block *mb)
 {
-  ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
-  ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd;
+  ACE_IO_Cntl_Msg * const ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
+  ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds const cmd = ioc->cmd ();
 
-  switch (cmd = ioc->cmd ())
+  switch (cmd)
     {
     case ACE_IO_Cntl_Msg::SET_LWM:
     case ACE_IO_Cntl_Msg::SET_HWM:
-      this->water_marks (cmd, *(size_t *) mb->cont ()->rd_ptr ());
+      this->water_marks (cmd,
+                         *reinterpret_cast<size_t const *> (mb->cont ()->rd_ptr ()));
       break;
     default:
       break;
@@ -59,7 +60,7 @@ Event_Analyzer::fini ()
 int
 Event_Analyzer::info (ACE_TCHAR **strp, size_t length) const
 {
-  const ACE_TCHAR *module_name = this->name ();
+  ACE_TCHAR const * const module_name = this->name ();
 
   if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
     return -1;

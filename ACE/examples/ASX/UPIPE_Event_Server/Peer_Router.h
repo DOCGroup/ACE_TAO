@@ -30,13 +30,18 @@ class Acceptor_Factory : public ACE_Acceptor<PEER_HANDLER, ACE_UPIPE_ACCEPTOR>
 {
 public:
   explicit Acceptor_Factory (Peer_Router<PEER_HANDLER, KEY> *pr);
+  Acceptor_Factory (Acceptor_Factory const &) = delete;
+  Acceptor_Factory (Acceptor_Factory &&) = delete;
+  Acceptor_Factory &operator= (Acceptor_Factory const &) = delete;
+  Acceptor_Factory &operator= (Acceptor_Factory &&) = delete;
   Peer_Router<PEER_HANDLER, KEY> *router () const;
 
   int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialize the acceptor when it's linked dynamically.
 
 private:
-  Peer_Router<PEER_HANDLER, KEY> *pr_;
+  Peer_Router<PEER_HANDLER, KEY> *pr_ {};
+  // Non-owning back-reference; the router owns this factory.
 };
 
 // Receive input from a Peer..
@@ -45,6 +50,10 @@ class Peer_Handler : public ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_MT_SYNCH>
 {
 public:
   explicit Peer_Handler (ACE_Thread_Manager * = nullptr);
+  Peer_Handler (Peer_Handler const &) = delete;
+  Peer_Handler (Peer_Handler &&) = delete;
+  Peer_Handler &operator= (Peer_Handler const &) = delete;
+  Peer_Handler &operator= (Peer_Handler &&) = delete;
 
   int open (void * = nullptr) override;
   // Called by the ACE_Acceptor::handle_input() to activate this object.
@@ -56,8 +65,8 @@ public:
   // Send output to a peer.
 
 protected:
-  ROUTER *router_task_;
-  // Pointer to write task..
+  ROUTER *router_task_ {};
+  // Non-owning pointer to the router task.
 
 private:
   // Don't need this method here...
@@ -76,6 +85,10 @@ class Peer_Router : public ACE_Task<ACE_MT_SYNCH>
 public:
   explicit Peer_Router (ACE_Thread_Manager * = nullptr);
   ~Peer_Router () = default;
+  Peer_Router (Peer_Router const &) = delete;
+  Peer_Router (Peer_Router &&) = delete;
+  Peer_Router &operator= (Peer_Router const &) = delete;
+  Peer_Router &operator= (Peer_Router &&) = delete;
 
   using HANDLER = Peer_Handler<Peer_Router<PEER_HANDLER, PEER_KEY>, PEER_KEY>;
 
@@ -100,13 +113,7 @@ protected:
   int fini () override;
 
   // Factory for accepting new PEER_HANDLERs.
-  std::unique_ptr<Acceptor_Factory<PEER_HANDLER, PEER_KEY>> acceptor_;
-
-private:
-  Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
-  Peer_Router (Peer_Router<PEER_HANDLER, PEER_KEY> &&) = delete;
-  Peer_Router &operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
-  Peer_Router &operator= (Peer_Router<PEER_HANDLER, PEER_KEY> &&) = delete;
+  std::unique_ptr<Acceptor_Factory<PEER_HANDLER, PEER_KEY>> acceptor_ {};
 };
 
 #if defined (__ACE_INLINE__)

@@ -32,6 +32,10 @@ class Supplier_Handler
 {
 public:
   explicit Supplier_Handler (ACE_Thread_Manager *tm = nullptr);
+  Supplier_Handler (Supplier_Handler const &) = delete;
+  Supplier_Handler (Supplier_Handler &&) = delete;
+  Supplier_Handler &operator= (Supplier_Handler const &) = delete;
+  Supplier_Handler &operator= (Supplier_Handler &&) = delete;
   int open (void *) override;
 };
 
@@ -39,6 +43,10 @@ class Supplier_Router : public SUPPLIER_ROUTER
 {
 public:
   explicit Supplier_Router (ACE_Thread_Manager *);
+  Supplier_Router (Supplier_Router const &) = delete;
+  Supplier_Router (Supplier_Router &&) = delete;
+  Supplier_Router &operator= (Supplier_Router const &) = delete;
+  Supplier_Router &operator= (Supplier_Router &&) = delete;
 
 protected:
   // ACE_Task hooks..

@@ -18,6 +18,12 @@
 class Event_Analyzer : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  Event_Analyzer () = default;
+  Event_Analyzer (Event_Analyzer const &) = delete;
+  Event_Analyzer (Event_Analyzer &&) = delete;
+  Event_Analyzer &operator= (Event_Analyzer const &) = delete;
+  Event_Analyzer &operator= (Event_Analyzer &&) = delete;
+
   int open (void *a = nullptr) override;
   int close (u_long flags = 0) override;
   int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;

@@ -29,6 +29,10 @@ class Consumer_Handler
 {
 public:
   explicit Consumer_Handler (ACE_Thread_Manager *tm = nullptr);
+  Consumer_Handler (Consumer_Handler const &) = delete;
+  Consumer_Handler (Consumer_Handler &&) = delete;
+  Consumer_Handler &operator= (Consumer_Handler const &) = delete;
+  Consumer_Handler &operator= (Consumer_Handler &&) = delete;
   int open (void *) override;
 };
 
@@ -36,6 +40,10 @@ class Consumer_Router : public CONSUMER_ROUTER
 {
 public:
   explicit Consumer_Router (ACE_Thread_Manager *thr_manager);
+  Consumer_Router (Consumer_Router const &) = delete;
+  Consumer_Router (Consumer_Router &&) = delete;
+  Consumer_Router &operator= (Consumer_Router const &) = delete;
+  Consumer_Router &operator= (Consumer_Router &&) = delete;
 
 protected:
   // ACE_Task hooks..

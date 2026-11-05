@@ -6,6 +6,7 @@
 #include "ace/Service_Config.h"
 
 #include "Peer_Router.h"
+#include "Message_Block_Owner.h"
 #include "Options.h"
 
 
@@ -26,7 +27,7 @@ Acceptor_Factory<PH, PK>::init (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("df:"), 0);
   ACE_UPIPE_Addr addr;
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int c {}; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'f':
@@ -65,15 +66,23 @@ template <class ROUTER, class KEY> int
 Peer_Handler<ROUTER, KEY>::svc ()
 {
   // Just a try !!  we're just reading from our ACE_Message_Queue.
-  ACE_Message_Block *db, *hb;
-  int n;
   // do an endless loop
   for (;;)
     {
-      db = new ACE_Message_Block (BUFSIZ);
-      hb = new ACE_Message_Block (sizeof (KEY), ACE_Message_Block::MB_PROTO, db);
+      ACE_Message_Block *db {};
+      ACE_NEW_RETURN (db, ACE_Message_Block (BUFSIZ), -1);
+      UPIPE_Event_Server::Message_Block_Owner data_block {db};
 
-      if ((n = this->peer ().recv (db->rd_ptr (), db->size ())) == -1)
+      ACE_Message_Block *hb {};
+      ACE_NEW_RETURN (hb,
+                      ACE_Message_Block (sizeof (KEY), ACE_Message_Block::MB_PROTO, db),
+                      -1);
+      UPIPE_Event_Server::Message_Block_Owner header {hb};
+      data_block.release ();
+
+      ssize_t const n = this->peer ().recv (db->rd_ptr (), db->size ());
+
+      if (n == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("recv failed")), -1);
       else if (n == 0) // Client has closed down the connection.
@@ -88,13 +97,14 @@ Peer_Handler<ROUTER, KEY>::svc ()
       else // Transform incoming buffer into a Message and pass downstream.
         {
           db->wr_ptr (n);
-          *(ACE_HANDLE *) hb->rd_ptr () = this->get_handle (); // structure assignment.
-          hb->wr_ptr (sizeof (long));
+          *reinterpret_cast<KEY *> (hb->rd_ptr ()) = this->get_handle ();
+          hb->wr_ptr (sizeof (KEY));
           if (this->router_task_->reply (hb) == -1)
             {
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Peer_Handler.svc : router_task->reply failed\n")));
               return -1;
             }
+          header.release ();
 
           // return this->router_task_->reply (hb) == -1 ? -1 : 0;
         }
@@ -148,29 +158,6 @@ Peer_Handler<ROUTER, KEY>::handle_input (ACE_HANDLE h)
 
   return 0;
 
-#if 0
-  ACE_Message_Block *db = new ACE_Message_Block (BUFSIZ);
-  ACE_Message_Block *hb = new ACE_Message_Block (sizeof (KEY), ACE_Message_Block::MB_PROTO, db);
-  int           n;
-
-  if ((n = this->peer ().recv (db->rd_ptr (), db->size ())) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv failed")), -1);
-  else if (n == 0) // Client has closed down the connection.
-    {
-      if (this->router_task_->unbind_peer (this->get_handle ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("unbind failed")), -1);
-      ACE_DEBUG ((LM_DEBUG, "(%t) shutting down %d\n", h));
-      return -1; // Instruct the ACE_Reactor to deregister us by returning -1.
-    }
-  else // Transform incoming buffer into a Message and pass downstream.
-    {
-      db->wr_ptr (n);
-      *(long *) hb->rd_ptr () = this->get_handle (); // structure assignment.
-      hb->wr_ptr (sizeof (long));
-      return this->router_task_->reply (hb) == -1 ? -1 : 0;
-    }
-#endif
 }
 
 template <class PH, class PK>
@@ -182,11 +169,12 @@ Peer_Router<PH, PK>::Peer_Router (ACE_Thread_Manager *tm)
 template <class PH, class PK> int
 Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
 {
+  UPIPE_Event_Server::Message_Block_Owner message {mb};
   ACE_Map_Iterator<PK, PH *, ACE_RW_Mutex> map_iter = this->peer_map_;
-  int bytes      = 0;
-  int iterations = 0;
-  ACE_Message_Block *data_block = mb->cont ();
-  for (ACE_Map_Entry<PK, PH *> *ss = nullptr;
+  int bytes {};
+  int iterations {};
+  ACE_Message_Block * const data_block = mb->cont ();
+  for (ACE_Map_Entry<PK, PH *> *ss {};
        map_iter.next (ss) != 0;
        map_iter.advance ())
     {
@@ -198,7 +186,6 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
       bytes += ss->int_id_->put (data_block);
     }
 
-  mb->release ();
   return bytes == 0 ? 0 : bytes / iterations;
 }
 
@@ -212,14 +199,15 @@ Peer_Router<PH, PK>::fini ()
 template <class PH, class PK> int
 Peer_Router<PH, PK>::control (ACE_Message_Block *mb)
 {
-  ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
-  ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds command;
+  ACE_IO_Cntl_Msg * const ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
+  ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds const command = ioc->cmd ();
 
-  switch (command = ioc->cmd ())
+  switch (command)
     {
     case ACE_IO_Cntl_Msg::SET_LWM:
     case ACE_IO_Cntl_Msg::SET_HWM:
-      this->water_marks (command, *(size_t *) mb->cont ()->rd_ptr ());
+      this->water_marks (command,
+                         *reinterpret_cast<size_t const *> (mb->cont ()->rd_ptr ()));
       break;
     default:
       return -1;
@@ -256,7 +244,8 @@ Peer_Router<PH, PK>::init (int argc, ACE_TCHAR *argv[])
       if (pa.get_local_addr (addr) != -1)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) initializing %s, file = %s, fd = %d, this = %@\n"),
-                    this->name (), addr.get_path_name (), pa.get_handle (), this));
+                    this->name (), addr.get_path_name (), pa.get_handle (),
+                    static_cast<void *> (this)));
       else
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("get_local_addr")), -1);
