@@ -2,14 +2,14 @@
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+#include <string>
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT("ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -48,7 +48,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("ior")};
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return -1;
 
       test_i servant (orb.in ());
@@ -61,14 +62,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                          -1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+        File_Handle output_file (ACE_OS::fopen (ior_output_file.c_str (), "w"),
+                                 &ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file.c_str ()),
+                            -1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
