@@ -14,25 +14,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
 
-#include <memory>
 #include <string>
-
-namespace
-{
-  struct Message_Block_Chain_Deleter
-  {
-    void operator() (ACE_Message_Block *message_block) const
-    {
-      while (message_block != nullptr)
-        {
-          ACE_Message_Block *next = message_block->cont ();
-          message_block->cont (nullptr);
-          message_block->release ();
-          message_block = next;
-        }
-    }
-  };
-}
 
 static const ACE_TCHAR file_prefix[] = ACE_TEXT ("http:");
 
@@ -98,7 +80,7 @@ TAO_HTTP_Parser::parse_string (const char *nior,
   ACE_NEW_THROW_EX (mb,
                     ACE_Message_Block (),
                     CORBA::INTERNAL ());
-  std::unique_ptr<ACE_Message_Block, Message_Block_Chain_Deleter> mb_owner (mb);
+  ACE_Message_Block_Unique_Ptr mb_owner {mb};
 
   // Create a client
   TAO_HTTP_Client client;
