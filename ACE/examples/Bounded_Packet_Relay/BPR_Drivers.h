@@ -8,7 +8,10 @@
  *  the different possible implementations of the Timer_Queue based
  *  bounded packet relay example.
  *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Chris Gill <cdgill@cs.wustl.edu> and Douglas C. Schmidt
+ *          <d.schmidt@vanderbilt.edu>. Based on Timer Queue Test by Carlos O'Ryan
+ *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
+ *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
 //=============================================================================
 
@@ -46,6 +49,11 @@ class Output_Device_Wrapper_Base;
 class Bounded_Packet_Relay
 {
 public:
+  Bounded_Packet_Relay (Bounded_Packet_Relay const &) = delete;
+  Bounded_Packet_Relay (Bounded_Packet_Relay &&) = delete;
+  Bounded_Packet_Relay &operator= (Bounded_Packet_Relay const &) = delete;
+  Bounded_Packet_Relay &operator= (Bounded_Packet_Relay &&) = delete;
+
   // = Enumerates possible status values for a transmission.
   enum Transmission_Status
   {
@@ -96,13 +104,13 @@ public:
   // = Accessors and mutators for relay settings
 
   /// Get high water mark for relay queue.
-  ACE_UINT32 queue_hwm ();
+  ACE_UINT32 queue_hwm () const;
 
   /// Set high water mark for relay queue.
   void queue_hwm (ACE_UINT32 hwm);
 
   /// Get low water mark for relay queue.
-  ACE_UINT32 queue_lwm ();
+  ACE_UINT32 queue_lwm () const;
 
   /// Set low water mark for relay queue.
   void queue_lwm (ACE_UINT32 lwm);
@@ -111,25 +119,25 @@ private:
   // = Concurrency Management.
 
   /// flag for whether or not a transmission is active
-  bool is_active_;
+  bool is_active_ {};
 
-  /// Thread manager for the input device task.
-  ACE_Thread_Manager * input_task_mgr_;
+  /// Borrowed thread manager for the input device task.
+  ACE_Thread_Manager *input_task_mgr_ {};
 
-  /// Pointer to the input device wrapper.
-  Input_Device_Wrapper_Base * input_wrapper_;
+  /// Borrowed input device wrapper.
+  Input_Device_Wrapper_Base *input_wrapper_ {};
 
-  /// Pointer to the output device wrapper.
-  Output_Device_Wrapper_Base * output_wrapper_;
+  /// Borrowed output device wrapper.
+  Output_Device_Wrapper_Base *output_wrapper_ {};
 
   /// Queue used to buffer input messages.
   ACE_Message_Queue<ACE_SYNCH> queue_;
 
   /// High water mark for relay queue.
-  ACE_UINT32 queue_hwm_;
+  ACE_UINT32 queue_hwm_ {DEFAULT_HWM};
 
   /// Low water mark for relay queue.
-  ACE_UINT32 queue_lwm_;
+  ACE_UINT32 queue_lwm_ {DEFAULT_LWM};
 
   /// Lock for thread-safe synchronization of transmission startup and
   /// termination.
@@ -138,22 +146,22 @@ private:
   // = Transmission Statistics
 
   /// Returns string corresponding to current status.
-  const char *status_msg () const;
+  char const *status_msg () const;
 
   /// Number of transmissions sent.
-  u_long transmission_number_;
+  u_long transmission_number_ {};
 
   /// Count of packets sent in the most recent transmission.
-  u_long packets_sent_;
+  u_long packets_sent_ {};
 
   /// Status of the current or most recent transmission.
-  Transmission_Status status_;
+  Transmission_Status status_ {UN_INITIALIZED};
 
   /// Start time of the most recent transmission.
-  ACE_Time_Value transmission_start_;
+  ACE_Time_Value transmission_start_ {};
 
   /// Ending time of the most recent transmission.
-  ACE_Time_Value transmission_end_;
+  ACE_Time_Value transmission_end_ {};
 };
 
 /**
@@ -185,11 +193,15 @@ public:
   /// Constructor.
   explicit Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr);
 
-  /// Destructor.
-  virtual ~Input_Device_Wrapper_Base ();
+  Input_Device_Wrapper_Base (Input_Device_Wrapper_Base const &) = delete;
+  Input_Device_Wrapper_Base (Input_Device_Wrapper_Base &&) = delete;
+  Input_Device_Wrapper_Base &operator= (Input_Device_Wrapper_Base const &) = delete;
+  Input_Device_Wrapper_Base &operator= (Input_Device_Wrapper_Base &&) = delete;
 
-  /// Sets send input message command in the input device driver
-  /// object.
+  /// Destructor.
+  ~Input_Device_Wrapper_Base () override;
+
+  /// Sets a borrowed command in the input device driver object.
   int set_send_input_msg_cmd (ACE_Command_Base *send_input_msg_cmd);
 
   /// Sets period (in usecs) between when inputs are created.
@@ -220,30 +232,31 @@ protected:
   /**
    * Sends a newly created message block, carrying data read from the
    * underlying input device, by passing a pointer to the message
-   * block to its command execution.
+   * block to its command execution. The caller retains ownership on
+   * failure; the receiver owns the message after successful execution.
    */
   virtual int send_input_message (ACE_Message_Block *);
 
   /// Send newly created input message.
-  ACE_Command_Base *send_input_msg_cmd_;
+  ACE_Command_Base *send_input_msg_cmd_ {};
 
   /// Period between when input values are produced (usecs).
-  u_long input_period_;
+  u_long input_period_ {ACE_ONE_SECOND_IN_USECS};
 
   /// Reactor used to multiplex input streams, timeouts.
   ACE_Reactor reactor_;
 
   /// Flag to indicate whether or not input object is
   /// (and should remain) active.
-  bool is_active_;
+  bool is_active_ {};
 
   /// Count of messages to send before stopping (-1 indicates the
   /// device should not stop).
-  long send_count_;
+  long send_count_ {};
 
   /// Currently remaining count of messages to send before stopping
   /// (-1 indicates the device should not stop).
-  long current_count_;
+  long current_count_ {};
 };
 
 /**
@@ -262,11 +275,17 @@ protected:
 class Output_Device_Wrapper_Base
 {
 public:
-  virtual ~Output_Device_Wrapper_Base ();
+  Output_Device_Wrapper_Base () = default;
 
-  /// Writes contents of the passed message block out to the underlying
-  /// output device.
-  virtual int write_output_message (void *) = 0;
+  Output_Device_Wrapper_Base (Output_Device_Wrapper_Base const &) = delete;
+  Output_Device_Wrapper_Base (Output_Device_Wrapper_Base &&) = delete;
+  Output_Device_Wrapper_Base &operator= (Output_Device_Wrapper_Base const &) = delete;
+  Output_Device_Wrapper_Base &operator= (Output_Device_Wrapper_Base &&) = delete;
+
+  virtual ~Output_Device_Wrapper_Base () = default;
+
+  /// Consumes the passed message block and writes it to the output device.
+  virtual int write_output_message (ACE_Message_Block *) = 0;
 
   /// Provides an abstract interface to allow modifying device
   /// settings.

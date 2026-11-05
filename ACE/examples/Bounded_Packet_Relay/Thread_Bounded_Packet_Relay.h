@@ -7,7 +7,10 @@
  *  This code provides a thread based implementation
  *  of the bounded packet relay example.
  *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Chris Gill <cdgill@cs.wustl.edu> and Douglas C. Schmidt
+ *          <d.schmidt@vanderbilt.edu>. Based on Timer Queue Test by Carlos O'Ryan
+ *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
+ *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
 //=============================================================================
 
@@ -16,6 +19,7 @@
 #define _THREAD_BOUNDED_PACKET_RELAY_H_
 
 #include "ace/Functor_T.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -63,12 +67,16 @@ public:
 
   /// Constructor.
   Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
-                             size_t read_length,
-                             const char* text,
+                             std::string const &text,
                              int logging = 0);
 
+  Text_Input_Device_Wrapper (Text_Input_Device_Wrapper const &) = delete;
+  Text_Input_Device_Wrapper (Text_Input_Device_Wrapper &&) = delete;
+  Text_Input_Device_Wrapper &operator= (Text_Input_Device_Wrapper const &) = delete;
+  Text_Input_Device_Wrapper &operator= (Text_Input_Device_Wrapper &&) = delete;
+
   /// Destructor.
-  virtual ~Text_Input_Device_Wrapper ();
+  ~Text_Input_Device_Wrapper () override = default;
 
   /**
    * Modifies device settings based on passed pointer to a u_long.
@@ -83,20 +91,17 @@ protected:
   ACE_Message_Block *create_input_message () override;
 
 private:
-  /// Length of the buffer into which to "read".
-  size_t read_length_;
-
-  /// Text to "read" into the buffer.
-  const char *text_;
+  /// Owns the text used by this pseudo-device.
+  std::string text_;
 
   /// Index into the string.
-  size_t index_;
+  size_t index_ {};
 
   /// This value is 0 if logging is turned off, non-zero otherwise
-  int logging_;
+  int logging_ {};
 
   /// This value holds a count of packets created.
-  u_long packet_count_;
+  u_long packet_count_ {};
 };
 
 /**
@@ -118,10 +123,15 @@ public:
   /// Default constructor.
   explicit Text_Output_Device_Wrapper (int logging = 0);
 
+  Text_Output_Device_Wrapper (Text_Output_Device_Wrapper const &) = delete;
+  Text_Output_Device_Wrapper (Text_Output_Device_Wrapper &&) = delete;
+  Text_Output_Device_Wrapper &operator= (Text_Output_Device_Wrapper const &) = delete;
+  Text_Output_Device_Wrapper &operator= (Text_Output_Device_Wrapper &&) = delete;
+
   // = Command Accessible Entry Points
 
   /// Consumes and possibly prints out the passed message.
-  int write_output_message (void *message) override;
+  int write_output_message (ACE_Message_Block *message) override;
 
   /**
    * Modifies device settings based on passed pointer to a u_long.
@@ -132,10 +142,10 @@ public:
 
 private:
   /// This value holds the logging level.
-  int logging_;
+  int logging_ {};
 
   /// This value holds a count of packets received.
-  u_long packet_count_;
+  u_long packet_count_ {};
 };
 
 /**
@@ -159,8 +169,13 @@ public:
                    Thread_Timer_Queue *queue,
                    Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
 
+  User_Input_Task (User_Input_Task const &) = delete;
+  User_Input_Task (User_Input_Task &&) = delete;
+  User_Input_Task &operator= (User_Input_Task const &) = delete;
+  User_Input_Task &operator= (User_Input_Task &&) = delete;
+
   /// Destructor.
-  virtual ~User_Input_Task ();
+  ~User_Input_Task () override;
 
   /// This method runs the event loop in the new thread.
   int svc () override;
@@ -203,13 +218,13 @@ public:
 
 private:
   /// How many microseconds are in a second.
-  const int usecs_;
+  static constexpr int usecs_ {ACE_ONE_SECOND_IN_USECS};
 
-  /// The bounded packet relay.
-  Bounded_Packet_Relay *relay_;
+  /// Borrowed bounded packet relay.
+  Bounded_Packet_Relay *relay_ {};
 
-  /// The timer queue implementation.
-  Thread_Timer_Queue *queue_;
+  /// Borrowed timer queue implementation.
+  Thread_Timer_Queue *queue_ {};
 
   /// The thread timer queue test driver.
   Thread_Bounded_Packet_Relay_Driver &driver_;
@@ -222,7 +237,9 @@ private:
  *
  * The base class provides a helper method that derived classes
  * can register as a deferred execution callback that will cancel
- * all timers in the underlying timer queue, and then delete "this".
+ * all timers in the underlying timer queue, and then delete "this". The timer
+ * queue keeps a non-owning handler pointer; callbacks and cancellation paths
+ * delete each registered handler, so these objects must not have another owner.
  */
 class BPR_Handler_Base : public ACE_Event_Handler
 {
@@ -236,8 +253,13 @@ public:
   BPR_Handler_Base (Bounded_Packet_Relay &relay,
                     Thread_Timer_Queue &queue);
 
+  BPR_Handler_Base (BPR_Handler_Base const &) = delete;
+  BPR_Handler_Base (BPR_Handler_Base &&) = delete;
+  BPR_Handler_Base &operator= (BPR_Handler_Base const &) = delete;
+  BPR_Handler_Base &operator= (BPR_Handler_Base &&) = delete;
+
   /// Destructor.
-  virtual ~BPR_Handler_Base ();
+  ~BPR_Handler_Base () override = default;
 
   // = Command accessible entry points.
 
@@ -277,17 +299,22 @@ public:
 
   /// Constructor.
   Send_Handler (u_long send_count,
-                const ACE_Time_Value &duration,
+                ACE_Time_Value const &duration,
                 Bounded_Packet_Relay &relay,
                 Thread_Timer_Queue &queue,
                 Thread_Bounded_Packet_Relay_Driver &driver);
 
+  Send_Handler (Send_Handler const &) = delete;
+  Send_Handler (Send_Handler &&) = delete;
+  Send_Handler &operator= (Send_Handler const &) = delete;
+  Send_Handler &operator= (Send_Handler &&) = delete;
+
   /// Destructor.
-  virtual ~Send_Handler ();
+  ~Send_Handler () override = default;
 
   /// Call back hook.
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *arg) override;
 
   /// Cancellation hook.
   virtual int cancelled ();
@@ -300,7 +327,7 @@ public:
 private:
   /// Count of the number of messages to send from the
   /// relay object to the output device object.
-  u_long send_count_;
+  u_long send_count_ {};
 
   /// Stores the expected duration until expiration, and is used to
   /// re-register the handler if there are still sends to perform.
@@ -327,12 +354,17 @@ public:
                        Thread_Timer_Queue &queue,
                        Thread_Bounded_Packet_Relay_Driver &driver);
 
+  Termination_Handler (Termination_Handler const &) = delete;
+  Termination_Handler (Termination_Handler &&) = delete;
+  Termination_Handler &operator= (Termination_Handler const &) = delete;
+  Termination_Handler &operator= (Termination_Handler &&) = delete;
+
   /// Destructor.
-  virtual ~Termination_Handler ();
+  ~Termination_Handler () override = default;
 
   /// Call back hook.
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *arg) override;
 
   /// Cancellation hook.
   virtual int cancelled ();
@@ -362,8 +394,13 @@ public:
   /// Constructor.
   explicit Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);
 
+  Thread_Bounded_Packet_Relay_Driver (Thread_Bounded_Packet_Relay_Driver const &) = delete;
+  Thread_Bounded_Packet_Relay_Driver (Thread_Bounded_Packet_Relay_Driver &&) = delete;
+  Thread_Bounded_Packet_Relay_Driver &operator= (Thread_Bounded_Packet_Relay_Driver const &) = delete;
+  Thread_Bounded_Packet_Relay_Driver &operator= (Thread_Bounded_Packet_Relay_Driver &&) = delete;
+
   /// Destructor.
-  virtual ~Thread_Bounded_Packet_Relay_Driver ();
+  ~Thread_Bounded_Packet_Relay_Driver () override = default;
 
   /// Displays the user menu.
   int display_menu () override;
