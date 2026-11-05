@@ -6,8 +6,14 @@
 #include "ace/Containers.h"
 #include "ace/Synch.h"
 #include "ace/Condition_T.h"
+#include "ace/Message_Block.h"
+#include <atomic>
+#include <chrono>
 #include <memory>
 #include <cstring>
+#include <thread>
+
+constexpr int MESSAGE_COUNT = 30;
 
 // Listing 4 code/ch16
 class Follower
@@ -61,7 +67,25 @@ public:
 
   void shut_down ()
   {
-    shutdown_ = true;
+    ACE_GUARD (ACE_Thread_Mutex, leader_mon, this->leader_lock_);
+    this->shutdown_.store (true);
+    leader_active (0);
+
+    ACE_GUARD (ACE_Thread_Mutex, follower_mon, this->followers_lock_);
+    while (!this->followers_.is_empty ())
+      {
+        Follower *follower {};
+        if (this->followers_.dequeue_head (follower) != 0)
+          break;
+        follower->signal ();
+      }
+
+    this->msg_queue ()->deactivate ();
+  }
+
+  int processed_messages () const
+  {
+    return this->processed_messages_.load ();
   }
 
 private:
@@ -83,15 +107,16 @@ private:
     this->current_leader_ = leader;
   }
 
-  void process_message (ACE_Message_Block *mb);
+  void process_message (ACE_Message_Block_Unique_Ptr const &message_block);
 
   bool done () const
   {
-    return shutdown_;
+    return this->shutdown_.load ();
   }
 
 private:
-  bool shutdown_ {};
+  std::atomic<bool> shutdown_ {};
+  std::atomic<int> processed_messages_ {};
   ACE_thread_t current_leader_ {};
   ACE_Thread_Mutex leader_lock_;
   ACE_Unbounded_Queue<Follower *> followers_; // Borrowed; each waiting thread owns its follower.
@@ -106,22 +131,28 @@ LF_ThreadPool::svc ()
   ACE_TRACE ("LF_ThreadPool::svc");
   while (!done ())
     {
-      become_leader ();  // Block until this thread is the leader.
+      if (become_leader () == -1)
+        break;
 
-      ACE_Message_Block *mb {};
+      ACE_Message_Block *raw_message_block {};
       ACE_Time_Value tv {LONG_TIME};
       tv += ACE_OS::gettimeofday ();
 
       // Get a message, elect new leader, then process message.
-      if (this->getq (mb, &tv) < 0)
+      if (this->getq (raw_message_block, &tv) < 0)
         {
+          if (done ())
+            break;
           if (elect_new_leader () == 0)
             break;
           continue;
         }
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
+      if (!message_block)
+        continue;
 
       elect_new_leader ();
-      process_message (mb);
+      process_message (message_block);
     }
 
   return 0;
@@ -142,11 +173,26 @@ LF_ThreadPool::become_leader ()
         return -1;
       {
         // Wait until told to do so.
-        while (leader_active ())
-          fw->wait ();
+        while (leader_active () && !done ())
+          {
+            fw->wait ();
+            if (leader_active () && !done ())
+              {
+                // Another follower became leader first; register again before waiting.
+                ACE_GUARD_RETURN (ACE_Thread_Mutex,
+                                  follower_mon,
+                                  this->followers_lock_,
+                                  -1);
+                if (this->followers_.enqueue_tail (fw.get ()) == -1)
+                  return -1;
+              }
+          }
       }
 
     }
+
+  if (done ())
+    return -1;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Becoming the leader\n")));
 
@@ -206,20 +252,20 @@ LF_ThreadPool::elect_new_leader ()
 // Listing 5
 
 void
-LF_ThreadPool::process_message (ACE_Message_Block *mb)
+LF_ThreadPool::process_message (ACE_Message_Block_Unique_Ptr const &message_block)
 {
   ACE_TRACE ("LF_ThreadPool::process_message");
   int msgId {};
-  std::memcpy (&msgId, mb->rd_ptr (), sizeof (int));
-  mb->release ();
+  std::memcpy (&msgId, message_block->rd_ptr (), sizeof (int));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Started processing message:%d\n"),
               msgId));
-  ACE_OS::sleep (1);
+  std::this_thread::sleep_for (std::chrono::seconds (1));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Finished processing message:%d\n"),
               msgId));
+  ++this->processed_messages_;
 }
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
@@ -228,23 +274,27 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   tp.activate (THR_NEW_LWP| THR_JOINABLE, 5);
 
   // Wait for a few seconds...
-  ACE_OS::sleep (2);
-  ACE_Time_Value tv (1L);
+  std::this_thread::sleep_for (std::chrono::seconds (2));
 
-  ACE_Message_Block *mb {};
-  for (int i = 0; i < 30; ++i)
+  ACE_Message_Block *raw_message_block {};
+  for (int i = 0; i < MESSAGE_COUNT; ++i)
     {
-      ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof (int)), -1);
-      std::memcpy (mb->wr_ptr (), &i, sizeof (int));
-      ACE_OS::sleep (tv);
+      ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (sizeof (int)), -1);
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
+      std::memcpy (message_block->wr_ptr (), &i, sizeof (int));
+      std::this_thread::sleep_for (std::chrono::seconds (1));
 
       // Add a new work item.
-      tp.putq (mb);
+      if (tp.putq (message_block.get ()) == -1)
+        return -1;
+      message_block.release ();
     }
 
-  ACE_Thread_Manager::instance ()->wait ();
+  while (tp.processed_messages () < MESSAGE_COUNT)
+    std::this_thread::sleep_for (std::chrono::milliseconds (10));
 
-  ACE_OS::sleep (10);
+  tp.shut_down ();
+  ACE_Thread_Manager::instance ()->wait ();
 
   return 0;
 }

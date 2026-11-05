@@ -10,9 +10,12 @@
 #include "ace/Future.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Condition_T.h"
+#include "ace/Message_Block.h"
 #include <array>
+#include <chrono>
 #include <memory>
 #include <cstring>
+#include <thread>
 
 class Worker;
 
@@ -46,19 +49,21 @@ public:
     this->thread_id_ = id;
     while (true)
       {
-        ACE_Message_Block *mb {};
-        if (this->getq (mb) == -1)
+        ACE_Message_Block *raw_message_block {};
+        if (this->getq (raw_message_block) == -1)
           ACE_ERROR_BREAK
             ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
-        if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
+        ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
+        if (!message_block)
+          break;
+        if (message_block->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT ("(%t) Shutting down\n")));
-            mb->release ();
             break;
           }
         // Process the message.
-        process_message (mb);
+        process_message (message_block);
         // Return to work.
         this->manager_->return_to_work (this);
       }
@@ -73,17 +78,16 @@ public:
   }
 
 private:
-  void process_message (ACE_Message_Block *mb)
+  void process_message (ACE_Message_Block_Unique_Ptr const &message_block)
   {
     ACE_TRACE ("Worker::process_message");
     int msgId {};
-    std::memcpy (&msgId, mb->rd_ptr (), sizeof (int));
-    mb->release ();
+    std::memcpy (&msgId, message_block->rd_ptr (), sizeof (int));
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Started processing message %d\n"),
                 msgId));
-    ACE_OS::sleep (3);
+    std::this_thread::sleep_for (std::chrono::seconds (3));
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Finished processing message %d\n"),
                 msgId));
@@ -97,7 +101,8 @@ private:
 class Manager : public ACE_Task<ACE_MT_SYNCH>, private IManager
 {
 public:
-  enum {POOL_SIZE = 5, MAX_TIMEOUT = 5};
+  static constexpr int POOL_SIZE = 5;
+  static constexpr int MAX_TIMEOUT = 5;
 
   Manager ()
     : workers_cond_ (workers_lock_)
@@ -120,16 +125,19 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb {};
+        ACE_Message_Block *raw_message_block {};
         ACE_Time_Value tv {static_cast<long> (MAX_TIMEOUT)};
         tv += ACE_OS::time (nullptr);
 
         // Get a message request.
-        if (this->getq (mb, &tv) < 0)
+        if (this->getq (raw_message_block, &tv) < 0)
           {
             shut_down ();
             break;
           }
+        ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
+        if (!message_block)
+          continue;
 
         // Choose a worker.
         Worker *worker {};
@@ -144,7 +152,8 @@ public:
         }
 
         // On success, the worker queue owns the message block.
-        worker->putq (mb);
+        if (worker->putq (message_block.get ()) != -1)
+          message_block.release ();
       }
 
     return 0;
@@ -221,13 +230,15 @@ Manager::shut_down ()
                  buf.data ()));
 
       // Send the hangup message.
-      ACE_Message_Block *mb {};
+      ACE_Message_Block *raw_message_block {};
       ACE_NEW_RETURN
-        (mb,
-         ACE_Message_Block(0,
-                           ACE_Message_Block::MB_HANGUP),
+        (raw_message_block,
+         ACE_Message_Block (0, ACE_Message_Block::MB_HANGUP),
          -1);
-      worker->putq (mb);
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
+      if (worker->putq (message_block.get ()) == -1)
+        return -1;
+      message_block.release ();
 
       // Wait for the exit.
       worker->wait ();
@@ -245,7 +256,7 @@ Manager::shut_down ()
   return 0;
 }
 
-const ACE_Thread_ID &
+ACE_Thread_ID const &
 Manager::thread_id (Worker *worker) const
 {
   return worker->thread_id ();
@@ -257,21 +268,21 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   tp.activate ();
 
   // Wait for a moment every time you send a message.
-  ACE_Time_Value tv;
-  tv.msec (100);
-
-  ACE_Message_Block *mb {};
+  ACE_Message_Block *raw_message_block {};
   for (int i = 0; i < 30; ++i)
     {
       ACE_NEW_RETURN
-        (mb, ACE_Message_Block(sizeof(int)), -1);
+        (raw_message_block, ACE_Message_Block (sizeof (int)), -1);
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
 
-      std::memcpy (mb->wr_ptr (), &i, sizeof (int));
+      std::memcpy (message_block->wr_ptr (), &i, sizeof (int));
 
-      ACE_OS::sleep (tv);
+      std::this_thread::sleep_for (std::chrono::milliseconds (100));
 
       // Add a new work item.
-      tp.putq (mb);
+      if (tp.putq (message_block.get ()) == -1)
+        return -1;
+      message_block.release ();
     }
 
   ACE_Thread_Manager::instance ()->wait ();

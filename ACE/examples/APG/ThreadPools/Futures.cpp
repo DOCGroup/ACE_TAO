@@ -11,7 +11,9 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Condition_T.h"
 #include <array>
+#include <chrono>
 #include <memory>
+#include <thread>
 
 constexpr int OUTSTANDING_REQUESTS = 20;
 
@@ -32,7 +34,8 @@ public:
     // Block for the result.
     future.get (result);
     std::unique_ptr<ACE_CString> result_owner {result};
-    ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"), result_owner->c_str ()));
+    if (result_owner)
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"), result_owner->c_str ()));
   }
 };
 // Listing 2
@@ -51,7 +54,7 @@ public:
     ACE_TRACE ("LongWork::call");
     ACE_DEBUG
       ((LM_INFO, ACE_TEXT ("(%t) Attempting long work task\n")));
-    ACE_OS::sleep (1);
+    std::this_thread::sleep_for (std::chrono::seconds (1));
 
     ACE_CString *msg {};
     ACE_NEW_RETURN (msg, ACE_CString ("Completed assigned task\n"), -1);
@@ -60,12 +63,6 @@ public:
       return -1;
     msg_owner.release ();
     return 0;
-  }
-
-  ACE_Future<ACE_CString *> &future ()
-  {
-    ACE_TRACE ("LongWork::future");
-    return result_;
   }
 
   void attach (CompletionCallBack *cb)
@@ -168,7 +165,8 @@ ACE_thread_t Worker::thread_id () const
 class Manager : public ACE_Task_Base, private IManager
 {
 public:
-  enum {POOL_SIZE = 5, MAX_TIMEOUT = 5};
+  static constexpr int POOL_SIZE = 5;
+  static constexpr int MAX_TIMEOUT = 5;
 
   Manager ()
     : workers_cond_ (workers_lock_)
@@ -326,16 +324,13 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   Manager tp;
   tp.activate ();
 
-  ACE_Time_Value tv;
-  tv.msec (100);
-
   // Wait for a few seconds every time you send a message.
   CompletionCallBack cb;
   std::array<LongWork, OUTSTANDING_REQUESTS> work_array {};
   for (int i = 0; i < OUTSTANDING_REQUESTS; ++i)
     {
       work_array[i].attach (&cb);
-      ACE_OS::sleep (tv);
+      std::this_thread::sleep_for (std::chrono::milliseconds (100));
       tp.perform (&work_array[i]);
     }
 

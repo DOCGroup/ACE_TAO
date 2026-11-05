@@ -18,6 +18,8 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Truncate.h"
 #include <array>
+#include <chrono>
+#include <thread>
 
 #include "Request_Handler.h"
 
@@ -152,7 +154,7 @@ public:
 
   int svc () override
   {
-    ACE_OS::sleep (3);
+    std::this_thread::sleep_for (std::chrono::seconds (3));
     ACE_TCHAR const *const msg =
       ACE_TEXT ("Message from Connection worker");
 
@@ -173,7 +175,6 @@ private:
   {
       ACE_SOCK_Stream stream;
       ACE_SOCK_Connector connect;
-      ACE_Time_Value delay {0, req_delay};
       size_t const len = static_cast<size_t> (arg[0]);
 
       for (size_t i = 0; i < cli_conn_no; ++i)
@@ -200,7 +201,7 @@ private:
                               ACE_TEXT ("send_n")));
                   continue;
                 }
-              ACE_OS::sleep (delay);
+              std::this_thread::sleep_for (std::chrono::milliseconds (req_delay));
             }
 
           stream.close ();
