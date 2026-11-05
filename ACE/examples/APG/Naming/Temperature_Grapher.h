@@ -1,28 +1,30 @@
 #ifndef TEMPERATURE_GRAPHER_H
 #define TEMPERATURE_GRAPHER_H
 
-#include "Thermometer.h"
-#include "Temperature_Grapher_Options.h"
 #include "Naming_Context.h"
+#include "Temperature_Grapher_Options.h"
 
 class Temperature_Grapher
-  {
-  public:
-    Temperature_Grapher( Temperature_Grapher_Options & opt,
-                         Naming_Context & naming_context )
-        : opt_(opt), naming_context_(naming_context)
-    {
-    }
+{
+public:
+  Temperature_Grapher (Temperature_Grapher_Options const &opt,
+                       Naming_Context &naming_context)
+    : opt_ (opt), naming_context_ (naming_context)
+  { }
 
-    void monitor();
+  Temperature_Grapher (Temperature_Grapher const &) = delete;
+  Temperature_Grapher &operator= (Temperature_Grapher const &) = delete;
+  Temperature_Grapher (Temperature_Grapher &&) = delete;
+  Temperature_Grapher &operator= (Temperature_Grapher &&) = delete;
 
-  protected:
-    void update_graph();
+  void monitor ();
 
-  private:
-    Thermometer * thermometer_;
-    Temperature_Grapher_Options & opt_;
-    Naming_Context & naming_context_;
-  };
+protected:
+  void update_graph ();
+
+private:
+  Temperature_Grapher_Options const &opt_;
+  Naming_Context &naming_context_;
+};
 
 #endif /* TEMPERATURE_GRAPHER_H */

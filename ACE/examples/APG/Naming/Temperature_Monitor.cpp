@@ -1,6 +1,8 @@
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_unistd.h"
+#include <cstdio>
+#include <ctime>
+
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "Thermometer.h"
 #include "Temperature_Monitor.h"
@@ -8,17 +10,16 @@
 
 // Listing 1 code/ch21
 Temperature_Monitor::Temperature_Monitor
-  (Temperature_Monitor_Options &opt,
+  (Temperature_Monitor_Options const &opt,
    Naming_Context &naming_context)
-    : opt_(opt), naming_context_(naming_context)
+    : opt_ (opt), naming_context_ (naming_context)
 { }
 // Listing 1
 
 // Listing 31 code/ch21
 void Temperature_Monitor::record_temperature (float temp)
 {
-  Name_Binding_Ptr current
-    (this->naming_context_.fetch ("current"));
+  Name_Binding_Ptr current {this->naming_context_.fetch ("current")};
   if (current)
     {
       this->naming_context_.rebind ("previous",
@@ -39,14 +40,12 @@ void Temperature_Monitor::record_temperature (float temp)
 // Listing 41 code/ch21
 void Temperature_Monitor::record_failure ()
 {
-  Name_Binding_Ptr lastReset
-    (this->naming_context_.fetch ("lastReset"));
-  Name_Binding_Ptr resetCount
-    (this->naming_context_.fetch ("resetCount"));
+  Name_Binding_Ptr lastReset {this->naming_context_.fetch ("lastReset")};
+  Name_Binding_Ptr resetCount {this->naming_context_.fetch ("resetCount")};
 // Listing 41
 
 // Listing 42 code/ch21
-  int now = (int) ACE_OS::time ();
+  int const now = static_cast<int> (std::time (nullptr));
   int lastResetTime;
   if (lastReset)
     {
@@ -69,7 +68,7 @@ void Temperature_Monitor::record_failure ()
 
 // Listing 5 code/ch21
 void
-Temperature_Monitor::reset_device (Name_Binding_Ptr &resetCount)
+Temperature_Monitor::reset_device (Name_Binding_Ptr const &resetCount)
 {
   int number_of_resets = 1;
   if (resetCount)
@@ -78,14 +77,15 @@ Temperature_Monitor::reset_device (Name_Binding_Ptr &resetCount)
       if (number_of_resets > this->opt_.excessive_resets ())
         {
           // Exclude 5
-          EMail notification;
+          EMail notification {};
 
-          char message[BUFSIZ];
-          ACE_OS::sprintf (message,
-                           "Thermometer: %s\n"
-                           "Reset Count: %d\n",
-                           this->thermometer_->address(),
-                           number_of_resets);
+          char message[BUFSIZ] {};
+          std::snprintf (message,
+                         sizeof (message),
+                         "Thermometer: %s\n"
+                         "Reset Count: %d\n",
+                         this->thermometer_->address ().c_str (),
+                         number_of_resets);
 
           notification.send (this->opt_.admin_email (),
                              this->opt_.email_from (),
@@ -96,7 +96,7 @@ Temperature_Monitor::reset_device (Name_Binding_Ptr &resetCount)
     }
   this->thermometer_->reset ();
   this->naming_context_.rebind ("lastReset",
-                                (int) ACE_OS::time ());
+                                static_cast<int> (std::time (nullptr)));
   this->naming_context_.rebind ("resetCount",
                                 number_of_resets);
 }
@@ -105,12 +105,12 @@ Temperature_Monitor::reset_device (Name_Binding_Ptr &resetCount)
 // Listing 2 code/ch21
 void Temperature_Monitor::monitor ()
 {
-  this->thermometer_ =
-    std::make_unique<Thermometer> (this->opt_.thermometer_address ());
+  this->thermometer_ = std::make_unique<Thermometer> (
+    this->opt_.thermometer_address ());
 
-  for(;;)
+  while (true)
     {
-      float temp = this->thermometer_->temperature ();
+      float const temp = this->thermometer_->temperature ();
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Read temperature %.2f\n"),
                   temp));
 
@@ -125,6 +125,5 @@ void Temperature_Monitor::monitor ()
 
       ACE_OS::sleep (this->opt_.poll_interval ());
     }
-
 }
 // Listing 2

@@ -2,45 +2,45 @@
 #define TEMPERATURE_MONITOR_OPTIONS_H
 
 class Temperature_Monitor_Options
+{
+public:
+  Temperature_Monitor_Options (int, ACE_TCHAR *[])
+  { }
+
+  char const *thermometer_address () const
   {
-  public:
-    Temperature_Monitor_Options (int, ACE_TCHAR *[])
-    { }
+    return "serial:// s0/0x3e52";
+  }
 
-    const char *thermometer_address ()
-    {
-      return "serial:// s0/0x3e52";
-    }
+  int poll_interval () const
+  {
+    return 10; // every 10 seconds
+  }
 
-    int poll_interval ()
-    {
-      return 10; // every 10 seconds
-    }
+  int reset_interval () const
+  {
+    return 60; // sixty seconds
+  }
 
-    int reset_interval ()
-    {
-      return 60; // sixty seconds
-    }
+  int excessive_resets () const
+  {
+    return 5; // no response in 5 minutes
+  }
 
-    int excessive_resets ()
-    {
-      return 5; // no response in 5 minutes
-    }
+  char const *admin_email () const
+  {
+    return "root@localhost";
+  }
 
-    const char *admin_email ()
-    {
-      return "root@localhost";
-    }
+  char const *email_from () const
+  {
+    return "temperature monitor";
+  }
 
-    const char *email_from ()
-    {
-      return "temperature monitor";
-    }
-
-    int history_size()
-    {
-      return 10;
-    }
-  };
+  int history_size () const
+  {
+    return 10;
+  }
+};
 
 #endif /* TEMPERATURE_MONITOR_OPTIONS_H */
