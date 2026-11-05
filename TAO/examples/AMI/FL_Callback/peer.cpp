@@ -5,12 +5,15 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdlib.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://progress.ior");
-int nthreads = 4;
-int interval = 0; // microseconds
+struct Peer_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT ("file://progress.ior") };
+  int nthreads {4};
+  int interval {}; // microseconds
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Peer_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:t:"));
   int c {};
@@ -19,15 +22,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        interval = ACE_OS::atoi (get_opts.opt_arg ());
+        options.interval = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -100,6 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
+      Peer_Options options;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
@@ -119,16 +123,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var progress_object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Progress_var progress =
         Progress::_narrow (progress_object.in ());
 
-      ACE_Time_Value delay (0, interval);
+      ACE_Time_Value delay (0, options.interval);
 
       Peer_i peer;
       peer.init (orb.in (),
@@ -137,7 +141,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Worker worker (orb.in ());
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"),
                           1);
