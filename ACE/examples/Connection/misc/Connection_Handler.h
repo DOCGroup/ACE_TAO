@@ -9,6 +9,13 @@
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
+  Connection_Handler () = default;
+  ~Connection_Handler () override = default;
+  Connection_Handler (Connection_Handler const &) = delete;
+  Connection_Handler (Connection_Handler &&) = delete;
+  Connection_Handler &operator= (Connection_Handler const &) = delete;
+  Connection_Handler &operator= (Connection_Handler &&) = delete;
+
   // Initialize the <Connection_Handler> and make it an Active Object.
   int open (void *) override;
 
@@ -34,7 +41,7 @@ protected:
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
   // Keeps track of whether we're done.
-  sig_atomic_t finished_;
+  sig_atomic_t finished_ {};
 };
 
 #endif /* ACE_CONNECTION_HANDLER_H */

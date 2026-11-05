@@ -122,11 +122,13 @@ Connection_Handler::handle_close (ACE_HANDLE,
 int
 Connection_Handler::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
+  char buf[BUFSIZ + 1] {};
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) handle_input\n")));
 
-  switch (this->peer ().recv (buf, sizeof buf))
+  ssize_t const n = this->peer ().recv (buf, sizeof buf - 1);
+
+  switch (n)
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -139,7 +141,8 @@ Connection_Handler::handle_input (ACE_HANDLE)
                          this->get_handle ()),
                         -1);
     default:
-      if (buf[0] == (char) EOF)
+      buf[n] = '\0';
+      if (buf[0] == static_cast<char> (EOF))
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) closing log daemon (fd = %d)\n"),
                            this->get_handle ()),
@@ -186,7 +189,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 
-  const u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
+  u_short const port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) in main\n")));
 
