@@ -30,17 +30,17 @@
  */
 class Logging_Acceptor : public ACE_Event_Handler
 {
-friend class Logging_Handler;
+  friend class Logging_Handler;
 public:
   /// Constructor.
   Logging_Acceptor () = default;
-  Logging_Acceptor (const Logging_Acceptor &) = delete;
+  Logging_Acceptor (Logging_Acceptor const &) = delete;
   Logging_Acceptor (Logging_Acceptor &&) = delete;
-  Logging_Acceptor &operator= (const Logging_Acceptor &) = delete;
+  Logging_Acceptor &operator= (Logging_Acceptor const &) = delete;
   Logging_Acceptor &operator= (Logging_Acceptor &&) = delete;
 
   /// Initialization.
-  int open (const ACE_INET_Addr &a);
+  int open (ACE_INET_Addr const &a);
 
 private:
   // = Demuxing hooks.

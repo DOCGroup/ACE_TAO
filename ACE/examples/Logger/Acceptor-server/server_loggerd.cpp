@@ -19,17 +19,18 @@
 #include "ace/streams.h"
 
 #include "ace/Log_Record.h"
-#include "ace/Test_and_Set.h"
+
+#include <memory>
+#include <new>
 
 #include "server_loggerd.h"
-#include <memory>
 
 // ----------------------------------------
 
 // Return the port number.
 
 u_short
-Options::port ()
+Options::port () const
 {
   return this->port_;
 }
@@ -39,11 +40,9 @@ Options::port ()
 void
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  this->port_ = ACE_DEFAULT_SERVER_PORT;
-
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int c {}; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'p':
@@ -70,13 +69,9 @@ using QUIT_HANDLER = ACE_Singleton<ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t
 // Specialize a Logging Acceptor.
 using Logging_Acceptor = ACE_Acceptor<Logging_Handler, ACE_SOCK_ACCEPTOR>;
 
-// Default constructor.
-
-Logging_Handler::Logging_Handler () = default;
-
 int
-Logging_Handler::handle_timeout (const ACE_Time_Value &,
-                                 const void *arg)
+Logging_Handler::handle_timeout (ACE_Time_Value const &,
+                                 void const *arg)
 {
 #if defined (ACE_NDEBUG)
   ACE_UNUSED_ARG (arg);
@@ -93,29 +88,29 @@ Logging_Handler::handle_timeout (const ACE_Time_Value &,
 int
 Logging_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_Log_Record log_record;
+  ACE_Log_Record log_record {};
 
   // We need to use the old two-read trick here since TCP sockets
   // don't support framing natively.  Allocate a message block for the
   // payload; initially at least large enough to hold the header, but
   // needs some room for alignment.
-  ACE_Message_Block *payload_p = nullptr;
-  ACE_Message_Block *header_p = nullptr;
-  ACE_NEW_RETURN (header_p,
-                  ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
-                  -1);
-
-  std::unique_ptr <ACE_Message_Block> header (header_p);
+  std::unique_ptr<ACE_Message_Block> header (
+    new (std::nothrow) ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+  if (!header)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
 
-  ACE_CDR::Boolean byte_order;
-  ACE_CDR::ULong length;
+  ACE_CDR::Boolean byte_order {};
+  ACE_CDR::ULong length {};
 
-  ssize_t count = ACE::recv_n (this->peer ().get_handle (),
-                               header->wr_ptr (),
-                               8);
+  ssize_t const count = ACE::recv_n (this->peer ().get_handle (),
+                                     header->wr_ptr (),
+                                     8);
   switch (count)
     {
       // Handle shutdown and error cases.
@@ -149,10 +144,13 @@ Logging_Handler::handle_input (ACE_HANDLE)
   // Extract the length
   header_cdr >> length;
 
-  ACE_NEW_RETURN (payload_p,
-                  ACE_Message_Block (length),
-                  -1);
-  std::unique_ptr <ACE_Message_Block> payload (payload_p);
+  std::unique_ptr<ACE_Message_Block> payload (
+    new (std::nothrow) ACE_Message_Block (length));
+  if (!payload)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
@@ -200,7 +198,7 @@ Logging_Handler::open (void *)
                           -1);
       else if (REACTOR::instance ()->schedule_timer
                (this,
-                (const void *) this,
+                static_cast<void const *> (this),
                 ACE_Time_Value (2),
                 ACE_Time_Value (2)) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

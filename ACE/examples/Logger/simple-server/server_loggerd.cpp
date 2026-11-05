@@ -12,7 +12,7 @@
 #include "Logging_Acceptor.h"
 #include "Reactor_Singleton.h"
 
-static sig_atomic_t finished = 0;
+static sig_atomic_t finished {};
 
 extern "C" void
 handler (int)
@@ -27,10 +27,12 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa (static_cast<ACE_SignalHandler> (handler), SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  Logging_Acceptor *peer_acceptor;
+  // The reactor owns this dynamically allocated acceptor after registration;
+  // handle_close deletes it when the reactor closes the handler.
+  Logging_Acceptor *peer_acceptor {};
   ACE_NEW_RETURN (peer_acceptor,
                   Logging_Acceptor,
                   1);
@@ -39,7 +41,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int c {}; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'p':

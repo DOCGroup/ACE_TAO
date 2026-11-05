@@ -7,7 +7,7 @@
 
 // Initialize peer_acceptor object.
 int
-Logging_Acceptor::open (const ACE_INET_Addr &addr)
+Logging_Acceptor::open (ACE_INET_Addr const &addr)
 {
   // Reuse addr if already in use.
   if (this->peer_acceptor_.open (addr, 1) == -1)
@@ -38,7 +38,7 @@ Logging_Acceptor::get_handle () const
 int
 Logging_Acceptor::handle_input (ACE_HANDLE)
 {
-  Logging_Handler *svc_handler;
+  Logging_Handler *svc_handler {};
 
   ACE_NEW_RETURN (svc_handler, Logging_Handler, -1);
 
@@ -51,6 +51,8 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
   // associations.
   int const reset_new_handle = this->reactor ()->uses_event_associations ();
 
+  // The handler deletes itself from handle_close after registration with the
+  // reactor. Until then, this function owns it through the explicit close path.
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    nullptr, // remote address
                                    nullptr, // timeout
