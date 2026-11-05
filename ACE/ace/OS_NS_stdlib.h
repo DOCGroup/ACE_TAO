@@ -236,11 +236,11 @@ namespace ACE_OS {
 
 #if !defined (ACE_DISABLE_MKTEMP)
 #  if !defined (ACE_LACKS_MKTEMP)
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   char *mktemp (char *s);
 
 #    if defined (ACE_HAS_WCHAR)
-  ACE_NAMESPACE_INLINE_FUNCTION
+  extern ACE_Export
   wchar_t *mktemp (wchar_t *s);
 #    endif /* ACE_HAS_WCHAR */
 #  else
