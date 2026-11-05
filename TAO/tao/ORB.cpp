@@ -1143,13 +1143,15 @@ namespace TAO
 
       if  (ACE_OS::strcasecmp (arg, ACE_TEXT("CURRENT")) == 0)
         {
-          return ACE_Service_Config::current ();
+          return ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {
+            ACE_Service_Config::current ()};
         }
 
       // Explicit global case?
       if  (orbconfig_string.is_empty () || ACE_OS::strcasecmp (arg, ACE_TEXT("GLOBAL")) == 0)
         {
-          return ACE_Service_Config::global ();
+          return ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {
+            ACE_Service_Config::global ()};
         }
 
       // Someone else's context?
@@ -1163,7 +1165,8 @@ namespace TAO
           TAO_ORB_Core_Auto_Ptr oc (TAO::ORB_Table::instance ()->find (
             ACE_TEXT_ALWAYS_CHAR(orbid.c_str ())));
           if (oc.get () != nullptr)
-              return oc->configuration ();
+              return ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {
+                oc->configuration ()};
 
           if (TAO_debug_level > 0)
               TAOLIB_ERROR ((LM_ERROR,
@@ -1315,7 +1318,9 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   // Initialize the Service Configurator.  This must occur before the
   // ORBInitializer::pre_init() method is invoked on each registered
   // ORB initializer.
-  int result = TAO::ORB::open_services (oc->configuration (),
+  int result = TAO::ORB::open_services (
+                                        ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {
+                                          oc->configuration ()},
                                         command_line.get_argc (),
                                         command_line.get_TCHAR_argv ());
 

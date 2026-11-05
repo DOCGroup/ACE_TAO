@@ -42,7 +42,7 @@ class TAO_MProfile;
 class TAO_Protocol_Factory;
 class TAO_Protocol_Item;
 
-using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item *>;
+using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set<TAO_Protocol_Item *>::iterator;
 
 using TAO_AcceptorSetIterator = TAO_Acceptor**;
 

@@ -63,7 +63,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                     *this->lock_,
                     -1);
 
-  if (rd == nullptr)
+  if (!rd)
     {
       if (TAO_debug_level > 0)
         {
