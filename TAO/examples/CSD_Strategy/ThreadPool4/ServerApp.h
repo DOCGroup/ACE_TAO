@@ -7,33 +7,26 @@
 
 class ServerApp
 {
-  public:
-    ServerApp();
-    ~ServerApp();
+public:
+  ServerApp () = default;
+  ~ServerApp () = default;
 
-    int run(int argc, ACE_TCHAR* argv[]);
+  int run (int argc, ACE_TCHAR *argv[]);
 
+private:
+  int parse_args (int argc, ACE_TCHAR *argv[]);
+  void usage_statement () const;
 
-  private:
-    int parse_args(int argc, ACE_TCHAR* argv[]);
-    void usage_statement();
+  Foo_ptr create_foo (PortableServer::POA_ptr poa, char const *servant_name);
 
-    Foo_ptr
-    create_foo(
-      PortableServer::POA_ptr poa,
-      const char* servant_name);
+  Callback_ptr create_callback (PortableServer::POA_ptr poa,
+                                char const *servant_name);
 
-    Callback_ptr
-    create_callback(
-      PortableServer::POA_ptr poa,
-      const char* servant_name);
+  ACE_TString exe_name_ {};
 
+  CORBA::ORB_var orb_ {};
 
-    ACE_TString exe_name_;
-
-    CORBA::ORB_var orb_;
-
-    int synch_with_server_;
+  bool synch_with_server_ {};
 };
 
 #endif

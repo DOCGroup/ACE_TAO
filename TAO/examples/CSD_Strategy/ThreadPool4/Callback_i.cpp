@@ -1,15 +1,9 @@
 #include "Callback_i.h"
-
-
-Callback_i::Callback_i()
-{
-}
-
+#include "ace/Log_Msg.h"
 
 void
-Callback_i::test_method (
-)
+Callback_i::test_method ()
 {
-  ACE_DEBUG((LM_DEBUG, "(%P|%t)Callback_i::test_method called\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Callback_i::test_method called\n"));
 }
 
