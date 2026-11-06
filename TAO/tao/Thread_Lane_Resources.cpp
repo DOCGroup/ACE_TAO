@@ -10,7 +10,7 @@
 #include "tao/Transport_Descriptor_Interface.h"
 
 #include "ace/Reactor.h"
-
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -18,8 +18,6 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     TAO_ORB_Core &orb_core,
     TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
-    acceptor_registry_ (nullptr),
-    connector_registry_ (nullptr),
     transport_cache_ (nullptr),
     leader_follower_ (nullptr),
     new_leader_generator_ (new_leader_generator),
@@ -91,9 +89,9 @@ TAO_Thread_Lane_Resources::acceptor_registry ()
           TAO_Resource_Factory &resource_factory =
             *this->orb_core_.resource_factory ();
 
-          // Ask it to create a new acceptor registry.
-          this->acceptor_registry_ =
-            resource_factory.get_acceptor_registry ();
+          // Ask it to create a new connector registry.
+          this->acceptor_registry_.reset (
+            resource_factory.get_acceptor_registry ());
         }
     }
 
@@ -114,8 +112,8 @@ TAO_Thread_Lane_Resources::connector_registry ()
       if (this->connector_registry_ == nullptr)
         {
           // Ask it to create a new acceptor registry.
-          TAO_Connector_Registry *connector_registry =
-            this->orb_core_.resource_factory ()->get_connector_registry ();
+          std::unique_ptr<TAO_Connector_Registry> connector_registry (
+            this->orb_core_.resource_factory ()->get_connector_registry ());
 
           if (connector_registry == nullptr)
             {
@@ -138,13 +136,12 @@ TAO_Thread_Lane_Resources::connector_registry ()
           // Finally, everything is created and opened successfully:
           // now we can assign to the member.  Otherwise, the
           // assignment would be premature.
-          this->connector_registry_ = connector_registry;
+          this->connector_registry_ = std::move (connector_registry);
         }
     }
 
-  return this->connector_registry_;
+  return this->connector_registry_.get ();
 }
-
 
 TAO_Leader_Follower &
 TAO_Thread_Lane_Resources::leader_follower ()
@@ -170,7 +167,6 @@ TAO_Thread_Lane_Resources::leader_follower ()
   return *this->leader_follower_;
 }
 
-
 ACE_Allocator*
 TAO_Thread_Lane_Resources::input_cdr_dblock_allocator ()
 {
@@ -189,7 +185,6 @@ TAO_Thread_Lane_Resources::input_cdr_dblock_allocator ()
   return this->input_cdr_dblock_allocator_;
 }
 
-
 ACE_Allocator*
 TAO_Thread_Lane_Resources::input_cdr_buffer_allocator ()
 {
@@ -207,7 +202,6 @@ TAO_Thread_Lane_Resources::input_cdr_buffer_allocator ()
 
   return this->input_cdr_buffer_allocator_;
 }
-
 
 ACE_Allocator*
 TAO_Thread_Lane_Resources::input_cdr_msgblock_allocator ()
@@ -245,7 +239,6 @@ TAO_Thread_Lane_Resources::transport_message_buffer_allocator ()
   return this->transport_message_buffer_allocator_;
 }
 
-
 ACE_Allocator*
 TAO_Thread_Lane_Resources::output_cdr_dblock_allocator ()
 {
@@ -264,7 +257,6 @@ TAO_Thread_Lane_Resources::output_cdr_dblock_allocator ()
   return this->output_cdr_dblock_allocator_;
 }
 
-
 ACE_Allocator*
 TAO_Thread_Lane_Resources::output_cdr_buffer_allocator ()
 {
@@ -282,7 +274,6 @@ TAO_Thread_Lane_Resources::output_cdr_buffer_allocator ()
 
   return this->output_cdr_buffer_allocator_;
 }
-
 
 ACE_Allocator*
 TAO_Thread_Lane_Resources::output_cdr_msgblock_allocator ()
@@ -361,22 +352,9 @@ TAO_Thread_Lane_Resources::resource_factory ()
 void
 TAO_Thread_Lane_Resources::finalize ()
 {
-  // Close connectors before acceptors!
-  // Ask the registry to close all registered connectors.
-  if (this->connector_registry_ != nullptr)
-    {
-      this->connector_registry_->close_all ();
-      delete this->connector_registry_;
-      this->connector_registry_ = nullptr;
-    }
-
-  // Ask the registry to close all registered acceptors.
-  if (this->acceptor_registry_ != nullptr)
-    {
-      this->acceptor_registry_->close_all ();
-      delete this->acceptor_registry_;
-      this->acceptor_registry_ = nullptr;
-    }
+  // Destroy connectors before acceptors; their destructors close them.
+  this->connector_registry_.reset ();
+  this->acceptor_registry_.reset ();
 
   // Set of handlers still in the connection cache.
   TAO::Connection_Handler_Set handlers;
