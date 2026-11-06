@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CosConcurrencyControl::LockSet_ptr
 CC_LockSetFactory::create ()
 {
-  CC_LockSet *ls = nullptr;
+  CC_LockSet *ls {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
@@ -30,7 +30,7 @@ CC_LockSetFactory::create ()
 CosConcurrencyControl::LockSet_ptr
 CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which)
 {
-  CC_LockSet *ls = nullptr;
+  CC_LockSet *ls {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
