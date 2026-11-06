@@ -78,10 +78,8 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       *os << be_nl_2
           << "ACE_INLINE" << be_nl;
       *os << node->name () << "::"
-          << node->local_name () << " ("
-          << be_idt << be_idt_nl
-          << "::IOP::IOR *ior," << be_nl
-          << "TAO_ORB_Core *oc)" << be_uidt_nl;
+          << node->local_name () << " (::IOP::IOR *ior, TAO_ORB_Core *oc)"
+          << be_idt_nl;
       *os << ": ::CORBA::Object (ior, oc)";
 
       *os << be_uidt_nl

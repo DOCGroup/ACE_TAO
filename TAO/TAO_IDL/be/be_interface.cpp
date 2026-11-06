@@ -427,10 +427,9 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
       *os << this->name () << "::"
           << this->local_name () << " ("
           << be_idt_nl
-          << "TAO_Stub *objref," << be_nl
-          << "::CORBA::Boolean _tao_collocated," << be_nl
-          << "TAO_Abstract_ServantBase *servant," << be_nl
-          << "TAO_ORB_Core *" << (abstract ? "" : "oc") << ")"
+          << "TAO_Stub *objref, ::CORBA::Boolean _tao_collocated, "
+          << "TAO_Abstract_ServantBase *servant, TAO_ORB_Core *"
+          << (abstract ? "" : "oc") << ")"
           << be_nl
           << ": ";
 

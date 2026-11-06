@@ -139,13 +139,10 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "if (this->one_shot_factory_)" << be_idt_nl
           << "{" << be_idt_nl
           << "this->disable_factory_ = true;" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "if ("
-          << "this->one_shot_factory_ == false && this->proxy_factory_ != nullptr)"
-          << be_idt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
           << "{" << be_idt_nl
-          << "delete "
-          << "this->proxy_factory_;" << be_nl
+          << "delete this->proxy_factory_;" << be_nl
           << "this->proxy_factory_ = nullptr;" << be_uidt_nl
           << "}" << be_uidt << be_uidt_nl
           << "}\n\n";
@@ -159,10 +156,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
         *os << "::";
 
       *os << "TAO_"<< node->flat_name ()
-          << "_Proxy_Factory_Adapter::create_proxy (" << be_idt << be_idt_nl
-          << "::" << node->full_name ()
-          << "_ptr proxy" << be_uidt_nl
-          << ")" << be_uidt << be_uidt_nl
+          << "_Proxy_Factory_Adapter::create_proxy (::" << node->full_name ()
+          << "_ptr proxy)" << be_nl
           << "{" << be_idt_nl
           << "ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, "
           << "this->lock_, nullptr));" << be_nl_2
@@ -175,13 +170,25 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "}" << be_uidt_nl << be_nl
           << "// Verify that an <proxy_factory_> is available else make one." << be_nl
           << "if (!this->proxy_factory_)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "ACE_NEW_RETURN ("
-          << "this->proxy_factory_," << be_idt_nl
-          << "TAO_" << node->flat_name ()
-          << "_Default_Proxy_Factory (false)," << be_nl
-          << "nullptr);" << be_uidt << be_nl
-          << "}" << be_uidt << be_uidt_nl
+          << "{" << be_idt_nl;
+
+      std::string const factory_allocation = "ACE_NEW_RETURN (this->proxy_factory_, TAO_"
+        + node->flat_name () + "_Default_Proxy_Factory (false), nullptr);";
+      if (factory_allocation.length () + 6 <= 120)
+        {
+          *os << factory_allocation;
+        }
+      else
+        {
+          *os << "ACE_NEW_RETURN (" << be_idt_nl
+              << "this->proxy_factory_," << be_nl
+              << "TAO_" << node->flat_name ()
+              << "_Default_Proxy_Factory (false)," << be_nl
+              << "nullptr);" << be_uidt;
+        }
+
+      *os << be_uidt_nl
+          << "}" << be_uidt_nl
           << "return "
           << "this->proxy_factory_->create_proxy (proxy);"
           << be_uidt << be_uidt_nl

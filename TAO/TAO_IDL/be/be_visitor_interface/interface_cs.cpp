@@ -430,19 +430,30 @@ be_visitor_interface_cs::gen_xxx_narrow (std::string const& pre,
   else if (be_global->gen_smart_proxies () &&
            !node->is_abstract ())
     {
-      *os << node->full_name () << " *proxy = TAO::Narrow_Utils<"
-          << node->local_name () << ">::" << pre << " (";
+      std::string narrow_call = node->full_name () + " *proxy = TAO::Narrow_Utils<"
+        + node->local_name () + ">::" + pre + " (_tao_objref, \""
+        + node->repoID () + "\");";
 
       if (pre == "narrow")
         {
-          *os << be_idt << be_idt_nl
-              << "_tao_objref," << be_nl
-              << "\"" << node->repoID () << "\"";
-          *os << ");" << be_uidt << be_uidt;
+          if (narrow_call.length () + 2 <= 120)
+            {
+              *os << narrow_call;
+            }
+          else
+            {
+              *os << node->full_name () << " *proxy = TAO::Narrow_Utils<"
+                  << node->local_name () << ">::" << pre << " ("
+                  << be_idt << be_idt_nl
+                  << "_tao_objref," << be_nl
+                  << "\"" << node->repoID () << "\");"
+                  << be_uidt << be_uidt;
+            }
         }
       else
         {
-          *os << "_tao_objref);";
+          *os << node->full_name () << " *proxy = TAO::Narrow_Utils<"
+              << node->local_name () << ">::" << pre << " (_tao_objref);";
         }
 
       *os << be_nl

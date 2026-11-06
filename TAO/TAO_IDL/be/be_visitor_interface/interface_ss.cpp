@@ -142,8 +142,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::CORBA::Boolean " << full_skel_name
       << "::_is_a (char const *value)" << be_nl
       << "{" << be_idt_nl
-      << "return" << be_idt_nl
-      << "(" << be_idt_nl;
+      << "return (" << be_idt_nl;
 
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {
@@ -163,8 +162,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
           << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
 
-  *os << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+  *os << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "char const *" << full_skel_name

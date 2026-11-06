@@ -19,16 +19,10 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
 
   this->ctx_->node (node);
 
-  *os << be_nl_2
-      << "///////////////////////////////////////////////////////////////////////"
-      << be_nl
-      << "//                 Direct Proxy  Implementation" << be_nl
-      << "//" << be_nl_2;
-
   // Destructor Implementation
-  *os << node->full_direct_proxy_impl_name () << "::~"
-      << node->direct_proxy_impl_name () << " ()"
-      << be_nl << "{" << be_nl << "}" << be_nl_2;
+  *os << be_nl_2
+      << node->full_direct_proxy_impl_name () << "::~"
+      << node->direct_proxy_impl_name () << " () = default;" << be_nl_2;
 
   if (this->visit_scope (node) == -1)
     {
@@ -38,11 +32,6 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
                          "codegen for scope failed\n"),
                         -1);
     }
-
-  *os << be_nl_2
-      << "//" << be_nl
-      << "//           End Direct Proxy Implementation" << be_nl
-      << "///////////////////////////////////////////////////////////////////////";
 
   return 0;
 }

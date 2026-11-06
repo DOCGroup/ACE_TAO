@@ -365,15 +365,22 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
          << be_nl;
     }
 
+  std::size_t const count = node->argument_count ();
   if (!node->void_return_type ())
     {
-      os << "retval =" << be_idt_nl;
+      os << "retval =";
+      if (count > 0)
+        {
+          os << be_idt_nl;
+        }
+      else
+        {
+          os << " ";
+        }
     }
 
   os << "this->servant_->" << node->local_name () << " ("
      << be_idt;
-
-  std::size_t const count = node->argument_count ();
 
   for (unsigned int i {}; i < count; ++i)
     {
@@ -383,13 +390,12 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
 
   os << ");";
 
-  if (!node->void_return_type ())
+  os << be_uidt;
+  if (!node->void_return_type () && count > 0)
     {
       os << be_uidt;
     }
-
-  os << be_uidt
-     << be_uidt_nl;
+  os << be_uidt_nl;
 
   return 0;
 }

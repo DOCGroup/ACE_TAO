@@ -53,8 +53,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
   TAO_INSERT_COMMENT (os);
 
-  *os << "void" << be_nl
-      << intf->full_direct_proxy_impl_name () << "::";
+  std::string operation_name = intf->full_direct_proxy_impl_name () + "::";
 
   // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
@@ -62,50 +61,73 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       // Now check if we are a "get" or "set" operation.
       if (node->nmembers () == 1)
         {
-          *os << "_set_";
+          operation_name += "_set_";
         }
       else
         {
-          *os << "_get_";
+          operation_name += "_get_";
         }
     }
 
-  *os << this->ctx_->port_prefix ()
-      << node->local_name () << " (" << be_idt << be_idt_nl
-      << "TAO_Abstract_ServantBase  *servant," << be_nl
-      << "TAO::Argument **";
+  operation_name += this->ctx_->port_prefix ();
+  operation_name += node->local_name ()->get_string ();
 
   if (!node->void_return_type () || node->nmembers () > 0)
     {
-      *os << " args";
+      std::string signature = operation_name
+        + " (TAO_Abstract_ServantBase *servant, TAO::Argument **args)";
+
+      *os << "void" << be_nl;
+      if (signature.length () <= 120)
+        {
+          *os << signature << be_nl;
+        }
+      else
+        {
+          *os << operation_name << " (" << be_idt_nl
+              << "TAO_Abstract_ServantBase *servant," << be_nl
+              << "TAO::Argument **args)" << be_uidt_nl;
+        }
+    }
+  else
+    {
+      *os << "void" << be_nl
+          << operation_name << " (TAO_Abstract_ServantBase *servant)" << be_nl;
     }
 
-  *os << ")" << be_uidt_nl;
+  *os << "{" << be_idt_nl;
 
-  *os << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  *os << intf->full_skel_name () << "_ptr _tao_ptr =" << be_idt_nl
-      << "dynamic_cast<" << intf->full_skel_name () << "_ptr> ("
-      << "servant);" << be_uidt_nl;
+  std::string const servant_cast = intf->full_skel_name ()
+    + "_ptr _tao_ptr = dynamic_cast<" + intf->full_skel_name ()
+    + "_ptr> (servant);";
+  if (servant_cast.length () + 2 <= 120)
+    {
+      *os << servant_cast << be_nl;
+    }
+  else
+    {
+      *os << intf->full_skel_name () << "_ptr _tao_ptr =" << be_idt_nl
+          << "dynamic_cast<" << intf->full_skel_name ()
+          << "_ptr> (servant);" << be_uidt_nl;
+    }
 
   *os << "if (!_tao_ptr)" << be_idt_nl
       << "{" << be_idt_nl
       << "throw ::CORBA::INTERNAL ();" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+      << "}" << be_uidt_nl;
 
   if (!node->void_return_type ())
     {
-      *os << "((TAO::Arg_Traits<";
+      *os << "using _tao_retval_type = TAO::Arg_Traits<";
 
       this->gen_arg_template_param_name (node,
                                          node->return_type (),
                                          os);
 
-      *os << ">::ret_val *) args[0])->arg () =" << be_idt_nl;
+      *os << ">::ret_val;" << be_nl
+          << "_tao_retval_type * const _tao_retval = "
+          << "static_cast<_tao_retval_type *> (args[0]);" << be_nl;
     }
-
-  *os << "_tao_ptr";
 
   be_visitor_context ctx;
 
@@ -114,14 +136,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       return -1;
     }
 
-  if (!node->void_return_type ())
-    {
-      *os << be_uidt;
-    }
-
-  *os << be_uidt << be_uidt << be_uidt_nl;
-
-  *os << "}" << be_nl << be_nl;
+  *os << be_uidt_nl << "}" << be_nl_2;
 
   return 0;
 }
@@ -135,20 +150,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
 {
   TAO_OutStream * const os = this->ctx_->stream ();
 
-  *os << "->" << node->local_name () << " ("
-      << be_idt << be_idt << be_idt;
-
-  UTL_ScopeActiveIterator si (node,
-                              UTL_Scope::IK_decls);
-
-  if (si.is_done ())
-    {
-      *os << be_uidt_nl
-          << ");";
-
-      return 0;
-    }
-
+  UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
   AST_Argument *arg {};
   int index = 1;
 
@@ -156,35 +158,65 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     {
       arg = dynamic_cast<AST_Argument*> (si.item ());
 
-      *os << (index == 1 ? "" : ",") << be_nl
-          << "((TAO::Arg_Traits<";
+      char const *arg_direction = nullptr;
+      switch (arg->direction ())
+        {
+          case AST_Argument::dir_IN:
+            arg_direction = "in";
+            break;
+          case AST_Argument::dir_INOUT:
+            arg_direction = "inout";
+            break;
+          case AST_Argument::dir_OUT:
+            arg_direction = "out";
+            break;
+          default:
+            break;
+        }
+
+      *os << "using _tao_arg_" << index << "_type = TAO::Arg_Traits<";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),
                                          os);
 
-      *os << ">::";
-
-      switch (arg->direction ())
-        {
-          case AST_Argument::dir_IN:
-            *os << "in";
-            break;
-          case AST_Argument::dir_INOUT:
-            *os << "inout";
-            break;
-          case AST_Argument::dir_OUT:
-            *os << "out";
-          default:
-            break;
-        }
-
-      *os << "_arg_val *) args[" << index << "])->arg ()";
+      *os << ">::" << arg_direction << "_arg_val;" << be_nl
+          << "_tao_arg_" << index << "_type * const _tao_arg_" << index
+          << " = static_cast<_tao_arg_" << index << "_type *> (args["
+          << index << "]);" << be_nl;
     }
 
-  // End the upcall
-  *os << be_uidt_nl
-      << ");";
+  if (index > 1)
+    {
+      *os << be_nl;
+    }
+
+  if (!node->void_return_type ())
+    {
+      *os << "_tao_retval->arg () = ";
+    }
+
+  *os << "_tao_ptr->" << node->local_name () << " (";
+  if (index == 1)
+    {
+      *os << ");";
+      return 0;
+    }
+
+  *os << be_idt_nl;
+  for (int arg_index = 1; arg_index < index; ++arg_index)
+    {
+      *os << "_tao_arg_" << arg_index << "->arg ()";
+      if (arg_index + 1 == index)
+        {
+          *os << ");";
+        }
+      else
+        {
+          *os << "," << be_nl;
+        }
+    }
+  *os << be_uidt;
 
   return 0;
 }

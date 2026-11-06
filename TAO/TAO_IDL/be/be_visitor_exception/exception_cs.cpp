@@ -32,6 +32,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  std::string const base_initializer = ": ::CORBA::UserException (\""
+    + node->repoID () + "\", \"" + node->local_name ()->get_string () + "\")";
 
   os->indent ();
 
@@ -64,12 +66,19 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                             -1);
         }
 
-      *os << be_idt_nl
-          << ": ::CORBA::UserException ("
-          << be_idt << be_idt << be_idt_nl
-          << "\"" << node->repoID () << "\"," << be_nl
-          << "\"" << node->local_name () << "\")" << be_uidt
-          << be_uidt << be_uidt << be_uidt_nl;
+      *os << be_idt_nl;
+      if (base_initializer.length () + 2 <= 120)
+        {
+          *os << base_initializer << be_uidt_nl;
+        }
+      else
+        {
+          *os << ": ::CORBA::UserException ("
+              << be_idt << be_idt << be_idt_nl
+              << "\"" << node->repoID () << "\"," << be_nl
+              << "\"" << node->local_name () << "\")" << be_uidt
+              << be_uidt << be_uidt << be_uidt_nl;
+        }
       *os << "{" << be_idt;
 
       // Assign each individual member. We need yet another state.
@@ -97,20 +106,25 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // Default constructor.
   *os << node->name () << "::" << node->local_name ()
       << " ()" << be_idt_nl;
-  *os << ": ::CORBA::UserException (" << be_idt << be_idt << be_idt_nl
-      << "\"" << node->repoID () << "\"," << be_nl
-      << "\"" << node->local_name () << "\")" << be_uidt
-      << be_uidt << be_uidt << be_uidt_nl;
+  if (base_initializer.length () + 2 <= 120)
+    {
+      *os << base_initializer << be_uidt_nl;
+    }
+  else
+    {
+      *os << ": ::CORBA::UserException (" << be_idt << be_idt << be_idt_nl
+          << "\"" << node->repoID () << "\"," << be_nl
+          << "\"" << node->local_name () << "\")" << be_uidt
+          << be_uidt << be_uidt << be_uidt_nl;
+    }
   *os << "{" << be_nl;
   *os << "}" << be_nl_2;
 
   // Copy constructor.
   *os << node->name () << "::" << node->local_name () << " (const ::"
       << node->name () << " &_tao_excp)" << be_idt_nl;
-  *os << ": ::CORBA::UserException (" << be_idt << be_idt << be_idt_nl
-      << "_tao_excp._rep_id ()," << be_nl
-      << "_tao_excp._name ())" << be_uidt
-      << be_uidt << be_uidt << be_uidt_nl;
+  *os << ": ::CORBA::UserException (_tao_excp._rep_id (), _tao_excp._name ())"
+      << be_uidt_nl;
   *os << "{";
 
   ctx = *this->ctx_;

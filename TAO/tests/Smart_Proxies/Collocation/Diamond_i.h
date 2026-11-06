@@ -31,6 +31,10 @@ public:
 
   char * color () override;
   // Return the color of this object (interface.)
+
+  CORBA::Long combine (CORBA::Long first,
+                       CORBA::Long &second,
+                       CORBA::Long_out third) override;
 };
 
 class Diamond_Export Right_i : public POA_Diamond::Right
@@ -62,6 +66,10 @@ public:
 
   char * color () override;
   // Return the color of this object (interface.)
+
+  CORBA::Long combine (CORBA::Long first,
+                       CORBA::Long &second,
+                       CORBA::Long_out third) override;
 
   CORBA::Long width () override;
   // Return the width of the stuff.
