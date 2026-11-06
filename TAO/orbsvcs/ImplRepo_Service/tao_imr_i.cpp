@@ -1331,7 +1331,7 @@ TAO_IMR_Op_Register::run ()
 
   ImplementationRepository::ServerInformation_var server_information;
   ImplementationRepository::StartupOptions  local;
-  ImplementationRepository::StartupOptions* options = nullptr;
+  ImplementationRepository::StartupOptions* options {};
 
   try
     {

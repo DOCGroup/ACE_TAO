@@ -145,7 +145,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
     {
       // This is not a leak. The listener registers with
       // the pinger and will delete itself when done.
-      AccessLiveListener *l = nullptr;
+      AccessLiveListener *l {};
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                      this,
                                      this->locator_.pinger()));
@@ -522,7 +522,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
       this->final_state ();
     }
 
-  AccessLiveListener *l = nullptr;
+  AccessLiveListener *l {};
   if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
     {
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
@@ -635,7 +635,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
       {
         if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
           {
-            AccessLiveListener *l = nullptr;
+            AccessLiveListener *l {};
             ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                             this,
                                             this->locator_.pinger()));

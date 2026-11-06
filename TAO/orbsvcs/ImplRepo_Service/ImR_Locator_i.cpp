@@ -162,7 +162,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
       return result;
     }
 
-  Locator_Repository::SIMap::ENTRY* entry = nullptr;
+  Locator_Repository::SIMap::ENTRY* entry {};
   Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
 
   for (;it.next (entry) != 0; it.advance ())
@@ -290,7 +290,7 @@ ImR_Locator_i::shutdown
   if (activators != 0 && this->repository_->activators ().current_size () > 0)
     {
       ACE_Vector<ImplementationRepository::Activator_var> acts;
-      Locator_Repository::AIMap::ENTRY* entry = nullptr;
+      Locator_Repository::AIMap::ENTRY* entry {};
       Locator_Repository::AIMap::ITERATOR it (this->repository_->activators ());
       for (;it.next (entry) != 0; it.advance ())
         {
@@ -603,7 +603,7 @@ ImR_Locator_i::activate_server
                       server));
     }
 
-  ImR_ResponseHandler *rh = nullptr;
+  ImR_ResponseHandler *rh {};
   ACE_NEW (rh,
            ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_ACTIVATE_SERVER,
                                     _tao_rh));
@@ -883,7 +883,7 @@ ImR_Locator_i::kill_server
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
  const char * name, CORBA::Short signum)
 {
-  CORBA::Exception *ex = nullptr;
+  CORBA::Exception *ex {};
   Server_Info_Ptr si;
   if (!this->get_info_for_name (name, si))
     {
@@ -1006,7 +1006,7 @@ ImR_Locator_i::force_remove_server
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
  const char *name, CORBA::Short signum)
 {
-  CORBA::Exception *ex = nullptr;
+  CORBA::Exception *ex {};
   Server_Info_Ptr si;
   AsyncAccessManager_ptr aam;
   if (this->opts_->readonly ())
@@ -1229,7 +1229,7 @@ ImR_Locator_i::shutdown_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
  const char* name)
 {
-  CORBA::Exception *ex = nullptr;
+  CORBA::Exception *ex {};
   Server_Info_Ptr si;
 
   if (!this->get_info_for_name (name, si))
@@ -1466,7 +1466,7 @@ ImR_Locator_i::list
  CORBA::ULong how_many,
  CORBA::Boolean active)
 {
-  AsyncListManager *l = nullptr;
+  AsyncListManager *l {};
   try
     {
       ACE_NEW_THROW_EX (l,
@@ -1640,7 +1640,7 @@ bool
 ImR_Locator_i::server_is_alive (UpdateableServerInfo& info)
 {
   this->connect_server (info);
-  SyncListener *listener = nullptr;
+  SyncListener *listener {};
   ACE_NEW_RETURN (listener,
                   SyncListener (info->ping_id(),
                                 this->orb_.in(),
