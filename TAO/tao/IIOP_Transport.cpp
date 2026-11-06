@@ -46,7 +46,7 @@ TAO_IIOP_Transport::connection_handler_i ()
 ssize_t
 TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,
-                          const ACE_Time_Value *max_wait_time)
+                          ACE_Time_Value const *max_wait_time)
 {
   ssize_t const retval =
     this->connection_handler_->peer ().sendv (iov,
@@ -70,8 +70,8 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
 
 #if TAO_HAS_SENDFILE == 1
 ssize_t
-TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
-                              iovec * iov,
+TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
+                              iovec *iov,
                               int iovcnt,
                               size_t &bytes_transferred,
                               TAO::Transport::Drain_Constraints const & dc)
@@ -114,7 +114,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 
       if (this->io_timeout(dc))
         {
-          int val = 0;
+          int val {};
           if (ACE::enter_send_timedwait (out_fd,
                                          this->io_timeout(dc), val) == -1)
             return retval;
@@ -152,7 +152,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 ssize_t
 TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
-                          const ACE_Time_Value *max_wait_time)
+                          ACE_Time_Value const *max_wait_time)
 {
   this->connection_closed_on_read_ = false;
 
@@ -286,7 +286,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 
   IIOP::ListenPointList listen_point_list;
 
-  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar)
+  for (std::unique_ptr<TAO_Acceptor> const &acceptor : ar)
     {
       // Check whether it is an IIOP acceptor
       if (acceptor->tag () == this->tag ())
@@ -341,9 +341,9 @@ TAO_IIOP_Transport::get_listen_point (
     return -1;
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
-  const ACE_INET_Addr *endpoint_addr =
+  ACE_INET_Addr const *endpoint_addr =
     iiop_acceptor->endpoints ();
-  size_t count = iiop_acceptor->endpoint_count ();
+  size_t const count = iiop_acceptor->endpoint_count ();
 
 #if defined (TAO_USE_BROKEN_BIDIR)
 
@@ -389,11 +389,11 @@ TAO_IIOP_Transport::get_listen_point (
 #if defined (ACE_HAS_IPV6)
       // If this is an IPv6 decimal linklocal address containing a scopeid than
       // remove the scopeid from the information being sent.
-      char const *cp_scope = nullptr;
+      char const *cp_scope {};
       if (endpoint_addr[index].get_type () == PF_INET6 &&
           (cp_scope = std::strchr (interface_name.in (), '%')) != nullptr)
         {
-          CORBA::ULong len = cp_scope - interface_name.in ();
+          CORBA::ULong const len = cp_scope - interface_name.in ();
           interface_name[len] = '\0';
         }
 #endif /* ACE_HAS_IPV6 */
