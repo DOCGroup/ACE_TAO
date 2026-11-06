@@ -108,6 +108,11 @@ protected:
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
 
 private:
+  TAO_IIOP_Connector (TAO_IIOP_Connector const &) = delete;
+  TAO_IIOP_Connector &operator= (TAO_IIOP_Connector const &) = delete;
+  TAO_IIOP_Connector (TAO_IIOP_Connector &&) = delete;
+  TAO_IIOP_Connector &operator= (TAO_IIOP_Connector &&) = delete;
+
   /// This is the first half of making a connection. Both make_connection
   /// and make_parallel_connection will start out using begin_connection.
   int begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
@@ -132,7 +137,6 @@ private:
   /// Return the remote endpoint, a helper function
   TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
-private:
   /// Our connect strategy
   TAO_IIOP_CONNECT_STRATEGY connect_strategy_;
 
