@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "ace/Event_Handler.h"
 #include "ace/Naming_Context.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,38 +29,38 @@ public:
   void list_options ();
   // Print name options
 
-  int bind (const char *key,
-            const char *value,
-            const char *type = "");
+  int bind (std::string const &key,
+            std::string const &value,
+            std::string const &type = {});
   // Bind a key to a value
 
-  int unbind (const char *key);
+  int unbind (std::string const &key);
   // Unbind a name binding
 
-  int rebind (const char *key,
-              const char *value,
-              const char *type = "");
+  int rebind (std::string const &key,
+              std::string const &value,
+              std::string const &type = {});
   // Rebind a name binding
 
-  int find (const char *key);
+  int find (std::string const &key);
   // Find the value associated with a key
 
-  int list_names (const char *pattern);
+  int list_names (std::string const &pattern);
   // Find all names that match pattern
 
-  int list_values (const char *pattern);
+  int list_values (std::string const &pattern);
   // Find all values that match pattern
 
-  int list_types (const char *pattern);
+  int list_types (std::string const &pattern);
   // Find all types that match pattern
 
-  int list_name_entries (const char *pattern);
+  int list_name_entries (std::string const &pattern);
   // Find all names that match pattern
 
-  int list_value_entries (const char *pattern);
+  int list_value_entries (std::string const &pattern);
   // Find all values that match pattern
 
-  int list_type_entries (const char *pattern);
+  int list_type_entries (std::string const &pattern);
   // Find all types that match pattern
 
 private:
@@ -75,7 +76,7 @@ private:
   int set_node_local ();
   // Set options to use NODE_LOCAL naming context
 
-  int set_host (const char *hostname, int port);
+  int set_host (std::string const &hostname, int port);
   // Set options to use NET_LOCAL naming context specifying host name
   // and port number
 };

@@ -1,28 +1,40 @@
 #include "ace/Service_Config.h"
 #include "ace/Naming_Context.h"
 #include "ace/Dynamic_Service.h"
-#include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
-#include "ace/os_include/os_ctype.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/os_include/os_assert.h"
+#include "ace/Thread_Manager.h"
+#include "ace/Malloc_Base.h"
 
 #include "Client_Test.h"
+
+#include <cctype>
+#include <iostream>
+#include <memory>
+#include <sstream>
+#include <string>
 
 // Get the instance of Name_Service using Dynamic_Service
 
 //inline Name_Service *
 //NAME_SERVICE ()
 
-inline ACE_Naming_Context *
+static ACE_Naming_Context *
 NAMING_CONTEXT ()
 {
   return ACE_Dynamic_Service<ACE_Naming_Context>::instance ("ACE_Naming_Context");
 }
+
+static void
+free_naming_context_result (char *result)
+{
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance ()->free (result);
+#else
+  delete [] result;
+#endif
+}
+
+using Naming_Context_String = std::unique_ptr<char, decltype (&free_naming_context_result)>;
 
 Client_Test::Client_Test ()
 {
@@ -48,7 +60,6 @@ Client_Test::open ()
   return 0;
 }
 
-
 int
 Client_Test::close ()
 {
@@ -61,155 +72,121 @@ Client_Test::close ()
 int
 Client_Test::handle_input (ACE_HANDLE)
 {
-  char option[BUFSIZ];
-  char buf1[BUFSIZ];
-  char buf2[BUFSIZ];
-  char buf3[BUFSIZ];
-  char *temp_buf;
-  int port;
-  char input[1024];
-
-  if (::scanf ("%s", option) <= 0)
+  std::string command_line;
+  if (!std::getline (std::cin, command_line))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p Try again!\n",
                        "Client_Test::handle_input"),
                       0);
 
-  int result = -1;
-
-  switch (ACE_OS::ace_isupper (option[0]) ? ACE_OS::ace_tolower (option[0]) : option[0])
+  std::istringstream input (command_line);
+  std::string option;
+  if (!(input >> option))
     {
-    case 'p' :
+      this->display_menu ();
+      return 0;
+    }
+
+  int result {-1};
+  char const command = static_cast<char> (
+    std::tolower (static_cast<unsigned char> (option.front ())));
+
+  switch (command)
+    {
+    case 'p':
       result = this->set_proc_local ();
       break;
-    case 'n' :
+    case 'n':
       result = this->set_node_local ();
       break;
-    case 'h' :
-      if (::scanf ("%s %d", buf1, &port) <= 0)
+    case 'h':
+      {
+        std::string hostname;
+        int port {};
+        if (!(input >> hostname >> port))
+          break;
+        result = this->set_host (hostname, port);
         break;
-      result = this->set_host (buf1, port);
-      break;
-    case 'b' :
-      // get the input from stdin
-      ACE_OS::fgets (input, sizeof input, stdin);
-
-      // get the key
-      if (nullptr != (temp_buf = ACE_OS::strtok (input, " ")))
-        {
-          ACE_OS::strcpy (buf1, temp_buf);
-
-          temp_buf = ACE_OS::strtok (nullptr, " ");
-
-          // get the value
-          if (temp_buf)
-            {
-              ACE_OS::strcpy (buf2, temp_buf);
-
-              temp_buf = ACE_OS::strtok (nullptr, " ");
-
-              // get the type (if entered).
-              if (temp_buf)
-                {
-                  ACE_OS::strcpy (buf3, temp_buf);
-                  result = this->bind (buf1, buf2, buf3);
-                }
-              else
-                result = this->bind (buf1, buf2);
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "Bind Failed! Value not entered.\n"));
-        }
-      else
-        ACE_ERROR ((LM_ERROR,
-                    "Bind Failed! Key and Value not entered.\n"));
-      break;
-    case 'u' :
-      if (::scanf ("%s", buf1) <= 0)
+      }
+    case 'b':
+      {
+        std::string key;
+        std::string value;
+        std::string type;
+        if (input >> key >> value)
+          {
+            input >> type;
+            result = this->bind (key, value, type);
+          }
+        else
+          ACE_ERROR ((LM_ERROR,
+                      "Bind Failed! Key and value not entered.\n"));
         break;
-      result = this->unbind (buf1);
-      break;
-    case 'r' :
-      // get the input from stdin
-      ACE_OS::fgets (input, sizeof input, stdin);
-
-      temp_buf = ACE_OS::strtok (input, " ");
-      // get the key
-      if (temp_buf)
-        {
-          ACE_OS::strcpy (buf1, temp_buf);
-
-          temp_buf = ACE_OS::strtok (nullptr, " ");
-
-          // get the value
-          if (temp_buf)
-            {
-              ACE_OS::strcpy (buf2, temp_buf);
-
-              temp_buf = ACE_OS::strtok (nullptr, " ");
-              // get the type (if entered)
-              if (temp_buf)
-                {
-                  ACE_OS::strcpy (buf3, temp_buf);
-                  result = this->rebind (buf1, buf2, buf3);
-                }
-              else
-                result = this->rebind (buf1, buf2);
-            }
-          else
-            ACE_ERROR ((LM_ERROR,
-                        "Rebind Failed! Value not entered.\n"));
-        }
-      else
-        ACE_ERROR ((LM_ERROR,
-                    "Reind Failed! Key and value not entered.\n"));
-      break;
-    case 'f' :
-      if (::scanf ("%s", buf1) <= 0)
+      }
+    case 'u':
+      {
+        std::string key;
+        if (!(input >> key))
+          break;
+        result = this->unbind (key);
         break;
-      result = this->find (buf1);
-      break;
-    case 'j' :
-      if (::scanf ("%s", buf1) <= 0)
+      }
+    case 'r':
+      {
+        std::string key;
+        std::string value;
+        std::string type;
+        if (input >> key >> value)
+          {
+            input >> type;
+            result = this->rebind (key, value, type);
+          }
+        else
+          ACE_ERROR ((LM_ERROR,
+                      "Rebind Failed! Key and value not entered.\n"));
         break;
-      else
-        result = this->list_names (buf1);
-      break;
-    case 'k' :
-      if (::scanf ("%s", buf1) <= 0)
+      }
+    case 'f':
+    case 'j':
+    case 'k':
+    case 'l':
+    case 'c':
+    case 'd':
+    case 'e':
+      {
+        std::string key_pattern;
+        if (!(input >> key_pattern))
+          break;
+        switch (command)
+          {
+          case 'f':
+            result = this->find (key_pattern);
+            break;
+          case 'j':
+            result = this->list_names (key_pattern);
+            break;
+          case 'k':
+            result = this->list_values (key_pattern);
+            break;
+          case 'l':
+            result = this->list_types (key_pattern);
+            break;
+          case 'c':
+            result = this->list_name_entries (key_pattern);
+            break;
+          case 'd':
+            result = this->list_value_entries (key_pattern);
+            break;
+          case 'e':
+            result = this->list_type_entries (key_pattern);
+            break;
+          }
         break;
-      else
-        result = this->list_values (buf1);
-      break;
-    case 'l' :
-      if (::scanf ("%s", buf1) <= 0)
-        break;
-      else
-        result = this->list_types (buf1);
-      break;
-    case 'c' :
-      if (::scanf ("%s", buf1) <= 0)
-        break;
-      else
-        result = this->list_name_entries (buf1);
-      break;
-    case 'd' :
-      if (::scanf ("%s", buf1) <= 0)
-        break;
-      else
-        result = this->list_value_entries (buf1);
-      break;
-    case 'e' :
-      if (::scanf ("%s", buf1) <= 0)
-        break;
-      else
-        result = this->list_type_entries (buf1);
-      break;
-    case 'q' :
+      }
+    case 'q':
       result = -1;
       break;
-    default :
+    default:
       ACE_DEBUG ((LM_DEBUG,
                   "Unrecognized command.\n"));
     }
@@ -296,60 +273,62 @@ Client_Test::set_node_local ()
 }
 
 int
-Client_Test::set_host (const char *hostname, int port)
+Client_Test::set_host (std::string const &hostname, int port)
 {
   // Close down original name space
   NAMING_CONTEXT ()->close ();
 
   this->name_options_->context (ACE_Naming_Context::NET_LOCAL);
   // Set Name Options
-  this->name_options_->nameserver_host (ACE_TEXT_CHAR_TO_TCHAR (hostname));
+  this->name_options_->nameserver_host (ACE_TEXT_CHAR_TO_TCHAR (hostname.c_str ()));
   this->name_options_->nameserver_port (port);
 
   return NAMING_CONTEXT ()->open (ACE_Naming_Context::NET_LOCAL);
 }
 
 int
-Client_Test::bind (const char *key,
-                   const char *value,
-                   const char *type)
+Client_Test::bind (std::string const &key,
+                   std::string const &value,
+                   std::string const &type)
 {
-  if (NAMING_CONTEXT ()->bind (key, value, type) != 0)
+  if (NAMING_CONTEXT ()->bind (key.c_str (), value.c_str (), type.c_str ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p Bind failed! Key %s exists\n",
                        "Client_Test::bind",
-                       key),
+                       key.c_str ()),
                       0);
   return 0;
 }
 
 int
-Client_Test::unbind (const char *key)
+Client_Test::unbind (std::string const &key)
 {
-  if (NAMING_CONTEXT ()->unbind (key) != 0)
+  if (NAMING_CONTEXT ()->unbind (key.c_str ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p Unbind failed! Key %s not found\n",
                        "Client_Test::unbind",
-                       key),
+                       key.c_str ()),
                       0);
   return 0;
 }
 
 int
-Client_Test::rebind (const char *key,
-                     const char *value,
-                     const char *type)
+Client_Test::rebind (std::string const &key,
+                     std::string const &value,
+                     std::string const &type)
 {
-  int result = NAMING_CONTEXT ()->rebind (key, value, type );
+  int const result = NAMING_CONTEXT ()->rebind (key.c_str (),
+                                               value.c_str (),
+                                               type.c_str ());
   return result == 1 ? 0 : result;
 }
 
 int
-Client_Test::list_names (const char *pattern)
+Client_Test::list_names (std::string const &pattern)
 {
   ACE_PWSTRING_SET set;
 
-  if (NAMING_CONTEXT ()->list_names (set, pattern) != 0)
+  if (NAMING_CONTEXT ()->list_names (set, pattern.c_str ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p Pattern matching failed!\n",
                        "Client_Test::list_names"),
@@ -358,183 +337,196 @@ Client_Test::list_names (const char *pattern)
     {
       ACE_PWSTRING_ITERATOR set_iterator (set);
 
-      for (ACE_NS_WString *name = nullptr;
-           set_iterator.next (name) !=0;
-           set_iterator.advance())
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s\n",
-                    name->char_rep ()));
-    }
-  return 0;
-}
-
-int
-Client_Test::list_values (const char *pattern)
-{
-  ACE_PWSTRING_SET set;
-
-  if (NAMING_CONTEXT ()->list_values (set, pattern) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_values"),
-                      0);
-  else
-    {
-      ACE_PWSTRING_ITERATOR set_iterator (set);
-
-      for (ACE_NS_WString *value = nullptr;
-           set_iterator.next (value) !=0;
-           set_iterator.advance())
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s\n",
-                    value->char_rep ()));
-    }
-  return 0;
-}
-
-int
-Client_Test::list_types (const char *pattern)
-{
-  ACE_PWSTRING_SET set;
-
-  if (NAMING_CONTEXT ()->list_types (set, pattern) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_types"),
-                      0);
-  else
-    {
-      ACE_PWSTRING_ITERATOR set_iterator (set);
-
-      for (ACE_NS_WString *type = nullptr;
-           set_iterator.next (type) !=0;
-           set_iterator.advance())
-        ACE_DEBUG ((LM_DEBUG,
-                    "%s\n",
-                    type->char_rep ()));
-    }
-  return 0;
-}
-
-int
-Client_Test::list_name_entries (const char *pattern)
-{
-  ACE_BINDING_SET set;
-
-  if (NAMING_CONTEXT ()->list_name_entries (set, pattern) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_names"),
-                      0);
-  else
-    {
-      ACE_BINDING_ITERATOR set_iterator (set);
-
-      for (ACE_Name_Binding *entry = nullptr;
-           set_iterator.next (entry) !=0;
-           set_iterator.advance())
+      for (ACE_NS_WString *name {};
+           set_iterator.next (name) != 0;
+           set_iterator.advance ())
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s\t",
-                      entry->name_.char_rep ()));
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s\t",
-                      entry->value_.char_rep ()));
-          if (entry->type_)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s\n",
-                        entry->type_));
-        }
-    }
-  return 0;
-}
-
-int
-Client_Test::list_value_entries (const char *pattern)
-{
-  ACE_BINDING_SET set;
-
-  if (NAMING_CONTEXT ()->list_value_entries (set, pattern) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_values"),
-                      0);
-  else
-    {
-      ACE_BINDING_ITERATOR set_iterator (set);
-      for (ACE_Name_Binding *entry = nullptr;
-           set_iterator.next (entry) !=0;
-           set_iterator.advance())
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s\t",
-                      entry->name_.char_rep ()));
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s\t",
-                      entry->value_.char_rep ()));
-          if (entry->type_)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s\n",
-                        entry->type_));
-        }
-    }
-  return 0;
-}
-
-int
-Client_Test::list_type_entries (const char *pattern)
-{
-  ACE_BINDING_SET set;
-
-  if (NAMING_CONTEXT ()->list_type_entries (set, pattern) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p Pattern matching failed!\n",
-                       "Client_Test::list_types"),
-                      0);
-  else
-    {
-      ACE_BINDING_ITERATOR set_iterator (set);
-
-      for (ACE_Name_Binding *entry = nullptr;
-           set_iterator.next (entry) !=0;
-           set_iterator.advance())
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s\t",
-                      entry->name_.char_rep ()));
-          ACE_DEBUG ((LM_DEBUG,
-                      "%s\t",
-                      entry->value_.char_rep ()));
+          Naming_Context_String name_rep {name->char_rep (), free_naming_context_result};
           ACE_DEBUG ((LM_DEBUG,
                       "%s\n",
-                      entry->type_));
+                      name_rep ? name_rep.get () : ""));
         }
     }
   return 0;
 }
 
 int
-Client_Test::find (const char *key)
+Client_Test::list_values (std::string const &pattern)
 {
-  char *value = nullptr;
-  char *type = nullptr;
+  ACE_PWSTRING_SET set;
 
-  if (NAMING_CONTEXT ()->resolve (key, value, type) != 0)
+  if (NAMING_CONTEXT ()->list_values (set, pattern.c_str ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p Pattern matching failed!\n",
+                       "Client_Test::list_values"),
+                      0);
+  else
+    {
+      ACE_PWSTRING_ITERATOR set_iterator (set);
+
+      for (ACE_NS_WString *value {};
+           set_iterator.next (value) != 0;
+           set_iterator.advance ())
+        {
+          Naming_Context_String value_rep {value->char_rep (), free_naming_context_result};
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\n",
+                      value_rep ? value_rep.get () : ""));
+        }
+    }
+  return 0;
+}
+
+int
+Client_Test::list_types (std::string const &pattern)
+{
+  ACE_PWSTRING_SET set;
+
+  if (NAMING_CONTEXT ()->list_types (set, pattern.c_str ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p Pattern matching failed!\n",
+                       "Client_Test::list_types"),
+                      0);
+  else
+    {
+      ACE_PWSTRING_ITERATOR set_iterator (set);
+
+      for (ACE_NS_WString *type {};
+           set_iterator.next (type) != 0;
+           set_iterator.advance ())
+        {
+          Naming_Context_String type_rep {type->char_rep (), free_naming_context_result};
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\n",
+                      type_rep ? type_rep.get () : ""));
+        }
+    }
+  return 0;
+}
+
+int
+Client_Test::list_name_entries (std::string const &pattern)
+{
+  ACE_BINDING_SET set;
+
+  if (NAMING_CONTEXT ()->list_name_entries (set, pattern.c_str ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p Pattern matching failed!\n",
+                       "Client_Test::list_names"),
+                      0);
+  else
+    {
+      ACE_BINDING_ITERATOR set_iterator (set);
+
+      for (ACE_Name_Binding *entry {};
+           set_iterator.next (entry) != 0;
+           set_iterator.advance ())
+        {
+          Naming_Context_String name_rep {entry->name_.char_rep (), free_naming_context_result};
+          Naming_Context_String value_rep {entry->value_.char_rep (), free_naming_context_result};
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\t",
+                      name_rep ? name_rep.get () : ""));
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\t",
+                      value_rep ? value_rep.get () : ""));
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\n",
+                      entry->type_ ? entry->type_ : ""));
+        }
+    }
+  return 0;
+}
+
+int
+Client_Test::list_value_entries (std::string const &pattern)
+{
+  ACE_BINDING_SET set;
+
+  if (NAMING_CONTEXT ()->list_value_entries (set, pattern.c_str ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p Pattern matching failed!\n",
+                       "Client_Test::list_values"),
+                      0);
+  else
+    {
+      ACE_BINDING_ITERATOR set_iterator (set);
+      for (ACE_Name_Binding *entry {};
+           set_iterator.next (entry) != 0;
+           set_iterator.advance ())
+        {
+          Naming_Context_String name_rep {entry->name_.char_rep (), free_naming_context_result};
+          Naming_Context_String value_rep {entry->value_.char_rep (), free_naming_context_result};
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\t",
+                      name_rep ? name_rep.get () : ""));
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\t",
+                      value_rep ? value_rep.get () : ""));
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\n",
+                      entry->type_ ? entry->type_ : ""));
+        }
+    }
+  return 0;
+}
+
+int
+Client_Test::list_type_entries (std::string const &pattern)
+{
+  ACE_BINDING_SET set;
+
+  if (NAMING_CONTEXT ()->list_type_entries (set, pattern.c_str ()) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p Pattern matching failed!\n",
+                       "Client_Test::list_types"),
+                      0);
+  else
+    {
+      ACE_BINDING_ITERATOR set_iterator (set);
+
+      for (ACE_Name_Binding *entry {};
+           set_iterator.next (entry) != 0;
+           set_iterator.advance ())
+        {
+          Naming_Context_String name_rep {entry->name_.char_rep (), free_naming_context_result};
+          Naming_Context_String value_rep {entry->value_.char_rep (), free_naming_context_result};
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\t",
+                      name_rep ? name_rep.get () : ""));
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\t",
+                      value_rep ? value_rep.get () : ""));
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s\n",
+                      entry->type_ ? entry->type_ : ""));
+        }
+    }
+  return 0;
+}
+
+int
+Client_Test::find (std::string const &key)
+{
+  char *value {};
+  char *type {};
+
+  int const result = NAMING_CONTEXT ()->resolve (key.c_str (), value, type);
+  Naming_Context_String value_owner {value, free_naming_context_result};
+  Naming_Context_String type_owner {type, free_naming_context_result};
+
+  if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p Find failed! Key %s not found\n",
                        "Client_Test::list_find",
-                       key),
+                       key.c_str ()),
                       0);
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Binding for %s : value = %s\ttype = %s\n",
-                  key,
-                  value,
-                  type));
-      if (type)
-        delete [] type;
-      return 0;
-    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Binding for %s : value = %s\ttype = %s\n",
+              key.c_str (),
+              value_owner.get (),
+              type_owner ? type_owner.get () : ""));
+  return 0;
 }
 
