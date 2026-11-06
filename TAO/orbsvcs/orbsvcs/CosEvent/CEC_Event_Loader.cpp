@@ -77,8 +77,8 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:xrtdb"));
       int opt;
       ACE_TCHAR const *service_name = ACE_TEXT("CosEventService");
-      ACE_TCHAR const *ior_file = nullptr;
-      ACE_TCHAR const *pid_file = nullptr;
+      ACE_TCHAR const *ior_file {};
+      ACE_TCHAR const *pid_file {};
       this->bind_to_naming_service_ = true;
       bool use_rebind = false;
       bool disconnect_callbacks = false;
