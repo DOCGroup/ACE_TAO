@@ -4,13 +4,13 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACEXML_Char const *test = ACE_TEXT ("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd");
+  ACEXML_Char const * const test = ACE_TEXT ("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd");
 
-  ACEXML_Char const *simple = ACE_TEXT ("http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent");
+  ACEXML_Char const * const simple = ACE_TEXT ("http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent");
 
   ACEXML_HttpCharStream first;
   ACEXML_HttpCharStream second;
-  ACEXML_Char ch;
+  ACEXML_Char ch {};
 
   if (first.open (test) != -1)
     {

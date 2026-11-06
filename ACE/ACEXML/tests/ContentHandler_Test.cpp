@@ -43,8 +43,8 @@ Basic_Content_Tester::characters (ACEXML_Char const *ch,
                                   size_t start,
                                   size_t length)
 {
-  static bool already_called = false;
-  static ACEXML_Char const *expect =
+  static bool already_called {};
+  static ACEXML_Char const * const expect =
     ACE_TEXT ("Example\nd'internationalisation");
 
   if (already_called)
@@ -69,7 +69,7 @@ Basic_Content_Tester::characters (ACEXML_Char const *ch,
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  int status = 0;
+  int status {};
   ACEXML_InputSource input_source;
   input_source.setEncoding (ACE_TEXT ("encoding"));
   input_source.setPublicId (ACE_TEXT ("public-id"));
@@ -143,7 +143,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     }
 
   Basic_Content_Tester tester;
-  ACEXML_StrCharStream *raw_test_stream = nullptr;
+  ACEXML_StrCharStream *raw_test_stream {};
   ACE_NEW_RETURN (raw_test_stream, ACEXML_StrCharStream, -1);
   std::unique_ptr<ACEXML_StrCharStream> test_stream (raw_test_stream);
   if (test_stream->open (tester.get_test_string (),
@@ -161,7 +161,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                        false);
     parser.parse (&input);
   }
-  catch (const ACEXML_SAXException& ex)
+  catch (ACEXML_SAXException const& ex)
   {
     ex.print();
     status = 1;

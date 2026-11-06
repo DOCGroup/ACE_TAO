@@ -6,6 +6,7 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Log_Msg.h"
+#include <array>
 
 constexpr int MAX_ITERATIONS = 100 * 1000;
 constexpr int NUM_TEST_STRS = 6;
@@ -19,69 +20,74 @@ static bool is_escaped (ACEXML_String const &s)
   return true;
 }
 
-static int run_tests (ACEXML_String const *test_strings, int iterations)
+static int run_tests (std::array<ACEXML_String, NUM_TEST_STRS> const& test_strings,
+                      int iterations)
 {
   // Test 1 - Escape the strings using a new temporary string each iteration.
-  ACE_Time_Value start = ACE_OS::gettimeofday();
+  ACE_Time_Value start (ACE_OS::gettimeofday ());
   for (int i = 0; i < iterations; ++i)
   {
-    ACEXML_String tmp = ACEXML_escape_string(test_strings[i % NUM_TEST_STRS]);
+    ACEXML_String tmp = ACEXML_escape_string (test_strings[i % NUM_TEST_STRS]);
     if (! is_escaped(tmp))
     {
-      ACE_ERROR((LM_ERROR, "Error: Failed to escape string\n"));
+      ACE_ERROR ((LM_ERROR, "Error: Failed to escape string\n"));
       return 1;
     }
   }
-  ACE_DEBUG((LM_DEBUG, "Test1 took %dms\n", (ACE_OS::gettimeofday() - start).msec()));
+  ACE_DEBUG ((LM_DEBUG, "Test1 took %dms\n",
+              (ACE_OS::gettimeofday () - start).msec ()));
 
   // Test 2 - Escape the strings using a shared temporary string. This shouldn't
   // be any faster than Test 1 as long as the compiler has return value optimization.
   ACEXML_String tmp;
-  start = ACE_OS::gettimeofday();
+  start = ACE_OS::gettimeofday ();
   for (int i = 0; i < iterations; ++i)
   {
-    tmp = ACEXML_escape_string(test_strings[i % NUM_TEST_STRS]);
+    tmp = ACEXML_escape_string (test_strings[i % NUM_TEST_STRS]);
     if (! is_escaped(tmp))
     {
-      ACE_ERROR((LM_ERROR, "Error: Failed to escape string\n"));
+      ACE_ERROR ((LM_ERROR, "Error: Failed to escape string\n"));
       return 1;
     }
   }
-  ACE_DEBUG((LM_DEBUG, "Test2 took %dms\n", (ACE_OS::gettimeofday() - start).msec()));
+  ACE_DEBUG ((LM_DEBUG, "Test2 took %dms\n",
+              (ACE_OS::gettimeofday () - start).msec ()));
 
   // Test 3 - Escape the strings using a shared temporary string. This time, we use
   // the alternate form of ACEXML_escape_string() so that our temporary buffer is reused.
-  tmp.clear(1);
-  start = ACE_OS::gettimeofday();
+  tmp.clear (1);
+  start = ACE_OS::gettimeofday ();
   for (int i = 0; i < iterations; ++i)
   {
-    ACEXML_escape_string(test_strings[i % NUM_TEST_STRS], tmp);
+    ACEXML_escape_string (test_strings[i % NUM_TEST_STRS], tmp);
     if (! is_escaped(tmp))
     {
-      ACE_ERROR((LM_ERROR, "Error: Failed to escape string\n"));
+      ACE_ERROR ((LM_ERROR, "Error: Failed to escape string\n"));
       return 1;
     }
   }
-  ACE_DEBUG((LM_DEBUG, "Test3 took %dms\n", (ACE_OS::gettimeofday() - start).msec()));
+  ACE_DEBUG ((LM_DEBUG, "Test3 took %dms\n",
+              (ACE_OS::gettimeofday () - start).msec ()));
 
   // Test 4 - Same as Test 3, except that the tmp buffer shouldn't have to resize.
-  start = ACE_OS::gettimeofday();
+  start = ACE_OS::gettimeofday ();
   for (int i = 0; i < iterations; ++i)
   {
-    ACEXML_escape_string(test_strings[i % NUM_TEST_STRS], tmp);
+    ACEXML_escape_string (test_strings[i % NUM_TEST_STRS], tmp);
     if (! is_escaped(tmp))
     {
-      ACE_ERROR((LM_ERROR, "Error: Failed to escape string\n"));
+      ACE_ERROR ((LM_ERROR, "Error: Failed to escape string\n"));
       return 1;
     }
   }
-  ACE_DEBUG((LM_DEBUG, "Test4 took %dms\n", (ACE_OS::gettimeofday() - start).msec()));
+  ACE_DEBUG ((LM_DEBUG, "Test4 took %dms\n",
+              (ACE_OS::gettimeofday () - start).msec ()));
   return 0;
 }
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACEXML_String test_strings[NUM_TEST_STRS] = {
+  std::array<ACEXML_String, NUM_TEST_STRS> test_strings {
     ACE_TEXT("\"xxxxx\"xxxxxxxx xx\"xxxxxx xxxxxx\"xxxxxxxxxx xxxxxxxx\"xxxxxx\""),
     ACE_TEXT("'xxxxx\'xxxxxxxx' xxxxxxxx xx'xxxxxxxx'xxxxxx xxxxxxx'xxxxxxx'"),
     ACE_TEXT("&xxxx&xxxxxxxxx &xxxxxxxx xxxxx&xxxxxxxxxxx xxxx&xxxxxxxxxx&"),
@@ -93,7 +99,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   if (run_tests (test_strings, MAX_ITERATIONS) != 0)
     return 1;
 
-  ACE_DEBUG((LM_DEBUG, "Rerun tests with larger strings\n"));
+  ACE_DEBUG ((LM_DEBUG, "Rerun tests with larger strings\n"));
   for (int i = 0; i < NUM_TEST_STRS; ++i)
   {
     for (int j = 0; j < 5; ++j)

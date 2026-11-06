@@ -4,13 +4,13 @@
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACEXML_NamespaceSupport xmlns;
-  if (xmlns.init() == -1)
+  if (xmlns.init () == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Error in initializing namespace support.")));
       return 1;
     }
-  xmlns.pushContext();
+  xmlns.pushContext ();
   xmlns.declarePrefix(ACE_TEXT (""),
                       ACE_TEXT ("http://www.w3.org/1999/xhtml"));
   xmlns.declarePrefix(ACE_TEXT ("dc"),
@@ -18,8 +18,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   xmlns.declarePrefix(ACE_TEXT ("xc"),
                       ACE_TEXT ("http://www.purl.org/dc#"));
 
-  ACEXML_Char const *lName, *uri;
-  ACEXML_Char const *n1 = ACE_TEXT ("p");
+  ACEXML_Char const *lName {}, *uri {};
+  ACEXML_Char const * const n1 = ACE_TEXT ("p");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("*** Checking processName:\n")));
   if (xmlns.processName (n1, uri, lName, false) != 0)
@@ -31,8 +31,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                 ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
                 uri, lName, n1));
 
-  ACEXML_Char const *n2 = ACE_TEXT ("dc:title");
-  if (xmlns.processName(n2, uri, lName, false) != 0)
+  ACEXML_Char const * const n2 = ACE_TEXT ("dc:title");
+  if (xmlns.processName (n2, uri, lName, false) != 0)
     ACE_DEBUG ((LM_ERROR,
                 ACE_TEXT ("Fail to resolve namespace name %S\n"),
                 n2));
@@ -41,8 +41,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                 ACE_TEXT ("Namespace URI: %s\nLocal name: %s\nRaw name: %s\n"),
                 uri, lName, n2));
 
-  ACEXML_Char const *n3 = ACE_TEXT ("xml:title");
-  if (xmlns.processName(n3, uri, lName, false) != 0)
+  ACEXML_Char const * const n3 = ACE_TEXT ("xml:title");
+  if (xmlns.processName (n3, uri, lName, false) != 0)
     ACE_DEBUG ((LM_ERROR,
                 ACE_TEXT ("Fail to resolve namespace name %S\n"),
                 n3));
@@ -60,15 +60,15 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                 ACE_TEXT ("Fail to get a list of declared prefixes\n")));
   else
     {
-      ACEXML_STR_LIST::ITERATOR iter = prefixes.begin ();
-      ACEXML_Char const **prefix = nullptr;
+      ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
+      ACEXML_Char const **prefix {};
 
       for (; iter.next (prefix);iter.advance ())
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getPrefix\n")));
-  ACEXML_Char const *prefix = nullptr;
+  ACEXML_Char const *prefix {};
 
   if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.purl.org/dc#"))) == nullptr)
     ACE_DEBUG ((LM_ERROR,
@@ -101,8 +101,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to getPrefixes based on known URI\n")));
   else
     {
-      ACEXML_STR_LIST::ITERATOR iter = prefixes.begin ();
-      ACEXML_Char const **prefix = nullptr;
+      ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
+      ACEXML_Char const **prefix {};
 
       for (; iter.next (prefix);iter.advance ())
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
@@ -115,15 +115,15 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to getPrefixes\n")));
   else
     {
-      ACEXML_STR_LIST::ITERATOR iter = prefixes.begin ();
-      ACEXML_Char const **prefix = nullptr;
+      ACEXML_STR_LIST::ITERATOR iter (prefixes.begin ());
+      ACEXML_Char const **prefix {};
 
       for (; iter.next (prefix);iter.advance ())
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("prefix: \"%s\"\n"), *prefix));
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getURI\n")));
-  ACEXML_Char const *URI = nullptr;
+  ACEXML_Char const *URI {};
 
   if ((URI = xmlns.getURI (ACE_TEXT ("dc"))) == nullptr)
     ACE_DEBUG((LM_ERROR, ACE_TEXT ("Fail to get URI for \"dc\"\n")));
@@ -142,7 +142,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for default namespace is %s\n"), URI));
 
-  xmlns.popContext();
+  xmlns.popContext ();
 
   return 0;
 }
