@@ -70,7 +70,7 @@ public:
 
   /// Insert the component into the list, making a copy of the octet
   /// sequence.
-  void set_context (const IOP::ServiceContext &context);
+  void set_context (IOP::ServiceContext const &context);
 
   /// Insert the component into the list, making a copy of the octet
   /// sequence.  Search the list before insertion so that the
@@ -78,7 +78,7 @@ public:
   /// If the replace flag is true, update the specified context.
   /// Return 0 if the component was present and the replace flag
   /// was not set to true.
-  int set_context (const IOP::ServiceContext &context, CORBA::Boolean replace);
+  int set_context (IOP::ServiceContext const &context, CORBA::Boolean replace);
 
   /// Insert the component into the list, but efficiently stealing the
   /// contents of the octet sequence.
@@ -90,7 +90,7 @@ public:
 
   /// Get a reference to a context identified by id, return
   /// 0 if the component is not present.
-  int get_context (IOP::ServiceId id, const IOP::ServiceContext **context) const;
+  int get_context (IOP::ServiceId id, IOP::ServiceContext const **context) const;
 
   /// Get a copy of the Service Context corresponding to the given
   /// ServiceId.  The caller owns the returned Service Context.
@@ -114,8 +114,8 @@ public:
   bool is_service_id (IOP::ServiceId id);
 
   /// = Marshaling and demarshaling the list
-  int encode (TAO_OutputCDR& cdr) const;
-  int decode (TAO_InputCDR& cdr);
+  int encode (TAO_OutputCDR &cdr) const;
+  int decode (TAO_InputCDR &cdr);
 
   /// Return the underlying service context list
   IOP::ServiceContextList &service_info ();
@@ -123,13 +123,13 @@ public:
   /// @note This method is only for backward comptiblity. We
   /// need to get this removed once RT folks have their service
   /// addition info done through this interface
-  const IOP::ServiceContextList &service_info () const;
+  IOP::ServiceContextList const &service_info () const;
 
 private:
   /// Helper methods to implement set_context()
-  void set_context_i (const IOP::ServiceContext &context);
+  void set_context_i (IOP::ServiceContext const &context);
   void set_context_i (IOP::ServiceContext &context);
-  void add_context_i (const IOP::ServiceContext &context);
+  void add_context_i (IOP::ServiceContext const &context);
   void add_context_i (IOP::ServiceContext &context);
   void set_context_i (IOP::ServiceId id, TAO_OutputCDR &cdr);
   void set_context_i (IOP::ServiceContext &context, TAO_OutputCDR &cdr);

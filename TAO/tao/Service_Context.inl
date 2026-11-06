@@ -13,7 +13,7 @@ TAO_Service_Context::service_info ()
   return this->service_context_;
 }
 
-ACE_INLINE const IOP::ServiceContextList &
+ACE_INLINE IOP::ServiceContextList const &
 TAO_Service_Context::service_info () const
 {
   return this->service_context_;
