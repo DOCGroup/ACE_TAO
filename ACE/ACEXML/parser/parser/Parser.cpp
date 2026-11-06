@@ -2884,7 +2884,7 @@ ACEXML_Parser::reset ()
     {
       this->current_->getInputSource()->getCharStream()->rewind();
 
-      this->current_->setInputSource (0);
+      this->current_->setInputSource (nullptr);
       delete this->current_;
       this->current_ = nullptr;
     }

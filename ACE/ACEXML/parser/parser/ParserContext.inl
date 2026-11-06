@@ -1,14 +1,4 @@
 // -*- C++ -*-
-#include <algorithm>
-
-ACEXML_INLINE
-ACEXML_Parser_Context::ACEXML_Parser_Context()
-  : instream_ (0),
-    locator_ (0)
-{
-
-}
-
 ACEXML_INLINE
 ACEXML_Parser_Context::ACEXML_Parser_Context (ACEXML_InputSource* instream,
                                               ACEXML_LocatorImpl* locator)
@@ -18,57 +8,43 @@ ACEXML_Parser_Context::ACEXML_Parser_Context (ACEXML_InputSource* instream,
 
 }
 
-ACEXML_INLINE
-ACEXML_Parser_Context::ACEXML_Parser_Context (const ACEXML_Parser_Context& src)
-  : instream_ (src.instream_),
-    locator_ (src.locator_)
-{
-
-}
-
 ACEXML_INLINE bool
-ACEXML_Parser_Context::operator!= (const ACEXML_Parser_Context& src)
+ACEXML_Parser_Context::operator!= (ACEXML_Parser_Context const& src) const
 {
-  return (this->instream_ != src.instream_ && this->locator_ != src.locator_);
-}
-
-ACEXML_INLINE ACEXML_Parser_Context&
-ACEXML_Parser_Context::operator= (const ACEXML_Parser_Context& src)
-{
-  ACEXML_Parser_Context tmp (src);
-  std::swap (this->instream_, tmp.instream_);
-  std::swap (this->locator_, tmp.locator_);
-  return *this;
+  return (this->instream_.get () != src.instream_.get ()
+          && this->locator_.get () != src.locator_.get ());
 }
 
 
 ACEXML_INLINE ACEXML_InputSource*
 ACEXML_Parser_Context::getInputSource ()
 {
-  return this->instream_;
+  return this->instream_.get ();
 }
 
 ACEXML_INLINE ACEXML_LocatorImpl*
 ACEXML_Parser_Context::getLocator ()
 {
-  return this->locator_;
+  return this->locator_.get ();
 }
 
 ACEXML_INLINE void
 ACEXML_Parser_Context::setInputSource (ACEXML_InputSource* ip)
 {
-  this->instream_ = ip;
+  this->instream_.release ();
+  this->instream_.reset (ip);
 }
 
 ACEXML_INLINE void
 ACEXML_Parser_Context::setLocator (ACEXML_LocatorImpl* locator)
 {
-  this->locator_ = locator;
+  this->locator_.release ();
+  this->locator_.reset (locator);
 }
 
 ACEXML_INLINE void
 ACEXML_Parser_Context::reset ()
 {
-  this->instream_ = 0;
-  this->locator_ = 0;
+  this->instream_.release ();
+  this->locator_.release ();
 }
