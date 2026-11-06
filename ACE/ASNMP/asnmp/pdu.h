@@ -34,6 +34,8 @@
 
 #define MAX_VBS 25
 #include "asnmp/vb.h"         // include Vb class definition
+#include <array>
+#include <memory>
 
 /**
  * @class Pdu
@@ -52,6 +54,9 @@ public:
 
   /// constructor with another Pdu instance
   Pdu( const Pdu &pdu);
+
+  Pdu (Pdu &&) = delete;
+  Pdu &operator= (Pdu &&) = delete;
 
   /// destructor
   ~Pdu();
@@ -149,40 +154,40 @@ public:
 
 protected:
   /// pointer to array of Vbs
-  Vb *vbs_[MAX_VBS];
+  std::array<std::unique_ptr<Vb>, MAX_VBS> vbs_ {};
 
   /// count of Vbs
-  int vb_count_;
+  int vb_count_ {};
 
   /// SMI error status
-  int error_status_;
+  int error_status_ {};
 
   /// SMI error index
-  int error_index_;
+  int error_index_ {};
 
   /// valid boolean status of object construction
   /// SMI request id
-  int validity_;
-  unsigned long request_id_;
+  int validity_ {};
+  unsigned long request_id_ {};
 
   /// derived at run time based on request type
-  unsigned short pdu_type_;
+  unsigned short pdu_type_ {};
 
   /**
     * a timestamp associated with an infor
     * for notify Pdu objects only
     * traps & notifies
     */
-  TimeTicks notify_timestamp_;
+  TimeTicks notify_timestamp_ {};
 
   /// an id
-  Oid notify_id_;
+  Oid notify_id_ {};
 
-  Oid notify_enterprise_;
+  Oid notify_enterprise_ {};
 
 private:
   /// buffer for to_string()
-  char *output_;
+  std::unique_ptr<char[]> output_ {};
 };
 
 
@@ -196,14 +201,16 @@ class ASNMP_Export VbIter
 public:
   /// default constructor
   VbIter(Pdu& pdu);
+  VbIter (VbIter const &) = delete;
+  VbIter &operator= (VbIter const &) = delete;
+  VbIter (VbIter &&) = delete;
+  VbIter &operator= (VbIter &&) = delete;
 
   /// returns 1 if ok, else 0 if none left
   int next(Vb& vb);
 
 private:
   /// disallow copy constructor use
-  VbIter(const VbIter&);
-
   /// current object in list
   int idx_;
 

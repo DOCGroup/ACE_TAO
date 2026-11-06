@@ -49,6 +49,7 @@
 #include "asnmp/octet.h"               // octet class
 #include "asnmp/address.h"             // address class def
 #include "asnmp/integer.h"             // integer class
+#include <memory>
 
 
 //------------[ VB Class Def ]-------------------------------------
@@ -82,6 +83,8 @@ public:
 
   /// copy constructor
   Vb( const Vb &vb);
+  Vb (Vb &&) = delete;
+  Vb &operator= (Vb &&) = delete;
 
   /**
    * destructor
@@ -187,13 +190,13 @@ public:
 
 protected:
   /// display vb as  [ oid / value ]
-  char *output_;
+  std::unique_ptr<char[]> output_ {};
 
   /// a vb is made up of a oid
   Oid iv_vb_oid_;
 
   /// and a value...
-  SnmpSyntax *iv_vb_value_;
+  std::unique_ptr<SnmpSyntax> iv_vb_value_ {};
 
   /// are there any vb exceptions??
   SmiUINT32 exception_status_;

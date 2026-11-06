@@ -35,6 +35,7 @@ DAMAGES.
 
 #include "ace/OS_main.h"
 #include "asnmp/oid.h"
+#include "asnmp/pdu.h"
 #include "asnmp/vb.h"
 #include "test_config.h"
 
@@ -176,6 +177,29 @@ static void VbTest()
   ACE_ASSERT(o1 == o2);
   v11.get_value(s2);
   ACE_ASSERT(s1 == s2);
+
+  Pdu pdu;
+  pdu += v5;
+  pdu += v10;
+  ACE_ASSERT(pdu.get_vb_count() == 2);
+
+  Pdu copied_pdu (pdu);
+  Vb copied_vb;
+  ACE_ASSERT(copied_pdu.get_vb_count() == 2);
+  ACE_ASSERT(copied_pdu.get_vb (copied_vb, 1) == 1);
+  ACE_ASSERT(copied_vb == v10);
+
+  ACE_ASSERT(copied_pdu.delete_vb (0) == 1);
+  ACE_ASSERT(copied_pdu.get_vb_count() == 1);
+  ACE_ASSERT(copied_pdu.get_vb (copied_vb, 0) == 1);
+  ACE_ASSERT(copied_vb == v10);
+
+  Vb varbinds[] {v5, v10};
+  Pdu list_pdu;
+  ACE_ASSERT(list_pdu.set_vblist (varbinds, 2) == 1);
+  ACE_ASSERT(list_pdu.get_vb_count() == 2);
+  ACE_ASSERT(list_pdu.trim (1) == 1);
+  ACE_ASSERT(list_pdu.get_vb_count() == 1);
 #endif /*if ACE_WIN32*/
 }
 
