@@ -62,7 +62,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ****************************************************************
 
       // Create an scheduling service
-      POA_RtecScheduler::Scheduler *sched_impl = nullptr;
+      POA_RtecScheduler::Scheduler *sched_impl {};
       if (config_run)
         {
           ACE_NEW_RETURN (sched_impl,
