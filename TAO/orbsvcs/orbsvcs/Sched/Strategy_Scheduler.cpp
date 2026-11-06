@@ -691,7 +691,7 @@ ACE_Scheduler_Strategy::minimum_critical_priority ()
 // class ACE_MUF_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
 
-ACE_MUF_Scheduler_Strategy *ACE_MUF_Scheduler_Strategy::instance_ = nullptr;
+ACE_MUF_Scheduler_Strategy *ACE_MUF_Scheduler_Strategy::instance_ {};
 
 ///////////////////////////////////////////////////////
 // class ACE_MUF_Scheduler_Strategy member functions //
@@ -842,7 +842,7 @@ ACE_MUF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
 // class ACE_RMS_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
 
-ACE_RMS_Scheduler_Strategy *ACE_RMS_Scheduler_Strategy::instance_ = nullptr;
+ACE_RMS_Scheduler_Strategy *ACE_RMS_Scheduler_Strategy::instance_ {};
 
 ///////////////////////////////////////////////////////
 // class ACE_RMS_Scheduler_Strategy member functions //
@@ -965,7 +965,7 @@ ACE_RMS_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
 // class ACE_MLF_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
 
-ACE_MLF_Scheduler_Strategy *ACE_MLF_Scheduler_Strategy::instance_ = nullptr;
+ACE_MLF_Scheduler_Strategy *ACE_MLF_Scheduler_Strategy::instance_ {};
 
 ///////////////////////////////////////////////////////
 // class ACE_MLF_Scheduler_Strategy member functions //
@@ -1090,7 +1090,7 @@ ACE_MLF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
 // class ACE_EDF_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
 
-ACE_EDF_Scheduler_Strategy *ACE_EDF_Scheduler_Strategy::instance_ = nullptr;
+ACE_EDF_Scheduler_Strategy *ACE_EDF_Scheduler_Strategy::instance_ {};
 
 ///////////////////////////////////////////////////////
 // class ACE_EDF_Scheduler_Strategy member functions //
@@ -1209,7 +1209,7 @@ ACE_EDF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
 //////////////////////////////////////////////
 
 ACE_Criticality_Scheduler_Strategy *
-ACE_Criticality_Scheduler_Strategy::instance_ = nullptr;
+ACE_Criticality_Scheduler_Strategy::instance_ {};
 
 ///////////////////////////////////////////////////////////////
 // class ACE_Criticality_Scheduler_Strategy member functions //
