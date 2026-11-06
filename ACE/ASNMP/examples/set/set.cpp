@@ -34,12 +34,13 @@
 //
 // SNMPv1 Set Application
 //
-class set {
+class set
+{
 public:
-  set(int argc, char **argv); // process command line args
-  bool valid() const;            // verify transaction can proceed
-  int run();                     //  issue transaction
-  static void usage();           // operator help message
+  set (int argc, char **argv); // process command line args
+  bool valid () const;            // verify transaction can proceed
+  int run ();                     // issue transaction
+  static void usage ();           // operator help message
 
 private:
   set (set const &) = delete;
@@ -53,39 +54,38 @@ private:
   OctetStr community_;
   Snmp snmp_;
   UdpTarget target_;
-  bool valid_;
+  bool valid_ {};
 };
-
 
 // main entry point
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter atc (argc, argv);
   set get (atc.get_argc (), atc.get_ASCII_argv ());
-  if (get.valid())
-     return get.run();
+  if (get.valid ())
+     return get.run ();
   else
     set::usage();
   return 1;
 }
 
 bool
-set::valid() const
+set::valid () const
 {
- return valid_;
+  return this->valid_;
 }
 
-set::set(int argc, char *argv[]): valid_(false)
+set::set (int argc, char *argv[])
 {
-   Vb vb;                                  // construct a Vb object
-   Oid req;
+   Vb vb {}; // construct a Vb object
+   Oid req {};
    if ( argc < 2)
      return;
    target_.get_write_community(community_);
    address_ = argv[argc - 1];
-   if ( !address_.valid()) {
+   if (!address_.valid ()) {
       cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
-     << argv[argc] << "\n";
+     << argv[argc - 1] << "\n";
       return;
    }
 
@@ -93,89 +93,89 @@ set::set(int argc, char *argv[]): valid_(false)
    ACE_Get_Opt get_opt (argc,
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("o:c:r:t:I:U:C:G:T:O:S:P:"));
-   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
+   for (int option = get_opt (); option != -1; option = get_opt ())
+     switch (option)
        {
        case 'o':
-         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         if (req.valid() == 0)
+         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+         if (req.valid () == 0)
          cout << "ERROR: oid value: "
-              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg())
+              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ())
               << "is not valid. using default.\n";
          break;
 
        case 'c':
-         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         target_.set_write_community(community_);
+         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+         target_.set_write_community (community_);
          break;
 
        case 'r':
-         target_.set_retry(ACE_OS::atoi (get_opt.opt_arg()));
+         target_.set_retry (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
 
        case 't':
-         target_.set_timeout(ACE_OS::atoi (get_opt.opt_arg()));
+         target_.set_timeout (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
 
        case 'I': // Integer32
          {
-         SnmpInt32 o(ACE_OS::atoi(get_opt.opt_arg()));
-         vb.set_value(o);
+         SnmpInt32 o (ACE_OS::atoi (get_opt.opt_arg ()));
+         vb.set_value (o);
          pdu_ += vb;
          }
         break;
 
        case 'U': // Unsigned32
          {
-         SnmpUInt32 o(ACE_OS::atoi(get_opt.opt_arg()));
-         vb.set_value(o);
+         SnmpUInt32 o (ACE_OS::atoi (get_opt.opt_arg ()));
+         vb.set_value (o);
          pdu_ += vb;
          }
         break;
 
        case 'C': // Counter32
          {
-         Counter32 o(ACE_OS::atoi(get_opt.opt_arg()));
-         vb.set_value(o);
+         Counter32 o (ACE_OS::atoi (get_opt.opt_arg ()));
+         vb.set_value (o);
          pdu_ += vb;
          }
          break;
 
        case 'G': // Gauge32
         {
-         Gauge32 o(ACE_OS::atoi(get_opt.opt_arg()));
-         vb.set_value(o);
+         Gauge32 o (ACE_OS::atoi (get_opt.opt_arg ()));
+         vb.set_value (o);
          pdu_ += vb;
          }
         break;
 
        case 'T': // TimeTicks
         {
-         TimeTicks o(ACE_OS::atoi(get_opt.opt_arg()));
-         vb.set_value(o);
+         TimeTicks o (ACE_OS::atoi (get_opt.opt_arg ()));
+         vb.set_value (o);
          pdu_ += vb;
          }
         break;
 
        case 'O': // Oid as a variable identifier
         {
-         oid_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         vb.set_oid(oid_); // when value is set, pdu updated
+         oid_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+         vb.set_oid (oid_); // when value is set, pdu updated
          }
          break;
 
        case 'S': // Octet String
          {
-         OctetStr o(ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg()));
-         vb.set_value(o);                    // set the Oid portion of the Vb
+         OctetStr o (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+         vb.set_value (o); // set the Oid portion of the Vb
          pdu_ += vb;
          }
          break;
 
        case 'P': // Oid String as a value
          {
-         Oid o(ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg()));
-         vb.set_value(o);                    // set the Oid portion of the Vb
+         Oid o (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+         vb.set_value (o); // set the Oid portion of the Vb
          pdu_ += vb;
          }
          break;
@@ -185,11 +185,11 @@ set::set(int argc, char *argv[]): valid_(false)
        }
 
   // if user didn't set anything use defaults
-  if (pdu_.get_vb_count() == 0) {
-   Oid def_oid("1.3.6.1.2.1.1.4.0");      // defualt is sysName
-   OctetStr def_value("sysName.0 updated by ASNMP set command");
-   vb.set_oid(def_oid);
-   vb.set_value(def_value);
+  if (pdu_.get_vb_count () == 0) {
+   Oid const def_oid ("1.3.6.1.2.1.1.4.0"); // default is sysName
+   OctetStr def_value ("sysName.0 updated by ASNMP set command");
+   vb.set_oid (def_oid);
+   vb.set_value (def_value);
    pdu_ += vb;
    cout << "INFO: using defaults, setting sysName to : " <<  \
         def_value.to_string() << endl;
@@ -198,10 +198,10 @@ set::set(int argc, char *argv[]): valid_(false)
   valid_ = true;
 }
 
-void set::usage()
+void set::usage ()
 {
   cout << "Usage:\n";
-  cout << "next [options] dotted-quad | DNSName[:port]\n";
+  cout << "set [options] dotted-quad | DNSName[:port]\n";
   cout << "      -o OID starts with oid after 1.3.6.1.2.1.1.1.0 (mibII sysDescr.0)\n";
   cout << "      -c Community_name, default is 'private'\n";
   cout << "      -r N  retries default is N = 1 retry\n";
@@ -210,27 +210,26 @@ void set::usage()
   cout << "      where I=int32, U=uint32, G=gauge32, S=octet, P=oid" << endl;
 }
 
-
-int set::run()
+int set::run ()
 {
    //----------[ create a ASNMP session ]-----------------------------------
-   if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
+   if (snmp_.valid () != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<
           snmp_.error_string()<< "\n";
       return 1;
    }
 
    //--------[ build up ASNMP object needed ]-------------------------------
-   if (address_.get_port() == 0)
-     address_.set_port(DEF_AGENT_PORT);
-   target_.set_address( address_);         // make a target using the address
+   if (address_.get_port () == 0)
+     address_.set_port (DEF_AGENT_PORT);
+   target_.set_address (address_); // make a target using the address
 
    //-------[ issue the request, blocked mode ]-----------------------------
-   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version()+ 1) << \
+   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1) << \
        " SET SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
-   target_.get_address(address_); // target updates port used
-   int rc;
-   char const *name = address_.resolve_hostname(rc);
+   target_.get_address (address_); // target updates port used
+   int rc {};
+   char const * const name = address_.resolve_hostname (rc);
 
    cout << "Device: " << address_ << " ";
 
@@ -242,23 +241,23 @@ int set::run()
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;
 
-   if (snmp_.set( pdu_, target_) == SNMP_CLASS_SUCCESS) {
-       Vb vb;
+   if (snmp_.set (pdu_, target_) == SNMP_CLASS_SUCCESS) {
+       Vb vb {};
       // check to see if there are any errors
-      if (pdu_.get_error_status()) {
+      if (pdu_.get_error_status ()) {
         cout << "ERROR: agent replied as follows\n";
         cout << pdu_.agent_error_reason() << endl;
       }
       else {
-        VbIter iter(pdu_);
-        while (iter.next(vb)) {
+        VbIter iter (pdu_);
+        while (iter.next (vb)) {
           cout << "\tOid = " << vb.to_string_oid() << "\n";
           cout << "\tValue = " << vb.to_string_value() << "\n";
        }
      }
    }
    else {
-    char const *ptr = snmp_.error_string();
+    char const * const ptr = snmp_.error_string ();
     cout << "ASNMP:ERROR: set command failed reason: " << ptr << endl;
   }
   cout << "ASNMP:INFO:command completed normally.\n"<< endl;
