@@ -25,7 +25,7 @@ namespace TAO
   ::CORBA::ValueBase *
   ObjectReferenceTemplate::_copy_value ()
   {
-    ::CORBA::ValueBase *ret_val = nullptr;
+    ::CORBA::ValueBase *ret_val {};
     ACE_NEW_THROW_EX (
       ret_val,
       ObjectReferenceTemplate (
@@ -54,7 +54,7 @@ namespace TAO
   PortableInterceptor::AdapterName *
   ObjectReferenceTemplate::adapter_name ()
   {
-    PortableInterceptor::AdapterName *adapter_name = nullptr;
+    PortableInterceptor::AdapterName *adapter_name {};
 
     ACE_NEW_THROW_EX (adapter_name,
                       PortableInterceptor::AdapterName (
