@@ -46,7 +46,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      const int milliseconds = 50;
+      constexpr int milliseconds {50};
 
       CEC_Counting_Supplier supplier_00;
 
@@ -149,7 +149,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       consumer_00.dump_results (expected, 5);
       consumer_01.dump_results (expected, 5);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Service");
       return 1;

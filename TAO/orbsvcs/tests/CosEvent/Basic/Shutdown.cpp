@@ -4,7 +4,8 @@
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 
 static void run_test (PortableServer::POA_ptr poa,
-                      int with_callbacks);
+                      bool with_callbacks);
+static void deactivate_servant (PortableServer::Servant servant);
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -27,9 +28,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      run_test (poa.in (), 0);
+      run_test (poa.in (), false);
 
-      run_test (poa.in (), 1);
+      run_test (poa.in (), true);
 
       // ****************************************************************
 
@@ -37,7 +38,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -45,7 +46,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void
+static void
 deactivate_servant (PortableServer::Servant servant)
 {
   PortableServer::POA_var poa =
@@ -57,7 +58,7 @@ deactivate_servant (PortableServer::Servant servant)
 
 static void
 run_test (PortableServer::POA_ptr poa,
-          int with_callbacks)
+          bool with_callbacks)
 {
   TAO_CEC_EventChannel_Attributes attributes (poa,
                                               poa);
@@ -81,17 +82,18 @@ run_test (PortableServer::POA_ptr poa,
 
   // ****************************************************************
 
-  CEC_Counting_Consumer **consumer = 0;
-  CEC_Counting_Supplier **supplier = 0;
+  // These ACE-allocated arrays hold servants until they are deactivated below.
+  CEC_Counting_Consumer **consumer {};
+  CEC_Counting_Supplier **supplier {};
 
-  const int n = 200;
+  constexpr int n {200};
   ACE_NEW (consumer, CEC_Counting_Consumer*[n]);
   ACE_NEW (supplier, CEC_Counting_Supplier*[n]);
 
-  int i = 0;
+  int i {};
   for (i = 0; i != n; ++i)
     {
-      char consumer_name[64];
+      char consumer_name[64] {};
       ACE_OS::sprintf (consumer_name, "Consumer/%4.4d", i);
       ACE_NEW (consumer[i],
                CEC_Counting_Consumer (consumer_name));
