@@ -14,6 +14,7 @@
 #ifndef EC_MULTIPLE_H
 #define EC_MULTIPLE_H
 
+#include <array>
 #include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -45,25 +46,28 @@ class Test_Supplier : public POA_RtecEventComm::PushSupplier
   //   to execute the proper test.
 public:
   Test_Supplier (Test_ECG* test, void* cookie);
+  Test_Supplier (Test_Supplier const&) = delete;
+  Test_Supplier (Test_Supplier&&) = delete;
+  Test_Supplier& operator= (Test_Supplier const&) = delete;
+  Test_Supplier& operator= (Test_Supplier&&) = delete;
 
-  void open (const char* name,
+  void open (char const* name,
              int event_a, int event_b,
              int message_count,
-             const RtecScheduler::Period_t& rate,
+             RtecScheduler::Period_t const& rate,
              RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
   void close ();
   // Disconnect from the EC.
 
-  void activate (const char* name,
-                 const RtecScheduler::Period_t& rate,
+  void activate (char const* name,
+                 RtecScheduler::Period_t const& rate,
                  RtecEventChannelAdmin::EventChannel_ptr ec);
 
-  void push (const RtecEventComm::EventSet& events);
+  void push (RtecEventComm::EventSet const& events);
   void disconnect_push_consumer ();
   // Implement the callbacks for our consumer personality.
-
 
   void disconnect_push_supplier () override;
   // The methods in the skeleton.
@@ -112,8 +116,12 @@ class Test_Consumer : public POA_RtecEventComm::PushConsumer
   //   identify the consumer.
 public:
   Test_Consumer (Test_ECG* test, void *cookie);
+  Test_Consumer (Test_Consumer const&) = delete;
+  Test_Consumer (Test_Consumer&&) = delete;
+  Test_Consumer& operator= (Test_Consumer const&) = delete;
+  Test_Consumer& operator= (Test_Consumer&&) = delete;
 
-  void open (const char* name,
+  void open (char const* name,
              int event_a, int event_b,
              RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the consumer to the EC.
@@ -121,7 +129,7 @@ public:
   void close ();
   // Disconnect from the EC.
 
-  void push (const RtecEventComm::EventSet& events) override;
+  void push (RtecEventComm::EventSet const& events) override;
   void disconnect_push_consumer () override;
   // The skeleton methods.
 
@@ -159,6 +167,10 @@ class Test_ECG
   //
 public:
   Test_ECG ();
+  Test_ECG (Test_ECG const&) = delete;
+  Test_ECG (Test_ECG&&) = delete;
+  Test_ECG& operator= (Test_ECG const&) = delete;
+  Test_ECG& operator= (Test_ECG&&) = delete;
 
   enum {
     MAX_EVENTS = 1024,
@@ -176,7 +188,7 @@ public:
 
   void push_supplier (void* supplier_cookie,
                       RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-                      const RtecEventComm::EventSet &events);
+                      RtecEventComm::EventSet const& events);
   // Callback method for suppliers, we push for them to their
   // consumers and take statistics on the way.
   // It is possible that we ignore the <consumer> parameter when
@@ -184,7 +196,7 @@ public:
 
   void push_consumer (void* consumer_cookie,
                       ACE_hrtime_t arrival,
-                      const RtecEventComm::EventSet& events);
+                      RtecEventComm::EventSet const& events);
   // Callback method for consumers, if any of our consumers has
   // received events it will invoke this method.
 
@@ -195,7 +207,7 @@ public:
 private:
   RtecEventChannelAdmin::EventChannel_ptr
     get_ec (CosNaming::NamingContext_ptr naming_context,
-            const char* ec_name);
+            char const* ec_name);
   // Helper routine to obtain an EC given its name.
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
@@ -229,7 +241,7 @@ private:
   // Block event delivery until all the consumers are ready.
 
   struct Stats;
-  void dump_results (const ACE_TCHAR* name, Stats& stats);
+  void dump_results (ACE_TCHAR const* name, Stats& stats);
   // Dump the results for a particular consumer.
 
   int local_source (RtecEventComm::EventSourceID id) const;
@@ -270,8 +282,8 @@ private:
   // Don't send the messages through the EC. This is needed to measure
   // the overhead introduced by the EC.
 
-  Test_Supplier* suppliers_[Test_ECG::MAX_SUPPLIERS];
-  Test_Consumer* consumers_[Test_ECG::MAX_CONSUMERS];
+  std::array<Test_Supplier*, Test_ECG::MAX_SUPPLIERS> suppliers_;
+  std::array<Test_Consumer*, Test_ECG::MAX_CONSUMERS> consumers_;
   // The suppliers and consumer arrays, the sizes are controlled using
   // {lp,hp}_{suppliers,consumers}_
 
@@ -325,22 +337,22 @@ private:
   // two other types. The types for high-priority clients can be
   // different from the types to low priority clients.
 
-  const ACE_TCHAR* schedule_file_;
+  ACE_TCHAR const* schedule_file_;
   // Ask the schedule to compute and dump its schedule after the test
   // execution.
 
-  const ACE_TCHAR* pid_file_name_;
+  ACE_TCHAR const* pid_file_name_;
   // The name of a file where the process stores its pid
 
   struct Stats {
     ACE_hrtime_t total_time_;
-    float laxity_[MAX_EVENTS];
-    ACE_hrtime_t lcl_latency_[MAX_EVENTS];
-    ACE_hrtime_t end_[MAX_EVENTS];
+    std::array<float, MAX_EVENTS> laxity_;
+    std::array<ACE_hrtime_t, MAX_EVENTS> lcl_latency_;
+    std::array<ACE_hrtime_t, MAX_EVENTS> end_;
     int lcl_count_;
     // We keep laxity and total_time stats only for the local events.
 
-    ACE_hrtime_t rmt_latency_[MAX_EVENTS];
+    std::array<ACE_hrtime_t, MAX_EVENTS> rmt_latency_;
     int rmt_count_;
   };
   Stats stats_[Test_ECG::MAX_CONSUMERS];
