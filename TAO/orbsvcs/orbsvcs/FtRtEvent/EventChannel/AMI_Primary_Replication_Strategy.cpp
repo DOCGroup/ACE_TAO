@@ -44,7 +44,7 @@ int AMI_Primary_Replication_Strategy::svc()
 {
   try{
     int argc = 0;
-    char** argv = nullptr;
+    char** argv = {};
     orb_ = CORBA::ORB_init (argc, argv);
 
     root_poa_ =  resolve_init<PortableServer::POA>(orb_.in(), "RootPOA");
@@ -90,7 +90,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
   FtRtecEventChannelAdmin::ObjectId const& oid)
 {
    ACE_Auto_Event event;
-   Update_Manager* manager = nullptr;
+   Update_Manager* manager = {};
    bool success = false;
 
     FTRT::TransactionDepth transaction_depth =

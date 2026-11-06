@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
 CachedRequestTable::is_new_request (ACE_CString const &client_id, CORBA::Long retention_id)
 {
-  TableImpl::ENTRY *entry = nullptr;
+  TableImpl::ENTRY *entry = {};
   return table_.find(client_id, entry) !=0 || entry->int_id_.retention_id != retention_id;
 }
 
@@ -25,7 +25,7 @@ CachedRequestTable::update (ACE_CString const &client_id,
 {
   CachedRequestInfo info;
   info.retention_id = retention_id;
-  TableImpl::ENTRY *entry = nullptr;
+  TableImpl::ENTRY *entry = {};
   if (table_.bind(client_id, info, entry))
   {
     entry->int_id_.result = result;
@@ -38,7 +38,7 @@ CachedRequestTable::update (ACE_CString const &client_id,
 CORBA::Any
 CachedRequestTable::get_result (ACE_CString const &client_id)
 {
-  TableImpl::ENTRY *entry = nullptr;
+  TableImpl::ENTRY *entry = {};
   if (table_.find(client_id, entry)) {
     return entry->int_id_.result;
   }
@@ -161,7 +161,7 @@ get_sequence_number_context(
 
 
 namespace {
-FtEventServiceInterceptor *interceptor = nullptr;
+FtEventServiceInterceptor *interceptor = {};
 }
 
 FtEventServiceInterceptor::FtEventServiceInterceptor ()

@@ -32,7 +32,7 @@ namespace FTRTEC {
 
     initialized = true;
 
-    Fault_Detector* detector = nullptr;
+    Fault_Detector* detector = {};
 
     // Parse any service configurator parameters.
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)
