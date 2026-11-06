@@ -164,7 +164,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
   TAO::SL3::CredentialsCurator_var tao_curator =
     TAO::SL3::CredentialsCurator::_narrow (curator.in ());
 
-  TAO::SSLIOP::CredentialsAcquirerFactory * factory = nullptr;
+  TAO::SSLIOP::CredentialsAcquirerFactory * factory = {};
   ACE_NEW_THROW_EX (factory,
                     TAO::SSLIOP::CredentialsAcquirerFactory,
                     CORBA::NO_MEMORY ());

@@ -267,7 +267,7 @@ TAO::SSLIOP::Protocol_Factory::options_delimiter () const
 TAO_Acceptor *
 TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 {
-  TAO_Acceptor *acceptor = nullptr;
+  TAO_Acceptor *acceptor = {};
 
   ACE_NEW_RETURN (acceptor,
                   TAO::SSLIOP::Acceptor (this->qop_,
@@ -284,7 +284,7 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 int
 TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char *&path)
 {
-  char *lst = nullptr;
+  char *lst = {};
   char const *type_name = ACE_OS::strtok_r (arg, ":", &lst);
   path = CORBA::string_dup (ACE_OS::strtok_r (nullptr, "", &lst));
 
@@ -306,7 +306,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   CORBA::String_var ec_name;
   CORBA::String_var ca_file;
   CORBA::String_var ca_dir;
-  ACE_TCHAR *rand_path = nullptr;
+  ACE_TCHAR *rand_path = {};
 
   int certificate_type = -1;
   int private_key_type = -1;
@@ -567,7 +567,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   if (rand_path != nullptr)
   {
     short errors = 0;
-    ACE_TCHAR *file_name = nullptr;
+    ACE_TCHAR *file_name = {};
     ACE_TCHAR const *path = ACE_OS::strtok_r (rand_path,
                                               TAO_PATH_SEPARATOR_STRING,
                                               &file_name);
@@ -851,7 +851,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer ()
 TAO_Connector *
 TAO::SSLIOP::Protocol_Factory::make_connector ()
 {
-  TAO::SSLIOP::Connector *connector = nullptr;
+  TAO::SSLIOP::Connector *connector = {};
 
   ACE_NEW_RETURN (connector,
                   TAO::SSLIOP::Connector (this->qop_, this->check_host_),

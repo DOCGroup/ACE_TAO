@@ -149,7 +149,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
       throw CORBA::BAD_PARAM ();
     }
 
-  TAO::SSLIOP::OwnCredentials * creds = nullptr;
+  TAO::SSLIOP::OwnCredentials * creds = {};
   ACE_NEW_THROW_EX (creds,
                     TAO::SSLIOP::OwnCredentials (x509.in (), evp.in ()),
                     CORBA::NO_MEMORY ());
@@ -206,7 +206,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (::SSLIOP::File const &certificate)
   if (filename == nullptr)
     return nullptr;
 
-  FILE *fp = nullptr;
+  FILE *fp = {};
   ::X509 *x = nullptr;
 
   if (certificate.type == ::SSLIOP::ASN1)
@@ -277,7 +277,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (::SSLIOP::File const &key)
   if (filename == nullptr)
     return nullptr;
 
-  FILE *fp = nullptr;
+  FILE *fp = {};
   ::EVP_PKEY *evp = nullptr;
 
   if (key.type == ::SSLIOP::ASN1)

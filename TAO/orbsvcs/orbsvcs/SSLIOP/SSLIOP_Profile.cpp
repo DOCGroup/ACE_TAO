@@ -58,7 +58,7 @@ TAO_SSLIOP_Profile::~TAO_SSLIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp = {};
 
   for (TAO_Endpoint *next = this->ssl_endpoint_.next ();
        next != nullptr;
@@ -136,7 +136,7 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR & cdr)
                i < this->count_ -1;
                ++i)
             {
-              TAO_SSLIOP_Endpoint *endpoint = nullptr;
+              TAO_SSLIOP_Endpoint *endpoint = {};
               ACE_NEW_RETURN (endpoint,
                               TAO_SSLIOP_Endpoint (nullptr, nullptr),
                               -1);
@@ -292,7 +292,7 @@ TAO_SSLIOP_Profile::decode_tagged_endpoints ()
            (i + 1) != 0;
            --i)
         {
-          TAO_SSLIOP_Endpoint *endpoint = nullptr;
+          TAO_SSLIOP_Endpoint *endpoint = {};
           ACE_NEW_RETURN (endpoint,
                           TAO_SSLIOP_Endpoint (nullptr, nullptr),
                           -1);

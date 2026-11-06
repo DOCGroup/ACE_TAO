@@ -128,7 +128,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
   // Create a profile for each acceptor endpoint.
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
-      TAO_SSLIOP_Profile *pfile = nullptr;
+      TAO_SSLIOP_Profile *pfile = {};
 
       // @@ We need to create an SSLIOP::SSL component for the object
       //    we're creating an MProfile for.  This will allow us to
@@ -206,8 +206,8 @@ TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
                                               CORBA::Short priority)
 {
   size_t index = 0;
-  TAO_Profile *pfile = nullptr;
-  TAO_SSLIOP_Profile *ssliop_profile = nullptr;
+  TAO_Profile *pfile = {};
+  TAO_SSLIOP_Profile *ssliop_profile = {};
 
   // First see if <mprofile> already contains a SSLIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -307,8 +307,8 @@ TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
        index < this->endpoint_count_;
        ++index)
     {
-      TAO_SSLIOP_Endpoint *ssl_endp = nullptr;
-      TAO_IIOP_Endpoint *iiop_endp = nullptr;
+      TAO_SSLIOP_Endpoint *ssl_endp = {};
+      TAO_IIOP_Endpoint *iiop_endp = {};
       ACE_NEW_RETURN (iiop_endp,
                       TAO_IIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),

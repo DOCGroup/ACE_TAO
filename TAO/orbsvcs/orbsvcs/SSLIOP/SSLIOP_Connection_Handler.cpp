@@ -43,7 +43,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
 {
   this->current_ = TAO::SSLIOP::Util::current (orb_core);
 
-  TAO::SSLIOP::Transport *specific_transport = nullptr;
+  TAO::SSLIOP::Transport *specific_transport = {};
   ACE_NEW (specific_transport,
           TAO::SSLIOP::Transport (this, orb_core));
 
