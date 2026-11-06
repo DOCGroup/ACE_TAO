@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IIOP_ACCEPTOR_H
 #define TAO_IIOP_ACCEPTOR_H
 
@@ -52,20 +51,20 @@ public:
   TAO_IIOP_Acceptor ();
 
   /// Destructor.
-  ~TAO_IIOP_Acceptor ();
+  ~TAO_IIOP_Acceptor () override;
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address () const;
+  ACE_INET_Addr const &address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints ();
+  ACE_INET_Addr const *endpoints ();
 
   /// Returns address for default endpoint
-  const ACE_INET_Addr& default_address () const;
+  ACE_INET_Addr const &default_address () const;
 
   /// Set address for default endpoint
-  void set_default_address (const ACE_INET_Addr& addr);
+  void set_default_address (ACE_INET_Addr const &addr);
 
   using BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
   using CREATION_STRATEGY = TAO_Creation_Strategy<TAO_IIOP_Connection_Handler>;
@@ -115,9 +114,9 @@ public:
    *   hostname or the IP if no reverse mapping exists.
    */
   virtual int hostname (TAO_ORB_Core *orb_core,
-                        const ACE_INET_Addr &addr,
+                        ACE_INET_Addr const &addr,
                         char *&host,
-                        const char *specified_hostname = nullptr);
+                        char const *specified_hostname = nullptr);
 
 protected:
   /**
@@ -130,7 +129,7 @@ protected:
    * AF_UNSPEC. This value is then passed to probe_interfaces by open.
    */
   int
-  parse_address (const char *address,
+  parse_address (char const *address,
                  ACE_INET_Addr &addr,
                  ACE_CString &specified_hostname,
                  int *def_type = nullptr);
@@ -139,7 +138,7 @@ protected:
    * Set the host name for the given address using the dotted decimal
    * format.
    */
-  int dotted_decimal_address (const ACE_INET_Addr &addr,
+  int dotted_decimal_address (ACE_INET_Addr const &addr,
                               char *&host);
 
   /**
@@ -147,7 +146,7 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_INET_Addr &addr,
+  virtual int open_i (ACE_INET_Addr const &addr,
                       ACE_Reactor *reactor);
 
   /**
@@ -174,7 +173,7 @@ protected:
    *                port but can't because you're behind a firewall and don't
    *                want to permit passage on all ephemeral ports)
    */
-  int parse_options (const char *options);
+  int parse_options (char const *options);
 
   /**
    * Parse options splits the options list in to an argv array. This
@@ -187,23 +186,25 @@ protected:
    * implementations. an ill-formed option is one which is missing an
    * equal sign or something to the left of it.
    */
-  virtual int parse_options_i (int &argc, ACE_CString ** argv);
+  virtual int parse_options_i (int &argc, ACE_CString **argv);
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
-  int create_new_profile (const TAO::ObjectKey &object_key,
+  int create_new_profile (TAO::ObjectKey const &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
 
   /// Helper method to create a profile that contains all of
   /// our endpoints.
-  int create_shared_profile (const TAO::ObjectKey &object_key,
+  int create_shared_profile (TAO::ObjectKey const &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 
 private:
-  void operator= (const TAO_IIOP_Acceptor &);
-  TAO_IIOP_Acceptor (const TAO_IIOP_Acceptor &);
+  TAO_IIOP_Acceptor (TAO_IIOP_Acceptor const &) = delete;
+  TAO_IIOP_Acceptor &operator= (TAO_IIOP_Acceptor const &) = delete;
+  TAO_IIOP_Acceptor (TAO_IIOP_Acceptor &&) = delete;
+  TAO_IIOP_Acceptor &operator= (TAO_IIOP_Acceptor &&) = delete;
 
 protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
@@ -215,7 +216,7 @@ protected:
    * at the port specified in each element of addrs_) for an available
    * port.  This is specified via the "portspan=" option to the endpoint.
    */
-  unsigned short port_span_;
+  unsigned short port_span_ {1};
 
   /**
    * Cache the information about the endpoints serviced by this
@@ -233,7 +234,7 @@ protected:
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).
-  CORBA::ULong endpoint_count_;
+  CORBA::ULong endpoint_count_ {};
 
   /**
    * The GIOP version for this endpoint
@@ -243,10 +244,10 @@ protected:
   TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {}; // Borrowed from the owning ORB.
 
   /// Enable socket option SO_REUSEADDR to be set
-  int reuse_addr_;
+  int reuse_addr_ {1};
 
   /// Address for default endpoint
   ACE_INET_Addr default_address_;
@@ -256,9 +257,9 @@ private:
   BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  CREATION_STRATEGY *creation_strategy_;
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
-  ACCEPT_STRATEGY *accept_strategy_;
+  std::unique_ptr<CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<CONCURRENCY_STRATEGY> concurrency_strategy_;
+  std::unique_ptr<ACCEPT_STRATEGY> accept_strategy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
