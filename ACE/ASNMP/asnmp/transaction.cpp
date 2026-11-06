@@ -17,17 +17,8 @@
 #include "asnmp/transaction.h"
 #include "ace/OS_NS_string.h"
 
-// pre: pdu, target report  valid() == 1
-// post: pdu sent out over the wire
-inline void reset_receive_buffer(iovec& io)
-{
-  io.iov_base = 0;
-  io.iov_len = 0;
-}
-
 transaction::transaction(const Pdu& pdu, const UdpTarget& target,
                          ACE_SOCK_Dgram& io):
-                         result_(0),
                          wp_(pdu,target), params_(target), session_(io)
 {
   // last step, convert address (get ride of this once we have merged address
@@ -36,15 +27,12 @@ transaction::transaction(const Pdu& pdu, const UdpTarget& target,
   // via string conversion "dotted-quad:port"
   ACE_INET_Addr tmp(udp);
   addr_ = tmp;
-  reset_receive_buffer(receive_iovec_);
 }
 
 transaction::~transaction()
 {
   ACE_Reactor::instance()->remove_handler(this, READ_MASK | DONT_CALL);
   ACE_Reactor::instance()->cancel_timer(this);
-
-  delete [] (char *) receive_iovec_.iov_base;
 }
 
 // implement state machine, send, wait (timeout/results) return
@@ -112,14 +100,14 @@ int transaction::run(transaction_result * r)
 // got back response from SNMPv1 agent - process it
 int transaction::handle_input (ACE_HANDLE)
 {
-  // OS allocates iovec_.iov_base ptr and len
-  delete [] (char*) receive_iovec_.iov_base;
-  reset_receive_buffer(receive_iovec_);
+  receive_buffer_.reset ();
+  receive_iovec_ = {};
   int rc = session_.recv(&receive_iovec_, receive_addr_, 0);
+  receive_buffer_.reset (static_cast<char *> (receive_iovec_.iov_base));
   if (rc == -1)
     {
-      delete [] (char*) receive_iovec_.iov_base;
-      reset_receive_buffer(receive_iovec_);
+      receive_buffer_.reset ();
+      receive_iovec_ = {};
       if (result_)
         result_->result(this, SNMP_CLASS_RESOURCE_UNAVAIL);
       return SNMP_CLASS_RESOURCE_UNAVAIL;
@@ -175,9 +163,8 @@ int transaction::result(Pdu& pdu, char *comm_str, ACE_INET_Addr *from)
 }
 
 transaction::transaction(ACE_SOCK_Dgram& io)
-: result_(0), session_(io)
+  : session_(io)
 {
-  reset_receive_buffer(receive_iovec_);
 }
 
 

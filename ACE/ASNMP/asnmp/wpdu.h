@@ -23,6 +23,7 @@
 #include "asnmp/asn1.h"
 #include "asnmp/pdu.h"
 #include "asnmp/target.h"
+#include <memory>
 
 struct snmp_pdu;
 /**
@@ -39,43 +40,48 @@ class ASNMP_Export wpdu
 public:
   /// construct CMU data from HP SNMP++ objects
   /// construct HP SNMP++ objects from raw buffer via CMU SNMP datatypes
-  wpdu(const Pdu& pdu, const UdpTarget& target);
-  wpdu(const iovec& buffer);
+  wpdu (Pdu const &pdu, UdpTarget const &target);
+  wpdu (iovec const &buffer);
   wpdu(); // same as using iovec?
+  wpdu (wpdu const &) = delete;
+  wpdu &operator= (wpdu const &) = delete;
+  wpdu (wpdu &&) = delete;
+  wpdu &operator= (wpdu &&) = delete;
 
   ~wpdu();
 
   /// constructor completed ok? rc = 1 else 0
-  int valid() const;
+  int valid () const;
 
   /// return raw data stream via CMU code
-  const iovec& get_buffer() const;
+  iovec const &get_buffer () const;
 
   /// return HP SNMP++ pdu
-  int get_pdu(Pdu& pdu, snmp_version& version);
+  int get_pdu (Pdu &pdu, snmp_version &version);
 
   /// return community strptr
-  const unsigned char *get_community() const;
+  unsigned char const *get_community () const;
 
 private:
-  int convert_vb_to_smival( Vb &tempvb, SmiVALUE *smival );
-  int load_vbs(snmp_pdu *raw_pdu, const Pdu& pdu);
-  int restore_vbs(Pdu& pdu, const snmp_pdu *raw_pdu) const;
-  void free_smival_descriptor( SmiVALUE *smival );
-  static void copy_iovec(iovec& dest, const iovec& src);
-  int set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const;
+  int convert_vb_to_smival (Vb &tempvb, SmiVALUE *smival);
+  int load_vbs (snmp_pdu *raw_pdu, Pdu const &pdu);
+  int restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const;
+  void free_smival_descriptor (SmiVALUE *smival);
+  static void copy_iovec (iovec &dest, iovec const &src);
+  int set_trap_info (snmp_pdu *raw_pdu, Pdu const &pdu) const;
 
   /// raw format
-  iovec iovec_;
+  std::unique_ptr<char[]> buffer_ {};
+  iovec iovec_ {};
 
   /// object construction state
-  int valid_flag_;
+  int valid_flag_ {};
 
   /// snmp version
-  snmp_version version_;
+  snmp_version version_ {version1};
 
-  unsigned char community_name[MAX_COMM_STR_LEN];
-  unsigned long comm_len; // = MAX_COMM_STR_LEN;
+  unsigned char community_name[MAX_COMM_STR_LEN] {};
+  unsigned long comm_len {MAX_COMM_STR_LEN};
 };
 
 #endif // WPDU_H_

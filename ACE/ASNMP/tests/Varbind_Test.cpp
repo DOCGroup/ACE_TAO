@@ -36,8 +36,11 @@ DAMAGES.
 #include "ace/OS_main.h"
 #include "asnmp/oid.h"
 #include "asnmp/pdu.h"
+#include "asnmp/target.h"
 #include "asnmp/vb.h"
+#include "asnmp/wpdu.h"
 #include "test_config.h"
+#include <cstring>
 
 /*
   Vb();
@@ -200,6 +203,23 @@ static void VbTest()
   ACE_ASSERT(list_pdu.get_vb_count() == 2);
   ACE_ASSERT(list_pdu.trim (1) == 1);
   ACE_ASSERT(list_pdu.get_vb_count() == 1);
+
+  Pdu request;
+  request.set_type (sNMP_PDU_GET);
+  Vb request_vb;
+  request_vb.set_oid (o1);
+  request_vb.set_null ();
+  request += request_vb;
+  UdpTarget target {IpAddress ("127.0.0.1")};
+  wpdu encoded (request, target);
+  ACE_ASSERT(encoded.valid() == 1);
+
+  wpdu copied_wire (encoded.get_buffer());
+  ACE_ASSERT(copied_wire.valid() == 1);
+  ACE_ASSERT(copied_wire.get_buffer().iov_len == encoded.get_buffer().iov_len);
+  ACE_ASSERT(std::memcmp (copied_wire.get_buffer().iov_base,
+                          encoded.get_buffer().iov_base,
+                          encoded.get_buffer().iov_len) == 0);
 #endif /*if ACE_WIN32*/
 }
 

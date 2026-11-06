@@ -23,6 +23,8 @@
 #include "asnmp/transaction_result.h"
 #include "asnmp/wpdu.h"         // cmu adapter class
 #include "ace/SOCK_Dgram.h"
+#include "ace/Malloc_Base.h"
+#include <memory>
 
 /**
  * @class transaction
@@ -32,14 +34,18 @@
  */
 class ASNMP_Export transaction : public ACE_Event_Handler
 {
-  int retry_counter_;
-  transaction_result * result_;
+  int retry_counter_ {};
+  transaction_result *result_ {}; // borrowed callback
 
 public:
   /// constructor
   /// destructor
   transaction(const Pdu& pdu, const UdpTarget& target, ACE_SOCK_Dgram& io);
   transaction(ACE_SOCK_Dgram& io);
+  transaction (transaction const &) = delete;
+  transaction &operator= (transaction const &) = delete;
+  transaction (transaction &&) = delete;
+  transaction &operator= (transaction &&) = delete;
   ~transaction();
 
   /// begin polling for values
@@ -66,14 +72,27 @@ public:
   ACE_HANDLE get_handle () const override;
 
 private:
-  /// disallow copy construction
-  transaction(const transaction&);
+  // ACE_SOCK_Dgram::recv allocates this buffer; release it through the matching allocator.
+  struct Receive_Buffer_Deleter
+  {
+    void operator() (char *buffer) const
+    {
+      if (!buffer)
+        return;
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance ()->free (buffer);
+#else
+      delete [] buffer;
+#endif
+    }
+  };
 
   wpdu wp_;                     // wire pdu
   UdpTarget params_;            // params
   ACE_INET_Addr addr_;          // to address
   ACE_SOCK_Dgram session_;      // io object
-  iovec receive_iovec_;         // receive buffer
+  std::unique_ptr<char[], Receive_Buffer_Deleter> receive_buffer_ {};
+  iovec receive_iovec_ {};      // non-owning view; recv() allocates receive_buffer_
   ACE_INET_Addr receive_addr_;  // from address
 };
 

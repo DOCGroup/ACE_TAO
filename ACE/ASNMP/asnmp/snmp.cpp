@@ -41,6 +41,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_time.h"
+#include <memory>
 
 const coldStartOid coldStart;
 const warmStartOid warmStart;
@@ -150,28 +151,33 @@ int Snmp::run_transaction(Pdu& pdu, UdpTarget& target, Snmp_Result * cb)
   result_ = cb;
 
   // 2. write request to agent
-  transaction * trans = new transaction(pdu, target, iv_snmp_session_);
-  return trans->run(this);
+  std::unique_ptr<transaction> trans =
+    std::make_unique<transaction> (pdu, target, iv_snmp_session_);
+  int const result = trans->run (this);
+  if (result == 0)
+    trans.release ();
+  return result;
 }
 
 void Snmp::result(transaction *t, int rc)
 {
-    t->result(*pdu_);
+    std::unique_ptr<transaction> transaction_owner {t};
+    transaction_owner->result (*pdu_);
     // verify this is the pdu we are after
     if (pdu_->get_request_id() == hold_req_id_)
     {
         last_transaction_status_ = rc;
-        delete t;
         result_->result(this, rc);
     }
     else
     {
-        rc = t->run(this);
+        rc = transaction_owner->run (this);
         if (rc < 0)
         {
-            delete t;
             result_->result(this, rc);
         }
+        else
+            transaction_owner.release ();
     }
 }
 
