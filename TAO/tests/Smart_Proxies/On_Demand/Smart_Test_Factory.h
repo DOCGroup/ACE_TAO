@@ -11,7 +11,7 @@ public:
   Smart_Test_Factory ();
 
   // This method will create the smart_proxy.
-  virtual Test_ptr create_proxy (Test_ptr proxy);
+  Test_ptr create_proxy (Test_ptr proxy) override;
 };
 
 // The following Factory is used by the ACE_Service_Config to

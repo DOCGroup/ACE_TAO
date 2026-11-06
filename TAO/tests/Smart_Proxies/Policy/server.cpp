@@ -21,11 +21,11 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Short method  (CORBA::Short boo);
+  CORBA::Short method (CORBA::Short boo) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void shutdown  ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

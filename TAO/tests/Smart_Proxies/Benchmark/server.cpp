@@ -21,13 +21,13 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  CORBA::Short box_prices  ();
+  CORBA::Short box_prices () override;
 
-  CORBA::Long tickets  (CORBA::Short number);
+  CORBA::Long tickets (CORBA::Short number) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void shutdown  ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

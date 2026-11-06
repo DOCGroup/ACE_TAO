@@ -32,8 +32,6 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
       this->ctx_->node (node);
       os->indent ();
 
-      *os << "virtual ";
-
       // STEP I: generate the return type.
       be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
@@ -65,7 +63,7 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
       // STEP 3: generate the argument list with the appropriate mapping. For these
       // we grab a visitor that generates the parameter listing
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_CH);
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_SMART_PROXY_CH);
       be_visitor_operation_arglist oa_visitor (&ctx);
 
       if (node->accept (&oa_visitor) == -1)

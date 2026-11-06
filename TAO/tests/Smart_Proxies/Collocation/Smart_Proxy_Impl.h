@@ -10,7 +10,7 @@ class MY_Stub_Export Smart_Diamond_Top_Factory : public virtual Diamond::TAO_Dia
 public:
   Smart_Diamond_Top_Factory ();
 
-  virtual Diamond::Top_ptr create_proxy (Diamond::Top_ptr proxy);
+  Diamond::Top_ptr create_proxy (Diamond::Top_ptr proxy) override;
 
   // This method will create the smart_proxy.
 };
@@ -21,7 +21,7 @@ class MY_Stub_Export Smart_Diamond_Top_Proxy : public virtual Diamond::TAO_Diamo
 public:
   Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy);
 
-  virtual char * shape ();
+  char * shape () override;
   // Smartify the method call!
 
   // Dont need to add any extra functionality into shutdown()
