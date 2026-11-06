@@ -82,12 +82,12 @@ English.
 
 @ifinfo
 @node Top, Copying, (dir), (dir)
-@top GNU GPERF Utility
+@top ACE GPERF Utility
 @chapter Introduction
 
-This manual documents the GNU @code{gperf} perfect hash function generator
-utility, focusing on its features and how to use them, and how to report
-bugs.
+This manual documents ACE's C++17-only adaptation of the GNU @code{gperf}
+perfect hash function generator, including its features, usage, and known
+limitations.
 
 @end ifinfo
 @menu
@@ -112,9 +112,9 @@ High-Level Description of ACE @code{gperf}
 
 Input Format to @code{gperf}
 
-* Declarations::		@code{struct} Declarations and C Code Inclusion.
+* Declarations::		@code{struct} Declarations and C++ Code Inclusion.
 * Keywords::			Format for Keyword Entries.
-* Functions::			Including Additional C Functions.
+* Functions::			Including Additional C++ Functions.
 @end menu
 
 @node Copying, Contributors, Top, Top
@@ -464,7 +464,7 @@ comp.sources.unix, volume 20.  Finally, a paper describing
 in the Second USENIX C++ Conference proceedings.
 
 @node Search Structures, Description, Motivation, Top
-@chapter Static search structures and GNU @code{gperf}
+@chapter Static search structures and ACE @code{gperf}
 
 A @dfn{static search structure} is an Abstract Data Type with certain
 fundamental operations, @emph{e.g.}, @emph{initialize}, @emph{insert},
@@ -531,7 +531,7 @@ part of the official GNU distribution.  Each compiler utilizes
 efficiently identify their respective reserved keywords.
 
 @node Description, Options, Search Structures, Top
-@chapter High-Level Description of GNU @code{gperf}
+@chapter High-Level Description of ACE @code{gperf}
 
 @menu
 * Input Format::		Input Format to @code{gperf}
@@ -543,10 +543,10 @@ The perfect hash function generator @code{ace_gperf} reads a set of
 default).  It attempts to derive a perfect hashing function that
 recognizes a member of the @dfn{static keyword set} with at most a
 single probe into the lookup table.  If @code{ace_gperf} succeeds in
-generating such a function it produces a pair of C++ source code routines
+generating such a function it produces C++ source code routines
 that perform hashing and table lookup recognition.  All generated C++ code
 is directed to the standard output.  Command-line options described
-below allow you to modify the input and output format to @code{gperf}.
+below allow you to modify the input and output format to @code{ace_gperf}.
 
 By default, @code{ace_gperf} attempts to produce time-efficient C++17 code, with
 less emphasis on efficient space utilization.  However, several options
@@ -555,8 +555,8 @@ versa.  In particular, expanding the generated table size produces a
 sparse search structure, generally yielding faster searches.
 Conversely, you can direct @code{ace_gperf} to utilize a C++ @code{switch}
 statement scheme that minimizes data space storage size.  Furthermore,
-using a C @code{switch} may actually speed up the keyword retrieval time
-somewhat.  Actual results depend on your C++ compiler, of course.
+using a C++ @code{switch} may actually speed up the keyword retrieval time
+somewhat.  Actual results depend on your compiler, of course.
 
 In general, @code{gperf} assigns values to the characters it is using
 for hashing until some set of values gives each keyword a unique value.
@@ -588,18 +588,18 @@ are optional.  The following sections describe the input format for each
 section.
 
 @menu
-* Declarations::		@code{struct} Declarations and C Code Inclusion.
+* Declarations::		@code{struct} Declarations and C++ Code Inclusion.
 * Keywords::			Format for Keyword Entries.
-* Functions::			Including Additional C Functions.
+* Functions::			Including Additional C++ Functions.
 @end menu
 
 @node Declarations, Keywords, Input Format, Input Format
-@subsection @code{struct} Declarations and C Code Inclusion
+@subsection @code{struct} Declarations and C++ Code Inclusion
 
 The keyword input file optionally contains a section for including
-arbitrary C declarations and definitions, as well as provisions for
+arbitrary C++ declarations and definitions, as well as provisions for
 providing a user-supplied @code{struct}.  If the @samp{-t} option
-@emph{is} enabled, you @emph{must} provide a C @code{struct} as the last
+@emph{is} enabled, you @emph{must} provide a C++ @code{struct} as the last
 component in the declaration section from the keyfile file.  The first
 field in this struct must be a @code{char *} identifier called ``name,''
 although it is possible to modify this field's name with the @samp{-K}
@@ -633,7 +633,7 @@ appearing left justified in the first column, as in the UNIX utility
 @code{lex}.
 
 Using a syntax similar to GNU utilities @code{flex} and @code{bison}, it
-is possible to directly include C source text and comments verbatim into
+is possible to directly include C++ source text and comments verbatim into
 the generated output file.  This is accomplished by enclosing the region
 inside left-justified surrounding @code{%@{}, @code{%@}} pairs.  Here is
 an input fragment based on the previous example that illustrates this
@@ -711,14 +711,14 @@ these fields are simply ignored.  All previous examples except the last
 one contain keyword attributes.
 
 @node Functions,  , Keywords, Input Format
-@subsection Including Additional C Functions
+@subsection Including Additional C++ Functions
 
 The optional third section also corresponds closely with conventions
 found in @code{flex} and @code{bison}.  All text in this section,
 starting at the final @code{%%} and extending to the end of the input
 file, is included verbatim into the generated output file.  Naturally,
 it is your responsibility to ensure that the code contained in this
-section is valid C.
+section is valid C++.
 
 @node Output Format,  , Input Format, Description
 @section Output Format for Generated C++17 Code with @code{ace_gperf}
@@ -727,14 +727,14 @@ Several options control how the generated C++17 code appears on the standard
 output.  Two C++ functions are generated.  They are called @code{hash} and
 @code{in_word_set}, although you may modify the name for
 @code{in_word_set} with a command-line option.  Both functions require
-two arguments, a string, @code{char *} @var{str}, and a length
-parameter, @code{int} @var{len}.  Their default function prototypes are
+two arguments, a string, @code{char const *} @var{str}, and a length
+parameter, @code{std::size_t} @var{len}.  Their default function prototypes are
 as follows:
 
 @example
 @group
 static std::size_t hash (char const *str, std::size_t len);
-char * in_word_set (char const *str, std::size_t len);
+char const * in_word_set (char const *str, std::size_t len);
 @end group
 @end example
 
@@ -770,14 +770,15 @@ code.
 @end itemize
 
 If the @samp{-t}, @samp{-S}, and @samp{-p} options are omitted the
-default action is to generate a @code{char *} array containing the keys,
+default action is to generate a @code{std::array} of pointers to constant
+characters containing the keys,
 together with additional null strings used for padding the array.  By
 experimenting with the various input and output options, and timing the
 resulting C++ code, you can determine the best option choices for
 different keyword set characteristics.
 
 @node Options, Bugs, Description, Top
-@chapter Options to the @code{gperf} Utility
+@chapter Options to the @code{ace_gperf} Utility
 
 There are @emph{many} options to @code{gperf}.  They were added to make
 the program more convenient for use with real applications.  ``On-line''
@@ -788,7 +789,7 @@ include:
 @table @samp
 @item -c
 Generates code that uses the @code{std::strncmp} function to perform
-string comparisons.  The default action is to use @code{strcmp}.
+string comparisons.  The default action is to use @code{std::strcmp}.
 
 @item -C
 Makes the contents of all generated lookup tables constant, @emph{i.e.},
@@ -908,7 +909,7 @@ field in your supplied @code{struct}.
 @item -l
 Compare key lengths before trying a string comparison.  This might cut
 down on the number of string comparisons made during the lookup, since
-keys with different lengths are never compared via @code{strcmp}.
+keys with different lengths are never compared via @code{std::strcmp}.
 However, using @samp{-l} might greatly increase the size of the
 generated C++ code if the lookup table range is large (which implies that
 the switch option @samp{-S} is not enabled), since the length table
@@ -1045,13 +1046,13 @@ likely to be a @emph{perfect} hash function anymore!  Finally, use the
 function @emph{fast}, with less emphasis on making it minimal.
 
 @item
-The size of the generate static keyword array can get @emph{extremely}
+The size of the generated static keyword array can get @emph{extremely}
 large if the input keyword file is large or if the keywords are quite
-similar.  This tends to slow down the compilation of the generated C
+similar.  This tends to slow down the compilation of the generated C++
 code, and @emph{greatly} inflates the object code size.  If this
 situation occurs, consider using the @samp{-S} option to reduce data
 size, potentially increasing keyword recognition time a negligible
-amount.  Since many C compilers cannot correctly generated code for
+amount.  Since compilers cannot always generate code for
 large switch statements it is important to qualify the @var{-S} option
 with an appropriate numerical argument that controls the number of
 switch statements generated.
@@ -1063,13 +1064,8 @@ anyone considers this a problem write me and let me know so I can remove
 the constraint.
 
 @item
-The C++ source code only compiles correctly with GNU G++, version 1.36
-(and hopefully later versions).  Porting to AT&T cfront would be
-tedious, but possible (and desirable).  There is also a K&R C version
-available now.  This should compile without change on most BSD systems,
-but may require a bit of work to run on SYSV, since @code{gperf} uses
-@var{alloca} in several places.  Send mail to schmidt at ics.uci.edu for
-information.
+Generated source code requires a compiler and standard library with
+C++17 support.
 @end itemize
 
 @node Projects, Implementation, Bugs, Top
@@ -1101,12 +1097,11 @@ lookups (note that the gcc compiler generally produces good code for
 
 @item
 In addition to improving the algorithm, it would also be useful to
-generate a C++ class or Ada package as the code output, in addition to
-the current C routines.
+provide further customization of the generated C++ interface.
 @end itemize
 
 @node Implementation, Bibliography, Projects, Top
-@chapter Implementation Details of GNU @code{gperf}
+@chapter Implementation Details of ACE @code{gperf}
 
 A paper describing the high-level description of the data structures and
 algorithms used to implement @code{gperf} will soon be available.  This
