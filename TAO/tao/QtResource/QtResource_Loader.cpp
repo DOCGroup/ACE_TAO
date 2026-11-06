@@ -8,7 +8,7 @@ namespace TAO
 {
   QtResource_Loader::QtResource_Loader (QApplication * const qapp)
   {
-    QtResource_Factory *tmp = nullptr;
+    QtResource_Factory *tmp {};
 
     ACE_NEW (tmp,
              QtResource_Factory (qapp));

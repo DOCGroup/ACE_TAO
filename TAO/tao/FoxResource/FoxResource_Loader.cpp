@@ -8,7 +8,7 @@ namespace TAO
 {
   FoxResource_Loader::FoxResource_Loader (FXApp *app)
   {
-    FoxResource_Factory *tmp = nullptr;
+    FoxResource_Factory *tmp {};
 
     ACE_NEW (tmp,
              FoxResource_Factory (app));

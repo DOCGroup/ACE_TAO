@@ -8,7 +8,7 @@ namespace TAO
 {
   TkResource_Loader::TkResource_Loader ()
   {
-    TkResource_Factory *tmp = nullptr;
+    TkResource_Factory *tmp {};
 
     ACE_NEW (tmp,
              TkResource_Factory ());
