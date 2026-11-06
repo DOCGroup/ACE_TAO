@@ -17,13 +17,13 @@ TAO_DTP_Thread_Lane_Resources_Manager::TAO_DTP_Thread_Lane_Resources_Manager
     : TAO_Thread_Lane_Resources_Manager (orb_core)
 {
   // Create the default resources.
-  TAO_Thread_Lane_Resources *default_lane_resources = nullptr;
+  TAO_Thread_Lane_Resources *default_lane_resources {};
   ACE_NEW (default_lane_resources,
            TAO_Thread_Lane_Resources (orb_core));
   this->default_lane_resources_.reset (default_lane_resources);
 
   // Create the thread-pool manager.
-  TAO_DTP_Thread_Pool_Manager *tp_manager = nullptr;
+  TAO_DTP_Thread_Pool_Manager *tp_manager {};
   ACE_NEW (tp_manager,
            TAO_DTP_Thread_Pool_Manager (orb_core));
   this->tp_manager_.reset (tp_manager);
@@ -41,7 +41,7 @@ TAO_DTP_Thread_Lane_Resources_Manager::open_default_resources ()
 
   params->get_endpoint_set (TAO_DEFAULT_LANE, endpoint_set);
 
-  bool ignore_address = false;
+  bool ignore_address {};
 
   int const result =
     this->default_lane_resources_->open_acceptor_registry (endpoint_set,
@@ -100,7 +100,7 @@ TAO_Thread_Lane_Resources_Manager *
 TAO_DTP_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (
   TAO_ORB_Core &core)
 {
-  TAO_Thread_Lane_Resources_Manager *manager = nullptr;
+  TAO_Thread_Lane_Resources_Manager *manager {};
 
   /// Create the RT Thread Lane Resources Manager.
   ACE_NEW_RETURN (manager,

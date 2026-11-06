@@ -27,7 +27,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
   ACE_TRACE ("TAO_DTP_POA_Loader::init");
 
   // Only allow initialization once.
-  static bool initialized = false;
+  static bool initialized {};
   if (initialized)
     return 0;
   initialized = true;
@@ -62,7 +62,7 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
   repo->init(0,0);
 
-  for (int curarg = 0; curarg < argc; curarg++)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (TAO_debug_level > 0)
         {
@@ -115,7 +115,7 @@ TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
 {
   std::string poa_name;
   std::string config_name;
-  TAO_DTP_POA_Strategy *strategy_container = nullptr;
+  TAO_DTP_POA_Strategy *strategy_container {};
 
   ACE_TCHAR *sep = ACE_OS::strchr (map, ':');
 

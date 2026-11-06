@@ -298,16 +298,16 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 
   // Default parameters.
   int default_grp_id = -1;
-  ACE_Task_Base *default_task = nullptr;
-  ACE_hthread_t *default_thread_handles = nullptr;
-  void **default_stack = nullptr;
+  ACE_Task_Base *default_task {};
+  ACE_hthread_t *default_thread_handles {};
+  void **default_stack {};
 
   // Setting stack size.
-  size_t *stack_size_array = nullptr;
+  size_t *stack_size_array {};
   ACE_NEW_RETURN (stack_size_array,
                   size_t[count],
                   -1);
-  size_t index;
+  size_t index {};
   for (index = 0; index != count; ++index)
     stack_size_array[index] =
       this->definition_.stack_size_;
@@ -322,8 +322,8 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
     thread_flags |
     orb_core.orb_params ()->thread_creation_flags ();
 
-  int default_priority = 0;
-  int result = 0;
+  int default_priority {};
+  int result {};
   // Activate the threads.
   if (TAO_debug_level > 7)
     {
@@ -463,7 +463,7 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool (TAO_DTP_Definition &def)
 void
 TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
 {
-  TAO_DTP_Thread_Pool *tao_thread_pool = nullptr;
+  TAO_DTP_Thread_Pool *tao_thread_pool {};
 
   // The guard is just for the map, don't do a wait inside the guard, because
   // during the wait other threads can try to access the thread pool manager
@@ -480,21 +480,20 @@ TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
       return; //throw RTCORBA::RTORB::InvalidThreadpool ();
   }
 
+  std::unique_ptr<TAO_DTP_Thread_Pool> safe_thread_pool (tao_thread_pool);
+
   // Mark the thread pool that we are shutting down.
-  tao_thread_pool->shutting_down ();
+  safe_thread_pool->shutting_down ();
 
   // Wait for the threads.
-  tao_thread_pool->wait ();
-
-  // Delete the thread pool.
-  delete tao_thread_pool;
+  safe_thread_pool->wait ();
 }
 
 CORBA::ULong
 TAO_DTP_Thread_Pool_Manager::create_threadpool_i (TAO_DTP_Definition &def)
 {
   // Create the thread pool.
-  TAO_DTP_Thread_Pool *thread_pool = nullptr;
+  TAO_DTP_Thread_Pool *thread_pool {};
 
   ACE_NEW_THROW_EX (thread_pool,
                     TAO_DTP_Thread_Pool (*this,

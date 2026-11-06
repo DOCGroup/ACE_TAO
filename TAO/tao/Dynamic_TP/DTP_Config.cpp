@@ -57,15 +57,14 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
 {
   TAO_DTP_Definition entry;
 
-  ACE_TCHAR *name = nullptr;
-  bool overwrite = false;
+  ACE_TCHAR *name {};
+  bool overwrite {};
 
-  int curarg = 0;
-  int r = 0;
+  int r {};
 
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
-      long val = 0;
+      long val {};
       if ((r = this->parse_string (curarg,
                                    argc,
                                    argv,
@@ -228,12 +227,12 @@ TAO_DTP_Config::parse_long (int &curarg,
                                    int argc, ACE_TCHAR *argv[],
                                    ACE_TCHAR const *match, long &value)
 {
-  ACE_TCHAR *str;
+  ACE_TCHAR *str {};
   int result = this->parse_string (curarg, argc, argv, match, str);
   if (result < 1)
     return result;
 
-  ACE_TCHAR *err = nullptr;
+  ACE_TCHAR *err {};
   value = ACE_OS::strtol (str, &err, 10);
   if (err && *err != 0)
     {
@@ -248,7 +247,7 @@ TAO_DTP_Config::parse_bool (int &curarg,
                                    int argc, ACE_TCHAR *argv[],
                                    ACE_TCHAR const *match, bool &value)
 {
-  long num;
+  long num {};
   int result = this->parse_long (curarg, argc, argv, match, num);
   if (result < 1)
     return result;

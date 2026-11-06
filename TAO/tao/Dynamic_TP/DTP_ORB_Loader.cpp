@@ -28,8 +28,7 @@ TAO_DTP_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
     return 0;
   this->initialized_ = true;
 
-  int curarg = 0;
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT ("-DTPORB")) == 0)
         {
