@@ -1,17 +1,18 @@
+#include <memory>
+
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/POAC.h"
 #include "tao/PortableServer/POAManagerC.h"
 
-const ACE_TCHAR *output_filename = ACE_TEXT ("persistence.notify.xml");
-
-// must be char
-const char *format =
+// Must be char because this is written using fprintf.
+constexpr char format[] =
   "<?xml version=\"1.0\"?>\n"
   "<notification_service version=\"1.0\" timestamp=\"197568243541\">\n"
   "  <channel_factory>\n"
-  "    <channel TopologyID=\"2\" MaxQueueLength=\"0\" MaxConsumers=\"0\" MaxSuppliers=\"0\" RejectNewEvents=\"false\">\n"
+  "    <channel TopologyID=\"2\" MaxQueueLength=\"0\" MaxConsumers=\"0\" "
+  "MaxSuppliers=\"0\" RejectNewEvents=\"false\">\n"
   "      <filter_factory>\n"
   "        <filter FilterId=\"1\" Grammar=\"TCL\">\n"
   "          <constraint ConstraintId=\"3\" Expression=\"threshold &gt; 10\">\n"
@@ -106,10 +107,10 @@ const char *format =
   ;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& output_filename)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -134,13 +135,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const* output_filename { ACE_TEXT ("persistence.notify.xml") };
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -152,29 +154,30 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, output_filename) != 0)
         return 1;
 
       CORBA::String_var repo_id =
         "IDL:omg.org/CosNotifyComm/StructuredPushConsumer:1.0";
 
       CORBA::Object_var object =
-        root_poa->create_reference (repo_id.in());
+        root_poa->create_reference (repo_id.in ());
 
       CORBA::String_var ior = orb->object_to_string (object.in ());
 
-      FILE *output_file= ACE_OS::fopen (output_filename, "w");
-      if (output_file == 0)
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (output_filename, ACE_TEXT ("w")),
+        ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file for writing IOR: %C\n"),
-                           output_file),
-                           1);
-      const char * dummy_consumer_proxy = ior.in();
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                           output_filename),
+                          1);
+      char const* dummy_consumer_proxy = ior.in ();
 
-      ACE_OS::fprintf (output_file, format,
+      ACE_OS::fprintf (output_file.get (), format,
                        dummy_consumer_proxy, dummy_consumer_proxy,
                        dummy_consumer_proxy, dummy_consumer_proxy);
-      ACE_OS::fclose (output_file);
 
       poa_manager->activate ();
 
@@ -186,7 +189,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
