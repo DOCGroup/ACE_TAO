@@ -224,7 +224,7 @@ public:
   virtual ~ACE_TSS_TPQ_Entry () = default;
 
   /// Allows us to pass args to the construction of the TSS object.
-  virtual ACE_TPQ_Entry *make_TSS_TYPE () const;
+  ACE_TPQ_Entry *make_TSS_TYPE () const override;
 
   /// Operator overloading and inheritance don't mix.
   operator ACE_TPQ_Entry *();
@@ -513,12 +513,12 @@ public:
    * owner of the token.  If ignore_deadlock is passed as 1 and errnum
    * == EDEADLK, then deadlock was detected via ace_token_manager.
    */
-  virtual int acquire (ACE_TPQ_Entry *caller,
-                       int ignore_deadlock,
-                       int notify);
+  int acquire (ACE_TPQ_Entry *caller,
+               int ignore_deadlock,
+               int notify) override;
 
   /// Same as acquire, but fails if would block
-  virtual int tryacquire (ACE_TPQ_Entry *caller);
+  int tryacquire (ACE_TPQ_Entry *caller) override;
 
   /**
    * An optimized method that efficiently reacquires the token if no
@@ -540,31 +540,31 @@ public:
    * <ACE_Token_Proxy::sleep_hook> has been called on the current
    * owner of the token.
    */
-  virtual int renew (ACE_TPQ_Entry *caller,
-                     int requeue_position);
+  int renew (ACE_TPQ_Entry *caller,
+             int requeue_position) override;
 
   /**
    * Relinquish the token.  If there are any waiters then the next one
    * in line gets it.  If the caller is not the owner, caller is
    * removed from the waiter list.
    */
-  virtual int release (ACE_TPQ_Entry *caller);
+  int release (ACE_TPQ_Entry *caller) override;
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_Tokens::MUTEX.
-  virtual int type () const;
+  int type () const override;
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
-  virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id);
+  int owners (OWNER_STACK &o, const ACE_TCHAR *id) override;
 
   /// Returns true if @a id is waiting for this token.
-  virtual bool is_waiting_for (const ACE_TCHAR *id);
+  bool is_waiting_for (const ACE_TCHAR *id) override;
 
   /// Returns true if @a id is an owner of this token.
-  virtual bool is_owner (const ACE_TCHAR *id);
+  bool is_owner (const ACE_TCHAR *id) override;
 
 private:
   /// ACE_Mutex_Token used to lock internal data structures.
@@ -608,12 +608,12 @@ public:
    * owner of the token.  If @a ignore_deadlock is passed as 1 and errnum
    * == EDEADLK, then deadlock was detected via ACE_Token_Manager.
    */
-  virtual int acquire (ACE_TPQ_Entry *caller,
-                       int ignore_deadlock,
-                       int notify);
+  int acquire (ACE_TPQ_Entry *caller,
+               int ignore_deadlock,
+               int notify) override;
 
   /// Same as acquire except fails on would block
-  virtual int tryacquire (ACE_TPQ_Entry *caller);
+  int tryacquire (ACE_TPQ_Entry *caller) override;
 
   /**
    * An optimized method that efficiently reacquires the token if no
@@ -635,15 +635,15 @@ public:
    * <ACE_Token_Proxy::sleep_hook> has been called on the current
    * owner of the token.
    */
-  virtual int renew (ACE_TPQ_Entry *caller,
-                     int requeue_position);
+  int renew (ACE_TPQ_Entry *caller,
+             int requeue_position) override;
 
   /**
    * Relinquish the token.  If there are any waiters then the next one
    * in line gets it.  If the caller is not the owner, caller is
    * removed from the waiter list.
    */
-  virtual int release (ACE_TPQ_Entry *caller);
+  int release (ACE_TPQ_Entry *caller) override;
 
   /// Dump the state of the class.
   void dump () const;
@@ -652,17 +652,17 @@ public:
   enum PROXY_TYPE { READER, WRITER };
 
   /// Returns READER or WRITER.
-  virtual int type () const;
+  int type () const override;
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
-  virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id);
+  int owners (OWNER_STACK &o, const ACE_TCHAR *id) override;
 
   /// Returns true if @a id is waiting for this token.
-  virtual bool is_waiting_for (const ACE_TCHAR *id);
+  bool is_waiting_for (const ACE_TCHAR *id) override;
 
   /// Returns true if @a id is an owner of this token.
-  virtual bool is_owner (const ACE_TCHAR *id);
+  bool is_owner (const ACE_TCHAR *id) override;
 
 protected:
   /// The number of waiting writers.
