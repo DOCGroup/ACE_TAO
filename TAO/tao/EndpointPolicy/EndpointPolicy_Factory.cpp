@@ -29,7 +29,7 @@ TAO_EndpointPolicy_Factory::create_policy (
 {
   if (type == EndpointPolicy::ENDPOINT_POLICY_TYPE)
     {
-      EndpointPolicy::EndpointList const* endpoint_list = nullptr;
+      EndpointPolicy::EndpointList const* endpoint_list {};
       if (!(value >>= endpoint_list))
         throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
@@ -89,7 +89,7 @@ TAO_EndpointPolicy_Factory::create_policy (
       if (!found_one)
         throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY_VALUE);
 
-      TAO_EndpointPolicy_i *tmp = nullptr;
+      TAO_EndpointPolicy_i *tmp {};
       ACE_NEW_THROW_EX (tmp,
                         TAO_EndpointPolicy_i (*endpoint_list),
                         CORBA::NO_MEMORY (TAO::VMCID,
