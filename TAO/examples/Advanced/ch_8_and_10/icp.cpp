@@ -9,17 +9,13 @@
  */
 //=============================================================================
 
+#include <algorithm>
+#include <cstdlib>
+#include <cstring>
+#include <map>
+#include <string>
 
-
-
-#include    <string>
-#include    <map>
-#include    <algorithm>
-#include    <cstring>
-//#include    <stdlib.h>
-#include    "icp.h"
-#include    "ace/OS_NS_stdlib.h"
-#include    "ace/OS_NS_string.h"
+#include "icp.h"
 
 //----------------------------------------------------------------
 
@@ -65,7 +61,7 @@ int
 ICP_online(unsigned long id)
 {
     // Look for id in state map.
-    StateMap::iterator pos = dstate.find (id);
+    StateMap::const_iterator const pos = dstate.find (id);
     if (pos != dstate.end ())
         return -1;                          // Already exists
 
@@ -93,7 +89,7 @@ int
 ICP_offline(unsigned long id)
 {
     // Look for id in state map
-    StateMap::iterator pos = dstate.find (id);
+    StateMap::const_iterator const pos = dstate.find (id);
     if (pos == dstate.end ())
         return -1;                              // No such device
     dstate.erase (id);
@@ -118,7 +114,7 @@ static
 long
 vary_temp (long temp)
 {
-    long const r = ACE_OS::rand () % 50;
+    int const r = std::rand () % 50;
     long delta {};
     if (r < 5)
         delta = 3;
@@ -128,7 +124,7 @@ vary_temp (long temp)
         delta = 1;
     else
         delta = 0;
-    if (ACE_OS::rand () % 2)
+    if (std::rand () % 2)
         delta = -delta;
     return temp + delta;
 }

@@ -10,15 +10,15 @@
  */
 //=============================================================================
 
+#include "server.h"
 
-#include    "server.h"
-#include    <algorithm>
-#include    <iostream>
-#include    "icp.h"
-//#include    <iostream.h>
-//#include    <assert.h>
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+
+#include "icp.h"
+
 //----------------------------------------------------------------
-
 
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
@@ -43,7 +43,7 @@ operator<< (std::ostream& os, CORBA::Exception const& e)
 
 //----------------------------------------------------------------
 
-Controller_impl * Thermometer_impl::m_ctrl; // static member
+Controller_impl * Thermometer_impl::m_ctrl {}; // static member
 
 // Helper function to read the model string from a device.
 
@@ -51,7 +51,7 @@ CCS::ModelType
 Thermometer_impl::
 get_model ()
 {
-    char buf[32];
+    char buf[32] {};
     assert (ICP_get (m_anum, "model", buf, sizeof (buf)) == 0);
     return CORBA::string_dup (buf);
 }
@@ -62,7 +62,7 @@ CCS::TempType
 Thermometer_impl::
 get_temp ()
 {
-    short temp;
+    short temp {};
     assert (
         ICP_get (m_anum, "temperature", &temp, sizeof (temp)
     ) == 0);
@@ -75,7 +75,7 @@ CCS::LocType
 Thermometer_impl::
 get_loc ()
 {
-    char buf[32];
+    char buf[32] {};
     assert (ICP_get (m_anum, "location", buf, sizeof (buf)) == 0);
     return CORBA::string_dup (buf);
 }
@@ -162,7 +162,7 @@ Thermometer_impl::location (char const *loc)
 CCS::TempType
 Thermostat_impl::get_nominal_temp ()
 {
-    short temp;
+    short temp {};
     assert (
         ICP_get (m_anum, "nominal_temp", &temp, sizeof (temp)
     ) == 0);
@@ -175,7 +175,7 @@ CCS::TempType
 Thermostat_impl::
 set_nominal_temp (CCS::TempType new_temp)
 {
-    short old_temp;
+    short old_temp {};
 
     // We need to return the previous nominal temperature,
     // so we first read the current nominal temperature before
@@ -292,7 +292,7 @@ change (
     CORBA::Short delta
 )
 {
-    CCS::Controller::EChange ec;    // Just in case we need it
+    CCS::Controller::EChange ec {}; // Just in case we need it
 
     // We cannot add a delta value to a thermostat's temperature
     // directly, so for each thermostat, we read the nominal
@@ -332,7 +332,7 @@ Controller_impl::
 find (CCS::Controller::SearchSeq & slist)
 {
     // Loop over input list and look up each device.
-    CORBA::ULong listlen = slist.length ();
+    CORBA::ULong const listlen = slist.length ();
     for (CORBA::ULong i {}; i < listlen; ++i) {
         AssetMap::const_iterator where;  // Iterator for asset map
         int num_found {};                // Num matched per iteration
@@ -350,11 +350,9 @@ find (CCS::Controller::SearchSeq & slist)
                 slist[i].device = where->second->_this ();
         } else {
             // Search for model or location string.
-            char const *search_str;
-            if (sc == CCS::Controller::LOCATION)
-                search_str = slist[i].key.loc ();
-            else
-                search_str = slist[i].key.model_desc ();
+            char const *const search_str = sc == CCS::Controller::LOCATION
+                ? slist[i].key.loc ()
+                : slist[i].key.model_desc ();
 
             // Find first matching device (if any).
             where = std::find_if (
@@ -371,7 +369,7 @@ find (CCS::Controller::SearchSeq & slist)
                 } else {
                     // Each further match appends a new
                     // element to the search sequence.
-                    CORBA::ULong len = slist.length ();
+                    CORBA::ULong const len = slist.length ();
                     slist.length (len + 1);
                     slist[len].key = slist[i].key;
                     slist[len].device = where->second->_this ();
