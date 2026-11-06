@@ -2,26 +2,16 @@
 
 #include "RedGreen_Test.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
-#include <atomic>
-
-#define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
-#define NAMING_SERVICE_NAME "NameService"
-
-#define DOMAIN_GREEN "DOMAIN_GREEN"
-#define DOMAIN_RED "DOMAIN_RED"
-
-#define TYPE_GREEN "TYPE_GREEN"
-#define TYPE_RED "TYPE_RED"
-
-std::atomic<int> g_result_count {0};
-ACE_hrtime_t g_throughput_start_;
-
-static bool consumer_is_done = false;
+constexpr char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
+constexpr char NAMING_SERVICE_NAME[] = "NameService";
+constexpr char DOMAIN_GREEN[] = "DOMAIN_GREEN";
+constexpr char DOMAIN_RED[] = "DOMAIN_RED";
+constexpr char TYPE_GREEN[] = "TYPE_GREEN";
+constexpr char TYPE_RED[] = "TYPE_RED";
 
 int
 RedGreen_Test::parse_args (int argc,
@@ -29,25 +19,24 @@ RedGreen_Test::parse_args (int argc,
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const* current_arg {};
 
-    while (arg_shifter.is_anything_left ())
+  while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_size"))))
+      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-burst_size"))) != nullptr)
         {
           this->burst_size_ = ACE_OS::atoi (current_arg);
           ACE_DEBUG ((LM_DEBUG,
                       "Burst size = %d\n",
-                      burst_size_));
+                      this->burst_size_));
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-?")) == 0)
         {
-          ACE_DEBUG((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                      "usage: %s "
                      "-burst_size [count]\n",
-                     argv[0],
                      argv[0]));
 
           arg_shifter.consume_arg ();
@@ -63,14 +52,6 @@ RedGreen_Test::parse_args (int argc,
   return 0;
 }
 
-RedGreen_Test::RedGreen_Test ()
-  : burst_size_ (10),
-    nthreads_ (2)
-{
-  // No-Op.
-  ifgop_ = CosNotifyChannelAdmin::OR_OP;
-}
-
 void
 RedGreen_Test::destroy_ec ()
 {
@@ -82,7 +63,7 @@ RedGreen_Test::destroy_ec ()
         {
           this->ec_->destroy ();
         }
-      catch (const CORBA::COMM_FAILURE&)
+      catch (CORBA::COMM_FAILURE const&)
         {
           // Silently swallow this b/c this could mean the EC is gone
           // or that the network is hosed.  Either way, we're not waiting
@@ -93,7 +74,7 @@ RedGreen_Test::destroy_ec ()
                       "      invoke `destroy()' on the Event Channel in the\n"
                       "      RedGreen destroy_ec. This is likely not a problem.\n"));
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("in RedGreen destructor; swallowing.\n");
         }
@@ -101,7 +82,6 @@ RedGreen_Test::destroy_ec ()
       this->ec_ = CosNotifyChannelAdmin::EventChannel::_nil ();
     }
 }
-
 
 void
 RedGreen_Test::init (int argc,
@@ -122,23 +102,24 @@ void
 RedGreen_Test::run ()
 {
   try
-  {
-    this->send_events ();
-
-    while (! consumer_is_done)
     {
-      ACE_Time_Value tv(0, 10 * 1000);
-      this->orb_->run(tv);
-    }
+      this->send_events ();
 
-    this->destroy_ec ();
-    this->orb_->shutdown (false);
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("Supplier:");
-    throw;
-  }
+      while (!this->consumer_is_done_.load (std::memory_order_relaxed))
+        {
+          ACE_Time_Value tv (0, 10 * 1000);
+          this->orb_->run (tv);
+        }
+
+      this->dump_results ();
+      this->destroy_ec ();
+      this->orb_->shutdown (false);
+    }
+  catch (CORBA::Exception const& ex)
+    {
+      ex._tao_print_exception ("Supplier:");
+      throw;
+    }
 
   worker_.thr_mgr ()->wait ();
 }
@@ -146,8 +127,7 @@ RedGreen_Test::run ()
 void
 RedGreen_Test::done ()
 {
-  dump_results ();
-  worker_.done ();
+  this->consumer_is_done_.store (true, std::memory_order_relaxed);
 }
 
 void
@@ -155,27 +135,27 @@ RedGreen_Test::init_ORB (int argc, ACE_TCHAR *argv [])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  CORBA::Object_ptr poa_object  =
+  CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references("RootPOA");
 
-  if (CORBA::is_nil (poa_object))
+  if (CORBA::is_nil (poa_object.in ()))
     {
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Unable to initialize the POA.\n"));
       return;
     }
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object);
+    PortableServer::POA::_narrow (poa_object.in ());
 
   PortableServer::POAManager_var poa_manager =
     root_poa_->the_POAManager ();
 
   poa_manager->activate ();
 
-  worker_.orb (this->orb_.in ());
+  this->worker_.orb (this->orb_.in ());
 
-  if (worker_.activate (THR_NEW_LWP | THR_JOINABLE,
-                        this->nthreads_) != 0)
+  if (this->worker_.activate (THR_NEW_LWP | THR_JOINABLE,
+                        2) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot activate client threads\n"));
@@ -215,11 +195,11 @@ RedGreen_Test::resolve_Notify_factory ()
 void
 RedGreen_Test::create_EC ()
 {
-  CosNotifyChannelAdmin::ChannelID id;
+  CosNotifyChannelAdmin::ChannelID id {};
 
-  this->ec_ = notify_factory_->create_channel (this->initial_qos_,
-                                               this->initial_admin_,
-                                               id);
+  this->ec_ = this->notify_factory_->create_channel (this->initial_qos_,
+                                                     this->initial_admin_,
+                                                     id);
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
@@ -227,11 +207,11 @@ RedGreen_Test::create_EC ()
 void
 RedGreen_Test::create_supplieradmin ()
 {
-  CosNotifyChannelAdmin::AdminID adminid;
+  CosNotifyChannelAdmin::AdminID adminid {};
 
-  supplier_admin_ =
-    ec_->new_for_suppliers (this->ifgop_,
-                            adminid);
+  this->supplier_admin_ =
+    this->ec_->new_for_suppliers (this->ifgop_,
+                                  adminid);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 }
@@ -239,11 +219,11 @@ RedGreen_Test::create_supplieradmin ()
 void
 RedGreen_Test::create_consumeradmin ()
 {
-  CosNotifyChannelAdmin::AdminID adminid;
+  CosNotifyChannelAdmin::AdminID adminid {};
 
-  consumer_admin_ =
-    ec_->new_for_consumers (this->ifgop_,
-                            adminid);
+  this->consumer_admin_ =
+    this->ec_->new_for_consumers (this->ifgop_,
+                                  adminid);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 }
@@ -252,11 +232,11 @@ void
 RedGreen_Test::create_consumers ()
 {
   ACE_NEW (this->normal_consumer_,
-           RedGreen_Test_StructuredPushConsumer (this));
+           RedGreen_Test_StructuredPushConsumer (*this));
   this->normal_consumer_->connect (this->consumer_admin_.in ());
 
   ACE_NEW (this->slow_consumer_,
-           SlowConsumer (this));
+           SlowConsumer (*this));
   this->slow_consumer_->connect (this->consumer_admin_.in ());
 }
 
@@ -264,7 +244,7 @@ void
 RedGreen_Test::create_suppliers ()
 {
   ACE_NEW (this->supplier_,
-           RedGreen_Test_StructuredPushSupplier ());
+           RedGreen_Test_StructuredPushSupplier (*this));
   this->supplier_->connect (this->supplier_admin_.in ());
 }
 
@@ -273,23 +253,21 @@ RedGreen_Test::send_events ()
 {
   // Setup the Consumer 1 to receive
   //event_type : "DOMAIN_GREEN", "DOMAIN_GREEN".
-  CosNotification::EventTypeSeq added_1(1);
+  CosNotification::EventTypeSeq added_1 (1);
   added_1.length (1);
-  CosNotification::EventTypeSeq removed_1 (0);
-  removed_1.length (0);
+  CosNotification::EventTypeSeq removed_1 {};
 
-  added_1[0].domain_name =  CORBA::string_dup (DOMAIN_GREEN);
+  added_1[0].domain_name = CORBA::string_dup (DOMAIN_GREEN);
   added_1[0].type_name = CORBA::string_dup (TYPE_GREEN);
 
   this->normal_consumer_->get_proxy_supplier ()->subscription_change (added_1, removed_1);
 
   // Setup the Consumer 2 to receive event_type : "DOMAIN_RED", "TYPE_RED"
-  CosNotification::EventTypeSeq added_2(1);
+  CosNotification::EventTypeSeq added_2 (1);
   added_2.length (1);
-  CosNotification::EventTypeSeq removed_2 (0);
-  removed_2.length (0);
+  CosNotification::EventTypeSeq removed_2 {};
 
-  added_2[0].domain_name =  CORBA::string_dup (DOMAIN_RED);
+  added_2[0].domain_name = CORBA::string_dup (DOMAIN_RED);
   added_2[0].type_name = CORBA::string_dup (TYPE_RED);
 
   this->slow_consumer_->get_proxy_supplier ()->subscription_change (added_2, removed_2);
@@ -297,31 +275,31 @@ RedGreen_Test::send_events ()
   // Create the events - one of each type
 
   // Event 2
-  CosNotification::StructuredEvent green_event;
+  CosNotification::StructuredEvent green_event {};
   green_event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup(DOMAIN_GREEN);
+    CORBA::string_dup (DOMAIN_GREEN);
   green_event.header.fixed_header.event_type.type_name =
-    CORBA::string_dup(TYPE_GREEN);
+    CORBA::string_dup (TYPE_GREEN);
   green_event.header.fixed_header.event_name = CORBA::string_dup ("");
   green_event.header.variable_header.length (0); // put nothing here
   green_event.filterable_data.length (0);
-  green_event.remainder_of_body <<= (CORBA::Long)10;
+  green_event.remainder_of_body <<= static_cast<CORBA::Long> (10);
 
   // event 3
-  CosNotification::StructuredEvent red_event;
+  CosNotification::StructuredEvent red_event {};
   red_event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup(DOMAIN_RED);
+    CORBA::string_dup (DOMAIN_RED);
   red_event.header.fixed_header.event_type.type_name =
-    CORBA::string_dup(TYPE_RED);
-  red_event.header.fixed_header.event_name = CORBA::string_dup("");
+    CORBA::string_dup (TYPE_RED);
+  red_event.header.fixed_header.event_name = CORBA::string_dup ("");
   red_event.header.variable_header.length (0); // put nothing here
   red_event.filterable_data.length (0);
-  red_event.remainder_of_body <<= (CORBA::Long)10;
+  red_event.remainder_of_body <<= static_cast<CORBA::Long> (10);
 
-  g_throughput_start_ = ACE_OS::gethrtime ();
+  this->throughput_start_.store (ACE_OS::gethrtime (), std::memory_order_relaxed);
 
   // let supplier 1 send all these events
-  for (int i = 0; i < this->burst_size_; ++i)
+  for (int i {}; i < this->burst_size_; ++i)
     {
       this->supplier_->send_event (red_event);
 
@@ -329,28 +307,27 @@ RedGreen_Test::send_events ()
     }
 }
 
-
 void
 RedGreen_Test::dump_results ()
 {
   ACE_Throughput_Stats throughput;
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
   ACE_TCHAR buf[BUFSIZ];
 
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("Normal Consumer [%02d]"),
                    1);
-  normal_consumer_->dump_stats (buf,
-                                gsf);
-  normal_consumer_->accumulate_into (throughput);
+  this->normal_consumer_->dump_stats (buf,
+                                      gsf);
+  this->normal_consumer_->accumulate_into (throughput);
 
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("Slow Consumer [%02d]"),
                    2);
-  slow_consumer_->dump_stats (buf,
-                              gsf);
-  slow_consumer_->accumulate_into (throughput);
+  this->slow_consumer_->dump_stats (buf,
+                                    gsf);
+  this->slow_consumer_->accumulate_into (throughput);
 
   ACE_DEBUG ((LM_DEBUG,
               "\n"));
@@ -365,38 +342,31 @@ RedGreen_Test::dump_results ()
   this->supplier_->accumulate_into (suppliers);
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
-  throughput.dump_results (ACE_TEXT("Notify_Consumer/totals"), gsf);
+  throughput.dump_results (ACE_TEXT ("Notify_Consumer/totals"), gsf);
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
-  suppliers.dump_results (ACE_TEXT("Notify_Supplier/totals"), gsf);
+  suppliers.dump_results (ACE_TEXT ("Notify_Supplier/totals"), gsf);
 }
 
 // *****************************************************************
 
 RedGreen_Test_StructuredPushConsumer::RedGreen_Test_StructuredPushConsumer (
-    RedGreen_Test* RedGreen_Test
+    RedGreen_Test& test_client
   )
-  : RedGreen_Test_ (RedGreen_Test),
-    push_count_ (0)
-{
-}
-
-RedGreen_Test_StructuredPushConsumer::~RedGreen_Test_StructuredPushConsumer (
-    void
-  )
+  : test_client_ (test_client)
 {
 }
 
 void
 RedGreen_Test_StructuredPushConsumer::accumulate_into (
-    ACE_Throughput_Stats &throughput) const
+    ACE_Throughput_Stats& throughput) const
 {
   throughput.accumulate (this->throughput_);
 }
 
 void
 RedGreen_Test_StructuredPushConsumer::dump_stats (
-  const ACE_TCHAR* msg,
+  ACE_TCHAR const* msg,
   ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
@@ -437,8 +407,8 @@ RedGreen_Test_StructuredPushConsumer::disconnect ()
 
 void
 RedGreen_Test_StructuredPushConsumer::offer_change (
-    const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/
+    CosNotification::EventTypeSeq const& /*added*/,
+    CosNotification::EventTypeSeq const& /*removed*/
   )
 {
   // No-Op.
@@ -446,16 +416,16 @@ RedGreen_Test_StructuredPushConsumer::offer_change (
 
 void
 RedGreen_Test_StructuredPushConsumer::push_structured_event (
-    const CosNotification::StructuredEvent & notification
+    CosNotification::StructuredEvent const& notification
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              ace_mon,
              this->lock_);
-  const char* domain_name =
+  char const* const domain_name =
     notification.header.fixed_header.event_type.domain_name;
 
-  const char* type_name =
+  char const* const type_name =
     notification.header.fixed_header.event_type.type_name;
 
   if (TAO_debug_level)
@@ -465,8 +435,8 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (
                 domain_name,
                 type_name));
 
-  TimeBase::TimeT latency_base_recorded;
-  ACE_hrtime_t latency_base;
+  TimeBase::TimeT latency_base_recorded {};
+  ACE_hrtime_t latency_base {};
 
   notification.filterable_data[0].value >>= latency_base_recorded;
 
@@ -476,17 +446,17 @@ RedGreen_Test_StructuredPushConsumer::push_structured_event (
   ++this->push_count_;
 
   // Grab timestamp again.
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const test_start =
+    this->test_client_.throughput_start_.load (std::memory_order_relaxed);
 
   // Record statistics.
-  this->throughput_.sample (now - g_throughput_start_,
+  this->throughput_.sample (now - test_start,
                             now - latency_base);
-
-
-  if (g_result_count.fetch_add (1, std::memory_order_relaxed) + 1 ==
-      2 * RedGreen_Test_->burst_size_)
+  if (test_client_.result_count_.fetch_add (1, std::memory_order_relaxed) + 1 ==
+      2 * test_client_.burst_size_)
     {
-      RedGreen_Test_->done ();
+      test_client_.done ();
     }
 }
 
@@ -505,14 +475,14 @@ RedGreen_Test_StructuredPushConsumer::get_proxy_supplier ()
 
 // *****************************************************************
 
-SlowConsumer::SlowConsumer (RedGreen_Test* RedGreen_Test)
-  : RedGreen_Test_StructuredPushConsumer (RedGreen_Test)
+SlowConsumer::SlowConsumer (RedGreen_Test& test_client)
+  : RedGreen_Test_StructuredPushConsumer (test_client)
 {
 }
 
 void
 SlowConsumer::push_structured_event (
-    const CosNotification::StructuredEvent & notification
+    CosNotification::StructuredEvent const& notification
   )
 {
   // Slow it down ...
@@ -523,24 +493,23 @@ SlowConsumer::push_structured_event (
 
 // *****************************************************************
 
-RedGreen_Test_StructuredPushSupplier::RedGreen_Test_StructuredPushSupplier ()
-{
-}
-
-RedGreen_Test_StructuredPushSupplier::~RedGreen_Test_StructuredPushSupplier ()
+RedGreen_Test_StructuredPushSupplier::RedGreen_Test_StructuredPushSupplier (
+    RedGreen_Test& test_client
+  )
+  : test_client_ (test_client)
 {
 }
 
 void
 RedGreen_Test_StructuredPushSupplier::accumulate_into (
-    ACE_Throughput_Stats &throughput) const
+    ACE_Throughput_Stats& throughput) const
 {
   throughput.accumulate (this->throughput_);
 }
 
 void
 RedGreen_Test_StructuredPushSupplier::dump_stats (
-  const ACE_TCHAR* msg,
+  ACE_TCHAR const* msg,
   ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (msg, gsf);
@@ -581,8 +550,8 @@ RedGreen_Test_StructuredPushSupplier::disconnect ()
 
 void
 RedGreen_Test_StructuredPushSupplier::subscription_change (
-    const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq &) /*removed */
+    CosNotification::EventTypeSeq const& /*added*/,
+    CosNotification::EventTypeSeq const& /*removed*/)
 {
   //No-Op.
 }
@@ -595,18 +564,20 @@ RedGreen_Test_StructuredPushSupplier::send_event (
   event.filterable_data[0].name = CORBA::string_dup("latency_base");
 
   // Record current time.
-  ACE_hrtime_t start = ACE_OS::gethrtime ();
+  ACE_hrtime_t const start = ACE_OS::gethrtime ();
 
-  TimeBase::TimeT latency_base;
+  TimeBase::TimeT latency_base {};
   ORBSVCS_Time::hrtime_to_TimeT (latency_base,
                                  start);
   // any
   event.filterable_data[0].value <<= latency_base;
   proxy_consumer_->push_structured_event (event);
 
-  ACE_hrtime_t end = ACE_OS::gethrtime ();
+  ACE_hrtime_t const end = ACE_OS::gethrtime ();
+  ACE_hrtime_t const test_start =
+    this->test_client_.throughput_start_.load (std::memory_order_relaxed);
 
-  this->throughput_.sample (end - g_throughput_start_,
+  this->throughput_.sample (end - test_start,
                             end - start);
 }
 
@@ -618,20 +589,10 @@ RedGreen_Test_StructuredPushSupplier::disconnect_structured_push_supplier ()
 
 //*****************************************************************
 
-Worker::Worker ()
-{
-}
-
 void
 Worker::orb (CORBA::ORB_ptr orb)
 {
-  orb_ = CORBA::ORB::_duplicate (orb);
-}
-
-void
-Worker::done ()
-{
-  consumer_is_done = true;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 }
 
 int
@@ -641,7 +602,7 @@ Worker::svc ()
   {
     this->orb_->run ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Consumer:");
   }
