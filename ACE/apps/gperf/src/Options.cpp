@@ -271,7 +271,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("bBcCdDe:Ef:F:gGhH:i:IJj:k:K:lmMnN:oOprs:S:tTvVZ:Q"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("bBcCdDe:Ef:F:gGhH:i:IJj:k:K:lmMnN:oOprs:S:tTvVZ:QR"));
 
   argc_ = argc;
   argv_ = argv;
@@ -393,6 +393,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "\tcharacter value upon collisions.  Must be an odd number, default is %d.\n"
                              "-J\tSkips '#include \"ace/OS_NS_string.h\"' part in the output.\n"
                              "-Q\tSkips '#include <cstring>' in C++ output.\n"
+                             "-R\tSkips C++17 standard headers in the output.\n"
                              "-k\tAllows selection of the key positions used in the hash function.\n"
                              "\tThe allowable choices range between 1-%d, inclusive.  The positions\n"
                              "\tare separated by commas, ranges may be used, and key positions may\n"
@@ -500,6 +501,12 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'Q':
           {
             ACE_SET_BITS (option_word_, SKIPSTDCSTRING);
+            break;
+          }
+        // Skip including the C++17 standard headers.
+        case 'R':
+          {
+            ACE_SET_BITS (option_word_, SKIPCPP17HEADERS);
             break;
           }
         // Sets key positions used for hash function.

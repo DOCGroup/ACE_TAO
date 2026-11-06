@@ -1,0 +1,97 @@
+[
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../../..",
+            "-o",
+            ".obj/logging_app.o",
+            "logging_app.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/Logger/client",
+        "file": "logging_app.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../../..",
+            "-o",
+            ".obj/Logging_Acceptor.o",
+            "Logging_Acceptor.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/Logger/simple-server",
+        "file": "Logging_Acceptor.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../../..",
+            "-o",
+            ".obj/server_loggerd.o",
+            "server_loggerd.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/Logger/simple-server",
+        "file": "server_loggerd.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../../..",
+            "-o",
+            ".obj/Logging_Handler.o",
+            "Logging_Handler.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/Logger/simple-server",
+        "file": "Logging_Handler.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../../..",
+            "-o",
+            ".obj/server_loggerd.o",
+            "server_loggerd.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/Logger/Acceptor-server",
+        "file": "server_loggerd.cpp"
+    }
+]

@@ -1,0 +1,173 @@
+[
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/Logging_Handler.o",
+            "Logging_Handler.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "Logging_Handler.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/Thread_Per_Connection_Logging_Server.o",
+            "Thread_Per_Connection_Logging_Server.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "Thread_Per_Connection_Logging_Server.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/Logging_Client.o",
+            "Logging_Client.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "Logging_Client.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/Reactive_Logging_Server_Ex.o",
+            "Reactive_Logging_Server_Ex.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "Reactive_Logging_Server_Ex.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/Process_Per_Connection_Logging_Server.o",
+            "Process_Per_Connection_Logging_Server.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "Process_Per_Connection_Logging_Server.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/Reactive_Logging_Server.o",
+            "Reactive_Logging_Server.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "Reactive_Logging_Server.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/Logging_Server.o",
+            "Logging_Server.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "Logging_Server.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/RT_Thread_Per_Connection_Logging_Server.o",
+            "RT_Thread_Per_Connection_Logging_Server.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "RT_Thread_Per_Connection_Logging_Server.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-O3",
+            "-g",
+            "-fdelayed-template-parsing",
+            "-DACE_HAS_CUSTOM_EXPORT_MACROS=0",
+            "-I/home/johnny/ACE/trunk/ACE",
+            "-DACE_HAS_VALGRIND",
+            "-D__ACE_INLINE__",
+            "-I../..",
+            "-o",
+            ".obj/Iterative_Logging_Server.o",
+            "Iterative_Logging_Server.cpp"
+        ],
+        "directory": "/home/johnny/ACE/trunk/ACE/examples/C++NPv1",
+        "file": "Iterative_Logging_Server.cpp"
+    }
+]

@@ -59,7 +59,8 @@ enum Option_Type
   SKIPSTRINGH  = 0400000000,    /**< Skip including the header file ace/OS_NS_string.h. */
   BINARYSEARCH = 01000000000,   /**< Generates Binary Search code. */
   LINEARSEARCH = 02000000000,   /**< Generates Linear Search code. */
-  SKIPSTDCSTRING = 04000000000  /**< Skip including the C++ <cstring> header. */
+  SKIPSTDCSTRING = 04000000000, /**< Skip including the C++ <cstring> header. */
+  SKIPCPP17HEADERS = 010000000000 /**< Skip including C++17 standard headers. */
 };
 
 // Define some useful constants (these don't really belong here, but
