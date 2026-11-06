@@ -8,7 +8,7 @@
 #include "ORB_Initializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-ACE_TCHAR const *ior_file = nullptr;
+ACE_TCHAR const *ior_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -44,7 +44,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       if (::parse_args (argc, argv) != 0) return -1;
 
-      ORB_Initializer *temp_initializer = nullptr;
+      ORB_Initializer *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       ORB_Initializer,
                       -1);  // No exceptions yet!
@@ -71,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      RolyPoly_i* roly_poly_impl;
+      RolyPoly_i* roly_poly_impl {};
 
       ACE_NEW_RETURN (roly_poly_impl,
                       RolyPoly_i (orb.in ()),
