@@ -136,7 +136,7 @@ TAO_DynamicImplementation::_dispatch (
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request_ptr = nullptr;
+  CORBA::ServerRequest *dsi_request_ptr {};
   ACE_NEW (dsi_request_ptr,
            CORBA::ServerRequest (request));
   CORBA::ServerRequest_var dsi_request (dsi_request_ptr);

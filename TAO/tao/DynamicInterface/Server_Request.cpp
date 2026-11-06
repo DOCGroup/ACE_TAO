@@ -112,7 +112,7 @@ CORBA::ServerRequest::set_result (CORBA::Any const& value)
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
     }
 
-  CORBA::Any *retval = nullptr;
+  CORBA::Any *retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any (value),
                     CORBA::NO_MEMORY ());
@@ -141,7 +141,7 @@ CORBA::ServerRequest::set_exception (CORBA::Any const& value)
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 21, CORBA::COMPLETED_MAYBE);
     }
 
-  CORBA::Any *exception = nullptr;
+  CORBA::Any *exception {};
   ACE_NEW_THROW_EX (exception,
                     CORBA::Any (value),
                     CORBA::NO_MEMORY ());

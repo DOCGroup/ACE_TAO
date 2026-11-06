@@ -52,7 +52,7 @@ namespace TAO
     // Convert DII exception list to a form the invocation can use
     // to filter raised user exceptions.
     ex_count = this->exception_list_->count ();
-    TAO::Exception_Data *exception_data = nullptr;
+    TAO::Exception_Data *exception_data {};
     ACE_NEW_THROW_EX (exception_data,
                       TAO::Exception_Data[ex_count],
                       CORBA::NO_MEMORY ());
@@ -180,7 +180,7 @@ namespace TAO
     // to prevent memory leaks. The invoke may encounter errors
     // before being able to handover the dispatcher to the invocation
     // using and managing it.
-    TAO_DII_Deferred_Reply_Dispatcher *new_rd = nullptr;
+    TAO_DII_Deferred_Reply_Dispatcher *new_rd {};
     ACE_NEW_THROW_EX (new_rd,
         TAO_DII_Deferred_Reply_Dispatcher (this->request_,
                                            this->orb_core_),
