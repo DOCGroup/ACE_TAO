@@ -16,7 +16,7 @@ int
 Receiver_StreamEndPoint::get_callback (const char *flow_name,
                                        TAO_AV_Callback *&callback)
 {
-  Receiver_Callback *callback_ = nullptr;
+  Receiver_Callback *callback_ {};
   ACE_NEW_RETURN (callback_,
                   Receiver_Callback,
                   -1);

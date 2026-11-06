@@ -204,12 +204,12 @@ TimeStamp_Protocol_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                   TAO_AV_Flow_Handler *handler,
                                                   TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *callback = nullptr;
+  TAO_AV_Callback *callback {};
   endpoint->get_callback (entry->flowname (),
                           callback);
 
 
-  TimeStamp_Protocol_Object *object = nullptr;
+  TimeStamp_Protocol_Object *object {};
   ACE_NEW_RETURN (object,
                   TimeStamp_Protocol_Object (callback,
                                              transport),

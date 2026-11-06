@@ -6,7 +6,7 @@
 using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 // Create a singleton instance of the Sender.
 
-static FILE *output_file = nullptr;
+static FILE *output_file {};
 // File handle of the file into which received data is written.
 
 static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");

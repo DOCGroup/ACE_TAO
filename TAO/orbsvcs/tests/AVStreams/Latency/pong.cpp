@@ -126,12 +126,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ());
 
-      Reactive_Strategy *reactive_strategy = nullptr;
+      Reactive_Strategy *reactive_strategy {};
       ACE_NEW_RETURN (reactive_strategy,
                       Reactive_Strategy,
                       1);
       reactive_strategy->init (orb.in (), poa.in ());
-      TAO_MMDevice *mmdevice_impl = nullptr;
+      TAO_MMDevice *mmdevice_impl {};
       ACE_NEW_RETURN (mmdevice_impl,
                       TAO_MMDevice (reactive_strategy),
                       1);
@@ -158,11 +158,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      Pong_Recv_FDev *pong_fdev_impl = nullptr;
+      Pong_Recv_FDev *pong_fdev_impl {};
       ACE_NEW_RETURN (pong_fdev_impl,
                       Pong_Recv_FDev ("Pong"),
                       1);
-      Ping_Send_FDev *ping_fdev_impl = nullptr;
+      Ping_Send_FDev *ping_fdev_impl {};
       ACE_NEW_RETURN (ping_fdev_impl,
                       Ping_Send_FDev ("Ping"),
                       1);

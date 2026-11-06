@@ -110,12 +110,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                       poa.in ());
 
       // Register the video mmdevice object with the ORB
-      Reactive_Strategy *reactive_strategy = nullptr;
+      Reactive_Strategy *reactive_strategy {};
       ACE_NEW_RETURN (reactive_strategy,
                       Reactive_Strategy,
                       1);
       reactive_strategy->init (orb.in (), poa.in ());
-      TAO_MMDevice *mmdevice_impl = nullptr;
+      TAO_MMDevice *mmdevice_impl {};
       ACE_NEW_RETURN (mmdevice_impl,
                       TAO_MMDevice (reactive_strategy),
                       1);
@@ -142,11 +142,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      Ping_Recv_FDev *ping_fdev_impl = nullptr;
+      Ping_Recv_FDev *ping_fdev_impl {};
       ACE_NEW_RETURN (ping_fdev_impl,
                       Ping_Recv_FDev ("Ping"),
                       1);
-      Pong_Send_FDev *pong_fdev_impl = nullptr;
+      Pong_Send_FDev *pong_fdev_impl {};
       ACE_NEW_RETURN (pong_fdev_impl,
                       Pong_Send_FDev ("Pong"),
                       1);
