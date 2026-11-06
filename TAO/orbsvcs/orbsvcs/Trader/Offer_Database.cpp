@@ -59,11 +59,11 @@ insert_offer (const char* type, CosTrading::Offer* offer)
     {
       // If there's no entry for the service type, create one.
 
-      Offer_Map_Entry* new_offer_map_entry = nullptr;
+      Offer_Map_Entry* new_offer_map_entry {};
       ACE_NEW_RETURN (new_offer_map_entry, Offer_Map_Entry, 0);
       // Keep ownership until the database map accepts the new entry.
       std::unique_ptr<Offer_Map_Entry> new_offer_map_entry_owner (new_offer_map_entry);
-      TAO_Offer_Map* offer_map = nullptr;
+      TAO_Offer_Map* offer_map {};
       ACE_NEW_RETURN (offer_map, TAO_Offer_Map, 0);
       new_offer_map_entry->offer_map_.reset (offer_map);
       new_offer_map_entry->counter_ = 1;
@@ -113,7 +113,7 @@ remove_offer (const char* type, CORBA::ULong id)
 
   if (this->offer_db_.find (service_type, db_entry) == 0)
     {
-      CosTrading::Offer* offer = nullptr;
+      CosTrading::Offer* offer {};
       Offer_Map_Entry* offer_map_entry = db_entry->int_id_;
 
       if (offer_map_entry->lock_.acquire_write () == -1)
@@ -178,7 +178,7 @@ lookup_offer (char const* offer_id,
               char const*& type_name)
 {
   CORBA::ULong index;
-  CosTrading::Offer* offer = nullptr;
+  CosTrading::Offer* offer {};
   this->parse_offer_id (offer_id, type_name, index);
 
   if ((offer = this->lookup_offer (type_name, index)) == nullptr)
@@ -194,7 +194,7 @@ lookup_offer (char const* offer_id)
 {
   char const* type_name;
   CORBA::ULong index;
-  CosTrading::Offer* offer = nullptr;
+  CosTrading::Offer* offer {};
 
   this->parse_offer_id (offer_id, type_name, index);
 
@@ -210,7 +210,7 @@ lookup_offer (const char* type, CORBA::ULong id)
 {
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
-  CosTrading::Offer* return_value = nullptr;
+  CosTrading::Offer* return_value {};
   typename Offer_Database::ENTRY* db_entry = nullptr;
   CORBA::String_var service_type (type);
 
@@ -219,7 +219,7 @@ lookup_offer (const char* type, CORBA::ULong id)
       Offer_Map_Entry* offer_map_entry = db_entry->int_id_;
       ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map_entry->lock_, 0);
 
-      TAO_Offer_Map::ENTRY* offer_entry_ptr = nullptr;
+      TAO_Offer_Map::ENTRY* offer_entry_ptr {};
       if (offer_map_entry->offer_map_->find (id, offer_entry_ptr) == 0)
         return_value = offer_entry_ptr->int_id_;
     }

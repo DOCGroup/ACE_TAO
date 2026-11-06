@@ -360,7 +360,7 @@ fill_receptacles (const char* /* type */,
   // Add to the sequence, filtering out the undesired properties.
   for (i = 0; i < offers_in_sequence; i++)
     {
-      CosTrading::Offer* offer = nullptr;
+      CosTrading::Offer* offer {};
       CosTrading::OfferId offer_id = 0;
 
       // Pull the next ordered offer out of the preference
@@ -387,7 +387,7 @@ fill_receptacles (const char* /* type */,
       // Add to the iterator
       for (i = 0; i < offers_in_iterator; i++)
         {
-          CosTrading::Offer* offer = nullptr;
+          CosTrading::Offer* offer {};
           CosTrading::OfferId offer_id = 0;
 
           // Pull the next ordered offer out of the preference
@@ -401,7 +401,7 @@ fill_receptacles (const char* /* type */,
   size_t num_offers = pref_inter.num_offers ();
   for (size_t j = 0; j < num_offers; j++)
     {
-      CosTrading::Offer* offer = nullptr;
+      CosTrading::Offer* offer {};
       CosTrading::OfferId offer_id = 0;
 
       pref_inter.remove_offer (offer, offer_id);
@@ -429,7 +429,7 @@ create_offer_iterator (const TAO_Property_Filter& pfilter)
   // We pass the property filter to the iterators, so when the iterators
   // return the offers, they can remove the undesirable properties
   // from those offers.
-  TAO_Offer_Iterator* iterator = nullptr;
+  TAO_Offer_Iterator* iterator {};
 
   if (CORBA::is_nil (this->trader_.trading_components ().register_if ()))
     ACE_NEW_RETURN (iterator,
@@ -542,7 +542,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
   // collection. The end result is a distributed tree of offer
   // iterators, which if traversed in its entirety is probably hugely
   // inefficient, but oh well, I can't think of a better solution.
-  TAO_Offer_Iterator_Collection* offer_iter_collection = nullptr;
+  TAO_Offer_Iterator_Collection* offer_iter_collection {};
   ACE_NEW (offer_iter_collection,
            TAO_Offer_Iterator_Collection);
   offer_iter_collection->add_offer_iterator (offer_iter);
@@ -552,9 +552,9 @@ federated_query (const CosTrading::LinkNameSeq& links,
 
   for (int i = links.length () - 1; i >= 0; i--)
     {
-      CosTrading::OfferSeq* out_offers = nullptr;
-      CosTrading::OfferIterator* out_offer_iter = nullptr;
-      CosTrading::PolicyNameSeq* out_limits = nullptr;
+      CosTrading::OfferSeq* out_offers {};
+      CosTrading::OfferIterator* out_offer_iter {};
+      CosTrading::PolicyNameSeq* out_limits {};
 
       try
         {
@@ -647,7 +647,7 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
   // Copy in the ordered offers.
   for (j = 0; j < length; j++)
     {
-      CosTrading::Offer* offer = nullptr;
+      CosTrading::Offer* offer {};
       pref_inter.remove_offer (offer);
       //copy[j] = *offer;
       offers[j] = *offer;
@@ -809,7 +809,7 @@ _cxx_export (CORBA::Object_ptr reference,
   // Get service type map
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
-  CosTrading::Offer* offer = nullptr;
+  CosTrading::Offer* offer {};
   TAO_Support_Attributes_i& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
@@ -881,7 +881,7 @@ describe (const char *id)
   CosTrading::Offer* offer =
     offer_database.lookup_offer (id, type);
 
-  CosTrading::Register::OfferInfo* offer_info = nullptr;
+  CosTrading::Register::OfferInfo* offer_info {};
   ACE_NEW_THROW_EX (offer_info, CosTrading::Register::OfferInfo, CORBA::NO_MEMORY ());
 
   offer_info->reference = CORBA::Object::_duplicate (offer->reference.in ());
@@ -1536,7 +1536,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
     throw CosTrading::Link::UnknownLinkName (name);
 
   // Build a new Link Info structure.
-  CosTrading::Link::LinkInfo* new_link_info = nullptr;
+  CosTrading::Link::LinkInfo* new_link_info {};
   CosTrading::Link::LinkInfo& old_link_info = link_entry->int_id_;
 
   ACE_NEW_THROW_EX (new_link_info,

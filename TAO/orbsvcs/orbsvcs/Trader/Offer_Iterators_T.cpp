@@ -47,7 +47,7 @@ next_n (CORBA::ULong n,
     (n <  this->offer_ids_.size ()) ? n :
        static_cast<CORBA::ULong> (this->offer_ids_.size ());
 
-  CosTrading::OfferSeq* raw_offer_sequence = nullptr;
+  CosTrading::OfferSeq* raw_offer_sequence {};
   ACE_NEW_THROW_EX (raw_offer_sequence,
                     CosTrading::OfferSeq,
                     CORBA::NO_MEMORY ());

@@ -661,7 +661,7 @@ TAO_Trader_Factory::manufacture_trader ()
   using MT_TRADER = TAO_Trader<ACE_Null_Mutex, ACE_Null_Mutex>;
 #endif /* ACE_HAS_THREADS */
 
-  TAO_TRADER* return_value = nullptr;
+  TAO_TRADER* return_value {};
   int components = static_cast<int> (TAO_Trader_Base::LOOKUP);
 
   if (this->conformance_ >= TAO_TRADER_SIMPLE)

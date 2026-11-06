@@ -261,7 +261,7 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
 CORBA::Any*
 TAO_Property_Evaluator::property_value (int index)
 {
-  CORBA::Any* prop_val = nullptr;
+  CORBA::Any* prop_val {};
   bool const in_cache = this->dp_cache_[index] != nullptr;
 
   bool const dynamic = this->is_dynamic_property (index);
@@ -391,7 +391,7 @@ CORBA::Any*
 TAO_Property_Evaluator_By_Name::property_value (const char* property_name)
 {
   int index = 0;
-  CORBA::Any* prop_value = nullptr;
+  CORBA::Any* prop_value {};
   CORBA::String_var prop_name (property_name);
 
   // If the property name is in the map, delegate evaluation to our
@@ -424,7 +424,7 @@ const CosTrading::Property*
 TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
 {
   int index = 0;
-  CosTrading::Property* property = nullptr;
+  CosTrading::Property* property {};
   CORBA::String_var prop_name (property_name);
 
   if (this->table_.find (prop_name, index) == 0)
@@ -443,7 +443,7 @@ construct_dynamic_prop (const char* name,
 {
   ACE_UNUSED_ARG (name);
 
-  CosTradingDynamic::DynamicProp* dp_struct = nullptr;
+  CosTradingDynamic::DynamicProp* dp_struct {};
 
   ACE_NEW_RETURN (dp_struct,
                   CosTradingDynamic::DynamicProp,
@@ -1143,7 +1143,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
   for (i = 0; i < merge_length; i++)
     {
-      Property_Table::ENTRY* entry = nullptr;
+      Property_Table::ENTRY* entry {};
       CORBA::String_var prop_name = modifies[i].name.in ();
 
       CosTrading::Property* prop =
@@ -1167,7 +1167,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
   // relative ordering.
   for (i = 0; i < original_length; i++)
     {
-      CosTrading::Property* prop_value = nullptr;
+      CosTrading::Property* prop_value {};
       const char* name = this->offer_->properties[i].name;
       CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
@@ -1176,7 +1176,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
   for (i = 0; i < merge_length; i++)
     {
-      CosTrading::Property* prop_value = nullptr;
+      CosTrading::Property* prop_value {};
       const char* name = modifies[i].name;
       CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)

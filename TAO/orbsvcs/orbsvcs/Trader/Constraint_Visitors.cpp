@@ -1185,7 +1185,7 @@ CORBA::TypeCode*
 TAO_Constraint_Validator::extract_type (TAO_Constraint* expr,
                                         TAO_Expression_Type& type)
 {
-  CORBA::TypeCode* return_value = nullptr;
+  CORBA::TypeCode* return_value {};
 
   type = expr->expr_type ();
   if (type == TAO_IDENT)
