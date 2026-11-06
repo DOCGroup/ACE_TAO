@@ -2,28 +2,20 @@
 #include "Notify_Test_Client.h"
 #include "tao/debug.h"
 
-Notify_Push_Consumer::Notify_Push_Consumer (const char* name,
-                                            int sent,
-                                            bool useFilter,
+#include <cstring>
+
+Notify_Push_Consumer::Notify_Push_Consumer (int sent,
+                                            bool use_filter,
                                             Notify_Test_Client& client)
-: name_ (name)
-, sent_(sent)
-, received_(0)
-, expected_(sent)
-, useFilter_(useFilter)
-, client_(client)
+  : expected_ (use_filter ? sent * 4 / 9 : sent),
+    use_filter_ (use_filter),
+    client_ (client)
 {
   // By sending multiples of 9, we ensure that all combinations of group and type
   // are possible, and that our calculations come out evenly.
-  ACE_ASSERT(sent % 9 == 0);
+  ACE_ASSERT (sent % 9 == 0);
 
   // This test currently only supports one expression
-  if (useFilter)
-  {
-    // group != 0 && type != 1
-    expected_ = sent_ * 4 / 9;
-  }
-
   this->client_.consumer_start (this);
 }
 
@@ -49,48 +41,46 @@ Notify_Push_Consumer::_connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consume
   this->_remove_ref ();
 }
 
-static void validate_expression(bool expr, const char* msg)
+static void
+validate_expression (bool expr, char const* msg)
 {
-  if (! expr)
-  {
-    ACE_ERROR((LM_ERROR, ACE_TEXT("Error: %C\n"), msg));
-  }
+  if (!expr)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: %C\n"), msg));
 }
 
 #define validate(expr) validate_expression(expr, #expr)
 
 void
 Notify_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& event)
+  CosNotification::StructuredEvent const& event)
 {
-  ACE_DEBUG((LM_DEBUG, "-"));
-  ++received_;
+  ACE_DEBUG ((LM_DEBUG, "-"));
+  CORBA::Long const received = this->received_.fetch_add (1, std::memory_order_relaxed) + 1;
 
-  CORBA::ULong id = 0;
-  CORBA::ULong group = 0;
-  CORBA::ULong type = 0;
+  CORBA::ULong group {};
+  CORBA::ULong type {};
 
-  ACE_ASSERT(event.filterable_data.length() == 3);
-  ACE_ASSERT(ACE_OS::strcmp(event.filterable_data[0].name.in(), "id") == 0);
-  ACE_ASSERT(ACE_OS::strcmp(event.filterable_data[1].name.in(), "group") == 0);
-  ACE_ASSERT(ACE_OS::strcmp(event.filterable_data[2].name.in(), "type") == 0);
-  event.filterable_data[0].value >>= id;
+  ACE_ASSERT (event.filterable_data.length () == 3);
+  ACE_ASSERT (std::strcmp (event.filterable_data[0].name.in (), "id") == 0);
+  ACE_ASSERT (std::strcmp (event.filterable_data[1].name.in (), "group") == 0);
+  ACE_ASSERT (std::strcmp (event.filterable_data[2].name.in (), "type") == 0);
   event.filterable_data[1].value >>= group;
   event.filterable_data[2].value >>= type;
 
-  if (useFilter_)
-    validate(type != 1 && group != 0);
+  if (this->use_filter_)
+    validate (type != 1 && group != 0);
 
-  if (received_ > expected_)
-  {
-    ACE_ERROR((LM_ERROR, "\nError: Expected %d, Received %d\n", expected_, received_));
-    this->client_.consumer_done (this);
-    return;
-  }
-  if (received_ >= expected_)
-  {
-    ACE_DEBUG((LM_DEBUG, "\nConsumer received %d events.\n", received_));
-    this->client_.consumer_done (this);
-    return;
-  }
+  if (received > this->expected_)
+    {
+      ACE_ERROR ((LM_ERROR, "\nError: Expected %d, Received %d\n",
+                  this->expected_, received));
+      this->client_.consumer_done (this);
+      return;
+    }
+  if (received >= this->expected_)
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nConsumer received %d events.\n", received));
+      this->client_.consumer_done (this);
+      return;
+    }
 }
