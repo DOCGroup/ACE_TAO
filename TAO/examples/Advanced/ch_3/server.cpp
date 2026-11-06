@@ -9,8 +9,6 @@
  *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #include "server.h"
 #include <ace/OS_NS_time.h>
 #include <iostream>
@@ -52,7 +50,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       mgr->activate ();
 
       // Create an object
-      Time_impl time_servant;
+      Time_impl time_servant {};
 
       // Write its stringified reference to stdout
       Time_var tm = time_servant._this ();

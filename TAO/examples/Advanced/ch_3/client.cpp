@@ -9,8 +9,6 @@
  *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #include "timeC.h"
 #include <iomanip>
 #include <iostream>
@@ -49,7 +47,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       {
         std::cout << "Validating connection" << std::endl;
-        CORBA::PolicyList_var pols;
+        CORBA::PolicyList_var pols {};
         tm->_validate_connection (pols.out ());
         std::cout << "Successful " << std::endl;
       }
