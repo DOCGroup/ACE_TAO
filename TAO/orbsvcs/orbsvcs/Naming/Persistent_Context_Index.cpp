@@ -158,7 +158,7 @@ TAO_Persistent_Context_Index::init (size_t context_size)
 int
 TAO_Persistent_Context_Index::recreate_all ()
 {
-  CONTEXT_INDEX::ITERATOR *index_iter = nullptr;
+  CONTEXT_INDEX::ITERATOR *index_iter {};
 
   ACE_NEW_RETURN (index_iter,
                   (CONTEXT_INDEX::ITERATOR) (*index_),
@@ -170,7 +170,7 @@ TAO_Persistent_Context_Index::recreate_all ()
   using IND_DEF = ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
                                               TAO_Persistent_Index_IntId>;
 
-  IND_DEF::ENTRY *entry = nullptr;
+  IND_DEF::ENTRY *entry {};
 
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file...\n"));
@@ -193,7 +193,7 @@ TAO_Persistent_Context_Index::recreate_all ()
       // allocation fails.
       std::unique_ptr<TAO_Persistent_Naming_Context> temp (context_impl);
 
-      TAO_Naming_Context *context = nullptr;
+      TAO_Naming_Context *context {};
       ACE_NEW_RETURN (context,
                       TAO_Naming_Context (context_impl),
                       -1);
@@ -247,7 +247,7 @@ TAO_Persistent_Context_Index::create_index ()
 
   // Create the allocator with the appropriate options.  The name used
   // for  the lock is the same as one used for the file.
-  ALLOCATOR *allocator = nullptr;
+  ALLOCATOR *allocator {};
   ACE_NEW_RETURN (allocator,
                   ALLOCATOR (this->index_file_,
                              this->index_file_,
@@ -263,7 +263,7 @@ TAO_Persistent_Context_Index::create_index ()
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
-  void *context_index = nullptr;
+  void *context_index {};
 
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.

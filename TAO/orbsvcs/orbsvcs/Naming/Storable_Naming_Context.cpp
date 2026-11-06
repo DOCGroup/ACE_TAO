@@ -494,7 +494,7 @@ TAO_Storable_Naming_Context::make_new_context (
   // allocation fails.
   std::unique_ptr<TAO_Storable_Naming_Context> temp (context_impl);
 
-  TAO_Naming_Context *context = nullptr;
+  TAO_Naming_Context *context {};
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
@@ -588,7 +588,7 @@ TAO_Storable_Naming_Context::new_context ()
   }
 
   // Create a new context.
-  TAO_Storable_Naming_Context *new_context = nullptr;
+  TAO_Storable_Naming_Context *new_context {};
   CosNaming::NamingContext_var result =
     make_new_context (this->orb_.in (),
                       this->poa_.in (),
@@ -940,7 +940,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                            CORBA::INTERNAL ());
 
   // Dynamically allocate iterator for traversing the underlying hash map.
-  HASH_MAP::ITERATOR *hash_iter = nullptr;
+  HASH_MAP::ITERATOR *hash_iter {};
   ACE_NEW_THROW_EX (hash_iter,
                     HASH_MAP::ITERATOR (storable_context_->map ()),
                     CORBA::NO_MEMORY ());
@@ -962,7 +962,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   using ITER_SERVANT = TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF>;
 
   // A pointer to BindingIterator servant.
-  ITER_SERVANT *bind_iter = nullptr;
+  ITER_SERVANT *bind_iter {};
 
   // Number of bindings that will go into the BindingList <bl>.
   CORBA::ULong n;
@@ -976,7 +976,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);
 
-  ENTRY_DEF *hash_entry = nullptr;
+  ENTRY_DEF *hash_entry {};
 
   for (CORBA::ULong i = 0; i < n; i++)
     {
@@ -1060,7 +1060,7 @@ TAO_Storable_Naming_Context::recreate_all (
   root_name_ = poa_id;
 
   // Create a new context.
-  TAO_Storable_Naming_Context *new_context = nullptr;
+  TAO_Storable_Naming_Context *new_context {};
   CosNaming::NamingContext_var result =
     make_new_context (orb,
                       poa,

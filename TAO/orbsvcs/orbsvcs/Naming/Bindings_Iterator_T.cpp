@@ -43,7 +43,7 @@ template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
     CosNaming::Binding_out b)
 {
-  CosNaming::Binding *binding = nullptr;
+  CosNaming::Binding *binding {};
 
   // Allocate a binding to be returned (even if there no more
   // bindings, we need to allocate an out parameter.)
@@ -81,7 +81,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
                                CORBA::INTERNAL ());
 
       // Return a binding.
-      TABLE_ENTRY *hash_entry = nullptr;
+      TABLE_ENTRY *hash_entry {};
       hash_iter_->next (hash_entry);
 
       if (populate_binding (hash_entry, *binding) == 0)
@@ -134,7 +134,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
       // bindings.
       bl->length (how_many);
 
-      TABLE_ENTRY *hash_entry = nullptr;
+      TABLE_ENTRY *hash_entry {};
 
       // Iterate and populate the BindingList.
       for (CORBA::ULong i = 0; i < how_many; i++)

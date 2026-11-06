@@ -75,7 +75,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   // allocation fails.
   std::unique_ptr<TAO_Storable_Naming_Context> temp (context_impl);
 
-  TAO_Naming_Context *context = nullptr;
+  TAO_Naming_Context *context {};
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());

@@ -129,7 +129,7 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
 {
   CORBA::ULong count = infos.length();
   FT_Naming::UpdateInfo* guts = infos.get_buffer(true);
-  FT_Naming::UpdateInfoSeq* block = nullptr;
+  FT_Naming::UpdateInfoSeq* block {};
   ACE_NEW (block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
   std::unique_ptr<FT_Naming::UpdateInfoSeq> block_owner (block);
   {
@@ -186,7 +186,7 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
                                      ACE_TCHAR *argv [],
                                      CORBA::ORB_ptr orb)
 {
-  TAO_FT_Naming_Replication_Manager *replicator = nullptr;
+  TAO_FT_Naming_Replication_Manager *replicator {};
   ACE_NEW_RETURN (replicator, TAO_FT_Naming_Replication_Manager (*this), -1);
   this->replicator_.reset (replicator);
 

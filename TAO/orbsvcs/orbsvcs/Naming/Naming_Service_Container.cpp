@@ -102,7 +102,7 @@ ACE_Unbounded_List<T>::dump () const
   ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
   ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
 
-  T *item = nullptr;
+  T *item {};
 #if !defined (ACE_NLOGGING)
   size_t count = 1;
 #endif /* ! ACE_NLOGGING */
@@ -340,7 +340,7 @@ template <class T> T&
 ACE_Unbounded_List_Iterator<T>::operator* ()
 {
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator*");
-  T *retv = nullptr;
+  T *retv {};
 
   int result = this->next (retv);
   ACE_ASSERT (result != 0);

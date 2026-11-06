@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Naming_Server::TAO_Naming_Server (size_t bsize)
   : bundle_size_ (bsize)
 {
-  IOR_Bundle* iors = nullptr;
+  IOR_Bundle* iors {};
   ACE_NEW (iors, IOR_Bundle[bsize]);
   this->iors_.reset (iors);
 }
@@ -64,7 +64,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
   , use_storable_context_ (use_storable_context)
 #endif /* CORBA_E_MICRO */
 {
-  IOR_Bundle* iors = nullptr;
+  IOR_Bundle* iors {};
   ACE_NEW (iors, IOR_Bundle[bsize]);
   this->iors_.reset (iors);
   if (this->init (orb,
@@ -457,7 +457,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           // In lieu of a fully implemented service configurator version
           // of this Reader and Writer, let's just take something off the
           // command line for now.
-          TAO::Storable_Factory* pf = nullptr;
+          TAO::Storable_Factory* pf {};
           std::string directory (ACE_TEXT_ALWAYS_CHAR (persistence_location));
           ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory (directory), -1);
           std::unique_ptr<TAO::Storable_Factory> persFactory(pf);
@@ -556,7 +556,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           if (naming_context_factory == nullptr) return -1;
 
           // Allocate and initialize Persistent Context Index.
-          TAO_Persistent_Context_Index* context_index = nullptr;
+          TAO_Persistent_Context_Index* context_index {};
           ACE_NEW_RETURN (context_index,
                           TAO_Persistent_Context_Index (orb, poa, naming_context_factory),
                           -1);
