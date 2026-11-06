@@ -231,7 +231,7 @@ TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream)
   // Check whether the output cdr stream is build up of multiple
   // messageblocks. If so, consolidate them to one block that can be
   // dumped
-  ACE_Message_Block* consolidated_block = nullptr;
+  ACE_Message_Block* consolidated_block {};
   char *buf = const_cast <char*> (stream.buffer ());
   size_t const total_len = stream.total_length ();
   if (stream.begin()->cont () != nullptr)
@@ -643,7 +643,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  ACE_Data_Block *db = nullptr;
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
@@ -764,7 +764,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  ACE_Data_Block *db = nullptr;
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
@@ -1525,7 +1525,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // request/reply id.
     CORBA::ULong tmp = 0;
     CORBA::ULong *id = std::addressof(tmp);
-    char *tmp_id = nullptr;
+    char *tmp_id {};
 
     if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||
         ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Reply ||
@@ -1619,7 +1619,7 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg) const
 bool
 TAO_GIOP_Message_Base::has_pending_fragments () const
 {
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
   return this->fragment_stack_.top (qd) == 0;
 }
 
@@ -1693,7 +1693,7 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
   // copies at all here. The same is also done in the higher layers.
 
   ACE_Message_Block::Message_Flags flg = 0;
-  ACE_Data_Block *db = nullptr;
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   flg = qd->msg_block ()->self_flags ();
@@ -1787,8 +1787,8 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
 {
   TAO::Incoming_Message_Stack reverse_stack;
 
-  TAO_Queued_Data *tail = nullptr;
-  TAO_Queued_Data *head = nullptr;
+  TAO_Queued_Data *tail {};
+  TAO_Queued_Data *head {};
 
   //
   // CONSOLIDATE FRAGMENTED MESSAGE
@@ -1941,7 +1941,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
       return -1;
     }
 
-  TAO_Queued_Data *head = nullptr;
+  TAO_Queued_Data *head {};
 
   // Revert stack
   while (this->fragment_stack_.pop (head) != -1)

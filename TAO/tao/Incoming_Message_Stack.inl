@@ -17,7 +17,7 @@ ACE_INLINE
 Incoming_Message_Stack::~Incoming_Message_Stack()
 {
   // Delete all the nodes left behind
-  TAO_Queued_Data * del = nullptr;
+  TAO_Queued_Data * del {};
 
   while (this->pop (del) != -1)
     {
