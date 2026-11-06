@@ -99,7 +99,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
               if (connector != nullptr)
                 {
                   // add connector to list.
-                  TAO_AV_Container_Utils::insert (this->connectors_, connector);
+                  this->connectors_.insert (connector);
 
                   if (connector->open (endpoint,
                                        av_core,
@@ -132,7 +132,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                   if (control_connector != nullptr)
                     {
                       // add connector to list.
-                      TAO_AV_Container_Utils::insert (this->connectors_, control_connector);
+                      this->connectors_.insert (control_connector);
 
                       if (control_connector->open (endpoint,
                                                    av_core,
@@ -165,7 +165,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 int
 TAO_AV_Connector_Registry::close (TAO_AV_Connector *connector)
 {
-  TAO_AV_Container_Utils::remove (this->connectors_, connector);
+  this->connectors_.remove (connector);
 
   delete connector;
 
@@ -187,7 +187,7 @@ TAO_AV_Connector_Registry::close_all ()
         }
     }
 
-  this->connectors_.clear ();
+  this->connectors_.reset ();
   return 0;
 }
 
@@ -265,7 +265,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                   if (acceptor != nullptr)
                     {
                       // add acceptor to list.
-                      TAO_AV_Container_Utils::insert (this->acceptors_, acceptor);
+                      this->acceptors_.insert (acceptor);
 
                       if (acceptor->open (endpoint,
                                           av_core,
@@ -289,7 +289,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                                                   TAO_AV_Core::TAO_AV_CONTROL) == -1)
                                 return -1;
                               // add acceptor to list.
-                              TAO_AV_Container_Utils::insert (this->acceptors_, acceptor);
+                              this->acceptors_.insert (acceptor);
 
                               entry->protocol_object ()->control_object (entry->control_protocol_object ());
                              }
@@ -378,7 +378,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                        flow_protocol),
                       -1);
 
-  TAO_AV_Container_Utils::insert (this->acceptors_, acceptor);
+  this->acceptors_.insert (acceptor);
 
   char const *control_flow_factory_name = flow_factory->control_flow_factory ();
 
@@ -414,7 +414,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                            transport_protocol),
                           -1);
 
-      TAO_AV_Container_Utils::insert (this->acceptors_, control_acceptor);
+      this->acceptors_.insert (control_acceptor);
 
       entry->protocol_object ()->control_object (entry->control_protocol_object ());
     }
@@ -433,7 +433,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
 int
 TAO_AV_Acceptor_Registry::close (TAO_AV_Acceptor *acceptor)
 {
-  TAO_AV_Container_Utils::remove (this->acceptors_, acceptor);
+  this->acceptors_.remove (acceptor);
   delete acceptor;
 
   return 0;
@@ -454,7 +454,7 @@ TAO_AV_Acceptor_Registry::close_all ()
       delete *i;
     }
 
-  this->acceptors_.clear ();
+  this->acceptors_.reset ();
   return 0;
 }
 

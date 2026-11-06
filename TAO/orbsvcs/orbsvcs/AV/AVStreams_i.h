@@ -13,8 +13,6 @@
 #define AVSTREAMS_I_H
 #include /**/ "ace/pre.h"
 
-#include <list>
-
 #include "orbsvcs/AV/AV_Core.h"
 
 #include "orbsvcs/AV/AV_export.h"
@@ -886,9 +884,9 @@ public:
   int set_mcast_addr (ACE_CString addr,u_short port);
   void set_protocol (char const *protocol);
 protected:
-  using FlowProducer_Set = std::list<AVStreams::FlowProducer_ptr>;
+  using FlowProducer_Set = ACE_Unbounded_Set<AVStreams::FlowProducer_ptr>;
   using FlowProducer_SetItor = FlowProducer_Set::iterator;
-  using FlowConsumer_Set = std::list<AVStreams::FlowConsumer_ptr>;
+  using FlowConsumer_Set = ACE_Unbounded_Set<AVStreams::FlowConsumer_ptr>;
   using FlowConsumer_SetItor = FlowConsumer_Set::iterator;
 
   /// The multicast address returned by the producer.
