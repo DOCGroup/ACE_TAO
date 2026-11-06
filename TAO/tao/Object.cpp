@@ -755,7 +755,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
         }
     }
 
-  TAO_Stub *objdata = nullptr;
+  TAO_Stub *objdata {};
 
   try
     {
@@ -895,7 +895,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
       // Ownership of type_hint is given to TAO_Stub
       // TAO_Stub will make a copy of mp!
-      TAO_Stub *objdata = nullptr;
+      TAO_Stub *objdata {};
 
       try
         {
@@ -956,7 +956,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
   else
     {
       // Lazy strategy!
-      IOP::IOR *ior = nullptr;
+      IOP::IOR *ior {};
 
       ACE_NEW_RETURN (ior,
                       IOP::IOR (),
@@ -1034,6 +1034,6 @@ namespace TAO
   }
 } // close TAO namespace
 
-TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) () = nullptr;
+TAO::Object_Proxy_Broker * (*_TAO_Object_Proxy_Broker_Factory_function_pointer) () {};
 
 TAO_END_VERSIONED_NAMESPACE_DECL

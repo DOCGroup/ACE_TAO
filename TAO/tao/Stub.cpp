@@ -185,7 +185,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
     }
 
 
-  IOP::IOR *tmp_info = nullptr;
+  IOP::IOR *tmp_info {};
 
   if (this->forward_profiles_ != nullptr)
     {
@@ -499,7 +499,7 @@ TAO_Stub::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
   if (this->policies_ == nullptr)
     {
-      CORBA::PolicyList *policy_list_ptr = nullptr;
+      CORBA::PolicyList *policy_list_ptr {};
       ACE_NEW_THROW_EX (policy_list_ptr,
                         CORBA::PolicyList (),
                         CORBA::NO_MEMORY ());

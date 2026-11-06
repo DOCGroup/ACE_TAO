@@ -310,7 +310,7 @@ TAO_MProfile::policy_list ()
           this->init_policy_list ();
         }
     }
-  CORBA::PolicyList *ret_val = nullptr;
+  CORBA::PolicyList *ret_val {};
   ACE_NEW_THROW_EX (ret_val,
                     CORBA::PolicyList (*this->policy_list_),
                     CORBA::NO_MEMORY (0,
