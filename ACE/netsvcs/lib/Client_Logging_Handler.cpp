@@ -9,7 +9,6 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
-#include <memory>
 #include "ace/SString.h"
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
@@ -103,13 +102,13 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // don't support framing natively.  Allocate a message block for the
   // payload; initially at least large enough to hold the header, but
   // needs some room for alignment.
-  ACE_Message_Block *payload_p = 0;
-  ACE_Message_Block *header_p = 0;
+  ACE_Message_Block *payload_p {};
+  ACE_Message_Block *header_p {};
   ACE_NEW_RETURN (header_p,
                   ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
                   -1);
 
-  std::unique_ptr <ACE_Message_Block> header (header_p);
+  ACE_Message_Block_Unique_Ptr header {header_p};
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
@@ -123,7 +122,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   ACE_SPIPE_Stream spipe;
   spipe.set_handle (handle);
-  int flags = 0;
+  int flags {};
 
   // We've got a framed IPC mechanism, so we can just to a <recv>.
   ssize_t result = spipe.recv (&header_msg,
@@ -194,7 +193,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
-  ACE_CDR::Boolean byte_order;
+  ACE_CDR::Boolean byte_order {};
   if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
     {
       ACE_ERROR ((LM_ERROR,
@@ -206,7 +205,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
-  ACE_CDR::ULong length;
+  ACE_CDR::ULong length {};
   if (!(header_cdr >> length))
     {
       ACE_ERROR ((LM_ERROR,
@@ -217,7 +216,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
-  std::unique_ptr <ACE_Message_Block> payload (payload_p);
+  ACE_Message_Block_Unique_Ptr payload {payload_p};
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);

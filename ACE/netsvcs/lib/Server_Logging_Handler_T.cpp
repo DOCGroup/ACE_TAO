@@ -2,7 +2,6 @@
 #define ACE_SERVER_LOGGING_HANDLERT_C
 
 #include "ace/config-all.h"
-#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
 #include "ace/CDR_Stream.h"
@@ -57,23 +56,23 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   // don't support framing natively.  Allocate a message block for the
   // payload; initially at least large enough to hold the header, but
   // needs some room for alignment.
-  ACE_Message_Block *payload_p = 0;
-  ACE_Message_Block *header_p = 0;
+  ACE_Message_Block *payload_p {};
+  ACE_Message_Block *header_p {};
   ACE_NEW_RETURN (header_p,
                   ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
                   -1);
 
-  std::unique_ptr <ACE_Message_Block> header (header_p);
+  ACE_Message_Block_Unique_Ptr header {header_p};
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
 
-  ACE_CDR::Boolean byte_order;
-  ACE_CDR::ULong length;
+  ACE_CDR::Boolean byte_order {};
+  ACE_CDR::ULong length {};
 
-  ssize_t count = ACE::recv_n (this->peer ().get_handle (),
-                               header->wr_ptr (),
-                               8);
+  ssize_t const count = ACE::recv_n (this->peer ().get_handle (),
+                                     header->wr_ptr (),
+                                     8);
   switch (count)
     {
       // Handle shutdown and error cases.
@@ -120,7 +119,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
-  std::unique_ptr <ACE_Message_Block> payload (payload_p);
+  ACE_Message_Block_Unique_Ptr payload {payload_p};
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
