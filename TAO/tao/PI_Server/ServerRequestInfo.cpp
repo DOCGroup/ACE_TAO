@@ -11,7 +11,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/PolicyC.h"
 #include "tao/AnyTypeCode/DynamicC.h"
-#include "tao/ORB_Core.h"
 #include "tao/Service_Context.h"
 #include "tao/PI/RequestInfo_Util.h"
 #include "tao/PI/PICurrent.h"
@@ -38,7 +37,7 @@ TAO::ServerRequestInfo::request_id ()
   // For 64-bit platforms, only the lower 32 bits are used.  Hopefully
   // that will be enough to ensure uniqueness.
 
-  CORBA::ULong id = 0;
+  CORBA::ULong id {};
 
   // Note that we reinterpret_cast to an "unsigned long" instead of
   // CORBA::ULong since we need to first cast to an integer large
@@ -73,7 +72,7 @@ TAO::ServerRequestInfo::operation ()
 Dynamic::ParameterList *
 TAO::ServerRequestInfo::arguments ()
 {
-  if (!this->args_)
+  if (this->args_ == nullptr)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
@@ -94,7 +93,7 @@ TAO::ServerRequestInfo::arguments ()
 
   parameter_list->length (static_cast<CORBA::ULong> (end - begin));
 
-  CORBA::ULong p = 0;
+  CORBA::ULong p {};
   for (TAO::Argument * const * i = begin; i != end; ++i, ++p)
     {
       // Insert the operation parameters into the
@@ -117,7 +116,7 @@ TAO::ServerRequestInfo::arguments ()
 Dynamic::ExceptionList *
 TAO::ServerRequestInfo::exceptions ()
 {
-  if (!this->args_)
+  if (this->args_ == nullptr)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
@@ -134,10 +133,10 @@ TAO::ServerRequestInfo::exceptions ()
   CORBA::TypeCode_ptr const * const end   =
     this->exceptions_ + this->nexceptions_;
 
-  CORBA::ULong e = 0;
+  CORBA::ULong e {};
   for (CORBA::TypeCode_ptr const * i = begin; i != end; ++i, ++e)
     {
-      CORBA::TypeCode_ptr tcp_object = *i;
+      CORBA::TypeCode_ptr const tcp_object = *i;
       (*exception_list)[e] = tcp_object;
     }
 
@@ -159,13 +158,13 @@ TAO::ServerRequestInfo::operation_context ()
 CORBA::Any *
 TAO::ServerRequestInfo::result ()
 {
-  if (!this->args_)
+  if (this->args_ == nullptr)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
     }
 
   // Generate the result on demand.
-  static CORBA::Boolean const tk_void_any = true;
+  static CORBA::Boolean const tk_void_any {true};
 
   CORBA::Any * result_any = TAO_RequestInfo_Util::make_any (tk_void_any);
 
@@ -226,19 +225,19 @@ TAO::ServerRequestInfo::get_slot (PortableInterceptor::SlotId id)
 {
   // Retrieve the total number of assigned slots from the PICurrent.
   // No TSS access is incurred.
-  CORBA::Object_ptr pi_current_obj =
+  CORBA::Object_ptr const pi_current_obj =
     this->server_request_.orb_core ()->pi_current ();
 
-  TAO::PICurrent *pi_current =
+  TAO::PICurrent * const pi_current =
     dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
-  if (!pi_current)
+  if (pi_current == nullptr)
     throw ::CORBA::INTERNAL ();
 
   pi_current->check_validity (id);
 
   // Retrieve the request scope PICurrent object.
-  TAO::PICurrent_Impl *rsc = this->server_request_.rs_pi_current ();
+  TAO::PICurrent_Impl * const rsc = this->server_request_.rs_pi_current ();
 
   return rsc->get_slot (id);
 }
@@ -318,7 +317,7 @@ TAO::ServerRequestInfo::sending_exception ()
 char *
 TAO::ServerRequestInfo::server_id ()
 {
-  if (this->servant_upcall_)
+  if (this->servant_upcall_ != nullptr)
   {
     return CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
   }
@@ -329,7 +328,7 @@ TAO::ServerRequestInfo::server_id ()
 char *
 TAO::ServerRequestInfo::orb_id ()
 {
-  if (this->servant_upcall_)
+  if (this->servant_upcall_ != nullptr)
   {
     return CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
   }
@@ -345,7 +344,7 @@ TAO::ServerRequestInfo::adapter_name ()
   // POA, the adapter_name is the sequence of names from the root POA
   // to the POA that services the request. The root POA is not named
   // in this sequence.
-  if (this->servant_upcall_)
+  if (this->servant_upcall_ != nullptr)
   {
     return this->servant_upcall_->poa ().adapter_name ();
   }
@@ -358,7 +357,7 @@ TAO::ServerRequestInfo::object_id ()
 {
   if (this->servant_upcall_ != nullptr)
     {
-      const PortableServer::ObjectId &id =
+      PortableServer::ObjectId const &id =
         this->servant_upcall_->user_id ();
 
       PortableInterceptor::ObjectId *tmp {};
@@ -383,7 +382,7 @@ TAO::ServerRequestInfo::object_id ()
       //    access is involved.
       CORBA::ULong const len = id.length ();
       obj_id->length (len);
-      CORBA::Octet *buffer = obj_id->get_buffer ();
+      CORBA::Octet * const buffer = obj_id->get_buffer ();
       std::memcpy (buffer, id.get_buffer (), len);
 
       return obj_id._retn ();
@@ -395,7 +394,7 @@ TAO::ServerRequestInfo::object_id ()
 CORBA::OctetSeq *
 TAO::ServerRequestInfo::adapter_id ()
 {
-  if (this->servant_upcall_)
+  if (this->servant_upcall_ != nullptr)
   {
     return this->servant_upcall_->poa ().id ();
   }
@@ -448,17 +447,17 @@ TAO::ServerRequestInfo::get_server_policy (CORBA::PolicyType type)
 
 void
 TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
-                                  const CORBA::Any &data)
+                                  CORBA::Any const &data)
 {
   // Retrieve the total number of assigned slots from the PICurrent
   // object.  No TSS access is incurred.
-  CORBA::Object_ptr pi_current_obj =
+  CORBA::Object_ptr const pi_current_obj =
     this->server_request_.orb_core ()->pi_current ();
 
-  TAO::PICurrent *pi_current =
+  TAO::PICurrent * const pi_current =
     dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
-  if (!pi_current)
+  if (pi_current == nullptr)
     throw ::CORBA::INTERNAL ();
 
   pi_current->check_validity (id);
@@ -470,7 +469,7 @@ TAO::ServerRequestInfo::set_slot (PortableInterceptor::SlotId id,
 }
 
 CORBA::Boolean
-TAO::ServerRequestInfo::target_is_a (const char * id)
+TAO::ServerRequestInfo::target_is_a (char const *id)
 {
   if (this->servant_upcall_ == nullptr)
   {
@@ -490,7 +489,7 @@ TAO::ServerRequestInfo::target_is_a (const char * id)
 
 void
 TAO::ServerRequestInfo::add_reply_service_context (
-    const IOP::ServiceContext & service_context,
+    IOP::ServiceContext const &service_context,
     CORBA::Boolean replace)
 {
   // Get the service context from the list

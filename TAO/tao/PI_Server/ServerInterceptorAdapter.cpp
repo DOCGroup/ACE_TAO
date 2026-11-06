@@ -33,7 +33,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
     {
       oc = nullptr;
 
-      bool is_remote_request = !server_request.collocated ();
+      bool const is_remote_request = !server_request.collocated ();
       TAO::ServerRequestInfo request_info (server_request,
                                           args,
                                           nargs,
@@ -43,7 +43,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
 
       for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
         {
-          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+          ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (i);
 
           if (registered.details_.should_be_processed (is_remote_request))
@@ -69,7 +69,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
           ++server_request.interceptor_count ();
         }
     }
-  catch (const ::PortableInterceptor::ForwardRequest& exc)
+  catch (::PortableInterceptor::ForwardRequest const &exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -117,7 +117,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
       TAO::PICurrent_Guard const pi_guard (server_request,
                                            false /* Copy RSC to TSC */);
 
-      bool is_remote_request = !server_request.collocated ();
+      bool const is_remote_request = !server_request.collocated ();
       TAO::ServerRequestInfo request_info (server_request,
                                            args,
                                            nargs,
@@ -127,7 +127,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 
       for (size_t i = 0 ; i < server_request.interceptor_count (); ++i)
         {
-          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+          ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (i);
 
           if (registered.details_.should_be_processed (is_remote_request))
@@ -137,7 +137,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
             }
         }
     }
-  catch (const ::PortableInterceptor::ForwardRequest& exc)
+  catch (::PortableInterceptor::ForwardRequest const &exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -177,7 +177,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
       TAO::PICurrent_Guard const pi_guard (server_request,
                                            false /* Copy RSC to TSC */);
 
-      bool is_remote_request = !server_request.collocated ();
+      bool const is_remote_request = !server_request.collocated ();
 
       TAO::ServerRequestInfo request_info (server_request,
                                            args,
@@ -188,7 +188,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 
       for (size_t i = 0 ; i < this->interceptor_list_.size(); ++i)
         {
-          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+          ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (i);
 
           if (registered.details_.should_be_processed (is_remote_request))
@@ -202,7 +202,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
           ++server_request.interceptor_count ();
         }
     }
-  catch (const ::PortableInterceptor::ForwardRequest& exc)
+  catch (::PortableInterceptor::ForwardRequest const &exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -257,7 +257,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
 
       for (size_t i = 0; i < server_request.interceptor_count (); ++i)
         {
-          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+          ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (i);
 
           if (registered.details_.should_be_processed (is_remote_request))
@@ -270,7 +270,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
           // an intermediate interception point.
         }
     }
-  catch (const ::PortableInterceptor::ForwardRequest& exc)
+  catch (::PortableInterceptor::ForwardRequest const &exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -320,7 +320,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
       // invoked in another "ending" interception point.
       --server_request.interceptor_count ();
 
-      ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+      ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
         this->interceptor_list_.registered_interceptor (
           server_request.interceptor_count ());
 
@@ -371,7 +371,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
           // being invoked in another "ending" interception point.
           --server_request.interceptor_count ();
 
-          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+          ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (
               server_request.interceptor_count ());
 
@@ -381,7 +381,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
             }
         }
     }
-  catch (const ::PortableInterceptor::ForwardRequest& exc)
+  catch (::PortableInterceptor::ForwardRequest const &exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -393,7 +393,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
                         exceptions,
                         nexceptions);
     }
-  catch ( ::CORBA::Exception& ex)
+  catch (::CORBA::Exception &ex)
     {
       // The send_exception() interception point in the remaining
       // interceptors must be called so call this method (not the
@@ -462,7 +462,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
           // being invoked in another "ending" interception point.
           --server_request.interceptor_count ();
 
-          ServerRequestInterceptor_List::RegisteredInterceptor& registered =
+          ServerRequestInterceptor_List::RegisteredInterceptor const &registered =
             this->interceptor_list_.registered_interceptor (
               server_request.interceptor_count ());
 
@@ -472,7 +472,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
             }
         }
     }
-  catch (const ::PortableInterceptor::ForwardRequest& exc)
+  catch (::PortableInterceptor::ForwardRequest const &exc)
     {
       server_request.forward_location (exc.forward.in ());
       server_request.pi_reply_status (PortableInterceptor::LOCATION_FORWARD);
@@ -496,7 +496,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
 void
 TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
   PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-  const CORBA::PolicyList& policies)
+  CORBA::PolicyList const &policies)
 {
   this->interceptor_list_.add_interceptor (interceptor, policies);
 }

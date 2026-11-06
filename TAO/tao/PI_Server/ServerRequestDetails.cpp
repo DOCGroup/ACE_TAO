@@ -14,10 +14,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   void
-  ServerRequestDetails::apply_policies (const CORBA::PolicyList &policies)
+  ServerRequestDetails::apply_policies (CORBA::PolicyList const &policies)
   {
     // Flag to check for duplicate ProcessingModePolicy objects in the list.
-    bool processing_mode_applied = false;
+    bool processing_mode_applied {};
 
     CORBA::ULong const plen = policies.length ();
 

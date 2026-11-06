@@ -41,7 +41,7 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

@@ -32,7 +32,7 @@ public:
   TAO_PortableServer_PolicyFactory () = default;
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any & value) override;
+                                   CORBA::Any const &value) override;
 
 private:
   TAO_PortableServer_PolicyFactory (TAO_PortableServer_PolicyFactory const &) = delete;
