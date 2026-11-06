@@ -168,11 +168,8 @@ Client::svc ()
 
       timer.start ();
 
-      ACE_UINT32 client_count {};
       for (ACE_UINT32 i = 0; i < this->niterations_; ++i)
         {
-          client_count++;
-
           server_->sendCharSeq (charSeq);
 
           //server_->sendOctetSeq (octetSeq);
