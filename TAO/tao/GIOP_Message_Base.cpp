@@ -1144,9 +1144,6 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
 
   TAO_GIOP_Locate_Status_Msg status_info;
 
-  // Defaulting.
-  status_info.status = GIOP::UNKNOWN_OBJECT;
-
   CORBA::Boolean response_required = true;
 
   try
