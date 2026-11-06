@@ -65,9 +65,9 @@ TAO_Interpreter::is_empty_string (const char* str)
   return return_value;
 }
 
-char* TAO_Lex_String_Input::string_ = nullptr;
-char* TAO_Lex_String_Input::current_ = nullptr;
-char* TAO_Lex_String_Input::end_ = nullptr;
+char* TAO_Lex_String_Input::string_ {};
+char* TAO_Lex_String_Input::current_ {};
+char* TAO_Lex_String_Input::end_ {};
 
 // Routine to have Lex read its input from the constraint string.
 
