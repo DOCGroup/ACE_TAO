@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -35,10 +34,10 @@
 class getapp : public Snmp_Result
 {
 public:
-  getapp(int argc, char **argv); // process command line args
-  bool valid() const;            // verify transaction can proceed
-  int run();                     //  issue transaction
-  static void usage();           // operator help message
+  getapp (int argc, char **argv); // process command line args
+  bool valid () const;            // verify transaction can proceed
+  int run ();                     // issue transaction
+  static void usage ();           // operator help message
 
   void result(Snmp * r, int rc) override;
 
@@ -54,36 +53,36 @@ private:
   OctetStr community_;
   Snmp snmp_;
   UdpTarget target_;
-  bool valid_;
+  bool valid_ {};
 };
-
 
 // main entry point
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter atc (argc, argv);
   getapp get (atc.get_argc (), atc.get_ASCII_argv ());
-  if (get.valid())
-     return get.run();
+  if (get.valid ())
+     return get.run ();
   else
     getapp::usage();
   return 1;
 }
 
-bool getapp::valid() const
+bool getapp::valid () const
 {
- return valid_;
+  return this->valid_;
 }
-getapp::getapp(int argc, char *argv[]): valid_(false)
+getapp::getapp (int argc, char *argv[])
 {
-   Oid req, def_oid("1.3.6.1.2.1.1.1.0");      // default is sysDescr
+   Oid req {};
+   Oid def_oid ("1.3.6.1.2.1.1.1.0"); // default is sysDescr
    if ( argc < 2)
      return;
 
    address_ = argv[argc - 1];
-   if ( !address_.valid()) {
+   if (!address_.valid ()) {
       cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
-     << argv[argc] << "\n";
+     << argv[argc - 1] << "\n";
       return;
    }
 
@@ -91,46 +90,46 @@ getapp::getapp(int argc, char *argv[]): valid_(false)
    ACE_Get_Opt get_opt (argc,
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("o:c:r:t:p:"));
-   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
+   for (int option = get_opt (); option != -1; option = get_opt ())
+     switch (option)
        {
        case 'o':
-         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         if (req.valid() == 0)
+         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+         if (req.valid () == 0)
          cout << "ERROR: oid value: "
-              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg())
+              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ())
               << "is not valid. using default.\n";
          break;
 
        case 'c':
-         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         target_.set_read_community(community_);
+         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+         target_.set_read_community (community_);
          break;
 
        case 'r':
-         target_.set_retry(ACE_OS::atoi (get_opt.opt_arg()));
+         target_.set_retry (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
 
        case 't':
-         target_.set_timeout(ACE_OS::atoi (get_opt.opt_arg()));
+         target_.set_timeout (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
 
        default:
          break;
        }
 
-  Vb vb;                                  // construct a Vb object
-  if (req.valid())
-     vb.set_oid( req);                    // set the Oid portion of the Vb
+  Vb vb {}; // construct a Vb object
+  if (req.valid ())
+     vb.set_oid (req); // set the Oid portion of the Vb
   else {
-     vb.set_oid( def_oid);               // set the Oid portion of the Vb
+     vb.set_oid (def_oid); // set the Oid portion of the Vb
   }
   pdu_ += vb;
-  vb.get_oid(oid_); // store for later use
-  valid_ = true;
+  vb.get_oid (oid_); // store for later use
+  this->valid_ = true;
 }
 
-void getapp::usage()
+void getapp::usage ()
 {
   cout << "Usage:\n";
   cout << "get [options] dotted-quad | DNSName[:port]\n";
@@ -140,27 +139,26 @@ void getapp::usage()
   cout << "      -t N  timeout in seconds default is 1 second" << endl;
 }
 
-
-int getapp::run()
+int getapp::run ()
 {
    //----------[ create a ASNMP session ]-----------------------------------
-   if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
+   if (snmp_.valid () != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<
           snmp_.error_string()<< "\n";
       return 1;
    }
 
    //--------[ build up ASNMP object needed ]-------------------------------
-   if (address_.get_port() == 0)
-     address_.set_port(DEF_AGENT_PORT);
-   target_.set_address( address_);         // make a target using the address
+   if (address_.get_port () == 0)
+     address_.set_port (DEF_AGENT_PORT);
+   target_.set_address (address_); // make a target using the address
 
    //-------[ issue the request, blocked mode ]-----------------------------
-   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version()+ 1) << \
+   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1) << \
        " GET SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
-   target_.get_address(address_); // target updates port used
-   int rc;
-   const char *name = address_.resolve_hostname(rc);
+   target_.get_address (address_); // target updates port used
+   int rc {};
+   char const * const name = address_.resolve_hostname (rc);
 
    cout << "Device: " << address_ << " ";
 
@@ -172,8 +170,8 @@ int getapp::run()
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;
 
-   if (snmp_.get( pdu_, target_, this) != SNMP_CLASS_SUCCESS) {
-    const char *ptr = snmp_.error_string();
+   if (snmp_.get (pdu_, target_, this) != SNMP_CLASS_SUCCESS) {
+    char const * const ptr = snmp_.error_string ();
     cout << "ASNMP:ERROR: get command failed reason: " << ptr << endl;
    } else {
        ACE_Reactor::instance()->run_reactor_event_loop();
@@ -181,26 +179,26 @@ int getapp::run()
    return 0;
 }
 
-void getapp::result(Snmp *, int rc)
+void getapp::result (Snmp *, int rc)
 {
-    Vb vb;
+    Vb vb {};
     if (rc < 0)
     {
-      const char *ptr = snmp_.error_string();
+      char const * const ptr = snmp_.error_string ();
       cout << "ASNMP:ERROR: get command failed reason: " << ptr << endl;
     }
     else
     {
       // check to see if there are any errors
-      if (pdu_.get_error_status())
+      if (pdu_.get_error_status ())
       {
         cout << "ERROR: agent replied as follows\n";
         cout << pdu_.agent_error_reason() << endl;
       }
       else
       {
-        VbIter iter(pdu_);
-        while (iter.next(vb))
+        VbIter iter (pdu_);
+        while (iter.next (vb))
         {
           cout << "\tOid = " << vb.to_string_oid() << "\n";
           cout << "\tValue = " << vb.to_string_value() << "\n";
