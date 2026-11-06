@@ -231,7 +231,7 @@ Distributer::init (int /*argc*/,
                                            this->protocol_.c_str (),
                                            0);
 
-  TAO_StreamCtrl* sender_streamctrl = nullptr;
+  TAO_StreamCtrl* sender_streamctrl {};
   // Video stream controller for the stream between sender and distributer
 
   ACE_NEW_RETURN (sender_streamctrl,
