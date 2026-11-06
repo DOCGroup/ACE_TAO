@@ -359,8 +359,24 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
           case AST_Decl::NT_typedef:
             {
               AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
+              if (td == nullptr)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                  return nullptr;
+                }
 
-              nt = td->primitive_base_type ()->node_type ();
+              AST_Type *primitive_type = td->primitive_base_type ();
+              if (primitive_type == nullptr)
+                {
+                  idl_global->err ()->error1 (
+                    UTL_Error::EIDL_ILLEGAL_RAISES,
+                    this);
+                  return nullptr;
+                }
+
+              nt = primitive_type->node_type ();
 
               if (nt != AST_Decl::NT_except)
                 {

@@ -21,6 +21,7 @@
 #endif
 
 #include <string>
+#include <utility>
 
 struct Failed {};
 
@@ -97,7 +98,7 @@ public:
   void assert_annotation_member_value (
     AST_Annotation_Member *member, T1 expected_value)
   {
-    AST_Expression expected (static_cast<T2> (expected_value));
+    AST_Expression expected (static_cast<T2> (std::move (expected_value)));
     assert_annotation_member_value (member, &expected);
   }
 

@@ -69,7 +69,17 @@ FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
 
   if (d->node_type () == AST_Decl::NT_typedef)
     {
-      d = dynamic_cast<AST_Typedef*> (d)->primitive_base_type ();
+      AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
+      if (td == nullptr)
+        {
+          throw Bailout ();
+        }
+
+      d = td->primitive_base_type ();
+      if (d == nullptr)
+        {
+          throw Bailout ();
+        }
     }
 
   this->base_home_ = dynamic_cast<AST_Home*> (d);
@@ -104,7 +114,17 @@ FE_HomeHeader::compile_managed_component (
 
   if (d->node_type () == AST_Decl::NT_typedef)
     {
-      d = dynamic_cast<AST_Typedef*> (d)->primitive_base_type ();
+      AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
+      if (td == nullptr)
+        {
+          throw Bailout ();
+        }
+
+      d = td->primitive_base_type ();
+      if (d == nullptr)
+        {
+          throw Bailout ();
+        }
     }
 
   this->managed_component_ = dynamic_cast<AST_Component*> (d);

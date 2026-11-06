@@ -871,10 +871,20 @@ TAO_DynUnion_i::label_match (CORBA::Any const& my_any,
           {
             TAO::Any_Impl *other_impl = other_any.impl ();
 
+            if (other_impl == nullptr)
+              {
+                return false;
+              }
+
             if (other_impl->encoded ())
               {
                 TAO::Unknown_IDL_Type *other_unk =
                   dynamic_cast<TAO::Unknown_IDL_Type *> (other_impl);
+
+                if (other_unk == nullptr)
+                  {
+                    return false;
+                  }
 
                 // We don't want unk's rd_ptr to move, in case we are
                 // shared by another Any, so we use this to copy the

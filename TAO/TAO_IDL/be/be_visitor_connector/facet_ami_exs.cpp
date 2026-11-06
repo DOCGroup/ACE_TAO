@@ -353,6 +353,15 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
     be_interface *sync_iface =
        dynamic_cast<be_interface*> (d);
 
+    if (sync_iface == nullptr)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("be_visitor_facet_ami_exs::")
+                           ACE_TEXT ("gen_facet_executor_class - ")
+                           ACE_TEXT ("invalid synchronous interface\n")),
+                          -1);
+      }
+
     /// The overload of traverse_inheritance_graph() used here
     /// doesn't automatically prime the queues.
     sync_iface->get_insert_queue ().clear ();

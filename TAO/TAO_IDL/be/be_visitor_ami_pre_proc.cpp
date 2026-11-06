@@ -453,6 +453,14 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   be_interface *field_type =
     dynamic_cast<be_interface*> (handler);
+  if (field_type == nullptr)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("be_visitor_ami_pre_proc::")
+                  ACE_TEXT ("create_sendc_operation - ")
+                  ACE_TEXT ("invalid reply handler type\n")));
+      return nullptr;
+    }
 
   ACE_NEW_RETURN (id,
                   Identifier ("ami_handler"),
@@ -667,6 +675,14 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
             }
 
           AST_Argument *original_arg = dynamic_cast<AST_Argument*> (d);
+          if (original_arg == nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_ami_pre_proc::")
+                                 ACE_TEXT ("create_reply_handler_operation - ")
+                                 ACE_TEXT ("invalid argument in operation scope\n")),
+                                -1);
+            }
 
           if (original_arg->direction () == AST_Argument::dir_INOUT ||
               original_arg->direction () == AST_Argument::dir_OUT)
