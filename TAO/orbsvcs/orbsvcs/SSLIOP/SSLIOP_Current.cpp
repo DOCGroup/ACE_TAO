@@ -25,7 +25,7 @@ TAO::SSLIOP::Current::get_peer_certificate ()
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
-  ::SSLIOP::ASN_1_Cert *c = nullptr;
+  ::SSLIOP::ASN_1_Cert *c {};
   ACE_NEW_THROW_EX (c,
                     ::SSLIOP::ASN_1_Cert,
                     CORBA::NO_MEMORY (
@@ -55,7 +55,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
-  ::SSLIOP::SSL_Cert *c = nullptr;
+  ::SSLIOP::SSL_Cert *c {};
   ACE_NEW_THROW_EX (c,
                     ::SSLIOP::SSL_Cert,
                     CORBA::NO_MEMORY (

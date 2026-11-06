@@ -207,7 +207,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (::SSLIOP::File const &certificate)
     return nullptr;
 
   FILE *fp = {};
-  ::X509 *x = nullptr;
+  ::X509 *x {};
 
   if (certificate.type == ::SSLIOP::ASN1)
     {
@@ -278,7 +278,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (::SSLIOP::File const &key)
     return nullptr;
 
   FILE *fp = {};
-  ::EVP_PKEY *evp = nullptr;
+  ::EVP_PKEY *evp {};
 
   if (key.type == ::SSLIOP::ASN1)
     {
