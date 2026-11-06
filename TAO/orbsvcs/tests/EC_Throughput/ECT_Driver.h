@@ -31,9 +31,15 @@ class ECT_Driver
   // = DESCRIPTION
   //
 public:
-  virtual ~ECT_Driver ();
+  ECT_Driver () = default;
+  virtual ~ECT_Driver () = default;
 
-  virtual void shutdown_consumer (void* consumer_cookie) = 0;
+  ECT_Driver (ECT_Driver const&) = delete;
+  ECT_Driver (ECT_Driver&&) = delete;
+  ECT_Driver& operator= (ECT_Driver const&) = delete;
+  ECT_Driver& operator= (ECT_Driver&&) = delete;
+
+  virtual void shutdown_consumer () = 0;
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.
