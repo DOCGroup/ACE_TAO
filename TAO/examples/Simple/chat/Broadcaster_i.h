@@ -84,7 +84,7 @@ public:
   };
 
   using RECEIVER_SET = ACE_Unbounded_Set<Receiver_Data>;
-  using RECEIVER_SET_ITERATOR = ACE_Unbounded_Set_Iterator<Receiver_Data>;
+  using RECEIVER_SET_ITERATOR = RECEIVER_SET::iterator;
 
   /// Set of registered clients.
   RECEIVER_SET receiver_set_;

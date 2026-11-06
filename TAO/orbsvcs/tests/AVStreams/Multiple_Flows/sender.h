@@ -18,7 +18,7 @@
 #include "orbsvcs/AV/Protocol_Factory.h"
 
 using ProtocolObject_Set = ACE_Unbounded_Set<TAO_AV_Protocol_Object*>;
-using ProtocolObject_SetItor = ACE_Unbounded_Set_Iterator<TAO_AV_Protocol_Object*>;
+using ProtocolObject_SetItor = ProtocolObject_Set::iterator;
 
 /**
  * @class Sender_StreamEndPoint

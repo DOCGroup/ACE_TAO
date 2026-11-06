@@ -46,13 +46,6 @@ int
 Quoter_Server::init (int argc,
                     ACE_TCHAR* argv[])
 {
-  this->argc_ = argc;
-  ACE_TCHAR **argv_copy {};
-  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
-  this->argv_.reset (argv_copy);
-  for (int i = 0; i < argc; i++)
-    this->argv_[i] = argv[i];
-
   char const *exception_message = "Null Message";
   try
     {
@@ -64,6 +57,14 @@ Quoter_Server::init (int argc,
                            "%p\n",
                            "init"),
                           -1);
+
+      // ORB_init removes ORB options, so preserve only the remaining app args.
+      this->argc_ = argc;
+      ACE_TCHAR **argv_copy {};
+      ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+      this->argv_.reset (argv_copy);
+      for (int i = 0; i < argc; i++)
+        this->argv_[i] = argv[i];
 
       if (this->parse_args () != 0)
         return -1;
