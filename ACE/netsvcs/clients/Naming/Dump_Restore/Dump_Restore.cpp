@@ -11,6 +11,18 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cctype>
+#include <iostream>
+#include <limits>
+#include <sstream>
+
+static void
+free_read_buffer (char *buffer)
+{
+  ACE_Allocator::instance ()->free (buffer);
+}
+
+using Read_Buffer_String = std::unique_ptr<char, decltype (&free_read_buffer)>;
 
 Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
   : ns_context_ (std::make_unique<ACE_Naming_Context> ())
@@ -30,10 +42,8 @@ Dump_Restore::Dump_Restore (int argc, ACE_TCHAR *argv[])
     }
   else
     {
-      // Don't really need to do this but it's a hack to fix the
-      // problme of Display () not printing the right hostname
-      ACE_OS::strcpy (this->hostname_,
-                      this->name_options_->nameserver_host ());
+      // Cache the host name for display.
+      this->hostname_ = this->name_options_->nameserver_host ();
       this->port_ =
         this->name_options_->nameserver_port ();
 
@@ -59,76 +69,80 @@ Dump_Restore::~Dump_Restore ()
   ACE_Reactor::instance ()->remove_handler
     (ACE_STDIN,
      ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
-
-  if (this->infile_)
-    ACE_OS::fclose (this->infile_);
 }
 
 int
 Dump_Restore::handle_input (ACE_HANDLE)
 {
-  char option[BUFSIZ];
-  char buf1[BUFSIZ];
-  u_short port;
-
-  if (::scanf ("%s", option) <= 0)
+  std::string command_line;
+  if (!std::getline (std::cin, command_line))
     {
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("try again\n")));
       return 0;
     }
 
-  switch (option[0])
+  std::istringstream input (command_line);
+  std::string option;
+  if (!(input >> option))
     {
-    case 'P' :
-    case 'p' :
-      set_proc_local ();
+      this->display_menu ();
+      return 0;
+    }
+
+  char const command = static_cast<char> (
+    std::tolower (static_cast<unsigned char> (option.front ())));
+  switch (command)
+    {
+    case 'p':
+      this->set_proc_local ();
       break;
-    case 'N' :
-    case 'n' :
-      set_node_local ();
+    case 'n':
+      this->set_node_local ();
       break;
-    case 'H' :
-    case 'h' :
-      if (::scanf ("%s %hu", buf1, &port) <= 0)
+    case 'h':
+      {
+        std::string hostname;
+        unsigned int port {};
+        if (input >> hostname >> port
+            && port <= std::numeric_limits<u_short>::max ())
+          this->set_host (ACE_TEXT_CHAR_TO_TCHAR (hostname.c_str ()),
+                          static_cast<u_short> (port));
         break;
-      set_host (ACE_TEXT_CHAR_TO_TCHAR (buf1), port);
-      break;
-    case 'F':
+      }
     case 'f':
-      if (::scanf ("%s", filename_) <= 0)
+      {
+        if (!(input >> this->filename_))
+          break;
+        this->infile_.reset (ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ()),
+                                            ACE_TEXT ("r")));
+        if (!this->infile_)
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Unable to open input file %C\n"),
+                      this->filename_.c_str ()));
         break;
-      if (this->infile_)
-        ACE_OS::fclose (this->infile_);
-      this->infile_ = ACE_OS::fopen(filename_, ACE_TEXT("r"));
+      }
+    case 'b':
+      this->populate (Operation_Type::BIND);
       break;
-    case 'B' :
-    case 'b' :
-      populate (Operation_Type::BIND);
+    case 'u':
+      this->populate (Operation_Type::UNBIND);
       break;
-    case 'U' :
-    case 'u' :
-      populate (Operation_Type::UNBIND);
+    case 'r':
+      this->populate (Operation_Type::REBIND);
       break;
-    case 'R' :
-    case 'r' :
-      populate (Operation_Type::REBIND);
-      break;
-    case 'D':
     case 'd':
-      if (::scanf ("%s", dump_filename_) <= 0)
-        break;
-      this->dump ();
+      if (input >> this->dump_filename_)
+        this->dump ();
       break;
-    case 'Q' :
-    case 'q' :
-      quit ();
+    case 'q':
+      this->quit ();
       break;
-    default :
+    default:
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Unrecognized command.\n")));
     }
 
-  display_menu ();
+  this->display_menu ();
   return 0;
 }
 
@@ -157,7 +171,7 @@ Dump_Restore::display_menu ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("  Hostname: %s\n"),
-                  this->hostname_));
+                  this->hostname_.c_str ()));
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("  Port Number: %d\n"),
                   this->port_));
@@ -166,7 +180,7 @@ Dump_Restore::display_menu ()
   if (this->infile_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Input File: %C\n"),
-                this->filename_));
+                this->filename_.c_str ()));
   else
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("** No Input File Specified **\n")));
@@ -190,7 +204,6 @@ Dump_Restore::display_menu ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("<Q> or ^C (exit)\n")));
 }
-
 
 int
 Dump_Restore::set_proc_local ()
@@ -237,12 +250,10 @@ Dump_Restore::set_node_local ()
 }
 
 int
-Dump_Restore::set_host (const ACE_TCHAR *hostname,
+Dump_Restore::set_host (ACE_TCHAR const *hostname,
                         int port)
 {
-  // Don't really need to do this but it's a hack to fix the problme
-  // of Display () not printing the right hostname
-  ACE_OS::strcpy (this->hostname_, hostname);
+  this->hostname_ = hostname;
   this->port_ = port;
   this->ns_scope_ = ACE_Naming_Context::NET_LOCAL;
 
@@ -264,32 +275,20 @@ Dump_Restore::set_host (const ACE_TCHAR *hostname,
 
 int
 Dump_Restore::doit (Dump_Restore::Operation_Type op,
-                    const char *name,
-                    const char *value,
-                    const char *type)
+                    std::string const &name,
+                    std::string const &value,
+                    std::string const &type)
 {
-  int result = -1;
-
   switch (op)
     {
     case Operation_Type::BIND:
-      {
-        result = this->bind (name, value, type);
-        break;
-      }
+      return this->bind (name, value, type);
     case Operation_Type::UNBIND:
-      {
-        result = this->unbind (name);
-        break;
-      }
+      return this->unbind (name);
     case Operation_Type::REBIND:
-      {
-        result = this->rebind (name, value, type);
-        break;
-      }
+      return this->rebind (name, value, type);
     }
-
-  return result;
+  return -1;
 }
 
 int
@@ -297,89 +296,89 @@ Dump_Restore::populate (Dump_Restore::Operation_Type op)
 {
   if (this->infile_)
     {
-      int result = -1;
       enum class State { NAME, VALUE, TYPE };
-
       State state = State::NAME;
-      // reset file pointer
-      ACE_OS::rewind (this->infile_);
+      ACE_OS::rewind (this->infile_.get ());
 
-      ACE_Allocator *allocator =
-        ACE_Allocator::instance ();
-      ACE_Read_Buffer read_buffer (this->infile_,
-                                   0,
-                                   allocator);
+      ACE_Read_Buffer read_buffer (this->infile_.get (),
+                                   false,
+                                   ACE_Allocator::instance ());
+      std::string name;
+      std::string value;
+      std::string type;
 
-      for (char *temp = nullptr;
-           (temp = read_buffer.read ('\n')) != nullptr;
-           )
+      for (char *line {};
+           (line = read_buffer.read ('\n')) != nullptr;)
         {
-          char *name = nullptr;
-          char const *actual_name = nullptr;
-          char *value = nullptr;
-          char const *actual_value = nullptr;
-          char *type = nullptr;
-          char const *actual_type = nullptr;
+          Read_Buffer_String line_owner {line, free_read_buffer};
+          std::string line_text {line_owner.get ()};
+          if (!line_text.empty () && line_text.back () == '\r')
+            line_text.pop_back ();
+
+          std::string::size_type const separator = line_text.find ('=');
+          if (separator == std::string::npos)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Invalid input line: %C\n"),
+                               line_text.c_str ()),
+                              -1);
+
+          std::string const field = line_text.substr (0, separator);
+          std::string const field_value = line_text.substr (separator + 1);
 
           switch (state)
             {
             case State::NAME:
-              name = temp;
-              ACE_OS::strtok (name, "=");
-              actual_name = ACE_OS::strtok (nullptr, "=");
+              if (field != "name")
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Expected name field, got %C\n"),
+                                   field.c_str ()),
+                                  -1);
+              name = field_value;
               state = State::VALUE;
               break;
             case State::VALUE:
-              value = temp;
-              ACE_OS::strtok (value, "=");
-              actual_value = ACE_OS::strtok (nullptr, "=");
+              if (field != "value")
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Expected value field, got %C\n"),
+                                   field.c_str ()),
+                                  -1);
+              value = field_value;
               state = State::TYPE;
               break;
             case State::TYPE:
-              type = temp;
-              ACE_OS::strtok (type, "=");
-              actual_type = ACE_OS::strtok (nullptr, "=");
-
-              if (actual_type)
-                result = this->doit (op,
-                                     actual_name,
-                                     actual_value,
-                                     actual_type);
-              else
-                result = this->doit (op,
-                                     actual_name,
-                                     actual_value);
-              if (name)
-                allocator->free(name);
-              if (value)
-                allocator->free(value);
-              if (type)
-                allocator->free(type);
+              if (field != "type")
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Expected type field, got %C\n"),
+                                   field.c_str ()),
+                                  -1);
+              type = field_value;
+              if (this->doit (op, name, value, type) != 0)
+                return -1;
+              name.clear ();
+              value.clear ();
+              type.clear ();
               state = State::NAME;
               break;
-            default:
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("%p\n"),
-                                 ACE_TEXT ("populate")),
-                                -1);
-              /* NOTREACHED */
             }
         }
 
-      return result;
+      if (state != State::NAME)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Incomplete name binding in input file\n")),
+                          -1);
+      return 0;
     }
-  else
-    return -1;
+  return -1;
 }
 
 int
-Dump_Restore::bind (const char *key,
-                    const char *value,
-                    const char *type)
+Dump_Restore::bind (std::string const &key,
+                    std::string const &value,
+                    std::string const &type)
 {
-  int result = ns_context_->bind (key,
-                                  value,
-                                  type);
+  int const result = this->ns_context_->bind (key.c_str (),
+                                              value.c_str (),
+                                              type.c_str ());
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
@@ -389,16 +388,16 @@ Dump_Restore::bind (const char *key,
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%s%s%s\n"),
                        ACE_TEXT ("key <"),
-                       key,
+                       ACE_TEXT_CHAR_TO_TCHAR (key.c_str ()),
                        ACE_TEXT ("> already bound")),
                       1);
   return 0;
 }
 
 int
-Dump_Restore::unbind (const char *key)
+Dump_Restore::unbind (std::string const &key)
 {
-  int result = ns_context_->unbind (key);
+  int const result = this->ns_context_->unbind (key.c_str ());
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -409,13 +408,13 @@ Dump_Restore::unbind (const char *key)
 }
 
 int
-Dump_Restore::rebind (const char *key,
-                      const char *value,
-                      const char *type)
+Dump_Restore::rebind (std::string const &key,
+                      std::string const &value,
+                      std::string const &type)
 {
-  if (ns_context_->rebind (key,
-                           value,
-                           type) == -1)
+  if (this->ns_context_->rebind (key.c_str (),
+                                 value.c_str (),
+                                 type.c_str ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ns_context_->rebind")),

@@ -1,34 +1,49 @@
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include "ace/Malloc_Base.h"
+#include "ace/Read_Buffer.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
+static void
+free_read_buffer (char *buffer)
+{
+  ACE_Allocator::instance ()->free (buffer);
+}
 
 int
-ACE_TMAIN(int, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  FILE * const infile = ACE_OS::fopen (argv[1], "r");
-  char buf[BUFSIZ];
-
-  if (infile == nullptr)
+  if (argc < 3)
     return -1;
 
-  FILE * const outfile = ACE_OS::fopen (argv[2], "w");
-  if (outfile == nullptr)
+  std::unique_ptr<FILE, int (*) (FILE *)> infile {
+    ACE_OS::fopen (argv[1], ACE_TEXT ("r")), ACE_OS::fclose
+  };
+  if (!infile)
     return -1;
 
-  int count = 0;
-  while (ACE_OS::fgets (buf, BUFSIZ, infile))
+  std::unique_ptr<FILE, int (*) (FILE *)> outfile {
+    ACE_OS::fopen (argv[2], ACE_TEXT ("w")), ACE_OS::fclose
+  };
+  if (!outfile)
+    return -1;
+
+  ACE_Read_Buffer read_buffer (infile.get (), false, ACE_Allocator::instance ());
+  std::size_t count {};
+  for (char *line {};
+       (line = read_buffer.read ('\n')) != nullptr;)
     {
-      buf[ACE_OS::strlen(buf) - 1] = '\0';
-      ACE_OS::fputs (buf, outfile);
+      std::unique_ptr<char, decltype (&free_read_buffer)> line_owner {
+        line, free_read_buffer
+      };
+      ACE_OS::fputs (line_owner.get (), outfile.get ());
       if (count % 2 == 0)
-        ACE_OS::fputs (" ", outfile);
+        ACE_OS::fputs (" ", outfile.get ());
       else
-        ACE_OS::fputs ("\n", outfile);
-      count++;
+        ACE_OS::fputs ("\n", outfile.get ());
+      ++count;
     }
 
-  ACE_OS::fclose (outfile);
-  ACE_OS::fclose (infile);
   return 0;
 }
