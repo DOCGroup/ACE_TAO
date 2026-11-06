@@ -53,7 +53,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IIOP_Connection_Handler_Array_Guard
 {
 public:
-  TAO_IIOP_Connection_Handler_Array_Guard (TAO_IIOP_Connection_Handler **p, unsigned count);
+  TAO_IIOP_Connection_Handler_Array_Guard (
+    std::vector<TAO_IIOP_Connection_Handler *> const &handlers,
+    unsigned count);
   ~TAO_IIOP_Connection_Handler_Array_Guard ();
 
 private:
@@ -67,14 +69,14 @@ private:
     TAO_IIOP_Connection_Handler_Array_Guard &&) = delete;
 
   /// Handler.
-  TAO_IIOP_Connection_Handler ** const ptr_;
+  std::vector<TAO_IIOP_Connection_Handler *> const &handlers_;
   unsigned const count_;
 };
 
 TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard (
-  TAO_IIOP_Connection_Handler **p,
+  std::vector<TAO_IIOP_Connection_Handler *> const &handlers,
   unsigned count)
-  : ptr_ (p),
+  : handlers_ (handlers),
     count_ (count)
 {
 }
@@ -82,11 +84,8 @@ TAO_IIOP_Connection_Handler_Array_Guard::TAO_IIOP_Connection_Handler_Array_Guard
 TAO_IIOP_Connection_Handler_Array_Guard::~TAO_IIOP_Connection_Handler_Array_Guard ()
 {
   ACE_Errno_Guard eguard (errno);
-  if (this->ptr_ != nullptr)
-    {
-      for (unsigned i = 0; i < this->count_; i++)
-        this->ptr_[i]->remove_reference ();
-    }
+  for (unsigned i = 0; i < this->count_; ++i)
+    this->handlers_[i]->remove_reference ();
 }
 
 //---------------------------------------------------------------------------
@@ -337,7 +336,7 @@ TAO_IIOP_Connector::make_parallel_connection (
     {
       // Make sure that we always do a remove_reference for every member
       // of the list
-      TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (shlist.data (), count);
+      TAO_IIOP_Connection_Handler_Array_Guard svc_handler_auto_ptr (shlist, count);
 
       winner = this->complete_connection (result,
                                           desc,
