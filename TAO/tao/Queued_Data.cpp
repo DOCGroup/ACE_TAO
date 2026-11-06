@@ -36,15 +36,15 @@ clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
   size_t const aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
 
   // Get the allocators
-  ACE_Allocator *data_allocator = nullptr;
-  ACE_Allocator *data_block_allocator = nullptr;
-  ACE_Allocator *message_block_allocator = nullptr;
+  ACE_Allocator *data_allocator {};
+  ACE_Allocator *data_block_allocator {};
+  ACE_Allocator *message_block_allocator {};
   mb->access_allocators (data_allocator,
                          data_block_allocator,
                          message_block_allocator);
 
   // Create a new Message Block
-  ACE_Message_Block *nb = nullptr;
+  ACE_Message_Block *nb {};
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Message_Block*> (
                                          message_block_allocator->malloc (
@@ -79,7 +79,7 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
                                    ACE_Data_Block *db)
 {
   // Get a node for the queue..
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
 
   if (message_buffer_alloc)
     {
@@ -173,7 +173,7 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
     (void) TAO_Queued_Data::replace_data_block (*sqd.msg_block_);
 
 
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
 
   if (sqd.allocator_)
     {

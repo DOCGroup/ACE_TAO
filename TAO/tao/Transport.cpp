@@ -1039,7 +1039,7 @@ bool
 TAO_Transport::is_idle ()
 {
   // Incoming state is not synchronized with receive processing here.
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
   return this->active_requests_.load (std::memory_order_relaxed) == 0
     && this->queue_is_empty_i ()
     && this->incoming_message_queue_.queue_length () == 0
@@ -1743,7 +1743,7 @@ int
 TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
                                 ACE_Time_Value *max_wait_time, bool back)
 {
-  TAO_Queued_Message *queued_message = nullptr;
+  TAO_Queued_Message *queued_message {};
   ACE_NEW_RETURN (queued_message,
                   TAO_Asynch_Queued_Message (message_block,
                                              this->orb_core_,
@@ -1802,7 +1802,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
         }
     }
 
-  TAO_Queued_Data *q_data = nullptr;
+  TAO_Queued_Data *q_data {};
 
   if (this->incoming_message_stack_.top (q_data) != -1
       && q_data->missing_data () != TAO_MISSING_DATA_UNDEFINED)
@@ -1859,7 +1859,7 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
       q_data->msg_type () == GIOP::Fragment)
     {
       // consolidate message on top of stack, only for fragmented messages
-      TAO_Queued_Data *new_q_data = nullptr;
+      TAO_Queued_Data *new_q_data {};
 
       switch (this->messaging_object()->consolidate_fragmented_message (q_data, new_q_data))
         {
@@ -1938,7 +1938,7 @@ TAO_Transport::consolidate_enqueue_message (TAO_Queued_Data *q_data)
   if (q_data->more_fragments () ||
       q_data->msg_type () == GIOP::Fragment)
     {
-      TAO_Queued_Data *new_q_data = nullptr;
+      TAO_Queued_Data *new_q_data {};
 
       switch (this->messaging_object()->consolidate_fragmented_message (q_data, new_q_data))
         {
@@ -2070,7 +2070,7 @@ TAO_Transport::handle_input_parse_extra_messages (
   // parsed
   int buf_status = 0;
 
-  TAO_Queued_Data *q_data = nullptr;     // init
+  TAO_Queued_Data *q_data {};     // init
 
   // parse buffer until all messages have been extracted, consolidate
   // and enqueue complete messages, if the last message being parsed
@@ -2148,7 +2148,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
   size_t recv_size = 0; // Note: unsigned integer
 
   // Pointer to newly parsed message
-  TAO_Queued_Data *q_data = nullptr;
+  TAO_Queued_Data *q_data {};
 
   // Optimizing access of constants
   size_t const header_length = this->messaging_object ()->header_length ();
