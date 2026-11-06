@@ -16,7 +16,6 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Unbounded_Set.h"
-#include "tao/Acceptor_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,6 +25,7 @@
 #include "tao/Exception.h"
 #include "tao/params.h"
 #include <memory>
+#include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
@@ -44,6 +44,7 @@ class TAO_Protocol_Factory;
 class TAO_Protocol_Item;
 
 using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set<TAO_Protocol_Item *>::iterator;
+using TAO_AcceptorSet = std::vector<std::unique_ptr<TAO_Acceptor>>;
 
 /**
  * @class TAO_Acceptor_Registry

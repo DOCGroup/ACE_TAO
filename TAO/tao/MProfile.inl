@@ -6,9 +6,7 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  policy_list_ (nullptr),
      is_policy_list_initialized_ (false),
      forward_from_(nullptr),
-     pfiles_ (nullptr),
      current_ (0),
-     size_ (0),
      last_ (0)
 {
   this->set (sz);
@@ -19,9 +17,7 @@ TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
   :  policy_list_ (nullptr),
      is_policy_list_initialized_ (false),
      forward_from_(nullptr),
-     pfiles_ (nullptr),
      current_ (0),
-     size_ (0),
      last_ (0)
 {
   this->set (mprofiles);
@@ -141,7 +137,7 @@ TAO_MProfile::give_profile (TAO_Profile *pfile, int share)
   if (share)
     return this->give_shared_profile(pfile);
   // skip by the used slots
-  if (last_ == size_) // full!
+  if (last_ == this->pfiles_.size ()) // full!
     return -1;
 
   pfiles_[last_++] = pfile;
@@ -172,7 +168,7 @@ TAO_MProfile::profile_count () const
 ACE_INLINE CORBA::ULong
 TAO_MProfile::size () const
 {
-  return this->size_;
+  return static_cast<CORBA::ULong> (this->pfiles_.size ());
 }
 
 ACE_INLINE const TAO_Profile*
@@ -183,10 +179,10 @@ TAO_MProfile::get_profile (CORBA::ULong slot) const
   return this->pfiles_[slot];
 }
 
-ACE_INLINE TAO_Profile **
+ACE_INLINE TAO_Profile *const *
 TAO_MProfile::pfiles () const
 {
-  return this->pfiles_.get ();
+  return this->pfiles_.empty () ? nullptr : this->pfiles_.data ();
 }
 
 ACE_INLINE void

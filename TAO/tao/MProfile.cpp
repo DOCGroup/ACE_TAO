@@ -8,7 +8,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
 #include "ace/CORBA_macros.h"
-#include <utility>
+#include <new>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.inl"
@@ -44,16 +44,14 @@ TAO_MProfile::~TAO_MProfile ()
 void
 TAO_MProfile::cleanup ()
 {
-  if (this->pfiles_ != nullptr)
+  for (TAO_PHandle i = 0; i < this->last_; ++i)
     {
-      for (TAO_PHandle i = 0; i < this->last_; ++i)
-        if (this->pfiles_[i])
-          this->pfiles_[i]->_decr_refcnt ();
-      this->pfiles_ = nullptr;
+      if (this->pfiles_[i] != nullptr)
+        this->pfiles_[i]->_decr_refcnt ();
     }
 
+  std::vector<TAO_Profile *> ().swap (this->pfiles_);
   this->current_ = 0;
-  this->size_ = 0;
   this->last_ = 0;
 }
 
@@ -66,62 +64,41 @@ TAO_MProfile::set (CORBA::ULong sz)
       return 0;
     }
 
-  // See if we already have an existing profile list or if we need to
-  // get ridof what we have.
-  if (this->size_ != 0)
+  for (TAO_Profile *&pfile : this->pfiles_)
     {
-      // Release all of our profiles.
-
-      for (TAO_PHandle h = 0;
-           h < this->size_;
-           ++h)
-        if (this->pfiles_[h])
-          {
-            this->pfiles_[h]->_decr_refcnt ();
-            this->pfiles_[h] = nullptr;
-          }
-
-      // Next see if we can reuse our profile list memory
-      if (this->size_ < sz)
+      if (pfile != nullptr)
         {
-          // we cant reuse memory since the current array is too small!
-          TAO_Profile **pfiles = nullptr;
-          ACE_NEW_RETURN (pfiles,
-                          TAO_Profile *[sz],
-                          -1);
-          this->pfiles_.reset (pfiles);
-          this->size_ = sz;
+          pfile->_decr_refcnt ();
+          pfile = nullptr;
         }
-      // else , leave this->size and this->pfiles alone!
     }
-  else
+
+  if (static_cast<size_t> (sz) > this->pfiles_.max_size ())
+    return -1;
+
+  if (this->pfiles_.size () < sz)
     {
-      // first time, initialize!
-      TAO_Profile **pfiles = nullptr;
-      ACE_NEW_RETURN (pfiles,
-                      TAO_Profile *[sz],
-                      -1);
-      this->pfiles_.reset (pfiles);
-      this->size_ = sz;
+      try
+        {
+          this->pfiles_.resize (sz, nullptr);
+        }
+      catch (std::bad_alloc const&)
+        {
+          return -1;
+        }
     }
 
   this->last_ = 0;
   this->current_ = 0;
-
-  for (TAO_PHandle i = 0; i != this->size_; ++i)
-    this->pfiles_[i] = nullptr;
-
-  return this->size_;
+  return static_cast<int> (this->pfiles_.size ());
 }
 
 int
 TAO_MProfile::set (const TAO_MProfile &mprofile)
 {
-  // NOTE: We use mprofile->last_ instead of mprofile->size_ to set
-  // this->size_.  This is so we can use set () to trim a profile
-  // list!!
-
-  this->set (mprofile.last_);
+  // Copy only the used profiles, not the source's unused capacity.
+  if (this->set (mprofile.last_) < 0)
+    return -1;
 
   // set indexes ...
   this->last_ = mprofile.last_;
@@ -145,25 +122,20 @@ TAO_MProfile::set (const TAO_MProfile &mprofile)
 int
 TAO_MProfile::grow (CORBA::ULong sz)
 {
-  if (sz <= this->size_)
+  if (sz <= this->pfiles_.size ())
     return 0;
 
-  // get the additional space
-  TAO_Profile **new_pfiles = nullptr;
-  ACE_NEW_RETURN (new_pfiles,
-                  TAO_Profile *[sz],
-                  -1);
-  std::unique_ptr<TAO_Profile *[]> owned_new_pfiles (new_pfiles);
+  if (static_cast<size_t> (sz) > this->pfiles_.max_size ())
+    return -1;
 
-  // got it, now copy profiles
-  for (TAO_PHandle h = 0; h < this->size_; ++h)
+  try
     {
-      new_pfiles[h] = this->pfiles_[h];
-      this->pfiles_[h] = nullptr;
+      this->pfiles_.resize (sz, nullptr);
     }
-
-  this->pfiles_ = std::move (owned_new_pfiles);
-  this->size_ = sz;
+  catch (std::bad_alloc const&)
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -172,9 +144,9 @@ int
 TAO_MProfile::add_profile (TAO_Profile *pfile)
 {
   // skip by the used slots
-  if (last_ == size_) // full!
+  if (last_ == this->pfiles_.size ()) // full!
     {
-      if (this->grow (this->size_ + 1) < 0)
+      if (this->grow (static_cast<CORBA::ULong> (this->pfiles_.size () + 1)) < 0)
         return -1;
     }
 
@@ -192,9 +164,10 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
 int
 TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
 {
-  // this->size_ == total number of profiles we can hold
+  // this->pfiles_.size() == total number of profiles we can hold
   // this->last_ == the index of the last profile
-  CORBA::ULong const space = this->size_ - this->last_;
+  CORBA::ULong const space =
+    static_cast<CORBA::ULong> (this->pfiles_.size ()) - this->last_;
 
   if (space < pfiles->last_)
     {
@@ -220,7 +193,7 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
 // current_ == index of the next profile to be returned (or one past
 //             the last returned.
 //
-// this->size_ = 7; current_ = 3; last_ = 7
+// this->size () = 7; current_ = 3; last_ = 7
 //   0, 1, 2, 3, 4, 5, 6}
 // { _, _, _, _, ..., _}
 //
@@ -244,6 +217,7 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
             }
           // subtract 1 from last_ to indicate we have one fewer profiles
           this->last_--;
+          this->pfiles_[this->last_] = nullptr;
           found = 1;
           break;
         }

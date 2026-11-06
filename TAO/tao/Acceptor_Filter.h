@@ -17,8 +17,7 @@
 #include "tao/orbconf.h"
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
-#include <memory>
-#include <vector>
+#include "tao/Acceptor_Registry.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,8 +32,6 @@ namespace TAO
 
 class TAO_MProfile;
 class TAO_Acceptor;
-
-using TAO_AcceptorSet = std::vector<std::unique_ptr<TAO_Acceptor>>;
 
 /**
  * @class TAO_Acceptor_Filter
