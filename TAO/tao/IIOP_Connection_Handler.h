@@ -61,13 +61,13 @@ public:
   Reference_Count remove_reference ();
 #endif
 
-  TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
+  explicit TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Constructor.
   explicit TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   /// Destructor.
-  ~TAO_IIOP_Connection_Handler ();
+  ~TAO_IIOP_Connection_Handler () override;
 
   /// Called by the @c Strategy_Acceptor when the handler is completely
   /// connected.  Argument is unused.
@@ -124,6 +124,11 @@ protected:
   int set_tos (int tos);
 
 private:
+  TAO_IIOP_Connection_Handler (TAO_IIOP_Connection_Handler const &) = delete;
+  TAO_IIOP_Connection_Handler &operator= (TAO_IIOP_Connection_Handler const &) = delete;
+  TAO_IIOP_Connection_Handler (TAO_IIOP_Connection_Handler &&) = delete;
+  TAO_IIOP_Connection_Handler &operator= (TAO_IIOP_Connection_Handler &&) = delete;
+
   /// Stores the type of service value.
   int dscp_codepoint_;
 };

@@ -16,6 +16,9 @@
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
@@ -74,13 +77,18 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_IIOP_Transport* specific_transport = nullptr;
-  ACE_NEW (specific_transport,
-           TAO_IIOP_Transport (this, orb_core));
+  std::unique_ptr<TAO_Transport> specific_transport {
+    new (std::nothrow) TAO_IIOP_Transport (this, orb_core)
+  };
+  if (!specific_transport)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   if (TAO_debug_level > 9)
     {
-      TAO_Transport *tport = static_cast<TAO_Transport *> (specific_transport);
+      TAO_Transport *tport = specific_transport.get ();
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%B]::")
                   ACE_TEXT("IIOP_Connection_Handler, ")
@@ -90,7 +98,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
     }
 
   // store this pointer (indirectly increment ref count)
-  this->transport (specific_transport);
+  this->transport (specific_transport.release ());
 }
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler ()
@@ -370,7 +378,7 @@ TAO_IIOP_Connection_Handler::close_connection ()
   int const linger = this->orb_core()->orb_params()->linger ();
   if (linger != -1)
     {
-      struct linger lval;
+      struct linger lval {};
       lval.l_onoff = 1;
 #if defined(ACE_HAS_LINGER_MS)
       lval.l_linger_ms = linger * 1000;
@@ -417,8 +425,8 @@ TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 
 
 int
-TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                             const void *)
+TAO_IIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                             void const *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -
@@ -623,11 +631,7 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
 int
 TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
 {
-  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
-
-  CORBA::Long codepoint = dscp_codepoint;
-
-  tos = static_cast<int> (codepoint) << 2;
+  int const tos = static_cast<int> (dscp_codepoint) << 2;
 
   this->set_tos (tos);
 
@@ -637,17 +641,13 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
 int
 TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
 {
-  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
-
   if (set_network_priority)
     {
       TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
       if (tph != nullptr)
         {
-          CORBA::Long codepoint = tph->get_dscp_codepoint ();
-
-          tos = static_cast<int> (codepoint) << 2;
+          int const tos = static_cast<int> (tph->get_dscp_codepoint ()) << 2;
           this->set_tos (tos);
         }
     }
@@ -658,7 +658,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 void
 TAO_IIOP_Connection_Handler::abort ()
 {
-  struct linger lval = { 0, 0 };
+  struct linger lval {};
   lval.l_onoff = 1;
 
   if (this->peer ().set_option(SOL_SOCKET,
