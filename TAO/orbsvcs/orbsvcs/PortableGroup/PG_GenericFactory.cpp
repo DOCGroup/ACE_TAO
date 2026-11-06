@@ -599,7 +599,7 @@ TAO_PG_GenericFactory::check_minimum_number_members (
 
       size_t const len = factory_set.size ();
 
-      static PortableGroup::GenericFactory::FactoryCreationId const * const nil_fcid = nullptr;
+      static PortableGroup::GenericFactory::FactoryCreationId const * const nil_fcid {};
 
       for (size_t i = 0; i < len; ++i)
         {

@@ -184,7 +184,7 @@ TAO_UIPMC_Acceptor::open (
                   -1);
   this->addrs_.reset (addrs);
 
-  char **hosts = nullptr;
+  char **hosts {};
   ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
