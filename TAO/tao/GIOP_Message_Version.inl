@@ -18,13 +18,13 @@ TAO_GIOP_Message_Version::set_version (CORBA::Octet maj, CORBA::Octet min)
 }
 
 ACE_INLINE bool
-TAO_GIOP_Message_Version::operator== (const TAO_GIOP_Message_Version &src) const
+TAO_GIOP_Message_Version::operator== (TAO_GIOP_Message_Version const &src) const
 {
   return this->minor == src.minor && this->major == src.major;
 }
 
 ACE_INLINE bool
-TAO_GIOP_Message_Version::operator!= (const TAO_GIOP_Message_Version &src) const
+TAO_GIOP_Message_Version::operator!= (TAO_GIOP_Message_Version const &src) const
 {
   return !(*this == src);
 }

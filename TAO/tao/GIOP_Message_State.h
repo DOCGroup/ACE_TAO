@@ -103,22 +103,22 @@ private:
   TAO_GIOP_Message_Version giop_version_ {TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR};
 
   /// 0 = big, 1 = little
-  CORBA::Octet byte_order_ {0};
+  CORBA::Octet byte_order_ {};
 
   /// MsgType above
   GIOP::MsgType message_type_ {GIOP::Request};
 
   /// In byte_order!
-  CORBA::ULong payload_size_ {0};
+  CORBA::ULong payload_size_ {};
 
   /// (Requests and Replys)
   /// A value of zero indicates that this message does not have any
   /// fragments.  A value of non-zero indicates that it does have
   /// fragments.
-  CORBA::Boolean more_fragments_ {false};
+  CORBA::Boolean more_fragments_ {};
 
   /// Compressed
-  CORBA::Boolean compressed_ {false};
+  CORBA::Boolean compressed_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

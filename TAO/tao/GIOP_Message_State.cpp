@@ -168,7 +168,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char const *buf)
     {
       // Read the byte ORDER
       this->byte_order_ =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x01);
+        static_cast<CORBA::Octet> (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01);
 
       // Read the fragment bit
       this->more_fragments_ =
@@ -192,7 +192,7 @@ TAO_GIOP_Message_State::get_payload_size (char const *rd_ptr)
 CORBA::ULong
 TAO_GIOP_Message_State::read_ulong (char const *rd_ptr) const
 {
-  CORBA::ULong x = 0;
+  CORBA::ULong x {};
 
   // We don't need to do this sort of copy. But some compilers (read it
   // as SunCC) have a problem in deferencing from the
