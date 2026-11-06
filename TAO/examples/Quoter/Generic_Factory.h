@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Generic_Factory.h
@@ -8,7 +7,6 @@
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #include "ace/Get_Opt.h"
 
@@ -54,6 +52,12 @@ public:
   u_int parse_args ();
 
 private:
+  struct Options
+  {
+    bool use_lifecycle_service {};
+    int debug_level {1};
+  };
+
   /// Instance of the Quoter Generic Factory.
   std::unique_ptr<Quoter_Generic_Factory_i> quoter_Generic_Factory_i_ptr_;
 
@@ -69,11 +73,7 @@ private:
   /// Pointer-array copy made before ORB_init modifies argv.
   std::unique_ptr<ACE_TCHAR *[]> argv_;
 
-  /// flag for whether or not to use the lifecycle service
-  bool use_LifeCycle_Service_ {};
-
-  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_ {1};
+  Options options_ {};
 };
 
 #endif /* GENERIC_FACTORY_H */

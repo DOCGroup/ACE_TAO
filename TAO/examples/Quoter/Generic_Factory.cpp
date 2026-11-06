@@ -69,7 +69,7 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       Quoter_Generic_Factory_i *factory {};
       ACE_NEW_RETURN (factory,
-                      Quoter_Generic_Factory_i (this->debug_level_),
+                      Quoter_Generic_Factory_i (this->options_.debug_level),
                       -1);
       this->quoter_Generic_Factory_i_ptr_.reset (factory);
 
@@ -79,11 +79,11 @@ Quoter_Generic_Factory_Server::init (int argc,
         this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_.get ());
 
       // Print the IOR.
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: IOR is: <%C>\n", str.in ()));
 
       // Register the Quoter GenericFactory with the Naming Service.
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Trying to get a reference to the Naming Service.\n"));
 
@@ -105,7 +105,7 @@ Quoter_Generic_Factory_Server::init (int argc,
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
 
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Have a proper reference to the Naming Service.\n"));
 
@@ -122,7 +122,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoterNamingContext_var_ =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ());
 
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Have a proper reference to the Quoter Naming Context.\n"));
 
@@ -139,7 +139,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoterNamingContext_var_->bind (quoter_Generic_Factory_Name,
                                       gf_obj.in ());
 
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Bound the Quoter GenericFactory to the Quoter Naming Context.\n"));
 
@@ -147,7 +147,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       // the Generic Factory should try to register itself to the closest
       // Life Cycle Service is order to be called.
 
-      if (this->use_LifeCycle_Service_)
+      if (this->options_.use_lifecycle_service)
       {
         // get the Quoter_Life_Cycle_Service
         CosNaming::Name life_Cycle_Service_Name (1);
@@ -162,7 +162,7 @@ Quoter_Generic_Factory_Server::init (int argc,
         LifeCycleService::Life_Cycle_Service_var  life_Cycle_Service_var =
           LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in ());
 
-        if (this->debug_level_ >= 2)
+        if (this->options_.debug_level >= 2)
           ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Have a proper reference to Life Cycle Service.\n"));
 
         exception_message = "While _this on Generic Factory";
@@ -174,7 +174,7 @@ Quoter_Generic_Factory_Server::init (int argc,
                                                   "Generic Factory",         // description
                                                   object_var.in ());
 
-        if (this->debug_level_ >= 2)
+        if (this->options_.debug_level >= 2)
           ACE_DEBUG ((LM_DEBUG,
                       "Generic_Factory: Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
       }
@@ -193,7 +193,7 @@ Quoter_Generic_Factory_Server::init (int argc,
 int
 Quoter_Generic_Factory_Server::run ()
 {
-  if (this->debug_level_ >= 1)
+  if (this->options_.debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Generic_Factory_Server is running\n"));
 
@@ -215,10 +215,10 @@ Quoter_Generic_Factory_Server::parse_args ()
     switch (opt)
       {
       case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opt.opt_arg ());
+        this->options_.debug_level = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'l':
-        this->use_LifeCycle_Service_ = true;
+        this->options_.use_lifecycle_service = true;
         break;
       default:
         exit_code = 1;

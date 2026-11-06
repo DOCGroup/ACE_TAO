@@ -54,6 +54,12 @@ public:
   int init (int argc, ACE_TCHAR **argv);
 
 private:
+  struct Options
+  {
+    int debug_level {1};
+    bool use_lifecycle_service {};
+  };
+
   /// Remember our orb.
   CORBA::ORB_var orb_ {};
 
@@ -69,9 +75,6 @@ private:
   /// Copy of argv because ORB_init modifies the argument vector.
   std::unique_ptr<ACE_TCHAR *[]> argv_;
 
-  /// Flag to tell server to shutdown.
-  bool shutdown_ {};
-
   /// Pointer to a factory finder
   Stock::Quoter_Factory_Finder_var factory_Finder_var_ {};
 
@@ -84,12 +87,7 @@ private:
   /// Quoter obj ref.
   Stock::Quoter_var quoter_var_ {};
 
-  /// Flag to tell if the a Generic Factory is going to be used
-  /// or the LifeCycle Service (false means Generic Factory, true means LCS)
-  bool useLifeCycleService_ {};
-
-  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_ {1};
+  Options options_ {};
 };
 
 /**

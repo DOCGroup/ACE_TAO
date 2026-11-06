@@ -20,10 +20,10 @@ Quoter_Server::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opts.opt_arg ());
+        this->options_.debug_level = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'n': // number of Quoter objects we export
-        this->num_of_objs_ = ACE_OS::atoi (get_opts.opt_arg ());
+        this->options_.num_of_objects = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -68,7 +68,7 @@ Quoter_Server::init (int argc,
       if (this->parse_args () != 0)
         return -1;
 
-      if (this->num_of_objs_ <= 0)
+      if (this->options_.num_of_objects <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "The number of Quoter objects must be positive\n"), -1);
 
       // Obtain the RootPOA.
@@ -87,7 +87,7 @@ Quoter_Server::init (int argc,
 
       Quoter_Factory_i *factory {};
       ACE_NEW_RETURN (factory,
-                      Quoter_Factory_i (static_cast<size_t> (this->num_of_objs_),
+                      Quoter_Factory_i (static_cast<size_t> (this->options_.num_of_objects),
                                         root_poa.in ()),
                       -1);
       this->quoter_Factory_i_ptr_.reset (factory);
@@ -116,7 +116,7 @@ Quoter_Server::init (int argc,
       poa_manager->activate ();
 
       // Print the IOR.
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG, "Quoter Server: IOR is: <%C>\n", quoter_Factory_ior.in ()));
     }
   catch (CORBA::Exception const &ex)
@@ -186,7 +186,7 @@ Quoter_Server::init_naming_service ()
 int
 Quoter_Server::run ()
 {
-  if (this->debug_level_ >= 1)
+  if (this->options_.debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Server is running\n"));
 
