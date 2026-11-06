@@ -64,7 +64,7 @@ TLS_Client::run_tests ()
   ACE_DEBUG ((LM_DEBUG,
               "\nCalling BasicLogFactory::create...\n"));
 
-  DsLogAdmin::LogFullActionType logfullaction = DsLogAdmin::halt;
+  DsLogAdmin::LogFullActionType const logfullaction = DsLogAdmin::halt;
   CORBA::ULongLong max_size {}; // 0 means "infinite"
 
   DsLogAdmin::LogId logid {};
@@ -81,7 +81,7 @@ TLS_Client::run_tests ()
   DsLogAdmin::Anys any_seq (log_event_count);
   any_seq.length (log_event_count);
 
-  for (int i = 0; i < log_event_count; i++)
+  for (int i {}; i < log_event_count; ++i)
     {
       any_seq [i] <<= "Foo";
     }
@@ -107,11 +107,10 @@ TLS_Client::run_tests ()
   DsLogAdmin::RecordList_var rec_list =
     basic_log->query (query_lang, query_1, iter_out);
 
-  CORBA::ULong j {};
-  for (; j < rec_list->length();++j)  //dhanvey added info
-  ACE_DEBUG ((LM_DEBUG,
-              "id = %Q, time= %Q\n",
-              rec_list[j].id, rec_list[j].time));
+  for (CORBA::ULong j {}; j < rec_list->length (); ++j)
+    ACE_DEBUG ((LM_DEBUG,
+                "id = %Q, time= %Q\n",
+                rec_list[j].id, rec_list[j].time));
 
   ACE_DEBUG ((LM_DEBUG,
               "Deleting records...\n"));
