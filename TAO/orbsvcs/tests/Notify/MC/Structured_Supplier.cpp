@@ -11,14 +11,11 @@
 #include "Notify_StructuredPushSupplier.h"
 #include "Notify_Test_Client.h"
 
-// ******************************************************************
-// Data Section
-// ******************************************************************
-
-static TAO_Notify_Tests_StructuredPushSupplier* supplier_1 = 0;
-static int max_events = 2000;
-static const ACE_TCHAR *ior_output_file = ACE_TEXT ("supplier.ior");
-static const ACE_TCHAR *ior = ACE_TEXT ("file://test_monitor.ior");
+struct Supplier_Options
+{
+  int max_events { 2000 };
+  ACE_TCHAR const* ior { ACE_TEXT ("file://test_monitor.ior") };
+};
 
 // ******************************************************************
 // Subroutine Section
@@ -27,44 +24,48 @@ static const ACE_TCHAR *ior = ACE_TEXT ("file://test_monitor.ior");
 class Supplier_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]) override;
+
+  Supplier_Options const& options () const
+  {
+    return this->options_;
+  }
+
+private:
+  Supplier_Options options_ {};
 };
 
 int
 Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:e:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:o:e:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
-  {
-    case 'k':
-      ior = get_opts.optarg;
-      break;
-
-    case 'e':
-      max_events = ACE_OS::atoi (get_opts.optarg);
-      break;
-
-    case 'o':
-      ior_output_file = get_opts.optarg;
-      break;
-
-    default:
-      ACE_ERROR_RETURN ((LM_ERROR,
-        "usage:  %s "
-        "-k <ior> "
-        "-o <iorfile> -e <# of events> "
-        "\n",
-        argv [0]),
-        -1);
-  }
+  while ((option = get_opts ()) != -1)
+    {
+      switch (option)
+        {
+        case 'k':
+          this->options_.ior = get_opts.opt_arg ();
+          break;
+        case 'e':
+          this->options_.max_events = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'o':
+          // Accepted for compatibility; this test does not write a supplier IOR.
+          get_opts.opt_arg ();
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -k <ior> -o <iorfile> -e <# of events>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
 
   // Indicates successful parsing of the command line
   return 0;
 }
-
 
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
 create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
@@ -76,11 +77,10 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
 
-
 static void
-SendEvent (int id)
+send_event (TAO_Notify_Tests_StructuredPushSupplier& supplier, int id)
 {
-  CosNotification::StructuredEvent event;
+  CosNotification::StructuredEvent event {};
 
   event.header.fixed_header.event_type.domain_name = CORBA::string_dup ("DOC_TAO");
   event.header.fixed_header.event_type.type_name = CORBA::string_dup ("examples");
@@ -90,26 +90,27 @@ SendEvent (int id)
   event.filterable_data[0].value <<= id;
 
   try
-  {
-    supplier_1->send_event (event);
-  }
-  catch (const CORBA::Exception& e)
-  {
-    e._tao_print_exception ("Error: ");
-  }
+    {
+      supplier.send_event (event);
+    }
+  catch (CORBA::Exception const& ex)
+    {
+      ex._tao_print_exception ("Error: ");
+    }
 }
 
 static void
 create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
-                  PortableServer::POA_ptr poa)
+                  PortableServer::POA_ptr poa,
+                  TAO_Notify_Tests_StructuredPushSupplier*& supplier)
 {
   // startup the supplier
-  ACE_NEW_THROW_EX (supplier_1,
+  ACE_NEW_THROW_EX (supplier,
     TAO_Notify_Tests_StructuredPushSupplier (),
     CORBA::NO_MEMORY ());
 
-  supplier_1->init (poa);
-  supplier_1->connect (admin);
+  supplier->init (poa);
+  supplier->connect (admin);
 
   CosNotification::EventTypeSeq added (1);
   CosNotification::EventTypeSeq removed (1);
@@ -121,9 +122,8 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   removed[0].domain_name = CORBA::string_dup ("*");
   removed[0].type_name = CORBA::string_dup ("*");
 
-  supplier_1->offer_change (added, removed);
+  supplier->offer_change (added, removed);
 }
-
 
 // ******************************************************************
 // Main Section
@@ -131,7 +131,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  int status {};
   try
     {
       Supplier_Client client;
@@ -143,8 +143,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             client.create_event_channel ("MyEventChannel", 1);
 
           CORBA::ORB_ptr orb = client.orb ();
-          CORBA::Object_var object =
-            orb->string_to_object (ior);
+          CORBA::Object_var const object =
+            orb->string_to_object (client.options ().ior);
 
           MonitorTestInterface_var sig =
             MonitorTestInterface::_narrow (object.in ());
@@ -155,24 +155,25 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             create_supplieradmin (ec.in ());
           if (!CORBA::is_nil (admin.in ()))
             {
-              create_suppliers (admin.in (), client.root_poa ());
+              TAO_Notify_Tests_StructuredPushSupplier* supplier {};
+              create_suppliers (admin.in (), client.root_poa (), supplier);
 
               sig->running (MonitorTestInterface::Supplier);
               ACE_DEBUG ((LM_DEBUG,
-                          "1 supplier sending %d events...\n", max_events));
-              for (int i = 0; i < max_events; ++i)
-              {
-                ACE_DEBUG ((LM_DEBUG, "+"));
-                SendEvent (i);
-              }
+                          "1 supplier sending %d events...\n", client.options ().max_events));
+              for (int i {}; i < client.options ().max_events; ++i)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "+"));
+                  send_event (*supplier, i);
+                }
               ACE_DEBUG ((LM_DEBUG,
-                          "\nSupplier sent %d events.\n", max_events));
+                          "\nSupplier sent %d events.\n", client.options ().max_events));
               sig->finished (MonitorTestInterface::Supplier);
-              supplier_1->disconnect ();
+              supplier->disconnect ();
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const& e)
     {
       e._tao_print_exception ("Supplier Error: ");
       status = 1;
