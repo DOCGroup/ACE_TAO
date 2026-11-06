@@ -68,7 +68,7 @@ TAO::HTIOP::Profile::~Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -449,7 +449,7 @@ TAO::HTIOP::Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO::HTIOP::Endpoint *endpoint = nullptr;
+          TAO::HTIOP::Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO::HTIOP::Endpoint (endpoints[i].host,
                                               endpoints[i].port,

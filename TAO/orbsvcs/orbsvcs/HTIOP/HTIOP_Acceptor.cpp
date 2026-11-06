@@ -91,7 +91,7 @@ TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   // Create a profile for each acceptor endpoint.
   for (CORBA::ULong i = 0; i < this->endpoint_count_; ++i)
     {
-      TAO::HTIOP::Profile *pfile = nullptr;
+      TAO::HTIOP::Profile *pfile {};
       ACE_NEW_RETURN (pfile,
                       TAO::HTIOP::Profile (this->hosts_[i],
                                          this->addrs_[i].get_port_number (),
@@ -133,8 +133,8 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                            CORBA::Short priority)
 {
   CORBA::ULong index = 0;
-  TAO_Profile *pfile = nullptr;
-  TAO::HTIOP::Profile *htiop_profile = nullptr;
+  TAO_Profile *pfile {};
+  TAO::HTIOP::Profile *htiop_profile {};
 
   // First see if <mprofile> already contains a TAO_HTIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -189,7 +189,7 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
        index < this->endpoint_count_;
        ++index)
     {
-      TAO::HTIOP::Endpoint *endpoint = nullptr;
+      TAO::HTIOP::Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO::HTIOP::Endpoint (this->hosts_[index],
                                           this->addrs_[index].get_port_number (),
@@ -301,7 +301,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
   // consideration.
   const char *port_separator_loc = std::strchr (address, ':');
 
-  const char *specified_hostname = nullptr;
+  const char *specified_hostname {};
   char tmp_host[MAXHOSTNAMELEN + 1];
 
   if (port_separator_loc == address)
@@ -355,13 +355,13 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
-  ACE::HTBP::Addr *addrs = nullptr;
+  ACE::HTBP::Addr *addrs {};
   ACE_NEW_RETURN (addrs,
                   ACE::HTBP::Addr[this->endpoint_count_],
                   -1);
   this->addrs_.reset (addrs);
 
-  char **hosts = nullptr;
+  char **hosts {};
   ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
@@ -438,13 +438,13 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
        proxy_port != 0))
     {
       this->endpoint_count_ = 1;
-      ACE::HTBP::Addr *addrs = nullptr;
+      ACE::HTBP::Addr *addrs {};
       ACE_NEW_RETURN (addrs,
                       ACE::HTBP::Addr[this->endpoint_count_],
                       -1);
       this->addrs_.reset (addrs);
 
-      char **hosts = nullptr;
+      char **hosts {};
       ACE_NEW_RETURN (hosts,
                       char *[this->endpoint_count_],
                       -1);
@@ -481,19 +481,19 @@ int
 TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
                             ACE_Reactor *reactor)
 {
-  CREATION_STRATEGY *creation_strategy = nullptr;
+  CREATION_STRATEGY *creation_strategy {};
   ACE_NEW_RETURN (creation_strategy,
                   CREATION_STRATEGY (this->orb_core_),
                   -1);
   this->creation_strategy_.reset (creation_strategy);
 
-  CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  CONCURRENCY_STRATEGY *concurrency_strategy {};
   ACE_NEW_RETURN (concurrency_strategy,
                   CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
   this->concurrency_strategy_.reset (concurrency_strategy);
 
-  ACCEPT_STRATEGY *accept_strategy = nullptr;
+  ACCEPT_STRATEGY *accept_strategy {};
   ACE_NEW_RETURN (accept_strategy,
                   ACCEPT_STRATEGY (this->orb_core_),
                   -1);
@@ -600,7 +600,7 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                             char *&host)
 {
   int result = 0;
-  const char *tmp = nullptr;
+  const char *tmp {};
 
   // If the IP address in the INET_Addr is the INADDR_ANY address,
   // then force the actual IP address to be used by initializing a new
@@ -644,7 +644,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // network interfaces.
   size_t if_cnt = 0;
 
-  ACE_INET_Addr *inet_addrs = nullptr;
+  ACE_INET_Addr *inet_addrs {};
 
   if (ACE::get_ip_interfaces (if_cnt,
                               inet_addrs) != 0
@@ -691,13 +691,13 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   else
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 
-  ACE::HTBP::Addr *addrs = nullptr;
+  ACE::HTBP::Addr *addrs {};
   ACE_NEW_RETURN (addrs,
                   ACE::HTBP::Addr[this->endpoint_count_],
                   -1);
   this->addrs_.reset (addrs);
 
-  char **hosts = nullptr;
+  char **hosts {};
   ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);

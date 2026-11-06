@@ -45,10 +45,10 @@ int
 TAO::HTIOP::Protocol_Factory::init (int argc,
                                   ACE_TCHAR* argv[])
 {
-  const ACE_TCHAR * config_file = nullptr;
-  const ACE_TCHAR * persist_file = nullptr;
+  const ACE_TCHAR * config_file {};
+  const ACE_TCHAR * persist_file {};
   unsigned proxy_port = 0;
-  const ACE_TCHAR * proxy_host = nullptr;
+  const ACE_TCHAR * proxy_host {};
 
   ACE_stat statbuf;
   int use_registry = 0;
@@ -90,7 +90,7 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
         }
     }
 
-  ACE::HTBP::Environment *ht_env = nullptr;
+  ACE::HTBP::Environment *ht_env {};
   ACE_NEW_RETURN (ht_env,
                   ACE::HTBP::Environment(0,
                                        use_registry,
@@ -113,7 +113,7 @@ TAO::HTIOP::Protocol_Factory::init (int argc,
 TAO_Acceptor *
 TAO::HTIOP::Protocol_Factory::make_acceptor ()
 {
-  TAO_Acceptor *acceptor = nullptr;
+  TAO_Acceptor *acceptor {};
 
   ACE_NEW_RETURN (acceptor,
                   TAO::HTIOP::Acceptor (this->ht_env_.get (),
@@ -125,7 +125,7 @@ TAO::HTIOP::Protocol_Factory::make_acceptor ()
 TAO_Connector *
 TAO::HTIOP::Protocol_Factory::make_connector ()
 {
-  TAO_Connector *connector = nullptr;
+  TAO_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO::HTIOP::Connector (this->ht_env_.get ()),
                   0);

@@ -172,7 +172,7 @@ TAO::HTIOP::Endpoint::duplicate ()
   // using this method for some other purpose later, this will be a
   // seed for bugs.
 
-  TAO::HTIOP::Endpoint *endpoint = nullptr;
+  TAO::HTIOP::Endpoint *endpoint {};
 
   ACE_NEW_RETURN (endpoint,
                   TAO::HTIOP::Endpoint (this->host_.in (),

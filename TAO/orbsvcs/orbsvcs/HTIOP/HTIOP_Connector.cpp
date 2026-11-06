@@ -44,7 +44,7 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   /// Our connect creation strategy
-  CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
   ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
@@ -52,7 +52,7 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
                   -1);
   this->connect_creation_strategy_.reset (connect_creation_strategy);
 
-  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
   ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
@@ -188,17 +188,17 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   // This is where we need to set the ACE::HTBP::Stream to the connection
   // handler.
-  TAO::HTIOP::Connection_Handler *svc_handler = nullptr;
+  TAO::HTIOP::Connection_Handler *svc_handler {};
 
   // In more traditional connectors, the following code would be part of a
   // strategized connector's connect() method. This include making the
   // handler, attaching the session, and activating the handler.
 
   // Instantiate a ACE::HTBP::Session
-  ACE::HTBP::Session *session = nullptr;
+  ACE::HTBP::Session *session {};
   if (ACE::HTBP::Session::find_session (session_id, session) == -1)
     {
-      ACE_INET_Addr *proxy = nullptr;
+      ACE_INET_Addr *proxy {};
       ACE_NEW_RETURN (proxy,
                       ACE_INET_Addr(static_cast<u_short> (proxy_port),proxy_host.c_str()),
                       0);
@@ -349,7 +349,7 @@ TAO::HTIOP::Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO::HTIOP::Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
