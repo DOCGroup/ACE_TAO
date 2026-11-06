@@ -12,22 +12,26 @@
 class bug_3252_Export DllOrb: public ACE_Task_Base
 {
 public:
-  DllOrb ();
-  virtual ~DllOrb ();
+  DllOrb () = default;
+  DllOrb (DllOrb const&) = delete;
+  DllOrb (DllOrb&&) = delete;
+  DllOrb& operator= (DllOrb const&) = delete;
+  DllOrb& operator= (DllOrb&&) = delete;
+  ~DllOrb () override = default;
 
-  CORBA::ORB_ptr orb () const { return CORBA::ORB::_duplicate(mv_orb_.in()); }
+  CORBA::ORB_ptr orb () const { return CORBA::ORB::_duplicate (this->mv_orb_.in ()); }
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int fini ();
+  int fini () override;
 
-  virtual int svc ();
+  int svc () override;
 
 private:
-  std::unique_ptr <ACE_Thread_Barrier> ma_barrier_;
-  CORBA::ORB_var mv_orb_;
-  PortableServer::POA_var mv_rootPOA_;
-  PortableServer::POAManager_var mv_poaManager_;
+  std::unique_ptr<ACE_Thread_Barrier> ma_barrier_ {};
+  CORBA::ORB_var mv_orb_ {};
+  PortableServer::POA_var mv_rootPOA_ {};
+  PortableServer::POAManager_var mv_poaManager_ {};
 };
 
 ACE_FACTORY_DECLARE (bug_3252, DllOrb)

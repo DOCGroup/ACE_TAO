@@ -4,33 +4,22 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
-DllOrb::DllOrb ()
- : ma_barrier_(),
-   mv_orb_ (),
-   mv_rootPOA_ ()
-{
-}
-
-DllOrb::~DllOrb ()
-{
-}
-
 int
 DllOrb::init (int argc, ACE_TCHAR *argv[])
 {
-  int threadCnt = 1;
+  int thread_count { 1 };
 
   try
   {
     ACE_Arg_Shifter as (argc, argv);
-    const ACE_TCHAR *currentArg = 0;
+    ACE_TCHAR const* current_arg {};
     while (as.is_anything_left ())
     {
-      if (0 != (currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
+      if ((current_arg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))) != nullptr)
       {
-        int num = ACE_OS::atoi (currentArg);
+        int const num = ACE_OS::atoi (current_arg);
         if (num >= 1)
-          threadCnt = num;
+          thread_count = num;
         as.consume_arg ();
       }
       else
@@ -45,7 +34,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-    CORBA::Object_var v_poa =
+    CORBA::Object_var const v_poa =
       mv_orb_->resolve_initial_references ("RootPOA");
 
     mv_rootPOA_ = PortableServer::POA::_narrow (v_poa.in ());
@@ -64,7 +53,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
 
     mv_poaManager_->activate ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("DllOrb::init: ");
     return -1;
@@ -75,13 +64,11 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  ma_barrier_.reset (new ACE_Thread_Barrier (threadCnt + 1));
+  ma_barrier_ = std::make_unique<ACE_Thread_Barrier> (thread_count + 1);
 
-  this->activate(
-    THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED,
-    threadCnt);
+  this->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_count);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() ...\n")));
-  ma_barrier_->wait();
+  ma_barrier_->wait ();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("init mp_barrier->wait() done\n")));
 
   return 0;
@@ -98,7 +85,7 @@ DllOrb::fini ()
     // attempt to protect against sporadic BAD_INV_ORDER exceptions
     ACE_OS::sleep (ACE_Time_Value (0, 500));
 
-      mv_rootPOA_->destroy (1, 1);
+    mv_rootPOA_->destroy (1, 1);
 
       mv_rootPOA_ = PortableServer::POA::_nil ();
     mv_orb_->shutdown (true);
@@ -110,7 +97,7 @@ DllOrb::fini ()
 
     ma_barrier_.reset ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("DllOrb::fini: ");
     return -1;
@@ -126,7 +113,7 @@ DllOrb::fini ()
     mv_orb_->destroy ();
     mv_orb_ = CORBA::ORB::_nil ();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Exception caught:");
     return -1;
@@ -138,7 +125,7 @@ DllOrb::fini ()
 int DllOrb::svc ()
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("svc mp_barrier->wait() ...\n")));
-  ma_barrier_->wait();
+  ma_barrier_->wait ();
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("svc mp_barrier->wait() done\n")));
 
   try
@@ -149,11 +136,11 @@ int DllOrb::svc ()
       mv_orb_->run();
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("mv_orb->run returned\n")));
     }
-    catch(CORBA::BAD_INV_ORDER const & rc_ex)
+    catch (CORBA::BAD_INV_ORDER const& rc_ex)
     {
-      const CORBA::ULong VMCID = rc_ex.minor() & 0xFFFFF000U;
-      const CORBA::ULong minorCode = rc_ex.minor() & 0xFFFU;
-      if (VMCID == CORBA::OMGVMCID && minorCode == 4)
+      CORBA::ULong const vmcid = rc_ex.minor () & 0xFFFFF000U;
+      CORBA::ULong const minor_code = rc_ex.minor () & 0xFFFU;
+      if (vmcid == CORBA::OMGVMCID && minor_code == 4)
       {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("ignored 'CORBA::BAD_INV_ORDER: ORB has shutdown.'\n")));
       }
@@ -164,7 +151,7 @@ int DllOrb::svc ()
     }
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("mv_orb->run done\n")));
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("DllOrb::svc: ");
     return -1;
