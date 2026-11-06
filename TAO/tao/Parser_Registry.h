@@ -22,6 +22,7 @@
 
 #include "ace/os_include/os_stddef.h"
 #include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,9 +57,9 @@ public:
   TAO_IOR_Parser *match_parser (const char *ior_string);
 
   // = Iterator.
-  using Parser_Iterator = TAO_IOR_Parser **;
-  Parser_Iterator begin () const;
-  Parser_Iterator end () const;
+  using const_iterator = std::vector<TAO_IOR_Parser *>::const_iterator;
+  const_iterator begin () const;
+  const_iterator end () const;
 
 private:
   // The parser registry should not be copied.
@@ -68,11 +69,8 @@ private:
   TAO_Parser_Registry &operator= (TAO_Parser_Registry &&) = delete;
 
 private:
-  /// Non-owning parser pointers, stored in an owned pointer-array buffer.
-  std::unique_ptr<TAO_IOR_Parser *[]> parsers_;
-
-  /// Number of parsers
-  size_t size_ {};
+  /// Non-owning pointers to the registered parser services.
+  std::vector<TAO_IOR_Parser *> parsers_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
