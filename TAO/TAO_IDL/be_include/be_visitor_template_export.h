@@ -32,17 +32,17 @@ class AST_Interface;
 class be_visitor_template_export : public be_visitor_scope
 {
 public:
-  be_visitor_template_export (be_visitor_context *ctx);
+  explicit be_visitor_template_export (be_visitor_context *ctx);
 
-  virtual ~be_visitor_template_export ();
+  ~be_visitor_template_export () override;
 
-  virtual int visit_root (be_root *node);
+  int visit_root (be_root *node) override;
 
-  virtual int visit_module (be_module *node);
+  int visit_module (be_module *node) override;
 
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 };
 
 

@@ -11,14 +11,14 @@
 
 #include "valuetype.h"
 
+#include <string>
+
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_valuetype::~be_visitor_valuetype ()
-{
-}
+be_visitor_valuetype::~be_visitor_valuetype () = default;
 
 int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
@@ -663,7 +663,6 @@ be_visitor_valuetype::visit_field (be_field *)
 int
 be_visitor_valuetype::gen_pd (be_valuetype *node)
 {
-  int n_processed = 0;
   this->elem_number_ = 0;
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
@@ -687,8 +686,6 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
         {
           continue;
         }
-
-      ++n_processed;
 
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
@@ -790,9 +787,9 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
 
       *os << (index++ != 0 ? "," : "") << be_nl;
 
-      ACE_CString arg_name ("_tao_init_");
+      std::string arg_name ("_tao_init_");
       arg_name += f->local_name ()->get_string ();
-      Identifier id (arg_name.c_str ());
+      Identifier id {arg_name};
       UTL_ScopedName sn (&id, nullptr);
       be_type *ft = dynamic_cast<be_type*> (f->field_type ());
       bool seen = ft->seen_in_operation ();
@@ -816,79 +813,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       // its field type if it is anonymous - we don't want that.
       arg.be_decl::destroy ();
       arg.AST_Decl::destroy ();
-      id.destroy ();
     }
-}
-
-// Generate the _init definition.
-int
-be_visitor_valuetype::gen_init_defn (be_valuetype *node)
-{
-  if (node->is_abstract ())
-    {
-      return 0;
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  TAO_INSERT_COMMENT (os);
-
-  *os << "class " << be_global->stub_export_macro ()
-      << " " << node->local_name ()
-      << "_init : public ::CORBA::ValueFactoryBase" << be_nl;
-
-  // Generate the body.
-  *os << "{" << be_nl
-      << "public:" << be_idt_nl
-      << "virtual ~" << node->local_name () << "_init ();" << be_nl;
-
-  *os << "virtual const char* tao_repository_id ();\n" << be_nl;
-  *os << "// create () goes here" << be_nl;
-  *os << be_uidt_nl << "};" << be_nl;
-
-  return 0;
-}
-
-int
-be_visitor_valuetype::gen_init_impl (be_valuetype *node)
-{
-  if (node->is_abstract ())
-    {
-      return 0;
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-  os->indent ();
-
-  char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local _out names
-
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::sprintf (fname,
-                   "%s_init",
-                   node->full_name ());
-
-  ACE_OS::memset (lname,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::sprintf (lname,
-                   "%s_init",
-                   node->local_name ());
-
-  // Destructor.
-  *os << fname << "::~" << lname << " ()" << be_nl
-      << "{" << be_nl << "}\n\n";
-
-  *os << "const char*" << be_nl
-      << fname << "::tao_repository_id ()" << be_nl
-      << "{" << be_idt_nl
-      <<   "return " << node->local_name ()
-      <<                "::_tao_obv_static_repository_id ();"
-      << be_uidt_nl << "}\n\n";
-
-  return 0;
 }
 
 bool
@@ -961,13 +886,13 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 bool
 be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
 {
- if (ACE_OS::strncmp (node->local_name (), "AMH_", 4) == 0)
+ if (node->local_name ().substr (0, 4) == "AMH_")
    {
-     const char *last_E =
-      ACE_OS::strrchr (node->full_name (), 'E');
+     std::string const& full_name = node->full_name ();
+     std::string::size_type const last_E = full_name.rfind ('E');
 
-     if (last_E != nullptr
-         && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+     if (last_E != std::string::npos
+         && full_name.substr (last_E) == "ExceptionHolder")
        {
          return true;
        }

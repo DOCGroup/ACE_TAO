@@ -37,21 +37,18 @@ class TAO_IFRService_Export TAO_AbstractInterfaceDef_i
 {
 public:
   /// Constructor
-  TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo);
+  explicit TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_AbstractInterfaceDef_i () override;
 
   /// Return our definition kind.
-  CORBA::DefinitionKind def_kind (
-    ) override;
+  CORBA::DefinitionKind def_kind () override;
 
-  CORBA::Boolean is_a (
-      const char *interface_id
-    ) override;
+  CORBA::Boolean is_a (char const *interface_id) override;
 
   CORBA::Boolean is_a_i (
-      const char *interface_id
+      char const *interface_id
     );
 };
 

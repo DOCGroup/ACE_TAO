@@ -39,7 +39,7 @@ class TAO_IFRService_Export TAO_ConstantDef_i : public virtual TAO_Contained_i
 {
 public:
   /// Constructor
-    TAO_ConstantDef_i (TAO_Repository_i *repo);
+    explicit TAO_ConstantDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_ConstantDef_i () override;
@@ -69,9 +69,9 @@ public:
 
   CORBA::Any *value_i ();
 
-  virtual void value (const CORBA::Any &value);
+  virtual void value (CORBA::Any const &value);
 
-  void value_i (const CORBA::Any &value);
+  void value_i (CORBA::Any const &value);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

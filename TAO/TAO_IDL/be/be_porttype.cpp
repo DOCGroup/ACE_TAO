@@ -18,9 +18,7 @@ be_porttype::be_porttype (UTL_ScopedName *n)
 {
 }
 
-be_porttype::~be_porttype ()
-{
-}
+be_porttype::~be_porttype () = default;
 
 void
 be_porttype::destroy ()

@@ -16,6 +16,8 @@
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CI_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CI_H_
 
+#include <string>
+
 /**
  * @class be_visitor_valuetype_field_ci
  *
@@ -28,36 +30,40 @@ class be_visitor_valuetype_field_ci : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_valuetype_field_ci (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_field_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_field_ci ();
+  ~be_visitor_valuetype_field_ci () override;
+  be_visitor_valuetype_field_ci (be_visitor_valuetype_field_ci const &) = delete;
+  be_visitor_valuetype_field_ci (be_visitor_valuetype_field_ci &&) = delete;
+  be_visitor_valuetype_field_ci &operator= (be_visitor_valuetype_field_ci const &) = delete;
+  be_visitor_valuetype_field_ci &operator= (be_visitor_valuetype_field_ci &&) = delete;
 
   /// visit the field node
-  virtual int visit_field (be_field *node);
+  int visit_field (be_field *node) override;
 
   // =visit operations on all possible data types that a union_branch can be
 
   /// visit array type
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 
   /// visit structure type
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit union type
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
   /// print additional string before op (e.g. ACE_INLINE)
-  void setenclosings (const char *pre);
-  const char *pre_op ();
+  void setenclosings (std::string const& pre);
+  std::string const& pre_op () const;
 
   /// if (in_obv_space_) print OBV_name else print name
   void op_name (be_valuetype *node, TAO_OutStream *os);
 
-  bool in_obv_space_;
+  bool in_obv_space_ {};
 
 private:
-  const char *pre_op_;
+  std::string pre_op_ {};
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_FIELD_CI_H_ */

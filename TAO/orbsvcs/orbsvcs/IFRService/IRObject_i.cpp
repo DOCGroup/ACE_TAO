@@ -17,9 +17,7 @@ TAO_IRObject_i::TAO_IRObject_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_IRObject_i::~TAO_IRObject_i ()
-{
-}
+TAO_IRObject_i::~TAO_IRObject_i () = default;
 
 CORBA::DefinitionKind
 TAO_IRObject_i::def_kind (

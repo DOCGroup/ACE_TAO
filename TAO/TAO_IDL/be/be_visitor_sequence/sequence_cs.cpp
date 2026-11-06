@@ -20,9 +20,6 @@ be_visitor_sequence_cs::be_visitor_sequence_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_cs::~be_visitor_sequence_cs ()
-{
-}
 
 int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 {
@@ -53,7 +50,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (bt == nullptr)
     {
@@ -64,7 +61,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   // If our base type is an anonymous sequence, we must create a name
   // and generate a class declaration for it as well.
@@ -73,7 +70,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       // Temporarily make the context's tdef node 0 so the nested call
       // to create_name will not get confused and give our anonymous
       // sequence element type the same name as we have.
-      be_typedef *tmp = this->ctx_->tdef ();
+      be_typedef * const tmp = this->ctx_->tdef ();
       this->ctx_->tdef (nullptr);
 
       if (bt->accept (this) != 0)
@@ -97,7 +94,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << be_nl_2;
 
@@ -109,12 +106,11 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   if (node->unbounded ())
     {
       *os << be_nl_2
-          << node->name () << "::" << node->local_name () << " ("
-          << be_idt << be_idt_nl
-          << "::CORBA::ULong max)" << be_uidt_nl
-          << ": " << be_idt;
+          << node->name () << "::" << node->local_name ()
+          << " (::CORBA::ULong max)" << be_nl
+          << "  : " << be_idt;
 
-      int status =
+      int const status =
         node->gen_base_class_name (os,
                                    "",
                                    this->ctx_->scope ()->decl ());
@@ -131,8 +127,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
 
-      *os << " (max)" << be_uidt << be_uidt_nl
-          << "{}";
+      *os << " (max) {}" << be_uidt;
     }
 
   /// If we are using std::vector, we can't implement this
@@ -142,7 +137,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       // Constructor with the buffer
       *os << be_nl_2
           << node->name () << "::" << node->local_name () << " ("
-          << be_idt << be_idt_nl;
+          << be_idt;
 
       if (node->unbounded ())
         {
@@ -166,8 +161,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
       *os << " * buffer," << be_nl
-          << "::CORBA::Boolean release)" << be_uidt
-          << be_uidt_nl
+          << "::CORBA::Boolean release)" << be_uidt_nl
           << "  : " << be_idt << be_idt;
 
       // Pass it to the base constructor.

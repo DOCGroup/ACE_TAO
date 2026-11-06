@@ -38,7 +38,7 @@ class TAO_IFRService_Export TAO_UnionDef_i : public virtual TAO_TypedefDef_i,
 {
 public:
   /// Constructor
-  TAO_UnionDef_i (TAO_Repository_i *repo);
+  explicit TAO_UnionDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_UnionDef_i () override;
@@ -75,9 +75,9 @@ public:
 
   CORBA::UnionMemberSeq *members_i ();
 
-  virtual void members (const CORBA::UnionMemberSeq &members);
+  virtual void members (CORBA::UnionMemberSeq const &members);
 
-  void members_i (const CORBA::UnionMemberSeq &members);
+  void members_i (CORBA::UnionMemberSeq const &members);
 
 private:
   /// Used by members() to get each member's label value.

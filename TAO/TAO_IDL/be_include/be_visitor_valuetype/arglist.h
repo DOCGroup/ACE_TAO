@@ -27,22 +27,26 @@ class be_visitor_obv_operation_arglist : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_obv_operation_arglist (be_visitor_context *ctx);
+  explicit be_visitor_obv_operation_arglist (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_obv_operation_arglist ();
+  ~be_visitor_obv_operation_arglist () override;
+  be_visitor_obv_operation_arglist (be_visitor_obv_operation_arglist const &) = delete;
+  be_visitor_obv_operation_arglist (be_visitor_obv_operation_arglist &&) = delete;
+  be_visitor_obv_operation_arglist &operator= (be_visitor_obv_operation_arglist const &) = delete;
+  be_visitor_obv_operation_arglist &operator= (be_visitor_obv_operation_arglist &&) = delete;
 
   /// special arglist generation for amh_exceptionholders
   bool is_amh_exception_holder (be_operation *node);
 
   /// visit the operation
-  int visit_operation (be_operation *node);
+  int visit_operation (be_operation *node) override;
 
   /// visit each argument
-  int visit_argument (be_argument *node);
+  int visit_argument (be_argument *node) override;
 
   /// set 'comma' only between arguments
-  int post_process (be_decl *bd);
+  int post_process (be_decl *bd) override;
 };
 
 #endif /* _BE_VISITOR_OBV_OPERATION_ARGLIST_H_ */

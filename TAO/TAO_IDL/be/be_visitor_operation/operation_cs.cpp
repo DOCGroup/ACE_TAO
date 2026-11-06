@@ -20,16 +20,14 @@ be_visitor_operation_cs::be_visitor_operation_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_cs::~be_visitor_operation_cs ()
-{
-}
+be_visitor_operation_cs::~be_visitor_operation_cs () = default;
 
 // Processing to be done after every element in the scope is processed.
 int
 be_visitor_operation_cs::post_process (be_decl *bd)
 {
   // All we do here is to insert a comma and a newline.
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {
@@ -76,7 +74,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node for future use
 
   if (node->is_local ())
@@ -100,7 +98,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   // Generate the return type mapping (same as in the header file)
   be_visitor_context ctx = *this->ctx_;
-  be_visitor_operation_rettype rt_visitor = (&ctx);
+  be_visitor_operation_rettype rt_visitor (&ctx);
 
   if (bt->accept (&rt_visitor) == -1)
     {
@@ -169,7 +167,7 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
 {
   // This method is used to generate the ParamData table entry.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)

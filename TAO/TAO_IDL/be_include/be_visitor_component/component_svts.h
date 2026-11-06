@@ -13,6 +13,8 @@
 #ifndef _BE_COMPONENT_COMPONENT_SVTS_H_
 #define _BE_COMPONENT_COMPONENT_SVTS_H_
 
+#include <string>
+
 /**
  * @class be_visitor_component_svts
  *
@@ -24,16 +26,20 @@
 class be_visitor_component_svts : public be_visitor_component
 {
 public:
-  be_visitor_component_svts (be_visitor_context *ctx);
+  explicit be_visitor_component_svts (be_visitor_context *ctx);
 
-  ~be_visitor_component_svts ();
+  ~be_visitor_component_svts () override;
+  be_visitor_component_svts (be_visitor_component_svts const &) = delete;
+  be_visitor_component_svts (be_visitor_component_svts &&) = delete;
+  be_visitor_component_svts &operator= (be_visitor_component_svts const &) = delete;
+  be_visitor_component_svts &operator= (be_visitor_component_svts &&) = delete;
 
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
 
 private:
   TAO_OutStream &os_;
-  ACE_CString export_macro_;
+  std::string export_macro_;
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_SVTS_H_ */

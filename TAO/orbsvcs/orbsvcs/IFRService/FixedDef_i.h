@@ -40,7 +40,7 @@ class TAO_IFRService_Export TAO_FixedDef_i : public virtual TAO_IDLType_i
 {
 public:
   /// Constructor
-  TAO_FixedDef_i (TAO_Repository_i *repo);
+  explicit TAO_FixedDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_FixedDef_i () override;

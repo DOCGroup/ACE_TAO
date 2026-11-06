@@ -83,6 +83,7 @@ public:
 
   // Get list item.
   UTL_ScopedName *head ();
+  UTL_ScopedName const *head () const;
 
   // Accessors.
   bool truncatable () const;
@@ -103,10 +104,10 @@ private:
 class   UTL_NamelistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  UTL_NamelistActiveIterator (UTL_NameList *source);
+  explicit UTL_NamelistActiveIterator (UTL_NameList *source);
 
   // Get current item.
-  UTL_ScopedName *item ();
+  UTL_ScopedName *item () const;
 };
 
 #endif           // _UTL_NAMELIST_UTL_NAMELIST_HH

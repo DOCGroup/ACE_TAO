@@ -10,6 +10,7 @@
 //=============================================================================
 
 #include "operation.h"
+#include "be_interface.h"
 
 // ************************************************************
 //   operation visitor  to generate the argument list.
@@ -19,19 +20,16 @@
 
 be_visitor_operation_arglist::be_visitor_operation_arglist (
     be_visitor_context *ctx)
-  : be_visitor_operation (ctx),
-    unused_ (false)
+  : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_arglist::~be_visitor_operation_arglist ()
-{
-}
+be_visitor_operation_arglist::~be_visitor_operation_arglist () = default;
 
 int
 be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   bool const has_args = node->argument_count () > 0;
 
   *os << " (";
@@ -71,10 +69,19 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
   *os << ")" << be_uidt;
 
+  bool const inherited_operation =
+    this->ctx_->interface () != nullptr
+    && this->ctx_->interface () != node->defined_in ();
+
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
+      if (inherited_operation)
+        {
+          *os << " override";
+        }
+
       if (node->is_local ())
         {
           *os << " = 0";
@@ -82,9 +89,16 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+      break;
     case TAO_CodeGen::TAO_TIE_OPERATION_ARGLIST_SH:
+      *os << " override";
       break;
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
+      if (inherited_operation)
+        {
+          *os << " override";
+        }
+
       *os << " = 0";
       break;
     default:
@@ -99,7 +113,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 int
 be_visitor_operation_arglist::visit_factory (be_factory *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   bool has_args = node->argument_count () > 0;
 
   *os << " (";
@@ -151,7 +165,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // generate the appropriate relative scoped names.
   be_operation *op =
     dynamic_cast<be_operation*> (this->ctx_->scope ());
-  be_interface *intf = nullptr;
+  be_interface *intf {};
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -192,7 +206,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
 int
 be_visitor_operation_arglist::post_process (be_decl *bd)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // if we are not the last node in the list of arguments, generate a comma
   // else decide if we are generating code to support true exceptions - in

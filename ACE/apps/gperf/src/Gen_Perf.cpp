@@ -30,7 +30,7 @@
 #include "ace/Truncate.h"
 
 /// Current release version.
-extern const char *version_string;
+extern char const *version_string;
 
 /// Reads input keys, possibly applies the reordering heuristic, sets
 /// the maximum associated value size (rounded up to the nearest power

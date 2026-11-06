@@ -50,8 +50,8 @@ be_enum::gen_ostream_operator (TAO_OutStream *os,
                                bool /* use_underscore */)
 {
   *os << be_nl
-      << "std::ostream& operator<< (std::ostream &strm, const "
-      << this->name () << " _tao_enumerator)" << be_nl
+      << "std::ostream& operator<< (std::ostream &strm, "
+      << this->name () << " const _tao_enumerator)" << be_nl
       << "{" << be_idt_nl
       << "switch (_tao_enumerator)" << be_idt_nl
       << "{" << be_idt_nl;

@@ -13,19 +13,12 @@
 
 be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
-    comp_ (nullptr),
     os_ (*ctx->stream ()),
-    comment_start_border_ ("/**"),
-    comment_end_border_ (" */"),
-    your_code_here_ ("/* Your code here. */"),
     export_macro_ (be_global->exec_export_macro ())
 {
 }
 
-be_visitor_home_exs::~be_visitor_home_exs ()
-{
-}
+be_visitor_home_exs::~be_visitor_home_exs () = default;
 
 int
 be_visitor_home_exs::visit_home (be_home *node)
@@ -80,14 +73,13 @@ int
 be_visitor_home_exs::visit_factory (be_factory *node)
 {
   AST_Decl *scope = ScopeAsDecl (comp_->defined_in ());
-  ACE_CString sname_str (scope->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = comp_->local_name ()->get_string ();
-  const char *global = (sname_str == "" ? "" : "::");
+  std::string const sname_str (scope->full_name ());
+  std::string const& lname = comp_->local_name ()->get_string ();
+  std::string const global = sname_str.empty () ? "" : "::";
 
   os_ << be_nl_2
       << "::Components::EnterpriseComponent_ptr" << be_nl
-      << node_->original_local_name ()->get_string ()
+      << node_->original_local_name ()
       << "_exec_i::" << node->local_name ();
 
   be_visitor_operation_arglist visitor (this->ctx_);
@@ -105,7 +97,7 @@ be_visitor_home_exs::visit_factory (be_factory *node)
   os_ << be_nl
       << "{" << be_idt_nl
       << your_code_here_ << be_nl
-      << "return " << global << sname << "::CCM_"
+      << "return " << global << sname_str << "::CCM_"
       << lname << "::_nil ();" << be_uidt_nl
       << "}";
 
@@ -116,8 +108,7 @@ int
 be_visitor_home_exs::gen_exec_class ()
 {
   // No '_cxx_' prefix.
-  const char *lname =
-    node_->original_local_name ()->get_string ();
+  std::string const& lname = node_->original_local_name ();
 
   os_ << be_nl
       << comment_start_border_ << be_nl
@@ -156,13 +147,13 @@ be_visitor_home_exs::gen_exec_class ()
           be_interface *bi =
             dynamic_cast<be_interface*> (h->inherits ()[i]);
 
-          bi->get_insert_queue ().reset ();
-          bi->get_del_queue ().reset ();
-          bi->get_insert_queue ().enqueue_tail (bi);
+          bi->get_insert_queue ().clear ();
+          bi->get_del_queue ().clear ();
+          bi->get_insert_queue ().push_back (bi);
 
           Home_Exec_Op_Attr_Generator op_attr_gen (this);
 
-          int status =
+          int const status =
             bi->traverse_inheritance_graph (op_attr_gen,
                                             &os_,
                                             false,
@@ -175,7 +166,7 @@ be_visitor_home_exs::gen_exec_class ()
                                  ACE_TEXT ("gen_exec_class - ")
                                  ACE_TEXT ("traverse_inheritance_graph() ")
                                  ACE_TEXT ("failed for %s\n"),
-                                 bi->full_name ()),
+                                 bi->full_name ().c_str ()),
                                 -1);
             }
         }
@@ -196,7 +187,7 @@ be_visitor_home_exs::gen_exec_class ()
       << be_uidt_nl << be_nl
       << "ACE_NEW_THROW_EX (" << be_idt_nl
       << "retval," << be_nl
-      << comp_->original_local_name ()->get_string ()
+      << comp_->original_local_name ()
       << "_exec_i," << be_nl
       << "::CORBA::NO_MEMORY ());"
       << be_uidt_nl << be_nl
@@ -210,7 +201,7 @@ void
 be_visitor_home_exs::gen_entrypoint ()
 {
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
       << "_Impl ()" << be_nl
@@ -220,14 +211,14 @@ be_visitor_home_exs::gen_entrypoint ()
       << be_uidt_nl << be_nl
       << "ACE_NEW_NORETURN (" << be_idt_nl
       << "retval," << be_nl
-      << node_->original_local_name ()->get_string ()
+      << node_->original_local_name ()
       << "_exec_i);" << be_uidt_nl << be_nl
       << "return retval;" << be_uidt_nl
       << "}";
 }
 
 Home_Exec_Op_Attr_Generator::Home_Exec_Op_Attr_Generator (
-    be_visitor_scope * visitor)
+    be_visitor_scope *visitor)
   : visitor_ (visitor)
 {
 }

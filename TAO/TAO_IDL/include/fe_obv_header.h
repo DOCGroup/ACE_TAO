@@ -17,11 +17,15 @@ public:
                 UTL_NameList *supports,
                 bool truncatable,
                 bool is_eventtype = false);
+  FE_OBVHeader (FE_OBVHeader const &) = delete;
+  FE_OBVHeader (FE_OBVHeader &&) = delete;
+  FE_OBVHeader &operator= (FE_OBVHeader const &) = delete;
+  FE_OBVHeader &operator= (FE_OBVHeader &&) = delete;
   ~FE_OBVHeader () override;
 
   // Data Accessors.
-  AST_Type **supports () const;
-  long n_supports () const;
+  AST_Type_List const& supports () const;
+  std::size_t n_supports () const;
   AST_Type *inherits_concrete () const;
   AST_Type *supports_concrete () const;
   bool truncatable () const;
@@ -31,11 +35,11 @@ public:
 
 protected:
   // Supported interfaces.
-  AST_Type **supports_;
-  long n_supports_;
+  AST_Type_List supports_;
+  std::size_t n_supports_ {};
 
-  AST_Type *inherits_concrete_;
-  AST_Type *supports_concrete_;
+  AST_Type *inherits_concrete_ {};
+  AST_Type *supports_concrete_ {};
 
   // Currently ignored.
   bool truncatable_;

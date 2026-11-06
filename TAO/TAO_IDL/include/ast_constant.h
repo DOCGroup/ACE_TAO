@@ -65,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_CONSTANT_AST_CONSTANT_HH
 #define _AST_CONSTANT_AST_CONSTANT_HH
 
+#include <memory>
+
 #include "ast_expression.h"
 #include "ast_decl.h"
 #include "global_extern.h"
@@ -90,15 +92,19 @@ public:
   AST_Constant (AST_Expression::ExprType et,
                 AST_Expression *ev,
                 UTL_ScopedName *n);
+  AST_Constant (AST_Constant const &) = delete;
+  AST_Constant (AST_Constant &&) = delete;
+  AST_Constant &operator= (AST_Constant const &) = delete;
+  AST_Constant &operator= (AST_Constant &&) = delete;
 
   ~AST_Constant () override;
 
   // Data Accessors.
-  AST_Expression *constant_value ();
-  AST_Expression::ExprType et ();
+  AST_Expression *constant_value () const;
+  AST_Expression::ExprType et () const;
 
   // Accessors for the private member.
-  bool ifr_added ();
+  bool ifr_added () const;
   void ifr_added (bool val);
 
   UTL_ScopedName *enum_full_name ();
@@ -118,13 +124,13 @@ public:
   bool annotatable () const override { return true; }
 
 protected:
-  AST_Expression *pd_constant_value;
+  std::unique_ptr<AST_Expression> pd_constant_value;
   // The value.
 
   AST_Expression::ExprType pd_et;
   // Its expression type.
 
-  bool ifr_added_;
+  bool ifr_added_ {};
   // Has this node been added to the IFR?
 };
 

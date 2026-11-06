@@ -87,6 +87,12 @@ UTL_NameList::head ()
   return this->pd_car_data;
 }
 
+UTL_ScopedName const *
+UTL_NameList::head () const
+{
+  return this->pd_car_data;
+}
+
 bool
 UTL_NameList::truncatable () const
 {
@@ -116,13 +122,13 @@ UTL_NamelistActiveIterator::UTL_NamelistActiveIterator (UTL_NameList *s)
 
 // Get current item.
 UTL_ScopedName *
-UTL_NamelistActiveIterator::item ()
+UTL_NamelistActiveIterator::item () const
 {
   if (source == nullptr)
     {
       return nullptr;
     }
 
-  return ((UTL_NameList *) source)->head ();
+  return static_cast<UTL_NameList *> (source)->head ();
 }
 

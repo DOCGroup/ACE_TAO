@@ -74,12 +74,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/config-all.h"
 
 FE_Declarator::FE_Declarator (UTL_ScopedName *n,
-                              DeclaratorType dt,
+                              Declarator_Type dt,
                               AST_Decl *cp)
  : pd_complex_part (cp),
+   pd_name (n),
    pd_decl_type (dt)
 {
-  this->pd_name = n;
+}
+
+void
+FE_Declarator::Scoped_Name_Deleter::operator() (UTL_ScopedName *name) const
+{
+  if (name != nullptr)
+    {
+      name->destroy ();
+      delete name;
+    }
 }
 
 // Compose the type of the complex declarator (if any) with the base
@@ -129,11 +139,11 @@ FE_Declarator::compose (AST_Decl *d)
   // not have a different prefix from the place of declaration.
   if (!ct->is_defined ())
     {
-      const char *original_prefix = d->prefix ();
+      std::string original_prefix = d->prefix ();
       AST_Decl *scope = d;
 
       // Maybe the prefix hasn't been applied yet.
-      while (ACE_OS::strcmp (original_prefix, "") == 0)
+      while (original_prefix.empty ())
         {
           scope = ScopeAsDecl (scope->defined_in ());
 
@@ -146,10 +156,10 @@ FE_Declarator::compose (AST_Decl *d)
           original_prefix = scope->prefix ();
         }
 
-      // Skip if the pointers are the same.
+      // Skip if the prefix is unchanged.
       if (d->prefix () != original_prefix)
         {
-          d->prefix (const_cast<char *> (original_prefix));
+          d->prefix (original_prefix);
         }
 
       // (JP) This could give a bogus error, since typeprefix can
@@ -157,11 +167,10 @@ FE_Declarator::compose (AST_Decl *d)
       // The right way to do this is with a separate traversal
       // after the entire AST is built.
       /*
-      char *current_prefix = 0;
-      idl_global->pragma_prefixes ().top (current_prefix);
+      std::vector<std::string> const& prefixes =
+        idl_global->pragma_prefixes ();
 
-      if (current_prefix != 0
-          && ACE_OS::strcmp (current_prefix, d->prefix ()) != 0)
+      if (!prefixes.empty () && prefixes.back () != d->prefix ())
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,
                                       d);
@@ -171,7 +180,8 @@ FE_Declarator::compose (AST_Decl *d)
       */
     }
 
-  if (this->pd_decl_type == FD_simple || this->pd_complex_part == nullptr)
+  if (this->pd_decl_type == Declarator_Type::Simple
+      || this->pd_complex_part == nullptr)
     {
       return ct;
     }
@@ -200,30 +210,19 @@ FE_Declarator::compose (AST_Decl *d)
 void
 FE_Declarator::destroy ()
 {
-  if (pd_name)
-    {
-      this->pd_name->destroy ();
-      delete this->pd_name;
-      this->pd_name = nullptr;
-    }
+  this->pd_name.reset ();
 }
 
 // Data accessors.
 
 AST_Decl *
-FE_Declarator::complex_part ()
+FE_Declarator::complex_part () const
 {
   return this->pd_complex_part;
 }
 
 UTL_ScopedName *
-FE_Declarator::name ()
+FE_Declarator::name () const
 {
-  return this->pd_name;
-}
-
-FE_Declarator::DeclaratorType
-FE_Declarator::decl_type ()
-{
-  return this->pd_decl_type;
+  return this->pd_name.get ();
 }

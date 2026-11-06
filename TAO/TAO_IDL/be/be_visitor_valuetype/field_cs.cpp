@@ -13,17 +13,15 @@
 
 #include "valuetype.h"
 
+#include <string>
 be_visitor_valuetype_field_cs::be_visitor_valuetype_field_cs (
     be_visitor_context *ctx)
-  : be_visitor_decl (ctx),
-    in_obv_space_ (false)
+  : be_visitor_decl (ctx)
 {
   setenclosings ("");
 }
 
-be_visitor_valuetype_field_cs::~be_visitor_valuetype_field_cs ()
-{
-}
+be_visitor_valuetype_field_cs::~be_visitor_valuetype_field_cs () = default;
 
 int
 be_visitor_valuetype_field_cs::visit_field (be_field *node)
@@ -103,10 +101,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute the
   // full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string fname;
 
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
@@ -118,24 +113,20 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
         {
           be_decl *parent =
                  dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           bt->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += bt->local_name ()->get_string ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           bt->full_name ());
+          fname = "_";
+          fname += bt->full_name ();
         }
     }
   else
     {
       // Typedefed node.
-      ACE_OS::sprintf (fname,
-                       "%s",
-                       bt->full_name ());
+      fname = bt->full_name ();
     }
 
   TAO_INSERT_COMMENT (os);
@@ -146,7 +137,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (const " << fname
+  *os << "::" << ub->local_name () << " (" << fname << " const"
       << " val)" << be_nl
       << "{" << be_idt_nl;
   *os << fname << "_copy ("
@@ -156,7 +147,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   *os << "}" << be_nl;
 
   *os << "/// Retrieve the member." << be_nl
-      << this->pre_op () << "const " << fname << "_slice *" << be_nl;
+      << this->pre_op () << fname << "_slice const *" << be_nl;
 
   this->op_name (bu,
                  os);
@@ -296,7 +287,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
   *os << "this->"
       << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix () << " =" << be_idt_nl
-      << "TAO::Objref_Traits< ::" << bt->name ()
+      << "TAO::Objref_Traits<::" << bt->name ()
       << ">::duplicate (val);" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl_2;
 
@@ -591,7 +582,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   // IN parameter semantics call for 'const' qualifier except
   // for interface types, which here are Object and TypeCode.
   *os << "::" << ub->local_name ()
-      << " (" << (is_object ? "" : "const ") << bt->name ();
+      << " (" << bt->name () << (is_object ? "" : " const");
 
   if (is_object)
     {
@@ -654,7 +645,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_any:
       *os << "// Retrieve the member." << be_nl
-          << this->pre_op () << "const ::" << bt->name () << " &" << be_nl;
+          << this->pre_op () << "::" << bt->name () << " const &" << be_nl;
 
       this->op_name (bu, os);
 
@@ -761,7 +752,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl;
 
   *os << "this->"
@@ -771,7 +762,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
   *os << "}" << be_nl_2;
 
   *os << "/// Readonly get method." << be_nl
-      << this->pre_op () << "const " << bt->name () << " &" << be_nl;
+      << this->pre_op () << bt->name () << " const &" << be_nl;
 
   this->op_name (bu,
                  os);
@@ -830,7 +821,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
   this->op_name (bu,
                  os);
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << "::" << ub->local_name () << " (char *val)";
     }
@@ -855,13 +846,13 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
                  os);
   *os << "::" << ub->local_name ();
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
-      *os << " (const char *val)" << be_nl;
+      *os << " (char const *val)" << be_nl;
     }
   else
     {
-      *os << " (const ::CORBA::WChar *val)" << be_nl;
+      *os << " (::CORBA::WChar const *val)" << be_nl;
     }
 
   *os << "{" << be_idt_nl;
@@ -872,7 +863,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
       << bu->field_pd_postfix ()
       << " = ";
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << "::CORBA::string_dup (val);" << be_uidt_nl;
     }
@@ -892,18 +883,18 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   *os << "::" << ub->local_name ();
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
-      *os << " (const ::CORBA::String_var &val)" << be_nl;
+      *os << " (::CORBA::String_var const &val)" << be_nl;
     }
   else
     {
-      *os << " (const ::CORBA::WString_var &val)" << be_nl;
+      *os << " (::CORBA::WString_var const &val)" << be_nl;
     }
 
   *os << "{" << be_idt_nl;
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << "::CORBA::String_var " << ub->local_name ();
     }
@@ -920,13 +911,13 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
       << ub->local_name () << "_var._retn ();" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
-      *os << this->pre_op () << "const char *" << be_nl;
+      *os << this->pre_op () << "char const *" << be_nl;
     }
   else
     {
-      *os << this->pre_op () << "const ::CORBA::WChar *" << be_nl;
+      *os << this->pre_op () << "::CORBA::WChar const *" << be_nl;
     }
 
   this->op_name (bu,
@@ -1000,7 +991,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl;
 
   *os << "this->"
@@ -1011,7 +1002,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   *os << "}" << be_nl;
 
   *os << "/// Readonly get method." << be_nl
-      << this->pre_op () << "const " << bt->name () << " &" << be_nl;
+      << this->pre_op () << bt->name () << " const &" << be_nl;
 
   this->op_name (bu,
                  os);
@@ -1115,14 +1106,14 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (const " << bt->name () << " &val)" << be_nl
+      << " (" << bt->name () << " const &val)" << be_nl
       << "{" << be_idt_nl;
   *os << "this->" << bu->field_pd_prefix () << ub->local_name ()
       << bu->field_pd_postfix () << " = val;" << be_uidt_nl;
   *os << "}" << be_nl;
 
   *os << "/// Readonly get method." << be_nl
-      << this->pre_op () << "const " << bt->name () << " &" << be_nl;
+      << this->pre_op () << bt->name () << " const &" << be_nl;
 
   this->op_name (bu,
                  os);
@@ -1153,13 +1144,13 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
 }
 
 void
-be_visitor_valuetype_field_cs::setenclosings (const char *pre)
+be_visitor_valuetype_field_cs::setenclosings (std::string const& pre)
 {
   this->pre_op_ = pre;
 }
 
-const char*
-be_visitor_valuetype_field_cs::pre_op ()
+std::string const&
+be_visitor_valuetype_field_cs::pre_op () const
 {
   return this->pre_op_;
 }

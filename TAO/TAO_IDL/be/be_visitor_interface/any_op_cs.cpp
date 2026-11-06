@@ -18,9 +18,7 @@ be_visitor_interface_any_op_cs::be_visitor_interface_any_op_cs (
 {
 }
 
-be_visitor_interface_any_op_cs::~be_visitor_interface_any_op_cs ()
-{
-}
+be_visitor_interface_any_op_cs::~be_visitor_interface_any_op_cs () = default;
 
 int
 be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
@@ -142,7 +140,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   *os << "::CORBA::Boolean" << be_nl
       << "operator>>= (" << be_idt << be_idt_nl
-      << "const ::CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Any const &_tao_any," << be_nl
       << node->full_name () << "_ptr &_tao_elem)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl

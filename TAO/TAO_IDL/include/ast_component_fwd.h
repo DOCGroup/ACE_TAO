@@ -8,6 +8,10 @@
 class TAO_IDL_FE_Export AST_ComponentFwd : public virtual AST_InterfaceFwd
 {
 public:
+  AST_ComponentFwd (AST_ComponentFwd const &) = delete;
+  AST_ComponentFwd (AST_ComponentFwd &&) = delete;
+  AST_ComponentFwd &operator= (AST_ComponentFwd const &) = delete;
+  AST_ComponentFwd &operator= (AST_ComponentFwd &&) = delete;
   AST_ComponentFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
@@ -23,7 +27,7 @@ public:
   int ast_accept (ast_visitor *visitor) override;
 
   // Is this decl a forward declared type (Yes)
-  bool is_fwd () override;
+  bool is_fwd () const override;
 
   static AST_Decl::NodeType const NT;
 };

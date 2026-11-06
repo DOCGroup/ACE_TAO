@@ -8,26 +8,28 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 
+#include <cerrno>
+#include <new>
+
 ifr_visitor::ifr_visitor ()
-  : lock_ (0)
 {
   // Create the appropriate lock.
   if (be_global->enable_locking ())
     {
-      ACE_NEW (this->lock_,
-               ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ());
+      this->lock_.reset (new (std::nothrow) ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ());
     }
   else
     {
-      ACE_NEW (this->lock_,
-               ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> ());
+      this->lock_.reset (new (std::nothrow) ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> ());
+    }
+
+  if (this->lock_ == nullptr)
+    {
+      errno = ENOMEM;
     }
 }
 
-ifr_visitor::~ifr_visitor ()
-{
-  delete this->lock_;
-}
+ifr_visitor::~ifr_visitor () = default;
 
 // All the visit methods. Each concrete ifr visitors will
 // override some subset of these.

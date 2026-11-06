@@ -20,9 +20,7 @@ AST_Template_Module_Inst::AST_Template_Module_Inst (
 {
 }
 
-AST_Template_Module_Inst::~AST_Template_Module_Inst ()
-{
-}
+AST_Template_Module_Inst::~AST_Template_Module_Inst () = default;
 
 AST_Template_Module *
 AST_Template_Module_Inst::ref () const
@@ -33,7 +31,7 @@ AST_Template_Module_Inst::ref () const
 FE_Utils::T_ARGLIST const *
 AST_Template_Module_Inst::template_args () const
 {
-  return this->template_args_;
+  return this->template_args_.get ();
 }
 
 void
@@ -45,9 +43,7 @@ AST_Template_Module_Inst::dump (ACE_OSTREAM_TYPE &)
 void
 AST_Template_Module_Inst::destroy ()
 {
-  this->template_args_->destroy ();
-  delete this->template_args_;
-  this->template_args_ = nullptr;
+  this->template_args_.reset ();
 
   this->AST_Field::destroy ();
 }

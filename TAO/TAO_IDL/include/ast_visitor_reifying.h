@@ -40,7 +40,7 @@ class ast_visitor_context;
 class ast_visitor_reifying : public ast_visitor
 {
 public:
-  ast_visitor_reifying (ast_visitor_context *ctx);
+  explicit ast_visitor_reifying (ast_visitor_context *ctx);
 
   ~ast_visitor_reifying () override;
 
@@ -105,13 +105,13 @@ private:
   // the corresponding instantiation, and store that instead.
   void check_and_store (AST_Decl *node);
 
-  // Returns a relative scoped name allocated on the heap if the
-  // arg is declared inside a template module, otherwise 0.
+  // Returns a relative scoped name owned by the caller if the arg is declared
+  // inside a template module, otherwise nullptr.
   UTL_ScopedName *template_module_rel_name (AST_Decl *d);
 
 private:
   ast_visitor_context *ctx_;
-  AST_Decl *reified_node_;
+  AST_Decl *reified_node_ {};
 };
 
 #endif // TAO_AST_VISITOR_REIFYING_H

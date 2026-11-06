@@ -38,7 +38,7 @@ class TAO_IFRService_Export TAO_ArrayDef_i : public virtual TAO_IDLType_i
 {
 public:
   /// Constructor
-  TAO_ArrayDef_i (TAO_Repository_i *repo);
+  explicit TAO_ArrayDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_ArrayDef_i () override;

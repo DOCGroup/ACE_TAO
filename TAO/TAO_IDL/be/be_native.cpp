@@ -48,12 +48,6 @@ be_native::gen_typecode ()
   return 0;
 }
 
-long
-be_native::tc_size ()
-{
-  return 0;
-}
-
 void
 be_native::destroy ()
 {

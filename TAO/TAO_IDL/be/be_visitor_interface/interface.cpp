@@ -16,9 +16,7 @@ be_visitor_interface::be_visitor_interface (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface::~be_visitor_interface ()
-{
-}
+be_visitor_interface::~be_visitor_interface () = default;
 
 // This method must be overridden by the derived interface visitors.
 int
@@ -109,43 +107,21 @@ be_visitor_interface::visit_scope (be_scope *node)
   return 0;
 }
 
-int
+bool
 be_visitor_interface::is_amh_rh_node (be_interface *node)
 {
    //If, is implied-IDL
   if (node->original_interface () != nullptr)
     {
       // and the name starts with AMH
-      if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
+      if (node->local_name ().substr (0, 3) == "AMH")
         {
           // then it is an AMH node.
-          return 1;
+          return true;
         }
     }
 
-  return 0;
-}
-
-void
-be_visitor_interface::add_abstract_op_args (AST_Operation *old_op,
-                                            be_operation &new_op)
-{
-  AST_Decl *d = nullptr;
-
-  for (UTL_ScopeActiveIterator si (old_op, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      d = si.item ();
-      new_op.add_to_scope (d);
-    }
-
-  UTL_ExceptList *excep_list = old_op->exceptions ();
-
-  if (nullptr != excep_list)
-    {
-      new_op.be_add_exceptions (excep_list->copy ());
-    }
+  return false;
 }
 
 // All common visit methods for interface visitor.

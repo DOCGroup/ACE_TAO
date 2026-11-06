@@ -16,9 +16,7 @@ be_visitor_module::be_visitor_module (be_visitor_context *ctx)
 {
 }
 
-be_visitor_module::~be_visitor_module ()
-{
-}
+be_visitor_module::~be_visitor_module () = default;
 
 int
 be_visitor_module::visit_module (be_module *node)
@@ -47,7 +45,7 @@ be_visitor_module::visit_constant (be_constant *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -86,7 +84,7 @@ be_visitor_module::visit_native (be_native *node)
   // will be modified based on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -119,7 +117,7 @@ be_visitor_module::visit_enum (be_enum *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -182,7 +180,7 @@ be_visitor_module::visit_exception (be_exception *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -249,7 +247,7 @@ be_visitor_module::visit_interface (be_interface *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 1;
+  int status {1};
 
   switch (this->ctx_->state ())
     {
@@ -383,7 +381,7 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -428,7 +426,7 @@ be_visitor_module::visit_valuebox (be_valuebox *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -502,7 +500,7 @@ be_visitor_module::visit_valuetype (be_valuetype *node)
   // will be modified based on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -583,7 +581,7 @@ be_visitor_module::visit_valuetype_fwd (be_valuetype_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -640,7 +638,7 @@ be_visitor_module::visit_component (be_component *node)
   // will be modified based on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -733,7 +731,7 @@ be_visitor_module::visit_component_fwd (be_component_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -778,7 +776,7 @@ be_visitor_module::visit_home (be_home *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -835,7 +833,7 @@ be_visitor_module::visit_connector (be_connector *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -897,7 +895,7 @@ be_visitor_module::visit_structure (be_structure *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -966,7 +964,7 @@ be_visitor_module::visit_structure_fwd (be_structure_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -999,7 +997,7 @@ be_visitor_module::visit_union (be_union *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {
@@ -1068,7 +1066,7 @@ be_visitor_module::visit_union_fwd (be_union_fwd *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
   {
@@ -1101,7 +1099,7 @@ be_visitor_module::visit_typedef (be_typedef *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {

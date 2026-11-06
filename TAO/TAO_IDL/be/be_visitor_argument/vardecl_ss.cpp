@@ -23,9 +23,7 @@ be_visitor_args_vardecl_ss::be_visitor_args_vardecl_ss (
 {
 }
 
-be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss ()
-{
-}
+be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss () = default;
 
 int be_visitor_args_vardecl_ss::visit_argument (
   be_argument *node)
@@ -187,7 +185,7 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
       bt = node;
     }
 
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   *os << "::" << bt->name ();
 
@@ -312,7 +310,7 @@ int be_visitor_args_vardecl_ss::visit_string (
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      if (node->width () == (long) sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "::CORBA::String_var "
               << arg->local_name () << ";";
@@ -325,7 +323,7 @@ int be_visitor_args_vardecl_ss::visit_string (
 
       break;
     case AST_Argument::dir_OUT:
-      if (node->width () == (long )sizeof (char))
+      if (node->width () == sizeof (char))
         {
           *os << "::CORBA::String_var "
               << arg->local_name () << ";";

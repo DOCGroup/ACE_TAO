@@ -14,6 +14,8 @@
 #ifndef _BE_VISITOR_OPERATION_OPERATION_H_
 #define _BE_VISITOR_OPERATION_OPERATION_H_
 
+#include <string>
+
 // ************************************************************
 // Generic Operation visitor with some helper methods
 // ************************************************************
@@ -29,10 +31,14 @@ class be_visitor_operation : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_operation (be_visitor_context *ctx);
+  explicit be_visitor_operation (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation ();
+  ~be_visitor_operation () override;
+  be_visitor_operation (be_visitor_operation const &) = delete;
+  be_visitor_operation (be_visitor_operation &&) = delete;
+  be_visitor_operation &operator= (be_visitor_operation const &) = delete;
+  be_visitor_operation &operator= (be_visitor_operation &&) = delete;
 
   // =helper
 
@@ -40,16 +46,15 @@ public:
   virtual int void_return_type (be_type *);
 
   /// does any of the argument node have the specified direction
-  virtual int has_param_type (be_operation *,
-                              AST_Argument::Direction);
+  virtual bool has_param_type (be_operation *,
+                               AST_Argument::Direction);
 
   /// Special generation of throw_spec if it is an AMH ExceptionHolder
-  /// 0:false, 1:true
-  virtual int is_amh_exception_holder (be_interface *node);
+  virtual bool is_amh_exception_holder (be_interface *node);
 
   /// helper that generates code for raising an exception
-  virtual int gen_raise_exception (const char *exception_name,
-                                   const char *exception_arguments);
+  virtual int gen_raise_exception (std::string const& exception_name,
+                                   std::string const& exception_arguments);
 
   /**
    * Generates the code from opening brace to closing brace for

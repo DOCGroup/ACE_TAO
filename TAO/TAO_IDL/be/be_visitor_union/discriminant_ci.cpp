@@ -28,23 +28,23 @@ namespace
 
         for (unsigned long i = 0; i < node->nfields (); ++i)
           {
-            AST_Field **field = nullptr;
+            AST_Field *field {};
 
             if (node->field (field, i) != 0 || field == nullptr)
               {
                 return -1;
               }
 
-            be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
+            be_union_branch * const branch = dynamic_cast<be_union_branch*> (field);
 
             if (branch == nullptr)
               {
                 continue;
               }
 
-            for (unsigned long j = 0; j < branch->label_list_length (); ++j)
+            for (std::size_t j = 0; j < branch->label_list_length (); ++j)
               {
-                AST_UnionLabel *label = branch->label (j);
+                AST_UnionLabel * const label = branch->label (j);
 
                 if (label->label_kind () == AST_UnionLabel::UL_default)
                   {
@@ -83,22 +83,22 @@ namespace
 
     for (unsigned long i = 0; i < node->nfields (); ++i)
       {
-        AST_Field **field = nullptr;
+        AST_Field *field {};
 
         if (node->field (field, i) != 0 || field == nullptr)
           {
             return -1;
           }
 
-        be_union_branch *branch = dynamic_cast<be_union_branch*> (*field);
+        be_union_branch * const branch = dynamic_cast<be_union_branch*> (field);
 
         if (branch == nullptr)
           {
             continue;
           }
 
-        bool generated_label = false;
-        for (unsigned long j = 0; j < branch->label_list_length (); ++j)
+        bool generated_label {};
+        for (std::size_t j = 0; j < branch->label_list_length (); ++j)
           {
             if (branch->label (j)->label_kind () == AST_UnionLabel::UL_default)
               {
@@ -158,16 +158,13 @@ be_visitor_union_discriminant_ci::be_visitor_union_discriminant_ci (
 {
 }
 
-be_visitor_union_discriminant_ci::~be_visitor_union_discriminant_ci ()
-{
-}
 
 int
 be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 {
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -178,7 +175,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
       bt = node;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // now check if we need to generate the _default () method
   be_union::DefaultValue dv;
@@ -207,7 +204,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 
       // We use one of the enum values that isn't used in this
       // union if one is available.
-      UTL_ScopedName *sn = node->value_to_name (dv.u.enum_val);
+      UTL_ScopedName * const sn = node->value_to_name (dv.u.enum_val);
 
       if (sn)
         {
@@ -271,10 +268,10 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
 
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -285,7 +282,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       bt = node;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Now check if we need to generate the _default () method.
   be_union::DefaultValue dv;
@@ -402,7 +399,7 @@ be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
   this->ctx_->alias (node);
 
   // The node to be visited in the base primitve type that gets typedefed.
-  be_type *bt = node->primitive_base_type ();
+  be_type * const bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))
     {

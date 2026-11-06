@@ -41,7 +41,7 @@ class TAO_IFRService_Export TAO_WstringDef_i : public virtual TAO_IDLType_i
 {
 public:
   /// Constructor.
-  TAO_WstringDef_i (TAO_Repository_i *repo);
+  explicit TAO_WstringDef_i (TAO_Repository_i *repo);
 
   /// Destructor.
   ~TAO_WstringDef_i () override;

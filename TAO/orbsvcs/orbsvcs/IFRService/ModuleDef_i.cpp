@@ -14,9 +14,7 @@ TAO_ModuleDef_i::TAO_ModuleDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ModuleDef_i::~TAO_ModuleDef_i ()
-{
-}
+TAO_ModuleDef_i::~TAO_ModuleDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ModuleDef_i::def_kind ()
@@ -47,7 +45,7 @@ TAO_ModuleDef_i::destroy_i ()
 CORBA::Contained::Description *
 TAO_ModuleDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

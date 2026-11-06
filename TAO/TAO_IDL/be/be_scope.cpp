@@ -16,29 +16,17 @@
 
 // Default Constructor.
 be_scope::be_scope ()
-  : UTL_Scope (),
-    comma_ (0)
+  : UTL_Scope ()
 {
 }
 
 // Constructor.
 be_scope::be_scope (AST_Decl::NodeType type)
-  : UTL_Scope (type),
-    comma_ (0)
+  : UTL_Scope (type)
 {
 }
 
-be_scope::~be_scope ()
-{
-}
-
-// Code generation methods.
-
-AST_Field *
-be_scope::be_add_field (AST_Field *f)
-{
-  return this->fe_add_field (f);
-}
+be_scope::~be_scope () = default;
 
 AST_Argument *
 be_scope::be_add_argument (AST_Argument *)

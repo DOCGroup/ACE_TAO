@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
+#include <cstdio>
 #include <memory>
 #include "ace/Reverse_Lock_T.h"
 
@@ -439,6 +440,15 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
   // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can
   // just call TAO_PG_ObjectGroupManager::object_group() here.
 
+  // The map is keyed by the decimal ObjectId generated from the
+  // 32-bit FactoryCreationId.
+  char object_id_string[14] {};
+  std::sprintf (object_id_string,
+                "%ul",
+                ACE_U64_TO_U32 (group_id));
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId (object_id_string);
+
   TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -446,8 +456,7 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
                       this->lock_,
                       PortableGroup::ObjectGroup::_nil ());
 
-    if (this->object_group_map_.find (ACE_U64_TO_U32 (group_id),
-                                      group_entry)
+    if (this->object_group_map_.find (oid.in (), group_entry)
          != 0)
       {
         throw PortableGroup::ObjectGroupNotFound ();

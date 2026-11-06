@@ -76,10 +76,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "global_extern.h"
 
+#include <string>
+
 // Static functions.
 
-// Convert an enum Direction value to a char *.
-static const char *
+// Convert an enum Direction value to a string.
+static std::string
 direction_to_string (AST_Argument::Direction d)
 {
   switch (d)
@@ -92,7 +94,7 @@ direction_to_string (AST_Argument::Direction d)
       return "inout";
     }
 
-  return nullptr;
+  return {};
 }
 
 AST_Decl::NodeType const
@@ -106,7 +108,7 @@ AST_Argument::AST_Argument (Direction d,
     AST_Field (AST_Decl::NT_argument, ft, n),
     pd_direction (d)
 {
-  AST_Decl::NodeType fnt = ft->node_type ();
+  AST_Decl::NodeType const fnt = ft->node_type ();
 
   if (fnt == AST_Decl::NT_except)
     {
@@ -114,9 +116,7 @@ AST_Argument::AST_Argument (Direction d,
     }
 }
 
-AST_Argument::~AST_Argument ()
-{
-}
+AST_Argument::~AST_Argument () = default;
 
 // Dump this AST_Argument node to the ostream o.
 void
@@ -140,7 +140,7 @@ AST_Argument::destroy ()
 }
 
 AST_Argument::Direction
-AST_Argument::direction ()
+AST_Argument::direction () const
 {
   return this->pd_direction;
 }

@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of the BE-subclassed classes instead of of AST classes.
 
 #include "be_generator.h"
+
+#include <utility>
 #include "be_root.h"
 #include "be_predefined_type.h"
 #include "be_module.h"
@@ -163,7 +165,7 @@ be_generator::create_module (UTL_Scope *s,
           // Create this new module with referance to the
           // "first" previous module found in scope.
           ACE_NEW_RETURN (retval, be_module (n, m), nullptr);
-          retval->prefix (const_cast<char *> (m->prefix ()));
+          retval->prefix (m->prefix ());
           return retval;
         }
     }
@@ -201,10 +203,10 @@ be_generator::create_module (UTL_Scope *s,
 
 AST_Interface *
 be_generator::create_interface (UTL_ScopedName *n,
-                                AST_Type **ih,
+                                AST_Type_List const& ih,
                                 long nih,
-                                AST_Interface **ih_flat,
-                                long nih_flat,
+                                AST_Interface_List const& ih_flat,
+                                std::size_t nih_flat,
                                 bool l,
                                 bool a)
 {
@@ -237,9 +239,9 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                                     bool is_abstract)
 {
   AST_Interface *full_defn = this->create_interface (n,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0,
                                                      is_local,
                                                      is_abstract);
@@ -269,13 +271,13 @@ be_generator::create_valuebox (UTL_ScopedName *n,
 
 AST_ValueType *
 be_generator::create_valuetype (UTL_ScopedName *n,
-                                AST_Type **inherits,
+                                AST_Type_List const& inherits,
                                 long n_inherits,
                                 AST_Type *inherits_concrete,
-                                AST_Interface **inherits_flat,
-                                long n_inherits_flat,
-                                AST_Type **supports_list,
-                                long n_supports,
+                                AST_Interface_List const& inherits_flat,
+                                std::size_t n_inherits_flat,
+                                AST_Type_List const& supports_list,
+                                std::size_t n_supports,
                                 AST_Type *supports_concrete,
                                 bool is_abstract,
                                 bool is_truncatable,
@@ -305,12 +307,12 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
                                     bool is_abstract)
 {
   AST_ValueType *full_defn = this->create_valuetype (n,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      0,
                                                      nullptr,
                                                      is_abstract,
@@ -329,13 +331,13 @@ be_generator::create_valuetype_fwd (UTL_ScopedName *n,
 
 AST_EventType *
 be_generator::create_eventtype (UTL_ScopedName *n,
-                                AST_Type **inherits,
+                                AST_Type_List const& inherits,
                                 long n_inherits,
                                 AST_Type *inherits_concrete,
-                                AST_Interface **inherits_flat,
-                                long n_inherits_flat,
-                                AST_Type **supports_list,
-                                long n_supports,
+                                AST_Interface_List const& inherits_flat,
+                                std::size_t n_inherits_flat,
+                                AST_Type_List const& supports_list,
+                                std::size_t n_supports,
                                 AST_Type *supports_concrete,
                                 bool is_abstract,
                                 bool is_truncatable,
@@ -365,12 +367,12 @@ be_generator::create_eventtype_fwd (UTL_ScopedName *n,
                                     bool is_abstract)
 {
   AST_EventType *full_defn = this->create_eventtype (n,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      0,
                                                      nullptr,
                                                      is_abstract,
@@ -390,10 +392,10 @@ be_generator::create_eventtype_fwd (UTL_ScopedName *n,
 AST_Component *
 be_generator::create_component (UTL_ScopedName *n,
                                 AST_Component *base_component,
-                                AST_Type **supports_list,
+                                AST_Type_List const& supports_list,
                                 long n_supports,
-                                AST_Interface **supports_flat,
-                                long n_supports_flat)
+                                AST_Interface_List const& supports_flat,
+                                std::size_t n_supports_flat)
 {
   be_component *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -413,9 +415,9 @@ be_generator::create_component_fwd (UTL_ScopedName *n)
 {
   AST_Component *full_defn = this->create_component (n,
                                                      nullptr,
-                                                     nullptr,
+                                                     AST_Type_List {},
                                                      -1,
-                                                     nullptr,
+                                                     AST_Interface_List {},
                                                      0);
 
   be_component_fwd *retval = nullptr;
@@ -433,10 +435,10 @@ be_generator::create_home (UTL_ScopedName *n,
                            AST_Home *base_home,
                            AST_Component *managed_component,
                            AST_Type *primary_key,
-                           AST_Type **supports_list,
+                           AST_Type_List const& supports_list,
                            long n_supports,
-                           AST_Interface **supports_flat,
-                           long n_supports_flat)
+                           AST_Interface_List const& supports_flat,
+                           std::size_t n_supports_flat)
 {
   be_home *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -766,11 +768,11 @@ be_generator::create_expr (ACE_CDR::ULong l,
 }
 
 AST_Expression *
-be_generator::create_expr (UTL_String *s)
+be_generator::create_expr (std::string s)
 {
   be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_expression (s),
+                  be_expression (std::move (s), AST_Expression::EV_string),
                   nullptr);
 
   return retval;
@@ -799,11 +801,11 @@ be_generator::create_expr (ACE_OutputCDR::from_wchar wc)
 }
 
 AST_Expression *
-be_generator::create_expr (char *s)
+be_generator::create_wstring_expr (std::string s)
 {
   be_expression *retval = nullptr;
   ACE_NEW_RETURN (retval,
-                  be_expression (s),
+                  be_expression (std::move (s), AST_Expression::EV_wstring),
                   nullptr);
 
   return retval;
@@ -846,7 +848,7 @@ be_generator::create_enum_val (ACE_CDR::ULong v,
 
 AST_Array *
 be_generator::create_array (UTL_ScopedName *n,
-                            ACE_CDR::ULong ndims,
+                            std::size_t ndims,
                             UTL_ExprList *dims,
                             bool is_local,
                             bool is_abstract)
@@ -929,7 +931,7 @@ be_generator::create_wstring (AST_Expression *v)
                    : "wstring");
   UTL_ScopedName n (&id,
                     nullptr);
-  AST_Decl::NodeType nt = sizeof (ACE_CDR::WChar) == 1
+  AST_Decl::NodeType const nt = sizeof (ACE_CDR::WChar) == 1
                             ? AST_Decl::NT_string
                             : AST_Decl::NT_wstring;
 
@@ -1158,13 +1160,13 @@ AST_Template_Module_Ref *
 be_generator::create_template_module_ref (
   UTL_ScopedName *n,
   AST_Template_Module *ref,
-  UTL_StrList *param_refs)
+  UTL_StrList param_refs)
 {
   be_template_module_ref *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   be_template_module_ref (n,
                                           ref,
-                                          param_refs),
+                                          std::move (param_refs)),
                   nullptr);
 
   return retval;

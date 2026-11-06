@@ -12,16 +12,15 @@
 
 #include "component.h"
 
+#include <string>
+
 be_visitor_executor_ex_idl::be_visitor_executor_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
 {
 }
 
-be_visitor_executor_ex_idl::~be_visitor_executor_ex_idl (
-  )
-{
-}
+be_visitor_executor_ex_idl::~be_visitor_executor_ex_idl () = default;
 
 int
 be_visitor_executor_ex_idl::visit_component (
@@ -33,7 +32,7 @@ be_visitor_executor_ex_idl::visit_component (
 
   os_ << be_nl
       << "local interface CCM_"
-      << node->original_local_name ()->get_string ()
+      << node->original_local_name ()
       << be_idt_nl
       << ": ";
 
@@ -43,15 +42,14 @@ be_visitor_executor_ex_idl::visit_component (
     }
   else
     {
-      ACE_CString sname_str =
+      std::string const sname_str (
         IdentifierHelper::orig_sn (
-          ScopeAsDecl (base->defined_in ())->name ());
+          ScopeAsDecl (base->defined_in ())->name ()));
 
-      const char *sname = sname_str.c_str ();
-      const char *global = (sname_str == "" ? "" : "::");
+      std::string const global = sname_str.empty () ? "" : "::";
 
-      os_ << global << sname << "::CCM_"
-          << base->original_local_name ()->get_string ();
+      os_ << global << sname_str << "::CCM_"
+          << base->original_local_name ();
     }
 
   this->gen_supported ();
@@ -83,8 +81,8 @@ be_visitor_executor_ex_idl::visit_connector (be_connector *node)
 int
 be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
 {
-  AST_Decl::NodeType snt = this->node_->node_type ();
-  AST_Decl::NodeType ant =
+  AST_Decl::NodeType const snt = this->node_->node_type ();
+  AST_Decl::NodeType const ant =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   /// For now, we want porttype attributes generated only for
@@ -95,7 +93,7 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
       return 0;
     }
 
-  bool rd_only = node->readonly ();
+  bool const rd_only = node->readonly ();
 
   // Keep output statements separate because of side effects.
   // No need to check for anonymous array - anonymous types not
@@ -106,8 +104,9 @@ be_visitor_executor_ex_idl::visit_attribute (be_attribute *node)
   be_type *ft = node->field_type ();
 
   os_ << IdentifierHelper::type_name (ft, this);
-  os_ << " " << this->ctx_->port_prefix ().c_str ()
-     << IdentifierHelper::try_escape (node->original_local_name ()).c_str ();
+  os_ << " " << this->ctx_->port_prefix ()
+     << IdentifierHelper::try_escape (
+          node->original_local_name ());
 
   this->gen_exception_list (node->get_get_exceptions (),
                            rd_only ? "" : "get");
@@ -144,8 +143,8 @@ be_visitor_executor_ex_idl::visit_sequence (
 int
 be_visitor_executor_ex_idl::visit_string (be_string *node)
 {
-  bool wide =
-    static_cast<size_t> (node->width ()) > sizeof (char);
+  bool const wide =
+    node->width () > sizeof (char);
 
   os_ << (wide ? "w" : "") << "string";
 
@@ -168,21 +167,19 @@ be_visitor_executor_ex_idl::visit_provides (
 
   AST_Decl *scope = ScopeAsDecl (impl->defined_in ());
 
-  ACE_CString sname_str =
-    IdentifierHelper::orig_sn (scope->name ());
-  const char *sname = sname_str.c_str ();
+  std::string const sname_str (
+    IdentifierHelper::orig_sn (scope->name ()));
+  std::string const& lname =
+    impl->original_local_name ();
 
-  const char *lname =
-    impl->original_local_name ()->get_string ();
+  std::string const global = sname_str.empty () ? "" : "::";
 
-  const char *global = (sname_str == "" ? "" : "::");
-
-  ACE_CString prefix (this->ctx_->port_prefix ());
+  std::string prefix (this->ctx_->port_prefix ());
   prefix += node->local_name ()->get_string ();
-  const char *port_name = prefix.c_str ();
+  std::string const& port_name = prefix;
 
   os_ << be_nl
-      << global << sname << "::CCM_" << lname << " get_"
+      << global << sname_str << "::CCM_" << lname << " get_"
       << port_name << " ();";
 
   return 0;
@@ -197,7 +194,7 @@ be_visitor_executor_ex_idl::visit_consumes (
   os_ << be_nl
       << "void push_" << node->local_name ()->get_string ()
       << " (in ::"
-      << IdentifierHelper::orig_sn (impl->name ()).c_str ()
+      << IdentifierHelper::orig_sn (impl->name ())
       << " e);";
 
   return 0;
@@ -208,13 +205,13 @@ be_visitor_executor_ex_idl::gen_supported ()
 {
   os_ << be_idt;
 
-  AST_Type **supported = node_->supports ();
+  AST_Type_List const& supported = node_->supports ();
 
-  for (long i = 0; i < node_->n_supports (); ++i)
+  for (std::size_t i = 0; i < supported.size (); ++i)
     {
       os_ << "," << be_nl
           << "::"
-          << IdentifierHelper::orig_sn (supported[i]->name ()).c_str ();
+          << IdentifierHelper::orig_sn (supported[i]->name ());
     }
 
   os_ << be_uidt;
@@ -223,7 +220,7 @@ be_visitor_executor_ex_idl::gen_supported ()
 void
 be_visitor_executor_ex_idl::gen_exception_list (
   UTL_ExceptList *exceptions,
-  const char *prefix,
+  std::string const& prefix,
   bool closed)
 {
   if (exceptions != nullptr && exceptions->length () > 0)
@@ -235,7 +232,7 @@ be_visitor_executor_ex_idl::gen_exception_list (
            !ei.is_done ();)
         {
           os_ << "::"
-              << IdentifierHelper::orig_sn (ei.item ()->name ()).c_str ();
+              << IdentifierHelper::orig_sn (ei.item ()->name ());
 
           ei.next ();
 

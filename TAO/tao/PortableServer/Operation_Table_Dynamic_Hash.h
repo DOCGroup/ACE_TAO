@@ -62,12 +62,12 @@ public:
 
   int find (char const *opname,
             TAO_Skeleton &skelfunc,
-            unsigned int const length = 0) override;
+            std::size_t const length = 0) override;
 
   int find (char const *opname,
             TAO_Collocated_Skeleton &skelfunc,
             TAO::Collocation_Strategy s,
-            unsigned int const length = 0) override;
+            std::size_t const length = 0) override;
 private:
   using OP_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<const char *,
                                   TAO::Operation_Skeletons,

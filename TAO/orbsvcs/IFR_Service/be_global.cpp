@@ -16,23 +16,16 @@
 #include "global_extern.h"
 #include "idl_defines.h"
 
-TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
+TAO_IFR_BE_Export BE_GlobalData *be_global = nullptr;
 
 BE_GlobalData::BE_GlobalData ()
-  : removing_ (false),
-    filename_ (0),
-    enable_locking_ (false),
-    do_included_files_ (true),
-    allow_duplicate_typedefs_ (false)
 {
   // At this point, the FE has been initialized.  We can
   // now instruct it that we want to preserve c++ keywords.
   idl_global->preserve_cpp_keywords (true);
 }
 
-BE_GlobalData::~BE_GlobalData ()
-{
-}
+BE_GlobalData::~BE_GlobalData () = default;
 
 bool
 BE_GlobalData::removing () const
@@ -81,16 +74,10 @@ BE_GlobalData::destroy ()
 {
 }
 
-const char *
-BE_GlobalData::filename () const
-{
-  return this->filename_;
-}
-
 void
-BE_GlobalData::filename (char *fname)
+BE_GlobalData::gen_source_info (bool)
 {
-  this->filename_ = fname;
+  // The shared IDL driver uses this hook, but the IFR backend emits no source.
 }
 
 bool
@@ -129,22 +116,24 @@ BE_GlobalData::allow_duplicate_typedefs (bool val)
   this->allow_duplicate_typedefs_ = val;
 }
 
-ACE_CString
+std::string const&
 BE_GlobalData::orb_args () const
 {
   return this->orb_args_;
 }
 
 void
-BE_GlobalData::orb_args (const ACE_CString& args)
+BE_GlobalData::orb_args (std::string const& args)
 {
   this->orb_args_ = args;
 }
 
-ACE_CString
-BE_GlobalData::spawn_options ()
+std::string
+BE_GlobalData::spawn_options () const
 {
-  return this->orb_args_ + idl_global->idl_flags ();
+  std::string result (this->orb_args_);
+  result += idl_global->idl_flags ();
+  return result;
 }
 
 #define UNKNOWN_OPTION \

@@ -9,8 +9,6 @@ TAO_ComponentModuleDef_i::TAO_ComponentModuleDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentModuleDef_i::~TAO_ComponentModuleDef_i ()
-{
-}
+TAO_ComponentModuleDef_i::~TAO_ComponentModuleDef_i () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -16,6 +16,8 @@
 #include "ast_valuetype.h"
 #include "ast_field.h"
 
+#include <string>
+
 class TAO_OutStream;
 
 /**
@@ -29,51 +31,45 @@ class be_valuetype : public virtual be_interface,
 {
 public:
   be_valuetype (UTL_ScopedName *n,
-                AST_Type **inherits,
+                AST_Type_List const& inherits,
                 long n_inherits,
                 AST_Type *inherits_concrete,
-                AST_Interface **inherits_flat,
-                long n_inherits_flat,
-                AST_Type **supports,
-                long n_supports,
+                AST_Interface_List const& inherits_flat,
+                std::size_t n_inherits_flat,
+                AST_Type_List const& supports,
+                std::size_t n_supports,
                 AST_Type *supports_concrete,
                 bool abstract,
                 bool truncatable,
                 bool custom);
 
-  ~be_valuetype ();
+  ~be_valuetype () override;
 
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   /// Should generate optimized form?
   bool opt_accessor ();
 
   /// Generate the helper functions definition.
-  virtual int gen_helper_header (char *local_name = 0,
-                                 char *full_name = 0);
-
-  /// Generate the helper functions inline implementation.
-  virtual int gen_helper_inline (char *local_name = 0,
-                                 char *full_name = 0);
+  virtual int gen_helper_header ();
 
   /// Generate the helper functions implementation.
-  virtual int gen_helper_stubs (char *local_name = 0,
-                                char *full_name = 0);
+  virtual int gen_helper_stubs ();
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore);
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
 
   /// Generate the declarations used by the template _var, _out
   /// classes for valuetypes, and by sequence template classes.
   void gen_var_out_seq_decls ();
 
   /// Retrieve the fully scoped skel class name.
-  const char *full_obv_skel_name ();
+  std::string const& full_obv_skel_name () const;
 
-  const char *field_pd_prefix ();
+  std::string field_pd_prefix () const;
 
-  const char *field_pd_postfix ();
+  std::string field_pd_postfix () const;
 
   // For building the name for private data fields.
   be_valuetype *statefull_inherit ();
@@ -87,38 +83,25 @@ public:
       bool use_concrete_paths = true
     );
 
-  /// Load the insert queue with the concrete interface we support, and
-  /// call the generic version of traverse_inheritance_graph().
-  int traverse_concrete_inheritance_graph (
-      tao_code_emitter gen,
-      TAO_OutStream *os
-    );
-
   /// Do we support at least one abstract interface?
   bool supports_abstract () const;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Compute the fully scoped skel class name.
-  void compute_fullobvskelname ();
+  void compute_fullobvskelname () const;
 
   /// Compute the count of private/public/all data members.
   ACE_CDR::ULong data_members_count (
       AST_Field::Visibility vis = AST_Field::vis_NA
     );
 
-  /// Helper method passed to the template method to generate code for
-  /// adding abstract supported interfaces to the inheritance list.
-  static int abstract_supports_helper (be_interface *node,
-                                       be_interface *base,
-                                       TAO_OutStream *os);
-
   /// Accessor to the member.
-  const char *fwd_helper_name () const;
+  std::string const& fwd_helper_name () const;
 
   // There are three possible situations.
   // (1) If there is no initializers but at least one operation.
@@ -152,7 +135,7 @@ public:
 
   /// Use the above enum and methods to determine this after the
   /// node's scope is visited but before code generation.
-  virtual bool will_have_factory ();
+  bool will_have_factory () override;
 
   /// Decides whether to generate the initializing contstructor or not.
   bool has_member ();
@@ -163,16 +146,16 @@ public:
 
 private:
   /// Do we support at least one abstract interface?
-  bool supports_abstract_;
+  bool supports_abstract_ {};
 
   /// Have these been done already?
-  bool var_out_seq_decls_gen_;
+  bool var_out_seq_decls_gen_ {};
 
   /// To differentiate from the interface skeleton name.
-  char *full_obv_skel_name_;
+  mutable std::string full_obv_skel_name_;
 
   /// Flag used by default constructor generator.
-  bool is_amh_excep_holder_;
+  bool is_amh_excep_holder_ {};
 };
 
 #endif  // if !defined

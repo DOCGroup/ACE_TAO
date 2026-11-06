@@ -2,6 +2,8 @@
 #define _AST_STRUCTURE_FWD_AST_STRUCTURE_FWD_HH
 
 #include "ast_type.h"
+#include <memory>
+
 class AST_Structure;
 
 // Representation of a forward structure declaration.
@@ -9,6 +11,10 @@ class AST_Structure;
 class TAO_IDL_FE_Export AST_StructureFwd : public virtual AST_Type
 {
 public:
+  AST_StructureFwd (AST_StructureFwd const &) = delete;
+  AST_StructureFwd (AST_StructureFwd &&) = delete;
+  AST_StructureFwd &operator= (AST_StructureFwd const &) = delete;
+  AST_StructureFwd &operator= (AST_StructureFwd &&) = delete;
   AST_StructureFwd (AST_Structure *full_defn,
                     UTL_ScopedName *n);
 
@@ -30,7 +36,7 @@ public:
   int ast_accept (ast_visitor *visitor) override;
 
   // Is this decl a forward declared type (Yes)
-  bool is_fwd () override;
+  bool is_fwd () const override;
 
   // We don't actually want the forward declaration,
   // but want to return the full definition member,
@@ -43,7 +49,10 @@ private:
   AST_Structure *pd_full_definition;
   // The structure this is a forward declaration of.
 
-  bool is_defined_;
+  std::unique_ptr<AST_Structure> owned_full_definition_;
+  // The owned dummy structure, while this forward declaration owns it.
+
+  bool is_defined_ {};
   // Checking the member above isn't good enough.
 };
 

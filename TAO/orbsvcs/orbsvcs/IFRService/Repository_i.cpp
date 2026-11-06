@@ -13,6 +13,8 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/SString.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
@@ -27,10 +29,7 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
 {
 }
 
-TAO_Repository_i::~TAO_Repository_i ()
-{
-  delete this->lock_;
-}
+TAO_Repository_i::~TAO_Repository_i () = default;
 
 CORBA::DefinitionKind
 TAO_Repository_i::def_kind ()
@@ -45,7 +44,7 @@ TAO_Repository_i::destroy ()
 }
 
 CORBA::Contained_ptr
-TAO_Repository_i::lookup_id (const char *search_id)
+TAO_Repository_i::lookup_id (char const *search_id)
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::Contained::_nil ());
 
@@ -53,10 +52,10 @@ TAO_Repository_i::lookup_id (const char *search_id)
 }
 
 CORBA::Contained_ptr
-TAO_Repository_i::lookup_id_i (const char *search_id)
+TAO_Repository_i::lookup_id_i (char const *search_id)
 {
-  if (ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
-      || ACE_OS::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
+  if (std::strcmp (search_id, "IDL:omg.org/CORBA/Object:1.0") == 0
+      || std::strcmp (search_id, "IDL:omg.org/CORBA/ValueBase:1.0") == 0)
     {
       return CORBA::Contained::_nil ();
     }
@@ -465,18 +464,20 @@ TAO_Repository_i::repo_init (CORBA::Repository_ptr repo_ref,
   this->repo_poa_ = repo_poa;
 
   // Create the appropriate lock.
+  ACE_Lock *lock = nullptr;
   if (OPTIONS::instance ()->enable_locking ())
     {
-      ACE_NEW_THROW_EX (this->lock_,
+      ACE_NEW_THROW_EX (lock,
                         ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (),
                         CORBA::NO_MEMORY ());
     }
   else
     {
-      ACE_NEW_THROW_EX (this->lock_,
+      ACE_NEW_THROW_EX (lock,
                         ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
                         CORBA::NO_MEMORY ());
     }
+  this->lock_.reset (lock);
 
   // Resolve and narrow the TypeCodeFactory.
   CORBA::Object_var object =
@@ -788,7 +789,7 @@ TAO_Repository_i::select_idltype (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Wstring:
       return this->WstringDef_servant_->_tied_object ();
     default:
-      return 0;
+      return nullptr;
   }
 }
 
@@ -814,7 +815,7 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_Value:
       return this->ExtValueDef_servant_->_tied_object ();
     default:
-      return 0;
+      return nullptr;
   }
 }
 
@@ -854,7 +855,7 @@ TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
     case CORBA::dk_ValueMember:
       return this->ValueMemberDef_servant_->_tied_object ();
     default:
-      return 0;
+      return nullptr;
   }
 }
 
@@ -988,7 +989,7 @@ TAO_Repository_i::sequences_key () const
   return this->sequences_key_;
 }
 
-const char *
+char const *
 TAO_Repository_i::extension () const
 {
   return this->extension_.in ();
@@ -1000,7 +1001,7 @@ TAO_Repository_i::lock () const
   return *this->lock_;
 }
 
-const char * TAO_Repository_i::TAO_IFR_primitive_kinds[] =
+char const *TAO_Repository_i::TAO_IFR_primitive_kinds[] =
   {
     "pk_null",
     "pk_void",
@@ -1026,7 +1027,7 @@ const char * TAO_Repository_i::TAO_IFR_primitive_kinds[] =
     "pk_value_base"
   };
 
-const char *
+char const *
 TAO_Repository_i::pkind_to_string (CORBA::PrimitiveKind pkind) const
 {
   return TAO_Repository_i::TAO_IFR_primitive_kinds[pkind];

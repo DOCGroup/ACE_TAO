@@ -14,15 +14,13 @@ TAO_ExtAttributeDef_i::TAO_ExtAttributeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i ()
-{
-}
+TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i () = default;
 
 CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::get_exceptions (
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -47,7 +45,7 @@ TAO_ExtAttributeDef_i::get_exceptions_i (
 
 void
 TAO_ExtAttributeDef_i::get_exceptions (
-    const CORBA::ExcDescriptionSeq &get_exceptions
+    CORBA::ExcDescriptionSeq const &get_exceptions
   )
 {
   TAO_IFR_WRITE_GUARD;
@@ -59,7 +57,7 @@ TAO_ExtAttributeDef_i::get_exceptions (
 
 void
 TAO_ExtAttributeDef_i::get_exceptions_i (
-    const CORBA::ExcDescriptionSeq &get_exceptions
+    CORBA::ExcDescriptionSeq const &get_exceptions
   )
 {
   this->exceptions ("get_excepts",
@@ -70,7 +68,7 @@ CORBA::ExcDescriptionSeq *
 TAO_ExtAttributeDef_i::set_exceptions (
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -95,7 +93,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
 
 void
 TAO_ExtAttributeDef_i::set_exceptions (
-    const CORBA::ExcDescriptionSeq &set_exceptions
+    CORBA::ExcDescriptionSeq const &set_exceptions
   )
 {
   TAO_IFR_WRITE_GUARD;
@@ -107,7 +105,7 @@ TAO_ExtAttributeDef_i::set_exceptions (
 
 void
 TAO_ExtAttributeDef_i::set_exceptions_i (
-    const CORBA::ExcDescriptionSeq &set_exceptions
+    CORBA::ExcDescriptionSeq const &set_exceptions
   )
 {
   this->exceptions ("put_excepts",
@@ -118,7 +116,7 @@ CORBA::ExtAttributeDescription *
 TAO_ExtAttributeDef_i::describe_attribute (
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -170,7 +168,7 @@ TAO_ExtAttributeDef_i::fill_description (
 
 void
 TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
-                                        const char *sub_section)
+                                        char const *sub_section)
 {
   ACE_Configuration_Section_Key excepts_key;
   int status =
@@ -229,8 +227,8 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
 }
 
 void
-TAO_ExtAttributeDef_i::exceptions (const char *sub_section,
-                                   const CORBA::ExcDescriptionSeq &exceptions)
+TAO_ExtAttributeDef_i::exceptions (char const *sub_section,
+                                   CORBA::ExcDescriptionSeq const &exceptions)
 {
   this->repo_->config ()->remove_section (this->section_key_,
                                           sub_section,

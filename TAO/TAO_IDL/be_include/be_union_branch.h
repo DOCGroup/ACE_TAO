@@ -33,17 +33,17 @@ public:
 
   /// Generate the label value (as in a switch/case statement).
   int gen_label_value (TAO_OutStream *os,
-                       unsigned long index = 0);
+                       std::size_t index = 0);
 
   /// Generate the default label value (as in a switch/case statement).
   int gen_default_label_value (TAO_OutStream *os,
                                be_union *bu);
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif

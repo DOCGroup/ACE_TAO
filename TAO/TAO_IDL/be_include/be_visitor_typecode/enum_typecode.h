@@ -29,7 +29,12 @@ namespace TAO
   {
   public:
     /// Constructor.
-    be_visitor_enum_typecode (be_visitor_context * ctx);
+    explicit be_visitor_enum_typecode (be_visitor_context * ctx);
+
+    be_visitor_enum_typecode (be_visitor_enum_typecode const &) = delete;
+    be_visitor_enum_typecode (be_visitor_enum_typecode &&) = delete;
+    be_visitor_enum_typecode &operator= (be_visitor_enum_typecode const &) = delete;
+    be_visitor_enum_typecode &operator= (be_visitor_enum_typecode &&) = delete;
 
     /// Visit an enumeration.
     /**
@@ -39,7 +44,7 @@ namespace TAO
      *       the rest of the legacy method names and their call sites
      *       are updated accordingly.
      */
-    virtual int visit_enum (be_enum * node);
+    int visit_enum (be_enum * node) override;
 
   private:
     /// Generate structure field related TypeCode code.

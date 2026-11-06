@@ -14,9 +14,7 @@ ifr_adding_visitor_structure::ifr_adding_visitor_structure (AST_Decl *scope)
 {
 }
 
-ifr_adding_visitor_structure::~ifr_adding_visitor_structure ()
-{
-}
+ifr_adding_visitor_structure::~ifr_adding_visitor_structure () = default;
 
 // Specialized visit_scope method for stucts only.
 int
@@ -32,7 +30,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
   AST_Structure *s = dynamic_cast<AST_Structure*> (node);
   CORBA::ULong const nfields = static_cast<CORBA::ULong> (s->nfields ());
   this->members_.length (nfields);
-  AST_Field **f = 0;
+  AST_Field *f = nullptr;
 
   try
     {
@@ -49,7 +47,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
                -1);
             }
 
-          AST_Type *ft = (*f)->field_type ();
+          AST_Type *ft = f->field_type ();
           bool defined_here = ft->is_child (this->scope_);
 
           // If the struct member is defined in the struct, we have to
@@ -96,7 +94,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
             }
 
           this->members_[i].name =
-            CORBA::string_dup ((*f)->local_name ()->get_string ());
+            CORBA::string_dup (f->local_name ()->get_string ().c_str ());
 
           // IfR method create_struct does not use this - it just needs
           // to be non-zero for marshaling.
@@ -107,7 +105,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
             CORBA::IDLType::_duplicate (this->ir_current_.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -126,7 +124,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
     {
       CORBA::StructDef_var struct_def;
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       if (CORBA::is_nil (prev_def.in ()))
         {
@@ -149,9 +147,9 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
           // First create the named structure without any members.
           struct_def =
             current_scope->create_struct (
-                node->repoID (),
-                node->local_name ()->get_string (),
-                node->version (),
+                node->repoID ().c_str (),
+                node->local_name ()->get_string ().c_str (),
+                node->version ().c_str (),
                 dummyMembers
               );
 
@@ -245,7 +243,7 @@ ifr_adding_visitor_structure::visit_structure (AST_Structure *node)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -264,7 +262,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
     {
       // Is this enum already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -275,7 +273,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
           CORBA::EnumMemberSeq members (member_count);
           members.length (member_count);
 
-          UTL_ScopedName *member_name = 0;
+          UTL_ScopedName *member_name = nullptr;
 
           // Get a list of the member names.
           for (CORBA::ULong i = 0; i < member_count; ++i)
@@ -284,15 +282,15 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
 
               members[i] =
                 CORBA::string_dup (
-                    member_name->last_component ()->get_string ()
+                    member_name->last_component ()->get_string ().c_str ()
                   );
             }
 
           this->ir_current_ =
             be_global->repository ()->create_enum (
-                                          node->repoID (),
-                                          node->local_name ()->get_string (),
-                                          node->version (),
+                                          node->repoID ().c_str (),
+                                          node->local_name ()->get_string ().c_str (),
+                                          node->version ().c_str (),
                                           members
                                         );
 
@@ -316,7 +314,7 @@ ifr_adding_visitor_structure::visit_enum (AST_Enum *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (
@@ -335,7 +333,7 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
     {
       // Is this union already in the respository?
       CORBA::Contained_var prev_def =
-        be_global->repository ()->lookup_id (node->repoID ());
+        be_global->repository ()->lookup_id (node->repoID ().c_str ());
 
       // If not, create a new entry.
       if (CORBA::is_nil (prev_def.in ()))
@@ -370,7 +368,7 @@ ifr_adding_visitor_structure::visit_union (AST_Union *node)
             CORBA::IDLType::_narrow (prev_def.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

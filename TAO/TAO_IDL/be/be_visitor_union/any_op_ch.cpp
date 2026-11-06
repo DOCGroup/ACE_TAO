@@ -17,9 +17,6 @@ be_visitor_union_any_op_ch::be_visitor_union_any_op_ch (
 {
 }
 
-be_visitor_union_any_op_ch::~be_visitor_union_any_op_ch ()
-{
-}
 
 int
 be_visitor_union_any_op_ch::visit_union (be_union *node)
@@ -30,19 +27,19 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  std::string const macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 
   *os << be_global->anyops_versioning_begin () << be_nl;
 
-  *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
-      << " &); // copying version" << be_nl;
+  *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
+      << " const &); // copying version" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
-      << node->name () << " *&);";
+  *os << macro << " ::CORBA::Boolean operator>>= (::CORBA::Any const &, "
+      << node->name () << " const *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;
 
@@ -51,9 +48,9 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
        !si.is_done ();
        si.next ())
     {
-      AST_Decl *d = si.item ();
+      AST_Decl * const d = si.item ();
 
-      be_enum *e = dynamic_cast<be_enum*> (d);
+      be_enum * const e = dynamic_cast<be_enum*> (d);
       if (e != nullptr)
         {
           be_visitor_enum_any_op_ch visitor (&ctx);
@@ -86,7 +83,7 @@ int
 be_visitor_union_any_op_ch::visit_union_branch (be_union_branch *node)
 {
   // First generate the type information.
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

@@ -62,7 +62,8 @@ enum Option_Type
   SKIPCLASS    = 0200000000,    /**< Skip the class definition part in the output while in C++ mode. */
   SKIPSTRINGH  = 0400000000,    /**< Skip including the header file ace/OS_NS_string.h. */
   BINARYSEARCH = 01000000000,   /**< Generates Binary Search code. */
-  LINEARSEARCH = 02000000000    /**< Generates Linear Search code. */
+  LINEARSEARCH = 02000000000,   /**< Generates Linear Search code. */
+  SKIPSTDCSTRING = 04000000000  /**< Skip including the C++ <cstring> header. */
 };
 
 // Define some useful constants (these don't really belong here, but
@@ -120,10 +121,14 @@ public:
   static const char *class_name ();
   static const char *hash_name ();
   static const char *delimiter ();
+  static bool cxx17 ();
 
 private:
   /// Holds the user-specified Options.
   static int option_word_;
+
+  /// Whether C++17 output was selected.
+  static bool cxx17_;
 
   /// Number of switch statements to generate.
   static int total_switches_;

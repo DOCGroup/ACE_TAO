@@ -121,7 +121,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_factory.h"         // class AST_Factory
 
 #include        "utl_list.h"            // class UTL_List
-#include        "utl_strlist.h"         // class UTL_StrList
+#include        "utl_strlist.h"         // UTL_StrList alias
 #include        "utl_exprlist.h"        // class UTL_ExprList
 
 #include        "ast_generator.h"       // class AST_Generator

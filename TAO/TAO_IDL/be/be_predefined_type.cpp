@@ -22,7 +22,9 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
+
+#include <cstdlib>
+#include <string>
 
 be_predefined_type::be_predefined_type (
       AST_PredefinedType::PredefinedType t,
@@ -88,7 +90,7 @@ be_predefined_type::be_predefined_type (
 // Overridden method.
 void
 be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
-                                                 const char *instance_name,
+                                                 std::string const& instance_name,
                                                  bool use_underscore,
                                                  bool accessor)
 {
@@ -224,10 +226,8 @@ be_predefined_type::compute_tc_name ()
       break;
     case AST_PredefinedType::PT_pseudo:
       {
-        char tcname [100];
-        ACE_OS::sprintf (tcname,
-                         "_tc_%s",
-                         this->name ()->last_component ()->get_string ());
+        std::string tcname ("_tc_");
+        tcname += this->name ()->last_component ()->get_string ();
 
         ACE_NEW (id,
                  Identifier (tcname));
@@ -243,7 +243,7 @@ be_predefined_type::compute_tc_name ()
       idl_global->err ()->misc_error (
         "be_predefined_type::compute_tc_name: Unknown or invalid predefined type", this);
       // Nothing else to do. We will segfault if we continue, return, or throw Bailout
-      ACE_OS::abort ();
+      std::abort ();
     }
 
   ACE_NEW (conc_name,
@@ -259,8 +259,7 @@ be_predefined_type::compute_repoID ()
   switch (this->pt ())
     {
     case AST_PredefinedType::PT_object:
-      ACE::strdelete (this->repoID_);
-      this->repoID_ = ACE::strnew ("IDL:omg.org/CORBA/Object:1.0");
+      this->repoID_ = "IDL:omg.org/CORBA/Object:1.0";
       break;
     default:
       AST_Decl::compute_repoID ();

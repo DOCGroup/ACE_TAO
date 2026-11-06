@@ -21,16 +21,14 @@ be_visitor_operation_smart_proxy_ch::be_visitor_operation_smart_proxy_ch (
 {
 }
 
-be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch ()
-{
-}
+be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch () = default;
 
 int
 be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
 {
   if (be_global->gen_smart_proxies ())
     {
-      TAO_OutStream *os = this->ctx_->stream ();
+      TAO_OutStream * const os = this->ctx_->stream ();
       this->ctx_->node (node);
       os->indent ();
 
@@ -61,7 +59,7 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
         }
 
       // STEP 2: generate the operation name.
-      *os << " " << this->ctx_->port_prefix ().c_str ()
+      *os << " " << this->ctx_->port_prefix ()
           << node->local_name ();
 
       // STEP 3: generate the argument list with the appropriate mapping. For these
@@ -78,6 +76,8 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
                              "codegen for argument list failed\n"),
                             -1);
         }
+
+      *os << be_nl;
     }
   else
     {

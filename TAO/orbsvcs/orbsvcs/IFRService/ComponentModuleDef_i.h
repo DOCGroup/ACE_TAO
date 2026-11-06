@@ -38,7 +38,7 @@ class TAO_IFRService_Export TAO_ComponentModuleDef_i
 {
 public:
   /// Constructor
-  TAO_ComponentModuleDef_i (TAO_Repository_i *repo);
+  explicit TAO_ComponentModuleDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_ComponentModuleDef_i () override;

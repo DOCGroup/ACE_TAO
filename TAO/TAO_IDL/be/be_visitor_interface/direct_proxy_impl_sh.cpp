@@ -7,12 +7,6 @@ be_visitor_interface_direct_proxy_impl_sh (be_visitor_context *ctx)
   // No-Op.
 }
 
-be_visitor_interface_direct_proxy_impl_sh::
-~be_visitor_interface_direct_proxy_impl_sh ()
-{
-  // No-Op.
-}
-
 int
 be_visitor_interface_direct_proxy_impl_sh::visit_interface (
     be_interface *node

@@ -69,13 +69,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl_global.h"
 #include "utl_scoped_name.h"
 
+#include <string>
+
+
 class AST_Decl;
 class AST_Interface;
 class AST_Enum;
 class AST_Fixed;
 class AST_Union;
 class AST_UnionLabel;
-class UTL_String;
 class AST_Annotation_Decl;
 class AST_Annotation_Member;
 
@@ -163,10 +165,10 @@ public:
     EIDL_OK                     // No error
   };
 
-  ErrorCode last_error;
-  long last_error_lineno;
-  ErrorCode last_warning;
-  long last_warning_lineno;
+  ErrorCode last_error {EIDL_OK};
+  long last_error_lineno {-1};
+  ErrorCode last_warning {EIDL_OK};
+  long last_warning_lineno {-1};
 
   // Operations
 
@@ -183,50 +185,30 @@ public:
                AST_Decl *t3);
 
   // Report warnings with varying numbers of arguments
-  void warning0 (ErrorCode e);
-  void warning1 (ErrorCode e,
-                 AST_Decl *t);
-  void warning2 (ErrorCode e,
-                 AST_Decl *t1,
-                 AST_Decl *t2);
   void warning3 (ErrorCode e,
                  AST_Decl *t1,
                  AST_Decl *t2,
                  AST_Decl *t3);
 
-  /**
-   * Report an error that can be out of context of IDL parsing.
-   */
-  void direct_error (
-    const char *reason, const ACE_CString &filename, long lineno,
-    ErrorCode error_code = EIDL_MISC);
-
-  /**
-   * Report an warning that can be out of context of IDL parsing.
-   */
-  void direct_warning (
-    const char *reason, const ACE_CString &filename, long lineno,
-    ErrorCode error_code = EIDL_MISC);
-
   // Report a syntax error in IDL input
   void syntax_error (IDL_GlobalData::ParseState ps);
 
   // Report clash of declared and referenced identifiers
-  void redef_error (const char *n, const char *t);
+  void redef_error (std::string const& n, std::string const& t);
 
   // Report a name being used with different spellings
-  void name_case_error (char *n,
-                        char *t);
+  void name_case_error (std::string const& n,
+                        std::string const& t);
 
   // Same as above, but doesn't increment the error count.
-  void name_case_warning (char *n,
-                          char *t);
+  void name_case_warning (std::string const& n,
+                          std::string const& t);
 
   // Differs from spelling of IDL keyword only by case.
-  void idl_keyword_error (char *n);
+  void idl_keyword_error (std::string const& n);
 
   // Same as above, but doesn't increment the error count.
-  void idl_keyword_warning (char *n);
+  void idl_keyword_warning (std::string const& n);
 
   // Report an unsuccessful coercion attempt
   void coercion_error (AST_Expression *v,
@@ -239,17 +221,17 @@ public:
   void lookup_warning (UTL_ScopedName *n);
 
   // Report an illegal #pragma version.
-  void version_number_error (char *n);
+  void version_number_error (std::string const& n);
 
   // Report an illegal #pragma version syntax
-  void version_syntax_error (const char *msg);
+  void version_syntax_error (std::string const& msg);
 
   // Repost an attempt to reset the version.
   void version_reset_error ();
 
   // Report an attempt to change the id once set.
-  void id_reset_error (const char *o,
-                       const char *n);
+  void id_reset_error (std::string const& o,
+                       std::string const& n);
 
   // Report an attempt to use a forward declared interface which
   // hasn't been defined yet in an inheritance spec
@@ -272,10 +254,6 @@ public:
   // Report an attempt to illegally inherit from an abstract type.
   void abstract_inheritance_error (UTL_ScopedName *v,
                                    UTL_ScopedName *i);
-
-  // Report an attempt to support more then one concrete type.
-  void abstract_support_error (UTL_ScopedName *v,
-                               UTL_ScopedName *i);
 
   // Report a situation where a non-local interface was expected but we got
   // something else instead. This most likely is a case in a supports
@@ -320,11 +298,6 @@ public:
   // key, emits, publishes or consumes declaration.
   void valuetype_expected (AST_Decl *d);
 
-  // Report a situation where a concrete value type was expected but we got
-  // something else instead. This most likely is a case where a valuetype
-  // inherits from something other than a concrete valuetype.
-  void concrete_valuetype_expected (AST_Decl *d);
-
   // Report a situation where an abstract type was expected but we got
   // something else instead. This is the case in an inheritance
   // list where a concrete type appears after an abstract type, or
@@ -335,11 +308,6 @@ public:
   // something else instead. This is the case in an 'emits', 'publishes',
   // or 'consumes' declaration in a component and it's not an event type.
   void eventtype_expected (AST_Decl *d);
-
-  // Report a situation where a valuetype used as a primary key for a
-  // component home does not inherit directly or indirectly from
-  // Components::primaryKeyBase.
-  void primary_key_error (AST_Decl *d);
 
   // Report a situation where an enumerator was expected but we got
   // something else instead. This occurs when a union with an enum
@@ -375,20 +343,9 @@ public:
   // Fixed data type is not supported
   void fixed_unsupported (AST_Fixed *f);
 
-  // Report back-end error
-  void back_end (long lineno,
-                 UTL_String *s);
-
-  // Report illegal infix operator error (they can be used
-  // only with integer, floating point or fixed point expressions.
-  void illegal_infix ();
-
   // Report local type used in remote operation.
   void local_remote_mismatch (AST_Decl *l,
                               UTL_Scope *s);
-
-  // Improper use of -Sm option.
-  void ignore_idl3_error (AST_Decl *d);
 
   // Valuetype violates a spec-defined constraint on a
   // valuetype used as a primary key.
@@ -398,11 +355,11 @@ public:
   void duplicate_param_id (UTL_ScopedName *n);
 
   // Referenced template parameter not matched in param list.
-  void mismatched_template_param (const char *name);
+  void mismatched_template_param (std::string const& name);
 
   // Given a template param of the form 'sequence<T>', the
   // 'T' must match a previous param in the list.
-  void mismatch_seq_of_param (const char *param_id);
+  void mismatch_seq_of_param (std::string const& param_id);
 
   // Informative message when a lookup fails because a
   // masking scope has not been correctly differentiated
@@ -420,32 +377,32 @@ public:
   /**
    * Report IDL version error, with a given reason.
    */
-  void idl_version_error (const char *reason);
+  void idl_version_error (std::string const& reason);
 
   /**
    * Warn about an unsupported feature in the input IDL that can be ignored for
    * the most part.
    */
-  void unsupported_warning (const char *reason);
+  void unsupported_warning (std::string const& reason);
 
   /**
    * Report an unsupported feature in the input IDL that can't be ignored.
    */
-  void unsupported_error (const char *reason);
+  void unsupported_error (std::string const& reason);
 
   /**
    * Report a error for a specific situation
    *
    * If node is not defined the current file and line are reported.
    */
-  void misc_error (const char *reason, AST_Decl *node = nullptr);
+  void misc_error (std::string const& reason, AST_Decl *node = nullptr);
 
   /**
    * Report a warning for a specific situation
    *
    * If node is not defined the current file and line are reported.
    */
-  void misc_warning (const char *reason, AST_Decl *node = nullptr);
+  void misc_warning (std::string const& reason, AST_Decl *node = nullptr);
 
   /**
    * Report that an invalid annotation parameter was passed
@@ -467,8 +424,6 @@ public:
   void annotation_param_missing_error (
     AST_Annotation_Appl *appl, AST_Annotation_Member *member);
 
-  /// Reset recent warning and error information
-  void reset_last_error_and_warning ();
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

@@ -13,6 +13,8 @@
 
 #include "valuetype.h"
 
+#include <cstddef>
+
 // ******************************************************
 // Valuetype visitor for client header
 // ******************************************************
@@ -22,9 +24,7 @@ be_visitor_valuetype_ch::be_visitor_valuetype_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_ch::~be_visitor_valuetype_ch ()
-{
-}
+be_visitor_valuetype_ch::~be_visitor_valuetype_ch () = default;
 
 int
 be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
@@ -36,7 +36,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   // Evaluate the member in time for the decision to generate
   // the recursive typecode include in the stub source file.
-  ACE_Unbounded_Queue<AST_Type *> list;
+  std::vector<AST_Type *> list;
   (void) node->in_recursion (list);
 
   // This will be a no-op if it has alread by done by a forward
@@ -68,7 +68,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   long i;  // loop index
   be_valuetype *inherited = nullptr;
   long n_inherits = node->n_inherits ();
-  int inherits_eventtype = 0;
+  bool inherits_eventtype = false;
 
   if (n_inherits > 0)
     {
@@ -79,7 +79,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
           if (inherited->node_type () == AST_Decl::NT_eventtype)
             {
-              inherits_eventtype = 1;
+              inherits_eventtype = true;
             }
 
           if (i > 0)
@@ -138,7 +138,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
   else if (node->node_type () == AST_Decl::NT_eventtype)
     {
-      if (inherits_eventtype == 0)
+      if (!inherits_eventtype)
         {
           if (n_inherits > 0)
             {
@@ -154,7 +154,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate the supported interfaces.
-  for (i = 0; i < node->n_supports (); ++i)
+  for (std::size_t i = 0; i < node->n_supports (); ++i)
     {
       *os << "," << be_nl
           << "public virtual ::"
@@ -175,8 +175,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << node->local_name () << " (::CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
           << "{}" << be_nl_2
-          << "virtual ~" << node->local_name () << " ();" << be_nl
-          << "virtual ::CORBA::ValueBase *_copy_value ();";
+          << "~" << node->local_name () << " () override;" << be_nl
+          << "::CORBA::ValueBase *_copy_value () override;";
     }
 
   *os << be_nl_2
@@ -188,19 +188,19 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << "TAO_InputCDR &strm," << be_nl
       << node->local_name () << " *&new_object);" << be_uidt
       << be_uidt_nl << be_nl
-      << "virtual const char* "
-      << "_tao_obv_repository_id () const;"
+      << "char const * "
+      << "_tao_obv_repository_id () const override;"
       << be_nl_2
-      << "virtual void "
-      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const;"
+      << "void "
+      << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const override;"
       << be_nl_2
-      << "static const char* "
+      << "static char const * "
       << "_tao_obv_static_repository_id ();";
 
   if (be_global->tc_support ())
     {
       *os << be_nl_2
-          << "virtual ::CORBA::TypeCode_ptr _tao_type () const;";
+          << "::CORBA::TypeCode_ptr _tao_type () const override;";
     }
 
   // Generate code for the valuetype definition.
@@ -241,8 +241,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (node->n_supports () > 0)
     {
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
-      *os << be_nl << "virtual void _add_ref () = 0;" << be_nl;
-      *os << "virtual void _remove_ref () = 0;" << be_nl;
+      *os << be_nl << "void _add_ref () override = 0;" << be_nl;
+      *os << "void _remove_ref () override = 0;" << be_nl;
       *os << "virtual ::CORBA::ValueBase *_tao_to_value ();";
     }
 
@@ -254,24 +254,24 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   if (!is_an_amh_exception_holder)
     {
-      *os << "virtual ~" << node->local_name () << " ();"
+      *os << "~" << node->local_name () << " () override;"
           << be_nl_2;
     }
 
   // Support for marshalling.
   if (!node->is_abstract () || is_an_amh_exception_holder)
     {
-      *os << "virtual ::CORBA::Boolean "
-          << "_tao_marshal_v (TAO_OutputCDR &) const;" << be_nl;
-      *os << "virtual ::CORBA::Boolean "
-          << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
-      *os << "virtual ::CORBA::Boolean "
-          << "_tao_match_formal_type (ptrdiff_t) const;" << be_nl;
+      *os << "::CORBA::Boolean "
+          << "_tao_marshal_v (TAO_OutputCDR &) const override;" << be_nl;
+      *os << "::CORBA::Boolean "
+          << "_tao_unmarshal_v (TAO_InputCDR &) override;" << be_nl;
+      *os << "::CORBA::Boolean "
+          << "_tao_match_formal_type (ptrdiff_t) const override;" << be_nl;
     }
 
   if (be_global->gen_ostream_operators ())
     {
-      *os << "virtual std::ostream &_tao_stream_v (std::ostream &) const;"
+      *os << "std::ostream &_tao_stream_v (std::ostream &) const override;"
       << be_nl;
     }
 
@@ -280,9 +280,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
   *os << be_uidt_nl << "private:" << be_idt_nl;
-  *os << node->local_name () << " (const " << node->local_name () << " &);"
+  *os << node->local_name () << " (" << node->local_name () << " const &);"
       << be_nl
-      << "void operator= (const " << node->local_name () << " &);"
+      << "void operator= (" << node->local_name () << " const &);"
       << be_nl;
 
   /*********************************************************/
@@ -307,7 +307,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
             << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
             << "::CORBA::Boolean "
             << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
-            << "virtual void truncation_hook ();" << be_nl;
+            << "void truncation_hook () override;" << be_nl;
        }
 
      *os  << be_uidt_nl << be_nl

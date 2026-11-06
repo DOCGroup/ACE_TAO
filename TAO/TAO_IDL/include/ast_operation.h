@@ -67,8 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_decl.h"
 #include "utl_scope.h"
+#include "utl_strlist.h"
+#include "utl_exceptlist.h"
 
-class UTL_ExceptList;
 class AST_Type;
 
 class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl,
@@ -88,22 +89,26 @@ public:
                  UTL_ScopedName *n,
                  bool local,
                  bool abstract);
+  AST_Operation (AST_Operation const &) = delete;
+  AST_Operation (AST_Operation &&) = delete;
+  AST_Operation &operator= (AST_Operation const &) = delete;
+  AST_Operation &operator= (AST_Operation &&) = delete;
 
   ~AST_Operation () override;
 
   // Data Accessors.
 
-  AST_Type *return_type ();
+  AST_Type *return_type () const;
 
-  Flags flags ();
+  Flags flags () const;
 
-  UTL_StrList *context ();
+  UTL_StrList const& context () const;
 
-  UTL_ExceptList *exceptions ();
+  UTL_ExceptList *exceptions () const;
 
   // Public operations.
 
-  bool void_return_type ();
+  bool void_return_type () const;
   /// Returns 1 if the operation has a void return type.
 
   /// Return the number of arguments
@@ -124,7 +129,7 @@ public:
    */
   int count_arguments_with_direction (int direction_mask);
 
-  virtual int has_native ();
+  virtual bool has_native ();
   // Any of the arguments or the return value is a <native> type.
   // This is important because in that case no code should be
   // generated for the stubs.
@@ -154,19 +159,19 @@ protected:
   Flags pd_flags;
   // Operation flags
 
-  UTL_StrList *pd_context;
+  UTL_StrList pd_context;
   // Context
 
-  UTL_ExceptList *pd_exceptions;
+  UTL_ExceptList_Owner pd_exceptions;
   // Exceptions raised
 
-  int argument_count_;
+  int argument_count_ {-1};
   // Number of arguments.
 
-  bool has_in_arguments_;
+  bool has_in_arguments_ {};
   // True if any arguments are IN or INOUT
 
-  int has_native_;
+  bool has_native_ {};
   // Is any argument of type native.
 
   // Operations.
@@ -176,9 +181,9 @@ protected:
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse ();
+  friend class tao_yy::parser;
   AST_Argument *fe_add_argument (AST_Argument *a) override;
-  UTL_StrList *fe_add_context (UTL_StrList *c) override;
+  void fe_add_context (UTL_StrList context) override;
   UTL_NameList *fe_add_exceptions (UTL_NameList *e) override;
 };
 

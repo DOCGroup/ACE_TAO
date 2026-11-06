@@ -18,10 +18,12 @@
 #include "utl_identifier.h"
 #include "global_extern.h"
 
+#include <string>
+
 be_string::be_string (AST_Decl::NodeType nt,
                       UTL_ScopedName * n,
                       AST_Expression * v,
-                      long width)
+                      std::size_t width)
   : COMMON_Base (),
     AST_Decl (nt,
               n,
@@ -57,7 +59,7 @@ be_string::be_string (AST_Decl::NodeType nt,
 // Overridden method.
 void
 be_string::gen_member_ostream_operator (TAO_OutStream *os,
-                                        const char *instance_name,
+                                        std::string const& instance_name,
                                         bool use_underscore,
                                         bool accessor)
 {
@@ -98,7 +100,7 @@ void
 be_string::compute_tc_name ()
 {
   Identifier * id = nullptr;
-  ACE_CDR::ULong val = 0UL;
+  ACE_CDR::ULong const val = 0UL;
   AST_Expression zero (val);
 
   if (*this->max_size () == &zero)
@@ -133,9 +135,8 @@ be_string::compute_tc_name ()
                UTL_ScopedName (tao_id,
                                nullptr));
 
-      ACE_CString local_tc_name =
-        ACE_CString ("tc_")
-        + ACE_CString (this->flat_name ());
+      std::string local_tc_name ("tc_");
+      local_tc_name += this->flat_name ();
 
       Identifier * typecode_scope = nullptr;
       ACE_NEW (typecode_scope,
@@ -149,7 +150,7 @@ be_string::compute_tc_name ()
       this->tc_name_->nconc (tc_scope_conc_name);
 
       ACE_NEW (id,
-               Identifier (local_tc_name.c_str ()));
+               Identifier (local_tc_name));
     }
 
   zero.destroy ();

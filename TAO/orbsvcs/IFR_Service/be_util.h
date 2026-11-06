@@ -15,6 +15,8 @@
 
 #include "TAO_IFR_BE_Export.h"
 
+#include <string>
+
 class AST_Generator;
 
 class be_util
@@ -22,7 +24,7 @@ class be_util
 public:
   /// Special BE arg call factored out of DRV_args.
   static TAO_IFR_BE_Export void
-  prep_be_arg (char *s);
+  prep_be_arg (std::string const& s);
 
   /// Checks made after parsing args.
   static TAO_IFR_BE_Export void

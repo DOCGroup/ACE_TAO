@@ -7,9 +7,7 @@ be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
 }
 
 be_visitor_operation_direct_proxy_impl_ss::
-~be_visitor_operation_direct_proxy_impl_ss ()
-{
-}
+~be_visitor_operation_direct_proxy_impl_ss () = default;
 
 int
 be_visitor_operation_direct_proxy_impl_ss::visit_operation (
@@ -22,7 +20,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -72,7 +70,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
         }
     }
 
-  *os << this->ctx_->port_prefix ().c_str ()
+  *os << this->ctx_->port_prefix ()
       << node->local_name () << " (" << be_idt << be_idt_nl
       << "TAO_Abstract_ServantBase  *servant," << be_nl
       << "TAO::Argument **";
@@ -87,7 +85,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
   *os << be_uidt_nl
       << "{" << be_idt_nl;
 
-  *os << intf->full_skel_name () << "_ptr _tao_ptr = " << be_idt_nl
+  *os << intf->full_skel_name () << "_ptr _tao_ptr =" << be_idt_nl
       << "dynamic_cast<" << intf->full_skel_name () << "_ptr> ("
       << "servant);" << be_uidt_nl;
 
@@ -98,7 +96,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
   if (!node->void_return_type ())
     {
-      *os << "((TAO::Arg_Traits< ";
+      *os << "((TAO::Arg_Traits<";
 
       this->gen_arg_template_param_name (node,
                                          node->return_type (),
@@ -135,7 +133,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     be_operation *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "->" << node->local_name () << " ("
       << be_idt << be_idt << be_idt;
@@ -151,7 +149,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
       return 0;
     }
 
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
   int index = 1;
 
   for (; !si.is_done (); si.next (), ++index)
@@ -159,7 +157,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
       arg = dynamic_cast<AST_Argument*> (si.item ());
 
       *os << (index == 1 ? "" : ",") << be_nl
-          << "((TAO::Arg_Traits< ";
+          << "((TAO::Arg_Traits<";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),

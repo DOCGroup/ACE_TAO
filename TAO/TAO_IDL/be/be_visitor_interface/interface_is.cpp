@@ -16,9 +16,7 @@ be_visitor_interface_is::be_visitor_interface_is (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_is::~be_visitor_interface_is ()
-{
-}
+be_visitor_interface_is::~be_visitor_interface_is () = default;
 
 int
 be_visitor_interface_is::visit_interface (be_interface *node)
@@ -69,9 +67,9 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       *os << be_global->impl_class_prefix () << node->flat_name ()
           << be_global->impl_class_suffix () << "& "
           << be_global->impl_class_prefix () << node->flat_name ()
-          << be_global->impl_class_suffix () << "::operator=(const "
+          << be_global->impl_class_suffix () << "::operator=("
           << be_global->impl_class_prefix () << node->flat_name ()
-          << be_global->impl_class_suffix () << "& t)" <<be_idt_nl
+          << be_global->impl_class_suffix () << " const &t)" << be_idt_nl
           << "{" << be_idt_nl
           << "return *this;" << be_uidt_nl
           << "}" << be_nl << be_uidt_nl;
@@ -113,7 +111,7 @@ be_visitor_interface_is::method_helper (be_interface *derived,
                                         be_interface *node,
                                         TAO_OutStream *os)
 {
-  if (ACE_OS::strcmp (derived->flat_name (), node->flat_name ()) != 0)
+  if (derived->flat_name () != node->flat_name ())
     {
       be_visitor_context ctx;
       ctx.state (TAO_CodeGen::TAO_ROOT_IS);

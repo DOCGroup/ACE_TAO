@@ -26,10 +26,14 @@ class be_visitor_component_fwd_any_op_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_component_fwd_any_op_ch (be_visitor_context *ctx);
+  explicit be_visitor_component_fwd_any_op_ch (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_component_fwd_any_op_ch () override;
+  be_visitor_component_fwd_any_op_ch (be_visitor_component_fwd_any_op_ch const &) = delete;
+  be_visitor_component_fwd_any_op_ch (be_visitor_component_fwd_any_op_ch &&) = delete;
+  be_visitor_component_fwd_any_op_ch &operator= (be_visitor_component_fwd_any_op_ch const &) = delete;
+  be_visitor_component_fwd_any_op_ch &operator= (be_visitor_component_fwd_any_op_ch &&) = delete;
 
   /// visit component_fwd
   int visit_component_fwd (be_component_fwd *node) override;

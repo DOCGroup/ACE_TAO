@@ -19,13 +19,11 @@ AST_StructureFwd::AST_StructureFwd (AST_Structure *full_defn,
     AST_Type (AST_Decl::NT_struct_fwd,
               n),
     pd_full_definition (full_defn),
-    is_defined_ (false)
+    owned_full_definition_ (full_defn)
 {
 }
 
-AST_StructureFwd::~AST_StructureFwd ()
-{
-}
+AST_StructureFwd::~AST_StructureFwd () = default;
 
 // Redefinition of inherited virtual operations.
 
@@ -54,8 +52,11 @@ AST_StructureFwd::full_definition ()
 void
 AST_StructureFwd::set_full_definition (AST_Structure *nfd)
 {
-  this->pd_full_definition->destroy ();
-  delete this->pd_full_definition;
+  if (this->owned_full_definition_ != nullptr)
+    {
+      this->owned_full_definition_->destroy ();
+      this->owned_full_definition_.reset ();
+    }
   this->pd_full_definition = nfd;
 
   // In case it's not already set.
@@ -72,15 +73,16 @@ void
 AST_StructureFwd::set_as_defined ()
 {
   this->is_defined_ = true;
+  this->owned_full_definition_.release ();
 }
 
 void
 AST_StructureFwd::destroy ()
 {
-  if (!this->is_defined_ && nullptr != this->pd_full_definition)
+  if (this->owned_full_definition_ != nullptr)
     {
-      this->pd_full_definition->destroy ();
-      delete this->pd_full_definition;
+      this->owned_full_definition_->destroy ();
+      this->owned_full_definition_.reset ();
       this->pd_full_definition = nullptr;
     }
 
@@ -88,7 +90,7 @@ AST_StructureFwd::destroy ()
 }
 
 bool
-AST_StructureFwd::is_fwd ()
+AST_StructureFwd::is_fwd () const
 {
   return true; // This is a fwd declared type
 }

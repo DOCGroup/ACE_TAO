@@ -17,9 +17,7 @@ be_visitor_exception_cdr_op_cs::be_visitor_exception_cdr_op_cs (
 {
 }
 
-be_visitor_exception_cdr_op_cs::~be_visitor_exception_cdr_op_cs ()
-{
-}
+be_visitor_exception_cdr_op_cs::~be_visitor_exception_cdr_op_cs () = default;
 
 int
 be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
@@ -42,7 +40,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -54,7 +52,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   *os << be_nl_2
       << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_aggregate)" << be_uidt
+      << node->name () << " const &_tao_aggregate)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -191,7 +189,7 @@ be_visitor_exception_cdr_op_cs::post_process (be_decl *bd)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {

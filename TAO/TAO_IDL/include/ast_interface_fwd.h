@@ -66,6 +66,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 
 #include "ast_type.h"
+#include <memory>
+
 class AST_Interface;
 
 // Representation of a forward interface declaration.
@@ -73,6 +75,10 @@ class AST_Interface;
 class TAO_IDL_FE_Export AST_InterfaceFwd : public virtual AST_Type
 {
 public:
+  AST_InterfaceFwd (AST_InterfaceFwd const &) = delete;
+  AST_InterfaceFwd (AST_InterfaceFwd &&) = delete;
+  AST_InterfaceFwd &operator= (AST_InterfaceFwd const &) = delete;
+  AST_InterfaceFwd &operator= (AST_InterfaceFwd &&) = delete;
   AST_InterfaceFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
@@ -99,7 +105,6 @@ public:
 
   bool is_local () override;
   virtual bool is_valuetype ();
-  virtual bool is_abstract_valuetype ();
 
   bool full_def_seen ();
 
@@ -113,7 +118,7 @@ public:
   int ast_accept (ast_visitor *visitor) override;
 
   // Is this decl a forward declared type (Yes)
-  bool is_fwd () override;
+  bool is_fwd () const override;
 
   // We don't actually want the forward declaration,
   // but want to return the full definition member,
@@ -126,11 +131,11 @@ private:
   AST_Interface *pd_full_definition;
   // The interface this is a forward declaration of.
 
-  bool is_defined_;
-  // Checking the member above isn't good enough.
+  std::unique_ptr<AST_Interface> owned_full_definition_;
+  // The owned dummy interface, while this forward declaration owns it.
 
-  /// True if we own pd_full_definition, which would be true if it's a dummy.
-  bool has_ownership_;
+  bool is_defined_ {};
+  // Checking the member above isn't good enough.
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

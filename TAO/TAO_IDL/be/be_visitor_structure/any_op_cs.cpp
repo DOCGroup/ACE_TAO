@@ -32,7 +32,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -76,10 +76,10 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
   *os << "/// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << "const ::" << node->name () << " &_tao_elem)"
+      << "::" << node->name () << " const &_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
+      << "TAO::Any_Dual_Impl_T<::" << node->name () << ">::insert_copy ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl
@@ -95,7 +95,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "::" << node->name () << " *_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert ("
+      << "TAO::Any_Dual_Impl_T<::" << node->name () << ">::insert ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl
@@ -107,11 +107,11 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
   // Extraction to const pointer.
   *os << "/// Extraction to const pointer." << be_nl
       << "::CORBA::Boolean operator>>= (" << be_idt_nl
-      << "const ::CORBA::Any &_tao_any," << be_nl
-      << "const ::" << node->name () << " *&_tao_elem)"
+      << "::CORBA::Any const &_tao_any," << be_nl
+      << "::" << node->name () << " const *&_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "return TAO::Any_Dual_Impl_T< ::" << node->name () << ">::extract ("
+      << "return TAO::Any_Dual_Impl_T<::" << node->name () << ">::extract ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl
@@ -139,7 +139,7 @@ int
 be_visitor_structure_any_op_cs::visit_field (be_field *node)
 {
   // First generate the type information.
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

@@ -6,18 +6,25 @@
 #include <utl_identifier.h>
 
 #include <cstdlib>
+#include <memory>
 
 int test_fixed_typedef ()
 {
   Identifier id_fixed ("fixed");
   UTL_ScopedName name_fixed (&id_fixed, 0);
-  AST_Expression digits (22), scale (2);
-  AST_Fixed fixed (&name_fixed, &digits, &scale);
+  std::unique_ptr<AST_Expression> digits = std::make_unique<AST_Expression> (22);
+  std::unique_ptr<AST_Expression> scale = std::make_unique<AST_Expression> (2);
+  std::unique_ptr<AST_Fixed> fixed =
+    std::make_unique<AST_Fixed> (&name_fixed, digits.get (), scale.get ());
+  digits.release ();
+  scale.release ();
 
   Identifier id_typedef ("Myfixed");
   UTL_ScopedName name_typedef (&id_typedef, 0);
-  AST_Typedef td (&fixed, &name_typedef, false, false);
+  AST_Typedef td (fixed.get (), &name_typedef, false, false);
+  fixed.release ();
   CHECK (td.owns_base_type ());
+  td.destroy ();
   return EXIT_SUCCESS;
 }
 

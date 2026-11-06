@@ -38,7 +38,7 @@ class TAO_IFRService_Export TAO_ExceptionDef_i : public virtual TAO_Contained_i,
 {
 public:
   /// Constructor
-  TAO_ExceptionDef_i (TAO_Repository_i *repo);
+  explicit TAO_ExceptionDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_ExceptionDef_i () override;
@@ -66,9 +66,9 @@ public:
 
   CORBA::StructMemberSeq *members_i ();
 
-  virtual void members (const CORBA::StructMemberSeq & members);
+  virtual void members (CORBA::StructMemberSeq const &members);
 
-  void members_i (const CORBA::StructMemberSeq & members);
+  void members_i (CORBA::StructMemberSeq const &members);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

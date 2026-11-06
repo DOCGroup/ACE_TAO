@@ -24,9 +24,7 @@ be_visitor_field_ch::be_visitor_field_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_ch::~be_visitor_field_ch ()
-{
-}
+be_visitor_field_ch::~be_visitor_field_ch () = default;
 
 int
 be_visitor_field_ch::visit_field (be_field *node)
@@ -347,7 +345,7 @@ be_visitor_field_ch::visit_sequence (be_sequence *node)
       // If we are being reused by valutype, this would get generated
       // in the private section of the OBV_xx class, so we must
       // generate the typedef for that case elsewhere.
-      AST_Decl::NodeType snt =
+      AST_Decl::NodeType const snt =
         this->ctx_->scope ()->decl ()->node_type ();
 
       if (snt != AST_Decl::NT_valuetype && snt != AST_Decl::NT_eventtype)
@@ -427,7 +425,7 @@ be_visitor_field_ch::visit_map (be_map *node)
         // If we are being reused by valutype, this would get generated
         // in the private section of the OBV_xx class, so we must
         // generate the typedef for that case elsewhere.
-        AST_Decl::NodeType snt =
+        AST_Decl::NodeType const snt =
           this->ctx_->scope ()->decl ()->node_type ();
 
         if (snt != AST_Decl::NT_valuetype && snt != AST_Decl::NT_eventtype)
@@ -467,7 +465,7 @@ be_visitor_field_ch::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << "::TAO::String_Manager";
     }

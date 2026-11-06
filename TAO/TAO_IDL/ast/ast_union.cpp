@@ -104,11 +104,8 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     UTL_Scope (AST_Decl::NT_union),
     AST_Structure (n,
                    local,
-                   abstract),
-    default_index_ (-2)
+                   abstract)
 {
-  this->default_value_.computed_ = -2;
-
   AST_PredefinedType *pdt = nullptr;
 
   if (dt == nullptr)
@@ -197,9 +194,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     }
 }
 
-AST_Union::~AST_Union ()
-{
-}
+AST_Union::~AST_Union () = default;
 
 // Public operations.
 
@@ -210,8 +205,9 @@ AST_Union::redefine (AST_Structure *from)
 
   if (u == nullptr)
     {
-      idl_global->err ()->redef_error (from->local_name ()->get_string (),
-                                       this->local_name ()->get_string ());
+      idl_global->err ()->redef_error (
+        from->local_name ()->get_string (),
+        this->local_name ()->get_string ());
       return;
     }
 
@@ -238,15 +234,15 @@ AST_Union::default_index ()
 
 // Are we or the parameter node involved in any recursion?
 bool
-AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_Union::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = (list.size () == 0);
+  bool const self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.
-  if (self_test && this->in_recursion_ != -1)
+  if (self_test && this->in_recursion_ != Recursion_State::unknown)
     {
-      return (this->in_recursion_ == 1);
+      return this->in_recursion_ == Recursion_State::recursive;
     }
 
   if (list.size () > 1)
@@ -260,7 +256,7 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       }
   }
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
@@ -300,7 +296,7 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
           if (type->in_recursion (list))
             {
               if (self_test)
-                this->in_recursion_ = 1;
+                this->in_recursion_ = Recursion_State::recursive;
               idl_global->recursive_type_seen_ = true;
               return true;
             }
@@ -309,204 +305,8 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   // Not in recursion.
   if (self_test)
-    this->in_recursion_ = 0;
+    this->in_recursion_ = Recursion_State::not_recursive;
   return false;
-}
-
-// Look up the default branch in union.
-AST_UnionBranch *
-AST_Union::lookup_default ()
-{
-  AST_UnionBranch *b = nullptr;
-  AST_Decl *d = nullptr;
-
-  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_both);
-       !i.is_done();
-       i.next ())
-    {
-      d = i.item ();
-
-      if (d->node_type () == AST_Decl::NT_union_branch)
-        {
-          b = dynamic_cast<AST_UnionBranch*> (d);
-
-          if (b == nullptr)
-            {
-              continue;
-            }
-
-          if (b->label () != nullptr
-              && b->label ()->label_kind () == AST_UnionLabel::UL_default)
-            {
-              idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
-                                          this,
-                                          b);
-              return b;
-            }
-        }
-    }
-
-  return nullptr;
-}
-
-// Look up a branch by label.
-AST_UnionBranch *
-AST_Union::lookup_label (AST_UnionBranch *b)
-{
-  AST_UnionLabel *label = b->label ();
-  AST_Expression *lv = label->label_val ();
-
-  if (label->label_val () == nullptr)
-    {
-      return b;
-    }
-
-  AST_Decl *d = nullptr;
-  AST_UnionBranch *fb = nullptr;
-
-  lv->set_ev (lv->coerce (this->pd_udisc_type));
-
-  if (lv->ev () == nullptr)
-    {
-      idl_global->err ()->eval_error (lv);
-      return b;
-    }
-
-  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
-       !i.is_done();
-       i.next ())
-    {
-      d = i.item ();
-
-      if (d->node_type () == AST_Decl::NT_union_branch)
-        {
-          fb = dynamic_cast<AST_UnionBranch*> (d);
-
-          if (fb == nullptr)
-            {
-              continue;
-            }
-
-          if (fb->label() != nullptr
-              && fb->label ()->label_kind () == AST_UnionLabel::UL_label
-              && fb->label ()->label_val ()->compare (lv))
-            {
-              idl_global->err ()->error2  (UTL_Error::EIDL_MULTIPLE_BRANCH,
-                                           this,
-                                           b);
-              return b;
-            }
-        }
-    }
-
-  return nullptr;
-}
-
-// Look up a branch in an enum which is the discriminator type for this
-// union, based on the label value which must be an enumerator in that
-// enum.
-AST_UnionBranch *
-AST_Union::lookup_enum (AST_UnionBranch *b)
-{
-  AST_UnionLabel *label = b->label();
-  AST_Expression *lv = label->label_val ();
-  AST_Enum *e = dynamic_cast<AST_Enum*> (this->pd_disc_type);
-  AST_Decl *d = nullptr;
-  AST_UnionBranch       *fb = nullptr;
-
-  if (e == nullptr)
-    {
-      return nullptr;
-    }
-
-  if (lv == nullptr)
-    {
-      return b;
-    }
-
-  // Expecting a symbol label.
-  if (lv->ec () != AST_Expression::EC_symbol)
-    {
-      idl_global->err ()->enum_val_expected (this,
-                                             label);
-      return b;
-    }
-
-  // See if the symbol defines a constant in the discriminator enum.
-  UTL_ScopedName *sn = lv->n ();
-  d = e->lookup_by_name (sn,
-                         true);
-
-  if (d == nullptr || d->defined_in () != e)
-    {
-      idl_global->err ()->enum_val_lookup_failure (this,
-                                                   e,
-                                                   sn);
-      return b;
-    }
-
-  // OK, now see if this symbol is already used as the label of
-  // some other branch.
-  for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_decls);
-       !i.is_done();
-       i.next ())
-    {
-      d = i.item ();
-
-      if (d->node_type () == AST_Decl::NT_union_branch)
-        {
-          fb = dynamic_cast<AST_UnionBranch*> (d);
-
-          if (fb == nullptr)
-            {
-              continue;
-            }
-
-          if (fb->label() != nullptr
-              && fb->label ()->label_kind () == AST_UnionLabel::UL_label
-              && fb->label ()->label_val ()->compare (lv))
-            {
-              idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
-                                          this,
-                                          b);
-              return b;
-            }
-        }
-    }
-
-  return nullptr;
-}
-
-// Look up a branch by value. This is the top level branch label resolution
-// entry point. It dispatches to the right lookup function depending on the
-// union discriminator type.
-AST_UnionBranch *
-AST_Union::lookup_branch (AST_UnionBranch *branch)
-{
-  AST_UnionLabel *label = nullptr;
-
-  if (branch != nullptr)
-    {
-      label = branch->label ();
-    }
-
-  if (label != nullptr)
-    {
-      if (label->label_kind () == AST_UnionLabel::UL_default)
-        {
-          return this->lookup_default ();
-        }
-
-      if (this->pd_udisc_type == AST_Expression::EV_enum)
-        {
-          // CONVENTION: indicates enum discriminant.
-          return this->lookup_enum (branch);
-        }
-
-      return this->lookup_label (branch);
-    }
-
-  return nullptr;
 }
 
 // Return the default value.
@@ -558,7 +358,7 @@ AST_Union::compute_default_value ()
       if (ub != nullptr)
         {
           // If the label is a case label, increment by 1.
-          for (unsigned long i = 0; i < ub->label_list_length (); ++i)
+          for (std::size_t i = 0; i < ub->label_list_length (); ++i)
             {
               if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                 {
@@ -582,7 +382,7 @@ AST_Union::compute_default_value ()
     case AST_Expression::EV_ushort:
       if (total_case_members > ACE_UINT16_MAX)
         {
-          this->default_value_.computed_ = 0;
+          this->default_value_.computed_ = false;
         }
 
       break;
@@ -594,7 +394,7 @@ AST_Union::compute_default_value ()
       // incomplete (reguardless as to the actual member_count).
       if (total_case_members > ACE_UINT32_MAX)
         {
-          this->default_value_.computed_ = 0;
+          this->default_value_.computed_ = false;
         }
 
       break;
@@ -605,7 +405,7 @@ AST_Union::compute_default_value ()
         {
           // If anyone ever produces a "default clause is invalid here" error
           // after passing through here I will buy them a a house.
-          this->default_value_.computed_ = 0;
+          this->default_value_.computed_ = false;
         }
 
       break;
@@ -613,7 +413,7 @@ AST_Union::compute_default_value ()
     case AST_Expression::EV_int8:
       if (total_case_members > ACE_INT8_MAX)
         {
-          this->default_value_.computed_ = 0;
+          this->default_value_.computed_ = false;
         }
 
       break;
@@ -621,21 +421,21 @@ AST_Union::compute_default_value ()
     case AST_Expression::EV_octet:
       if (total_case_members > ACE_UINT8_MAX)
         {
-          this->default_value_.computed_ = 0;
+          this->default_value_.computed_ = false;
         }
 
       break;
     case AST_Expression::EV_wchar:
       if (total_case_members == ACE_WCHAR_MAX + 1)
         {
-          this->default_value_.computed_ = 0;
+          this->default_value_.computed_ = false;
         }
 
       break;
     case AST_Expression::EV_bool:
       if (total_case_members == 2)
         {
-          this->default_value_.computed_ = 0;
+          this->default_value_.computed_ = false;
         }
 
       break;
@@ -735,7 +535,7 @@ AST_Union::compute_default_value ()
 
           if (ub != nullptr)
             {
-              for (unsigned long i = 0;
+              for (std::size_t i = 0;
                    i < ub->label_list_length () && !break_loop;
                    ++i)
                 {
@@ -871,7 +671,7 @@ AST_Union::compute_default_value ()
       // default value.
       if (break_loop == 0)
         {
-          this->default_value_.computed_ = 1;
+          this->default_value_.computed_ = true;
         }
 
     } // End of outer while (default_value.computed == -2).
@@ -915,10 +715,10 @@ AST_Union::compute_default_index ()
             {
               ub = dynamic_cast<AST_UnionBranch*> (d);
 
-              for (unsigned long j = 0; j < ub->label_list_length (); ++j)
+              for (std::size_t j = 0; j < ub->label_list_length (); ++j)
                 {
                   // Check if we are printing the default case.
-                  AST_UnionLabel::UnionLabel ulk = ub->label (j)->label_kind ();
+                  AST_UnionLabel::UnionLabel const ulk = ub->label (j)->label_kind ();
                   if (ulk == AST_UnionLabel::UL_default)
                     {
                       // Zero based indexing.
@@ -942,7 +742,68 @@ AST_Union::compute_default_index ()
 AST_UnionBranch *
 AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 {
-  return dynamic_cast<AST_UnionBranch*> (this->fe_add_ref_decl (t));
+  AST_UnionBranch *branch =
+    dynamic_cast<AST_UnionBranch*> (this->fe_add_ref_decl (t));
+
+  if (branch == nullptr)
+    {
+      return nullptr;
+    }
+
+  bool duplicate_label = false;
+
+  for (std::size_t i = 0;
+       i < branch->label_list_length () && !duplicate_label;
+       ++i)
+    {
+      AST_UnionLabel *label = branch->label (i);
+
+      for (UTL_ScopeActiveIterator iter (this, UTL_Scope::IK_decls);
+           !iter.is_done () && !duplicate_label;
+           iter.next ())
+        {
+          AST_UnionBranch *other_branch =
+            dynamic_cast<AST_UnionBranch*> (iter.item ());
+
+          if (other_branch == nullptr)
+            {
+              continue;
+            }
+
+          std::size_t const other_label_count = other_branch == branch
+            ? i
+            : other_branch->label_list_length ();
+
+          for (std::size_t j = 0; j < other_label_count; ++j)
+            {
+              AST_UnionLabel *other_label = other_branch->label (j);
+              bool const both_default =
+                label->label_kind () == AST_UnionLabel::UL_default
+                && other_label->label_kind () == AST_UnionLabel::UL_default;
+              bool const same_value =
+                label->label_kind () == AST_UnionLabel::UL_label
+                && other_label->label_kind () == AST_UnionLabel::UL_label
+                && label->label_val () != nullptr
+                && other_label->label_val () != nullptr
+                && label->label_val ()->compare (other_label->label_val ());
+
+              if (both_default || same_value)
+                {
+                  duplicate_label = true;
+                  break;
+                }
+            }
+        }
+    }
+
+  if (duplicate_label)
+    {
+      idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
+                                  this,
+                                  branch);
+    }
+
+  return branch;
 }
 
 AST_Union *
@@ -1047,14 +908,26 @@ AST_Union::disc_type ()
   return this->pd_disc_type;
 }
 
+AST_ConcreteType const *
+AST_Union::disc_type () const
+{
+  return this->pd_disc_type;
+}
+
 AST_Expression::ExprType
-AST_Union::udisc_type ()
+AST_Union::udisc_type () const
 {
   return this->pd_udisc_type;
 }
 
 AST_Annotation_Appls &
 AST_Union::disc_annotations ()
+{
+  return disc_annotations_;
+}
+
+AST_Annotation_Appls const &
+AST_Union::disc_annotations () const
 {
   return disc_annotations_;
 }

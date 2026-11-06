@@ -41,7 +41,7 @@ class TAO_IFRService_Export TAO_ExtAbstractInterfaceDef_i
 {
 public:
   /// Constructor
-  TAO_ExtAbstractInterfaceDef_i (TAO_Repository_i *repo);
+  explicit TAO_ExtAbstractInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_ExtAbstractInterfaceDef_i () override;

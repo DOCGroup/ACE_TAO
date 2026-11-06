@@ -16,9 +16,7 @@ be_visitor_enum_cdr_op_ch::be_visitor_enum_cdr_op_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_enum_cdr_op_ch::~be_visitor_enum_cdr_op_ch ()
-{
-}
+be_visitor_enum_cdr_op_ch::~be_visitor_enum_cdr_op_ch () = default;
 
 int
 be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
@@ -28,7 +26,7 @@ be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -46,8 +44,8 @@ be_visitor_enum_cdr_op_ch::visit_enum (be_enum *node)
     {
       *os << be_nl
           << be_global->stub_export_macro () << " std::ostream&"
-          << " operator<< (std::ostream &strm, const " << node->name ()
-          << " _tao_enumerator);" << be_nl;
+          << " operator<< (std::ostream &strm, " << node->name ()
+          << " const _tao_enumerator);" << be_nl;
     }
 
   *os << be_global->core_versioning_end () << be_nl;

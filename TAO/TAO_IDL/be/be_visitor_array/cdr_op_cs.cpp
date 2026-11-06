@@ -12,15 +12,15 @@
 
 #include "array.h"
 
+#include <string>
+
 be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs ()
-{
-}
+be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs () = default;
 
 int
 be_visitor_array_cdr_op_cs::visit_array (be_array *node)
@@ -52,7 +52,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                         -1);
     }
 
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   // If we contain an anonymous sequence,
   // generate code for the sequence here.
@@ -116,19 +116,13 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 
   // For anonymous arrays, the type name has a _ prepended. We compute the
   // full_name with or without the underscore and use it later on.
-  char fname [NAMEBUFSIZE];  // to hold the full and
+  std::string fname;
 
-  // Save the node's local name and full name in a buffer for quick use later
-  // on.
-  ACE_OS::memset (fname,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  bool use_underscore = (this->ctx_->tdef () == nullptr);
+  bool const use_underscore = (this->ctx_->tdef () == nullptr);
 
   if (!use_underscore)
     {
-      ACE_OS::sprintf (fname, "%s", node->full_name ());
+      fname = node->full_name ();
     }
   else
     {
@@ -141,16 +135,14 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
         {
           be_decl *parent =
             dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-          ACE_OS::sprintf (fname,
-                           "%s::_%s",
-                           parent->full_name (),
-                           node->local_name ()->get_string ());
+          fname = parent->full_name ();
+          fname += "::_";
+          fname += node->local_name ()->get_string ();
         }
       else
         {
-          ACE_OS::sprintf (fname,
-                           "_%s",
-                           node->full_name ());
+          fname = "_";
+          fname += node->full_name ();
         }
     }
 
@@ -167,7 +159,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << fname << "_forany &_tao_array)" << be_uidt
+      << fname << "_forany const &_tao_array)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -466,14 +458,14 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
                         -1);
     }
 
-  unsigned long const ndims = array->n_dims ();
+  std::size_t const ndims = array->n_dims ();
 
   // Generate a product of all the dimensions. This will be the total length
   // of the "unfolded" single dimensional array.
   for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
-      AST_Expression *expr = array->dims ()[i];
+      AST_Expression *expr = array->dims ()[i].get ();
 
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
@@ -567,10 +559,10 @@ int
 be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  ACE_CDR::ULong i;
+  std::size_t i;
   be_array *node =
     dynamic_cast<be_array*> (this->ctx_->node ());
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   if (node == nullptr)
     {
@@ -584,7 +576,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   // Initialize a boolean variable.
   *os << "CORBA::Boolean _tao_marshal_flag = true;" << be_nl;
 
-  ACE_CDR::ULong ndims = node->n_dims ();
+  std::size_t const ndims = node->n_dims ();
 
   // We get here if the "type" of individual elements of the array is not a
   // primitive type. In this case, we are left with no other alternative but to
@@ -594,7 +586,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
-      AST_Expression *expr = node->dims ()[i];
+      AST_Expression *expr = node->dims ()[i].get ();
 
       if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
@@ -667,7 +659,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
           *os << "_tao_marshal_flag = (strm >> ";
           if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
             {
-              if (str->width () == (long) sizeof (char))
+              if (str->width () == sizeof (char))
                 {
                   *os << "ACE_InputCDR::to_string (_tao_array ";
                 }
@@ -725,7 +717,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                                         -1);
                     }
 
-                  AST_PredefinedType::PredefinedType pdt = pt->pt ();
+                  AST_PredefinedType::PredefinedType const pdt = pt->pt ();
 
                   if (pdt == AST_PredefinedType::PT_pseudo
                       || pdt == AST_PredefinedType::PT_object)
@@ -763,7 +755,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       else if (nt == AST_Decl::NT_interface
                || nt == AST_Decl::NT_interface_fwd)
         {
-          *os << "_tao_marshal_flag = " << be_idt_nl
+          *os << "_tao_marshal_flag =" << be_idt_nl
               << "TAO::Objref_Traits<" << bt->name () << ">::"
               << "marshal (_tao_array";
 
@@ -794,7 +786,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
           *os << "_tao_marshal_flag = (strm << ";
           if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
             {
-              if (str->width () == (long) sizeof (char))
+              if (str->width () == sizeof (char))
                 {
                   *os << "ACE_OutputCDR::from_string (_tao_array ";
                 }
@@ -852,7 +844,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                                         -1);
                     }
 
-                  AST_PredefinedType::PredefinedType pdt = pt->pt ();
+                  AST_PredefinedType::PredefinedType const pdt = pt->pt ();
 
                   if (pdt == AST_PredefinedType::PT_pseudo
                       || pdt == AST_PredefinedType::PT_object)

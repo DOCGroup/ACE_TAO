@@ -77,13 +77,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/CDR_Base.h"
 
+#include <cstddef>
+
 // Forward declare active iterator for UTL_List.
 class  UTL_ListActiveIterator;
 
 class TAO_IDL_FE_Export UTL_List
 {
 public:
-  UTL_List (UTL_List *c);
+  explicit UTL_List (UTL_List *c);
 
   UTL_List (UTL_List const &) = delete;
   UTL_List (UTL_List &&) = delete;
@@ -100,12 +102,13 @@ public:
 
   // Get next list.
   UTL_List *tail ();
+  UTL_List const *tail () const;
 
   // Set next list
   void set_tail (UTL_List *l);
 
   // How long is this list?
-  ACE_CDR::Long length ();
+  std::size_t length () const;
 
   // Cleanup.
   virtual void destroy ();
@@ -115,7 +118,7 @@ private:
   UTL_List *pd_cdr_data;
 
   // Operations
-  ACE_CDR::Long list_length (ACE_CDR::Long n);
+  std::size_t list_length (std::size_t n) const;
 
   // Friend class.
   friend class UTL_ListActiveIterator;
@@ -125,7 +128,7 @@ private:
 class TAO_IDL_FE_Export UTL_ListActiveIterator
 {
 public:
-  UTL_ListActiveIterator (UTL_List *s);
+  explicit UTL_ListActiveIterator (UTL_List *s);
 
   virtual ~UTL_ListActiveIterator () = default;
 
@@ -133,7 +136,7 @@ public:
   virtual void next ();
 
   // Are we at the end of this list?
-  virtual bool is_done ();
+  virtual bool is_done () const;
 
 protected:
   // On what to iterate?

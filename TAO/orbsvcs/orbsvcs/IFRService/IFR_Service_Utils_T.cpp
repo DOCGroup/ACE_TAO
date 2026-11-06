@@ -154,7 +154,7 @@ TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
 template<typename T_strseq>
 void
 TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
-    const char *section_name,
+    char const *section_name,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
     T_strseq &seq)
@@ -195,7 +195,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
     T_desc_seq &desc_seq,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
-    const char *sub_section
+    char const *sub_section
   )
 {
   ACE_Configuration_Section_Key sub_key;
@@ -286,10 +286,10 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_base_type (T_desc_seq &desc_seq,
 
 template<typename T>
 T *
-TAO_Port_Utils<T>::create_entry (const char *id,
-                                 const char *name,
-                                 const char *version,
-                                 const char *sub_section,
+TAO_Port_Utils<T>::create_entry (char const *id,
+                                 char const *name,
+                                 char const *version,
+                                 char const *sub_section,
                                  CORBA::Container_ptr port_base_type,
                                  CORBA::Boolean is_multiple,
                                  TAO_Repository_i *repo,
@@ -310,7 +310,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
                                           version,
                                           sub_section);
 
-  const char *tmp =
+  char const *tmp =
     TAO_IFR_Service_Utils::reference_to_path (port_base_type);
 
   ACE_Configuration_Section_Key base_type_key;

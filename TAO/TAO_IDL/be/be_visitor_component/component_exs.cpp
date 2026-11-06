@@ -22,9 +22,7 @@ be_visitor_component_exs::be_visitor_component_exs (
   export_macro_ = be_global->exec_export_macro ();
 }
 
-be_visitor_component_exs::~be_visitor_component_exs ()
-{
-}
+be_visitor_component_exs::~be_visitor_component_exs () = default;
 
 int
 be_visitor_component_exs::visit_component (be_component *node)
@@ -68,36 +66,24 @@ be_visitor_component_exs::visit_component (be_component *node)
 
   /// Generate the empty ops for the AMI4CCM reply handlers,
   /// if any.
-  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
-         idl_global->ciao_ami_recep_names ());
-       ! i.done ();
-       i.advance ())
+  for (std::string const &item : idl_global->ciao_ami_recep_names ())
     {
-      char **item = nullptr;
-      i.next (item);
-
-      UTL_ScopedName *sn =
-        FE_Utils::string_to_scoped_name (*item);
+      FE_Utils::Scoped_Name_Owner sn =
+        FE_Utils::string_to_scoped_name_owner (item);
 
       UTL_Scope *s =
         idl_global->scopes ().top_non_null ();
 
-      AST_Decl *d = s->lookup_by_name (sn, true);
+      AST_Decl *d = s->lookup_by_name (sn.get (), true);
 
       if (d == nullptr)
         {
-          idl_global->err ()->lookup_error (sn);
-
-          sn->destroy ();
-          delete sn;
-          sn = nullptr;
+          idl_global->err ()->lookup_error (sn.get ());
 
           continue;
         }
 
-      sn->destroy ();
-      delete sn;
-      sn = nullptr;
+      sn.reset ();
 
       be_uses *u = dynamic_cast<be_uses*> (d);
 
@@ -153,7 +139,7 @@ Component_Exec_Op_Attr_Generator::emit (be_interface * /*derived_interface */,
                                         TAO_OutStream * /* os */,
                                         be_interface * base_interface)
 {
-  AST_Decl::NodeType nt = base_interface->node_type ();
+  AST_Decl::NodeType const nt = base_interface->node_type ();
 
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {

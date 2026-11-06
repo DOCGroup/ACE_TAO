@@ -23,10 +23,14 @@ class be_visitor_array_ci : public be_visitor_array
 {
 public:
   /// constructor
-  be_visitor_array_ci (be_visitor_context *ctx);
+  explicit be_visitor_array_ci (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_array_ci () override = default;
+  be_visitor_array_ci (be_visitor_array_ci const &) = delete;
+  be_visitor_array_ci (be_visitor_array_ci &&) = delete;
+  be_visitor_array_ci &operator= (be_visitor_array_ci const &) = delete;
+  be_visitor_array_ci &operator= (be_visitor_array_ci &&) = delete;
 
   /// visit the array node
   int visit_array (be_array *node) override;

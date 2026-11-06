@@ -24,9 +24,7 @@ be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (
 {
 }
 
-be_visitor_valuetype_obv_cs::~be_visitor_valuetype_obv_cs ()
-{
-}
+be_visitor_valuetype_obv_cs::~be_visitor_valuetype_obv_cs () = default;
 
 // OBV_ class must be in OBV_ namespace
 int

@@ -7,20 +7,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Options::Options ()
-  : ior_output_file_ (ACE_OS::strdup ("if_repo.ior")),
-    persistent_ (0),
-    persistent_file_ (ACE_OS::strdup ("ifr_default_backing_store")),
-    using_registry_ (0),
-    enable_locking_ (0),
-    support_multicast_(0)
+  : ior_output_file_ ("if_repo.ior"),
+    persistent_file_ ("ifr_default_backing_store")
 {
 }
 
-Options::~Options ()
-{
-  ACE_OS::free (this->ior_output_file_);
-  ACE_OS::free (this->persistent_file_);
-}
+Options::~Options () = default;
 
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
@@ -32,26 +24,24 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':  // Set the IOR output filename.
-        ACE_OS::free (this->ior_output_file_);
-        this->ior_output_file_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->ior_output_file_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
       case 'p': // Make the IFR persistent
-        this->persistent_ = 1;
-        this->using_registry_ = 0;
+        this->persistent_ = true;
+        this->using_registry_ = false;
         break;
       case 'b':
-        ACE_OS::free (this->persistent_file_);
-        this->persistent_file_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->persistent_file_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
       case 'l':
 #if defined (ACE_HAS_THREADS)
-        this->enable_locking_ = 1;
+        this->enable_locking_ = true;
 #endif /* ACE_HAS_THREADS */
         break;
       case 'r': // win32 registry implementation
 #if defined (ACE_WIN32)
-        if (this->persistent_ == 0)
-          this->using_registry_ = 1;
+        if (!this->persistent_)
+          this->using_registry_ = true;
         break;
 #else /* ACE_WIN32 */
         ORBSVCS_ERROR_RETURN ((
@@ -62,7 +52,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         );
 #endif /* ACE_WIN32 */
       case 'm':
-        this->support_multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
+        this->support_multicast_ = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
       case '?':  // display help for use of the server.
       default:
@@ -89,10 +79,10 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-const char *
+char const *
 Options::ior_output_file () const
 {
-  return this->ior_output_file_;
+  return this->ior_output_file_.c_str ();
 }
 
 int
@@ -101,10 +91,10 @@ Options::persistent () const
   return this->persistent_;
 }
 
-const char *
+char const *
 Options::persistent_file () const
 {
-  return this->persistent_file_;
+  return this->persistent_file_.c_str ();
 }
 
 int

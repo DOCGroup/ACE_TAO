@@ -16,15 +16,12 @@
 be_visitor_valuetype_field_ci::be_visitor_valuetype_field_ci (
     be_visitor_context *ctx
   )
-  : be_visitor_decl (ctx),
-    in_obv_space_ (false)
+  : be_visitor_decl (ctx)
 {
   setenclosings ("");
 }
 
-be_visitor_valuetype_field_ci::~be_visitor_valuetype_field_ci ()
-{
-}
+be_visitor_valuetype_field_ci::~be_visitor_valuetype_field_ci () = default;
 
 int
 be_visitor_valuetype_field_ci::visit_field (be_field *node)
@@ -198,13 +195,13 @@ be_visitor_valuetype_field_ci::visit_union (be_union *node)
 }
 
 void
-be_visitor_valuetype_field_ci::setenclosings (const char *pre)
+be_visitor_valuetype_field_ci::setenclosings (std::string const& pre)
 {
   this->pre_op_ = pre;
 }
 
-const char*
-be_visitor_valuetype_field_ci::pre_op ()
+std::string const&
+be_visitor_valuetype_field_ci::pre_op () const
 {
   return this->pre_op_;
 }

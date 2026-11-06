@@ -21,9 +21,7 @@ be_visitor_exception_cs::be_visitor_exception_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception_cs::~be_visitor_exception_cs ()
-{
-}
+be_visitor_exception_cs::~be_visitor_exception_cs () = default;
 
 // Visit the Exception_Cs node and its scope.
 int be_visitor_exception_cs::visit_exception (be_exception *node)
@@ -183,11 +181,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "}" << be_nl_2;
 
   // Const downcast method.
-  *os << "const " << node->name () << " *" << be_nl;
+  *os << node->name () << " const *" << be_nl;
   *os << node->name () << "::_downcast (::CORBA::Exception const *_tao_excp)"
       << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return dynamic_cast<const " << node->local_name ()
+  *os << "return dynamic_cast<" << node->local_name () << " const"
       << " *> (_tao_excp);" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
@@ -264,8 +262,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "}" << be_nl_2;
     }
 
-  if ((ACE_OS::strcmp (node->full_name (), "CORBA::InvalidPolicies") == 0) ||
-      (ACE_OS::strcmp (node->full_name (), "CORBA::PolicyError") == 0))
+  if (node->full_name () == "CORBA::InvalidPolicies"
+      || node->full_name () == "CORBA::PolicyError")
     {
       *os << "// TAO extension - the virtual _type method." << be_nl
           << "::CORBA::TypeCode_ptr " << node->name ()
@@ -294,8 +292,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << be_nl_2;
     }
 
-  if ((ACE_OS::strcmp (node->full_name (), "CORBA::InvalidPolicies") != 0) &&
-      (ACE_OS::strcmp (node->full_name (), "CORBA::PolicyError") != 0))
+  if (node->full_name () != "CORBA::InvalidPolicies"
+      && node->full_name () != "CORBA::PolicyError")
     {
       if (be_global->tc_support ())
         {

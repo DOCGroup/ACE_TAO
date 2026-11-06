@@ -29,9 +29,7 @@ be_finder::be_finder (UTL_ScopedName *n)
 {
 }
 
-be_finder::~be_finder ()
-{
-}
+be_finder::~be_finder () = default;
 
 void
 be_finder::destroy ()

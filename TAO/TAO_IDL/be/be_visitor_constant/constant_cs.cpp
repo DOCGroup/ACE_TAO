@@ -16,9 +16,7 @@ be_visitor_constant_cs::be_visitor_constant_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_constant_cs::~be_visitor_constant_cs ()
-{
-}
+be_visitor_constant_cs::~be_visitor_constant_cs () = default;
 
 // visit the Constant_cs node and its scope
 int
@@ -31,8 +29,8 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
       return 0;
     }
 
-  AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
-  bool in_class = (snt != AST_Decl::NT_root
+  AST_Decl::NodeType const snt = node->defined_in ()->scope_node_type ();
+  bool const in_class = (snt != AST_Decl::NT_root
                    && snt != AST_Decl::NT_module);
   if (be_global->gen_inline_constants () && !in_class)
     {
@@ -40,7 +38,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
       return 0;
     }
 
-  AST_Expression::ExprType etype = node->et ();
+  AST_Expression::ExprType const etype = node->et ();
   bool const forbidden_in_class = (in_class
                              && (etype == AST_Expression::EV_string
                                  || etype == AST_Expression::EV_wstring
@@ -48,7 +46,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
                                  || etype == AST_Expression::EV_double
                                  || etype == AST_Expression::EV_longdouble));
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
