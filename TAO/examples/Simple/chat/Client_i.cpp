@@ -18,6 +18,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 Client_i::Client_i ()
   : nickname_ ("noname")
 {
@@ -169,9 +171,9 @@ Client_i::handle_input (ACE_HANDLE)
   try
     {
       // Check if the user wants to quit.
-      if (ACE_OS::strncmp (buf,
-                           QUIT_STRING,
-                           ACE_OS::strlen (QUIT_STRING)) == 0)
+      if (std::strncmp (buf,
+                        QUIT_STRING,
+                        std::strlen (QUIT_STRING)) == 0)
         {
           // Remove ourselves from the server.
           try
