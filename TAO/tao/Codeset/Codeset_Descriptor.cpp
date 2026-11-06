@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "tao/Codeset/Codeset_Descriptor.h"
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 
@@ -18,25 +17,15 @@
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
-#include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
-{
-  Translator_Node *temp = trans_base_;
-  while (temp)
-    {
-      temp = trans_base_->next_;
-      // don't need to delete the associated translator factory, it is
-      // owned by the service registry
-      delete trans_base_;
-      trans_base_ = temp;
-    }
-}
+  = default;
 
 void
-TAO_Codeset_Descriptor::ncs (const ACE_TCHAR *name)
+TAO_Codeset_Descriptor::ncs (ACE_TCHAR const *name)
 {
   ACE_CDR::ULong n = 0;
   if (ACE_Codeset_Registry::locale_to_registry
@@ -75,7 +64,7 @@ TAO_Codeset_Descriptor::ncs () const
 int
 TAO_Codeset_Descriptor::num_translators () const
 {
-  return this->num_translators_;
+  return static_cast<int> (this->translators_.size ());
 }
 
 int
@@ -85,31 +74,17 @@ TAO_Codeset_Descriptor::max_bytes () const
 }
 
 void
-TAO_Codeset_Descriptor::add_translator (const ACE_TCHAR *name)
+TAO_Codeset_Descriptor::add_translator (ACE_TCHAR const *name)
 {
-  std::unique_ptr<Translator_Node> node = std::make_unique<Translator_Node> ();
-  node->name_ = name;
-
-  if (this->trans_base_ == nullptr)
-    {
-      this->trans_base_ = node.get ();
-    }
-  else
-    {
-      Translator_Node *temp = this->trans_base_;
-      while (temp->next_ != nullptr)
-        temp = temp->next_;
-      temp->next_ = node.get ();
-    }
-
-  ++this->num_translators_;
-  node.release ();
+  Translator_Node node;
+  node.name_ = name;
+  this->translators_.push_back (std::move (node));
 }
 
-TAO_Codeset_Descriptor::Translator_Node *
+TAO_Codeset_Descriptor::Translator_List &
 TAO_Codeset_Descriptor::translators ()
 {
-  return this->trans_base_;
+  return this->translators_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

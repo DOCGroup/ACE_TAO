@@ -20,17 +20,16 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class NCS_TO_TCS>
-TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::~TAO_Codeset_Translator_Factory_T ()
-{
-  delete translator_;
-}
+TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::~TAO_Codeset_Translator_Factory_T () = default;
 
 template<class NCS_TO_TCS>
 int
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init (int argc, ACE_TCHAR* argv[])
 {
   this->TAO_Codeset_Translator_Factory::init (argc,argv);
-  ACE_NEW_RETURN (translator_,NCS_TO_TCS,-1);
+  NCS_TO_TCS *translator = nullptr;
+  ACE_NEW_RETURN (translator, NCS_TO_TCS, -1);
+  this->translator_.reset (translator);
   if( TAO_debug_level > 0 )
     TAOLIB_DEBUG((LM_DEBUG, "TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init() entered\n"));
   return 0;
@@ -60,7 +59,7 @@ TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::assign (TAO_InputCDR *cdr) const
 {
   if (cdr)
     {
-      this->assign_i(cdr,this->translator_);
+      this->assign_i (cdr, this->translator_.get ());
     }
 }
 
@@ -72,7 +71,7 @@ TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::assign (TAO_OutputCDR *cdr) const
 {
   if (cdr)
     {
-      this->assign_i(cdr,this->translator_);
+      this->assign_i (cdr, this->translator_.get ());
     }
 }
 

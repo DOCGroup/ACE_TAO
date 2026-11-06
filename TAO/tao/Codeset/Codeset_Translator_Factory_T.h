@@ -15,10 +15,11 @@
 
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,7 +68,7 @@ private:
   TAO_Codeset_Translator_Factory_T (TAO_Codeset_Translator_Factory_T &&) = delete;
   TAO_Codeset_Translator_Factory_T &operator= (TAO_Codeset_Translator_Factory_T &&) = delete;
 
-  NCS_TO_TCS *translator_ {};
+  std::unique_ptr<NCS_TO_TCS> translator_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

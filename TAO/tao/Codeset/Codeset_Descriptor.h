@@ -23,6 +23,7 @@
 #include "tao/Codeset_Descriptor_Base.h"
 
 #include <string>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,18 +39,20 @@ public:
   struct Translator_Node
   {
     std::basic_string<ACE_TCHAR> name_ {};
+    // Borrowed; the ACE service registry owns the factory.
     TAO_Codeset_Translator_Factory *translator_factory_ {};
-    Translator_Node *next_ {};
   };
 
+  using Translator_List = std::vector<Translator_Node>;
+
   void ncs (ACE_CDR::ULong ncs);
-  void ncs (const ACE_TCHAR *name) override;
+  void ncs (ACE_TCHAR const *name) override;
   ACE_CDR::ULong ncs () const;
   int max_bytes () const;
   int num_translators () const;
 
-  void add_translator (const ACE_TCHAR *name) override;
-  Translator_Node *translators ();
+  void add_translator (ACE_TCHAR const *name) override;
+  Translator_List &translators ();
 
 private:
   TAO_Codeset_Descriptor (TAO_Codeset_Descriptor const &) = delete;
@@ -59,8 +62,7 @@ private:
 
   ACE_CDR::ULong ncs_ {};
   int max_bytes_ {1};
-  int num_translators_ {};
-  Translator_Node *trans_base_ {};
+  Translator_List translators_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
