@@ -90,7 +90,7 @@ TAO_PG_Default_Property_Validator::validate_criteria (
         }
       else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue const* factories = nullptr;
+  PortableGroup::FactoriesValue const* factories = {};
           if (!(property.val >>= factories))
             invalid_criteria[p++] = property;
           else

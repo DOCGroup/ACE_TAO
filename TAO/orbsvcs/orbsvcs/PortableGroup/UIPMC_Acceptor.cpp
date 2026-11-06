@@ -103,7 +103,7 @@ TAO_UIPMC_Acceptor::open (
   ACE_INET_Addr addr;
 
   char const *port_separator_loc = std::strchr (address, ':');
-  char const *specified_hostname = nullptr;
+  char const *specified_hostname = {};
   char tmp_host[MAXHOSTNAMELEN + 1];
 
 #if defined (ACE_HAS_IPV6)

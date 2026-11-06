@@ -57,7 +57,7 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
 
   while (arg_shifter.is_anything_left ())
     {
-      ACE_TCHAR const *current_arg = nullptr;
+  ACE_TCHAR const *current_arg = {};
 
       // This option lets you override the default
       if (0 != (current_arg = arg_shifter.get_the_parameter

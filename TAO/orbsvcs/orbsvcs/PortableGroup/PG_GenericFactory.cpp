@@ -463,7 +463,7 @@ TAO_PG_GenericFactory::process_criteria (
     }
 
   // Factories
-  PortableGroup::FactoryInfos const *factory_infos_tmp = nullptr;
+  PortableGroup::FactoryInfos const *factory_infos_tmp = {};
   name[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
   if (TAO_PG::get_property_value (name, props.in (), value1)
       && !(value1 >>= factory_infos_tmp))
