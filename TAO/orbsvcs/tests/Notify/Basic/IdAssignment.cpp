@@ -23,7 +23,7 @@ IdAssignment::parse_args (int argc,
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    const ACE_TCHAR *current_arg = 0;
+    ACE_TCHAR const *current_arg {};
 
     while (arg_shifter.is_anything_left ())
     {
@@ -364,15 +364,15 @@ IdAssignment::destroy_supplier_admin (
 void
 IdAssignment::run_test()
 {
-  CosNotifyChannelAdmin::ChannelID* ec_id = 0;
+  CosNotifyChannelAdmin::ChannelID *ec_id {};
   ACE_NEW (ec_id,
            CosNotifyChannelAdmin::ChannelID [this->ec_count_]);
 
-  CosNotifyChannelAdmin::AdminID* consumer_admin_id = 0;
+  CosNotifyChannelAdmin::AdminID *consumer_admin_id {};
   ACE_NEW (consumer_admin_id,
            CosNotifyChannelAdmin::AdminID [this->consumer_admin_count_]);
 
-  CosNotifyChannelAdmin::AdminID* supplier_admin_id = 0;
+  CosNotifyChannelAdmin::AdminID *supplier_admin_id {};
   ACE_NEW (supplier_admin_id,
            CosNotifyChannelAdmin::AdminID [this->supplier_admin_count_]);
 
@@ -500,7 +500,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test.run_test ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Error: ");
       return 1;

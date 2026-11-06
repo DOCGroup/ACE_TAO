@@ -30,11 +30,11 @@ class ExtendedFilter : public Notify_Test_Client
 public:
   // Initialization and termination code
   ExtendedFilter ();
-  virtual ~ExtendedFilter ();
+  ~ExtendedFilter () override;
 
   /// initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Run the test.
   void run_test ();

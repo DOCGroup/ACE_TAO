@@ -30,11 +30,11 @@ class Sequence;
 class SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer
 {
 public:
-  SequencePushConsumer (Sequence* client);
+  explicit SequencePushConsumer (Sequence *client);
 
   // = SequencePushConsumer methods
-  virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications);
+  void push_structured_events (
+        CosNotification::EventBatch const &notifications) override;
 
 protected:
   Sequence* test_client_;
@@ -46,10 +46,10 @@ class SequencePushSupplier : public TAO_Notify_Tests_SequencePushSupplier
 {
 public:
   /// Constructor.
-  SequencePushSupplier (Sequence * test_client);
+  explicit SequencePushSupplier (Sequence *test_client);
 
   /// Destructor.
-  virtual ~SequencePushSupplier ();
+  ~SequencePushSupplier () override;
 
 protected:
   Sequence* test_client_;
@@ -62,14 +62,14 @@ class Sequence : public Notify_Test_Client
 public:
   // Initialization and termination code.
   Sequence ();
-  virtual ~Sequence ();
+  ~Sequence () override;
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]) ;
+                  ACE_TCHAR *argv[]) override;
 
   /// Initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Called when an event is received.
   void on_event_received ();

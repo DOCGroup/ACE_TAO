@@ -79,7 +79,6 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
     consumer->disconnect ();
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "PushConsumer has been disconnected.\n"));
-    consumer = 0;
   }
 }
 
@@ -97,7 +96,6 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
     consumer->disconnect ();
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer has been disconnected.\n"));
-    consumer = 0;
   }
 }
 
@@ -116,7 +114,6 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
 
     if (TAO_debug_level)
       ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer has been disconnected.\n"));
-    consumer = 0;
   }
 }
 
@@ -341,19 +338,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       client.end_test ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
     }
 
-  int status = 0;
+  int status {};
 
   try
     {
       status = client.check_results ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       status = 1;

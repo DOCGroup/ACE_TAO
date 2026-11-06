@@ -31,11 +31,11 @@ class Event_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsu
 {
 public:
   /// Constructor.
-  Event_StructuredPushConsumer (Events *test_client);
+  explicit Event_StructuredPushConsumer (Events *test_client);
 
   // = StructuredPushSupplier methods.
-  virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+      CosNotification::StructuredEvent const &notification) override;
 
 protected:
   Events * test_client_;
@@ -47,10 +47,10 @@ class Event_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSuppl
 {
 public:
   /// Constructor.
-  Event_StructuredPushSupplier (Events * test_client);
+  explicit Event_StructuredPushSupplier (Events *test_client);
 
   /// Destructor.
-  virtual ~Event_StructuredPushSupplier ();
+  ~Event_StructuredPushSupplier () override;
 
 protected:
   Events* test_client_;
@@ -63,14 +63,14 @@ class Events : public Notify_Test_Client
 public:
   // Initialization and termination code.
   Events ();
-  virtual ~Events ();
+  ~Events () override;
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]) ;
+                  ACE_TCHAR *argv[]) override;
 
   /// Initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Called when an event is received.
   void on_event_received ();

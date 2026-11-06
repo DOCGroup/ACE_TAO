@@ -134,7 +134,7 @@ ConnectDisconnect::parse_args(int argc, ACE_TCHAR *argv[])
   ACE_Arg_Shifter arg_shifter (argc,
                               argv);
 
-    const ACE_TCHAR *current_arg = 0;
+    ACE_TCHAR const *current_arg {};
 
     while (arg_shifter.is_anything_left ())
     {
@@ -191,9 +191,9 @@ ConnectDisconnect::create_EC ()
 void
 ConnectDisconnect::run_test ()
 {
-  for (int iterations = 0; iterations < count_; ++iterations)
+  for (int iterations {}; iterations < count_; ++iterations)
     {
-      int i = 0;
+      int i {};
 
       for (i = 0; i < this->consumers_; ++i)
         {
@@ -315,19 +315,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       client.end_test ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
     }
 
-  int status = 0;
+  int status {};
 
   try
     {
       status = client.check_results ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       status = 1;
