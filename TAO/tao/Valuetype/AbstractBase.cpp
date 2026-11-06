@@ -225,7 +225,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
   abs = nullptr;
   CORBA::Boolean discriminator = false;
   ACE_InputCDR::to_boolean tb (discriminator);
-  TAO_ORB_Core *orb_core = nullptr;
+  TAO_ORB_Core *orb_core {};
 
   if (strm >> tb)
     {
