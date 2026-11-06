@@ -47,7 +47,7 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   /// Our connect creation strategy
-  TAO_SCIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  TAO_SCIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SCIOP_CONNECT_CREATION_STRATEGY
@@ -58,7 +58,7 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
     connect_creation_strategy);
 
   /// Our activation strategy
-  TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
@@ -122,7 +122,7 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 {
   TAO_Endpoint *tao_endpoint = desc.endpoint ();
 
-  TAO_Transport *transport = nullptr;
+  TAO_Transport *transport {};
 
   // @@ ATL folks, is this while loop needed?
   // TAO_Default_Endpoint_Selector has this code already, i.e., the
@@ -173,7 +173,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
   // polling the reactor for connection completion. However, the side-effect
   // was to cause the connection to timeout immediately.
 
-  TAO_SCIOP_Connection_Handler *svc_handler = nullptr;
+  TAO_SCIOP_Connection_Handler *svc_handler {};
 
   // Connect.
   ACE_Multihomed_INET_Addr multihomed;
@@ -323,7 +323,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
 TAO_Profile *
 TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
-  TAO_Profile *pfile = nullptr;
+  TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_SCIOP_Profile (this->orb_core ()),
                   0);
@@ -346,7 +346,7 @@ TAO_SCIOP_Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_SCIOP_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (

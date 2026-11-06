@@ -86,7 +86,7 @@ TAO_DIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
           && std::strcmp (this->hosts_[i], this->hosts_[0]) == 0)
         continue;
 
-      TAO_DIOP_Profile *pfile = nullptr;
+      TAO_DIOP_Profile *pfile {};
       ACE_NEW_RETURN (pfile,
                       TAO_DIOP_Profile (this->hosts_[i],
                                         this->addrs_[i].get_port_number (),
@@ -127,7 +127,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           CORBA::Short priority)
 {
   CORBA::ULong index = 0;
-  TAO_DIOP_Profile *diop_profile = nullptr;
+  TAO_DIOP_Profile *diop_profile {};
 
   // First see if <mprofile> already contains a DIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -183,7 +183,7 @@ TAO_DIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           std::strcmp (this->hosts_[index], this->hosts_[0]) == 0)
         continue;
 
-      TAO_DIOP_Endpoint *endpoint = nullptr;
+      TAO_DIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO_DIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),
@@ -314,13 +314,13 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
-  ACE_INET_Addr *addrs = nullptr;
+  ACE_INET_Addr *addrs {};
   ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[this->endpoint_count_],
                   -1);
   this->addrs_.reset (addrs);
 
-  char **hosts = nullptr;
+  char **hosts {};
   ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);
@@ -671,7 +671,7 @@ TAO_DIOP_Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
                                            char *&host)
 {
   int result = 0;
-  char const *tmp = nullptr;
+  char const *tmp {};
 
   // If the IP address in the INET_Addr is the IN(6)ADDR_ANY address,
   // then force the actual IP address to be used by initializing a new
@@ -717,7 +717,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   // it.  The hostnames will then be used when creating a
   // TAO_DIOP_Profile for each endpoint setup on the probed
   // network interfaces.
-  ACE_INET_Addr *if_addrs = nullptr;
+  ACE_INET_Addr *if_addrs {};
   size_t if_cnt = 0;
 
   int const interface_result = ACE::get_ip_interfaces (if_cnt, if_addrs);
@@ -743,7 +743,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 
       if_cnt = 1; // Force the network interface count to be one.
       safe_if_addrs.reset ();
-      ACE_INET_Addr *default_if_addrs = nullptr;
+      ACE_INET_Addr *default_if_addrs {};
       ACE_NEW_RETURN (default_if_addrs,
                       ACE_INET_Addr[if_cnt],
                       -1);
@@ -854,13 +854,13 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
       return -1;
     }
 
-  ACE_INET_Addr *addrs = nullptr;
+  ACE_INET_Addr *addrs {};
   ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[this->endpoint_count_],
                   -1);
   this->addrs_.reset (addrs);
 
-  char **hosts = nullptr;
+  char **hosts {};
   ACE_NEW_RETURN (hosts,
                   char *[this->endpoint_count_],
                   -1);

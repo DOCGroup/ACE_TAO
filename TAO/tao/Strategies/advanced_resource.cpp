@@ -122,7 +122,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_TCHAR const *current_arg = nullptr;
+  ACE_TCHAR const *current_arg {};
   while (arg_shifter.is_anything_left ())
     {
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBReactorRegistry")) == 0)
@@ -387,7 +387,7 @@ TAO_Advanced_Resource_Factory::get_protocol_factories ()
 ACE_Reactor_Impl *
 TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
 {
-  ACE_Reactor_Impl *impl = nullptr;
+  ACE_Reactor_Impl *impl {};
 
   /*
    * Hook for specializing the Reactor implementation in TAO.
@@ -478,7 +478,7 @@ using NULL_LOCK_ALLOCATOR = ACE_Allocator_Adapter<NULL_LOCK_MALLOC>;
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->cdr_allocator_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -496,7 +496,7 @@ TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator ()
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->cdr_allocator_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -514,7 +514,7 @@ TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator ()
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->cdr_allocator_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -533,7 +533,7 @@ TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator ()
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::amh_response_handler_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->amh_response_handler_allocator_lock_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -551,7 +551,7 @@ TAO_Advanced_Resource_Factory::amh_response_handler_allocator ()
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::ami_response_handler_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->ami_response_handler_allocator_lock_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -576,7 +576,7 @@ TAO_Advanced_Resource_Factory::input_cdr_allocator_type_locked ()
 TAO_Connection_Purging_Strategy *
 TAO_Advanced_Resource_Factory::create_purging_strategy ()
 {
-  TAO_Connection_Purging_Strategy *strategy = nullptr;
+  TAO_Connection_Purging_Strategy *strategy {};
 
   switch (this->connection_purging_type_)
     {
@@ -613,7 +613,7 @@ TAO_Advanced_Resource_Factory::create_purging_strategy ()
 TAO_LF_Strategy *
 TAO_Advanced_Resource_Factory::create_lf_strategy ()
 {
-  TAO_LF_Strategy *strategy = nullptr;
+  TAO_LF_Strategy *strategy {};
 
   if (this->reactor_type_ == TAO_REACTOR_SELECT_ST)
     {

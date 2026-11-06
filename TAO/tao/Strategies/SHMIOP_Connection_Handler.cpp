@@ -37,7 +37,7 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_
   : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core)
 {
-  TAO_SHMIOP_Transport *specific_transport = nullptr;
+  TAO_SHMIOP_Transport *specific_transport {};
   ACE_NEW (specific_transport,
           TAO_SHMIOP_Transport(this, orb_core));
 

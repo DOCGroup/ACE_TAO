@@ -33,7 +33,7 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
   if (this->register_orb_initializer () == -1)
     return -1;
 
-  TAO_Optimized_Connection_Endpoint_Selector *selector = nullptr;
+  TAO_Optimized_Connection_Endpoint_Selector *selector {};
   ACE_NEW_RETURN (selector,
                   TAO_Optimized_Connection_Endpoint_Selector(connect_timeout),
                   -1);

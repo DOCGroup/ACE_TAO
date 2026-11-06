@@ -64,7 +64,7 @@ TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -484,7 +484,7 @@ TAO_SHMIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_SHMIOP_Endpoint *endpoint = nullptr;
+          TAO_SHMIOP_Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO_SHMIOP_Endpoint (endpoints[i].host,
                                                endpoints[i].port,

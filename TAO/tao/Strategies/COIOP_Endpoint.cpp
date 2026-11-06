@@ -55,7 +55,7 @@ TAO_COIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_COIOP_Endpoint::duplicate ()
 {
-  TAO_COIOP_Endpoint *endpoint = nullptr;
+  TAO_COIOP_Endpoint *endpoint {};
 
   ACE_NEW_RETURN (endpoint,
                   TAO_COIOP_Endpoint (this->uuid_),

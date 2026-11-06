@@ -40,7 +40,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_DIOP_Transport *specific_transport = nullptr;
+  TAO_DIOP_Transport *specific_transport {};
   ACE_NEW (specific_transport,
            TAO_DIOP_Transport (this, orb_core));
 

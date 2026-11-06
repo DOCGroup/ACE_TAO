@@ -40,7 +40,7 @@ TAO_DIOP_Protocol_Factory::options_delimiter () const
 TAO_Acceptor *
 TAO_DIOP_Protocol_Factory::make_acceptor ()
 {
-  TAO_Acceptor *acceptor = nullptr;
+  TAO_Acceptor *acceptor {};
 
   ACE_NEW_RETURN (acceptor,
                   TAO_DIOP_Acceptor,
@@ -58,7 +58,7 @@ TAO_DIOP_Protocol_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
 TAO_Connector *
 TAO_DIOP_Protocol_Factory::make_connector ()
 {
-  TAO_Connector *connector = nullptr;
+  TAO_Connector *connector {};
 
   ACE_NEW_RETURN (connector,
                   TAO_DIOP_Connector,

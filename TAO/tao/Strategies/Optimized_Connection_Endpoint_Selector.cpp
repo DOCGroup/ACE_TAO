@@ -56,7 +56,7 @@ int
 TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
                                                            TAO::Profile_Transport_Resolver *r)
 {
-  TAO_Endpoint *effective_endpoint = nullptr;
+  TAO_Endpoint *effective_endpoint {};
 
   r->profile(p);
   effective_endpoint = p->endpoint ();

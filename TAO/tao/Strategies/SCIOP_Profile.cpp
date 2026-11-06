@@ -64,7 +64,7 @@ TAO_SCIOP_Profile::~TAO_SCIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -97,7 +97,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 
   for (int i=endpointSeq.length() - 1; i > 0 ; i--)
     {
-      TAO_SCIOP_Endpoint *endpoint = nullptr;
+      TAO_SCIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO_SCIOP_Endpoint (endpointSeq[i],
                                           this->endpoint_.port_,
@@ -491,7 +491,7 @@ TAO_SCIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_SCIOP_Endpoint *endpoint = nullptr;
+          TAO_SCIOP_Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO_SCIOP_Endpoint (endpoints[i].host,
                                              endpoints[i].port,

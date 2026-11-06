@@ -35,7 +35,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core
   : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core)
 {
-  TAO_UIOP_Transport *specific_transport = nullptr;
+  TAO_UIOP_Transport *specific_transport {};
   ACE_NEW (specific_transport,
            TAO_UIOP_Transport (this, orb_core));
 

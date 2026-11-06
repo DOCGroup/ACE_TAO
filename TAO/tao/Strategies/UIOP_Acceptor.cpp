@@ -70,7 +70,7 @@ TAO_UIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
       && mprofile.grow (count + 1) == -1)
     return -1;
 
-  TAO_UIOP_Profile *pfile = nullptr;
+  TAO_UIOP_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_UIOP_Profile (addr,
                                     object_key,
@@ -106,8 +106,8 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           TAO_MProfile &mprofile,
                                           CORBA::Short priority)
 {
-  TAO_Profile *pfile = nullptr;
-  TAO_UIOP_Profile *uiop_profile = nullptr;
+  TAO_Profile *pfile {};
+  TAO_UIOP_Profile *uiop_profile {};
 
   // First see if <mprofile> already contains a UIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -136,7 +136,7 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
         return 0;
 
-      TAO_UIOP_Endpoint *endpoint = nullptr;
+      TAO_UIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO_UIOP_Endpoint (addr),
                       -1);
@@ -235,19 +235,19 @@ int
 TAO_UIOP_Acceptor::open_i (const char *rendezvous,
                            ACE_Reactor *reactor)
 {
-  TAO_UIOP_CREATION_STRATEGY *creation_strategy = nullptr;
+  TAO_UIOP_CREATION_STRATEGY *creation_strategy {};
   ACE_NEW_RETURN (creation_strategy,
                   TAO_UIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
   this->creation_strategy_.reset (creation_strategy);
 
-  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy {};
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_UIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
   this->concurrency_strategy_.reset (concurrency_strategy);
 
-  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy = nullptr;
+  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy {};
   ACE_NEW_RETURN (accept_strategy,
                   TAO_UIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
@@ -373,7 +373,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       return -1;
     }
 
-  char *rendezvous = nullptr;
+  char *rendezvous {};
 
   // Get rendezvous_point
   int const read_result = cdr.read_string (rendezvous);

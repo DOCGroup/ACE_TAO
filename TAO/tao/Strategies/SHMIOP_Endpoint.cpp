@@ -144,7 +144,7 @@ TAO_SHMIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_SHMIOP_Endpoint::duplicate ()
 {
-  TAO_SHMIOP_Endpoint *endpoint = nullptr;
+  TAO_SHMIOP_Endpoint *endpoint {};
   ACE_NEW_RETURN (endpoint,
                   TAO_SHMIOP_Endpoint (this->host_.in (),
                                        this->port_,
