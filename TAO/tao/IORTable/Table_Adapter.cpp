@@ -31,7 +31,7 @@ TAO_Table_Adapter::~TAO_Table_Adapter () = default;
 std::unique_ptr<ACE_Lock>
 TAO_Table_Adapter::create_lock (TAO_SYNCH_MUTEX &thread_lock)
 {
-  ACE_Lock *the_lock = nullptr;
+  ACE_Lock *the_lock {};
   ACE_NEW_NORETURN (the_lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock));
   return std::unique_ptr<ACE_Lock> (the_lock);
 }
@@ -40,7 +40,7 @@ void
 TAO_Table_Adapter::open ()
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-  TAO_IOR_Table_Impl *impl = nullptr;
+  TAO_IOR_Table_Impl *impl {};
   ACE_NEW_THROW_EX (impl,
                     TAO_IOR_Table_Impl (),
                     CORBA::NO_MEMORY ());
@@ -185,7 +185,7 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
 TAO_Adapter*
 TAO_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
-  TAO_Adapter* ptr = nullptr;
+  TAO_Adapter* ptr {};
   ACE_NEW_NORETURN (ptr, TAO_Table_Adapter (*oc));
   return ptr;
 }
