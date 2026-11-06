@@ -44,8 +44,12 @@
 #ifndef EC_MCAST_H
 #define EC_MCAST_H
 
+#include <array>
 #include "ace/SString.h"
 #include <atomic>
+#include <memory>
+#include <string>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -78,19 +82,16 @@ class ECM_Federation
   //   federation.
   //
 public:
-  ECM_Federation (char* name,
+  ECM_Federation (std::string name,
                   CORBA::UShort mcast_port,
-                  int supplier_types,
-                  char** supplier_names,
-                  int consumer_types,
-                  char** consumer_names);
-  // Constructor, it assumes ownership of the buffers, strings must be
-  // allocated using CORBA::string_alloc(), buffers using operator new.
+                  std::vector<std::string> supplier_names,
+                  std::vector<std::string> consumer_names);
+  ECM_Federation (ECM_Federation const&) = delete;
+  ECM_Federation (ECM_Federation&&) = delete;
+  ECM_Federation& operator= (ECM_Federation const&) = delete;
+  ECM_Federation& operator= (ECM_Federation&&) = delete;
 
-  ~ECM_Federation ();
-  // Dtor
-
-  const char* name () const;
+  char const* name () const;
   // The name of the federation....
 
   CORBA::UShort mcast_port () const;
@@ -99,7 +100,7 @@ public:
   int supplier_types () const;
   // The number of different event types published by this federation.
 
-  const char* supplier_name (CORBA::ULong i) const;
+  char const* supplier_name (CORBA::ULong i) const;
   // The name (mcast addr in A.B.C.D format) of the event type <i>
 
   CORBA::ULong supplier_ipaddr (CORBA::ULong i) const;
@@ -108,7 +109,7 @@ public:
   int consumer_types () const;
   // The number of different event types consumed by this federation.
 
-  const char* consumer_name (CORBA::ULong i) const;
+  char const* consumer_name (CORBA::ULong i) const;
   // The name (mcast addr in A.B.C.D format) of the event type <i>
 
   CORBA::ULong consumer_ipaddr (CORBA::ULong i) const;
@@ -129,16 +130,14 @@ public:
   // (type,source) to UDP addresses (ipaddr,port)
 
 private:
-  char* name_;
+  std::string name_;
   CORBA::UShort mcast_port_;
 
-  int supplier_types_;
-  char** supplier_names_;
-  CORBA::ULong* supplier_ipaddr_;
+  std::vector<std::string> supplier_names_;
+  std::vector<CORBA::ULong> supplier_ipaddr_;
 
-  int consumer_types_;
-  char** consumer_names_;
-  CORBA::ULong* consumer_ipaddr_;
+  std::vector<std::string> consumer_names_;
+  std::vector<CORBA::ULong> consumer_ipaddr_;
 
   PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender_;
   // The sender
@@ -164,9 +163,13 @@ class ECM_Supplier : public POA_RtecEventComm::PushSupplier
   //   sent.
   //
 public:
-  ECM_Supplier (ECM_Local_Federation* federation);
+  explicit ECM_Supplier (ECM_Local_Federation* federation);
+  ECM_Supplier (ECM_Supplier const&) = delete;
+  ECM_Supplier (ECM_Supplier&&) = delete;
+  ECM_Supplier& operator= (ECM_Supplier const&) = delete;
+  ECM_Supplier& operator= (ECM_Supplier&&) = delete;
 
-  void open (const char* name,
+  void open (char const* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel);
   // This method connects the supplier to the EC.
 
@@ -180,7 +183,7 @@ public:
   RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
-  void push (const RtecEventComm::EventSet& events);
+  void push (RtecEventComm::EventSet const& events);
   void disconnect_push_consumer ();
   // Implement the callbacks for our consumer personality.
 
@@ -189,7 +192,7 @@ public:
 
 private:
   ECM_Local_Federation* federation_;
-  // To callback the federation.
+  // Borrowed; ECM_Driver owns the local federation.
 
   RtecEventComm::EventSourceID supplier_id_;
   // We generate an id based on the name....
@@ -216,9 +219,13 @@ class ECM_Consumer : public POA_RtecEventComm::PushConsumer
   //   This class connects as an event consumer to the EC.  The events
   //   are actually handled by the ECM_Local_Federation.
 public:
-  ECM_Consumer (ECM_Local_Federation* federation);
+  explicit ECM_Consumer (ECM_Local_Federation* federation);
+  ECM_Consumer (ECM_Consumer const&) = delete;
+  ECM_Consumer (ECM_Consumer&&) = delete;
+  ECM_Consumer& operator= (ECM_Consumer const&) = delete;
+  ECM_Consumer& operator= (ECM_Consumer&&) = delete;
 
-  void open (const char* name,
+  void open (char const* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
              unsigned int *seed);
   // This method connects the consumer to the EC.
@@ -232,12 +239,12 @@ public:
   // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
-  void push (RtecEventComm::EventSet const &events) override;
+  void push (RtecEventComm::EventSet const& events) override;
   void disconnect_push_consumer () override;
 
 private:
   ECM_Local_Federation* federation_;
-  // To callback.
+  // Borrowed; ECM_Driver owns the local federation.
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC using this proxy.
@@ -255,8 +262,12 @@ class ECM_Local_Federation
 public:
   ECM_Local_Federation (ECM_Federation *federation,
                         ECM_Driver *driver);
+  ECM_Local_Federation (ECM_Local_Federation const&) = delete;
+  ECM_Local_Federation (ECM_Local_Federation&&) = delete;
+  ECM_Local_Federation& operator= (ECM_Local_Federation const&) = delete;
+  ECM_Local_Federation& operator= (ECM_Local_Federation&&) = delete;
   // Constructor.
-  ~ECM_Local_Federation ();
+  ~ECM_Local_Federation () = default;
   // Destructor
 
   void open (int event_count,
@@ -274,10 +285,10 @@ public:
   // The supplier is ready to send a new event.
 
   void consumer_push (ACE_hrtime_t arrival,
-                      const RtecEventComm::EventSet& event);
+                      RtecEventComm::EventSet const& event);
   // The consumer just received an event.
 
-  const ECM_Federation *federation () const;
+  ECM_Federation const* federation () const;
   // The federation description.
 
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
@@ -296,21 +307,21 @@ public:
   // that we actually publish.
 
   // = Delegate on the federation description
-  const char* name () const;
+  char const* name () const;
   CORBA::UShort mcast_port () const;
   int supplier_types () const;
-  const char* supplier_name (CORBA::ULong i) const;
+  char const* supplier_name (CORBA::ULong i) const;
   CORBA::ULong supplier_ipaddr (CORBA::ULong i) const;
   int consumer_types () const;
-  const char* consumer_name (CORBA::ULong i) const;
+  char const* consumer_name (CORBA::ULong i) const;
   CORBA::ULong consumer_ipaddr (CORBA::ULong i) const;
 
 private:
-  ECM_Federation *federation_;
-  // The description of the events we send and receive.
+  ECM_Federation* federation_;
+  // Borrowed; ECM_Driver owns the federation description.
 
   ECM_Driver *driver_;
-  // The test driver.
+  // Borrowed; ECM_Driver owns this local federation.
 
   ECM_Consumer consumer_;
   ECM_Supplier supplier_;
@@ -348,7 +359,7 @@ private:
   // This object reads the events and pushes them into the EC. Notice
   // that it can receive events from multiple Event Handlers.
 
-  TAO_ECG_Mcast_EH* mcast_eh_;
+  std::unique_ptr<TAO_ECG_Mcast_EH> mcast_eh_;
   // The event handler, it receives callbacks from the reactor
   // whenever an event is available in some of the multicast groups,
   // it then forwards to the <mcast_recv_> object for processing and
@@ -365,7 +376,7 @@ private:
   CORBA::ULong publication_change_period_;
   // The (average) period between publication changes, in usecs
 
-  CORBA::Boolean* subscription_subset_;
+  std::vector<CORBA::Boolean> subscription_subset_;
   // The events we are actually subscribed to.
 };
 
@@ -388,6 +399,10 @@ class ECM_Driver
   //
 public:
   ECM_Driver ();
+  ECM_Driver (ECM_Driver const&) = delete;
+  ECM_Driver (ECM_Driver&&) = delete;
+  ECM_Driver& operator= (ECM_Driver const&) = delete;
+  ECM_Driver& operator= (ECM_Driver&&) = delete;
 
   enum {
     MAX_EVENTS = 1024,
@@ -406,7 +421,6 @@ public:
   void federation_has_shutdown (ECM_Local_Federation *federation);
   // One of the federations has completed its simulation, once all of
   // them finish the test exists.
-
 
 private:
   void open_federations (RtecEventChannelAdmin::EventChannel_ptr ec);
@@ -441,12 +455,12 @@ private:
   int parse_config_file ();
   // parse the command line arguments
 
-  int parse_name_list (FILE* file, int n, char** names,
-                       const char* error_msg);
+  int parse_name_list (FILE* file, int n, std::vector<std::string>& names,
+                       char const* error_msg);
   // parse one of the lists of names in the federation definition.
 
   int skip_blanks (FILE* file,
-                   const char* error_msg);
+                   char const* error_msg);
   // skip the blanks in the file.
 
   void dump_results ();
@@ -459,26 +473,26 @@ private:
   int event_count_;
   // How many events will the suppliers send
 
-  ACE_TCHAR* config_filename_;
+  ACE_TCHAR const* config_filename_;
   // The name of the file where we read the configuration.
 
-  const ACE_TCHAR* pid_filename_;
+  ACE_TCHAR const* pid_filename_;
   // The name of a file where the process stores its pid
 
   int local_federations_count_;
   // How many federations are running in this process (or, if you
   // prefer, in how many federations does this process participate).
 
-  ECM_Local_Federation* local_federations_[MAX_LOCAL_FEDERATIONS];
+  std::array<std::unique_ptr<ECM_Local_Federation>, MAX_LOCAL_FEDERATIONS> local_federations_;
   // The local federations.
 
-  char* local_names_[MAX_LOCAL_FEDERATIONS];
+  std::array<std::string, MAX_LOCAL_FEDERATIONS> local_names_;
   // The names of the local federations.
 
   int all_federations_count_;
   // The total number of federations we belong to.
 
-  ECM_Federation* all_federations_[MAX_FEDERATIONS];
+  std::array<std::unique_ptr<ECM_Federation>, MAX_FEDERATIONS> all_federations_;
   // All the federations.
 
   std::atomic<CORBA::ULong> federations_running_ {0};
