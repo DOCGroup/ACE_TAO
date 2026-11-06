@@ -112,7 +112,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 {
   while (!this->command_queue_.is_empty ())
     {
-      ACE_Command_Base *command = nullptr;
+      ACE_Command_Base *command {};
       this->command_queue_.dequeue_head (command);
       std::unique_ptr<ACE_Command_Base> command_guard (command);
       command_guard->execute ();

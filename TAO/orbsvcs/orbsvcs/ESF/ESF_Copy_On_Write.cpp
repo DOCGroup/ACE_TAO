@@ -175,7 +175,7 @@ template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
     ~TAO_ESF_Copy_On_Write_Write_Guard ()
 {
-  Collection *tmp = nullptr;
+  Collection *tmp {};
   {
     ACE_GUARD (ACE_SYNCH_MUTEX_T, ace_mon, this->mutex);
 

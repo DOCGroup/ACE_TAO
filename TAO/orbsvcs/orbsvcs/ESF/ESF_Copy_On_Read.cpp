@@ -26,7 +26,7 @@ TAO_ESF_Copy_On_Read<PROXY,COLLECTION,ITERATOR,ACE_LOCK>::
     for_each (TAO_ESF_Worker<PROXY> *worker)
 {
   // @@ Use an allocator for this memory...
-  PROXY **proxies = nullptr;
+  PROXY **proxies {};
   size_t size = 0;
   try
     {
