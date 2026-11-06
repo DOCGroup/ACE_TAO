@@ -524,6 +524,14 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
             }
 
           AST_Argument *original_arg = dynamic_cast<AST_Argument*> (d);
+          if (original_arg == nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("be_visitor_ami_pre_proc::")
+                                 ACE_TEXT ("create_sendc_operation - ")
+                                 ACE_TEXT ("invalid argument in operation scope\n")),
+                                0);
+            }
 
           if (original_arg->direction () == AST_Argument::dir_IN ||
               original_arg->direction () == AST_Argument::dir_INOUT)
