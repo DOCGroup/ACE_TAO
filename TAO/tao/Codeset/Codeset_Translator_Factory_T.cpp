@@ -27,7 +27,7 @@ int
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init (int argc, ACE_TCHAR* argv[])
 {
   this->TAO_Codeset_Translator_Factory::init (argc,argv);
-  NCS_TO_TCS *translator = nullptr;
+  NCS_TO_TCS *translator {};
   ACE_NEW_RETURN (translator, NCS_TO_TCS, -1);
   this->translator_.reset (translator);
   if( TAO_debug_level > 0 )

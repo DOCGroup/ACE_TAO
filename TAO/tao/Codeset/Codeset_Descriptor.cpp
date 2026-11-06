@@ -31,7 +31,7 @@ TAO_Codeset_Descriptor::ncs (ACE_TCHAR const *name)
   if (ACE_Codeset_Registry::locale_to_registry
       (ACE_TEXT_ALWAYS_CHAR(name), n) == 0)
     {
-      char **endPtr = nullptr;
+      char **endPtr {};
       n = static_cast<ACE_CDR::ULong> (
             ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(name), endPtr, 0));
     }
