@@ -115,7 +115,11 @@ public:
   CORBA::Boolean _non_existent () override;
 
   /// Query the Interface Repository for the interface definition.
+#if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   CORBA::InterfaceDef_ptr _get_interface () override;
+#else
+  CORBA::InterfaceDef_ptr _get_interface ();
+#endif
 
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Default _get_component: always returns CORBA::Object::_nil().
