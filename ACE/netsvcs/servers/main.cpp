@@ -8,6 +8,7 @@
 #include "Name_Handler.h"
 #include "Token_Handler.h"
 #include "Server_Logging_Handler.h"
+#include <array>
 
 static void
 end_event_loop_handler (int, siginfo_t *, ucontext_t *)
@@ -44,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // ACE_Service_Object_Ptr which is an <auto_ptr> specialized
           // for ACE_Service_Object.
 
-          ACE_TCHAR *l_argv[3] {};
+          std::array<ACE_TCHAR *, 3> l_argv {};
           ACE_TCHAR name_port[] =
             ACE_TEXT ("-p ") ACE_TEXT (ACE_DEFAULT_NAME_SERVER_PORT_STR);
 
@@ -52,7 +53,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_1 = ACE_SVC_INVOKE (ACE_Name_Acceptor);
 
-          if (sp_1->init (1, l_argv) == -1)
+          if (sp_1->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("Name Service")),
@@ -64,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_2 = ACE_SVC_INVOKE (ACE_TS_Server_Acceptor);
 
-          if (sp_2->init (1, l_argv) == -1)
+          if (sp_2->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("TS Server Acceptor")),
@@ -76,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           l_argv[2] = nullptr;
           ACE_Service_Object_Ptr sp_3 = ACE_SVC_INVOKE (ACE_TS_Clerk_Processor);
 
-          if (sp_3->init (2, l_argv) == -1)
+          if (sp_3->init (2, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("TS Clerk Processor")),
@@ -89,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           l_argv[1] = nullptr;
           ACE_Service_Object_Ptr sp_4 = ACE_SVC_INVOKE (ACE_Token_Acceptor);
 
-          if (sp_4->init (1, l_argv) == -1)
+          if (sp_4->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("Token Service")),
@@ -103,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Service_Object_Ptr sp_5 =
             ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor);
 
-          if (sp_5->init (1, l_argv) == -1)
+          if (sp_5->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("Threaded Logging Server")),
@@ -116,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Service_Object_Ptr sp_6 =
             ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
 
-          if (sp_6->init (1, l_argv) == -1)
+          if (sp_6->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("Logging Server")),
@@ -127,7 +128,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_Service_Object_Ptr sp_7 =
             ACE_SVC_INVOKE (ACE_Client_Logging_Acceptor);
 
-          if (sp_7->init (1, l_argv) == -1)
+          if (sp_7->init (1, l_argv.data ()) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("%p\n"),
                                ACE_TEXT ("Logging Client")),
