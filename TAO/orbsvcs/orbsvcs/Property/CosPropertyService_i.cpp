@@ -1581,7 +1581,7 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
                   CosPropertyService::Properties,
                   false);
 
-  COSPROPERTY_HASH_ENTRY *entry_ptr = nullptr;
+  COSPROPERTY_HASH_ENTRY *entry_ptr {};
 
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
     return false;
