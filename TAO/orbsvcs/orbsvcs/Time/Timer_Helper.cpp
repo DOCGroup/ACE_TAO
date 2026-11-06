@@ -18,13 +18,13 @@ int
 Timer_Helper::handle_timeout (ACE_Time_Value const &,
                               void const *)
 {
-  int no_of_servers = 0;
-  CORBA::ULongLong sum = 0;
+  int no_of_servers {};
+  CORBA::ULongLong sum {};
 
   // The following are used to keep a track of the inaccuracy
   // in synchronization.
   CORBA::ULongLong lowest_time = ACE_UINT64_LITERAL (0xFFFFFFFFFFFFFFFF);
-  CORBA::ULongLong highest_time  = 0;
+  CORBA::ULongLong highest_time {};
 
   try
     {

@@ -28,7 +28,7 @@ CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
                 CosTime::TIO_out overlap)
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   try
     {
@@ -139,7 +139,7 @@ CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                    CosTime::TIO_out overlap)
 {
-  TAO_TIO * tio_i = nullptr;
+  TAO_TIO * tio_i {};
 
   TimeBase::TimeT const lb1 =
     this->time_interval ().lower_bound;
@@ -230,7 +230,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 CosTime::UTO_ptr
 TAO_TIO::time ()
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO ((this->time_interval ().upper_bound -

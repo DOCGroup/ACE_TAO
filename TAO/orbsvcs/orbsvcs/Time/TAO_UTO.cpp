@@ -134,7 +134,7 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   try
     {
@@ -170,7 +170,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 CosTime::TIO_ptr
 TAO_UTO::interval ()
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   try
     {
