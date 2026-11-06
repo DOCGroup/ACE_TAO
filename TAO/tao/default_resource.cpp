@@ -227,7 +227,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         ++curarg;
         if (curarg < argc)
           {
-            TAO_Protocol_Item *item = nullptr;
+            TAO_Protocol_Item *item {};
             ACE_NEW_RETURN (item,
                             TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                             -1);
@@ -693,7 +693,7 @@ TAO_Default_Resource_Factory::get_protocol_factories ()
 TAO_Acceptor_Registry *
 TAO_Default_Resource_Factory::get_acceptor_registry ()
 {
-  TAO_Acceptor_Registry *ar = nullptr;
+  TAO_Acceptor_Registry *ar {};
 
   ACE_NEW_RETURN(ar,
                  TAO_Acceptor_Registry,
@@ -705,7 +705,7 @@ TAO_Default_Resource_Factory::get_acceptor_registry ()
 TAO_Connector_Registry *
 TAO_Default_Resource_Factory::get_connector_registry ()
 {
-  TAO_Connector_Registry *cr = nullptr;
+  TAO_Connector_Registry *cr {};
 
   ACE_NEW_RETURN(cr,
                  TAO_Connector_Registry,
@@ -761,7 +761,7 @@ TAO_Default_Resource_Factory::destroy_timer_queue (ACE_Timer_Queue *tmq) const
 ACE_Reactor_Impl*
 TAO_Default_Resource_Factory::allocate_reactor_impl () const
 {
-  ACE_Reactor_Impl *impl = nullptr;
+  ACE_Reactor_Impl *impl {};
   // get a timer queue (or not) from a possibly configured
   // time policy
   TAO_RSF_Timer_Queue_Ptr tmq (*this, this->create_timer_queue ());
@@ -781,7 +781,7 @@ TAO_Default_Resource_Factory::allocate_reactor_impl () const
 ACE_Reactor *
 TAO_Default_Resource_Factory::get_reactor ()
 {
-  ACE_Reactor *reactor = nullptr;
+  ACE_Reactor *reactor {};
   ACE_NEW_RETURN (reactor,
                   ACE_Reactor (this->allocate_reactor_impl (), 1),
                   nullptr);
@@ -833,7 +833,7 @@ TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)
 ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_dblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -853,7 +853,7 @@ TAO_Default_Resource_Factory::input_cdr_dblock_allocator ()
 ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_buffer_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -873,7 +873,7 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator ()
 ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_msgblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -899,7 +899,7 @@ TAO_Default_Resource_Factory::input_cdr_allocator_type_locked ()
 ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -919,7 +919,7 @@ TAO_Default_Resource_Factory::output_cdr_dblock_allocator ()
 ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
 
   switch (this->output_cdr_allocator_type_)
     {
@@ -954,7 +954,7 @@ TAO_Default_Resource_Factory::output_cdr_buffer_allocator ()
 ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_msgblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -974,7 +974,7 @@ TAO_Default_Resource_Factory::output_cdr_msgblock_allocator ()
 ACE_Allocator*
 TAO_Default_Resource_Factory::amh_response_handler_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -994,7 +994,7 @@ TAO_Default_Resource_Factory::amh_response_handler_allocator ()
 ACE_Allocator*
 TAO_Default_Resource_Factory::ami_response_handler_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -1033,7 +1033,7 @@ TAO_Default_Resource_Factory::max_muxed_connections () const
 ACE_Lock *
 TAO_Default_Resource_Factory::create_cached_connection_lock ()
 {
-  ACE_Lock *the_lock = nullptr;
+  ACE_Lock *the_lock {};
 
   if (this->cached_connection_lock_type_ == TAO_NULL_LOCK)
     ACE_NEW_RETURN (the_lock,
@@ -1059,7 +1059,7 @@ TAO_Default_Resource_Factory::locked_transport_cache ()
 TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy ()
 {
-  TAO_Flushing_Strategy *strategy = nullptr;
+  TAO_Flushing_Strategy *strategy {};
   if (this->flushing_strategy_type_ == TAO_LEADER_FOLLOWER_FLUSHING)
     ACE_NEW_RETURN (strategy,
                     TAO_Leader_Follower_Flushing_Strategy,
@@ -1078,7 +1078,7 @@ TAO_Default_Resource_Factory::create_flushing_strategy ()
 TAO_Connection_Purging_Strategy *
 TAO_Default_Resource_Factory::create_purging_strategy ()
 {
-  TAO_Connection_Purging_Strategy *strategy = nullptr;
+  TAO_Connection_Purging_Strategy *strategy {};
 
   if (this->connection_purging_type_ == TAO_Resource_Factory::LRU)
     {
@@ -1100,7 +1100,7 @@ TAO_Default_Resource_Factory::create_purging_strategy ()
 TAO_LF_Strategy *
 TAO_Default_Resource_Factory::create_lf_strategy ()
 {
-  TAO_LF_Strategy *strategy = nullptr;
+  TAO_LF_Strategy *strategy {};
 
   ACE_NEW_RETURN (strategy,
                   TAO_LF_Strategy_Complete,
@@ -1114,7 +1114,7 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
   TAO_Transport * transport,
   CORBA::ULong max_message_size) const
 {
-  TAO_GIOP_Fragmentation_Strategy* strategy = nullptr;
+  TAO_GIOP_Fragmentation_Strategy* strategy {};
 
   // Minimum GIOP message size is 24 (a multiple of 8):
   //   12   GIOP Message Header
