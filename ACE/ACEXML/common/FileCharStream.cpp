@@ -10,8 +10,6 @@
 #endif /* ACE_USES_WCHAR */
 
 ACEXML_FileCharStream::ACEXML_FileCharStream ()
-  : filename_ (nullptr), encoding_ (nullptr), size_ (0), infile_ (nullptr),
-    close_infile_ (true), peek_ (0)
 {
 }
 
@@ -21,13 +19,10 @@ ACEXML_FileCharStream::~ACEXML_FileCharStream ()
 }
 
 int
-ACEXML_FileCharStream::use_stream_i (FILE* open_file, const ACEXML_Char *name)
+ACEXML_FileCharStream::use_stream_i (FILE* open_file, ACEXML_Char const *name)
 {
-  delete[] this->filename_;
-  this->filename_ = nullptr;
-
-  delete[] this->encoding_;
-  this->encoding_ = nullptr;
+  this->filename_.reset ();
+  this->encoding_.reset ();
 
   this->infile_ = open_file;
   if (this->infile_ == nullptr)
@@ -38,12 +33,12 @@ ACEXML_FileCharStream::use_stream_i (FILE* open_file, const ACEXML_Char *name)
     return -1;
 
   this->size_ = ACE_Utils::truncate_cast<ACE_OFF_T> (statbuf.st_size);
-  this->filename_ = ACE::strnew (name);
+  this->filename_.reset (ACE::strnew (name));
   return this->determine_encoding();
 }
 
 int
-ACEXML_FileCharStream::use_stream (FILE* open_file, const ACEXML_Char *name)
+ACEXML_FileCharStream::use_stream (FILE* open_file, ACEXML_Char const *name)
 {
   if (open_file != nullptr)
     ACE_OS::rewind(open_file);
@@ -53,7 +48,7 @@ ACEXML_FileCharStream::use_stream (FILE* open_file, const ACEXML_Char *name)
 }
 
 int
-ACEXML_FileCharStream::open (const ACEXML_Char *name)
+ACEXML_FileCharStream::open (ACEXML_Char const *name)
 {
   this->close_infile_ = true;
   return use_stream_i(ACE_OS::fopen (name, ACE_TEXT ("r")), name);
@@ -81,10 +76,7 @@ ACEXML_FileCharStream::determine_encoding ()
     return -1;
   else
     {
-      delete [] this->encoding_;
-      this->encoding_ = ACE::strnew (temp);
-//       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
-//                   this->encoding_));
+      this->encoding_.reset (ACE::strnew (temp));
     }
   // Move over the byte-order-mark if present.
   char ch;
@@ -136,10 +128,8 @@ ACEXML_FileCharStream::close ()
         }
       this->infile_ = nullptr;
     }
-  delete[] this->filename_;
-  this->filename_ = nullptr;
-  delete[] this->encoding_;
-  this->encoding_ = nullptr;
+  this->filename_.reset ();
+  this->encoding_.reset ();
   this->size_ = 0;
   this->peek_ = 0;
   return 0;
@@ -195,7 +185,7 @@ ACEXML_FileCharStream::peek ()
 int
 ACEXML_FileCharStream::get_i (ACEXML_Char& ch)
 {
-  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
+  if (ACE_OS::strcmp (this->encoding_.get (), ACE_TEXT ("UTF-8")) == 0)
     {
       ch = (ACEXML_Char) ACE_OS::fgetc (this->infile_);
       return (feof(this->infile_) ? -1 : 0);
@@ -208,7 +198,7 @@ ACEXML_FileCharStream::get_i (ACEXML_Char& ch)
       return 0;
     }
 
-  int BE = (ACE_OS::strcmp (this->encoding_,
+  int BE = (ACE_OS::strcmp (this->encoding_.get (),
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   ACEXML_Char input[2];
   int i = 0;
@@ -229,7 +219,7 @@ int
 ACEXML_FileCharStream::peek_i ()
 {
   // If we are reading a UTF-8 encoded file, just use the plain unget.
-  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
+  if (ACE_OS::strcmp (this->encoding_.get (), ACE_TEXT ("UTF-8")) == 0)
     {
       ACEXML_Char ch = (ACEXML_Char) ACE_OS::fgetc (this->infile_);
       ACE_OS::ungetc (ch, this->infile_);
@@ -243,7 +233,7 @@ ACEXML_FileCharStream::peek_i ()
 
   // Peek into the stream. This reads two characters off the stream, keeps
   // it in peek_.
-  int BE = (ACE_OS::strcmp (this->encoding_,
+  int BE = (ACE_OS::strcmp (this->encoding_.get (),
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   ACEXML_Char input[2];
   int i = 0;
@@ -261,14 +251,14 @@ ACEXML_FileCharStream::peek_i ()
 }
 #endif /* ACE_USES_WCHAR */
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_FileCharStream::getEncoding ()
 {
-  return this->encoding_;
+  return this->encoding_.get ();
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_FileCharStream::getSystemId ()
 {
-  return this->filename_;
+  return this->filename_.get ();
 }

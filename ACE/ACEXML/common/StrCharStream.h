@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/CharStream.h"
+#include <memory>
 
 /**
  * @class ACEXML_StrCharStream
@@ -36,7 +37,7 @@ public:
   ~ACEXML_StrCharStream () override;
 
   /// Initializing StrCharStream with @a str and @a name
-  int open (const ACEXML_Char *str, const ACEXML_Char* name);
+  int open (ACEXML_Char const *str, ACEXML_Char const *name);
 
   /**
    * Returns the available ACEXML_Char in the buffer.  -1
@@ -74,12 +75,12 @@ public:
   /*
    * Get the character encoding for a byte stream or URI.
    */
-  const ACEXML_Char *getEncoding () override;
+  ACEXML_Char const *getEncoding () override;
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  const ACEXML_Char* getSystemId () override;
+  ACEXML_Char const *getSystemId () override;
 
   /**
    *  Resets the pointer to the beginning of the stream.
@@ -87,11 +88,11 @@ public:
   void rewind () override;
 
 private:
-  ACEXML_Char *start_;
-  ACEXML_Char *ptr_;
-  ACEXML_Char *end_;
-  ACEXML_Char* encoding_;
-  ACEXML_Char* name_;
+  std::unique_ptr<ACEXML_Char[]> start_ {};
+  ACEXML_Char *ptr_ {};
+  ACEXML_Char *end_ {};
+  std::unique_ptr<ACEXML_Char[]> encoding_ {};
+  std::unique_ptr<ACEXML_Char[]> name_ {};
 };
 
 #include /**/ "ace/post.h"

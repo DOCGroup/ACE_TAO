@@ -20,6 +20,7 @@
 
 #include "ACEXML/common/CharStream.h"
 #include "ACEXML/common/Encoding.h"
+#include <memory>
 
 /**
  * @class ACEXML_FileCharStream
@@ -36,13 +37,13 @@ public:
   virtual ~ACEXML_FileCharStream ();
 
   /// Open a file.
-  int open (const ACEXML_Char *name);
+  int open (ACEXML_Char const *name);
 
   /**
    * Accept an already opened file. The stream does not
    * assume ownership of open_file.
    */
-  int use_stream (FILE* open_file, const ACEXML_Char *name);
+  int use_stream (FILE* open_file, ACEXML_Char const *name);
 
   /**
    * Returns the available ACEXML_Char in the buffer.  -1
@@ -87,12 +88,12 @@ public:
   /*
    * Get the character encoding for the file.
    */
-  const ACEXML_Char *getEncoding () override;
+  ACEXML_Char const *getEncoding () override;
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  const ACEXML_Char* getSystemId () override;
+  ACEXML_Char const *getSystemId () override;
 
 private:
   /** Read the next character as a normal character. Return -1 if EOF is
@@ -117,18 +118,18 @@ private:
 #endif /* ACE_USES_WCHAR */
 
   /// internal accept an already opened file.
-  int use_stream_i (FILE* open_file, const ACEXML_Char *name);
+  int use_stream_i (FILE* open_file, ACEXML_Char const *name);
 
-  ACEXML_Char*  filename_;
-  ACEXML_Char*  encoding_;
-  ACE_OFF_T     size_;
-  FILE*         infile_;
-  bool          close_infile_;
+  std::unique_ptr<ACEXML_Char[]> filename_ {};
+  std::unique_ptr<ACEXML_Char[]> encoding_ {};
+  ACE_OFF_T     size_ {};
+  FILE*         infile_ {};
+  bool          close_infile_ {true};
   // This is needed to ensure that we can implement a peek operation on a
   // UTF-16 encoded file. It is a bit hackish, but there is no other way of
   // implementing a peek() as the standard I/O FILE* guarantees only one
   // pushback.
-  ACEXML_Char   peek_;
+  ACEXML_Char   peek_ {};
 };
 
 

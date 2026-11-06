@@ -5,10 +5,9 @@
 #include "ace/OS_NS_string.h"
 
 ACEXML_StrCharStream::ACEXML_StrCharStream ()
-  : start_ (nullptr), ptr_ (nullptr), end_ (nullptr), encoding_ (nullptr), name_ (nullptr)
+  : ptr_ {}, end_ {}
 {
 }
-
 
 ACEXML_StrCharStream::~ACEXML_StrCharStream ()
 {
@@ -16,18 +15,18 @@ ACEXML_StrCharStream::~ACEXML_StrCharStream ()
 }
 
 int
-ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
+ACEXML_StrCharStream::open (ACEXML_Char const *str, ACEXML_Char const *name)
 {
   if (str != nullptr && name != nullptr)
     {
-      delete [] this->start_;
-      if ((this->start_ = ACE::strnew (str)) == nullptr)
+      this->start_.reset (ACE::strnew (str));
+      if (this->start_ == nullptr)
         return -1;
-      delete [] this->name_;
-      if ((this->name_ = ACE::strnew (name)) == nullptr)
+      this->name_.reset (ACE::strnew (name));
+      if (this->name_ == nullptr)
         return -1;
-      this->ptr_ = this->start_;
-      this->end_ = this->start_ + ACE_OS::strlen (this->start_);
+      this->ptr_ = this->start_.get ();
+      this->end_ = this->start_.get () + ACE_OS::strlen (this->start_.get ());
       return this->determine_encoding();
     }
   return -1;                // Invalid string passed.
@@ -37,19 +36,17 @@ int
 ACEXML_StrCharStream::available ()
 {
   if (this->start_ != nullptr)
-    return static_cast<int> (this->end_ - this->start_); // @@ Will this work on all platforms?
+    return static_cast<int> (this->end_ - this->start_.get ()); // @@ Will this work on all platforms?
   return -1;
 }
 
 int
 ACEXML_StrCharStream::close ()
 {
-  delete[] this->start_;
-  delete[] this->encoding_;
-  this->encoding_ = nullptr;
-  delete[] this->name_;
-  this->name_ = nullptr;
-  this->start_ = this->ptr_ = this->end_ = nullptr;
+  this->start_.reset ();
+  this->encoding_.reset ();
+  this->name_.reset ();
+  this->ptr_ = this->end_ = nullptr;
   return 0;
 }
 
@@ -59,7 +56,7 @@ ACEXML_StrCharStream::determine_encoding ()
   if (this->start_ == nullptr)
     return -1;
   char input[4] = {0,0,0,0};
-  char* sptr  = (char*)this->start_;
+  char* sptr  = (char*)this->start_.get ();
   int i = 0;
   for ( ; i < 4 && sptr != (char*)this->end_; ++sptr, ++i)
     input[i] = *sptr;
@@ -68,9 +65,7 @@ ACEXML_StrCharStream::determine_encoding ()
     return -1;
   else
     {
-      delete [] this->encoding_;
-      this->encoding_ = ACE::strnew (temp);
-      // ACE_DEBUG ((LM_DEBUG, "String's encoding is %s\n", this->encoding_));
+      this->encoding_.reset (ACE::strnew (temp));
     }
   return 0;
 }
@@ -78,7 +73,7 @@ ACEXML_StrCharStream::determine_encoding ()
 void
 ACEXML_StrCharStream::rewind ()
 {
-  this->ptr_ = this->start_;
+  this->ptr_ = this->start_.get ();
   this->determine_encoding();
 }
 
@@ -116,14 +111,14 @@ ACEXML_StrCharStream::peek ()
   return -1;
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_StrCharStream::getEncoding ()
 {
-  return this->encoding_;
+  return this->encoding_.get ();
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_StrCharStream::getSystemId()
 {
-  return this->name_;
+  return this->name_.get ();
 }
