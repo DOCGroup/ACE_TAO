@@ -224,7 +224,7 @@ TAO_IIOP_Profile*
 TAO_IORManip_IIOP_Filter::create_profile (TAO_Profile* profile)
 {
   ACE_INET_Addr addr;
-  TAO_IIOP_Profile* new_profile = nullptr;
+  TAO_IIOP_Profile* new_profile {};
   ACE_NEW_THROW_EX (new_profile,
                    TAO_IIOP_Profile (addr,
                                      profile->object_key (),
