@@ -292,7 +292,7 @@ namespace TAO
        }
 
     // Get the entry too
-    HASH_MAP_ENTRY *entry = nullptr;
+    HASH_MAP_ENTRY *entry {};
 
     // Update the purging strategy information while we
     // are holding our lock
@@ -450,10 +450,10 @@ namespace TAO
 
     // Make a temporary object. It does not do a copy.
     Cache_ExtId key (prop);
-    HASH_MAP_ENTRY *entry = nullptr;
+    HASH_MAP_ENTRY *entry {};
     busy_count = 0;
     int cache_status = 0;
-    HASH_MAP_ENTRY *found_entry = nullptr;
+    HASH_MAP_ENTRY *found_entry {};
 
     // loop until we find a usable transport, or until we've checked
     // all cached entries for this endpoint
