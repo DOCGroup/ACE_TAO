@@ -8,6 +8,7 @@
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/common/InputSource.h"
+#include "ACEXML/common/LocatorImpl.h"
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "ace/OS_main.h"
@@ -68,6 +69,47 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int status = 0;
+  ACEXML_InputSource input_source;
+  input_source.setEncoding (ACE_TEXT ("encoding"));
+  input_source.setPublicId (ACE_TEXT ("public-id"));
+  input_source.setSystemId (ACE_TEXT ("system-id"));
+  input_source.setEncoding (input_source.getEncoding ());
+  input_source.setPublicId (input_source.getPublicId ());
+  input_source.setSystemId (input_source.getSystemId ());
+
+  if (input_source.getEncoding () == nullptr
+      || input_source.getPublicId () == nullptr
+      || input_source.getSystemId () == nullptr
+      || std::char_traits<ACEXML_Char>::compare (input_source.getEncoding (),
+                                                 ACE_TEXT ("encoding"),
+                                                 8) != 0
+      || std::char_traits<ACEXML_Char>::compare (input_source.getPublicId (),
+                                                 ACE_TEXT ("public-id"),
+                                                 9) != 0
+      || std::char_traits<ACEXML_Char>::compare (input_source.getSystemId (),
+                                                 ACE_TEXT ("system-id"),
+                                                 9) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("InputSource self-copy failed\n")));
+      return -1;
+    }
+
+  ACEXML_LocatorImpl locator (ACE_TEXT ("system-id"), ACE_TEXT ("public-id"));
+  locator.setPublicId (locator.getPublicId ());
+  locator.setSystemId (locator.getSystemId ());
+  if (locator.getPublicId () == nullptr
+      || locator.getSystemId () == nullptr
+      || std::char_traits<ACEXML_Char>::compare (locator.getPublicId (),
+                                              ACE_TEXT ("public-id"),
+                                              9) != 0
+      || std::char_traits<ACEXML_Char>::compare (locator.getSystemId (),
+                                                 ACE_TEXT ("system-id"),
+                                                 9) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("LocatorImpl self-copy failed\n")));
+      return -1;
+    }
+
   Basic_Content_Tester tester;
   ACEXML_StrCharStream *raw_test_stream = nullptr;
   ACE_NEW_RETURN (raw_test_stream, ACEXML_StrCharStream, -1);

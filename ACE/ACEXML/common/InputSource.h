@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/CharStream.h"
+#include <memory>
 
 /**
  * @class ACEXML_InputSource
@@ -71,7 +72,7 @@ public:
   /**
    * Create a new input source with a system identifier.
    */
-  explicit ACEXML_InputSource (const ACEXML_Char *systemId);
+  explicit ACEXML_InputSource (ACEXML_Char const *systemId);
 
   /**
    * Default destructor.
@@ -86,17 +87,17 @@ public:
   /**
    * Get the character encoding for a byte stream or URI.
    */
-  virtual const ACEXML_Char *getEncoding () const;
+  virtual ACEXML_Char const *getEncoding () const;
 
   /**
    * Get the public identifier for this input source.
    */
-  virtual const ACEXML_Char *getPublicId () const;
+  virtual ACEXML_Char const *getPublicId () const;
 
   /**
    * Get the system identifier for this input source.
    */
-  virtual const ACEXML_Char *getSystemId () const;
+  virtual ACEXML_Char const *getSystemId () const;
 
   /**
    * Set the ACEXML_Char stream for this input source.
@@ -108,23 +109,23 @@ public:
   /**
    * Set the character encoding, if known.
    */
-  virtual void setEncoding (const ACEXML_Char *encoding);
+  virtual void setEncoding (ACEXML_Char const *encoding);
 
   /**
    * Set the public identifier for this input source.
    */
-  virtual void setPublicId (const ACEXML_Char *publicId);
+  virtual void setPublicId (ACEXML_Char const *publicId);
 
   /**
    * Set the public identifier for this input source.
    */
-  virtual void setSystemId (const ACEXML_Char *systemId);
+  virtual void setSystemId (ACEXML_Char const *systemId);
 
 private:
-  ACEXML_CharStream *charStream_;
-  ACEXML_Char *encoding_;
-  ACEXML_Char *publicId_;
-  ACEXML_Char *systemId_;
+  std::unique_ptr<ACEXML_CharStream> charStream_ {};
+  std::unique_ptr<ACEXML_Char[]> encoding_ {};
+  std::unique_ptr<ACEXML_Char[]> publicId_ {};
+  std::unique_ptr<ACEXML_Char[]> systemId_ {};
 };
 
 

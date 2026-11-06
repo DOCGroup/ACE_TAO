@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/Locator.h"
+#include <memory>
 
 /**
  * @class ACEXML_LocatorImpl
@@ -69,15 +70,15 @@ public:
    * Construct a locator with systemId and publicId
    *
    */
-  ACEXML_LocatorImpl (const ACEXML_Char* systemId,
-                      const ACEXML_Char* publicId);
+  ACEXML_LocatorImpl (ACEXML_Char const *systemId,
+                      ACEXML_Char const *publicId);
   /**
    * Copy constructor.  Create a persistent copy of the current state
    * of a locator. When the original locator changes, this copy will
    * still keep the original values (and it can be used outside the
    * scope of DocumentHandler methods).
    */
-  ACEXML_LocatorImpl (const ACEXML_Locator& locator);
+  ACEXML_LocatorImpl (ACEXML_Locator const& locator);
 
   ACEXML_LocatorImpl (const ACEXML_LocatorImpl &) = delete;
   ACEXML_LocatorImpl (ACEXML_LocatorImpl &&) = delete;
@@ -102,12 +103,12 @@ public:
   /*
    * Return the public identifier for the current document event.
    */
-  const ACEXML_Char *getPublicId () const override;
+  ACEXML_Char const *getPublicId () const override;
 
   /*
    * Return the system identifier for the current document event.
    */
-  const ACEXML_Char *getSystemId () const override;
+  ACEXML_Char const *getSystemId () const override;
 
   /*
    * Set the column number of this locator.
@@ -122,12 +123,12 @@ public:
   /*
    * Set the public identifier of this locator.
    */
-  void setPublicId (const ACEXML_Char *id);
+  void setPublicId (ACEXML_Char const *id);
 
   /*
    * Set the system identifier of this locator.
    */
-  void setSystemId (const ACEXML_Char *id);
+  void setSystemId (ACEXML_Char const *id);
 
   /*
    * Increment the line number.
@@ -148,10 +149,10 @@ public:
   void reset ();
 
 private:
-  ACEXML_Char *publicId_;
-  ACEXML_Char *systemId_;
-  int lineNumber_;
-  int columnNumber_;
+  std::unique_ptr<ACEXML_Char[]> publicId_ {};
+  std::unique_ptr<ACEXML_Char[]> systemId_ {};
+  int lineNumber_ {1};
+  int columnNumber_ {};
 };
 
 #if defined (__ACEXML_INLINE__)
