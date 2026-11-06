@@ -251,7 +251,7 @@ CosEC_ServantBase::init_SupplierQOS (RtecBase::handle_t supp_handle,
   // supplier also an option...
 
   ACE_TCHAR const *c = ACE_TEXT(" "); // space
-  ACE_TCHAR *tok = nullptr;
+  ACE_TCHAR *tok {};
 
  // if nothing was specified on the command line use defaults..
   if (source_type_pairs == nullptr)
@@ -307,7 +307,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
   // parse_args routine).
 
   ACE_TCHAR const *c = ACE_TEXT(" "); // space
-  ACE_TCHAR *tok = nullptr;
+  ACE_TCHAR *tok {};
 
   consumer_qos.start_disjunction_group ();
 

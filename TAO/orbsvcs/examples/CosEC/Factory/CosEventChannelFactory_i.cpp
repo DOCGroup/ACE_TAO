@@ -76,7 +76,7 @@ TAO_CosEventChannelFactory_i::create (char const *channel_id,
 
       TAO_CEC_EventChannel_Attributes attr (defPOA, defPOA);
 
-      TAO_CEC_EventChannel *impl = nullptr;
+      TAO_CEC_EventChannel *impl {};
       ACE_NEW_THROW_EX (impl,
                         TAO_CEC_EventChannel (attr, nullptr, 0),
                         CORBA::NO_MEMORY ());
