@@ -20,23 +20,28 @@ class Notify_Structured_Push_Consumer: public TAO_Notify_Tests_StructuredPushCon
 {
 public:
   Notify_Structured_Push_Consumer (
-                        const char* name,
+                        char const* name,
                         CORBA::Short policy,
                         bool use_ordering,
                         int expected,
                         Notify_Test_Client& client);
 
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer&&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer&&) = delete;
+
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&);
+  void push_structured_event (CosNotification::StructuredEvent const&) override;
 
-  ACE_CString name_;
-  CORBA::Short order_policy_;
-  bool use_ordering_;
-  int expected_;
-  int count_;
-  int first_;
+  ACE_CString name_ {};
+  CORBA::Short order_policy_ {};
+  bool use_ordering_ {};
+  int expected_ {};
+  int count_ {};
+  int first_ {};
   Notify_Test_Client& client_;
 };
 
