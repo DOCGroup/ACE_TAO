@@ -12,11 +12,11 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"
 
-static ACE_TCHAR const * location_id = nullptr;
-static ACE_TCHAR const * location_kind = nullptr;
+static ACE_TCHAR const * location_id {};
+static ACE_TCHAR const * location_kind {};
 static ACE_TCHAR const * mtype = ACE_TEXT("CPU");
 static ACE_TCHAR const * mstyle = ACE_TEXT("PUSH");
-static ACE_TCHAR const * custom_monitor_ior = nullptr;
+static ACE_TCHAR const * custom_monitor_ior {};
 
 // For the sake of consistency, make default push monitoring interval
 // the same as the pull monitoring interval.
@@ -47,7 +47,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:k:t:s:i:m:h"));
 
   int c = 0;
-  ACE_TCHAR const * s = nullptr;
+  ACE_TCHAR const * s {};
 
   while ((c = get_opts ()) != -1)
     {
@@ -128,7 +128,6 @@ TAO_LB_run_load_monitor (void * orb_arg)
 }
 #endif  /* linux && ACE_HAS_THREADS */
 
-
 CosLoadBalancing::LoadMonitor_ptr
 get_load_monitor (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr root_poa)
@@ -151,7 +150,7 @@ get_load_monitor (CORBA::ORB_ptr orb,
 
       if (ACE_OS::strcasecmp (::mtype, ACE_TEXT("CPU")) == 0)
         {
-          TAO_LB_CPU_Load_Average_Monitor * monitor = nullptr;
+          TAO_LB_CPU_Load_Average_Monitor * monitor {};
           ACE_NEW_THROW_EX (monitor,
                             TAO_LB_CPU_Load_Average_Monitor (::location_id,
                                                              ::location_kind),
