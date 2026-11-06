@@ -24,9 +24,7 @@ be_visitor_sequence_cdr_op_cs::be_visitor_sequence_cdr_op_cs (
 {
 }
 
-be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs ()
-{
-}
+be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs () = default;
 
 int
 be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
@@ -52,9 +50,9 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
-  be_type *bt =
+  be_type * const bt =
     dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
@@ -74,7 +72,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   // If our element type is an anonymous sequence, generate code for it here.
   if (bt->node_type () == AST_Decl::NT_sequence)
     {
-      int status =
+      int const status =
           this->gen_anonymous_base_type (
               bt,
               TAO_CodeGen::TAO_ROOT_CDR_OP_CS);
@@ -96,7 +94,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
       << be_nl;
 
-  bool alt = be_global->alt_mapping ();
+  bool const alt = be_global->alt_mapping ();
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -107,8 +105,8 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     {
       *os << "::CORBA::Boolean operator<< (" << be_idt_nl
           << "TAO_OutputCDR &strm," << be_nl
-          << "const std::vector<" << bt->full_name ()
-          << "> &_tao_vector)"
+          << "std::vector<" << bt->full_name ()
+          << "> const &_tao_vector)"
           << be_uidt_nl
           << "{" << be_idt_nl
           << "::CORBA::ULong length = _tao_vector.size ();"
@@ -130,7 +128,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       *os << "::CORBA::Boolean operator<< ("
           << be_idt << be_idt_nl
           << "TAO_OutputCDR &strm," << be_nl
-          << "const " << node->name () << " &_tao_sequence)"
+          << node->name () << " const &_tao_sequence)"
           << be_uidt
           << be_uidt_nl
           << "{" << be_idt_nl

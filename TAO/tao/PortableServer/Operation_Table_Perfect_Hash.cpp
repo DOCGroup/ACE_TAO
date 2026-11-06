@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_Perfect_Hash_OpTable::find (char const *opname,
                                 TAO_Skeleton &skelfunc,
-                                unsigned int const length)
+                                std::size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
@@ -39,7 +39,7 @@ TAO_Perfect_Hash_OpTable::find (char const *opname,
       skelfunc = nullptr; // insure that somebody can't call a wrong function!
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
-                         ACE_TEXT ("operation '%C' (length=%d) failed\n"),
+                         ACE_TEXT ("operation '%C' (length=%B) failed\n"),
                          opname ? opname : "<null string>", length),
                         -1);
     }
@@ -54,7 +54,7 @@ int
 TAO_Perfect_Hash_OpTable::find (char const *opname,
                                 TAO_Collocated_Skeleton &skelfunc,
                                 TAO::Collocation_Strategy st,
-                                unsigned int const length)
+                                std::size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
@@ -64,7 +64,7 @@ TAO_Perfect_Hash_OpTable::find (char const *opname,
       skelfunc = nullptr; // insure that somebody can't call a wrong function!
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
-                         ACE_TEXT ("operation '%C' (length=%d) failed\n"),
+                         ACE_TEXT ("operation '%C' (length=%B) failed\n"),
                          opname ? opname : "<null string>", length),
                         -1);
     }

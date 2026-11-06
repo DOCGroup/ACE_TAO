@@ -17,9 +17,7 @@ be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
 {
 }
 
-be_visitor_interface_cdr_op_cs::~be_visitor_interface_cdr_op_cs ()
-{
-}
+be_visitor_interface_cdr_op_cs::~be_visitor_interface_cdr_op_cs () = default;
 
 int
 be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
@@ -56,7 +54,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->full_name () << "_ptr _tao_objref)" << be_uidt
+      << node->full_name () << "_ptr const _tao_objref)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -113,12 +111,12 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   if (!node->is_abstract ())
     {
-      *os << "TAO::Narrow_Utils< ::" << node->name () << ">::unchecked_narrow ("
+      *os << "TAO::Narrow_Utils<::" << node->name () << ">::unchecked_narrow ("
           << "obj.in ());";
     }
   else
     {
-      *os << "TAO::AbstractBase_Narrow_Utils< ::" << node->name () << ">::unchecked_narrow ("
+      *os << "TAO::AbstractBase_Narrow_Utils<::" << node->name () << ">::unchecked_narrow ("
           << "obj.in ());";
     }
 

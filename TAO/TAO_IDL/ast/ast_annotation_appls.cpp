@@ -1,26 +1,18 @@
 #include "ast_annotation_appls.h"
 #include "ast_annotation_appl.h"
+#include "global_extern.h"
+#include "utl_scope.h"
 
-AST_Annotation_Appls::AST_Annotation_Appls ()
-{
-}
+#include <string>
 
-AST_Annotation_Appls::AST_Annotation_Appls (const AST_Annotation_Appls& other)
-{
-  *this = other;
-}
+AST_Annotation_Appls::AST_Annotation_Appls () = default;
 
-AST_Annotation_Appls::~AST_Annotation_Appls ()
-{
-}
+AST_Annotation_Appls::AST_Annotation_Appls (AST_Annotation_Appls const &other) = default;
+
+AST_Annotation_Appls::~AST_Annotation_Appls () = default;
 
 AST_Annotation_Appls &
-AST_Annotation_Appls::operator= (const AST_Annotation_Appls& other)
-{
-  vector_.clear ();
-  add (other);
-  return *this;
-}
+AST_Annotation_Appls::operator= (AST_Annotation_Appls const &other) = default;
 
 void
 AST_Annotation_Appls::add (AST_Annotation_Appl *appl)
@@ -29,21 +21,26 @@ AST_Annotation_Appls::add (AST_Annotation_Appl *appl)
 }
 
 void
-AST_Annotation_Appls::add (const AST_Annotation_Appls &other)
+AST_Annotation_Appls::add (AST_Annotation_Appls const &other)
 {
-  for (const_iterator i = other.begin (); i != other.end (); ++i)
+  if (this == &other)
     {
-      vector_.push_back (*i);
+      AST_Annotation_Appl_Ptrs const original (vector_);
+      vector_.insert (vector_.end (), original.begin (), original.end ());
+    }
+  else
+    {
+      vector_.insert (vector_.end (), other.vector_.begin (), other.vector_.end ());
     }
 }
 
 bool
 AST_Annotation_Appls::empty () const
 {
-  return !vector_.size ();
+  return vector_.empty ();
 }
 
-size_t
+std::size_t
 AST_Annotation_Appls::size () const
 {
   return vector_.size ();
@@ -74,18 +71,18 @@ AST_Annotation_Appls::end () const
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::operator[] (size_t index)
+AST_Annotation_Appls::operator[] (std::size_t index) const
 {
   return vector_[index].get ();
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::find (AST_Annotation_Decl *annotation)
+AST_Annotation_Appls::find (AST_Annotation_Decl *annotation) const
 {
   AST_Annotation_Appl *result = nullptr;
-  for (iterator i = begin (); i != end (); ++i)
+  for (AST_Annotation_Appl_Ptr const& appl_ptr : vector_)
     {
-      AST_Annotation_Appl *appl = i->get ();
+      AST_Annotation_Appl *appl = appl_ptr.get ();
       if (appl && appl->annotation_decl () == annotation)
         {
           result = appl;
@@ -95,21 +92,21 @@ AST_Annotation_Appls::find (AST_Annotation_Decl *annotation)
 }
 
 AST_Annotation_Appl *
-AST_Annotation_Appls::find (const char *annotation)
+AST_Annotation_Appls::find (std::string const& annotation) const
 {
-  if (!annotation)
+  if (annotation.empty ())
     {
       return nullptr;
     }
 
-  UTL_Scope* bottom = idl_global->scopes ().bottom ();
-  if (!bottom)
+  UTL_Scope * bottom = idl_global->scopes ().bottom ();
+  if (bottom == nullptr)
     {
       return nullptr;
     }
 
-  AST_Decl* decl = bottom->lookup_by_name (annotation);
-  if (!decl)
+  AST_Decl * decl = bottom->lookup_by_name (annotation);
+  if (decl == nullptr)
     {
       return nullptr;
     }

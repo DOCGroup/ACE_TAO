@@ -18,9 +18,7 @@ AST_Param_Holder::AST_Param_Holder (UTL_ScopedName *parameter_name,
 {
 }
 
-AST_Param_Holder::~AST_Param_Holder ()
-{
-}
+AST_Param_Holder::~AST_Param_Holder () = default;
 
 FE_Utils::T_Param_Info const *
 AST_Param_Holder::info () const

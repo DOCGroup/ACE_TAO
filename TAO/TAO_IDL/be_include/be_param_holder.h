@@ -26,13 +26,13 @@ public:
   be_param_holder (UTL_ScopedName *parameter_name,
                    FE_Utils::T_Param_Info *info);
 
-  virtual ~be_param_holder ();
+  ~be_param_holder () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif // TAO_BE_PARAM_HOLDER_H

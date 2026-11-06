@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <string>
 
 #include "idl_defines.h"
+
 #include "global_extern.h"
 #include "drv_extern.h"
 #include "fe_extern.h"
@@ -81,39 +82,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/os_include/os_ctype.h"
 #include "ace/Lib_Find.h"
 
-extern long DRV_nfiles;
-extern char *DRV_files[];
-
 void process_long_option(long ac, char **av, long &i);
 
 // Push a file into the list of files to be processed
 void
-DRV_push_file (const char *s)
+DRV_push_file (std::string const& s)
 {
-  // If filenames come from the command line, there is no
-  // need to duplicate the string, but some backends have
-  // an option to recurse over a directory and add all
-  // IDL files found. In this latter case we have to
-  // duplicate the file name string.
-  DRV_files[DRV_nfiles++] = ACE::strnew (s);
+  DRV_files.emplace_back (s);
 }
 
 // Prepare a CPP argument
 static void
-DRV_prep_cpp_arg (char *s)
+DRV_prep_cpp_arg (std::string const& input)
 {
-  std::string instr (s);
   std::string newarg;
   newarg.reserve (512);
 
-  for (std::string::size_type pos = instr.find_first_of (',');
+  std::string::size_type start = 0;
+  for (std::string::size_type pos = input.find (',', start);
        pos != std::string::npos;
-       instr = instr.substr (pos + 1), pos = instr.find_first_of (','))
+       start = pos + 1, pos = input.find (',', start))
     {
-      newarg.append (instr.substr (0, pos));
+      newarg.append (input, start, pos - start);
     }
 
-  DRV_cpp_putarg (newarg.c_str ());
+  DRV_cpp_putarg (newarg);
 }
 
 // Print a usage message and exit.
@@ -122,8 +115,8 @@ DRV_usage ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C: usage: %C [[flag|file] ...] [-- file ...]\n"),
-              idl_global->prog_name (),
-              idl_global->prog_name ()));
+              idl_global->prog_name ().c_str (),
+              idl_global->prog_name ().c_str ()));
 
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("Legal flags:\n")
@@ -155,6 +148,7 @@ DRV_usage ()
     ACE_TEXT (" --default-idl-version\tPrint the default IDL version and exit\n")
     ACE_TEXT (" --list-idl-versions\tPrint IDL versions supported and exit\n")
     ACE_TEXT (" --syntax-only\t\tJust check the syntax, do not create files\n")
+    ACE_TEXT (" --generate-source-info\tGenerate source file and line comments\n")
     ACE_TEXT (" --bison-trace\t\tEnable Bison Tracing (sets yydebug to 1)\n")
     ACE_TEXT (" --dump-builtins\tDump the compiler and user defined IDL.\n")
     ACE_TEXT (" --just-dump-builtins\tJust dump the compiler defined IDL and exit.\n")
@@ -183,8 +177,7 @@ DRV_usage ()
 void
 DRV_parse_args (long ac, char **av)
 {
-  ACE_CString buffer;
-  char *s = nullptr;
+  std::string s;
   long i;
 
   // After -- process all arguments as files
@@ -202,7 +195,7 @@ DRV_parse_args (long ac, char **av)
 
           switch (av[i][1])
             {
-            case 0:
+            case '\0':
               // One or more letters expected after the dash.
               ACE_ERROR ((
                   LM_ERROR,
@@ -236,24 +229,23 @@ DRV_parse_args (long ac, char **av)
                   s = av[i] + 2;
                 }
 
-              ACE_OS::strcat (idl_global->local_escapes (), s);
-              ACE_OS::strcat (idl_global->local_escapes (), " ");
+              idl_global->append_local_escape (s);
               break;
             case 'a':
               if (av[i][2] == 'e')
                 {
                   idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_ERROR);
+                    IDL_GlobalData::Anon_Type_Diagnostic::Error);
                 }
               else if (av[i][2] == 'w')
                 {
                   idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_WARNING);
+                    IDL_GlobalData::Anon_Type_Diagnostic::Warning);
                 }
               else if (av[i][2] == 's')
                 {
                   idl_global->anon_type_diagnostic (
-                    IDL_GlobalData::ANON_TYPE_SILENT);
+                    IDL_GlobalData::Anon_Type_Diagnostic::Silent);
                 }
               else
                 {
@@ -284,11 +276,11 @@ DRV_parse_args (long ac, char **av)
                     {
                       idl_global->append_idl_flag (av[i + 1]);
 
-                      ACE_CString arg = av[i];
+                      std::string arg (av[i]);
                       arg += av[i + 1];
 
-                      DRV_cpp_putarg (arg.c_str ());
-                      idl_global->add_include_path (arg.substr (2).c_str (), false);
+                      DRV_cpp_putarg (arg);
+                      idl_global->add_include_path (arg.substr (2), false);
                       ++i;
                     }
                   else
@@ -298,11 +290,11 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  ACE_CString arg (av[i], 2);
+                  std::string arg (av[i], 2);
                   arg += av[i] + 2;
 
-                  idl_global->add_include_path (arg.substr (2).c_str (), false);
-                  DRV_cpp_putarg (arg.c_str ());
+                  idl_global->add_include_path (arg.substr (2), false);
+                  DRV_cpp_putarg (arg);
                 }
 
               break;
@@ -339,7 +331,7 @@ DRV_parse_args (long ac, char **av)
                   s = av[i] + 2;
                 }
 
-              switch (*s)
+              switch (s.empty () ? '\0' : s[0])
                 {
                 default:
                   ACE_ERROR ((
@@ -350,16 +342,16 @@ DRV_parse_args (long ac, char **av)
                   return;
 
                 case 'p':
-                  if (*(s + 1) == ',')
+                  if (s.size () > 1 && s[1] == ',')
                     {
-                      DRV_prep_cpp_arg (s + 2);
+                      DRV_prep_cpp_arg (s.substr (2));
                     }
 
                   break;
                 case 'b':
-                  if (*(s + 1) == ',')
+                  if (s.size () > 1 && s[1] == ',')
                     {
-                      be_util::prep_be_arg (s + 2);
+                      be_util::prep_be_arg (s.substr (2));
                     }
 
                   break;
@@ -384,13 +376,14 @@ DRV_parse_args (long ac, char **av)
                   s = av[i] + 2;
                 }
 
-              switch (*s)
+              switch (s.empty () ? '\0' : s[0])
                 {
                   case 'p':
-                    if (*(s + 1) == ',')
+                    if (s.size () > 1 && s[1] == ',')
                       {
-                        idl_global->set_cpp_location (s + 2);
-                        DRV_cpp_new_location (s + 2);
+                        std::string const cpp_location = s.substr (2);
+                        idl_global->set_cpp_location (cpp_location);
+                        DRV_cpp_new_location (cpp_location);
                       }
                     else
                       {
@@ -409,7 +402,7 @@ DRV_parse_args (long ac, char **av)
                         LM_ERROR,
                         ACE_TEXT ("IDL: I dont' understand the use of")
                         ACE_TEXT (" %s with the '-Y' option\n"),
-                        ACE_TEXT_CHAR_TO_TCHAR (s)
+                        ACE_TEXT_CHAR_TO_TCHAR (s.c_str ())
                       ));
                     idl_global->parse_args_exit (1);
                     return;
@@ -499,52 +492,52 @@ DRV_parse_args (long ac, char **av)
   be_util::arg_post_proc ();
 
   // Make sure the output directory is valid.
-  if (idl_global->temp_dir () == nullptr)
+  if (idl_global->temp_dir ().empty ())
     {
-      ACE_TCHAR tmpdir[MAXPATHLEN + 1];
+      std::basic_string<ACE_TCHAR> tmpdir (MAXPATHLEN + 1, ACE_TCHAR {});
 
-      if (ACE::get_temp_dir (tmpdir, MAXPATHLEN) == -1)
+      if (ACE::get_temp_dir (tmpdir.data (), MAXPATHLEN) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Temporary path too long, ")
                       ACE_TEXT ("defaulting to current directory\n")));
 
-          ACE_OS::strcpy (tmpdir, ACE_TEXT ("."));
+          tmpdir = ACE_TEXT (".");
         }
 
 #if defined(ACE_MVS)
-      if (ACE_OS::access (tmpdir, F_OK) == -1
-          || ACE_OS::access (tmpdir, R_OK) == -1
-          || ACE_OS::access (tmpdir, W_OK) == -1)
+      if (ACE_OS::access (tmpdir.c_str (), F_OK) == -1
+          || ACE_OS::access (tmpdir.c_str (), R_OK) == -1
+          || ACE_OS::access (tmpdir.c_str (), W_OK) == -1)
 #else
-      if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
+      if (ACE_OS::access (tmpdir.c_str (), F_OK | R_OK | W_OK) == -1)
 #endif /* ACE_MVS */
         {
           ACE_ERROR ((
               LM_ERROR,
               ACE_TEXT ("Can't access temporary directory (%s),")
               ACE_TEXT (" using current directory for temp files.\n"),
-              tmpdir
+              tmpdir.c_str ()
             ));
 
-          ACE_OS::strcpy (tmpdir, ACE_TEXT ("."));
+          tmpdir = ACE_TEXT (".");
 #if defined(ACE_MVS)
-          if (ACE_OS::access (tmpdir, F_OK) == -1
-              || ACE_OS::access (tmpdir, R_OK) == -1
-              || ACE_OS::access (tmpdir, W_OK) == -1)
+          if (ACE_OS::access (tmpdir.c_str (), F_OK) == -1
+              || ACE_OS::access (tmpdir.c_str (), R_OK) == -1
+              || ACE_OS::access (tmpdir.c_str (), W_OK) == -1)
 #else
-          if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
+          if (ACE_OS::access (tmpdir.c_str (), F_OK | R_OK | W_OK) == -1)
 #endif /* ACE_MVS */
             {
               ACE_ERROR ((LM_ERROR,
                           "Error: Can't access temporary directory %s\n",
-                          tmpdir));
+                          tmpdir.c_str ()));
 
               throw Bailout ();
             }
         }
 
-      idl_global->temp_dir (ACE_TEXT_ALWAYS_CHAR (tmpdir));
+      idl_global->temp_dir (ACE_TEXT_ALWAYS_CHAR (tmpdir.c_str ()));
     }
 
   DRV_cpp_post_init ();
@@ -559,7 +552,7 @@ print_idl_versions()
   for (int v = 1; v < IDL_VERSION_COUNT; v++)
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
-        IdlVersion (static_cast<SpecificIdlVersion>(v)).to_string ()
+        IdlVersion (static_cast<SpecificIdlVersion>(v)).to_string ().c_str ()
         ));
     }
 }
@@ -567,9 +560,9 @@ print_idl_versions()
 void
 process_long_option(long ac, char **av, long &i)
 {
-  const char *long_option = av[i] + 2;
-  bool no_more_args = i + 1 >= ac;
-  if (!ACE_OS::strcmp (long_option, "idl-version"))
+  std::string const long_option (av[i] + 2);
+  bool const no_more_args = i + 1 >= ac;
+  if (long_option == "idl-version")
     {
       bool invalid_version = no_more_args;
       if (no_more_args)
@@ -597,49 +590,53 @@ process_long_option(long ac, char **av, long &i)
           idl_global->parse_args_exit (1);
         }
     }
-  else if (!ACE_OS::strcmp (long_option, "syntax-only"))
+  else if (long_option == "syntax-only")
     {
       idl_global->syntax_only_ = true;
     }
-  else if (!ACE_OS::strcmp (long_option, "default-idl-version"))
+  else if (long_option == "generate-source-info")
+    {
+      be_global->gen_source_info (true);
+    }
+  else if (long_option == "default-idl-version")
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
-        idl_global->default_idl_version_.to_string ()));
+          idl_global->default_idl_version_.to_string ().c_str ()));
       idl_global->parse_args_exit (0);
     }
-  else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))
+  else if (long_option == "list-idl-versions")
     {
       print_idl_versions ();
       idl_global->parse_args_exit (0);
     }
-  else if (!ACE_OS::strcmp (long_option, "help"))
+  else if (long_option == "help")
     {
       idl_global->print_help ();
     }
-  else if (!ACE_OS::strcmp (long_option, "bison-trace"))
+  else if (long_option == "bison-trace")
     {
       FE_yydebug (true);
     }
-  else if (!ACE_OS::strcmp (long_option, "version"))
+  else if (long_option == "version")
     {
       idl_global->print_version ();
     }
-  else if (!ACE_OS::strcmp (long_option, "dump-builtins"))
+  else if (long_option == "dump-builtins")
     {
       idl_global->dump_builtins_ = true;
       idl_global->dump_ast ();
     }
-  else if (!ACE_OS::strcmp (long_option, "just-dump-builtins"))
+  else if (long_option == "just-dump-builtins")
     {
       // Don't use dump_ast because we need to dump before parsing any files.
       idl_global->dump_builtins_ = true;
       idl_global->just_dump_builtins_ = true;
     }
-  else if (!ACE_OS::strcmp (long_option, "dump"))
+  else if (long_option == "dump")
     {
       idl_global->dump_ast ();
     }
-  else if (!ACE_OS::strcmp (long_option, "unknown-annotations"))
+  else if (long_option == "unknown-annotations")
     {
       bool invalid_argument = no_more_args;
       if (no_more_args)
@@ -651,22 +648,23 @@ process_long_option(long ac, char **av, long &i)
       else
         {
           i++;
-          if (!ACE_OS::strcmp (av[i], "warn-once"))
+          std::string const annotation_mode (av[i]);
+          if (annotation_mode == "warn-once")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE;
             }
-          else if (!ACE_OS::strcmp (av[i], "warn-all"))
+          else if (annotation_mode == "warn-all")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ALL;
             }
-          else if (!ACE_OS::strcmp (av[i], "error"))
+          else if (annotation_mode == "error")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
             }
-          else if (!ACE_OS::strcmp (av[i], "ignore"))
+          else if (annotation_mode == "ignore")
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_IGNORE;

@@ -18,9 +18,7 @@ be_visitor_component_fwd_any_op_ch::be_visitor_component_fwd_any_op_ch (
 {
 }
 
-be_visitor_component_fwd_any_op_ch::~be_visitor_component_fwd_any_op_ch ()
-{
-}
+be_visitor_component_fwd_any_op_ch::~be_visitor_component_fwd_any_op_ch () = default;
 
 int
 be_visitor_component_fwd_any_op_ch::visit_component_fwd (

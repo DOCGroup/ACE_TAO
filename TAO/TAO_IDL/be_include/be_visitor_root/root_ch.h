@@ -26,11 +26,16 @@
 class be_visitor_root_ch : public be_visitor_root
 {
 public:
-  be_visitor_root_ch (be_visitor_context *ctx);
+  explicit be_visitor_root_ch (be_visitor_context *ctx);
 
-  ~be_visitor_root_ch ();
+  ~be_visitor_root_ch () override;
 
-  virtual int visit_root (be_root *node);
+  be_visitor_root_ch (const be_visitor_root_ch &) = delete;
+  be_visitor_root_ch (be_visitor_root_ch &&) = delete;
+  be_visitor_root_ch &operator= (const be_visitor_root_ch &) = delete;
+  be_visitor_root_ch &operator= (be_visitor_root_ch &&) = delete;
+
+  int visit_root (be_root *node) override;
 
 private:
   /// Open file and initialize stream.
@@ -54,7 +59,7 @@ private:
   /// its constructor is called too soon to initialize the
   /// stream. This class is the only root visitor that
   /// contains filestream output.
-  TAO_OutStream *o_;
+  TAO_OutStream *o_ {};
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_CH_H_ */

@@ -89,8 +89,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     AST_Decl (nt,
               n),
     pd_constant_value (v),
-    pd_et (t),
-    ifr_added_ (false)
+    pd_et (t)
 {
 }
 
@@ -102,8 +101,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     AST_Decl (AST_Decl::NT_const,
               n),
     pd_constant_value (v),
-    pd_et (t),
-    ifr_added_ (false)
+    pd_et (t)
 {
   // Avoids a truncation warning on MSVC when assigning a decimal
   // literal to a float constant. Must also check that the input
@@ -126,9 +124,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     }
 }
 
-AST_Constant::~AST_Constant ()
-{
-}
+AST_Constant::~AST_Constant () = default;
 
 // Redefinition of inherited virtual operations.
 
@@ -156,12 +152,7 @@ AST_Constant::ast_accept (ast_visitor *visitor)
 void
 AST_Constant::destroy ()
 {
-  if (this->pd_constant_value != nullptr)
-    {
-      this->pd_constant_value->destroy ();
-      delete this->pd_constant_value;
-      this->pd_constant_value = nullptr;
-    }
+  this->pd_constant_value.reset ();
 
   this->AST_Decl::destroy ();
 }
@@ -169,19 +160,19 @@ AST_Constant::destroy ()
 // Data accessors.
 
 AST_Expression *
-AST_Constant::constant_value ()
+AST_Constant::constant_value () const
 {
-  return this->pd_constant_value;
+  return this->pd_constant_value.get ();
 }
 
 AST_Expression::ExprType
-AST_Constant::et ()
+AST_Constant::et () const
 {
   return this->pd_et;
 }
 
 bool
-AST_Constant::ifr_added ()
+AST_Constant::ifr_added () const
 {
   return this->ifr_added_;
 }

@@ -66,10 +66,6 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
                         false,
                         false,
                         false),
-    supports_ (nullptr),
-    n_supports_ (0),
-    inherits_concrete_ (nullptr),
-    supports_concrete_ (nullptr),
     truncatable_ (truncatable)
 {
   this->compile_inheritance (inherits,
@@ -81,17 +77,15 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
     }
 }
 
-FE_OBVHeader::~FE_OBVHeader ()
-{
-}
+FE_OBVHeader::~FE_OBVHeader () = default;
 
-AST_Type **
+AST_Type_List const&
 FE_OBVHeader::supports () const
 {
   return this->supports_;
 }
 
-long
+std::size_t
 FE_OBVHeader::n_supports () const
 {
   return this->n_supports_;
@@ -128,9 +122,9 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
   this->FE_InterfaceHeader::compile_inheritance (vtypes,
                                                  true);
 
-  if (this->n_inherits_ > 0)
+  if (!this->iseen_.empty ())
     {
-      AST_Type *t = this->inherits_[0];
+      AST_Type *t = this->iseen_[0];
       AST_ValueType *vt = dynamic_cast<AST_ValueType*> (t);
 
       if (vt != nullptr
@@ -140,14 +134,14 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
         }
 
       if (! is_eventtype
-          && this->inherits_[0]->node_type () == AST_Decl::NT_eventtype)
+          && this->iseen_[0]->node_type () == AST_Decl::NT_eventtype)
         {
-          idl_global->err ()->valuetype_expected (this->inherits_[0]);
+          idl_global->err ()->valuetype_expected (this->iseen_[0]);
         }
 
-      for (long i = 1; i < this->n_inherits_; ++i)
+      for (std::size_t i = 1; i < this->iseen_.size (); ++i)
         {
-          t = this->inherits_[i];
+          t = this->iseen_[i];
 
           if (!t->is_abstract ())
             {
@@ -168,22 +162,16 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 {
   if (supports == nullptr)
     {
-      this->supports_ = nullptr;
+      this->supports_.clear ();
       this->n_supports_ = 0;
       return;
     }
-
-  long length = supports->length ();
-  this->n_supports_ = length;
-
-  ACE_NEW (this->supports_,
-           AST_Type *[length]);
 
   AST_Decl *d = nullptr;
   UTL_ScopedName *item = nullptr;
   AST_Interface *iface = nullptr;
   AST_Type *t = nullptr;
-  int i = 0;
+  std::size_t i = 0;
 
   for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
     {
@@ -250,14 +238,14 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
               && nt != AST_Decl::NT_interface)
             {
               idl_global->err ()->mismatched_template_param (
-                ph->info ()->name_.c_str ());
+                ph->info ()->name_);
 
               continue;
             }
         }
       else
         {
-          idl_global->err ()->supports_error (this->interface_name_,
+          idl_global->err ()->supports_error (this->interface_name_.get (),
                                               d);
           continue;
         }
@@ -265,7 +253,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       // Forward declared interface?
       if (iface != nullptr && !iface->is_defined ())
         {
-          idl_global->err ()->supports_fwd_error (this->interface_name_,
+          idl_global->err ()->supports_fwd_error (this->interface_name_.get (),
                                                   iface);
           continue;
         }
@@ -291,14 +279,16 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
             }
         }
 
-      this->supports_[i++] = t;
+      this->supports_.push_back (t);
+      ++i;
     }
+  this->n_supports_ = this->supports_.size ();
 }
 
 bool
 FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 {
-  if (this->n_inherits_ == 0)
+  if (this->iseen_.empty ())
     {
       return true;
     }
@@ -307,9 +297,9 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
   AST_Type *concrete = nullptr;
   AST_Interface *ancestor = nullptr;
 
-  for (long i = 0; i < this->n_inherits_; ++i)
+  for (std::size_t i = 0; i < this->iseen_.size (); ++i)
     {
-      vt = dynamic_cast<AST_ValueType*> (this->inherits_[i]);
+      vt = dynamic_cast<AST_ValueType*> (this->iseen_[i]);
       concrete = vt->supports_concrete ();
 
       if (nullptr == concrete)
@@ -322,7 +312,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
           return true;
         }
 
-      for (long j = 0; j < d->n_inherits_flat (); ++j)
+      for (std::size_t j = 0; j < d->n_inherits_flat (); ++j)
         {
           ancestor = d->inherits_flat ()[j];
 

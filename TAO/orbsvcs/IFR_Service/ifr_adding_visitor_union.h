@@ -31,14 +31,18 @@
 class ifr_adding_visitor_union : public ifr_adding_visitor
 {
 public:
-  ifr_adding_visitor_union (AST_Decl *scope);
+  explicit ifr_adding_visitor_union (AST_Decl *scope);
 
-  virtual ~ifr_adding_visitor_union ();
+  ~ifr_adding_visitor_union () override;
+  ifr_adding_visitor_union (ifr_adding_visitor_union const &) = delete;
+  ifr_adding_visitor_union (ifr_adding_visitor_union &&) = delete;
+  ifr_adding_visitor_union &operator= (ifr_adding_visitor_union const &) = delete;
+  ifr_adding_visitor_union &operator= (ifr_adding_visitor_union &&) = delete;
 
-  virtual int visit_scope (UTL_Scope *node);
-  virtual int visit_structure (AST_Structure *node);
-  virtual int visit_enum (AST_Enum *node);
-  virtual int visit_union (AST_Union *node);
+  int visit_scope (UTL_Scope *node) override;
+  int visit_structure (AST_Structure *node) override;
+  int visit_enum (AST_Enum *node) override;
+  int visit_union (AST_Union *node) override;
 
   /// Lets the visitor one level above acess this value.
   virtual CORBA::IDLType_ptr ir_current () const;

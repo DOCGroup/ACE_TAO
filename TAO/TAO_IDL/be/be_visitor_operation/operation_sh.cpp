@@ -16,9 +16,7 @@ be_visitor_operation_sh::be_visitor_operation_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_sh::~be_visitor_operation_sh ()
-{
-}
+be_visitor_operation_sh::~be_visitor_operation_sh () = default;
 
 int
 be_visitor_operation_sh::visit_operation (be_operation *node)
@@ -29,7 +27,7 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   TAO_INSERT_COMMENT (os);

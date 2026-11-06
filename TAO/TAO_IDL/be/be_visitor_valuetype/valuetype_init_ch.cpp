@@ -19,9 +19,7 @@ be_visitor_valuetype_init_ch::be_visitor_valuetype_init_ch (
 {
 }
 
-be_visitor_valuetype_init_ch::~be_visitor_valuetype_init_ch ()
-{
-}
+be_visitor_valuetype_init_ch::~be_visitor_valuetype_init_ch () = default;
 
 int
 be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
@@ -91,12 +89,12 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
       os << be_nl_2
-         << "virtual ::CORBA::ValueBase *create_for_unmarshal ();";
+         << "::CORBA::ValueBase *create_for_unmarshal () override;";
 
       if (node->supports_abstract ())
         {
           os << be_nl_2
-             << "virtual ::CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();" << be_uidt;
+             << "::CORBA::AbstractBase_ptr create_for_unmarshal_abstract () override;" << be_uidt;
         }
     }
 
@@ -106,7 +104,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
   os << "// TAO-specific extensions"
      << be_uidt_nl
      << "public:" << be_idt_nl;
-  os << "virtual const char* tao_repository_id ();";
+  os << "virtual char const * tao_repository_id ();";
 
   if (factory_style == be_valuetype::FS_ABSTRACT_FACTORY)
     {

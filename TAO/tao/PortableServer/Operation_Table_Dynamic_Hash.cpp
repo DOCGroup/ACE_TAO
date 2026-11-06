@@ -78,7 +78,7 @@ TAO_Dynamic_Hash_OpTable::bind (char const *opname,
 int
 TAO_Dynamic_Hash_OpTable::find (char const *opname,
                                 TAO_Skeleton &skel_ptr,
-                                unsigned int const)
+                                std::size_t const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
   TAO::Operation_Skeletons s;
@@ -97,7 +97,7 @@ int
 TAO_Dynamic_Hash_OpTable::find (char const *opname,
                                 TAO_Collocated_Skeleton &skel_ptr,
                                 TAO::Collocation_Strategy s,
-                                unsigned int const)
+                                std::size_t const)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
 

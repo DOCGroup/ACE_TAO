@@ -42,9 +42,7 @@ be_eventtype_fwd::be_eventtype_fwd (AST_Interface *dummy,
 {
 }
 
-be_eventtype_fwd::~be_eventtype_fwd ()
-{
-}
+be_eventtype_fwd::~be_eventtype_fwd () = default;
 
 int
 be_eventtype_fwd::accept (be_visitor *visitor)

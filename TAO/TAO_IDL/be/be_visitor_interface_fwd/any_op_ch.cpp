@@ -18,9 +18,7 @@ be_visitor_interface_fwd_any_op_ch::be_visitor_interface_fwd_any_op_ch (
 {
 }
 
-be_visitor_interface_fwd_any_op_ch::~be_visitor_interface_fwd_any_op_ch ()
-{
-}
+be_visitor_interface_fwd_any_op_ch::~be_visitor_interface_fwd_any_op_ch () = default;
 
 int
 be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
@@ -42,8 +40,8 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  std::string const macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -56,7 +54,7 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
       << " operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr *); // non-copying" << be_nl;
   *os << macro << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, "
+      << " operator>>= (::CORBA::Any const &, "
       << node->name () << " *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;

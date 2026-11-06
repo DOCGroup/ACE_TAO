@@ -25,10 +25,15 @@ class be_visitor_valuebox : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_valuebox (be_visitor_context *ctx);
+  explicit be_visitor_valuebox (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox () override;
+  ~be_visitor_valuebox () override  = default;
+
+  be_visitor_valuebox (be_visitor_valuebox const &) = delete;
+  be_visitor_valuebox (be_visitor_valuebox &&) = delete;
+  be_visitor_valuebox &operator= (be_visitor_valuebox const &) = delete;
+  be_visitor_valuebox &operator= (be_visitor_valuebox &&) = delete;
 
   /// visit attribute. We provide code for this method in the derived class
   int visit_valuebox (be_valuebox *node) override;

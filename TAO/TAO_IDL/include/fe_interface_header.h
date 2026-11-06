@@ -68,6 +68,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scoped_name.h"
 
 #include "ast_typedef.h"
+#include "ast_interface.h"
+
+#include <cstddef>
+#include <memory>
+#include <vector>
 
 class UTL_NameList;
 class AST_Interface;
@@ -83,15 +88,19 @@ public:
                       bool is_local,
                       bool is_abstract,
                       bool compile_now);
+  FE_InterfaceHeader (FE_InterfaceHeader const &) = delete;
+  FE_InterfaceHeader (FE_InterfaceHeader &&) = delete;
+  FE_InterfaceHeader &operator= (FE_InterfaceHeader const &) = delete;
+  FE_InterfaceHeader &operator= (FE_InterfaceHeader &&) = delete;
 
   virtual ~FE_InterfaceHeader ();
 
   // Data Accessors.
   UTL_ScopedName *name () const;
-  AST_Type **inherits () const;
-  long n_inherits () const;
-  AST_Interface **inherits_flat () const;
-  long n_inherits_flat () const;
+  AST_Type_List const& inherits () const;
+  std::size_t n_inherits () const;
+  AST_Interface_List const& inherits_flat () const;
+  std::size_t n_inherits_flat () const;
 
   bool is_local () const;
   // See if we are a local interface.
@@ -121,32 +130,23 @@ protected:
   bool already_seen (AST_Type *ip);
   bool already_seen_flat (AST_Interface *ip);
 
-  void install_in_header ();
-
-  void destroy_flat_arrays ();
+  void clear_flat_inheritance ();
 
   // Data.
 protected:
-  UTL_ScopedName *interface_name_;
-  bool has_template_parent_;
+  struct Scoped_Name_Deleter
+  {
+    void operator() (UTL_ScopedName *name) const;
+  };
 
-  // Inherited interfaces.
-  AST_Type **inherits_;
-  long n_inherits_;
+  std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter> interface_name_;
+  bool has_template_parent_ {};
 
-  // Used for name clash checking.
-  AST_Interface  **inherits_flat_;
-  long n_inherits_flat_;
+  bool is_local_ {};
+  bool is_abstract_ {};
 
-  bool is_local_;
-  bool is_abstract_;
-
-  AST_Type **iseen_;
-  AST_Interface **iseen_flat_;
-  long iallocated_;
-  long iused_;
-  long iallocated_flat_;
-  long iused_flat_;
+  std::vector<AST_Type *> iseen_;
+  std::vector<AST_Interface *> iseen_flat_;
 };
 
 #endif           // _FE_INTERFACE_HEADER_FE_INTERFACE_HH

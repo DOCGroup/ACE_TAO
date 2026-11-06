@@ -19,9 +19,7 @@ AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
 {
 }
 
-AST_ValueTypeFwd::~AST_ValueTypeFwd ()
-{
-}
+AST_ValueTypeFwd::~AST_ValueTypeFwd () = default;
 
 // Redefinition of inherited virtual operations.
 

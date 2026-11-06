@@ -40,7 +40,7 @@ class TAO_IFRService_Export TAO_ValueMemberDef_i : public virtual TAO_Contained_
 {
 public:
   /// Constructor
-  TAO_ValueMemberDef_i (TAO_Repository_i *repoy);
+  explicit TAO_ValueMemberDef_i (TAO_Repository_i *repoy);
 
   /// Destructor
   ~TAO_ValueMemberDef_i () override;

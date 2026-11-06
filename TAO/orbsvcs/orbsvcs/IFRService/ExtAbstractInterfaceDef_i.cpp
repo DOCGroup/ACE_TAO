@@ -15,9 +15,7 @@ TAO_ExtAbstractInterfaceDef_i::TAO_ExtAbstractInterfaceDef_i (
 {
 }
 
-TAO_ExtAbstractInterfaceDef_i::~TAO_ExtAbstractInterfaceDef_i ()
-{
-}
+TAO_ExtAbstractInterfaceDef_i::~TAO_ExtAbstractInterfaceDef_i () = default;
 
 // Just call the base class version, this is here only to
 // disambiguate multiple inheritance.

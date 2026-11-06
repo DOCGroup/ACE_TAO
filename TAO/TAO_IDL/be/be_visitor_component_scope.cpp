@@ -26,10 +26,8 @@
 be_visitor_component_scope::be_visitor_component_scope (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (nullptr),
     os_ (*ctx->stream ()),
-    export_macro_ (be_global->svnt_export_macro ()),
-    in_ext_port_ (false)
+    export_macro_ (be_global->svnt_export_macro ())
 {
   /// All existing CIAO examples set the servant export values in the CIDL
   /// compiler to equal the IDL compiler's skel export values. Below is a
@@ -41,10 +39,7 @@ be_visitor_component_scope::be_visitor_component_scope (
     }
 }
 
-be_visitor_component_scope::~be_visitor_component_scope (
-  )
-{
-}
+be_visitor_component_scope::~be_visitor_component_scope () = default;
 
 int
 be_visitor_component_scope::visit_extended_port (
@@ -53,18 +48,18 @@ be_visitor_component_scope::visit_extended_port (
   this->in_ext_port_ = true;
   this->ctx_->interface (this->node_);
 
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   /// Skip if we are defined inside a porttype.
   /// Depends on nested ports not being allowed.
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
-      this->ctx_->port_prefix () = node->local_name ()->get_string ();
-      this->ctx_->port_prefix () += '_';
+      this->ctx_->port_prefix (node->local_name ()->get_string ());
+      this->ctx_->append_port_prefix ("_");
     }
 
-  int status =
+  int const status =
     this->visit_porttype_scope (node->port_type ());
 
   if (status == -1)
@@ -77,7 +72,7 @@ be_visitor_component_scope::visit_extended_port (
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   this->in_ext_port_ = false;
   return 0;
 }
@@ -86,18 +81,18 @@ int
 be_visitor_component_scope::visit_mirror_port (
   be_mirror_port *node)
 {
-  AST_Decl::NodeType nt =
+  AST_Decl::NodeType const nt =
     ScopeAsDecl (node->defined_in ())->node_type ();
 
   /// Skip if we are defined inside a porttype.
   /// Depends on nested ports not being allowed.
   if (nt == AST_Decl::NT_component || nt == AST_Decl::NT_connector)
     {
-      this->ctx_->port_prefix () = node->local_name ()->get_string ();
-      this->ctx_->port_prefix () += '_';
+      this->ctx_->port_prefix (node->local_name ()->get_string ());
+      this->ctx_->append_port_prefix ("_");
     }
 
-  int status =
+  int const status =
     this->visit_porttype_scope_mirror (node->port_type ());
 
   if (status == -1)
@@ -111,7 +106,7 @@ be_visitor_component_scope::visit_mirror_port (
     }
 
   /// Reset port prefix string.
-  this->ctx_->port_prefix () = "";
+  this->ctx_->port_prefix ({});
   return 0;
 }
 
@@ -206,7 +201,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (
                                    ACE_TEXT ("be_visitor_component_scope")
                                    ACE_TEXT ("::visit_porttype_mirror - ")
                                    ACE_TEXT ("%s->accept() failed\n"),
-                                   d->full_name ()),
+                                   d->full_name ().c_str ()),
                                   -1);
               }
 
@@ -224,67 +219,12 @@ be_visitor_component_scope::node (be_component *c)
 }
 
 void
-be_visitor_component_scope::gen_svnt_entrypoint_decl ()
-{
-  os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
-      << " ::PortableServer::Servant" << be_nl
-      << "create_" << node_->flat_name ()
-      << "_Servant (" << be_idt_nl
-      << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::"
-      << be_global->ciao_container_type ()
-      << "_Container_ptr c," << be_nl
-      << "const char * ins_name);" << be_uidt;
-}
-
-void
-be_visitor_component_scope::gen_svnt_entrypoint_defn ()
-{
-  ACE_CString sname_str (
-    ScopeAsDecl (node_->defined_in ())->full_name ());
-  const char *sname = sname_str.c_str ();
-  const char *lname = node_->local_name ();
-  const char *global = (sname_str == "" ? "" : "::");
-
-  os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
-      << " ::PortableServer::Servant" << be_nl
-      << "create_" << node_->flat_name ()
-      << "_Servant (" << be_idt_nl
-      << "::Components::EnterpriseComponent_ptr p," << be_nl
-      << "::CIAO::" << be_global->ciao_container_type ()
-      << "_Container_ptr c," << be_nl
-      << "const char * ins_name)" << be_uidt_nl
-      << "{" << be_idt_nl
-      << global << sname << "::CCM_" << lname
-      << "_var x =" << be_idt_nl
-      << global << sname << "::CCM_" << lname
-      << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "if (::CORBA::is_nil (x.in ()))" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "::PortableServer::Servant retval = 0;" << be_nl
-      << "ACE_NEW_RETURN (retval," << be_nl
-      << "                " << lname << "_Servant (" << be_idt_nl
-      << "                x.in ()," << be_nl
-      << "                ::Components::CCMHome::_nil ()," << be_nl
-      << "                ins_name," << be_nl
-      << "                0," << be_nl
-      << "                c)," << be_uidt_nl
-      << "                0);" << be_nl_2
-      << "return retval;" << be_uidt_nl
-      << "}";
-}
-
-void
 be_visitor_component_scope::gen_exec_entrypoint_decl ()
 {
   os_ << be_nl_2
       << "/// Factory method and library entry point used by the middleware" << be_nl
       << "/// @return new component instance" << be_nl
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
       << "_Impl ();";
@@ -294,7 +234,7 @@ void
 be_visitor_component_scope::gen_exec_entrypoint_defn ()
 {
   os_ << be_nl_2
-      << "extern \"C\" " << export_macro_.c_str ()
+      << "extern \"C\" " << export_macro_
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
       << "_Impl ()" << be_nl

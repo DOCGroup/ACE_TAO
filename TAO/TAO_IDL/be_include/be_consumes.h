@@ -16,16 +16,16 @@ public:
   be_consumes (UTL_ScopedName *n,
                AST_Type *consumes_type);
 
-  virtual ~be_consumes ();
+  ~be_consumes () override;
 
   // Non-virtual override of frontend method.
   be_eventtype *consumes_type () const;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif // BE_CONSUMES_H

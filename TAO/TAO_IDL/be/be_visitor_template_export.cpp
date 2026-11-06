@@ -25,9 +25,7 @@ be_visitor_template_export::be_visitor_template_export (
 {
 }
 
-be_visitor_template_export::~be_visitor_template_export ()
-{
-}
+be_visitor_template_export::~be_visitor_template_export () = default;
 
 int
 be_visitor_template_export::visit_root (be_root *node)

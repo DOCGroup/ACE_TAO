@@ -12,15 +12,15 @@
 
 #include "operation.h"
 
+#include <string>
+
 be_visitor_operation_ami_cs::be_visitor_operation_ami_cs (
     be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs ()
-{
-}
+be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs () = default;
 
 // Processing to be done after every element in the scope is
 // processed.
@@ -28,7 +28,7 @@ int
 be_visitor_operation_ami_cs::post_process (be_decl *bd)
 {
   // all we do here is to insert a comma and a newline
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {
@@ -48,7 +48,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
     }
 
   be_visitor_context ctx;
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   TAO_INSERT_COMMENT (os);
@@ -74,7 +74,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Generate the scope::operation name.
   *os << parent->full_name ()
-      << "::" << this->ctx_->port_prefix ().c_str ()
+      << "::" << this->ctx_->port_prefix ()
       << node->local_name ()->get_string ();
 
   // Generate the argument list with the appropriate mapping (same as
@@ -155,7 +155,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "{" << be_idt_nl
           << "std::addressof(_tao_retval)";
 
-      AST_Argument *arg = nullptr;
+      AST_Argument *arg {};
       UTL_ScopeActiveIterator arg_list_iter (ami_op,
                                              UTL_Scope::IK_decls);
 
@@ -174,26 +174,25 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "};" << be_uidt;
     }
 
-  ACE_CString base (node->local_name ()->get_string ());
+  std::string const& base =
+    node->local_name ()->get_string ();
 
   /// The sendc_* operation makes the invocation with the
   /// original operation name.
-  ACE_CString lname_str (base.substr (ACE_OS::strlen ("sendc_")));
-  const char *lname = lname_str.c_str ();
+  static constexpr std::size_t sendc_prefix_length = sizeof ("sendc_") - 1;
+  std::string const lname = base.substr (sendc_prefix_length);
 
-  ACE_CString opname (node->is_attr_op () ? "_" : "");
+  std::string opname (node->is_attr_op () ? "_" : "");
   opname += lname;
 
-  /// Some compilers can't resolve the stream operator overload.
-  const char *op_name = opname.c_str ();
-  ACE_CString::size_type len = opname.length ();
+  std::string::size_type const len = opname.length ();
 
   *os << be_nl_2
       << "TAO::Asynch_Invocation_Adapter _invocation_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << nargs << "," << be_nl
-      << "\"" << op_name << "\"," << be_nl
+      << "\"" << opname << "\"," << be_nl
       << len << "," << be_nl;
 
   *os << "TAO::TAO_CO_NONE";
@@ -243,8 +242,8 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 int
 be_visitor_operation_ami_cs::visit_argument (be_argument *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr; // argument type
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {}; // argument type
 
   // Retrieve the type for this argument.
   bt = dynamic_cast<be_type*> (node->field_type ());

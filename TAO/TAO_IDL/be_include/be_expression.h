@@ -22,7 +22,7 @@ class be_expression : public virtual AST_Expression
 {
 public:
   // Constructors.
-  be_expression (UTL_ScopedName *n);
+  explicit be_expression (UTL_ScopedName *n);
 
   be_expression (AST_Expression *b,
                  AST_Expression::ExprType t);
@@ -31,30 +31,29 @@ public:
                  AST_Expression *v1,
                  AST_Expression *v2);
 
-  be_expression (ACE_CDR::Long l);
+  explicit be_expression (ACE_CDR::Long l);
 
-  be_expression (ACE_CDR::LongLong ll);
+  explicit be_expression (ACE_CDR::LongLong ll);
 
-  be_expression (ACE_CDR::Boolean b);
+  explicit be_expression (ACE_CDR::Boolean b);
 
-  be_expression (ACE_CDR::ULong ul);
+  explicit be_expression (ACE_CDR::ULong ul);
 
-  be_expression (ACE_CDR::ULongLong ull);
+  explicit be_expression (ACE_CDR::ULongLong ull);
 
   be_expression (ACE_CDR::ULong l,
                  AST_Expression::ExprType t);
 
-  be_expression (UTL_String *s);
+  explicit be_expression (std::string s);
+  be_expression (std::string s, AST_Expression::ExprType t);
 
-  be_expression (char *s);
+  explicit be_expression (ACE_CDR::Char c);
 
-  be_expression (ACE_CDR::Char c);
+  explicit be_expression (ACE_OutputCDR::from_wchar wc);
 
-  be_expression (ACE_OutputCDR::from_wchar wc);
+  explicit be_expression (ACE_CDR::Double d);
 
-  be_expression (ACE_CDR::Double d);
-
-  be_expression (const ACE_CDR::Fixed &f);
+  explicit be_expression (const ACE_CDR::Fixed &f);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

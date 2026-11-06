@@ -23,9 +23,7 @@ be_visitor_operation_rettype::be_visitor_operation_rettype (be_visitor_context
 {
 }
 
-be_visitor_operation_rettype::~be_visitor_operation_rettype ()
-{
-}
+be_visitor_operation_rettype::~be_visitor_operation_rettype () = default;
 
 int
 be_visitor_operation_rettype::visit_array (
@@ -76,7 +74,7 @@ int
 be_visitor_operation_rettype::visit_predefined_type (
   be_predefined_type *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -103,7 +101,7 @@ be_visitor_operation_rettype::visit_predefined_type (
       *os << bt->name ();
 
       // If it's not TCKind, it's either Object, TypeCode or ValueBase.
-      if (ACE_OS::strcmp (bt->local_name ()->get_string (), "TCKind") != 0)
+      if (bt->local_name ()->get_string () != "TCKind")
         {
           *os << "_ptr";
         }
@@ -160,7 +158,7 @@ int
 be_visitor_operation_rettype::visit_string (be_string *node)
 {
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  bool wide = (node->width () != (long) sizeof (char));
+  bool wide = (node->width () != sizeof (char));
 
   if (wide)
     {
@@ -298,10 +296,10 @@ be_visitor_operation_rettype::visit_valuebox (
   return 0;
 }
 
-const char *
-be_visitor_operation_rettype::type_name (be_type *node)
+std::string const&
+be_visitor_operation_rettype::type_name (be_type *node) const
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias () != nullptr)
     {

@@ -17,9 +17,6 @@ be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_ch::~be_visitor_sequence_ch ()
-{
-}
 
 int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 {
@@ -51,11 +48,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the base type since we may need to do some code
   // generation for the base type.
-  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (bt == nullptr)
     {
@@ -67,7 +64,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
     }
 
   bt->seen_in_sequence (true);
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   // If our base type is an anonymous sequence, we must create a name
   // and generate a class declaration for it as well.
@@ -76,7 +73,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       // Temporarily make the context's tdef node 0 so the nested call
       // to create_name will not get confused and give our anonymous
       // sequence element type the same name as we have.
-      be_typedef *tmp = this->ctx_->tdef ();
+      be_typedef * const tmp = this->ctx_->tdef ();
       this->ctx_->tdef (nullptr);
 
       if (bt->accept (this) != 0)
@@ -157,7 +154,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << node->local_name () << be_idt_nl
           << ": public" << be_idt << be_idt_nl;
 
-      int status =
+      int const status =
         node->gen_base_class_name (os,
                                   "",
                                   this->ctx_->scope ()->decl ());
@@ -184,7 +181,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       if (node->unbounded ())
         {
           *os << be_nl
-              << node->local_name () << " (::CORBA::ULong max);";
+              << "explicit " << node->local_name () << " (::CORBA::ULong max);";
         }
 
       /// If we are using std::vector, we can't implement this
@@ -223,9 +220,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       // Default copy/move constructor and assignment operators
       *os << be_nl
-          << node->local_name () << " (const " << node->local_name () << " &) = default;" << be_nl
+          << node->local_name () << " (" << node->local_name ()
+          << " const &) = default;" << be_nl
           << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl
-          << node->local_name () << "& operator= (const " << node->local_name () << " &) = default;" << be_nl
+          << node->local_name () << "& operator= (" << node->local_name ()
+          << " const &) = default;" << be_nl
           << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
           << be_nl;
 
@@ -247,12 +246,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       // TAO provides extensions for octet sequences, first find out if
       // the base type is an octet (or an alias for octet).
-      be_predefined_type *predef = nullptr;
+      be_predefined_type *predef {};
 
       if (bt->base_node_type () == AST_Type::NT_pre_defined)
         {
-          be_typedef* alias =
-                dynamic_cast<be_typedef*> (bt);
+          be_typedef * const alias = dynamic_cast<be_typedef*> (bt);
 
           if (alias == nullptr)
             {
@@ -275,9 +273,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
         {
           *os << be_nl_2
               << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
-              << node->local_name () << " (::CORBA::ULong length, const ACE_Message_Block* mb)"
+              << node->local_name () << " (::CORBA::ULong length, ACE_Message_Block const *mb)"
               << be_idt_nl
-              << ": ::TAO::unbounded_value_sequence< ::CORBA::Octet>"
+              << ": ::TAO::unbounded_value_sequence<::CORBA::Octet>"
               << " (length, mb) {}" << be_uidt_nl
               << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
         }
@@ -296,11 +294,11 @@ void
 be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
                                              be_type *elem)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << be_nl;
 
-  AST_Type::SIZE_TYPE st = elem->size_type ();
+  AST_Type::SIZE_TYPE const st = elem->size_type ();
 
   *os << "using " << node->local_name () << "_var = "
       << (st == AST_Type::FIXED ? "::TAO_FixedSeq_Var_T<"

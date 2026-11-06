@@ -18,14 +18,12 @@ be_visitor_ami4ccm_conn_ex_idl::be_visitor_ami4ccm_conn_ex_idl (
 {
 }
 
-be_visitor_ami4ccm_conn_ex_idl::~be_visitor_ami4ccm_conn_ex_idl ()
-{
-}
+be_visitor_ami4ccm_conn_ex_idl::~be_visitor_ami4ccm_conn_ex_idl () = default;
 
 int
 be_visitor_ami4ccm_conn_ex_idl::visit_interface (be_interface *node)
 {
-  Identifier *oln = node->original_local_name ();
+  std::string const& oln = node->original_local_name ();
 
   TAO_INSERT_COMMENT (&os_);
 

@@ -9,6 +9,10 @@ class AST_EventType;
 class TAO_IDL_FE_Export AST_Publishes : public virtual AST_Field
 {
 public:
+  AST_Publishes (AST_Publishes const &) = delete;
+  AST_Publishes (AST_Publishes &&) = delete;
+  AST_Publishes &operator= (AST_Publishes const &) = delete;
+  AST_Publishes &operator= (AST_Publishes &&) = delete;
   AST_Publishes (UTL_ScopedName *n,
                  AST_Type *publishes_type);
 

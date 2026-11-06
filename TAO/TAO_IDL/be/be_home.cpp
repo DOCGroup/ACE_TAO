@@ -23,10 +23,10 @@ be_home::be_home (UTL_ScopedName *n,
                   AST_Home *base_home,
                   AST_Component *managed_component,
                   AST_Type *primary_key,
-                  AST_Type **supports,
+                  AST_Type_List const& supports,
                   long n_supports,
-                  AST_Interface **supports_flat,
-                  long n_supports_flat)
+                  AST_Interface_List const& supports_flat,
+                  std::size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_home,
@@ -80,9 +80,7 @@ be_home::be_home (UTL_ScopedName *n,
   idl_global->object_arg_seen_ = true;
 }
 
-be_home::~be_home ()
-{
-}
+be_home::~be_home () = default;
 
 void
 be_home::scan (UTL_Scope *s)
@@ -118,35 +116,19 @@ be_home::scan (UTL_Scope *s)
 void
 be_home::destroy ()
 {
-  delete [] this->full_skel_name_;
-  this->full_skel_name_ = nullptr;
+  this->full_skel_name_.clear ();
 
-  delete [] this->full_coll_name_;
-  this->full_coll_name_ = nullptr;
+  this->full_coll_name_.clear ();
+  this->local_coll_name_.clear ();
 
-  delete [] this->local_coll_name_;
-  this->local_coll_name_ = nullptr;
+  this->direct_proxy_impl_name_.clear ();
+  this->full_direct_proxy_impl_name_.clear ();
 
-  delete [] this->relative_skel_name_;
-  this->relative_skel_name_ = nullptr;
+  this->client_scope_.clear ();
+  this->client_scope_computed_ = false;
 
-  delete [] this->direct_proxy_impl_name_;
-  this->direct_proxy_impl_name_ = nullptr;
-
-  delete [] this->full_direct_proxy_impl_name_;
-  this->full_direct_proxy_impl_name_ = nullptr;
-
-  delete [] this->client_scope_;
-  this->client_scope_ = nullptr;
-
-  delete [] this->flat_client_scope_;
-  this->flat_client_scope_ = nullptr;
-
-  delete [] this->server_scope_;
-  this->server_scope_ = nullptr;
-
-  delete [] this->flat_server_scope_;
-  this->flat_server_scope_ = nullptr;
+  this->server_scope_.clear ();
+  this->server_scope_computed_ = false;
 
   this->be_scope::destroy ();
   this->be_type::destroy ();

@@ -17,6 +17,8 @@
 #include "be_type.h"
 #include "ast_string.h"
 
+#include <string>
+
 class AST_Expression;
 class be_visitor;
 
@@ -27,23 +29,23 @@ public:
   be_string (AST_Decl::NodeType nt,
              UTL_ScopedName *n,
              AST_Expression *v,
-             long width);
+             std::size_t width);
 
   // Overridden from class be_type.
-  virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
-                                            bool use_underscore,
-                                            bool accessor = false);
+  void gen_member_ostream_operator (TAO_OutStream *os,
+                                    std::string const& instance_name,
+                                    bool use_underscore,
+                                    bool accessor = false) override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 protected:
   /// Overridden method to compute typecode name.
-  virtual void compute_tc_name ();
+  void compute_tc_name () override;
 };
 
 #endif

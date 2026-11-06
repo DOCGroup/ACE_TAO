@@ -40,7 +40,7 @@ class TAO_IFRService_Export TAO_LocalInterfaceDef_i : public virtual TAO_Interfa
 {
 public:
   /// Constructor
-  TAO_LocalInterfaceDef_i (TAO_Repository_i *repo);
+  explicit TAO_LocalInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_LocalInterfaceDef_i () override;
@@ -48,9 +48,9 @@ public:
   /// Return our definition kind.
   CORBA::DefinitionKind def_kind () override;
 
-  CORBA::Boolean is_a (const char *interface_id) override;
+  CORBA::Boolean is_a (char const *interface_id) override;
 
-  CORBA::Boolean is_a_i (const char *interface_id);
+  CORBA::Boolean is_a_i (char const *interface_id);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

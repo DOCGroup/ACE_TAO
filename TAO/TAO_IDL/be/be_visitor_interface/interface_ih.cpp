@@ -11,14 +11,14 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_interface_ih::be_visitor_interface_ih (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
 }
 
-be_visitor_interface_ih::~be_visitor_interface_ih ()
-{
-}
+be_visitor_interface_ih::~be_visitor_interface_ih () = default;
 
 int
 be_visitor_interface_ih::visit_interface (be_interface *node)
@@ -29,16 +29,9 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  static char namebuf [NAMEBUFSIZE];
-
-
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
+  std::string const namebuf (node->flat_name ());
 
   // Generate the skeleton class name.
-
-  ACE_OS::sprintf (namebuf, "%s", node->flat_name ());
 
   if (be_global->gen_impl_debug_info ())
     {
@@ -79,18 +72,18 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
     {
       *os << "// Copy Constructor"<<be_nl
           << be_global->impl_class_prefix () << namebuf
-          << be_global->impl_class_suffix () << " (const "
+          << be_global->impl_class_suffix () << " ("
           << be_global->impl_class_prefix () << namebuf
-          << be_global->impl_class_suffix () << "&) = default;" <<be_nl <<be_nl;
+          << be_global->impl_class_suffix () << " const &) = default;" << be_nl << be_nl;
     }
 
   if (be_global->gen_assign_op ())
     {
       *os << "// Copy Assignment" << be_nl
           << be_global->impl_class_prefix () << namebuf
-          << be_global->impl_class_suffix () << "& " << "operator=(const "
+          << be_global->impl_class_suffix () << "& " << "operator=("
           << be_global->impl_class_prefix () << namebuf
-          << be_global->impl_class_suffix () << "&);" << be_nl_2;
+          << be_global->impl_class_suffix () << " const &);" << be_nl_2;
     }
 
   *os << "// Destructor" << be_nl
@@ -138,10 +131,7 @@ be_visitor_interface_ih::method_helper (be_interface *derived,
                                         be_interface *node,
                                         TAO_OutStream *os)
 {
-  int compare =
-    ACE_OS::strcmp (derived->flat_name (), node->flat_name ());
-
-  if (compare != 0)
+  if (derived->flat_name () != node->flat_name ())
     {
       be_visitor_context ctx;
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);

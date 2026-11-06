@@ -23,9 +23,7 @@ AST_Native::AST_Native (UTL_ScopedName *n)
 {
 }
 
-AST_Native::~AST_Native ()
-{
-}
+AST_Native::~AST_Native () = default;
 
 void
 AST_Native::destroy ()

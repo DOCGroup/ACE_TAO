@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 
+#include <memory>
+
 class AST_Decl;
 class AST_Type;
 
@@ -74,24 +76,27 @@ class TAO_IDL_FE_Export FE_Declarator
 {
 public:
   // Enum to denote types of declarators.
-  enum DeclaratorType
+  enum class Declarator_Type
   {
-    FD_simple,  // Simple declarator
-    FD_complex  // Complex declarator (complex_part field used)
+    Simple,  // Simple declarator
+    Complex  // Complex declarator (complex_part field used)
   };
 
   // Operations.
 
   // Constructor and destructor.
   FE_Declarator (UTL_ScopedName *n,
-                 DeclaratorType dt,
+                 Declarator_Type dt,
                  AST_Decl *cp);
+  FE_Declarator (FE_Declarator const &) = delete;
+  FE_Declarator (FE_Declarator &&) = delete;
+  FE_Declarator &operator= (FE_Declarator const &) = delete;
+  FE_Declarator &operator= (FE_Declarator &&) = delete;
   virtual ~FE_Declarator () = default;
 
   // Data Accessors.
-  AST_Decl *complex_part ();
-  UTL_ScopedName *name ();
-  DeclaratorType decl_type ();
+  AST_Decl *complex_part () const;
+  UTL_ScopedName *name () const;
 
   // Other Operations.
 
@@ -101,10 +106,17 @@ public:
   virtual void destroy ();
 
 private:
+  struct Scoped_Name_Deleter
+  {
+    void operator() (UTL_ScopedName *name) const;
+  };
+
+  using Scoped_Name_Owner = std::unique_ptr<UTL_ScopedName, Scoped_Name_Deleter>;
+
   // Data.
   AST_Decl *pd_complex_part;       // If a complex declarator
-  UTL_ScopedName *pd_name;         // The name if complex
-  DeclaratorType pd_decl_type;     // Whether complex or simple
+  Scoped_Name_Owner pd_name;       // The name if complex
+  Declarator_Type pd_decl_type;     // Whether complex or simple
 };
 
 #endif           // _FE_DECLARATOR_FE_DECLARATOR_HH

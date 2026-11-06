@@ -20,9 +20,7 @@ be_publishes::be_publishes (UTL_ScopedName *n,
 {
 }
 
-be_publishes::~be_publishes ()
-{
-}
+be_publishes::~be_publishes () = default;
 
 be_eventtype *
 be_publishes::publishes_type () const

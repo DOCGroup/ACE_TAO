@@ -18,9 +18,7 @@ be_visitor_interface_svts::be_visitor_interface_svts (
 {
 }
 
-be_visitor_interface_svts::~be_visitor_interface_svts ()
-{
-}
+be_visitor_interface_svts::~be_visitor_interface_svts () = default;
 
 int
 be_visitor_interface_svts::visit_interface (be_interface *node)

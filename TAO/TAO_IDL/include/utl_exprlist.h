@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_list.h"
 
+#include <memory>
+
 class AST_Expression;
 
 // List of expressions.
@@ -82,26 +84,39 @@ class TAO_IDL_FE_Export UTL_ExprList : public UTL_List
 public:
   UTL_ExprList (AST_Expression *s,
                 UTL_ExprList *cdr);
+  UTL_ExprList (UTL_ExprList const &) = delete;
+  UTL_ExprList (UTL_ExprList &&) = delete;
+  UTL_ExprList &operator= (UTL_ExprList const &) = delete;
+  UTL_ExprList &operator= (UTL_ExprList &&) = delete;
+  ~UTL_ExprList () override;
 
   // Get list item.
   AST_Expression *head ();
+  AST_Expression const *head () const;
 
   // Cleanup.
   void destroy () override;
 
 private:
+  struct Expression_Deleter
+  {
+    void operator() (AST_Expression *expression) const;
+  };
+
+  using Expression_Owner = std::unique_ptr<AST_Expression, Expression_Deleter>;
+
   // Data.
-  AST_Expression *pd_car_data;
+  Expression_Owner pd_car_data;
 };
 
 // Active iterator for UTL_ExprList.
 class   UTL_ExprlistActiveIterator : public UTL_ListActiveIterator
 {
 public:
-  UTL_ExprlistActiveIterator (UTL_ExprList *s);
+  explicit UTL_ExprlistActiveIterator (UTL_ExprList *s);
 
   // Get current item.
-  AST_Expression *item ();
+  AST_Expression *item () const;
 };
 
 #endif           // _UTL_EXPRLIST_UTL_EXPRLIST_HH

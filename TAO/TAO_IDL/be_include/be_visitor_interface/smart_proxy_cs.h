@@ -23,17 +23,21 @@ class be_visitor_interface_smart_proxy_cs : public be_visitor_interface
 {
 public:
   /// constructor
-  be_visitor_interface_smart_proxy_cs (be_visitor_context *ctx);
+  explicit be_visitor_interface_smart_proxy_cs (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_interface_smart_proxy_cs ();
+  ~be_visitor_interface_smart_proxy_cs () override;
+  be_visitor_interface_smart_proxy_cs (be_visitor_interface_smart_proxy_cs const &) = delete;
+  be_visitor_interface_smart_proxy_cs (be_visitor_interface_smart_proxy_cs &&) = delete;
+  be_visitor_interface_smart_proxy_cs &operator= (be_visitor_interface_smart_proxy_cs const &) = delete;
+  be_visitor_interface_smart_proxy_cs &operator= (be_visitor_interface_smart_proxy_cs &&) = delete;
 
   /// visit interface
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// This will just call the above method - no need to create
   /// another set of visitors for this stuff.
-  virtual int visit_component (be_component *node);
+  int visit_component (be_component *node) override;
 };
 
 #endif /* _BE_INTERFACE_SMART_PROXY_CS_H_ */

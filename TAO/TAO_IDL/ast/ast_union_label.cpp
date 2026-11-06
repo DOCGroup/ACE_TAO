@@ -85,9 +85,7 @@ AST_UnionLabel::AST_UnionLabel (UnionLabel lk,
       }
 }
 
-AST_UnionLabel::~AST_UnionLabel ()
-{
-}
+AST_UnionLabel::~AST_UnionLabel () = default;
 
 // Redefinition of inherited virtual operations.
 
@@ -117,16 +115,14 @@ AST_UnionLabel::destroy ()
   // Otherwise (default label) our label value is 0.
   if (UL_label == this->pd_label_kind)
     {
-      this->pd_label_val->destroy ();
-      delete this->pd_label_val;
-      this->pd_label_val = nullptr;
+      this->pd_label_val.reset ();
     }
 }
 
 // Data accessors.
 
 AST_UnionLabel::UnionLabel
-AST_UnionLabel::label_kind ()
+AST_UnionLabel::label_kind () const
 {
   return this->pd_label_kind;
 }
@@ -134,5 +130,11 @@ AST_UnionLabel::label_kind ()
 AST_Expression *
 AST_UnionLabel::label_val ()
 {
-  return this->pd_label_val;
+  return this->pd_label_val.get ();
+}
+
+AST_Expression const *
+AST_UnionLabel::label_val () const
+{
+  return this->pd_label_val.get ();
 }

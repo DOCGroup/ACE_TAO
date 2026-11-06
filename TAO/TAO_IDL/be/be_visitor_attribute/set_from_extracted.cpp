@@ -18,10 +18,7 @@ be_visitor_attribute_set_from_extracted::be_visitor_attribute_set_from_extracted
 {
 }
 
-be_visitor_attribute_set_from_extracted::~be_visitor_attribute_set_from_extracted (
-  )
-{
-}
+be_visitor_attribute_set_from_extracted::~be_visitor_attribute_set_from_extracted () = default;
 
 int
 be_visitor_attribute_set_from_extracted::visit_array (

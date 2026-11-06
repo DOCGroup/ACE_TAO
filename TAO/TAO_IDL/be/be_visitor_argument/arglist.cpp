@@ -11,6 +11,7 @@
 
 #include "argument.h"
 
+
 #include "be_map.h"
 
 // ************************************************************
@@ -19,14 +20,11 @@
 // ************************************************************
 
 be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
-  : be_visitor_args (ctx),
-    unused_ (false)
+  : be_visitor_args (ctx)
 {
 }
 
-be_visitor_args_arglist::~be_visitor_args_arglist ()
-{
-}
+be_visitor_args_arglist::~be_visitor_args_arglist () = default;
 
 int be_visitor_args_arglist::visit_argument (be_argument *node)
 {
@@ -73,7 +71,7 @@ int be_visitor_args_arglist::visit_array (be_array *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node);
+      *os << this->type_name (node) << " const";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node);
@@ -179,14 +177,14 @@ int be_visitor_args_arglist::visit_native (be_native *node)
 int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_any)
     {
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const " << this->type_name (node) << " &";
+          *os << this->type_name (node) << " const &";
           break;
         case AST_Argument::dir_INOUT:
           *os << this->type_name (node) << " &";
@@ -216,8 +214,8 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
            || pt == AST_PredefinedType::PT_abstract)
     {
       // The only PT_pseudo that doesn't take a _ptr suffix.
-      bool is_tckind =
-        (ACE_OS::strcmp (node->local_name ()->get_string (), "TCKind") == 0);
+      bool const is_tckind =
+        (node->local_name ()->get_string () == "TCKind");
 
       switch (this->direction ())
         {
@@ -270,11 +268,11 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
 int be_visitor_args_arglist::visit_fixed (be_fixed *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  const char * const type = this->type_name (node);
+  std::string const type = this->type_name (node);
 
   if (this->direction () == AST_Argument::dir_IN)
     {
-      *os << "const " << type << " &";
+      *os << type << " const &";
     }
   else
     {
@@ -307,7 +305,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " &";
+      *os << this->type_name (node) << " const &";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " &";
@@ -345,15 +343,15 @@ int be_visitor_args_arglist::visit_map (be_map *node)
 int be_visitor_args_arglist::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
-  bool wide = (node->width () != (long) sizeof (char));
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
+  bool const wide = (node->width () != sizeof (char));
 
   if (!wide && bound == 0 && be_global->alt_mapping ())
     {
       switch (this->direction ())
         {
           case AST_Argument::dir_IN:
-            *os << "const std::string";
+            *os << "std::string const";
             break;
           default:
             *os << "std::string &";
@@ -363,12 +361,12 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       return 0;
     }
 
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const char *";
+          *os << "char const *";
           break;
         case AST_Argument::dir_INOUT:
           *os << "char *&";
@@ -383,7 +381,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << "const ::CORBA::WChar *";
+          *os << "::CORBA::WChar const *";
           break;
         case AST_Argument::dir_INOUT:
           *os << "::CORBA::WChar *&";
@@ -404,7 +402,7 @@ int be_visitor_args_arglist::visit_structure (be_structure *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " &";
+      *os << this->type_name (node) << " const &";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " &";
@@ -424,7 +422,7 @@ int be_visitor_args_arglist::visit_union (be_union *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
-      *os << "const " << this->type_name (node) << " &";
+      *os << this->type_name (node) << " const &";
       break;
     case AST_Argument::dir_INOUT:
       *os << this->type_name (node) << " &";

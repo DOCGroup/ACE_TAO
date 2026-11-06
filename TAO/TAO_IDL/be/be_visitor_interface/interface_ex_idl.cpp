@@ -18,9 +18,7 @@ be_visitor_interface_ex_idl::be_visitor_interface_ex_idl (
 {
 }
 
-be_visitor_interface_ex_idl::~be_visitor_interface_ex_idl ()
-{
-}
+be_visitor_interface_ex_idl::~be_visitor_interface_ex_idl () = default;
 
 int
 be_visitor_interface_ex_idl::visit_interface (be_interface *node)

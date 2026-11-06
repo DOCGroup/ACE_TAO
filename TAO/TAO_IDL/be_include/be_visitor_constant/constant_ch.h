@@ -25,10 +25,14 @@ class be_visitor_constant_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_constant_ch (be_visitor_context *ctx);
+  explicit be_visitor_constant_ch (be_visitor_context *ctx);
 
   /// destructor
   ~be_visitor_constant_ch () override;
+  be_visitor_constant_ch (be_visitor_constant_ch const &) = delete;
+  be_visitor_constant_ch (be_visitor_constant_ch &&) = delete;
+  be_visitor_constant_ch &operator= (be_visitor_constant_ch const &) = delete;
+  be_visitor_constant_ch &operator= (be_visitor_constant_ch &&) = delete;
 
   /// visit constant.
   int visit_constant (be_constant *node) override;

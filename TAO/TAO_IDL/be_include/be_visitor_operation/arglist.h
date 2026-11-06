@@ -28,22 +28,26 @@
 class be_visitor_operation_arglist : public be_visitor_operation
 {
 public:
-  be_visitor_operation_arglist (be_visitor_context *ctx);
+  explicit be_visitor_operation_arglist (be_visitor_context *ctx);
 
-  ~be_visitor_operation_arglist ();
+  ~be_visitor_operation_arglist () override;
+  be_visitor_operation_arglist (be_visitor_operation_arglist const &) = delete;
+  be_visitor_operation_arglist (be_visitor_operation_arglist &&) = delete;
+  be_visitor_operation_arglist &operator= (be_visitor_operation_arglist const &) = delete;
+  be_visitor_operation_arglist &operator= (be_visitor_operation_arglist &&) = delete;
 
-  virtual int visit_operation (be_operation *node);
-  virtual int visit_factory (be_factory *node);
-  virtual int visit_argument (be_argument *node);
+  int visit_operation (be_operation *node) override;
+  int visit_factory (be_factory *node) override;
+  int visit_argument (be_argument *node) override;
 
   /// Stuff to output after each element of the scope is handled.
-  virtual int post_process (be_decl *);
+  int post_process (be_decl *) override;
 
   /// Set the member.
   void unused (bool val);
 
 private:
-  bool unused_;
+  bool unused_ {};
 };
 
 #endif /* _BE_VISITOR_OPERATION_ARGLIST_H_ */

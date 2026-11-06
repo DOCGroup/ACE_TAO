@@ -25,13 +25,13 @@ class be_eventtype : public virtual be_valuetype,
 {
 public:
   be_eventtype (UTL_ScopedName *n,
-                AST_Type **inherits,
+                AST_Type_List const& inherits,
                 long n_inherits,
                 AST_Type *inherits_concrete,
-                AST_Interface **inherits_flat,
-                long n_inherits_flat,
-                AST_Type **supports,
-                long n_supports,
+                AST_Interface_List const& inherits_flat,
+                std::size_t n_inherits_flat,
+                AST_Type_List const& supports,
+                std::size_t n_supports,
                 AST_Type *supports_concrete,
                 bool abstract,
                 bool truncatable,
@@ -40,10 +40,10 @@ public:
   ~be_eventtype ();
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #endif  // if !defined

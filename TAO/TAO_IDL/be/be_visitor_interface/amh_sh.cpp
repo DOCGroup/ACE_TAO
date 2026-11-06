@@ -11,15 +11,15 @@
 
 #include "interface.h"
 
+#include <string>
+
 be_visitor_amh_interface_sh::be_visitor_amh_interface_sh (
     be_visitor_context *ctx)
   : be_visitor_interface_sh (ctx)
 {
 }
 
-be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh ()
-{
-}
+be_visitor_amh_interface_sh::~be_visitor_amh_interface_sh () = default;
 
 // The node is the original interface node but we 'tweak' with the
 // local_name and the the operation signatures to generate the AMH
@@ -40,7 +40,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  ACE_CString class_name;
+  std::string class_name;
 
   TAO_INSERT_COMMENT (os);
 
@@ -54,37 +54,32 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   else
     {
       class_name += "AMH_";
-      class_name +=  node->local_name ();
+      class_name += node->local_name ();
     }
 
   // Generate the skeleton class name.
-  *os << "class " << class_name.c_str () << ";" << be_nl;
+  *os << "class " << class_name << ";" << be_nl;
 
   // Generate the _ptr declaration.
-  *os << "using " << class_name.c_str () << "_ptr = "
-      << class_name.c_str () << " *;" << be_nl_2;
+  *os << "using " << class_name << "_ptr = "
+      << class_name << " *;" << be_nl_2;
 
   // Now generate the class definition.
   *os << "class " << be_global->skel_export_macro ()
-      << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
+      << " " << class_name << be_idt_nl << ": " << be_idt;
 
-  long n_parents = node->n_inherits ();
+  long const n_parents = node->n_inherits ();
 
   if (n_parents > 0)
     {
       for (int i = 0; i < n_parents; ++i)
         {
-          ACE_CString amh_name ("POA_");
+          std::string amh_name ("POA_");
 
-          // @@ The following code is *NOT* exception-safe.
-          char *buf = nullptr;
           be_interface *base =
             dynamic_cast<be_interface*> (node->inherits ()[i]);
-          base->compute_full_name ("AMH_", "", buf);
-          amh_name += buf;
-          // buf was allocated by ACE_OS::strdup, so we need to use free
-          // instead of delete.
-          ACE_OS::free (buf);
+          std::string const full_name = base->compute_full_name ("AMH_", "");
+          amh_name += full_name;
 
           if (i != 0)
             {
@@ -92,7 +87,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
             }
 
           *os << "public virtual "
-              << amh_name.c_str ()
+              << amh_name
               << be_nl;
         }
     }
@@ -106,28 +101,27 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
-      << class_name.c_str () << " ();" << be_uidt_nl << be_nl
+      << class_name << " ();" << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
-  *os << class_name.c_str () << " (const " << class_name.c_str ()
-      << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " () = default;\n\n"
+  *os << class_name << " (" << class_name << " const &rhs);" << be_nl
+      << "~" << class_name << " () override = default;\n\n"
       << be_nl
-      << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
+      << "::CORBA::Boolean _is_a (char const *logical_type_id) override;" << be_nl_2;
 
   // Add the dispatch method.
-  *os << "virtual void _dispatch (" << be_idt << be_idt_nl
+  *os << "void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
-      << "TAO::Portable_Server::Servant_Upcall *_servant_upcall);" << be_uidt
+      << "TAO::Portable_Server::Servant_Upcall *_servant_upcall) override;" << be_uidt
       << be_uidt_nl << be_nl;
 
   this->this_method (node);
 
   // The _interface_repository_id method.
   *os << be_nl
-      << "virtual const char* _interface_repository_id "
-      << "() const;";
+      << "char const *_interface_repository_id "
+      << "() const override;";
 
   if (this->visit_scope (node) ==  -1)
     {
@@ -158,218 +152,17 @@ be_visitor_amh_interface_sh::visit_attribute (be_attribute *node)
   return visitor.visit_attribute (node);
 }
 
-int
-be_visitor_amh_interface_sh::add_original_members (be_interface *node,
-                                                   be_interface *amh_node)
-{
-  if (!node || !amh_node)
-    {
-      return -1;
-    }
-
-  this->elem_number_ = 0;
-
-  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      AST_Decl *d = si.item ();
-
-      if (!d)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "(%N:%l) be_visitor_amh_pre_proc::visit_interface - "
-              "bad node in this scope\n"
-            ),
-            0
-          );
-        }
-
-      if (d->node_type () == AST_Decl::NT_attr)
-        {
-          be_attribute *attribute = dynamic_cast<be_attribute*> (d);
-
-          if (!attribute)
-            {
-              return 0;
-            }
-        }
-      else
-        {
-          be_operation* operation = dynamic_cast<be_operation*> (d);
-
-          if (operation)
-            {
-              this->add_amh_operation (operation, amh_node);
-            }
-        }
-    }
-
-  return 0;
-}
-
-
-int
-be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
-                                            be_interface *amh_node)
-{
-  if (!node || !amh_node)
-    {
-      return -1;
-    }
-
-  // We do nothing for oneways!
-  if (node->flags () == AST_Operation::OP_oneway)
-    {
-      return 0;
-    }
-
-  Identifier *id = nullptr;
-  UTL_ScopedName *sn = nullptr;
-
-  ACE_NEW_RETURN (id,
-                  Identifier ("void"),
-                  -1);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  nullptr),
-                  -1);
-
-  // Create the return type, which is "void"
-  be_predefined_type *rt = nullptr;
-  ACE_NEW_RETURN (rt,
-                  be_predefined_type (AST_PredefinedType::PT_void,
-                                      sn),
-                  -1);
-
-  ACE_CString original_op_name (
-                  node->name ()->last_component ()->get_string ()
-                );
-
-  UTL_ScopedName *op_name =
-    static_cast<UTL_ScopedName *> (amh_node->name ()->copy ());
-
-  ACE_NEW_RETURN (id,
-                  Identifier (original_op_name.rep ()),
-                  -1);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  nullptr),
-                  -1);
-
-  op_name->nconc (sn);
-
-  // Create the operation
-  be_operation *operation = nullptr;
-  ACE_NEW_RETURN (operation,
-                  be_operation (rt, //node->return_type (),
-                                AST_Operation::OP_noflags,
-                                op_name,
-                                0,
-                                0),
-                  -1);
-
-  operation->set_name (op_name);
-
-  // Iterate over the arguments and put all the in and inout
-  // into the new method.
-  if (node->nmembers () > 0)
-    {
-      // Initialize an iterator to iterate thru our scope.
-      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-           !si.is_done ();
-           si.next ())
-        {
-          AST_Decl *d = si.item ();
-
-          if (!d)
-            {
-              operation->destroy ();
-              delete operation;
-              operation = nullptr;
-
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("be_visitor_amh_pre_proc::")
-                                 ACE_TEXT ("create_response_handler_operation - ")
-                                 ACE_TEXT ("bad node in this scope\n")),
-                                -1);
-            }
-
-          AST_Argument *original_arg =
-            dynamic_cast<AST_Argument*> (d);
-
-          if (original_arg->direction () == AST_Argument::dir_INOUT ||
-              original_arg->direction () == AST_Argument::dir_IN)
-            {
-              // Create the argument.
-              be_argument *arg = nullptr;
-              ACE_NEW_RETURN (arg,
-                              be_argument (original_arg->direction (),
-                                           original_arg->field_type (),
-                                           original_arg->name ()),
-                              -1);
-
-              operation->be_add_argument (arg);
-            }
-        }
-    }
-
-  operation->set_defined_in (amh_node);
-
-  // After having generated the operation we insert it into the
-  // AMH node interface.
-  if (nullptr == amh_node->be_add_operation (operation))
-    {
-      return -1;
-    }
-
-  return 0;
-}
-
-
-be_interface *
-be_visitor_amh_interface_sh::create_amh_class (ACE_CString name)
-{
-  Identifier *id = nullptr;
-  ACE_NEW_RETURN (id,
-                  Identifier (name.c_str ()),
-                  nullptr);
-
-  UTL_ScopedName *amh_class_name = nullptr;
-  ACE_NEW_RETURN (amh_class_name,
-                  UTL_ScopedName (id,
-                                  nullptr),
-                  nullptr);
-
-  be_interface *amh_class = nullptr;
-  ACE_NEW_RETURN (amh_class,
-                  be_interface (amh_class_name, // name
-                                nullptr,        // list of inherited
-                                0,              // number of inherited
-                                nullptr,        // list of ancestors
-                                0,              // number of ancestors
-                                0,              // non-local
-                                0),             // non-abstract
-                  nullptr);
-
-  amh_class->set_name (amh_class_name);
-  return amh_class;
-}
-
 void
 be_visitor_amh_interface_sh::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  ACE_CString non_amh_name = node->client_enclosing_scope ();
+  std::string non_amh_name (node->client_enclosing_scope ());
   non_amh_name += node->local_name ();
 
   // Print out the _this() method.  The _this() method for AMH
   // interfaces is "special", because the returned type is not exactly
   // the type of the class, but the original class that "implied" the
   // AMH one.
-  *os << non_amh_name.c_str () << " *_this ();\n" << be_uidt;
+  *os << non_amh_name << " *_this ();\n" << be_uidt;
 }

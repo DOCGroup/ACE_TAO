@@ -113,6 +113,52 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 #define TAO_IDL_HAS_PARSE_ARGS_EXIT
 
+/**
+ * This signals that the TAO IDL front end provides its modern C++ string API:
+ * UTL_IdList::get_string_copy () returns std::string, and string APIs use
+ * std::string directly. Include this header and test this macro
+ * when a backend also supports older TAO IDL versions, where get_string_copy ()
+ * returns an owning char * that must be released with delete [].
+ */
+#define TAO_IDL_HAS_STD_STRING_API
+
+/**
+ * This signals that the TAO IDL AST exposes inheritance and supported-interface
+ * lists as standard C++ containers instead of pointer arrays. External backends
+ * can use this to support both this API and older TAO IDL releases.
+ */
+#define TAO_IDL_HAS_STD_AST_LIST_API
+
+/**
+ * This signals that AST_Structure::field () returns its field through an
+ * AST_Field * reference instead of an AST_Field ** output argument.
+ */
+#define TAO_IDL_HAS_AST_FIELD_REFERENCE_API
+
+/**
+ * This signals that DCPS_Data_Type_Info stores keys in a standard container
+ * of std::string values instead of an ACE queue of ACE_TString pointers.
+ */
+#define TAO_IDL_HAS_STD_DCPS_DATA_TYPE_INFO
+
+/**
+ * This signals that IDL_GlobalData stores its default IDL version in an
+ * IdlVersion object, rather than a SpecificIdlVersion value.
+ */
+#define TAO_IDL_HAS_IDL_VERSION_CLASS
+
+/**
+ * This signals that IDL_GlobalData uses the scoped
+ * IDL_GlobalData::Anon_Type_Diagnostic enum.
+ */
+#define TAO_IDL_HAS_SCOPED_ANON_TYPE_DIAGNOSTIC
+
+/**
+ * This signals that TAO_IDL passes its source file list to BE_post_init () as
+ * a std::vector<std::string> instead of a char pointer array and count.
+ */
+#define TAO_IDL_HAS_STD_DRV_FILES
+
 #define NAMEBUFSIZE 1024
 // Maximum length of static buffers used to store names.
 

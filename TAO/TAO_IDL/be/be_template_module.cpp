@@ -20,9 +20,7 @@ be_template_module::be_template_module (
 {
 }
 
-be_template_module::~be_template_module ()
-{
-}
+be_template_module::~be_template_module () = default;
 
 void
 be_template_module::destroy ()

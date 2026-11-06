@@ -81,6 +81,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Truncate.h"
 
+#include <memory>
+
 AST_Structure::AST_Structure (UTL_ScopedName *n,
                               bool local,
                               bool abstract)
@@ -92,10 +94,7 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
               n),
     AST_ConcreteType (AST_Decl::NT_struct,
                       n),
-    UTL_Scope (AST_Decl::NT_struct),
-    member_count_ (-1),
-    local_struct_ (-1),
-    fwd_decl_ (nullptr)
+    UTL_Scope (AST_Decl::NT_struct)
 {
 }
 
@@ -111,10 +110,7 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
               n),
     AST_ConcreteType (nt,
                       n),
-    UTL_Scope (nt),
-    member_count_ (-1),
-    local_struct_ (-1),
-    fwd_decl_ (nullptr)
+    UTL_Scope (nt)
 {
 }
 
@@ -125,15 +121,15 @@ AST_Structure::~AST_Structure ()
 
 // Are we or the parameter node involved in any recursion?
 bool
-AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_Structure::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = (list.size () == 0);
+  bool const self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.
-  if (self_test && this->in_recursion_ != -1)
+  if (self_test && this->in_recursion_ != Recursion_State::unknown)
     {
-      return (this->in_recursion_ == 1);
+      return this->in_recursion_ == Recursion_State::recursive;
     }
 
   if (list.size () > 1)
@@ -148,7 +144,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       }
   }
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
@@ -188,7 +184,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
           if (type->in_recursion (list))
             {
               if (self_test)
-                this->in_recursion_ = 1;
+                this->in_recursion_ = Recursion_State::recursive;
               idl_global->recursive_type_seen_ = true;
               return true;
             }
@@ -197,7 +193,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   // Not in recursion.
   if (self_test)
-    this->in_recursion_ = 0;
+    this->in_recursion_ = Recursion_State::not_recursive;
   return false;
 }
 
@@ -219,10 +215,17 @@ AST_Structure::nfields () const
 }
 
 int
-AST_Structure::field (AST_Field **&result,
+AST_Structure::field (AST_Field *&result,
                       ACE_CDR::ULong slot) const
 {
-  return this->fields_.get (result, slot);
+  if (slot >= this->fields_.size ())
+    {
+      result = nullptr;
+      return -1;
+    }
+
+  result = this->fields_[slot];
+  return 0;
 }
 
 bool
@@ -236,7 +239,7 @@ AST_Structure::is_local ()
         }
       else
         {
-          this->local_struct_ = 0;
+          this->local_struct_ = false;
 
           if (this->nmembers () > 0)
             {
@@ -274,7 +277,7 @@ AST_Structure::contains_wstring ()
             }
         }
 
-      this->contains_wstring_ = 0;
+      this->contains_wstring_ = false;
     }
 
   return this->contains_wstring_;
@@ -327,7 +330,7 @@ AST_Structure::fwd_decl (AST_StructureFwd *node)
   this->fwd_decl_ = node;
 }
 
-ACE_Unbounded_Queue<AST_Field *> &
+std::vector<AST_Field *> &
 AST_Structure::fields ()
 {
   return this->fields_;
@@ -427,7 +430,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
   if (d != nullptr)
     {
       // Full definition must have the same prefix as the forward declaration.
-      if (ACE_OS::strcmp (i->prefix (), d->prefix ()) != 0)
+      if (i->prefix () != d->prefix ())
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,
                                       i);
@@ -435,7 +438,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
           return;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       // If this interface has been forward declared in a previous opening
       // of the module it's defined in, the lookup will find the
@@ -477,8 +480,8 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
           // All OK, do the redefinition.
           else
             {
-              AST_Decl::NodeType fd_nt = fd->node_type ();
-              AST_Decl::NodeType i_nt = i->node_type ();
+              AST_Decl::NodeType const fd_nt = fd->node_type ();
+              AST_Decl::NodeType const i_nt = i->node_type ();
 
               // Only redefinition of the same kind.
               if (i_nt != fd_nt)
@@ -503,8 +506,8 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                 }
 
               // Use full definition node.
+              std::unique_ptr<AST_Structure> redefined_structure (i);
               i->destroy ();
-              delete i;
               i = fd;
             }
         }
@@ -522,7 +525,7 @@ AST_Structure::redefine (AST_Structure *from)
   this->set_imported (idl_global->imported ());
   this->set_in_main_file (idl_global->in_main_file ());
   this->set_line (idl_global->lineno ());
-  this->set_file_name (idl_global->filename ()->get_string ());
+  this->set_file_name (idl_global->filename ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
   this->fields_ = from->fields_;
@@ -586,14 +589,14 @@ bool AST_Structure::annotatable () const
 }
 
 AST_Decl *
-AST_Structure::operator[] (const size_t index)
+AST_Structure::operator[] (std::size_t const index)
 {
-  size_t count = member_count_ <= 0 ? 0 : member_count_;
+  std::size_t const count = member_count_ <= 0 ? 0 : member_count_;
   if (index >= count)
     {
       return nullptr;
     }
-  size_t i = 0;
+  std::size_t i = 0;
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
@@ -608,17 +611,19 @@ AST_Structure::operator[] (const size_t index)
 }
 
 AST_Decl *
-AST_Structure::operator[] (const char* name)
+AST_Structure::operator[] (std::string const& name)
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())
     {
       AST_Decl *field = si.item ();
-      const char *field_name = field->local_name ()->get_string ();
-      if (!ACE_OS::strcmp (name, field_name)) {
-        return field;
-      }
+      std::string const& field_name =
+        field->local_name ()->get_string ();
+      if (name == field_name)
+        {
+          return field;
+        }
     }
   return nullptr;
 }

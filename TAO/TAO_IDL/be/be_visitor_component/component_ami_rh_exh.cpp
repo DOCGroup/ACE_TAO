@@ -11,6 +11,8 @@
 
 #include "component.h"
 
+#include <memory>
+
 be_visitor_component_ami_rh_exh::be_visitor_component_ami_rh_exh (
       be_visitor_context *ctx)
   : be_visitor_component_ami_rh_ex_base (ctx),
@@ -18,9 +20,7 @@ be_visitor_component_ami_rh_exh::be_visitor_component_ami_rh_exh (
 {
 }
 
-be_visitor_component_ami_rh_exh::~be_visitor_component_ami_rh_exh ()
-{
-}
+be_visitor_component_ami_rh_exh::~be_visitor_component_ami_rh_exh () = default;
 
 int
 be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
@@ -43,13 +43,13 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
 
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
-  this->iface_->get_insert_queue ().reset ();
-  this->iface_->get_del_queue ().reset ();
-  this->iface_->get_insert_queue ().enqueue_tail (this->iface_);
+  this->iface_->get_insert_queue ().clear ();
+  this->iface_->get_del_queue ().clear ();
+  this->iface_->get_insert_queue ().push_back (this->iface_);
 
   Exec_ReplyHandler_Op_Attr_Generator op_attr_gen (this);
 
-  int status =
+  int const status =
     this->iface_->traverse_inheritance_graph (op_attr_gen,
                                               &os_,
                                               false,
@@ -104,11 +104,11 @@ be_visitor_component_ami_rh_exh::visit_operation (
       << "virtual void" << be_nl
       << node->local_name ()->get_string () << " (";
 
-  int count =
+  int const count =
     node->count_arguments_with_direction (
       AST_Argument::dir_INOUT | AST_Argument::dir_OUT);
 
-  bool vrt = node->void_return_type ();
+  bool const vrt = node->void_return_type ();
 
   if (count == 0 && vrt)
     {
@@ -120,37 +120,43 @@ be_visitor_component_ami_rh_exh::visit_operation (
 
       if (!vrt)
         {
+          // ACE_NEW_RETURN requires raw output pointers; adopt each allocation immediately.
           Identifier *id = nullptr;
-          UTL_ScopedName *sn = nullptr;
 
           ACE_NEW_RETURN (id,
                           Identifier ("ami_return_val"),
                           -1);
+          std::unique_ptr<Identifier> id_owner (id);
 
           UTL_ScopedName *tmp = nullptr;
 
           ACE_NEW_RETURN (tmp,
-                          UTL_ScopedName (id,
+                          UTL_ScopedName (id_owner.get (),
                                           nullptr),
                           -1);
+          id_owner.release ();
+          FE_Utils::Scoped_Name_Owner tmp_owner (tmp);
 
-          sn = (UTL_ScopedName *)node->name ()->copy ();
-          sn->nconc (tmp);
+          FE_Utils::Scoped_Name_Owner argument_name (
+            static_cast<UTL_ScopedName *> (node->name ()->copy ()));
+          argument_name->nconc (tmp_owner.get ());
+          tmp_owner.release ();
 
           // Create the argument.
           be_argument *arg = nullptr;
           ACE_NEW_RETURN (arg,
                           be_argument (AST_Argument::dir_OUT,
                                       node->return_type (),
-                                      sn),
+                                      argument_name.get ()),
                           -1);
+          std::unique_ptr<be_argument, BE_AST_Decl_Deleter> const arg_owner (arg);
 
           arg->set_defined_in (node);
-          arg->set_name (sn);
+          arg->set_name (argument_name.get ());
+          argument_name.release ();
 
           if (this->visit_argument (arg) == -1)
             {
-              delete arg;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_component")
                                  ACE_TEXT ("_ami_rh_exh")
@@ -158,10 +164,6 @@ be_visitor_component_ami_rh_exh::visit_operation (
                                  ACE_TEXT ("return type arg")
                                  ACE_TEXT (" gen failed\n")),
                                 -1);
-            }
-          else
-            {
-              delete arg;
             }
 
           if (count != 0)

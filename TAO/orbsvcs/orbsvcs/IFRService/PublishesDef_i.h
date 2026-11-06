@@ -37,7 +37,7 @@ class TAO_IFRService_Export TAO_PublishesDef_i
 {
 public:
   /// Constructor
-    TAO_PublishesDef_i (TAO_Repository_i *repo);
+    explicit TAO_PublishesDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_PublishesDef_i () override;

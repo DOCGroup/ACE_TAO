@@ -16,9 +16,6 @@ be_visitor_union_ci::be_visitor_union_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union_ci::~be_visitor_union_ci ()
-{
-}
 
 int be_visitor_union_ci::visit_union (be_union *node)
 {
@@ -30,7 +27,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -42,7 +39,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
   // the discriminant type may have to be defined here if it was an enum
   // declaration inside of the union statement.
 
-  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {

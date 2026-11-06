@@ -22,6 +22,10 @@ public:
                  UTL_NameList *supports,
                  UTL_ScopedName *managed_component,
                  UTL_ScopedName *primary_key);
+  FE_HomeHeader (FE_HomeHeader const &) = delete;
+  FE_HomeHeader (FE_HomeHeader &&) = delete;
+  FE_HomeHeader &operator= (FE_HomeHeader const &) = delete;
+  FE_HomeHeader &operator= (FE_HomeHeader &&) = delete;
 
   ~FE_HomeHeader () override;
 
@@ -31,9 +35,9 @@ public:
   AST_Type *primary_key () const;
 
 protected:
-  AST_Home *base_home_;
-  AST_Component *managed_component_;
-  AST_Type *primary_key_;
+  AST_Home *base_home_ {};
+  AST_Component *managed_component_ {};
+  AST_Type *primary_key_ {};
 
 protected:
   void compile_inheritance (UTL_ScopedName *base_home);

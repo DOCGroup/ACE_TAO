@@ -22,9 +22,7 @@ be_visitor_component_exh::be_visitor_component_exh (
   export_macro_ = be_global->exec_export_macro ();
 }
 
-be_visitor_component_exh::~be_visitor_component_exh ()
-{
-}
+be_visitor_component_exh::~be_visitor_component_exh () = default;
 
 int
 be_visitor_component_exh::visit_component (be_component *node)
@@ -68,36 +66,24 @@ be_visitor_component_exh::visit_component (be_component *node)
 
   /// If this list has members, then we can assume that the
   /// artifacts from -GC exist.
-  for (ACE_Unbounded_Queue<char *>::CONST_ITERATOR i (
-         idl_global->ciao_ami_recep_names ());
-       ! i.done ();
-       i.advance ())
+  for (std::string const &item : idl_global->ciao_ami_recep_names ())
     {
-      char **item = nullptr;
-      i.next (item);
-
-      UTL_ScopedName *sn =
-        FE_Utils::string_to_scoped_name (*item);
+      FE_Utils::Scoped_Name_Owner sn =
+        FE_Utils::string_to_scoped_name_owner (item);
 
       UTL_Scope *s =
         idl_global->scopes ().top_non_null ();
 
-      AST_Decl *d = s->lookup_by_name (sn, true);
+      AST_Decl *d = s->lookup_by_name (sn.get (), true);
 
       if (d == nullptr)
         {
-          idl_global->err ()->lookup_error (sn);
-
-          sn->destroy ();
-          delete sn;
-          sn = nullptr;
+          idl_global->err ()->lookup_error (sn.get ());
 
           continue;
         }
 
-      sn->destroy ();
-      delete sn;
-      sn = nullptr;
+      sn.reset ();
 
       be_uses *u = dynamic_cast<be_uses*> (d);
 

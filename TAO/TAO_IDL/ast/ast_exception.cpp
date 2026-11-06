@@ -100,23 +100,21 @@ AST_Exception::AST_Exception (UTL_ScopedName *n,
 {
 }
 
-AST_Exception::~AST_Exception ()
-{
-}
+AST_Exception::~AST_Exception () = default;
 
 // Public operations.
 
 // Are we or the parameter node involved in any recursion?
 bool
-AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
+AST_Exception::in_recursion (std::vector<AST_Type *> &list)
 {
-  bool self_test = (list.size () == 0);
+  bool const self_test = list.empty ();
 
   // We should calculate this only once. If it has already been
   // done, just return it.
-  if (self_test && this->in_recursion_ != -1)
+  if (self_test && this->in_recursion_ != Recursion_State::unknown)
     {
-      return (this->in_recursion_ == 1);
+      return this->in_recursion_ == Recursion_State::recursive;
     }
 
   if (list.size () > 1)
@@ -129,7 +127,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       }
   }
 
-  list.enqueue_tail(this);
+  list.push_back (this);
 
   // Proceed if the number of members in our scope is greater than 0.
   if (this->nmembers () > 0)
@@ -166,7 +164,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
           if (type->in_recursion (list))
             {
               if (self_test)
-                this->in_recursion_ = 1;
+                this->in_recursion_ = Recursion_State::recursive;
               idl_global->recursive_type_seen_ = true;
               return true;
             }
@@ -175,8 +173,8 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   // Not in recursion.
   if (self_test)
-    this->in_recursion_ = 0;
-  return false; //this->in_recursion_;
+    this->in_recursion_ = Recursion_State::not_recursive;
+  return false;
 }
 
 // Dump this AST_Exception node to the ostream o.

@@ -1015,7 +1015,7 @@ AST_Field:
 AST_Interface:
 
 	BE_Interface::BE_Interface(UTL_ScopedName *n,
-				   AST_Interface **ih,
+				   AST_Interface_List const& ih,
 				   long nih,
 				   UTL_StrList *p)
 		    : AST_Interface(n, ih, nih, p),

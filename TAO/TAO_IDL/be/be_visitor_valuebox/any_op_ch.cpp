@@ -23,9 +23,6 @@ be_visitor_valuebox_any_op_ch::be_visitor_valuebox_any_op_ch (
 {
 }
 
-be_visitor_valuebox_any_op_ch::~be_visitor_valuebox_any_op_ch ()
-{
-}
 
 int
 be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
@@ -37,7 +34,7 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  const char *macro = this->ctx_->export_macro ();
+  std::string const macro = this->ctx_->export_macro ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -49,7 +46,7 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << " **); // non-copying" << be_nl;
 
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
+  *os << macro << " ::CORBA::Boolean operator>>= (::CORBA::Any const &, "
       << node->name () << " *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;

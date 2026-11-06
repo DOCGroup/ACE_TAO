@@ -16,9 +16,7 @@ be_visitor_interface_ci::be_visitor_interface_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ci::~be_visitor_interface_ci ()
-{
-}
+be_visitor_interface_ci::~be_visitor_interface_ci () = default;
 
 int
 be_visitor_interface_ci::visit_interface (be_interface *node)
@@ -67,7 +65,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
       *os << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name ()
-          << " (const " << node->local_name () << " &rhs)" << be_idt_nl
+          << " (" << node->local_name () << " const &rhs)" << be_idt_nl
           << ": ::CORBA::AbstractBase (rhs)" << be_uidt_nl
           << "{}";
     }

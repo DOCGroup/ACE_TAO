@@ -67,14 +67,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // AST_String nodes have a maximum size (an AST_Expression which must
 // evaluate to a positive integer).
 
+#include <string>
+
 #include "ast_string.h"
 #include "ast_expression.h"
 #include "ast_visitor.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "utl_identifier.h"
-#include "idl_defines.h"
 #include "global_extern.h"
+
+#include <string>
 
 // Note we are overlooking the wstring case here.
 AST_Decl::NodeType const
@@ -83,7 +84,7 @@ AST_String::NT = AST_Decl::NT_string;
 AST_String::AST_String (AST_Decl::NodeType nt,
                         UTL_ScopedName *n,
                         AST_Expression *ms,
-                        long wide)
+                        std::size_t wide)
   : COMMON_Base (),
     AST_Decl (nt, n, true),
     AST_Type (nt, n),
@@ -97,7 +98,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   Identifier *id = nullptr;
   UTL_ScopedName *new_name = nullptr;
   UTL_ScopedName *conc_name = nullptr;
-  bool narrow = this->width () == (ssize_t) sizeof (char);
+  bool const narrow = this->width () == sizeof (char);
 
   ACE_NEW (id,
            Identifier (narrow ? "char *" : "WChar *"));
@@ -122,35 +123,23 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 
   this->set_name (new_name);
 
-  unsigned long bound = ms->ev ()->u.ulval;
+  unsigned long const bound = ms->ev ()->u.ulval;
 
-  static char namebuf[NAMEBUFSIZE];
-  static char boundbuf[NAMEBUFSIZE];
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-  ACE_OS::memset (boundbuf,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  if (bound)
+  std::string namebuf ("CORBA_");
+  if (wide != 1)
     {
-      ACE_OS::sprintf (boundbuf,
-                       "_%ld",
-                       bound);
+      namebuf += 'W';
+    }
+  namebuf += "STRING";
+  if (bound != 0)
+    {
+      namebuf += '_' + std::to_string (bound);
     }
 
-  ACE_OS::sprintf (namebuf,
-                   "CORBA_%sSTRING%s",
-                   (wide == 1 ? "" : "W"),
-                   boundbuf);
-
-  this->flat_name_ = ACE::strnew (namebuf);
+  this->flat_name_ = namebuf;
 }
 
-AST_String::~AST_String ()
-{
-}
+AST_String::~AST_String () = default;
 
 // Redefinition of inherited virtual operations.
 
@@ -172,9 +161,7 @@ AST_String::ast_accept (ast_visitor *visitor)
 void
 AST_String::destroy ()
 {
-  this->pd_max_size->destroy ();
-  delete this->pd_max_size;
-  this->pd_max_size = nullptr;
+  this->pd_max_size.reset ();
 
   this->AST_ConcreteType::destroy ();
 }
@@ -182,13 +169,13 @@ AST_String::destroy ()
 // Data accessors.
 
 AST_Expression *
-AST_String::max_size ()
+AST_String::max_size () const
 {
-  return this->pd_max_size;
+  return this->pd_max_size.get ();
 }
 
-long
-AST_String::width ()
+std::size_t
+AST_String::width () const
 {
   return this->pd_width;
 }

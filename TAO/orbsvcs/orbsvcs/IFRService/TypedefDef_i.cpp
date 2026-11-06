@@ -12,14 +12,12 @@ TAO_TypedefDef_i::TAO_TypedefDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_TypedefDef_i::~TAO_TypedefDef_i ()
-{
-}
+TAO_TypedefDef_i::~TAO_TypedefDef_i () = default;
 
 CORBA::Contained::Description *
 TAO_TypedefDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 

@@ -24,9 +24,7 @@ be_template_module_inst::be_template_module_inst (
 {
 }
 
-be_template_module_inst::~be_template_module_inst ()
-{
-}
+be_template_module_inst::~be_template_module_inst () = default;
 
 void
 be_template_module_inst::destroy ()

@@ -23,9 +23,7 @@ be_visitor_exception_ch::be_visitor_exception_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception_ch::~be_visitor_exception_ch ()
-{
-}
+be_visitor_exception_ch::~be_visitor_exception_ch () = default;
 
 // Visit the Exception node and its scope.
 int be_visitor_exception_ch::visit_exception (be_exception *node)
@@ -35,7 +33,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -58,13 +56,13 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   // Constructors and destructor.
   *os << be_nl_2
       << node->local_name () << " ();" << be_nl
-      << node->local_name () << " (const " << node->local_name ()
-      << " &);" << be_nl
-      << "~" << node->local_name () << " () = default;\n" << be_nl;
+      << node->local_name () << " (" << node->local_name ()
+      << " const &);" << be_nl
+      << "~" << node->local_name () << " () override = default;\n" << be_nl;
 
   // Assignment operator.
-  *os << node->local_name () << " &operator= (const "
-      << node->local_name () << " &);" << be_nl_2;
+  *os << node->local_name () << " &operator= ("
+      << node->local_name () << " const &);" << be_nl_2;
 
   if (be_global->any_support ())
     {
@@ -73,16 +71,16 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   *os << "static " << node->local_name ()
       << " *_downcast (::CORBA::Exception *);" << be_nl
-      << "static const " << node->local_name ()
-      << " *_downcast (::CORBA::Exception const *);" << be_nl_2;
+      << "static " << node->local_name () << " const *"
+      << "_downcast (::CORBA::Exception const *);" << be_nl_2;
 
   *os << "static ::CORBA::Exception *_alloc ();" << be_nl_2;
 
-  *os << "virtual ::CORBA::Exception *"
-      << "_tao_duplicate () const;\n" << be_nl
-      << "virtual void _raise () const;\n" << be_nl
-      << "virtual void _tao_encode (TAO_OutputCDR &cdr) const;" << be_nl
-      << "virtual void _tao_decode (TAO_InputCDR &cdr);";
+  *os << "::CORBA::Exception *"
+      << "_tao_duplicate () const override;\n" << be_nl
+      << "void _raise () const override;\n" << be_nl
+      << "void _tao_encode (TAO_OutputCDR &cdr) const override;" << be_nl
+      << "void _tao_decode (TAO_InputCDR &cdr) override;";
 
   // Generate constructor that takes each member as a parameter. We need a
   // new state. Such a constructor exists if we have members.
@@ -105,7 +103,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   if (be_global->tc_support ())
     {
       *os << be_nl_2
-          << "virtual ::CORBA::TypeCode_ptr _tao_type () const;";
+          << "::CORBA::TypeCode_ptr _tao_type () const override;";
     }
 
   *os << be_uidt_nl << "};";

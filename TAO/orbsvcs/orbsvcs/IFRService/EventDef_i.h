@@ -41,7 +41,7 @@ class TAO_IFRService_Export TAO_EventDef_i : public virtual TAO_ExtValueDef_i
 {
 public:
   /// Constructor
-    TAO_EventDef_i (TAO_Repository_i *repo);
+    explicit TAO_EventDef_i (TAO_Repository_i *repo);
 
   /// Destructor
   ~TAO_EventDef_i () override;
@@ -60,9 +60,9 @@ public:
   /// From Contained_i's pure virtual function.
   CORBA::Contained::Description *describe_i () override;
 
-  CORBA::Boolean is_a (const char *event_id) override;
+  CORBA::Boolean is_a (char const *event_id) override;
 
-  CORBA::Boolean is_a_i (const char *event_id);
+  CORBA::Boolean is_a_i (char const *event_id);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

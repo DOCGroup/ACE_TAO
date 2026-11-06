@@ -36,13 +36,10 @@ public:
   be_scope ();
 
   /// Constructor that sets the node type.
-  be_scope (AST_Decl::NodeType nt);
+  explicit be_scope (AST_Decl::NodeType nt);
 
   /// Destructor.
-  virtual ~be_scope ();
-
-  /// To access the protected base class method fe_add_field.
-  AST_Field *be_add_field (AST_Field *f);
+  ~be_scope () override;
 
   /// Overridden in be_operation and be_factory.
   virtual AST_Argument *be_add_argument (AST_Argument *arg);
@@ -57,14 +54,14 @@ public:
   virtual be_decl *decl ();
 
   /// Recursively clean up scope members.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Visiting.
   virtual int accept (be_visitor *visitor);
 
 private:
   /// If set, generate a comma after every element is handled.
-  unsigned short comma_;
+  unsigned short comma_ {};
 };
 
 #endif // if !defined

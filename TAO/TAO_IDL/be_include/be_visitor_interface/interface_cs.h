@@ -13,6 +13,8 @@
 #ifndef _BE_INTERFACE_INTERFACE_CS_H_
 #define _BE_INTERFACE_INTERFACE_CS_H_
 
+#include <string>
+
 /**
  * @class be_visitor_interface_cs
  *
@@ -23,14 +25,18 @@
 class be_visitor_interface_cs : public be_visitor_interface
 {
 public:
-  be_visitor_interface_cs (be_visitor_context *ctx);
-  ~be_visitor_interface_cs ();
+  explicit be_visitor_interface_cs (be_visitor_context *ctx);
+  ~be_visitor_interface_cs () override;
+  be_visitor_interface_cs (be_visitor_interface_cs const &) = delete;
+  be_visitor_interface_cs (be_visitor_interface_cs &&) = delete;
+  be_visitor_interface_cs &operator= (be_visitor_interface_cs const &) = delete;
+  be_visitor_interface_cs &operator= (be_visitor_interface_cs &&) = delete;
 
-  virtual int visit_interface (be_interface *node);
-  virtual int visit_component (be_component *node);
-  virtual int visit_connector (be_connector *node);
-  virtual int visit_extended_port (be_extended_port *node);
-  virtual int visit_mirror_port (be_mirror_port *node);
+  int visit_interface (be_interface *node) override;
+  int visit_component (be_component *node) override;
+  int visit_connector (be_connector *node) override;
+  int visit_extended_port (be_extended_port *node) override;
+  int visit_mirror_port (be_mirror_port *node) override;
 
   /// Helper to generate the definitions for the operations
   /// of any abstract parents we may have.
@@ -42,7 +48,7 @@ private:
   /// Helper method to generate _narrow and _unchecked_narrow. The
   /// string <n> will contain the needed predicate that needs to be
   /// generated.
-  bool gen_xxx_narrow (const char *n,
+  bool gen_xxx_narrow (std::string const& pre,
                        be_interface *node);
 };
 

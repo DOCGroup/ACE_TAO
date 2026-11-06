@@ -27,13 +27,17 @@ class be_visitor_valuetype_marshal_ch : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_valuetype_marshal_ch (be_visitor_context *ctx);
+  explicit be_visitor_valuetype_marshal_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_marshal_ch ();
+  ~be_visitor_valuetype_marshal_ch () override;
+  be_visitor_valuetype_marshal_ch (be_visitor_valuetype_marshal_ch const &) = delete;
+  be_visitor_valuetype_marshal_ch (be_visitor_valuetype_marshal_ch &&) = delete;
+  be_visitor_valuetype_marshal_ch &operator= (be_visitor_valuetype_marshal_ch const &) = delete;
+  be_visitor_valuetype_marshal_ch &operator= (be_visitor_valuetype_marshal_ch &&) = delete;
 
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_eventtype (be_eventtype *node);
+  int visit_valuetype (be_valuetype *node) override;
+  int visit_eventtype (be_eventtype *node) override;
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_MARSHAL_CH_H_ */

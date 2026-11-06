@@ -22,15 +22,15 @@ class be_finder : public virtual AST_Finder,
                   public virtual be_factory
 {
 public:
-  be_finder (UTL_ScopedName *n);
+  explicit be_finder (UTL_ScopedName *n);
 
   ~be_finder ();
 
   /// Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
-  virtual int accept (be_visitor *visitor);
+  int accept (be_visitor *visitor) override;
 };
 
 #endif // BE_FINDER_H

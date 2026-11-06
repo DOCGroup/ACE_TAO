@@ -23,9 +23,7 @@ TAO_HomeDef_i::TAO_HomeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_HomeDef_i::~TAO_HomeDef_i ()
-{
-}
+TAO_HomeDef_i::~TAO_HomeDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_HomeDef_i::def_kind ()
@@ -67,7 +65,7 @@ TAO_HomeDef_i::destroy_i ()
 CORBA::Contained::Description *
 TAO_HomeDef_i::describe ()
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -234,7 +232,7 @@ CORBA::InterfaceDefSeq *
 TAO_HomeDef_i::supported_interfaces (
   )
 {
-  TAO_IFR_READ_GUARD_RETURN (0);
+  TAO_IFR_READ_GUARD_RETURN (nullptr);
 
   this->update_key ();
 
@@ -289,7 +287,7 @@ TAO_HomeDef_i::supported_interfaces_i (
 
 void
 TAO_HomeDef_i::supported_interfaces (
-    const CORBA::InterfaceDefSeq &supported_interfaces
+    CORBA::InterfaceDefSeq const &supported_interfaces
   )
 {
   TAO_IFR_WRITE_GUARD;
@@ -301,7 +299,7 @@ TAO_HomeDef_i::supported_interfaces (
 
 void
 TAO_HomeDef_i::supported_interfaces_i (
-    const CORBA::InterfaceDefSeq &supported_interfaces
+    CORBA::InterfaceDefSeq const &supported_interfaces
   )
 {
   this->repo_->config ()->remove_section (this->section_key_,
@@ -444,11 +442,11 @@ TAO_HomeDef_i::primary_key_i (
 }
 
 CORBA::ComponentIR::FactoryDef_ptr
-TAO_HomeDef_i::create_factory (const char *id,
-                               const char *name,
-                               const char *version,
-                               const CORBA::ParDescriptionSeq &params,
-                               const CORBA::ExceptionDefSeq &exceptions)
+TAO_HomeDef_i::create_factory (char const *id,
+                               char const *name,
+                               char const *version,
+                               CORBA::ParDescriptionSeq const &params,
+                               CORBA::ExceptionDefSeq const &exceptions)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::FactoryDef::_nil ());
 
@@ -463,11 +461,11 @@ TAO_HomeDef_i::create_factory (const char *id,
 
 CORBA::ComponentIR::FactoryDef_ptr
 TAO_HomeDef_i::create_factory_i (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::ParDescriptionSeq &params,
-    const CORBA::ExceptionDefSeq &exceptions
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::ParDescriptionSeq const &params,
+    CORBA::ExceptionDefSeq const &exceptions
   )
 {
   CORBA::Object_var obj = this->create_common (CORBA::dk_Factory,
@@ -482,11 +480,11 @@ TAO_HomeDef_i::create_factory_i (
 }
 
 CORBA::ComponentIR::FinderDef_ptr
-TAO_HomeDef_i::create_finder (const char *id,
-                              const char *name,
-                              const char *version,
-                              const CORBA::ParDescriptionSeq &params,
-                              const CORBA::ExceptionDefSeq &exceptions)
+TAO_HomeDef_i::create_finder (char const *id,
+                              char const *name,
+                              char const *version,
+                              CORBA::ParDescriptionSeq const &params,
+                              CORBA::ExceptionDefSeq const &exceptions)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::FinderDef::_nil ());
 
@@ -501,11 +499,11 @@ TAO_HomeDef_i::create_finder (const char *id,
 
 CORBA::ComponentIR::FinderDef_ptr
 TAO_HomeDef_i::create_finder_i (
-    const char *id,
-    const char *name,
-    const char *version,
-    const CORBA::ParDescriptionSeq &params,
-    const CORBA::ExceptionDefSeq &exceptions
+    char const *id,
+    char const *name,
+    char const *version,
+    CORBA::ParDescriptionSeq const &params,
+    CORBA::ExceptionDefSeq const &exceptions
   )
 {
   CORBA::Object_var obj = this->create_common (CORBA::dk_Finder,
@@ -521,12 +519,12 @@ TAO_HomeDef_i::create_finder_i (
 
 CORBA::Object_ptr
 TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
-                              const char *id,
-                              const char *name,
-                              const char *version,
-                              const char *sub_section,
-                              const CORBA::ParDescriptionSeq &params,
-                              const CORBA::ExceptionDefSeq &exceptions)
+                              char const *id,
+                              char const *name,
+                              char const *version,
+                              char const *sub_section,
+                              CORBA::ParDescriptionSeq const &params,
+                              CORBA::ExceptionDefSeq const &exceptions)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -648,7 +646,7 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
 void
 TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
                                  CORBA::OpDescriptionSeq &ods,
-                                 const char *sub_section)
+                                 char const *sub_section)
 {
   ods.length (0);
   ACE_Configuration_Section_Key sub_key;
@@ -682,7 +680,7 @@ TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
 void
 TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
                              CORBA::OperationDescription &od,
-                             const char *sub_section)
+                             char const *sub_section)
 {
   ACE_Configuration_Section_Key op_key;
   this->repo_->config ()->open_section (key,
@@ -728,7 +726,7 @@ TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
 void
 TAO_HomeDef_i::fill_param_desc_seq (ACE_Configuration_Section_Key &key,
                                     CORBA::ParDescriptionSeq &pds,
-                                    const char *sub_section)
+                                    char const *sub_section)
 {
   pds.length (0);
   ACE_Configuration_Section_Key params_key;
@@ -762,7 +760,7 @@ TAO_HomeDef_i::fill_param_desc_seq (ACE_Configuration_Section_Key &key,
 void
 TAO_HomeDef_i::fill_param_desc (ACE_Configuration_Section_Key &key,
                                 CORBA::ParameterDescription &pd,
-                                const char *sub_section)
+                                char const *sub_section)
 {
   ACE_Configuration_Section_Key param_key;
   this->repo_->config ()->open_section (key,
@@ -797,7 +795,7 @@ TAO_HomeDef_i::fill_param_desc (ACE_Configuration_Section_Key &key,
 void
 TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
                                   CORBA::ExcDescriptionSeq &eds,
-                                  const char *sub_section)
+                                  char const *sub_section)
 {
   eds.length (0);
   ACE_Configuration_Section_Key excepts_key;
@@ -831,7 +829,7 @@ TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
 void
 TAO_HomeDef_i::fill_exc_desc (ACE_Configuration_Section_Key &key,
                               CORBA::ExceptionDescription &ed,
-                              const char *sub_section)
+                              char const *sub_section)
 {
   ACE_TString path;
   this->repo_->config ()->get_string_value (key,
@@ -861,7 +859,7 @@ TAO_HomeDef_i::fill_exc_desc (ACE_Configuration_Section_Key &key,
 void
 TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
                                    CORBA::ExtAttrDescriptionSeq &eads,
-                                   const char *sub_section)
+                                   char const *sub_section)
 {
   eads.length (0);
   ACE_Configuration_Section_Key attrs_key;
@@ -895,7 +893,7 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
 void
 TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
                                CORBA::ExtAttributeDescription &ead,
-                               const char *sub_section)
+                               char const *sub_section)
 {
   ACE_Configuration_Section_Key attr_key;
   this->repo_->config ()->open_section (key,

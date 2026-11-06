@@ -9,6 +9,10 @@ class TAO_IDL_FE_Export AST_Connector
   : public virtual AST_Component
 {
 public:
+  AST_Connector (AST_Connector const &) = delete;
+  AST_Connector (AST_Connector &&) = delete;
+  AST_Connector &operator= (AST_Connector const &) = delete;
+  AST_Connector &operator= (AST_Connector &&) = delete;
   AST_Connector ();
 
   AST_Connector (UTL_ScopedName *n,

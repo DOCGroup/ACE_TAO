@@ -28,13 +28,13 @@ class be_visitor_scope : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_scope (be_visitor_context *ctx);
+  explicit be_visitor_scope (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_scope ();
+  ~be_visitor_scope () override;
 
   /// visit scope
-  int visit_scope (be_scope *node);
+  int visit_scope (be_scope *node) override;
 
   /// do any processing after every element except the last one of the scope is
   /// processed
@@ -56,7 +56,7 @@ public:
   bool last_inout_or_out_node (be_decl *bd);
 
 protected:
-  int elem_number_;
+  int elem_number_ {};
 };
 
 

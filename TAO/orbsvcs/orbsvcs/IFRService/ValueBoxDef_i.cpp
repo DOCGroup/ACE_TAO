@@ -17,9 +17,7 @@ TAO_ValueBoxDef_i::TAO_ValueBoxDef_i (
 {
 }
 
-TAO_ValueBoxDef_i::~TAO_ValueBoxDef_i ()
-{
-}
+TAO_ValueBoxDef_i::~TAO_ValueBoxDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ValueBoxDef_i::def_kind ()

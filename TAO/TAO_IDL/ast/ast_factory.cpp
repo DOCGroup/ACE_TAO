@@ -77,6 +77,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exceptlist.h"
 #include "utl_namelist.h"
 
+#include <memory>
+
+namespace
+{
+  struct UTL_NameList_Deleter
+  {
+    void operator() (UTL_NameList *list) const
+    {
+      if (list != nullptr)
+        {
+          list->destroy ();
+          delete list;
+        }
+    }
+  };
+}
+
 AST_Decl::NodeType const
 AST_Factory::NT = AST_Decl::NT_factory;
 
@@ -87,26 +104,22 @@ AST_Factory::AST_Factory (UTL_ScopedName *n)
               n),
     UTL_Scope (AST_Decl::NT_factory),
     pd_exceptions (nullptr),
-    pd_n_exceptions (0),
-    argument_count_ (-1),
-    has_native_ (0)
+    pd_n_exceptions (0)
 {
 }
 
-AST_Factory::~AST_Factory ()
-{
-}
+AST_Factory::~AST_Factory () = default;
 
 // Public operations.
 
 UTL_ExceptList *
-AST_Factory::exceptions ()
+AST_Factory::exceptions () const
 {
-  return this->pd_exceptions;
+  return this->pd_exceptions.get ();
 }
 
-int
-AST_Factory::n_exceptions ()
+std::size_t
+AST_Factory::n_exceptions () const
 {
   return this->pd_n_exceptions;
 }
@@ -121,7 +134,7 @@ AST_Factory::argument_count ()
 }
 
 // Return if any argument or the return type is a <native> type.
-int
+bool
 AST_Factory::has_native ()
 {
   this->compute_argument_attr ();
@@ -132,11 +145,7 @@ AST_Factory::has_native ()
 void
 AST_Factory::destroy ()
 {
-  if (nullptr != this->pd_exceptions)
-    {
-      this->pd_exceptions->destroy ();
-      this->pd_exceptions = nullptr;
-    }
+  this->pd_exceptions.reset ();
 
   this->AST_Decl::destroy ();
   this->UTL_Scope::destroy ();
@@ -152,11 +161,11 @@ AST_Factory::be_add_exceptions (UTL_ExceptList *t)
     }
   else
     {
-      this->pd_exceptions = t;
+      this->pd_exceptions.reset (t);
       this->pd_n_exceptions = (t == nullptr ? 0 : t->length ());
     }
 
-  return this->pd_exceptions;
+  return this->pd_exceptions.get ();
 }
 
 // Private operations.
@@ -196,7 +205,7 @@ AST_Factory::compute_argument_attr ()
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
-                  this->has_native_ = 1;
+                  this->has_native_ = true;
                 }
             }
         }
@@ -214,11 +223,13 @@ AST_Factory::fe_add_argument (AST_Argument *t)
 UTL_NameList *
 AST_Factory::fe_add_exceptions (UTL_NameList *t)
 {
+  std::unique_ptr<UTL_NameList, UTL_NameList_Deleter> t_owner (t);
+
   UTL_ScopedName *nl_n = nullptr;
   AST_Type *fe = nullptr;
   AST_Decl *d = nullptr;
 
-  this->pd_exceptions = nullptr;
+  this->pd_exceptions.reset ();
 
   for (UTL_NamelistActiveIterator nl_i (t);
        !nl_i.is_done ();
@@ -234,7 +245,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
           return nullptr;
         }
 
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
 
       if (nt != AST_Decl::NT_except
           && nt != AST_Decl::NT_param_holder)
@@ -253,7 +264,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
 
       if (this->pd_exceptions == nullptr)
         {
-          this->pd_exceptions = el;
+          this->pd_exceptions.reset (el);
         }
       else
         {
@@ -263,14 +274,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
       this->pd_n_exceptions++;
     }
 
-  // This return value is never used, it's easier to
-  // destroy it here and return 0 than to destroy it
-  // each place it is passed in.
-  t->destroy ();
-  delete t;
-  t = nullptr;
-
-  return t;
+  return nullptr;
 }
 
 // Dump this AST_Factory node to the ostream o.

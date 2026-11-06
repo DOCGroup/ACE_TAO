@@ -66,12 +66,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_GENERATOR_AST_GENERATOR_HH
 
 #include "ast_operation.h"
+#include "ast_interface.h"
 #include "ast_argument.h"
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
 #include "ast_porttype.h"
 
 #include "fe_utils.h"
+#include "utl_strlist.h"
+
+#include <cstddef>
+#include <string>
 
 class UTL_LabelList;
 class UTL_ExprList;
@@ -103,9 +108,9 @@ class AST_Annotation_Member;
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
-  AST_Generator () {}
+  AST_Generator () = default;
 
-  virtual ~AST_Generator () {}
+  virtual ~AST_Generator () = default;
 
   // Operations.
 
@@ -124,10 +129,10 @@ public:
   // Create a node representing an interface.
   virtual AST_Interface *create_interface (
       UTL_ScopedName *n,
-      AST_Type **inherits,
+      AST_Type_List const& inherits,
       long n_inherits,
-      AST_Interface **inherits_flat,
-      long n_inherits_flat,
+      AST_Interface_List const& inherits_flat,
+      std::size_t n_inherits_flat,
       bool is_local,
       bool is_abstract);
 
@@ -140,13 +145,13 @@ public:
   // Create a node representing a valuetype.
   virtual AST_ValueType *create_valuetype (
       UTL_ScopedName *n,
-      AST_Type **inherits,
+      AST_Type_List const& inherits,
       long n_inherits,
       AST_Type *inherits_concrete,
-      AST_Interface **inherits_flat,
-      long n_inherits_flat,
-      AST_Type **supports_list,
-      long n_supports,
+      AST_Interface_List const& inherits_flat,
+      std::size_t n_inherits_flat,
+      AST_Type_List const& supports_list,
+      std::size_t n_supports,
       AST_Type *supports_concrete,
       bool is_abstract,
       bool is_truncatable,
@@ -160,13 +165,13 @@ public:
   // Create a node representing an eventtype.
   virtual AST_EventType *create_eventtype (
       UTL_ScopedName *n,
-      AST_Type **inherits,
+      AST_Type_List const& inherits,
       long n_inherits,
       AST_Type *inherits_concrete,
-      AST_Interface **inherits_flat,
-      long n_inherits_flat,
-      AST_Type **supports_list,
-      long n_supports,
+      AST_Interface_List const& inherits_flat,
+      std::size_t n_inherits_flat,
+      AST_Type_List const& supports_list,
+      std::size_t n_supports,
       AST_Type *supports_concrete,
       bool is_abstract,
       bool is_truncatable,
@@ -181,10 +186,10 @@ public:
   virtual AST_Component *create_component (
       UTL_ScopedName *n,
       AST_Component *base_component,
-      AST_Type **supports_list,
+      AST_Type_List const& supports_list,
       long n_supports,
-      AST_Interface **supports_flat,
-      long n_supports_flat);
+      AST_Interface_List const& supports_flat,
+      std::size_t n_supports_flat);
 
   // Create a node representing a forward declaration of a component.
   virtual AST_ComponentFwd *create_component_fwd (
@@ -196,10 +201,10 @@ public:
       AST_Home *base_home,
       AST_Component *managed_component,
       AST_Type *primary_key,
-      AST_Type **support_lists,
+      AST_Type_List const& support_lists,
       long n_supports,
-      AST_Interface **supports_flat,
-      long n_supports_flat);
+      AST_Interface_List const& supports_flat,
+      std::size_t n_supports_flat);
 
   // Create a node representing an exception.
   virtual AST_Exception *create_exception (
@@ -299,9 +304,8 @@ public:
   virtual AST_Expression *create_expr (ACE_CDR::ULong v,
                                        AST_Expression::ExprType t);
 
-  virtual AST_Expression *create_expr (UTL_String *s);
-
-  virtual AST_Expression *create_expr (char *s);
+  virtual AST_Expression *create_expr (std::string s);
+  virtual AST_Expression *create_wstring_expr (std::string s);
 
   virtual AST_Expression *create_expr (ACE_CDR::Char c);
 
@@ -309,7 +313,7 @@ public:
 
   virtual AST_Expression *create_expr (ACE_CDR::Double d);
 
-  virtual AST_Expression *create_expr (const ACE_CDR::Fixed &f);
+  virtual AST_Expression *create_expr (ACE_CDR::Fixed const &f);
 
   // Create a node representing an enumerator.
   virtual AST_EnumVal *create_enum_val (ACE_CDR::ULong v,
@@ -317,7 +321,7 @@ public:
 
   // Create a node representing an array type.
   virtual AST_Array *create_array (UTL_ScopedName *n,
-                                   ACE_CDR::ULong ndims,
+                                   std::size_t ndims,
                                    UTL_ExprList *dims,
                                    bool is_local,
                                    bool is_abstract);
@@ -419,7 +423,7 @@ public:
   AST_Template_Module_Ref *create_template_module_ref (
     UTL_ScopedName *n,
     AST_Template_Module *ref,
-    UTL_StrList *param_refs);
+    UTL_StrList param_refs);
 
   virtual
   AST_Param_Holder *create_param_holder (

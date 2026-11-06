@@ -7,8 +7,6 @@ TAO_IDLType_i::TAO_IDLType_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_IDLType_i::~TAO_IDLType_i ()
-{
-}
+TAO_IDLType_i::~TAO_IDLType_i () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,9 +17,7 @@ be_visitor_root_cns::be_visitor_root_cns (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_cns::~be_visitor_root_cns ()
-{
-}
+be_visitor_root_cns::~be_visitor_root_cns () = default;
 
 int
 be_visitor_root_cns::visit_root (be_root *node)

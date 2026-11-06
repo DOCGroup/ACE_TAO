@@ -19,16 +19,13 @@ FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
                         supports,
                         false,
                         false,
-                        false),
-    base_component_ (nullptr)
+                        false)
 {
   this->compile_inheritance (base_component);
   this->compile_supports (supports);
 }
 
-FE_ComponentHeader::~FE_ComponentHeader ()
-{
-}
+FE_ComponentHeader::~FE_ComponentHeader () = default;
 
 AST_Component *
 FE_ComponentHeader::base_component () const
@@ -36,28 +33,28 @@ FE_ComponentHeader::base_component () const
   return this->base_component_;
 }
 
-AST_Type **
+AST_Type_List const&
 FE_ComponentHeader::supports () const
 {
-  return this->inherits_;
+  return this->inherits ();
 }
 
-long
+std::size_t
 FE_ComponentHeader::n_supports () const
 {
-  return this->n_inherits_;
+  return this->n_inherits ();
 }
 
-AST_Interface **
+AST_Interface_List const&
 FE_ComponentHeader::supports_flat () const
 {
-  return this->inherits_flat_;
+  return this->inherits_flat ();
 }
 
-long
+std::size_t
 FE_ComponentHeader::n_supports_flat () const
 {
-  return this->n_inherits_flat_;
+  return this->n_inherits_flat ();
 }
 
 void
@@ -117,8 +114,6 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
   UTL_ScopedName *item = nullptr;
   AST_Interface *iface = nullptr;
   AST_Type *t = nullptr;
-  long j = 0;
-  long k = 0;
 
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.
@@ -181,7 +176,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
           if (!iface->is_defined ())
             {
               idl_global->err ()->inheritance_fwd_error (
-                this->interface_name_,
+                this->interface_name_.get (),
                 iface);
 
               continue;
@@ -208,7 +203,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
               && nt != AST_Decl::NT_interface)
             {
               idl_global->err ()->mismatched_template_param (
-                ph->info ()->name_.c_str ());
+                ph->info ()->name_);
 
               continue;
             }
@@ -224,33 +219,5 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       this->compile_one_inheritance (t);
     }
 
-  // OK, install in interface header.
-  // First the flat list (all ancestors).
-  if (this->iused_flat_ > 0)
-    {
-      ACE_NEW (this->inherits_flat_,
-               AST_Interface *[this->iused_flat_]);
-
-      for (j = 0; j < this->iused_flat_; ++j)
-        {
-          this->inherits_flat_[j] = this->iseen_flat_[j];
-        }
-
-      this->n_inherits_flat_ = this->iused_flat_;
-    }
-
-  // Then the list of immediate ancestors.
-  if (this->iused_ > 0)
-    {
-      ACE_NEW (this->inherits_,
-               AST_Type *[this->iused_]);
-
-      for (k = 0; k < this->iused_; ++k)
-        {
-          this->inherits_[k] = this->iseen_[k];
-        }
-
-      this->n_inherits_ = this->iused_;
-    }
 }
 

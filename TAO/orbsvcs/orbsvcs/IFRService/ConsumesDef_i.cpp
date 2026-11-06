@@ -13,9 +13,7 @@ TAO_ConsumesDef_i::TAO_ConsumesDef_i (
 {
 }
 
-TAO_ConsumesDef_i::~TAO_ConsumesDef_i ()
-{
-}
+TAO_ConsumesDef_i::~TAO_ConsumesDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_ConsumesDef_i::def_kind ()

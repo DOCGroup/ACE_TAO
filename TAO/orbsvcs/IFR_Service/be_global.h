@@ -18,7 +18,8 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
 #include "ace/Containers.h"
-#include "ace/SString.h"
+
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,6 +40,10 @@ public:
   //
   /// Constructor.
   BE_GlobalData ();
+  BE_GlobalData (BE_GlobalData const &) = delete;
+  BE_GlobalData (BE_GlobalData &&) = delete;
+  BE_GlobalData &operator= (BE_GlobalData const &) = delete;
+  BE_GlobalData &operator= (BE_GlobalData &&) = delete;
 
   /// Destructor.
   virtual ~BE_GlobalData ();
@@ -56,11 +61,8 @@ public:
 
   ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes ();
 
-  /// Cleanup function.
+  /// Cleanup hook required by the shared TAO_IDL driver.
   void destroy ();
-
-  const char *filename () const;
-  void filename (char *fname);
 
   bool enable_locking () const;
   void enable_locking (bool value);
@@ -71,19 +73,21 @@ public:
   bool allow_duplicate_typedefs () const;
   void allow_duplicate_typedefs (bool val);
 
-  ACE_CString orb_args () const;
-  void orb_args (const ACE_CString& args);
+  std::string const& orb_args () const;
+  void orb_args (std::string const& args);
 
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
-  ACE_CString spawn_options ();
+  std::string spawn_options () const;
 
   /// Parse an argument that might affect the backend.
   void parse_args (long &i, char **av);
 
+  void gen_source_info (bool val);
+
 private:
   /// Are we removing IR objects from the repository?
-  bool removing_;
+  bool removing_ {};
 
   /// Reference to our ORB.
   CORBA::ORB_var orb_;
@@ -97,20 +101,17 @@ private:
   /// IR object scope stack.
   ACE_Unbounded_Stack<CORBA::Container_ptr> ifr_scopes_;
 
-  /// Name of the IDL file we are processing.
-  char *filename_;
-
   /// Option to lock at the IDL file level.
-  bool enable_locking_;
+  bool enable_locking_ {};
 
   /// Option to process included IDL files.
-  bool do_included_files_;
+  bool do_included_files_ {true};
 
   /// Option to enable duplicate typedefs in parsed IDL.
-  bool allow_duplicate_typedefs_;
+  bool allow_duplicate_typedefs_ {};
 
   /// Holder for -ORB args saved and passed to DRV_fork.
-  ACE_CString orb_args_;
+  std::string orb_args_;
 };
 
 #endif /* TAO_IFR_BE_GLOBAL_H */

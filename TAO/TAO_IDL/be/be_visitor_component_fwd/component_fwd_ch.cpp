@@ -17,9 +17,7 @@ be_visitor_component_fwd_ch::be_visitor_component_fwd_ch (
 {
 }
 
-be_visitor_component_fwd_ch::~be_visitor_component_fwd_ch ()
-{
-}
+be_visitor_component_fwd_ch::~be_visitor_component_fwd_ch () = default;
 
 // Visit the component_fwd_ch node and its scope.
 int

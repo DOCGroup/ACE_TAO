@@ -11,9 +11,7 @@ TAO_WstringDef_i::TAO_WstringDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_WstringDef_i::~TAO_WstringDef_i ()
-{
-}
+TAO_WstringDef_i::~TAO_WstringDef_i () = default;
 
 CORBA::DefinitionKind
 TAO_WstringDef_i::def_kind ()

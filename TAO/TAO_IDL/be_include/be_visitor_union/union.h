@@ -26,10 +26,15 @@ class be_visitor_union : public be_visitor_scope
 {
 public:
   /// constructor
-  be_visitor_union (be_visitor_context *ctx);
+  explicit be_visitor_union (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union () override;
+  ~be_visitor_union () override  = default;
+
+  be_visitor_union (be_visitor_union const &) = delete;
+  be_visitor_union (be_visitor_union &&) = delete;
+  be_visitor_union &operator= (be_visitor_union const &) = delete;
+  be_visitor_union &operator= (be_visitor_union &&) = delete;
 
   /// visit union. We provide code for this method in the derived class
   int visit_union (be_union *node) override;
@@ -39,9 +44,9 @@ public:
   /// visit union_branch
   int visit_union_branch (be_union_branch *node) override;
 
-  enum BoolUnionBranch { BUB_NONE, BUB_UNCONDITIONAL, BUB_TRUE, BUB_FALSE };
+  enum class Bool_Union_Branch { None, Unconditional, True, False };
 
-  static BoolUnionBranch boolean_branch (be_union_branch *b);
+  static Bool_Union_Branch boolean_branch (be_union_branch *b);
 
   static int branch_index (be_union_branch *b);
 };

@@ -23,9 +23,7 @@ AST_UnionFwd::AST_UnionFwd (AST_Union *dummy,
 {
 }
 
-AST_UnionFwd::~AST_UnionFwd ()
-{
-}
+AST_UnionFwd::~AST_UnionFwd () = default;
 
 // Redefinition of inherited virtual operations.
 

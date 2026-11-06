@@ -28,10 +28,15 @@ class be_visitor_union_discriminant_ch : public be_visitor_decl
 {
 public:
   /// constructor
-  be_visitor_union_discriminant_ch (be_visitor_context *ctx);
+  explicit be_visitor_union_discriminant_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_discriminant_ch () override;
+  ~be_visitor_union_discriminant_ch () override  = default;
+
+  be_visitor_union_discriminant_ch (be_visitor_union_discriminant_ch const &) = delete;
+  be_visitor_union_discriminant_ch (be_visitor_union_discriminant_ch &&) = delete;
+  be_visitor_union_discriminant_ch &operator= (be_visitor_union_discriminant_ch const &) = delete;
+  be_visitor_union_discriminant_ch &operator= (be_visitor_union_discriminant_ch &&) = delete;
 
   /// visit an enum
   int visit_enum (be_enum *node) override;

@@ -21,9 +21,7 @@ be_visitor_attr_setarg_type::be_visitor_attr_setarg_type  (
 {
 }
 
-be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type ()
-{
-}
+be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type () = default;
 
 int
 be_visitor_attr_setarg_type::visit_array (be_array *)
@@ -121,7 +119,7 @@ be_visitor_attr_setarg_type::visit_sequence (be_sequence *)
 int
 be_visitor_attr_setarg_type::visit_string (be_string *node)
 {
-  if (node->width () == (ssize_t) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       os_ << "const char * ";
     }
@@ -145,7 +143,7 @@ int
 be_visitor_attr_setarg_type::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  int status = node->primitive_base_type ()->accept (this);
+  int const status = node->primitive_base_type ()->accept (this);
 
   if (status == -1)
     {

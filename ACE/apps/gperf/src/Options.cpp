@@ -25,10 +25,29 @@
 #include "ace/Get_Opt.h"
 #include "Iterator.h"
 #include "ace/ACE.h"
+#include "ace/ace_wchar.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Truncate.h"
+
+namespace
+{
+  void
+  print_option (ACE_TCHAR const *option)
+  {
+    if (option == nullptr)
+      option = ACE_TEXT ("");
+
+#if defined (ACE_USES_WCHAR)
+    ACE_Wide_To_Ascii narrow_option (option);
+    char const *narrow = narrow_option.char_rep ();
+    ACE_OS::printf ("%s ", narrow == nullptr ? "" : narrow);
+#else
+    ACE_OS::printf ("%s ", option);
+#endif
+  }
+}
 
 /// These need to appear before the global class instantiation, since
 /// they are static members with a default constructor that initializes
@@ -44,7 +63,7 @@ ACE_CString Options::delimiters_;
 Options option;
 
 /// Current program version.
-extern const char *version_string;
+extern char const *version_string;
 
 /// Size to jump on a collision.
 static constexpr int DEFAULT_JUMP_VALUE = 5;
@@ -68,6 +87,7 @@ static const char *const DEFAULT_HASH_NAME = "hash";
 static const char *const DEFAULT_DELIMITERS = ",\n";
 
 int Options::option_word_;
+bool Options::cxx17_;
 int Options::total_switches_;
 u_int Options::total_keysig_size_;
 int Options::size_;
@@ -96,9 +116,13 @@ Options::print_options ()
 {
   ACE_OS::printf ("/* Command-line: ");
 
-  ACE_OS::printf ("%s ", ACE_TEXT_ALWAYS_CHAR (ACE::basename (argv_[0])));
-  for (int i = 1; i < argc_; i++)
-    ACE_OS::printf ("%s ", ACE_TEXT_ALWAYS_CHAR (argv_[i]));
+  if (argv_ != nullptr && argc_ > 0 && argv_[0] != nullptr)
+    print_option (ACE::basename (argv_[0]));
+  else
+    print_option (nullptr);
+
+  for (int i = 1; argv_ != nullptr && i < argc_; i++)
+    print_option (argv_[i]);
 
   ACE_OS::printf ("*/\n");
 }
@@ -139,6 +163,7 @@ Options::Options ()
   key_positions_[2] = EOS;
   total_keysig_size_ = 2;
   delimiters_ = DEFAULT_DELIMITERS;
+  cxx17_ = false;
   jump_ = DEFAULT_JUMP_VALUE;
   option_word_ = DEFAULTCHARS | C;
   function_name_ = DEFAULT_NAME;
@@ -254,7 +279,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   if (ACE_LOG_MSG->open (argv[0]) == -1)
     return -1;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:Q"));
 
   argc_ = argc;
   argv_ = argv;
@@ -382,6 +407,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "-j\tAffects the ``jump value,'' i.e., how far to advance the associated\n"
                              "\tcharacter value upon collisions.  Must be an odd number, default is %d.\n"
                              "-J\tSkips '#include \"ace/OS_NS_string.h\"' part in the output.\n"
+                             "-Q\tSkips '#include <cstring>' in C++ output.\n"
                              "-k\tAllows selection of the key positions used in the hash function.\n"
                              "\tThe allowable choices range between 1-%d, inclusive.  The positions\n"
                              "\tare separated by commas, ranges may be used, and key positions may\n"
@@ -393,7 +419,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "-l\tCompare key lengths before trying a string comparison.  This helps\n"
                              "\tcut down on the number of string comparisons made during the lookup.\n"
                              "-L\tGenerates code in the language specified by the option's argument.\n"
-                             "\tLanguages handled are currently C++ and C.  The default is C.\n"
+                             "\tLanguages handled are C++17, C++, and C.  The default is C.\n"
                              "-m\tAvoids the warning about identical hash values. This is valid\n"
                              "\tonly if the -D option is enabled.\n"
                              "-M\tSkips class definition in the output. This is valid only in C++ mode.\n"
@@ -487,6 +513,12 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             ACE_SET_BITS (option_word_, SKIPSTRINGH);
             break;
           }
+        // Skip including the C++ standard string header.
+        case 'Q':
+          {
+            ACE_SET_BITS (option_word_, SKIPSTDCSTRING);
+            break;
+          }
         // Sets key positions used for hash function.
         case 'k':
           {
@@ -554,7 +586,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'L':
           {
             option_word_ &= ~C;
-            if (!ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C++")))
+            cxx17_ = !ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C++17"));
+            if (cxx17_ || !ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C++")))
               ACE_SET_BITS (option_word_, (CPLUSPLUS | ANSI));
             else if (!ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT("C")))
               ACE_SET_BITS (option_word_, C);
@@ -831,6 +864,13 @@ const char *
 Options::delimiter ()
 {
   return delimiters_.c_str ();
+}
+
+/// True when C++17 output was selected.
+bool
+Options::cxx17 ()
+{
+  return cxx17_;
 }
 
 /// Gets the total number of switch statements to generate.

@@ -120,7 +120,7 @@ AST_illegal_recursive_type (AST_Decl *t)
     }
 
   AST_Decl::NodeType nt;
-  AST_Type *ut = dynamic_cast<AST_Type*> (t);
+  AST_Type const *ut = dynamic_cast<AST_Type const*> (t);
 
   if (ut != nullptr)
     {

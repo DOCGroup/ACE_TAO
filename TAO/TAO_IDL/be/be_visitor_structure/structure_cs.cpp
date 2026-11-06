@@ -20,9 +20,6 @@ be_visitor_structure_cs::be_visitor_structure_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure_cs::~be_visitor_structure_cs ()
-{
-}
 
 int
 be_visitor_structure_cs::visit_structure (be_structure *node)
@@ -49,16 +46,13 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
 
   if (be_global->any_support ())
     {
-      TAO_OutStream *os = this->ctx_->stream ();
+      TAO_OutStream * const os = this->ctx_->stream ();
 
       *os << be_nl_2;
       TAO_INSERT_COMMENT (os);
 
-      *os << "void" << be_nl
-          << node->name ()
-          << "::_tao_any_destructor (" << be_idt << be_idt_nl
-          << "void *_tao_void_pointer)" << be_uidt
-          << be_uidt_nl
+      *os << "void " << node->name ()
+          << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
           << node->local_name () << " *tmp = static_cast<"
           << node->local_name () << " *> (_tao_void_pointer);" << be_nl

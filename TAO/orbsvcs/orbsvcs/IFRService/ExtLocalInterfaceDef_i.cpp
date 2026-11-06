@@ -14,9 +14,7 @@ TAO_ExtLocalInterfaceDef_i::TAO_ExtLocalInterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtLocalInterfaceDef_i::~TAO_ExtLocalInterfaceDef_i ()
-{
-}
+TAO_ExtLocalInterfaceDef_i::~TAO_ExtLocalInterfaceDef_i () = default;
 
 // Just call the base class version, this is here only to
 // disambiguate multiple inheritance.

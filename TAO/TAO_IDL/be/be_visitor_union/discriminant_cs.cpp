@@ -18,16 +18,13 @@ be_visitor_union_discriminant_cs::be_visitor_union_discriminant_cs (
 {
 }
 
-be_visitor_union_discriminant_cs::~be_visitor_union_discriminant_cs ()
-{
-}
 
 int
 be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
 {
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {

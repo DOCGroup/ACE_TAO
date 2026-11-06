@@ -24,10 +24,10 @@
 
 be_component::be_component (UTL_ScopedName *n,
                             AST_Component *base_component,
-                            AST_Type **supports,
+                            AST_Type_List const& supports,
                             long n_supports,
-                            AST_Interface **supports_flat,
-                            long n_supports_flat)
+                            AST_Interface_List const& supports_flat,
+                            std::size_t n_supports_flat)
   : COMMON_Base (false,
                  false),
     AST_Decl (AST_Decl::NT_component,
@@ -59,23 +59,13 @@ be_component::be_component (UTL_ScopedName *n,
                   supports_flat,
                   n_supports_flat,
                   false,
-                  false),
-    n_provides_ (0UL),
-    n_remote_provides_ (0UL),
-    n_uses_ (0UL),
-    n_remote_uses_ (0UL),
-    has_uses_multiple_ (false),
-    n_publishes_ (0UL),
-    n_consumes_ (0UL),
-    n_emits_ (0UL)
+                  false)
 {
   this->size_type (AST_Type::VARIABLE);
   this->has_constructor (true);
 }
 
-be_component::~be_component ()
-{
-}
+be_component::~be_component () = default;
 
 be_component *
 be_component::base_component () const
@@ -106,40 +96,22 @@ be_component::accept (be_visitor *visitor)
             : visitor->visit_component (this));
 }
 
-AST_Structure *
-be_component::be_add_structure (AST_Structure *t)
-{
-  return this->fe_add_structure (t);
-}
-
-AST_Typedef *
-be_component::be_add_typedef (AST_Typedef *t)
-{
-  return this->fe_add_typedef (t);
-}
-
-ACE_CDR::ULong
+std::size_t
 be_component::n_provides () const
 {
   return this->n_provides_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_remote_provides () const
 {
   return this->n_remote_provides_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_uses () const
 {
   return this->n_uses_;
-}
-
-ACE_CDR::ULong
-be_component::n_remote_uses () const
-{
-  return this->n_remote_uses_;
 }
 
 bool
@@ -148,19 +120,19 @@ be_component::has_uses_multiple () const
   return this->has_uses_multiple_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_publishes () const
 {
   return this->n_publishes_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_consumes () const
 {
   return this->n_consumes_;
 }
 
-ACE_CDR::ULong
+std::size_t
 be_component::n_emits () const
 {
   return this->n_emits_;
@@ -207,11 +179,6 @@ be_component::scan (UTL_Scope *s)
             if (u->is_multiple ())
               {
                 this->has_uses_multiple_ = true;
-              }
-
-            if (!u->uses_type ()->is_local ())
-              {
-                ++this->n_remote_uses_;
               }
 
             continue;
@@ -304,19 +271,18 @@ be_component::gen_stub_inheritance (TAO_OutStream *os)
       *os << "Components::CCMObject";
     }
 
-  long nsupports = this->n_inherits ();
+  AST_Type_List const& supports = this->supports ();
+  std::size_t const nsupports = supports.size ();
 
   if (nsupports > 0)
     {
       *os << be_idt;
 
-      AST_Type **supp_list = this->supports ();
-
-      for (long i = 0; i < nsupports; ++i)
+      for (std::size_t i = 0; i < nsupports; ++i)
         {
           *os << "," << be_nl
               << "public virtual ::"
-              << supp_list[i]->name ();
+              << supports[i]->name ();
         }
 
       *os << be_uidt;
@@ -339,11 +305,11 @@ be_component::gen_skel_inheritance (TAO_OutStream *os)
       *os << "public virtual POA_Components::CCMObject";
     }
 
-  long nsupports = this->n_inherits ();
-  AST_Type **supports = this->supports ();
+  AST_Type_List const& supports = this->supports ();
+  std::size_t const nsupports = supports.size ();
   AST_Type *supported = nullptr;
 
-  for (long i = 0; i < nsupports; ++i)
+  for (std::size_t i = 0; i < nsupports; ++i)
     {
       supported = supports[i];
 
@@ -369,7 +335,7 @@ be_component::gen_is_a_ancestors (TAO_OutStream *os)
       ancestor = ancestor->base_component ();
     }
 
-  *os << "std::strcmp (value, \"IDL:omg.org/Components/CCMObject:1.0\") == 0" << be_nl;
+  *os << "std::strcmp (value, \"IDL:omg.org/Components/CCMObject:1.0\") == 0";
 
   return 0;
 }
@@ -378,7 +344,6 @@ void
 be_component::mirror_scan (AST_PortType *pt)
 {
   AST_Uses *u = nullptr;
-  AST_Provides *p = nullptr;
   AST_Attribute *a = nullptr;
 
   for (UTL_ScopeActiveIterator i (pt, UTL_Scope::IK_decls);
@@ -391,13 +356,6 @@ be_component::mirror_scan (AST_PortType *pt)
         {
           case AST_Decl::NT_provides:
             ++this->n_uses_;
-            p = dynamic_cast<AST_Provides*> (d);
-
-            if (!p->provides_type ()->is_local ())
-              {
-                ++this->n_remote_uses_;
-              }
-
             continue;
           case AST_Decl::NT_uses:
             ++this->n_provides_;

@@ -8,7 +8,7 @@
 class TAO_IDL_FE_Export AST_Finder : public virtual AST_Factory
 {
 public:
-  AST_Finder (UTL_ScopedName *n);
+  explicit AST_Finder (UTL_ScopedName *n);
 
   ~AST_Finder () override;
 

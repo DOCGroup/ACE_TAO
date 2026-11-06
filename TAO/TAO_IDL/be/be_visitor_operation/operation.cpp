@@ -11,6 +11,8 @@
 
 #include "operation.h"
 
+#include <string>
+
 // ************************************************************
 // Generic Operation visitor
 // ************************************************************
@@ -20,9 +22,7 @@ be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation::~be_visitor_operation ()
-{
-}
+be_visitor_operation::~be_visitor_operation () = default;
 
 // Is the operation return type void?
 int
@@ -51,33 +51,28 @@ be_visitor_operation::void_return_type (be_type *bt)
   return 0;
 }
 
-int
+bool
 be_visitor_operation::has_param_type (be_operation *node,
                                       AST_Argument::Direction dir)
 {
-  return (node->count_arguments_with_direction (dir) != 0);
+  return node->count_arguments_with_direction (dir) != 0;
 }
 
-int
+bool
 be_visitor_operation::is_amh_exception_holder (be_interface *node)
 {
-  int is_an_amh_exception_holder = 0;
-  const char *amh_underbar = "AMH_";
-  const char *node_name = node->local_name ();
+  bool is_an_amh_exception_holder {};
 
-  if( amh_underbar[0] == node_name[0] &&
-      amh_underbar[1] == node_name[1] &&
-      amh_underbar[2] == node_name[2] &&
-      amh_underbar[3] == node_name[3]
-      ) // node name starts with "AMH_"
+  if (node->local_name ().substr (0, 4) == "AMH_")
     {
       //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder\n"));
-      const char *last_E = ACE_OS::strrchr (node->full_name (), 'E');
-      if (last_E != nullptr
-          && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
+      std::string const& full_name = node->full_name ();
+      std::size_t const last_E = full_name.rfind ('E');
+      if (last_E != std::string::npos
+          && full_name.substr (last_E) == "ExceptionHolder")
         {
           //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder\n"));
-          is_an_amh_exception_holder = 1;
+          is_an_amh_exception_holder = true;
         }
     }
 
@@ -85,10 +80,10 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
 }
 
 int
-be_visitor_operation::gen_raise_exception (const char *exception_name,
-                                           const char *exception_arguments)
+be_visitor_operation::gen_raise_exception (std::string const& exception_name,
+                                           std::string const& exception_arguments)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "throw "
       << exception_name << "(" << exception_arguments << ");";
@@ -127,7 +122,7 @@ be_visitor_operation::gen_stub_operation_body (
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   be_visitor_context ctx;
 
   *os << be_nl << "{" << be_idt_nl;
@@ -163,7 +158,7 @@ be_visitor_operation::gen_stub_operation_body (
     }
 
   // Declare return type helper class.
-  *os << "TAO::Arg_Traits< ";
+  *os << "TAO::Arg_Traits<";
 
   this->gen_arg_template_param_name (node,
                                      return_type,
@@ -182,7 +177,7 @@ be_visitor_operation::gen_stub_operation_body (
       << "{" << be_idt_nl
       << "std::addressof(_tao_retval)";
 
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
@@ -218,7 +213,7 @@ be_visitor_operation::gen_stub_operation_body (
   /// The AMI ReplyHandler version of generated get/set ops
   /// for attributes doesn't have the leading underscore.
   bool const escape = (node->is_attr_op () && !intf->is_ami_rh ());
-  ACE_CString opname (escape ? "_" : "");
+  std::string opname (escape ? "_" : "");
 
   /// This logic handles regular IDL for attributes. The AMI
   /// backend preprocessing visitor doesn't set the context
@@ -237,13 +232,12 @@ be_visitor_operation::gen_stub_operation_body (
         }
     }
 
-  opname += node->original_local_name ()->get_string ();
+  opname += node->original_local_name ();
 
   /// Some compilers can't resolve the stream operator overload.
-  const char *lname = opname.c_str ();
-  ACE_CString::size_type len = opname.length ();
+  std::string::size_type const len = opname.length ();
 
-  *os << lname << "\"," << be_nl
+  *os << opname << "\"," << be_nl
       << len << "," << be_nl;
 
   *os << "TAO::TAO_CO_NONE";
@@ -336,7 +330,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
                                              TAO_OutStream *os,
                                              bool ami)
 {
-  AST_Argument *arg = nullptr;
+  AST_Argument *arg {};
   UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
 
   if (ami)
@@ -350,7 +344,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
       arg = dynamic_cast<AST_Argument*> (arg_decl_iter.item ());
 
       *os << be_nl
-          << "TAO::Arg_Traits< ";
+          << "TAO::Arg_Traits<";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),
@@ -387,7 +381,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
                                                    AST_Type *bt,
                                                    TAO_OutStream *os)
 {
-  AST_Typedef *alias = nullptr;
+  AST_Typedef *alias {};
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -395,12 +389,12 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
     }
 
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
-  ACE_CDR::ULong bound = 0;
+  ACE_CDR::ULong bound {};
 
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
-      AST_String *s =
-        dynamic_cast<AST_String*> (bt->unaliased_type  ());
+      AST_String const *s =
+        dynamic_cast<AST_String const*> (bt->unaliased_type  ());
       bound = s->max_size ()->ev ()->u.ulval;
 
       // If the (w)string is unbounded, code is generated below by the
@@ -433,7 +427,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
 
   // We need the unaliased type name to make the code block below
   // work correctly.
-  AST_Type *ut = bt->unaliased_type ();
+  AST_Type const *ut = bt->unaliased_type ();
   nt = ut->node_type ();
 
   if (nt == AST_Decl::NT_fixed)
@@ -446,8 +440,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   // type, in order to disambiguate the template parameter.
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt =
-        dynamic_cast<AST_PredefinedType*> (ut);
+      AST_PredefinedType const *pdt =
+        dynamic_cast<AST_PredefinedType const*> (ut);
 
       switch (pdt->pt ())
         {
@@ -470,7 +464,8 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
             *os << "::ACE_InputCDR::to_int8";
             return;
           case AST_PredefinedType::PT_void:
-            break;
+            *os << "void";
+            return;
           default:
             *os << "::";
             break;
@@ -487,7 +482,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   /// For now, keep a list of system operation or arg names
   /// that may not be remapped. May decide later to regnerate
   /// ORB code for alt mapping as well.
-  ACE_CString repo_id (scope->repoID ());
+  std::string const& repo_id = scope->repoID ();
   bool sys_val = (repo_id == "IDL:repository_id:1.0");
 
   // For types other than the 4 above, don't unalias the type name

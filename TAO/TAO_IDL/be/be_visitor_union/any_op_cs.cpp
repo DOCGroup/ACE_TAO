@@ -17,9 +17,6 @@ be_visitor_union_any_op_cs::be_visitor_union_any_op_cs (
 {
 }
 
-be_visitor_union_any_op_cs::~be_visitor_union_any_op_cs ()
-{
-}
 
 int
 be_visitor_union_any_op_cs::visit_union (be_union *node)
@@ -30,7 +27,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -74,7 +71,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
   *os << "/// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << "const " << node->name () << " &_tao_elem)"
+      << node->name () << " const &_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert_copy ("
@@ -105,8 +102,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
   // Extraction to const pointer.
   *os << "/// Extraction to const pointer." << be_nl
       << "::CORBA::Boolean operator>>= (" << be_idt_nl
-      << "const ::CORBA::Any &_tao_any," << be_nl
-      << "const " << node->name () << " *&_tao_elem)"
+      << "::CORBA::Any const &_tao_any," << be_nl
+      << node->name () << " const *&_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "return TAO::Any_Dual_Impl_T<" << node->name () << ">::extract ("
@@ -125,9 +122,9 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
        !si.is_done ();
        si.next ())
     {
-      AST_Decl *d = si.item ();
+      AST_Decl * const d = si.item ();
 
-      be_enum *e = dynamic_cast<be_enum*> (d);
+      be_enum * const e = dynamic_cast<be_enum*> (d);
       if (e != nullptr)
         {
           be_visitor_enum_any_op_cs visitor (&ctx);
@@ -160,7 +157,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 int
 be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

@@ -11,6 +11,7 @@
 
 #include "union_branch.h"
 
+
 // **********************************************
 //  Visitor for union_branch in the client header file.
 // **********************************************
@@ -22,14 +23,12 @@ be_visitor_union_branch_public_ch::be_visitor_union_branch_public_ch (
 {
 }
 
-be_visitor_union_branch_public_ch::~be_visitor_union_branch_public_ch ()
-{
-}
+be_visitor_union_branch_public_ch::~be_visitor_union_branch_public_ch () = default;
 
 int
 be_visitor_union_branch_public_ch::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -60,9 +59,9 @@ be_visitor_union_branch_public_ch::visit_union_branch (be_union_branch *node)
 int
 be_visitor_union_branch_public_ch::visit_array (be_array *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -83,7 +82,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -140,9 +139,9 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
 int
 be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -163,7 +162,7 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -201,9 +200,9 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -224,7 +223,7 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -243,9 +242,9 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
 int
 be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -266,7 +265,7 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -285,9 +284,9 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
 int
 be_visitor_union_branch_public_ch::visit_valuebox (be_valuebox *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -308,7 +307,7 @@ be_visitor_union_branch_public_ch::visit_valuebox (be_valuebox *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -327,9 +326,9 @@ be_visitor_union_branch_public_ch::visit_valuebox (be_valuebox *node)
 int
 be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -350,7 +349,7 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -369,9 +368,9 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
 int
 be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -392,7 +391,7 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -411,10 +410,10 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 int
 be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
-  be_typedef *td = this->ctx_->alias ();
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
+  be_typedef * const td = this->ctx_->alias ();
 
   // Check if we are visiting this via a visit to a typedef node.
   if (td != nullptr)
@@ -435,7 +434,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -445,7 +444,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
     case AST_PredefinedType::PT_object:
     case AST_PredefinedType::PT_abstract:
       *os << be_nl_2
-          << "void " << ub->local_name () << " (const "
+          << "void " << ub->local_name () << " ("
           << bt->nested_type_name (bu, "_ptr") << ");" << be_nl;
       *os << bt->nested_type_name (bu, "_ptr") << " "
           << ub->local_name () << " () const;";
@@ -459,9 +458,9 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
       break;
     case AST_PredefinedType::PT_any:
       *os << be_nl_2
-          << "void " << ub->local_name () << " (const "
-          << bt->nested_type_name (bu) << " &);" << be_nl;
-      *os << "const " << bt->nested_type_name (bu) << " &"
+          << "void " << ub->local_name () << " ("
+          << bt->nested_type_name (bu) << " const &);" << be_nl;
+      *os << bt->nested_type_name (bu) << " const &"
           << ub->local_name () << " () const;" << be_nl;
       *os << bt->nested_type_name (bu) << " &"
           << ub->local_name () << " ();";
@@ -494,9 +493,9 @@ be_visitor_union_branch_public_ch::visit_map (be_map *node)
 int
 be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -517,7 +516,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -525,7 +524,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-      const char* kind = nullptr;
+      char const *kind {};
       switch (node->node_type ())
       {
         case AST_Decl::NT_sequence:
@@ -557,7 +556,7 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%N:%l) be_visitor_union_branch_public_ch::"
                                "visit_seq_map_common - "
-                               "invalid type: %C\n", node->node_type_name ()),
+                               "invalid type: %C\n", node->node_type_name ().c_str ()),
                               -1);
           }
       };
@@ -575,9 +574,9 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
   TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
-      << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &);" << be_nl;
-  *os << "const " << bt->nested_type_name (bu) << " &"
+      << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu) << " const &);" << be_nl;
+  *os << bt->nested_type_name (bu) << " const &"
       << ub->local_name  () << " () const;"
       << be_nl;
   *os << bt->nested_type_name (bu) << " &" << ub->local_name ()
@@ -589,8 +588,8 @@ be_visitor_union_branch_public_ch::visit_seq_map_common (be_type *node)
 int
 be_visitor_union_branch_public_ch::visit_string (be_string *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
 
   if (!ub || !bu)
     {
@@ -601,31 +600,31 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
   // Three methods to set the string value
-  if (node->width () == (long) sizeof (char))
+  if (node->width () == sizeof (char))
     {
       *os << be_nl_2
           << "void " << ub->local_name () << " (char *);" << be_nl;
-      *os << "void " << ub->local_name () << " (const char *);"
+      *os << "void " << ub->local_name () << " (char const *);"
           << be_nl;
-      *os << "void " << ub->local_name () << " (const ::CORBA::String_var&);"
+      *os << "void " << ub->local_name () << " (::CORBA::String_var const&);"
           << be_nl;
-      *os << "const char *" << ub->local_name ()
+      *os << "char const *" << ub->local_name ()
           << " () const;";
     }
   else
     {
       *os << be_nl_2
           << "void " << ub->local_name () << " (::CORBA::WChar *);" << be_nl;
-      *os << "void " << ub->local_name () << " (const ::CORBA::WChar *);"
+      *os << "void " << ub->local_name () << " (::CORBA::WChar const *);"
           << be_nl;
-      *os << "void " << ub->local_name () << " (const ::CORBA::WString_var&);"
+      *os << "void " << ub->local_name () << " (::CORBA::WString_var const&);"
           << be_nl;
-      *os << "const ::CORBA::WChar *" << ub->local_name ()
+      *os << "::CORBA::WChar const *" << ub->local_name ()
           << " () const;";
     }
 
@@ -635,9 +634,9 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
 int
 be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -658,7 +657,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -681,9 +680,9 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
   TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
-      << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &);" << be_nl
-      << "const " << bt->nested_type_name (bu) << " &"
+      << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu) << " const &);" << be_nl
+      << bt->nested_type_name (bu) << " const &"
       << ub->local_name  () << " () const;"
       << be_nl
       << bt->nested_type_name (bu) << " &" << ub->local_name ()
@@ -696,7 +695,7 @@ int
 be_visitor_union_branch_public_ch::visit_structure_fwd (
   be_structure_fwd *node)
 {
-  be_structure *s =
+  be_structure * const s =
     dynamic_cast<be_structure*> (node->full_definition ());
 
   return this->visit_structure (s);
@@ -708,7 +707,7 @@ be_visitor_union_branch_public_ch::visit_typedef (be_typedef *node)
   this->ctx_->alias (node);
 
   // Make a decision based on the primitive base type.
-  be_type *bt = node->primitive_base_type ();
+  be_type * const bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))
     {
@@ -726,9 +725,9 @@ be_visitor_union_branch_public_ch::visit_typedef (be_typedef *node)
 int
 be_visitor_union_branch_public_ch::visit_union (be_union *node)
 {
-  be_decl *ub = this->ctx_->node ();
-  be_decl *bu = this->ctx_->scope ()->decl ();
-  be_type *bt = nullptr;
+  be_decl * const ub = this->ctx_->node ();
+  be_decl * const bu = this->ctx_->scope ()->decl ();
+  be_type *bt {};
 
   // Check if we are visiting this via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -750,7 +749,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
   if (bt->node_type () != AST_Decl::NT_typedef
@@ -773,9 +772,9 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
   TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
-      << "void " << ub->local_name () << " (const "
-      << bt->nested_type_name (bu) << " &);" << be_nl
-      << "const " << bt->nested_type_name (bu) << " &"
+      << "void " << ub->local_name () << " ("
+      << bt->nested_type_name (bu) << " const &);" << be_nl
+      << bt->nested_type_name (bu) << " const &"
       << ub->local_name  () << " () const;"
       << be_nl
       << bt->nested_type_name (bu) << " &" << ub->local_name ()
@@ -787,7 +786,7 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
 int
 be_visitor_union_branch_public_ch::visit_union_fwd (be_union_fwd *node)
 {
-  be_union *u =
+  be_union * const u =
     dynamic_cast<be_union*> (node->full_definition ());
 
   return this->visit_union (u);
