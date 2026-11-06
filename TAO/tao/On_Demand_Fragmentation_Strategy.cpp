@@ -9,7 +9,7 @@
 #include "ace/Truncate.h"
 
 TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
-  TAO_Transport * transport,
+  TAO_Transport *transport,
   CORBA::ULong max_message_size)
   : transport_ (transport)
   , max_message_size_ (max_message_size)
@@ -20,7 +20,7 @@ TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy () =
 
 int
 TAO_On_Demand_Fragmentation_Strategy::fragment (
-  TAO_OutputCDR & cdr,
+  TAO_OutputCDR &cdr,
   ACE_CDR::ULong pending_alignment,
   ACE_CDR::ULong pending_length)
 {

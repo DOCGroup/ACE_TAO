@@ -38,7 +38,7 @@ class TAO_Export TAO_GIOP_Fragmentation_Strategy
 {
 public:
   /// Constructor
-  TAO_GIOP_Fragmentation_Strategy () {}
+  TAO_GIOP_Fragmentation_Strategy () = default;
 
   /// Destructor.
   virtual ~TAO_GIOP_Fragmentation_Strategy ();
@@ -63,15 +63,17 @@ public:
    *
    * @return Zero on success.
    */
-  virtual int fragment (TAO_OutputCDR & cdr,
+  virtual int fragment (TAO_OutputCDR &cdr,
                         ACE_CDR::ULong pending_alignment,
                         ACE_CDR::ULong pending_length) = 0;
 
 private:
   TAO_GIOP_Fragmentation_Strategy (TAO_GIOP_Fragmentation_Strategy const &) = delete;
-  void operator= (TAO_GIOP_Fragmentation_Strategy const &) = delete;
-  TAO_GIOP_Fragmentation_Strategy (TAO_GIOP_Fragmentation_Strategy&&) = delete;
-  void operator= (TAO_GIOP_Fragmentation_Strategy &&) = delete;
+  TAO_GIOP_Fragmentation_Strategy &operator= (
+    TAO_GIOP_Fragmentation_Strategy const &) = delete;
+  TAO_GIOP_Fragmentation_Strategy (TAO_GIOP_Fragmentation_Strategy &&) = delete;
+  TAO_GIOP_Fragmentation_Strategy &operator= (
+    TAO_GIOP_Fragmentation_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
