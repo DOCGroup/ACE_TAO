@@ -13,25 +13,24 @@
 
 snmp_agent::snmp_agent ()
 {
-  ACE_TRACE("snmp_agent::snmp_agent");
+  ACE_TRACE ("snmp_agent::snmp_agent");
 }
 
-snmp_agent::~snmp_agent()
+snmp_agent::~snmp_agent ()
 {
-  ACE_TRACE("snmp_agent::~snmp_agent");
+  ACE_TRACE ("snmp_agent::~snmp_agent");
 }
-
 
 bool snmp_agent::valid () const
 {
-  ACE_TRACE("snmp_agent::valid");
+  ACE_TRACE ("snmp_agent::valid");
   return agent_ != nullptr;
 }
 
-int snmp_agent::set_args(int argc, char *argv[])
+int snmp_agent::set_args (int argc, char *argv[])
 {
-  ACE_TRACE("snmp_agent::set_args");
-  unsigned short port = SNMP_AGENT_PORT;
+  ACE_TRACE ("snmp_agent::set_args");
+  unsigned short port {SNMP_AGENT_PORT};
   ACE_TCHAR const *rd = RD_COM;
   ACE_TCHAR const *wr = WR_COM;
   ACE_Argv_Type_Converter to_tchar (argc, argv);
@@ -39,12 +38,12 @@ int snmp_agent::set_args(int argc, char *argv[])
   ACE_Get_Opt get_opt
     (argc, to_tchar.get_TCHAR_argv (), ACE_TEXT ("p:w:r:hv"));
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int option = get_opt (); option != -1; option = get_opt ())
     {
-      switch (c)
+      switch (option)
         {
         case 'p':
-          port = (ACE_OS::atoi (get_opt.optarg));
+          port = static_cast<unsigned short> (ACE_OS::atoi (get_opt.optarg));
           break;
         case 'w': // write community string
           wr = get_opt.optarg;
@@ -69,9 +68,9 @@ int snmp_agent::set_args(int argc, char *argv[])
    return 0;
 }
 
-int snmp_agent::run()
+int snmp_agent::run ()
 {
-  ACE_TRACE("snmp_agent::run");
+  ACE_TRACE ("snmp_agent::run");
   ACE_ASSERT(agent_);
 
   // open service port

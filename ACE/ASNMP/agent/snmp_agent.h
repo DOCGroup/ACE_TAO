@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 class agent_impl;
 
 /**
@@ -26,8 +25,8 @@ class agent_impl;
 class snmp_agent
 {
 public:
-  snmp_agent(); // uses port 161, public, private
-  ~snmp_agent();
+  snmp_agent (); // uses port 161, public, private
+  ~snmp_agent ();
   snmp_agent (snmp_agent const &) = delete;
   snmp_agent (snmp_agent &&) = delete;
   snmp_agent &operator= (snmp_agent const &) = delete;
@@ -36,10 +35,10 @@ public:
   bool valid () const;
   // did object construct ok
 
-  int set_args(int argc, char *argv[]);
+  int set_args (int argc, char *argv[]);
   // runtime arguments such as community strings, port to use
 
-  int run();
+  int run ();
   // begin processing requests
 
 private:

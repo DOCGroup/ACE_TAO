@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef AGENT_IMPL_H
 #define AGENT_IMPL_H
 
@@ -40,13 +39,13 @@ public:
   int handle_set (Pdu &pdu, UdpTarget &target) override;
 
   /// main loop here using a reactor object
-  int process_requests();
+  int process_requests ();
 
 private:
   /// this agent's read, write community strings
   UdpTarget tgt_;
   /// set values for a "get" cmd
-  int get_response(Vb& vb);
+  int get_response (Vb& vb);
   /// agent "uptime" ticks reported in 1/100 second
   ACE_High_Res_Timer agent_clock_;
 };
