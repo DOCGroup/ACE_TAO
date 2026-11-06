@@ -36,12 +36,13 @@
 //
 // SNMPv1 Trap Application
 //
-class trapapp {
+class trapapp
+{
 public:
-  trapapp(int argc, char **argv); // process command line args
-  bool valid() const;            // verify transaction can proceed
-  int run();                     //  issue transaction
-  static void usage();           // operator help message
+  trapapp (int argc, char **argv); // process command line args
+  bool valid () const;            // verify transaction can proceed
+  int run ();                     // issue transaction
+  static void usage ();           // operator help message
 
 private:
   trapapp (trapapp const &) = delete;
@@ -55,38 +56,37 @@ private:
   OctetStr community_;
   Snmp snmp_;
   UdpTarget target_;
-  bool valid_;
+  bool valid_ {};
 };
-
 
 // main entry point
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter atc (argc, argv);
   trapapp get (atc.get_argc (), atc.get_ASCII_argv ());
-  if (get.valid())
-     return get.run();
+  if (get.valid ())
+     return get.run ();
   else
     trapapp::usage();
   return 1;
 }
 
-bool trapapp::valid() const
+bool trapapp::valid () const
 {
- return valid_;
+  return this->valid_;
 }
-trapapp::trapapp(int argc, char *argv[]): valid_(false)
+trapapp::trapapp (int argc, char *argv[])
 {
-   Oid def_ent_oid("1.3.6.1.2.1.1.1.2.0.1");      // def enterprise oid
-   Oid ent, trap; // user specified values
+   Oid const def_ent_oid ("1.3.6.1.2.1.1.1.2.0.1"); // default enterprise OID
+   Oid ent {}, trap {}; // user-specified values
 
    if ( argc < 2)  // hostname mandatory
      return;
 
    address_ = argv[argc - 1];
-   if ( !address_.valid()) {
+   if (!address_.valid ()) {
       cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
-     << argv[argc] << "\n";
+     << argv[argc - 1] << "\n";
       return;
    }
 
@@ -94,46 +94,46 @@ trapapp::trapapp(int argc, char *argv[]): valid_(false)
    ACE_Get_Opt get_opt (argc,
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("c:e:t:"));
-   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
+   for (int option = get_opt (); option != -1; option = get_opt ())
+     switch (option)
        {
        case 'c': // community string
-         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         target_.set_read_community(community_);
+         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+         target_.set_read_community (community_);
          break;
 
        case 'e': // trap oid to send
-         ent = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
+         ent = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
          break;
 
        case 't': // trap oid
-         trap = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
+         trap = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
          break;
 
        default:
          break;
        }
 
-   if (ent.valid())
-      pdu_.set_notify_enterprise( ent); // set up the enterprise of the trap
+   if (ent.valid ())
+      pdu_.set_notify_enterprise (ent); // set up the enterprise of the trap
    else
-      pdu_.set_notify_enterprise( def_ent_oid);
+      pdu_.set_notify_enterprise (def_ent_oid);
 
-  if (trap.valid())
-     pdu_.set_notify_id( trap);          // set the id of the trap
+  if (trap.valid ())
+     pdu_.set_notify_id (trap); // set the id of the trap
   else
-     pdu_.set_notify_id( coldStart);      // set the id of the trap
+     pdu_.set_notify_id (coldStart); // set the id of the trap
 
-  Oid detail_oid("1.3.6.1.4.1.11.2.16.2");
-  OctetStr detail_value("SNMP++ Trap Send Test");
-  Vb vb(detail_oid, detail_value);
+  Oid const detail_oid ("1.3.6.1.4.1.11.2.16.2");
+  OctetStr const detail_value ("SNMP++ Trap Send Test");
+  Vb vb (detail_oid, detail_value);
   pdu_ += vb;
 
-  pdu_.get_notify_id(oid_); // store for later use
-  valid_ = true;
+  pdu_.get_notify_id (oid_); // store for later use
+  this->valid_ = true;
 }
 
-void trapapp::usage()
+void trapapp::usage ()
 {
   cout << "Usage:\n";
   cout << "trap [options] dotted-quad | DNSName[:port]\n";
@@ -141,27 +141,27 @@ void trapapp::usage()
   cout << "      -r N  retries default is N = 1 retry\n";
   cout << "      -t N  timeout in seconds default is 1 second" << endl;
   cout << "      -e oid  enterprise oid default is 1.3.6.1.2.1.1.1.2.0.1\n";
-  cout << "      -O oid  trap id default is coldStart 1.3.6.1.6.3.1.1.5.1\n";
+  cout << "      -t oid  trap id default is coldStart 1.3.6.1.6.3.1.1.5.1\n";
 }
 
-int trapapp::run()
+int trapapp::run ()
 {
-   if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
+   if (snmp_.valid () != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<
           snmp_.error_string()<< "\n";
       return 1;
    }
 
-   if (address_.get_port() == 0)
-     address_.set_port(DEF_TRAP_PORT);
-   target_.set_address( address_);         // make a target using the address
+   if (address_.get_port () == 0)
+     address_.set_port (DEF_TRAP_PORT);
+   target_.set_address (address_); // make a target using the address
 
    //-------[ issue the request, blocked mode ]-----------------------------
-   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version()+ 1) << \
+   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1) << \
        " TRAP GENERATOR SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
-   target_.get_address(address_); // target updates port used
-   int rc;
-   const char *name = address_.resolve_hostname(rc);
+   target_.get_address (address_); // target updates port used
+   int rc {};
+   char const * const name = address_.resolve_hostname (rc);
 
    cout << "Device: " << address_ << " ";
 
@@ -171,11 +171,11 @@ int trapapp::run()
 
    cout << "[ Community=" <<  community_.to_string() << " ]"<< endl;
 
-   if (snmp_.trap( pdu_, target_) == SNMP_CLASS_SUCCESS) {
+   if (snmp_.trap (pdu_, target_) == SNMP_CLASS_SUCCESS) {
      cout << "Trap was written to network...\n";
    }
    else {
-    const char *ptr = snmp_.error_string();
+    char const * const ptr = snmp_.error_string ();
     cout << "ASNMP:ERROR: trap command failed reason: " << ptr << endl;
   }
 
