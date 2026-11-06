@@ -111,7 +111,7 @@ static
 long
 vary_temp (long temp)
 {
-  long const r = std::rand () % 50;
+  int const r = std::rand () % 50;
   long delta {};
   if  (r < 5)
     delta = 3;
