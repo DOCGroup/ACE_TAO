@@ -141,7 +141,7 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
     tc->discriminator_type ();
 
   CORBA::Any disc_any;
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
 
   // Get a CDR stream - if the Any doesn't have one, make one.
   TAO::Any_Impl *impl = any.impl ();
@@ -220,7 +220,7 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
       CORBA::TypeCode_var member_tc = tc->member_type (i);
 
       CORBA::Any member_any;
-      TAO::Unknown_IDL_Type *unk = nullptr;
+      TAO::Unknown_IDL_Type *unk {};
       ACE_NEW (unk,
                TAO::Unknown_IDL_Type (member_tc.in (),
                                       in));
@@ -258,7 +258,7 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
             tc->member_type (index);
 
           CORBA::Any default_any;
-          TAO::Unknown_IDL_Type *unk = nullptr;
+          TAO::Unknown_IDL_Type *unk {};
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (default_tc.in (),
                                           in));
@@ -720,7 +720,7 @@ TAO_DynUnion_i::to_any ()
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),

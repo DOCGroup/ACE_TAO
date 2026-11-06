@@ -339,10 +339,10 @@ TAO_DynFixed_i::to_any ()
     {
       throw CORBA::MARSHAL ();
     }
-  CORBA::Any *result = nullptr;
+  CORBA::Any *result {};
   ACE_NEW_THROW_EX (result, CORBA::Any, CORBA::NO_MEMORY ());
   TAO_InputCDR input (output);
-  TAO::Unknown_IDL_Type *unknown = nullptr;
+  TAO::Unknown_IDL_Type *unknown {};
   ACE_NEW_THROW_EX (unknown,
                     TAO::Unknown_IDL_Type (this->type_.in (), input),
                     CORBA::NO_MEMORY ());

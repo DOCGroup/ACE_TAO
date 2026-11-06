@@ -279,7 +279,7 @@ TAO_DynValue_i::get_members ()
     }
 
   // Create the return NameValuePairSeq
-  DynamicAny::NameValuePairSeq *members = nullptr;
+  DynamicAny::NameValuePairSeq *members {};
   ACE_NEW_THROW_EX (
     members,
     DynamicAny::NameValuePairSeq (this->component_count_),
@@ -357,7 +357,7 @@ TAO_DynValue_i::get_members_as_dyn_any ()
     }
 
   // Create the return NameDynAnyPairSeq
-  DynamicAny::NameDynAnyPairSeq *members = nullptr;
+  DynamicAny::NameDynAnyPairSeq *members {};
   ACE_NEW_THROW_EX (
     members,
     DynamicAny::NameDynAnyPairSeq (this->component_count_),
@@ -612,7 +612,7 @@ TAO_DynValue_i::get_val ()
 
   // Now read in this stream to create the actual value.
   TAO_InputCDR for_reading (out_cdr);
-  CORBA::ValueBase *retval = nullptr;
+  CORBA::ValueBase *retval {};
   if (!CORBA::ValueBase::_tao_unmarshal (for_reading, retval ))
     {
       throw DynamicAny::DynAny::InvalidValue ();
@@ -635,7 +635,7 @@ TAO_DynValue_i::to_any ()
 
   // Convert the out_cdr into a new any.
   TAO_InputCDR in_cdr (out_cdr);
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (
     unk,
     TAO::Unknown_IDL_Type (this->type_.in (), in_cdr),
@@ -1026,7 +1026,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
       // and find the address of the original TAO_DynValue_i that we
       // created last time and stored in the map.
       char *pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
-      void* original = nullptr;
+      void* original {};
       if (strm.get_value_map()->get()->find (pos, original))
         {
           if (TAO_debug_level)
@@ -1204,7 +1204,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
         {
           // Need to create an any for this field.
           TAO_InputCDR unk_in (strm);
-          TAO::Unknown_IDL_Type *unk = nullptr;
+          TAO::Unknown_IDL_Type *unk {};
           ACE_NEW_THROW_EX (
             unk,
             TAO::Unknown_IDL_Type (field_tc.in (), unk_in),
