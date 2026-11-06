@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    rw_locks.cpp
@@ -10,42 +9,52 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
+
 #include <memory>
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
-
 using ACE_TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 
-static std::unique_ptr<ACE_Token_Proxy> global_rlock;
-static std::unique_ptr<ACE_Token_Proxy> global_wlock;
+struct Options
+{
+  ACE_TCHAR const *server_host {ACE_DEFAULT_SERVER_HOST};
+  int server_port {ACE_DEFAULT_SERVER_PORT};
+  int threads {2};
+  int iterations {50};
+  int reads {4};
+  bool ignore_deadlock {};
+  bool debug {};
+  bool remote {};
+  bool write_sleep {};
+  bool renew {};
+};
 
-static ACE_TCHAR const *server_host = ACE_DEFAULT_SERVER_HOST;
-static int server_port = ACE_DEFAULT_SERVER_PORT;
-static bool ignore_deadlock = false;
-static int threads = 2;
-static int iterations = 50;
-static bool debug = false;
-static bool remote = false;
-static int reads = 4;
-static bool write_sleep = false;
-static bool renew = false;
+struct Thread_Options
+{
+  ACE_Token_Proxy *read_lock {};
+  ACE_Token_Proxy *write_lock {};
+  int iterations {};
+  int reads {};
+  bool write_sleep {};
+  bool renew {};
+};
 
 static ACE_THR_FUNC_RETURN
-run_thread (void *)
+run_thread (void *argument)
 {
-  for (int x = 0; x < iterations; x++)
+  Thread_Options const * const options = static_cast<Thread_Options const *> (argument);
+  for (int iteration = 0; iteration < options->iterations; ++iteration)
     {
-      int y = 0;
-      for (; y < reads; y++)
+      int y {};
+      for (; y < options->reads; ++y)
         {
-          if (global_rlock->acquire () == -1)
+          if (options->read_lock->acquire () == -1)
             {
               if (ACE_Log_Msg::instance ()->errnum () == EDEADLK)
                 {
@@ -56,17 +65,17 @@ run_thread (void *)
                 return ACE_THR_FUNC_RETURN_NULL;
             }
 
-          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_rlock.get ()) == 0)
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (options->read_lock) == 0)
             ACE_ERROR_RETURN ((LM_ERROR, "reader acquire violated invariant.\n"), 0);
 
           ACE_DEBUG ((LM_DEBUG, "(%t) rlock acquired.\n"));
         }
 
-      if (renew)
+      if (options->renew)
         {
-          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_rlock.get ());
+          ACE_TOKEN_INVARIANTS::instance ()->releasing (options->read_lock);
 
-          if (global_rlock->renew () == -1)
+          if (options->read_lock->renew () == -1)
             {
               if (ACE_Log_Msg::instance ()->errnum () == EDEADLK)
                 {
@@ -79,7 +88,7 @@ run_thread (void *)
 
           ACE_DEBUG ((LM_DEBUG, "(%t) rlock renewed.\n"));
 
-          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_rlock.get ()) == 0)
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (options->read_lock) == 0)
             ACE_ERROR_RETURN ((LM_ERROR, "reader renew violated invariant.\n"), 0);
         }
 
@@ -87,45 +96,43 @@ run_thread (void *)
 
       for (; y > 0; y--)
         {
-          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_rlock.get ());
-          if (global_rlock->release () == 0)
+          ACE_TOKEN_INVARIANTS::instance ()->releasing (options->read_lock);
+          if (options->read_lock->release () == 0)
             ACE_DEBUG ((LM_DEBUG, "(%t) r-released.\n"));
         }
 
-      if (global_wlock->acquire () == -1)
+      if (options->write_lock->acquire () == -1)
         ACE_DEBUG ((LM_DEBUG, "wlock deadlock detected\n"));
       else
         {
-          if (write_sleep)
+          if (options->write_sleep)
             ACE_OS::sleep (1);
           ACE_DEBUG ((LM_DEBUG, "\t\t(%t) wlock acquired.\n"));
 
-          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_wlock.get ()) == 0)
+          if (ACE_TOKEN_INVARIANTS::instance ()->acquired (options->write_lock) == 0)
             ACE_ERROR_RETURN ((LM_ERROR, "writer acquire violated invariant.\n"), 0);
 
-          if (renew)
+          if (options->renew)
             {
-              ACE_TOKEN_INVARIANTS::instance ()->releasing (global_wlock.get ());
+              ACE_TOKEN_INVARIANTS::instance ()->releasing (options->write_lock);
 
-              if (global_wlock->renew () == -1)
+              if (options->write_lock->renew () == -1)
                 {
                   if (ACE_Log_Msg::instance ()->errnum () == EDEADLK)
-                  {
                     ACE_DEBUG ((LM_DEBUG, "wlock deadlock detected during renew\n"));
-                  }
                   else
                     return ACE_THR_FUNC_RETURN_NULL;
                 }
 
               ACE_DEBUG ((LM_DEBUG, "(%t) rlock renewed.\n"));
 
-              if (ACE_TOKEN_INVARIANTS::instance ()->acquired (global_wlock.get ()) == 0)
+              if (ACE_TOKEN_INVARIANTS::instance ()->acquired (options->write_lock) == 0)
                 ACE_ERROR_RETURN ((LM_ERROR, "writer renew violated invariant.\n"), 0);
             }
 
-          ACE_TOKEN_INVARIANTS::instance ()->releasing (global_wlock.get ());
+          ACE_TOKEN_INVARIANTS::instance ()->releasing (options->write_lock);
 
-          if (global_wlock->release () == 0)
+          if (options->write_lock->release () == 0)
             ACE_DEBUG ((LM_DEBUG, "\t\t(%t) w-released.\n"));
         }
     }
@@ -135,44 +142,44 @@ run_thread (void *)
 }
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_LOG_MSG->open (argv[0], ACE_Log_Msg::STDERR); // | ACE_Log_Msg::VERBOSE);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("t:iun:dr:sp:h:R"), 1);
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int option {}; (option = get_opt ()) != -1; )
     {
-      switch (c)
+      switch (option)
         {
         case 'h':  // specify the host machine on which the server is running
-          server_host = get_opt.opt_arg ();
-          remote = true;
+          options.server_host = get_opt.opt_arg ();
+          options.remote = true;
           break;
         case 'p':  // specify the port on which the server is running
-          server_port = ACE_OS::atoi (get_opt.opt_arg ());
-          remote = true;
+          options.server_port = ACE_OS::atoi (get_opt.opt_arg ());
+          options.remote = true;
           break;
         case 't':
-          threads = ACE_OS::atoi (get_opt.opt_arg ());
+          options.threads = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'R':
-          renew = true;
+          options.renew = true;
           break;
         case 'r':
-          reads = ACE_OS::atoi (get_opt.opt_arg ());
+          options.reads = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'd':
-          debug = true;
+          options.debug = true;
           break;
         case 's':
-          write_sleep = true;
+          options.write_sleep = true;
           break;
         case 'n':
-          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          options.iterations = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'i':
-          ignore_deadlock = true;
+          options.ignore_deadlock = true;
           break;
         case 'u':
           // usage same as unknown.
@@ -192,6 +199,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
 
+  if (options.threads <= 0 || options.iterations < 0 || options.reads < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "threads must be positive; iterations and reads cannot be negative\n"),
+                      -1);
   return 0;
 }
 
@@ -202,31 +213,48 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #endif
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) == -1)
+  Options options;
+  if (parse_args (argc, argv, options) == -1)
     return -1;
 
-  if (remote)
+  std::unique_ptr<ACE_Token_Proxy> read_lock;
+  std::unique_ptr<ACE_Token_Proxy> write_lock;
+  if (options.remote)
     {
-      ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port, server_host));
-      global_rlock = std::make_unique<ACE_Remote_RLock> (ACE_TEXT ("THE_TOKEN"),
-                                                        ignore_deadlock, debug);
-      global_wlock = std::make_unique<ACE_Remote_WLock> (ACE_TEXT ("THE_TOKEN"),
-                                                        ignore_deadlock, debug);
+      ACE_Remote_Mutex::set_server_address (
+        ACE_INET_Addr (options.server_port, options.server_host));
+      read_lock = std::make_unique<ACE_Remote_RLock> (ACE_TEXT ("THE_TOKEN"),
+                                                     options.ignore_deadlock,
+                                                     options.debug);
+      write_lock = std::make_unique<ACE_Remote_WLock> (ACE_TEXT ("THE_TOKEN"),
+                                                      options.ignore_deadlock,
+                                                      options.debug);
     }
   else
     {
-      global_rlock = std::make_unique<ACE_Local_RLock> (ACE_TEXT ("THE_TOKEN"),
-                                                       ignore_deadlock, debug);
-      global_wlock = std::make_unique<ACE_Local_WLock> (ACE_TEXT ("THE_TOKEN"),
-                                                       ignore_deadlock, debug);
+      read_lock = std::make_unique<ACE_Local_RLock> (ACE_TEXT ("THE_TOKEN"),
+                                                    options.ignore_deadlock,
+                                                    options.debug);
+      write_lock = std::make_unique<ACE_Local_WLock> (ACE_TEXT ("THE_TOKEN"),
+                                                     options.ignore_deadlock,
+                                                     options.debug);
     }
+
+  Thread_Options thread_options {
+    read_lock.get (),
+    write_lock.get (),
+    options.iterations,
+    options.reads,
+    options.write_sleep,
+    options.renew
+  };
 
   ACE_Thread_Manager mgr;
 
-  if (mgr.spawn_n (threads, run_thread,
-                   nullptr,
+  if (mgr.spawn_n (options.threads, run_thread,
+                   &thread_options,
                    THR_BOUND | SUSPEND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
@@ -242,7 +270,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 #else
 int
-ACE_TMAIN(int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"), -1);
