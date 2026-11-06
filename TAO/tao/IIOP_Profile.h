@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
 
@@ -45,22 +44,22 @@ public:
   static const char object_key_delimiter_;
 
   /// Return the char string prefix.
-  static const char *prefix ();
+  static char const *prefix ();
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
-  TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                    const TAO::ObjectKey &object_key,
-                    const TAO_GIOP_Message_Version &version,
+  TAO_IIOP_Profile (ACE_INET_Addr const &addr,
+                    TAO::ObjectKey const &object_key,
+                    TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor, this is the most efficient since it
   /// doesn't require any address resolution processing.
-  TAO_IIOP_Profile (const char *host,
+  TAO_IIOP_Profile (char const *host,
                     CORBA::UShort port,
-                    const TAO::ObjectKey &object_key,
-                    const ACE_INET_Addr &addr,
-                    const TAO_GIOP_Message_Version &version,
+                    TAO::ObjectKey const &object_key,
+                    ACE_INET_Addr const &addr,
+                    TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
   /// Profile constructor, default.
@@ -172,7 +171,13 @@ protected:
   TAO_IIOP_Endpoint *last_endpoint_;
 
   /// Number of endpoints in the list headed by <endpoint_>.
-  CORBA::ULong count_;
+  CORBA::ULong count_ {1};
+
+private:
+  TAO_IIOP_Profile (TAO_IIOP_Profile const &) = delete;
+  TAO_IIOP_Profile &operator= (TAO_IIOP_Profile const &) = delete;
+  TAO_IIOP_Profile (TAO_IIOP_Profile &&) = delete;
+  TAO_IIOP_Profile &operator= (TAO_IIOP_Profile &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

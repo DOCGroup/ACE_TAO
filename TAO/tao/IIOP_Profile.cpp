@@ -10,11 +10,13 @@
 #include "tao/SystemException.h"
 #include "ace/Truncate.h"
 #include "ace/os_include/os_netdb.h"
-#include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
+#include <memory>
+#include <new>
 
-static const char the_prefix[] = "iiop";
+static constexpr char the_prefix[] = "iiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,14 +24,11 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
-
-  for (TAO_Endpoint *next = this->endpoint ()->next ();
-       next != nullptr;
-       next = tmp)
+  TAO_Endpoint *next_endpoint = this->endpoint ()->next ();
+  while (next_endpoint != nullptr)
     {
-      tmp = next->next ();
-      delete next;
+      std::unique_ptr<TAO_Endpoint> endpoint_owner {next_endpoint};
+      next_endpoint = endpoint_owner->next ();
     }
 }
 
@@ -41,9 +40,9 @@ TAO_IIOP_Profile::object_key_delimiter () const
   return TAO_IIOP_Profile::object_key_delimiter_;
 }
 
-TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                                    const TAO::ObjectKey &object_key,
-                                    const TAO_GIOP_Message_Version &version,
+TAO_IIOP_Profile::TAO_IIOP_Profile (ACE_INET_Addr const &addr,
+                                    TAO::ObjectKey const &object_key,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_INTERNET_IOP,
                  orb_core,
@@ -51,24 +50,22 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                  version),
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    last_endpoint_ (&this->endpoint_),
-    count_ (1)
+    last_endpoint_ (&this->endpoint_)
 {
 }
 
-TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
+TAO_IIOP_Profile::TAO_IIOP_Profile (char const *host,
                                     CORBA::UShort port,
-                                    const TAO::ObjectKey &object_key,
-                                    const ACE_INET_Addr &addr,
-                                    const TAO_GIOP_Message_Version &version,
+                                    TAO::ObjectKey const &object_key,
+                                    ACE_INET_Addr const &addr,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (IOP::TAG_INTERNET_IOP,
                  orb_core,
                  object_key,
                  version),
     endpoint_ (host, port, addr),
-    last_endpoint_ (&this->endpoint_),
-    count_ (1)
+    last_endpoint_ (&this->endpoint_)
 {
 }
 
@@ -78,21 +75,20 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
                                            TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
-    last_endpoint_ (&this->endpoint_),
-    count_ (1)
+    last_endpoint_ (&this->endpoint_)
 {
 }
 
 int
-TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
+TAO_IIOP_Profile::decode_profile (TAO_InputCDR &cdr)
 {
   // Decode host and port into the <endpoint_>.
   // it is necessary to do it indirectly so that IPv6 host addresses
   // can be evaluated correctly.
   CORBA::String_var host;
-  CORBA::UShort port;
+  CORBA::UShort port {};
 
-  if (cdr.read_string(host.out()) == 0 ||
+  if (cdr.read_string (host.out ()) == 0 ||
       cdr.read_ushort (port) == 0)
     {
       if (TAO_debug_level > 0)
@@ -102,15 +98,15 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       return -1;
     }
 
-  this->endpoint_.host(host.in());
-  this->endpoint_.port(port);
+  this->endpoint_.host (host.in ());
+  this->endpoint_.port (port);
 
   if (cdr.good_bit ())
     {
       // Invalidate the object_addr_ until first access.
       this->endpoint_.object_addr_.set_type (-1);
 
-      const char* csv = this->orb_core()->orb_params()->preferred_interfaces();
+      char const *csv = this->orb_core ()->orb_params ()->preferred_interfaces ();
       if (csv != nullptr && *csv != '\0')
         {
           bool const enforce =
@@ -124,12 +120,12 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_IIOP_Profile::parse_string_i (const char *ior)
+TAO_IIOP_Profile::parse_string_i (char const *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
 
-  const char *okd = std::strchr (ior, this->object_key_delimiter_);
+  char const *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == nullptr || okd == ior)
     {
@@ -142,13 +138,14 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
     }
 
   // Length of host string.
-  CORBA::ULong length_host = 0;
+  CORBA::ULong length_host {};
 
-  const char *cp_pos_overrun = std::strchr (ior, ':');  // Look for a port
-  const char *cp_pos = (cp_pos_overrun < okd) ? cp_pos_overrun : nullptr; // but before object key
+  char const *cp_pos_overrun = std::strchr (ior, ':');  // Look for a port
+  char const *cp_pos = cp_pos_overrun != nullptr && cp_pos_overrun < okd
+    ? cp_pos_overrun : nullptr; // but before object key
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
-  bool ipv6_in_host = false;
+  bool ipv6_in_host {};
 
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // decimal IPv6 address representation.
@@ -158,9 +155,10 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos_a_overrun = std::strchr(ior, ']');
-      const char *cp_pos_a = (cp_pos_a_overrun < okd) ? cp_pos_a_overrun : 0; // before object key
-      if (cp_pos_a == 0)
+      char const *cp_pos_a_overrun = std::strchr (ior, ']');
+      char const *cp_pos_a = cp_pos_a_overrun != nullptr && cp_pos_a_overrun < okd
+        ? cp_pos_a_overrun : nullptr; // before object key
+      if (cp_pos_a == nullptr)
         {
           // No valid IPv6 address specified.
           if (TAO_debug_level > 0)
@@ -181,7 +179,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
           if (cp_pos_a[1] == ':')    // Look for a port
             cp_pos = cp_pos_a + 1;
           else
-            cp_pos = 0;
+            cp_pos = nullptr;
           ipv6_in_host = true; // host string contains full IPv6 numeric address
         }
     }
@@ -268,7 +266,7 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
   this->endpoint_.is_ipv6_decimal_ = ipv6_in_host;
 #endif /* ACE_HAS_IPV6 */
 
-  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (this->endpoint_.host_.in ()[0] == '\0')
     {
       ACE_INET_Addr host_addr;
 
@@ -298,9 +296,9 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
         }
 
       this->endpoint_.host_ = CORBA::string_dup (tmp_host);
-      const char* csv = this->orb_core()->orb_params()->preferred_interfaces();
+      char const *csv = this->orb_core ()->orb_params ()->preferred_interfaces ();
       bool const enforce =
-        this->orb_core()->orb_params()->enforce_pref_interfaces();
+        this->orb_core ()->orb_params ()->enforce_pref_interfaces ();
       this->endpoint_.preferred_interfaces (csv, enforce, *this);
     }
 
@@ -314,13 +312,13 @@ TAO_IIOP_Profile::parse_string_i (const char *ior)
 }
 
 CORBA::Boolean
-TAO_IIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_IIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
   if (other_profile == this)
     return true;
 
-  const TAO_IIOP_Profile *op =
-    dynamic_cast<const TAO_IIOP_Profile *> (other_profile);
+  TAO_IIOP_Profile const *op =
+    dynamic_cast<TAO_IIOP_Profile const *> (other_profile);
 
   // Make sure we have a TAO_IIOP_Profile.
   if (op == nullptr)
@@ -331,7 +329,7 @@ TAO_IIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   if (this->count_ != op->count_)
     return false;
   // Check endpoints equivalence.
-  const TAO_IIOP_Endpoint *other_endp = &op->endpoint_;
+  TAO_IIOP_Endpoint const *other_endp = &op->endpoint_;
   for (TAO_IIOP_Endpoint *endp = &this->endpoint_;
        endp != nullptr;
        endp = endp->next_)
@@ -349,7 +347,7 @@ CORBA::ULong
 TAO_IIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
-  CORBA::ULong hashval = 0;
+  CORBA::ULong hashval {};
   for (TAO_IIOP_Endpoint *endp = &this->endpoint_;
        endp != nullptr;
        endp = endp->next_)
@@ -360,7 +358,7 @@ TAO_IIOP_Profile::hash (CORBA::ULong max)
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  const TAO::ObjectKey &ok =
+  TAO::ObjectKey const &ok =
     this->ref_object_key_->object_key ();
 
   if (ok.length () >= 4)
@@ -374,7 +372,7 @@ TAO_IIOP_Profile::hash (CORBA::ULong max)
   return hashval % max;
 }
 
-TAO_Endpoint*
+TAO_Endpoint *
 TAO_IIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
@@ -414,7 +412,8 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
     {
       if (--this->count_ > 0)
         {
-          TAO_IIOP_Endpoint* n = this->endpoint_.next_;
+          TAO_IIOP_Endpoint *n = this->endpoint_.next_;
+          std::unique_ptr<TAO_IIOP_Endpoint> removed {n};
           this->endpoint_ = *n;
           // since the assignment operator does not copy the next_
           // pointer, we must do it by hand
@@ -423,50 +422,53 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
             {
               this->last_endpoint_ = &this->endpoint_;
             }
-          delete n;
         }
       return;
     }
 
-  TAO_IIOP_Endpoint* prev = &this->endpoint_;
-  TAO_IIOP_Endpoint* cur = this->endpoint_.next_;
+  TAO_IIOP_Endpoint *prev = &this->endpoint_;
+  TAO_IIOP_Endpoint *cur = this->endpoint_.next_;
 
   while (cur != nullptr)
-  {
-    if (cur == endp)
-      break;
-    prev = cur;
-    cur = cur->next_;
-  }
+    {
+      if (cur == endp)
+        break;
+      prev = cur;
+      cur = cur->next_;
+    }
 
   if (cur != nullptr)
-  {
-    prev->next_ = cur->next_;
-    cur->next_ = nullptr;
-    --this->count_;
-    if (this->last_endpoint_ == cur)
-      {
+    {
+      prev->next_ = cur->next_;
+      cur->next_ = nullptr;
+      --this->count_;
+      if (this->last_endpoint_ == cur)
         this->last_endpoint_ = prev;
-      }
-    delete cur;
-  }
+      std::unique_ptr<TAO_IIOP_Endpoint> removed {cur};
+    }
 }
 
 void
 TAO_IIOP_Profile::remove_generic_endpoint (TAO_Endpoint *ep)
 {
-  this->remove_endpoint(dynamic_cast<TAO_IIOP_Endpoint *>(ep));
+  this->remove_endpoint (dynamic_cast<TAO_IIOP_Endpoint *> (ep));
 }
 
 void
 TAO_IIOP_Profile::add_generic_endpoint (TAO_Endpoint *endp)
 {
-  TAO_IIOP_Endpoint *iep = dynamic_cast<TAO_IIOP_Endpoint *>(endp);
+  TAO_IIOP_Endpoint *iep = dynamic_cast<TAO_IIOP_Endpoint *> (endp);
   if (iep != nullptr)
     {
-      TAO_IIOP_Endpoint *clone;
-      ACE_NEW (clone, TAO_IIOP_Endpoint(*iep));
-      this->add_endpoint(clone);
+      std::unique_ptr<TAO_IIOP_Endpoint> clone {
+        new (std::nothrow) TAO_IIOP_Endpoint (*iep)
+      };
+      if (!clone)
+        {
+          errno = ENOMEM;
+          return;
+        }
+      this->add_endpoint (clone.release ());
     }
 }
 
@@ -476,7 +478,7 @@ TAO_IIOP_Profile::to_string () const
   // corbaloc:iiop:1.2@host:port,iiop:1.2@host:port,.../key
 
   CORBA::String_var key;
-  TAO::ObjectKey::encode_sequence_to_string (key.inout(),
+  TAO::ObjectKey::encode_sequence_to_string (key.inout (),
                                              this->ref_object_key_->object_key ());
 
   size_t buflen = (
@@ -488,9 +490,9 @@ TAO_IIOP_Profile::to_string () const
        std::strlen (::the_prefix) /* "iiop" */ +
        1 /* colon separator */);
 
- const TAO_IIOP_Endpoint *endp = nullptr;
- for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
-   {
+  TAO_IIOP_Endpoint const *endp = &this->endpoint_;
+  for (; endp != nullptr; endp = endp->next_)
+    {
       buflen += (
           pfx_len +
           1 /* major version */ +
@@ -505,57 +507,58 @@ TAO_IIOP_Profile::to_string () const
       if (endp->is_ipv6_decimal_)
         buflen += 2; // room for '[' and ']'
 #endif /* ACE_HAS_IPV6 */
-   }
+    }
 
-  static const char digits [] = "0123456789";
+  static constexpr char digits [] = "0123456789";
 
-  char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
+  CORBA::String_var buffer = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
+  char *buf = buffer.inout ();
 
   std::strcpy (buf, "corbaloc:");
 
   for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
     {
-      if(&this->endpoint_ != endp)
-      std::strcat (buf, ",");
+      if (&this->endpoint_ != endp)
+        std::strcat (buf, ",");
 
 #if defined (ACE_HAS_IPV6)
       if (endp->is_ipv6_decimal_)
         {
           // Don't publish scopeid if included.
-          ACE_CString tmp(endp->host ());
-          ACE_CString::size_type pos = tmp.find('%');
+          ACE_CString tmp (endp->host ());
+          ACE_CString::size_type pos = tmp.find ('%');
           if (pos != ACE_CString::npos)
             {
-              tmp = tmp.substr(0, pos + 1);
+              tmp = tmp.substr (0, pos + 1);
               tmp[pos] = '\0';
             }
-          std::sprintf (buf + std::strlen(buf),
-                  "%s:%c.%c@[%s]:%d",
-                  ::the_prefix,
-                  digits [this->version_.major],
-                  digits [this->version_.minor],
-                  tmp.c_str (),
-                  endp->port () );
+          std::sprintf (buf + std::strlen (buf),
+                        "%s:%c.%c@[%s]:%d",
+                        ::the_prefix,
+                        digits [this->version_.major],
+                        digits [this->version_.minor],
+                        tmp.c_str (),
+                        endp->port ());
         }
       else
 #endif
-      std::sprintf (buf + std::strlen(buf),
-              "%s:%c.%c@%s:%d",
-              ::the_prefix,
-              digits [this->version_.major],
-              digits [this->version_.minor],
-              endp->host (),
-              endp->port () );
-  }
-  std::sprintf (buf + std::strlen(buf),
-          "%c%s",
-          this->object_key_delimiter_,
-          key.in ());
+      std::sprintf (buf + std::strlen (buf),
+                    "%s:%c.%c@%s:%d",
+                    ::the_prefix,
+                    digits [this->version_.major],
+                    digits [this->version_.minor],
+                    endp->host (),
+                    endp->port ());
+    }
+  std::sprintf (buf + std::strlen (buf),
+                "%c%s",
+                this->object_key_delimiter_,
+                key.in ());
 
-  return buf;
+  return buffer._retn ();
 }
 
-const char *
+char const *
 TAO_IIOP_Profile::prefix ()
 {
   return ::the_prefix;
@@ -574,13 +577,13 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 #if defined (ACE_HAS_IPV6)
   // For IPv6 decimal addresses make sure the possibly included scopeid
   // is not published as this has only local meaning.
-  char const *host = nullptr;
-  char const *pos = nullptr;
+  char const *host {};
+  char const *pos {};
   if (this->endpoint_.is_ipv6_decimal_ &&
       (pos = std::strchr (host = this->endpoint_.host (), '%')) != nullptr)
     {
       ACE_CString tmp;
-      size_t len = pos - host;
+      size_t const len = pos - host;
       tmp.set (this->endpoint_.host (), len, 1);
       encap.write_string (tmp.c_str ());
     }
@@ -610,7 +613,7 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
 {
   // encode IOP::TAG_ALTERNATE_IIOP_ADDRESS tags if there are more
   // than one endpoints to listen to.
-  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
+  TAO_IIOP_Endpoint const *endpoint = &this->endpoint_;
   for (CORBA::ULong i = 1;
        i < this->count_;
        ++i)
@@ -631,13 +634,13 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
 #if defined (ACE_HAS_IPV6)
       // For IPv6 decimal addresses make sure the possibly included scopeid
       // is not published as this has only local meaning.
-      char const *host = nullptr;
-      char const *pos = nullptr;
+      char const *host {};
+      char const *pos {};
       if (endpoint->is_ipv6_decimal_ &&
           (pos = std::strchr (host = endpoint->host (), '%')) != nullptr)
         {
           ACE_CString tmp;
-          size_t len = pos - host;
+          size_t const len = pos - host;
           tmp.set (endpoint->host (), len, 1);
           if (!(out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
               || !(out_cdr << tmp.c_str ())
@@ -655,17 +658,17 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = IOP::TAG_ALTERNATE_IIOP_ADDRESS;
 
-      size_t length = out_cdr.total_length ();
+      size_t const length = out_cdr.total_length ();
       tagged_component.component_data.length
         (static_cast<CORBA::ULong>(length));
       CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      for (const ACE_Message_Block *iterator = out_cdr.begin ();
+      for (ACE_Message_Block const *iterator = out_cdr.begin ();
                  iterator != nullptr;
            iterator = iterator->cont ())
         {
-          size_t i_length = iterator->length ();
+          size_t const i_length = iterator->length ();
           std::memcpy (buf, iterator->rd_ptr (), i_length);
 
           buf += i_length;
@@ -675,15 +678,15 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
       // TaggedComponents.
       tagged_components_.set_component (tagged_component);
     }
-  return  0;
+  return 0;
 }
 
 int
 TAO_IIOP_Profile::encode_endpoints ()
 {
-  CORBA::ULong actual_count = 0;
+  CORBA::ULong actual_count {};
 
-  const TAO_IIOP_Endpoint *endpoint = &this->endpoint_;
+  TAO_IIOP_Endpoint const *endpoint = &this->endpoint_;
 
   // Count the number of endpoints that needs to be encoded
   for (CORBA::ULong c = 0;
@@ -718,16 +721,16 @@ TAO_IIOP_Profile::encode_endpoints ()
           if (endpoint->is_ipv6_decimal_)
             {
               // Don't publish scopeid if included.
-              ACE_CString tmp(endpoint->host ());
-              ACE_CString::size_type pos = tmp.find('%');
+              ACE_CString tmp (endpoint->host ());
+              ACE_CString::size_type pos = tmp.find ('%');
               if (pos != ACE_CString::npos)
                 {
                   tmp = tmp.substr (0, pos + 1);
                   tmp[pos] = '\0';
-                  endpoints[i].host = tmp.c_str();
+                  endpoints[i].host = tmp.c_str ();
                 }
               else
-                endpoints[i].host = tmp.c_str();
+                endpoints[i].host = tmp.c_str ();
             }
           else
 #endif /* ACE_HAS_IPV6 */
@@ -749,7 +752,6 @@ TAO_IIOP_Profile::encode_endpoints ()
   return  0;
 }
 
-
 int
 TAO_IIOP_Profile::decode_endpoints ()
 {
@@ -758,14 +760,14 @@ TAO_IIOP_Profile::decode_endpoints ()
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char *> (buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
@@ -791,52 +793,60 @@ TAO_IIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_IIOP_Endpoint *endpoint = nullptr;
-          ACE_NEW_RETURN (endpoint,
-                          TAO_IIOP_Endpoint (endpoints[i].host,
-                                             endpoints[i].port,
-                                             endpoints[i].priority),
-                          -1);
+          std::unique_ptr<TAO_IIOP_Endpoint> endpoint {
+            new (std::nothrow) TAO_IIOP_Endpoint (endpoints[i].host,
+                                                  endpoints[i].port,
+                                                  endpoints[i].priority)
+          };
+          if (!endpoint)
+            {
+              errno = ENOMEM;
+              return -1;
+            }
 
-          this->add_endpoint (endpoint);
+          this->add_endpoint (endpoint.release ());
         }
     }
 
   // Now decode if there are any TAG_ALTERNATE_IIOP_ADDRESS
   // components.
 
-  IOP::MultipleComponentProfile& tc = this->tagged_components_.components();
-  for (CORBA::ULong index = 0; index < tc.length(); index++)
+  IOP::MultipleComponentProfile &tc = this->tagged_components_.components ();
+  for (CORBA::ULong index {}; index < tc.length (); ++index)
     {
       if (tc[index].tag != IOP::TAG_ALTERNATE_IIOP_ADDRESS)
         continue;
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tc[index].component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*>(buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                            tc[index].component_data.length ());
 
       // Extract the Byte Order.
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
         return -1;
 
-      in_cdr.reset_byte_order (static_cast<int>(byte_order));
+      in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       CORBA::String_var host;
-      CORBA::Short port;
+      CORBA::Short port {};
 
-      if (!(in_cdr >> host.out()) || !(in_cdr >> port))
+      if (!(in_cdr >> host.out ()) || !(in_cdr >> port))
         return -1;
 
-      TAO_IIOP_Endpoint *endpoint = nullptr;
-      ACE_NEW_RETURN (endpoint,
-                      TAO_IIOP_Endpoint (host.in(),
-                                         port,
-                                         TAO_INVALID_PRIORITY),
-                      -1);
+      std::unique_ptr<TAO_IIOP_Endpoint> endpoint {
+        new (std::nothrow) TAO_IIOP_Endpoint (host.in (),
+                                              port,
+                                              TAO_INVALID_PRIORITY)
+      };
+      if (!endpoint)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
 
-      this->add_endpoint (endpoint);
+      this->add_endpoint (endpoint.release ());
     }
 
   return 0;
