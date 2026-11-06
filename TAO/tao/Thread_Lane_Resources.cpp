@@ -89,7 +89,7 @@ TAO_Thread_Lane_Resources::acceptor_registry ()
           TAO_Resource_Factory &resource_factory =
             *this->orb_core_.resource_factory ();
 
-          // Ask it to create a new connector registry.
+          // Ask it to create a new acceptor registry.
           this->acceptor_registry_.reset (
             resource_factory.get_acceptor_registry ());
         }
@@ -111,7 +111,7 @@ TAO_Thread_Lane_Resources::connector_registry ()
 
       if (this->connector_registry_ == nullptr)
         {
-          // Ask it to create a new acceptor registry.
+          // Ask it to create a new connector registry.
           std::unique_ptr<TAO_Connector_Registry> connector_registry (
             this->orb_core_.resource_factory ()->get_connector_registry ());
 
