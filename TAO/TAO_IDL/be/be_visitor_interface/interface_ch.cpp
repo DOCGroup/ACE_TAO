@@ -233,12 +233,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
 
       *os << "// Non-local interface only." << be_nl
-          << node->local_name () << " (" << be_idt << be_idt_nl
+          << node->local_name () << " (" << be_idt_nl
           << "TAO_Stub *objref," << be_nl
           << "::CORBA::Boolean _tao_collocated = false," << be_nl
           << "TAO_Abstract_ServantBase *servant = nullptr," <<  be_nl
           << "TAO_ORB_Core *orb_core = nullptr);"
-          << be_uidt << be_uidt;
+          << be_uidt;
     }
 
   if (c != nullptr)

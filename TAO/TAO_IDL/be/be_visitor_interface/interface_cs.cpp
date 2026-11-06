@@ -86,8 +86,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
-          << node->name () << "_ptr const p,"
-          << "TAO_OutputCDR & cdr)" << be_nl
+          << node->name () << "_ptr const p, "
+          << "TAO_OutputCDR &cdr)" << be_nl
           << "{" << be_idt_nl
           << "return ";
 
@@ -433,18 +433,19 @@ be_visitor_interface_cs::gen_xxx_narrow (std::string const& pre,
       *os << node->full_name () << " *proxy = TAO::Narrow_Utils<"
           << node->local_name () << ">::" << pre << " (";
 
-      *os << be_idt << be_idt_nl;
-
-      *os << "_tao_objref";
       if (pre == "narrow")
         {
-          *os << "," << be_nl
+          *os << be_idt << be_idt_nl
+              << "_tao_objref," << be_nl
               << "\"" << node->repoID () << "\"";
+          *os << ");" << be_uidt << be_uidt;
+        }
+      else
+        {
+          *os << "_tao_objref);";
         }
 
-      *os << ");";
-
-      *os << be_uidt << be_uidt << be_nl
+      *os << be_nl
           << "return TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (proxy);"
           << be_uidt << be_uidt_nl

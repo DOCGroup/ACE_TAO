@@ -35,53 +35,60 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << "class " << be_global->stub_export_macro ()<< " "
+  *os << be_nl_2
+      << "class " << be_global->stub_export_macro () << " "
       << "TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory" << be_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl << be_nl
-      << "TAO_" << node->flat_name ()
+      << "public:" << be_idt_nl
+      << "/**" << be_nl
+      << " * @param permanent If true, this factory stays registered until the" << be_nl
+      << " * program terminates. If false, it is unregistered after its first" << be_nl
+      << " * invocation, allowing a different smart proxy per object." << be_nl
+      << " */" << be_nl
+      << "explicit TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory (bool permanent = true);"
-      << be_nl
-      << "// <permanent> signifies that the proxy factory will remain" << be_nl
-      << "// registered with the Proxy Factory Adapter until the program" << be_nl
-      << "// terminates. That is, it will be a one-shot factory for the" << be_nl
-      << "// interface.  If this value is set to false, then the factory will" << be_nl
-      << "// be unregistered after the first invocation providing the" << be_nl
-      << "// flexibility of having a different smart proxy per object" << be_nl
-      << "// instead of per interface." << be_nl << be_nl
+      << be_nl_2
       << "virtual ~TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory ();" << be_nl_2
       << "virtual " << node->local_name () << "_ptr create_proxy ("
       << node->local_name () << "_ptr proxy);" << be_uidt_nl
-      << "};\n\n";
+      << "};";
 
-  *os << "class " << be_global->stub_export_macro ()<< " "
+  *os << be_nl_2
+      << "class " << be_global->stub_export_macro () << " "
       << "TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter" << be_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl << be_nl
+      << "public:" << be_idt_nl
       << "friend class TAO_Singleton<TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl_2
       << "void register_proxy_factory (TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory *df, bool one_shot_factory = true);" << be_nl
       << "void unregister_proxy_factory ();" << be_nl_2
       << node->local_name () << "_ptr create_proxy ("
-      << node->local_name () << "_ptr proxy);" << be_nl
+      << node->local_name () << "_ptr proxy);" << be_uidt_nl
       << "protected:" << be_idt_nl
       << "TAO_" << node->flat_name ()
-      << "_Proxy_Factory_Adapter ();" << be_nl
+      << "_Proxy_Factory_Adapter () = default;" << be_nl
       << "~TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter ();" << be_nl
       << "TAO_" << node->flat_name ()
-      << "_Proxy_Factory_Adapter &operator= (" << be_idt << be_idt_nl
+      << "_Proxy_Factory_Adapter (TAO_" << node->flat_name ()
+      << "_Proxy_Factory_Adapter const &) = delete;" << be_nl
       << "TAO_" << node->flat_name ()
-      << "_Proxy_Factory_Adapter const &" << be_uidt_nl
-      << ");" << be_uidt_nl
+      << "_Proxy_Factory_Adapter (TAO_" << node->flat_name ()
+      << "_Proxy_Factory_Adapter &&) = delete;" << be_nl
       << "TAO_" << node->flat_name ()
-      << "_Default_Proxy_Factory *proxy_factory_;" << be_nl
-      << "bool one_shot_factory_;" << be_nl
-      << "bool disable_factory_;"<<be_nl
+      << "_Proxy_Factory_Adapter &operator= (TAO_" << node->flat_name ()
+      << "_Proxy_Factory_Adapter const &) = delete;" << be_nl
+      << "TAO_" << node->flat_name ()
+      << "_Proxy_Factory_Adapter &operator= (TAO_" << node->flat_name ()
+      << "_Proxy_Factory_Adapter &&) = delete;" << be_nl
+      << "TAO_" << node->flat_name ()
+      << "_Default_Proxy_Factory *proxy_factory_ {};" << be_nl
+      << "bool one_shot_factory_ {};" << be_nl
+      << "bool disable_factory_ {};" << be_nl
       << "TAO_SYNCH_RECURSIVE_MUTEX lock_;" << be_uidt_nl
       << "};";
 
@@ -90,7 +97,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "TAO_Singleton<TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl_2;
 
-  *os << "class " << be_global->stub_export_macro ()<< " "
+  *os << be_nl_2
+      << "class " << be_global->stub_export_macro () << " "
       << "TAO_"<< node->flat_name ()
       << "_Smart_Proxy_Base" << be_idt_nl
       << ": public virtual "
@@ -128,18 +136,16 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 
   *os << "{" << be_nl
       << "public:" << be_idt_nl
-      << "TAO_"<< node->flat_name () << "_Smart_Proxy_Base ();"
+      << "TAO_"<< node->flat_name () << "_Smart_Proxy_Base () = default;"
       << be_nl
-      // Just to keep Old g++ complier (version: 2.7.2.3) happy it's
-      // necesssary to declare and define the destructor explicitly.
-      << "~TAO_"<< node->flat_name () << "_Smart_Proxy_Base ();"
-      << be_nl
+      << "~TAO_" << node->flat_name ()
+      << "_Smart_Proxy_Base () override;" << be_nl
       // This method will delegate this method to the <base_proxy_>
       // member of the smart proxy and so the smart proxy's (nil)
       // stubobj will not be returned.
       << "TAO_Stub *_stubobj () const override;" << be_nl
       << "TAO_Stub *_stubobj () override;"
-      << be_uidt_nl;
+      << be_nl;
 
   // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
@@ -153,10 +159,11 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "protected:" << be_idt_nl
+  *os << be_uidt_nl
+      << "protected:" << be_idt_nl
       << "::" << node->full_name ()
       << "_ptr get_proxy ();" << be_nl
-      << "::" << node->full_name () << "_var proxy_;"
+      << "::" << node->full_name () << "_var proxy_ {};"
       << be_uidt_nl
       << "};\n\n";
 

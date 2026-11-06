@@ -85,7 +85,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 
       be_decl* scope = dynamic_cast<be_scope*> (intf->defined_in ())->decl ();
 
-      *os << " ";
+      *os << be_nl;
       *os << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -94,7 +94,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 
       *os << "TAO_" << intf->flat_name () <<"_Smart_Proxy_Base::";
       *os << this->ctx_->port_prefix ()
-          << node->local_name () << " ";
+          << node->local_name ();
 
       // STEP 4: generate the argument list with the appropriate mapping (same as
       // in the header file)
@@ -110,9 +110,8 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
                             -1);
         }
 
-      *os << "{" << be_idt << "\n";
-
-      os->indent ();
+      *os << be_nl
+          << "{" << be_idt_nl;
 
       // Simply make the call and leave everything to the layer
       // above, i.e. the client code.
@@ -126,8 +125,8 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       if (this->gen_invoke (ctx, node) == -1)
         return -1;
 
-      *os << be_uidt_nl
-          << "}\n\n";
+      *os << ";" << be_uidt_nl
+          << "}" << be_nl_2;
     }
   else
     {
@@ -142,8 +141,12 @@ int be_visitor_operation_smart_proxy_cs::gen_invoke (be_visitor_context &ctx,
 {
   TAO_OutStream * const os = this->ctx_->stream ();
 
-  *os << "->" << node->local_name () << " ("
-      << be_idt << be_idt << "\n";
+  *os << "->" << node->local_name () << " (";
+
+  if (node->argument_count () > 0)
+    {
+      *os << be_idt;
+    }
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
@@ -158,8 +161,12 @@ int be_visitor_operation_smart_proxy_cs::gen_invoke (be_visitor_context &ctx,
                         -1);
     }
 
-  *os << be_uidt_nl
-      << ");\n" << be_uidt;
+  *os << ")";
+
+  if (node->argument_count () > 0)
+    {
+      *os << be_uidt;
+    }
 
   return 0;
 }

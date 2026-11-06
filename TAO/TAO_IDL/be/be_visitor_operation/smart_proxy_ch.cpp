@@ -30,8 +30,6 @@ be_visitor_operation_smart_proxy_ch::visit_operation (be_operation *node)
     {
       TAO_OutStream * const os = this->ctx_->stream ();
       this->ctx_->node (node);
-      os->indent ();
-
       // STEP I: generate the return type.
       be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
