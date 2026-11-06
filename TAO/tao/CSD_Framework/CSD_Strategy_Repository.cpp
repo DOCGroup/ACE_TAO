@@ -40,7 +40,7 @@ int
 TAO_CSD_Strategy_Repository::add_strategy (std::string const &name,
                                            CSD_Framework::Strategy_ptr strat)
 {
-  Strategy_Node *node = nullptr;
+  Strategy_Node *node {};
   ACE_NEW_RETURN (node, Strategy_Node (name, strat), -1);
   if (this->strategy_list_head_ == nullptr)
     this->strategy_list_head_ = node;

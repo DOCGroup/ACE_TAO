@@ -13,7 +13,7 @@ TAO_Adapter*
 TAO_CSD_Object_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
   // Create the CSD object adapter.
-  TAO_CSD_Object_Adapter *object_adapter = nullptr;
+  TAO_CSD_Object_Adapter *object_adapter {};
   ACE_NEW_RETURN (object_adapter,
                   TAO_CSD_Object_Adapter (oc->server_factory ()->
                                           active_object_map_creation_parameters (),
@@ -21,7 +21,7 @@ TAO_CSD_Object_Adapter_Factory::create (TAO_ORB_Core *oc)
                   nullptr);
 
   // Create and register the CSD servant dispatcher.
-  TAO_CSD_Default_Servant_Dispatcher *csd_servant_dispatcher = nullptr;
+  TAO_CSD_Default_Servant_Dispatcher *csd_servant_dispatcher {};
   ACE_NEW_RETURN (csd_servant_dispatcher,
                   TAO_CSD_Default_Servant_Dispatcher,
                   nullptr);
