@@ -196,7 +196,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                       TAO_OutputCDR cdr;
                       cdr.write_ulong (static_cast<CORBA::ULong> (disc_val));
                       TAO_InputCDR in_cdr (cdr);
-                      TAO::Unknown_IDL_Type *unk = nullptr;
+                      TAO::Unknown_IDL_Type *unk {};
                       ACE_NEW_RETURN (unk,
                                       TAO::Unknown_IDL_Type (disc_tc.in (),
                                                              in_cdr),
@@ -403,7 +403,7 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
       return 0;
     }
 
-  CORBA::Any *any_ptr = nullptr;
+  CORBA::Any *any_ptr {};
   ACE_NEW_RETURN (any_ptr,
                   CORBA::Any (any),
                   -1);
@@ -575,7 +575,7 @@ TAO_Log_Constraint_Visitor::visit_component (
       TAO_ETCL_Literal_Constraint id;
       pop_queue_front (this->queue_, id);
 
-      CORBA::Any *any_ptr = nullptr;
+      CORBA::Any *any_ptr {};
       ACE_NEW_RETURN (any_ptr,
                       CORBA::Any,
                       -1);

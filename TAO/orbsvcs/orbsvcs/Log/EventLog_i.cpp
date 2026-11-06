@@ -19,7 +19,7 @@ TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
   TAO_CEC_EventChannel_Attributes const attr (this->poa_.in(),
                                               this->poa_.in());
 
-  TAO_CEC_EventChannel * event_channel = nullptr;
+  TAO_CEC_EventChannel * event_channel {};
   ACE_NEW_THROW_EX (event_channel,
                     TAO_CEC_EventChannel(attr),
                     CORBA::NO_MEMORY ());

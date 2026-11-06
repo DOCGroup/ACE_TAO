@@ -33,7 +33,7 @@ TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
 
   this->consumer_admin_->subscription_change (added, removed);
 
-  TAO_NotifyLogNotification *notifier = nullptr;
+  TAO_NotifyLogNotification *notifier {};
   ACE_NEW_THROW_EX (notifier,
                     TAO_NotifyLogNotification (this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());

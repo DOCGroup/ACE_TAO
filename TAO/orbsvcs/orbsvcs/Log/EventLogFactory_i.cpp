@@ -16,7 +16,7 @@ TAO_EventLogFactory_i::TAO_EventLogFactory_i ()
 
       TAO_CEC_EventChannel_Attributes const attr (defPOA.in (), defPOA.in ());
 
-      TAO_CEC_EventChannel *impl = nullptr;
+      TAO_CEC_EventChannel *impl {};
       ACE_NEW_THROW_EX (impl,
                         TAO_CEC_EventChannel (attr),
                         CORBA::NO_MEMORY ());
@@ -69,7 +69,7 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
   this->consumer_admin_ =
     this->event_channel_->for_consumers ();
 
-  TAO_EventLogNotification *notifier = nullptr;
+  TAO_EventLogNotification *notifier {};
   ACE_NEW_THROW_EX (notifier,
                     TAO_EventLogNotification(this->event_channel_.in ()),
                     CORBA::NO_MEMORY ());

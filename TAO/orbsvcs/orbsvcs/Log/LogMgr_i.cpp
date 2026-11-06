@@ -63,7 +63,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
   }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  PortableServer::ServantActivator *servant_activator = nullptr;
+  PortableServer::ServantActivator *servant_activator {};
 
   ACE_NEW_THROW_EX (servant_activator,
                     TAO_LogActivator (*this),
@@ -121,7 +121,7 @@ TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id)
 DsLogAdmin::Log_ptr
 TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id)
 {
-  PortableServer::ServantBase *servant = nullptr;
+  PortableServer::ServantBase *servant {};
 
   servant = create_log_servant (id);
 

@@ -306,7 +306,7 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id)
       throw DsLogAdmin::InvalidRecordId ();
     }
 
-  DsLogAdmin::NVList *nvlist = nullptr;
+  DsLogAdmin::NVList *nvlist {};
   ACE_NEW_THROW_EX (nvlist,
                     DsLogAdmin::NVList (rec.attr_list),
                     CORBA::NO_MEMORY ());
@@ -394,7 +394,7 @@ TAO_Hash_LogRecordStore::query_i (char const *constraint,
   if (iter != iter_end)         // There are more records to process.
     {
       // Create an iterator to pass out.
-      TAO_Hash_Iterator_i *iter_query = nullptr;
+      TAO_Hash_Iterator_i *iter_query {};
       ACE_NEW_THROW_EX (iter_query,
                         TAO_Hash_Iterator_i (this->iterator_poa_.in (),
                                              this->reactor_,
@@ -671,7 +671,7 @@ TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType acti
 DsLogAdmin::QoSList *
 TAO_Hash_LogRecordStore::get_log_qos () const
 {
-  DsLogAdmin::QoSList *ret_val = nullptr;
+  DsLogAdmin::QoSList *ret_val {};
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::QoSList (this->log_qos_),
                     CORBA::NO_MEMORY ());
@@ -712,7 +712,7 @@ TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size)
 DsLogAdmin::WeekMask*
 TAO_Hash_LogRecordStore::get_week_mask ()
 {
-  DsLogAdmin::WeekMask *ret_val = nullptr;
+  DsLogAdmin::WeekMask *ret_val {};
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::WeekMask (this->weekmask_),
                     CORBA::NO_MEMORY ());
