@@ -23,6 +23,7 @@
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
 #include <atomic>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -55,7 +56,7 @@ public:
   /// Constructor
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
-               const TAO_GIOP_Message_Version &version);
+               TAO_GIOP_Message_Version const &version);
 
   /**
    * @name Non virtual methods for the profile classes.
@@ -66,7 +67,7 @@ public:
 
   /// Return a pointer to this profile's version.  This object
   /// maintains ownership.
-  const TAO_GIOP_Message_Version &version () const;
+  TAO_GIOP_Message_Version const &version () const;
 
   /// Get a pointer to the TAO_ORB_Core.
   TAO_ORB_Core *orb_core () const;
@@ -82,15 +83,15 @@ public:
   void forward_to (TAO_MProfile *mprofiles);
 
   /// MProfile accessor
-  TAO_MProfile* forward_to ();
+  TAO_MProfile *forward_to ();
 
   /// Access the tagged components, notice that they they could be
   /// empty (or ignored) for non-GIOP protocols (and even for GIOP-1.0)
-  const TAO_Tagged_Components& tagged_components () const;
-  TAO_Tagged_Components& tagged_components ();
+  TAO_Tagged_Components const &tagged_components () const;
+  TAO_Tagged_Components &tagged_components ();
 
   /// Add the given tagged component to the profile.
-  void add_tagged_component (const IOP::TaggedComponent &component);
+  void add_tagged_component (IOP::TaggedComponent const &component);
 
   /**
    * Return the current addressing mode for this profile.
@@ -99,15 +100,15 @@ public:
   CORBA::Short addressing_mode () const;
 
   /// @deprecated Return a reference to the Object Key.
-  const TAO::ObjectKey &object_key () const;
+  TAO::ObjectKey const &object_key () const;
 
-  /// Obtain the object key, return 0 if the profile cannot be parsed.
+  /// Obtain the object key, return nullptr if the profile cannot be parsed.
   /// The memory is owned by the caller!
   TAO::ObjectKey *_key () const;
   //@}
 
   /**
-   * @name Template methods that needs to be implemented by the
+   * @name Template methods that need to be implemented by the
    * concrete classes. Some of the methods may be overridden only
    * under specila circumstances.
    */
@@ -116,7 +117,7 @@ public:
   virtual int encode (TAO_OutputCDR &stream) const;
 
   /// Initialize this object using the given CDR octet string.
-  virtual int decode (TAO_InputCDR& cdr);
+  virtual int decode (TAO_InputCDR &cdr);
 
   /**
    * This method is used to get the IOP::TaggedProfile. The profile
@@ -133,7 +134,7 @@ public:
   virtual void policies (CORBA::PolicyList *policy_list);
 
   /// Accessor for the client exposed policies of this profile.
-  virtual void  get_policies (CORBA::PolicyList &policy_list);
+  virtual void get_policies (CORBA::PolicyList &policy_list);
 
   /// Returns true if this profile can specify multicast endpoints.
   virtual int supports_multicast () const;
@@ -175,12 +176,12 @@ public:
 
   /// Initialize this object using the given input string.
   /// Supports URL style of object references
-  virtual void parse_string (const char *string);
+  virtual void parse_string (char const *string);
 
   /// Return a string representation for this profile.  Client must
   /// deallocate memory. Only one endpoint is included into the
   /// string.
-  virtual char* to_string () const = 0;
+  virtual char *to_string () const = 0;
 
   /**
    * Encodes this profile's endpoints into a tagged component.
@@ -203,7 +204,6 @@ public:
    * the head of the list.
    */
   virtual TAO_Endpoint *endpoint () = 0;
-
 
   /**
    * Return a pointer to this profile's endpoint.  If the most derived
@@ -257,13 +257,13 @@ public:
    *
    * @return @c true if this profile is equivalent to @c other_profile.
    */
-  CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
+  CORBA::Boolean is_equivalent (TAO_Profile const *other_profile);
 
   /**
    * Compare the object key for this profile with that of
    * another. This is weaker than is_equivalent
    */
-  CORBA::Boolean compare_key (const TAO_Profile *other) const;
+  CORBA::Boolean compare_key (TAO_Profile const *other) const;
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max) = 0;
@@ -293,14 +293,14 @@ protected:
   virtual int decode_endpoints () = 0;
 
   /// Protocol specific implementation of parse_string ()
-  virtual void parse_string_i (const char *string) = 0;
+  virtual void parse_string_i (char const *string) = 0;
   //@}
 
   /// To be used by inherited classes
   TAO_Profile (CORBA::ULong tag,
                TAO_ORB_Core *orb_core,
-               const TAO::ObjectKey &key,
-               const TAO_GIOP_Message_Version &version);
+               TAO::ObjectKey const &key,
+               TAO_GIOP_Message_Version const &version);
 
   /// Helper method that encodes the endpoints for RTCORBA as
   /// tagged_components.
@@ -311,7 +311,7 @@ protected:
    * TAO_Profile subclasses must implement this template method so
    * that they can apply their own definition of profile equivalence.
    */
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile * other) = 0;
+  virtual CORBA::Boolean do_is_equivalent (TAO_Profile const *other) = 0;
 
   /// Allow services to apply their own definition of "equivalence."
   /**
@@ -320,7 +320,7 @@ protected:
    * applicable to all TAO_Profile subclasses.
    */
   virtual TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
-                                            const TAO_Profile * other);
+      TAO_Profile const *other);
 
   CORBA::ULong hash_service_i (CORBA::ULong m);
 
@@ -351,18 +351,18 @@ protected:
 
   /// Flag indicating whether the lazy decoding of the client exposed
   /// policies has taken place.
-  CORBA::Boolean are_policies_parsed_;
+  CORBA::Boolean are_policies_parsed_ {};
 
   /// The current addressing mode.
   /// This may be changed if a remote server sends back an address mode
   /// exception.
-  CORBA::Short addressing_mode_;
+  CORBA::Short addressing_mode_ {};
 
   /// Our tagged profile
-  IOP::TaggedProfile *tagged_profile_;
+  std::unique_ptr<IOP::TaggedProfile> tagged_profile_;
 
   /// Object_key associated with this profile.
-  TAO::Refcounted_ObjectKey *ref_object_key_;
+  TAO::Refcounted_ObjectKey *ref_object_key_ {};
 
 private:
   /// IOP protocol tag.
@@ -373,17 +373,17 @@ private:
 
   /// The TAO_MProfile which contains the profiles for the forwarded
   /// object.
-  TAO_MProfile* forward_to_;
+  TAO_MProfile *forward_to_ {};
 
   /// Number of outstanding references to this object.
-  std::atomic<uint32_t> refcount_;
+  std::atomic<uint32_t> refcount_ {1};
 
   /// A lock that protects creation of the tagged profile
   TAO_SYNCH_MUTEX tagged_profile_lock_;
 
-  /// Having (tagged_profile_ != 0) doesn't mean yet that
+  /// Having a non-null tagged_profile_ doesn't mean yet that
   /// tagged_profile_ building is finished.
-  bool tagged_profile_created_;
+  bool tagged_profile_created_ {};
 };
 
 // A helper class to handle the various kinds of octet sequences used
@@ -391,10 +391,10 @@ private:
 using TAO_opaque = TAO::unbounded_value_sequence<CORBA::Octet>;
 
 TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR&, const TAO_opaque&);
+operator<< (TAO_OutputCDR &, TAO_opaque const &);
 
 TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR&, TAO_opaque&);
+operator>> (TAO_InputCDR &, TAO_opaque &);
 
 /**
  * @class TAO_Unknown_Profile
@@ -417,10 +417,10 @@ public:
                        TAO_ORB_Core *orb_core);
 
   // = The TAO_Profile methods look above
-  void parse_string (const char *string) override;
+  void parse_string (char const *string) override;
   char object_key_delimiter () const override;
-  char* to_string () const override;
-  int decode (TAO_InputCDR& cdr) override;
+  char *to_string () const override;
+  int decode (TAO_InputCDR &cdr) override;
   int encode (TAO_OutputCDR &stream) const override;
   int encode_endpoints () override;
 
@@ -433,15 +433,15 @@ public:
   int decode_endpoints () override;
 
 protected:
-  CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile) override;
+  CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
   TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
-      const TAO_Profile* other_profile) override;
+      TAO_Profile const *other_profile) override;
 
 private:
   void create_profile_body (TAO_OutputCDR &encap) const override;
 
-  void parse_string_i (const char *string) override;
-private:
+  void parse_string_i (char const *string) override;
+
   TAO_opaque body_;
 };
 

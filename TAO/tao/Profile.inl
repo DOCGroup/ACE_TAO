@@ -7,7 +7,7 @@ TAO_Profile::tag () const
   return this->tag_;
 }
 
-ACE_INLINE const TAO_GIOP_Message_Version &
+ACE_INLINE TAO_GIOP_Message_Version const &
 TAO_Profile::version () const
 {
   return this->version_;
@@ -37,13 +37,13 @@ TAO_Profile::forward_to_i ()
   return this->forward_to_;
 }
 
-ACE_INLINE const TAO_Tagged_Components&
+ACE_INLINE TAO_Tagged_Components const &
 TAO_Profile::tagged_components () const
 {
   return this->tagged_components_;
 }
 
-ACE_INLINE TAO_Tagged_Components&
+ACE_INLINE TAO_Tagged_Components &
 TAO_Profile::tagged_components ()
 {
   return this->tagged_components_;
@@ -55,7 +55,7 @@ TAO_Profile::addressing_mode () const
   return this->addressing_mode_;
 }
 
-ACE_INLINE const TAO::ObjectKey &
+ACE_INLINE TAO::ObjectKey const &
 TAO_Profile::object_key () const
 {
   return this->ref_object_key_->object_key ();
@@ -70,7 +70,7 @@ TAO_Profile::_incr_refcnt ()
 ACE_INLINE unsigned long
 TAO_Profile::_decr_refcnt ()
 {
-  unsigned long count = --this->refcount_;
+  unsigned long const count = --this->refcount_;
   if (count == 0)
     {
       // refcount is 0, so delete us!
@@ -79,7 +79,5 @@ TAO_Profile::_decr_refcnt ()
     }
   return count;
 }
-
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

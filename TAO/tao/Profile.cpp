@@ -23,19 +23,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           TAO_ORB_Core *orb_core,
-                          const TAO::ObjectKey &obj_key,
-                          const TAO_GIOP_Message_Version &version)
+                          TAO::ObjectKey const &obj_key,
+                          TAO_GIOP_Message_Version const &version)
   : version_ (version)
-    , are_policies_parsed_ (false)
-    , addressing_mode_ (0)
-    , tagged_profile_ (nullptr)
-    , ref_object_key_ (nullptr)
-    , tag_ (tag)
-    , orb_core_ (orb_core)
-    , forward_to_ (nullptr)
-    , refcount_ (1)
-    , tagged_profile_lock_ ()
-    , tagged_profile_created_ (false)
+  , tag_ (tag)
+  , orb_core_ (orb_core)
 {
   (void) this->orb_core_->object_key_table ().bind (obj_key,
                                                     this->ref_object_key_);
@@ -43,33 +35,20 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
 
 TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           TAO_ORB_Core *orb_core,
-                          const TAO_GIOP_Message_Version &version)
+                          TAO_GIOP_Message_Version const &version)
   : version_ (version)
-    , are_policies_parsed_ (false)
-    , addressing_mode_ (0)
-    , tagged_profile_ (nullptr)
-    , ref_object_key_ (nullptr)
-    , tag_ (tag)
-    , orb_core_ (orb_core)
-    , forward_to_ (nullptr)
-    , refcount_ (1)
-    , tagged_profile_lock_ ()
-    , tagged_profile_created_ (false)
+  , tag_ (tag)
+  , orb_core_ (orb_core)
 {
 }
 
 TAO_Profile::~TAO_Profile ()
 {
-  if (this->tagged_profile_)
-    {
-      delete this->tagged_profile_;
-    }
-
   this->orb_core_->object_key_table ().unbind (this->ref_object_key_);
 }
 
 void
-TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component)
+TAO_Profile::add_tagged_component (IOP::TaggedComponent const &component)
 {
   // Sanity checks.
   this->verify_orb_configuration ();
@@ -85,19 +64,18 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component)
   this->tagged_components_.set_component (component);
 }
 
-
 TAO_Endpoint *
 TAO_Profile::base_endpoint ()
 {
-  return this->endpoint();
+  return this->endpoint ();
 }
 
 TAO::ObjectKey *
 TAO_Profile::_key () const
 {
-  TAO::ObjectKey *key = nullptr;
+  TAO::ObjectKey *key {};
 
-  if (this->ref_object_key_)
+  if (this->ref_object_key_ != nullptr)
     {
       ACE_NEW_RETURN (key,
                       TAO::ObjectKey (this->ref_object_key_->object_key ()),
@@ -105,7 +83,6 @@ TAO_Profile::_key () const
     }
   return key;
 }
-
 
 int
 TAO_Profile::encode (TAO_OutputCDR &stream) const
@@ -141,7 +118,7 @@ TAO_Profile::encode (TAO_OutputCDR &stream) const
 }
 
 int
-TAO_Profile::decode (TAO_InputCDR& cdr)
+TAO_Profile::decode (TAO_InputCDR &cdr)
 {
 #if !defined (ACE_NLOGGING)
   size_t const encap_len = cdr.length ();
@@ -236,19 +213,19 @@ IOP::TaggedProfile *
 TAO_Profile::create_tagged_profile ()
 {
   if (this->tagged_profile_created_)
-    return this->tagged_profile_;
+    return this->tagged_profile_.get ();
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->tagged_profile_lock_,
-                    this->tagged_profile_);
+                    this->tagged_profile_.get ());
 
   // .. DCL
   if (!this->tagged_profile_created_)
     {
-      ACE_NEW_RETURN (this->tagged_profile_,
-                      IOP::TaggedProfile,
-                      nullptr);
+      IOP::TaggedProfile *tagged_profile = nullptr;
+      ACE_NEW_RETURN (tagged_profile, IOP::TaggedProfile, nullptr);
+      this->tagged_profile_.reset (tagged_profile);
 
       // As we have not created we will now create the TaggedProfile
       this->tagged_profile_->tag = this->tag_;
@@ -278,7 +255,7 @@ TAO_Profile::create_tagged_profile ()
       CORBA::Octet *buffer =
         this->tagged_profile_->profile_data.get_buffer ();
 
-      for (const ACE_Message_Block *i = encap.begin ();
+      for (ACE_Message_Block const *i = encap.begin ();
            i != encap.end ();
            i = i->next ())
         {
@@ -290,7 +267,7 @@ TAO_Profile::create_tagged_profile ()
       this->tagged_profile_created_ = true;
     }
 
-  return this->tagged_profile_;
+  return this->tagged_profile_.get ();
 }
 
 void
@@ -303,7 +280,7 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
   tagged_component.component_data.length (length);
   CORBA::Octet *buf = tagged_component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
+  for (ACE_Message_Block const *iterator = out_cdr.begin ();
        iterator != nullptr;
        iterator = iterator->cont ())
     {
@@ -317,7 +294,6 @@ TAO_Profile::set_tagged_components (TAO_OutputCDR &out_cdr)
   // TaggedComponents.
   tagged_components_.set_component (tagged_component);
 }
-
 
 void
 TAO_Profile::policies (CORBA::PolicyList *policy_list)
@@ -336,8 +312,8 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   Messaging::PolicyValueSeq policy_value_seq;
 
-  size_t length = 0;
-  CORBA::Octet *buf = nullptr;
+  size_t length {};
+  CORBA::Octet *buf {};
 
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
@@ -345,7 +321,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   policy_value_seq.length (plen);
 
-  for (CORBA::ULong i = 0; i < plen; ++i)
+  for (CORBA::ULong i {}; i < plen; ++i)
     {
       TAO_OutputCDR out_CDR;
       policy_value_seq[i].ptype = (*policy_list)[i]->policy_type ();
@@ -363,7 +339,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
       // Copy the CDR buffer data into the octet sequence buffer.
 
-      for (const ACE_Message_Block *iterator = out_CDR.begin ();
+      for (ACE_Message_Block const *iterator = out_CDR.begin ();
            iterator != nullptr;
            iterator = iterator->cont ())
         {
@@ -390,7 +366,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   tagged_component.component_data.length (static_cast <CORBA::ULong>(length));
   buf = tagged_component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
+  for (ACE_Message_Block const *iterator = out_cdr.begin ();
        iterator != nullptr;
        iterator = iterator->cont ())
     {
@@ -407,7 +383,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 }
 
 void
-TAO_Profile::get_policies (CORBA::PolicyList& pl)
+TAO_Profile::get_policies (CORBA::PolicyList &pl)
 {
 #if !defined(CORBA_E_MICRO)
   // None has already parsed the policies.
@@ -420,14 +396,14 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
       // if it exists.
       if (this->tagged_components_.get_component (tagged_component))
         {
-          const CORBA::Octet *buf =
+          CORBA::Octet const *buf =
             tagged_component.component_data.get_buffer ();
 
-          TAO_InputCDR in_cdr (reinterpret_cast <const char *> (buf),
+          TAO_InputCDR in_cdr (reinterpret_cast <char const *> (buf),
                                tagged_component.component_data.length ());
 
           // Extract the Byte Order
-          CORBA::Boolean byte_order;
+          CORBA::Boolean byte_order {};
 
           if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
             {
@@ -462,7 +438,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
                       buf = policy_value_seq[i].pvalue.get_buffer ();
 
                       TAO_InputCDR in_cdr_policy (
-                        reinterpret_cast <const char*>  (buf),
+                        reinterpret_cast <char const *> (buf),
                         policy_value_seq[i].pvalue.length ());
 
                       if (!(in_cdr_policy >> ACE_InputCDR::to_boolean (byte_order)))
@@ -492,7 +468,7 @@ TAO_Profile::get_policies (CORBA::PolicyList& pl)
                                     ACE_TEXT ("policies.\n")));
                     }
                 }
-              catch (const ::CORBA::Exception& ex)
+              catch (::CORBA::Exception const &ex)
                 {
                   // This case should occur when in the IOR are
                   // embedded policies that TAO doesn't support, so as
@@ -611,9 +587,9 @@ TAO_Profile::addressing_mode (CORBA::Short addr)
 }
 
 void
-TAO_Profile::parse_string (const char *ior)
+TAO_Profile::parse_string (char const *ior)
 {
-  if (!ior || !*ior)
+  if (ior == nullptr || *ior == '\0')
     {
       throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
@@ -645,7 +621,7 @@ TAO_Profile::parse_string (const char *ior)
     }
 
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
-      this->version_.minor >  TAO_DEF_GIOP_MINOR)
+      this->version_.minor > TAO_DEF_GIOP_MINOR)
     {
       throw ::CORBA::INV_OBJREF (
                    CORBA::SystemException::_tao_minor_code (
@@ -658,10 +634,10 @@ TAO_Profile::parse_string (const char *ior)
 }
 
 CORBA::Boolean
-TAO_Profile::is_equivalent (const TAO_Profile *other)
+TAO_Profile::is_equivalent (TAO_Profile const *other)
 {
-  CORBA::Boolean result = false;
-  if (other)
+  CORBA::Boolean result {};
+  if (other != nullptr)
     {
       TAO_Service_Callbacks::Profile_Equivalence callback
         = this->is_equivalent_hook (other);
@@ -684,28 +660,28 @@ TAO_Profile::is_equivalent (const TAO_Profile *other)
 }
 
 CORBA::Boolean
-TAO_Profile::compare_key (const TAO_Profile *other) const
+TAO_Profile::compare_key (TAO_Profile const *other) const
 {
   return (this->ref_object_key_ == other->ref_object_key_) ||
     ((this->ref_object_key_ != nullptr &&
       other->ref_object_key_ != nullptr &&
-      this->ref_object_key_->object_key() ==
-      other->ref_object_key_->object_key()));
+      this->ref_object_key_->object_key () ==
+      other->ref_object_key_->object_key ()));
 }
 
 TAO_Endpoint *
 TAO_Profile::first_filtered_endpoint ()
 {
-  TAO_Endpoint *ep = this->endpoint();
-  return ep == nullptr ? nullptr : ep->next_filtered(this->orb_core_,nullptr);
+  TAO_Endpoint *ep = this->endpoint ();
+  return ep == nullptr ? nullptr : ep->next_filtered (this->orb_core_, nullptr);
 }
 
 TAO_Endpoint *
 TAO_Profile::next_filtered_endpoint (TAO_Endpoint *source)
 {
   if (source == nullptr)
-    return this->first_filtered_endpoint();
-  return source->next_filtered(this->orb_core_,this->endpoint());
+    return this->first_filtered_endpoint ();
+  return source->next_filtered (this->orb_core_, this->endpoint ());
 }
 
 void
@@ -715,7 +691,7 @@ TAO_Profile::add_generic_endpoint (TAO_Endpoint *)
 }
 
 TAO_Service_Callbacks::Profile_Equivalence
-TAO_Profile::is_equivalent_hook (const TAO_Profile *other)
+TAO_Profile::is_equivalent_hook (TAO_Profile const *other)
 {
   // Allow services to apply their own definition of "equivalence."
   return this->orb_core_->is_profile_equivalent (this, other);
@@ -728,7 +704,7 @@ TAO_Profile::hash_service_i (CORBA::ULong m)
 }
 
 int
-TAO_Profile::encode_alternate_endpoints()
+TAO_Profile::encode_alternate_endpoints ()
 {
   // this should be a pure virtual, but there are many
   // existing specializations that would need to be
@@ -756,7 +732,7 @@ TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
 {
 }
 
-TAO_Endpoint*
+TAO_Endpoint *
 TAO_Unknown_Profile::endpoint ()
 {
   return nullptr;
@@ -769,13 +745,13 @@ TAO_Unknown_Profile::endpoint_count () const
 }
 
 void
-TAO_Unknown_Profile::parse_string (const char *)
+TAO_Unknown_Profile::parse_string (char const *)
 {
   // @@ THROW something????
 }
 
 void
-TAO_Unknown_Profile::parse_string_i (const char *)
+TAO_Unknown_Profile::parse_string_i (char const *)
 {
   // @@ THROW something????
 }
@@ -794,7 +770,7 @@ TAO_Unknown_Profile::to_string () const
 }
 
 int
-TAO_Unknown_Profile::decode (TAO_InputCDR& cdr)
+TAO_Unknown_Profile::decode (TAO_InputCDR &cdr)
 {
   if (!(cdr >> this->body_))
     {
@@ -836,16 +812,16 @@ TAO_Unknown_Profile::_key () const
 }
 
 CORBA::Boolean
-TAO_Unknown_Profile::do_is_equivalent (const TAO_Profile* other_profile)
+TAO_Unknown_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_Unknown_Profile * op =
-    dynamic_cast <const TAO_Unknown_Profile *> (other_profile);
+  TAO_Unknown_Profile const *op =
+    dynamic_cast <TAO_Unknown_Profile const *> (other_profile);
 
-  return (CORBA::Boolean) (op == nullptr ? 0 : this->body_ == op->body_);
+  return op != nullptr && this->body_ == op->body_;
 }
 
 TAO_Service_Callbacks::Profile_Equivalence
-TAO_Unknown_Profile::is_equivalent_hook (const TAO_Profile * /* other */)
+TAO_Unknown_Profile::is_equivalent_hook (TAO_Profile const * /* other */)
 {
   // Override the default implementation since we don't need the
   // additional checks it performs.
@@ -856,7 +832,7 @@ TAO_Unknown_Profile::is_equivalent_hook (const TAO_Profile * /* other */)
 CORBA::ULong
 TAO_Unknown_Profile::hash (CORBA::ULong max)
 {
-  return (ACE::hash_pjw (reinterpret_cast <const char*>
+  return (ACE::hash_pjw (reinterpret_cast <char const *>
                                           (this->body_.get_buffer ()),
                          this->body_.length ()) % max);
 }
@@ -868,13 +844,12 @@ TAO_Unknown_Profile::create_profile_body (TAO_OutputCDR &) const
   return;
 }
 
-
 // *************************************************************
 // Operators for TAO_opaque encoding and decoding
 // *************************************************************
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
+operator<< (TAO_OutputCDR &cdr, TAO_opaque const &x)
 {
   CORBA::ULong const length = x.length ();
   cdr.write_ulong (length);
@@ -894,9 +869,9 @@ operator<< (TAO_OutputCDR& cdr, const TAO_opaque& x)
 }
 
 CORBA::Boolean
-operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
+operator>> (TAO_InputCDR &cdr, TAO_opaque &x)
 {
-  CORBA::ULong length;
+  CORBA::ULong length {};
   cdr.read_ulong (length);
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
