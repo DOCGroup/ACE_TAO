@@ -104,7 +104,7 @@ int SetExample::runUnboundedSet ()
   // Iterate and destroy the elements in the set.
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Deleting the elements\n")));
   ACE_Unbounded_Set_Iterator<DataElement*> iter (uset);
-  for (iter = uset.begin (); iter != uset.end (); ++iter)
+  for (; iter != uset.end (); ++iter)
     {
       std::unique_ptr<DataElement> element_owner {*iter};
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d:"), element_owner->getData ()));

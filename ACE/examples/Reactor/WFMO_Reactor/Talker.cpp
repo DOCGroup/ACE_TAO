@@ -423,7 +423,7 @@ Peer_Handler::handle_output (ACE_HANDLE)
 {
   ACE_Message_Block *raw_message_block {};
 
-  ACE_Time_Value const tv (ACE_Time_Value::zero);
+  ACE_Time_Value tv (ACE_Time_Value::zero);
 
   // Forward the message to the remote peer receiver.
   if (this->getq (raw_message_block, &tv) != -1)
@@ -559,7 +559,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Let the proactor know that it will be used with Reactor
   // Create specific proactor
-  ACE_WIN32_Proactor win32_proactor (nullptr, 1);
+  ACE_WIN32_Proactor win32_proactor (1, true);
   // Get the interface proactor
   ACE_Proactor proactor (&win32_proactor);
   // Put it as the instance.

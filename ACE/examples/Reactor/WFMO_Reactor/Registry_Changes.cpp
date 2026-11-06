@@ -121,7 +121,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Reactor reactor;
   Event_Handler handler (reactor);
 
-  int const thread_result = ACE_OS::thr_create (worker, &handler, nullptr, 0);
+  int const thread_result = ACE_OS::thr_create (worker, &handler, 0, 0);
   ACE_TEST_ASSERT (thread_result == 0);
 
   for (int result = 0; result != -1; result = reactor.handle_events ())

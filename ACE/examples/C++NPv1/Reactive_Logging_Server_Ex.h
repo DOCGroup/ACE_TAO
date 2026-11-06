@@ -52,8 +52,12 @@ protected:
 
   int wait_for_multiple_events () override {
     active_read_handles_ = master_handle_set_;
+#if defined (ACE_WIN32)
+    int const width = 0;
+#else
     int const width = ACE_Utils::truncate_cast<int> (
       static_cast<intptr_t> (active_read_handles_.max_set ())) + 1;
+#endif
 
     return ACE::select (width, active_read_handles_);
   }

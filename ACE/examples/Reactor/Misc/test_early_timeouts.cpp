@@ -68,9 +68,14 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       starting_time_of_day = ACE_OS::gettimeofday ();
 
       // Wait for timeout
+#if defined (ACE_WIN32)
+      int const width = 0;
+#else
+      int const width = ACE_Utils::truncate_cast<int> (
+        static_cast<intptr_t> (dummy_pipe.read_handle ()));
+#endif
       result = ACE_OS::select (
-        ACE_Utils::truncate_cast<int> (
-          static_cast<intptr_t> (dummy_pipe.read_handle ())),
+        width,
         dummy_handle_set,
         nullptr,
         nullptr,

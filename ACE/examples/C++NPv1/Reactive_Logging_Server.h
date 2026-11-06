@@ -41,8 +41,12 @@ protected:
 
   int wait_for_multiple_events () override {
     active_handles_ = master_handle_set_;
+#if defined (ACE_WIN32)
+    int const width = 0;
+#else
     int const width = ACE_Utils::truncate_cast<int> (
       static_cast<intptr_t> (active_handles_.max_set ())) + 1;
+#endif
     if (select (width,
                 active_handles_.fdset (),
                 nullptr,  // no write_fds
@@ -51,8 +55,10 @@ protected:
       {
         return -1;
       }
+#if !defined (ACE_WIN32)
     active_handles_.sync (static_cast<ACE_HANDLE> (
       static_cast<intptr_t> (active_handles_.max_set ()) + 1));
+#endif
     return 0;
   }
 

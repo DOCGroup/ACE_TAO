@@ -92,7 +92,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
   int result = 0;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Time_Value const time (1);
+  ACE_Time_Value time (1);
   //FUZZ: enable check_for_lack_ACE_OS
 
   while (true)

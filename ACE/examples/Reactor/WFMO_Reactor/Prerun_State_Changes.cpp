@@ -33,9 +33,8 @@ public:
   int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask) override
     {
       ACE_UNUSED_ARG(mask);
-      ACE_DEBUG ((LM_DEBUG,
-                  "event handler %d closed.\n",
-                  static_cast<size_t> (handle)));
+      ACE_UNUSED_ARG (handle);
+      ACE_DEBUG ((LM_DEBUG, "event handler closed.\n"));
       delete this;
       return 0;
     }

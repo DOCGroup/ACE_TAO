@@ -35,7 +35,7 @@ ACE_INLINE const char *
 HTTP_Headers::header_token (int name) const
 {
   const HTTP_Hdr_Node **hn = this->header_nodes_->find (name);
-  return (hn && *hn) ? **hn : nullptr;
+  return hn && *hn ? static_cast<char const *> (**hn) : nullptr;
 }
 
 ACE_INLINE const char *
