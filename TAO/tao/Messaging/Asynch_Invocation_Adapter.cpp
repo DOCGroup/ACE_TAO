@@ -64,7 +64,7 @@ namespace TAO
         // New reply dispatcher on the heap or allocator, because
         // we will go out of scope and hand over the reply dispatcher
         // to the ORB.
-        TAO_Asynch_Reply_Dispatcher *rd = nullptr;
+        TAO_Asynch_Reply_Dispatcher *rd {};
 
         // Get the allocator we could use.
         ACE_Allocator* ami_allocator =
@@ -138,7 +138,7 @@ namespace TAO
       }
     else
       {
-        ACE_Time_Value *max_wait_time = nullptr;
+        ACE_Time_Value *max_wait_time {};
         return Invocation_Adapter::invoke_remote_i (stub,
                                                     details,
                                                     effective_target,

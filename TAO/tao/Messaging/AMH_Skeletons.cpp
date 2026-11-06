@@ -48,7 +48,7 @@ TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
                                   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = nullptr;
+  static ::CORBA::TypeCode_ptr const * const exceptions {};
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -101,7 +101,7 @@ void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_reque
                                                 TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = nullptr;
+  static ::CORBA::TypeCode_ptr const * const exceptions {};
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -182,7 +182,7 @@ TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
                                         TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = nullptr;
+  static ::CORBA::TypeCode_ptr const * const exceptions {};
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -233,7 +233,7 @@ TAO_AMH_Skeletons::_repository_id_amh_skel (TAO_ServerRequest & server_request,
                                             TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const * const exceptions = nullptr;
+  static ::CORBA::TypeCode_ptr const * const exceptions {};
   static ::CORBA::ULong const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
 
