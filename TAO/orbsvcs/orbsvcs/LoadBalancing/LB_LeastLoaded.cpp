@@ -60,7 +60,7 @@ TAO_LB_LeastLoaded::name ()
 CosLoadBalancing::Properties *
 TAO_LB_LeastLoaded::get_properties ()
 {
-  CosLoadBalancing::Properties * props = nullptr;
+  CosLoadBalancing::Properties * props {};
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties (this->properties_),
                     CORBA::NO_MEMORY (
@@ -104,7 +104,7 @@ TAO_LB_LeastLoaded::push_loads (
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = nullptr;
+      TAO_LB_LoadMap::ENTRY * entry {};
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;
@@ -489,7 +489,7 @@ TAO_LB_LeastLoaded::init (PortableGroup::Properties const & props)
   CORBA::Float dampening = TAO_LB::LL_DEFAULT_DAMPENING;
   CORBA::Float per_balance_load = TAO_LB::LL_DEFAULT_PER_BALANCE_LOAD;
 
-  PortableGroup::Property const * ct = nullptr;  // critical threshold property
+  PortableGroup::Property const * ct {};  // critical threshold property
 
   CORBA::ULong const len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)

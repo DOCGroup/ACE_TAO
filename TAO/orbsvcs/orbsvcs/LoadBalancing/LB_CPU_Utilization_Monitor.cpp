@@ -18,9 +18,9 @@ double calc_cpu_loading ()
   static unsigned long prev_idle = 0;
   static double prev_total = 0.0;
 
-  FILE *file_ptr = nullptr;
-  char *item = nullptr;
-  char *arg = nullptr;
+  FILE *file_ptr {};
+  char *item {};
+  char *arg {};
   unsigned long delta_idle = 0;
   unsigned long user = 0;
   unsigned long nice = 0;
@@ -128,7 +128,7 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
   double load_double = calc_cpu_loading ();
   load = load_double;
 
-  CosLoadBalancing::LoadList * tmp = nullptr;
+  CosLoadBalancing::LoadList * tmp {};
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (

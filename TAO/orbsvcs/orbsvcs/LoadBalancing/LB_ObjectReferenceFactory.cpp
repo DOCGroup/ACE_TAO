@@ -41,7 +41,7 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
 ::CORBA::ValueBase *
 TAO_LB_ObjectReferenceFactory::_copy_value ()
 {
-  ::CORBA::ValueBase * ret_val = nullptr;
+  ::CORBA::ValueBase * ret_val {};
   // Not implemented
   return ret_val;
 }
