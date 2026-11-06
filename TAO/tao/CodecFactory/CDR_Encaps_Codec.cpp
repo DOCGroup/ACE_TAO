@@ -64,7 +64,7 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       && (cdr << data))
     {
-      CORBA::OctetSeq * octet_seq = nullptr;
+      CORBA::OctetSeq * octet_seq {};
 
       ACE_NEW_THROW_EX (octet_seq,
                         CORBA::OctetSeq,
@@ -131,12 +131,12 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
       this->wchar_translator_->assign (&cdr);
     }
 
-  CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
-      CORBA::Any * any = nullptr;
+      CORBA::Any * any {};
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
@@ -205,7 +205,7 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
 
       // TAO extension: replace the contents of the octet sequence with
       // the CDR stream.
-      CORBA::OctetSeq * octet_seq = nullptr;
+      CORBA::OctetSeq * octet_seq {};
 
       ACE_NEW_THROW_EX (octet_seq,
                         CORBA::OctetSeq,
@@ -226,7 +226,7 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
            i != nullptr;
            i = i->cont ())
         {
-          std::size_t len = i->length ();
+          std::size_t const len = i->length ();
           std::memcpy (buf,
                        i->rd_ptr (),
                        len);
@@ -290,13 +290,13 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
       this->wchar_translator_->assign (&cdr);
     }
 
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
 
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
-      CORBA::Any * any = nullptr;
+      CORBA::Any * any {};
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
@@ -310,7 +310,7 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
       CORBA::Any_var safe_any = any;
 
       // Stick it into the Any.
-      TAO::Unknown_IDL_Type *unk = nullptr;
+      TAO::Unknown_IDL_Type *unk {};
       ACE_NEW_RETURN (unk,
                       TAO::Unknown_IDL_Type (tc, cdr),
                       nullptr);
