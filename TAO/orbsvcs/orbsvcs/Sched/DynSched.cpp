@@ -335,7 +335,7 @@ int ACE_DynScheduler::priority (
   RtecScheduler::Preemption_Priority_t &preemption_prio)
 {
   // look up the RT_Info that has the given handle
-  RT_Info *rt_info = nullptr;
+  RT_Info *rt_info = {};
   if (lookup_rt_info (handle, rt_info) == SUCCEEDED)
   {
     // copy the priority values from the RT_Info
@@ -386,7 +386,7 @@ int ACE_DynScheduler::number_of_dependencies(RT_Info& rt_info)
 int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
                                      Dependency_Info& d)
 {
-  RT_Info *temp_info = nullptr; // temporary pointer to the caller's RT_Info
+  RT_Info *temp_info = {}; // temporary pointer to the caller's RT_Info
 
   switch (d.dependency_type)
   {
@@ -571,7 +571,7 @@ ACE_DynScheduler::reset ()
     {
       // free all the dispatch entries in the list, then the list itself
       ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
-      Dispatch_Entry **entry = nullptr;
+      Dispatch_Entry **entry = {};
       for (iter.first (); ! iter.done (); iter.advance (), entry = 0)
       {
         if ((iter.next (entry) != 0) && (entry) && (*entry))
@@ -587,7 +587,7 @@ ACE_DynScheduler::reset ()
     {
       // free all the config info entries in the list, then the list itself
       ACE_Unbounded_Set_Iterator <Config_Info *> iter (*config_info_entries_);
-      Config_Info **entry = nullptr;
+      Config_Info **entry = {};
       for (iter.first (); ! iter.done (); iter.advance (), entry = 0)
       {
         if ((iter.next (entry) != 0) && (entry) && (*entry))
@@ -604,7 +604,7 @@ ACE_DynScheduler::reset ()
     {
       // free all the dispatch entries in the list, then the list itself
       ACE_Unbounded_Set_Iterator <Dispatch_Entry *> expanded_iter (*expanded_dispatches_);
-      Dispatch_Entry **expanded_entry = nullptr;
+      Dispatch_Entry **expanded_entry = {};
       for (expanded_iter.first (); ! expanded_iter.done ();
            expanded_iter.advance (), expanded_entry = 0)
       {
@@ -637,7 +637,7 @@ ACE_DynScheduler::reset ()
     {
       // iterate over and delete the set of timeline entries
       ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> t_iter (*timeline_);
-      TimeLine_Entry_Link *t_entry = nullptr;
+      TimeLine_Entry_Link *t_entry = {};
       for (t_iter.first (); ! t_iter.done (); t_iter.advance (), t_entry = 0)
       {
         if ((t_iter.next (t_entry) != 0) && (t_entry))
@@ -662,7 +662,7 @@ ACE_DynScheduler::schedule (
   RtecScheduler::Anomaly_Severity severity = RtecScheduler::ANOMALY_NONE;
   RtecScheduler::Anomaly_Severity temp_severity = RtecScheduler::ANOMALY_NONE;
   status_t temp_status = SUCCEEDED;
-  Scheduling_Anomaly *anomaly = nullptr;
+  Scheduling_Anomaly *anomaly = {};
   ACE_CString unresolved_locals (""), unresolved_remotes ("");
 
   if (up_to_date_)
@@ -1111,7 +1111,7 @@ ACE_DynScheduler::propagate_dispatches (
   u_long i;
   frame_size_ = 1;
   status_t status = SUCCEEDED;
-  Scheduling_Anomaly * anomaly = nullptr;
+  Scheduling_Anomaly * anomaly = {};
 
   // iterate through the ordered_task_entries_ array in order
   // from highest DFS finishing time to lowest, so that every
@@ -1398,7 +1398,7 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
     {
       // obtain a pointer to the corresponding Task_Entry for each dependency
 
-      RT_Info* dependency_info = nullptr;
+      RT_Info* dependency_info = {};
       lookup_rt_info(entry.rt_info ()->dependencies[i].rt_info, dependency_info);
 
       if (! dependency_info)
@@ -2218,8 +2218,8 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
   Time current_accumulated_execution = 0;
   Time last_completion = 0;
   Time current_completion = 0;
-  TimeLine_Entry *current_entry = nullptr;
-  TimeLine_Entry *current_last_entry = nullptr;
+  TimeLine_Entry *current_entry = {};
+  TimeLine_Entry *current_last_entry = {};
 
   while (entries_remain)
   {
@@ -2304,7 +2304,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 {
   status_t status = SUCCEEDED;
-  FILE *file = nullptr;
+  FILE *file = {};
 
   // bail out if we're not up to date or there is no timeline
   if ((! up_to_date_) || (! timeline_))

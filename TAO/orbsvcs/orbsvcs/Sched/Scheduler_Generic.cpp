@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Structure for storing the RT_Info information for each task, per mode.
 struct Mode_Entry
 {
-  RtecScheduler::RT_Info *rt_info_ = nullptr;
+  RtecScheduler::RT_Info *rt_info_ = {};
   u_long start_time_ {}; // microseconds
   u_long stop_time_ {};  // microseconds
 

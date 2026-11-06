@@ -61,7 +61,7 @@ ACE_Strategy_Scheduler::assign_priorities (
   // Start with happy status.
   ACE_DynScheduler::status_t status = SUCCEEDED;
 
-  RtecScheduler::Scheduling_Anomaly *anomaly = nullptr;
+  RtecScheduler::Scheduling_Anomaly *anomaly = {};
 
   // Start with the highest OS priority in the given range and work downward:
   // if we run out of values to assign, return an error.
@@ -200,7 +200,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
   ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
   ACE_DynScheduler::status_t status = ACE_DynScheduler::SUCCEEDED;
-  RtecScheduler::Scheduling_Anomaly *anomaly = nullptr;
+  RtecScheduler::Scheduling_Anomaly *anomaly = {};
 
   // Start subpriority levels and element counts at 1, set level values in
   // the first entry, increment the static subpriority level.
@@ -419,8 +419,8 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
   // Initialize last stop time to arrival time of the dispatch.
   Time last_stop = dispatch_entry.arrival ();
 
-  TimeLine_Entry *last_entry = nullptr;
-  TimeLine_Entry *current_entry = nullptr;
+  TimeLine_Entry *last_entry = {};
+  TimeLine_Entry *current_entry = {};
   ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> iter (*timeline_);
   for (iter.first (); (remaining_time > 0U) && (iter.done () == 0);
        iter.advance ())
@@ -492,7 +492,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 
       // Remove entries corresponding to the rescheduled
       // dispatch from the timeline and destroy them.
-      TimeLine_Entry *next_remove_entry = nullptr;
+      TimeLine_Entry *next_remove_entry = {};
       while (remove_entry)
       {
         next_remove_entry = remove_entry->next ();
@@ -584,7 +584,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 template <class STRATEGY> ACE_Strategy_Scheduler *
 ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Priority_t minimum_critical_priority)
 {
-  ACE_Strategy_Scheduler *the_scheduler = nullptr;
+  ACE_Strategy_Scheduler *the_scheduler = {};
   STRATEGY *the_strategy;
 
   ACE_NEW_RETURN(the_strategy, STRATEGY(minimum_critical_priority), nullptr);

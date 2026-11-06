@@ -110,7 +110,7 @@ ACE_Scheduler::get_rt_info (Object_Name name,
   // class.
   ACE_CString lookup (name);
   // Search the map for the <name>.  If found, return the RT_Info.
-  RT_Info **info_array = nullptr;
+  RT_Info **info_array = {};
   if (info_collection_.find (lookup, info_array) >= 0)
     {
       rtinfo = info_array[0];

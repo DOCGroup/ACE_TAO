@@ -320,7 +320,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close ()
 
   // Unbind and delete each RT_Info in the map: this also cleans up
   // all the entries and tuples associated with each RT_Info.
-  TAO_RT_Info_Ex *rt_info = nullptr;
+  TAO_RT_Info_Ex *rt_info = {};
   RtecScheduler::handle_t handle;
   while (rt_info_map_.current_size () > 0)
     {
@@ -348,7 +348,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close ()
 
   // Delete each Config_Info in the map.
   RtecScheduler::Preemption_Priority_t config_priority;
-  RtecScheduler::Config_Info *config_info = nullptr;
+  RtecScheduler::Config_Info *config_info = {};
   while (config_info_map_.current_size () > 0)
     {
       config_priority = (*config_info_map_.begin ()).ext_id_;
@@ -363,7 +363,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close ()
     }
 
   // Delete each dependency set in the caller map
-  RtecScheduler::Dependency_Set *dependency_set = nullptr;
+  RtecScheduler::Dependency_Set *dependency_set = {};
   while (calling_dependency_set_map_.current_size () > 0)
     {
       handle = (*calling_dependency_set_map_.begin ()).ext_id_;
@@ -479,7 +479,7 @@ get (RtecScheduler::handle_t handle)
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
   // Find the RT_Info in the hash map.
-  TAO_RT_Info_Ex *rt_info = nullptr;
+  TAO_RT_Info_Ex *rt_info = {};
   if (rt_info_map_.find (handle, rt_info) != 0)
     {
       throw RtecScheduler::UNKNOWN_TASK ();
@@ -522,7 +522,7 @@ set (::RtecScheduler::handle_t handle,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
   // Look up the RT_Info by its handle, throw an exception if it's not there.
-  TAO_RT_Info_Ex *rt_info_ptr = nullptr;
+  TAO_RT_Info_Ex *rt_info_ptr = {};
   if (rt_info_map_.find (handle, rt_info_ptr) != 0)
     {
       throw RtecScheduler::UNKNOWN_TASK ();
@@ -578,7 +578,7 @@ reset (RtecScheduler::handle_t handle,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
   // Look up the RT_Info by its handle, throw an exception if it's not there.
-  TAO_RT_Info_Ex *rt_info_ptr = nullptr;
+  TAO_RT_Info_Ex *rt_info_ptr = {};
   if (rt_info_map_.find (handle, rt_info_ptr) != 0)
     {
       throw RtecScheduler::UNKNOWN_TASK ();
@@ -638,7 +638,7 @@ set_seq (RtecScheduler::RT_Info_Set const & infos)
   for (u_int i = 0; i < infos.length (); ++i)
     {
       // Look up the RT_Info by its handle, throw an exception if it's not there.
-      TAO_RT_Info_Ex *rt_info_ptr = nullptr;
+      TAO_RT_Info_Ex *rt_info_ptr = {};
       if (rt_info_map_.find (infos[i].handle, rt_info_ptr) != 0)
         {
           throw RtecScheduler::UNKNOWN_TASK ();
@@ -691,7 +691,7 @@ reset_seq (RtecScheduler::RT_Info_Set const & infos)
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
-  TAO_RT_Info_Ex *rt_info_ptr = nullptr;
+  TAO_RT_Info_Ex *rt_info_ptr = {};
   u_int i;
 
   for (i = 0; i < infos.length (); ++i)
@@ -769,7 +769,7 @@ replace_seq (RtecScheduler::RT_Info_Set const & infos)
   ACE_GUARD_THROW_EX (ACE_LOCK, ace_mon, this->mutex_,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
-  TAO_RT_Info_Ex *rt_info_ptr = nullptr;
+  TAO_RT_Info_Ex *rt_info_ptr = {};
 
   for (typename RT_INFO_MAP::iterator info_iter (this->rt_info_map_);
        info_iter.done () == 0;
@@ -874,7 +874,7 @@ priority (RtecScheduler::handle_t handle,
   // adaptive transition.  For now, go ahead and return whatever
   // priority is there, even if the RT_Info_Ex is disabled.
 
-  TAO_RT_Info_Ex *rt_info = nullptr;
+  TAO_RT_Info_Ex *rt_info = {};
   if (rt_info_map_.find (handle, rt_info) != 0)
     {
       throw RtecScheduler::UNKNOWN_TASK ();
@@ -1041,7 +1041,7 @@ set_rt_info_enable_state (RtecScheduler::handle_t handle,
                       RtecScheduler::SYNCHRONIZATION_FAILURE ());
 
   // Look up the RT_Info by its handle, throw an exception if it's not there.
-  TAO_RT_Info_Ex *rt_info_ptr = nullptr;
+  TAO_RT_Info_Ex *rt_info_ptr = {};
   if (rt_info_map_.find (handle, rt_info_ptr) != 0)
     {
       throw RtecScheduler::UNKNOWN_TASK ();
@@ -1075,7 +1075,7 @@ set_rt_info_enable_state_seq (RtecScheduler::RT_Info_Enable_State_Pair_Set const
   for (u_int i = 0; i < pair_set.length (); ++i)
     {
       // Look up the RT_Info by its handle, throw an exception if it's not there.
-      TAO_RT_Info_Ex *rt_info_ptr = nullptr;
+      TAO_RT_Info_Ex *rt_info_ptr = {};
       if (rt_info_map_.find (pair_set[i].handle, rt_info_ptr) != 0)
         {
           throw RtecScheduler::UNKNOWN_TASK ();
@@ -1297,7 +1297,7 @@ get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
     }
 
   infos->length (this->rt_info_count_);
-  TAO_RT_Info_Ex* rt_info = nullptr;
+  TAO_RT_Info_Ex* rt_info = {};
   for (typename RT_INFO_MAP::iterator info_iter (this->rt_info_map_);
        info_iter.done () == 0;
        ++info_iter)
@@ -1326,7 +1326,7 @@ get_dependency_set (RtecScheduler::Dependency_Set_out dependencies)
       dependencies = new RtecScheduler::Dependency_Set (this->dependency_count_);
     }
   dependencies->length (this->dependency_count_);
-  RtecScheduler::Dependency_Set *dependency_set = nullptr;
+  RtecScheduler::Dependency_Set *dependency_set = {};
   int i = 0;
   for (typename DEPENDENCY_SET_MAP::iterator
          dependency_iter (this->called_dependency_set_map_);
@@ -1371,7 +1371,7 @@ get_config_info_set (RtecScheduler::Config_Info_Set_out configs)
     }
 
   configs->length (this->config_info_count_);
-  RtecScheduler::Config_Info* config_info = nullptr;
+  RtecScheduler::Config_Info* config_info = {};
   for (typename CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
        config_iter.done () == 0;
        ++config_iter)
@@ -1409,7 +1409,7 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
       throw RtecScheduler::NOT_SCHEDULED ();
     }
 
-  RtecScheduler::Config_Info *config_info = nullptr;
+  RtecScheduler::Config_Info *config_info = {};
   if (config_info_map_.find (p_priority, config_info) != 0)
     {
       throw RtecScheduler::UNKNOWN_PRIORITY_LEVEL();
@@ -1473,7 +1473,7 @@ get_config_infos (RtecScheduler::Config_Info_Set_out configs)
                         CORBA::NO_MEMORY ());
     }
   configs->length (this->config_info_count_);
-  RtecScheduler::Config_Info* config_info = nullptr;
+  RtecScheduler::Config_Info* config_info = {};
   for (typename CONFIG_INFO_MAP::iterator config_iter (this->config_info_map_);
        config_iter.done () == 0;
        ++config_iter)
@@ -1502,8 +1502,8 @@ create_i (char const *entry_point,
               " TAO_Reconfig_Scheduler::create_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
-  TAO_RT_Info_Ex* new_rt_info = nullptr;
-  TAO_Reconfig_Scheduler_Entry* new_sched_entry = nullptr;
+  TAO_RT_Info_Ex* new_rt_info = {};
+  TAO_Reconfig_Scheduler_Entry* new_sched_entry = {};
   int result = 0;
 
   // If we're ignoring duplicates, check for and return the existing
@@ -1669,7 +1669,7 @@ set_i (TAO_RT_Info_Ex *rt_info,
       else if (result == 0)  // We did not find an existing tuple.
         {
           // Create a new RT_Info tuple from the passed RT_Info.
-          TAO_RT_Info_Tuple *tuple_ptr = nullptr;
+          TAO_RT_Info_Tuple *tuple_ptr = {};
           ACE_NEW_THROW_EX (tuple_ptr,
                             TAO_RT_Info_Tuple (*rt_info),
                             CORBA::NO_MEMORY ());
@@ -1718,7 +1718,7 @@ lookup_i (char const * entry_point)
               " TAO_Reconfig_Scheduler::lookup_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
-  TAO_RT_Info_Ex *rt_info = nullptr;
+  TAO_RT_Info_Ex *rt_info = {};
   if (rt_info_tree_.find (entry_point, rt_info) != 0)
     {
       throw RtecScheduler::UNKNOWN_TASK ();
@@ -1745,7 +1745,7 @@ priority_i (RtecScheduler::handle_t handle,
       throw RtecScheduler::NOT_SCHEDULED ();
     }
 
-  TAO_RT_Info_Ex *rt_info = nullptr;
+  TAO_RT_Info_Ex *rt_info = {};
   if (rt_info_map_.find (handle, rt_info) != 0)
     {
       throw RtecScheduler::UNKNOWN_TASK ();
@@ -2010,7 +2010,7 @@ map_dependency_i (RtecScheduler::handle_t key,
               " TAO_Reconfig_Scheduler::map_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
-  RtecScheduler::Dependency_Set *dependency_set = nullptr;
+  RtecScheduler::Dependency_Set *dependency_set = {};
 
   // Look up the dependency set in the passed map
   if (dependency_map.find (key, dependency_set) != 0)
@@ -2054,7 +2054,7 @@ unmap_dependency_i (RtecScheduler::handle_t key,
               " TAO_Reconfig_Scheduler::unmap_dependency_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
-  RtecScheduler::Dependency_Set *dependency_set = nullptr;
+  RtecScheduler::Dependency_Set *dependency_set = {};
 
   // Try to unbind the matching dependency set from the passed map
   // and if successful, destroy the
@@ -2120,7 +2120,7 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
               " TAO_Reconfig_Scheduler::map_dependency_enable_state_i.\n"));
 #endif /* SCHEDULER_LOGGING */
 
-  RtecScheduler::Dependency_Set *dependency_set = nullptr;
+  RtecScheduler::Dependency_Set *dependency_set = {};
 
   // Try to unbind the matching dependency set from the passed map
   // and if successful, destroy the
@@ -2472,7 +2472,7 @@ assign_priorities_i ()
 
   // Empty out the previously stored configuration infos, if any.
   RtecScheduler::Preemption_Priority_t config_priority;
-  RtecScheduler::Config_Info *config_info_temp = nullptr;
+  RtecScheduler::Config_Info *config_info_temp = {};
   while (config_info_map_.current_size () > 0)
     {
       config_priority = (*config_info_map_.begin ()).ext_id_;
@@ -2751,7 +2751,7 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
   if (current_ptr_array_size <= handle)
     {
       long new_size = handle + 1;
-      ARRAY_ELEMENT_TYPE ** new_array = nullptr;
+      ARRAY_ELEMENT_TYPE ** new_array = {};
 
       if (current_ptr_array_size > 0)
         {
