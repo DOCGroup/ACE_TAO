@@ -436,7 +436,7 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_thread_pool (TAO_Thread
     }
 
   // Set ServerProtocolPolicy.
-  TAO_ServerProtocolPolicy *server_protocol_policy = nullptr;
+  TAO_ServerProtocolPolicy *server_protocol_policy {};
   ACE_NEW_RETURN (server_protocol_policy,
                   TAO_ServerProtocolPolicy (protocols),
                   0);

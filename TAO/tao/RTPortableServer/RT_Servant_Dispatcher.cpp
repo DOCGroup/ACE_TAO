@@ -76,7 +76,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
   if (tph != nullptr)
     {
-      char const *priority_model = nullptr;
+      char const *priority_model {};
       RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
 
       // NOT_SPECIFIED PriorityModel processing.
@@ -94,7 +94,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
           // Attempt to extract client-propagated priority from the
           // ServiceContextList of the request.
-          IOP::ServiceContext const *context = nullptr;
+          IOP::ServiceContext const *context {};
 
           if (request_service_context.get_context (IOP::RTCorbaPriority,
                                                    &context) == 1)
@@ -362,7 +362,7 @@ TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
                                             TAO_ORB_Core &orb_core,
                                             TAO_Object_Adapter *object_adapter)
 {
-  TAO_RT_POA *poa = nullptr;
+  TAO_RT_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
