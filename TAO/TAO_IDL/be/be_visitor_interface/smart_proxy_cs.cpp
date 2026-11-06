@@ -174,7 +174,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       std::string const factory_allocation = "ACE_NEW_RETURN (this->proxy_factory_, TAO_"
         + node->flat_name () + "_Default_Proxy_Factory (false), nullptr);";
-      if (factory_allocation.length () + 6 <= 120)
+      if (factory_allocation.length () + 6 <= be_global->max_line_length ())
         {
           *os << factory_allocation;
         }

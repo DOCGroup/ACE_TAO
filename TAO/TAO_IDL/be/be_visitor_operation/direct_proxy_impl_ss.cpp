@@ -74,11 +74,12 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
   if (!node->void_return_type () || node->nmembers () > 0)
     {
+      // The arguments parameter is named only when the operation uses it.
       std::string signature = operation_name
         + " (TAO_Abstract_ServantBase *servant, TAO::Argument **args)";
 
       *os << "void" << be_nl;
-      if (signature.length () <= 120)
+      if (signature.length () <= be_global->max_line_length ())
         {
           *os << signature << be_nl;
         }
@@ -91,8 +92,20 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
     }
   else
     {
-      *os << "void" << be_nl
-          << operation_name << " (TAO_Abstract_ServantBase *servant)" << be_nl;
+      std::string signature = operation_name
+        + " (TAO_Abstract_ServantBase *servant, TAO::Argument **)";
+
+      *os << "void" << be_nl;
+      if (signature.length () <= be_global->max_line_length ())
+        {
+          *os << signature << be_nl;
+        }
+      else
+        {
+          *os << operation_name << " (" << be_idt_nl
+              << "TAO_Abstract_ServantBase *servant," << be_nl
+              << "TAO::Argument **)" << be_uidt_nl;
+        }
     }
 
   *os << "{" << be_idt_nl;
@@ -100,7 +113,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
   std::string const servant_cast = intf->full_skel_name ()
     + "_ptr _tao_ptr = dynamic_cast<" + intf->full_skel_name ()
     + "_ptr> (servant);";
-  if (servant_cast.length () + 2 <= 120)
+  if (servant_cast.length () + 2 <= be_global->max_line_length ())
     {
       *os << servant_cast << be_nl;
     }

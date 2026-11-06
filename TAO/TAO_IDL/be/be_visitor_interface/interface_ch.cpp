@@ -72,13 +72,13 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << be_nl_2
       << "// The static operations." << be_nl
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
-      << node->local_name () << "_ptr obj);" << be_nl_2;
+      << node->local_name () << "_ptr obj);" << be_nl;
 
   if (c == nullptr)
     {
       *os << "static void _tao_release ("
           << node->local_name () << "_ptr obj);"
-          << be_nl_2;
+          << be_nl;
     }
 
   if (! this->gen_xxx_narrow ("_narrow", node, os))
@@ -261,8 +261,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // Abstract interfaces have a *protected* copy constructor.
   if (! node->is_abstract ())
     {
-      *os << "// Private and unimplemented for concrete interfaces." << be_nl
-          << node->local_name () << " ("
+      *os << node->local_name () << " ("
           << node->local_name () << " const &) = delete;" << be_nl
           << node->local_name () << " ("
           << node->local_name () << " &&) = delete;" << be_nl;

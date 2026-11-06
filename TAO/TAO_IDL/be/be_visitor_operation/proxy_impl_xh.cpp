@@ -26,25 +26,26 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
     ? (node->nmembers () == 1 ? "_set_" : "_get_") : "";
   std::string const method_name = attr_prefix + this->ctx_->port_prefix ()
     + node->local_name ()->get_string ();
-  bool const has_args = !node->void_return_type () || node->nmembers () > 0;
+  bool const uses_args = !node->void_return_type () || node->nmembers () > 0;
   std::string const signature = "static void " + method_name
-    + " (TAO_Abstract_ServantBase *servant"
-    + (has_args ? ", TAO::Argument **args" : "") + ");";
+    + " (TAO_Abstract_ServantBase *servant, TAO::Argument **"
+    + (uses_args ? "args" : "") + ");";
 
-  if (signature.length () <= 120)
+  if (signature.length () <= be_global->max_line_length ())
     {
-      *os << signature << be_nl;
+      *os << signature;
     }
   else
     {
       *os << "static void" << be_nl
           << method_name << " (" << be_idt_nl
-          << "TAO_Abstract_ServantBase *servant";
-      if (has_args)
+          << "TAO_Abstract_ServantBase *servant," << be_nl
+          << "TAO::Argument **";
+      if (uses_args)
         {
-          *os << "," << be_nl << "TAO::Argument **args";
+          *os << "args";
         }
-      *os << ");" << be_uidt_nl;
+      *os << ");" << be_uidt;
     }
 
   return 0;

@@ -954,6 +954,9 @@ public:
   unsigned long tab_size () const;
   void tab_size (unsigned long val);
 
+  std::size_t max_line_length () const;
+  void max_line_length (std::size_t val);
+
   /// Command line passed to ACE_Process::spawn. Different
   /// implementations in IDL and IFR backends.
   std::string spawn_options () const;
@@ -1343,6 +1346,9 @@ private:
 
   /// 2 spaces by default, can be set from the command line.
   unsigned int tab_size_ {2};
+
+  /// Maximum generated line length used by compact formatting decisions.
+  std::size_t max_line_length_ {120};
 
   /// Are we generating STL types?
   bool alt_mapping_ {};

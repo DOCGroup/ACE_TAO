@@ -67,7 +67,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         }
 
       *os << be_idt_nl;
-      if (base_initializer.length () + 2 <= 120)
+      if (base_initializer.length () + 2 <= be_global->max_line_length ())
         {
           *os << base_initializer << be_uidt_nl;
         }
@@ -106,7 +106,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   // Default constructor.
   *os << node->name () << "::" << node->local_name ()
       << " ()" << be_idt_nl;
-  if (base_initializer.length () + 2 <= 120)
+  if (base_initializer.length () + 2 <= be_global->max_line_length ())
     {
       *os << base_initializer << be_uidt_nl;
     }

@@ -2442,6 +2442,18 @@ BE_GlobalData::tab_size (unsigned long val)
   this->tab_size_ = val;
 }
 
+std::size_t
+BE_GlobalData::max_line_length () const
+{
+  return this->max_line_length_;
+}
+
+void
+BE_GlobalData::max_line_length (std::size_t val)
+{
+  this->max_line_length_ = val;
+}
+
 std::string
 BE_GlobalData::spawn_options () const
 {
