@@ -32,10 +32,6 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
     this->ctx_->interface () != nullptr
     && this->ctx_->interface () != node->defined_in ();
 
-  bool const inherited_operation =
-    this->ctx_->interface () != nullptr
-    && this->ctx_->interface () != node->defined_in ();
-
   this->ctx_->node (node);
 
   *os << be_nl_2;
