@@ -132,7 +132,7 @@ TAO_FT_Naming_Manager::create_object_group (
   // When creating the object group, it starts as a generic
   // CORBA Object. It will become the type of the first added
   // member.
-  char const * type_id = "IDL:omg.org:CORBA/Object:1.0";
+  char const * type_id = "IDL:omg.org/CORBA/Object:1.0";
 
   // Add the group name to the criteria and create the object
   TAO::PG_Property_Set property_set (the_criteria);

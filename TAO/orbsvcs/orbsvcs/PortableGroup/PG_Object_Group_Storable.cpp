@@ -559,7 +559,8 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
 {
   stream.rewind ();
 
-  std::string group_name = PG_Object_Group::get_name ();
+  char const *const name = PG_Object_Group::get_name ();
+  std::string const group_name = name == nullptr ? "" : name;
   stream << group_name;
   stream << this->distribute_;
   std::string role (this->role_.c_str ());
