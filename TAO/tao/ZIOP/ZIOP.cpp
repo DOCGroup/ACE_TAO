@@ -63,7 +63,7 @@ TAO_ZIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   if (TAO_DEF_GIOP_MINOR < 2)
     return;
 
-  TAO_ZIOPPolicy_Validator *validator = nullptr;
+  TAO_ZIOPPolicy_Validator *validator {};
   ACE_NEW_THROW_EX (validator,
                     TAO_ZIOPPolicy_Validator (val.orb_core ()),
                     CORBA::NO_MEMORY (

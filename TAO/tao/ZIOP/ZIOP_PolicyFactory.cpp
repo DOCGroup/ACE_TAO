@@ -38,7 +38,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
     }
   case ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID :
     {
-      ::Compression::CompressorIdLevelList const* val = nullptr;
+      ::Compression::CompressorIdLevelList const* val {};
 
       // Extract the value from the any.
       if (!(value >>= val))
