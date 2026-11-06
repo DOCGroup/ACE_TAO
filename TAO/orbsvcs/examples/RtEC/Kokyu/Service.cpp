@@ -74,7 +74,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ****************************************************************
 
       // Create an scheduling service
-      POA_RtecScheduler::Scheduler *sched_impl = nullptr;
+      POA_RtecScheduler::Scheduler *sched_impl {};
 
       if (ACE_OS::strcasecmp(sched_type.c_str(), "rms") == 0)
         {
