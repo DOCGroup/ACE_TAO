@@ -30,7 +30,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                  orb_core->output_cdr_dblock_allocator (),
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                 fragmentation_strategy_,
+                 fragmentation_strategy_.get (),
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
@@ -47,13 +47,11 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
-
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base ()
 {
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   this->out_stream_.unregister_monitor ();
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
-  delete fragmentation_strategy_;
 }
 
 void
@@ -140,7 +138,6 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
       if (TAO_debug_level)
         TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing locate request header\n")));
-
 
       return -1;
     }
@@ -627,7 +624,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                         TAO_ENCAP_BYTE_ORDER,
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                        this->fragmentation_strategy_,
+                        this->fragmentation_strategy_.get (),
                         qd->giop_version ().major_version (),
                         qd->giop_version ().minor_version ());
 
@@ -1134,7 +1131,6 @@ TAO_GIOP_Message_Base::process_request (
 
   return 0;
 }
-
 
 int
 TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
@@ -2002,7 +1998,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
 TAO_GIOP_Fragmentation_Strategy *
 TAO_GIOP_Message_Base::fragmentation_strategy ()
 {
-  return this->fragmentation_strategy_;
+  return this->fragmentation_strategy_.get ();
 }
 
 void
