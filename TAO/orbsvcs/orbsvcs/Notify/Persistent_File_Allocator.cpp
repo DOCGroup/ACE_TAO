@@ -27,7 +27,7 @@ Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
   , callback_(nullptr)
   , allocator_owns_(true)
 {
-  unsigned char *data = nullptr;
+  unsigned char *data = {};
   ACE_NEW (data, unsigned char[this->block_size_]);
   this->data_.reset (data);
   std::memset (this->data_.get (), 0, this->block_size_);
@@ -44,7 +44,7 @@ Persistent_Storage_Block::Persistent_Storage_Block(
 {
   if (psb.data () != nullptr)
     {
-      unsigned char *data = nullptr;
+      unsigned char *data = {};
       ACE_NEW (data, unsigned char[this->block_size_]);
       this->data_.reset (data);
       std::memcpy (this->data_.get (), psb.data (), this->block_size_);
@@ -56,7 +56,7 @@ Persistent_Storage_Block::operator= (Persistent_Storage_Block const &psb)
 {
   if (this != &psb)
     {
-      unsigned char *data = nullptr;
+      unsigned char *data = {};
       if (psb.data () != nullptr)
         {
           data = new unsigned char[psb.block_size_];
@@ -188,7 +188,7 @@ Persistent_File_Allocator::shutdown()
 Persistent_Storage_Block*
 Persistent_File_Allocator::allocate()
 {
-  Persistent_Storage_Block* result = nullptr;
+  Persistent_Storage_Block* result = {};
   size_t block_number = 0;
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
   if (!this->allocate_block(block_number))
@@ -208,7 +208,7 @@ Persistent_File_Allocator::allocate()
 Persistent_Storage_Block*
 Persistent_File_Allocator::allocate_at(size_t block_number)
 {
-  Persistent_Storage_Block* result = nullptr;
+  Persistent_Storage_Block* result = {};
   this->used(block_number);
   if (DEBUG_LEVEL > 0) ORBSVCS_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Persistent_File_Allocator::allocate at : %B\n"),
@@ -224,7 +224,7 @@ Persistent_File_Allocator::allocate_at(size_t block_number)
 Persistent_Storage_Block*
 Persistent_File_Allocator::allocate_nowrite()
 {
-  Persistent_Storage_Block* result = nullptr;
+  Persistent_Storage_Block* result = {};
   ACE_NEW_RETURN (result,
                   Persistent_Storage_Block (static_cast<size_t> (~0), 0),
                   0);
@@ -384,7 +384,7 @@ Persistent_File_Allocator::run()
   while (do_more_work)
   {
     do_more_work = false;
-    Persistent_Storage_Block * blk = nullptr;
+    Persistent_Storage_Block * blk = {};
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
       while (this->block_queue_.empty() && !terminate_thread_)
@@ -405,7 +405,7 @@ Persistent_File_Allocator::run()
         pstore_.write(blk->block_number(), blk->data(), blk->get_sync());
       }
       {
-        Persistent_Storage_Block * blk2 = nullptr;
+        Persistent_Storage_Block * blk2 = {};
         ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->queue_lock_);
         if (! this->block_queue_.empty ())
           {

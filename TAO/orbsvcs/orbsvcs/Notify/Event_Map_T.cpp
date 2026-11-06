@@ -48,7 +48,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy)
 template <class PROXY, class ACE_LOCK> int
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_EventType& event_type)
 {
-  ENTRY* entry = nullptr;
+  ENTRY* entry = {};
 
   int result = -1;
 
@@ -96,7 +96,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
 template <class PROXY, class ACE_LOCK> int
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_EventType& event_type)
 {
-  ENTRY* entry = nullptr;
+  ENTRY* entry = {};
 
   if (event_type.is_special () == 1)
     {

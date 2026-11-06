@@ -34,7 +34,7 @@ TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
 , timer_id_ (-1)
 , timer_ (0)
 {
-  Request_Queue* pending_events = nullptr;
+  Request_Queue* pending_events = {};
   ACE_NEW (pending_events, TAO_Notify_Consumer::Request_Queue ());
   this->pending_events_.reset( pending_events );
 
@@ -502,7 +502,7 @@ TAO_Notify_Consumer::dispatch_from_queue (
 {
 // FUZZ: enable check_for_ACE_Guard
   bool result = true;
-  TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
+  TAO_Notify_Method_Request_Event_Queueable * request = {};
   if (requests.dequeue_head (request) == 0)
     {
       ace_mon.release ();

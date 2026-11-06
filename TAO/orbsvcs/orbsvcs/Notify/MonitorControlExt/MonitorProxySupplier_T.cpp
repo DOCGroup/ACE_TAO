@@ -12,10 +12,6 @@
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename ProxyPushSupplier>
@@ -82,7 +78,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
     }
   event_channel_ = admin_->get_ec ();
 
-  TAO_Notify_Buffering_Strategy* bs = nullptr;
+  TAO_Notify_Buffering_Strategy* bs = {};
   TAO_Notify_Worker_Task * worker_task =  this->TAO_Notify_Object::get_worker_task ();
   TAO_Notify_ThreadPool_Task* tpt =
     dynamic_cast<TAO_Notify_ThreadPool_Task*> (worker_task);

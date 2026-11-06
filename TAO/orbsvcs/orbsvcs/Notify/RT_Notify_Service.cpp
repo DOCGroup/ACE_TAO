@@ -66,7 +66,7 @@ TAO_RT_Notify_Service::create_factory ()
 TAO_Notify_Builder*
 TAO_RT_Notify_Service::create_builder ()
 {
-  TAO_Notify_Builder* builder = nullptr;
+  TAO_Notify_Builder* builder = {};
   ACE_NEW_THROW_EX (builder,
                     TAO_Notify_RT_Builder (),
                     CORBA::NO_MEMORY ());

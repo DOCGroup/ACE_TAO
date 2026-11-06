@@ -106,7 +106,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
     TAO_InputCDR & cdr)
 {
   bool ok = true;
-  TAO_Notify_Method_Request_Dispatch_Queueable * result = nullptr;
+  TAO_Notify_Method_Request_Dispatch_Queueable * result = {};
   std::string textpath;
   CORBA::ULong count;
   if (cdr.read_ulong (count))
@@ -231,7 +231,7 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::execute ()
 TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Dispatch_No_Copy::copy ()
 {
-  TAO_Notify_Method_Request_Queueable* request = nullptr;
+  TAO_Notify_Method_Request_Queueable* request = {};
 
   TAO_Notify_Event::Ptr event_var (
     this->event_->queueable_copy () );

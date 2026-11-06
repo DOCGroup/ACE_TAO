@@ -24,7 +24,7 @@ Standard_Event_Persistence::get_factory ()
   //@@todo guard? ; doublecheck?
   if (this->factory_ == nullptr)
     {
-      Standard_Event_Persistence_Factory *factory = nullptr;
+      Standard_Event_Persistence_Factory *factory = {};
       ACE_NEW_NORETURN (factory,
                         Standard_Event_Persistence_Factory ());
 
@@ -142,7 +142,7 @@ Routing_Slip_Persistence_Manager*
 Standard_Event_Persistence_Factory::create_routing_slip_persistence_manager(
   Persistent_Callback* callback)
 {
-  Routing_Slip_Persistence_Manager* rspm = nullptr;
+  Routing_Slip_Persistence_Manager* rspm = {};
   ACE_NEW_RETURN(rspm, Routing_Slip_Persistence_Manager(this), rspm);
   rspm->set_callback(callback);
   return rspm;
@@ -151,7 +151,7 @@ Standard_Event_Persistence_Factory::create_routing_slip_persistence_manager(
 Routing_Slip_Persistence_Manager *
 Standard_Event_Persistence_Factory::first_reload_manager()
 {
-  Routing_Slip_Persistence_Manager * result = nullptr;
+  Routing_Slip_Persistence_Manager * result = {};
   if (this->is_reloading_)
   {
     result = this->root_.load_next();

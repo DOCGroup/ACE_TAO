@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_Factory*
 TAO_MC_Notify_Service::create_factory ()
 {
-  TAO_MC_Default_Factory* factory = nullptr;
+  TAO_MC_Default_Factory* factory = {};
   ACE_NEW_THROW_EX (factory,
                     TAO_MC_Default_Factory (),
                     CORBA::NO_MEMORY ());

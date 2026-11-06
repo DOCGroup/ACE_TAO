@@ -11,6 +11,7 @@
 #include "ace/SString.h"
 #include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
+#include "orbsvcs/Notify/ProxySupplier.h"
 #include "orbsvcs/Notify/SupplierAdmin.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)

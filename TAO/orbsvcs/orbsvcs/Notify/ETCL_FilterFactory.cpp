@@ -88,7 +88,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
     throw CosNotifyFilter::InvalidGrammar ();
 
   TAO_Notify_Object::ID id = filter_ids_.id ();
-  TAO_Notify_ETCL_Filter* filter = nullptr;
+  TAO_Notify_ETCL_Filter* filter = {};
   return this->create_filter (constraint_grammar, id, filter);
 }
 
@@ -159,8 +159,8 @@ TAO_Notify_ETCL_FilterFactory::remove_filter (
   FILTERMAP::ITERATOR iterator (this->filters_);
 
   bool found = false;
-  TAO_Notify_ETCL_Filter* filter_servant = nullptr;
-  FILTERMAP::ENTRY *entry = nullptr;
+  TAO_Notify_ETCL_Filter* filter_servant = {};
+  FILTERMAP::ENTRY *entry = {};
   while ( !found && iterator.next (entry) != 0 ) {
     if (svt == entry->int_id_) {
       filter_servant = entry->int_id_;
@@ -219,7 +219,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
   TAO_Notify::Topology_Object* result = this;
   if (type == "filter")
   {
-    const char* value = nullptr;
+    const char* value = {};
     if (attrs.find ("FilterId", value))
     {
       TAO_Notify_Object::ID const id = std::atoi (value);
@@ -231,7 +231,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
 
       filter_ids_.set_last_used (id);
 
-      TAO_Notify_ETCL_Filter* filter = nullptr;
+      TAO_Notify_ETCL_Filter* filter = {};
       this->create_filter (0, id, filter);
       filter->load_attrs (attrs);
 
@@ -284,7 +284,7 @@ TAO_Notify_ETCL_FilterFactory::find_filter (const TAO_Notify_Object::ID& id)
                     this->mtx_,
                     CosNotifyFilter::Filter::_nil ());
 
-  TAO_Notify_ETCL_Filter* filter = nullptr;
+  TAO_Notify_ETCL_Filter* filter = {};
   if (filters_.find (id, filter) == -1)
     return CosNotifyFilter::Filter::_nil ();
   else

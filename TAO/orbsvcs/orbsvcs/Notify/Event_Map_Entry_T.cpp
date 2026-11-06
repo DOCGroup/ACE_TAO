@@ -24,7 +24,7 @@ TAO_Notify_Event_Map_Entry_T<PROXY>::init ()
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  COLLECTION *collection = nullptr;
+  COLLECTION *collection = {};
   factory->create (collection);
   this->collection_.reset (collection);
 }

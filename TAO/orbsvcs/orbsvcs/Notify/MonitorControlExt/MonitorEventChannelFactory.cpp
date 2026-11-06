@@ -65,7 +65,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       ACE_CString stat_name (dir_name +
                              NotifyMonitoringExt::ActiveEventChannelCount);
 
-      EventChannels* event_channels = nullptr;
+      EventChannels* event_channels = {};
       ACE_NEW (event_channels,
                EventChannels (this,
                               stat_name,
@@ -117,7 +117,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
       this->stat_names_.push_back (stat_name);
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelCreationTime;
-      Monitor_Base* timestamp = nullptr;
+      Monitor_Base* timestamp = {};
       ACE_NEW (timestamp,
                Timestamp_Monitor (stat_name.c_str ()));
 
@@ -389,7 +389,7 @@ TAO_MonitorEventChannelFactory::get_ecs (
                                      0);
 
               Map::iterator itr (this->map_);
-              Map::value_type* entry = nullptr;
+              Map::value_type* entry = {};
 
               while (itr.next (entry))
                 {

@@ -340,7 +340,7 @@ TAO_Notify_ConsumerAdmin::find_proxy_supplier (
     TAO_Notify::IdVec & id_path,
     size_t position)
 {
-  TAO_Notify_ProxySupplier * result = nullptr;
+  TAO_Notify_ProxySupplier * result = {};
   size_t path_size = id_path.size ();
   if (position < path_size)
   {

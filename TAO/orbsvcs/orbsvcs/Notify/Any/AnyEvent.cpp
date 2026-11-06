@@ -94,7 +94,7 @@ TAO_Notify_AnyEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
 TAO_Notify_AnyEvent *
 TAO_Notify_AnyEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
 {
-  TAO_Notify_AnyEvent * event = nullptr;
+  TAO_Notify_AnyEvent * event = {};
   CORBA::Any body;
   if (cdr >> body)
   {

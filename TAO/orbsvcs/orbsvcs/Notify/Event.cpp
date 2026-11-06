@@ -50,7 +50,7 @@ TAO_Notify_Event::translate (const CosNotification::StructuredEvent& notificatio
 TAO_Notify_Event *
 TAO_Notify_Event::unmarshal (TAO_InputCDR & cdr)
 {
-  TAO_Notify_Event * result = nullptr;
+  TAO_Notify_Event * result = {};
   ACE_CDR::Octet code = 0;
   if (cdr.read_octet (code))
   {

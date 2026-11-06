@@ -20,7 +20,7 @@ void
 TAO_Notify_CosEC_ProxyPushSupplier::connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer)
 {
   // Convert Consumer to Base Type
-  TAO_Notify_PushConsumer *consumer = nullptr;
+  TAO_Notify_PushConsumer *consumer = {};
   ACE_NEW_THROW_EX (consumer,
                     TAO_Notify_PushConsumer (this),
                     CORBA::NO_MEMORY ());

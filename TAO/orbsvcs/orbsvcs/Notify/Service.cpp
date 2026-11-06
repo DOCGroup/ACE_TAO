@@ -14,7 +14,7 @@ TAO_Notify_Service::load_default ()
                                               nullptr
                                             };
 
-  TAO_Notify_Service* notify_service = nullptr;
+  TAO_Notify_Service* notify_service = {};
   for(size_t i = 0; services[i] != nullptr; i++)
     {
       notify_service =

@@ -39,13 +39,13 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
 {
   ACE_ASSERT (this->timer_.get() == nullptr);
 
-  TAO_Notify_Timer_Queue* timer = nullptr;
+  TAO_Notify_Timer_Queue* timer = {};
   ACE_NEW_THROW_EX (timer,
                     TAO_Notify_Timer_Queue (),
                     CORBA::NO_MEMORY ());
   this->timer_.reset (timer);
 
-  TAO_Notify_Buffering_Strategy* buffering_strategy = nullptr;
+  TAO_Notify_Buffering_Strategy* buffering_strategy = {};
   ACE_NEW_THROW_EX (buffering_strategy,
                     TAO_Notify_Buffering_Strategy (*msg_queue (), admin_properties),
                     CORBA::NO_MEMORY ());
@@ -113,13 +113,13 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
 int
 TAO_Notify_ThreadPool_Task::svc ()
 {
-  TAO_Notify_Method_Request_Queueable* method_request = nullptr;
+  TAO_Notify_Method_Request_Queueable* method_request = {};
 
   while (!shutdown_)
     {
       try
         {
-          ACE_Time_Value* dequeue_blocking_time = nullptr;
+          ACE_Time_Value* dequeue_blocking_time = {};
           ACE_Time_Value earliest_time;
 
           if (!this->timer_->impl().is_empty ())

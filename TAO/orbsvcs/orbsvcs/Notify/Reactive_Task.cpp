@@ -17,7 +17,7 @@ TAO_Notify_Reactive_Task::init ()
 {
   ACE_ASSERT (this->timer_.get() == nullptr);
 
-  TAO_Notify_Timer_Reactor* timer = nullptr;
+  TAO_Notify_Timer_Reactor* timer = {};
   ACE_NEW_THROW_EX (timer,
                     TAO_Notify_Timer_Reactor (),
                     CORBA::NO_MEMORY ());

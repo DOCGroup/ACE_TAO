@@ -388,7 +388,7 @@ TAO_MonitorEventChannel::map_supplier_proxy (
   // The view from the outside sees a supplier proxy as a consumer.
   // So, we'll register a RemoveConsumerSupplierControl for each supplier
   // proxy indicating a consumer (false)
-  RemoveConsumerSupplierControl* rcsc = nullptr;
+  RemoveConsumerSupplierControl* rcsc = {};
   ACE_NEW_THROW_EX (rcsc,
                     RemoveConsumerSupplierControl (this, full, id, false),
                     CORBA::NO_MEMORY ());
@@ -437,7 +437,7 @@ TAO_MonitorEventChannel::map_consumer_proxy (
   // The view from the outside sees a consumer proxy as a supplier.
   // So, we'll register a RemoveConsumerSupplierControl for each consumer
   // proxy indicating a supplier (true)
-  RemoveConsumerSupplierControl* rcsc = nullptr;
+  RemoveConsumerSupplierControl* rcsc = {};
   ACE_NEW_THROW_EX (rcsc,
                     RemoveConsumerSupplierControl (this, full, id, true),
                     CORBA::NO_MEMORY ());
@@ -539,7 +539,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       ACE_CString dir_name (this->name_ + "/");
       ACE_CString stat_name = dir_name +
                               NotifyMonitoringExt::EventChannelCreationTime;
-      Monitor_Base* timestamp = nullptr;
+      Monitor_Base* timestamp = {};
       ACE_NEW_THROW_EX (timestamp,
                         Timestamp_Monitor (stat_name.c_str ()),
                         CORBA::NO_MEMORY ());
@@ -558,7 +558,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerCount;
-      EventChannelConsumersSuppliers* consumers = nullptr;
+      EventChannelConsumersSuppliers* consumers = {};
       ACE_NEW_THROW_EX (consumers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -598,7 +598,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelTimedoutConsumerNames;
-      EventChannelTimedoutConsumers* tconsumers = nullptr;
+      EventChannelTimedoutConsumers* tconsumers = {};
       ACE_NEW_THROW_EX (tconsumers,
                         EventChannelTimedoutConsumers (
                           this,
@@ -618,7 +618,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierCount;
-      EventChannelConsumersSuppliers* suppliers = nullptr;
+      EventChannelConsumersSuppliers* suppliers = {};
       ACE_NEW_THROW_EX (suppliers,
                         EventChannelConsumersSuppliers (
                           this,
@@ -660,7 +660,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelConsumerAdminCount;
-      EventChannelConsumerSupplierAdmins* conadmins = nullptr;
+      EventChannelConsumerSupplierAdmins* conadmins = {};
       ACE_NEW_THROW_EX (conadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -700,7 +700,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSupplierAdminCount;
-      EventChannelConsumerSupplierAdmins* supadmins = nullptr;
+      EventChannelConsumerSupplierAdmins* supadmins = {};
       ACE_NEW_THROW_EX (supadmins,
                         EventChannelConsumerSupplierAdmins (
                           this,
@@ -741,7 +741,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       supadmins->remove_ref ();
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelQueueSize;
-      QueuedEvents* events = nullptr;
+      QueuedEvents* events = {};
       ACE_NEW_THROW_EX (events,
                         QueuedEvents (this,
                                       stat_name.c_str (),
@@ -773,7 +773,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       events->remove_ref ();
 
       stat_name = dir_name + NotifyMonitoringExt::EventChannelOldestEvent;
-      OldestEvent* oldest = nullptr;
+      OldestEvent* oldest = {};
       ACE_NEW_THROW_EX (oldest,
                         OldestEvent (this, stat_name.c_str (),
                                      Monitor_Control_Types::MC_TIME),
@@ -791,7 +791,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
 
       stat_name = dir_name
                   + NotifyMonitoringExt::EventChannelSlowestConsumers;
-      SlowestConsumers* slowest = nullptr;
+      SlowestConsumers* slowest = {};
       ACE_NEW_THROW_EX (slowest,
                         SlowestConsumers (this,
                                           stat_name.c_str (),
@@ -810,7 +810,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
 
       stat_name = dir_name +
                   NotifyMonitoringExt::EventChannelQueueOverflows;
-      QueueOverflows* overflows = nullptr;
+      QueueOverflows* overflows = {};
       ACE_NEW_THROW_EX (overflows,
                         QueueOverflows (stat_name.c_str ()),
                         CORBA::NO_MEMORY ());
@@ -824,7 +824,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       TAO_Control_Registry* cinstance =
         TAO_Control_Registry::instance ();
 
-      ShutdownControl* sd = nullptr;
+      ShutdownControl* sd = {};
       ACE_NEW_THROW_EX (sd,
                         ShutdownControl (this,
                                          this->name_),
@@ -1038,7 +1038,7 @@ TAO_MonitorEventChannel::get_timedout_consumers (
   ACE_READ_GUARD (ACE_SYNCH_RW_MUTEX, guard, this->timedout_supplier_mutex_);
 
   Map::const_iterator itr (this->timedout_supplier_map_);
-  Map::value_type* entry = nullptr;
+  Map::value_type* entry = {};
   while (itr.next (entry))
     {
       names->push_back (entry->item ());
@@ -1339,7 +1339,7 @@ TAO_MonitorEventChannel::is_duplicate_name (
   ACE_CString const &name) const
 {
   Map::const_iterator itr (map);
-  Map::value_type* entry = nullptr;
+  Map::value_type* entry = {};
 
   while (itr.next (entry))
     {

@@ -64,7 +64,7 @@ ACE_Time_Value
 TAO_Notify_Buffering_Strategy::oldest_event ()
 {
   ACE_Time_Value tv (ACE_Time_Value::max_time);
-  ACE_Message_Block* mb = nullptr;
+  ACE_Message_Block* mb = {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, tv);
   TAO_Notify_Message_Queue::ITERATOR itr (this->msg_queue_);
@@ -212,7 +212,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 int
 TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &method_request, const ACE_Time_Value *abstime)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb = {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -308,7 +308,7 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
       return false;
     }
 
-  ACE_Message_Block* mb = nullptr;
+  ACE_Message_Block* mb = {};
   int result = -1;
 
   if (this->discard_policy_.is_valid() == 0 ||

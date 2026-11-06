@@ -78,7 +78,7 @@ TAO_Notify_Event_Manager::init ()
 {
   ACE_ASSERT (this->consumer_map_.get() == nullptr);
 
-  TAO_Notify_Consumer_Map* consumer_map = nullptr;
+  TAO_Notify_Consumer_Map* consumer_map = {};
   ACE_NEW_THROW_EX (consumer_map,
                     TAO_Notify_Consumer_Map (),
                     CORBA::NO_MEMORY ());
@@ -86,7 +86,7 @@ TAO_Notify_Event_Manager::init ()
 
   this->consumer_map().init ();
 
-  TAO_Notify_Supplier_Map* supplier_map = nullptr;
+  TAO_Notify_Supplier_Map* supplier_map = {};
   ACE_NEW_THROW_EX (supplier_map,
                     TAO_Notify_Supplier_Map (),
                     CORBA::NO_MEMORY ());

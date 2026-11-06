@@ -24,7 +24,7 @@ namespace TAO_Notify
   Topology_Saver*
   XML_Topology_Factory::create_saver ()
   {
-    XML_Saver *saver = nullptr;
+    XML_Saver *saver = {};
 
     ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), nullptr);
     std::unique_ptr<XML_Saver> saver_guard (saver);
@@ -40,7 +40,7 @@ namespace TAO_Notify
   Topology_Loader*
   XML_Topology_Factory::create_loader()
   {
-    XML_Loader *loader = nullptr;
+    XML_Loader *loader = {};
     ACE_NEW_RETURN (loader, XML_Loader, nullptr);
     std::unique_ptr<XML_Loader> loader_guard (loader);
 
