@@ -78,11 +78,11 @@ void ACE_Scheduler_Factory::rt_info_enable_state_default(RtecScheduler::RT_Info_
 // This symbols are extern because the automatic template
 // instantiation mechanism in SunCC gets confused otherwise.
 int TAO_SF_config_count = -1;
-ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info = nullptr;
+ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info {};
 int TAO_SF_entry_count = -1;
-ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info = nullptr;
+ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info {};
 int TAO_SF_dependency_count = -1;
-ACE_Scheduler_Factory::POD_Dependency_Info* TAO_SF_dep_info = nullptr;
+ACE_Scheduler_Factory::POD_Dependency_Info* TAO_SF_dep_info {};
 
 struct ACE_Scheduler_Factory_Data
 {
@@ -118,7 +118,7 @@ struct ACE_Scheduler_Factory_Data
   }
 };
 
-static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = nullptr;
+static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data {};
 
 int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_Config_Info cfgi[],
