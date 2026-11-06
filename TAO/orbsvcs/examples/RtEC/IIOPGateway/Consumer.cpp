@@ -9,7 +9,7 @@
 constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
 constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
-static ACE_TCHAR const *ecname = nullptr;
+static ACE_TCHAR const *ecname {};
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
