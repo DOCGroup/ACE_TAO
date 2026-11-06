@@ -951,7 +951,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
           if (result == -1)
             if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s\n", flowname));
         }
-      FlowEndPoint_Map *map_a = nullptr, *map_b = nullptr;
+      FlowEndPoint_Map *map_a {}, *map_b {};
       if (flow_spec.length () == 0)
         {
           map_a = a_fep_map;

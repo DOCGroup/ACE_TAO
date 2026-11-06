@@ -461,7 +461,7 @@ TAO_SFP_Base::check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry)
       // all the fragments have been received
       // we can now chain the ACE_Message_Blocks in the fragment_set_ and then return them
       // back.
-      ACE_Message_Block *frame = nullptr, *head = nullptr;
+      ACE_Message_Block *frame {}, *head {};
       FRAGMENT_SET_ITERATOR frag_iterator (fragment_entry->fragment_set_);
       TAO_SFP_Fragment_Node *node;
       for (;frag_iterator.next (node) != 0;frag_iterator.advance ())
@@ -1039,7 +1039,7 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
                               size_t &last_mb_orig_len,
                               size_t &last_mb_current_len)
 {
-  ACE_Message_Block *fragment_mb = nullptr, *temp_mb = nullptr;
+  ACE_Message_Block *fragment_mb {}, *temp_mb {};
   size_t prev_len,last_len = 0;
   size_t current_len = 0;
   size_t message_len = initial_len;
