@@ -28,7 +28,7 @@ namespace TAO
       ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
 
     // Would be nice to have runtime option.
-    ACE_Lock *lock = nullptr;
+    ACE_Lock *lock {};
     ACE_NEW (lock,
              ACE_Lock_Adapter<TAO_SYNCH_MUTEX>);
     this->lock_.reset (lock);

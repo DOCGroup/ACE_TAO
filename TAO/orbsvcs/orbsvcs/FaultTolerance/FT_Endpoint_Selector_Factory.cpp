@@ -22,7 +22,7 @@ TAO_FT_Endpoint_Selector_Factory::get_selector ()
       // Double checked locking..
       if (!this->ft_endpoint_selector_)
         {
-          TAO_FT_Invocation_Endpoint_Selector *selector = nullptr;
+          TAO_FT_Invocation_Endpoint_Selector *selector {};
           ACE_NEW_THROW_EX (selector,
                             TAO_FT_Invocation_Endpoint_Selector (),
                             CORBA::NO_MEMORY ());
