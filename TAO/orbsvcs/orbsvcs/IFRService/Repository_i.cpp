@@ -719,7 +719,7 @@ TAO_Repository_i::create_servants_and_poas ()
                                  poa_manager.in (), \
                                  policies); \
 \
-  TAO_ ## name ## _i * name ## _impl = nullptr; \
+  TAO_ ## name ## _i * name ## _impl {}; \
   ACE_NEW_RETURN (name ## _impl, \
                   TAO_ ## name ## _i (this), \
                   -1); \

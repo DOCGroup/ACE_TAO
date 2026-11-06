@@ -23,7 +23,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = nullptr;
+TAO_Repository_i *TAO_IFR_Service_Utils::repo_ {};
 
 TAO_IFR_Server::TAO_IFR_Server () = default;
 
@@ -278,7 +278,7 @@ TAO_IFR_Server::create_repository ()
   std::unique_ptr<TAO_ComponentRepository_i> safety (impl);
   TAO_IFR_Service_Utils::repo_ = impl;
 
-  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie = nullptr;
+  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie {};
 
   ACE_NEW_THROW_EX (
       impl_tie,
