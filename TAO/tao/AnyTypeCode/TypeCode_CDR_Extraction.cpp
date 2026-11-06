@@ -603,7 +603,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
       elem_type & member = cases[i];
 
       TAO::TypeCode::Case<CORBA::String_var, CORBA::TypeCode_var> *
-        the_case = nullptr;
+        the_case {};
 
       // Ugly.  *sigh*
       switch (discriminant_kind)
