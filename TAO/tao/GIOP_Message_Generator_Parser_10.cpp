@@ -17,7 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO_GIOP_Message_Generator_Parser_10::write_request_header (
-    const TAO_Operation_Details &opdetails,
+    TAO_Operation_Details const &opdetails,
     TAO_Target_Specification &spec,
     TAO_OutputCDR &msg)
 {
@@ -44,7 +44,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
   // anyway.
-  const TAO::ObjectKey *key = spec.object_key ();
+  TAO::ObjectKey const *key = spec.object_key ();
 
   if (key)
     {
@@ -81,7 +81,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
 
   if (result != 0)
     {
-      const CORBA::ULong username_size =
+      CORBA::ULong const username_size =
         static_cast<CORBA::ULong> (std::strlen (username));
 
       CORBA::Octet *buffer =
@@ -112,7 +112,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
 bool
 TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
     CORBA::ULong request_id,
-    TAO_Target_Specification  &spec,
+    TAO_Target_Specification &spec,
     TAO_OutputCDR &msg)
 {
   msg << request_id;
@@ -120,7 +120,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
   // anyway.
-  const TAO::ObjectKey *key = spec.object_key ();
+  TAO::ObjectKey const *key = spec.object_key ();
 
   if (key)
     {
@@ -161,7 +161,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       // extra node at the end of the service context list, just to
       // force the appropriate padding.
       // But first we take it out any of them..
-      CORBA::ULong count = 0;
+      CORBA::ULong count {};
       IOP::ServiceContextList &svc_ctx = reply.service_context_notowned ();
       CORBA::ULong const l = svc_ctx.length ();
       CORBA::ULong i;
@@ -202,7 +202,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
       size_t const target = static_cast<size_t>(reply.dsi_nvlist_align_);
       size_t const current = output.current_alignment () % ACE_CDR::MAX_ALIGNMENT;
 
-      CORBA::ULong pad = 0;
+      CORBA::ULong pad {};
 
       if (target == 0)
         {
@@ -268,7 +268,6 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   return true;
 }
 
-
 bool
 TAO_GIOP_Message_Generator_Parser_10::write_locate_reply_mesg (
     TAO_OutputCDR &output,
@@ -309,7 +308,6 @@ TAO_GIOP_Message_Generator_Parser_10::write_fragment_header (
   return false;
 }
 
-
 int
 TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
     TAO_ServerRequest &request)
@@ -333,14 +331,14 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
 
   CORBA::Boolean hdr_status = input.good_bit ();
 
-  CORBA::ULong req_id = 0;
+  CORBA::ULong req_id {};
 
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
 
   request.request_id (req_id);
 
-  CORBA::Octet response_flags = CORBA::Octet();
+  CORBA::Octet response_flags {};
   hdr_status = hdr_status && input.read_octet (response_flags);
   request.response_expected ((response_flags != 0));
 
@@ -361,7 +359,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   // translation, nor could others in the CORBA community, the operation name
   // will not be translated regardless of the translation of other strings.
   //
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   hdr_status = hdr_status && input.read_ulong (length);
 
   if (hdr_status)
@@ -404,7 +402,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
   TAO_InputCDR &msg = request.incoming_stream ();
 
   // Get the request id
-  CORBA::ULong req_id = 0;
+  CORBA::ULong req_id {};
   CORBA::Boolean hdr_status = msg.read_ulong (req_id);
 
   // Store it in the Locate request classes
@@ -439,7 +437,6 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
 
   return 0;
 }
-
 
 int
 TAO_GIOP_Message_Generator_Parser_10::parse_locate_reply (

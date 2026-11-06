@@ -22,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO_GIOP_Message_Generator_Parser_12::write_request_header (
-    const TAO_Operation_Details &opdetails,
+    TAO_Operation_Details const &opdetails,
     TAO_Target_Specification &spec,
     TAO_OutputCDR &msg)
 {
@@ -65,7 +65,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
     return false;
 
   // The reserved field
-  CORBA::Octet reserved[3] = {0, 0, 0};
+  CORBA::Octet reserved[3] {};
 
   msg.write_octet_array (reserved, 3);
 
@@ -227,13 +227,13 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   CORBA::Boolean hdr_status = input.good_bit ();
 
-  CORBA::ULong req_id = 0;
+  CORBA::ULong req_id {};
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
 
   request.request_id (req_id);
 
-  CORBA::Octet response_flags = CORBA::Octet();
+  CORBA::Octet response_flags {};
   hdr_status = hdr_status && input.read_octet (response_flags);
 
   request.response_expected ((response_flags > 0));
@@ -249,7 +249,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   hdr_status =
     hdr_status && request.profile ().unmarshall_target_address(input);
 
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   hdr_status = hdr_status && input.read_ulong (length);
 
   if (hdr_status)
@@ -303,7 +303,6 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   return hdr_status ? 0 : -1;
 }
 
-
 int
 TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
     TAO_GIOP_Locate_Request_Header &request)
@@ -312,7 +311,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   TAO_InputCDR &msg = request.incoming_stream ();
 
   // Get the request id.
-  CORBA::ULong req_id = 0;
+  CORBA::ULong req_id {};
   CORBA::Boolean hdr_status = msg.read_ulong (req_id);
 
   // Store it in the Locate request classes
@@ -378,13 +377,11 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
   return 0;
 }
 
-
 CORBA::Octet
 TAO_GIOP_Message_Generator_Parser_12::major_version () const
 {
   return static_cast<CORBA::Octet> (1);
 }
-
 
 CORBA::Octet
 TAO_GIOP_Message_Generator_Parser_12::minor_version () const
@@ -413,7 +410,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
           return false;
 
         // Get the object key
-        const TAO::ObjectKey *key = spec.object_key ();
+        TAO::ObjectKey const *key = spec.object_key ();
 
         if (key)
           {
@@ -439,7 +436,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
           return false;
 
         // Get the profile
-        const IOP::TaggedProfile *pfile = spec.profile ();
+        IOP::TaggedProfile const *pfile = spec.profile ();
 
         if (pfile)
           {
@@ -465,7 +462,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
           return false;
 
         // Get the IOR
-        IOP::IOR *ior = nullptr;
+        IOP::IOR *ior {};
         CORBA::ULong const index = spec.iop_ior (ior);
 
         if (ior)

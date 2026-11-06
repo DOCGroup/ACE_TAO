@@ -36,7 +36,7 @@ class TAO_GIOP_Message_Generator_Parser_12 :
 public:
   /// Write the request header in to @a msg
   bool write_request_header (
-      const TAO_Operation_Details &opdetails,
+      TAO_Operation_Details const &opdetails,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg) override;
 
