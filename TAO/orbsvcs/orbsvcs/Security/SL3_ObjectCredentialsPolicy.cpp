@@ -11,7 +11,7 @@ TAO::SL3::ObjectCredentialsPolicy::ObjectCredentialsPolicy (
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::ObjectCredentialsPolicy::creds_list ()
 {
-  SecurityLevel3::OwnCredentialsList * creds = nullptr;
+  SecurityLevel3::OwnCredentialsList * creds {};
 
   ACE_NEW_THROW_EX (creds,
                     SecurityLevel3::OwnCredentialsList (this->creds_list_),

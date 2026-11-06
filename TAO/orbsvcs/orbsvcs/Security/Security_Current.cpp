@@ -53,7 +53,7 @@ TAO_Security_Current::init ()
   try
     {
       int argc {};
-      ACE_TCHAR **argv = nullptr;
+      ACE_TCHAR **argv {};
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             this->orb_id_.in ());
