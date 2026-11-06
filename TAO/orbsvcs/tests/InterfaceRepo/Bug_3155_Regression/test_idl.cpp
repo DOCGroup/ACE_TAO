@@ -2,79 +2,63 @@
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"
 
-namespace
+struct Test_Options
 {
-  ACE_TCHAR const* ifr_ior_file = nullptr;
-  ACE_TCHAR const* idl_value = nullptr;
-}
+  ACE_TCHAR const* ifr_ior_file {};
+  ACE_TCHAR const* idl_value {};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Test_Options& options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:s:"));
-  const unsigned char full_success = 0x03;
-  unsigned char success = 0;
+  int c {};
 
-  while (true)
+  while ((c = get_opts ()) != -1)
     {
-      int c = get_opts ();
-      if (success == full_success)
-        {
-          break;
-        }
-
-      if (c == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                            "usage:  %s"
-                            " -i <ifr_ior>"
-                              " -s <idl_valuetype>"
-                            "\n",
-                            argv [0]),
-                            -1);
-        }
-
       switch (c)
         {
         case 'i':
-          ifr_ior_file = get_opts.opt_arg ();
-          success |= 0x01;
+          options.ifr_ior_file = get_opts.opt_arg ();
           break;
         case 's':
-          idl_value = get_opts.opt_arg ();
-          success |= 0x02;
+          options.idl_value = get_opts.opt_arg ();
           break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -i <ifr_ior> -s <idl_valuetype>\n"),
+                             argv [0]),
+                            -1);
         }
     }
 
-  // Indicates successful parsing of the command line
+  if (options.ifr_ior_file == nullptr || options.idl_value == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("usage: %s -i <ifr_ior> -s <idl_valuetype>\n"),
+                       argv [0]),
+                      -1);
+
   return 0;
 }
 
-// ----------------------------------------------------------------------
-
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Test_Options options;
+
   try
     {
-      // init orb
-      CORBA::ORB_var the_orb =
+      CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
-        {
-          return -1;
-        }
+      if (parse_args (argc, argv, options) == -1)
+        return -1;
 
-      // get IFR
       CORBA::Object_var objref =
-        the_orb->string_to_object (ifr_ior_file);
-      if (objref.in () == nullptr)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                              "The received objref is nil\n"),
-                            -1);
-        }
+        orb->string_to_object (options.ifr_ior_file);
+      if (CORBA::is_nil (objref.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("The received objref is nil\n")), -1);
 
       CORBA::ComponentIR::Repository_var the_repo_ref;
       try
@@ -87,17 +71,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      // search in repository
       CORBA::Contained_var current_contained =
-        the_repo_ref->lookup_id (ACE_TEXT_ALWAYS_CHAR (idl_value));
-      if (CORBA::is_nil(current_contained.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                              "Can't look up the valuetype\n"),
-                            -1);
-        }
+        the_repo_ref->lookup_id (ACE_TEXT_ALWAYS_CHAR (options.idl_value));
+      if (CORBA::is_nil (current_contained.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Can't look up the valuetype\n")), -1);
 
-      // get value type definition
       CORBA::ExtValueDef_var value_def =
         CORBA::ExtValueDef::_narrow (current_contained.in ());
       CORBA::ExtValueDef::ExtFullValueDescription_var value_descr;
@@ -105,22 +83,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           value_descr = value_def->describe_ext_value ();
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("Can't describe_ext_value:");
           return 1;
         }
 
-      CORBA::ValueMemberSeq& the_value_members =
+      CORBA::ValueMemberSeq const& the_value_members =
         value_descr->members;
-      for (CORBA::ULong ct = 0; ct < the_value_members.length (); ++ct)
-      {
-        CORBA::ValueMember const& current_member =
-          the_value_members [ct];
-        ACE_DEBUG ((LM_DEBUG,
-                    "value type member '%C'\n",
-                    current_member.name.in ()));
-      }
+      for (CORBA::ULong ct {}; ct < the_value_members.length (); ++ct)
+        {
+          CORBA::ValueMember const& current_member = the_value_members [ct];
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("value type member '%C'\n"),
+                      current_member.name.in ()));
+        }
     }
   catch (CORBA::Exception const& ex)
     {
