@@ -186,10 +186,10 @@ private:
   CORBA::ULong const opname_len_;
 
   /// Request ID of this operation.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Response flags
-  CORBA::Octet response_flags_;
+  CORBA::Octet response_flags_ {};
 
   /// The ServiceContextList sent to the server side. Only valid
   /// when sending a request.
@@ -200,13 +200,13 @@ private:
   TAO_Service_Context reply_service_info_;
 
   /// Addressing mode for this request.
-  TAO_Target_Specification::TAO_Target_Address addressing_mode_;
+  TAO_Target_Specification::TAO_Target_Address addressing_mode_ {TAO_Target_Specification::Key_Addr};
 
   /**
    * The arguments of this operation. Note that the return value is also
    * an argument
    */
-  TAO::Argument **args_;
+  TAO::Argument **args_ {};
 
   /// Number of arguments including the return value
   CORBA::ULong const num_args_;
@@ -215,28 +215,28 @@ private:
   CORBA::Boolean const has_in_args_;
 
   /// The type of exceptions that the operations can throw.
-  TAO::Exception_Data const *ex_data_;
+  TAO::Exception_Data const *ex_data_ {};
 
   /// Count of the exceptions that operations can throw.
   CORBA::ULong const ex_count_;
 
   /// Boolean flag to indicate whether in the skeletons the stub arguments
   /// stored in these operation details should be used or not.
-  CORBA::Boolean use_stub_args_;
+  CORBA::Boolean use_stub_args_ {};
 
 #if TAO_HAS_INTERCEPTORS == 1
   /// FT request expiration time (absolute gregorian)
-  TimeBase::TimeT ft_expiration_time_;
+  TimeBase::TimeT ft_expiration_time_ {};
 
   /// FT request retention id
-  CORBA::Long ft_retention_id_;
+  CORBA::Long ft_retention_id_ {};
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
   /// The optional collocated arguments converter
-  TAO::Collocated_Arguments_Converter *cac_;
+  TAO::Collocated_Arguments_Converter *cac_ {};
 
   /// The optional reply dispatcher
-  TAO_Reply_Dispatcher *reply_dispatcher_;
+  TAO_Reply_Dispatcher *reply_dispatcher_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

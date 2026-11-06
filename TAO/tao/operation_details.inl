@@ -12,21 +12,12 @@ TAO_Operation_Details::TAO_Operation_Details (char const *name,
                                               CORBA::ULong count)
   : opname_ (name)
     , opname_len_ (len)
-    , request_id_ (0)
-    , response_flags_ (0)
-    , addressing_mode_ (TAO_Target_Specification::Key_Addr)
     , args_ (args)
     , num_args_ (num)
     , has_in_args_ (has_in_args)
     , ex_data_ (data)
     , ex_count_ (count)
-    , use_stub_args_ (args ? true : false)
-#if TAO_HAS_INTERCEPTORS == 1
-    , ft_expiration_time_ (0)
-    , ft_retention_id_ (0)
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
-    , cac_ (0)
-    , reply_dispatcher_ (0)
+    , use_stub_args_ (args != nullptr)
 {
 }
 
@@ -255,6 +246,5 @@ TAO_Operation_Details::reply_dispatcher (TAO_Reply_Dispatcher *rd)
 {
   this->reply_dispatcher_ = rd;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
