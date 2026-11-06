@@ -170,7 +170,7 @@ TAO_StructDef_i::members_i ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (kind_queue.size ());
 
-  CORBA::StructMemberSeq *members = nullptr;
+  CORBA::StructMemberSeq *members = {};
   ACE_NEW_THROW_EX (members,
                     CORBA::StructMemberSeq (size),
                     CORBA::NO_MEMORY ());
@@ -183,7 +183,7 @@ TAO_StructDef_i::members_i ()
   CORBA::DefinitionKind kind = CORBA::dk_none;
   CORBA::Object_var obj;
   ACE_Configuration_Section_Key member_key;
-  TAO_IDLType_i *impl = nullptr;
+  TAO_IDLType_i *impl = {};
 
   // Store to replace below.
   ACE_Configuration_Section_Key key_holder = this->section_key_;
@@ -252,7 +252,7 @@ TAO_StructDef_i::members_i (CORBA::StructMemberSeq const &members)
                                         "refs",
                                         1,
                                         refs_key);
-  char *path = nullptr;
+  char *path = {};
 
   // Create a section for each new member. We just store the
   // member name and the path to its database entry.

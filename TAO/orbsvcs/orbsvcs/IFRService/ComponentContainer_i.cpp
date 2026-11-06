@@ -110,8 +110,8 @@ TAO_ComponentContainer_i::create_component_i (
                                                  "count",
                                                  count);
 
-      char const *supported_path = nullptr;
-      char *stringified = nullptr;
+      char const *supported_path = {};
+      char *stringified = {};
 
       for (i = 0; i < count; ++i)
         {
@@ -186,7 +186,7 @@ TAO_ComponentContainer_i::create_home_i (
         "defns"
       );
 
-  char *base_path = nullptr;
+  char *base_path = {};
 
   if (! CORBA::is_nil (base_home))
     {
@@ -219,8 +219,8 @@ TAO_ComponentContainer_i::create_home_i (
                                                  "count",
                                                  length);
 
-      char *supported_path = nullptr;
-      char *stringified = nullptr;
+      char *supported_path = {};
+      char *stringified = {};
 
       for (i = 0; i < length; ++i)
         {
@@ -360,7 +360,7 @@ TAO_ComponentContainer_i::create_event_i (
                                             1,
                                             bases_key);
 
-      char *base_path = nullptr;
+      char *base_path = {};
 
       for (i = 0; i < length; ++i)
         {
@@ -388,7 +388,7 @@ TAO_ComponentContainer_i::create_event_i (
       this->repo_->config ()->set_integer_value (supported_key,
                                                  "count",
                                                  length);
-      char *supported_path = nullptr;
+      char *supported_path = {};
 
       for (i = 0; i < length; ++i)
         {
@@ -414,8 +414,8 @@ TAO_ComponentContainer_i::create_event_i (
                                             initializers_key);
 
       CORBA::ULong count = 0;
-      char *path = nullptr;
-      char *stringified = nullptr;
+      char *path = {};
+      char *stringified = {};
       ACE_Configuration_Section_Key initializer_key;
       ACE_Configuration_Section_Key outer_key;
       ACE_Configuration_Section_Key inner_key;

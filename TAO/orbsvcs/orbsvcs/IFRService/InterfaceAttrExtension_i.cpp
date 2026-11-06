@@ -35,7 +35,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface ()
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
 TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
 {
-  CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *fifd = nullptr;
+  CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *fifd = {};
   ACE_NEW_RETURN (fifd,
                   CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription,
                   0);
@@ -199,7 +199,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   repo_ids.length (length);
 
   PortableServer::ObjectId_var oid;
-  char *base_path = nullptr;
+  char *base_path = {};
   ACE_Configuration_Section_Key base_key;
 
   for (i = 0; i < length; ++i)

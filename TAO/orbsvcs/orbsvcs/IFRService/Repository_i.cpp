@@ -464,7 +464,7 @@ TAO_Repository_i::repo_init (CORBA::Repository_ptr repo_ref,
   this->repo_poa_ = repo_poa;
 
   // Create the appropriate lock.
-  ACE_Lock *lock = nullptr;
+  ACE_Lock *lock = {};
   if (OPTIONS::instance ()->enable_locking ())
     {
       ACE_NEW_THROW_EX (lock,

@@ -61,7 +61,7 @@ TAO_ValueMemberDef_i::describe_i ()
                                               val);
   vm.access = static_cast<CORBA::Visibility> (val);
 
-  CORBA::Contained::Description *retval = nullptr;
+  CORBA::Contained::Description *retval = {};
   ACE_NEW_RETURN (retval,
                   CORBA::Contained::Description,
                   0);

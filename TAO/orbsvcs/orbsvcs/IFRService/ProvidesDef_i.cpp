@@ -47,7 +47,7 @@ TAO_ProvidesDef_i::describe_i ()
                                             base_type_id);
   pd.interface_type = base_type_id.fast_rep ();
 
-  CORBA::Contained::Description *retval = nullptr;
+  CORBA::Contained::Description *retval = {};
   ACE_NEW_RETURN (retval,
                   CORBA::Contained::Description,
                   0);

@@ -137,7 +137,7 @@ TAO_HomeDef_i::describe_i ()
 
   home_desc.type = this->type_i ();
 
-  CORBA::Contained::Description *retval = nullptr;
+  CORBA::Contained::Description *retval = {};
   ACE_NEW_RETURN (retval,
                   CORBA::Contained::Description,
                   0);
@@ -243,7 +243,7 @@ CORBA::InterfaceDefSeq *
 TAO_HomeDef_i::supported_interfaces_i (
   )
 {
-  CORBA::InterfaceDefSeq *retval = nullptr;
+  CORBA::InterfaceDefSeq *retval = {};
   ACE_NEW_RETURN (retval,
                   CORBA::InterfaceDefSeq,
                   0);
@@ -266,7 +266,7 @@ TAO_HomeDef_i::supported_interfaces_i (
                                              "count",
                                              count);
   retval->length (count);
-  char *stringified = nullptr;
+  char *stringified = {};
   ACE_TString holder;
   CORBA::Object_var obj;
 
@@ -317,8 +317,8 @@ TAO_HomeDef_i::supported_interfaces_i (
                                         "supported",
                                         1,
                                         supported_key);
-  char *stringified = nullptr;
-  char *path = nullptr;
+  char *stringified = {};
+  char *path = {};
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -572,8 +572,8 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
-      char *type_path = nullptr;
-      char *stringified = nullptr;
+      char *type_path = {};
+      char *stringified = {};
       ACE_Configuration_Section_Key param_key;
 
       for (i = 0; i < length; ++i)
@@ -622,7 +622,7 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
       this->repo_->config ()->set_integer_value (excepts_key,
                                                  "count",
                                                  length);
-      char *type_path = nullptr;
+      char *type_path = {};
 
       for (i = 0; i < length; ++i)
         {
@@ -666,7 +666,7 @@ TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
                                              "count",
                                              count);
   ods.length (count);
-  char *stringified = nullptr;
+  char *stringified = {};
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {
@@ -746,7 +746,7 @@ TAO_HomeDef_i::fill_param_desc_seq (ACE_Configuration_Section_Key &key,
                                              "count",
                                              count);
   pds.length (count);
-  char *stringified = nullptr;
+  char *stringified = {};
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {
@@ -815,7 +815,7 @@ TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
                                              "count",
                                              count);
   eds.length (count);
-  char *stringified = nullptr;
+  char *stringified = {};
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {
@@ -879,7 +879,7 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
                                              "count",
                                              count);
   eads.length (count);
-  char *stringified = nullptr;
+  char *stringified = {};
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {

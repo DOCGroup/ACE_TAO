@@ -41,7 +41,7 @@ TAO_OperationDef_i::describe ( )
 CORBA::Contained::Description *
 TAO_OperationDef_i::describe_i ( )
 {
-  CORBA::Contained::Description *desc_ptr = nullptr;
+  CORBA::Contained::Description *desc_ptr = {};
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
@@ -180,7 +180,7 @@ TAO_OperationDef_i::params_i ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (key_queue.size ());
 
-  CORBA::ParDescriptionSeq *pd_seq = nullptr;
+  CORBA::ParDescriptionSeq *pd_seq = {};
   ACE_NEW_THROW_EX (pd_seq,
                     CORBA::ParDescriptionSeq (size),
                     CORBA::NO_MEMORY ());
@@ -279,7 +279,7 @@ TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
   this->repo_->config ()->set_integer_value (params_key,
                                              "count",
                                              length);
-  char *type_path = nullptr;
+  char *type_path = {};
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -392,7 +392,7 @@ TAO_OperationDef_i::contexts_i ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (context_queue.size ());
 
-  CORBA::ContextIdSeq *ci_seq = nullptr;
+  CORBA::ContextIdSeq *ci_seq = {};
   ACE_NEW_THROW_EX (ci_seq,
                     CORBA::ContextIdSeq (size),
                     CORBA::NO_MEMORY ());
@@ -493,7 +493,7 @@ TAO_OperationDef_i::exceptions_i ( )
 
   CORBA::ULong size = static_cast<CORBA::ULong> (path_queue.size ());
 
-  CORBA::ExceptionDefSeq *ed_seq = nullptr;
+  CORBA::ExceptionDefSeq *ed_seq = {};
   ACE_NEW_THROW_EX (ed_seq,
                     CORBA::ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());

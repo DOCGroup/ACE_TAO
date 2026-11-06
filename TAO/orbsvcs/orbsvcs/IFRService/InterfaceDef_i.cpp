@@ -77,7 +77,7 @@ TAO_InterfaceDef_i::describe ()
 CORBA::Contained::Description *
 TAO_InterfaceDef_i::describe_i ()
 {
-  CORBA::Contained::Description *desc_ptr = nullptr;
+  CORBA::Contained::Description *desc_ptr = {};
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
@@ -114,7 +114,7 @@ TAO_InterfaceDef_i::describe_i ()
   CORBA::RepositoryIdSeq repo_ids (length);
   repo_ids.length (length);
 
-  char *base_path = nullptr;
+  char *base_path = {};
   ACE_Configuration_Section_Key base_key;
 
   for (i = 0; i < length; ++i)
@@ -187,7 +187,7 @@ TAO_InterfaceDef_i::base_interfaces_i ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (kind_queue.size ());
 
-  CORBA::InterfaceDefSeq *seq = nullptr;
+  CORBA::InterfaceDefSeq *seq = {};
   ACE_NEW_THROW_EX (seq,
                     CORBA::InterfaceDefSeq (size),
                     CORBA::NO_MEMORY ());
@@ -260,7 +260,7 @@ TAO_InterfaceDef_i::base_interfaces_i (CORBA::InterfaceDefSeq const &base_interf
                                         inherited_key);
 
   CORBA::String_var name;
-  char *inherited_path = nullptr;
+  char *inherited_path = {};
   PortableServer::ObjectId_var oid;
   ACE_Configuration_Section_Key base_key;
 
@@ -329,7 +329,7 @@ TAO_InterfaceDef_i::is_a_i (char const *interface_id)
   CORBA::ULong length = bases->length ();
 
   PortableServer::ObjectId_var oid;
-  char *base_path = nullptr;
+  char *base_path = {};
   ACE_Configuration_Section_Key base_key;
 
   for (CORBA::ULong i = 0; i < length; ++i)
@@ -368,7 +368,7 @@ TAO_InterfaceDef_i::describe_interface ()
 CORBA::InterfaceDef::FullInterfaceDescription *
 TAO_InterfaceDef_i::describe_interface_i ()
 {
-  CORBA::InterfaceDef::FullInterfaceDescription *fifd = nullptr;
+  CORBA::InterfaceDef::FullInterfaceDescription *fifd = {};
   ACE_NEW_RETURN (fifd,
                   CORBA::InterfaceDef::FullInterfaceDescription,
                   0);
@@ -531,7 +531,7 @@ TAO_InterfaceDef_i::describe_interface_i ()
   repo_ids.length (length);
 
   PortableServer::ObjectId_var oid;
-  char *base_path = nullptr;
+  char *base_path = {};
   ACE_Configuration_Section_Key base_key;
 
   for (i = 0; i < length; ++i)
@@ -727,7 +727,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
       this->repo_->config ()->set_integer_value (params_key,
                                                  "count",
                                                  length);
-      char *type_path = nullptr;
+      char *type_path = {};
 
       for (i = 0; i < length; ++i)
         {
@@ -778,7 +778,7 @@ TAO_InterfaceDef_i::create_operation_i (char const *id,
                                             "excepts",
                                             1,
                                             excepts_key);
-      char *type_path = nullptr;
+      char *type_path = {};
 
       for (i = 0; i < length; ++i)
         {

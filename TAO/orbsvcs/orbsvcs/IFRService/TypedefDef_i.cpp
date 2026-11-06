@@ -27,7 +27,7 @@ TAO_TypedefDef_i::describe ()
 CORBA::Contained::Description *
 TAO_TypedefDef_i::describe_i ()
 {
-  CORBA::Contained::Description *desc_ptr = nullptr;
+  CORBA::Contained::Description *desc_ptr = {};
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());

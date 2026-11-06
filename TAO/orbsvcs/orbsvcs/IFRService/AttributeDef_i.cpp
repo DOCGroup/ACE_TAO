@@ -35,7 +35,7 @@ TAO_AttributeDef_i::describe ()
 CORBA::Contained::Description *
 TAO_AttributeDef_i::describe_i ()
 {
-  CORBA::Contained::Description *desc_ptr = nullptr;
+  CORBA::Contained::Description *desc_ptr = {};
   ACE_NEW_THROW_EX (desc_ptr,
                     CORBA::Contained::Description,
                     CORBA::NO_MEMORY ());
@@ -44,7 +44,7 @@ TAO_AttributeDef_i::describe_i ()
 
   retval->kind = CORBA::dk_Attribute;
 
-  CORBA::AttributeDescription *ad = nullptr;
+  CORBA::AttributeDescription *ad = {};
   ACE_NEW_RETURN (ad,
                   CORBA::AttributeDescription,
                   0);
@@ -236,7 +236,7 @@ TAO_AttributeDef_i::get_exceptions ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (path_queue.size ());
 
-  CORBA::ExceptionDefSeq *get_ed_seq = nullptr;
+  CORBA::ExceptionDefSeq *get_ed_seq = {};
   ACE_NEW_THROW_EX (get_ed_seq,
                     CORBA::ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());
@@ -308,7 +308,7 @@ TAO_AttributeDef_i::put_exceptions ()
 
   CORBA::ULong size = static_cast<CORBA::ULong> (path_queue.size ());
 
-  CORBA::ExceptionDefSeq *put_ed_seq = nullptr;
+  CORBA::ExceptionDefSeq *put_ed_seq = {};
   ACE_NEW_THROW_EX (put_ed_seq,
                     CORBA::ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());

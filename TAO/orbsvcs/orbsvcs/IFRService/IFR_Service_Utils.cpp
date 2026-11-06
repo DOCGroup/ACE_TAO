@@ -218,7 +218,7 @@ TAO_IFR_Server::open_config ()
             "Software\\TAO\\IFR"
           );
 
-      ACE_Configuration_Win32Registry *registry = nullptr;
+      ACE_Configuration_Win32Registry *registry = {};
       ACE_NEW_THROW_EX (registry,
                         ACE_Configuration_Win32Registry (root),
                         CORBA::NO_MEMORY ());
@@ -229,7 +229,7 @@ TAO_IFR_Server::open_config ()
     }
   else
     {
-      ACE_Configuration_Heap *heap = nullptr;
+      ACE_Configuration_Heap *heap = {};
       ACE_NEW_THROW_EX (heap,
                         ACE_Configuration_Heap,
                         CORBA::NO_MEMORY ());
@@ -264,7 +264,7 @@ TAO_IFR_Server::open_config ()
 int
 TAO_IFR_Server::create_repository ()
 {
-  TAO_ComponentRepository_i *impl = nullptr;
+  TAO_ComponentRepository_i *impl = {};
   ACE_NEW_THROW_EX (
       impl,
       TAO_ComponentRepository_i (
@@ -404,7 +404,7 @@ TAO_IFR_Server::init_multicast_server ()
 
   // Instantiate a handler which will handle client requests for
   // the IFR ior, received on the multicast port.
-  TAO_IOR_Multicast *ior_multicast = nullptr;
+  TAO_IOR_Multicast *ior_multicast = {};
   ACE_NEW_THROW_EX (ior_multicast,
                     TAO_IOR_Multicast (),
                     CORBA::NO_MEMORY ());
@@ -600,7 +600,7 @@ TAO_IFR_Service_Utils::name_exists (
   int status = 0;
   ACE_TString section_name;
   u_int count = 0;
-  char *stringified = nullptr;
+  char *stringified = {};
 
   // Check the members defined elsewhere, if any.
   ACE_Configuration_Section_Key refs_key;
@@ -750,7 +750,7 @@ TAO_IFR_Service_Utils::check_subsection (
 
   ACE_Configuration_Section_Key entry_key;
   ACE_TString entry_name;
-  char *stringified = nullptr;
+  char *stringified = {};
 
   for (CORBA::ULong i = 0; i < count; ++i)
     {
@@ -950,7 +950,7 @@ TAO_IFR_Service_Utils::set_exceptions (
                              "count",
                              length);
 
-  char *type_path = nullptr;
+  char *type_path = {};
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -1070,7 +1070,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
                                       "count",
                                       count);
   vm_seq.length (count);
-  char *stringified = nullptr;
+  char *stringified = {};
   ACE_Configuration_Section_Key member_key, type_key;
   ACE_TString holder;
   CORBA::ULong access = 0;
