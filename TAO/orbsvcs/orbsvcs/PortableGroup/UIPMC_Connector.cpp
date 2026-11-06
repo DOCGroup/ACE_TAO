@@ -117,7 +117,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 #endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
 
-  TAO_UIPMC_Connection_Handler *svc_handler = nullptr;
+  TAO_UIPMC_Connection_Handler *svc_handler {};
 
   ACE_NEW_RETURN (svc_handler,
                   TAO_UIPMC_Connection_Handler (this->orb_core ()),
@@ -274,7 +274,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 TAO_Profile *
 TAO_UIPMC_Connector::create_profile (TAO_InputCDR &cdr)
 {
-  TAO_Profile *pfile = nullptr;
+  TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_UIPMC_Profile (this->orb_core ()),
                   nullptr);
@@ -297,7 +297,7 @@ TAO_UIPMC_Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_UIPMC_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (

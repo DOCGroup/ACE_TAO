@@ -9,7 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Adapter *
 TAO_PG_Object_Adapter_Factory::create (TAO_ORB_Core * orb_core)
 {
-  TAO_Object_Adapter *object_adapter = nullptr;
+  TAO_Object_Adapter *object_adapter {};
   ACE_NEW_RETURN (object_adapter,
                   TAO_Object_Adapter (orb_core->server_factory ()->
                                         active_object_map_creation_parameters (),
@@ -17,7 +17,7 @@ TAO_PG_Object_Adapter_Factory::create (TAO_ORB_Core * orb_core)
                   nullptr);
 
   // Create and register the RT servant dispatcher.
-  TAO_PG_Servant_Dispatcher *rt_servant_dispatcher = nullptr;
+  TAO_PG_Servant_Dispatcher *rt_servant_dispatcher {};
   ACE_NEW_RETURN (rt_servant_dispatcher,
                   TAO_PG_Servant_Dispatcher,
                   nullptr);

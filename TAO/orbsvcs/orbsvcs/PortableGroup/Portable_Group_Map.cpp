@@ -57,7 +57,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
   new_entry->key = key;
 
   // First, check if the GroupId is already in the map.
-  Map_Entry *entry = nullptr;
+  Map_Entry *entry {};
   if (this->map_.find (group_id, entry) == 0)
     {
       // Add the object key to the list of object keys serviced by this GroupId.
@@ -101,7 +101,7 @@ TAO_Portable_Group_Map::dispatch (PortableGroup::TagGroupTaggedComponent* group_
                   this->lock_);
 
   // Look up the GroupId.
-  Map_Entry *entry = nullptr;
+  Map_Entry *entry {};
   if (this->map_.find (group_id, entry) == 0)
     {
       // Save the read pointer in the message block since

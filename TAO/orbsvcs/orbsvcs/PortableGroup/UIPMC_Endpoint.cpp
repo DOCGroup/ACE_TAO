@@ -97,7 +97,7 @@ TAO_UIPMC_Endpoint::next ()
 TAO_Endpoint *
 TAO_UIPMC_Endpoint::duplicate ()
 {
-  TAO_UIPMC_Endpoint *endpoint = nullptr;
+  TAO_UIPMC_Endpoint *endpoint {};
 
   ACE_NEW_RETURN (endpoint,
                   TAO_UIPMC_Endpoint (this->object_addr_),

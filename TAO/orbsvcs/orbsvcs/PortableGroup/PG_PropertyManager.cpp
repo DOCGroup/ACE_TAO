@@ -53,7 +53,7 @@ TAO_PG_PropertyManager::get_default_properties ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, nullptr);
 
-  PortableGroup::Properties * props = nullptr;
+  PortableGroup::Properties * props {};
   ACE_NEW_THROW_EX (props,
                     PortableGroup::Properties (this->default_properties_),
                     CORBA::NO_MEMORY (
@@ -94,7 +94,7 @@ TAO_PG_PropertyManager::set_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  Type_Prop_Table::ENTRY * entry = nullptr;
+  Type_Prop_Table::ENTRY * entry {};
   if (this->type_properties_.find (type_id, entry) != 0)
     throw CORBA::BAD_PARAM ();
 
@@ -110,8 +110,8 @@ TAO_PG_PropertyManager::get_type_properties (
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, nullptr);
 
 
-  Type_Prop_Table::ENTRY * entry = nullptr;
-  PortableGroup::Properties * type_properties = nullptr;
+  Type_Prop_Table::ENTRY * entry {};
+  PortableGroup::Properties * type_properties {};
 
   if (this->type_properties_.find (type_id, entry) == 0)
     type_properties = &entry->int_id_;
@@ -122,7 +122,7 @@ TAO_PG_PropertyManager::get_type_properties (
   CORBA::ULong const props_len =
     (def_props_len > type_props_len ? def_props_len : type_props_len);
 
-  PortableGroup::Properties * tmp_properties = nullptr;
+  PortableGroup::Properties * tmp_properties {};
   ACE_NEW_THROW_EX (tmp_properties,
                     PortableGroup::Properties (props_len),
                     CORBA::NO_MEMORY (
@@ -158,7 +158,7 @@ TAO_PG_PropertyManager::remove_type_properties (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  Type_Prop_Table::ENTRY * entry = nullptr;
+  Type_Prop_Table::ENTRY * entry {};
   if (this->type_properties_.find (type_id, entry) != 0)
     throw CORBA::BAD_PARAM ();
 
@@ -221,8 +221,8 @@ TAO_PG_PropertyManager::get_properties (
     this->object_group_manager_.type_id (object_group);
 
   CORBA::ULong type_props_len {};
-  PortableGroup::Properties * type_properties = nullptr;
-  Type_Prop_Table::ENTRY * type_entry = nullptr;
+  PortableGroup::Properties * type_properties {};
+  Type_Prop_Table::ENTRY * type_entry {};
   if (this->type_properties_.find (type_id.in (), type_entry) == 0)
     {
       type_properties = &type_entry->int_id_;
@@ -236,7 +236,7 @@ TAO_PG_PropertyManager::get_properties (
   if (def_props_len > properties_len)
     properties_len = def_props_len;
 
-  PortableGroup::Properties * tmp_properties = nullptr;
+  PortableGroup::Properties * tmp_properties {};
   ACE_NEW_THROW_EX (tmp_properties,
                     PortableGroup::Properties (properties_len),
                     CORBA::NO_MEMORY (

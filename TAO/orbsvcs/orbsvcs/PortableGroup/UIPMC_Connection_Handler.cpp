@@ -36,7 +36,7 @@ TAO_UIPMC_Connection_Handler::TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_co
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_UIPMC_Transport *specific_transport = nullptr;
+  TAO_UIPMC_Transport *specific_transport {};
   ACE_NEW(specific_transport,
           TAO_UIPMC_Transport (this, orb_core));
 

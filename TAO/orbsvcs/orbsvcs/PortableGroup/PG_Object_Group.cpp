@@ -274,7 +274,7 @@ TAO::PG_Object_Group::add_member (PortableGroup::Location const & the_location,
   CORBA::Object_var member_ior =
     this->orb_->string_to_object (member_ior_string.in ());
 
-  MemberInfo * info = nullptr;
+  MemberInfo * info {};
   ACE_NEW_THROW_EX (info,
                     MemberInfo (member_ior.in (),
                                 the_location),
@@ -327,7 +327,7 @@ TAO::PG_Object_Group::set_primary_member (
                     this->internals_,
                     0);
   int result { 1 };
-  MemberInfo * info = nullptr;
+  MemberInfo * info {};
   if (this->members_.find (the_location, info) == 0)
     {
       int cleared {};
@@ -396,7 +396,7 @@ TAO::PG_Object_Group::remove_member (
     PortableGroup::Location const & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-  MemberInfo * info = nullptr;
+  MemberInfo * info {};
   if (this->members_.unbind (the_location, info) == 0)
     {
       if (this->members_.current_size () > 0)
@@ -579,7 +579,7 @@ TAO::PG_Object_Group::locations_of_members ()
                     this->internals_,
                     0);
 
-  PortableGroup::Locations * result = nullptr;
+  PortableGroup::Locations * result {};
 
   CORBA::ULong const count = static_cast<CORBA::ULong> (this->members_.current_size ());
 
@@ -614,7 +614,7 @@ TAO::PG_Object_Group::get_member_reference (
 
   CORBA::Object_var result;
 
-  MemberInfo * info = nullptr;
+  MemberInfo * info {};
   if (this->members_.find (the_location, info) == 0)
     {
       result = CORBA::Object::_duplicate (info->member_.in ());
@@ -720,7 +720,7 @@ TAO::PG_Object_Group::create_member (
               CORBA::Object_var member_ior =
                 this->orb_->string_to_object (member_ior_string.in ());
 
-              MemberInfo * info = nullptr;
+              MemberInfo * info {};
               ACE_NEW_THROW_EX (info, MemberInfo(
                                                  member_ior.in(),
                                                  the_location,
@@ -802,7 +802,7 @@ TAO::PG_Object_Group::create_members (size_t count)
                   CORBA::Object_var member_ior =
                     this->orb_->string_to_object (member_ior_string.in ());
 
-                  MemberInfo * info = nullptr;
+                  MemberInfo * info {};
                   ACE_NEW_THROW_EX (info, MemberInfo(
                                                      member_ior.in(),
                                                      factory_location,

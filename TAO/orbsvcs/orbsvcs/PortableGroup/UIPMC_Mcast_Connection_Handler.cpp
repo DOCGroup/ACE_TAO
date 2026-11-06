@@ -44,7 +44,7 @@ TAO_UIPMC_Mcast_Connection_Handler::TAO_UIPMC_Mcast_Connection_Handler (
   : TAO_UIPMC_MCAST_SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core)
 {
-  TAO_UIPMC_Mcast_Transport *specific_transport = nullptr;
+  TAO_UIPMC_Mcast_Transport *specific_transport {};
   ACE_NEW (specific_transport,
            TAO_UIPMC_Mcast_Transport (this, orb_core));
 

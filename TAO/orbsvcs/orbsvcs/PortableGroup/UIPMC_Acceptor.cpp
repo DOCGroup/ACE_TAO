@@ -178,7 +178,7 @@ TAO_UIPMC_Acceptor::open (
 
   this->endpoint_count_ = 1;  // Only one hostname to store
 
-  ACE_INET_Addr *addrs = nullptr;
+  ACE_INET_Addr *addrs {};
   ACE_NEW_RETURN (addrs,
                   ACE_INET_Addr[this->endpoint_count_],
                   -1);
@@ -277,7 +277,7 @@ TAO_UIPMC_Acceptor::open_i (
     } // End loop replacing all preferred_interfaces tokens.
 
   // Create our connection handler and pass it our configurtion options.
-  TAO_UIPMC_Mcast_Connection_Handler *connection_handler = nullptr;
+  TAO_UIPMC_Mcast_Connection_Handler *connection_handler {};
   ACE_NEW_RETURN (connection_handler,
                   TAO_UIPMC_Mcast_Connection_Handler (this->orb_core_),
                   -1);

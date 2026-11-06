@@ -293,7 +293,7 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
           if (bound == -1)
             bound = TAO_DEFAULT_MIOP_FRAGMENTS_CLEANUP_DELAY;
 
-          TAO_PG::Time_Bound_Fragments_Cleanup_Strategy *strategy = nullptr;
+          TAO_PG::Time_Bound_Fragments_Cleanup_Strategy *strategy {};
           ACE_NEW_RETURN (strategy,
                           TAO_PG::Time_Bound_Fragments_Cleanup_Strategy (
                             bound),
@@ -307,7 +307,7 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
           if (bound == -1)
             bound = TAO_DEFAULT_MIOP_FRAGMENTS_CLEANUP_NUMBER;
 
-          TAO_PG::Number_Bound_Fragments_Cleanup_Strategy *strategy = nullptr;
+          TAO_PG::Number_Bound_Fragments_Cleanup_Strategy *strategy {};
           ACE_NEW_RETURN (strategy,
                           TAO_PG::Number_Bound_Fragments_Cleanup_Strategy (
                             bound),
@@ -321,7 +321,7 @@ TAO_MIOP_Resource_Factory::fragments_cleanup_strategy () const
           if (bound == -1)
             bound = TAO_DEFAULT_MIOP_FRAGMENTS_CLEANUP_MEMORY;
 
-          TAO_PG::Memory_Bound_Fragments_Cleanup_Strategy *strategy = nullptr;
+          TAO_PG::Memory_Bound_Fragments_Cleanup_Strategy *strategy {};
           ACE_NEW_RETURN (strategy,
                           TAO_PG::Memory_Bound_Fragments_Cleanup_Strategy (
                             bound),

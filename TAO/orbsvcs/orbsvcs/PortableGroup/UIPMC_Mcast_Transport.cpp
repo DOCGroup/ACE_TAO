@@ -350,7 +350,7 @@ TAO_UIPMC_Mcast_Transport::recv_all (TAO_Resume_Handle &rh)
                           id_hash));
             }
 
-          TAO_PG::UIPMC_Recv_Packet *packet = nullptr;
+          TAO_PG::UIPMC_Recv_Packet *packet {};
           if (this->incomplete_.find (id_hash, packet) == -1)
             {
               ACE_NEW_THROW_EX (packet,
@@ -509,7 +509,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
         }
 
       // Create a data block from our dequeued completed message.
-      char *buffer = nullptr;
+      char *buffer {};
       ACE_NEW_THROW_EX (buffer,
                         char[complete->data_length () + ACE_CDR::MAX_ALIGNMENT],
                         CORBA::NO_MEMORY (

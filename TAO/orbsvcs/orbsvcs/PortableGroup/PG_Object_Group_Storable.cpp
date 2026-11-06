@@ -18,7 +18,7 @@ namespace
     int size {};
     stream >> size;
 
-    char *tmp = nullptr;
+    char *tmp {};
     ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
     std::unique_ptr<char[]> buf (tmp);
     stream.read (size, buf.get ());
@@ -538,7 +538,7 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
       int is_primary {};
       stream >> is_primary;
 
-      MemberInfo * info = nullptr;
+      MemberInfo * info {};
       ACE_NEW_THROW_EX (info, MemberInfo(member.in (),
                                          the_location,
                                          factory.in (),

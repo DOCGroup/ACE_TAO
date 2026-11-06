@@ -39,7 +39,7 @@ TAO_UIPMC_Protocol_Factory::options_delimiter () const
 TAO_Acceptor *
 TAO_UIPMC_Protocol_Factory::make_acceptor ()
 {
-  TAO_Acceptor *acceptor = nullptr;
+  TAO_Acceptor *acceptor {};
   ACE_NEW_RETURN (acceptor,
                   TAO_UIPMC_Acceptor (
                     this->listen_on_all_,
@@ -125,7 +125,7 @@ TAO_UIPMC_Protocol_Factory::make_connector ()
   // only on the client side.
   ACE_Utils::UUID_GENERATOR::instance ()->init ();
 
-  TAO_Connector *connector = nullptr;
+  TAO_Connector *connector {};
   ACE_NEW_RETURN (connector,
                   TAO_UIPMC_Connector,
                   nullptr);

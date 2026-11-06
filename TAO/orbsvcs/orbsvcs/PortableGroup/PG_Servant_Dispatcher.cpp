@@ -12,7 +12,7 @@ TAO_PG_Servant_Dispatcher::create_Root_POA (ACE_CString const &name,
                                             TAO_ORB_Core &orb_core,
                                             TAO_Object_Adapter *object_adapter)
 {
-  TAO_Root_POA *poa = nullptr;
+  TAO_Root_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_GOA (name,

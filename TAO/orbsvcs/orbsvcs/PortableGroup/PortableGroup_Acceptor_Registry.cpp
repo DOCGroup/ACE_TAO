@@ -17,7 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_PortableGroup_Acceptor_Registry::~TAO_PortableGroup_Acceptor_Registry ()
 {
   // Free the memory for the endpoints.
-  Entry *entry = nullptr;
+  Entry *entry {};
   Acceptor_Registry_Iterator iter (this->registry_);
 
   while (iter.next (entry))
@@ -32,7 +32,7 @@ void
 TAO_PortableGroup_Acceptor_Registry::open (TAO_Profile const *profile,
                                            TAO_ORB_Core &orb_core)
 {
-  Entry *entry = nullptr;
+  Entry *entry {};
 
   if (this->find (profile, entry) == 1)
     {

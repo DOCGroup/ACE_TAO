@@ -148,7 +148,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
         }
     }
 
-  TAO_PG_ObjectGroup_Array * groups = nullptr;
+  TAO_PG_ObjectGroup_Array * groups {};
   if (this->location_map_.find (the_location, groups) == 0
       && this->member_already_present (*groups, group_entry))
     throw PortableGroup::MemberAlreadyPresent ();
@@ -203,7 +203,7 @@ TAO_PG_ObjectGroupManager::remove_member (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group);
 
-  TAO_PG_ObjectGroup_Array * groups = nullptr;
+  TAO_PG_ObjectGroup_Array * groups {};
   if (this->location_map_.find (the_location, groups) != 0)
     throw PortableGroup::ObjectGroupNotFound ();
 
@@ -279,7 +279,7 @@ TAO_PG_ObjectGroupManager::locations_of_members (
   TAO_PG_ObjectGroup_Map_Entry * group_entry =
     this->get_group_entry (object_group);
 
-  PortableGroup::Locations *temp = nullptr;
+  PortableGroup::Locations *temp {};
   ACE_NEW_THROW_EX (temp,
                     PortableGroup::Locations,
                     CORBA::NO_MEMORY (
@@ -326,7 +326,7 @@ TAO_PG_ObjectGroupManager::groups_at_location (
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-  TAO_PG_ObjectGroup_Array * groups = nullptr;
+  TAO_PG_ObjectGroup_Array * groups {};
   if (this->location_map_.find (the_location, groups) == 0)
     {
       CORBA::ULong const len = static_cast<CORBA::ULong> (groups->size ());
@@ -368,7 +368,7 @@ PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::get_object_group_ref (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-  TAO_PG_ObjectGroup_Map_Entry * entry = nullptr;
+  TAO_PG_ObjectGroup_Map_Entry * entry {};
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -404,7 +404,7 @@ TAO_PG_ObjectGroupManager::get_member_ref (
   // of an object group (and hence the member) at a given location,
   // instead of existence of a member at a given location.
 
-  TAO_PG_ObjectGroup_Array * groups = nullptr;
+  TAO_PG_ObjectGroup_Array * groups {};
   if (this->location_map_.find (loc, groups) == 0
       && this->member_already_present (*groups, group_entry))
     {
@@ -446,7 +446,7 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (object_id_string);
 
-  TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
+  TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
@@ -485,7 +485,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
     this->poa_->create_reference_with_id (oid,
                                           type_id);
 
-  TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
+  TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   ACE_NEW_THROW_EX (group_entry,
                     TAO_PG_ObjectGroup_Map_Entry,
                     CORBA::NO_MEMORY (
@@ -530,7 +530,7 @@ TAO_PG_ObjectGroupManager::destroy_object_group (
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
+  TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.unbind (oid, group_entry) != 0)
     throw PortableGroup::ObjectNotFound ();
 
@@ -565,7 +565,7 @@ TAO_PG_ObjectGroupManager::object_group (PortableServer::ObjectId const & oid)
                     this->lock_,
                     PortableGroup::ObjectGroup::_nil ());
 
-  TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
+  TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.find (oid, group_entry) == 0)
     return
       PortableGroup::ObjectGroup::_duplicate (group_entry->object_group.in ());
@@ -599,7 +599,7 @@ PortableGroup::Properties *
 TAO_PG_ObjectGroupManager::get_properties (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-  PortableGroup::Properties * properties = nullptr;
+  PortableGroup::Properties * properties {};
   ACE_NEW_THROW_EX (properties,
                     PortableGroup::Properties,
                     CORBA::NO_MEMORY (
@@ -652,7 +652,7 @@ TAO_PG_ObjectGroupManager::get_group_entry (
       throw CORBA::INTERNAL ();
     }
 
-  TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
+  TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.find (oid.in (), group_entry) != 0)
     throw PortableGroup::ObjectGroupNotFound ();
 
@@ -780,7 +780,7 @@ TAO_PG_ObjectGroupManager::remove_group_from_location_map (
 
     // Now that we have a location, we must find the groups at that
     // location and remove this group from them
-    TAO_PG_ObjectGroup_Array * groups = nullptr;
+    TAO_PG_ObjectGroup_Array * groups {};
     if (this->location_map_.find (loc, groups) == 0)
       {
         int to_be_removed = this->get_object_group_position (*groups,
@@ -836,7 +836,7 @@ TAO_PG_ObjectGroupManager::member_count (
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-  TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
+  TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.find (oid, group_entry) != 0)
     throw PortableGroup::ObjectGroupNotFound ();
 
@@ -866,7 +866,7 @@ TAO_PG_ObjectGroupManager::is_alive (
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-  TAO_PG_ObjectGroup_Map_Entry * group_entry = nullptr;
+  TAO_PG_ObjectGroup_Map_Entry * group_entry {};
   if (this->object_group_map_.find (oid, group_entry) != 0)
     throw PortableGroup::ObjectGroupNotFound ();
 
