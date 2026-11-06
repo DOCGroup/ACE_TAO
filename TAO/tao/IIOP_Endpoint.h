@@ -54,22 +54,22 @@ public:
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
-  TAO_IIOP_Endpoint (const char *host,
+  TAO_IIOP_Endpoint (char const *host,
                      CORBA::UShort port,
-                     const ACE_INET_Addr &addr,
+                     ACE_INET_Addr const &addr,
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Constructor.
-  TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
+  TAO_IIOP_Endpoint (ACE_INET_Addr const &addr,
                      int use_dotted_decimal_addresses);
 
   /// Constructor.  This constructor is used when decoding endpoints.
-  TAO_IIOP_Endpoint (const char *host,
+  TAO_IIOP_Endpoint (char const *host,
                      CORBA::UShort port,
                      CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_IIOP_Endpoint () = default;
+  ~TAO_IIOP_Endpoint () override = default;
 
   // = Implementation of abstract TAO_Endpoint methods.  See
   // Endpoint.h for their documentation.
@@ -108,15 +108,15 @@ public:
   // = IIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_INET_Addr &object_addr () const;
+  ACE_INET_Addr const &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const char *host () const;
+  char const *host () const;
 
   /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
-  const char *host (const char *h);
+  char const *host (char const *h);
 
   /// Return the port number.
   CORBA::UShort port () const;
@@ -128,7 +128,7 @@ public:
   bool is_preferred_network () const;
 
   /// Return the preferred network if any.
-  const char *preferred_network () const;
+  char const *preferred_network () const;
 
 #if defined (ACE_HAS_IPV6)
   /// Does the host string represent an IPv6 decimal address.
@@ -137,16 +137,16 @@ public:
 
   /// Need to have an assignment operator since the IIOP_Profile class may
   /// have to reorder its list of endpoints based on filtering by the EndpointPolicy.
-  TAO_IIOP_Endpoint & operator= (const TAO_IIOP_Endpoint& other);
+  TAO_IIOP_Endpoint &operator= (TAO_IIOP_Endpoint const &other);
 
   /// Given a comma separated list of preferred interface directives, which
   /// are of the form <wild_remote>=<wild_local>, this function will retrieve
   /// the list of preferred local ip addresses by matching wild_local against
   /// the list of all local ip interfaces, for any directive where wild_remote
   /// matches the host from our endpoint.
-  static void find_preferred_interfaces (const ACE_CString& host,
-                                         const ACE_CString& csvPreferred,
-                                         std::vector<ACE_CString>& preferred);
+  static void find_preferred_interfaces (ACE_CString const &host,
+                                         ACE_CString const &csv_preferred,
+                                         std::vector<ACE_CString> &preferred);
 
 private:
   TAO_IIOP_Endpoint *next_filtered_i (TAO_IIOP_Endpoint *root,
@@ -155,7 +155,7 @@ private:
                                       bool want_ipv6);
 
   /// Helper method for setting INET_Addr.
-  int set (const ACE_INET_Addr &addr,
+  int set (ACE_INET_Addr const &addr,
            int use_dotted_decimal_addresses);
 
   /// Helper method for object_addr () call.
@@ -163,14 +163,14 @@ private:
 
   /// Generate preferred interfaces from the options passed in by the
   /// user.
-  CORBA::ULong preferred_interfaces (const char *csvPreferred,
+  CORBA::ULong preferred_interfaces (char const *csv_preferred,
                                      bool enforce,
                                      TAO_IIOP_Profile &profile);
 
   /// Chain a new duplicate of ourself with the specified
   /// local preferred interface.
   TAO_IIOP_Endpoint *add_local_endpoint (TAO_IIOP_Endpoint *ep,
-                                         const char *local,
+                                         char const *local,
                                          TAO_IIOP_Profile &profile);
 
   /// Canonical copy constructor
@@ -179,36 +179,36 @@ private:
    * accidentally. Clients should only use duplicate () to make a deep
    * copy
    */
-  TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &);
+  TAO_IIOP_Endpoint (TAO_IIOP_Endpoint const &);
 
 private:
   /// String representing the host name.
-  CORBA::String_var host_;
+  CORBA::String_var host_ {};
 
-  /// TCP port number.
-  CORBA::UShort port_;
+  /// TCP port number (683 is the IANA-assigned default).
+  CORBA::UShort port_ {683};
 
 #if defined (ACE_HAS_IPV6)
   /// Does the host string represent an IPv6 decimal address.
-  bool is_ipv6_decimal_;
+  bool is_ipv6_decimal_ {};
 #endif /* ACE_HAS_IPV6 */
 
   /// Is this endpoint created encodable as part of the IOR?
-  bool is_encodable_;
+  bool is_encodable_ {true};
 
   /// Flag to indicate if the address has been resolved and set.
-  mutable bool object_addr_set_;
+  mutable bool object_addr_set_ {};
 
   /// Cached instance of ACE_INET_Addr for use in making
   /// invocations, etc.
-  mutable ACE_INET_Addr object_addr_;
+  mutable ACE_INET_Addr object_addr_ {};
 
   /// Preferred path for this endpoint.
-  TAO::IIOP_Endpoint_Info preferred_path_;
+  TAO::IIOP_Endpoint_Info preferred_path_ {};
 
   /// IIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
-  TAO_IIOP_Endpoint *next_;
+  TAO_IIOP_Endpoint *next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
