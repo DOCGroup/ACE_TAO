@@ -15,28 +15,28 @@ namespace TAO
   namespace Transport
   {
     template <typename Impl>
-    Current_ORBInitializer<Impl>::Current_ORBInitializer(const ACE_TCHAR* id)
+    Current_ORBInitializer<Impl>::Current_ORBInitializer (
+      ACE_TCHAR const *id)
       : Current_ORBInitializer_Base (id)
     {
     }
 
-
     template <typename Impl>
     TAO::Transport::Current_ptr
-    Current_ORBInitializer<Impl>::make_current_instance (TAO_ORB_Core* core,
-                                                         std::size_t tss_slot_id)
-      {
-        // Create the Current
-        Current_ptr tmp = nullptr;
-        ACE_NEW_THROW_EX (tmp,
-                          Impl (core, tss_slot_id),
-                          CORBA::NO_MEMORY
-                            (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
-                                                                      ENOMEM),
-                             CORBA::COMPLETED_NO));
+    Current_ORBInitializer<Impl>::make_current_instance (
+      TAO_ORB_Core *core,
+      std::size_t tss_slot_id)
+    {
+      Current_ptr tmp {};
+      ACE_NEW_THROW_EX (tmp,
+                        Impl (core, tss_slot_id),
+                        CORBA::NO_MEMORY
+                          (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
+                                                                    ENOMEM),
+                           CORBA::COMPLETED_NO));
 
-        return tmp;
-      }
+      return tmp;
+    }
 
   }
 

@@ -21,21 +21,22 @@ namespace TAO
     /// () == 0, or if transport->connection_handler () == 0. Will
     /// throw NoContext, if no transport has been selected yet.
 
-    TAO_IIOP_Connection_Handler*
+    TAO_IIOP_Connection_Handler *
     IIOP_Current_Impl::handler ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
-      const TAO_Transport* t = this->transport ();
+      TAO_Transport const * const t = this->transport ();
       if (t == nullptr)
         throw NoContext ();
 
-      TAO_Connection_Handler *ch = const_cast<TAO_Transport*>(t)->connection_handler ();
+      TAO_Connection_Handler * const ch =
+        const_cast<TAO_Transport *> (t)->connection_handler ();
       if (ch == nullptr)
         throw NoContext ();
 
       // Make sure that this connection handler is for IIOP.  This
       // implementation is not intended to operate under SSLIOP.
-      TAO_IIOP_Connection_Handler* iiop_ch =
+      TAO_IIOP_Connection_Handler * const iiop_ch =
         dynamic_cast <TAO_IIOP_Connection_Handler*> (ch);
       if (iiop_ch == nullptr)
         throw NoContext ();
@@ -49,7 +50,9 @@ namespace TAO
 
     /// Ctor
 
-    IIOP_Current_Impl::IIOP_Current_Impl (TAO_ORB_Core* core, std::size_t tss_slot_id)
+    IIOP_Current_Impl::IIOP_Current_Impl (
+      TAO_ORB_Core *core,
+      std::size_t tss_slot_id)
       : Current_Impl (core, tss_slot_id)
     {
     }
@@ -80,7 +83,7 @@ namespace TAO
     IIOP_Current_Impl::remote_port ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
-      TAO_IIOP_Connection_Handler *iiopch =
+      TAO_IIOP_Connection_Handler * const iiopch =
         this->handler ();
 
       ACE_INET_Addr a;
@@ -92,11 +95,11 @@ namespace TAO
 #endif
     }
 
-    char*
+    char *
     IIOP_Current_Impl::remote_host ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
-      TAO_IIOP_Connection_Handler *iiopch =
+      TAO_IIOP_Connection_Handler * const iiopch =
         this->handler ();
 
       ACE_INET_Addr a;
@@ -124,11 +127,11 @@ namespace TAO
 #endif
     }
 
-    char*
+    char *
     IIOP_Current_Impl::local_host ()
     {
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
-      TAO_IIOP_Connection_Handler *iiopch =
+      TAO_IIOP_Connection_Handler * const iiopch =
         this->handler ();
 
       ACE_INET_Addr a;

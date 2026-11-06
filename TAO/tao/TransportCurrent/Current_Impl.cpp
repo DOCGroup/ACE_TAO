@@ -21,7 +21,7 @@ namespace TAO
   namespace Transport
   {
     /// ctor
-    Current_Impl::Current_Impl (TAO_ORB_Core* core, std::size_t tss_slot_id)
+    Current_Impl::Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id)
       : core_ (core)
       , tss_slot_id_ (tss_slot_id)
     {
@@ -32,14 +32,14 @@ namespace TAO
     /// Obtains the current transport. Throws a NoContext exception
     /// if, there was no "current" transport selected on the current
     /// thread.
-    const TAO_Transport*
+    TAO_Transport const *
     Current_Impl::transport () const
     {
-      Transport_Selection_Guard* topguard =
+      Transport_Selection_Guard * const topguard =
         Transport_Selection_Guard::current (this->core_, this->tss_slot_id_);
 
       if (topguard == nullptr)
-        throw NoContext();
+        throw NoContext ();
 
       return topguard->get ();
     }
@@ -47,19 +47,19 @@ namespace TAO
     static const TAO::Transport::Stats dummy_transport_stats;
 
     /// Obtains the current transport's stats
-    const TAO::Transport::Stats*
+    TAO::Transport::Stats const *
     Current_Impl::transport_stats () const
     {
       static const TAO::Transport::Stats dummy;
 
-      const TAO_Transport* t = this->transport ();
+      TAO_Transport const * const t = this->transport ();
 
       return (t == nullptr || t->stats () == nullptr) ? &dummy_transport_stats : t->stats ();
     }
 
     CORBA::Long Current_Impl::id ()
     {
-      const TAO_Transport* t = this->transport ();
+      TAO_Transport const * const t = this->transport ();
 
       return (t == nullptr) ? 0 : static_cast<CORBA::Long> (t->id ());
     }

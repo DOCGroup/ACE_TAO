@@ -48,7 +48,7 @@ namespace TAO
     {
     public:
       /// Constructor.
-      IIOP_Current_Impl (TAO_ORB_Core* core, std::size_t tss_slot_id);
+      IIOP_Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
 
       //@{
       ::CORBA::Long id () override;
@@ -78,7 +78,7 @@ namespace TAO
       /// Transport. Will throw NoContext if the (selected) transport
       /// () == 0, or if transport->connection_handler () == 0. Will
       /// throw NoContext, if no transport has been selected yet.
-      TAO_IIOP_Connection_Handler* handler ();
+      TAO_IIOP_Connection_Handler *handler ();
 
     private:
       IIOP_Current_Impl (IIOP_Current_Impl const &) = delete;

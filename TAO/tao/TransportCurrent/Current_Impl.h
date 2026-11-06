@@ -40,7 +40,7 @@ namespace TAO
       {
       public:
         /// Constructor.
-        Current_Impl (TAO_ORB_Core* core, std::size_t tss_slot_id);
+        Current_Impl (TAO_ORB_Core *core, std::size_t tss_slot_id);
 
         /**
          * These are methods exposed by the
@@ -66,12 +66,12 @@ namespace TAO
          */
         //@{
         /// A (strategy) method used to obtain the transport ptr
-        const TAO_Transport* transport () const;
+        TAO_Transport const *transport () const;
 
         /// A Stats instance. If protocol is unavailable (0) or the
         /// TAO_HAS_TRANSPORT_CURRENT macro is defined as anything but
         /// 1, a single static instance will be used.
-        const TAO::Transport::Stats* transport_stats () const;
+        TAO::Transport::Stats const *transport_stats () const;
         //@}
 
         /// Destructor is protected to enforce the fact this class is
@@ -88,10 +88,10 @@ namespace TAO
 
       private:
         // The ORB (core) that owes us.
-        TAO_ORB_Core* core_;
+        TAO_ORB_Core * const core_;
 
         // The ORB's TSS slot id for the Transport ptr
-        std::size_t tss_slot_id_;
+        std::size_t const tss_slot_id_;
       };
   }
 

@@ -39,7 +39,7 @@ namespace TAO
       , public virtual ::CORBA::LocalObject
     {
     public:
-      Current_ORBInitializer_Base (const ACE_TCHAR* id);
+      explicit Current_ORBInitializer_Base (ACE_TCHAR const *id);
       ~Current_ORBInitializer_Base () override;
 
       void pre_init (PortableInterceptor::ORBInitInfo_ptr) override;
@@ -47,7 +47,7 @@ namespace TAO
       void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
     protected:
         virtual TAO::Transport::Current_ptr
-        make_current_instance (TAO_ORB_Core* core, std::size_t tss_slot_id) = 0;
+        make_current_instance (TAO_ORB_Core *core, std::size_t tss_slot_id) = 0;
     protected:
       ACE_TString const id_;
       Current_ORBInitializer_Base (Current_ORBInitializer_Base const &) = delete;
