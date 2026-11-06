@@ -31,7 +31,7 @@ TAO_BiDir_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr info)
     }
 
   // Bind the service context handler for BiDIR GIOP
-  TAO_BiDIR_Service_Context_Handler* h = nullptr;
+  TAO_BiDIR_Service_Context_Handler* h {};
   ACE_NEW (h,
            TAO_BiDIR_Service_Context_Handler());
   tao_info->orb_core ()->service_context_registry ().bind (IOP::BI_DIR_IIOP, h);
@@ -48,7 +48,7 @@ TAO_BiDir_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info)
 {
   /// Register the BiDir policy factories.
-  PortableInterceptor::PolicyFactory_ptr temp_factory = nullptr;
+  PortableInterceptor::PolicyFactory_ptr temp_factory {};
   /// This policy factory is used for all BiDir related policies.
   ACE_NEW_THROW_EX (temp_factory,
                     TAO_BiDir_PolicyFactory,
