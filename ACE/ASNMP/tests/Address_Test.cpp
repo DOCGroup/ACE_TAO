@@ -33,9 +33,9 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
 #include <memory>
 #include "ace/OS_main.h"
-#include "ace/OS_NS_string.h"
 #include "asnmp/address.h"
 #include "test_config.h"
 
@@ -252,8 +252,8 @@ static void TestNetbiosAddress()
 
   n1 = n4;
   ACE_ASSERT(n1 == n4);
-  ACE_ASSERT(ACE_OS::strcmp(static_cast<char const *> (n1),
-                            static_cast<char const *> (n4)) == 0);
+  ACE_ASSERT(std::strcmp(static_cast<char const *> (n1),
+                         static_cast<char const *> (n4)) == 0);
 
   n1.set_service_type(nb_server);
   ACE_ASSERT(nb_server == n1.get_service_type());

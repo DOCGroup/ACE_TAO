@@ -33,8 +33,8 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
 #include "ace/OS_main.h"
-#include "ace/OS_NS_string.h"
 #include "asnmp/octet.h"
 #include "test_config.h"
 
@@ -76,7 +76,7 @@ DAMAGES.
 
 static void TestOctet()
 {
-  char const *str = "A test of octet strings...!@@#$%^&*()_+|~{}:,./<>?";
+  char const * const str = "A test of octet strings...!@@#$%^&*()_+|~{}:,./<>?";
   OctetStr o1;
   ACE_ASSERT(o1.valid() == 1);
   ACE_ASSERT(o1.length() == 0);
@@ -84,7 +84,8 @@ static void TestOctet()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o1(\"\") [%s]\n",
     o1.to_string()));
   o1.set_data (reinterpret_cast<SmiBYTE const *> (str));
-  ACE_ASSERT (!ACE_OS::strcmp (str, reinterpret_cast<char const *> (o1.data ())));
+  ACE_ASSERT (o1.length () == std::strlen (str));
+  ACE_ASSERT (std::memcmp (str, o1.data (), o1.length ()) == 0);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o1(\"str\") [%s]\n",
     o1.to_string()));
 
@@ -109,7 +110,7 @@ static void TestOctet()
   OctetStr o5;
   o5 = str;
   ACE_ASSERT(o5.valid() == 1);
-  ACE_ASSERT(o5.length() == ACE_OS::strlen(str));
+  ACE_ASSERT(o5.length() == std::strlen(str));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o5(\"str\") [%s]\n",
     o5.to_string()));
 
@@ -124,7 +125,7 @@ static void TestOctet()
   o6 = "";
   o6 += str;
   o6 += '#';
-  ACE_ASSERT(o6[0] == (SmiBYTE) 'A');
+  ACE_ASSERT(o6[0] == static_cast<SmiBYTE> ('A'));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o6(\"str\") [%s]\n",
     o6.to_string()));
 

@@ -58,12 +58,12 @@ static void
 TestGuage ()
 {
 #if !defined (ACE_WIN32)
-   long l = LONG_MAX, nl = LONG_MIN;  // limits.h
-   unsigned long ul = ULONG_MAX, def = 0;
-   int i = INT_MAX, ni = INT_MIN;
-   unsigned int ui = UINT_MAX;
-   unsigned short us = 10;
-   short si = static_cast<short> (65535);
+   long const l = LONG_MAX, nl = LONG_MIN;  // limits.h
+   unsigned long const ul = ULONG_MAX, def = 0;
+   int const i = INT_MAX, ni = INT_MIN;
+   unsigned int const ui = UINT_MAX;
+   unsigned short const us = 10;
+   short const si = static_cast<short> (65535);
 
    // constructors
    Gauge32 g1;
@@ -83,20 +83,20 @@ TestGuage ()
    std::unique_ptr<Gauge32> g8 = std::make_unique<Gauge32> (g5);
    ACE_ASSERT(g8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%u]\n",
-    (unsigned long)g1));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%u\") [%u]\n",
-    l, (unsigned long)g2));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g3(\"%u\") [%u]\n",
-    nl, (unsigned long)g3));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g4(\"%u\") [%u]\n",
-    ul, (unsigned long)g4));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g5(\"%u\") [%u]\n",
-    i, (unsigned long)g5));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g6(\"%u\") [%u]\n",
-    ni, (unsigned long)g6));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g7(\"%u\") [%u]\n",
-    ui, (unsigned long)g7));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%lu]\n",
+    static_cast<unsigned long> (g1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%ld\") [%lu]\n",
+    l, static_cast<unsigned long> (g2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g3(\"%ld\") [%lu]\n",
+    nl, static_cast<unsigned long> (g3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g4(\"%lu\") [%lu]\n",
+    ul, static_cast<unsigned long> (g4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g5(\"%d\") [%lu]\n",
+    i, static_cast<unsigned long> (g5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g6(\"%d\") [%lu]\n",
+    ni, static_cast<unsigned long> (g6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g7(\"%u\") [%lu]\n",
+    ui, static_cast<unsigned long> (g7)));
 
   // assignent
   g1 = g2;  // obj

@@ -62,12 +62,12 @@ DAMAGES.
 static void  TestCounter()
 {
 #if !defined (ACE_WIN32)
-   long l = LONG_MAX, nl = LONG_MIN;  // limits.h
-   unsigned long ul = ULONG_MAX, def = 0;
-   int i = INT_MAX, ni = INT_MIN;
-   unsigned int ui = UINT_MAX;
-   unsigned short us = 10;
-   short si = static_cast<short> (65535);
+   long const l = LONG_MAX, nl = LONG_MIN;  // limits.h
+   unsigned long const ul = ULONG_MAX, def = 0;
+   int const i = INT_MAX, ni = INT_MIN;
+   unsigned int const ui = UINT_MAX;
+   unsigned short const us = 10;
+   short const si = static_cast<short> (65535);
 
    // constructors
    Counter32 c1;
@@ -87,20 +87,20 @@ static void  TestCounter()
    std::unique_ptr<Counter32> c8 = std::make_unique<Counter32> (c5);
    ACE_ASSERT(c8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%u]\n",
-    (unsigned long)c1));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c2(\"%u\") [%u]\n",
-    l, (unsigned long)c2));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c3(\"%u\") [%u]\n",
-    nl, (unsigned long)c3));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c4(\"%u\") [%u]\n",
-    ul, (unsigned long)c4));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c5(\"%u\") [%u]\n",
-    i, (unsigned long)c5));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c6(\"%u\") [%u]\n",
-    ni, (unsigned long)c6));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c7(\"%u\") [%u]\n",
-    ui, (unsigned long)c7));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%lu]\n",
+    static_cast<unsigned long> (c1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c2(\"%ld\") [%lu]\n",
+    l, static_cast<unsigned long> (c2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c3(\"%ld\") [%lu]\n",
+    nl, static_cast<unsigned long> (c3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c4(\"%lu\") [%lu]\n",
+    ul, static_cast<unsigned long> (c4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c5(\"%d\") [%lu]\n",
+    i, static_cast<unsigned long> (c5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c6(\"%d\") [%lu]\n",
+    ni, static_cast<unsigned long> (c6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c7(\"%u\") [%lu]\n",
+    ui, static_cast<unsigned long> (c7)));
 
   // assignent
   c1 = c2;  // obj
