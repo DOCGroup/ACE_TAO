@@ -23,7 +23,7 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mtx_);
   FILTERMAP::ITERATOR iterator (this->filters_);
 
-  for (FILTERMAP::ENTRY *entry = nullptr;
+  for (FILTERMAP::ENTRY *entry {};
     iterator.next (entry) != 0;
     iterator.advance ())
   {
@@ -198,7 +198,7 @@ TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver &save
     int index = 0;
     FILTERMAP::ITERATOR iterator (this->filters_);
 
-    for (FILTERMAP::ENTRY *entry = nullptr;
+    for (FILTERMAP::ENTRY *entry {};
       iterator.next (entry) != 0;
       iterator.advance (), ++index)
     {
@@ -309,7 +309,7 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
 
   FILTERMAP::ITERATOR iterator (this->filters_);
 
-  for (FILTERMAP::ENTRY *entry = nullptr;
+  for (FILTERMAP::ENTRY *entry {};
     iterator.next (entry) != 0;
     iterator.advance ())
   {

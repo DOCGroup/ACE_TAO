@@ -248,14 +248,14 @@ private:
   Standard_Event_Persistence_Factory* factory_;
   Event_Header event_header_;
   Routing_Slip_Header routing_slip_header_;
-  Persistent_Storage_Block* first_event_block_ = nullptr;
-  Persistent_Storage_Block* first_routing_slip_block_ = nullptr;
+  Persistent_Storage_Block* first_event_block_ {};
+  Persistent_Storage_Block* first_routing_slip_block_ {};
   /// We are part of a doubly-linked list
   Routing_Slip_Persistence_Manager* prev_manager_;
   Routing_Slip_Persistence_Manager* next_manager_;
   std::vector<size_t> allocated_event_blocks_;
   std::vector<size_t> allocated_routing_slip_blocks_;
-  Persistent_Callback* callback_ = nullptr;
+  Persistent_Callback* callback_ {};
 
   /// If these are non-null, we own them.
   ACE_Message_Block_Unique_Ptr event_mb_ {};

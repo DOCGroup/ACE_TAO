@@ -64,7 +64,7 @@ private:
 
 private:
   /// A stream representing our current output.
-  FILE * output_ = nullptr;
+  FILE * output_ {};
   bool close_out_ = false;
 
   /// the name of the output file

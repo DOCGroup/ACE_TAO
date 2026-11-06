@@ -524,7 +524,7 @@ TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver &saver)
     int index = 0;
     CONSTRAINT_EXPR_LIST::ITERATOR iterator (this->constraint_expr_list_);
 
-    for (CONSTRAINT_EXPR_LIST::ENTRY *entry = nullptr;
+    for (CONSTRAINT_EXPR_LIST::ENTRY *entry {};
       iterator.next (entry) != 0;
       iterator.advance (), ++index)
     {

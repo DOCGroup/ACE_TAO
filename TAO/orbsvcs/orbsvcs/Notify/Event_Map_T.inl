@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class PROXY, class ACE_LOCK> ACE_INLINE  TAO_Notify_Event_Map_Entry_T<PROXY>*
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_Notify_EventType& event_type)
 {
-  TAO_Notify_Event_Map_Entry_T<PROXY>* entry = nullptr;
+  TAO_Notify_Event_Map_Entry_T<PROXY>* entry {};
 
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, nullptr);
 

@@ -189,7 +189,7 @@ namespace TAO_Notify
     bool children_changed_ = false;
 
     /// A safely-typed copy of parent_;
-    Topology_Parent * topology_parent_ = nullptr;
+    Topology_Parent * topology_parent_ {};
   };
 
   /// \brief Interface for topology objects that act as parents.

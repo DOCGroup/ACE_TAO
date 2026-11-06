@@ -212,7 +212,7 @@ private:
   size_t complete_requests_ {};
 
   /// Pointer to a Routing_Slip_Persistence_Manager
-  Routing_Slip_Persistence_Manager * rspm_ = nullptr;
+  Routing_Slip_Persistence_Manager * rspm_ {};
 
   int sequence_;
 
