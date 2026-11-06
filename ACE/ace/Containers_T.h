@@ -1656,7 +1656,7 @@ private:
   struct Search_Structure
   {
     /// Item in the set.
-    T item_;
+    T item_ {};
 
     /// Keeps track of whether this item is in use or not.
     bool is_free_ {true};

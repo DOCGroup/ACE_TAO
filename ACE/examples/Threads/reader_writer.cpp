@@ -87,7 +87,7 @@ reader (void *)
   for (int iterations = 1;
        iterations <= n_iterations; iterations++)
     {
-      ACE_READ_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, nullptr);
+      ACE_READ_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, ACE_THR_FUNC_RETURN_NULL);
 
       current_readers.fetch_add (1, std::memory_order_relaxed);
 
@@ -125,7 +125,7 @@ writer (void *)
        iterations <= n_iterations;
        iterations++)
     {
-      ACE_WRITE_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, nullptr);
+      ACE_WRITE_GUARD_RETURN (ACE_RW_Mutex, g, rw_mutex, ACE_THR_FUNC_RETURN_NULL);
 
       current_writers.fetch_add (1, std::memory_order_relaxed);
 
