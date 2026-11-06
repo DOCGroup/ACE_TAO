@@ -897,7 +897,7 @@ namespace
 
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg = nullptr;
+        const ACE_TCHAR *current_arg {};
         if (0 == arg_shifter.cur_arg_strncasecmp
             (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {

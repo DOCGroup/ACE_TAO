@@ -88,7 +88,7 @@ TAO::ObjectKey_Table::bind_i (TAO::ObjectKey const &key,
 int
 TAO::ObjectKey_Table::unbind_i (TAO::Refcounted_ObjectKey *&key_new)
 {
-  TAO::Refcounted_ObjectKey *tmp = nullptr;
+  TAO::Refcounted_ObjectKey *tmp {};
 
   if (this->table_.unbind (key_new->object_key (), tmp) != -1)
     {

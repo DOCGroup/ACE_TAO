@@ -235,7 +235,7 @@ CORBA::SystemException::_info () const
   if (VMCID == TAO::VMCID)
     {
       // @@ Move the following code to a subroutine, it is too long already!
-      const char *location = nullptr;
+      const char *location {};
       switch (this->minor () & 0x00000F80u)
         {
         case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE:
@@ -302,7 +302,7 @@ CORBA::SystemException::_info () const
           location = "unknown location";
         }
 
-      const char *errno_indication = nullptr;
+      const char *errno_indication {};
       char unknown_errno [255];
       CORBA::ULong minor_code = this->minor () & 0x7FU;
       switch (minor_code)
@@ -404,7 +404,7 @@ CORBA::SystemException::_info () const
     {
       CORBA::ULong const minor_code = this->minor () & 0xFFFU;
 
-      const char *minor_description = nullptr;
+      const char *minor_description {};
 
       if (minor_code > 0)
           minor_description =
@@ -973,7 +973,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::Exception * \
 CORBA::name ::_tao_duplicate () const \
 { \
-  CORBA::Exception * result = nullptr; \
+  CORBA::Exception * result {}; \
   ACE_NEW_RETURN (result, CORBA::name (*this), nullptr); \
   return result; \
 }
@@ -985,7 +985,7 @@ STANDARD_EXCEPTION_LIST
 CORBA::SystemException * \
 CORBA::name ::_tao_create () \
 { \
-  CORBA::name *result = nullptr; \
+  CORBA::name *result {}; \
   ACE_NEW_RETURN (result, CORBA::name (), nullptr); \
   return result; \
 }

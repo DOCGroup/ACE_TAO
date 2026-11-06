@@ -659,14 +659,14 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
   ACE_CString options_tmp;
   this->extract_endpoint_options (addrs, options_tmp, (*factory)->factory ());
 
-  char const *options = nullptr;
+  char const *options {};
 
   if (options_tmp.length () > 0)
     {
       options = options_tmp.c_str ();
     }
 
-  char *last_addr = nullptr;
+  char *last_addr {};
   std::unique_ptr<char[]> addr_str (addrs.rep ());
 
   char const *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);

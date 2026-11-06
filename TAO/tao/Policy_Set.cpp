@@ -239,7 +239,7 @@ CORBA::PolicyList *
 TAO_Policy_Set::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
   CORBA::ULong const slots = types.length ();
-  CORBA::PolicyList *policy_list_ptr = nullptr;
+  CORBA::PolicyList *policy_list_ptr {};
 
   if (slots == 0)
     {

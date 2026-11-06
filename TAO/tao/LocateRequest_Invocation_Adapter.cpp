@@ -45,7 +45,7 @@ namespace TAO
     ACE_Service_Config_Guard scg (stub->orb_core ()->configuration ());
 
     ACE_Time_Value tmp_wait_time;
-    ACE_Time_Value *max_wait_time = nullptr;
+    ACE_Time_Value *max_wait_time {};
 
     if (this->get_timeout (tmp_wait_time))
       max_wait_time = &tmp_wait_time;
@@ -125,7 +125,7 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj = nullptr;
+    TAO_Stub *stubobj {};
 
     bool nil_forward_ref = false;
     if (CORBA::is_nil (effective_target.in ()))

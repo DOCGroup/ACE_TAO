@@ -28,7 +28,7 @@ TAO::Storable_File_Guard::
 void
 TAO::Storable_File_Guard::init_no_load (Method_Type method_type)
 {
-  char const *mode = nullptr;
+  char const *mode {};
   this->rwflags_ = 0;
   switch (method_type)
     {

@@ -111,7 +111,7 @@ TAO_Connection_Handler::svc_i ()
   // in a reactive handler, except that this can simply block waiting
   // for input.
 
-  ACE_Time_Value *max_wait_time = nullptr;
+  ACE_Time_Value *max_wait_time {};
   ACE_Time_Value timeout;
   ACE_Time_Value current_timeout;
 

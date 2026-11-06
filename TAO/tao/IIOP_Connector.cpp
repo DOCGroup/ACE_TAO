@@ -115,7 +115,7 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   /// Our connect creation strategy
-  TAO_IIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  TAO_IIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_CONNECT_CREATION_STRATEGY
@@ -124,7 +124,7 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   /// Our activation strategy
-  TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),

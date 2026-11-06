@@ -178,7 +178,7 @@ TAO::Storable_FlatFileStream::open()
 {
   // For now, three flags exist "r", "w",  and "c"
   int flags = 0;
-  const char *fdmode = nullptr;
+  const char *fdmode {};
   if( std::strchr(mode_.c_str(), 'r') )
     if( std::strchr(mode_.c_str(), 'w') )
       flags = O_RDWR, fdmode = "w+";
@@ -737,7 +737,7 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
     }
   size_t match = 0;
   size_t dirlen = std::strlen(dir);
-  struct mntent *ent = nullptr;
+  struct mntent *ent {};
   const char *fname = "/etc/mtab";
   FILE *mt = ::setmntent(fname,"r");
   if (mt == nullptr)
@@ -789,7 +789,7 @@ TAO::Storable_FlatFileFactory::create_stream (std::string const &file,
                                                char const *mode,
                                               bool )
 {
-  TAO::Storable_Base *stream = nullptr;
+  TAO::Storable_Base *stream {};
   std::string path = this->directory_ + "/" + file;
   ACE_NEW_RETURN (stream,
                   TAO::Storable_FlatFileStream(path,

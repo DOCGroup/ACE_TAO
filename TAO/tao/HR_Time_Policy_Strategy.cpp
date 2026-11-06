@@ -13,7 +13,7 @@ TAO_HR_Time_Policy_Strategy::~TAO_HR_Time_Policy_Strategy () = default;
 
 ACE_Timer_Queue * TAO_HR_Time_Policy_Strategy::create_timer_queue ()
 {
-  ACE_Timer_Queue * tmq = nullptr;
+  ACE_Timer_Queue * tmq {};
 
   using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *,
                                              ACE_Event_Handler_Handle_Timeout_Upcall,

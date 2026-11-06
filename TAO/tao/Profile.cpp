@@ -223,7 +223,7 @@ TAO_Profile::create_tagged_profile ()
   // .. DCL
   if (!this->tagged_profile_created_)
     {
-      IOP::TaggedProfile *tagged_profile = nullptr;
+      IOP::TaggedProfile *tagged_profile {};
       ACE_NEW_RETURN (tagged_profile, IOP::TaggedProfile, nullptr);
       this->tagged_profile_.reset (tagged_profile);
 

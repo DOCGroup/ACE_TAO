@@ -65,7 +65,7 @@ TAO::ORB_Table::bind (char const * orb_id,
 TAO_ORB_Core *
 TAO::ORB_Table::find (char const * orb_id)
 {
-  TAO_ORB_Core * orb_core = nullptr;
+  TAO_ORB_Core * orb_core {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,

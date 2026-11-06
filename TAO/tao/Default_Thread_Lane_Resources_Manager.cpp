@@ -78,7 +78,7 @@ TAO_Default_Thread_Lane_Resources_Manager_Factory::
 TAO_Thread_Lane_Resources_Manager *
 TAO_Default_Thread_Lane_Resources_Manager_Factory::create_thread_lane_resources_manager (TAO_ORB_Core &core)
 {
-  TAO_Thread_Lane_Resources_Manager *manager = nullptr;
+  TAO_Thread_Lane_Resources_Manager *manager {};
 
   /// Create the Default Thread Lane Resources Manager.
   ACE_NEW_RETURN (manager,
