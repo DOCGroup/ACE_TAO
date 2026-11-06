@@ -272,7 +272,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
   // just need to be able to access such preloaded libraries here as
   // we unmarshal objrefs.
 
-  CORBA::ULong profiles = 0;
+  CORBA::ULong profiles {};
 
   // get the count of profiles that follow. This will tell us the
   // length of the sequence
@@ -283,7 +283,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
   // No profiles means a NIL objref.
   while (profiles-- != 0 && continue_append)
     {
-      CORBA::ULong tag = 0;
+      CORBA::ULong tag {};
 
       // get the profile ID tag
       if ((continue_append = (CORBA::Boolean) (src->read_ulong (tag)
@@ -291,7 +291,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
                                                : 0))  == 0)
         continue;
 
-      CORBA::ULong length = 0;
+      CORBA::ULong length {};
       if ((continue_append = (CORBA::Boolean) (src->read_ulong (length)
                               ? dest->write_ulong (length)
                               : 0)) == 0)

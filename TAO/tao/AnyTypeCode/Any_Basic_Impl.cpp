@@ -268,7 +268,7 @@ namespace TAO
         break;
       default:
         {
-          CORBA::ULongLong tmp = 0;
+          CORBA::ULongLong tmp {};
           ACE_NEW_RETURN (retval,
                           TAO::Any_Basic_Impl (tc, &tmp),
                           nullptr);

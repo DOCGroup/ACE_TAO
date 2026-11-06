@@ -566,7 +566,7 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
   CORBA::String_var id, name;
   CORBA::TypeCode_var discriminant_type;
   CORBA::Long default_index = -1;
-  CORBA::ULong ncases = 0;  // Just 'n case :-)
+  CORBA::ULong ncases {};  // Just 'n case :-)
 
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)
         && cdr >> TAO_InputCDR::to_string (name.out (), 0)
