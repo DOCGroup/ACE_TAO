@@ -235,7 +235,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       // connection using the IPv6 loopback address instead.
       ACE_INET_Addr peer_tmp (peer_addr);
       peer_tmp.set_port_number (static_cast<u_short> (0));
-      ACE_INET_Addr *tmp = nullptr;
+      ACE_INET_Addr *tmp {};
       size_t cnt = 0;
       int const err = ACE::get_ip_interfaces (cnt, tmp);
       if (err == 0)
