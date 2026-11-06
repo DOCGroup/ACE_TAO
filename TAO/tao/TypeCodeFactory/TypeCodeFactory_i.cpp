@@ -146,7 +146,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     }
 
   CORBA::ULong const len = members.length ();
-  CORBA::ULong dups = 0;
+  CORBA::ULong dups {};
   CORBA::ULong raw_default_index = ACE_UINT32_MAX;
   CORBA::Long default_index = -1;
   CORBA::Octet value = ACE_OCTET_MAX;
@@ -164,7 +164,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
       CORBA::UnionMember const & member = members[i];
       char const * const member_name = member.name;
 
-      int trybind_status = 0;
+      int trybind_status {};
 
       if (i > 0)
         {
@@ -195,7 +195,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               // Only if we do not have a duplicate case label do we
               // check for a duplicate member name.
               ACE_CString ext_id (member_name);
-              int int_id = 0;
+              int int_id {};
 
               trybind_status = map.trybind (ext_id, int_id);
             }
@@ -203,7 +203,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
       else
         {
           ACE_CString ext_id (member_name);
-          int int_id = 0;
+          int int_id {};
 
           trybind_status = map.trybind (ext_id, int_id);
         }
@@ -273,9 +273,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
   CORBA::TCKind const kind =
     discriminator_type->kind ();
 
-  CORBA::ULong ci = 0;  // Case array index.
+  CORBA::ULong ci {};  // Case array index.
 
-  bool is_recursive = false;
+  bool is_recursive {};
   CORBA::TypeCode_var recursive_tc;
 
   for (CORBA::ULong index = 0; index < len; ++index)
@@ -308,7 +308,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
 
       elem_type & element = cases[ci];
-      TAO::TypeCode::Case_Dynamic *the_case = nullptr;
+      TAO::TypeCode::Case_Dynamic *the_case {};
 
       if (index == raw_default_index)
         {
@@ -617,7 +617,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
   for (CORBA::ULong index = 0; index < len; ++index)
     {
       ACE_CString ext_id (members[index]);
-      int int_id = 0;
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -858,19 +858,13 @@ TAO_TypeCodeFactory_i::compute_default_label (
     CORBA::ULongLong ulonglong_val;
     CORBA::ULong enum_val;
     // TODO - handle (u)longlong types
-  } dv, u;
+  } dv {}, u {};
 
-  dv.char_val = 0;
-  dv.bool_val = 0;
   dv.short_val = ACE_INT16_MIN;
-  dv.ushort_val = 0;
   dv.long_val = ACE_INT32_MIN;
-  dv.ulong_val = 0;
-  dv.ulonglong_val = 0;
-  dv.enum_val = 0;
 
   CORBA::ULong const len = members.length ();
-  bool success = false;
+  bool success {};
 
   // A collision forces us to start over, because the label
   // values need not be in sorted order.
@@ -1192,7 +1186,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   field_array_type fields (len);
 
-  bool is_recursive = false;
+  bool is_recursive {};
 
   CORBA::TypeCode_var recursive_tc;
 
@@ -1219,7 +1213,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
         }
 
       ACE_CString ext_id (member_name);
-      int int_id = 0;
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -1346,7 +1340,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
-  bool is_recursive = false;
+  bool is_recursive {};
   CORBA::TypeCode_var recursive_tc;
 
   for (CORBA::ULong index = 0; index < len; ++index)
@@ -1372,7 +1366,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
         }
 
       ACE_CString ext_id (member_name);
-      int int_id = 0;
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -1823,7 +1817,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
         CORBA::TCKind const content_tc_kind =
           content_tc->kind ();
 
-        char const *content_tc_id = nullptr;
+        char const *content_tc_id {};
 
         if (content_tc_kind == CORBA::tk_struct
             || content_tc_kind == CORBA::tk_union
