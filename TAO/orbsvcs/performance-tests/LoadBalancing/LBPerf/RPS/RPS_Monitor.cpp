@@ -24,7 +24,7 @@ RPS_Monitor::RPS_Monitor (ServerRequestInterceptor * interceptor)
 CosLoadBalancing::Location *
 RPS_Monitor::the_location ()
 {
-  CosLoadBalancing::Location *location = nullptr;
+  CosLoadBalancing::Location *location {};
   ACE_NEW_THROW_EX (location,
                     CosLoadBalancing::Location (this->location_),
                     CORBA::NO_MEMORY (
@@ -53,7 +53,7 @@ RPS_Monitor::loads ()
   CORBA::Float const request_count =
     static_cast<CORBA::Float> (this->interceptor_->request_count ());
 
-  CosLoadBalancing::LoadList *tmp = nullptr;
+  CosLoadBalancing::LoadList *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (

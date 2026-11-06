@@ -190,7 +190,7 @@ join_object_group (CORBA::ORB_ptr orb,
         }
     }
 
-  Roundtrip *roundtrip_impl = nullptr;
+  Roundtrip *roundtrip_impl {};
   ACE_NEW_THROW_EX (roundtrip_impl,
                     Roundtrip (orb),
                     CORBA::NO_MEMORY ());
@@ -234,7 +234,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      ORBInitializer *initializer = nullptr;
+      ORBInitializer *initializer {};
       ACE_NEW_RETURN (initializer,
                       ORBInitializer,
                       -1);  // No exceptions yet!
@@ -272,7 +272,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosLoadBalancing::LoadManager_var load_manager =
         CosLoadBalancing::LoadManager::_narrow (lm_object.in ());
 
-      RPS_Monitor *monitor_servant = nullptr;
+      RPS_Monitor *monitor_servant {};
       ACE_NEW_THROW_EX (monitor_servant,
                         RPS_Monitor (initializer->interceptor ()),
                         CORBA::NO_MEMORY ());
