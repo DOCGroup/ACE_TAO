@@ -13,6 +13,9 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Token_Invariants.h"
+
+#include <array>
+#include <cstddef>
 #include <memory>
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
@@ -31,6 +34,7 @@ struct Two_Tokens
   std::unique_ptr<ACE_Token_Proxy> second_owner_;
   ACE_Token_Proxy *first_ {};  // Borrowed from the corresponding owner or the shared global token.
   ACE_Token_Proxy *second_ {}; // Borrowed from the corresponding owner or the shared global token.
+  int iterations {100};
 };
 
 struct Four_Tokens
@@ -41,14 +45,11 @@ struct Four_Tokens
   Four_Tokens &operator= (Four_Tokens const &) = delete;
   Four_Tokens &operator= (Four_Tokens &&) = delete;
 
-  std::unique_ptr<ACE_Token_Proxy> first1_owner_;
-  std::unique_ptr<ACE_Token_Proxy> first2_owner_;
-  std::unique_ptr<ACE_Token_Proxy> first3_owner_;
+  std::array<std::unique_ptr<ACE_Token_Proxy>, 3> first_owners_ {};
   std::unique_ptr<ACE_Token_Proxy> second_owner_;
-  ACE_Token_Proxy *first1_ {}; // Borrowed from first1_owner_.
-  ACE_Token_Proxy *first2_ {}; // Borrowed from first2_owner_.
-  ACE_Token_Proxy *first3_ {}; // Borrowed from first3_owner_.
+  std::array<ACE_Token_Proxy *, 3> first_ {}; // Borrowed from first_owners_.
   ACE_Token_Proxy *second_ {}; // Borrowed from second_owner_.
+  int iterations {100};
 };
 
 enum class Token_Kind
@@ -58,26 +59,29 @@ enum class Token_Kind
   WRITER
 };
 
-static bool ignore_deadlock = false;
-static bool remote_mutexes = false;
-static ACE_TCHAR const *server_host = ACE_DEFAULT_SERVER_HOST;
-static int server_port = ACE_DEFAULT_SERVER_PORT;
-static int iterations = 100;
-static bool rwlocks = false;
+struct Options
+{
+  ACE_TCHAR const *server_host {ACE_DEFAULT_SERVER_HOST};
+  int server_port {ACE_DEFAULT_SERVER_PORT};
+  int iterations {100};
+  bool ignore_deadlock {};
+  bool remote_mutexes {};
+  bool rwlocks {};
+};
 
 static std::unique_ptr<ACE_Token_Proxy>
-create_token (ACE_TCHAR const *name, Token_Kind kind)
+create_token (ACE_TCHAR const *name, Token_Kind kind, Options const &options)
 {
-  if (remote_mutexes)
+  if (options.remote_mutexes)
     {
       switch (kind)
         {
         case Token_Kind::MUTEX:
-          return std::make_unique<ACE_Remote_Mutex> (name, ignore_deadlock, 1);
+          return std::make_unique<ACE_Remote_Mutex> (name, options.ignore_deadlock, 1);
         case Token_Kind::READER:
-          return std::make_unique<ACE_Remote_RLock> (name, ignore_deadlock, 1);
+          return std::make_unique<ACE_Remote_RLock> (name, options.ignore_deadlock, 1);
         case Token_Kind::WRITER:
-          return std::make_unique<ACE_Remote_WLock> (name, ignore_deadlock, 1);
+          return std::make_unique<ACE_Remote_WLock> (name, options.ignore_deadlock, 1);
         }
     }
   else
@@ -85,11 +89,11 @@ create_token (ACE_TCHAR const *name, Token_Kind kind)
       switch (kind)
         {
         case Token_Kind::MUTEX:
-          return std::make_unique<ACE_Local_Mutex> (name, ignore_deadlock, 1);
+          return std::make_unique<ACE_Local_Mutex> (name, options.ignore_deadlock, 1);
         case Token_Kind::READER:
-          return std::make_unique<ACE_Local_RLock> (name, ignore_deadlock, 1);
+          return std::make_unique<ACE_Local_RLock> (name, options.ignore_deadlock, 1);
         case Token_Kind::WRITER:
-          return std::make_unique<ACE_Local_WLock> (name, ignore_deadlock, 1);
+          return std::make_unique<ACE_Local_WLock> (name, options.ignore_deadlock, 1);
         }
     }
 
@@ -97,11 +101,11 @@ create_token (ACE_TCHAR const *name, Token_Kind kind)
 }
 
 static ACE_THR_FUNC_RETURN
-two_token_thread (void *vp)
+two_token_thread (void *argument)
 {
-  Two_Tokens * const tokens = static_cast<Two_Tokens *> (vp);
+  Two_Tokens const * const tokens = static_cast<Two_Tokens const *> (argument);
 
-  for (int x = 0; x < iterations; x++)
+  for (int iteration {}; iteration < tokens->iterations; ++iteration)
     {
       if (tokens->first_->acquire () == -1)
         {
@@ -141,40 +145,27 @@ two_token_thread (void *vp)
 }
 
 static ACE_THR_FUNC_RETURN
-run_writer (void *vp)
+run_writer (void *argument)
 {
-  Four_Tokens * const ft = static_cast<Four_Tokens *> (vp);
-  int acquire_number = 0;
+  Four_Tokens const * const ft = static_cast<Four_Tokens const *> (argument);
+  std::size_t acquire_number {};
 
-  for (int x = 0; x < iterations; x++)
+  for (int iteration {}; iteration < ft->iterations; ++iteration)
     {
       // Cycle through each of the first three tokens.
-      ACE_Token_Proxy *t = nullptr;
-      switch (acquire_number)
-        {
-        case 0:
-          t = ft->first1_;
-          break;
-        case 1:
-          t = ft->first2_;
-          break;
-        case 2:
-          t = ft->first3_;
-          break;
-        }
+      ACE_Token_Proxy * const token = ft->first_[acquire_number];
+      acquire_number = (acquire_number + 1) % ft->first_.size ();
 
-      acquire_number = (acquire_number + 1) % 3;
-
-      if (t->acquire () == -1)
+      if (token->acquire () == -1)
         {
           ACE_ASSERT (errno == EDEADLK);
           ACE_DEBUG ((LM_DEBUG, "Deadlock detected.\n"));
           continue;
         }
 
-      if (ACE_TOKEN_INVARIANTS::instance ()->acquired (t) == 0)
+      if (ACE_TOKEN_INVARIANTS::instance ()->acquired (token) == 0)
         {
-          t->dump ();
+          token->dump ();
           ACE_ERROR_RETURN ((LM_ERROR, "violated invariant.\n"), 0);
         }
 
@@ -196,9 +187,9 @@ run_writer (void *vp)
       ft->second_->release ();
 
       G1:
-        ACE_TOKEN_INVARIANTS::instance ()->releasing (t);
+        ACE_TOKEN_INVARIANTS::instance ()->releasing (token);
 
-        t->release ();
+        token->release ();
     }
 
   ACE_DEBUG ((LM_DEBUG, "thread %t exiting\n"));
@@ -206,32 +197,32 @@ run_writer (void *vp)
 }
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_LOG_MSG->open (argv[0]);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("iuh:rp:n:"), 1);
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int option {}; (option = get_opt ()) != -1; )
     {
-      switch (c)
+      switch (option)
         {
         case 'r':
-          rwlocks = true;
+          options.rwlocks = true;
           break;
         case 'i':
-          ignore_deadlock = true;
+          options.ignore_deadlock = true;
           break;
         case 'h':
-          server_host = get_opt.opt_arg ();
-          remote_mutexes = true;
+          options.server_host = get_opt.opt_arg ();
+          options.remote_mutexes = true;
           break;
         case 'p':
-          server_port = ACE_OS::atoi (get_opt.opt_arg ());
-          remote_mutexes = true;
+          options.server_port = ACE_OS::atoi (get_opt.opt_arg ());
+          options.remote_mutexes = true;
           break;
         case 'n':
-          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          options.iterations = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'u':
         default:
@@ -245,23 +236,29 @@ parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if (remote_mutexes)
-    ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port, server_host));
+  if (options.iterations < 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "iterations cannot be negative\n"), -1);
+
+  if (options.remote_mutexes)
+    ACE_Remote_Mutex::set_server_address (
+      ACE_INET_Addr (options.server_port, options.server_host));
 
   return 0;
 }
 
 int
-mutex_test ()
+mutex_test (Options const &options)
 {
   ACE_Thread_Manager thr_mgr;
 
   Two_Tokens one;
   Two_Tokens two;
-  std::unique_ptr<ACE_Token_Proxy> global_mutex = create_token (ACE_TEXT ("global proxy"),
-                                                               Token_Kind::MUTEX);
-  one.first_owner_ = create_token (ACE_TEXT ("local proxy"), Token_Kind::MUTEX);
-  two.second_owner_ = create_token (ACE_TEXT ("local proxy"), Token_Kind::MUTEX);
+  one.iterations = options.iterations;
+  two.iterations = options.iterations;
+  std::unique_ptr<ACE_Token_Proxy> global_mutex = create_token (
+    ACE_TEXT ("global proxy"), Token_Kind::MUTEX, options);
+  one.first_owner_ = create_token (ACE_TEXT ("local proxy"), Token_Kind::MUTEX, options);
+  two.second_owner_ = create_token (ACE_TEXT ("local proxy"), Token_Kind::MUTEX, options);
   one.first_ = one.first_owner_.get ();
   one.second_ = global_mutex.get ();
   two.first_ = global_mutex.get ();
@@ -283,55 +280,48 @@ mutex_test ()
 }
 
 static int
-rwlock_test ()
+rwlock_test (Options const &options)
 {
   ACE_Thread_Manager thr_mgr;
 
-  Two_Tokens reader1;
-  Two_Tokens reader2;
-  Two_Tokens reader3;
+  std::array<Two_Tokens, 3> readers;
   Four_Tokens writer;
 
-  reader1.first_owner_ = create_token (ACE_TEXT ("reader first"), Token_Kind::READER);
-  ACE_TCHAR const * const reader1_second_name = remote_mutexes
-    ? ACE_TEXT ("reader first") : ACE_TEXT ("writer first 1");
-  reader1.second_owner_ = create_token (reader1_second_name, Token_Kind::READER);
-  reader2.first_owner_ = create_token (ACE_TEXT ("reader first"), Token_Kind::READER);
-  ACE_TCHAR const * const reader2_second_name = remote_mutexes
-    ? ACE_TEXT ("reader first") : ACE_TEXT ("writer first 2");
-  reader2.second_owner_ = create_token (reader2_second_name, Token_Kind::READER);
-  reader3.first_owner_ = create_token (ACE_TEXT ("reader first"), Token_Kind::READER);
-  ACE_TCHAR const * const reader3_second_name = remote_mutexes
-    ? ACE_TEXT ("reader first") : ACE_TEXT ("writer first 3");
-  reader3.second_owner_ = create_token (reader3_second_name, Token_Kind::READER);
+  writer.iterations = options.iterations;
 
-  writer.first1_owner_ = create_token (ACE_TEXT ("writer first 1"), Token_Kind::WRITER);
-  writer.first2_owner_ = create_token (ACE_TEXT ("writer first 2"), Token_Kind::WRITER);
-  writer.first3_owner_ = create_token (ACE_TEXT ("writer first 3"), Token_Kind::WRITER);
-  writer.second_owner_ = create_token (ACE_TEXT ("reader first"), Token_Kind::WRITER);
+  std::array<ACE_TCHAR const *, 3> const token_names {{
+    ACE_TEXT ("writer first 1"),
+    ACE_TEXT ("writer first 2"),
+    ACE_TEXT ("writer first 3")
+  }};
 
-  reader1.first_ = reader1.first_owner_.get ();
-  reader1.second_ = reader1.second_owner_.get ();
-  reader2.first_ = reader2.first_owner_.get ();
-  reader2.second_ = reader2.second_owner_.get ();
-  reader3.first_ = reader3.first_owner_.get ();
-  reader3.second_ = reader3.second_owner_.get ();
-  writer.first1_ = writer.first1_owner_.get ();
-  writer.first2_ = writer.first2_owner_.get ();
-  writer.first3_ = writer.first3_owner_.get ();
+  for (std::size_t index {}; index < readers.size (); ++index)
+    {
+      Two_Tokens &reader = readers[index];
+      reader.iterations = options.iterations;
+      reader.first_owner_ = create_token (
+        ACE_TEXT ("reader first"), Token_Kind::READER, options);
+      ACE_TCHAR const * const second_name = options.remote_mutexes
+        ? ACE_TEXT ("reader first") : token_names[index];
+      reader.second_owner_ = create_token (second_name, Token_Kind::READER, options);
+      reader.first_ = reader.first_owner_.get ();
+      reader.second_ = reader.second_owner_.get ();
+
+      writer.first_owners_[index] = create_token (
+        token_names[index], Token_Kind::WRITER, options);
+      writer.first_[index] = writer.first_owners_[index].get ();
+    }
+
+  writer.second_owner_ = create_token (
+    ACE_TEXT ("reader first"), Token_Kind::WRITER, options);
   writer.second_ = writer.second_owner_.get ();
 
   // Tell the token manager to be verbose when reporting deadlock.
   ACE_Token_Manager::instance ()->debug (1);
 
-  if (thr_mgr.spawn (two_token_thread, &reader1, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
-
-  if (thr_mgr.spawn (two_token_thread, &reader2, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
-
-  if (thr_mgr.spawn (two_token_thread, &reader3, THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "first spawn"), -1);
+  for (Two_Tokens &reader : readers)
+    if (thr_mgr.spawn (two_token_thread, &reader, THR_BOUND) == -1)
+      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "reader spawn"), -1);
 
   if (thr_mgr.spawn (run_writer, &writer, THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "second spawn"), -1);
@@ -343,22 +333,23 @@ rwlock_test ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) == -1)
+  Options options;
+  if (parse_args (argc, argv, options) == -1)
     return -1;
 
-  if (rwlocks)
-    rwlock_test ();
+  if (options.rwlocks)
+    rwlock_test (options);
   else
-    mutex_test ();
+    mutex_test (options);
 
   ACE_DEBUG ((LM_DEBUG, "test exiting.\n"));
   return 0;
 }
 #else
 int
-ACE_TMAIN(int, ACE_TCHAR *[])
+ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"), -1);
