@@ -3,9 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 
-
-ACE_TCHAR const *uipmc_url = nullptr;
-ACE_TCHAR const *ior_output_file = nullptr;
+ACE_TCHAR const *uipmc_url {};
+ACE_TCHAR const *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -49,7 +48,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
 
-      Server_impl *server_obj = nullptr;
+      Server_impl *server_obj {};
       ACE_NEW_RETURN (server_obj,
                       Server_impl(orb.in()),
                       -1);
