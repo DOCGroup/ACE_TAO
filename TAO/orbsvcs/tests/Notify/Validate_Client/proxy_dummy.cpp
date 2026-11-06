@@ -106,14 +106,14 @@ constexpr char format[] =
   "</notification_service>\n"
   ;
 
-int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& output_filename)
+static int
+parse_args (int argc, ACE_TCHAR* argv[], ACE_TCHAR const*& output_filename)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
-  int c {};
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         output_filename = get_opts.opt_arg ();
@@ -133,51 +133,46 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& output_filename)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_TCHAR const* output_filename { ACE_TEXT ("persistence.notify.xml") };
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA");
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
       if (parse_args (argc, argv, output_filename) != 0)
         return 1;
 
-      CORBA::String_var repo_id =
-        "IDL:omg.org/CosNotifyComm/StructuredPushConsumer:1.0";
+      char const* const repo_id = "IDL:omg.org/CosNotifyComm/StructuredPushConsumer:1.0";
 
-      CORBA::Object_var object =
-        root_poa->create_reference (repo_id.in ());
+      CORBA::Object_var const object = root_poa->create_reference (repo_id);
 
-      CORBA::String_var ior = orb->object_to_string (object.in ());
+      CORBA::String_var const ior = orb->object_to_string (object.in ());
 
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-        ACE_OS::fopen (output_filename, ACE_TEXT ("w")),
-        ACE_OS::fclose);
-      if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                           output_filename),
-                          1);
-      char const* dummy_consumer_proxy = ior.in ();
-
-      ACE_OS::fprintf (output_file.get (), format,
-                       dummy_consumer_proxy, dummy_consumer_proxy,
-                       dummy_consumer_proxy, dummy_consumer_proxy);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (output_filename, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                             output_filename),
+                            1);
+        char const* const dummy_consumer_proxy = ior.in ();
+        ACE_OS::fprintf (output_file.get (), format,
+                         dummy_consumer_proxy, dummy_consumer_proxy,
+                         dummy_consumer_proxy, dummy_consumer_proxy);
+      }
 
       poa_manager->activate ();
 
