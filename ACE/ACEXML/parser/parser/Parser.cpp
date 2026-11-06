@@ -1,4 +1,5 @@
 #include "ACEXML/parser/parser/Parser.h"
+#include <memory>
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/parser/parser/Parser.inl"
@@ -2081,14 +2082,16 @@ ACEXML_Parser::parse_entity_reference ()
 
   if (!this->external_entity_)
     {
-      ACEXML_StrCharStream* str = nullptr;
-      ACE_NEW_RETURN (str, ACEXML_StrCharStream, -1);
-      if (str->open (entity, replace) < 0
-          || this->switch_input (str, replace) != 0)
+      ACEXML_StrCharStream* raw_str = nullptr;
+      ACE_NEW_RETURN (raw_str, ACEXML_StrCharStream, -1);
+      std::unique_ptr<ACEXML_StrCharStream> str (raw_str);
+      if (str->open (entity, replace) < 0)
         {
           this->fatal_error (ACE_TEXT ("Unable to create internal input ")
                              ACE_TEXT ("stream"));
         }
+      if (this->switch_input (str.release (), replace) != 0)
+        this->fatal_error (ACE_TEXT ("Unable to create internal input stream"));
       return 0;
     }
   else
@@ -2166,7 +2169,7 @@ ACEXML_Parser::parse_PE_reference ()
 
   if (entity && !this->external_entity_)
     {
-      ACEXML_StrCharStream* sstream = nullptr;
+      ACEXML_StrCharStream* raw_sstream = nullptr;
       ACEXML_String str (entity);
       if (this->ref_state_ != ACEXML_ParserInt::IN_ENTITY_VALUE)
         {
@@ -2176,12 +2179,14 @@ ACEXML_Parser::parse_PE_reference ()
       //  ACE_DEBUG ((LM_DEBUG,
       //             ACE_TEXT ("Entity is %s\n Replacement Text is : %s\n"),
       //             replace, str.c_str()));
-      ACE_NEW_RETURN (sstream, ACEXML_StrCharStream, -1);
-      if (sstream->open (str.c_str(), replace) < 0
-          || this->switch_input (sstream, replace) != 0)
+      ACE_NEW_RETURN (raw_sstream, ACEXML_StrCharStream, -1);
+      std::unique_ptr<ACEXML_StrCharStream> sstream (raw_sstream);
+      if (sstream->open (str.c_str(), replace) < 0)
         {
           this->fatal_error (ACE_TEXT ("Error in switching InputSource"));
         }
+      if (this->switch_input (sstream.release (), replace) != 0)
+        this->fatal_error (ACE_TEXT ("Error in switching InputSource"));
       return 0;
     }
   else if (this->external_entity_ && this->validate_)
@@ -2508,8 +2513,10 @@ ACEXML_Parser::switch_input (ACEXML_CharStream* cstream,
                              const ACEXML_Char* systemId,
                              const ACEXML_Char* publicId)
 {
+  std::unique_ptr<ACEXML_CharStream> cstream_owner (cstream);
   ACEXML_InputSource* input = nullptr;
   ACE_NEW_RETURN (input, ACEXML_InputSource (cstream), -1);
+  cstream_owner.release ();
   return this->switch_input (input, systemId, publicId);
 }
 
@@ -2518,19 +2525,25 @@ ACEXML_Parser::switch_input (ACEXML_InputSource* input,
                              const ACEXML_Char* systemId,
                              const ACEXML_Char* publicId)
 {
+  std::unique_ptr<ACEXML_InputSource> input_owner (input);
   ACEXML_LocatorImpl* locator = nullptr;
   if (!systemId)
-    systemId = input->getSystemId();
+    systemId = input_owner->getSystemId();
   ACE_NEW_RETURN (locator, ACEXML_LocatorImpl (systemId, publicId), -1);
+  std::unique_ptr<ACEXML_LocatorImpl> locator_owner (locator);
   ACEXML_Parser_Context* new_context = nullptr;
-  ACE_NEW_RETURN (new_context, ACEXML_Parser_Context(input, locator), -1);
-  if (this->push_context (new_context) != 0)
+  ACE_NEW_RETURN (new_context,
+                  ACEXML_Parser_Context (input_owner.get (), locator_owner.get ()),
+                  -1);
+  std::unique_ptr<ACEXML_Parser_Context> context_owner (new_context);
+  input_owner.release ();
+  locator_owner.release ();
+  if (this->push_context (context_owner.get ()) != 0)
     {
       ACE_ERROR ((LM_ERROR, "Unable to switch input streams"));
-      delete new_context;
       return -1;
     }
-  this->current_ = new_context;
+  this->current_ = context_owner.release ();
   this->content_handler_->setDocumentLocator (this->current_->getLocator());
   return 0;
 }

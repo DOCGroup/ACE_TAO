@@ -664,6 +664,7 @@ private:
   /**
    *  Create a new ACEXML_CharStream from @a systemId and @a publicId and
    *  replace the current input stream with the newly created stream.
+   *  Takes ownership of @a cstream.
    */
   virtual int switch_input (ACEXML_CharStream* cstream,
                             const ACEXML_Char* systemId,
@@ -671,6 +672,7 @@ private:
   /**
    *  Create a new ACEXML_InputSource from @a systemId and @a publicId and
    *  replace the current input source with the newly created InputSource.
+   *  Takes ownership of @a input.
    */
   virtual int switch_input (ACEXML_InputSource* input,
                             const ACEXML_Char* systemId,
