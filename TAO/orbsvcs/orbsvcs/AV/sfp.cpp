@@ -189,7 +189,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
                           TAO_SFP_Frame_State &state,
                           TAO_AV_frame_info *&frame_info)
 {
-  ACE_Message_Block *message_block = nullptr;
+  ACE_Message_Block *message_block = {};
   int result = -1;
 
   if (TAO_debug_level > 0)
@@ -217,13 +217,13 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
   message_block->rd_ptr (frame_header_len);
   message_block->wr_ptr (n);
   CORBA::ULong ssrc = 0;
-  TAO_SFP_Fragment_Table_Entry *fragment_entry = nullptr;
+  TAO_SFP_Fragment_Table_Entry *fragment_entry = {};
   if (frame_header.flags & 0x2)
     {
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG,"fragmented frame:0th fragment\n"));
       state.more_fragments_ = true;
-      ACE_Message_Block *data = nullptr;
+      ACE_Message_Block *data = {};
       switch (frame_header.message_type)
         {
         case flowProtocol::Frame_Msg:
@@ -263,7 +263,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
         }
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG,"Length of 0th fragment= %d\n",data->length ()));
-      TAO_SFP_Fragment_Table *fragment_table = nullptr;
+      TAO_SFP_Fragment_Table *fragment_table = {};
       result = state.fragment_table_map_.find (ssrc,fragment_table);
       if (result != 0)
         {
@@ -367,7 +367,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
                              TAO_SFP_Frame_State &state,
                              TAO_AV_frame_info *&frame_info)
 {
-  TAO_SFP_Fragment_Table_Entry *fragment_entry = nullptr;
+  TAO_SFP_Fragment_Table_Entry *fragment_entry = {};
   int result = -1;
 
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"frag_number = %d, frag_size = %d,source_id  = %d sequnce_num = %d\n",
@@ -396,7 +396,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
                   -1);
   new_node->fragment_info_ = fragment;
   new_node->data_ = data;
-  TAO_SFP_Fragment_Table *fragment_table = nullptr;
+  TAO_SFP_Fragment_Table *fragment_table = {};
   result = state.fragment_table_map_.find (fragment.source_id,fragment_table);
   if (result != 0)
     {
@@ -1079,7 +1079,7 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
 int
 TAO_SFP_Object::set_policies (TAO_AV_PolicyList const &policies)
 {
-  TAO_AV_Policy *policy = nullptr;
+  TAO_AV_Policy *policy = {};
   for (CORBA::ULong i=0;i<policies.length ();i++)
     {
       policy = policies[i];
@@ -1122,7 +1122,7 @@ TAO_SFP_Consumer_Object::handle_input ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_SFP_Consumer_Object::handle_input\n"));
   // This is the entry point for receiving data.
-  TAO_AV_frame_info *frame_info = nullptr;
+  TAO_AV_frame_info *frame_info = {};
   int result = TAO_SFP_Base::handle_input (this->transport_,
                                            this->state_,
                                            frame_info);
@@ -1137,7 +1137,7 @@ TAO_SFP_Consumer_Object::handle_input ()
       // Now release the memory for the frame.
       if (this->state_.frame_block_ != &this->state_.static_frame_)
         {
-          ACE_Message_Block *temp = nullptr;
+          ACE_Message_Block *temp = {};
           for (temp = this->state_.frame_block_;
                temp != nullptr;
                temp = temp->cont ())
@@ -1239,8 +1239,8 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                           TAO_AV_Flow_Handler *handler,
                                           TAO_AV_Transport *transport)
 {
-  TAO_AV_Protocol_Object *object = nullptr;
-  TAO_AV_Callback *callback = nullptr;
+  TAO_AV_Protocol_Object *object = {};
+  TAO_AV_Callback *callback = {};
   endpoint->get_callback (entry->flowname (),
                        callback);
   ACE_CString flow_string( entry->flow_protocol_str () );

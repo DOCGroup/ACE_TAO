@@ -107,7 +107,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   try
     {
       // Bridge pattern. Allow subclasses to override this behavior
-      T_VDev *vdev = nullptr;
+      T_VDev *vdev = {};
       if (this->make_vdev (vdev) == -1)
         return -1;
 

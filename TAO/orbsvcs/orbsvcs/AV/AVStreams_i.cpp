@@ -138,7 +138,7 @@ TAO_Basic_StreamCtrl::start (AVStreams::flowSpec const &flow_spec)
               {
                 char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
                 ACE_CString flow_name_key (flowname);
-                FlowConnection_Map::ENTRY *flow_connection_entry = nullptr;
+                FlowConnection_Map::ENTRY *flow_connection_entry = {};
                 if (this->flow_connection_map_.find (flow_name_key,
                                                      flow_connection_entry) == 0)
                   {
@@ -149,7 +149,7 @@ TAO_Basic_StreamCtrl::start (AVStreams::flowSpec const &flow_spec)
             {
               // call start on all the flows.
               FlowConnection_Map_Iterator iterator (this->flow_connection_map_);
-              FlowConnection_Map_Entry *entry = nullptr;
+              FlowConnection_Map_Entry *entry = {};
               for (;iterator.next (entry) !=  0;iterator.advance ())
                 {
                   entry->int_id_->start ();
@@ -190,7 +190,7 @@ TAO_Basic_StreamCtrl::destroy (AVStreams::flowSpec const &flow_spec)
               {
                 char *flowname = TAO_AV_Core::get_flowname (flow_spec[i]);
                 ACE_CString flow_name_key (flowname);
-                FlowConnection_Map::ENTRY *flow_connection_entry = nullptr;
+                FlowConnection_Map::ENTRY *flow_connection_entry = {};
                 if (this->flow_connection_map_.find (flow_name_key, flow_connection_entry) == 0)
                   {
                     flow_connection_entry->int_id_->destroy ();
@@ -201,7 +201,7 @@ TAO_Basic_StreamCtrl::destroy (AVStreams::flowSpec const &flow_spec)
             {
               // call destroy on all the flows.
               FlowConnection_Map_Iterator iterator (this->flow_connection_map_);
-              FlowConnection_Map_Entry *entry = nullptr;
+              FlowConnection_Map_Entry *entry = {};
               for (;iterator.next (entry) !=  0;iterator.advance ())
                 {
                   entry->int_id_->destroy ();
@@ -435,7 +435,7 @@ TAO_StreamCtrl::stop (AVStreams::flowSpec const &flow_spec)
       if (this->flow_connection_map_.current_size () > 0)
         return;
       MMDevice_Map_Iterator a_iterator (this->mmdevice_a_map_);
-      MMDevice_Map::ENTRY *entry = nullptr;
+      MMDevice_Map::ENTRY *entry = {};
       for (;a_iterator.next (entry)!= 0;a_iterator.advance ())
         {
           entry->int_id_.sep_->stop (flow_spec);
@@ -473,7 +473,7 @@ TAO_StreamCtrl::start (AVStreams::flowSpec const &flow_spec)
         return;
 
       MMDevice_Map_Iterator a_iterator (this->mmdevice_a_map_);
-      MMDevice_Map::ENTRY *entry = nullptr;
+      MMDevice_Map::ENTRY *entry = {};
       for (;a_iterator.next (entry)!= 0;a_iterator.advance ())
         {
           entry->int_id_.sep_->start (flow_spec);
@@ -512,7 +512,7 @@ TAO_StreamCtrl::destroy (AVStreams::flowSpec const &flow_spec)
         return;
 
       MMDevice_Map_Iterator a_iterator (this->mmdevice_a_map_);
-      MMDevice_Map::ENTRY *entry = nullptr;
+      MMDevice_Map::ENTRY *entry = {};
       for (;a_iterator.next (entry)!= 0;a_iterator.advance ())
         {
           entry->int_id_.sep_->destroy (flow_spec);
@@ -719,7 +719,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
             {
               CORBA::Any_ptr flows_any = this->sep_a_->get_property_value ("Flows");
               AVStreams::flowSpec flows;
-              AVStreams::flowSpec const *temp_flows = nullptr;
+              AVStreams::flowSpec const *temp_flows = {};
               *flows_any >>= temp_flows;
               flows = *temp_flows;
               for (CORBA::ULong i=0; i< flows.length ();++i)
@@ -909,15 +909,15 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       AVStreams::flowSpec a_flows, b_flows;
       CORBA::Any_var flows_any;
       flows_any = sep_a_->get_property_value ("Flows");
-      AVStreams::flowSpec const *temp_flows = nullptr;
+      AVStreams::flowSpec const *temp_flows = {};
       flows_any.in () >>= temp_flows;
       a_flows = *temp_flows;
       flows_any = sep_b_->get_property_value ("Flows");
       flows_any.in () >>= temp_flows;
       b_flows = *temp_flows;
       u_int i;
-      FlowEndPoint_Map *a_fep_map = nullptr;
-      FlowEndPoint_Map *b_fep_map = nullptr;
+      FlowEndPoint_Map *a_fep_map = {};
+      FlowEndPoint_Map *b_fep_map = {};
       ACE_NEW_RETURN (a_fep_map,
                       FlowEndPoint_Map,
                       0);
@@ -968,7 +968,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                           0);
           for (i=0; i< flow_spec.length ();i++)
             {
-              TAO_Forward_FlowSpec_Entry *entry = nullptr;
+              TAO_Forward_FlowSpec_Entry *entry = {};
               ACE_NEW_RETURN (entry,
                               TAO_Forward_FlowSpec_Entry,
                               0);
@@ -1038,7 +1038,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                       CORBA::Object_var flow_connection_obj;
                       CORBA::Any_var flowname_any =
                         fep_a->get_property_value ("FlowName");
-                      char const *flowname = nullptr;
+                      char const *flowname = {};
                       flowname_any.in () >>= flowname;
                       try
                         {
@@ -1097,7 +1097,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                         }
                       CORBA::String_var fep_a_name, fep_b_name;
                       flowname_any = fep_a->get_property_value ("FlowName");
-                      char const *temp_name = nullptr;
+                      char const *temp_name = {};
                       flowname_any.in () >>= temp_name;
                       fep_a_name = CORBA::string_dup (temp_name);
                       flowname_any = fep_b->get_property_value ("FlowName");
@@ -1152,7 +1152,7 @@ TAO_StreamCtrl::unbind ()
       flow_spec.length(0);
 
       MMDevice_Map_Iterator a_iterator (this->mmdevice_a_map_);
-      MMDevice_Map::ENTRY *entry = nullptr;
+      MMDevice_Map::ENTRY *entry = {};
       for (;a_iterator.next (entry)!= 0;a_iterator.advance ())
         {
           entry->int_id_.sep_->destroy (flow_spec);
@@ -1234,7 +1234,7 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
               // Apply modify_qos to all the flows
               flowspec = this->flows_;
               MMDevice_Map_Iterator iterator (this->mmdevice_a_map_);
-              MMDevice_Map::ENTRY *entry = nullptr;
+              MMDevice_Map::ENTRY *entry = {};
               for (;iterator.next (entry) !=  0;iterator.advance ())
                 {
                   flowspec = entry->int_id_.flowspec_;
@@ -1602,7 +1602,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           CORBA::Any_var protocols_any =
             responder->get_property_value ("AvailableProtocols");
           AVStreams::protocolSpec peer_protocols;
-          AVStreams::protocolSpec const *temp_protocols = nullptr;
+          AVStreams::protocolSpec const *temp_protocols = {};
           protocols_any.in () >>= temp_protocols;
           peer_protocols = *temp_protocols;
           for (u_int i=0;i<peer_protocols.length ();i++)
@@ -1652,7 +1652,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
       u_int i;
       for (i=0;i<flow_spec.length ();i++)
         {
-          TAO_Forward_FlowSpec_Entry *entry = nullptr;
+          TAO_Forward_FlowSpec_Entry *entry = {};
           ACE_NEW_RETURN (entry,
                           TAO_Forward_FlowSpec_Entry,
                           0);
@@ -1690,7 +1690,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
         return retv;
       for (i=0;i<flow_spec.length ();i++)
         {
-          TAO_Reverse_FlowSpec_Entry *entry = nullptr;
+          TAO_Reverse_FlowSpec_Entry *entry = {};
           ACE_NEW_RETURN (entry,
                           TAO_Reverse_FlowSpec_Entry,
                           0);
@@ -2049,7 +2049,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
 
       for (CORBA::ULong i = 0; i < flow_spec.length (); ++i)
         {
-          TAO_Forward_FlowSpec_Entry *entry = nullptr;
+          TAO_Forward_FlowSpec_Entry *entry = {};
           ACE_NEW_RETURN (entry,
                           TAO_Forward_FlowSpec_Entry,
                           0);
@@ -2118,7 +2118,7 @@ TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
       TAO_Forward_FlowSpec_Entry entry;
       entry.parse (the_flows [i]);
       ACE_CString flow_name_key (entry.flowname ());
-      Flow_Handler_Map_Entry *handler_entry = nullptr;
+      Flow_Handler_Map_Entry *handler_entry = {};
       if (this->flow_handler_map_.find (flow_name_key,
                                         handler_entry) == 0)
         {
@@ -2245,7 +2245,7 @@ TAO_StreamEndPoint::add_fep_i (AVStreams::FlowEndPoint_ptr fep)
       CORBA::Any_var flow_name_any =
         fep->get_property_value ("FlowName");
 
-      char const *tmp = nullptr;
+      char const *tmp = {};
       flow_name_any >>= tmp;
       flow_name = CORBA::string_dup (tmp);
     }
@@ -2433,7 +2433,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
       TAO_AV_QoS qos (stream_qos);
       for (u_int i=0;i< flow_spec.length ();i++)
         {
-          TAO_Forward_FlowSpec_Entry *forward_entry = nullptr;
+          TAO_Forward_FlowSpec_Entry *forward_entry = {};
           ACE_NEW_RETURN (forward_entry,
                           TAO_Forward_FlowSpec_Entry,
                           0);
@@ -2517,7 +2517,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
           else
             {
               ACE_INET_Addr *mcast_addr;
-              TAO_FlowSpec_Entry *entry = nullptr;
+              TAO_FlowSpec_Entry *entry = {};
               result = this->mcast_entry_map_.find (mcast_key, entry);
               if (result == 0)
                 {
@@ -2685,7 +2685,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
             }
           else
             {
-              TAO_FlowSpec_Entry *mcast_entry = nullptr;
+              TAO_FlowSpec_Entry *mcast_entry = {};
               ACE_INET_Addr *mcast_addr;
               mcast_addr = dynamic_cast<ACE_INET_Addr *> (forward_entry->address ());
               if (mcast_addr == nullptr)
@@ -3252,7 +3252,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
 
       flow_name_any = fdev->get_property_value ("Flow");
 
-      char const *tmp = nullptr;
+      char const *tmp = {};
       *flow_name_any >>= tmp;
       flow_name = CORBA::string_dup (tmp);
     }
@@ -4010,7 +4010,7 @@ TAO_FlowEndPoint::set_protocol_restriction (AVStreams::protocolSpec const &proto
       AvailableProtocols_property <<= protocols;
       this->define_property ("AvailableProtocols",
                              AvailableProtocols_property);
-      AVStreams::protocolSpec const *temp_spec = nullptr;
+      AVStreams::protocolSpec const *temp_spec = {};
       CORBA::Any_var temp_any = this->get_property_value ("AvailableProtocols");
       temp_any.in () >>= temp_spec;
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "%N:%l\n"));
@@ -4043,7 +4043,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
       exception_message = "TAO_FlowEndPoint::is_fep_compatible - Format";
       format_ptr = this->get_property_value ("Format");
 
-      char const *temp_format = nullptr;
+      char const *temp_format = {};
       format_ptr.in () >>= temp_format;
       my_format = CORBA::string_dup (temp_format);
       // get my peer's format value
@@ -4058,7 +4058,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
       // since formats are same, check for a common protocol
       CORBA::Any_var AvailableProtocols_ptr;
       AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-      AVStreams::protocolSpec const *temp_protocols = nullptr;
+      AVStreams::protocolSpec const *temp_protocols = {};
 
       exception_message =
         "TAO_FlowEndPoint::is_fep_compatible - AvailableProtocols";
@@ -4144,7 +4144,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
       break;
     }
   AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-  AVStreams::protocolSpec const *temp_protocols = nullptr;
+  AVStreams::protocolSpec const *temp_protocols = {};
   CORBA::Any_var AvailableProtocols_ptr =
     peer_fep->get_property_value ("AvailableProtocols");
   AvailableProtocols_ptr.in () >>= temp_protocols;

@@ -379,7 +379,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   int result = -1;
   RTP_Packet *rtp_packet;
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
-  ACE_UINT32 *csrc_list = nullptr;
+  ACE_UINT32 *csrc_list = {};
 
   if (frame_info != nullptr)
     {
@@ -492,9 +492,9 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                TAO_AV_frame_info *frame_info)
 {
   int result = -1;
-  RTP_Packet *rtp_packet = nullptr;
+  RTP_Packet *rtp_packet = {};
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
-  ACE_UINT32 *csrc_list = nullptr;
+  ACE_UINT32 *csrc_list = {};
 
   if (this->connection_gone_)
     {
@@ -655,7 +655,7 @@ TAO_AV_RTP_Object::set_policies (TAO_AV_PolicyList const &policy_list)
 {
   this->policy_list_ = policy_list;
   CORBA::ULong const num_policies = this->policy_list_.length ();
-  TAO_AV_Policy *policy = nullptr;
+  TAO_AV_Policy *policy = {};
 
   for (u_int i=0; i< num_policies;i++)
     {
@@ -731,13 +731,13 @@ TAO_AV_RTP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                TAO_AV_Flow_Handler *handler,
                                                TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *callback = nullptr;
+  TAO_AV_Callback *callback = {};
 
   if( endpoint->get_callback (entry->flowname (), callback) ) {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%N,%l) Invalid callback\n"), 0);
   }
 
-  TAO_AV_Protocol_Object *object = nullptr;
+  TAO_AV_Protocol_Object *object = {};
   ACE_NEW_RETURN (object,
                   TAO_AV_RTP_Object (callback,
                                      transport),

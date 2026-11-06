@@ -15,7 +15,7 @@ RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
 {
   ACE_INET_Addr const *const_inet_addr = dynamic_cast<ACE_INET_Addr const *> (peer_addr);
 
-  ACE_INET_Addr *inet_addr = nullptr;
+  ACE_INET_Addr *inet_addr = {};
   ACE_NEW (inet_addr,
            ACE_INET_Addr (*const_inet_addr));
 
@@ -244,7 +244,7 @@ RTCP_Channel_In::getRRBlock()
 
   this->no_data_counter_ = 0;
 
-  RR_Block *local_block_ptr = nullptr;
+  RR_Block *local_block_ptr = {};
 
   ACE_NEW_RETURN (local_block_ptr,
                   RR_Block,

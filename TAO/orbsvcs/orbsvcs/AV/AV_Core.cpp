@@ -700,8 +700,8 @@ TAO_AV_Core::load_default_transport_factories ()
   char const *udp_factory_str = "UDP_Factory";
   char const *tcp_factory_str = "TCP_Factory";
 
-  TAO_AV_Transport_Factory *udp_factory = nullptr;
-  TAO_AV_Transport_Item *udp_item = nullptr;
+  TAO_AV_Transport_Factory *udp_factory = {};
+  TAO_AV_Transport_Item *udp_item = {};
 
   udp_factory =
     ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (udp_factory_str);
@@ -724,8 +724,8 @@ TAO_AV_Core::load_default_transport_factories ()
 
   this->transport_factories_.insert (udp_item);
 
-  TAO_AV_Transport_Factory *tcp_factory = nullptr;
-  TAO_AV_Transport_Item *tcp_item = nullptr;
+  TAO_AV_Transport_Factory *tcp_factory = {};
+  TAO_AV_Transport_Item *tcp_item = {};
 
   tcp_factory =
     ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (tcp_factory_str);
@@ -751,8 +751,8 @@ TAO_AV_Core::load_default_transport_factories ()
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
   char const *udp_qos_factory_str = "UDP_QoS_Factory";
 
-  TAO_AV_Transport_Factory *udp_qos_factory = nullptr;
-  TAO_AV_Transport_Item *udp_qos_item = nullptr;
+  TAO_AV_Transport_Factory *udp_qos_factory = {};
+  TAO_AV_Transport_Item *udp_qos_item = {};
 
   udp_qos_factory =
         ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (udp_qos_factory_str);
@@ -782,8 +782,8 @@ TAO_AV_Core::load_default_transport_factories ()
 #if defined ACE_HAS_SCTP
   char const *sctp_seq_factory_str = "SCTP_SEQ_Factory";
 
-  TAO_AV_Transport_Factory *sctp_seq_factory = nullptr;
-  TAO_AV_Transport_Item *sctp_seq_item = nullptr;
+  TAO_AV_Transport_Factory *sctp_seq_factory = {};
+  TAO_AV_Transport_Item *sctp_seq_item = {};
 
   sctp_seq_factory =
         ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (sctp_seq_factory_str);
@@ -870,8 +870,8 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
   char const *rtcp_flow = "RTCP_Flow_Factory";
   char const *sfp_flow = "SFP_Flow_Factory";
 
-  TAO_AV_Flow_Protocol_Factory *udp_flow_factory = nullptr;
-  TAO_AV_Flow_Protocol_Item *udp_item = nullptr;
+  TAO_AV_Flow_Protocol_Factory *udp_flow_factory = {};
+  TAO_AV_Flow_Protocol_Item *udp_item = {};
 
   udp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_flow);
@@ -897,8 +897,8 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
   char const *udp_qos_flow = "UDP_QoS_Flow_Factory";
-  TAO_AV_Flow_Protocol_Factory *udp_qos_flow_factory = nullptr;
-  TAO_AV_Flow_Protocol_Item *udp_qos_flow_item = nullptr;
+  TAO_AV_Flow_Protocol_Factory *udp_qos_flow_factory = {};
+  TAO_AV_Flow_Protocol_Item *udp_qos_flow_item = {};
 
   udp_qos_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (udp_qos_flow);
@@ -926,8 +926,8 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 #if defined ACE_HAS_SCTP
 
   char const *sctp_seq_flow = "SCTP_SEQ_Flow_Factory";
-  TAO_AV_Flow_Protocol_Factory *sctp_seq_flow_factory = nullptr;
-  TAO_AV_Flow_Protocol_Item *sctp_seq_flow_item = nullptr;
+  TAO_AV_Flow_Protocol_Factory *sctp_seq_flow_factory = {};
+  TAO_AV_Flow_Protocol_Item *sctp_seq_flow_item = {};
 
   sctp_seq_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (sctp_seq_flow);
@@ -952,8 +952,8 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
 #endif /* ACE_HAS_SCTP */
 
-  TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = nullptr;
-  TAO_AV_Flow_Protocol_Item *tcp_item = nullptr;
+  TAO_AV_Flow_Protocol_Factory *tcp_flow_factory = {};
+  TAO_AV_Flow_Protocol_Item *tcp_item = {};
 
   tcp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (tcp_flow);
@@ -976,8 +976,8 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
   this->flow_protocol_factories_.insert (tcp_item);
 
-  TAO_AV_Flow_Protocol_Factory *rtp_flow_factory = nullptr;
-  TAO_AV_Flow_Protocol_Item *rtp_item = nullptr;
+  TAO_AV_Flow_Protocol_Factory *rtp_flow_factory = {};
+  TAO_AV_Flow_Protocol_Item *rtp_item = {};
 
   rtp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtp_flow);
@@ -1000,8 +1000,8 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
   this->flow_protocol_factories_.insert (rtp_item);
 
-  TAO_AV_Flow_Protocol_Factory *rtcp_flow_factory = nullptr;
-  TAO_AV_Flow_Protocol_Item *rtcp_item = nullptr;
+  TAO_AV_Flow_Protocol_Factory *rtcp_flow_factory = {};
+  TAO_AV_Flow_Protocol_Item *rtcp_item = {};
 
   rtcp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (rtcp_flow);
@@ -1024,8 +1024,8 @@ TAO_AV_Core::load_default_flow_protocol_factories ()
 
   this->flow_protocol_factories_.insert (rtcp_item);
 
-  TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = nullptr;
-  TAO_AV_Flow_Protocol_Item *sfp_item = nullptr;
+  TAO_AV_Flow_Protocol_Factory *sfp_flow_factory = {};
+  TAO_AV_Flow_Protocol_Item *sfp_item = {};
 
   sfp_flow_factory =
     ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (sfp_flow);

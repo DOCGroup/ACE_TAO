@@ -285,7 +285,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
   :RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  RR_Block *local_block_ptr = nullptr;
+  RR_Block *local_block_ptr = {};
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -447,8 +447,8 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
                    RTCP_Packet (buffer)
 {
   unsigned int i;
-  sdesChunk_t *cp = nullptr; // pointer to chunk
-  sdesItem_t *ip = nullptr; // pointer to item
+  sdesChunk_t *cp = {}; // pointer to chunk
+  sdesItem_t *ip = {}; // pointer to item
 
   // The common part of the control packet header is processed
   // in the parent. It is 4 bytes long.
@@ -584,7 +584,7 @@ RTCP_SDES_Packet::~RTCP_SDES_Packet()
 void
 RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
 {
-  sdesChunk_t *cp = nullptr; // pointer to chunk
+  sdesChunk_t *cp = {}; // pointer to chunk
 
   // If this is the first chunk.
   if (chd_.count_ == 0)
@@ -969,7 +969,7 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
                                ACE_UINT32 octets_sent,
                                RR_Block *blocks)
 {
-  RR_Block *block_ptr = nullptr;
+  RR_Block *block_ptr = {};
   chd_.count_ = 0;
   chd_.ver_ = 2;
   chd_.pt_ = RTCP_PT_SR;
@@ -1008,7 +1008,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
                 : RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  RR_Block *local_block_ptr = nullptr;
+  RR_Block *local_block_ptr = {};
 
   // The common part of the header is initialized in the parent.
   i=4;
