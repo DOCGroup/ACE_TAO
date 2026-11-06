@@ -11,13 +11,13 @@
 #include <array>
 
 constexpr u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
-ACE_TCHAR const * const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
-ACE_TCHAR const * const DATA = ACE_TEXT ("hello world\n");
+constexpr ACE_TCHAR const * LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
+constexpr ACE_TCHAR const * DATA = ACE_TEXT ("hello world\n");
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const u_short logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : LOGGER_PORT;
+  u_short const logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : LOGGER_PORT;
   ACE_TCHAR const * const logger_host = argc > 2 ? argv[2] : LOGGER_HOST;
 
   ACE_SOCK_Stream logger;
@@ -31,7 +31,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   log_record.msg_data (DATA);
-  const size_t max_payload_size =
+  size_t const max_payload_size =
     4 // type()
     + 8 // timestamp
     + 4 // process id
