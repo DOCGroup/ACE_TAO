@@ -53,7 +53,7 @@ public:
    */
   TAO_Asynch_Queued_Message (ACE_Message_Block const *contents,
                              TAO_ORB_Core *oc,
-                             ACE_Time_Value *timeout,
+                             ACE_Time_Value const *timeout,
                              ACE_Allocator *alloc,
                              bool is_heap_allocated);
 
@@ -94,7 +94,7 @@ protected:
    *
    * @param alloc Allocator used for creating <this> object.
    */
-  TAO_Asynch_Queued_Message (char *buf,
+  TAO_Asynch_Queued_Message (std::unique_ptr<char[]> buffer,
                              TAO_ORB_Core *oc,
                              size_t size,
                              const ACE_Time_Value &abs_timeout,
