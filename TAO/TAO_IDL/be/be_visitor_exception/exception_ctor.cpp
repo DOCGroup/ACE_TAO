@@ -58,7 +58,15 @@ be_visitor_exception_ctor::visit_exception (be_exception *node)
       *os << node->name () << "::" << node->local_name ();
     }
 
-  *os << " (" << be_idt << be_idt_nl;
+  bool const compact_header_constructor =
+    this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH
+    && node->nfields () == 1;
+
+  *os << " (";
+  if (!compact_header_constructor)
+    {
+      *os << be_idt << be_idt_nl;
+    }
 
   if (this->visit_scope (node) == -1)
     {
@@ -71,7 +79,11 @@ be_visitor_exception_ctor::visit_exception (be_exception *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_EXCEPTION_CTOR_CH)
     {
-      *os << ");" << be_uidt << be_uidt;
+      *os << ");";
+      if (!compact_header_constructor)
+        {
+          *os << be_uidt << be_uidt;
+        }
     }
   else
     {

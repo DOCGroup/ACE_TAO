@@ -144,8 +144,6 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
   // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.
-  os->indent ();
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
