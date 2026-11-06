@@ -86,7 +86,7 @@ TAO_PriorityModelPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy ()
 {
-  TAO_PriorityModelPolicy* tmp = nullptr;
+  TAO_PriorityModelPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityModelPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -161,7 +161,7 @@ TAO_ThreadpoolPolicy::create (CORBA::Any const &val)
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_ThreadpoolPolicy *tmp = nullptr;
+  TAO_ThreadpoolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -185,7 +185,7 @@ TAO_ThreadpoolPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::copy ()
 {
-  TAO_ThreadpoolPolicy* tmp = nullptr;
+  TAO_ThreadpoolPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ThreadpoolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -225,7 +225,7 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (TAO_PrivateConnectionP
 CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::create (CORBA::Any const &)
 {
-  TAO_PrivateConnectionPolicy *tmp = nullptr;
+  TAO_PrivateConnectionPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -243,7 +243,7 @@ TAO_PrivateConnectionPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::copy ()
 {
-  TAO_PrivateConnectionPolicy* tmp = nullptr;
+  TAO_PrivateConnectionPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PrivateConnectionPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -294,11 +294,11 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (TAO_Prio
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::create (CORBA::Any const &val)
 {
-  RTCORBA::PriorityBands const *value = nullptr;
+  RTCORBA::PriorityBands const *value {};
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_PriorityBandedConnectionPolicy *tmp = nullptr;
+  TAO_PriorityBandedConnectionPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (*value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -310,7 +310,7 @@ TAO_PriorityBandedConnectionPolicy::create (CORBA::Any const &val)
 RTCORBA::PriorityBands *
 TAO_PriorityBandedConnectionPolicy::priority_bands ()
 {
-  RTCORBA::PriorityBands *tmp = nullptr;
+  RTCORBA::PriorityBands *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::PriorityBands (this->priority_bands_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -328,7 +328,7 @@ TAO_PriorityBandedConnectionPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::copy ()
 {
-  TAO_PriorityBandedConnectionPolicy *tmp = nullptr;
+  TAO_PriorityBandedConnectionPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_PriorityBandedConnectionPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -396,11 +396,11 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (TAO_ServerProtocolPolicy con
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::create (CORBA::Any const &val)
 {
-  RTCORBA::ProtocolList const *value = nullptr;
+  RTCORBA::ProtocolList const *value {};
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_ServerProtocolPolicy *tmp = nullptr;
+  TAO_ServerProtocolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (*value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -412,7 +412,7 @@ TAO_ServerProtocolPolicy::create (CORBA::Any const &val)
 RTCORBA::ProtocolList *
 TAO_ServerProtocolPolicy::protocols ()
 {
-  RTCORBA::ProtocolList *tmp = nullptr;
+  RTCORBA::ProtocolList *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -430,7 +430,7 @@ TAO_ServerProtocolPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::copy ()
 {
-  TAO_ServerProtocolPolicy* tmp = nullptr;
+  TAO_ServerProtocolPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ServerProtocolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -486,11 +486,11 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (TAO_ClientProtocolPolicy con
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::create (CORBA::Any const &val)
 {
-  RTCORBA::ProtocolList const *value = nullptr;
+  RTCORBA::ProtocolList const *value {};
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-  TAO_ClientProtocolPolicy *tmp = nullptr;
+  TAO_ClientProtocolPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (*value),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -502,7 +502,7 @@ TAO_ClientProtocolPolicy::create (CORBA::Any const &val)
 RTCORBA::ProtocolList *
 TAO_ClientProtocolPolicy::protocols ()
 {
-  RTCORBA::ProtocolList *tmp = nullptr;
+  RTCORBA::ProtocolList *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     RTCORBA::ProtocolList (this->protocols_),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -520,7 +520,7 @@ TAO_ClientProtocolPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::copy ()
 {
-  TAO_ClientProtocolPolicy* tmp = nullptr;
+  TAO_ClientProtocolPolicy* tmp {};
   ACE_NEW_THROW_EX (tmp,
                     TAO_ClientProtocolPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -1125,7 +1125,7 @@ RTCORBA::ProtocolProperties *
 TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id,
                                                                      TAO_ORB_Core *orb_core)
 {
-  RTCORBA::ProtocolProperties* property = nullptr;
+  RTCORBA::ProtocolProperties* property {};
 
   if (id == IOP::TAG_INTERNET_IOP)
     {
@@ -1218,7 +1218,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 RTCORBA::ProtocolProperties*
 TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id)
 {
-  RTCORBA::ProtocolProperties* property = nullptr;
+  RTCORBA::ProtocolProperties* property {};
 
   if (id == IOP::TAG_INTERNET_IOP)
     ACE_NEW_RETURN (property,

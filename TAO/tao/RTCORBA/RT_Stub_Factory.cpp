@@ -18,7 +18,7 @@ TAO_RT_Stub_Factory::create_stub (char const *repository_id,
                                   TAO_MProfile const &profiles,
                                   TAO_ORB_Core *orb_core)
 {
-  TAO_Stub *retval = nullptr;
+  TAO_Stub *retval {};
 
   ACE_NEW_THROW_EX (retval,
                     TAO_RT_Stub (repository_id, profiles, orb_core),

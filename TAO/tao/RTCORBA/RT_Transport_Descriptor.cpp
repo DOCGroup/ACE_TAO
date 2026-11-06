@@ -38,7 +38,7 @@ TAO_RT_Transport_Descriptor::duplicate ()
   if (endpoint == nullptr)
     return nullptr;
 
-  TAO_RT_Transport_Descriptor *new_descriptor = nullptr;
+  TAO_RT_Transport_Descriptor *new_descriptor {};
 
   ACE_NEW_RETURN (new_descriptor,
                   TAO_RT_Transport_Descriptor (endpoint, true),
@@ -48,8 +48,8 @@ TAO_RT_Transport_Descriptor::duplicate ()
   TAO_RT_Transport_Descriptor_Property *current_property =
     this->property_list_;
 
-  TAO_RT_Transport_Descriptor_Property *current_new_property = nullptr;
-  TAO_RT_Transport_Descriptor_Property *new_property = nullptr;
+  TAO_RT_Transport_Descriptor_Property *current_new_property {};
+  TAO_RT_Transport_Descriptor_Property *new_property {};
 
   while (current_property)
     {

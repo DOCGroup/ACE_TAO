@@ -430,12 +430,12 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
 
   // Default parameters.
   int default_grp_id = -1;
-  ACE_Task_Base *default_task = nullptr;
-  ACE_hthread_t *default_thread_handles = nullptr;
-  void **default_stack = nullptr;
+  ACE_Task_Base *default_task {};
+  ACE_hthread_t *default_thread_handles {};
+  void **default_stack {};
 
   // Setting stack size.
-  size_t *stack_size_array = nullptr;
+  size_t *stack_size_array {};
   ACE_NEW_RETURN (stack_size_array,
                   size_t[number_of_threads],
                   -1);
@@ -785,7 +785,7 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes (CORBA::ULong stacksize,
 void
 TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool)
 {
-  TAO_Thread_Pool *tao_thread_pool = nullptr;
+  TAO_Thread_Pool *tao_thread_pool {};
 
   // The guard is just for the map, don't do a wait inside the guard, because
   // during the wait other threads can try to access the thread pool manager
@@ -830,7 +830,7 @@ TAO_Thread_Pool_Manager::create_threadpool_i (CORBA::ULong stacksize,
                                               ACE_Time_Value const &dynamic_thread_time)
 {
   // Create the thread pool.
-  TAO_Thread_Pool *thread_pool = nullptr;
+  TAO_Thread_Pool *thread_pool {};
 
   ACE_NEW_THROW_EX (thread_pool,
                     TAO_Thread_Pool (*this,
@@ -861,7 +861,7 @@ TAO_Thread_Pool_Manager::create_threadpool_with_lanes_i (CORBA::ULong stacksize,
                                                          ACE_Time_Value const &dynamic_thread_time)
 {
   // Create the thread pool.
-  TAO_Thread_Pool *thread_pool = nullptr;
+  TAO_Thread_Pool *thread_pool {};
 
   ACE_NEW_THROW_EX (thread_pool,
                     TAO_Thread_Pool (*this,
@@ -930,7 +930,7 @@ TAO_Thread_Pool_Manager::get_threadpool (RTCORBA::ThreadpoolId thread_pool_id )
 {
   TAO_THREAD_POOL_MANAGER_GUARD;
 
-  TAO_Thread_Pool *thread_pool = nullptr;
+  TAO_Thread_Pool *thread_pool {};
   int const result = thread_pools_.find (thread_pool_id, thread_pool);
 
   ACE_UNUSED_ARG (result);

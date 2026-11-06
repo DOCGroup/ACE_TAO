@@ -94,7 +94,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
        ++protocol_index)
     {
       // Find the profiles that match the current protocol.
-      TAO_Profile *profile = nullptr;
+      TAO_Profile *profile {};
       TAO_MProfile &mprofile = (r.stub ()->forward_profiles() == nullptr) ?
         r.stub ()->base_profiles () : *r.stub ()->forward_profiles();
 
