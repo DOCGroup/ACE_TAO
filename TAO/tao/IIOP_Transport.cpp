@@ -286,16 +286,12 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 
   IIOP::ListenPointList listen_point_list;
 
-  TAO_AcceptorSetIterator const end = ar.end ();
-
-  for (TAO_AcceptorSetIterator acceptor = ar.begin ();
-       acceptor != end;
-       ++acceptor)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar)
     {
       // Check whether it is an IIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
-          if (this->get_listen_point (listen_point_list, *acceptor) == -1)
+          if (this->get_listen_point (listen_point_list, acceptor.get ()) == -1)
             {
               if (TAO_debug_level > 0)
                 TAOLIB_ERROR ((LM_ERROR,

@@ -36,8 +36,6 @@ TAO_EndpointPolicy_Factory::create_policy (
       TAO_Acceptor_Registry & registry =
         this->orb_core_->lane_resources ().acceptor_registry ();
 
-      TAO_Acceptor ** const acceptors_begin = registry.begin ();
-      TAO_Acceptor ** const acceptors_end = registry.end ();
       CORBA::ULong const num_eps = endpoint_list->length ();
 
       // need to count the protocol types offered by the acceptors
@@ -46,13 +44,11 @@ TAO_EndpointPolicy_Factory::create_policy (
 
       CORBA::ULong last_known_prot = 0xFFFFFFFF; // tag = 0 is IIOP
       int prot_count = 0;
-      for (TAO_Acceptor** acceptor = acceptors_begin;
-           acceptor != acceptors_end;
-           ++acceptor)
+      for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry)
         {
-          if ((*acceptor)->tag () != last_known_prot)
+          if (acceptor->tag () != last_known_prot)
             {
-              last_known_prot = (*acceptor)->tag ();
+              last_known_prot = acceptor->tag ();
               ++prot_count;
             }
         }
@@ -74,12 +70,10 @@ TAO_EndpointPolicy_Factory::create_policy (
           if (evi == nullptr)
             continue;
 
-          for (TAO_Acceptor** acceptor = acceptors_begin;
-               !found_one && acceptor != acceptors_end;
-               ++acceptor)
+          for (std::unique_ptr<TAO_Acceptor> const& acceptor : registry)
             {
-              if ((*acceptor)->tag () == prot_tag)
-                found_one = evi->validate_acceptor (*acceptor, prot_count > 1);
+              if (!found_one && acceptor->tag () == prot_tag)
+                found_one = evi->validate_acceptor (acceptor.get (), prot_count > 1);
             }
         }
 

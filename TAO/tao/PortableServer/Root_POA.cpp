@@ -2099,8 +2099,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
       result =
         filter->fill_profile (object_key,
                               mprofile,
-                              acceptor_registry.begin (),
-                              acceptor_registry.end ());
+                              acceptor_registry.acceptors ());
       if (result == -1)
         error = true;
     }

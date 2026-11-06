@@ -194,19 +194,14 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar.begin ();
-
   IIOP::ListenPointList listen_point_list;
 
-  for (;
-       acceptor != ar.end ();
-       acceptor++)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar)
     {
       // Check whether it is a IIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
-          if (this->get_listen_point (listen_point_list, *acceptor) == -1)
+          if (this->get_listen_point (listen_point_list, acceptor.get ()) == -1)
             {
               ORBSVCS_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SSLIOP_Transport::set_bidir_info, ",

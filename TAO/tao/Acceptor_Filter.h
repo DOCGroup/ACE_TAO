@@ -17,6 +17,8 @@
 #include "tao/orbconf.h"
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+#include <memory>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,6 +33,8 @@ namespace TAO
 
 class TAO_MProfile;
 class TAO_Acceptor;
+
+using TAO_AcceptorSet = std::vector<std::unique_ptr<TAO_Acceptor>>;
 
 /**
  * @class TAO_Acceptor_Filter
@@ -49,13 +53,11 @@ public:
 
   /**
    * Populate @a mprofile with profiles. Profiles are created for
-   * selected acceptors (endpoints) from the array delimited by
-   * @a acceptors_begin and @a acceptors_end.
+   * selected acceptors (endpoints) in @a acceptors.
    */
   virtual int fill_profile (TAO::ObjectKey const &object_key,
                             TAO_MProfile &mprofile,
-                            TAO_Acceptor **acceptors_begin,
-                            TAO_Acceptor **acceptors_end,
+                            TAO_AcceptorSet const& acceptors,
                             CORBA::Short priority = TAO_INVALID_PRIORITY) = 0;
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS

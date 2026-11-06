@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Unbounded_Set.h"
+#include "tao/Acceptor_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,8 +45,6 @@ class TAO_Protocol_Item;
 
 using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set<TAO_Protocol_Item *>::iterator;
 
-using TAO_AcceptorSetIterator = TAO_Acceptor**;
-
 /**
  * @class TAO_Acceptor_Registry
  *
@@ -60,7 +59,7 @@ class TAO_Export TAO_Acceptor_Registry
 {
 public:
   ///  Default constructor.
-  TAO_Acceptor_Registry () = default;
+  TAO_Acceptor_Registry ();
 
   ///  Default destructor.
   ~TAO_Acceptor_Registry ();
@@ -84,9 +83,10 @@ public:
   /// Return the acceptor bridges
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
 
-  // = Iterator.
-  TAO_AcceptorSetIterator begin ();
-  TAO_AcceptorSetIterator end ();
+  TAO_AcceptorSet const& acceptors () const;
+
+  TAO_AcceptorSet::const_iterator begin () const;
+  TAO_AcceptorSet::const_iterator end () const;
 
 private:
   TAO_Acceptor_Registry (TAO_Acceptor_Registry const &) = delete;
@@ -113,7 +113,7 @@ private:
                       int major,
                       int minor,
                       TAO_ProtocolFactorySetItor &factory,
-                      TAO_Acceptor* acceptor,
+                      std::unique_ptr<TAO_Acceptor> acceptor,
                       char const *options);
 
   /// Extract endpoint-specific options from the endpoint string.
@@ -137,10 +137,10 @@ private:
 
 private:
   /// List of acceptors that are currently open.
-  std::unique_ptr<TAO_Acceptor *[]> acceptors_;
+  TAO_AcceptorSet acceptors_;
 
-  /// Number of acceptors that are currently open.
-  size_t size_ {};
+  /// Reserve storage for the maximum number of acceptors needed.
+  bool reserve_acceptors (size_t count);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

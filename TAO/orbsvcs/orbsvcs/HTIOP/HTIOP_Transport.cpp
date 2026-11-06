@@ -224,20 +224,15 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar.begin ();
-
   ::HTIOP::ListenPointList listen_point_list;
 
-  for (;
-       acceptor != ar.end ();
-       acceptor++)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar)
     {
       // Check whether it is a HTIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
           if (this->get_listen_point (listen_point_list,
-                                      *acceptor) == -1)
+                                      acceptor.get ()) == -1)
             {
               ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport::set_bidir_info, "),
