@@ -4,9 +4,10 @@
 
 #include "TestC.h"
 
+#include <cstring>
+
 Consumer::Consumer (bool valuetype)
-  : event_count_ (0),
-    valuetype_ (valuetype)
+  : valuetype_ (valuetype)
 {
 }
 
@@ -28,7 +29,7 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
   // Simple subscription, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
   RtecEventChannelAdmin::ConsumerQOS qos;
-  qos.is_gateway = 0;
+  qos.is_gateway = false;
 
   qos.dependencies.length (2);
   RtecEventComm::EventHeader& h0 =
@@ -52,7 +53,7 @@ Consumer::disconnect ()
       // Disconnect from the proxy
       this->proxy_->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore exceptions
     }
@@ -69,7 +70,7 @@ Consumer::disconnect ()
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const& events)
 {
   if (events.length () == 0)
     {
@@ -78,18 +79,18 @@ Consumer::push (const RtecEventComm::EventSet& events)
       return;
     }
 
-  for (size_t i = 0; i < events.length (); ++i)
+  for (size_t i {}; i < events.length (); ++i)
     {
       ++this->event_count_;
 
       if (this->valuetype_)
         {
-          Hello::ValueTypeData * test_data = 0;
+          Hello::ValueTypeData * test_data {};
           if (events[i].data.any_value >>= test_data)
             {
               ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %C\n",
                           events[i].header.source, test_data->data ()));
-              if (ACE_OS::strcmp (test_data->data (), "ACE/TAO/CIAO") != 0)
+              if (std::strcmp (test_data->data (), "ACE/TAO/CIAO") != 0)
                 {
                   ACE_ERROR ((LM_ERROR, "Consumer (%P|%t): ERROR received not expected message\n"));
                 }
@@ -101,12 +102,12 @@ Consumer::push (const RtecEventComm::EventSet& events)
         }
       else
         {
-          const char* mystring = 0;
+          char const* mystring {};
           if (events[i].data.any_value >>= mystring)
             {
               ACE_DEBUG ((LM_DEBUG, "Consumer (%P|%t): Received message <%d>: %C\n",
                                     events[i].header.source, mystring));
-              if (ACE_OS::strcmp (mystring, "ACE/TAO/CIAO") != 0)
+              if (std::strcmp (mystring, "ACE/TAO/CIAO") != 0)
                 {
                   ACE_ERROR ((LM_ERROR, "Consumer (%P|%t): ERROR received not expected message\n"));
                 }
