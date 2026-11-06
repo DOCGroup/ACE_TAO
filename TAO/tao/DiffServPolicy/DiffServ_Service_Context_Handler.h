@@ -27,9 +27,9 @@ class TAO_DiffServ_Service_Context_Handler :
 public:
   TAO_DiffServ_Service_Context_Handler () = default;
 
-  int process_service_context (TAO_Transport& transport,
-                                       const IOP::ServiceContext& context,
-                                       TAO_ServerRequest *request) override;
+  int process_service_context (TAO_Transport &transport,
+                               IOP::ServiceContext const &context,
+                               TAO_ServerRequest *request) override;
   int generate_service_context (
     TAO_Stub *stub,
     TAO_Transport &transport,

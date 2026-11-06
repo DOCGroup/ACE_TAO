@@ -14,8 +14,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_DiffServ_Service_Context_Handler::process_service_context (
-  TAO_Transport&,
-  const IOP::ServiceContext&,
+  TAO_Transport &,
+  IOP::ServiceContext const &,
   TAO_ServerRequest *)
 {
   return 0;
@@ -24,12 +24,12 @@ TAO_DiffServ_Service_Context_Handler::process_service_context (
 int
 TAO_DiffServ_Service_Context_Handler::generate_service_context (
   TAO_Stub *stub,
-  TAO_Transport&,
+  TAO_Transport &,
   TAO_Operation_Details &opdetails,
   TAO_Target_Specification &,
   TAO_OutputCDR &)
 {
-  if (stub)
+  if (stub != nullptr)
     {
       CORBA::Policy_var cnpp =
         stub->get_cached_policy (TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY);
