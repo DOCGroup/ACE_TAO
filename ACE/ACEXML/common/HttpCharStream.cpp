@@ -20,13 +20,6 @@ static const int HDST_CRLF = 14;
 static const int HDST_CRLFCR = 15;
 
 ACEXML_HttpCharStream::ACEXML_HttpCharStream ()
-  : url_ (nullptr),
-    url_addr_ (nullptr),
-    stream_ (nullptr),
-    connector_ (nullptr),
-    size_(0),
-    data_offset_ (0),
-    encoding_ (nullptr)
 {
 }
 
@@ -36,23 +29,28 @@ ACEXML_HttpCharStream::~ACEXML_HttpCharStream ()
 }
 
 int
-ACEXML_HttpCharStream::open (const ACEXML_Char *url)
+ACEXML_HttpCharStream::open (ACEXML_Char const *url)
 {
-  this->url_ = ACE::strnew (url);
+  this->close ();
+  this->url_.reset (ACE::strnew (url));
 
-  ACE_NEW_RETURN (this->url_addr_, ACEXML_URL_Addr, -1);
-  ACE_NEW_RETURN (this->stream_, ACEXML_Mem_Map_Stream, -1);
+  ACEXML_URL_Addr* url_addr = nullptr;
+  ACE_NEW_RETURN (url_addr, ACEXML_URL_Addr, -1);
+  this->url_addr_.reset (url_addr);
+  ACEXML_Mem_Map_Stream* stream = nullptr;
+  ACE_NEW_RETURN (stream, ACEXML_Mem_Map_Stream, -1);
+  this->stream_.reset (stream);
 
-  if (this->url_addr_->string_to_addr (this->url_) == -1) {
+  if (this->url_addr_->string_to_addr (this->url_.get ()) == -1) {
     this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
   }
 
-  ACE_NEW_RETURN (this->connector_,
-                  Connector (nullptr, ACE_NONBLOCK),
-                  -1);
+  Connector* connector = nullptr;
+  ACE_NEW_RETURN (connector, Connector (nullptr, ACE_NONBLOCK), -1);
+  this->connector_.reset (connector);
 
-  if (this->stream_->open (this->connector_, *this->url_addr_) == -1) {
+  if (this->stream_->open (this->connector_.get (), *this->url_addr_) == -1) {
     this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot open backing store"), -1);
   }
@@ -311,23 +309,15 @@ ACEXML_HttpCharStream::available ()
 int
 ACEXML_HttpCharStream::close ()
 {
-  delete[] this->url_;
-  this->url_ = nullptr;
-
-  delete this->url_addr_;
-  this->url_addr_ = nullptr;
-
-  delete this->stream_;
-  this->stream_ = nullptr;
-
-  delete this->connector_;
-  this->connector_ = nullptr;
+  this->stream_.reset ();
+  this->connector_.reset ();
+  this->url_addr_.reset ();
+  this->url_.reset ();
 
   this->size_ = 0;
   this->data_offset_ = 0;
 
-  delete[] this->encoding_;
-  this->encoding_ = nullptr;
+  this->encoding_.reset ();
 
   return 0;
 }
@@ -354,11 +344,7 @@ ACEXML_HttpCharStream::determine_encoding ()
     return -1;
   else
     {
-      if (this->encoding_ != nullptr)
-        delete [] this->encoding_;
-
-      this->encoding_ = ACE::strnew (temp);
-      //   ACE_DEBUG ((LM_DEBUG, "URI's encoding is %s\n", this->encoding_));
+      this->encoding_.reset (ACE::strnew (temp));
     }
 
   // Move over the byte-order-mark if present.
@@ -389,16 +375,16 @@ ACEXML_HttpCharStream::rewind ()
   this->determine_encoding();
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_HttpCharStream::getEncoding ()
 {
-  return this->encoding_;
+  return this->encoding_.get ();
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_HttpCharStream::getSystemId ()
 {
-  return this->url_;
+  return this->url_.get ();
 }
 
 
@@ -448,12 +434,12 @@ ACEXML_HttpCharStream::peek ()
 int
 ACEXML_HttpCharStream::get_i (ACEXML_Char& ch)
 {
-  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
+  if (ACE_OS::strcmp (this->encoding_.get (), ACE_TEXT ("UTF-8")) == 0)
     {
       ch = (ACEXML_Char) this->stream_->get_char();
       return (ch == (ACEXML_Char)EOF ? -1 : 0);
     }
-  int BE = (ACE_OS::strcmp (this->encoding_,
+  int BE = (ACE_OS::strcmp (this->encoding_.get (),
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   ACEXML_Char input[2] = {0};
   int i = 0;
@@ -472,13 +458,13 @@ int
 ACEXML_HttpCharStream::peek_i ()
 {
   // If we are reading a UTF-8 encoded file, just use the plain unget.
-  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
+  if (ACE_OS::strcmp (this->encoding_.get (), ACE_TEXT ("UTF-8")) == 0)
     {
       ACEXML_Char ch = (ACEXML_Char) this->stream_->peek_char (0);
       return ch;
     }
 
-  int BE = (ACE_OS::strcmp (this->encoding_,
+  int BE = (ACE_OS::strcmp (this->encoding_.get (),
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   // Peek into the stream.
   ACEXML_Char input[2];

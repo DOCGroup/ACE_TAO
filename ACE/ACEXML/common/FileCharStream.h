@@ -33,6 +33,11 @@ public:
   /// Default constructor.
   ACEXML_FileCharStream ();
 
+  ACEXML_FileCharStream (ACEXML_FileCharStream const&) = delete;
+  ACEXML_FileCharStream (ACEXML_FileCharStream&&) = delete;
+  ACEXML_FileCharStream& operator= (ACEXML_FileCharStream const&) = delete;
+  ACEXML_FileCharStream& operator= (ACEXML_FileCharStream&&) = delete;
+
   /// Destructor
   virtual ~ACEXML_FileCharStream ();
 
