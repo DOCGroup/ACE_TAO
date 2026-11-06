@@ -5,9 +5,11 @@
 #include "ace/OS_NS_unistd.h"
 #include "Content_Iterator_i.h"
 
+#include <memory>
+
 Content_Iterator_i::Content_Iterator_i (char const *pathname,
                                         CORBA::ULongLong file_size)
-  : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),
+  : file_ (ACE_TEXT_CHAR_TO_TCHAR (pathname)),
     file_io_ (),
     file_size_ (file_size)
 {
@@ -24,12 +26,12 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong const offset,
                                 Web_Server::Chunk_Type_out chunk)
 {
   // Initialize/allocate the Chunk_Type sequence
-  Web_Server::Chunk_Type *tmp = nullptr;
-  ACE_NEW_THROW_EX (tmp,
+  Web_Server::Chunk_Type *chunk_ptr {};
+  ACE_NEW_THROW_EX (chunk_ptr,
                     Web_Server::Chunk_Type,
                     CORBA::NO_MEMORY ());
-
-  chunk = tmp;
+  Web_Server::Chunk_Type_var chunk_owner (chunk_ptr);
+  chunk = chunk_owner._retn ();
 
   if (offset >= this->file_size_)
     return false;  // Applications shouldn't throw system exceptions.
@@ -67,23 +69,22 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong const offset,
     }
 
   // Allocate a buffer for the file being read.
-  CORBA::Octet *buf =
-    Web_Server::Chunk_Type::allocbuf (BUFSIZ);
+  std::unique_ptr<CORBA::Octet, decltype (&Web_Server::Chunk_Type::freebuf)> buf (
+    Web_Server::Chunk_Type::allocbuf (BUFSIZ),
+    &Web_Server::Chunk_Type::freebuf);
 
-  if (buf == nullptr)
+  if (!buf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Could not allocate chunk buffer\n")),
                         false);
     }
 
-  ssize_t const bytes_read = this->file_io_.recv (buf,
+  ssize_t const bytes_read = this->file_io_.recv (buf.get (),
                                                   BUFSIZ);
 
   if (bytes_read == -1)
     {
-      Web_Server::Chunk_Type::freebuf (buf);
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("Error during read")),
@@ -100,8 +101,8 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong const offset,
   // sequence.  Only replace the amount of data actually read.
   chunk->replace (bytes_read,
                   bytes_read,
-                  buf,
-                  1);  // The sequence releases memory for us.
+                  buf.release (),
+                  true);  // The sequence releases memory for us.
 
   ++this->chunk_index_;
 

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    server.cpp
@@ -9,7 +8,6 @@
  *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include <algorithm>
 #include <cstring>
@@ -119,7 +117,7 @@ make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
 
 //----------------------------------------------------------------
 
-Controller_impl *Thermometer_impl::m_ctrl = nullptr;  // static member
+Controller_impl *Thermometer_impl::m_ctrl {};  // static member
 
 // Helper function to read the model string from a device.
 
@@ -469,13 +467,13 @@ change (
     CCS::Controller::ThermostatSeq const& tlist,
     CORBA::Short delta)
 {
-    CCS::Controller::EChange ec;    // Just in case we need it
+    CCS::Controller::EChange ec {}; // Just in case we need it
 
     // We cannot add a delta value to a thermostat's temperature
     // directly, so for each thermostat, we read the nominal
     // temperature, add the delta value to it, and write
     // it back again.
-    for (CORBA::ULong i = 0; i < tlist.length (); ++i) {
+    for (CORBA::ULong i {}; i < tlist.length (); ++i) {
         if (CORBA::is_nil (tlist[i]))
             continue;                       // Skip nil references
 
@@ -489,7 +487,7 @@ change (
             // If the update failed because the temperature
             // is out of range, we add the thermostat's info
             // to the errors sequence.
-            CORBA::ULong len = ec.errors.length ();
+            CORBA::ULong const len = ec.errors.length ();
             ec.errors.length (len + 1);
             ec.errors[len].tmstat_ref = tlist[i].in ();
             ec.errors[len].info = bt.details;
@@ -509,7 +507,7 @@ Controller_impl::find (CCS::Controller::SearchSeq& slist)
 {
     // Loop over input list and lookup each device.
     CORBA::ULong const listlen = slist.length ();
-    for (CORBA::ULong i = 0; i < listlen; ++i) {
+    for (CORBA::ULong i {}; i < listlen; ++i) {
         AssetMap::const_iterator where;   // Iterator for asset set
         int num_found {};                 // Num matched per iteration
 
@@ -526,11 +524,9 @@ Controller_impl::find (CCS::Controller::SearchSeq& slist)
                 slist[i].device = make_dref (m_poa.in (), where->first);
         } else {
             // Search for model or location string.
-            char const *search_str;
-            if (sc == CCS::Controller::LOCATION)
-                search_str = slist[i].key.loc ();
-            else
-                search_str = slist[i].key.model_desc ();
+            char const *const search_str = sc == CCS::Controller::LOCATION
+                ? slist[i].key.loc ()
+                : slist[i].key.model_desc ();
 
             // Find first matching device (if any).
             where = std::find_if (

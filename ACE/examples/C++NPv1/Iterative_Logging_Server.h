@@ -24,6 +24,10 @@ protected:
 
 public:
   Iterative_Logging_Server () : logging_handler_ (log_file_) {}
+  Iterative_Logging_Server (Iterative_Logging_Server const &) = delete;
+  Iterative_Logging_Server (Iterative_Logging_Server &&) = delete;
+  Iterative_Logging_Server &operator= (Iterative_Logging_Server const &) = delete;
+  Iterative_Logging_Server &operator= (Iterative_Logging_Server &&) = delete;
 
   ~Iterative_Logging_Server () override { log_file_.close (); }
 

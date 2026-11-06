@@ -15,10 +15,9 @@
 #define _DRIVER_CPP_
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "Driver.h"
-#include <memory>
+#include <cstdio>
 
 // constructor
 template <class RECEIVER, class ACTION>
@@ -28,10 +27,6 @@ Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
     action_ (action)
 {
 }
-
-// destructor
-template <class RECEIVER, class ACTION>
-Command<RECEIVER, ACTION>::~Command () = default;
 
 // invokes an operation.
 
@@ -43,18 +38,15 @@ Command<RECEIVER, ACTION>::execute (void *arg)
 
 // gets the next request from the user input.
 
-template <class TQ, class RECEIVER, class ACTION>
-Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::~Timer_Queue_Test_Driver () = default;
-
 template <class TQ, class RECEIVER, class ACTION> int
 Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request ()
 {
-  char buf[BUFSIZ];
+  char buf[BUFSIZ] {};
 
   this->display_menu ();
 
-  ACE_OS::printf ("please enter your choice: ");
-  ACE_OS::fflush (stdout);
+  std::printf ("please enter your choice: ");
+  std::fflush (stdout);
 
   // reads input from the user
   if (this->read_input (buf, sizeof buf) <= 0)
@@ -69,7 +61,8 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::get_next_request ()
 template <class TQ, class RECEIVER, class ACTION> int
 Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::run_test ()
 {
-  this->init ();
+  if (this->init () == -1)
+    return -1;
 
   for (;;)
     if (this->get_next_request () == -1)
@@ -83,21 +76,25 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::run_test ()
 template <class TQ, class RECEIVER, class ACTION> ssize_t
 Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::read_input (char *buf, size_t bufsiz)
 {
-  ACE_OS::memset (buf, 0, bufsiz);
+  if (bufsiz == 0)
+    return 0;
 
   // Wait for user to type commands.  This call is automatically
   // restarted when SIGINT or SIGALRM signals occur.
-  return ACE_OS::read (ACE_STDIN, buf, bufsiz);
+  ssize_t const bytes_read = ACE_OS::read (ACE_STDIN, buf, bufsiz - 1);
+  if (bytes_read > 0)
+    buf[bytes_read] = '\0';
+  return bytes_read;
 }
 
 // Parse the input and executes the corresponding operation
 
 template <class TQ, class RECEIVER, class ACTION> int
-Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
+Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (char const *buf)
 {
-  int option;
+  int option {};
 
-  if (::sscanf (buf, "%d", &option) <= 0)
+  if (std::sscanf (buf, "%d", &option) <= 0)
     // If there was an error reading the option simply try on the next line.
     return 0;
 
@@ -105,37 +102,39 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
     {
     case 1: // Schedule a new timer.
       {
-        u_long useconds;
+        u_int useconds {};
         // We just reread the option, this simplies parsing (since
         // sscanf can do it for us.)
-        if (::sscanf (buf, "%d %lu", &option, &useconds) < 2)
+        if (std::sscanf (buf, "%d %u", &option, &useconds) < 2)
           return 0;
 
-        if (schedule_cmd_->execute ((void *) &useconds) == -1)
+        if (schedule_cmd_->execute (&useconds) == -1)
           ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", "new timer failed"), -1);
       }
       break; // Cancel an existing timer.
       /* NOTREACHED */
     case 2:
       {
-        u_long id;
+        long id {};
         // We just reread the option, this simplies parsing (since
         // sscanf can do it for us.)
-        if (::sscanf (buf, "%d %lu", &option, &id) < 2)
+        if (std::sscanf (buf, "%d %ld", &option, &id) < 2)
           return 0;
 
-        if (cancel_cmd_->execute ((void *) &id) == -1)
-          ACE_DEBUG ((LM_DEBUG, "Timer #%d is not valid\n", id));
+        if (cancel_cmd_->execute (&id) == -1)
+          ACE_DEBUG ((LM_DEBUG,
+                      "Timer #%q is not valid\n",
+                      static_cast<ACE_INT64> (id)));
       }
       break;
       /* NOTREACHED */
 
     case 3: // Dump the existing timers.
-      return list_cmd_->execute (0);
+      return list_cmd_->execute (nullptr);
       /* NOTREACHED */
 
     case 4: // Exit the program.
-      return shutdown_cmd_->execute (0);
+      return shutdown_cmd_->execute (nullptr);
       /* NOTREACHED */
 
     default:

@@ -144,18 +144,18 @@ void AIO_Output_Handler::handle_write_stream
 AIO_Input_Handler::~AIO_Input_Handler () {
   reader_.cancel ();
   ACE_OS::closesocket (handle ());
-  if (mblk_ != nullptr) mblk_->release ();
-  mblk_ = nullptr;
+  mblk_.reset ();
   acceptor_->remove (this);
 }
 
 void AIO_Input_Handler::open
   (ACE_HANDLE new_handle, ACE_Message_Block &) {
   reader_.open (*this, new_handle, nullptr, proactor ());
-  ACE_NEW_NORETURN
-    (mblk_, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+  ACE_Message_Block *message_block = nullptr;
+  ACE_NEW_NORETURN (message_block, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+  mblk_.reset (message_block);
   // Align the Message Block for a CDR stream
-  ACE_CDR::mb_align (mblk_);
+  ACE_CDR::mb_align (mblk_.get ());
   reader_.read (*mblk_, LOG_HEADER_SIZE);
 }
 
@@ -167,25 +167,26 @@ void AIO_Input_Handler::handle_read_stream
     reader_.read (*mblk_, result.bytes_to_read () -
                   result.bytes_transferred ());
   else if (mblk_->length () == LOG_HEADER_SIZE) {
-    ACE_InputCDR cdr (mblk_);
+    ACE_InputCDR cdr (mblk_.get ());
 
-    ACE_CDR::Boolean byte_order;
+    ACE_CDR::Boolean byte_order {};
     cdr >> ACE_InputCDR::to_boolean (byte_order);
     cdr.reset_byte_order (byte_order);
 
-    ACE_CDR::ULong length;
+    ACE_CDR::ULong length {};
     cdr >> length;
 
     mblk_->size (length + LOG_HEADER_SIZE);
     reader_.read (*mblk_, length);
   }
   else {
-    if (OUTPUT_HANDLER::instance ()->put (mblk_) == -1)
-      mblk_->release ();
+    ACE_Message_Block *message_block = mblk_.release ();
+    if (OUTPUT_HANDLER::instance ()->put (message_block) == -1)
+      message_block->release ();
 
-    ACE_NEW_NORETURN
-      (mblk_, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
-    ACE_CDR::mb_align (mblk_);
+    ACE_NEW_NORETURN (message_block, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
+    mblk_.reset (message_block);
+    ACE_CDR::mb_align (mblk_.get ());
     reader_.read (*mblk_, LOG_HEADER_SIZE);
   }
 }

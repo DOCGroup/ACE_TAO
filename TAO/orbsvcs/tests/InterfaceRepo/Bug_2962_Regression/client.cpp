@@ -5,14 +5,11 @@
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const* ifr_ior = ACE_TEXT("file://ifr.ior");
-ACE_TCHAR const* member_type_id = ACE_TEXT("IDL:arrayOfStruct:1.0");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ifr_ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -23,93 +20,98 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-i <ior> "
-                           "\n",
+                           ACE_TEXT ("usage: %s -i <ior>\n"),
                            argv [0]),
                           -1);
       }
+
+  if (ifr_ior == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("usage: %s [-i <ior>]\n"),
+                       argv [0]),
+                      -1);
+
   // Indicates successful parsing of the command line
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var the_orb = CORBA::ORB_init (argc, argv);
+      ACE_TCHAR const* ifr_ior {ACE_TEXT ("file://ifr.ior")};
+      ACE_TCHAR const* const member_type_id {ACE_TEXT ("IDL:arrayOfStruct:1.0")};
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ifr_ior) != 0)
         return 1;
 
-      CORBA::Object_var obj = the_orb->string_to_object (ACE_TEXT_ALWAYS_CHAR(ifr_ior));
-      if (CORBA::is_nil (obj.in()))
+      CORBA::Object_var const obj = orb->string_to_object (ifr_ior);
+      if (CORBA::is_nil (obj.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG, "Obtained nil reference to Object for interface repository\n" ));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Obtained nil reference to Object for interface repository\n")));
           return 1;
         }
 
-      CORBA::ComponentIR::Repository_var ifr;
+      CORBA::ComponentIR::Repository_var ifr {};
 
       try
         {
-          ifr = CORBA::ComponentIR::Repository::_narrow (obj.in());
+          ifr = CORBA::ComponentIR::Repository::_narrow (obj.in ());
         }
-      catch (const CORBA::SystemException &)
+      catch (CORBA::SystemException const&)
         {
-          ACE_DEBUG ((LM_DEBUG, "exception catched .. narrowing IFR object\n" ));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("exception caught while narrowing IFR object\n")));
           return 1;
         }
 
-      if (CORBA::is_nil (ifr.in()))
+      if (CORBA::is_nil (ifr.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG, "Can't narrow to IFR\n" ));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Can't narrow to IFR\n")));
           return 1;
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Looking up %C", member_type_id ));
-      CORBA::Contained_var
-        dependency = ifr->lookup_id (ACE_TEXT_ALWAYS_CHAR(member_type_id));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Looking up %s"), member_type_id));
+      CORBA::Contained_var const dependency =
+        ifr->lookup_id (ACE_TEXT_ALWAYS_CHAR (member_type_id));
       if (CORBA::is_nil (dependency.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG, " *** failed ***\n" ));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" *** failed ***\n")));
           return 1;
         }
 
-      CORBA::AliasDef_var
-          the_alias = CORBA::AliasDef::_narrow (dependency.in ());
+      CORBA::AliasDef_var const the_alias = CORBA::AliasDef::_narrow (dependency.in ());
       if (CORBA::is_nil (the_alias.in ()))
         {
-          ACE_DEBUG ((LM_DEBUG, " *** not an alias ***\n" ));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" *** not an alias ***\n")));
           return 1;
         }
 
-      CORBA::IDLType_var
-        orig_type = the_alias->original_type_def ();
-      CORBA::TypeCode_var
-        tc_content = orig_type->type ();
+      CORBA::IDLType_var const orig_type = the_alias->original_type_def ();
+      CORBA::TypeCode_var const tc_content = orig_type->type ();
       CORBA::ULong const length = tc_content->length ();
-      CORBA::TypeCode_var
-        cont_type = tc_content->content_type ();
-      char const* name = cont_type->name ();
+      CORBA::TypeCode_var const cont_type = tc_content->content_type ();
+      char const* const name = cont_type->name ();
       ACE_DEBUG ((LM_DEBUG,
-                  " = %C [%u]\n",
+                  ACE_TEXT (" = %C [%u]\n"),
                   name,
                   length ));
 
-      if (2u == length)
+      if (length == 2u)
         {
-          ACE_DEBUG ((LM_DEBUG, "Correct result, test passed\n" ));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Correct result, test passed\n")));
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "Error: Should have been %C [2]\n", name));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Error: Should have been %C [2]\n"), name));
           return 2;
         }
     }
   catch (::CORBA::Exception const& ex)
     {
-      ex._tao_print_exception("ERROR : unexpected CORBA exception caugth :");
+      ex._tao_print_exception ("ERROR : unexpected CORBA exception caught:");
       return 1;
     }
   return 0;

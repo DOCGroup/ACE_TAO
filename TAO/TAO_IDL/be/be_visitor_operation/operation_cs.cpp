@@ -27,7 +27,7 @@ int
 be_visitor_operation_cs::post_process (be_decl *bd)
 {
   // All we do here is to insert a comma and a newline.
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {
@@ -74,7 +74,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         }
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node for future use
 
   if (node->is_local ())
@@ -167,7 +167,7 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
 {
   // This method is used to generate the ParamData table entry.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)

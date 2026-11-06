@@ -3,11 +3,9 @@
 // The "persistent client" program for the application.
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Persistent_Client_i client;
-
-
   ACE_DEBUG ((LM_DEBUG,
               "\nGrid client\n\n"));
 
@@ -16,5 +14,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   else
     return 0;
 }
-
-

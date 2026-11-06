@@ -19,7 +19,6 @@
 #include "tao/Environment.h"
 
 #include <memory>
-#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

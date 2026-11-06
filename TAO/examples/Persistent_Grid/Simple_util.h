@@ -118,10 +118,10 @@ public:
   int init (char const *name, int argc, ACE_TCHAR *argv[]);
 
   /// Return the interface object pointer.
-  InterfaceObj *operator-> () { return server_.in (); }
+  InterfaceObj *operator-> () const { return this->server_.in (); }
 
   /// Returns the shutdown flag.
-  int shutdown ();
+  int shutdown () const;
 
   /// Fills in the shutdwon flag.
   void shutdown (int);

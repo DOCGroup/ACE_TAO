@@ -9,8 +9,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #ifndef NOTIFY_RedGreen_Test_CLIENT_H
 #define NOTIFY_RedGreen_Test_CLIENT_H
 
@@ -22,6 +20,7 @@
 #include "ace/Throughput_Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -42,19 +41,21 @@ class Worker : public ACE_Task_Base
 {
 public:
   /// Constructor.
-  Worker ();
+  Worker () = default;
+
+  Worker (Worker const&) = delete;
+  Worker (Worker&&) = delete;
+  Worker& operator= (Worker const&) = delete;
+  Worker& operator= (Worker&&) = delete;
 
   void orb (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
   int svc () override;
 
-  // Shutdown ORB
-  void done ();
-
 private:
   /// The orb
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 /**
@@ -68,7 +69,12 @@ class RedGreen_Test
 {
  public:
   // = Initialization
-  RedGreen_Test ();
+  RedGreen_Test () = default;
+
+  RedGreen_Test (RedGreen_Test const&) = delete;
+  RedGreen_Test (RedGreen_Test&&) = delete;
+  RedGreen_Test& operator= (RedGreen_Test const&) = delete;
+  RedGreen_Test& operator= (RedGreen_Test&&) = delete;
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
@@ -88,11 +94,13 @@ class RedGreen_Test
   /// Destroy from the EC
   void destroy_ec ();
 
-  int burst_size_;
+protected:
+  int burst_size_ {10};
   Worker worker_;
-  int nthreads_;
+  std::atomic<int> result_count_ {};
+  std::atomic<bool> consumer_is_done_ {};
+  std::atomic<ACE_hrtime_t> throughput_start_ {};
 
- protected:
   /// Initializes the ORB.
   void init_ORB (int argc,
                  ACE_TCHAR *argv []);
@@ -123,39 +131,45 @@ class RedGreen_Test
 
   // = Data Members.
   /// Reference to the root poa.
-  PortableServer::POA_var root_poa_;
+  PortableServer::POA_var root_poa_ {};
 
   /// The ORB that we use.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Handle to the name service.
-  CosNaming::NamingContext_var naming_context_;
+  CosNaming::NamingContext_var naming_context_ {};
 
   /// Channel factory.
-  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
+  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_ {};
 
   /// The one channel that we create using the factory.
-  CosNotifyChannelAdmin::EventChannel_var ec_;
+  CosNotifyChannelAdmin::EventChannel_var ec_ {};
 
   /// The group operator between admin-proxy's.
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop_;
+  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop_ {CosNotifyChannelAdmin::OR_OP};
 
   /// Initial qos specified to the factory when creating the EC.
-  CosNotification::QoSProperties initial_qos_;
+  CosNotification::QoSProperties initial_qos_ {};
 
   /// Initial admin props specified to the factory when creating the EC.
-  CosNotification::AdminProperties initial_admin_;
+  CosNotification::AdminProperties initial_admin_ {};
 
   /// The consumer admin used by consumers.
-  CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
+  CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_ {};
 
   /// The supplier admin used by suppliers.
-  CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
+  CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_ {};
 
-  RedGreen_Test_StructuredPushConsumer* normal_consumer_;
-  RedGreen_Test_StructuredPushConsumer* slow_consumer_;
+  /// Non-owning pointers; their references are held by the POA.
+  RedGreen_Test_StructuredPushConsumer* normal_consumer_ {};
+  RedGreen_Test_StructuredPushConsumer* slow_consumer_ {};
 
-  RedGreen_Test_StructuredPushSupplier* supplier_;
+  /// Non-owning pointer; its reference is held by the POA.
+  RedGreen_Test_StructuredPushSupplier* supplier_ {};
+
+private:
+  friend class RedGreen_Test_StructuredPushConsumer;
+  friend class RedGreen_Test_StructuredPushSupplier;
 };
 
 /*****************************************************************/
@@ -170,56 +184,61 @@ class RedGreen_Test_StructuredPushConsumer
   //
 public:
   /// Constructor.
-  RedGreen_Test_StructuredPushConsumer (RedGreen_Test* RedGreen_Test);
+  explicit RedGreen_Test_StructuredPushConsumer (RedGreen_Test& test_client);
+
+  RedGreen_Test_StructuredPushConsumer (RedGreen_Test_StructuredPushConsumer const&) = delete;
+  RedGreen_Test_StructuredPushConsumer (RedGreen_Test_StructuredPushConsumer&&) = delete;
+  RedGreen_Test_StructuredPushConsumer& operator= (RedGreen_Test_StructuredPushConsumer const&) = delete;
+  RedGreen_Test_StructuredPushConsumer& operator= (RedGreen_Test_StructuredPushConsumer&&) = delete;
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from the supplier.
-  virtual void disconnect ();
+  void disconnect ();
 
   /// Accessor for the Proxy that we're connected to.
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier ();
 
   /// Accumulate the throughput statistics into <throughput>
-  void accumulate_into (ACE_Throughput_Stats &throughput) const;
+  void accumulate_into (ACE_Throughput_Stats& throughput) const;
 
   /// Accumulate the throughput statistics into <throughput>
-  void dump_stats (const ACE_TCHAR* msg,
+  void dump_stats (ACE_TCHAR const* msg,
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 protected:
   // = Data members
   /// The proxy that we are connected to.
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_ {};
 
   /// The proxy_supplier id.
-  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
+  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
 
   /// callback <done>
-  RedGreen_Test* RedGreen_Test_;
+  RedGreen_Test& test_client_;
 
   /// Protect internal state
   TAO_SYNCH_MUTEX lock_;
 
-  int push_count_;
+  int push_count_ {};
 
   /// Used for reporting stats
   ACE_Throughput_Stats throughput_;
 
   // = Methods
   /// Destructor
-  ~RedGreen_Test_StructuredPushConsumer () override;
+  ~RedGreen_Test_StructuredPushConsumer () override = default;
 
   // = NotifyPublish method
   void offer_change (
-      const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed) override;
+      CosNotification::EventTypeSeq const& added,
+      CosNotification::EventTypeSeq const& removed) override;
 
   // = StructuredPushSupplier methods
   void push_structured_event (
-      const CosNotification::StructuredEvent & notification) override;
+      CosNotification::StructuredEvent const& notification) override;
 
   void disconnect_structured_push_consumer () override;
 };
@@ -229,10 +248,16 @@ protected:
 class SlowConsumer : public RedGreen_Test_StructuredPushConsumer
 {
 public:
-  SlowConsumer (RedGreen_Test* RedGreen_Test);
+  explicit SlowConsumer (RedGreen_Test& test_client);
+
+  ~SlowConsumer () override = default;
+  SlowConsumer (SlowConsumer const&) = delete;
+  SlowConsumer (SlowConsumer&&) = delete;
+  SlowConsumer& operator= (SlowConsumer const&) = delete;
+  SlowConsumer& operator= (SlowConsumer&&) = delete;
 
   void push_structured_event (
-      const CosNotification::StructuredEvent & notification) override;
+      CosNotification::StructuredEvent const& notification) override;
 };
 
 /*****************************************************************/
@@ -247,7 +272,12 @@ class RedGreen_Test_StructuredPushSupplier
   //
 public:
   /// Constructor.
-  RedGreen_Test_StructuredPushSupplier ();
+  explicit RedGreen_Test_StructuredPushSupplier (RedGreen_Test& test_client);
+
+  RedGreen_Test_StructuredPushSupplier (RedGreen_Test_StructuredPushSupplier const&) = delete;
+  RedGreen_Test_StructuredPushSupplier (RedGreen_Test_StructuredPushSupplier&&) = delete;
+  RedGreen_Test_StructuredPushSupplier& operator= (RedGreen_Test_StructuredPushSupplier const&) = delete;
+  RedGreen_Test_StructuredPushSupplier& operator= (RedGreen_Test_StructuredPushSupplier&&) = delete;
 
   /// Connect the Supplier to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
@@ -257,34 +287,36 @@ public:
   void disconnect ();
 
   /// Send one event.
-  virtual void send_event (CosNotification::StructuredEvent& event);
+  void send_event (CosNotification::StructuredEvent& event);
 
   /// Accumulate the throughput statistics into <throughput>
-  void accumulate_into (ACE_Throughput_Stats &throughput) const;
+  void accumulate_into (ACE_Throughput_Stats& throughput) const;
 
   /// Accumulate the throughput statistics into <throughput>
-  void dump_stats (const ACE_TCHAR* msg,
+  void dump_stats (ACE_TCHAR const* msg,
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 protected:
   // = Data members
   /// The proxy that we are connected to.
-  CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_;
+  CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_ {};
 
   /// This supplier's id.
-  CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
+  CosNotifyChannelAdmin::ProxyID proxy_consumer_id_ {};
+
+  RedGreen_Test& test_client_;
 
   /// Measure the elapsed time spent while sending the events.
   ACE_Throughput_Stats throughput_;
 
   // = Protected Methods
   /// Destructor
-  ~RedGreen_Test_StructuredPushSupplier () override;
+  ~RedGreen_Test_StructuredPushSupplier () override = default;
 
   // = NotifyRedGreen_Test
   void subscription_change (
-      const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed) override;
+      CosNotification::EventTypeSeq const& added,
+      CosNotification::EventTypeSeq const& removed) override;
 
   // = StructuredPushSupplier method
   void disconnect_structured_push_supplier () override;

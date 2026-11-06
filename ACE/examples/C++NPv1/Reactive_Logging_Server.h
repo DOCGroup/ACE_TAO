@@ -17,6 +17,13 @@
 
 class Reactive_Logging_Server : public Iterative_Logging_Server
 {
+public:
+  Reactive_Logging_Server () = default;
+  Reactive_Logging_Server (Reactive_Logging_Server const &) = delete;
+  Reactive_Logging_Server (Reactive_Logging_Server &&) = delete;
+  Reactive_Logging_Server &operator= (Reactive_Logging_Server const &) = delete;
+  Reactive_Logging_Server &operator= (Reactive_Logging_Server &&) = delete;
+
 protected:
   // Keep track of the acceptor socket handle and all the
   // connected stream socket handles.
@@ -34,15 +41,18 @@ protected:
 
   int wait_for_multiple_events () override {
     active_handles_ = master_handle_set_;
-    int width = ACE_Utils::truncate_cast<int> ((intptr_t)active_handles_.max_set ()) + 1;
+    int const width = ACE_Utils::truncate_cast<int> (
+      static_cast<intptr_t> (active_handles_.max_set ())) + 1;
     if (select (width,
                 active_handles_.fdset (),
                 nullptr,  // no write_fds
                 nullptr,  // no except_fds
                 nullptr) == -1) // no timeout
-      return -1;
-    active_handles_.sync
-      ((ACE_HANDLE) ((intptr_t) active_handles_.max_set () + 1));
+      {
+        return -1;
+      }
+    active_handles_.sync (static_cast<ACE_HANDLE> (
+      static_cast<intptr_t> (active_handles_.max_set ()) + 1));
     return 0;
   }
 

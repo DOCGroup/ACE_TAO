@@ -52,13 +52,18 @@ public:
   /// Construction
   ACE_Stream_Head ();
 
+  ACE_Stream_Head (ACE_Stream_Head const &) = delete;
+  ACE_Stream_Head (ACE_Stream_Head &&) = delete;
+  ACE_Stream_Head &operator= (ACE_Stream_Head const &) = delete;
+  ACE_Stream_Head &operator= (ACE_Stream_Head &&) = delete;
+
   /// Destruction
   ~ACE_Stream_Head () override;
 
   // = ACE_Task hooks
   int open (void *a = nullptr) override;
   int close (u_long flags = 0) override;
-  int put (ACE_Message_Block *msg, ACE_Time_Value * = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
   int svc () override;
 
   // = Dynamic linking hooks
@@ -89,6 +94,11 @@ class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 public:
   /// Construction
   ACE_Stream_Tail ();
+
+  ACE_Stream_Tail (ACE_Stream_Tail const &) = delete;
+  ACE_Stream_Tail (ACE_Stream_Tail &&) = delete;
+  ACE_Stream_Tail &operator= (ACE_Stream_Tail const &) = delete;
+  ACE_Stream_Tail &operator= (ACE_Stream_Tail &&) = delete;
 
   /// Destruction
   ~ACE_Stream_Tail () override;
@@ -128,6 +138,11 @@ class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 public:
   /// Construction
   ACE_Thru_Task ();
+
+  ACE_Thru_Task (ACE_Thru_Task const &) = delete;
+  ACE_Thru_Task (ACE_Thru_Task &&) = delete;
+  ACE_Thru_Task &operator= (ACE_Thru_Task const &) = delete;
+  ACE_Thru_Task &operator= (ACE_Thru_Task &&) = delete;
 
   /// Destruction
   ~ACE_Thru_Task () override;

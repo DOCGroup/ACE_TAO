@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_MT_CLIENT_TEST_I_H
 #define TAO_MT_CLIENT_TEST_I_H
 

@@ -15,7 +15,6 @@
 
 #include "CCSC.h"        // ORB-specific
 
-
 //----------------------------------------------------------------
 
 // Generic ostream inserter for exceptions. Inserts the exception
@@ -98,7 +97,7 @@ operator<< (std::ostream& os, CCS::Thermostat::BtData const& btd)
 static std::ostream &
 operator<< (std::ostream& os, CCS::Controller::EChange const& ec)
 {
-    for (CORBA::ULong i = 0; i < ec.errors.length(); i++) {
+    for (CORBA::ULong i {}; i < ec.errors.length(); ++i) {
         os << "Change failed:" << std::endl;
         os << ec.errors[i].tmstat_ref.in(); // Overloaded <<
         os << ec.errors[i].info << std::endl;    // Overloaded <<
@@ -194,7 +193,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         list = ctrl->list();
         // Show details for each device.
-        for (CORBA::ULong i = 0; i < list->length (); ++i)
+        for (CORBA::ULong i {}; i < list->length (); ++i)
           {
             CCS::Thermometer_ptr ti = list[i];
             std::cout << ti;
@@ -214,7 +213,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;
-        for (CORBA::ULong i = 0; i < list->length () && CORBA::is_nil (tmstat.in ()); ++i) {
+        for (CORBA::ULong i {}; i < list->length () && CORBA::is_nil (tmstat.in ()); ++i) {
             tmstat = CCS::Thermostat::_narrow (list[i]);
         }
 
@@ -243,7 +242,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ctrl->find(ss);
 
         // Show the devices found in that room.
-        for (CORBA::ULong i = 0; i < ss.length (); ++i)
+        for (CORBA::ULong i {}; i < ss.length (); ++i)
             std::cout << ss[i].device.in();          // Overloaded <<
         std::cout << std::endl;
 
@@ -252,7 +251,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // containing only thermostats.
         std::cout << "Increasing thermostats by 40 degrees." << std::endl;
         CCS::Controller::ThermostatSeq tss;
-        for (CORBA::ULong i = 0; i < list->length (); ++i) {
+        for (CORBA::ULong i {}; i < list->length (); ++i) {
             tmstat = CCS::Thermostat::_narrow (list[i]);
             if (CORBA::is_nil(tmstat.in()))
                 continue;                   // Skip thermometers

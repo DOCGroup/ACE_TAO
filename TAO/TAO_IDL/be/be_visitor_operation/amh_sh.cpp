@@ -36,7 +36,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
     }
 
   // Output stream.
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   this->generate_shared_prologue (node, os, "");
@@ -71,8 +71,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
         }
     }
 
-  *os << be_uidt_nl
-      << ") = 0;" << be_uidt_nl;
+  *os << be_uidt << ") = 0;" << be_uidt_nl;
 
   return 0;
 }
@@ -80,11 +79,10 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
 int
 be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->generate_shared_prologue (node, os, "_get_");
 
-  *os << be_uidt_nl
-      << ") = 0;" << be_uidt_nl;
+  *os << be_uidt << ") = 0;" << be_uidt_nl;
 
   if (node->readonly ())
     {
@@ -110,7 +108,7 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
       return -1;
     }
 
-  *os << be_uidt_nl << ") = 0;" << be_uidt_nl;
+  *os << be_uidt << ") = 0;" << be_uidt_nl;
 
   return 0;
 }

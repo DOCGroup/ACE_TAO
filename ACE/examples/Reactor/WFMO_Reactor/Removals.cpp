@@ -42,7 +42,12 @@ public:
       this->event_.signal ();
     }
 
-  virtual int handle_signal (int, siginfo_t *, ucontext_t *)
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
+
+  int handle_signal (int, siginfo_t *, ucontext_t *) override
     {
       if (this->close_down_)
         return -1;
@@ -50,14 +55,14 @@ public:
         return 0;
     }
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
     {
       ACE_DEBUG ((LM_DEBUG, "event handler %d closed.\n", event_number_));
       delete this;
       return 0;
     }
 
-  virtual ACE_HANDLE get_handle () const
+  ACE_HANDLE get_handle () const override
     {
       return event_.handle ();
     }
@@ -76,18 +81,21 @@ private:
 int
 ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
-  int close_down = argc > 1 ? 1 : 0;
+  int const close_down = argc > 1 ? 1 : 0;
 
   for (size_t i = 1; i <= ACE_Reactor::instance ()->size (); i++)
-    new Event_Handler (static_cast<int> (i), close_down);
+    {
+      // The reactor callback owns each handler and deletes it on close.
+      new Event_Handler (static_cast<int> (i), close_down);
+    }
 
   int result = 0;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Time_Value time (1);
+  ACE_Time_Value const time (1);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  while (1)
+  while (true)
     {
       result = ACE_Reactor::instance ()->handle_events (time);
       if (result == 0 && errno == ETIME)

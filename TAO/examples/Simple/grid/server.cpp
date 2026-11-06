@@ -17,20 +17,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        argc,
                        argv) == -1)
         return 1;
-      else
-        {
-          server.run ();
-        }
+      server.run ();
     }
   catch (CORBA::UserException const &userex)
     {
-      //ACE_UNUSED_ARG (userex);
       userex._tao_print_exception ("User Exception in main");
       return -1;
     }
   catch (CORBA::SystemException const &sysex)
     {
-      //ACE_UNUSED_ARG (sysex);
       sysex._tao_print_exception ("System Exception in main ");
       return -1;
     }

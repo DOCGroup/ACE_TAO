@@ -22,11 +22,16 @@ protected:
 public:
   // Initialization and termination methods.
   explicit Logging_Handler (ACE_FILE_IO &log_file): log_file_ (log_file) {}
+  Logging_Handler (Logging_Handler const &) = delete;
+  Logging_Handler (Logging_Handler &&) = delete;
+  Logging_Handler &operator= (Logging_Handler const &) = delete;
+  Logging_Handler &operator= (Logging_Handler &&) = delete;
+
   Logging_Handler (ACE_FILE_IO &log_file,
                    ACE_HANDLE handle): log_file_ (log_file)
   { logging_peer_.set_handle (handle); }
   Logging_Handler (ACE_FILE_IO &log_file,
-                   const ACE_SOCK_Stream &logging_peer)
+                   ACE_SOCK_Stream const &logging_peer)
     : log_file_ (log_file), logging_peer_ (logging_peer) {}
   int close () { return logging_peer_.close (); }
 

@@ -21,7 +21,7 @@ be_visitor_union_branch_cdr_op_ch::~be_visitor_union_branch_cdr_op_ch () = defau
 int
 be_visitor_union_branch_cdr_op_ch::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -154,7 +154,7 @@ be_visitor_union_branch_cdr_op_ch::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
 
-  be_type *bt = node->primitive_base_type ();
+  be_type * const bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))
     {

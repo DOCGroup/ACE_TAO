@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    server.cpp
@@ -9,7 +8,6 @@
  *  @author MA.  Used with permission ofAddison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include <algorithm>
 #include <cstring>
@@ -75,7 +73,7 @@ make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
   return CCS::Thermometer::_narrow (obj.in ());
 }
 
-Controller_impl *Thermometer_impl::m_ctrl = nullptr;  // static member
+Controller_impl *Thermometer_impl::m_ctrl {};  // static member
 
 // Helper function to read the model string from a device.
 
@@ -413,7 +411,7 @@ Controller_impl::
 change (CCS::Controller::ThermostatSeq const& tlist,
         CORBA::Short delta)
 {
-  CCS::Controller::EChange ec;    // Just in case we need it
+  CCS::Controller::EChange ec {}; // Just in case we need it
 
   // We cannot add a delta value to a thermostat's temperature
   // directly, so for each thermostat, we read the nominal
@@ -456,7 +454,7 @@ Controller_impl::
 find (CCS::Controller::SearchSeq & slist)
 {
   // Loop over input list and lookup each device.
-  CORBA::ULong listlen = slist.length ();
+  CORBA::ULong const listlen = slist.length ();
   for (CORBA::ULong i {}; i < listlen; ++i)
     {
       AssetMap::const_iterator where;  // Iterator for asset set
@@ -478,11 +476,9 @@ find (CCS::Controller::SearchSeq & slist)
       else
         {
           // Search for model or location string.
-          char const *search_str;
-          if  (sc == CCS::Controller::LOCATION)
-            search_str = slist[i].key.loc ();
-          else
-            search_str = slist[i].key.model_desc ();
+          char const *const search_str = sc == CCS::Controller::LOCATION
+            ? slist[i].key.loc ()
+            : slist[i].key.model_desc ();
 
           // Find first matching device  (if any).
           where = std::find_if (m_assets.cbegin (), m_assets.cend (),

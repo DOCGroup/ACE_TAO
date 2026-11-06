@@ -56,12 +56,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       // Listing 4 code/ch06
       if (acceptor.accept (peer, &peer_addr, &timeout, 0) == -1)
         {
-          if (ACE_OS::last_error() == EINTR)
+          if (ACE_OS::last_error () == EINTR)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) Interrupted while ")
                         ACE_TEXT ("waiting for connection\n")));
           else
-            if (ACE_OS::last_error() == ETIMEDOUT)
+            if (ACE_OS::last_error () == ETIMEDOUT)
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) Timeout while ")
                           ACE_TEXT ("waiting for connection\n")));
@@ -70,18 +70,17 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       // Listing 5 code/ch06
       else
         {
-          ACE_TCHAR peer_name[MAXHOSTNAMELEN];
+          ACE_TCHAR peer_name[MAXHOSTNAMELEN] {};
           peer_addr.addr_to_string (peer_name, MAXHOSTNAMELEN);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Connection from %s\n"),
                       peer_name));
           // Listing 5
           // Listing 7 code/ch06
-          char buffer[4096];
-          ssize_t bytes_received;
+          char buffer[4096] {};
+          ssize_t bytes_received {};
 
-          while ((bytes_received =
-                    peer.recv (buffer, sizeof(buffer))) != -1)
+          while ((bytes_received = peer.recv (buffer, sizeof (buffer))) > 0)
             {
               peer.send_n (buffer, bytes_received);
             }

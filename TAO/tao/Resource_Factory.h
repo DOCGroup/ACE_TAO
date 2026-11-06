@@ -92,7 +92,7 @@ private:
 // factories.
 using TAO_ProtocolFactorySet = ACE_Unbounded_Set<TAO_Protocol_Item*>;
 
-using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
+using TAO_ProtocolFactorySetItor = TAO_ProtocolFactorySet::iterator;
 
 // ****************************************************************
 

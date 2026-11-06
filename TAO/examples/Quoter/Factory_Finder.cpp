@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Factory_Finder.cpp
@@ -9,7 +8,6 @@
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================
-
 
 #include "Factory_Finder.h"
 
@@ -37,7 +35,7 @@ Quoter_Factory_Finder_Server::init (int argc,
                                     ACE_TCHAR *argv[])
 {
   this->argc_ = argc;
-  ACE_TCHAR **argv_copy = nullptr;
+  ACE_TCHAR **argv_copy {};
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
   for (int i = 0; i < argc; i++)
@@ -67,7 +65,7 @@ Quoter_Factory_Finder_Server::init (int argc,
       if (this->parse_args () != 0)
         return -1;
 
-      Quoter_Factory_Finder_i *factory_finder = nullptr;
+      Quoter_Factory_Finder_i *factory_finder {};
       ACE_NEW_RETURN (factory_finder,
                       Quoter_Factory_Finder_i (this->debug_level_),
                       -1);
@@ -156,15 +154,14 @@ Quoter_Factory_Finder_Server::run ()
   return 0;
 }
 
-
 // Function get_options.
 
 u_int
 Quoter_Factory_Finder_Server::parse_args ()
 {
   ACE_Get_Opt get_opt (this->argc_, this->argv_.get (), ACE_TEXT("?d:"));
-  int opt;
-  int exit_code = 0;
+  int opt {};
+  int exit_code {};
 
   while ((opt = get_opt ()) != EOF)
     switch (opt)

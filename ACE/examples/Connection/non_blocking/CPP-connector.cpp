@@ -59,7 +59,7 @@ Peer_Handler<PEER_STREAM>::close (u_long)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Connect not successful: ending reactor event loop\n")));
-  this->reactor ()->end_reactor_event_loop();
+  this->reactor ()->end_reactor_event_loop ();
   return 0;
 }
 
@@ -75,9 +75,9 @@ Peer_Handler<PEER_STREAM>::connected ()
 {
   char buf[BUFSIZ];
 
-  ssize_t n = ACE_OS::read (ACE_STDIN,
-                            buf,
-                            sizeof buf);
+  ssize_t const n = ACE_OS::read (ACE_STDIN,
+                                  buf,
+                                  sizeof buf);
 
   if (n > 0
       && this->peer ().send_n (buf,
@@ -108,9 +108,9 @@ Peer_Handler<PEER_STREAM>::stdio ()
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in stdio\nplease enter input..: ")));
 
-  ssize_t n = ACE_OS::read (ACE_STDIN,
-                            buf,
-                            sizeof buf);
+  ssize_t const n = ACE_OS::read (ACE_STDIN,
+                                  buf,
+                                  sizeof buf);
   if (n > 0)
     {
       if (ACE_OS::write (ACE_STDOUT,
@@ -127,8 +127,8 @@ Peer_Handler<PEER_STREAM>::stdio ()
 }
 
 template <typename PEER_STREAM> int
-Peer_Handler<PEER_STREAM>::handle_timeout (const ACE_Time_Value &,
-                                       const void *)
+Peer_Handler<PEER_STREAM>::handle_timeout (ACE_Time_Value const &,
+                                           void const *)
 {
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("Connect timedout. ")));
   return this->close ();
@@ -195,7 +195,10 @@ Peer_Handler<PEER_STREAM>::handle_close (ACE_HANDLE h,
                                                    ACE_Event_Handler::READ_MASK);
 #endif /* ACE_WIN32 */
       else
-        delete this;
+        {
+          // No reactor is responsible for closing this handler.
+          delete this;
+        }
     }
 
   return 0;
@@ -229,12 +232,12 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
   // initialization.
   this->inherited::open (ACE_Reactor::instance ());
 
-  const ACE_TCHAR *r_addr = argc > 1 ? argv[1] :
+  ACE_TCHAR const * const r_addr = argc > 1 ? argv[1] :
     ACE_SERVER_ADDRESS (ACE_DEFAULT_SERVER_HOST,
                         ACE_DEFAULT_SERVER_PORT_STR);
-  ACE_Time_Value timeout (argc > 2
-                          ? ACE_OS::atoi (argv[2])
-                          : ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const timeout (argc > 2
+                                ? ACE_OS::atoi (argv[2])
+                                : ACE_DEFAULT_TIMEOUT);
 
   // Handle signals through the ACE_Reactor.
   if (ACE_Reactor::instance ()->register_handler
@@ -248,7 +251,8 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
   this->options_.set (ACE_Synch_Options::USE_REACTOR,
                       timeout);
 
-  SVC_HANDLER *sh;
+  // ACE_Connector owns this handler and may destroy it through close() on failure.
+  SVC_HANDLER *sh {};
   ACE_NEW_RETURN (sh,
                   SVC_HANDLER (this->reactor ()),
                   -1);
@@ -265,8 +269,5 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
   else
     return 0;
 }
-
-template <typename SVC_HANDLER, typename PEER_CONNECTOR>
-IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::~IPC_Client () = default;
 
 #endif /* CPP_CONNECTOR_C */

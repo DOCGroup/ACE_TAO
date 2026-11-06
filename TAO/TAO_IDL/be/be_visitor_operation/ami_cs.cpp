@@ -28,7 +28,7 @@ int
 be_visitor_operation_ami_cs::post_process (be_decl *bd)
 {
   // all we do here is to insert a comma and a newline
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {
@@ -48,7 +48,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
     }
 
   be_visitor_context ctx;
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   TAO_INSERT_COMMENT (os);
@@ -155,7 +155,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "{" << be_idt_nl
           << "std::addressof(_tao_retval)";
 
-      AST_Argument *arg = nullptr;
+      AST_Argument *arg {};
       UTL_ScopeActiveIterator arg_list_iter (ami_op,
                                              UTL_Scope::IK_decls);
 
@@ -242,8 +242,8 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 int
 be_visitor_operation_ami_cs::visit_argument (be_argument *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr; // argument type
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {}; // argument type
 
   // Retrieve the type for this argument.
   bt = dynamic_cast<be_type*> (node->field_type ());

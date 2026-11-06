@@ -36,13 +36,11 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
       for (size_type i = 0; i < size; ++i)
         new (&array_[i]) T;
     }
-  else
-    this->array_ = nullptr;
 }
 
 template <class T>
 ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
-                                   const T &default_value,
+                                   T const &default_value,
                                    ACE_Allocator *alloc)
   : max_size_ (size),
     cur_size_ (size),
@@ -58,14 +56,12 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
       for (size_type i = 0; i < size; ++i)
         new (&array_[i]) T (default_value);
     }
-  else
-    this->array_ = nullptr;
 }
 
 // The copy constructor (performs initialization).
 
 template <class T>
-ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
+ACE_Array_Base<T>::ACE_Array_Base (ACE_Array_Base<T> const &s)
   : max_size_ (s.size ()),
     cur_size_ (s.size ()),
     allocator_ (s.allocator_)
@@ -82,7 +78,7 @@ ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
 // Assignment operator (performs assignment).
 
 template <class T> void
-ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
+ACE_Array_Base<T>::operator= (ACE_Array_Base<T> const &s)
 {
   // Check for "self-assignment".
 
@@ -129,7 +125,7 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
 // Set an item in the array at location slot.
 
 template <class T> int
-ACE_Array_Base<T>::set (const T &new_item,
+ACE_Array_Base<T>::set (T const &new_item,
                         typename ACE_Array_Base<T>::size_type slot)
 {
   if (this->in_range (slot))

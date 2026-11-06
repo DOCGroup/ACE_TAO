@@ -1,11 +1,15 @@
 // Test the event server.
 
 #include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Stream.h"
 #include "ace/Service_Config.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/Truncate.h"
+#include <algorithm>
+#include <cstring>
+#include <memory>
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -15,7 +19,7 @@
 #include "Event_Analyzer.h"
 #include "Supplier_Router.h"
 #include "ace/Sig_Adapter.h"
-#include "ace/OS_NS_unistd.h"
+#include "Message_Block_Owner.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -33,6 +37,10 @@ class Quit_Handler : public ACE_Sig_Adapter
 {
 public:
   Quit_Handler ();
+  Quit_Handler (Quit_Handler const &) = delete;
+  Quit_Handler (Quit_Handler &&) = delete;
+  Quit_Handler &operator= (Quit_Handler const &) = delete;
+  Quit_Handler &operator= (Quit_Handler &&) = delete;
   int handle_input (ACE_HANDLE fd) override;
 };
 
@@ -57,20 +65,22 @@ Quit_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_INFO, " (%t) closing down the test\n"));
   options.print_results ();
 
-  ACE_Reactor::end_event_loop();
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 consumer (void *)
 {
   ACE_UPIPE_Stream c_stream;
   ACE_UPIPE_Addr c_addr (ACE_TEXT ("/tmp/conupipe"));
 
-  bool verb = options.verbose ();
-  int msiz = ACE_Utils::truncate_cast<int> (options.message_size ());
-  time_t secs, par1, par2;
-  time_t currsec;
+  bool const verb = options.verbose ();
+  size_t const msiz = options.message_size ();
+  time_t secs {};
+  time_t par1 {};
+  time_t par2 {};
+  time_t currsec {};
 
   if (verb)
     cout << "consumer starting connect" << endl;
@@ -82,16 +92,16 @@ consumer (void *)
   else
     cout << "consumer :we're connected" << endl;
 
-  ACE_Message_Block *mb_p = nullptr;
-
-  bool done = false;
-  int cnt = 0;
+  bool done {};
+  size_t cnt {};
   ACE_OS::time (&currsec);
 
   par1 = currsec;
 
+  ACE_Message_Block *mb_p {};
   while (!done && (c_stream.recv (mb_p) != -1))
     {
+      UPIPE_Event_Server::Message_Block_Owner message {mb_p};
       if (mb_p->length () > 1)
         {
           cnt++;
@@ -106,66 +116,77 @@ consumer (void *)
           if (verb)
             {
               cout << "consumer got last mb"
-                  << (char) * (mb_p->rd_ptr ()) << endl;
+                  << static_cast<char> (*mb_p->rd_ptr ()) << endl;
             }
           c_stream.close ();
           done = true;
         }
     }
 
-    ACE_OS::time (&currsec);
-    par2 = currsec;
+  ACE_OS::time (&currsec);
+  par2 = currsec;
 
-    secs = par2 - par1;
+  secs = par2 - par1;
 
-    if (secs <= 0)
-      secs=1;
+  if (secs <= 0)
+    secs = 1;
 
-    ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("consumer got %d messages of size %d ")
-                ACE_TEXT ("within %: seconds\n"),
-                cnt, msiz, secs));
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("consumer got %B messages of size %B ")
+              ACE_TEXT ("within %: seconds\n"),
+              cnt, msiz, secs));
 
-    ACE_OS::sleep (2);
-    cout << "consumer terminating " << endl;
-    return ACE_THR_FUNC_RETURN_NULL;
+  ACE_OS::sleep (2);
+  cout << "consumer terminating " << endl;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 supplier (void *dummy)
 {
   ACE_UPIPE_Stream s_stream;
   ACE_UPIPE_Addr serv_addr (ACE_TEXT ("/tmp/supupipe"));
   ACE_UPIPE_Connector con;
 
-  int iter = ACE_Utils::truncate_cast<int> (options.iterations ());
-  bool verb = options.verbose ();
-  int msiz = ACE_Utils::truncate_cast<int> (options.message_size ());
+  size_t const iter = options.iterations ();
+  bool const verb = options.verbose ();
+  size_t const msiz = options.message_size ();
   cout << "supplier starting connect" << endl;
 
   if (con.connect (s_stream, serv_addr) == -1)
     ACE_DEBUG ((LM_INFO, " (%t) connect failed\n"));
 
   cout << "supplier : we're connected" << endl;
-  int n = 0;
-  ACE_Message_Block * mb_p;
+  size_t n {};
+  char const * const message = static_cast<char const *> (dummy);
 
   while (n < iter)
     {
-      mb_p = new ACE_Message_Block (msiz);
-      ACE_OS::strcpy (mb_p->rd_ptr (), static_cast<char *> (dummy));
+      ACE_Message_Block *mb_p {};
+      ACE_NEW_RETURN (mb_p, ACE_Message_Block (msiz), ACE_THR_FUNC_RETURN_NULL);
+      UPIPE_Event_Server::Message_Block_Owner message_block {mb_p};
+      if (msiz != 0)
+        {
+          std::memset (mb_p->rd_ptr (), 0, msiz);
+          size_t const message_length =
+            std::min (std::strlen (message), msiz - 1);
+          std::memcpy (mb_p->rd_ptr (), message, message_length);
+        }
       mb_p->length (msiz);
       if (verb)
         cout << "supplier sending 1 message_block" << endl;
       if (s_stream.send (mb_p) == -1)
         {
           cout << "supplier send failed" << endl;
-          return (void *) -1;
+          return ACE_THR_FUNC_RETURN_NULL;
         }
+      message_block.release ();
       n++;
     }
 
-  mb_p = new ACE_Message_Block (10);
+  ACE_Message_Block *mb_p {};
+  ACE_NEW_RETURN (mb_p, ACE_Message_Block (10), ACE_THR_FUNC_RETURN_NULL);
+  UPIPE_Event_Server::Message_Block_Owner last_message_block {mb_p};
   mb_p->length (1);
   *mb_p->rd_ptr () = 'g';
 
@@ -174,9 +195,12 @@ supplier (void *dummy)
   if (s_stream.send (mb_p) == -1)
     {
       cout << "supplier send last mb failed" << endl;
-      return (void *) -1;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
-  mb_p = new ACE_Message_Block (10);
+  last_message_block.release ();
+
+  ACE_NEW_RETURN (mb_p, ACE_Message_Block (10), ACE_THR_FUNC_RETURN_NULL);
+  UPIPE_Event_Server::Message_Block_Owner very_last_message_block {mb_p};
   mb_p->length (0);
 
   if (verb)
@@ -185,8 +209,9 @@ supplier (void *dummy)
   if (s_stream.send (mb_p) == -1)
     {
       cout << "supplier send very last mb failed" << endl;
-      return (void *) -1;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
+  very_last_message_block.release ();
 
   ACE_OS::sleep (2);
   cout << "supplier terminating" << endl;
@@ -209,26 +234,43 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Create the modules..
 
-  MT_Module *sr = new MT_Module (ACE_TEXT ("Supplier_Router"),
-          new Supplier_Router (ACE_Thread_Manager::instance ()));
-  MT_Module *ea = new MT_Module (ACE_TEXT ("Event_Analyzer"),
-                                 new Event_Analyzer,
-                                 new Event_Analyzer);
-  MT_Module *cr = new MT_Module (ACE_TEXT ("Consumer_Router"),
-                                 nullptr, // 0 triggers the creation of a ACE_Thru_Task...
-                                 new Consumer_Router (ACE_Thread_Manager::instance ()));
+  std::unique_ptr<Supplier_Router> supplier_router =
+    std::make_unique<Supplier_Router> (ACE_Thread_Manager::instance ());
+  std::unique_ptr<MT_Module> supplier_module =
+    std::make_unique<MT_Module> (ACE_TEXT ("Supplier_Router"), supplier_router.get ());
+  // ACE_Module owns its tasks after construction.
+  supplier_router.release ();
+
+  std::unique_ptr<Event_Analyzer> analyzer_writer = std::make_unique<Event_Analyzer> ();
+  std::unique_ptr<Event_Analyzer> analyzer_reader = std::make_unique<Event_Analyzer> ();
+  std::unique_ptr<MT_Module> analyzer_module =
+    std::make_unique<MT_Module> (ACE_TEXT ("Event_Analyzer"),
+                                 analyzer_writer.get (), analyzer_reader.get ());
+  analyzer_writer.release ();
+  analyzer_reader.release ();
+
+  std::unique_ptr<Consumer_Router> consumer_router =
+    std::make_unique<Consumer_Router> (ACE_Thread_Manager::instance ());
+  std::unique_ptr<MT_Module> consumer_module =
+    std::make_unique<MT_Module> (ACE_TEXT ("Consumer_Router"), nullptr,
+                                 consumer_router.get ());
+  consumer_router.release ();
 
   // Push the modules onto the event_server stream.
 
-  if (event_server.push (sr) == -1)
+  // ACE_Stream owns a module once push starts; it links before opening its tasks.
+  MT_Module *supplier_module_ptr = supplier_module.release ();
+  if (event_server.push (supplier_module_ptr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (Supplier_Router)")), -1);
 
-  if (event_server.push (ea) == -1)
+  MT_Module *analyzer_module_ptr = analyzer_module.release ();
+  if (event_server.push (analyzer_module_ptr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (Event_Analyzer)")), -1);
 
-  if (event_server.push (cr) == -1)
+  MT_Module *consumer_module_ptr = consumer_module.release ();
+  if (event_server.push (consumer_module_ptr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (Consumer_Router)")), -1);
 
@@ -249,11 +291,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // spawn the two threads.
   char supplier_message[] = "hello";
 
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (consumer), nullptr,
+  if (ACE_Thread_Manager::instance ()->spawn (consumer, nullptr,
                                              THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 
-  else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (supplier), supplier_message,
+  else if (ACE_Thread_Manager::instance ()->spawn (supplier, supplier_message,
                                                   THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), 1);
 

@@ -38,17 +38,17 @@ public:
   Service_Config_DLL ();
 
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 
   /// Run by a daemon thread.
   /**
    * Each thread will invoke the Service Configurator via this
    * method unless the object is the "FINAL" object.
    */
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Directives to be passed to be processed by the Service
@@ -69,13 +69,13 @@ public:
   Refuses_Init () {}
 
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 
   /// Returns information on a service object.
-  virtual int info (ACE_TCHAR **info_string, size_t length = 0) const;
+  int info (ACE_TCHAR **info_string, size_t length = 0) const override;
 };
 
 ACE_FACTORY_DECLARE (Service_Config_DLL, Service_Config_DLL)

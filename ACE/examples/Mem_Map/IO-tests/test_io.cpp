@@ -9,26 +9,37 @@
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"
 #include <array>
+#include <memory>
 
 #if !defined(ACE_WIN32)
 
-// Name of program.
-static const ACE_TCHAR *program_name;
+static ACE_TCHAR const default_input_filename[] = ACE_TEXT ("/usr/dict/words");
+static ACE_TCHAR const default_output_filename[] = ACE_TEXT ("/tmp/foo");
 
-// Name of default input file.
-static const ACE_TCHAR *input_filename = ACE_TEXT ("/usr/dict/words");
+struct Options
+{
+  ACE_TCHAR const *program_name {};
+  ACE_TCHAR const *input_filename { default_input_filename };
+  ACE_TCHAR const *output_filename { default_output_filename };
+  bool remove_output { true };
+  int iteration_count { 100 };
+};
 
-// Name of default output file.
-static const ACE_TCHAR *output_filename = ACE_TEXT ("/tmp/foo");
-
-// Check if removing output file upon completion...
-static bool remove_output = true;
-
-// Count of the number of iterations to run the tests.
-static int iteration_count = 100;
+static Options options {};
 
 // Profiler used to keep track of file I/O time.
 static ACE_Profile_Timer profile_timer;
+
+struct File_Deleter
+{
+  void operator() (FILE *file) const
+  {
+    if (file != nullptr)
+      ACE_OS::fclose (file);
+  }
+};
+
+using File_Ptr = std::unique_ptr<FILE, File_Deleter>;
 
 // Explain usage and exit.
 
@@ -37,17 +48,17 @@ print_usage_and_die ()
 {
   ACE_OS::fprintf (stderr, "usage: %s"
                    " [-i input_file] [-o output_file] [-n iteration_count] [-r]\n",
-                   ACE_TEXT_ALWAYS_CHAR (program_name));
+                   ACE_TEXT_ALWAYS_CHAR (options.program_name));
   ACE_OS::exit (1);
 }
 
 // Clean up the output file on exit from a signal.
 
 extern "C" void
-cleanup (int = 0)
+cleanup (int)
 {
-  if (remove_output)
-    ACE_OS::unlink (output_filename);
+  if (options.remove_output)
+    ACE_OS::unlink (options.output_filename);
   ACE_OS::exit (0);
 }
 
@@ -62,16 +73,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
     {
     case 'i':
-      input_filename = get_opt.opt_arg ();
+      options.input_filename = get_opt.opt_arg ();
       break;
     case 'n':
-      iteration_count = ACE_OS::atoi (get_opt.opt_arg ());
+      options.iteration_count = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     case 'o':
-      output_filename = get_opt.opt_arg ();
+      options.output_filename = get_opt.opt_arg ();
       break;
     case 'r':
-      remove_output = false;
+      options.remove_output = false;
       break;
     default:
       print_usage_and_die ();
@@ -79,52 +90,35 @@ parse_args (int argc, ACE_TCHAR *argv[])
   }
 }
 
-// Array of pointers to derived classes that inherit from IO_Test
-// base class.
-
-static std::array<IO_Test *, 7> test_vector {};
+template <typename TEST>
+static int
+create_test (std::unique_ptr<IO_Test> &test,
+             char const *name)
+{
+  TEST *raw_test {};
+  ACE_NEW_RETURN (raw_test, TEST (name, profile_timer), -1);
+  test.reset (raw_test);
+  return 0;
+}
 
 static int
 run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 {
-  int i = 0;
+  std::array<std::unique_ptr<IO_Test>, 6> test_vector {};
+  if (create_test<Stdio_Test> (test_vector[0], "Stdio_Test") == -1
+      || create_test<Block_Fread_Fwrite_Test> (test_vector[1],
+                                               "Block_Fread_Fwrite_Test") == -1
+      || create_test<Block_Read_Write_Test> (test_vector[2],
+                                             "Block_Read_Write_Test") == -1
+      || create_test<Mmap1_Test> (test_vector[3], "Mmap1_Test") == -1
+      || create_test<Mmap2_Test> (test_vector[4], "Mmap2_Test") == -1
+      || create_test<Slow_Read_Write_Test> (test_vector[5],
+                                            "Slow_Read_Write_Test") == -1)
+    return -1;
 
-  ACE_NEW_RETURN (test_vector[i],
-                  Stdio_Test ("Stdio_Test",
-                              profile_timer),
-                  -1);
-  i++;
-  ACE_NEW_RETURN (test_vector[i],
-                  Block_Fread_Fwrite_Test ("Block_Fread_Fwrite_Test",
-                                           profile_timer),
-                  -1);
-  i++;
-  ACE_NEW_RETURN (test_vector[i],
-                  Block_Read_Write_Test ("Block_Read_Write_Test",
-                                         profile_timer),
-                  -1);
-  i++;
-  ACE_NEW_RETURN (test_vector[i],
-                  Mmap1_Test ("Mmap1_Test",
-                              profile_timer),
-                  -1);
-  i++;
-  ACE_NEW_RETURN (test_vector[i],
-                  Mmap2_Test ("Mmap2_Test",
-                              profile_timer),
-                  -1);
-  i++;
-  ACE_NEW_RETURN (test_vector[i],
-                  Slow_Read_Write_Test ("Slow_Read_Write_Test",
-                                        profile_timer),
-                  -1);
-  i++;
-
-  test_vector[i] = nullptr;
-
-  for (i = 0; test_vector[i] != nullptr; i++)
+  for (std::unique_ptr<IO_Test> const &test : test_vector)
     {
-      ACE_HANDLE hfile = fileno (output_fp);
+      ACE_HANDLE const hfile = fileno (output_fp);
       if (ACE_OS::ftruncate (hfile, 0) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%s\n"),
@@ -134,12 +128,12 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("--------------------\n")
                   ACE_TEXT ("starting %C for %d iterations(s):\n"),
-                  test_vector[i]->name (),
+                  test->name (),
                   iterations));
 
-      test_vector[i]->run_test (iterations,
-                                input_fp,
-                                output_fp);
+      test->run_test (iterations,
+                      input_fp,
+                      output_fp);
 
       ACE_Profile_Timer::ACE_Elapsed_Time et;
       profile_timer.elapsed_time (et);
@@ -150,7 +144,6 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
                   et.user_time,
                   et.system_time));
 
-      delete test_vector[i];
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -159,45 +152,44 @@ run_tests (int iterations, FILE *input_fp, FILE *output_fp)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  program_name = ACE::basename (argv[0],
-                                ACE_DIRECTORY_SEPARATOR_CHAR);
+  options.program_name = ACE::basename (argv[0],
+                                        ACE_DIRECTORY_SEPARATOR_CHAR);
   parse_args (argc, argv);
 
-  ACE_Sig_Action sa ((ACE_SignalHandler) cleanup, SIGINT);
+  ACE_Sig_Action sa (&cleanup, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  FILE *input_fp =
-    ACE_OS::fopen (input_filename, ACE_TEXT ("r"));
-  FILE *output_fp =
-    ACE_OS::fopen (output_filename, ACE_TEXT ("w+"));
+  File_Ptr input_fp (ACE_OS::fopen (options.input_filename, ACE_TEXT ("r")));
+  File_Ptr output_fp (ACE_OS::fopen (options.output_filename, ACE_TEXT ("w+")));
 
   if (input_fp == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
-                       input_filename),
+                       options.input_filename),
                       -1);
 
   if (output_fp == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
-                       output_filename),
+                       options.output_filename),
                       -1);
 
-  ACE_OS::unlink (output_filename);
+  ACE_OS::unlink (options.output_filename);
 
-  if (run_tests (iteration_count,
-                 input_fp,
-                 output_fp) == -1)
+  if (run_tests (options.iteration_count,
+                 input_fp.get (),
+                 output_fp.get ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("run_tests")),
                       -1);
 
-  if (ACE_OS::fclose (input_fp) == -1
-      || ACE_OS::fclose (output_fp) == -1)
+  int const input_close_result = ACE_OS::fclose (input_fp.release ());
+  int const output_close_result = ACE_OS::fclose (output_fp.release ());
+  if (input_close_result == -1 || output_close_result == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("fclose")),
                       -1);
-  cleanup ();
+  cleanup (0);
   return 0;
 }
 #else

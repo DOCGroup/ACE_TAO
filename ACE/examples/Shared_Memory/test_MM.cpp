@@ -3,20 +3,21 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
+#include <cstdio>
 
 static constexpr int SHMSZ = 27;
-ACE_TCHAR shm_key[] = ACE_TEXT ("/tmp/fooXXXXXX");
+static ACE_TCHAR shm_key[] = ACE_TEXT ("/tmp/fooXXXXXX");
 
 static void
 client ()
 {
   ACE_Shared_Memory_MM shm_client (shm_key);
-  char *shm = static_cast<char *> (shm_client.malloc ());
+  char *const shm = static_cast<char *> (shm_client.malloc ());
 
-  for (char *s = shm; *s != '\0'; s++)
-    putchar (*s);
+  for (char const *character = shm; *character != '\0'; ++character)
+    std::putchar (*character);
 
-  putchar ('\n');
+  std::putchar ('\n');
   *shm = '*';
 }
 
@@ -24,13 +25,13 @@ static void
 server ()
 {
   ACE_Shared_Memory_MM shm_server (shm_key, SHMSZ);
-  char *shm = static_cast<char *> (shm_server.malloc ());
-  char *s   = shm;
+  char *const shm = static_cast<char *> (shm_server.malloc ());
+  char *cursor = shm;
 
-  for (char c = 'a'; c <= 'z'; c++)
-    *s++ = c;
+  for (char character = 'a'; character <= 'z'; ++character)
+    *cursor++ = character;
 
-  *s = '\0';
+  *cursor = '\0';
 
   // Perform a busy wait (ugh)
   while (*shm != '*')

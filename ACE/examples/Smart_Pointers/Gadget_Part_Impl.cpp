@@ -35,7 +35,7 @@ void Gadget_Part_Impl::print_info ()
 void Gadget_Part_Impl::remove_from_owner ()
 {
   // Need to guarantee the existence of the owner for the duration of this call.
-  Gadget_var owner = owner_;
+  Gadget_var const owner = owner_;
 
   // Weak pointers are automatically set to nullptr if the object they refer to
   // is deleted. We can use this fact to check that our owner still exists.
@@ -47,7 +47,7 @@ void Gadget_Part_Impl::remove_from_owner ()
   ACE_Unbounded_Queue<Gadget_Part_var> parts;
   for (;;)
     {
-      Gadget_Part_var part = owner->remove_part ();
+      Gadget_Part_var const part = owner->remove_part ();
       if (part.null ())
         break;
       if (part != this)

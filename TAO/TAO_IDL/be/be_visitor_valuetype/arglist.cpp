@@ -73,7 +73,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                             -1);
         }
 
-      *os << be_uidt_nl
+      *os << be_uidt
           << ")";
     }
   else

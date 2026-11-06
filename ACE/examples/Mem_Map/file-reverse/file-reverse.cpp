@@ -8,7 +8,7 @@
 
 
 static void
-putline (const char *s)
+putline (char const *s)
 {
   while (putchar (*s++) != '\n')
     continue;
@@ -16,19 +16,19 @@ putline (const char *s)
 
 static void
 print_array_in_reverse (char *array,
-                        int size)
+                        int const size)
 {
   if (size <= 0)
     return;
 
-  size--;
+  int const last_index = size - 1;
 
-  if (array[size] == '\0')
-    array[size] = '\n';
+  if (array[last_index] == '\0')
+    array[last_index] = '\n';
 
-  while (--size >= 0)
-    if (array[size] == '\n')
-      putline (array + size + 1);
+  for (int index = last_index - 1; index >= 0; --index)
+    if (array[index] == '\n')
+      putline (array + index + 1);
 
   putline (array);
 }
@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
                        "mmap"),
                       -1);
 
-  print_array_in_reverse ((char *) mmap.addr (),
+  print_array_in_reverse (static_cast<char *> (mmap.addr ()),
                           ACE_Utils::truncate_cast<int> (mmap.size ()));
   return 0;
 }

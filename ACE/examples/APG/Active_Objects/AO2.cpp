@@ -1,21 +1,24 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_unistd.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Method_Request.h"
 #include "ace/Task.h"
 #include "ace/Future.h"
+#include <array>
+#include <chrono>
 #include <memory>
+#include <thread>
 
 class HA_ControllerAgent
 {
   // Proxy to the HA_Controller that is on the network.
 public:
-  HA_ControllerAgent () : status_result_ (1)
-  {
-    ACE_TRACE("HA_ControllerAgent::HA_ControllerAgent");
-  }
+  HA_ControllerAgent () = default;
+  HA_ControllerAgent (const HA_ControllerAgent &) = delete;
+  HA_ControllerAgent (HA_ControllerAgent &&) = delete;
+  HA_ControllerAgent &operator= (const HA_ControllerAgent &) = delete;
+  HA_ControllerAgent &operator= (HA_ControllerAgent &&) = delete;
 
   int status_update ()
   {
@@ -25,7 +28,7 @@ public:
                 ACE_TEXT ("thread of control\n")));
     // Simulate sending message to controller
     // and getting status.
-    ACE_OS::sleep (2);
+    std::this_thread::sleep_for (std::chrono::seconds (2));
     return next_result_id ();
   }
 
@@ -36,15 +39,20 @@ private:
     return status_result_++;
   }
 
-  int status_result_;
+  int status_result_ {1};
 };
 
 class StatusUpdate : public ACE_Method_Request
 {
 public:
+  StatusUpdate (const StatusUpdate &) = delete;
+  StatusUpdate (StatusUpdate &&) = delete;
+  StatusUpdate &operator= (const StatusUpdate &) = delete;
+  StatusUpdate &operator= (StatusUpdate &&) = delete;
+
   StatusUpdate (HA_ControllerAgent &controller,
-                ACE_Future<int> &returnVal)
-    : controller_ (controller), returnVal_ (returnVal)
+                ACE_Future<int> &return_val)
+    : controller_ (controller), return_val_ (return_val)
   {
     ACE_TRACE ("StatusUpdate::StatusUpdate");
   }
@@ -54,18 +62,24 @@ public:
     ACE_TRACE ("StatusUpdate::call");
 
     // status_update with the controller.
-    this->returnVal_.set (this->controller_.status_update ());
+    this->return_val_.set (this->controller_.status_update ());
     return 0;
   }
 
 private:
-  HA_ControllerAgent& controller_;
-  ACE_Future<int> returnVal_;
+  HA_ControllerAgent &controller_;
+  ACE_Future<int> return_val_;
 };
 
 class ExitMethod : public ACE_Method_Request
 {
 public:
+  ExitMethod () = default;
+  ExitMethod (const ExitMethod &) = delete;
+  ExitMethod (ExitMethod &&) = delete;
+  ExitMethod &operator= (const ExitMethod &) = delete;
+  ExitMethod &operator= (ExitMethod &&) = delete;
+
   int call () override
   {
     // Cause exit.
@@ -76,10 +90,10 @@ public:
 class Scheduler : public ACE_Task_Base
 {
 public:
-  Scheduler (Scheduler const &) = delete;
-  Scheduler &operator = (Scheduler const &) = delete;
+  Scheduler (const Scheduler &) = delete;
+  Scheduler &operator= (const Scheduler &) = delete;
   Scheduler (Scheduler &&) = delete;
-  Scheduler &operator = (Scheduler &&) = delete;
+  Scheduler &operator= (Scheduler &&) = delete;
 
   Scheduler ()
   {
@@ -91,23 +105,26 @@ public:
   {
     ACE_TRACE ("Scheduler::svc");
 
-    while (1)
+    while (true)
       {
         // Dequeue the next method object
-        std::unique_ptr<ACE_Method_Request> request (this->activation_queue_.dequeue ());
+        std::unique_ptr<ACE_Method_Request> request {this->activation_queue_.dequeue ()};
 
         // Invoke the method request.
-        if (request->call () == -1)
+        if (request == nullptr || request->call () == -1)
           break;
       }
 
     return 0;
   }
 
-  int enqueue (ACE_Method_Request *request)
+  int enqueue (std::unique_ptr<ACE_Method_Request> request)
   {
     ACE_TRACE ("Scheduler::enqueue");
-    return this->activation_queue_.enqueue (request);
+    const int result = this->activation_queue_.enqueue (request.get ());
+    if (result != -1)
+      request.release ();
+    return result;
   }
 
 private:
@@ -119,19 +136,19 @@ class HA_ControllerAgentProxy
   // This acts as a Proxy to the controller impl object.
 public:
   HA_ControllerAgentProxy () = default;
-  HA_ControllerAgentProxy (HA_ControllerAgentProxy const &) = delete;
-  HA_ControllerAgentProxy &operator = (HA_ControllerAgentProxy const &) = delete;
+  HA_ControllerAgentProxy (const HA_ControllerAgentProxy &) = delete;
+  HA_ControllerAgentProxy &operator = (const HA_ControllerAgentProxy &) = delete;
   HA_ControllerAgentProxy (HA_ControllerAgentProxy &&) = delete;
   HA_ControllerAgentProxy &operator = (HA_ControllerAgentProxy &&) = delete;
 
   ACE_Future<int> status_update ()
   {
-    ACE_TRACE("HA_ControllerAgentProxy::status_update");
+    ACE_TRACE ("HA_ControllerAgentProxy::status_update");
     ACE_Future<int> result;
 
     // Create and enqueue a method request on the scheduler.
     this->scheduler_.enqueue
-      (new StatusUpdate (this->controller_, result));
+      (std::make_unique<StatusUpdate> (this->controller_, result));
 
     // Return Future to the client.
     return result;
@@ -143,7 +160,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
     ACE_TRACE ("HA_ControllerAgentProxy::exit");
-    this->scheduler_.enqueue (new ExitMethod);
+    this->scheduler_.enqueue (std::make_unique<ExitMethod> ());
   }
 
 private:
@@ -159,14 +176,14 @@ public:
     : proxy_ (proxy)
   { }
 
-  CompletionCallBack (CompletionCallBack const &) = delete;
-  CompletionCallBack &operator = (CompletionCallBack const &) = delete;
+  CompletionCallBack (const CompletionCallBack &) = delete;
+  CompletionCallBack &operator = (const CompletionCallBack &) = delete;
   CompletionCallBack (CompletionCallBack &&) = delete;
   CompletionCallBack &operator = (CompletionCallBack &&) = delete;
 
-  void update (ACE_Future<int> const &future) override
+  void update (const ACE_Future<int> &future) override
   {
-    int result = 0;
+    int result {};
     future.get (result);
     ACE_DEBUG ((LM_INFO,
                 ACE_TEXT ("(%t) New Status %d\n"), result));
@@ -175,17 +192,19 @@ public:
   }
 
 private:
-  HA_ControllerAgentProxy& proxy_;
+  HA_ControllerAgentProxy &proxy_;
 };
 // Listing 1
 // Listing 2 code/ch15
+constexpr int status_update_count = 10;
+
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   HA_ControllerAgentProxy controller;
-  ACE_Future<int> results[10];
+  std::array<ACE_Future<int>, status_update_count> results {};
   CompletionCallBack cb (controller);
 
-  for (int i = 0 ; i < 10; i++)
+  for (int i = 0; i < status_update_count; ++i)
     {
       results[i] = controller.status_update ();
       results[i].attach (&cb);

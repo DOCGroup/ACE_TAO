@@ -4,7 +4,7 @@ void Timer_Dispatcher::wait_for_event ()
 {
   ACE_TRACE ("Timer_Dispatcher::wait_for_event");
 
-  while (1)
+  while (true)
     {
       ACE_Time_Value max_tv = timer_queue_->gettimeofday ();
 
@@ -19,7 +19,7 @@ void Timer_Dispatcher::wait_for_event ()
           ACE_Time_Value next_timeout =
             timer_queue_->gettimeofday ();
           next_timeout += *this_timeout;
-          if (this->timer_.wait (&next_timeout) == -1 )
+          if (this->timer_.wait (&next_timeout) == -1)
             this->timer_queue_->expire ();
         }
     }
@@ -29,8 +29,8 @@ void Timer_Dispatcher::wait_for_event ()
 long
 Timer_Dispatcher::schedule (ACE_Event_Handler *cb,
                             void *arg,
-                            const ACE_Time_Value &abs_time,
-                            const ACE_Time_Value &interval)
+                            ACE_Time_Value const &abs_time,
+                            ACE_Time_Value const &interval)
 {
   ACE_TRACE ("Timer_Dispatcher::schedule_timer");
 
@@ -58,11 +58,11 @@ void Timer_Dispatcher::set (ACE_Timer_Queue *timer_queue)
 
 int
 Timer_Dispatcher::reset_interval (long timer_id,
-                                  const ACE_Time_Value &interval)
+                                  ACE_Time_Value const &interval)
 {
   ACE_TRACE ("Timer_Dispatcher::reset_interval");
 
-  return timer_queue_->reset_interval(timer_id, interval);
+  return timer_queue_->reset_interval (timer_id, interval);
 }
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Timer_Dispatcher, ACE_Null_Mutex);
 

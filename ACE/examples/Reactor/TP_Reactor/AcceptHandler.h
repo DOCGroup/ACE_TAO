@@ -19,7 +19,7 @@ class AcceptHandler : public ACE_Event_Handler {
         /**
          * The reactor to which the accept handler belongs.
          */
-        ACE_Reactor *mReactor;
+        ACE_Reactor *const mReactor;
 
         /**
          * The socket used for incoming conections.
@@ -35,7 +35,11 @@ class AcceptHandler : public ACE_Event_Handler {
         /**
          * The destructor exists for tracing purposes.
          */
-        virtual ~AcceptHandler();
+        ~AcceptHandler() override;
+        AcceptHandler(AcceptHandler const &) = delete;
+        AcceptHandler(AcceptHandler &&) = delete;
+        AcceptHandler &operator= (AcceptHandler const &) = delete;
+        AcceptHandler &operator= (AcceptHandler &&) = delete;
 
         /**
          * Open the listening socket and register the handler with the reactor.

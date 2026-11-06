@@ -8,7 +8,10 @@
  *  the different possible implementations of the Timer_Queue
  *  based bounded packet relay example.
  *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Chris Gill <cdgill@cs.wustl.edu> and Douglas C. Schmidt
+ *          <d.schmidt@vanderbilt.edu>. Based on Timer Queue Test by Carlos O'Ryan
+ *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
+ *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
 //=============================================================================
 
@@ -17,6 +20,7 @@
 #define _BPR_DRIVERS_T_H_
 
 #include "ace/Functor.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,14 +48,19 @@ class Bounded_Packet_Relay_Driver
 {
 public:
   /// Constructor.
-  Bounded_Packet_Relay_Driver ();
+  Bounded_Packet_Relay_Driver () = default;
+
+  Bounded_Packet_Relay_Driver (Bounded_Packet_Relay_Driver const &) = delete;
+  Bounded_Packet_Relay_Driver (Bounded_Packet_Relay_Driver &&) = delete;
+  Bounded_Packet_Relay_Driver &operator= (Bounded_Packet_Relay_Driver const &) = delete;
+  Bounded_Packet_Relay_Driver &operator= (Bounded_Packet_Relay_Driver &&) = delete;
 
   /// Destructor.
-  virtual ~Bounded_Packet_Relay_Driver ();
+  virtual ~Bounded_Packet_Relay_Driver () = default;
 
   /// Breaks up the input string buffer into pieces and executes the
   /// appropriate method to handle that operation.
-  virtual int parse_commands (const char *buf);
+  virtual int parse_commands (char const *buf);
 
   /**
    * This is the main entry point for the driver.  The user of the
@@ -79,31 +88,31 @@ public:
   virtual int init () = 0;
 
   /// Get count of packets to send in a transmission.
-  u_long packet_count ();
+  u_long packet_count () const;
 
   /// Set count of packets to send in a transmission.
   void packet_count (u_long pc);
 
   /// Get rate at which input packets are to arrive.
-  u_long arrival_period ();
+  u_long arrival_period () const;
 
   /// Set rate at which input packets are to arrive.
   void arrival_period (u_long ap);
 
   /// Get rate at which packets are to be relayed (usec).
-  u_long send_period ();
+  u_long send_period () const;
 
   /// Set rate at which packets are to be relayed (usec).
   void send_period (u_long sp);
 
   /// Get limit on the duration of the transmission (usec).
-  u_long duration_limit ();
+  u_long duration_limit () const;
 
   /// Set limit on the duration of the transmission (usec).
   void duration_limit (u_long dl);
 
   /// Get logging level.
-  int logging_level ();
+  int logging_level () const;
 
   /// Set logging level.
   void logging_level (int ll);
@@ -117,47 +126,47 @@ protected:
   // = Set of commands to be executed.
 
   /// Set packet count command.
-  ACE_Command_Base *packet_count_cmd_;
+  std::unique_ptr<ACE_Command_Base> packet_count_cmd_ {};
 
   /// Set arrival period command.
-  ACE_Command_Base *arrival_period_cmd_;
+  std::unique_ptr<ACE_Command_Base> arrival_period_cmd_ {};
 
   /// Set transmit period command.
-  ACE_Command_Base *transmit_period_cmd_;
+  std::unique_ptr<ACE_Command_Base> transmit_period_cmd_ {};
 
   /// Set duration limit command.
-  ACE_Command_Base *duration_limit_cmd_;
+  std::unique_ptr<ACE_Command_Base> duration_limit_cmd_ {};
 
   /// Set logging level command.
-  ACE_Command_Base *logging_level_cmd_;
+  std::unique_ptr<ACE_Command_Base> logging_level_cmd_ {};
 
   /// Run transmission command.
-  ACE_Command_Base *run_transmission_cmd_;
+  std::unique_ptr<ACE_Command_Base> run_transmission_cmd_ {};
 
   /// Cancel transmission command.
-  ACE_Command_Base *cancel_transmission_cmd_;
+  std::unique_ptr<ACE_Command_Base> cancel_transmission_cmd_ {};
 
   /// Report statistics command.
-  ACE_Command_Base *report_stats_cmd_;
+  std::unique_ptr<ACE_Command_Base> report_stats_cmd_ {};
 
   /// Shut down the driver.
-  ACE_Command_Base *shutdown_cmd_;
+  std::unique_ptr<ACE_Command_Base> shutdown_cmd_ {};
 
 private:
   /// Count of packets to send in a transmission.
-  u_long packet_count_;
+  u_long packet_count_ {1000};
 
   /// Rate at which input packets are to arrive.
-  u_long arrival_period_;
+  u_long arrival_period_ {10000};
 
   /// Rate at which packets are to be relayed (usec).
-  u_long send_period_;
+  u_long send_period_ {10000};
 
   /// Limit on the duration of the transmission (usec).
-  u_long duration_limit_;
+  u_long duration_limit_ {20000000};
 
   /// Logging level.
-  int logging_level_;
+  int logging_level_ {};
 };
 
 #include "BPR_Drivers_T.cpp"

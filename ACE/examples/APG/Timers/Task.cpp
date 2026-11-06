@@ -11,15 +11,19 @@ using ActiveTimer = ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
 class CB : public ACE_Event_Handler
 {
 public:
-  explicit CB (int id) : id_ (id) { }
+  explicit CB (int const id) : id_ (id) {}
+  CB (CB const &) = delete;
+  CB (CB &&) = delete;
+  CB &operator= (CB const &) = delete;
+  CB &operator= (CB &&) = delete;
 
-  int handle_timeout (const ACE_Time_Value &,
-                      const void *arg) override
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *arg) override
   {
     ACE_TRACE ("CB::handle_timeout");
 
-    const int *val = static_cast<const int*> (arg);
-    ACE_ASSERT((*val) == id_);
+    int const *val = static_cast<int const *> (arg);
+    ACE_ASSERT ((*val) == id_);
 
     ACE_UNUSED_ARG (val);
 
@@ -29,7 +33,7 @@ public:
   }
 
 private:
-  int id_;
+  int id_ {};
 };
 // Listing 2
 
@@ -45,13 +49,13 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   CB cb1 (1);
   CB cb2 (2);
-  int arg1 = 1;
-  int arg2 = 2;
+  int const arg1 {1};
+  int const arg2 {2};
 
   // Schedule timers to go off 3 & 4 seconds from now
   // and then with an interval of 1.1 seconds.
-  const ACE_Time_Value curr_tv = ACE_OS::gettimeofday ();
-  ACE_Time_Value interval = ACE_Time_Value (1, 100000);
+  ACE_Time_Value const curr_tv = ACE_OS::gettimeofday ();
+  ACE_Time_Value const interval (1, 100000);
 
   atimer.schedule (&cb1,
                    &arg1,

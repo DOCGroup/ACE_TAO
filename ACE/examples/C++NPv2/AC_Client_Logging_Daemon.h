@@ -7,9 +7,12 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/Log_Record.h"
+#include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Synch_Traits.h"
+
+#include <array>
 
 class AC_CLD_Connector;
 
@@ -33,7 +36,9 @@ protected:
   int svc () override;
 
   // Send the buffered log records using a gather-write operation.
-  virtual int send (ACE_Message_Block *chunk[], size_t &count);
+  virtual int send (
+    std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
+    size_t &count);
 };
 
 class AC_Input_Handler

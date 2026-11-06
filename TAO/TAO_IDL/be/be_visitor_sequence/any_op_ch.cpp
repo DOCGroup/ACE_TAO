@@ -36,7 +36,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   std::string const macro = this->ctx_->export_macro ();
 
   *os << be_nl_2;
@@ -47,14 +47,14 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
   std::string name;
 
-  bool alt = be_global->alt_mapping ();
+  bool const alt = be_global->alt_mapping ();
 
   if (alt)
     {
-      be_type *bt =
+      be_type * const bt =
         dynamic_cast<be_type*> (node->base_type ());
 
-      name = "std::vector< ::";
+      name = "std::vector<::";
       name += bt->full_name ();
       name += ">";
     }

@@ -1,9 +1,10 @@
 #include "ace/FIFO_Send_Msg.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_main.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstdlib>
+#include <cstring>
+#include <cstdio>
+#include <ctime>
 
 
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -13,28 +14,30 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_FIFO_Send_Msg client (ACE_DEFAULT_RENDEZVOUS);
 
-  char buf[BUFSIZ];
+  char buf[BUFSIZ] {};
   ACE_Str_Buf msg (buf);
 
-  ACE_OS::srand (unsigned (ACE_OS::time (nullptr)));
+  std::srand (static_cast<unsigned> (std::time (nullptr)));
 
-  while (ACE_OS::fgets (buf, sizeof buf, stdin) != nullptr)
+  while (std::fgets (buf, sizeof buf, stdin) != nullptr)
     {
-      msg.len = ACE_OS::strlen (buf) + 1;
-      if (client.send (ACE_OS::rand () % 11, &msg) == -1)
-        ACE_OS::perror ("send");
+      msg.len = std::strlen (buf) + 1;
+      if (client.send (std::rand () % 11, &msg) == -1)
+        std::perror ("send");
     }
 
   if (client.close () == -1)
-    ACE_OS::perror ("close"), ACE_OS::exit (1);
+    {
+      std::perror ("close");
+      std::exit (1);
+    }
 
   return 0;
 }
 #else
-#include "ace/os_include/os_stdio.h"
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_OS::fprintf (stderr, "This feature is not supported\n");
+  std::fprintf (stderr, "This feature is not supported\n");
   return 0;
 }
 #endif /* ACE_HAS_STREAM_PIPES */

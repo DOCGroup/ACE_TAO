@@ -19,13 +19,21 @@
 #include "ace/Truncate.h"
 #include "ace/os_include/os_fcntl.h"
 #include <memory>
+#include <new>
 
 using LOG_MAP = ACE_Hash_Map_Manager<ACE_HANDLE, ACE_FILE_IO *, ACE_Null_Mutex>;
 
 class Reactive_Logging_Server_Ex : public Logging_Server
 {
+public:
+  Reactive_Logging_Server_Ex () = default;
+  Reactive_Logging_Server_Ex (Reactive_Logging_Server_Ex const &) = delete;
+  Reactive_Logging_Server_Ex (Reactive_Logging_Server_Ex &&) = delete;
+  Reactive_Logging_Server_Ex &operator= (Reactive_Logging_Server_Ex const &) = delete;
+  Reactive_Logging_Server_Ex &operator= (Reactive_Logging_Server_Ex &&) = delete;
+
 protected:
-  // Associate an active handle to an <ACE_FILE_IO> pointer.
+  // ACE_FILE_IO values are manually owned by the map after a successful bind.
   LOG_MAP log_map_;
 
   // Keep track of acceptor socket and all the connected
@@ -44,7 +52,8 @@ protected:
 
   int wait_for_multiple_events () override {
     active_read_handles_ = master_handle_set_;
-    int width = ACE_Utils::truncate_cast<int> ((intptr_t)active_read_handles_.max_set ()) + 1;
+    int const width = ACE_Utils::truncate_cast<int> (
+      static_cast<intptr_t> (active_read_handles_.max_set ())) + 1;
 
     return ACE::select (width, active_read_handles_);
   }
@@ -53,10 +62,17 @@ protected:
     ACE_SOCK_Stream logging_peer;
 
     while (acceptor ().accept (logging_peer) != -1) {
-      std::unique_ptr<ACE_FILE_IO> log_file = std::make_unique<ACE_FILE_IO> ();
+      std::unique_ptr<ACE_FILE_IO> log_file (
+        new (std::nothrow) ACE_FILE_IO);
+      if (!log_file)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
 
       // Use the client's hostname as the logfile name.
-      make_log_file (*log_file, &logging_peer);
+      if (make_log_file (*log_file, &logging_peer) == -1)
+        return -1;
 
       // Add the new <logging_peer>'s handle to the map and
       // to the set of handles we <select> for input.
@@ -76,16 +92,22 @@ protected:
     for (ACE_HANDLE handle;
          (handle = peer_iterator ()) != ACE_INVALID_HANDLE;
          ) {
-      ACE_FILE_IO *log_file = nullptr;
-      log_map_.find (handle, log_file);
+      ACE_FILE_IO *log_file {};
+      if (log_map_.find (handle, log_file) == -1 || log_file == nullptr)
+        {
+          master_handle_set_.clr_bit (handle);
+          continue;
+        }
       Logging_Handler logging_handler (*log_file, handle);
 
       if (logging_handler.log_record () == -1) {
         logging_handler.close ();
         master_handle_set_.clr_bit (handle);
-        log_map_.unbind (handle);
-        std::unique_ptr<ACE_FILE_IO> log_file_owner (log_file);
-        log_file_owner->close ();
+        if (log_map_.unbind (handle) == 0)
+          {
+            std::unique_ptr<ACE_FILE_IO> log_file_owner (log_file);
+            log_file_owner->close ();
+          }
       }
     }
     return 0;

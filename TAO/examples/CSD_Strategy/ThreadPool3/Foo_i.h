@@ -2,29 +2,34 @@
 #define FOO_I_H
 
 #include "FooS.h"
+#include <atomic>
 
 
 class Foo_i : public virtual POA_Foo
 {
   public:
-    Foo_i(unsigned num_clients);
-    virtual ~Foo_i();
+    explicit Foo_i (unsigned num_clients);
+    ~Foo_i () override = default;
+    Foo_i (Foo_i const &) = delete;
+    Foo_i (Foo_i &&) = delete;
+    Foo_i & operator= (Foo_i const &) = delete;
+    Foo_i & operator= (Foo_i &&) = delete;
 
-    virtual void op1();
+    void op1 () override;
 
-    virtual void op2(CORBA::Long value);
+    void op2 (CORBA::Long value) override;
 
-    virtual CORBA::Long op3();
+    CORBA::Long op3 () override;
 
-    virtual void op4(CORBA::Long value);
+    void op4 (CORBA::Long value) override;
 
-    virtual void op5();
+    void op5 () override;
 
-    virtual void done();
+    void done () override;
 
   private:
-    CORBA::Long value_;
-    unsigned num_clients_;
+    std::atomic<CORBA::Long> value_ {};
+    std::atomic<unsigned> num_clients_ {};
 };
 
 #endif

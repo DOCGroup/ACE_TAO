@@ -7,16 +7,19 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include <array>
 
 char const* service_name = "ScheduleService";
 
-char const* format_string = "{%-12s, %d, %d, %d, %d, %8d, "
-                            "static_cast<RtecScheduler::Criticality_t> (%d), "
-                            "static_cast<RtecScheduler::Importance_t> (%d), "
-                            "%d, %d, %3d, %d, %d, "
-                            "static_cast<RtecScheduler::Info_Type_t> (%d)}\n";
+char const* format_string = "{%-12s, %d, %d, %d, %d, %8d,\n"
+  "  static_cast<RtecScheduler::Criticality_t> (%d), "
+  "static_cast<RtecScheduler::Importance_t> (%d),\n"
+  "  %d, %d, %3d, %d, %d,\n"
+  "  static_cast<RtecScheduler::Info_Type_t> (%d), "
+  "static_cast<RtecScheduler::RT_Info_Enabled_Type_t> (%d)}\n";
 
 int
 parse_args (int argc, ACE_TCHAR *argv [])
@@ -54,8 +57,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
 
   // create initial data for supplier and consumer operations
-  const int operation_count = 8;
-  ACE_Scheduler_Factory::POD_RT_Info config_infos[operation_count] = {
+  constexpr int operation_count {8};
+  std::array<ACE_Scheduler_Factory::POD_RT_Info, operation_count> config_infos {{
                   // good supplier (no unresolved dependencies)
                   { "good_supplier",    // entry point
                     0,                  // handle
@@ -70,7 +73,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     0,                  // OS priority
                     0,                  // Preemption subpriority
                     0,                  // Preemption priority
-                    RtecScheduler::OPERATION           // info type
+                    RtecScheduler::OPERATION,          // info type
+                    RtecScheduler::RT_INFO_ENABLED     // enabled
                   },
                   // good consumer (no unresolved dependencies)
                   { "good_consumer",    // entry point
@@ -86,7 +90,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     0,                  // OS priority
                     0,                  // Preemption subpriority
                     0,                  // Preemption priority
-                    RtecScheduler::OPERATION           // info type
+                    RtecScheduler::OPERATION,          // info type
+                    RtecScheduler::RT_INFO_ENABLED     // enabled
                   },
                   // supplier with unresolved remote dependencies
                   { "unresolved_remote_supplier",    // entry point
@@ -102,7 +107,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     0,                  // OS priority
                     0,                  // Preemption subpriority
                     0,                  // Preemption priority
-                    RtecScheduler::REMOTE_DEPENDANT    // info type
+                    RtecScheduler::REMOTE_DEPENDANT,   // info type
+                    RtecScheduler::RT_INFO_ENABLED     // enabled
                   },
                   // consumer with unresolved remote dependencies
                   { "unresolved_remote_consumer",    // entry point
@@ -118,7 +124,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     0,                  // OS priority
                     0,                  // Preemption subpriority
                     0,                  // Preemption priority
-                    RtecScheduler::OPERATION           // info type
+                    RtecScheduler::OPERATION,          // info type
+                    RtecScheduler::RT_INFO_ENABLED     // enabled
                   },
                   // supplier with unresolved local dependencies
                   { "unresolved_local_supplier",    // entry point
@@ -134,7 +141,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     0,                  // OS priority
                     0,                  // Preemption subpriority
                     0,                  // Preemption priority
-                    RtecScheduler::OPERATION           // info type
+                    RtecScheduler::OPERATION,          // info type
+                    RtecScheduler::RT_INFO_ENABLED     // enabled
                   },
                   // consumer with unresolved local dependencies
                   { "unresolved_local_consumer",    // entry point
@@ -150,7 +158,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     0,                  // OS priority
                     0,                  // Preemption subpriority
                     0,                  // Preemption priority
-                    RtecScheduler::OPERATION           // info type
+                    RtecScheduler::OPERATION,          // info type
+                    RtecScheduler::RT_INFO_ENABLED     // enabled
                   },
                   // consumer with unresolved local and remote dependencies
                   { "both_unresolved_consumer_1",    // entry point
@@ -166,7 +175,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     0,                  // OS priority
                     0,                  // Preemption subpriority
                     0,                  // Preemption priority
-                    RtecScheduler::OPERATION           // info type
+                    RtecScheduler::OPERATION,          // info type
+                    RtecScheduler::RT_INFO_ENABLED     // enabled
                   },
                   // another consumer with unresolved
                   // local and remote dependencies
@@ -183,9 +193,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     0,                  // OS priority
                     0,                  // Preemption subpriority
                     0,                  // Preemption priority
-                    RtecScheduler::OPERATION           // info type
+                    RtecScheduler::OPERATION,          // info type
+                    RtecScheduler::RT_INFO_ENABLED     // enabled
                   }
-  };
+  }};
 
   try
     {
@@ -226,7 +237,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // create and initialize RT_Infos in the scheduler,
       // make second half of array depend on first half.
-      for (int i = 0; i < operation_count; ++i)
+      for (int i {}; i < operation_count; ++i)
         {
           // create the RT_Info
           config_infos[i].handle =
@@ -245,7 +256,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                  config_infos[i].threads,
                  static_cast<RtecScheduler::Info_Type_t> (config_infos[i].info_type));
         }
-
 
       // register dependency of good consumer on good supplier
       ACE_Scheduler_Factory::server ()->
@@ -337,7 +347,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             "Sched_Conf_Anomalies_Runtime.h",
                                             format_string);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }

@@ -37,17 +37,17 @@ public:
   void print_info () override;
 
   /// Ask the part to remove itself from the widget that contains it.
-  void remove_from_owner () override;
+  std::unique_ptr<Widget_Part> remove_from_owner () override;
 
 private:
   /// The widget that contains this part.
-  Widget *owner_;
+  Widget * const owner_ {};
 
   /// The name of this part.
-  std::string name_;
+  std::string const name_;
 
   /// The size of this part.
-  int size_;
+  int const size_ {};
 };
 
 #endif /* WIDGET_PART_IMPL_H */

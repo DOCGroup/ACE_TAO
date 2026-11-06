@@ -46,15 +46,11 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump () const
 template<ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ACE_Task (ACE_Thread_Manager *thr_man,
                                    ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq)
-  : ACE_Task_Base (thr_man),
-    msg_queue_ (0),
-    delete_msg_queue_ (false),
-    mod_ (0),
-    next_ (0)
+  : ACE_Task_Base (thr_man)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ACE_Task");
 
-  if (mq == 0)
+  if (mq == nullptr)
     {
       using QUEUE_TYPE = ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
       ACE_NEW (mq,
@@ -81,17 +77,17 @@ template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling");
-  if (this->mod_ == 0)
-    return 0;
+  if (this->mod_ == nullptr)
+    return nullptr;
   else
     return this->mod_->sibling (this);
 }
 
-template<ACE_SYNCH_DECL, class TIME_POLICY> const ACE_TCHAR *
+template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_TCHAR const *
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name () const
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name");
-  if (this->mod_ == 0)
+  if (this->mod_ == nullptr)
     return nullptr;
   else
     return this->mod_->name ();

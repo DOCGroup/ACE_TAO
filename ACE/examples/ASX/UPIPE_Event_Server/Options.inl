@@ -7,49 +7,49 @@
 
 
 inline void
-Options::supplier_port (const ACE_TCHAR *port)
+Options::supplier_port (std::basic_string<ACE_TCHAR> const &port)
 {
   this->supplier_port_ = port;
 }
 
-inline const ACE_TCHAR *
-Options::supplier_port ()
+inline std::basic_string<ACE_TCHAR> const &
+Options::supplier_port () const
 {
   return this->supplier_port_;
 }
 
 inline void
-Options::supplier_file (const ACE_TCHAR *file)
+Options::supplier_file (std::basic_string<ACE_TCHAR> const &file)
 {
   this->supplier_file_ = file;
 }
 
-inline const ACE_TCHAR *
-Options::supplier_file ()
+inline std::basic_string<ACE_TCHAR> const &
+Options::supplier_file () const
 {
   return this->supplier_file_;
 }
 
 inline void
-Options::consumer_file (const ACE_TCHAR *file)
+Options::consumer_file (std::basic_string<ACE_TCHAR> const &file)
 {
   this->consumer_file_ = file;
 }
 
-inline const ACE_TCHAR *
-Options::consumer_file ()
+inline std::basic_string<ACE_TCHAR> const &
+Options::consumer_file () const
 {
   return this->consumer_file_;
 }
 
 inline void
-Options::consumer_port (const ACE_TCHAR *port)
+Options::consumer_port (std::basic_string<ACE_TCHAR> const &port)
 {
   this->consumer_port_ = port;
 }
 
-inline const ACE_TCHAR *
-Options::consumer_port ()
+inline std::basic_string<ACE_TCHAR> const &
+Options::consumer_port () const
 {
   return this->consumer_port_;
 }
@@ -73,7 +73,7 @@ Options::thr_count (size_t count)
 }
 
 inline size_t
-Options::thr_count ()
+Options::thr_count () const
 {
   return this->thr_count_;
 }
@@ -85,7 +85,7 @@ Options::initial_queue_length (size_t length)
 }
 
 inline size_t
-Options::initial_queue_length ()
+Options::initial_queue_length () const
 {
   return this->initial_queue_length_;
 }
@@ -97,7 +97,7 @@ Options::high_water_mark (size_t size)
 }
 
 inline size_t
-Options::high_water_mark ()
+Options::high_water_mark () const
 {
   return this->high_water_mark_;
 }
@@ -109,7 +109,7 @@ Options::low_water_mark (size_t size)
 }
 
 inline size_t
-Options::low_water_mark ()
+Options::low_water_mark () const
 {
   return this->low_water_mark_;
 }
@@ -121,7 +121,7 @@ Options::message_size (size_t size)
 }
 
 inline size_t
-Options::message_size ()
+Options::message_size () const
 {
   return this->message_size_;
 }
@@ -133,7 +133,7 @@ Options::iterations (size_t n)
 }
 
 inline size_t
-Options::iterations ()
+Options::iterations () const
 {
   return this->iterations_;
 }
@@ -145,19 +145,19 @@ Options::t_flags (long flag)
 }
 
 inline long
-Options::t_flags ()
+Options::t_flags () const
 {
   return this->t_flags_;
 }
 
 inline bool
-Options::debug ()
+Options::debug () const
 {
   return this->debugging_;
 }
 
 inline bool
-Options::verbose ()
+Options::verbose () const
 {
   return this->verbosity_;
 }

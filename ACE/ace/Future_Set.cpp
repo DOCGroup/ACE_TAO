@@ -51,7 +51,7 @@ ACE_Future_Set<T>::~ACE_Future_Set ()
 template <class T> bool
 ACE_Future_Set<T>::is_empty () const
 {
-  return (((ACE_Future_Set<T>*)this)->future_map_.current_size () == 0 );
+  return this->future_map_.current_size () == 0;
 }
 
 template <class T> int
@@ -78,16 +78,17 @@ ACE_Future_Set<T>::insert (ACE_Future<T> &future)
 }
 
 template <class T> void
-ACE_Future_Set<T>::update (const ACE_Future<T> &future)
+ACE_Future_Set<T>::update (ACE_Future<T> const &future)
 {
   ACE_Message_Block *mb = nullptr;
-  FUTURE &local_future = const_cast<ACE_Future<T> &> (future);
 
   ACE_NEW (mb,
-           ACE_Message_Block ((char *) local_future.get_rep (), 0));
+           ACE_Message_Block (reinterpret_cast<char *> (future.get_rep ()), 0));
+  ACE_Message_Block_Unique_Ptr mb_owner (mb);
 
   // Enqueue in priority order.
-  this->future_notification_queue_->enqueue (mb, 0);
+  if (this->future_notification_queue_->enqueue (mb_owner.get (), nullptr) != -1)
+    mb_owner.release ();
 }
 
 template <class T> int

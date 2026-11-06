@@ -5,20 +5,14 @@
 #include "ace/OS_NS_sys_time.h"
 
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
-  const char* name,
+  char const* name,
   unsigned int expected,
   Notify_Test_Client& client)
   : name_ (name),
-  expected_ (expected),
-  count_ (0),
-  client_ (client)
+    expected_ (expected),
+    client_ (client)
 {
   this->client_.consumer_start (this);
-}
-
-
-Notify_Sequence_Push_Consumer::~Notify_Sequence_Push_Consumer ()
-{
 }
 
 void
@@ -37,22 +31,20 @@ Notify_Sequence_Push_Consumer::_connect (
     CosNotifyChannelAdmin::SequenceProxyPushSupplier::_narrow (
     proxysupplier.in ());
 
-  CosNotification::QoSProperties properties(1);
-  properties.length(1);
+  CosNotification::QoSProperties properties (1);
+  properties.length (1);
   properties[0].name = CORBA::string_dup(CosNotification::MaximumBatchSize);
   properties[0].value <<= (CORBA::Long)10;
 
-  proxy_->set_qos(properties);
+  proxy_->set_qos (properties);
   proxy_->connect_sequence_push_consumer (objref.in ());
 
-  // give ownership to POA
-  this->_remove_ref ();
 }
 
 
 void
-Notify_Sequence_Push_Consumer::push_structured_events(
-  const CosNotification::EventBatch& events)
+Notify_Sequence_Push_Consumer::push_structured_events (
+  CosNotification::EventBatch const& events)
 {
   if ( this->count_ == 0 )
   {

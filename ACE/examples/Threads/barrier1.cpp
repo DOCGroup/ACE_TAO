@@ -28,9 +28,10 @@ struct Tester_Args
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 
-static void *
-tester (Tester_Args *args)
+static ACE_THR_FUNC_RETURN
+tester (void *arg)
 {
+  Tester_Args * const args = static_cast<Tester_Args *> (arg);
   for (int iterations = 1;
        iterations <= args->n_iterations_;
        iterations++)
@@ -41,7 +42,7 @@ tester (Tester_Args *args)
       args->tester_barrier_.wait ();
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Default number of threads to spawn.
@@ -60,8 +61,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Tester_Args args (tester_barrier, n_iterations);
 
   if (ACE_Thread_Manager::instance ()->spawn_n
-      (int(n_threads), ACE_THR_FUNC (tester),
-       (void *) &args, THR_NEW_LWP | THR_DETACHED) == -1)
+      (n_threads, tester,
+       &args, THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   // Wait for all the threads to reach their exit point.

@@ -289,22 +289,27 @@ class ACE_Export ACE_Service_Config
   ACE_Threading_Helper<ACE_SYNCH_MUTEX> threadkey_;
 
 public:
+  ACE_Service_Config (ACE_Service_Config const &) = delete;
+  ACE_Service_Config &operator= (ACE_Service_Config const &) = delete;
+  ACE_Service_Config (ACE_Service_Config &&) = delete;
+  ACE_Service_Config &operator= (ACE_Service_Config &&) = delete;
+
   /**
    * Initialize the Service Repository. Note that initialising @a
    * signum to a negative number will prevent a signal handler being
    * registered when the repository is opened.
    */
-  ACE_Service_Config (bool ignore_static_svcs = true,
-                      size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
-                      int signum = SIGHUP);
+  explicit ACE_Service_Config (bool ignore_static_svcs = true,
+                               size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
+                               int signum = SIGHUP);
 
   /**
    * Performs an open without parsing command-line arguments.  The
    * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.
    */
-  ACE_Service_Config (const ACE_TCHAR program_name[],
-                      const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY);
+  explicit ACE_Service_Config (ACE_TCHAR const program_name[],
+                               ACE_TCHAR const *logger_key = ACE_DEFAULT_LOGGER_KEY);
 
   /// Perform user-specified close activities and remove dynamic
   /// memory.
@@ -641,7 +646,7 @@ protected:
 
 private:
   /// Have we called ACE_Service_Config::open() yet?
-  bool is_opened_;
+  bool is_opened_ {};
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for open, etc.
@@ -709,7 +714,7 @@ public:
   ACE_Service_Config_Guard &operator= (ACE_Service_Config_Guard const &) = delete;
   ACE_Service_Config_Guard &operator= (ACE_Service_Config_Guard &&) = delete;
 
-  ACE_Service_Config_Guard (ACE_Service_Gestalt* psg);
+  explicit ACE_Service_Config_Guard (ACE_Service_Gestalt *psg);
   ~ACE_Service_Config_Guard ();
 
 private:

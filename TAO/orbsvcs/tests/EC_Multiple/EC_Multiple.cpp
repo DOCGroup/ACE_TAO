@@ -19,6 +19,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_strings.h"
+#include <cstring>
 #include <memory>
 
 Test_ECG::Test_ECG ()
@@ -28,6 +29,8 @@ Test_ECG::Test_ECG ()
     consumer_disconnects_ (0),
     supplier_disconnects_ (0),
     short_circuit_ (0),
+    suppliers_ {},
+    consumers_ {},
     hp_suppliers_ (1),
     hp_consumers_ (1),
     hp_workload_ (10),
@@ -48,15 +51,19 @@ Test_ECG::Test_ECG ()
     lpc_event_b_ (0),
     schedule_file_ (nullptr),
     pid_file_name_ (nullptr),
+    stats_ {},
     ready_ (0),
-    ready_cnd_ (ready_mtx_)
+    ready_cnd_ (ready_mtx_),
+    running_suppliers_ (0),
+    running_consumers_ (0),
+    test_start_ {},
+    test_stop_ {}
 {
 }
 
 void
-print_priority_info (const char *const name)
+print_priority_info (char const* const name)
 {
-#if defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_PTHREADS)
   struct sched_param param;
   int policy, status;
@@ -73,10 +80,6 @@ print_priority_info (const char *const name)
   } else {
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
-#else
-  ACE_UNUSED_ARG (name);
-#endif /* ACE_HAS_PTHREADS */
-
 #ifdef sun
   // Find what scheduling class the thread's LWP is in.
   //FUZZ: disable check_for_lack_ACE_OS
@@ -254,17 +257,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
           break;
 
         case Test_ECG::ss_local:
-          {
-            std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
-            scheduler_impl = std::move(auto_scheduler_impl);
-          }
-          if (scheduler_impl.get () == nullptr)
-            return -1;
+          scheduler_impl = std::make_unique<ACE_Config_Scheduler> ();
           scheduler = scheduler_impl->_this ();
           break;
 
         case Test_ECG::ss_runtime:
-          if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM1") == 0)
+          if (std::strcmp (this->lcl_name_.c_str (), "ECM1") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -273,18 +271,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_1)/sizeof (runtime_infos_1[0]),
                 runtime_infos_1);
 
-              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
-                (new ACE_Runtime_Scheduler (runtime_configs_1_size,
-                                            runtime_configs_1,
-                                            runtime_infos_1_size,
-                                            runtime_infos_1));
-              scheduler_impl = std::move(auto_scheduler_impl);
-
-              if (scheduler_impl.get () == nullptr)
-                return -1;
+              scheduler_impl = std::make_unique<ACE_Runtime_Scheduler> (
+                runtime_configs_1_size,
+                runtime_configs_1,
+                runtime_infos_1_size,
+                runtime_infos_1);
               scheduler = scheduler_impl->_this ();
             }
-          else if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM2") == 0)
+          else if (std::strcmp (this->lcl_name_.c_str (), "ECM2") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -293,18 +287,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
                 runtime_infos_2);
 
-              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
-                (new ACE_Runtime_Scheduler (runtime_configs_2_size,
-                                            runtime_configs_2,
-                                            runtime_infos_2_size,
-                                            runtime_infos_2));
-              scheduler_impl = std::move(auto_scheduler_impl);
-
-              if (scheduler_impl.get () == nullptr)
-                return -1;
+              scheduler_impl = std::make_unique<ACE_Runtime_Scheduler> (
+                runtime_configs_2_size,
+                runtime_configs_2,
+                runtime_infos_2_size,
+                runtime_infos_2);
               scheduler = scheduler_impl->_this ();
             }
-          else if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM3") == 0)
+          else if (std::strcmp (this->lcl_name_.c_str (), "ECM3") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -313,15 +303,11 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
                 runtime_infos_3);
 
-              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
-                (new ACE_Runtime_Scheduler (runtime_configs_3_size,
-                                            runtime_configs_3,
-                                            runtime_infos_3_size,
-                                            runtime_infos_3));
-              scheduler_impl = std::move(auto_scheduler_impl);
-
-              if (scheduler_impl.get () == nullptr)
-                return -1;
+              scheduler_impl = std::make_unique<ACE_Runtime_Scheduler> (
+                runtime_configs_3_size,
+                runtime_configs_3,
+                runtime_infos_3_size,
+                runtime_infos_3);
               scheduler = scheduler_impl->_this ();
             }
           else
@@ -330,11 +316,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                           "Unknown name <%C> defaulting to "
                           "config scheduler\n", this->lcl_name_.c_str ()));
 
-              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
-              scheduler_impl = std::move(auto_scheduler_impl);
-
-              if (scheduler_impl.get () == nullptr)
-                return -1;
+              scheduler_impl = std::make_unique<ACE_Config_Scheduler> ();
               scheduler = scheduler_impl->_this ();
             }
           break;
@@ -342,7 +324,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       // We use this buffer to generate the names of the local
       // services.
-      const int bufsize = 512;
+      constexpr int bufsize {512};
       char buf[bufsize];
 
       // Register the scheduler with the naming service.
@@ -551,11 +533,11 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       tv.set (5, 0);
       orb->run (&tv);
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const& sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("NON SYS EX");
     }
@@ -564,9 +546,9 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
 RtecEventChannelAdmin::EventChannel_ptr
 Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
-                  const char* process_name)
+                  char const* process_name)
 {
-  const int bufsize = 512;
+  constexpr int bufsize {512};
   char buf[bufsize];
   ACE_OS::strcpy (buf, "EventChannel@");
   ACE_OS::strcat (buf, process_name);
@@ -607,7 +589,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_.c_str ());
 
       ACE_NEW (this->suppliers_[i],
-               Test_Supplier (this, this->suppliers_ + i));
+               Test_Supplier (this, this->suppliers_.data () + i));
 
       this->suppliers_[i]->open (buf,
                                  this->hps_event_a_,
@@ -629,7 +611,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
                        i - this->hp_suppliers_, this->lcl_name_.c_str ());
 
       ACE_NEW (this->suppliers_[i],
-               Test_Supplier (this, this->suppliers_ + i));
+               Test_Supplier (this, this->suppliers_.data () + i));
 
       this->suppliers_[i]->open (buf,
                                  this->lps_event_a_,
@@ -686,7 +668,7 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
                                          local_ec);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       throw;
     }
@@ -702,7 +684,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       ACE_OS::sprintf (buf, "hp_consumer_%02d@%s", i, this->lcl_name_.c_str ());
 
       ACE_NEW (this->consumers_[i],
-               Test_Consumer (this, this->consumers_ + i));
+               Test_Consumer (this, this->consumers_.data () + i));
 
       this->consumers_[i]->open (buf,
                                  this->hpc_event_a_,
@@ -720,7 +702,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
                        i - this->hp_consumers_, this->lcl_name_.c_str ());
 
       ACE_NEW (this->consumers_[i],
-               Test_Consumer (this, this->consumers_ + i));
+               Test_Consumer (this, this->consumers_.data () + i));
 
       this->consumers_[i]->open (buf,
                                  this->lpc_event_a_,
@@ -742,7 +724,7 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
     ACE_Scheduler_Factory::server ();
 
   // ECG name.
-  const int bufsize = 512;
+  constexpr int bufsize {512};
   char ecg_name[bufsize];
   ACE_OS::strcpy (ecg_name, "ecg_");
   ACE_OS::strcat (ecg_name, this->lcl_name_.c_str ());
@@ -768,7 +750,7 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 void
 Test_ECG::push_supplier (void * /* cookie */,
                          RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-                         const RtecEventComm::EventSet &events)
+                         RtecEventComm::EventSet const& events)
 {
   this->wait_until_ready ();
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) events sent by supplier\n"));
@@ -794,11 +776,11 @@ Test_ECG::push_supplier (void * /* cookie */,
 void
 Test_ECG::push_consumer (void *consumer_cookie,
                          ACE_hrtime_t arrival,
-                         const RtecEventComm::EventSet &events)
+                         RtecEventComm::EventSet const& events)
 {
   int ID =
     (reinterpret_cast<Test_Consumer**> (consumer_cookie)
-     - this->consumers_);
+     - this->consumers_.data ());
 
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) events received by consumer %d\n", ID));
 
@@ -811,7 +793,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
 #if 0
-  const int bufsize = 128;
+  constexpr int bufsize {128};
   char buf[bufsize];
   ACE_OS::sprintf (buf, "Consumer %d receives event in thread: ", ID);
   print_priority_info (buf);
@@ -819,7 +801,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
 
   for (u_int i = 0; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const& e = events[i];
 
       if (e.header.type == ACE_ES_EVENT_SHUTDOWN)
         {
@@ -947,7 +929,7 @@ Test_ECG::shutdown ()
 void
 Test_ECG::dump_results ()
 {
-  const int bufsize = 512;
+  constexpr int bufsize {512};
   ACE_TCHAR buf[bufsize];
 
   int i;
@@ -967,7 +949,7 @@ Test_ECG::dump_results ()
 }
 
 void
-Test_ECG::dump_results (const ACE_TCHAR* name, Stats& stats)
+Test_ECG::dump_results (ACE_TCHAR const* name, Stats& stats)
 {
   // @@ We are reporting the information without specifics about
   double usec = ACE_U64_TO_U32 (stats.total_time_) / 1000.0;
@@ -1183,11 +1165,11 @@ Test_Supplier::Test_Supplier (Test_ECG *test,
 }
 
 void
-Test_Supplier::open (const char* name,
+Test_Supplier::open (char const* name,
                      int event_a,
                      int event_b,
                      int message_count,
-                     const RtecScheduler::Period_t& rate,
+                     RtecScheduler::Period_t const& rate,
                      RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   this->event_a_ = event_a;
@@ -1256,14 +1238,14 @@ Test_Supplier::close ()
 }
 
 void
-Test_Supplier::activate (const char* name,
-                         const RtecScheduler::Period_t& rate,
+Test_Supplier::activate (char const* name,
+                         RtecScheduler::Period_t const& rate,
                          RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecScheduler::Scheduler_ptr server =
     ACE_Scheduler_Factory::server ();
 
-  const int bufsize = 512;
+  constexpr int bufsize {512};
   char buf[bufsize];
   ACE_OS::strcpy (buf, "consumer_");
   ACE_OS::strcat (buf, name);
@@ -1316,10 +1298,10 @@ Test_Supplier::activate (const char* name,
 }
 
 void
-Test_Supplier::push (const RtecEventComm::EventSet& events)
+Test_Supplier::push (RtecEventComm::EventSet const& events)
 {
 #if 0
-   const int bufsize = 128;
+   constexpr int bufsize {128};
    char buf[bufsize];
    ACE_OS::sprintf (buf, "Supplier %d receives event in thread: ",
                     this->supplier_id_);
@@ -1337,7 +1319,7 @@ Test_Supplier::push (const RtecEventComm::EventSet& events)
 
   for (u_int i = 0; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const& e = events[i];
       if (e.header.type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
         continue;
 
@@ -1399,7 +1381,7 @@ Test_Consumer::Test_Consumer (Test_ECG *test,
 }
 
 void
-Test_Consumer::open (const char* name,
+Test_Consumer::open (char const* name,
                      int event_a, int event_b,
                      RtecEventChannelAdmin::EventChannel_ptr ec)
 {
@@ -1455,7 +1437,7 @@ Test_Consumer::close ()
 }
 
 void
-Test_Consumer::push (const RtecEventComm::EventSet& events)
+Test_Consumer::push (RtecEventComm::EventSet const& events)
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
   this->test_->push_consumer (this->cookie_, arrival, events);
@@ -1469,16 +1451,15 @@ Test_Consumer::disconnect_push_consumer ()
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  Test_ECG *test;
+  Test_ECG* raw_test {};
 
   // Dynamically allocate the Test_ECG instance so that we don't have
   // to worry about running out of stack space if it's large.
-  ACE_NEW_RETURN (test,
+  ACE_NEW_RETURN (raw_test,
                   Test_ECG,
                   -1);
+  std::unique_ptr<Test_ECG> test (raw_test);
 
   const int status = test->run (argc, argv);
-
-  delete test;
   return status;
 }

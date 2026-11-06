@@ -151,7 +151,11 @@ class Peer_Handler : public MT_TASK, public ACE_Handler
 {
 public:
   Peer_Handler (int argc, ACE_TCHAR *argv[]);
-  ~Peer_Handler ();
+  ~Peer_Handler () override = default;
+  Peer_Handler (Peer_Handler const &) = delete;
+  Peer_Handler (Peer_Handler &&) = delete;
+  Peer_Handler &operator= (Peer_Handler const &) = delete;
+  Peer_Handler &operator= (Peer_Handler &&) = delete;
 
   //FUZZ: disable check_for_lack_ACE_OS
   /**
@@ -160,7 +164,7 @@ public:
    * hostname was specified from the command line.
    *FUZZ: enable check_for_lack_ACE_OS
    */
-  int open (void * =0);
+  int open (void * = nullptr);
 
   /**
    * This method will be called when an asynchronous read completes on a stream.
@@ -168,34 +172,34 @@ public:
    * out the message and reinitiate a read.  Otherwise, fail.  In both
    * cases, delete the message sent.
    */
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
   /**
    * This method will be called when an asynchronous write completes on a strea_m.
    * One of our asynchronous writes to the remote peer has completed.
    * Make sure it succeeded and then delete the message.
    */
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
   /**
    * Get the I/O handle used by this <handler>. This method will be
    * called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
    * passed to <open>.
    */
-  virtual ACE_HANDLE handle () const;
+  ACE_HANDLE handle () const override;
 
   /// Set the ACE_HANDLE value for this Handler.
   void handle (ACE_HANDLE);
 
   /// We've been removed from the Reactor.
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
   /**
    * Called when output events should start.  Note that this is
    * automatically invoked by the
    * <ACE_Reactor_Notificiation_Strategy>.
    */
-  virtual int handle_output (ACE_HANDLE fd);
+  int handle_output (ACE_HANDLE fd) override;
 
 private:
   /// Socket that we have connected to the server.
@@ -207,10 +211,10 @@ private:
 
   // = Remote peer info.
   /// Name of remote host.
-  ACE_TCHAR *host_;
+  ACE_TCHAR const *host_ {};
 
   /// Port number for remote host.
-  u_short port_;
+  u_short port_ {};
 
   /// Read stream
   ACE_Asynch_Read_Stream rd_stream_;
@@ -232,21 +236,25 @@ class STDIN_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   /// Initialization.
-  STDIN_Handler (MT_TASK &ph);
+  explicit STDIN_Handler (MT_TASK &ph);
+  STDIN_Handler (STDIN_Handler const &) = delete;
+  STDIN_Handler (STDIN_Handler &&) = delete;
+  STDIN_Handler &operator= (STDIN_Handler const &) = delete;
+  STDIN_Handler &operator= (STDIN_Handler &&) = delete;
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Activate object.
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
 
   /// Shut down.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long = 0);
+  int close (u_long = 0) override;
 
   /// Thread runs here as an active object.
-  int svc ();
+  int svc () override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
 private:
   /// Handle a ^C.  (Do nothing, this just illustrates how we can catch
@@ -258,20 +266,20 @@ private:
 
   /// The STDIN thread has exited.  This means the user hit ^C.  We can
   /// end the event loop.
-  virtual int handle_signal (int index, siginfo_t *, ucontext_t *);
+  int handle_signal (int index, siginfo_t *, ucontext_t *) override;
 
   /// Send all input to ph_.
   MT_TASK &ph_;
 
   /// Handle of our thread.
-  ACE_HANDLE thr_handle_;
+  ACE_HANDLE thr_handle_ {};
 };
 
 Peer_Handler::Peer_Handler (int argc, ACE_TCHAR *argv[])
   : strategy_ (ACE_Reactor::instance (),
                this,
                ACE_Event_Handler::WRITE_MASK),
-    host_ (0),
+    host_ (nullptr),
     port_ (ACE_DEFAULT_SERVER_PORT),
     mb_ (BUFSIZ)
 {
@@ -297,10 +305,6 @@ Peer_Handler::Peer_Handler (int argc, ACE_TCHAR *argv[])
     }
 }
 
-Peer_Handler::~Peer_Handler ()
-{
-}
-
 // This method creates the network connection to the remote peer.  It
 // does blocking connects and accepts depending on whether a hostname
 // was specified from the command line.
@@ -308,7 +312,7 @@ Peer_Handler::~Peer_Handler ()
 int
 Peer_Handler::open (void *)
 {
-  if (host_ != 0) // Connector
+  if (host_ != nullptr) // Connector
     {
       ACE_INET_Addr addr (port_, host_);
       ACE_SOCK_Connector connector;
@@ -340,7 +344,7 @@ Peer_Handler::open (void *)
     return result;
 
   result = this->rd_stream_.read (this->mb_,
-                                  this->mb_.size ());
+                                  this->mb_.size () - 1);
   return result;
 }
 
@@ -348,7 +352,7 @@ Peer_Handler::open (void *)
 // Make sure it succeeded and then delete the message.
 
 void
-Peer_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+Peer_Handler::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   if (result.bytes_transferred () <= 0)
     ACE_DEBUG ((LM_DEBUG, "(%t) %p bytes = %d\n", "Message failed",
@@ -365,7 +369,7 @@ Peer_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result
 
 
 void
-Peer_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Peer_Handler::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   if (result.bytes_transferred () > 0 &&
       this->mb_.length () > 0)
@@ -379,7 +383,7 @@ Peer_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       // If a read failed, we will assume it's because the remote peer
       // went away.  We will end the event loop.  Since we're in the
       // main thread, we don't need to do a notify.
-      ACE_Reactor::end_event_loop();
+      ACE_Reactor::end_event_loop ();
       return;
     }
 
@@ -388,7 +392,7 @@ Peer_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
   // Start off another read
   if (this->rd_stream_.read (this->mb_,
-                             this->mb_.size ()) == -1)
+                             this->mb_.size () - 1) == -1)
     ACE_ERROR ((LM_ERROR, "%p Read initiate.\n", "Peer_Handler"));
 }
 
@@ -417,16 +421,18 @@ Peer_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Peer_Handler::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *raw_message_block {};
 
-  ACE_Time_Value tv (ACE_Time_Value::zero);
+  ACE_Time_Value const tv (ACE_Time_Value::zero);
 
   // Forward the message to the remote peer receiver.
-  if (this->getq (mb, &tv) != -1)
+  if (this->getq (raw_message_block, &tv) != -1)
     {
-      if (this->wr_stream_.write (*mb,
-                                  mb->length ()) == -1)
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
+      if (this->wr_stream_.write (*message_block,
+                                  message_block->length ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p Write initiate.\n", "Peer_Handler"), -1);
+      message_block.release ();
     }
   return 0;
 }
@@ -445,7 +451,7 @@ STDIN_Handler::STDIN_Handler (MT_TASK &ph)
   // Registering this signal handler just tells the kernel that we
   // know what we're doing; to leave us alone.
 
-  ACE_OS::signal (SIGINT, (ACE_SignalHandler) STDIN_Handler::handler);
+  ACE_OS::signal (SIGINT, static_cast<ACE_SignalHandler> (&STDIN_Handler::handler));
 };
 
 // Activate object.
@@ -477,17 +483,19 @@ STDIN_Handler::svc ()
 
   for (;;)
     {
-      ACE_Message_Block *mb = new ACE_Message_Block (BUFSIZ);
+      ACE_Message_Block *raw_message_block {};
+      ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (BUFSIZ), -1);
+      ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
 
-      // Read from stdin into mb.
+      // Read from stdin into the new message block.
       int read_result = ACE_OS::read (ACE_STDIN,
-                                      mb->rd_ptr (),
-                                      mb->size ());
+                                      message_block->rd_ptr (),
+                                      message_block->size ());
 
-      // If read succeeds, put mb to peer handler, else end the loop.
+      // On success, enqueue the message block; otherwise, end the loop.
       if (read_result > 0)
         {
-          mb->wr_ptr (read_result);
+          message_block->wr_ptr (read_result);
           // Note that this call will first enqueue mb onto the peer
           // handler's message queue, which will then turn around and
           // notify the Reactor via the Notification_Strategy.  This
@@ -495,11 +503,12 @@ STDIN_Handler::svc ()
           // react by calling back to its handle_output() method,
           // which dequeues the message and sends it to the peer
           // across the network.
-          this->ph_.putq (mb);
+          if (this->ph_.putq (message_block.get ()) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "%p putq failed\n", "STDIN_Handler"), -1);
+          message_block.release ();
         }
       else
         {
-          mb->release ();
           break;
         }
     }
@@ -529,7 +538,7 @@ STDIN_Handler::register_thread_exit_hook ()
 int
 STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
-  if (si != 0)
+  if (si != nullptr)
     {
       ACE_TEST_ASSERT (this->thr_handle_ == si->si_handle_);
       ACE_Reactor::end_event_loop ();
@@ -550,7 +559,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Let the proactor know that it will be used with Reactor
   // Create specific proactor
-  ACE_WIN32_Proactor win32_proactor (0, 1);
+  ACE_WIN32_Proactor win32_proactor (nullptr, 1);
   // Get the interface proactor
   ACE_Proactor proactor (&win32_proactor);
   // Put it as the instance.
@@ -566,8 +575,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        "peer_handler", errno), 0);
 
   // Open active object for reading from stdin.
-  STDIN_Handler *stdin_handler =
-    new STDIN_Handler (peer_handler);
+  // The detached worker registers the handler with the reactor and its
+  // handle_close callback deletes it when the worker exits.
+  STDIN_Handler *stdin_handler = new STDIN_Handler (peer_handler);
 
   // Spawn thread.
   if (stdin_handler->open () == -1)

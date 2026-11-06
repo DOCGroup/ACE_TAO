@@ -358,13 +358,15 @@ Annotation_Test::assert_annotation_member_type (
   if (member->expr_type () != type)
     {
       std::string const member_name = member->name ()->get_string_copy ();
+      std::string const expected_type = AST_Expression::exprtype_to_string (type);
+      std::string const actual_type =
+        AST_Expression::exprtype_to_string (member->expr_type ());
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
         ACE_TEXT ("For Annotation Member %C, ")
         ACE_TEXT ("expecting it to be a %C, but it is a %C!\n"),
         name_.c_str (), member_name.c_str (),
-        AST_Expression::exprtype_to_string (type),
-        AST_Expression::exprtype_to_string (member->expr_type ())));
+        expected_type.c_str (), actual_type.c_str ()));
       failed ();
     }
 }

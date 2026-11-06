@@ -6,8 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_QOS_MANAGER)
 
-ACE_QoS_Manager::ACE_QoS_Manager ()
-{}
+ACE_QoS_Manager::ACE_QoS_Manager () = default;
 
 ACE_QoS_Manager::~ACE_QoS_Manager () = default;
 
@@ -17,7 +16,7 @@ ACE_QoS_Manager::~ACE_QoS_Manager () = default;
 int
 ACE_QoS_Manager::join_qos_session (ACE_QoS_Session *qos_session)
 {
-  if (this->qos_session_set ().insert (qos_session) != 0)
+  if (this->qos_session_set_.insert (qos_session) != 0)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error in adding a new session to the ")
                        ACE_TEXT ("socket session set\n")),
@@ -27,8 +26,8 @@ ACE_QoS_Manager::join_qos_session (ACE_QoS_Session *qos_session)
 
 // Returns the QoS session set for this socket.
 
-ACE_Unbounded_Set <ACE_QoS_Session *>
-ACE_QoS_Manager::qos_session_set ()
+ACE_QoS_Manager::ACE_QOS_SESSION_SET
+ACE_QoS_Manager::qos_session_set () const
 {
   return this->qos_session_set_;
 }

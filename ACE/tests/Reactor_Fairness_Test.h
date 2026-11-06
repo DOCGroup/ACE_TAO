@@ -33,9 +33,9 @@ public:
   Read_Handler () : chunks_in (0) {}
 
   /// The Svc_Handler callbacks.
-  virtual int handle_input (ACE_HANDLE h);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_input (ACE_HANDLE h) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
 private:
   unsigned int chunks_in;

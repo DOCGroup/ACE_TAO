@@ -64,6 +64,8 @@ public:
   /// to shutup g++.
   virtual ~ACE_QoS_Session () = default;
 
+  ACE_QoS_Session () = default;
+
   ACE_QoS_Session (ACE_QoS_Session const &) = delete;
   ACE_QoS_Session &operator= (ACE_QoS_Session const &) = delete;
   ACE_QoS_Session (ACE_QoS_Session &&) = delete;

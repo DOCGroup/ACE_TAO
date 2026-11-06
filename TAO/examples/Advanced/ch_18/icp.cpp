@@ -9,9 +9,6 @@
  */
 //=============================================================================
 
-
-
-
 #include "icp.h"
 
 #include <algorithm>
@@ -120,7 +117,7 @@ static
 long
 vary_temp (long temp)
 {
-    long const r = std::rand () % 50;
+    int const r = std::rand () % 50;
     long delta {};
     if  (r < 5)
         delta = 3;
@@ -186,7 +183,6 @@ actual_temp (StateMap::const_iterator pos)
 }
 
 //---------------------------------------------------------------
-
 
 // ICP_get() returns an attribute value of the device with the
 // given id. The attribute is named by the attr parameter. The

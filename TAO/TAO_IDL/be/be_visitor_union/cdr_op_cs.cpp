@@ -49,7 +49,7 @@ namespace {
           break;
       }
 
-    char const *val = out ? "_tao_union._d ()" : "_tao_discriminant";
+  char const *val = out ? "_tao_union._d ()" : "_tao_discriminant";
     if (tmp_suffix)
       {
         *os << (out ? "::ACE_OutputCDR::from_" : "::ACE_InputCDR::to_")

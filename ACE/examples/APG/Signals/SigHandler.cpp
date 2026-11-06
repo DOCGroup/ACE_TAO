@@ -10,7 +10,10 @@ public:
   explicit MySignalHandler (int signum) : signum_ (signum)
   { }
 
-  ~MySignalHandler () override = default;
+  MySignalHandler (MySignalHandler const &) = delete;
+  MySignalHandler (MySignalHandler &&) = delete;
+  MySignalHandler &operator= (MySignalHandler const &) = delete;
+  MySignalHandler &operator= (MySignalHandler &&) = delete;
 
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {

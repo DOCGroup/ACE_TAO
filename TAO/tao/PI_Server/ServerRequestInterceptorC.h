@@ -138,44 +138,35 @@ namespace PortableInterceptor
 
     virtual void receive_request_service_contexts (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-      )
-      = 0;
+      ) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void receive_request (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-
-      )
-      = 0;
+      ) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void send_reply (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-
-      )
-      = 0;
+      ) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void send_exception (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-
-      )
-      = 0;
+      ) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void send_other (
         ::PortableInterceptor::ServerRequestInfo_ptr ri
-
-      )
-      = 0;
+      ) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210

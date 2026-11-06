@@ -28,7 +28,7 @@ be_visitor_operation_argument::~be_visitor_operation_argument () = default;
 int
 be_visitor_operation_argument::post_process (be_decl *bd)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // If we are not the last parameter, we insert a comma. This is only
   // applicable for the upcalls or the call to (de)marshal that we use in the
@@ -114,7 +114,7 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     }
 
   ctx.scope (intf);
-  int status = 0;
+  int status {};
 
   switch (this->ctx_->state ())
     {

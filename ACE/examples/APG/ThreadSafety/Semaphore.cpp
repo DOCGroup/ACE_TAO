@@ -1,19 +1,23 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_string.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
+#include <atomic>
+#include <cstring>
 
 // Listing 2 code/ch14
 class Consumer : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  enum { N_THREADS = 5 };
+  static constexpr int N_THREADS {5};
 
-  Consumer (ACE_Semaphore& psema, ACE_Semaphore& csema)
-    : psema_ (psema), csema_ (csema), exit_condition_ (false)
-  { }
+  Consumer (ACE_Semaphore &psema, ACE_Semaphore &csema)
+    : psema_ (psema), csema_ (csema) {}
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   int svc () override
   {
@@ -27,20 +31,23 @@ public:
     csema_.acquire ();
     if (!is_closed ())
       {
-        ACE_Message_Block *mb = nullptr;
-        this->getq (mb);
-        if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
+        ACE_Message_Block *raw_message_block {};
+        if (this->getq (raw_message_block) == -1)
+          return;
+
+        ACE_Message_Block_Unique_Ptr message_block (raw_message_block);
+        if (message_block->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
             this->shutdown ();
-            mb->release ();
             return;
           }
         else
           {
+            int item {};
+            std::memcpy (&item, message_block->rd_ptr (), sizeof (item));
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%t) Consumed %d\n"),
-                        *((int*)mb->rd_ptr ())));
-            mb->release();
+                        item));
           }
         psema_.release ();
       }
@@ -50,68 +57,84 @@ public:
   void shutdown ()
   {
   //FUZZ: enable check_for_lack_ACE_OS
-    exit_condition_ = true;
+    if (exit_condition_.exchange (true))
+      return;
+
     this->msg_queue ()->deactivate ();
     csema_.release (N_THREADS);
   }
 
   bool is_closed () const
   {
-    return exit_condition_;
+    return exit_condition_.load ();
   }
 
 private:
-  ACE_Semaphore& psema_;
-  ACE_Semaphore& csema_;
-  bool exit_condition_;
+  ACE_Semaphore &psema_;
+  ACE_Semaphore &csema_;
+  std::atomic_bool exit_condition_ {};
 };
 // Listing 2
 // Listing 1 code/ch14
 class Producer : public ACE_Task_Base
 {
 public:
-  enum { MAX_PROD = 128 };
+  static constexpr int MAX_PROD {128};
 
-  Producer (ACE_Semaphore& psema, ACE_Semaphore& csema,
+  Producer (ACE_Semaphore &psema, ACE_Semaphore &csema,
             Consumer &consumer)
-      : psema_(psema), csema_(csema), consumer_(consumer)
-  { }
+    : psema_ (psema), csema_ (csema), consumer_ (consumer) {}
+  Producer (Producer const &) = delete;
+  Producer (Producer &&) = delete;
+  Producer &operator= (Producer const &) = delete;
+  Producer &operator= (Producer &&) = delete;
 
   int svc () override
   {
-    for (int i = 0; i <= MAX_PROD; i++)
-      produce_item (i);
-    hang_up ();
+    for (int i = 0; i <= MAX_PROD; ++i)
+      if (produce_item (i) == -1)
+        return -1;
+    return hang_up ();
+  }
+
+  int produce_item (int const item)
+  {
+    ACE_Message_Block_Unique_Ptr message_block (
+      new ACE_Message_Block (sizeof (item), ACE_Message_Block::MB_DATA));
+    psema_.acquire ();
+    std::memcpy (message_block->wr_ptr (), &item, sizeof (item));
+    message_block->wr_ptr (sizeof (item));
+    if (this->consumer_.putq (message_block.get ()) == -1)
+      {
+        psema_.release ();
+        return -1;
+      }
+    message_block.release ();
+
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Produced %d\n"), item));
+    csema_.release ();
     return 0;
   }
 
-  void produce_item (int item)
+  int hang_up ()
   {
+    ACE_Message_Block_Unique_Ptr message_block (
+      new ACE_Message_Block (0, ACE_Message_Block::MB_HANGUP));
     psema_.acquire ();
-    ACE_Message_Block *mb
-      = new ACE_Message_Block (sizeof (int),
-                               ACE_Message_Block::MB_DATA);
-    ACE_OS::memcpy (mb->wr_ptr (), &item, sizeof item);
-    mb->wr_ptr (sizeof (int));
-    this->consumer_.putq (mb);
-
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Produced %d\n"), item));
-    csema_.release();
-  }
-
-  void hang_up ()
-  {
-    psema_.acquire ();
-    ACE_Message_Block *mb =
-      new ACE_Message_Block (0, ACE_Message_Block::MB_HANGUP);
-    this->consumer_.putq (mb);
+    if (this->consumer_.putq (message_block.get ()) == -1)
+      {
+        psema_.release ();
+        return -1;
+      }
+    message_block.release ();
     csema_.release ();
+    return 0;
   }
 
 private:
-  ACE_Semaphore& psema_;
-  ACE_Semaphore& csema_;
-  Consumer& consumer_;
+  ACE_Semaphore &psema_;
+  ACE_Semaphore &csema_;
+  Consumer &consumer_;
 };
 // Listing 1
 // Listing 3 code/ch14

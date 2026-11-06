@@ -15,32 +15,36 @@ struct bug3688_Export TestListener
   public POA_CosNotifyComm::StructuredPushConsumer
 {
   TestListener(
-    CORBA::ORB * p_orb,
-    std::string const & rc_channelIor,
-    std::string const & rc_filterExpression = "");
+    CORBA::ORB* orb,
+    std::string const& channel_ior,
+    std::string const& filter_expression = "");
 
-  ~TestListener();
+  TestListener (TestListener const&) = delete;
+  TestListener (TestListener&&) = delete;
+  TestListener& operator= (TestListener const&) = delete;
+  TestListener& operator= (TestListener&&) = delete;
+  ~TestListener () override;
 
-  virtual void push_structured_event (
-    const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+    CosNotification::StructuredEvent const& notification) override;
 
-  virtual void disconnect_structured_push_consumer ();
+  void disconnect_structured_push_consumer () override;
 
-  virtual void offer_change(
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed);
+  void offer_change (
+    CosNotification::EventTypeSeq const& added,
+    CosNotification::EventTypeSeq const& removed) override;
 
-  PortableServer::POA_var mv_rootPOA;
-  PortableServer::ObjectId_var mv_oid;
-  CORBA::Object_var mv_this;
-  CosNotifyChannelAdmin::EventChannel_var mv_eventChannel;
-  CosNotifyChannelAdmin::ConsumerAdmin_var mv_consumerAdmin;
-  CosNotifyComm::StructuredPushConsumer_var mv_structuredPushConsumer;
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var mv_proxySupplier;
-  CosNotifyChannelAdmin::ProxyID m_proxySupplierId;
-  CosNotifyChannelAdmin::AdminID m_consumerAdminId;
+  PortableServer::POA_var root_poa {};
+  PortableServer::ObjectId_var object_id {};
+  CORBA::Object_var object_reference {};
+  CosNotifyChannelAdmin::EventChannel_var event_channel {};
+  CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin {};
+  CosNotifyComm::StructuredPushConsumer_var structured_push_consumer {};
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier {};
+  CosNotifyChannelAdmin::ProxyID proxy_supplier_id {};
+  CosNotifyChannelAdmin::AdminID consumer_admin_id {};
 
-  std::vector<CORBA::Long> m_receivedData;
+  std::vector<CORBA::Long> received_data;
 };
 
 

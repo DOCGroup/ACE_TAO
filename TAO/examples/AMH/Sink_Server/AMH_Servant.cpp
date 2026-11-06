@@ -5,6 +5,7 @@
 #include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdlib.h"
+#include <memory>
 
 
 AMH_Servant::AMH_Servant (CORBA::ORB_ptr orb)
@@ -73,34 +74,25 @@ AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 {
   try
     {
-      // @@ Mayur, the below Timer_Handler instance will leak if your
-      //    schedule_timer() call below fails (which you do not check
-      //    for).  If the schedule_timer() call fails, then you should
-      //    delete() the Timer_Handler instance.
-      //
-      // Done.
-
-      // The reactor owns this callback after scheduling it; it self-deletes
+      // The reactor owns the callback after scheduling it; it self-deletes
       // from handle_close when the timeout finishes.
-      Timer_Handler *handler = new Timer_Handler (_tao_rh,
-                                                  send_time);
+      std::unique_ptr<Timer_Handler> handler (
+        new Timer_Handler (_tao_rh, send_time));
 
       // We assume the schedule_timer method is thread-safe
-      long const l = this->reactor_->schedule_timer (handler,
-                                               nullptr,
-                                               ACE_Time_Value (0, this->sleep_time_));
+      long const timer_id = this->reactor_->schedule_timer (
+        handler.get (), nullptr, ACE_Time_Value (0, this->sleep_time_));
 
-      if (l == -1) //schedule timer failed
+      if (timer_id == -1) // schedule timer failed
         {
-          // free memory
-          delete handler;
-
           // send a no-op to the client
           _tao_rh->test_method (static_cast<Test::Timestamp> (0));
 
           // just in case we add code later on after this if stmt
           return;
         }
+
+      handler.release ();
     }
   catch (CORBA::Exception const& ex)
     {

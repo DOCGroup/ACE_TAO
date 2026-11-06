@@ -5,15 +5,19 @@
  *
  *  Method definitions for the threaded-bounded packet relay class.
  *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Chris Gill <cdgill@cs.wustl.edu> and Douglas C. Schmidt
+ *          <d.schmidt@vanderbilt.edu>. Based on Timer Queue Test by Carlos O'Ryan
+ *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
+ *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
 //=============================================================================
 
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Condition_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
+#include <new>
 
 #include "Thread_Bounded_Packet_Relay.h"
 
@@ -25,22 +29,13 @@ using SEND_HANDLER_CMD = ACE_Command_Callback<Send_Handler, Send_Handler::ACTION
 // Constructor.
 
 Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
-                                                      size_t read_length,
-                                                      const char* text,
+                                                      std::string const &text,
                                                       int logging)
   : Input_Device_Wrapper_Base (input_task_mgr),
-    read_length_ (read_length),
     text_ (text),
-    index_ (0),
-    logging_ (logging),
-    packet_count_ (0)
-
+    logging_ (logging)
 {
 }
-
-// Destructor.
-
-Text_Input_Device_Wrapper::~Text_Input_Device_Wrapper () = default;
 
 // Modifies device settings based on passed pointer to a u_long.
 
@@ -66,31 +61,30 @@ Text_Input_Device_Wrapper::modify_device_settings (void *logging)
 ACE_Message_Block *
 Text_Input_Device_Wrapper::create_input_message ()
 {
-  // Construct a new message block to send.
-  ACE_Message_Block *mb = nullptr;
-  ACE_NEW_RETURN (mb,
-                  ACE_Message_Block (read_length_),
-                  nullptr);
+  if (text_.empty ())
+    return nullptr;
 
-  // Zero out a "read" buffer to hold data.
-  char read_buf [BUFSIZ];
-  ACE_OS::memset (read_buf, 0, BUFSIZ);
-
-  // Loop through the text, filling in data to copy into the read
-  // buffer (leaving room for a terminating zero).
-  for (size_t i = 0; i < read_length_ - 1; ++i)
+  std::string read_buffer (text_.size () + 1, '\0');
+  for (size_t i = 0; i < text_.size (); ++i)
     {
-      read_buf [i] = text_ [index_];
-      index_ = (index_ + 1) % ACE_OS::strlen (text_);
+      read_buffer[i] = text_[index_];
+      index_ = (index_ + 1) % text_.size ();
+    }
+
+  // Construct a new message block to send.
+  ACE_Message_Block_Unique_Ptr mb {
+    new (std::nothrow) ACE_Message_Block (read_buffer.size ())};
+  if (!mb)
+    {
+      errno = ENOMEM;
+      return nullptr;
     }
 
   // Copy buf into the Message_Block and update the wr_ptr ().
-  if (mb->copy (read_buf, read_length_) < 0)
+  if (mb->copy (read_buffer.c_str (), read_buffer.size ()) < 0)
     {
-      delete mb;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "read buffer copy failed"),
-                        0);
+      ACE_ERROR ((LM_ERROR, "read buffer copy failed"));
+      return nullptr;
     }
 
   // log packet creation if logging is turned on
@@ -101,7 +95,7 @@ Text_Input_Device_Wrapper::create_input_message ()
                   packet_count_));
     }
 
-  return mb;
+  return mb.release ();
 }
 
 // Constructor.
@@ -114,9 +108,10 @@ Text_Output_Device_Wrapper::Text_Output_Device_Wrapper (int logging)
 // Consume and possibly print out the passed message.
 
 int
-Text_Output_Device_Wrapper::write_output_message (void *message)
+Text_Output_Device_Wrapper::write_output_message (ACE_Message_Block *message)
 {
-  if (message)
+  ACE_Message_Block_Unique_Ptr message_block {message};
+  if (message_block)
     {
       ++packet_count_;
 
@@ -127,9 +122,8 @@ Text_Output_Device_Wrapper::write_output_message (void *message)
       if (logging_ & Text_Output_Device_Wrapper::PRINT_MSGS_RCVD)
         ACE_DEBUG ((LM_DEBUG, "output message %d:\n[%s]\n",
                     packet_count_,
-                    static_cast<ACE_Message_Block *> (message)->rd_ptr ()));
+                    message_block->rd_ptr ()));
 
-      delete static_cast<ACE_Message_Block *> (message);
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -160,7 +154,6 @@ User_Input_Task::User_Input_Task (Bounded_Packet_Relay *relay,
                                   Thread_Timer_Queue *queue,
                                   Thread_Bounded_Packet_Relay_Driver &tbprd)
   : ACE_Task_Base (ACE_Thread_Manager::instance ()),
-    usecs_ (ACE_ONE_SECOND_IN_USECS),
     relay_ (relay),
     queue_ (queue),
     driver_ (tbprd)
@@ -201,7 +194,7 @@ User_Input_Task::set_packet_count (void *argument)
 {
   if (argument)
     {
-      driver_.packet_count (*static_cast<int *> (argument));
+      driver_.packet_count (*static_cast<u_long const *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -217,7 +210,7 @@ User_Input_Task::set_arrival_period (void *argument)
 {
   if (argument)
     {
-      driver_.arrival_period (*static_cast<int *> (argument));
+      driver_.arrival_period (*static_cast<u_long const *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -233,7 +226,7 @@ User_Input_Task::set_send_period (void *argument)
 {
   if (argument)
     {
-      driver_.send_period (*static_cast<int *> (argument));
+      driver_.send_period (*static_cast<u_long const *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -248,7 +241,7 @@ User_Input_Task::set_duration_limit (void *argument)
 {
   if (argument)
     {
-      driver_.duration_limit (*static_cast<int *> (argument));
+      driver_.duration_limit (*static_cast<u_long const *> (argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -291,40 +284,41 @@ User_Input_Task::run_transmission (void *)
             /* NOTREACHED */
           case 0:
             {
-              ACE_Time_Value now = ACE_OS::gettimeofday ();
-              ACE_Time_Value send_every (0, driver_.send_period ());
-              ACE_Time_Value send_at (send_every + now);
+              ACE_Time_Value const now = ACE_OS::gettimeofday ();
+              ACE_Time_Value const send_every (0, driver_.send_period ());
+              ACE_Time_Value const send_at (send_every + now);
 
-              Send_Handler *send_handler;
-              ACE_NEW_RETURN (send_handler,
-                              Send_Handler (driver_.packet_count (),
-                                            send_every,
-                                            *relay_,
-                                            *queue_,
-                                            driver_),
-                              -1);
-              if (queue_->schedule (send_handler, nullptr, send_at) < 0)
+              std::unique_ptr<Send_Handler> send_handler (
+                new (std::nothrow) Send_Handler (driver_.packet_count (),
+                                                 send_every,
+                                                 *relay_,
+                                                 *queue_,
+                                                 driver_));
+              if (!send_handler)
                 {
-                  delete send_handler;
+                  errno = ENOMEM;
+                  return -1;
+                }
+              if (queue_->schedule (send_handler.get (), nullptr, send_at) < 0)
+                {
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "User_Input_Task::run_transmission: "
                                      "failed to schedule send handler"),
                                     -1);
                 }
+              send_handler.release ();
               if (driver_.duration_limit ())
                 {
                   ACE_Time_Value terminate_at (0, driver_.duration_limit ());
                   terminate_at += now;
 
-                  Termination_Handler *termination_handler;
-
-                  termination_handler =
-                    new Termination_Handler (*relay_,
-                                             *queue_,
-                                             driver_);
-
+                  std::unique_ptr<Termination_Handler> termination_handler (
+                    new (std::nothrow) Termination_Handler (*relay_,
+                                                            *queue_,
+                                                            driver_));
                   if (! termination_handler)
                     {
+                      errno = ENOMEM;
                       this->clear_all_timers ();
                       ACE_ERROR_RETURN ((LM_ERROR,
                                          "User_Input_Task::run_transmission: "
@@ -332,10 +326,9 @@ User_Input_Task::run_transmission (void *)
                                          "handler"),
                                         -1);
                     }
-                  if (queue_->schedule (termination_handler,
+                  if (queue_->schedule (termination_handler.get (),
                                         nullptr, terminate_at) < 0)
                     {
-                      delete termination_handler;
                       this->clear_all_timers ();
                       ACE_ERROR_RETURN ((LM_ERROR,
                                          "User_Input_Task::run_transmission: "
@@ -343,6 +336,7 @@ User_Input_Task::run_transmission (void *)
                                          "handler"),
                                         -1);
                     }
+                  termination_handler.release ();
                 }
               return 0;
             }
@@ -447,7 +441,7 @@ int
 User_Input_Task::clear_all_timers ()
 {
   // loop through the timers in the queue, cancelling each one
-  for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
+  for (ACE_Timer_Node_T <ACE_Event_Handler *> *node {};
        (node = queue_->timer_queue ()->get_first ()) != nullptr;
        )
     queue_->timer_queue ()->cancel (node->get_timer_id (), nullptr, 0);
@@ -464,10 +458,6 @@ BPR_Handler_Base::BPR_Handler_Base (Bounded_Packet_Relay &relay,
 {
 }
 
-// Destructor.
-
-BPR_Handler_Base::~BPR_Handler_Base () = default;
-
 // Helper method: clears all timers.
 
 int
@@ -475,7 +465,7 @@ BPR_Handler_Base::clear_all_timers (void *)
 {
   // Loop through the timers in the queue, cancelling each one.
 
-  for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
+  for (ACE_Timer_Node_T <ACE_Event_Handler *> *node {};
        (node = queue_.timer_queue ()->get_first ()) != nullptr;
        )
     queue_.timer_queue ()->cancel (node->get_timer_id (), nullptr, 0);
@@ -490,7 +480,7 @@ BPR_Handler_Base::clear_all_timers (void *)
 // Constructor.
 
 Send_Handler::Send_Handler (u_long send_count,
-                            const ACE_Time_Value &duration,
+                            ACE_Time_Value const &duration,
                             Bounded_Packet_Relay &relay,
                             Thread_Timer_Queue &queue,
                             Thread_Bounded_Packet_Relay_Driver &driver)
@@ -501,15 +491,11 @@ Send_Handler::Send_Handler (u_long send_count,
 {
 }
 
-// Destructor.
-
-Send_Handler::~Send_Handler () = default;
-
 // Call back hook.
 
 int
-Send_Handler::handle_timeout (const ACE_Time_Value &,
-                              const void *)
+Send_Handler::handle_timeout (ACE_Time_Value const &,
+                              void const *)
 {
   switch (relay_.send_input ())
     {
@@ -521,12 +507,18 @@ Send_Handler::handle_timeout (const ACE_Time_Value &,
         if (send_count_ > 0)
           {
             // Enqueue a deferred callback to the reregister command.
-            SEND_HANDLER_CMD *re_register_callback_;
-            ACE_NEW_RETURN (re_register_callback_,
-                            SEND_HANDLER_CMD (*this,
-                                              &Send_Handler::reregister),
-                            -1);
-            return queue_.enqueue_command (re_register_callback_);
+            std::unique_ptr<SEND_HANDLER_CMD> re_register_callback (
+              new (std::nothrow) SEND_HANDLER_CMD (*this,
+                                                   &Send_Handler::reregister));
+            if (!re_register_callback)
+              {
+                errno = ENOMEM;
+                return -1;
+              }
+            if (queue_.enqueue_command (re_register_callback.get ()) < 0)
+              return -1;
+            re_register_callback.release ();
+            return 0;
           }
         else
           {
@@ -536,12 +528,18 @@ Send_Handler::handle_timeout (const ACE_Time_Value &,
             driver_.display_menu ();
 
             // Enqueue a deferred callback to the clear_all_timers command.
-            HANDLER_CMD *clear_timers_callback_;
-            ACE_NEW_RETURN (clear_timers_callback_,
-                            HANDLER_CMD (*this,
-                                         &BPR_Handler_Base::clear_all_timers),
-                            -1);
-            return queue_.enqueue_command (clear_timers_callback_);
+            std::unique_ptr<HANDLER_CMD> clear_timers_callback (
+              new (std::nothrow) HANDLER_CMD (*this,
+                                              &BPR_Handler_Base::clear_all_timers));
+            if (!clear_timers_callback)
+              {
+                errno = ENOMEM;
+                return -1;
+              }
+            if (queue_.enqueue_command (clear_timers_callback.get ()) < 0)
+              return -1;
+            clear_timers_callback.release ();
+            return 0;
           }
         /* NOTREACHED */
       default:
@@ -586,15 +584,11 @@ Termination_Handler::Termination_Handler (Bounded_Packet_Relay &relay,
 {
 }
 
-// Destructor.
-
-Termination_Handler::~Termination_Handler () = default;
-
 // Call back hook.
 
 int
-Termination_Handler::handle_timeout (const ACE_Time_Value &,
-                                     const void *)
+Termination_Handler::handle_timeout (ACE_Time_Value const &,
+                                     void const *)
 {
   // Transmission timed out, so end the transmission, display the user
   // menu, and register a callback to clear the timer queue and then
@@ -603,12 +597,18 @@ Termination_Handler::handle_timeout (const ACE_Time_Value &,
   driver_.display_menu ();
 
   // Enqueue a deferred callback to the clear_all_timers command.
-  HANDLER_CMD *clear_timers_callback_;
-  ACE_NEW_RETURN (clear_timers_callback_,
-                  HANDLER_CMD (*this,
-                               &BPR_Handler_Base::clear_all_timers),
-                  -1);
-  return queue_.enqueue_command (clear_timers_callback_);
+  std::unique_ptr<HANDLER_CMD> clear_timers_callback (
+    new (std::nothrow) HANDLER_CMD (*this,
+                                    &BPR_Handler_Base::clear_all_timers));
+  if (!clear_timers_callback)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  if (queue_.enqueue_command (clear_timers_callback.get ()) < 0)
+    return -1;
+  clear_timers_callback.release ();
+  return 0;
 }
 
 // Cancellation hook
@@ -626,10 +626,6 @@ Thread_Bounded_Packet_Relay_Driver::Thread_Bounded_Packet_Relay_Driver (Bounded_
   : input_task_ (relay, &timer_queue_, *this)
 {
 }
-
-// Destructor.
-
-Thread_Bounded_Packet_Relay_Driver::~Thread_Bounded_Packet_Relay_Driver () = default;
 
 // Display the user menu.
 
@@ -682,42 +678,69 @@ Thread_Bounded_Packet_Relay_Driver::init ()
 {
   // Initialize the <Command> objects with their corresponding
   // methods from <User_Input_Task>.
-  ACE_NEW_RETURN (packet_count_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::set_packet_count),
-                  -1);
-  ACE_NEW_RETURN (arrival_period_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::set_arrival_period),
-                  -1);
-  ACE_NEW_RETURN (transmit_period_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::set_send_period),
-                  -1);
-  ACE_NEW_RETURN (duration_limit_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::set_duration_limit),
-                  -1);
-  ACE_NEW_RETURN (logging_level_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::set_logging_level),
-                  -1);
-  ACE_NEW_RETURN (run_transmission_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::run_transmission),
-                  -1);
-  ACE_NEW_RETURN (cancel_transmission_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::end_transmission),
-                  -1);
-  ACE_NEW_RETURN (report_stats_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::report_stats),
-                  -1);
-  ACE_NEW_RETURN (shutdown_cmd_,
-                  DRIVER_CMD (input_task_,
-                              &User_Input_Task::shutdown),
-                  -1);
+  packet_count_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::set_packet_count));
+  if (!packet_count_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  arrival_period_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::set_arrival_period));
+  if (!arrival_period_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  transmit_period_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::set_send_period));
+  if (!transmit_period_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  duration_limit_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::set_duration_limit));
+  if (!duration_limit_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  logging_level_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::set_logging_level));
+  if (!logging_level_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  run_transmission_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::run_transmission));
+  if (!run_transmission_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  cancel_transmission_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::end_transmission));
+  if (!cancel_transmission_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  report_stats_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::report_stats));
+  if (!report_stats_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  shutdown_cmd_.reset (new (std::nothrow) DRIVER_CMD (
+    input_task_, &User_Input_Task::shutdown));
+  if (!shutdown_cmd_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
   if (this->input_task_.activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "cannot activate input task"),
@@ -738,6 +761,5 @@ Thread_Bounded_Packet_Relay_Driver::init ()
 int
 Thread_Bounded_Packet_Relay_Driver::run ()
 {
-  this->init ();
-  return 0;
+  return this->init ();
 }

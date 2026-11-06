@@ -32,7 +32,12 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   It simply registers for one event type.
   //
 public:
-  Consumer ();
+  Consumer () = default;
+
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
   // Constructor
 
   int run (int argc, ACE_TCHAR* argv[]);
@@ -40,15 +45,15 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const &events) override;
+  void disconnect_push_consumer () override;
   // The skeleton methods.
 
 private:
-  CORBA::ULong event_count_;
+  CORBA::ULong event_count_ {};
   // Keep track of the number of events received.
 
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_ptr orb_ {};
   // The orb, just a pointer because the ORB does not outlive the
   // run() method...
 

@@ -49,7 +49,6 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-
       CosNaming::Name name (1);
       name.length (1);
       name[0].id = CORBA::string_dup (notify_tls_log_factory_name);
@@ -70,7 +69,6 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
           CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_);
 
       ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
-
 
       this->proxy_supplier_ =
         CosNotifyChannelAdmin::ProxyPushSupplier::
@@ -102,25 +100,22 @@ Consumer::push (CORBA::Any const &event)
 {
   ACE_UNUSED_ARG (event);
 
-  this->event_count_ ++;
+  ++this->event_count_;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Consumer (%P|%t): %d log generated events received\n",
-                  this->event_count_));
+  ACE_DEBUG ((LM_DEBUG,
+              "Consumer (%P|%t): %d log generated events received\n",
+              this->event_count_));
 }
 
 void
-Consumer::disconnect_push_consumer
-   ()
+Consumer::disconnect_push_consumer ()
 {
-  this->proxy_supplier_->
-    disconnect_push_supplier();
+  this->proxy_supplier_->disconnect_push_supplier ();
 }
 
 void
-Consumer::offer_change
-   (CosNotification::EventTypeSeq const & /*added*/,
-    CosNotification::EventTypeSeq const & /*removed*/)
+Consumer::offer_change (CosNotification::EventTypeSeq const & /*added*/,
+                        CosNotification::EventTypeSeq const & /*removed*/)
 {
   // No-Op.
 }

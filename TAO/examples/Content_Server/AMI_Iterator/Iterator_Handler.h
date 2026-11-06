@@ -19,6 +19,8 @@
 #include "ace/FILE_IO.h"
 #include "Web_ServerS.h"
 
+#include <string>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -48,7 +50,7 @@ public:
 
   /// Constructor that creates a content iterator corresponding to the
   /// name of the file being retrieved from the web server.
-  Iterator_Handler ();
+  explicit Iterator_Handler (int& request_count);
 
   void next_chunk (CORBA::Boolean pending_data,
                    Web_Server::Chunk_Type const& chunk) override;
@@ -69,8 +71,7 @@ public:
    * incremented when file retrieval begins, and decremented when file
    * retrieval completes.
    */
-  void run (int *request_count,
-            char const *pathname,
+  void run (char const *pathname,
             Web_Server::Iterator_Factory_ptr factory);
 
 private:
@@ -87,10 +88,10 @@ private:
 
   /// Get the name of the viewer associated with the file being
   /// retrieved.
-  int get_viewer (char *viewer, size_t length);
+  int get_viewer (std::string& viewer) const;
 
   /// Spawn an external view to display the retrieved file.
-  int spawn_viewer ();
+  int spawn_viewer () const;
 
 private:
   /// The Addr corresponding to the retrieved file.
@@ -115,12 +116,8 @@ private:
   /// Reference to this Reply Handler's self.
   Web_Server::AMI_Content_IteratorHandler_var ami_handler_;
 
-  /**
-   * Pointer to external status monitoring variable. The contents (not
-   * the pointer itself) of the<pending_data> parameter will be
-   * decremented when file retrieval has completed.
-   */
-  int *request_count_ {};
+  /// Borrowed counter shared with the main loop until all requests complete.
+  int& request_count_;
 };
 
 #endif  /* ITERATOR_HAHNDLER_H */

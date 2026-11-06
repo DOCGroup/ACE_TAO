@@ -15,7 +15,8 @@ TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,
     tms_(tms)
 {
   int const retval =
-    this->tms_->bind_dispatcher (this->request_id_, rd);
+    this->tms_->bind_dispatcher (
+      this->request_id_, ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> {rd});
 
   if (retval == -1)
     this->status_ = TAO_Bind_Dispatcher_Guard::NO_UNBIND;

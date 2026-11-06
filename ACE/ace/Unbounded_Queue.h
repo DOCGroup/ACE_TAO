@@ -36,7 +36,7 @@ template <class T>
 class ACE_Unbounded_Queue_Iterator
 {
 public:
-  ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q, int end = 0);
+  explicit ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q, int end = 0);
 
   // = Iteration methods.
 
@@ -63,7 +63,7 @@ public:
 
 private:
   /// Pointer to the current node in the iteration.
-  ACE_Node<T> *current_;
+  ACE_Node<T> *current_ {};
 
   /// Pointer to the queue we're iterating over.
   ACE_Unbounded_Queue<T> &queue_;
@@ -78,7 +78,9 @@ template <class T>
 class ACE_Unbounded_Queue_Const_Iterator
 {
 public:
-  ACE_Unbounded_Queue_Const_Iterator (const ACE_Unbounded_Queue<T> &q, int end = 0);
+  explicit ACE_Unbounded_Queue_Const_Iterator (
+    ACE_Unbounded_Queue<T> const &q,
+    int end = 0);
 
   // = Iteration methods.
 
@@ -105,10 +107,10 @@ public:
 
 private:
   /// Pointer to the current node in the iteration.
-  ACE_Node<T> *current_;
+  ACE_Node<T> *current_ {};
 
   /// Pointer to the queue we're iterating over.
-  const ACE_Unbounded_Queue<T> &queue_;
+  ACE_Unbounded_Queue<T> const &queue_;
 };
 
 /**
@@ -157,19 +159,19 @@ public:
   /**
    * Initialize an empty queue using the strategy provided.
    */
-  ACE_Unbounded_Queue (ACE_Allocator *alloc = nullptr);
+  explicit ACE_Unbounded_Queue (ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
   /**
    * Initialize the queue to be a copy of the provided queue.
    */
-  ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &);
+  ACE_Unbounded_Queue (ACE_Unbounded_Queue<T> const &);
 
   /// Assignment operator.
   /**
    * Perform a deep copy of rhs.
    */
-  void operator= (const ACE_Unbounded_Queue<T> &);
+  void operator= (ACE_Unbounded_Queue<T> const &);
 
   /// Destructor.
   /**
@@ -198,14 +200,14 @@ public:
   /**
    * Insert an item at the end of the queue.
    */
-  int enqueue_tail (const T &new_item);
+  int enqueue_tail (T const &new_item);
 
   /// Adds @a new_item to the head of the queue.  Returns 0 on success,
   /// -1 on failure.
   /**
    * Insert an item at the head of the queue.
    */
-  int enqueue_head (const T &new_item);
+  int enqueue_head (T const &new_item);
 
   /// Removes and returns the first @a item on the queue.  Returns 0 on
   /// success, -1 if the queue was empty.
@@ -238,7 +240,7 @@ public:
    * Returns -1 on failure, 0 if @a slot isn't initially in range, and
    * 0 otherwise.
    */
-  int set (const T &item, size_t slot);
+  int set (T const &item, size_t slot);
 
   /// The number of items in the queue.
   /**
@@ -261,7 +263,7 @@ protected:
   void delete_nodes ();
 
   /// Copy nodes into this queue.
-  void copy_nodes (const ACE_Unbounded_Queue<T> &);
+  void copy_nodes (ACE_Unbounded_Queue<T> const &);
 
   /// Pointer to the dummy node in the circular linked Queue.
   ACE_Node<T> *head_ {};
@@ -270,7 +272,7 @@ protected:
   size_t cur_size_ {};
 
   /// Allocation Strategy of the queue.
-  ACE_Allocator *allocator_;
+  ACE_Allocator *allocator_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -9,26 +9,11 @@
 #include "Options.h"
 
 
-Options *
+Options &
 Options::instance ()
 {
   static Options instance;
-  return &instance;
-}
-
-Options::Options ()
-  : thr_count_ (4),
-    t_flags_ (0),
-    high_water_mark_ (8 * 1024),
-    low_water_mark_ (1024),
-    message_size_ (128),
-    initial_queue_length_ (0),
-    iterations_ (100000),
-    debugging_ (false),
-    verbosity_ (false),
-    consumer_port_ (ACE_DEFAULT_SERVER_PORT),
-    supplier_port_ (ACE_DEFAULT_SERVER_PORT + 1)
-{
+  return instance;
 }
 
 void Options::print_results ()
@@ -98,7 +83,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:bdH:i:L:l:M:ns:t:T:v"));
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != EOF)
   //FUZZ: enable check_for_lack_ACE_OS

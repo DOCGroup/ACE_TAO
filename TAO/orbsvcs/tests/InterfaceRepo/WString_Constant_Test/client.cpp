@@ -51,6 +51,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("InterfaceRepository");
       CORBA::Repository_var const repository = CORBA::Repository::_narrow (object.in ());
       CORBA::WChar const unicode_value[] = {static_cast<CORBA::WChar> (0x00e9), 0};
+      CORBA::WChar const concatenated_value[] = {
+        static_cast<CORBA::WChar> (0x00e9),
+        static_cast<CORBA::WChar> (0x00e9),
+        0
+      };
       if (!check_wstring_constant (
             repository.in (),
             "IDL:WString_Constant_Test/unicode_value:1.0",
@@ -60,7 +65,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             repository.in (),
             "IDL:WString_Constant_Test/escaped_value:1.0",
             unicode_value,
-            1))
+            1)
+          || !check_wstring_constant (
+            repository.in (),
+            "IDL:WString_Constant_Test/concatenated_value:1.0",
+            concatenated_value,
+            2))
         return 1;
 
       orb->destroy ();

@@ -26,34 +26,39 @@ static void *base_addr = ACE_DEFAULT_BASE_ADDR;
 static void
 print (Test_Data *data)
 {
-  for (Test_Data *t = data; t != nullptr; t = t->next_)
+  while (data != nullptr)
     {
+      // ACE_Based_Pointer currently exposes only a non-const operator->.
+      Test_Data *const record = data;
       ACE_DEBUG ((LM_DEBUG,
                   "<<<<\ni1_ = %d, i2_ = %d, i3_ = %d\n",
-                  t->i1_,
-                  t->i2_,
-                  t->i3_));
+                  record->i1_,
+                  record->i2_,
+                  record->i3_));
       ACE_DEBUG ((LM_DEBUG,
-                  "*t->bpl_ = %d, t->long_test_->array_[0] = %d\n>>>>\n",
-                  *t->long_test_->bpl_,
-                  t->long_test_->array_[0]));
+                  "*record->bpl_ = %d, record->long_test_->array_[0] = %d\n>>>>\n",
+                  *record->long_test_->bpl_,
+                  record->long_test_->array_[0]));
+      data = record->next_;
     }
 }
 
 static void *
 initialize (TEST_MALLOC *allocator)
 {
-  void *ptr;
+  void *ptr {};
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         nullptr);
-  Test_Data *data1 = new (ptr) Test_Data;
+  // Placement-new objects are owned by the ACE_Malloc pool and must not be
+  // wrapped in a smart pointer that would call ordinary delete.
+  Test_Data *const data1 = new (ptr) Test_Data {};
 
   data1->i1_ = 111;
   data1->i2_ = 222;
   data1->i3_ = 333;
 
-  void *gap = nullptr;
+  void *gap {};
   ACE_ALLOCATOR_RETURN (gap,
                         allocator->malloc (sizeof (256)),
                         nullptr);
@@ -63,7 +68,7 @@ initialize (TEST_MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         nullptr);
-  Test_Data *data2 = new (ptr) Test_Data;
+  Test_Data *const data2 = new (ptr) Test_Data {};
 
   data1->next_ = nullptr;
   data1->i1_ = 111;
@@ -78,7 +83,7 @@ initialize (TEST_MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
                         nullptr);
-  Long_Test *lt = new (ptr) Long_Test;
+  Long_Test *lt = new (ptr) Long_Test {};
 
   lt->array_[0] = 1000;
   lt->array_[1] = 1001;
@@ -87,7 +92,7 @@ initialize (TEST_MALLOC *allocator)
   lt->array_[4] = 1004;
   lt->bpl_ = lt->array_;
 
-  data1->long_test_= lt;
+  data1->long_test_ = lt;
 
   ACE_ASSERT (*lt->bpl_ == 1000);
   ACE_ASSERT (lt->bpl_[3] == 1003);
@@ -95,7 +100,7 @@ initialize (TEST_MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
                         nullptr);
-  lt = new (ptr) Long_Test;
+  lt = new (ptr) Long_Test {};
 
   lt->array_[0] = 2000;
   lt->array_[1] = 2001;
@@ -104,7 +109,7 @@ initialize (TEST_MALLOC *allocator)
   lt->array_[4] = 2004;
   lt->bpl_ = lt->array_;
 
-  data2->long_test_= lt;
+  data2->long_test_ = lt;
 
   ACE_ASSERT (*lt->bpl_ == 2000);
   ACE_ASSERT (lt->bpl_[4] == 2004);
@@ -117,7 +122,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("a:T"));
 
-  for (int c;
+  for (int c {};
        (c = get_opt ()) != -1;
        )
     {
@@ -125,7 +130,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
         case 'a':
           // Override the default base address.
-          base_addr = reinterpret_cast<void *> (static_cast<intptr_t> (ACE_OS::atoi (get_opt.opt_arg ())));
+          base_addr = reinterpret_cast<void *> (
+            static_cast<intptr_t> (ACE_OS::atoi (get_opt.opt_arg ())));
           break;
         case 'T':
 #if defined (ACE_HAS_TRACE)
@@ -141,17 +147,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
 
-  ACE_MMAP_Memory_Pool_Options options (base_addr);
+  ACE_MMAP_Memory_Pool_Options const options (base_addr);
 
   // Create an allocator.
-  TEST_MALLOC *ptr = nullptr;
-  ACE_NEW_RETURN (ptr,
+  TEST_MALLOC *raw_allocator {};
+  ACE_NEW_RETURN (raw_allocator,
                   TEST_MALLOC (ACE_TEXT("test_file"),
                                ACE_TEXT("test_lock"),
                                &options),
                   1);
-  std::unique_ptr <TEST_MALLOC> allocator (ptr);
-  void *data = nullptr;
+  std::unique_ptr<TEST_MALLOC> allocator (raw_allocator);
+  void *data {};
 
   // This is the first time in, so we allocate the memory and bind it
   // to the name "foo".
@@ -174,7 +180,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // release the resources.
   else
     {
-      print ((Test_Data *) data);
+      print (static_cast<Test_Data *> (data));
       allocator->free (data);
       allocator->remove ();
       ACE_DEBUG ((LM_DEBUG,

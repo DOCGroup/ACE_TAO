@@ -1522,7 +1522,7 @@ public:
    *            - EWOULDBLOCK: the timeout elapsed
    *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
-  virtual int enqueue_head (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = nullptr);
+  int enqueue_head (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = nullptr) override;
 
   /**
    * Enqueue one or more @c ACE_MESSAGE_TYPE objects at the tail of the queue.
@@ -1544,7 +1544,7 @@ public:
    *            - EWOULDBLOCK: the timeout elapsed
    *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
-  virtual int enqueue_tail (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = nullptr);
+  int enqueue_tail (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = nullptr) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

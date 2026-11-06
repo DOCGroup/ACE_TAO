@@ -79,7 +79,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 // Iterate <n_iterations> each time checking that nobody modifies the
 // data while we have a read lock.
 
-static void *
+static ACE_THR_FUNC_RETURN
 reader (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) reader starting\n"));
@@ -110,13 +110,13 @@ reader (void *)
 
       ACE_Thread::yield ();
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Iterate <n_iterations> each time modifying the global data
 // and checking that nobody steps on it while we can write it.
 
-static void *
+static ACE_THR_FUNC_RETURN
 writer (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) writer starting\n"));
@@ -151,7 +151,7 @@ writer (void *)
 
       ACE_Thread::yield ();
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Spawn off threads.
@@ -166,9 +166,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread starting\n"));
 
-  if (thr_mgr.spawn_n (n_readers, (ACE_THR_FUNC) reader, nullptr, THR_NEW_LWP) == -1 ||
-      thr_mgr.spawn_n (n_writers, (ACE_THR_FUNC) writer, nullptr, THR_NEW_LWP) == -1)
-     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+  if (thr_mgr.spawn_n (n_readers, reader, nullptr, THR_NEW_LWP) == -1
+      || thr_mgr.spawn_n (n_writers, writer, nullptr, THR_NEW_LWP) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   thr_mgr.wait ();
 

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Quoter_i.cpp
@@ -6,7 +5,6 @@
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "Quoter_i.h"
 
@@ -42,7 +40,7 @@ int Quoter_Factory_i::init ()
 
   for (size_t i = 0; i < this->quoter_num_; i++)
     {
-      Quoter_i *quoter = nullptr;
+      Quoter_i *quoter {};
       ACE_NEW_RETURN (quoter,
                       Quoter_i (false, this->poa_var_.in ()),
                       -1);
@@ -74,7 +72,6 @@ int Quoter_Factory_i::init ()
   return 0;
 }
 
-
 // Return the quoter by the id <name>.
 
 Stock::Quoter_ptr
@@ -91,7 +88,6 @@ Quoter_Factory_i::create_quoter (char const *)
   return this->quoters_[this->next_quoter_].get ()->_this ();
 }
 
-
 // Constructor
 
 Quoter_i::Quoter_i (bool use_LifeCycle_Service,
@@ -101,7 +97,6 @@ Quoter_i::Quoter_i (bool use_LifeCycle_Service,
 {
 }
 
-
 // Returns the current quote for the stock <stock_name>.
 // For now, just return 42.  It was a good day on Wall Street.
 
@@ -110,7 +105,6 @@ Quoter_i::get_quote (char const *)
 {
   return 42;
 }
-
 
 // Make a copy of this object
 
@@ -221,11 +215,8 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       // Report a NoFactory exception back to the caller
       throw CosLifeCycle::NoFactory ();
     }
-
-
   return lifeCycleObject_ptr;
 }
-
 
 // Move this object using <there> and <the_criteria>
 
@@ -238,7 +229,6 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
 
   throw CosLifeCycle::NotMovable();
 }
-
 
 // Removes the object.  Once we shut down the ORB we can call it a day.
 

@@ -22,6 +22,8 @@
 #include "Push_Web_ServerS.h"
 #include "ace/OS_NS_sys_stat.h"
 
+#include <string>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -61,17 +63,12 @@ public:
      Web_Server::Callback_ptr client_callback) override;
 
   /// Set the file modification date in the metadata structure.
-  int modification_date (ACE_stat const *file_status,
+  int modification_date (ACE_stat const& file_status,
                          Web_Server::Metadata_Type &metadata);
 
   /// Set the type of file content in the metadata structure.
-  int content_type (char const *filename,
+  int content_type (std::string const& filename,
                     Web_Server::Metadata_Type &metadata);
-
-private:
-  /// Reference to the object that is used by the server to push chunks
-  /// of data to the client.
-  Web_Server::Callback_var client_callback_;
 };
 
 #include /**/ "ace/post.h"

@@ -11,31 +11,30 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_UTF8_Encoding_Converter::ACE_UTF8_Encoding_Converter ()
- : native_ (0)
 {
   // Choose a converter for the ASCII or UTF-8 string to a wide character
   // string which we will use in from_utf8.  We have to make an
   // assumption here about the encoding based on the size of ACE_TCHAR.
+  ACE_Encoding_Converter *native {};
   switch (sizeof (ACE_TCHAR))
     {
     case 4:
-      ACE_NEW(this->native_, ACE_UTF32_Encoding_Converter);
+      ACE_NEW (native, ACE_UTF32_Encoding_Converter);
       break;
     case 2:
-      ACE_NEW(this->native_, ACE_UTF16_Encoding_Converter);
+      ACE_NEW (native, ACE_UTF16_Encoding_Converter);
       break;
     }
+  this->native_.reset (native);
 }
 
 ACE_UTF8_Encoding_Converter::~ACE_UTF8_Encoding_Converter ()
-{
-  delete native_;
-}
+  = default;
 
 ACE_UTF8_Encoding_Converter::Result
-ACE_UTF8_Encoding_Converter::to_utf8 (const void* source,
+ACE_UTF8_Encoding_Converter::to_utf8 (void const *source,
                                       size_t source_size,
-                                      ACE_Byte* target,
+                                      ACE_Byte *target,
                                       size_t target_size,
                                       bool /*strict*/)
 {
@@ -49,42 +48,42 @@ ACE_UTF8_Encoding_Converter::to_utf8 (const void* source,
 }
 
 ACE_UTF8_Encoding_Converter::Result
-ACE_UTF8_Encoding_Converter::from_utf8 (const ACE_Byte* source,
+ACE_UTF8_Encoding_Converter::from_utf8 (ACE_Byte const *source,
                                         size_t source_size,
-                                        void* target,
+                                        void *target,
                                         size_t target_size,
                                         bool strict)
 {
-  if (this->native_ != 0)
+  if (this->native_ != nullptr)
     {
-      return this->native_->from_utf8(source, source_size,
-                                      target, target_size, strict);
+      return this->native_->from_utf8 (source, source_size,
+                                       target, target_size, strict);
     }
 
-  ACE_TCHAR* targetStart = static_cast<ACE_TCHAR*> (target);
-  ACE_OS::strncpy (targetStart,
+  ACE_TCHAR *target_start = static_cast<ACE_TCHAR *> (target);
+  ACE_OS::strncpy (target_start,
                    ACE_TEXT_CHAR_TO_TCHAR (
-                     reinterpret_cast<const char*> (source)),
+                     reinterpret_cast<char const *> (source)),
                    source_size);
-  targetStart[source_size] = 0;
+  target_start[source_size] = 0;
   return CONVERSION_OK;
 }
 
-ACE_UTF8_Encoding_Converter*
-ACE_UTF8_Encoding_Converter::encoded (const ACE_Byte* source,
+ACE_UTF8_Encoding_Converter *
+ACE_UTF8_Encoding_Converter::encoded (ACE_Byte const *source,
                                       size_t source_size)
 {
-  for(size_t i = 0; i < source_size; i++)
+  for (size_t i = 0; i < source_size; ++i)
     {
       if (source[i] < 0x01 || source[i] > 0x7f)
-        return 0;
+        return nullptr;
     }
 
   // All characters are "valid" ASCII
-  ACE_UTF8_Encoding_Converter* converter = nullptr;
+  ACE_UTF8_Encoding_Converter *converter {};
   ACE_NEW_RETURN (converter,
                   ACE_UTF8_Encoding_Converter,
-                  0);
+                  nullptr);
   return converter;
 }
 

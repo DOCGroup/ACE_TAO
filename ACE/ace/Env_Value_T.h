@@ -43,10 +43,10 @@ public:
    * variable name or a default value.  Before being useful it must
    * open()'d.
    */
-  ACE_Env_Value ();
+  ACE_Env_Value () = default;
 
   /// Constructor that calls open().
-  ACE_Env_Value (const ACE_TCHAR *varname, const T &vardefault);
+  ACE_Env_Value (ACE_TCHAR const *varname, T const &vardefault);
 
   ACE_Env_Value (ACE_Env_Value const &) = delete;
   ACE_Env_Value (ACE_Env_Value &&) = delete;
@@ -57,24 +57,24 @@ public:
   ~ACE_Env_Value () = default;
 
   /// Returns the value as type T.
-  operator T ();
+  operator T () const;
 
   /// The constructor, read @a varname from the environment, using
   /// @a defval as its value if it is not defined.
-  void open (const ACE_TCHAR *varname, const T &defval);
+  void open (ACE_TCHAR const *varname, T const &defval);
 
   /// Returns the name of the variable being tracked.
-  const ACE_TCHAR *varname () const;
+  ACE_TCHAR const *varname () const;
 
 private:
   void fetch_value ();
 
-  const ACE_TCHAR *varname_ {};
+  ACE_TCHAR const *varname_ {};
   T value_ {};
 };
 
 /// Function to convert a string @a s into type @c T.
-template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
+template <class T> void ACE_Convert (ACE_TCHAR const *s, T &t);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -87,57 +87,57 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, ACE_TCHAR *&v)
+ACE_Convert (ACE_TCHAR const *s, ACE_TCHAR *&v)
 {
   v = const_cast<ACE_TCHAR *> (s);
 }
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, const ACE_TCHAR *&v)
+ACE_Convert (ACE_TCHAR const *s, ACE_TCHAR const *&v)
 {
-  v = (const ACE_TCHAR *) s;
+  v = s;
 }
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, short &si)
+ACE_Convert (ACE_TCHAR const *s, short &si)
 {
-  si = static_cast<short> (ACE_OS::strtol (s, 0, 10));
+  si = static_cast<short> (ACE_OS::strtol (s, nullptr, 10));
 }
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, u_short &us)
+ACE_Convert (ACE_TCHAR const *s, u_short &us)
 {
-  us = static_cast <u_short> (ACE_OS::strtol (s, 0, 10));
+  us = static_cast <u_short> (ACE_OS::strtol (s, nullptr, 10));
 }
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, u_int &i)
+ACE_Convert (ACE_TCHAR const *s, u_int &i)
 {
-  i = static_cast<u_int> (ACE_OS::strtol (s, 0, 10));
+  i = static_cast<u_int> (ACE_OS::strtol (s, nullptr, 10));
 }
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, long &l)
+ACE_Convert (ACE_TCHAR const *s, long &l)
 {
-  l = ACE_OS::strtol (s, 0, 10);
+  l = ACE_OS::strtol (s, nullptr, 10);
 }
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, int &i)
+ACE_Convert (ACE_TCHAR const *s, int &i)
 {
-  i = static_cast<int> (ACE_OS::strtol (s, 0, 10));
+  i = static_cast<int> (ACE_OS::strtol (s, nullptr, 10));
 }
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, u_long &ul)
+ACE_Convert (ACE_TCHAR const *s, u_long &ul)
 {
-  ul = ACE_OS::strtoul (s, 0, 10);
+  ul = ACE_OS::strtoul (s, nullptr, 10);
 }
 
 template <> inline void
-ACE_Convert (const ACE_TCHAR *s, double &d)
+ACE_Convert (ACE_TCHAR const *s, double &d)
 {
-  d = ACE_OS::strtod (s, 0);
+  d = ACE_OS::strtod (s, nullptr);
 }
 
 // Default calls a CTOR on type T of the form 'T::T(const char*)', but
@@ -146,7 +146,7 @@ ACE_Convert (const ACE_TCHAR *s, double &d)
 // default is used because a simple cast will be performed and no
 // conversion will be necessary.
 template <class T> inline void
-ACE_Convert (const ACE_TCHAR *s, T &t)
+ACE_Convert (ACE_TCHAR const *s, T &t)
 {
   t = T (s);
 }

@@ -14,7 +14,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-void
+static void
 deactivate_servant (PortableServer::Servant servant)
 {
   PortableServer::POA_var poa =
@@ -24,11 +24,7 @@ deactivate_servant (PortableServer::Servant servant)
   poa->deactivate_object (oid.in ());
 }
 
-
 RND_Driver::RND_Driver ()
-  :  nsuppliers_ (4),
-     nconsumers_ (4),
-     max_recursion_ (1)
 {
   TAO_CEC_Default_Factory::init_svcs ();
 }
@@ -47,7 +43,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       while (arg_shifter.is_anything_left ())
         {
-          const ACE_TCHAR *arg = arg_shifter.get_current ();
+          ACE_TCHAR const* arg = arg_shifter.get_current ();
 
           if (ACE_OS::strcasecmp (arg, ACE_TEXT("-suppliers")) == 0)
             {
@@ -55,7 +51,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const ACE_TCHAR* opt = arg_shifter.get_current ();
+                  ACE_TCHAR const* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nsuppliers_ = n;
@@ -68,7 +64,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const ACE_TCHAR* opt = arg_shifter.get_current ();
+                  ACE_TCHAR const* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 1)
                     this->nconsumers_ = n;
@@ -81,7 +77,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
               if (arg_shifter.is_parameter_next ())
                 {
-                  const ACE_TCHAR* opt = arg_shifter.get_current ();
+                  ACE_TCHAR const* opt = arg_shifter.get_current ();
                   int n = ACE_OS::atoi (opt);
                   if (n >= 0)
                     this->max_recursion_ = n;
@@ -106,8 +102,8 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       TAO_CEC_EventChannel_Attributes attributes (poa.in (),
                                                   poa.in ());
-      attributes.consumer_reconnect = 1;
-      attributes.supplier_reconnect = 1;
+      attributes.consumer_reconnect = true;
+      attributes.supplier_reconnect = true;
 
       TAO_CEC_EventChannel ec_impl (attributes);
       ec_impl.activate ();
@@ -134,7 +130,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (this->consumers_,
                       RND_Consumer*[this->nconsumers_],
                       1);
-      for (int i = 0; i != this->nconsumers_; ++i)
+      for (int i {}; i != this->nconsumers_; ++i)
         {
           ACE_NEW_RETURN (this->consumers_[i],
                           RND_Consumer (this),
@@ -149,7 +145,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (this->suppliers_,
                       RND_Supplier*[this->nsuppliers_],
                       1);
-      for (int j = 0; j != this->nsuppliers_; ++j)
+      for (int j {}; j != this->nsuppliers_; ++j)
         {
           ACE_NEW_RETURN (this->suppliers_[j],
                           RND_Supplier,
@@ -162,7 +158,8 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      for (int event_count = 0; event_count != 500; ++event_count)
+      constexpr int event_count_limit {500};
+      for (int event_count {}; event_count != event_count_limit; ++event_count)
         {
           ACE_Time_Value tv (0, 50000);
           orb->run (tv);
@@ -174,13 +171,13 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
       // ****************************************************************
 
       {
-        for (int k = 0; k != this->nsuppliers_; ++k)
+        for (int k {}; k != this->nsuppliers_; ++k)
           {
             deactivate_servant (this->suppliers_[k]);
             this->suppliers_[k]->_remove_ref ();
           }
         delete[] this->suppliers_;
-        this->suppliers_ = 0;
+        this->suppliers_ = nullptr;
       }
 
       // ****************************************************************
@@ -192,13 +189,13 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
       // ****************************************************************
 
       {
-        for (int k = 0; k != this->nconsumers_; ++k)
+        for (int k {}; k != this->nconsumers_; ++k)
           {
             deactivate_servant (this->consumers_[k]);
             this->consumers_[k]->_remove_ref ();
           }
         delete[] this->consumers_;
-        this->consumers_ = 0;
+        this->consumers_ = nullptr;
       }
 
       // ****************************************************************
@@ -213,7 +210,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Random");
       return 1;
@@ -222,20 +219,20 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 }
 
 void
-RND_Driver::timer (const CORBA::Any &e)
+RND_Driver::timer (CORBA::Any const& e)
 {
   int r = ACE_OS::rand ();
   if (r < 0)
     r = -r;
 
-  int n = r% 20;
+  int const n = r % 20;
 
   switch (n)
     {
     case 0:
     case 1:
       {
-        CORBA::Long recursion;
+        CORBA::Long recursion {};
         e >>= recursion;
         // ACE_DEBUG ((LM_DEBUG, "Pushing an event\n"));
         if (recursion < this->max_recursion_)
@@ -258,7 +255,7 @@ RND_Driver::timer (const CORBA::Any &e)
 
     case 6:
       {
-        int n = ACE_OS::rand () % this->nsuppliers_;
+        int const n = ACE_OS::rand () % this->nsuppliers_;
 
         // ACE_DEBUG ((LM_DEBUG, "Connecting supplier %d\n", n));
 
@@ -268,7 +265,7 @@ RND_Driver::timer (const CORBA::Any &e)
 
     case 7:
       {
-        int n = ACE_OS::rand () % this->nconsumers_;
+        int const n = ACE_OS::rand () % this->nconsumers_;
 
         // ACE_DEBUG ((LM_DEBUG, "Connecting consumer %d\n", n));
 
@@ -278,7 +275,7 @@ RND_Driver::timer (const CORBA::Any &e)
 
     case 8:
       {
-        int n = ACE_OS::rand () % this->nsuppliers_;
+        int const n = ACE_OS::rand () % this->nsuppliers_;
 
         // ACE_DEBUG ((LM_DEBUG, "Disconnecting supplier %d\n", n));
 
@@ -288,7 +285,7 @@ RND_Driver::timer (const CORBA::Any &e)
 
     case 9:
       {
-        int n = ACE_OS::rand () % this->nconsumers_;
+        int const n = ACE_OS::rand () % this->nconsumers_;
 
         // ACE_DEBUG ((LM_DEBUG, "Disconnecting consumer %d\n", n));
 
@@ -299,7 +296,7 @@ RND_Driver::timer (const CORBA::Any &e)
 }
 
 void
-RND_Driver::event (const CORBA::Any &e)
+RND_Driver::event (CORBA::Any const& e)
 {
   this->timer (e);
 }
@@ -338,7 +335,7 @@ RND_Consumer::disconnect ()
 }
 
 void
-RND_Consumer::push (const CORBA::Any &event)
+RND_Consumer::push (CORBA::Any const& event)
 {
   this->driver_->event (event);
 }
@@ -367,7 +364,7 @@ RND_Supplier::connect (CosEventChannelAdmin::SupplierAdmin_ptr admin)
   }
   CosEventComm::PushSupplier_var me;
 
-  int r = ACE_OS::rand () % 2;
+  int const r = ACE_OS::rand () % 2;
   if (r == 0)
     {
       me = this->_this ();
@@ -391,7 +388,7 @@ void
 RND_Supplier::push_new_event ()
 {
   CORBA::Any event;
-  CORBA::Long recursion = 0;
+  CORBA::Long recursion {};
   event <<= recursion;
 
   this->push (event);
@@ -423,9 +420,9 @@ int
 RND_Supplier::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "Thread %t started\n"));
-  int percent = 10;
-  int niterations = 5000;
-  for (int i = 0; i != niterations; ++i)
+  int percent {10};
+  constexpr int niterations {5000};
+  for (int i {}; i != niterations; ++i)
     {
       try
         {
@@ -434,7 +431,7 @@ RND_Supplier::svc ()
 
           this->push_new_event ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
         }
       if (i * 100 / niterations >= percent)

@@ -1,4 +1,3 @@
-#include "ace/OS_NS_unistd.h"
 #include "Notify_Sequence_Push_Consumer.h"
 #include "Notify_Test_Client.h"
 #include "orbsvcs/TimeBaseC.h"
@@ -6,22 +5,14 @@
 #include "tao/debug.h"
 
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
-                                            const char* name,
                                             unsigned int low,
                                             unsigned int high,
                                             Notify_Test_Client& client)
- : name_ (name),
-   low_ (low),
+ : low_ (low),
    high_ (high),
-   count_ (0),
    client_ (client)
 {
   this->client_.consumer_start (this);
-}
-
-
-Notify_Sequence_Push_Consumer::~Notify_Sequence_Push_Consumer ()
-{
 }
 
 
@@ -57,20 +48,22 @@ Notify_Sequence_Push_Consumer::_connect (
 
 
 void
-Notify_Sequence_Push_Consumer::push_structured_events(
-                          const CosNotification::EventBatch& events)
+Notify_Sequence_Push_Consumer::push_structured_events (
+  CosNotification::EventBatch const& events)
 {
-  ACE_DEBUG((LM_DEBUG, "{%u}", events.length()));
+  unsigned int const event_count = events.length ();
+  ACE_DEBUG ((LM_DEBUG, "{%u}", event_count));
 
-  this->count_ += events.length();
-  if (this->count_ > this->high_)
+  unsigned int const count = this->count_.fetch_add (
+    event_count, std::memory_order_relaxed) + event_count;
+  if (count > this->high_)
     {
       this->client_.consumer_done (this);
-      ACE_ERROR((LM_ERROR,
+      ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("Sequence Consumer (%P|%t): ERROR: too ")
                  ACE_TEXT ("many events received.\n")));
     }
-  else if (this->count_ >= this->low_)
+  else if (count >= this->low_)
     {
       this->client_.consumer_done (this);
     }

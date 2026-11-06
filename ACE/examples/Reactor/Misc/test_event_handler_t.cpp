@@ -24,9 +24,10 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   using EH_SH = ACE_Event_Handler_T<ACE_Test_Sig_Handler>;
+  ACE_Test_Sig_Handler handler;
 
   // Tie the ACE_Event_Handler_T together with the methods from ACE_Test_Sig_Handler.
-  EH_SH tied_sh (new ACE_Test_Sig_Handler, true,
+  EH_SH tied_sh (&handler, false,
                  &ACE_Test_Sig_Handler::get_handle,
                  &ACE_Test_Sig_Handler::handle_async_io,
                  &ACE_Test_Sig_Handler::shutdown,

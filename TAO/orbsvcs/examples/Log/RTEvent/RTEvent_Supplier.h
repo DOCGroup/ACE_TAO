@@ -31,15 +31,20 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //   It simply publishes one event type.
   //
 public:
-  Supplier ();
+  Supplier () = default;
   // Constructor
+
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
   int run (int argc, ACE_TCHAR* argv[]);
   // Run the test
 
   // = The RtecEventComm::PushSupplier methods
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
   // The skeleton methods.
 
 private:

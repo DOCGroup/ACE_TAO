@@ -66,8 +66,10 @@ public:
   void destroy () override;
 
 private:
+  using GridArray = std::unique_ptr<CORBA::Long[]>;
+
   /// Allocates array
-  static CORBA::Long *allocate_array (CORBA::Short x, CORBA::Short y);
+  static GridArray allocate_array (CORBA::Short x, CORBA::Short y);
 
   /// Width of the grid.
   CORBA::Short width_ {};
@@ -76,7 +78,6 @@ private:
   CORBA::Short height_ {};
 
   /// Pointer to the matrix.  This is organized as an "array of arrays."
-  using GridArray = std::unique_ptr<CORBA::Long[]>;
   GridArray array_;
 
   /// Some Windows compilers don't have min in std namespaces

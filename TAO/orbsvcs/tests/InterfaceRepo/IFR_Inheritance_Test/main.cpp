@@ -3,110 +3,102 @@
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB.h"
+#include <cstdlib>
 
-void printContents (CORBA::ContainedSeq const& cont)
+static void
+printContents (CORBA::ContainedSeq const& cont)
 {
   try
     {
-      for (CORBA::ULong i = 0; i < cont.length(); ++i)
+      for (CORBA::ULong i = 0; i < cont.length (); ++i)
         {
-          CORBA::Contained::Description_var topdesc = cont[i]->describe ();
-          if (topdesc->kind == CORBA::dk_Interface)
+          CORBA::Contained::Description_var const description = cont[i]->describe ();
+          if (description->kind == CORBA::dk_Interface)
             {
-              CORBA::InterfaceDef_var intDef =
+              CORBA::InterfaceDef_var const interface_def =
                 CORBA::InterfaceDef::_narrow (cont[i]);
 
-              CORBA::InterfaceDef::FullInterfaceDescription_var desc =
-                intDef->describe_interface ();
+              CORBA::InterfaceDef::FullInterfaceDescription_var const full_description =
+                interface_def->describe_interface ();
 
-              //printf ("-- %s:\n", desc->name.in ());
-
-              for (CORBA::ULong j1 = 0; j1 < desc->operations.length (); ++j1)
+              for (CORBA::ULong operation = 0;
+                   operation < full_description->operations.length ();
+                   ++operation)
                 ACE_DEBUG ((LM_DEBUG,
                             "operation %C::%C\n",
-                            desc->name.in (),
-                            desc->operations[j1].name.in ()));
+                            full_description->name.in (),
+                            full_description->operations[operation].name.in ()));
 
-              for (CORBA::ULong j2 = 0; j2 < desc->attributes.length (); ++j2)
+              for (CORBA::ULong attribute = 0;
+                   attribute < full_description->attributes.length ();
+                   ++attribute)
                 ACE_DEBUG ((LM_DEBUG,
                             "attribute %C::%C\n",
-                            desc->name.in (),
-                            desc->attributes[j2].name.in ()));
+                            full_description->name.in (),
+                            full_description->attributes[attribute].name.in ()));
             }
-          else if (topdesc->kind == CORBA::dk_Module)
+          else if (description->kind == CORBA::dk_Module)
             {
-              CORBA::ModuleDef_var moduleDef =
+              CORBA::ModuleDef_var const module =
                 CORBA::ModuleDef::_narrow (cont[i]);
 
-              CORBA::ContainedSeq_var moduleContents =
-                moduleDef->contents (CORBA::dk_all, 1);
-              printContents (moduleContents.in ());
+              CORBA::ContainedSeq_var const contents = module->contents (CORBA::dk_all, 1);
+              printContents (contents.in ());
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("printContents");
-      ACE_OS::exit(-1); // the test has failed!
+      std::exit (EXIT_FAILURE);
     }
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("InterfaceRepository");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      CORBA::Object_var const object = orb->resolve_initial_references ("InterfaceRepository");
 
       if (CORBA::is_nil (object.in ()))
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              "Null objref from resolve_initial_references\n"),
-             -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Null objref from resolve_initial_references\n")),
+                          -1);
 
-      CORBA::Repository_var  ifr =
-        CORBA::Repository::_narrow (object.in ());
+      CORBA::Repository_var const repository = CORBA::Repository::_narrow (object.in ());
 
-      if (CORBA::is_nil (ifr.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "CORBA::Repository::_narrow failed\n"),
-                            -1);
-        }
+      if (CORBA::is_nil (repository.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("CORBA::Repository::_narrow failed\n")),
+                          -1);
 
-      CORBA::ContainedSeq_var cont = ifr->contents (CORBA::dk_all, 0);
+      CORBA::ContainedSeq_var const contents = repository->contents (CORBA::dk_all, 0);
 
-      printContents (cont.in ());
+      printContents (contents.in ());
 
-      CORBA::Contained_var contained =
-        ifr->lookup_id ("IDL:IFR_Test/AbstractChild:1.0");
-      CORBA::AbstractInterfaceDef_var abstract_child =
+      CORBA::Contained_var const contained =
+        repository->lookup_id ("IDL:IFR_Test/AbstractChild:1.0");
+      CORBA::AbstractInterfaceDef_var const abstract_child =
         CORBA::AbstractInterfaceDef::_narrow (contained.in ());
 
       if (CORBA::is_nil (abstract_child.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "AbstractChild was not found in the IFR\n"),
-                            -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("AbstractChild was not found in the IFR\n")),
+                          -1);
 
-      CORBA::InterfaceDefSeq_var abstract_bases =
-        abstract_child->base_interfaces ();
+      CORBA::InterfaceDefSeq_var abstract_bases = abstract_child->base_interfaces ();
 
       if (abstract_bases->length () != 1
           || CORBA::is_nil (abstract_bases[0]))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "AbstractChild does not have its expected base\n"),
-                            -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("AbstractChild does not have its expected base\n")),
+                          -1);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("main");
       return -1;

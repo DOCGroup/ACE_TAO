@@ -5,10 +5,10 @@
 #include <memory>
 #include <string>
 
-static std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("ior")};
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c {};
@@ -22,9 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
@@ -38,50 +36,53 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("ior")};
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return -1;
 
       test_i servant (orb.in ());
 
-      test_var server =
+      test_var const server =
         servant._this ();
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Activated as <%C>\n"), ior.in ()));
 
-      using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
-      File_Handle output_file (ACE_OS::fopen (ior_output_file.c_str (), "w"),
-                               &ACE_OS::fclose);
-      if (!output_file)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file.c_str ()),
-                          -1);
-      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      {
+        using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+        File_Handle const output_file (ACE_OS::fopen (ior_output_file.c_str (), "w"),
+                                       &ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             ior_output_file.c_str ()),
+                            -1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("event loop finished\n")));
 
       root_poa->destroy (true, true);
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;

@@ -24,37 +24,38 @@
 #include "ace/SString.h"
 #include "ace/Truncate.h"
 #include "ace/Tokenizer_T.h"
+#include <memory>
 
 
 #if defined (ACE_WIN32)
 #define EXEC_NAME ACE_TEXT ("MORE.COM")
-const ACE_TCHAR *DATE_PATH = ACE_TEXT ("date.exe");
-const ACE_TCHAR *LS_PATH = ACE_TEXT ("ls.exe");
-const ACE_TCHAR *SLEEP_PATH = ACE_TEXT ("sleep.exe");
+constexpr ACE_TCHAR const *DATE_PATH = ACE_TEXT ("date.exe");
+constexpr ACE_TCHAR const *LS_PATH = ACE_TEXT ("ls.exe");
+constexpr ACE_TCHAR const *SLEEP_PATH = ACE_TEXT ("sleep.exe");
 #else
 #define EXEC_NAME ACE_TEXT ("less")
-const ACE_TCHAR *DATE_PATH = ACE_TEXT ("date");
-const ACE_TCHAR *LS_PATH = ACE_TEXT ("ls");
-const ACE_TCHAR *SLEEP_PATH = ACE_TEXT ("sleep");
+constexpr ACE_TCHAR const *DATE_PATH = ACE_TEXT ("date");
+constexpr ACE_TCHAR const *LS_PATH = ACE_TEXT ("ls");
+constexpr ACE_TCHAR const *SLEEP_PATH = ACE_TEXT ("sleep");
 #endif /* ACE_WIN32 */
 
-static const ACE_TCHAR *executable = EXEC_NAME;
-static ACE_TCHAR *print_file = nullptr;
-static ACE_TCHAR *environment_string = nullptr;
-static bool get_env = false;
-static bool run_date = false;
-static bool run_ls = false;
-static bool run_all = false;
-static bool run_setenv = false;
-static bool run_tokenizer = false;
-static bool run_wait = false;
+static ACE_TCHAR const *executable = EXEC_NAME;
+static ACE_TCHAR const *print_file {};
+static ACE_TCHAR const *environment_string {};
+static bool get_env {};
+static bool run_date {};
+static bool run_ls {};
+static bool run_all {};
+static bool run_setenv {};
+static bool run_tokenizer {};
+static bool run_wait {};
 
 // Parse the command-line arguments and set options.
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dlx:p:e:gastuw"));
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != -1)
     {
@@ -136,7 +137,7 @@ test_more ()
                   error_number));
     }
 
-  ACE_exitcode status;
+  ACE_exitcode status {};
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Process exit with status %d\n"),
@@ -167,7 +168,7 @@ test_date ()
       return;
     }
 
-  ACE_exitcode status;
+  ACE_exitcode status {};
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Process exit with status %d\n"),
@@ -184,14 +185,14 @@ test_ls ()
   ACE_Process new_process;
   if (new_process.spawn (options) == -1)
     {
-      int error_number = ACE_OS::last_error ();
+      int const error_number = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p errno = %d.\n"),
                   ACE_TEXT ("test_ls"),
                   error_number));
     }
 
-  ACE_exitcode status;
+  ACE_exitcode status {};
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Process exit with status %d\n"),
@@ -213,8 +214,8 @@ test_wait ()
                   error_number));
     }
 
-  int result;
-  ACE_exitcode status;
+  int result {};
+  ACE_exitcode status {};
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
@@ -277,18 +278,12 @@ test_wait ()
 static void
 win32_test_ls ()
 {
-  PROCESS_INFORMATION process_info;
-  ACE_TEXT_STARTUPINFO startup_info;
-  ACE_OS::memset ((void *) &startup_info,
-                  0,
-                  sizeof startup_info);
-  ACE_OS::memset ((void *) &process_info,
-                  0,
-                  sizeof process_info);
+  PROCESS_INFORMATION process_info {};
+  ACE_TEXT_STARTUPINFO startup_info {};
   startup_info.cb = sizeof startup_info;
   startup_info.dwFlags = STARTF_USESTDHANDLES;
 
-  ACE_HANDLE std_out = ACE_STDOUT;
+  ACE_HANDLE const std_out = ACE_STDOUT;
 
   if (!::DuplicateHandle (::GetCurrentProcess (),
                           std_out,
@@ -304,17 +299,17 @@ win32_test_ls ()
       return;
     }
 
-  ACE_TCHAR cmd_line[8];
-  ACE_OS::strncpy (cmd_line, ACE_TEXT ("-a"), sizeof (cmd_line));
-  BOOL fork_result =
+  ACE_TCHAR cmd_line[8] {};
+  ACE_OS::strcpy (cmd_line, ACE_TEXT ("-a"));
+  BOOL const fork_result =
     ACE_TEXT_CreateProcess (ACE_TEXT ("c:\\Utils\\bin\\ls.exe"),
                             cmd_line,
-                            0, // No process attributes.
-                            0, // No thread attributes.
+                            nullptr, // No process attributes.
+                            nullptr, // No thread attributes.
                             TRUE, // Allow handle inheritance.
                             0, // CREATE_NEW_CONSOLE, // Create a new console window.
-                            0,
-                            0, // Current directory to start in.
+                            nullptr,
+                            nullptr, // Current directory to start in.
                             &startup_info,
                             &process_info);
 
@@ -340,20 +335,14 @@ win32_test_ls ()
 static void
 win32_spawn_environment_process ()
 {
-  PROCESS_INFORMATION process_info;
-  ACE_TEXT_STARTUPINFO startup_info;
-  ACE_OS::memset ((void *) &startup_info,
-                  0,
-                  sizeof startup_info);
-  ACE_OS::memset ((void *) &process_info,
-                  0,
-                  sizeof process_info);
+  PROCESS_INFORMATION process_info {};
+  ACE_TEXT_STARTUPINFO startup_info {};
   startup_info.cb = sizeof (startup_info);
   startup_info.dwFlags = STARTF_USESTDHANDLES;
 
-  ACE_HANDLE std_in = ACE_STDIN;
-  ACE_HANDLE std_out = ACE_STDOUT;
-  ACE_HANDLE std_err = ACE_STDERR;
+  ACE_HANDLE const std_in = ACE_STDIN;
+  ACE_HANDLE const std_out = ACE_STDOUT;
+  ACE_HANDLE const std_err = ACE_STDERR;
 
   if (!::DuplicateHandle (::GetCurrentProcess(),
                           std_out,
@@ -399,36 +388,49 @@ win32_spawn_environment_process ()
 
   // Normally, this would be just GetEnvironmentStrings, but it
   // doesn't follow the same rules as the rest of the Win32 API
-  ACE_TCHAR *existing_environment = ACE_OS::getenvstrings ();
-  ACE_TCHAR environment[10240];
+  struct Environment_Deleter
+  {
+    void operator() (ACE_TCHAR *environment) const
+    {
+      ACE_TEXT_FreeEnvironmentStrings (environment);
+    }
+  };
+  std::unique_ptr<ACE_TCHAR, Environment_Deleter> existing_environment (
+    ACE_OS::getenvstrings ());
+  if (!existing_environment)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("getenvstrings failed\n")));
+      return;
+    }
+
+  ACE_TCHAR environment[10240] {};
   ACE_OS::sprintf (environment,
                    ACE_TEXT("ACE_PROCESS_TEST=%s"),
                    environment_string);
 
-  int size = 0;
-  while (existing_environment[size] != '\0')
+  int size {};
+  while (existing_environment.get ()[size] != '\0')
     size +=
       ACE_Utils::truncate_cast<int> (
-        ACE_OS::strlen (existing_environment + size) + 1);
+        ACE_OS::strlen (existing_environment.get () + size) + 1);
 
   ACE_OS::memcpy (environment + (ACE_OS::strlen (environment) + 1),
-                  existing_environment,
+                  existing_environment.get (),
                   size);
 
-  ACE_TEXT_FreeEnvironmentStrings (existing_environment);
-
-  ACE_TCHAR cmd_line[16];
-  ACE_OS::strncpy (cmd_line, ACE_TEXT ("process -g"), sizeof (cmd_line));
-  BOOL fork_result =
+  ACE_TCHAR cmd_line[16] {};
+  ACE_OS::strcpy (cmd_line, ACE_TEXT ("process -g"));
+  BOOL const fork_result =
     ACE_TEXT_CreateProcess (ACE_TEXT ("d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\process.exe"),
                             cmd_line,
-                            0, // No process attributes.
-                            0, // No thread attributes.
+                            nullptr, // No process attributes.
+                            nullptr, // No thread attributes.
                             TRUE, // Allow handle inheritance.
                             0, // CREATE_NEW_CONSOLE, // Create a new console window.
                             environment, // Environment.
                             //"d:\\harrison\\ACE_wrappers\\examples\\OS\\Process\\",
-                            0,
+                            nullptr,
                             &startup_info,
                             &process_info);
 
@@ -450,7 +452,7 @@ win32_spawn_environment_process ()
 #endif
 
 static void
-test_setenv (const ACE_TCHAR *argv0)
+test_setenv (ACE_TCHAR const *argv0)
 {
   ACE_Process_Options options;
   //  options.setenv ("ACE_PROCESS_TEST", "here's a really large number: %u", 0 - 1);
@@ -467,7 +469,7 @@ test_setenv (const ACE_TCHAR *argv0)
       return;
     }
 
-  ACE_exitcode status;
+  ACE_exitcode status {};
   process.wait (&status);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Process exit with status %d\n"),
@@ -485,11 +487,10 @@ tokenize (ACE_TCHAR *buffer)
   parser.preserve_designators ('\"', '\"'); // "  This quote is for emacs
   parser.preserve_designators ('\'', '\'');
 
-  for (const ACE_TCHAR *temp; ;)
+  for (ACE_TCHAR const *temp = parser.next ();
+       temp != nullptr;
+       temp = parser.next ())
     {
-      temp = parser.next ();
-      if (temp == nullptr)
-        break;
       ACE_DEBUG ((LM_DEBUG, temp));
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
     }
@@ -517,7 +518,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("%p.\n"),
                            ACE_TEXT ("main")),
                           -1);
-      ACE_exitcode status;
+      ACE_exitcode status {};
       process.wait (&status);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Process exit with status %d\n"),
@@ -533,8 +534,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (get_env)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("checking ACE_PROCESS_TEST\n")));
-      char *value = ACE_OS::getenv ("ACE_PROCESS_TEST");
-      char *value2 = ACE_OS::getenv ("ACE_PROCESS_TEST2");
+      char const *value = ACE_OS::getenv ("ACE_PROCESS_TEST");
+      char const *value2 = ACE_OS::getenv ("ACE_PROCESS_TEST2");
       ACE_DEBUG ((LM_DEBUG,
                   "ACE_PROCESS_TEST = %C.\n"
                   "ACE_PROCESS_TEST2 = %C.\n",
@@ -551,17 +552,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (&win32_test_ls);
 
-  if (environment_string != 0)
+  if (environment_string != nullptr)
     win32_spawn_environment_process ();
 #endif /* ACE_WIN32 */
 
   if (print_file != nullptr)
     test_more ();
 
-  ACE_TCHAR buf1[30];
-  ACE_TCHAR buf2[30];
-  ACE_OS::strcpy(buf1, ACE_TEXT (" -f hi honey -g \"I\'m home\""));
-  ACE_OS::strcpy(buf2, ACE_TEXT ("\"token 1\"\'token 2\'\"token 3\" "));
+  ACE_TCHAR buf1[30] {};
+  ACE_TCHAR buf2[30] {};
+  ACE_OS::strcpy (buf1, ACE_TEXT (" -f hi honey -g \"I\'m home\""));
+  ACE_OS::strcpy (buf2, ACE_TEXT ("\"token 1\"\'token 2\'\"token 3\" "));
 
   if (run_tokenizer)
     {

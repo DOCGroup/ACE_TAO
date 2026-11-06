@@ -52,7 +52,7 @@ HTTP_Base::deliver (ACE_Message_Block &mb)
     {
       // Make our Message Block big enough to hold a header name and
       // header value
-      this->mb_ = std::make_unique<ACE_Message_Block> (16384); // MAGIC!  2 x 8192
+      this->mb_.reset (new ACE_Message_Block (16384)); // MAGIC!  2 x 8192
 
       // Call into the deliver hook
       int r = this->espouse_line ();

@@ -2525,6 +2525,13 @@ TAO_CodeGen::gen_stub_src_includes ()
                            << "\"";
     }
 
+  if (idl_global->interface_seen_
+      || idl_global->exception_seen_
+      || idl_global->union_seen_)
+    {
+      this->gen_system_include (this->client_stubs_, "cstring");
+    }
+
   this->gen_system_include (this->client_stubs_, "memory");
 
   if (idl_global->union_seen_)
@@ -2614,13 +2621,6 @@ TAO_CodeGen::gen_stub_src_includes ()
         }
     }
 
-  // std::strcmp() is used by generated _is_a() implementations.
-  if (idl_global->interface_seen_
-      || idl_global->exception_seen_
-      || idl_global->union_seen_)
-    {
-      this->gen_system_include (this->client_stubs_, "cstring");
-    }
 }
 
 void
@@ -2684,6 +2684,7 @@ TAO_CodeGen::gen_skel_src_includes ()
         break;
     }
 
+  this->gen_system_include (this->server_skeletons_, "array");
   this->gen_system_include (this->server_skeletons_, "cstddef");
   this->gen_system_include (this->server_skeletons_, "cstring");
   this->gen_system_include (this->server_skeletons_, "memory");
@@ -2727,7 +2728,6 @@ TAO_CodeGen::gen_skel_src_includes ()
 
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_, "ace/Malloc_Allocator.h");
-
 }
 
 void

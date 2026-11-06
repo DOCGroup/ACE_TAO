@@ -24,6 +24,13 @@
 class TSS_Data
 {
 public:
+  TSS_Data () = default;
+
+  TSS_Data (TSS_Data const &) = delete;
+  TSS_Data (TSS_Data &&) = delete;
+  TSS_Data &operator= (TSS_Data const &) = delete;
+  TSS_Data &operator= (TSS_Data &&) = delete;
+
   void *data () const { return this->data_; }
   void data (void *v) { this->data_ = v; }
 

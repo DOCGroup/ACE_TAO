@@ -16,35 +16,42 @@ void
 HA_Proactive_Service::open (ACE_HANDLE h, ACE_Message_Block&)
 {
   this->handle (h);
-  if (this->reader_.open (*this) != 0 ||
-      this->writer_.open (*this) != 0   )
+  if (this->reader_.open (*this) != 0 || this->writer_.open (*this) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                   ACE_TEXT ("HA_Proactive_Service open")));
+      // The acceptor transfers the newly created service to this callback.
       delete this;
       return;
     }
 
-  ACE_Message_Block *mb = nullptr;
-  ACE_NEW_NORETURN (mb, ACE_Message_Block (1024));
+  ACE_Message_Block *raw_message_block {};
+  ACE_NEW_NORETURN (raw_message_block, ACE_Message_Block (1024));
+  if (raw_message_block == nullptr)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("allocating read block")));
+      delete this;
+      return;
+    }
+
+  ACE_Message_Block_Unique_Ptr mb {raw_message_block};
   if (this->reader_.read (*mb, mb->space ()) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                   ACE_TEXT ("HA_Proactive_Service begin read")));
-      mb->release ();
       delete this;
       return;
     }
 
-  // mb is now controlled by Proactor framework.
-  return;
+  // The Proactor now owns the message block until its completion callback.
+  mb.release ();
 }
 // Listing 1
 
 // Listing 2 code/ch08
 void
 HA_Proactive_Service::handle_read_stream
-  (const ACE_Asynch_Read_Stream::Result &result)
+  (ACE_Asynch_Read_Stream::Result const &result)
 {
   ACE_Message_Block &mb = result.message_block ();
   if (!result.success () || result.bytes_transferred () == 0)
@@ -63,22 +70,32 @@ HA_Proactive_Service::handle_read_stream
         }
       else
         {
-          ACE_Message_Block *new_mb;
-          ACE_NEW_NORETURN (new_mb, ACE_Message_Block (1024));
-          this->reader_.read (*new_mb, new_mb->space ());
+          ACE_Message_Block *raw_message_block {};
+          ACE_NEW_NORETURN (raw_message_block, ACE_Message_Block (1024));
+          if (raw_message_block == nullptr)
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("allocating read block")));
+          else
+            {
+              ACE_Message_Block_Unique_Ptr new_message_block {raw_message_block};
+              if (this->reader_.read (*new_message_block,
+                                      new_message_block->space ()) != 0)
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("starting read")));
+              else
+                new_message_block.release ();
+            }
         }
     }
-  return;
 }
 // Listing 2
 
 // Listing 3 code/ch08
 void
 HA_Proactive_Service::handle_write_stream
-(const ACE_Asynch_Write_Stream::Result &result)
+(ACE_Asynch_Write_Stream::Result const &result)
 {
   result.message_block ().release ();
-  return;
 }
 // Listing 3
 
@@ -88,9 +105,9 @@ HA_Proactive_Service::handle_write_stream
 #if defined (ACE_WIN32)
 int
 HA_Proactive_Acceptor::validate_connection
-(const ACE_Asynch_Accept::Result&,
- const ACE_INET_Addr&,
- const ACE_INET_Addr&)
+(ACE_Asynch_Accept::Result const &,
+ ACE_INET_Addr const &,
+ ACE_INET_Addr const &)
 {
   return 0;
 }
@@ -99,14 +116,14 @@ HA_Proactive_Acceptor::validate_connection
 // Listing 4 code/ch08
 int
 HA_Proactive_Acceptor::validate_connection (
-   const ACE_Asynch_Accept::Result&,
-   const ACE_INET_Addr& remote,
-   const ACE_INET_Addr& local)
+   ACE_Asynch_Accept::Result const &,
+   ACE_INET_Addr const &remote,
+   ACE_INET_Addr const &local)
 {
-  struct in_addr *remote_addr =
-    reinterpret_cast<struct in_addr*> (remote.get_addr ());
-  struct in_addr *local_addr =
-    reinterpret_cast<struct in_addr*> (local.get_addr ());
+  in_addr const *const remote_addr =
+    reinterpret_cast<in_addr const *> (remote.get_addr ());
+  in_addr const *const local_addr =
+    reinterpret_cast<in_addr const *> (local.get_addr ());
   if (inet_netof (*local_addr) == inet_netof (*remote_addr))
     return 0;
 
@@ -120,23 +137,23 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Listing 5 code/ch08
-  ACE_INET_Addr listen_addr;     // Set up with listen port
-  HA_Proactive_Acceptor aio_acceptor;
-  if (0 != aio_acceptor.open (listen_addr,
-                              0,     // bytes_to_read
-                              0,     // pass_addresses
-                              ACE_DEFAULT_ASYNCH_BACKLOG,
-                              1,     // reuse_addr
-                              nullptr,     // proactor
-                              1))    // validate_new_connection
+  ACE_INET_Addr listen_addr {}; // Set up with listen port
+  HA_Proactive_Acceptor aio_acceptor {};
+  if (aio_acceptor.open (listen_addr,
+                         0,     // bytes_to_read
+                         false, // pass_addresses
+                         ACE_DEFAULT_ASYNCH_BACKLOG,
+                         true,  // reuse_addr
+                         nullptr, // proactor
+                         true) != 0) // validate_new_connection
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("acceptor open")), 1);
   // Listing 5
 
 #if 0
   // Listing 6 code/ch08
-  ACE_INET_Addr peer_addr;    // Set up peer addr
-  ACE_Asynch_Connector<HA_Proactive_Service> aio_connect;
+  ACE_INET_Addr peer_addr {}; // Set up peer addr
+  ACE_Asynch_Connector<HA_Proactive_Service> aio_connect {};
   aio_connect.connect (peer_addr);
   // Listing 6
 #endif

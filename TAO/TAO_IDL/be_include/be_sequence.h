@@ -72,14 +72,14 @@ public:
   virtual MANAGED_TYPE managed_type () const;
 
   // Scope management functions.
-  virtual AST_Sequence *fe_add_sequence (AST_Sequence *) override;
+  AST_Sequence *fe_add_sequence (AST_Sequence *) override;
 
   /// Overridden method on the be_scope class.
   be_decl *decl () override;
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore) override;
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
 
   /// Cleanup method.
   void destroy () override;

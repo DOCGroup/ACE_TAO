@@ -159,7 +159,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << fname << "_forany &_tao_array)" << be_uidt
+      << fname << "_forany const &_tao_array)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
 

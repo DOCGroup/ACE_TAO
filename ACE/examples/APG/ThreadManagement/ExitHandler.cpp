@@ -5,6 +5,12 @@
 class ExitHandler : public ACE_At_Thread_Exit
 {
 public:
+  ExitHandler () = default;
+  ExitHandler (ExitHandler const &) = delete;
+  ExitHandler (ExitHandler &&) = delete;
+  ExitHandler &operator= (ExitHandler const &) = delete;
+  ExitHandler &operator= (ExitHandler &&) = delete;
+
   void apply () override
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%t) is exiting\n")));
@@ -19,6 +25,10 @@ class HA_CommandHandler : public ACE_Task_Base
 public:
   explicit HA_CommandHandler (ExitHandler &eh) : eh_ (eh)
   { }
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
 
   int svc () override
   {
@@ -36,7 +46,7 @@ public:
   }
 
 private:
-  ExitHandler& eh_;
+  ExitHandler &eh_;
 };
 // Listing 2
 // Listing 3 code/ch13

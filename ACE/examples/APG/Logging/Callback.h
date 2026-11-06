@@ -9,6 +9,12 @@
 class Callback : public ACE_Log_Msg_Callback
 {
 public:
+  Callback () = default;
+  Callback (Callback const &) = delete;
+  Callback (Callback &&) = delete;
+  Callback &operator= (Callback const &) = delete;
+  Callback &operator= (Callback &&) = delete;
+
   void log (ACE_Log_Record &log_record) override
   {
 #  if defined (ACE_LACKS_IOSTREAM_TOTALLY)

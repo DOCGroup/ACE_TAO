@@ -56,9 +56,9 @@ public:
    *
    * @param new_queue The activation queue uses an ACE_Message_Queue to
    *                  queue and order the method requests. If this argument
-   *                  is 0, a new ACE_Message_Queue is created for this
+   *                  is nullptr, a new ACE_Message_Queue is created for this
    *                  object's use and will be deleted when this object is
-   *                  destroyed. If a non-zero pointer is supplied, the
+   *                  destroyed. If a non-null pointer is supplied, the
    *                  passed object will be used and will not be deleted when
    *                  this object is destroyed. If an ACE_Task is being created
    *                  to act as the scheduler, for instance, its
@@ -72,18 +72,23 @@ public:
    *                  wrap the method requests queued to this activation queue.
    *                  Defaults to ACE_Allocator::instance().
    */
-  ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = nullptr,
-                        ACE_Allocator *alloc = nullptr,
-                        ACE_Allocator *db_alloc = nullptr);
+  explicit ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = nullptr,
+                                 ACE_Allocator *alloc = nullptr,
+                                 ACE_Allocator *db_alloc = nullptr);
 
   /// Destructor.
   virtual ~ACE_Activation_Queue ();
+
+  ACE_Activation_Queue (ACE_Activation_Queue const &) = delete;
+  ACE_Activation_Queue &operator= (ACE_Activation_Queue const &) = delete;
+  ACE_Activation_Queue (ACE_Activation_Queue &&) = delete;
+  ACE_Activation_Queue &operator= (ACE_Activation_Queue &&) = delete;
 
   // = Activate Queue operations.
 
   /// Dequeue the next available ACE_Method_Request.
   /**
-   * @param tv  If 0, the method will block until a method request is
+   * @param tv  If nullptr, the method will block until a method request is
    *            available, else will wait until the absolute time specified
    *            in the referenced ACE_Time_Value.  This method will return,
    *            earlier, however, if queue is closed, deactivated, or when
@@ -104,7 +109,7 @@ public:
    * @param new_method_request  Pointer to the ACE_Method_Request object to
    *            queue. This object's @c priority() method is called to obtain
    *            the priority.
-   * @param tv  If 0, the method will block until the method request can
+   * @param tv  If nullptr, the method will block until the method request can
    *            be queued, else will wait until the absolute time specified
    *            in the referenced ACE_Time_Value.  This method will return,
    *            earlier, however, if queue is closed, deactivated, or when
@@ -140,22 +145,17 @@ public:
 
 protected:
   /// Stores the Method_Requests.
-  ACE_Message_Queue<ACE_SYNCH> *queue_;
+  ACE_Message_Queue<ACE_SYNCH> *queue_ {};
 
 private:
   /// Owns the queue when this class creates it internally.
   std::unique_ptr<ACE_Message_Queue<ACE_SYNCH>> owned_queue_;
 
   /// Allocation strategy of the queue.
-  ACE_Allocator *allocator_;
+  ACE_Allocator *allocator_ {};
 
   /// Allocation strategy of the message blocks.
-  ACE_Allocator *data_block_allocator_;
-
-  ACE_Activation_Queue (ACE_Activation_Queue const &) = delete;
-  ACE_Activation_Queue &operator= (ACE_Activation_Queue const &) = delete;
-  ACE_Activation_Queue (ACE_Activation_Queue &&) = delete;
-  ACE_Activation_Queue &operator= (ACE_Activation_Queue &&) = delete;
+  ACE_Allocator *data_block_allocator_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

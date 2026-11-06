@@ -7,8 +7,6 @@
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu) Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================
-
-
 #include "server.h"
 #include "tao/ORB_Core.h"
 
@@ -22,10 +20,10 @@ Quoter_Server::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opts.opt_arg ());
+        this->options_.debug_level = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'n': // number of Quoter objects we export
-        this->num_of_objs_ = ACE_OS::atoi (get_opts.opt_arg ());
+        this->options_.num_of_objects = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -38,11 +36,9 @@ Quoter_Server::parse_args ()
                           1);
       }
 
-
   // Indicates successful parsing of command line.
   return 0;
 }
-
 
 //Initialize the Quoter Server
 
@@ -51,7 +47,7 @@ Quoter_Server::init (int argc,
                     ACE_TCHAR* argv[])
 {
   this->argc_ = argc;
-  ACE_TCHAR **argv_copy = nullptr;
+  ACE_TCHAR **argv_copy {};
   ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
   this->argv_.reset (argv_copy);
   for (int i = 0; i < argc; i++)
@@ -72,7 +68,7 @@ Quoter_Server::init (int argc,
       if (this->parse_args () != 0)
         return -1;
 
-      if (this->num_of_objs_ <= 0)
+      if (this->options_.num_of_objects <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "The number of Quoter objects must be positive\n"), -1);
 
       // Obtain the RootPOA.
@@ -89,9 +85,9 @@ Quoter_Server::init (int argc,
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      Quoter_Factory_i *factory = nullptr;
+      Quoter_Factory_i *factory {};
       ACE_NEW_RETURN (factory,
-                      Quoter_Factory_i (static_cast<size_t> (this->num_of_objs_),
+                      Quoter_Factory_i (static_cast<size_t> (this->options_.num_of_objects),
                                         root_poa.in ()),
                       -1);
       this->quoter_Factory_i_ptr_.reset (factory);
@@ -120,7 +116,7 @@ Quoter_Server::init (int argc,
       poa_manager->activate ();
 
       // Print the IOR.
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG, "Quoter Server: IOR is: <%C>\n", quoter_Factory_ior.in ()));
     }
   catch (CORBA::Exception const &ex)
@@ -132,7 +128,6 @@ Quoter_Server::init (int argc,
 
   return this->init_naming_service ();
 }
-
 
 // Initialization of Naming Service and register IDL_Quoter Context
 // and Quoter_factory object.
@@ -191,7 +186,7 @@ Quoter_Server::init_naming_service ()
 int
 Quoter_Server::run ()
 {
-  if (this->debug_level_ >= 1)
+  if (this->options_.debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Server is running\n"));
 

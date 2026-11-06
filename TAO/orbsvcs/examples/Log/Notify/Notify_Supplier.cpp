@@ -32,9 +32,8 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       this->orb_ =
         CORBA::ORB_init (argc, argv);
 
-
       CORBA::Object_var naming_obj =
-      this->orb_->resolve_initial_references (naming_service_name);
+        this->orb_->resolve_initial_references (naming_service_name);
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
@@ -42,7 +41,6 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
-
 
       CosNaming::Name name (1);
       name.length (1);
@@ -56,14 +54,14 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       ACE_ASSERT (!CORBA::is_nil (this->notify_log_factory_.in ()));
 
-      // create a log..
+      // Create a log.
 
       ACE_DEBUG ((LM_DEBUG,
                   "\nCalling NotifyLogFactory::create...\n"));
 
       DsLogAdmin::LogFullActionType logfullaction = DsLogAdmin::halt;
       DsLogAdmin::CapacityAlarmThresholdList threshold {};
-      CORBA::ULongLong max_size {}; // 0 means "infinite"
+      CORBA::ULongLong max_size = 0; // 0 means "infinite"
 
       DsLogAdmin::LogId logid {};
       CosNotification::QoSProperties initial_qos;
@@ -85,10 +83,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       DsLogAdmin::Anys any_seq (log_event_count);
       any_seq.length (log_event_count);
 
-      //DsLogAdmin::RecordIdList id_seq (LOG_EVENT_COUNT);
-      //id_seq.length (LOG_EVENT_COUNT);
-
-      for (int i = 0; i < log_event_count; i++)
+      for (int i {}; i < log_event_count; ++i)
         {
           any_seq [i] <<= i;
         }
@@ -160,15 +155,15 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       // any
       event.remainder_of_body <<= static_cast<CORBA::Long> (4);
 
-      for (int k = 0; k < events_to_send; k++)
-      {
-        event.filterable_data[0].value <<= static_cast<CORBA::Long> (k);
+      for (int k {}; k < events_to_send; ++k)
+        {
+          event.filterable_data[0].value <<= static_cast<CORBA::Long> (k);
 
-        // any
-        event.remainder_of_body <<= static_cast<CORBA::Long> (k);
+          // any
+          event.remainder_of_body <<= static_cast<CORBA::Long> (k);
 
-        supplier_1->send_event (event);
-      }
+          supplier_1->send_event (event);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling NotifyLog get_n_records...\n"));
@@ -179,7 +174,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   "Calling NotifyLog::get_current_size...\n"));
-       retval = notify_log_->get_current_size ();
+      retval = notify_log_->get_current_size ();
 
       ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
@@ -188,31 +183,30 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       DsLogAdmin::RecordList_var rec_list =
         notify_log_->query (query_lang, query_1, iter_out);
 
-      CORBA::ULong j {};
-      for (; j < rec_list->length();++j)
+      for (CORBA::ULong j {}; j < rec_list->length (); ++j)
+        ACE_DEBUG ((LM_DEBUG,
+                    "id = %Q, time= %Q\n",
+                    rec_list[j].id, rec_list[j].time));
+
       ACE_DEBUG ((LM_DEBUG,
-                   "id = %Q, time= %Q\n",
-                   rec_list[j].id, rec_list[j].time));
+                  "Deleting records...\n"));
 
-     ACE_DEBUG ((LM_DEBUG,
-                 "Deleting records...\n"));
+      retval = notify_log_->delete_records (query_lang, query_2);
 
-     retval = notify_log_->delete_records (query_lang, query_2);
+      ACE_DEBUG ((LM_DEBUG,
+                  "Calling NotifyLog::get_n_records...\n"));
+      retval = notify_log_->get_n_records ();
 
-     ACE_DEBUG ((LM_DEBUG,
-                 "Calling NotifyLog::get_n_records...\n"));
-     retval = notify_log_->get_n_records ();
+      ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d\n",
+                  retval));
 
-     ACE_DEBUG ((LM_DEBUG, "Number of records in Log after delete = %d\n",
-                 retval));
+      ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
+      retval = notify_log_->get_current_size ();
 
-     ACE_DEBUG ((LM_DEBUG, "Geting the current_size again...\n"));
-     retval = notify_log_->get_current_size ();
+      ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
 
-     ACE_DEBUG ((LM_DEBUG, "Size of data in Log = %d\n", retval));
-
-     this->notify_log_->destroy();
-     }
+      this->notify_log_->destroy ();
+    }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Supplier::run");
@@ -229,7 +223,8 @@ Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr
     this->_this ();
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_);
+    supplier_admin->obtain_notification_push_consumer (
+      CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 

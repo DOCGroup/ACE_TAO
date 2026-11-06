@@ -14,7 +14,7 @@ get_iterator (CORBA::ORB_ptr orb);
 // Perform file requests
 void invoke_requests (int argc,
                       ACE_TCHAR *argv[],
-                      int *request_count,
+                      int &request_count,
                       Web_Server::Iterator_Factory_ptr f);
 
 int
@@ -64,7 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ::invoke_requests (argc,
                          argv,
-                         &request_count,
+                         request_count,
                          factory.in ());
 
       // Run the ORB event loop.
@@ -141,7 +141,7 @@ get_iterator (CORBA::ORB_ptr o)
 
 void invoke_requests (int argc,
                       ACE_TCHAR *argv[],
-                      int *request_count,
+                      int &request_count,
                       Web_Server::Iterator_Factory_ptr f)
 {
   Web_Server::Iterator_Factory_var factory =
@@ -154,15 +154,14 @@ void invoke_requests (int argc,
     {
       Iterator_Handler *handler = nullptr;
       ACE_NEW_THROW_EX (handler,
-                        Iterator_Handler,
+                        Iterator_Handler (request_count),
                         CORBA::NO_MEMORY ());
 
       // Transfer ownership to the POA.
       PortableServer::ServantBase_var tmp (handler);
 
       // This ends up being an AMI call, so it won't block.
-      handler->run (request_count,
-                    ACE_TEXT_ALWAYS_CHAR(argv[i + 1]),
+      handler->run (ACE_TEXT_ALWAYS_CHAR (argv[i + 1]),
                     factory.in ());
     }
 }

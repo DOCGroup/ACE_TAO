@@ -18,11 +18,11 @@ namespace ACE
 
     int
     Monitor_Point_Auto_Query::handle_timeout (
-      const ACE_Time_Value& /* current */,
-      const void* monitor_query)
+      ACE_Time_Value const& /* current */,
+      void const* monitor_query)
     {
       Monitor_Query const* const mq =
-        reinterpret_cast<Monitor_Query const*> (monitor_query);
+        static_cast<Monitor_Query const*> (monitor_query);
 
       mq->query ();
 

@@ -10,7 +10,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_FIFO_Send client (ACE_DEFAULT_RENDEZVOUS);
-  ACE_TCHAR     buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ] {};
 
   while (ACE_OS::fgets (buf, sizeof buf, stdin) != nullptr)
     {

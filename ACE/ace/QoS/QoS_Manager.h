@@ -57,7 +57,7 @@ public:
   using ACE_QOS_SESSION_SET = ACE_Unbounded_Set<ACE_QoS_Session *>;
 
   /// Get the QoS session set.
-  ACE_QOS_SESSION_SET qos_session_set ();
+  ACE_QOS_SESSION_SET qos_session_set () const;
 
 private:
   /// Set of QoS sessions that this socket has joined.

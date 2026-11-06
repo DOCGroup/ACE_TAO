@@ -437,12 +437,12 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
   // PortableServer::ObjectId to PortableGroup::ObjectGroupId, can
   // just call TAO_PG_ObjectGroupManager::object_group() here.
 
-  // This manager's map is keyed by the decimal ObjectId generated from
-  // the 32-bit FactoryCreationId.
+  // The map is keyed by the decimal ObjectId generated from the
+  // 32-bit FactoryCreationId.
   char object_id_string[14] {};
   std::sprintf (object_id_string,
-                   "%ul",
-                   ACE_U64_TO_U32 (group_id));
+                "%ul",
+                ACE_U64_TO_U32 (group_id));
   PortableServer::ObjectId_var oid =
     PortableServer::string_to_ObjectId (object_id_string);
 

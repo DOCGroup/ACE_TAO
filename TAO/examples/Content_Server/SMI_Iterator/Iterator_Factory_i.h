@@ -17,6 +17,8 @@
 
 #include "Web_ServerS.h"
 
+#include <string>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -56,13 +58,12 @@ public:
                      Web_Server::Metadata_Type_out metadata) override;
 
   /// Set the file modification date in the metadata structure.
-  int modification_date (ACE_stat const *file_status,
-                         Web_Server::Metadata_Type_out metadata);
+  int modification_date (ACE_stat const& file_status,
+                         Web_Server::Metadata_Type& metadata);
 
   /// Set the type of file content in the metadata structure.
-  int content_type (char const *filename,
-                    Web_Server::Metadata_Type_out metadata);
+  int content_type (std::string const& filename,
+                    Web_Server::Metadata_Type& metadata);
 };
-
 
 #endif  /* ITERATOR_FACTORY_I_H */

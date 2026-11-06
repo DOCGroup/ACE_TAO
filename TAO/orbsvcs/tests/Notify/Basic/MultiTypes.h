@@ -35,9 +35,9 @@ class MultiTypes;
 class MultiTypes_PushConsumer : public TAO_Notify_Tests_PushConsumer
 {
 public:
-  MultiTypes_PushConsumer (MultiTypes* client);
+  explicit MultiTypes_PushConsumer (MultiTypes *client);
 
-  void push (const CORBA::Any & data);
+  void push (CORBA::Any const &data) override;
 
 protected:
   MultiTypes* client_;
@@ -48,10 +48,10 @@ protected:
 class MultiTypes_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  MultiTypes_StructuredPushConsumer (MultiTypes* client);
+  explicit MultiTypes_StructuredPushConsumer (MultiTypes *client);
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (const CosNotification::StructuredEvent & notification);
+  void push_structured_event (CosNotification::StructuredEvent const &notification) override;
 
 protected:
   MultiTypes* client_;
@@ -60,11 +60,11 @@ protected:
 class MultiTypes_SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer
 {
 public:
-  MultiTypes_SequencePushConsumer (MultiTypes* client);
+  explicit MultiTypes_SequencePushConsumer (MultiTypes *client);
 
   // = SequencePushConsumer methods
-  virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications);
+  void push_structured_events (
+        CosNotification::EventBatch const &notifications) override;
 
 protected:
   MultiTypes* client_;
@@ -78,18 +78,18 @@ class MultiTypes : public Notify_Test_Client
 public:
   // Initialization and termination code.
   MultiTypes ();
-  virtual ~MultiTypes ();
+  ~MultiTypes () override;
 
   void on_received_event (MultiTypes_PushConsumer* consumer);
   void on_received_event (MultiTypes_StructuredPushConsumer* consumer);
   void on_received_event (MultiTypes_SequencePushConsumer* consumer);
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]);
+                  ACE_TCHAR *argv[]) override;
 
   /// initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Run the test.
   void run_test ();

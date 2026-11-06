@@ -1,6 +1,5 @@
 #include "ace/LSOCK_Connector.h"
 #include "ace/Log_Msg.h"
-
 #if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 int
 ACE_TMAIN (int, ACE_TCHAR *argv[])
@@ -16,7 +15,6 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 
 #include "ace/UNIX_Addr.h"
 #include "CPP-connector.h"
-
 
 using PEER_HANDLER = Peer_Handler<ACE_LSOCK_STREAM>;
 using IPC_CLIENT = IPC_Client<PEER_HANDLER, ACE_LSOCK_CONNECTOR>;

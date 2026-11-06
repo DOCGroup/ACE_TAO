@@ -6,6 +6,7 @@
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread_Mutex.h"
+#include <memory>
 
 // This file exists primarily to get code into the book to show different
 // ways to do the same thing. For complete context and explanation, please
@@ -13,29 +14,37 @@
 
 class HA_Device_Repository {
 public:
-  int update_device (int device_id);
+  HA_Device_Repository () = default;
+  int update_device (int const device_id);
 
 private:
-  ACE_Thread_Mutex  mutex_;
+  HA_Device_Repository (HA_Device_Repository const &) = delete;
+  HA_Device_Repository (HA_Device_Repository &&) = delete;
+  HA_Device_Repository &operator= (HA_Device_Repository const &) = delete;
+  HA_Device_Repository &operator= (HA_Device_Repository &&) = delete;
+
+  ACE_Thread_Mutex mutex_;
 };
 
 class Object {
 };
-static Object *object;
+static std::unique_ptr<Object> object {};
 
 #if 0
 // This is less-desired way to do this...
 
 // Listing 1 code/ch12
 int
-HA_Device_Repository::update_device (int device_id)
+HA_Device_Repository::update_device (int const device_id)
 {
   this->mutex_.acquire ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Updating device %d\n"),
               device_id));
 
   // Allocate a new object.
-  ACE_NEW_RETURN (object, Object, -1);
+  Object *new_object {};
+  ACE_NEW_RETURN (new_object, Object, -1);
+  object.reset (new_object);
   // ...
   // Use the object
 
@@ -44,7 +53,7 @@ HA_Device_Repository::update_device (int device_id)
 // Listing 1
 // Listing 2 code/ch12
 int
-HA_Device_Repository::update_device (int device_id)
+HA_Device_Repository::update_device (int const device_id)
 {
   // Construct a guard specifying the type of the mutex as
   // a template parameter and passing in the mutex to hold
@@ -54,7 +63,9 @@ HA_Device_Repository::update_device (int device_id)
   // FUZZ: enable check_for_ACE_Guard
 
   // This can throw an exception that is not caught here.
-  ACE_NEW_RETURN (object, Object, -1);
+  Object *new_object {};
+  ACE_NEW_RETURN (new_object, Object, -1);
+  object.reset (new_object);
   // ..
   // Use the object.
   // ..
@@ -65,11 +76,13 @@ HA_Device_Repository::update_device (int device_id)
 
 // Listing 3 code/ch12
 int
-HA_Device_Repository::update_device (int /* device_id */)
+HA_Device_Repository::update_device (int const /* device_id */)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, mutex_, -1);
 
-  ACE_NEW_RETURN (object, Object, -1);
+  Object *new_object {};
+  ACE_NEW_RETURN (new_object, Object, -1);
+  object.reset (new_object);
   // Use the object.
   // ...
   return 0;

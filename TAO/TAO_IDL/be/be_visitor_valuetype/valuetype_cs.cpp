@@ -492,7 +492,7 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   // and without native exception support).
   *os << be_nl
       << "{" << be_idt_nl
-      << "std::unique_ptr< ::CORBA::Exception> safety (this->exception);" << be_nl
+      << "std::unique_ptr<::CORBA::Exception> safety (this->exception);" << be_nl
       << "this->exception->_raise ();" << be_uidt_nl
       << "}"
       << be_nl;

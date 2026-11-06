@@ -28,6 +28,11 @@ public:
   TSS_Obj ();
   ~TSS_Obj ();
 
+  TSS_Obj (TSS_Obj const &) = delete;
+  TSS_Obj (TSS_Obj &&) = delete;
+  TSS_Obj &operator= (TSS_Obj const &) = delete;
+  TSS_Obj &operator= (TSS_Obj &&) = delete;
+
 private:
   static std::atomic<int> count_;
 };

@@ -96,8 +96,8 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
 
   // No copy constructor for locality constraint interface.
   *os << "private:" << be_idt_nl
-      << class_name << " (const " << class_name
-      << "& rhs);" << be_uidt_nl;
+      << class_name << " (" << class_name
+      << " const &rhs);" << be_uidt_nl;
 
 
   *os << "};" << be_nl_2;

@@ -180,7 +180,7 @@ be_visitor_root_ch::gen_ref_counting_overrides ()
     }
 
   std::size_t index {};
-  be_interface_fwd *ifwd {};
+  be_interface_fwd *ifwd = nullptr;
 
   TAO_INSERT_COMMENT (o_);
 
@@ -225,7 +225,7 @@ be_visitor_root_ch::gen_static_corba_overrides ()
     }
 
   std::size_t index {};
-  AST_Interface *i {};
+  AST_Interface *i = nullptr;
 
   TAO_INSERT_COMMENT (o_);
 

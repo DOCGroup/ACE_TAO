@@ -15,6 +15,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 static constexpr int DEFAULT_TASKS = 100;
 static constexpr int DEFAULT_ITERATIONS = 10;
@@ -32,8 +33,13 @@ static size_t default_stack_size =
 class Test_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Test_Task (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
+  explicit Test_Task (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
   ~Test_Task () override = default;
+
+  Test_Task (Test_Task const &) = delete;
+  Test_Task (Test_Task &&) = delete;
+  Test_Task &operator= (Test_Task const &) = delete;
+  Test_Task &operator= (Test_Task &&) = delete;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void * = nullptr) override;
@@ -102,10 +108,7 @@ work (ACE_Thread_Manager *thr_mgr,
   ACE_UNUSED_ARG (stack_size);
 
   int i;
-  Test_Task *task_array;
-
-  ACE_NEW (task_array,
-           Test_Task[n_tasks]);
+  std::unique_ptr<Test_Task[]> task_array = std::make_unique<Test_Task[]> (n_tasks);
 
   ACE_DEBUG ((LM_DEBUG,
               "Opening Tasks, loop count = %d, error count = %d\n",
@@ -152,7 +155,6 @@ work (ACE_Thread_Manager *thr_mgr,
   // Wait for all the threads to finish.
   thr_mgr->wait ();
 
-  delete [] task_array;
   loop_count++;
 }
 

@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "Load_Balancer_i.h"
 
 #include <cstdlib>
@@ -56,7 +55,7 @@ Object_Group_Factory_i::make_group (bool random,
       Load_Balancer::Object_Group_var group;
 
       // Create an appropriate servant.
-      Object_Group_i * group_servant;
+      Object_Group_i *group_servant {};
       if (random)
         ACE_NEW_THROW_EX (group_servant,
                           Random_Object_Group (id, this),
@@ -114,7 +113,7 @@ Object_Group_Factory_i::resolve (char const * id)
 Load_Balancer::Group_List *
 Object_Group_Factory_i::list_groups (bool random)
 {
-  Load_Balancer::Group_List * list;
+  Load_Balancer::Group_List *list {};
 
   // Figure out the length of the list.
   CORBA::ULong const len = random
@@ -125,6 +124,7 @@ Object_Group_Factory_i::list_groups (bool random)
   ACE_NEW_THROW_EX (list,
                     Load_Balancer::Group_List (len),
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<Load_Balancer::Group_List> list_guard (list);
   list->length (len);
 
   // Create an iterator for group structure to populate the list.
@@ -135,8 +135,8 @@ Object_Group_Factory_i::list_groups (bool random)
     : rr_iter;
 
   // Iterate over groups and populate the list.
-  Object_Group_Factory_i::HASH_MAP::ENTRY * hash_entry = nullptr;
-  for (CORBA::ULong i = 0; i < len; ++i)
+  Object_Group_Factory_i::HASH_MAP::ENTRY *hash_entry {};
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       group_iter.next (hash_entry);
       group_iter.advance ();
@@ -144,7 +144,7 @@ Object_Group_Factory_i::list_groups (bool random)
       (*list)[i] = hash_entry->ext_id_.c_str ();
     }
 
-  return list;
+  return list_guard.release ();
 }
 
 Load_Balancer::Group_List *
@@ -174,7 +174,7 @@ Object_Group_i::~Object_Group_i ()
 
   do
     {
-      delete (iter.next ());
+      std::unique_ptr<std::string> const member_id (iter.next ());
     } while (iter.advance ());
 }
 
@@ -198,7 +198,7 @@ Object_Group_i::bind (Load_Balancer::Member const & member)
     throw CORBA::INTERNAL ();
 
   // Insert new member's id into <member_id_list_>.
-  std::string *new_id = nullptr;
+  std::string *new_id {};
   ACE_NEW_THROW_EX (new_id,
                     std::string (member.id),
                     CORBA::NO_MEMORY ());
@@ -236,7 +236,7 @@ Object_Group_i::unbind (char const * id)
   Object_Group_i::ITERATOR iter (member_id_list_);
   while (member_id != *(iter.next ()))
     iter.advance ();
-  delete (iter.next ());
+  std::unique_ptr<std::string> const removed_id (iter.next ());
   iter.remove ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -259,28 +259,29 @@ Object_Group_i::resolve_with_id (char const * id)
 Load_Balancer::Member_ID_List *
 Object_Group_i::members ()
 {
-  Load_Balancer::Member_ID_List * list;
+  Load_Balancer::Member_ID_List *list {};
 
   // Figure out the length of the list.
-  CORBA::ULong len = members_.current_size ();
+  CORBA::ULong const len = this->members_.current_size ();
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list,
                     Load_Balancer::Member_ID_List (len),
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<Load_Balancer::Member_ID_List> list_guard (list);
   list->length (len);
 
   // Create an iterator for <member_id_list_> to populate the list.
   Object_Group_i::ITERATOR id_iter (member_id_list_);
 
   // Iterate over groups and populate the list.
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       (*list)[i] = id_iter.next ()->c_str ();
       id_iter.advance ();
     }
 
-  return list;
+  return list_guard.release ();
 }
 
 void
@@ -331,7 +332,7 @@ Random_Object_Group::resolve ()
   size_t const member = std::rand () % group_size;
 
   // Get the id of the member to return to the client.
-  std::string *id = nullptr;
+  std::string *id {};
   member_id_list_.get (id, member);
 
   ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%C> Group resolved to <%C>\n",
@@ -369,7 +370,7 @@ RR_Object_Group::resolve ()
     throw Load_Balancer::no_such_member ();
 
   // Get the id of the member to return to the client.
-  std::string *id = nullptr;
+  std::string *id {};
   member_id_list_.get (id, next_);
 
   ACE_DEBUG ((LM_DEBUG, "Load_Balancer: In <%C> Group resolved to <%C>\n",
@@ -400,14 +401,14 @@ RR_Object_Group::unbind (char const *id)
 
   // As we remove the id from the <member_id_list>, we note the
   // position of the id in the list.
-  size_t position = 0;
+  size_t position {};
   Object_Group_i::ITERATOR iter (member_id_list_);
   while (member_id != *(iter.next ()))
     {
       iter.advance ();
       position++;
     }
-  delete (iter.next ());
+  std::unique_ptr<std::string> const removed_id (iter.next ());
   iter.remove ();
 
   // Update <next_> if necessary to reflect the deletion.

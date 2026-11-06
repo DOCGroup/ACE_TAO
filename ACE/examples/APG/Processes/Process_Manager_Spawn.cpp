@@ -1,6 +1,7 @@
+#include <array>
+
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
-#include <array>
 // Listing 0 code/ch10
 #include "ace/Process_Manager.h"
 
@@ -15,11 +16,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else             // Running as a parent.
     {
       // Get the processwide process manager.
-      ACE_Process_Manager* pm = ACE_Process_Manager::instance ();
+      ACE_Process_Manager *const pm = ACE_Process_Manager::instance ();
 
       // Specify the options for the new processes
       // to be spawned.
-      ACE_Process_Options options;
+      ACE_Process_Options options {};
       options.command_line (ACE_TEXT ("%s a"), argv[0]);
 
       // Spawn two child processes.
@@ -30,7 +31,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       pm->terminate (pids[0]);
 
       // Wait for the child we just terminated.
-      ACE_exitcode status;
+      ACE_exitcode status {};
       pm->wait (pids[0], &status);
 
       // Get the results of the termination.

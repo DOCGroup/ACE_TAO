@@ -350,6 +350,8 @@ static int test_reset_release ()
     ++errors;
   if (!expect (ACE_TEXT ("foe"), foe, true, 0, 0))
     ++errors;
+  if (foe || foe.get () != nullptr || foe.count () != 0)
+    ++errors;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test assignment to null\n")));
   Printer_Ptr fee(new Printer ("4"));

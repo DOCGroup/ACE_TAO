@@ -9,6 +9,12 @@
 class CanceledTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  CanceledTask () = default;
+  CanceledTask (CanceledTask const &) = delete;
+  CanceledTask (CanceledTask &&) = delete;
+  CanceledTask &operator= (CanceledTask const &) = delete;
+  CanceledTask &operator= (CanceledTask &&) = delete;
+
   int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));

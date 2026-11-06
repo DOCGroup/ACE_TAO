@@ -10,6 +10,8 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include <memory>
+
 #include "Widget_Part.h"
 
 /**
@@ -32,11 +34,11 @@ public:
 
   /// Add a new part to the widget. The widget takes ownership of the part
   /// object.
-  virtual void add_part (Widget_Part *part) = 0;
+  virtual void add_part (std::unique_ptr<Widget_Part> part) = 0;
 
   /// Remove a random part from the widget. Ownership of the part is returned
   /// to the caller.
-  virtual Widget_Part *remove_part () = 0;
+  virtual std::unique_ptr<Widget_Part> remove_part () = 0;
 
   /// Ask the widget to print information about the parts that it contains.
   virtual void list_parts () = 0;

@@ -5,6 +5,7 @@
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process_Mutex.h"
+#include <cstring>
 #include <memory>
 
 using TEST_MALLOC = ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
@@ -12,46 +13,50 @@ using TEST_MALLOC = ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 // The Address for the shared memory mapped files defaults to wherever
 // the OS wants to map it.
-const void *REQUEST_BASE_ADDR = nullptr;
-const void *RESPONSE_BASE_ADDR = nullptr;
+static void const *const REQUEST_BASE_ADDR {};
+static void const *const RESPONSE_BASE_ADDR {};
 #else
 // Default address for shared memory mapped files and SYSV shared
 // memory (defaults to 64 M).
-const void *REQUEST_BASE_ADDR = ((void *) (64 * 1024 * 1024));
+static void const *const REQUEST_BASE_ADDR =
+  reinterpret_cast<void const *> (static_cast<intptr_t> (64 * 1024 * 1024));
 
 // Default address for shared memory mapped files and SYSV shared
 // memory (defaults to 64 M).
-const void *RESPONSE_BASE_ADDR = ((void *) (128 * 1024 * 1024));
+static void const *const RESPONSE_BASE_ADDR =
+  reinterpret_cast<void const *> (static_cast<intptr_t> (128 * 1024 * 1024));
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-static const char *request_string = "hello from request repository";
-static const char *response_string = "hello from response repository";
+static char const request_string[] = "hello from request repository";
+static char const response_string[] = "hello from response repository";
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_MMAP_Memory_Pool_Options request_options (REQUEST_BASE_ADDR);
+  ACE_MMAP_Memory_Pool_Options const request_options (REQUEST_BASE_ADDR);
 
   // Create an adapter version of an allocator.
-  ACE_Allocator_Adapter<TEST_MALLOC> *adapter_ptr = nullptr;
-  ACE_NEW_RETURN (adapter_ptr,
+  ACE_Allocator_Adapter<TEST_MALLOC> *raw_adapter {};
+  ACE_NEW_RETURN (raw_adapter,
                   ACE_Allocator_Adapter<TEST_MALLOC> ("request_file",
                                                       "request_lock",
                                                       &request_options),
                   1);
 
-  std::unique_ptr <ACE_Allocator_Adapter<TEST_MALLOC> > shmem_request (adapter_ptr);
-  ACE_MMAP_Memory_Pool_Options response_options (RESPONSE_BASE_ADDR);
+  std::unique_ptr<ACE_Allocator_Adapter<TEST_MALLOC>> shmem_request (raw_adapter);
+  ACE_MMAP_Memory_Pool_Options const response_options (RESPONSE_BASE_ADDR);
 
-  TEST_MALLOC *ptr = nullptr;
+  TEST_MALLOC *raw_allocator {};
   // Create a non-adapter version of an allocator.
-  ACE_NEW_RETURN (ptr,
+  ACE_NEW_RETURN (raw_allocator,
                   TEST_MALLOC (ACE_TEXT("response_file"),
                                ACE_TEXT("response_lock"),
                                &response_options),
                   1);
-  std::unique_ptr <TEST_MALLOC> shmem_response (ptr);
-  void *data = nullptr;
+  std::unique_ptr<TEST_MALLOC> shmem_response (raw_allocator);
+  // These raw pointers refer to blocks managed by ACE_Malloc and are stored
+  // in its shared name database by bind ().
+  void *data {};
 
   // If we find "foo" then we're running the "second" time, so we must
   // release the resources.
@@ -60,7 +65,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
-                  data));
+                  static_cast<char const *> (data)));
       shmem_request->remove ();
     }
 
@@ -69,10 +74,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   else
     {
       ACE_ALLOCATOR_RETURN (data,
-                            shmem_request->malloc (ACE_OS::strlen (request_string) + 1),
+                            shmem_request->malloc (std::strlen (request_string) + 1),
                             1);
-      ACE_OS::strcpy ((char *) data,
-                      request_string);
+      std::strcpy (static_cast<char *> (data), request_string);
 
       if (shmem_request->bind ("foo",
                                data) == -1)
@@ -90,7 +94,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s\n",
-                  data));
+                  static_cast<char const *> (data)));
       shmem_response->remove ();
       ACE_DEBUG ((LM_DEBUG,
                   "all shared memory resources have been released\n"));
@@ -101,10 +105,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   else
     {
       ACE_ALLOCATOR_RETURN (data,
-                            shmem_response->malloc (ACE_OS::strlen (response_string) + 1),
+                            shmem_response->malloc (std::strlen (response_string) + 1),
                             1);
-      ACE_OS::strcpy ((char *) data,
-                      response_string);
+      std::strcpy (static_cast<char *> (data), response_string);
 
       if (shmem_response->bind ("foo",
                                 data) == -1)

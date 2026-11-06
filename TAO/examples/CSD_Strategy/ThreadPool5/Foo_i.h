@@ -3,17 +3,21 @@
 
 #include "FooS.h"
 #include "CallbackC.h"
-#include "ace/SString.h"
+#include "ace/Thread_Mutex.h"
 #include <atomic>
 
 class FooServantList;
 
-
 class Foo_i : public virtual POA_Foo
 {
   public:
-    Foo_i(const char* servant_name, FooServantList* mgr);
-    ~Foo_i () override;
+    explicit Foo_i (FooServantList *mgr);
+    ~Foo_i () override = default;
+
+    Foo_i (Foo_i const &) = delete;
+    Foo_i (Foo_i &&) = delete;
+    Foo_i &operator= (Foo_i const &) = delete;
+    Foo_i &operator= (Foo_i &&) = delete;
 
     void op1 () override;
 
@@ -66,9 +70,9 @@ class Foo_i : public virtual POA_Foo
 
     void done () override;
 
-    void active (bool flag);
+    void active (bool const flag);
 
-    bool active ();
+    bool active () const;
 
   private:
     using AtomicLong = std::atomic<CORBA::Long>;
@@ -76,17 +80,14 @@ class Foo_i : public virtual POA_Foo
     using AtomicBool = std::atomic<bool>;
 
     AtomicLong value_ {0};
-    AtomicUnsigned count_op1_ {0};
-    AtomicUnsigned count_op2_ {0};
     AtomicUnsigned count_op3_ {0};
     AtomicUnsigned count_op4_ {0};
-    AtomicUnsigned count_op5_ {0};
 
-    ACE_CString     servant_name_;
-    FooServantList* mgr_;
-    AtomicBool      active_ {true};
-    Callback_var    callback_;
+    // Borrowed manager pointer; FooServantList outlives its activated servants.
+    FooServantList *mgr_;
+    AtomicBool active_ {true};
+    TAO_SYNCH_MUTEX callback_lock_;
+    Callback_var callback_;
 };
-
 
 #endif

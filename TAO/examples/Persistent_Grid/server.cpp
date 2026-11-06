@@ -4,31 +4,25 @@
 // This is the main driver program for the time and date server.
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Server<Grid_Factory_i> server;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "\n\tGrid server\n\n"));
-
-
+  ACE_DEBUG ((LM_DEBUG, "\n\tGrid server\n\n"));
   try
     {
       if (server.init ("Grid",
                        argc,
                        argv) == -1)
         return 1;
-      else
-        {
-          server.run ();
-        }
+      server.run ();
     }
-  catch (CORBA::UserException const& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;
     }
-  catch (CORBA::SystemException const& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;

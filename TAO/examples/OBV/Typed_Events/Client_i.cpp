@@ -6,6 +6,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstdlib>
+
 int
 Checkpoint_Client_i::run (char const *name,
                           int argc,
@@ -17,8 +19,7 @@ Checkpoint_Client_i::run (char const *name,
 
   // Set random seed
   ACE_Time_Value const now (ACE_OS::gettimeofday ());
-  ACE_OS::srand (static_cast<unsigned int> (now.sec ()));
-
+  std::srand (static_cast<unsigned int> (now.sec ()));
 
   try
     {
@@ -56,7 +57,6 @@ Checkpoint_Client_i::run (char const *name,
       p_e->do_print ();
       checkpoint->put_event (p_e);
 
-
       bool const urgent = random_number (0, 2) > 1;
       char const *a_text = random_number (0, 2) > 1 ? "Coffee is cold."
                                                    : "I want pasta.";
@@ -64,7 +64,6 @@ Checkpoint_Client_i::run (char const *name,
       l_e->origin_id_ (JONAS);
       l_e->do_print ();
       checkpoint->put_event (l_e);
-
 
       ACE_DEBUG ((LM_DEBUG, "\nNow getting the alarms:\n"));
 
@@ -75,10 +74,10 @@ Checkpoint_Client_i::run (char const *name,
           i.next ()-> do_print ();
         }
 
-      if (checkpoint.shutdown () == 1)
+      if (checkpoint.shutdown ())
         checkpoint->shutdown ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\n Exception in RMI");
       return -1;
@@ -90,7 +89,7 @@ Checkpoint_Client_i::run (char const *name,
 // A random number in the range of min to max.
 CORBA::Float random_number (double min, double max)
 {
-  double range = max - min;
-  return static_cast<CORBA::Float> ((min + (range * ACE_OS::rand () / (RAND_MAX + 1.0))));
+  double const range = max - min;
+  return static_cast<CORBA::Float> (min + (range * std::rand () / (RAND_MAX + 1.0)));
 }
 

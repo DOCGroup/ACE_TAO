@@ -66,17 +66,17 @@ class ConnectDisconnect : public Notify_Test_Client
 public:
   // Initialization and termination code.
   ConnectDisconnect ();
-  virtual ~ConnectDisconnect ();
+  ~ConnectDisconnect () override;
 
   /// Keeps track of how many objects were destroyed.
   void on_entity_destroyed ();
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]);
+                  ACE_TCHAR *argv[]) override;
 
   /// initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Run the test.
   void run_test ();

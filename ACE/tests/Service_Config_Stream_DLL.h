@@ -21,12 +21,12 @@ class Service_Config_Stream_DLL_Export Test_Task : public MT_Task
 {
 public:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
-  virtual int close (u_long);
+  int open (void *) override;
+  int close (u_long) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int init (int, ACE_TCHAR *[]);
-  virtual int fini ();
+  int init (int, ACE_TCHAR *[]) override;
+  int fini () override;
 };
 
 // Task to verify the order and operation of the stream assembly
@@ -35,7 +35,7 @@ public:
 class Service_Config_Stream_DLL_Export Stream_Order_Test : public MT_Task
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]);
+  int init (int, ACE_TCHAR *[]) override;
 };
 
 #include /**/ "ace/post.h"

@@ -3,6 +3,7 @@
 #include "ace/Truncate.h"
 #include "Options.h"
 #include "Supplier_Router.h"
+#include "Message_Block_Owner.h"
 
 
 #if defined (ACE_HAS_THREADS)
@@ -36,16 +37,17 @@ Supplier_Router::svc ()
 {
   ACE_ASSERT (this->is_writer ());
 
-  ACE_Message_Block *message_block = nullptr;
-
   if (options.debug ())
     ACE_DEBUG ((LM_DEBUG, "(%t) starting svc in %s\n", this->name ()));
 
+  ACE_Message_Block *message_block {};
   while (this->getq (message_block) > 0)
-  {
-    if (this->put_next (message_block) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "(%t) put_next failed in %s\n", this->name ()), -1);
-  }
+    {
+      UPIPE_Event_Server::Message_Block_Owner message {message_block};
+      if (this->put_next (message_block) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "(%t) put_next failed in %s\n", this->name ()), -1);
+      message.release ();
+    }
 
   return 0;
 }
@@ -56,13 +58,10 @@ int
 Supplier_Router::open (void *)
 {
   ACE_ASSERT (this->is_writer ());
-  ACE_TCHAR *argv[3];
+  std::basic_string<ACE_TCHAR> file_arg {options.supplier_file ()};
+  ACE_TCHAR *argv[] = {file_arg.data ()};
 
-  argv[0] = (ACE_TCHAR *)this->name ();
-  argv[1] = (ACE_TCHAR *)options.supplier_file ();
-  argv[2] = nullptr;
-
-  if (this->init (1, &argv[1]) == -1)
+  if (this->init (1, argv) == -1)
     return -1;
 
   // Make this an active object.
@@ -109,8 +108,8 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR       buf[BUFSIZ];
   ACE_UPIPE_Addr  addr;
-  const ACE_TCHAR *module_name = this->name ();
-  ACE_UPIPE_Acceptor &sa = (ACE_UPIPE_Acceptor &) *this->acceptor_;
+  ACE_TCHAR const * const module_name = this->name ();
+  ACE_UPIPE_Acceptor &sa = this->acceptor_->acceptor ();
 
   if (sa.get_local_addr (addr) == -1)
     return -1;

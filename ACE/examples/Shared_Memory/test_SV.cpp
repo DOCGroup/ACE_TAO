@@ -1,6 +1,7 @@
 #include "ace/Shared_Memory_SV.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
+#include <cstdio>
 
 static constexpr int SHMSZ = 27;
 #if defined (ACE_WIN32)
@@ -13,12 +14,12 @@ static void
 client ()
 {
   ACE_Shared_Memory_SV shm_client (SHM_KEY, SHMSZ);
-  char *shm = static_cast<char *> (shm_client.malloc ());
+  char *const shm = static_cast<char *> (shm_client.malloc ());
 
-  for (char *s = shm; *s != '\0'; s++)
-    putchar (*s);
+  for (char const *character = shm; *character != '\0'; ++character)
+    std::putchar (*character);
 
-  putchar ('\n');
+  std::putchar ('\n');
   *shm = '*';
 }
 
@@ -28,13 +29,13 @@ server ()
   ACE_Shared_Memory_SV shm_server (SHM_KEY,
                                    SHMSZ,
                                    ACE_Shared_Memory_SV::ACE_CREATE);
-  char *shm = static_cast<char *> (shm_server.malloc ());
-  char *s   = shm;
+  char *const shm = static_cast<char *> (shm_server.malloc ());
+  char *cursor = shm;
 
-  for (char c = 'a'; c <= 'z'; c++)
-    *s++ = c;
+  for (char character = 'a'; character <= 'z'; ++character)
+    *cursor++ = character;
 
-  *s = '\0';
+  *cursor = '\0';
 
   while (*shm != '*')
     ACE_OS::sleep (1);

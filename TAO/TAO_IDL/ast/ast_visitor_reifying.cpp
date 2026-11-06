@@ -675,7 +675,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
                      ACE_TEXT ("ast_visitor_reifying::")
                      ACE_TEXT ("visit_param_holder() - no match for ")
                      ACE_TEXT ("template param %C in %C\n"),
-                     node->local_name ()->get_string ().c_str (),
+                     node->local_name ()->get_string ().data (),
                      ScopeAsDecl (idl_global->scopes ().top ())->full_name ().c_str ()),
                     -1);
 }

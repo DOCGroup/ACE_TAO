@@ -42,7 +42,7 @@ namespace ACE
     }
 
     void
-    Monitor_Group::receive (const Monitor_Control_Types::NameList& /* data */)
+    Monitor_Group::receive (Monitor_Control_Types::NameList const& /* data */)
     {
       /// No-op, should always call update().
     }

@@ -42,6 +42,10 @@ class Consumer_Router : public Peer_Router
   //     Therefore, we can put them in the protected section.
 public:
   explicit Consumer_Router (Peer_Router_Context *prc);
+  Consumer_Router (Consumer_Router const &) = delete;
+  Consumer_Router (Consumer_Router &&) = delete;
+  Consumer_Router &operator= (Consumer_Router const &) = delete;
+  Consumer_Router &operator= (Consumer_Router &&) = delete;
   // Initialization method.
 
 protected:

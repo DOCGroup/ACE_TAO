@@ -13,6 +13,7 @@
 
 #include "ace/Process_Mutex.h"
 #include "ace/Malloc_T.h"
+#include <memory>
 
 
 // Strategic typedefs for memory allocation.
@@ -34,32 +35,32 @@ using SB_ALLOCATOR = ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 using SB_ALLOCATOR = ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #endif /* ACE_LACKS_SBRK */
 
-// Singleton
-ACE_Allocator *Malloc::instance_ = nullptr;
-
 // This is a factory that decides what type of allocator to create.
 
 ACE_Allocator *
 Malloc::instance ()
 {
-  if (Malloc::instance_ == nullptr)
+  static std::unique_ptr<ACE_Allocator> const instance = [] ()
+    -> std::unique_ptr<ACE_Allocator>
     {
-      if (Options::instance ()->child ())
-        Malloc::instance_ = new ACE_Allocator_Adapter<M_ALLOCATOR>;
-      else if (Options::instance ()->spawn_threads ())
-        {
-          if (Options::instance ()->use_sbrk ())
-            Malloc::instance_ = new ACE_Allocator_Adapter<SB_ALLOCATOR>;
-          else if (Options::instance ()->use_shmem ())
-            Malloc::instance_ = new ACE_Allocator_Adapter<ST_ALLOCATOR>;
-          else
-            Malloc::instance_ = new ACE_Allocator_Adapter<L_ALLOCATOR>;
-        }
-      else if (Options::instance ()->use_mmap ())
-        Malloc::instance_ = new ACE_Allocator_Adapter<M_ALLOCATOR>;
-      else // Use Shared_Memory_Pool.
-        Malloc::instance_ = new ACE_Allocator_Adapter<SP_ALLOCATOR>;
-    }
+      Options const *const options = Options::instance ();
 
-  return Malloc::instance_;
+      if (options->child ())
+        return std::make_unique<ACE_Allocator_Adapter<M_ALLOCATOR>> ();
+      else if (options->spawn_threads ())
+        {
+          if (options->use_sbrk ())
+            return std::make_unique<ACE_Allocator_Adapter<SB_ALLOCATOR>> ();
+          else if (options->use_shmem ())
+            return std::make_unique<ACE_Allocator_Adapter<ST_ALLOCATOR>> ();
+          else
+            return std::make_unique<ACE_Allocator_Adapter<L_ALLOCATOR>> ();
+        }
+      else if (options->use_mmap ())
+        return std::make_unique<ACE_Allocator_Adapter<M_ALLOCATOR>> ();
+      else // Use Shared_Memory_Pool.
+        return std::make_unique<ACE_Allocator_Adapter<SP_ALLOCATOR>> ();
+    } ();
+
+  return instance.get ();
 }

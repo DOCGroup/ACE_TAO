@@ -46,7 +46,7 @@ namespace ACE
       /// These are overridden to be no-ops.
       void receive (double data) override;
       void receive (size_t data) override;
-      void receive (const Monitor_Control_Types::NameList& data) override;
+      void receive (Monitor_Control_Types::NameList const& data) override;
 
       void clear () override;
 

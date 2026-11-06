@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef UDP_PERFORMANCECLIENT_H
 #define UDP_PERFORMANCECLIENT_H
 
@@ -33,7 +32,7 @@ public:
   /// Constructor
   UDP_PerformanceClient (CORBA::ORB_ptr orb,
                          UDP_ptr udp,
-                         UDP_i *udpHandler,
+                         UDP_i &udpHandler,
                          ACE_UINT32 burst_messages);
 
   /// Destructor
@@ -53,7 +52,7 @@ private:
 
   UDP_var udp_ {};
 
-  UDP_i *udpHandler_ {};
+  UDP_i &udpHandler_;
 
   ACE_UINT32 last_wrong_messages_ {};
 

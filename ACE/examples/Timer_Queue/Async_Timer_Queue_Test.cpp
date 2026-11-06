@@ -17,12 +17,14 @@
 #include "ace/Timer_Queue_Adapters.h"
 
 #include "Async_Timer_Queue_Test.h"
+#include <memory>
+#include <new>
 
 
 // Hook method that is called to handle the expiration of a timer.
 int
-Async_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                     const void *arg)
+Async_Timer_Handler::handle_timeout (ACE_Time_Value const &tv,
+                                     void const *arg)
 {
   // Print some information here (note that this is not strictly
   // signal-safe since the ACE logging mechanism uses functions that
@@ -33,35 +35,29 @@ Async_Timer_Handler::handle_timeout (const ACE_Time_Value &tv,
               tv.usec (),
               arg));
 
-  // Commit suicide!
+  // Timer callbacks own and delete their one-shot handler.
   delete this;
   return 0;
 }
-
-// Initialize the Singleton pointer.
-Async_Timer_Queue *Async_Timer_Queue::instance_ = nullptr;
 
 // Implement the Singleton logic.
 Async_Timer_Queue *
 Async_Timer_Queue::instance ()
 {
-  if (Async_Timer_Queue::instance_ == nullptr)
+  static ACE_Sig_Set signal_mask = [] ()
     {
-      // Initialize with all signals enabled.
-      ACE_Sig_Set ss (1);
-
-      // But, don't block out SIGQUIT since we always want that
-      // signal to interrupt the program.
-      ss.sig_del (SIGQUIT);
-
-      ACE_NEW_RETURN (Async_Timer_Queue::instance_, Async_Timer_Queue (&ss), 0);
-    }
-  return Async_Timer_Queue::instance_;
+      ACE_Sig_Set result (1);
+      result.sig_del (SIGQUIT);
+      return result;
+    } ();
+  static Async_Timer_Queue instance (&signal_mask);
+  return &instance;
 }
 
 // Sets the signal set to mask, for the timer queue.
 
-Async_Timer_Queue::Async_Timer_Queue (ACE_Sig_Set *ss) :
+Async_Timer_Queue::Async_Timer_Queue (ACE_Sig_Set *ss)
+  :
   tq_ (ss)
 {
 }
@@ -93,16 +89,24 @@ Async_Timer_Queue::schedule (u_int microsecs)
 
   // Create a new Event_Handler for our timer.
 
-  ACE_Event_Handler *eh;
-  ACE_NEW (eh, Async_Timer_Handler);
+  std::unique_ptr<ACE_Event_Handler> eh (new (std::nothrow) Async_Timer_Handler);
+  if (!eh)
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "new Async_Timer_Handler"));
+      return;
+    }
 
-  // Schedule the timer to run in the future.
-  long tid = this->tq_.schedule(eh,
-                                nullptr, // Note that our "magic cookie" ACT is always null.
-                                ACE_OS::gettimeofday () + tv);
+  // Transfer ownership before scheduling because a timer can expire immediately.
+  ACE_Event_Handler *const raw_handler = eh.release ();
+  long const tid = this->tq_.schedule (raw_handler,
+                                       raw_handler,
+                                       ACE_OS::gettimeofday () + tv);
 
   if (tid == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "schedule_timer"));
+    {
+      delete raw_handler;
+      ACE_ERROR ((LM_ERROR, "%p\n", "schedule_timer"));
+    }
 }
 
 // Cancel a timer.
@@ -110,16 +114,20 @@ Async_Timer_Queue::schedule (u_int microsecs)
 void
 Async_Timer_Queue::cancel (long timer_id)
 {
-  ACE_DEBUG ((LM_DEBUG, "canceling %d\n", timer_id));
+  ACE_DEBUG ((LM_DEBUG,
+              "canceling %q\n",
+              static_cast<ACE_INT64> (timer_id)));
 
-  const void *act = nullptr;
+  void const *act {};
 
   if (this->tq_.cancel (timer_id, &act) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "cancel_timer"));
+    {
+      ACE_ERROR ((LM_ERROR, "%p\n", "cancel_timer"));
+      return;
+    }
 
-  // In this case, the act will be 0, but it could be a real pointer
-  // in other cases.
-  delete (ACE_Event_Handler *) act;
+  std::unique_ptr<ACE_Event_Handler> canceled_handler (
+    static_cast<ACE_Event_Handler *> (const_cast<void *> (act)));
 }
 
 // Schedule timer hook method.  This method is called from the driver.
@@ -127,9 +135,7 @@ Async_Timer_Queue::cancel (long timer_id)
 int
 Async_Timer_Queue::schedule_timer (void *argument)
 {
-  u_long useconds = *(int *)argument;
-
-  // Schedule a timer.
+  u_int const useconds = *static_cast<u_int const *> (argument);
   Async_Timer_Queue::instance ()->schedule (useconds);
 
   return 0;
@@ -140,9 +146,7 @@ Async_Timer_Queue::schedule_timer (void *argument)
 int
 Async_Timer_Queue::cancel_timer (void *argument)
 {
-  u_long id = *(int *)argument;
-
-  // Cancel a timer.
+  long const id = *static_cast<long const *> (argument);
   Async_Timer_Queue::instance ()->cancel (id);
 
   return 0;
@@ -200,7 +204,7 @@ register_signal_handlers ()
 {
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Register SIGQUIT (never blocked).
-  ACE_Sig_Action sigquit ((ACE_SignalHandler) signal_handler, SIGQUIT);
+  ACE_Sig_Action sigquit (&signal_handler, SIGQUIT);
   ACE_UNUSED_ARG (sigquit);
 #endif
 
@@ -210,17 +214,11 @@ register_signal_handlers ()
 
   // Register SIGINT (note that system calls will be restarted
   // automatically).
-  ACE_Sig_Action sigint ((ACE_SignalHandler) signal_handler,
+  ACE_Sig_Action sigint (&signal_handler,
                          SIGINT,
                          ss,
                          SA_RESTART);
   ACE_UNUSED_ARG (sigint);
-}
-
-// constructor
-
-Async_Timer_Queue_Test_Driver::Async_Timer_Queue_Test_Driver ()
-{
 }
 
 // displays the menu of options.
@@ -229,7 +227,7 @@ int
 Async_Timer_Queue_Test_Driver::display_menu ()
 {
   // The menu of options provided to the user.
-  static char menu[] =
+  static char const menu[] =
     "****\n"
     "1) schedule timer <usecs>\n"
     "2) cancel timer <timer_id>\n"
@@ -248,25 +246,33 @@ Async_Timer_Queue_Test_Driver::init ()
   using CMD = Command<Async_Timer_Queue, Async_Timer_Queue::ACTION>;
 
   // Initialize <Command> objects with their corresponding <Input_Task> methods.
-  ACE_NEW_RETURN (schedule_cmd_,
+  CMD *raw_schedule_cmd {};
+  ACE_NEW_RETURN (raw_schedule_cmd,
                   CMD (*Async_Timer_Queue::instance (),
                        &Async_Timer_Queue::schedule_timer),
                   -1);
+  schedule_cmd_.reset (raw_schedule_cmd);
 
-  ACE_NEW_RETURN (cancel_cmd_,
+  CMD *raw_cancel_cmd {};
+  ACE_NEW_RETURN (raw_cancel_cmd,
                   CMD (*Async_Timer_Queue::instance (),
                        &Async_Timer_Queue::cancel_timer),
                   -1);
+  cancel_cmd_.reset (raw_cancel_cmd);
 
-  ACE_NEW_RETURN (list_cmd_,
+  CMD *raw_list_cmd {};
+  ACE_NEW_RETURN (raw_list_cmd,
                   CMD (*Async_Timer_Queue::instance (),
                        &Async_Timer_Queue::list_timer),
                   -1);
+  list_cmd_.reset (raw_list_cmd);
 
-  ACE_NEW_RETURN (shutdown_cmd_,
+  CMD *raw_shutdown_cmd {};
+  ACE_NEW_RETURN (raw_shutdown_cmd,
                   CMD (*Async_Timer_Queue::instance (),
                        &Async_Timer_Queue::shutdown_timer),
                   -1);
+  shutdown_cmd_.reset (raw_shutdown_cmd);
 
   register_signal_handlers ();
 

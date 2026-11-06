@@ -68,7 +68,7 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
       // trouble with IN args that are multidimensional arrays.
       if (node->n_dims () > 1)
         {
-          *os << "(const ::" << node->name () << "_slice *) ";
+          *os << "(::" << node->name () << "_slice const *) ";
         }
 
       *os << arg->local_name ();

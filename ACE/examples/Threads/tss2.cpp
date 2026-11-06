@@ -18,12 +18,13 @@
 #include "TSS_Data.h"
 #include "TSS_Obj.h"
 #include "TSS_Task.h"
+#include <memory>
 
 
 #if defined (ACE_HAS_THREADS)
 
-const int MAX_TASKS = 4;
-const int MAX_ITERATIONS = 10;
+static constexpr int MAX_TASKS = 4;
+static constexpr int MAX_ITERATIONS = 10;
 
 std::atomic<int> Test_Task::count_ {0};
 std::atomic<int> Test_Task::wait_count_ {0};
@@ -64,12 +65,12 @@ Test_Task::~Test_Task ()
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Test_Task-: %d\n",
               Test_Task::count_.load (std::memory_order_relaxed)));
-  Test_Task::wait_count_.fetch_sub (1, std::memory_order_relaxed);
 }
 
-void *
+ACE_THR_FUNC_RETURN
 Test_Task::svc (void *arg)
 {
+  // The task array in main retains ownership until all worker threads finish.
   // When the thread exits this thread-specific object will be deleted
   // automatically.
   ACE_TSS<TSS_Obj> tss (new TSS_Obj);
@@ -98,15 +99,14 @@ Test_Task::svc (void *arg)
   ACE_ASSERT (TSS_DATA::instance ()->data () == arg);
 #endif
 
-  delete (Test_Task *) arg;
-
-  return nullptr;
+  Test_Task::wait_count_.fetch_sub (1, std::memory_order_relaxed);
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
 Test_Task::open (void *arg)
 {
-  if (ACE_Thread::spawn ((ACE_THR_FUNC) Test_Task::svc, arg) == -1)
+  if (ACE_Thread::spawn (Test_Task::svc, arg) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Thread::spawn"), 0);
 
   return 0;
@@ -117,9 +117,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   num_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : MAX_TASKS;
 
-  Test_Task **task_arr = nullptr;
-
-  ACE_NEW_RETURN (task_arr, Test_Task *[num_tasks], -1);
+  std::unique_ptr<Test_Task> *task_array_storage {};
+  ACE_NEW_RETURN (task_array_storage,
+                  std::unique_ptr<Test_Task>[num_tasks],
+                  -1);
+  std::unique_ptr<std::unique_ptr<Test_Task>[]> task_arr {task_array_storage};
 
   for (int i = 0; i < MAX_ITERATIONS; i++)
     {
@@ -132,8 +134,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (int j = 0; j < num_tasks; j++)
         {
-          ACE_NEW_RETURN (task_arr[j], Test_Task, -1);
-          task_arr[j]->open (task_arr[j]);
+          Test_Task *task {};
+          ACE_NEW_RETURN (task, Test_Task, -1);
+          task_arr[j].reset (task);
+        }
+
+      for (int j = 0; j < num_tasks; j++)
+        {
+          if (task_arr[j]->open (task_arr[j].get ()) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR, "failed to start Test_Task thread\n"), -1);
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%t) waiting for first thread started\n"));

@@ -36,7 +36,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
 }
 
 template <class T>
-ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
+ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Unbounded_Queue<T> const &us)
   : allocator_ (us.allocator_)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue");
@@ -52,7 +52,7 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &us)
 }
 
 template <class T> void
-ACE_Unbounded_Queue<T>::operator= (const ACE_Unbounded_Queue<T> &us)
+ACE_Unbounded_Queue<T>::operator= (ACE_Unbounded_Queue<T> const &us)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
 
@@ -103,7 +103,7 @@ ACE_Unbounded_Queue<T>::dump () const
 }
 
 template <class T> void
-ACE_Unbounded_Queue<T>::copy_nodes (const ACE_Unbounded_Queue<T> &us)
+ACE_Unbounded_Queue<T>::copy_nodes (ACE_Unbounded_Queue<T> const &us)
 {
   for (ACE_Node<T> *curr = us.head_->next_;
        curr != us.head_;
@@ -151,7 +151,7 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue ()
 }
 
 template <class T> int
-ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
+ACE_Unbounded_Queue<T>::enqueue_head (T const &new_item)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_head");
 
@@ -172,7 +172,7 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
 }
 
 template <class T> int
-ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
+ACE_Unbounded_Queue<T>::enqueue_tail (T const &new_item)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::enqueue_tail");
 
@@ -254,7 +254,7 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t slot) const
 }
 
 template <class T> int
-ACE_Unbounded_Queue<T>::set (const T &item,
+ACE_Unbounded_Queue<T>::set (T const &item,
                              size_t slot)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::set");
@@ -323,7 +323,9 @@ ACE_Unbounded_Queue_Const_Iterator<T>::dump () const
 }
 
 template <class T>
-ACE_Unbounded_Queue_Const_Iterator<T>::ACE_Unbounded_Queue_Const_Iterator (const ACE_Unbounded_Queue<T> &q, int end)
+ACE_Unbounded_Queue_Const_Iterator<T>::ACE_Unbounded_Queue_Const_Iterator (
+  ACE_Unbounded_Queue<T> const &q,
+  int end)
   : current_ (end == 0 ? q.head_->next_ : q.head_ ),
     queue_ (q)
 {

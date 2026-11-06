@@ -28,8 +28,8 @@ be_visitor_sequence_buffer_type::~be_visitor_sequence_buffer_type () = default;
 int
 be_visitor_sequence_buffer_type::visit_node (be_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -55,8 +55,8 @@ be_visitor_sequence_buffer_type::visit_node (be_type *node)
 int
 be_visitor_sequence_buffer_type::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  AST_PredefinedType::PredefinedType pt = node->pt ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+  AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   *os << "::";
 
@@ -93,7 +93,7 @@ be_visitor_sequence_buffer_type::visit_map (be_map *node)
 int
 be_visitor_sequence_buffer_type::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
@@ -111,7 +111,7 @@ be_visitor_sequence_buffer_type::visit_interface (be_interface *node)
 int
 be_visitor_sequence_buffer_type::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
@@ -140,7 +140,7 @@ be_visitor_sequence_buffer_type::visit_component_fwd (be_component_fwd *node)
 int
 be_visitor_sequence_buffer_type::visit_valuebox (be_valuebox *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
@@ -157,7 +157,7 @@ be_visitor_sequence_buffer_type::visit_valuebox (be_valuebox *node)
 int
 be_visitor_sequence_buffer_type::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
@@ -174,7 +174,7 @@ be_visitor_sequence_buffer_type::visit_valuetype (be_valuetype *node)
 int
 be_visitor_sequence_buffer_type::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH)
     {
@@ -203,7 +203,7 @@ be_visitor_sequence_buffer_type::visit_eventtype_fwd (be_eventtype_fwd *node)
 int
 be_visitor_sequence_buffer_type::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (node->width () == sizeof (char))
     {
@@ -220,7 +220,7 @@ be_visitor_sequence_buffer_type::visit_string (be_string *node)
 int
 be_visitor_sequence_buffer_type::visit_fixed (be_fixed *)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   *os << "::ACE_CDR::Fixed";
   return 0;
 }

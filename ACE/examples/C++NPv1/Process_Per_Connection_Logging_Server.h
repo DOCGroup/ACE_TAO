@@ -13,12 +13,17 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Signal.h"
 #include "Logging_Server.h"
+#include <string>
 
 class Logging_Process : public ACE_Process
 {
 public:
-  Logging_Process (const char *prog_name,
-                   const ACE_SOCK_Stream &logging_peer);
+  Logging_Process (char const *prog_name,
+                   ACE_SOCK_Stream const &logging_peer);
+  Logging_Process (Logging_Process const &) = delete;
+  Logging_Process (Logging_Process &&) = delete;
+  Logging_Process &operator= (Logging_Process const &) = delete;
+  Logging_Process &operator= (Logging_Process &&) = delete;
 
   int prepare (ACE_Process_Options &options) override;
   void unmanage () override;
@@ -26,15 +31,15 @@ public:
 private:
   Logging_Process () = delete;
 
-  char prog_name_[MAXPATHLEN + 1];
+  std::string prog_name_;
   ACE_SOCK_Stream logging_peer_;
 };
 
 
 class Process_Per_Connection_Logging_Server : public Logging_Server
 {
-protected:
-  char prog_name_[MAXPATHLEN + 1];
+private:
+  std::string prog_name_;
 
 protected:
   int handle_connections () override;
@@ -44,6 +49,12 @@ protected:
   int run_worker (int argc, char *argv[]);
 
 public:
+  Process_Per_Connection_Logging_Server () = default;
+  Process_Per_Connection_Logging_Server (Process_Per_Connection_Logging_Server const &) = delete;
+  Process_Per_Connection_Logging_Server (Process_Per_Connection_Logging_Server &&) = delete;
+  Process_Per_Connection_Logging_Server &operator= (Process_Per_Connection_Logging_Server const &) = delete;
+  Process_Per_Connection_Logging_Server &operator= (Process_Per_Connection_Logging_Server &&) = delete;
+
   int run (int argc, char *argv[]) override;
 };
 

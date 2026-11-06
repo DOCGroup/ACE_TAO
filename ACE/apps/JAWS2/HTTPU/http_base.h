@@ -11,7 +11,6 @@
 #include "HTTPU/http_export.h"
 #include "HTTPU/http_status.h"
 #include "HTTPU/http_headers.h"
-#include <memory>
 
 class HTTPU_Export HTTP_Base : public HTTP_SCode_Base
 {
@@ -70,7 +69,7 @@ protected:
   bool no_headers_;
   HTTP_Headers info_;
   JAWS_Header_Table_Iterator iter_;
-  std::unique_ptr<ACE_Message_Block> mb_;
+  ACE_Message_Block_Unique_Ptr mb_ {};
   ACE_Message_Block payload_;
 };
 

@@ -280,9 +280,9 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
   *os << be_uidt_nl << "private:" << be_idt_nl;
-  *os << node->local_name () << " (const " << node->local_name () << " &);"
+  *os << node->local_name () << " (" << node->local_name () << " const &);"
       << be_nl
-      << "void operator= (const " << node->local_name () << " &);"
+      << "void operator= (" << node->local_name () << " const &);"
       << be_nl;
 
   /*********************************************************/

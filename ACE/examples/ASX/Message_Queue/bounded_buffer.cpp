@@ -8,7 +8,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 // The producer reads data from the stdin stream, creates a message,
@@ -17,19 +16,22 @@
 // there is no more data to read.  The consumer uses this as a flag to
 // know when to exit.
 
-static void *
-producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
+static ACE_THR_FUNC_RETURN
+producer (void *arg)
 {
+  ACE_Message_Queue<ACE_MT_SYNCH> * const msg_queue =
+    static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (arg);
   // Keep reading stdin, until we reach EOF.
 
-  for (int n; ; )
+  for (;;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ), ACE_THR_FUNC_RETURN_NULL);
+      ACE_Message_Block_Unique_Ptr message {mb};
 
-      n = ACE_OS::read (ACE_STDIN, mb->wr_ptr (), mb->size ());
+      int const n = ACE_OS::read (ACE_STDIN, mb->wr_ptr (), mb->size ());
 
       if (n <= 0)
         {
@@ -39,6 +41,8 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
             ACE_ERROR ((LM_ERROR,
                         "(%t) %p\n",
                         "put_next"));
+          else
+            message.release ();
           break;
         }
       // Send the message to the other thread.
@@ -50,6 +54,8 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
             ACE_ERROR ((LM_ERROR,
                         "(%t) %p\n",
                         "put_next"));
+          else
+            message.release ();
         }
     }
 
@@ -61,16 +67,19 @@ producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 // producer sends a 0-sized message to inform the consumer to stop
 // reading and exit.
 
-static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
+static ACE_THR_FUNC_RETURN
+consumer (void *arg)
 {
-  int result = 0;
+  ACE_Message_Queue<ACE_MT_SYNCH> * const msg_queue =
+    static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (arg);
+  int result {};
 
   // Keep looping, reading a message out of the queue, until we timeout
   // or get a message with a length == 0, which signals us to quit.
 
   for (;;)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       ACE_Time_Value timeout (ACE_OS::time (0) + 4, 0); // Wait for upto 4 seconds
 
@@ -79,12 +88,11 @@ static void *consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
       if (result == -1)
         break;
 
-      int length = ACE_Utils::truncate_cast<int> (mb->length ());
+      ACE_Message_Block_Unique_Ptr message {mb};
+      int const length = ACE_Utils::truncate_cast<int> (mb->length ());
 
       if (length > 0)
         ACE_OS::write (ACE_STDOUT, mb->rd_ptr (), length);
-
-      mb->release ();
 
       if (length == 0)
         break;
@@ -107,7 +115,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue;
 
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (producer),
+      (producer,
        static_cast<void *> (&msg_queue),
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -115,8 +123,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                        "spawn"),
                       1);
   else if (ACE_Thread_Manager::instance ()->spawn
-           (ACE_THR_FUNC (consumer),
-            (void *) &msg_queue,
+           (consumer,
+            static_cast<void *> (&msg_queue),
             THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

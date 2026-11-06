@@ -10,6 +10,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Signal.h"
 #include "ace/OS_NS_unistd.h"
+#include <array>
 
 #include "transceiver.h"
 
@@ -20,24 +21,20 @@ Event_Transceiver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("Ch:p:S"));
 
-  this->port_number_ = ACE_DEFAULT_SERVER_PORT;
-  this->host_name_ = ACE_DEFAULT_SERVER_HOST;
-  this->role_ = ACE_TEXT ("Supplier");
-
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'C':
-        this->role_ = ACE_TEXT ("Consumer");
+        this->options_.role = Role::Consumer;
         break;
       case 'h':
-        this->host_name_ = get_opt.opt_arg ();
+        this->options_.host_name = get_opt.opt_arg ();
         break;
       case 'p':
-        this->port_number_ = ACE_OS::atoi (get_opt.opt_arg ());
+        this->options_.port_number = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'S':
-        this->role_ = ACE_TEXT ("Supplier");
+        this->options_.role = Role::Supplier;
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -52,10 +49,18 @@ Event_Transceiver::parse_args (int argc, ACE_TCHAR *argv[])
   // ACE_DEFAULT_SERVER_PORT and the Supplier port to
   // ACE_DEFAULT_SERVER_PORT + 1).  Note that this is kind of a
   // hack...
-  if (ACE_OS::strcmp (this->role_, ACE_TEXT ("Supplier")) == 0
-      && this->port_number_ == ACE_DEFAULT_SERVER_PORT)
-    this->port_number_++;
+  if (this->options_.role == Role::Supplier
+      && this->options_.port_number == ACE_DEFAULT_SERVER_PORT)
+    ++this->options_.port_number;
   return 0;
+}
+
+ACE_TCHAR const *
+Event_Transceiver::role_name () const
+{
+  return this->options_.role == Role::Consumer
+    ? ACE_TEXT ("Consumer")
+    : ACE_TEXT ("Supplier");
 }
 
 int
@@ -73,8 +78,6 @@ Event_Transceiver::handle_signal (int, siginfo_t *, ucontext_t *)
   ACE_Reactor::instance ()->end_reactor_event_loop ();
   return 0;
 }
-
-Event_Transceiver::Event_Transceiver () = default;
 
 Event_Transceiver::Event_Transceiver (int argc, ACE_TCHAR *argv[])
 {
@@ -108,8 +111,8 @@ Event_Transceiver::Event_Transceiver (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("register_stdin_handler")));
 
       // Address of the server.
-      ACE_INET_Addr server_addr (this->port_number_,
-                                 this->host_name_);
+      ACE_INET_Addr server_addr (this->options_.port_number,
+                                 this->options_.host_name.c_str ());
 
       ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR> connector;
 
@@ -123,10 +126,10 @@ Event_Transceiver::Event_Transceiver (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
-                      this->host_name_));
-          ACE_Reactor::instance()->remove_handler (sig_set);
-          ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance(),
-                                                   ACE_Thread_Manager::instance());
+                      this->options_.host_name.c_str ()));
+          ACE_Reactor::instance ()->remove_handler (sig_set);
+          ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
+                                                   ACE_Thread_Manager::instance ());
         }
     }
 }
@@ -161,18 +164,18 @@ Event_Transceiver::transmitter ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) entering %s transmitter\n"),
-              this->role_));
+              this->role_name ()));
 
-  char buf[BUFSIZ];
-  ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
-  int result = 0;
+  std::array<char, BUFSIZ> buffer;
+  ssize_t const n = ACE_OS::read (ACE_STDIN, buffer.data (), buffer.size ());
+  int result {};
 
-  if (n <= 0 || this->peer ().send_n (buf, n) != n)
+  if (n <= 0 || this->peer ().send_n (buffer.data (), n) != n)
     result = -1;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) leaving %s transmitter\n"),
-              this->role_));
+              this->role_name ()));
   return result;
 }
 
@@ -181,20 +184,20 @@ Event_Transceiver::receiver ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) entering %s receiver\n"),
-              this->role_));
+              this->role_name ()));
 
-  char buf[BUFSIZ];
+  std::array<char, BUFSIZ> buffer;
 
-  ssize_t n = this->peer ().recv (buf, sizeof buf);
-  int result = 0;
+  ssize_t const n = this->peer ().recv (buffer.data (), buffer.size ());
+  int result {};
 
   if (n <= 0
-      || ACE_OS::write (ACE_STDOUT, buf, n) != n)
+      || ACE_OS::write (ACE_STDOUT, buffer.data (), n) != n)
     result = -1;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) leaving %s receiver\n"),
-              this->role_));
+              this->role_name ()));
   return result;
 }
 

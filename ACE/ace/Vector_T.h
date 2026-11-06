@@ -82,8 +82,8 @@ public:
    * @param alloc Pointer to an ACE allocator.  If it is NULL then the
    *              default ACE allocator is used
    */
-  ACE_Vector (const size_t init_size = DEFAULT_SIZE,
-              ACE_Allocator* alloc = nullptr);
+  explicit ACE_Vector (size_t const init_size = DEFAULT_SIZE,
+                       ACE_Allocator *alloc = nullptr);
 
   /**
    * Destructor.
@@ -130,8 +130,8 @@ public:
    *          class T will be used (for more detail, see the
    *          initialization clause for this parameter).
    */
-  void resize (const size_t new_size,
-               const T& t);
+  void resize (size_t const new_size,
+               T const &t);
 
   /**
    * Appends a new element to the vector ("push back").  If the
@@ -143,7 +143,7 @@ public:
    *             default, this parameters gets initialized with the
    *             default value of the class T.
    */
-  void push_back (const T& elem);
+  void push_back (T const &elem);
 
   /**
    * Deletes the last element from the vector ("pop back").  What this
@@ -176,7 +176,7 @@ public:
    * Compare this vector with @arg s for equality.  Two vectors are equal
    * if their sizes are equal and all the elements are equal.
    */
-  bool operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
+  bool operator== (ACE_Vector<T, DEFAULT_SIZE> const &s) const;
 
   /// Inequality comparison operator.
   /**
@@ -184,7 +184,7 @@ public:
    * @arg s is always the complement of the boolean return value of
    * @c *this == @arg s.
    */
-  bool operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
+  bool operator!= (ACE_Vector<T, DEFAULT_SIZE> const &s) const;
 
   void swap (ACE_Vector &rhs);
 
@@ -225,7 +225,7 @@ template <class T, size_t DEFAULT_SIZE = ACE_VECTOR_DEFAULT_SIZE>
 class ACE_Vector_Iterator
 {
 public:
-  ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &);
+  explicit ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &);
 
   // = Iteration methods.
 

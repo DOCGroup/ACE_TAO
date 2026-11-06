@@ -33,8 +33,8 @@ public:
   Request_Handler (ACE_Thread_Manager *tm = 0);
 
 protected:
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0) override;
 
 private:
   size_t  nr_msgs_rcvd_;

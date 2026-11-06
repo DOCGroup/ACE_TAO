@@ -1,7 +1,6 @@
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/Service_Config.h"
-
 #include "CPP-acceptor.h"
 
 #if !defined (ACE_WIN32)
@@ -31,7 +30,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "This test is not ported to Win32 (yet)\n"),
+                     ACE_TEXT ("This test is not ported to Win32 (yet)\n")),
                     -1);
 }
 #endif /* !ACE_WIN32 */

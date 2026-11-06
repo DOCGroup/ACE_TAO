@@ -26,7 +26,6 @@
 #include "tao/orbconf.h"
 #include "ace/Message_Block.h"
 
-#include <memory>
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -259,8 +258,8 @@ private:
   Persistent_Callback* callback_ = nullptr;
 
   /// If these are non-null, we own them.
-  std::unique_ptr<ACE_Message_Block> event_mb_;
-  std::unique_ptr<ACE_Message_Block> routing_slip_mb_;
+  ACE_Message_Block_Unique_Ptr event_mb_ {};
+  ACE_Message_Block_Unique_Ptr routing_slip_mb_ {};
 };
 } /* namespace TAO_Notify */
 

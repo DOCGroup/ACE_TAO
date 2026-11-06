@@ -16,8 +16,7 @@
 class ClientTask : public ACE_Task_Base
 {
 public:
-  ClientTask(Foo_ptr foo,
-              Callback_ptr callback);
+  ClientTask (Foo_ptr foo, Callback_ptr callback);
 
   ~ClientTask () override = default;
 
@@ -26,9 +25,9 @@ public:
   ClientTask & operator= (ClientTask const &) = delete;
   ClientTask & operator= (ClientTask &&) = delete;
 
-  int open(void* x = 0) override;
-  int svc() override;
-  int close(u_long) override;
+  int open (void * = nullptr) override;
+  int svc () override;
+  int close (u_long) override;
 
 private:
   Foo_var foo_;

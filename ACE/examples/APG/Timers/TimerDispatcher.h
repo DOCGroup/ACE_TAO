@@ -11,18 +11,24 @@
 class Timer_Dispatcher
 {
 public:
+  Timer_Dispatcher () = default;
+  Timer_Dispatcher (Timer_Dispatcher const &) = delete;
+  Timer_Dispatcher (Timer_Dispatcher &&) = delete;
+  Timer_Dispatcher &operator= (Timer_Dispatcher const &) = delete;
+  Timer_Dispatcher &operator= (Timer_Dispatcher &&) = delete;
+
   void wait_for_event ();
 
   long schedule (ACE_Event_Handler *cb,
                  void *arg,
-                 const ACE_Time_Value &abs_time,
-                 const ACE_Time_Value &interval);
+                 ACE_Time_Value const &abs_time,
+                 ACE_Time_Value const &interval);
 
   int cancel (ACE_Event_Handler *cb,
               int dont_call_handle_close = 1);
 
   int reset_interval (long timer_id,
-                      const ACE_Time_Value &interval);
+                      ACE_Time_Value const &interval);
 
   void set (ACE_Timer_Queue *timer_queue);
 

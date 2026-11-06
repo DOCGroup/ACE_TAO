@@ -22,7 +22,7 @@ ACE_Activation_Queue::dump () const
               ACE_TEXT ("owns_queue_ = %d\n"),
               this->owned_queue_ != nullptr));
   ACELIB_DEBUG ((LM_INFO, ACE_TEXT ("queue_:\n")));
-  if (this->queue_)
+  if (this->queue_ != nullptr)
     this->queue_->dump();
   else
     ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("(nullptr)\n")));
@@ -31,11 +31,12 @@ ACE_Activation_Queue::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Activation_Queue::ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue,
-                                            ACE_Allocator *alloc,
-                                            ACE_Allocator *db_alloc)
-  : allocator_(alloc)
-  , data_block_allocator_(db_alloc)
+ACE_Activation_Queue::ACE_Activation_Queue (
+  ACE_Message_Queue<ACE_SYNCH> *new_queue,
+  ACE_Allocator *alloc,
+  ACE_Allocator *db_alloc)
+  : allocator_ (alloc)
+  , data_block_allocator_ (db_alloc)
 {
   if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
@@ -104,12 +105,14 @@ ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
                                             this->allocator_), // message_block allocator
                          -1);
 
-  // Enqueue in priority order.
-  int const result = this->queue_->enqueue_prio (mb, tv);
+  ACE_Message_Block_Unique_Ptr mb_owner (mb);
 
-  // Free ACE_Message_Block if enqueue_prio failed.
-  if (result == -1)
-      ACE_DES_FREE (mb, this->allocator_->free, ACE_Message_Block);
+  // Enqueue in priority order.
+  int const result = this->queue_->enqueue_prio (mb_owner.get (), tv);
+
+  // The queue takes ownership when enqueue_prio succeeds.
+  if (result != -1)
+    mb_owner.release ();
 
   return result;
 }

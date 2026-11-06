@@ -15,11 +15,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Inversion::EC_Inversion ()
-  :  same_events_ (0)
-{
-}
-
 int
 EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
 {
@@ -27,12 +22,12 @@ EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const* arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-same_events")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->same_events_ = 1;
+          this->same_events_ = true;
         }
 
       else

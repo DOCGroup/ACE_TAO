@@ -11,23 +11,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-Options::Options ()
-    : thr_count_ (4),
-      t_flags_ (THR_DETACHED),
-      high_water_mark_ (8 * 1024),
-      low_water_mark_ (1024),
-      message_size_ (128),
-      initial_queue_length_ (0),
-      iterations_ (100000),
-      debugging_ (false),
-      verbosity_ (false),
-      consumer_port_ (ACE_TEXT ("-p 10000")),
-      supplier_port_ (ACE_TEXT ("-p 10001")),
-      consumer_file_ (ACE_TEXT ("-f/tmp/conupipe")),
-      supplier_file_ (ACE_TEXT ("-f/tmp/supupipe"))
-{
-}
-
 void Options::print_results ()
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
@@ -56,22 +39,25 @@ void Options::print_results ()
                       "%8d = involuntary context switches\n"
                       "%8d = system calls\n"
                       "%8d = chars read/written\n",
-                      (int) rusage.pr_lwpid,
-                      (int) rusage.pr_count,
-                      (int) rusage.pr_minf,
-                      (int) rusage.pr_majf,
-                      (int) rusage.pr_inblk,
-                      (int) rusage.pr_oublk,
-                      (int) rusage.pr_msnd,
-                      (int) rusage.pr_mrcv,
-                      (int) rusage.pr_sigs,
-                      (int) rusage.pr_wtime.tv_sec, (int) rusage.pr_wtime.tv_nsec / 1000000,
-                      (int) rusage.pr_ltime.tv_sec, (int) rusage.pr_ltime.tv_nsec / 1000000,
-                      (int) rusage.pr_slptime.tv_sec, (int) rusage.pr_slptime.tv_nsec / 1000000,
-                      (int) rusage.pr_vctx,
-                      (int) rusage.pr_ictx,
-                      (int) rusage.pr_sysc,
-                      (int) rusage.pr_ioch);
+                      static_cast<int> (rusage.pr_lwpid),
+                      static_cast<int> (rusage.pr_count),
+                      static_cast<int> (rusage.pr_minf),
+                      static_cast<int> (rusage.pr_majf),
+                      static_cast<int> (rusage.pr_inblk),
+                      static_cast<int> (rusage.pr_oublk),
+                      static_cast<int> (rusage.pr_msnd),
+                      static_cast<int> (rusage.pr_mrcv),
+                      static_cast<int> (rusage.pr_sigs),
+                      static_cast<int> (rusage.pr_wtime.tv_sec),
+                      static_cast<int> (rusage.pr_wtime.tv_nsec) / 1000000,
+                      static_cast<int> (rusage.pr_ltime.tv_sec),
+                      static_cast<int> (rusage.pr_ltime.tv_nsec) / 1000000,
+                      static_cast<int> (rusage.pr_slptime.tv_sec),
+                      static_cast<int> (rusage.pr_slptime.tv_nsec) / 1000000,
+                      static_cast<int> (rusage.pr_vctx),
+                      static_cast<int> (rusage.pr_ictx),
+                      static_cast<int> (rusage.pr_sysc),
+                      static_cast<int> (rusage.pr_ioch));
     }
 #endif /* ACE_HAS_PRUSAGE_T */
 
@@ -93,7 +79,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("C:c:bdH:i:L:l:M:nS:s:t:T:v"));
-  int c;
+  int c {};
 
   while ((c = getopt ()) != -1)
   //FUZZ: enable check_for_lack_ACE_OS
@@ -103,10 +89,10 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->t_flags (THR_BOUND);
         break;
       case 'C':
-        this->consumer_file (getopt.opt_arg ());
+        this->consumer_file (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
         break;
       case 'c':
-        this->consumer_port (getopt.opt_arg ());
+        this->consumer_port (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
         break;
       case 'd':
         this->debugging_ = true;
@@ -130,10 +116,10 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->t_flags (THR_NEW_LWP);
         break;
       case 'S':
-        this->supplier_file (getopt.opt_arg ());
+        this->supplier_file (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
         break;
       case 's':
-        this->supplier_port (getopt.opt_arg ());
+        this->supplier_port (std::basic_string<ACE_TCHAR> {getopt.opt_arg ()});
         break;
       case 'T':
         #if defined (ACE_HAS_TRACE)

@@ -65,7 +65,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << "{" << be_idt_nl
       << "TAO_Stub_Auto_Ptr stub (this->_create_stub ());" << be_nl;
 
-  *os << "bool _tao_opt_colloc = "
+  *os << "bool const _tao_opt_colloc = "
       << "stub->servant_orb_var ()->orb_core ()->"
       << "optimize_collocation_objects ();" << be_nl
       << "::CORBA::Object_var obj = "

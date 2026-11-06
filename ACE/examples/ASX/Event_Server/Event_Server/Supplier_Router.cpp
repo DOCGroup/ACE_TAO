@@ -15,7 +15,7 @@ Supplier_Router::svc ()
 
   ACE_DEBUG ((LM_DEBUG, "(%t) starting svc in Supplier_Router\n"));
 
-  for (ACE_Message_Block *mb = nullptr;
+  for (ACE_Message_Block *mb {};
        this->getq (mb) >= 0;
        )
     {
@@ -66,7 +66,7 @@ Supplier_Router::open (void *)
 
       // Make this an active object to handle the error cases in a
       // separate thread.
-      return this->activate (Options::instance ()->t_flags ());
+      return this->activate (Options::instance ().t_flags ());
     }
 }
 
@@ -136,7 +136,7 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_INET_Addr addr;
-  const ACE_TCHAR *module_name = this->name ();
+  ACE_TCHAR const * const module_name = this->name ();
 
   if (this->context ()->acceptor ().get_local_addr (addr) == -1)
     return -1;

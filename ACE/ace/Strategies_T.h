@@ -441,8 +441,8 @@ public:
    * and then calling the @c open() method of the SVC_HANDLER in the
    * child.
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -727,7 +727,7 @@ public:
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
   /// This is a no-op.
-  virtual int make_svc_handler (SVC_HANDLER *&);
+  int make_svc_handler (SVC_HANDLER *&) override;
 };
 
 /**
@@ -751,8 +751,8 @@ public:
 
   // = Factory method.
   /// This is a no-op.
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 };
 
 template <class T>

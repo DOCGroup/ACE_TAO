@@ -140,7 +140,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // Generate code for the _is_a override.
   *os << be_nl_2
       << "::CORBA::Boolean " << full_skel_name
-      << "::_is_a (const char* value)" << be_nl
+      << "::_is_a (char const *value)" << be_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "(" << be_idt_nl;
@@ -167,7 +167,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
-  *os << "const char* " << full_skel_name
+  *os << "char const *" << full_skel_name
       << "::_interface_repository_id () const"
       << be_nl;
   *os << "{" << be_idt_nl;

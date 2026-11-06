@@ -9,8 +9,11 @@
 class HA_Device_Repository
 {
 public:
-  HA_Device_Repository () : owner_ (nullptr)
-  { }
+  HA_Device_Repository () = default;
+  HA_Device_Repository (HA_Device_Repository const &) = delete;
+  HA_Device_Repository (HA_Device_Repository &&) = delete;
+  HA_Device_Repository &operator= (HA_Device_Repository const &) = delete;
+  HA_Device_Repository &operator= (HA_Device_Repository &&) = delete;
 
   bool is_free () const
     { return this->owner_ == nullptr; }
@@ -27,20 +30,24 @@ public:
   int update_device (int device_id);
 
 private:
-  ACE_Task_Base * owner_;
+  // Track which thread currently owns the repository lock.
+  ACE_Task_Base *owner_ {};
 };
 // Listing 1
 
 class HA_CommandHandler : public ACE_Task_Base
 {
 public:
-  enum {NUM_USES = 10};
+  static constexpr int NUM_USES {10};
 
   HA_CommandHandler (HA_Device_Repository &rep,
                      ACE_Condition<ACE_Thread_Mutex> &wait,
                      ACE_Thread_Mutex &mutex)
-    : rep_ (rep), waitCond_ (wait), mutex_ (mutex)
-  { }
+    : rep_ (rep), waitCond_ (wait), mutex_ (mutex) {}
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
 
   int svc () override;
 
@@ -56,7 +63,7 @@ HA_CommandHandler::svc ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Handler Thread running\n")));
 
-  for (int i = 0; i < NUM_USES; i++)
+  for (int i = 0; i < NUM_USES; ++i)
     {
       this->mutex_.acquire ();
       while (!this->rep_.is_free ())
@@ -67,7 +74,7 @@ HA_CommandHandler::svc ()
       this->rep_.update_device (i);
 
       ACE_ASSERT (this->rep_.is_owner (this));
-      this->rep_.set_owner (0);
+      this->rep_.set_owner (nullptr);
 
       this->waitCond_.signal ();
     }

@@ -3,12 +3,13 @@
 // how the ACE_Connector and ACE_Acceptor patterns work when used with
 // ACE_UPIPEs.
 
+#include <chrono>
+#include <thread>
 #include "ace/Acceptor.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/Connector.h"
 #include "ace/UPIPE_Addr.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -27,11 +28,15 @@ public:
     {
       ACE_TRACE ("Server::Server");
     }
+  Server (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server const &) = delete;
+  Server &operator= (Server &&) = delete;
 
   int init (int argc, ACE_TCHAR *argv[]) override
     {
       ACE_TRACE ("Server::init");
-      const ACE_TCHAR *l_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+      ACE_TCHAR const * const l_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
 
       ACE_UPIPE_Addr local_addr (l_addr);
 
@@ -42,11 +47,12 @@ public:
         return -1;
 
       // Give server a chance to register the STREAM pipe.
-      ACE_OS::sleep (ACE_Time_Value (4));
+      std::this_thread::sleep_for (std::chrono::seconds (4));
       return 0;
     }
 
 private:
+  // These pointers refer to objects owned by main.
   ACE_Reactor *reactor_;
   // Our instance of the reactor.
 
@@ -68,16 +74,21 @@ public:
     {
       ACE_TRACE ("Client::Client");
     }
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
 
   int init (int argc, ACE_TCHAR *argv[]) override
   {
     ACE_TRACE ("Client::init");
 
-    const ACE_TCHAR *r_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+    ACE_TCHAR const * const r_addr = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
 
     ACE_UPIPE_Addr remote_addr (r_addr);
 
-    Client_Service *cs;
+    // ACE_Connector owns the handler and may destroy it through close() on failure.
+    Client_Service *cs {};
 
     ACE_NEW_RETURN (cs, Client_Service (this->thr_mgr_), -1);
 
@@ -85,6 +96,7 @@ public:
   }
 
 private:
+  // This pointer refers to the thread manager owned by main.
   ACE_Thread_Manager *thr_mgr_;
 };
 
@@ -113,7 +125,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "your platform does not support threads\n"),
+                     ACE_TEXT ("your platform does not support threads\n")),
                     1);
 }
 #endif /* ACE_HAS_THREADS */

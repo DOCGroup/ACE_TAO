@@ -110,7 +110,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
      << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
      << "\"" << node->repoID () << "\"," << be_nl
      << "\"" << node->original_local_name () << "\"," << be_nl
-     << "&" << discriminant_type->tc_name () << "," << be_nl
+     << "std::addressof (" << discriminant_type->tc_name () << ")," << be_nl
      << "_tao_cases_" << node->flat_name () << "," << be_nl
      << "sizeof (_tao_cases_" << node->flat_name () << ")/"
         "sizeof (_tao_cases_" << node->flat_name () << "[0])," << be_nl
@@ -209,7 +209,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
             branch->gen_default_label_value (&os, node);
 
             os << ", \"" << branch->original_local_name () << "\", "
-               << "&"  << type->tc_name ()
+               << "std::addressof (" << type->tc_name () << ")"
                << ");" << be_nl;
 
             // Since we have just generated the default case, there is no
@@ -236,7 +236,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
           branch->gen_label_value (&os, labelNumber);
 
           os << ", \"" << branch->original_local_name () << "\", "
-             << "&"  << type->tc_name ()
+             << "std::addressof (" << type->tc_name () << ")"
              << ");" << be_nl;
         }
     }
@@ -251,7 +251,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
 
   for (ACE_CDR::ULong n = 0u; n < countLabels; ++n)
     {
-      os << "&" << fields_name << "__" << n;
+      os << "std::addressof (" << fields_name << "__" << n << ")";
 
       if (n < countLabels - 1u)
         {

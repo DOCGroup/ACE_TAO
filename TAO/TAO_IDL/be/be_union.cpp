@@ -80,7 +80,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
   *os << be_nl
       << "std::ostream& operator<< (" << be_idt << be_idt_nl
       << "std::ostream &strm," << be_nl
-      << "const " << this->name () << " &_tao_union" << be_uidt_nl
+      << this->name () << " const &_tao_union" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "strm << \"" << this->name () << "(\";" << be_nl_2

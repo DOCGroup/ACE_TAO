@@ -114,12 +114,11 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << be_nl_2;
 
   // Copy constructor and destructor.
-  *os << class_name << " (const "
-      << class_name << "& rhs) = default;" << be_nl
+  *os << class_name << " (" << class_name << " const &rhs) = default;" << be_nl
       << "~" << class_name << " () override = default;" << be_nl_2;
 
   // _is_a
-  *os << "::CORBA::Boolean _is_a (const char* logical_type_id) override;" << be_nl_2;
+  *os << "::CORBA::Boolean _is_a (char const *logical_type_id) override;" << be_nl_2;
 
   // Add the dispatch method.
   *os << "void _dispatch (" << be_idt << be_idt_nl
@@ -131,7 +130,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // The _interface_repository_id method.
   *os << be_nl
-      << "const char* _interface_repository_id "
+      << "char const *_interface_repository_id "
       << "() const override;";
 
   // Generate code for elements in the scope (e.g., operations).

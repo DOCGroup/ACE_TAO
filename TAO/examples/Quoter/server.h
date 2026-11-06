@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef QUOTER_SERVER_H
 #define QUOTER_SERVER_H
 
@@ -61,15 +60,18 @@ public:
   int run ();
 
 private:
+  struct Options
+  {
+    int num_of_objects {1};
+    int debug_level {1};
+  };
+
   /// Parses the commandline arguments.
   int parse_args ();
 
   /// Initializes the name server and registers cubit factory with the
   /// name server.
   int init_naming_service ();
-
-  /// Number of quoter objects we export.
-  int num_of_objs_ {1};
 
   /// Naming Service context
   CosNaming::NamingContext_var namingContext_var_ {};
@@ -86,8 +88,7 @@ private:
   /// Pointer-array copy made before ORB_init modifies argv.
   std::unique_ptr<ACE_TCHAR *[]> argv_;
 
-  /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_ {1};
+  Options options_ {};
 };
 
 #endif /* QUOTER_SERVER_H */

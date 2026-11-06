@@ -268,9 +268,9 @@ ACE_Service_Repository::~ACE_Service_Repository ()
 /// found, but it is suspended and the caller wants to ignore suspended
 /// services a -2 is returned.  Must be called with locks held.
 int
-ACE_Service_Repository::find_i (const ACE_TCHAR name[],
+ACE_Service_Repository::find_i (ACE_TCHAR const name[],
                                 size_t &slot,
-                                const ACE_Service_Type **srp,
+                                ACE_Service_Type const **srp,
                                 bool ignore_suspended) const
 {
   ACE_TRACE ("ACE_Service_Repository::find_i");
@@ -318,7 +318,7 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
 int
 ACE_Service_Repository::relocate_i (size_t begin,
                                     size_t end,
-                                    const ACE_DLL& adll)
+                                    ACE_DLL const &adll)
 {
   ACE_SHLIB_HANDLE new_handle = adll.get_handle (0);
 
@@ -374,8 +374,8 @@ ACE_Service_Repository::relocate_i (size_t begin,
 }
 
 int
-ACE_Service_Repository::find (const ACE_TCHAR name[],
-                              const ACE_Service_Type **srp,
+ACE_Service_Repository::find (ACE_TCHAR const name[],
+                              ACE_Service_Type const **srp,
                               bool ignore_suspended) const
 {
   ACE_TRACE ("ACE_Service_Repository::find");
@@ -389,7 +389,7 @@ ACE_Service_Repository::find (const ACE_TCHAR name[],
 /// name as in an existing service causes the delete () to be called
 /// for the old one, i.e. make sure @code sr is allocated on the heap!
 int
-ACE_Service_Repository::insert (const ACE_Service_Type *sr)
+ACE_Service_Repository::insert (ACE_Service_Type const *sr)
 {
   ACE_TRACE ("ACE_Service_Repository::insert");
 
@@ -452,8 +452,8 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
 /// Resume a service that was previously suspended.
 int
-ACE_Service_Repository::resume (const ACE_TCHAR name[],
-                                const ACE_Service_Type **srp)
+ACE_Service_Repository::resume (ACE_TCHAR const name[],
+                                ACE_Service_Type const **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::resume");
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
@@ -468,8 +468,8 @@ ACE_Service_Repository::resume (const ACE_TCHAR name[],
 /// Suspend a service so that it will not be considered active under
 /// most circumstances by other portions of the ACE_Service_Repository.
 int
-ACE_Service_Repository::suspend (const ACE_TCHAR name[],
-                                 const ACE_Service_Type **srp)
+ACE_Service_Repository::suspend (ACE_TCHAR const name[],
+                                 ACE_Service_Type const **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::suspend");
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
@@ -485,7 +485,7 @@ ACE_Service_Repository::suspend (const ACE_TCHAR name[],
  * dynamically unlink it if it was originally dynamically linked.
  */
 int
-ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
+ACE_Service_Repository::remove (ACE_TCHAR const name[], ACE_Service_Type **ps)
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
   ACE_Service_Type *s = nullptr;
@@ -525,7 +525,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
  * loading of a DLL started in order to relocate dependent services.
  */
 int
-ACE_Service_Repository::remove_i (const ACE_TCHAR name[], ACE_Service_Type **ps)
+ACE_Service_Repository::remove_i (ACE_TCHAR const name[], ACE_Service_Type **ps)
 {
   size_t i = 0;
   if (-1 == this->find_i (name, i, nullptr, false))
@@ -566,7 +566,6 @@ ACE_Service_Repository_Iterator::dump () const
 ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
   (ACE_Service_Repository &sr, bool ignored_suspended)
   : svc_rep_ (sr),
-    next_ (0),
     ignore_suspended_ (ignored_suspended)
 {
   while (!(done() || valid()))
@@ -576,7 +575,7 @@ ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
 /// Obtains a pointer to the next valid service in the table.  If there
 /// are no more entries, returns 0, else 1.
 int
-ACE_Service_Repository_Iterator::next (const ACE_Service_Type *&sr)
+ACE_Service_Repository_Iterator::next (ACE_Service_Type const *&sr)
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::next");
 

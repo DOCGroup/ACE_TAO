@@ -327,7 +327,7 @@ be_util::prep_be_arg (std::string const& s)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%C: invalid or unknown ")
                       ACE_TEXT ("argument <%C> to back end\n"),
-                      idl_global->prog_name ().c_str (),
+                      idl_global->prog_name ().data (),
                       arg.c_str ()));
         }
     }

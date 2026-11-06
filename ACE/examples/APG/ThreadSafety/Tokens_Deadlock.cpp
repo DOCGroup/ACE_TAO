@@ -8,6 +8,12 @@
 class ThreadOne : public ACE_Task_Base
 {
 public:
+  ThreadOne () = default;
+  ThreadOne (ThreadOne const &) = delete;
+  ThreadOne (ThreadOne &&) = delete;
+  ThreadOne &operator= (ThreadOne const &) = delete;
+  ThreadOne &operator= (ThreadOne &&) = delete;
+
   int svc () override
   {
     ACE_Local_Mutex mutex1 (ACE_TEXT ("resource1"),
@@ -24,6 +30,12 @@ public:
 class ThreadTwo : public ACE_Task_Base
 {
 public:
+  ThreadTwo () = default;
+  ThreadTwo (ThreadTwo const &) = delete;
+  ThreadTwo (ThreadTwo &&) = delete;
+  ThreadTwo &operator= (ThreadTwo const &) = delete;
+  ThreadTwo &operator= (ThreadTwo &&) = delete;
+
   int svc () override
   {
     ACE_Local_Mutex mutex2 (ACE_TEXT ("resource2"),

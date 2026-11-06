@@ -6,19 +6,7 @@
 #include "tao/CDR.h"
 #include "testS.h"
 
-static const CORBA::ULong expected_version = 5;
-
-Server_Request_Interceptor::Server_Request_Interceptor ()
-  : request_count_ (0)
-  , forward_request_thrown_ (false)
-{
-  this->obj_[0] = CORBA::Object::_nil ();
-  this->obj_[1] = CORBA::Object::_nil ();
-}
-
-Server_Request_Interceptor::~Server_Request_Interceptor ()
-{
-}
+static constexpr CORBA::ULong expected_version = 5;
 
 void
 Server_Request_Interceptor::reset ()
@@ -39,8 +27,8 @@ Server_Request_Interceptor::forward_references (
         EINVAL),
       CORBA::COMPLETED_NO);
 
-  ACE_TCHAR *argv[] = {NULL};
-  int   argc = 0;
+  ACE_TCHAR* argv[] {nullptr};
+  int argc {};
 
   // Fetch the ORB having been initialized in main()
   CORBA::ORB_var orb =
@@ -63,8 +51,8 @@ Server_Request_Interceptor::name ()
 void
 Server_Request_Interceptor::destroy ()
 {
-  CORBA::release (this->obj_[0]);
-  CORBA::release (this->obj_[1]);
+  this->obj_[0] = CORBA::Object::_nil ();
+  this->obj_[1] = CORBA::Object::_nil ();
 }
 
 void
@@ -78,16 +66,16 @@ Server_Request_Interceptor::receive_request_service_contexts (
               this->request_count_));
               */
 
-  if (this->forward_request_thrown_ == true)
+  if (this->forward_request_thrown_)
     {
       IOP::ServiceContext_var svc =
         ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
       // extract the group component
-      TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
+      TAO_InputCDR cdr (reinterpret_cast<char const*> (svc->context_data.get_buffer ()),
                         svc->context_data.length ());
 
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
 
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         {
@@ -131,19 +119,19 @@ Server_Request_Interceptor::receive_request (
       this->forward_request_thrown_ = true;
 
       // Throw forward exception
-      throw PortableInterceptor::ForwardRequest (this->obj_[1]);
+      throw PortableInterceptor::ForwardRequest (this->obj_[1].in ());
     }
 
-  if (this->forward_request_thrown_ == true)
+  if (this->forward_request_thrown_)
     {
       IOP::ServiceContext_var svc =
         ri->get_request_service_context (IOP::FT_GROUP_VERSION);
 
       // extract the group component
-      TAO_InputCDR cdr (reinterpret_cast<const char*> (svc->context_data.get_buffer ()),
+      TAO_InputCDR cdr (reinterpret_cast<char const*> (svc->context_data.get_buffer ()),
                         svc->context_data.length ());
 
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
 
       if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
         {

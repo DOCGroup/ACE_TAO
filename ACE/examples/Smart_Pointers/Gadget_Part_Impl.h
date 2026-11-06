@@ -56,13 +56,13 @@ private:
   ///   no circular ownership problems. Weak pointers can also be converted
   ///   back into strong ones, so it is possible to guarantee the lifetime of
   ///   the owner object for the duration of the remove_from_owner call.
-  Gadget_ptr owner_;
+  Gadget_ptr const owner_;
 
   /// The name of this part.
-  std::string name_;
+  std::string const name_;
 
   /// The size of this part.
-  int size_;
+  int const size_ {};
 };
 
 #endif /* GADGET_PART_IMPL_H */

@@ -36,7 +36,7 @@ public:
   using Implementation = ACE_Unbounded_Set<PROXY *>;
 
   /// An alias for the underlying iterator
-  using Iterator = ACE_Unbounded_Set_Iterator<PROXY *>;
+  using Iterator = typename Implementation::iterator;
 
   /// Constructor
   TAO_ESF_Proxy_List () = default;
@@ -66,7 +66,7 @@ public:
 
 private:
   /// The underlying implementation object
-  ACE_Unbounded_Set<PROXY *> impl_;
+  Implementation impl_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

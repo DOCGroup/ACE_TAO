@@ -1,88 +1,60 @@
 #include "Task_Stats.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include <memory>
+#include <new>
+#include <stdexcept>
 
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-Base_Time::Base_Time ()
-{
-  base_time_ = ACE_OS::gethrtime ();
-}
-
-Task_Stats::Task_Stats ()
-  : base_time_(0),
-    end_time_ (0),
-    max_samples_ (0),
-    samples_count_ (0),
-    thr_run_time_ (0),
-    thr_count_ (0),
-    exec_time_min_ (0),
-    exec_time_min_at_ (0),
-    exec_time_max_ (0),
-    exec_time_max_at_(0),
-    sum_ (0),
-    sum2_ (0)
-{
-}
-
-Task_Stats::~Task_Stats ()
-{
-  delete[] this->thr_run_time_;
-  delete[] this->thr_count_;
-}
-
 int
-Task_Stats::init (size_t max_samples)
+Task_Stats::init (std::size_t max_samples)
 {
-  max_samples_ = max_samples;
-  ACE_NEW_RETURN (this->thr_run_time_, ACE_UINT32[this->max_samples_], -1);
-  ACE_NEW_RETURN (this->thr_count_, int[this->max_samples_], -1);
+  std::vector<Sample> samples;
+  try
+    {
+      samples.resize (max_samples);
+    }
+  catch (std::bad_alloc const &)
+    {
+      return -1;
+    }
+  catch (std::length_error const &)
+    {
+      return -1;
+    }
+
+  this->samples_.swap (samples);
+  this->samples_count_ = 0;
   return 0;
 }
 
 void
-Task_Stats::base_time (ACE_hrtime_t time)
+Task_Stats::dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg)
 {
-  base_time_ = time;
-}
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (file_name, ACE_TEXT ("w")), ACE_OS::fclose);
 
-void
-Task_Stats::end_time (ACE_hrtime_t time)
-{
-  end_time_ = time;
-}
-
-void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
-{
-  FILE* output_file = ACE_OS::fopen (file_name, "w");
-
-  if (output_file == 0)
+  if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%s cannot be opened\n",
+                  ACE_TEXT ("%s cannot be opened\n"),
                   file_name));
+      return;
     }
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (output_file, "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
+  ACE_OS::fprintf (output_file.get (), "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
 
-  // next, compose and dump what we want to say.
-  ACE_UINT32 val_1;
-  int val_2;
-  ACE_UINT64 x;
-
-  // dump the samples recorded.
-  for (size_t i = 0; i < this->samples_count_; ++i)
+  for (std::size_t i = 0; i < this->samples_count_; ++i)
     {
-      x = this->thr_run_time_[i];
-      val_1 = ACE_CU64_TO_CU32 (x);
-      val_2  = this->thr_count_[i];
-      ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,val_2);
+      ACE_OS::fprintf (output_file.get (),
+                       "%u \t %d\n",
+                       this->samples_[i].run_time,
+                       this->samples_[i].count);
     }
-
-  ACE_OS::fclose (output_file);
 
   ACE_DEBUG ((LM_DEBUG,
               "Samples are ready to be viewed\n"));

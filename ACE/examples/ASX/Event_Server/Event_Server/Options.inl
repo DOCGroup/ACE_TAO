@@ -12,7 +12,7 @@ Options::supplier_port (u_short port)
 }
 
 inline u_short
-Options::supplier_port ()
+Options::supplier_port () const
 {
   return this->supplier_port_;
 }
@@ -24,7 +24,7 @@ Options::consumer_port (u_short port)
 }
 
 inline u_short
-Options::consumer_port ()
+Options::consumer_port () const
 {
   return this->consumer_port_;
 }
@@ -48,7 +48,7 @@ Options::thr_count (size_t count)
 }
 
 inline size_t
-Options::thr_count ()
+Options::thr_count () const
 {
   return this->thr_count_;
 }
@@ -60,7 +60,7 @@ Options::initial_queue_length (size_t length)
 }
 
 inline size_t
-Options::initial_queue_length ()
+Options::initial_queue_length () const
 {
   return this->initial_queue_length_;
 }
@@ -72,7 +72,7 @@ Options::high_water_mark (size_t size)
 }
 
 inline size_t
-Options::high_water_mark ()
+Options::high_water_mark () const
 {
   return this->high_water_mark_;
 }
@@ -84,7 +84,7 @@ Options::low_water_mark (size_t size)
 }
 
 inline size_t
-Options::low_water_mark ()
+Options::low_water_mark () const
 {
   return this->low_water_mark_;
 }
@@ -96,7 +96,7 @@ Options::message_size (size_t size)
 }
 
 inline size_t
-Options::message_size ()
+Options::message_size () const
 {
   return this->message_size_;
 }
@@ -108,7 +108,7 @@ Options::iterations (size_t n)
 }
 
 inline size_t
-Options::iterations ()
+Options::iterations () const
 {
   return this->iterations_;
 }
@@ -120,19 +120,19 @@ Options::t_flags (long flag)
 }
 
 inline long
-Options::t_flags ()
+Options::t_flags () const
 {
   return this->t_flags_;
 }
 
 inline bool
-Options::debug ()
+Options::debug () const
 {
   return this->debugging_;
 }
 
 inline bool
-Options::verbose ()
+Options::verbose () const
 {
   return this->verbosity_;
 }

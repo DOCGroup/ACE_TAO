@@ -44,7 +44,8 @@ class ACE_Future_Set : public ACE_Future_Observer<T>
 {
 public:
   /// Constructor.
-  ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
+  explicit ACE_Future_Set (
+    ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
 
   ACE_Future_Set (const ACE_Future_Set &) = delete;
   ACE_Future_Set (ACE_Future_Set &&) = delete;
@@ -95,7 +96,7 @@ public:
 
   /// Called by the ACE_Future subject in which we are subscribed to
   /// when its value is written to.
-  virtual void update (const ACE_Future<T> &future);
+  void update (ACE_Future<T> const &future) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

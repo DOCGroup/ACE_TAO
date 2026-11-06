@@ -6,12 +6,12 @@
 #include "ace/Process_Manager.h"
 #include "Callback_i.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_string.h"
 
-Callback_i::Callback_i (int *request_count)
+#include <string>
+
+Callback_i::Callback_i (std::atomic<int>& request_count)
   : file_ (ACE_sap_any_cast (ACE_FILE_Addr &)),
     file_io_ (),
-    ami_handler_ (),
     metadata_ (),
     lock_ (),
     request_count_ (request_count)
@@ -32,7 +32,7 @@ Callback_i::Callback_i (int *request_count)
                   this->file_.get_path_name ()));
     }
   else
-    (*this->request_count_)++;
+    ++this->request_count_;
 }
 
 Callback_i::~Callback_i ()
@@ -53,7 +53,7 @@ Callback_i::next_chunk (Web_Server::Chunk_Type const& chunk_data,
       if (this->file_io_.send (chunk->get_buffer (),
                                chunk->length ()) == -1)
         {
-          (*this->request_count_)--;  // Don't wait for more data.
+          --this->request_count_;  // Don't wait for more data.
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
@@ -77,7 +77,7 @@ Callback_i::next_chunk (Web_Server::Chunk_Type const& chunk_data,
                   ACE_TEXT ("Wrote retrieved data to file <%s>\n"),
                   this->file_.get_path_name ()));
 
-      (*this->request_count_)--;  // No more data.
+      --this->request_count_;  // No more data.
 
       // File retrieval has completed, so spawn an external viewer to
       // display its contents.
@@ -154,46 +154,29 @@ Callback_i::content_received ()
 }
 
 int
-Callback_i::get_viewer (char *viewer,
-                        size_t length)
+Callback_i::get_viewer (std::string& viewer) const
 {
   char const *content_type =
     this->metadata_.content_type.in ();
 
   if (ACE_OS::strcasecmp (content_type, "text/html") == 0)
     {
-      char const lynx[] = "lynx";
-      if (length <= sizeof (lynx))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, lynx);
+      viewer = "lynx";
     }
   else if (ACE_OS::strcasecmp (content_type,
                                "text/plain") == 0)
     {
-      char const more[] = "more";
-      if (length <= sizeof (more))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, more);
+      viewer = "more";
     }
   else if (ACE_OS::strcasecmp (content_type,
                                "application/postscript") == 0)
     {
-      char const ghostview[] = "ghostview";
-      if (length <= sizeof (ghostview))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, ghostview);
+      viewer = "ghostview";
     }
   else if (ACE_OS::strcasecmp (content_type,
                                "application/pdf") == 0)
     {
-      char const acroread[] = "acroread";
-      if (length <= sizeof (acroread))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, acroread);
+      viewer = "acroread";
     }
   else if (ACE_OS::strcasecmp (content_type,
                                "image/jpeg") == 0
@@ -204,11 +187,7 @@ Callback_i::get_viewer (char *viewer,
            || ACE_OS::strcasecmp (content_type,
                                   "image/png") == 0)
     {
-      char const xv[] = "xv";
-      if (length <= sizeof (xv))
-        return -1;
-      else
-        ACE_OS::strcpy (viewer, xv);
+      viewer = "xv";
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -222,10 +201,9 @@ Callback_i::get_viewer (char *viewer,
 int
 Callback_i::spawn_viewer ()
 {
-  char viewer[BUFSIZ] {};
+  std::string viewer;
 
-  if (this->get_viewer (viewer,
-                        sizeof (viewer)) != 0)
+  if (this->get_viewer (viewer) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Problem determining which external ")
                        ACE_TEXT ("viewer to use.\n")),
@@ -235,10 +213,10 @@ Callback_i::spawn_viewer ()
   // external viewer.
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s %s"),
-                     viewer,
+                     viewer.c_str (),
                      this->file_.get_path_name ());
 
-  pid_t result = ACE_Process_Manager::instance ()->spawn (opts);
+  pid_t const result = ACE_Process_Manager::instance ()->spawn (opts);
 
   switch (result)
     {
@@ -254,7 +232,7 @@ Callback_i::spawn_viewer ()
       // Parent
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("Spawned viewer <%s> with PID <%d>.\n"),
-                  viewer,
+                  viewer.c_str (),
                   result));
       break;
     }

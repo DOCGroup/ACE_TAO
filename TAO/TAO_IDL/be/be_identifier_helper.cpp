@@ -91,7 +91,7 @@ IdentifierHelper::original_local_name (std::string const& local_name)
       std::string const keyword = local_name.substr (5);
 
       const TAO_IDL_CPP_Keyword_Entry *entry =
-        cpp_key_tbl.lookup (keyword.c_str (), len);
+        cpp_key_tbl.lookup (keyword.data (), len);
 
       if (entry != nullptr)
         {

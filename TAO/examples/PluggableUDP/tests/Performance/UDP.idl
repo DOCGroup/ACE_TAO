@@ -23,5 +23,3 @@ interface UDP
   oneway void shutdown ();
   // Shutdown the application.
 };
-
-

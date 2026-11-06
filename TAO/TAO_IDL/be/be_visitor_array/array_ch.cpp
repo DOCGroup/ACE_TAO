@@ -180,35 +180,29 @@ int be_visitor_array_ch::visit_array (be_array *node)
       if (node->size_type () == AST_Type::VARIABLE)
         {
           *os << be_nl_2
-              << "using " << node->local_name () << "_var =" << be_idt_nl
-              << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
-              << ">;" << be_uidt;
+              << "using " << node->local_name () << "_var = TAO_VarArray_Var_T<"
+              << node->local_name () << ", "
+              << node->local_name () << "_slice, "
+              << node->local_name () << "_tag>;";
 
           *os << be_nl_2
-              << "using " << node->local_name () << "_out =" << be_idt_nl
-              << "TAO_Array_Out_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_var," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
-              << ">;" << be_uidt;
+              << "using " << node->local_name () << "_out = TAO_Array_Out_T<"
+              << node->local_name () << ", "
+              << node->local_name () << "_var, "
+              << node->local_name () << "_slice, "
+              << node->local_name () << "_tag>;";
         }
       else
         {
           *os << be_nl_2
-              << "using " << node->local_name () << "_var =" << be_idt_nl
-              << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
-              << node->local_name () << "," << be_nl
-              << node->local_name () << "_slice," << be_nl
-              << node->local_name () << "_tag" << be_uidt_nl
-              << ">;" << be_uidt;
+              << "using " << node->local_name () << "_var = TAO_FixedArray_Var_T<"
+              << node->local_name () << ", "
+              << node->local_name () << "_slice, "
+              << node->local_name () << "_tag>;";
 
           *os << be_nl_2
               << "using " << node->local_name () << "_out = "
-              << node->local_name () << ";" << be_uidt;
+              << node->local_name () << ";";
         }
     }
 
@@ -257,12 +251,12 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << " *_tao_slice);" << be_nl_2;
       *os << storage_class << node->nested_type_name (scope, "_slice")
           << " *" << node->nested_type_name (scope, "_dup")
-          << " (const " << node->nested_type_name (scope, "_slice")
-          << " *_tao_slice);" << be_nl_2;
+          << " (" << node->nested_type_name (scope, "_slice")
+          << " const *_tao_slice);" << be_nl_2;
       *os << storage_class << "void "
           << node->nested_type_name (scope, "_copy")
-          << " (" << node->nested_type_name (scope, "_slice") << " *_tao_to, const "
-          << node->nested_type_name (scope, "_slice") << " *_tao_from);";
+          << " (" << node->nested_type_name (scope, "_slice") << " *_tao_to, "
+          << node->nested_type_name (scope, "_slice") << " const *_tao_from);";
     }
   else
     {
@@ -276,13 +270,13 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << " *_tao_slice);" << be_nl_2;
       *os << storage_class << node->nested_type_name (scope, "_slice", "_")
           << " *" << node->nested_type_name (scope, "_dup", "_")
-          << " (const " << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_slice);" << be_nl_2;
+          << " (" << node->nested_type_name (scope, "_slice", "_")
+          << " const *_tao_slice);" << be_nl_2;
       *os << storage_class << "void "
           << node->nested_type_name (scope, "_copy", "_")
           << " (" << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_to, const " << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_from);";
+          << " *_tao_to, " << node->nested_type_name (scope, "_slice", "_")
+          << " const *_tao_from);";
     }
 
   node->cli_hdr_gen (true);

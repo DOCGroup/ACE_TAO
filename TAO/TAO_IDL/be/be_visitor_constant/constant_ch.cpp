@@ -27,7 +27,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -35,7 +35,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // to us here itself, else it will be in the *.cpp file.
 
   AST_Decl::NodeType nt = AST_Decl::NT_pre_defined;
-  AST_Decl *tdef = node->constant_value ()->get_tdef ();
+  AST_Decl * const tdef = node->constant_value ()->get_tdef ();
   AST_Decl::NodeType bnt = AST_Decl::NT_pre_defined;
   AST_Expression::ExprType const etype = node->et ();
   AST_Decl::NodeType const snt = node->defined_in ()->scope_node_type ();
@@ -43,7 +43,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   if (tdef != nullptr)
     {
       nt = tdef->node_type ();
-      be_typedef *td = dynamic_cast<be_typedef*> (tdef);
+      be_typedef * const td = dynamic_cast<be_typedef*> (tdef);
       bnt = td->base_node_type ();
     }
 

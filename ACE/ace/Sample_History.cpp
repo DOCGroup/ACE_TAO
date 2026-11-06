@@ -16,21 +16,27 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Sample_History::ACE_Sample_History (size_t max_samples)
   : max_samples_ (max_samples)
-  , sample_count_ (0)
 {
+  ACE_UINT64 *samples {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_ALLOCATOR(this->samples_, static_cast<ACE_UINT64*>(ACE_Allocator::instance()->malloc(sizeof(ACE_UINT64) * this->max_samples_)));
+  ACE_ALLOCATOR (samples, static_cast<ACE_UINT64 *> (
+                   ACE_Allocator::instance ()->malloc (
+                     sizeof (ACE_UINT64) * this->max_samples_)));
 #else
-  ACE_NEW(this->samples_, ACE_UINT64[this->max_samples_]);
+  ACE_NEW (samples, ACE_UINT64[this->max_samples_]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+  this->samples_.reset (samples);
 }
 
-ACE_Sample_History::~ACE_Sample_History ()
+ACE_Sample_History::~ACE_Sample_History () = default;
+
+void
+ACE_Sample_History::Samples_Deleter::operator() (ACE_UINT64 *samples) const
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(this->samples_);
+  ACE_Allocator::instance ()->free (samples);
 #else
-  delete[] this->samples_;
+  delete[] samples;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 

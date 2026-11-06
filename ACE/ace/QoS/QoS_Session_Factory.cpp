@@ -31,19 +31,19 @@ ACE_QoS_Session_Factory::~ACE_QoS_Session_Factory ()
 ACE_QoS_Session *
 ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
 {
-  ACE_QoS_Session * qos_session = nullptr;
+  ACE_QoS_Session *qos_session {};
 
 #if defined (ACE_HAS_RAPI)
   if (qos_session_type == ACE_RAPI_SESSION)
     ACE_NEW_RETURN (qos_session,
                     ACE_RAPI_Session,
-                    0);
+                    nullptr);
 #endif /* ACE_HAS_RAPI */
 
   if (qos_session_type == ACE_GQOS_SESSION)
     ACE_NEW_RETURN (qos_session,
                     ACE_GQoS_Session,
-                    0);
+                    nullptr);
 
   if (this->add_session (qos_session) == -1)
     {
@@ -60,7 +60,7 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
 int
 ACE_QoS_Session_Factory::destroy_session (ACE_QoS_Session *qos_session)
 {
-  if ((qos_session != 0) && (this->remove_session (qos_session) == -1))
+  if (qos_session != nullptr && this->remove_session (qos_session) == -1)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error in destroying session\n")),
                       -1);

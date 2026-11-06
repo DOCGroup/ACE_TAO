@@ -177,7 +177,7 @@ int AC_Output_Handler::handle_input (ACE_HANDLE h) {
 }
 
 int AC_Output_Handler::svc () {
-  ACE_Message_Block *chunk[ACE_IOV_MAX];
+  std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> chunk {};
   size_t message_index = 0;
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
   ACE_Time_Value timeout;
@@ -198,10 +198,11 @@ int AC_Output_Handler::svc () {
       } else if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
     } else {
+      ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
       if (mblk->size () == 0
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
-        { mblk->release (); break; }
-      chunk[message_index] = mblk;
+        break;
+      chunk[message_index].reset (mblk_owner.release ());
       ++message_index;
     }
     if (message_index >= ACE_IOV_MAX ||
@@ -218,12 +219,14 @@ int AC_Output_Handler::svc () {
   return 0;
 }
 
-int AC_Output_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
+int AC_Output_Handler::send (
+  std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
+  size_t &count) {
   iovec iov[ACE_IOV_MAX];
-  size_t iov_size;
+  size_t iov_size = 0;
   int result = 0;
 
-  for (iov_size = 0; iov_size < count; ++iov_size) {
+  for (; iov_size < count; ++iov_size) {
     iov[iov_size].iov_base = chunk[iov_size]->rd_ptr ();
     iov[iov_size].iov_len =
       ACE_Utils::truncate_cast<u_long> (chunk[iov_size]->length ());
@@ -234,10 +237,9 @@ int AC_Output_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
       break;
     }
 
-  while (iov_size > 0) {
-    chunk[--iov_size]->release (); chunk[iov_size] = nullptr;
-  }
-  count = iov_size;
+  for (size_t i = 0; i < count; ++i)
+    chunk[i].reset ();
+  count = 0;
   return result;
 }
 
@@ -257,7 +259,10 @@ int AC_Input_Handler::close (u_long) {
   ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
-  output_handler_->put (shutdown_message);
+  ACE_Message_Block_Unique_Ptr shutdown_owner {shutdown_message};
+  if (output_handler_->put (shutdown_message) == -1)
+    return -1;
+  shutdown_owner.release ();
 
   reactor ()->remove_handler
     (connected_clients_, ACE_Event_Handler::READ_MASK);
@@ -270,15 +275,12 @@ int AC_Input_Handler::handle_input (ACE_HANDLE handle) {
 
   if (logging_handler.recv_log_record (mblk) != -1)
     {
-      if (output_handler_->put (mblk->cont ()) != -1)
+      ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
+      ACE_Message_Block * const payload = mblk_owner->cont ();
+      if (output_handler_->put (payload) != -1)
         {
-          mblk->cont (nullptr);
-          mblk->release ();
+          mblk_owner->cont (nullptr);
           return 0; // Success return.
-        }
-      else
-        {
-          mblk->release ();
         }
     }
 

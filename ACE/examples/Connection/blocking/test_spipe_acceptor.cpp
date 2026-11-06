@@ -2,7 +2,6 @@
 
 #include "SPIPE-acceptor.h"
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 int

@@ -26,7 +26,11 @@ be_visitor_operation_ch::~be_visitor_operation_ch () = default;
 int
 be_visitor_operation_ch::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
+
+  bool const inherited_operation =
+    this->ctx_->interface () != nullptr
+    && this->ctx_->interface () != node->defined_in ();
 
   bool const inherited_operation =
     this->ctx_->interface () != nullptr

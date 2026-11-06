@@ -94,7 +94,7 @@ public:
                    RtecEventComm::Event& event);
 
   // = The PushSupplier methods
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 private:
   /// Class we forward to.
@@ -156,7 +156,7 @@ public:
                     ACE_Thread_Manager* thr_mgr = 0);
 
   /// The svc call
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// The supplier

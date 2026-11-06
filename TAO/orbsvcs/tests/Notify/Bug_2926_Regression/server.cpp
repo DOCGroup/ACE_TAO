@@ -5,7 +5,7 @@
 
 #include "DllORB.h"
 
-ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+ACE_TCHAR const* const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug2926",
   TAO_VERSION,
@@ -13,9 +13,9 @@ ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1"
 );
 
-ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
+ACE_TCHAR const* const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE ("testDllOrb");
 
-ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+ACE_TCHAR const* const scpc_loadNotifyService = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testNotifyService",
   "TAO_CosNotification_Serv",
   TAO_VERSION,
@@ -23,7 +23,7 @@ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_VERSIONED_SERVICE_D
   ""
 );
 
-ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
+ACE_TCHAR const* const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE ("testNotifyService");
 
 void loadunloadcycle()
 {
@@ -32,57 +32,55 @@ void loadunloadcycle()
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading\n")
   ));
 
-  int result = ACE_Service_Config::process_directive(scpc_loadOrb);
+  int result = ACE_Service_Config::process_directive (scpc_loadOrb);
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done. Result: <%d>\n"),
     result
   ));
 
-  DllORB * p_orb =
-    ACE_Dynamic_Service<DllORB>::instance("testDllOrb");
+  DllORB* const p_orb = ACE_Dynamic_Service<DllORB>::instance ("testDllOrb");
 
-  CORBA::ORB_var v_orb;
-  v_orb = p_orb->orb();
+  CORBA::ORB_var v_orb = p_orb->orb ();
     ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - v_orb OK\n")
   ));
 
   CORBA::Object_var v_poa =
-    v_orb->resolve_initial_references("RootPOA");
+    v_orb->resolve_initial_references ("RootPOA");
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - v_poa OK\n")
   ));
 
   PortableServer::POA_var v_rootPOA =
-    PortableServer::POA::_narrow(v_poa.in ());
+    PortableServer::POA::_narrow (v_poa.in ());
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - v_rootPOA OK\n")
   ));
 
-  result = ACE_Service_Config::process_directive(scpc_loadNotifyService);
+  result = ACE_Service_Config::process_directive (scpc_loadNotifyService);
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - loading NotifyService done. Result: <%d>\n"),
     result
   ));
 
-  TAO_CosNotify_Service * p_notifyService =
-    ACE_Dynamic_Service<TAO_CosNotify_Service>::instance("testNotifyService");
+  TAO_CosNotify_Service* const p_notifyService =
+    ACE_Dynamic_Service<TAO_CosNotify_Service>::instance ("testNotifyService");
 
-  p_notifyService->init_service(v_orb.in());
+  p_notifyService->init_service (v_orb.in ());
 
   CosNotifyChannelAdmin::EventChannelFactory_var v_notifyFactory =
-    p_notifyService->create(v_rootPOA.in(), "");
+    p_notifyService->create (v_rootPOA.in (), "");
 
   // create an event channel
-  CosNotifyChannelAdmin::ChannelID id;
+  CosNotifyChannelAdmin::ChannelID id {};
 
-  CosNotification::QoSProperties initialQos;
-  CosNotification::AdminProperties initialAdmin;
+  CosNotification::QoSProperties initialQos {};
+  CosNotification::AdminProperties initialAdmin {};
 
   CosNotifyChannelAdmin::EventChannel_var  v_ec;
   v_ec = v_notifyFactory->create_channel(
@@ -99,7 +97,7 @@ void loadunloadcycle()
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService ...\n")
   ));
-  result = ACE_Service_Config::process_directive(scpc_unloadNotifyService);
+  result = ACE_Service_Config::process_directive (scpc_unloadNotifyService);
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - unloading NotifyService done. Result: <%d>\n"),
@@ -110,7 +108,7 @@ void loadunloadcycle()
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB ...\n")
   ));
-  result = ACE_Service_Config::process_directive(scpc_unloadOrb);
+  result = ACE_Service_Config::process_directive (scpc_unloadOrb);
   ACE_DEBUG((
     LM_DEBUG,
     ACE_TEXT ("(%P|%t) loadunloadcycle - unloading ORB done. Result: <%d>\n"),

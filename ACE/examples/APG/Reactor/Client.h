@@ -25,8 +25,14 @@ class Client :
   using super = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 public:
-  Client () : notifier_ (nullptr, this, ACE_Event_Handler::WRITE_MASK)
-      {}
+  Client ()
+    : notifier_ (nullptr, this, ACE_Event_Handler::WRITE_MASK)
+  { }
+
+  Client (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client const &) = delete;
+  Client &operator= (Client &&) = delete;
 
   int open (void * = nullptr) override;
 
@@ -41,8 +47,8 @@ public:
                       void const *act = nullptr) override;
 
 private:
-  enum { ITERATIONS = 5 };
-  int iterations_;
+  static constexpr int ITERATIONS = 5;
+  int iterations_ {};
   ACE_Reactor_Notification_Strategy notifier_;
 };
 // Listing 1

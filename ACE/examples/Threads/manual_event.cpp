@@ -58,10 +58,10 @@ Pseudo_Barrier::wait ()
     return this->event_.wait ();
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *arg)
 {
-  Pseudo_Barrier &thread_barrier = *(Pseudo_Barrier *) arg;
+  Pseudo_Barrier &thread_barrier = *static_cast<Pseudo_Barrier *> (arg);
 
   // work
   const int work = ::amount_of_work.fetch_add (1, std::memory_order_relaxed) + 1;
@@ -79,7 +79,7 @@ worker (void *arg)
 
   ACE_DEBUG ((LM_DEBUG, "(%t) dying\n"));
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -93,7 +93,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Pseudo_Barrier thread_barrier (n_threads);
 
   // create workers
-  if (tm.spawn_n (n_threads, (ACE_THR_FUNC) worker, &thread_barrier) == -1)
+  if (tm.spawn_n (n_threads, worker, &thread_barrier) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread creates for worker failed"), -1);
 
   // wait for all workers to exit

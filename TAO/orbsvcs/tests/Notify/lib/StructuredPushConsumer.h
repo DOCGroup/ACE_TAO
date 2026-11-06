@@ -69,17 +69,17 @@ public:
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
+  void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr) override;
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy ();
+  void disconnect_from_proxy () override;
 
   // = StructuredPushConsumer methods
-  virtual void disconnect_structured_push_consumer ();
+  void disconnect_structured_push_consumer () override;
 
  /// Default does nothing.
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+        CosNotification::StructuredEvent const &notification) override;
 };
 
 #if defined (__ACE_INLINE__)

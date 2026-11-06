@@ -1,6 +1,9 @@
 1i\
 #include "fe_private.h"\
+#include <array>\
+#include <cstddef>\
 #include <cstring>\
+#include <memory>\
 
 /^#include <cstring>$/d
 s/,}/, nullptr}/g

@@ -40,10 +40,10 @@ public:
   int verify_results();
 
   /// Run by a daemon thread to handle deferred processing.
-  virtual int svc ();
+  int svc () override;
 
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                      const void *arg) override;
 
 private:
   enum
@@ -81,17 +81,17 @@ public:
 
   /// Clean up resources from the Reactor.
   int handle_close (ACE_HANDLE h,
-                    ACE_Reactor_Mask m);
+                    ACE_Reactor_Mask m) override;
 
   /// Keep track of the number of timeouts.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                      const void *arg) override;
 
   /// Keep track of the number of I/O events.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Keep track of the number of notifies.
-  virtual int handle_exception (ACE_HANDLE);
+  int handle_exception (ACE_HANDLE) override;
 
   /// Verify that the expected events did happen.
   int verify_results ();

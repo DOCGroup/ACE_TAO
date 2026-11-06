@@ -6,12 +6,12 @@
  *    using an <ACE_Timer_Heap>. It also demonstrates using a custom handler for
  *    timer events.
  *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Alon Diamant <diamant.alon@gmail.com>
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>, Douglas C. Schmidt
+ *          <d.schmidt@vanderbilt.edu>, and Alon Diamant <diamant.alon@gmail.com>
  */
 //=============================================================================
 
 
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task.h"
 #include "ace/Timer_Heap_T.h"
@@ -21,6 +21,10 @@
 
 #include "ace/Condition_T.h"
 #include "ace/Thread_Mutex.h"
+#include <atomic>
+#include <cstdio>
+#include <memory>
+#include <new>
 
 Custom_Handler_Input_Task::Custom_Handler_Input_Task (Thread_Timer_Queue *queue,
                         Thread_Timer_Queue_Custom_Handler_Test &timer_queue_driver)
@@ -56,30 +60,33 @@ Custom_Handler_Input_Task::svc ()
 int
 Custom_Handler_Input_Task::add_timer (void *argument)
 {
-  u_long useconds = *reinterpret_cast<int *> (argument);
-  ACE_Time_Value interval (useconds / usecs_,
-                           useconds % usecs_);
-  ACE_Time_Value expire_at = ACE_OS::gettimeofday () + interval;
+  u_int const useconds = *static_cast<u_int const *> (argument);
+  ACE_Time_Value const interval (useconds / usecs_, useconds % usecs_);
+  ACE_Time_Value const expire_at = ACE_OS::gettimeofday () + interval;
+  // The callback may run before schedule returns and delete its handler.
+  // Keep the ID state separately owned so it remains valid in either order.
+  std::shared_ptr<std::atomic<long>> timer_id (
+    std::make_shared<std::atomic<long>> (-1));
+  std::unique_ptr<Custom_Handler> handler (
+    new (std::nothrow) Custom_Handler (expire_at, timer_id));
+  if (!handler)
+    ACE_ERROR_RETURN ((LM_ERROR, "handler allocation failed"), -1);
 
-  Custom_Handler *h;
-
-  ACE_NEW_RETURN (h,
-                  Custom_Handler (expire_at),
-                  -1);
-
-  int id = queue_->schedule (h, 0, expire_at);
+  Custom_Handler *const raw_handler = handler.release ();
+  long const id = queue_->schedule (raw_handler, nullptr, expire_at);
 
   if (id == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "schedule failed"),
-                      -1);
+    {
+      delete raw_handler;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "schedule failed"),
+                        -1);
+    }
 
-  // We store the id into the handler, this is only used to produce
-  // nicer messages.
-  h->set_id (id);
+  // The ID is only used to produce nicer messages.
+  timer_id->store (id, std::memory_order_relaxed);
 
-  ACE_OS::printf ("scheduling timer %d\n",
-                  id);
+  std::printf ("scheduling timer %ld\n", id);
   return 0;
 }
 
@@ -89,7 +96,8 @@ Custom_Handler_Input_Task::add_timer (void *argument)
 int
 Custom_Handler_Input_Task::cancel_timer (void *argument)
 {
-  return this->queue_->cancel (*reinterpret_cast<int *> (argument));
+  long const id = *static_cast<long const *> (argument);
+  return this->queue_->cancel (id);
 }
 
 // Lists the timers in the queue.  Ignores the argument. This method
@@ -150,21 +158,16 @@ Thread_Timer_Queue_Custom_Handler_Test::Thread_Timer_Queue_Custom_Handler_Test (
 {
 }
 
-Thread_Timer_Queue_Custom_Handler_Test::~Thread_Timer_Queue_Custom_Handler_Test ()
-{
-}
-
 int
 Thread_Timer_Queue_Custom_Handler_Test::run_test ()
 {
-  this->init ();
-  return 0;
+  return this->init ();
 }
 
 int
 Thread_Timer_Queue_Custom_Handler_Test::display_menu ()
 {
-  static char menu[] =
+  static char const menu[] =
     "Usage:\n"
     "1 <microseconds>: setups a new timer\n"
     "2 <timerid>: removes a timer\n"
@@ -180,25 +183,34 @@ Thread_Timer_Queue_Custom_Handler_Test::display_menu ()
 int
 Thread_Timer_Queue_Custom_Handler_Test::init ()
 {
-  using CMD = Command<Custom_Handler_Input_Task, Custom_Handler_Input_Task::ACTION>;
+  using CMD = Command<Custom_Handler_Input_Task,
+                      Custom_Handler_Input_Task::ACTION>;
 
   // initialize the <Command> objects with their corresponding
   // methods from <Custom_Handler_Input_Task>
-  ACE_NEW_RETURN (schedule_cmd_,
+  CMD *raw_schedule_cmd {};
+  ACE_NEW_RETURN (raw_schedule_cmd,
                   CMD (input_task_, &Custom_Handler_Input_Task::add_timer),
                   -1);
+  schedule_cmd_.reset (raw_schedule_cmd);
 
-  ACE_NEW_RETURN (cancel_cmd_,
+  CMD *raw_cancel_cmd {};
+  ACE_NEW_RETURN (raw_cancel_cmd,
                   CMD (input_task_, &Custom_Handler_Input_Task::cancel_timer),
                   -1);
+  cancel_cmd_.reset (raw_cancel_cmd);
 
-  ACE_NEW_RETURN (list_cmd_,
+  CMD *raw_list_cmd {};
+  ACE_NEW_RETURN (raw_list_cmd,
                   CMD (input_task_, &Custom_Handler_Input_Task::list_timer),
                   -1);
+  list_cmd_.reset (raw_list_cmd);
 
-  ACE_NEW_RETURN (shutdown_cmd_,
+  CMD *raw_shutdown_cmd {};
+  ACE_NEW_RETURN (raw_shutdown_cmd,
                   CMD (input_task_, &Custom_Handler_Input_Task::shutdown_timer),
                   -1);
+  shutdown_cmd_.reset (raw_shutdown_cmd);
 
   if (this->input_task_.activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

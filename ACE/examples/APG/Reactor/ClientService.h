@@ -21,6 +21,12 @@ class ClientService :
   using super = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
 public:
+  ClientService () = default;
+  ClientService (ClientService const &) = delete;
+  ClientService (ClientService &&) = delete;
+  ClientService &operator= (ClientService const &) = delete;
+  ClientService &operator= (ClientService &&) = delete;
+
   int open (void * = nullptr) override;
 
   // Called when input is available from the client.

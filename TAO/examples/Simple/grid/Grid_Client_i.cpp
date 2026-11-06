@@ -13,7 +13,7 @@ Grid_Client_i::parse_args (int argc,
   // Parses some of the options that are specific to this example
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("df:nk:xw:h:p:q:v:"));
 
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {

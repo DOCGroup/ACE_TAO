@@ -17,71 +17,59 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
+#include <string>
 
-// Name of file contains ior.
-static ACE_TCHAR const *IOR = ACE_TEXT ("file://ior");
-
-// Default iterations.
-static CORBA::ULong iterations = 20;
-
-// Default number of bytes to buffer before flushing.
-static CORBA::Long message_bytes = -1;
-
-// Default number of invocations to buffer before flushing.
-static CORBA::Long message_count = iterations / 4;
-
-// Default number of iterations before explicit flushing.
-static CORBA::Long flush_count = -1;
-
-// Time interval for implicit flushing (in milli seconds).
-static long timeout = -1;
-
-// Time interval between invocation (in milli seconds).
-static long interval = 1000;
-
-// Flag indicates whether to shutdown remote server or not upon client
-// shutdown.
-static bool shutdown_server = false;
+struct Client_Options
+{
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://ior")};
+  CORBA::ULong iterations {20};
+  CORBA::Long message_bytes {-1};
+  CORBA::Long message_count {5};
+  CORBA::Long flush_count {-1};
+  long timeout {-1};
+  long interval {1000};
+  bool shutdown_server {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:f:c:b:i:z:t:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'f':
-        flush_count = ACE_OS::atoi (get_opts.opt_arg ());
+        options.flush_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'c':
-        message_count = ACE_OS::atoi (get_opts.opt_arg ());
+        options.message_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'b':
-        message_bytes = ACE_OS::atoi (get_opts.opt_arg ());
+        options.message_bytes = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'z':
-        interval = ACE_OS::atoi (get_opts.opt_arg ());
+        options.interval = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        timeout = ACE_OS::atoi (get_opts.opt_arg ());
+        options.timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        shutdown_server = true;
+        options.shutdown_server = true;
         break;
 
       case '?':
@@ -101,7 +89,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR == nullptr)
+  if (options.ior.empty ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please specify the IOR for the servant\n"), -1);
 
@@ -119,13 +107,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      int parse_args_result = parse_args (argc, argv);
+      Client_Options options;
+      int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
         return parse_args_result;
 
       // Get an object reference from the argument string.
       CORBA::Object_var base =
-        orb->string_to_object (IOR);
+        orb->string_to_object (options.ior.c_str ());
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object = test::_narrow (base.in ());
@@ -139,7 +128,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Setup the none sync scope policy, i.e., the ORB will buffer
       // oneways.
-      Messaging::SyncScope sync_none = Messaging::SYNC_NONE;
+      Messaging::SyncScope const sync_none {Messaging::SYNC_NONE};
 
       // Setup the none sync scope any.
       CORBA::Any sync_none_any;
@@ -170,26 +159,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // If valid <message_count>, set the implicit flushing to
       // account for queued messages.
-      if (message_count != -1)
+      if (options.message_count != -1)
         {
           buffering_constraint.mode |= TAO::BUFFER_MESSAGE_COUNT;
-          buffering_constraint.message_count = message_count;
+          buffering_constraint.message_count = options.message_count;
         }
 
       // If valid <message_bytes>, set the implicit flushing to
       // account for queued bytes.
-      if (message_bytes != -1)
+      if (options.message_bytes != -1)
         {
           buffering_constraint.mode |= TAO::BUFFER_MESSAGE_BYTES;
-          buffering_constraint.message_bytes = message_bytes;
+          buffering_constraint.message_bytes = options.message_bytes;
         }
 
       // If valid <timeout>, set the implicit flushing to account for
       // timeouts.
-      if (timeout != -1)
+      if (options.timeout != -1)
         {
           buffering_constraint.mode |= TAO::BUFFER_TIMEOUT;
-          buffering_constraint.timeout = timeout * 10000;
+          buffering_constraint.timeout = options.timeout * 10000;
         }
 
       // Setup the buffering constraint any.
@@ -245,11 +234,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Explicit flushing policy will be used later.
       //
 
-      for (CORBA::ULong i = 1; i <= iterations; ++i)
+      for (CORBA::ULong i = 1; i <= options.iterations; ++i)
         {
           // Explicit flushing (is specified).
-          if (flush_count != -1 &&
-              i % flush_count == 0)
+          if (options.flush_count != -1 &&
+              i % options.flush_count == 0)
             {
               // Setup explicit flushing.
               policy_current->set_policy_overrides (buffering_flush_policy_list,
@@ -278,13 +267,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           // Interval between successive calls.
           ACE_Time_Value sleep_interval (0,
-                                         interval * 1000);
+                                         options.interval * 1000);
 
           orb->run (sleep_interval);
         }
 
       // Shutdown server.
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           test_object->shutdown ();
         }

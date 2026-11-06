@@ -86,11 +86,11 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 void
 Consumer::push (CORBA::Any const &)
 {
-  this->event_count_ ++;
+  ++this->event_count_;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Consumer (%P|%t): %d log generated events received\n",
-                  this->event_count_));
+  ACE_DEBUG ((LM_DEBUG,
+              "Consumer (%P|%t): %d log generated events received\n",
+              this->event_count_));
 }
 
 void

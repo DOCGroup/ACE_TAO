@@ -21,19 +21,24 @@ public:
               Callback_ptr callback,
               bool         collocated = false);
 
-  ~ClientTask () override;
+  ~ClientTask () override = default;
 
-  int open(void* x = 0) override;
+  ClientTask (ClientTask const &) = delete;
+  ClientTask (ClientTask &&) = delete;
+  ClientTask &operator= (ClientTask const &) = delete;
+  ClientTask &operator= (ClientTask &&) = delete;
+
+  int open (void * = nullptr) override;
   int svc() override;
   int close(u_long) override;
 
 private:
-  bool validate_connection ();
+  bool validate_connection () const;
 
-  CORBA::ORB_var orb_;
-  Foo_var foo_;
-  Callback_var callback_;
-  bool collocated_;
+  CORBA::ORB_var const orb_;
+  Foo_var const foo_;
+  Callback_var const callback_;
+  bool const collocated_;
 };
 
 #endif

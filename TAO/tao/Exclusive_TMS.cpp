@@ -48,7 +48,7 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
                                     ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd)
 {
   this->request_id_ = request_id;
-  this->rd_ = rd.get ();
+  this->rd_.reset (rd.get ());
 
   return 0;
 }
@@ -56,7 +56,7 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
 bool
 TAO_Exclusive_TMS::has_request ()
 {
-  return this->rd_ != nullptr;
+  return this->rd_.get () != nullptr;
 }
 
 int
@@ -125,7 +125,7 @@ TAO_Exclusive_TMS::idle_after_send ()
 {
   // if there is no reply dispatcher (possible in case of AMI requests)
   // release the transport now
-  if (this->rd_ != nullptr)
+  if (this->rd_)
     {
       return false;
     }
@@ -162,7 +162,7 @@ TAO_Exclusive_TMS::idle_after_reply ()
 void
 TAO_Exclusive_TMS::connection_closed ()
 {
-  if (this->rd_ != nullptr)
+  if (this->rd_)
     this->rd_->connection_closed ();
 }
 

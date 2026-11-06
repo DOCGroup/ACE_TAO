@@ -74,7 +74,7 @@ int
 be_visitor_operation_rettype::visit_predefined_type (
   be_predefined_type *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -299,7 +299,7 @@ be_visitor_operation_rettype::visit_valuebox (
 std::string const&
 be_visitor_operation_rettype::type_name (be_type *node) const
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
 
   if (this->ctx_->alias () != nullptr)
     {

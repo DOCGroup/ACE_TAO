@@ -11,18 +11,24 @@ class PCB;
 class PTimer_Dispatcher
 {
 public:
+  PTimer_Dispatcher () = default;
+  PTimer_Dispatcher (PTimer_Dispatcher const &) = delete;
+  PTimer_Dispatcher (PTimer_Dispatcher &&) = delete;
+  PTimer_Dispatcher &operator= (PTimer_Dispatcher const &) = delete;
+  PTimer_Dispatcher &operator= (PTimer_Dispatcher &&) = delete;
+
   void wait_for_event ();
 
   long schedule (PCB *cb,
                  void *arg,
-                 const ACE_Time_Value &abs_time,
-                 const ACE_Time_Value &interval);
+                 ACE_Time_Value const &abs_time,
+                 ACE_Time_Value const &interval);
 
   int cancel (PCB *cb,
               int dont_call_handle_close = 1);
 
   int reset_interval (long timer_id,
-                      const ACE_Time_Value &interval);
+                      ACE_Time_Value const &interval);
 
   void set (PTimerQueue *timer_queue);
 

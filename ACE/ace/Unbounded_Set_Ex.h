@@ -52,7 +52,8 @@ public:
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
 
-  ACE_Unbounded_Set_Ex_Iterator (ACE_Unbounded_Set_Ex<T, C> &s, bool end = false);
+  explicit ACE_Unbounded_Set_Ex_Iterator (ACE_Unbounded_Set_Ex<T, C> &s,
+                                           bool end = false);
 
   // = Iteration methods.
 
@@ -94,10 +95,10 @@ public:
 
 private:
   /// Pointer to the current node in the iteration.
-  ACE_Node<T, C> *current_;
+  ACE_Node<T, C> *current_ {};
 
   /// Pointer to the set we're iterating over.
-  ACE_Unbounded_Set_Ex<T, C> *set_;
+  ACE_Unbounded_Set_Ex<T, C> *set_ {};
 };
 
 /**
@@ -118,8 +119,9 @@ public:
   using pointer = typename container_type::const_pointer;
   using difference_type = typename container_type::difference_type;
 
-  ACE_Unbounded_Set_Ex_Const_Iterator (const ACE_Unbounded_Set_Ex<T, C> &s,
-                                       bool end = false);
+  explicit ACE_Unbounded_Set_Ex_Const_Iterator (
+    ACE_Unbounded_Set_Ex<T, C> const &s,
+    bool end = false);
 
   // = Iteration methods.
 
@@ -161,10 +163,10 @@ public:
 
 private:
   /// Pointer to the current node in the iteration.
-  ACE_Node<T, C> *current_;
+  ACE_Node<T, C> *current_ {};
 
   /// Pointer to the set we're iterating over.
-  const ACE_Unbounded_Set_Ex<T, C> *set_;
+  ACE_Unbounded_Set_Ex<T, C> const *set_ {};
 };
 
 /**
@@ -234,25 +236,25 @@ public:
    * Initialize an empty set using the allocation strategy of the user if
    * provided.
    */
-  ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = nullptr);
+  explicit ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = nullptr);
 
   /**
    * Initialize an empty set using the allocation strategy of the user if
    * provided, and a given comparator functor.
    */
-  ACE_Unbounded_Set_Ex (const C &comparator, ACE_Allocator *alloc = nullptr);
+  ACE_Unbounded_Set_Ex (C const &comparator, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
   /**
    * Initialize this set to be an exact copy of the set provided.
    */
-  ACE_Unbounded_Set_Ex (const ACE_Unbounded_Set_Ex<T, C> &);
+  ACE_Unbounded_Set_Ex (ACE_Unbounded_Set_Ex<T, C> const &);
 
   /// Assignment operator.
   /**
    * Perform a deep copy of the rhs into the lhs.
    */
-  ACE_Unbounded_Set_Ex<T, C> & operator= (const ACE_Unbounded_Set_Ex<T, C> &);
+  ACE_Unbounded_Set_Ex<T, C> & operator= (ACE_Unbounded_Set_Ex<T, C> const &);
 
   /// Destructor.
   /**
@@ -344,7 +346,7 @@ private:
   size_t cur_size_ {};
 
   /// Allocation strategy of the set.
-  ACE_Allocator *allocator_;
+  ACE_Allocator *allocator_ {};
 
   /// Comparator to be used
   COMP comp_;

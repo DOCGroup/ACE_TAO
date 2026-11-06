@@ -12,6 +12,8 @@
 #include <ace/Thread_Manager.h>
 #include <ace/TP_Reactor.h>
 
+#include <memory>
+
 #include "AcceptHandler.h"
 
 /**
@@ -22,7 +24,7 @@
 ACE_THR_FUNC_RETURN threadFunc(void *arg) {
     ACE_TRACE("threadFunc(void *)");
 
-    ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
+    ACE_Reactor *const reactor = static_cast<ACE_Reactor *> (arg);
     reactor->run_reactor_event_loop();
 
     return ACE_THR_FUNC_RETURN_NULL;
@@ -38,18 +40,20 @@ int ACE_TMAIN(int, ACE_TCHAR **) {
     ACE_Reactor reactor(&tpReactor);
 
     // create a new accept handler using that reactor
-    AcceptHandler *acceptHandler = nullptr;
-    ACE_NEW_NORETURN (acceptHandler, AcceptHandler(&reactor));
+    AcceptHandler *acceptHandler_raw {};
+    ACE_NEW_NORETURN (acceptHandler_raw, AcceptHandler(&reactor));
+    std::unique_ptr<AcceptHandler> acceptHandler (acceptHandler_raw);
     if (acceptHandler == nullptr)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
                         ACE_TEXT ("accept handler. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
 
     // open the accept handler
     if (acceptHandler->open() == -1) {
-        delete acceptHandler;
         ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to open accept ")
                           ACE_TEXT ("handler. Exiting.\n")), -1);
     }
+    // The reactor close callback deletes the registered handler.
+    acceptHandler.release ();
 
     // spawn some threads which run the reactor event loop(s)
     ACE_Thread_Manager::instance()->spawn_n(9, threadFunc, &reactor);

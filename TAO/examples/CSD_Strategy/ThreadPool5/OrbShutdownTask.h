@@ -15,15 +15,19 @@
 class OrbShutdownTask : public ACE_Task_Base
 {
 public:
-  OrbShutdownTask();
+  OrbShutdownTask () = default;
   ~OrbShutdownTask () override = default;
 
-  void orb(CORBA::ORB_ptr orb);
+  OrbShutdownTask (OrbShutdownTask const &) = delete;
+  OrbShutdownTask (OrbShutdownTask &&) = delete;
+  OrbShutdownTask &operator= (OrbShutdownTask const &) = delete;
+  OrbShutdownTask &operator= (OrbShutdownTask &&) = delete;
+
+  void orb (CORBA::ORB_ptr orb);
 
   int open(void*) override;
   int svc() override;
   int close(u_long) override;
-
 
 private:
   CORBA::ORB_var orb_;

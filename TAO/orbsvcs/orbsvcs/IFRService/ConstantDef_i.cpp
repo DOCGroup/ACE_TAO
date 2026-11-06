@@ -228,7 +228,7 @@ TAO_ConstantDef_i::value_i (CORBA::Any const &value)
       TAO_InputCDR in (out);
       mb = in.steal_contents ();
     }
-  std::unique_ptr<ACE_Message_Block> safe (mb);
+  ACE_Message_Block_Unique_Ptr safe {mb};
 
   CORBA::TCKind kind = val_tc->kind ();
 

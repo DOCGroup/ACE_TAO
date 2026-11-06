@@ -27,9 +27,9 @@ class Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
   //     <Peer_Router> (i.e., <Consumer_Router> or <Supplier_Router>).
 public:
   explicit Peer_Handler (Peer_Router_Context * = nullptr);
-  Peer_Handler (const Peer_Handler &) = delete;
+  Peer_Handler (Peer_Handler const &) = delete;
   Peer_Handler (Peer_Handler &&) = delete;
-  Peer_Handler &operator= (const Peer_Handler &) = delete;
+  Peer_Handler &operator= (Peer_Handler const &) = delete;
   Peer_Handler &operator= (Peer_Handler &&) = delete;
   // Initialization method.
 
@@ -48,9 +48,8 @@ public:
   // $ACE_ROOT/apps/Gateway/Gateway application.
 
 protected:
-  Peer_Router_Context *peer_router_context_;
-  // Pointer to router context.  This maintains the state that is
-  // shared by both Tasks in a <Peer_Router> Module.
+  Peer_Router_Context *peer_router_context_ {};
+  // Non-owning router context; Peer_Router_Context reference counting keeps it alive.
 };
 
 class Peer_Router_Context : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
@@ -86,7 +85,7 @@ public:
   // <ACE_Acceptor>.
 
   // = Set/Get Router Task.
-  Peer_Router *peer_router ();
+  Peer_Router *peer_router () const;
   void peer_router (Peer_Router *);
 
   void release ();
@@ -96,7 +95,7 @@ public:
   // Increment the reference count.
 
 private:
-  Peer_Router *peer_router_;
+  Peer_Router *peer_router_ {};
   // Pointer to the <Peer_Router> that we are accepting for.
 
   // = Useful aliases.
@@ -107,7 +106,7 @@ private:
   PEER_MAP peer_map_;
   // Map used to keep track of active peers.
 
-  int reference_count_;
+  int reference_count_ {};
   // Keep track of when we can delete ourselves.
 
   ~Peer_Router_Context ();
@@ -117,9 +116,9 @@ private:
   // Declare a friend class to avoid compiler warnings because the
   // destructor is private.
 
-  Peer_Router_Context (const Peer_Router_Context &) = delete;
+  Peer_Router_Context (Peer_Router_Context const &) = delete;
   Peer_Router_Context (Peer_Router_Context &&) = delete;
-  Peer_Router_Context &operator= (const Peer_Router_Context &) = delete;
+  Peer_Router_Context &operator= (Peer_Router_Context const &) = delete;
   Peer_Router_Context &operator= (Peer_Router_Context &&) = delete;
 };
 
@@ -136,7 +135,7 @@ class Peer_Router : public ACE_Task<ACE_SYNCH>
   //     <put> methods to specialize the behavior of the router to
   //     meet application-specific requirements.
 protected:
-  Peer_Router (Peer_Router_Context *prc);
+  explicit Peer_Router (Peer_Router_Context *prc);
   // Initialization method.
 
   virtual int control (ACE_Message_Block *);
@@ -149,14 +148,13 @@ protected:
   // Helpful typedef.
 
 private:
-  Peer_Router_Context *peer_router_context_;
-  // Reference to the context shared by the writer and reader Tasks,
-  // e.g., in the <Consumer_Router> and <Supplier_Router> Modules.
+  Peer_Router_Context *peer_router_context_ {};
+  // Non-owning reference to the context shared by the module's reader and writer.
 
   // = Prevent copies and pass-by-value.
-  Peer_Router (const Peer_Router &) = delete;
+  Peer_Router (Peer_Router const &) = delete;
   Peer_Router (Peer_Router &&) = delete;
-  Peer_Router &operator= (const Peer_Router &) = delete;
+  Peer_Router &operator= (Peer_Router const &) = delete;
   Peer_Router &operator= (Peer_Router &&) = delete;
 };
 

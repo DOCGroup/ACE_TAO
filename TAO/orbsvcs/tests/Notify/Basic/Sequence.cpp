@@ -128,7 +128,7 @@ Sequence::parse_args (int argc,
 {
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
-    const ACE_TCHAR *current_arg = 0;
+    ACE_TCHAR const *current_arg {};
 
     while (arg_shifter.is_anything_left ())
     {
@@ -251,9 +251,9 @@ Sequence::run_test ()
 
   CosNotification::EventBatch batch;
   batch.length (this->supplier_batch_size_);
-  CORBA::ULong batch_index = 0;
+  CORBA::ULong batch_index {};
 
-  for (int i = 0; i < this->event_count_; ++i)
+  for (int i {}; i < this->event_count_; ++i)
     {
       event.filterable_data[0].value <<= (CORBA::Long)i;
 
@@ -277,7 +277,7 @@ Sequence::run_test ()
 
           // reset
           batch.length (this->supplier_batch_size_);
-          batch_index = 0;
+          batch_index = {};
         }
     } // for
 
@@ -337,19 +337,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.ORB_run();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
     }
 
-  int status = 0;
+  int status {};
 
   try
     {
       status = events.check_results ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       status = 1;

@@ -3,12 +3,12 @@
 #include "TimerDispatcher.h"
 
 // Listing 1 code/ch20
-int CB::handle_timeout (const ACE_Time_Value &,
-                        const void *arg)
+int CB::handle_timeout (ACE_Time_Value const &,
+                        void const *arg)
 {
   ACE_TRACE ("CB::handle_timeout");
 
-  const int *val = static_cast<const int*> (arg);
+  int const *val = static_cast<int const *> (arg);
   ACE_ASSERT ((*val) == timerID_);
 
   ACE_UNUSED_ARG (val);

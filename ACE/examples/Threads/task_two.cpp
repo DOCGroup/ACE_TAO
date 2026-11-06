@@ -7,6 +7,7 @@
 
 #include "ace/Service_Config.h"
 #include <atomic>
+#include <memory>
 
 
 #if defined (ACE_HAS_THREADS)
@@ -94,7 +95,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : default_threads;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : default_iterations;
 
-  Task_Test **task_array = new Task_Test *[n_threads];
+  std::unique_ptr<Task_Test> *task_array_storage {};
+  ACE_NEW_RETURN (task_array_storage,
+                  std::unique_ptr<Task_Test>[n_threads],
+                  -1);
+  std::unique_ptr<std::unique_ptr<Task_Test>[]> task_array {task_array_storage};
 
   for (int i = 1; i <= n_iterations; i++)
     {
@@ -108,9 +113,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Launch the new tasks.
       for (int j = 0; j < n_threads; j++)
         {
-          task_array[j] = new Task_Test;
+          Task_Test *task {};
+          ACE_NEW_RETURN (task, Task_Test, -1);
+          task_array[j].reset (task);
+        }
+
+      for (int j = 0; j < n_threads; j++)
+        {
           // Activate the task, i.e., make it an active object.
-          task_array[j]->open ();
+          if (task_array[j]->open () == -1)
+            {
+              ACE_Thread_Manager::instance ()->wait ();
+              ACE_ERROR_RETURN ((LM_ERROR, "failed to activate task\n"), -1);
+            }
         }
 
       // Wait for initialization to kick in.
@@ -131,14 +146,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   wait_count.load (std::memory_order_relaxed)));
 
       // Wait for all the tasks to exit.
-          ACE_Thread_Manager::instance ()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
 
-      // Delete the existing tasks.
+      // Release the completed tasks before creating the next iteration's tasks.
       for (int k = 0; k < n_threads; k++)
-        delete task_array[k];
+        task_array[k].reset ();
     }
-
-  delete [] task_array;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) shutting down the test\n"));
   return 0;

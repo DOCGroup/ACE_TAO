@@ -39,7 +39,7 @@ public:
   /// Set the command builder.
   void command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder);
 
-  virtual int svc ();
+  int svc () override;
   // The thread entry point.
 
   void shutdown ();
@@ -66,7 +66,7 @@ public:
   /// Srt the run period.
   void run_period (ACE_Time_Value run_period);
 
-  virtual int svc ();
+  int svc () override;
   // The thread entry point.
 
 private:
@@ -99,7 +99,7 @@ public:
   void run ();
 
   /// Shutdown
-  virtual void shutdown ();
+  void shutdown () override;
 
 protected:
   /// Parse command line parameters.

@@ -30,7 +30,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   be_interface *intf = this->ctx_->interface ();
 
@@ -58,7 +58,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
   // Although unlikely it is possible that the 'T' in 'template class<T>' will
   // conflict with an argument name...
   std::string template_name ("T");
-  bool template_name_ok = false;
+  bool template_name_ok {};
 
   while (!template_name_ok)
     {

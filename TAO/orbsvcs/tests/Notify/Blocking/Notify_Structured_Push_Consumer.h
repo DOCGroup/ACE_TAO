@@ -20,8 +20,13 @@ class Notify_Test_Client;
 class Notify_Structured_Push_Consumer: public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer&&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer&&) = delete;
+
   Notify_Structured_Push_Consumer (
-                        const char* name,
+                        char const* name,
                         TimeBase::TimeT blocking,
                         unsigned int expected,
                         Notify_Test_Client& client);
@@ -29,12 +34,12 @@ public:
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&);
+  void push_structured_event (CosNotification::StructuredEvent const&) override;
 
   ACE_CString name_;
   TimeBase::TimeT blocking_timeout_;
   unsigned int expected_;
-  unsigned int count_;
+  unsigned int count_ {};
   Notify_Test_Client& client_;
 };
 

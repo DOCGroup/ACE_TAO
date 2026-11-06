@@ -9,6 +9,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstdio>
 #include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -112,10 +113,10 @@ namespace ACE
       char const *item {};
       char const *arg {};
 
-      while ((ACE_OS::fgets (buf_, sizeof (buf_), file_ptr_)) != nullptr)
+      while (std::fgets (buf_, sizeof (buf_), file_ptr_) != nullptr)
         {
-          item = ACE_OS::strtok (this->buf_, " \t\n");
-          arg = ACE_OS::strtok (nullptr, "\n");
+          item = std::strtok (this->buf_, " \t\n");
+          arg = std::strtok (nullptr, "\n");
 
           if (item == nullptr || arg == nullptr)
             {
@@ -124,17 +125,17 @@ namespace ACE
 
           if (std::strcmp (item, "cpu") == 0)
             {
-              sscanf (arg,
-                      "%lu %lu %lu %lu",
-                      &this->user_,
-                      &this->wait_,
-                      &this->kernel_,
-                      which_idle);
+              std::sscanf (arg,
+                           "%lu %lu %lu %lu",
+                           &this->user_,
+                           &this->wait_,
+                           &this->kernel_,
+                           which_idle);
               break;
             }
         }
 
-      ACE_OS::fclose (this->file_ptr_);
+      std::fclose (this->file_ptr_);
     }
 #endif
   }

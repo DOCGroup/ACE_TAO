@@ -5,15 +5,21 @@
 #include "ace/Log_Msg.h"
 #include "Callback_Handler.h"
 
+#include <memory>
+
 Callback_Handler::Callback_Handler (char const *pathname,
                                     Web_Server::Callback_ptr client_callback)
-  : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),
+  : file_ (ACE_TEXT_CHAR_TO_TCHAR (pathname)),
     file_io_ (),
     callback_ (Web_Server::Callback::_duplicate (client_callback)),
     ami_handler_ (),
-    chunk_ (new Web_Server::Chunk_Type)
+    chunk_ ()
 {
-  // Nothing else
+  Web_Server::Chunk_Type *chunk {};
+  ACE_NEW_THROW_EX (chunk,
+                    Web_Server::Chunk_Type,
+                    CORBA::NO_MEMORY ());
+  this->chunk_ = chunk;
 }
 
 void
@@ -27,23 +33,19 @@ Callback_Handler::next_chunk ()
     }
 
   // Allocate a buffer for the file being read.
-  CORBA::Octet *buf =
-    Web_Server::Chunk_Type::allocbuf (BUFSIZ);
+  std::unique_ptr<CORBA::Octet, decltype (&Web_Server::Chunk_Type::freebuf)> buf (
+    Web_Server::Chunk_Type::allocbuf (BUFSIZ),
+    &Web_Server::Chunk_Type::freebuf);
 
-  if (buf == nullptr)
+  if (!buf)
     throw CORBA::NO_MEMORY ();
 
-  ssize_t const bytes_read = this->file_io_.recv (buf,
+  ssize_t const bytes_read = this->file_io_.recv (buf.get (),
                                                   BUFSIZ);
   if (bytes_read == -1)
-    {
-      Web_Server::Chunk_Type::freebuf (buf);
-
-      throw CORBA::INTERNAL ();
-    }
+    throw CORBA::INTERNAL ();
   else if (bytes_read == 0)
     {
-      Web_Server::Chunk_Type::freebuf (buf);
       this->last_chunk_ = true;
     }
   else
@@ -60,8 +62,8 @@ Callback_Handler::next_chunk ()
       // sequence.  Only replace the amount of data actually read.
       this->chunk_->replace (bytes_read,
                              bytes_read,
-                             buf,
-                             1);  // The sequence releases memory for us.
+                             buf.release (),
+                             true);  // The sequence releases memory for us.
     }
 
   this->callback_->sendc_next_chunk (this->ami_handler_.in (),
