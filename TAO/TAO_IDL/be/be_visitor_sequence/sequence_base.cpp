@@ -26,7 +26,7 @@ be_visitor_sequence_base::~be_visitor_sequence_base () = default;
 int
 be_visitor_sequence_base::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   *os << "::" << node->name ();
 
@@ -37,8 +37,8 @@ be_visitor_sequence_base::visit_predefined_type (be_predefined_type *node)
 int
 be_visitor_sequence_base::visit_node (be_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -187,8 +187,8 @@ be_visitor_sequence_base_template_args::~be_visitor_sequence_base_template_args 
 int
 be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -218,8 +218,8 @@ be_visitor_sequence_base_template_args::visit_interface_fwd (
     be_interface_fwd *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {};
 
   if (this->ctx_->alias ())
     {
@@ -263,7 +263,7 @@ be_visitor_sequence_base_template_args::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   *os << "::" << node->name ();
 
   if (beseq_->managed_type () == be_sequence::MNG_PSEUDO

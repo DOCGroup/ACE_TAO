@@ -713,7 +713,7 @@ TAO_OutStream::print (AST_Expression *expr)
             << '"';
       break;
     case AST_Expression::EV_wstring:
-      this->TAO_OutStream::print ("L\"%s\"", ev->strval.c_str ());
+      this->TAO_OutStream::print ("L\"%s\"", ev->wstrval.c_str ());
       break;
     case AST_Expression::EV_enum:
       this->print (expr->n ());

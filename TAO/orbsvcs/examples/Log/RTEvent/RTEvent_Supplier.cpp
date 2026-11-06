@@ -62,9 +62,9 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "\nCalling EventLogFactory::create...\n"));
 
-      DsLogAdmin::LogFullActionType const logfullaction = DsLogAdmin::halt;
+      DsLogAdmin::LogFullActionType logfullaction = DsLogAdmin::halt;
       DsLogAdmin::CapacityAlarmThresholdList threshold {};
-      CORBA::ULongLong max_size {}; // 0 means "infinite"
+      CORBA::ULongLong max_size = 0; // 0 means "infinite"
 
       DsLogAdmin::LogId logid {};
 

@@ -35,7 +35,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
     }
 
   // Output stream.
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   UTL_Scope *s =

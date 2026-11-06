@@ -29,7 +29,7 @@ be_visitor_operation_arglist::~be_visitor_operation_arglist () = default;
 int
 be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   bool const has_args = node->argument_count () > 0;
 
   *os << " (";
@@ -113,7 +113,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 int
 be_visitor_operation_arglist::visit_factory (be_factory *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   bool has_args = node->argument_count () > 0;
 
   *os << " (";
@@ -165,7 +165,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // generate the appropriate relative scoped names.
   be_operation *op =
     dynamic_cast<be_operation*> (this->ctx_->scope ());
-  be_interface *intf = nullptr;
+  be_interface *intf {};
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -206,7 +206,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
 int
 be_visitor_operation_arglist::post_process (be_decl *bd)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // if we are not the last node in the list of arguments, generate a comma
   // else decide if we are generating code to support true exceptions - in

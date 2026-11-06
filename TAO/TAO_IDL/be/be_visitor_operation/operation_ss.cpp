@@ -29,8 +29,8 @@ be_visitor_operation_ss::visit_operation (be_operation * node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {};
 
   this->ctx_->node (node);
 
@@ -62,7 +62,7 @@ be_visitor_operation_ss::visit_argument (be_argument *node)
 {
   // This method is used to generate the ParamData table entry.
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Retrieve the type for this argument.
   be_type *bt = dynamic_cast<be_type*> (node->field_type ());
@@ -191,7 +191,11 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Generate the actual code for the skeleton. However, if any of the
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt;
+  if (!node->exceptions () || !be_global->tc_support ())
+    {
+      *os << be_nl;
+    }
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -205,7 +209,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   // Declare return type helper class.
 
-  *os << "TAO::SArg_Traits< ";
+  *os << "TAO::SArg_Traits<";
 
   this->gen_arg_template_param_name (node,
                                      return_type,
@@ -305,7 +309,7 @@ be_visitor_operation_ss::gen_skel_body_arglist (be_operation * node,
         dynamic_cast<AST_Argument*> (arg_decl_iter.item ());
 
       *os << be_nl
-          << "TAO::SArg_Traits< ";
+          << "TAO::SArg_Traits<";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),

@@ -40,8 +40,8 @@ public:
   void redefine (AST_Structure *from) override;
 
   /// Overridden from class be_type.
-  virtual void gen_ostream_operator (TAO_OutStream *os,
-                                     bool use_underscore) override;
+  void gen_ostream_operator (TAO_OutStream *os,
+                             bool use_underscore) override;
 
   /// Cleanup method.
   void destroy () override;

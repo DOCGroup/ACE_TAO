@@ -54,7 +54,7 @@ public:
   virtual be_decl *decl ();
 
   /// Recursively clean up scope members.
-  virtual void destroy () override;
+  void destroy () override;
 
   /// Visiting.
   virtual int accept (be_visitor *visitor);

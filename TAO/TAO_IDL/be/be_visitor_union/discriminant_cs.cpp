@@ -24,9 +24,16 @@ be_visitor_union_discriminant_cs::visit_enum (be_enum *node)
 {
   be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type * const bt = this->ctx_->alias ()
-    ? static_cast<be_type*> (this->ctx_->alias ())
-    : static_cast<be_type*> (node);
+  be_type *bt {};
+
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
 
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))

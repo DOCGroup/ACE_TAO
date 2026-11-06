@@ -30,7 +30,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::post_process (
   )
 {
   // All we do here is to insert a comma and a newline.
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   if (!this->last_node (bd))
     {
@@ -44,10 +44,10 @@ int
 be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   be_operation *node)
 {
-  be_type *bt = nullptr;
+  be_type *bt {};
   be_visitor_context ctx;
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   // Initialize the return type variable.
@@ -145,7 +145,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl ;
 
   std::string exception_data_arg = "0";
-  std::size_t excep_count = 0;
+  std::size_t excep_count {};
 
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
@@ -155,7 +155,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       *os << be_nl << "static TAO::Exception_Data " << "exceptions_data [] =" << be_nl;
       *os << "{" << be_idt_nl;
 
-      be_exception *ex = nullptr;
+      be_exception *ex {};
 
       // Initialize an iterator to iterate thru the exception list.
       // Continue until each element is visited.
@@ -245,8 +245,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (
     be_argument *node
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = nullptr;
+  TAO_OutStream * const os = this->ctx_->stream ();
+  be_type *bt {};
 
   // Retrieve the type for this argument.
   bt = dynamic_cast<be_type*> (node->field_type ());
@@ -316,7 +316,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::gen_marshal_and_invoke
     be_type *
   )
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   be_visitor_context ctx;
 
   os->indent ();

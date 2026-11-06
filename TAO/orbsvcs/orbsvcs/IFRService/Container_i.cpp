@@ -7,6 +7,7 @@
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "ace/SString.h"
+#include <memory>
 #include <deque>
 #include <cstring>
 

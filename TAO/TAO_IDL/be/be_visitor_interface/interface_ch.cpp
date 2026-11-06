@@ -145,27 +145,34 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
 
   // The _is_a method
-  *os << "::CORBA::Boolean _is_a (const char *type_id) override;"
+  *os << "::CORBA::Boolean _is_a (char const *type_id) override;"
       << be_nl;
 
   // The _interface_repository_id method.
-  *os << "const char* _interface_repository_id "
+  *os << "char const *_interface_repository_id "
       << "() const override;";
 
   if (be_global->gen_static_desc_operations ())
     {
-      *os << be_nl << "static const char* _desc_repository_id ();";
+      *os << be_nl << "static char const *_desc_repository_id ();";
 
-      *os << be_nl << "static const char* _desc_interface_name ();";
+      *os << be_nl << "static char const *_desc_interface_name ();";
     }
 
-  // The marshal method is not part of the abstract interface mapping.
+  *os << be_nl;
+  if (node->is_abstract ())
+    {
+      *os << "virtual ";
+    }
+  *os << "::CORBA::Boolean marshal "
+      << "(TAO_OutputCDR &cdr)";
+
   if (!node->is_abstract ())
     {
-      *os << be_nl
-          << "::CORBA::Boolean marshal "
-          << "(TAO_OutputCDR &cdr) override;";
+      *os << " override";
     }
+
+  *os << ";";
 
   // If we are generating CORBA Policy we need to add some more methods
   if (node->full_name () == "CORBA::Policy")
@@ -209,8 +216,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Protected copy constructor for abstract interfaces.
       *os << "// Protected for abstract interfaces." << be_nl
-          << node->local_name () << " (const "
-          << node->local_name () << " &);" << be_nl_2;
+          << node->local_name () << " ("
+          << node->local_name () << " const &);" << be_nl_2;
     }
 
   // Local interfaces don't support stub objects.
@@ -255,14 +262,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (! node->is_abstract ())
     {
       *os << "// Private and unimplemented for concrete interfaces." << be_nl
-          << node->local_name () << " (const "
-          << node->local_name () << " &) = delete;" << be_nl
+          << node->local_name () << " ("
+          << node->local_name () << " const &) = delete;" << be_nl
           << node->local_name () << " ("
           << node->local_name () << " &&) = delete;" << be_nl;
     }
 
   *os << node->local_name ()
-      << " &operator= (const " << node->local_name () << " &) = delete;" << be_nl
+      << " &operator= (" << node->local_name () << " const &) = delete;" << be_nl
       <<  node->local_name ()
       << " &operator= (" << node->local_name () << " &&) = delete;" << be_uidt_nl
       << "};";

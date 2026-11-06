@@ -52,11 +52,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "// instead of per interface." << be_nl << be_nl
       << "virtual ~TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory ();" << be_nl_2
-      << "virtual "<< node->local_name ()
-      << "_ptr create_proxy (" << be_idt << be_idt_nl
-      << node->local_name ()
-      << "_ptr proxy" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << "virtual " << node->local_name () << "_ptr create_proxy ("
+      << node->local_name () << "_ptr proxy);" << be_uidt_nl
       << "};\n\n";
 
   *os << "class " << be_global->stub_export_macro ()<< " "
@@ -66,15 +63,11 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "public:" << be_idt_nl << be_nl
       << "friend class TAO_Singleton<TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;" << be_nl_2
-      << "void register_proxy_factory (" << be_idt << be_idt_nl
-      << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
-      << "bool one_shot_factory = true" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl
+      << "void register_proxy_factory (TAO_" << node->flat_name ()
+      << "_Default_Proxy_Factory *df, bool one_shot_factory = true);" << be_nl
       << "void unregister_proxy_factory ();" << be_nl_2
-      << node->local_name ()
-      << "_ptr create_proxy (" << be_idt << be_idt_nl
-      << node->local_name () << "_ptr proxy" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl << be_nl
+      << node->local_name () << "_ptr create_proxy ("
+      << node->local_name () << "_ptr proxy);" << be_nl
       << "protected:" << be_idt_nl
       << "TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter ();" << be_nl
@@ -82,8 +75,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       << "_Proxy_Factory_Adapter ();" << be_nl
       << "TAO_" << node->flat_name ()
       << "_Proxy_Factory_Adapter &operator= (" << be_idt << be_idt_nl
-      << "const TAO_" << node->flat_name ()
-      << "_Proxy_Factory_Adapter &" << be_uidt_nl
+      << "TAO_" << node->flat_name ()
+      << "_Proxy_Factory_Adapter const &" << be_uidt_nl
       << ");" << be_uidt_nl
       << "TAO_" << node->flat_name ()
       << "_Default_Proxy_Factory *proxy_factory_;" << be_nl

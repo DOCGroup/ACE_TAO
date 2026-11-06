@@ -27,7 +27,7 @@ be_visitor_union_branch_public_cs::~be_visitor_union_branch_public_cs () = defau
 int
 be_visitor_union_branch_public_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -164,7 +164,7 @@ be_visitor_union_branch_public_cs::visit_structure (be_structure *node)
 int
 be_visitor_union_branch_public_cs::visit_structure_fwd (be_structure_fwd *node)
 {
-  be_structure *s =
+  be_structure * const s =
     dynamic_cast<be_structure*> (node->full_definition ());
 
   return this->visit_structure (s);
@@ -192,7 +192,7 @@ be_visitor_union_branch_public_cs::visit_union (be_union *node)
 int
 be_visitor_union_branch_public_cs::visit_union_fwd (be_union_fwd *node)
 {
-  be_union *u =
+  be_union * const u =
     dynamic_cast<be_union*> (node->full_definition ());
 
   return this->visit_union (u);

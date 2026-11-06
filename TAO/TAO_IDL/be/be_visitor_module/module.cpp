@@ -247,7 +247,7 @@ be_visitor_module::visit_interface (be_interface *node)
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 1;
+  int status {1};
 
   switch (this->ctx_->state ())
     {

@@ -105,11 +105,10 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
-  *os << class_name << " (const " << class_name
-      << "& rhs);" << be_nl
+  *os << class_name << " (" << class_name << " const &rhs);" << be_nl
       << "~" << class_name << " () override = default;\n\n"
       << be_nl
-      << "::CORBA::Boolean _is_a (const char* logical_type_id) override;" << be_nl_2;
+      << "::CORBA::Boolean _is_a (char const *logical_type_id) override;" << be_nl_2;
 
   // Add the dispatch method.
   *os << "void _dispatch (" << be_idt << be_idt_nl
@@ -121,7 +120,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
 
   // The _interface_repository_id method.
   *os << be_nl
-      << "const char* _interface_repository_id "
+      << "char const *_interface_repository_id "
       << "() const override;";
 
   if (this->visit_scope (node) ==  -1)

@@ -42,7 +42,7 @@ be_visitor_null_return_value::visit_component (be_component *node)
 int
 be_visitor_null_return_value::visit_enum (be_enum *node)
 {
-  os_ << "static_cast< ::" << node->full_name () << "> (0UL)";
+  os_ << "static_cast<::" << node->full_name () << "> (0UL)";
 
   return 0;
 }

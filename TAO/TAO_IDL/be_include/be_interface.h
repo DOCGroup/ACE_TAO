@@ -213,9 +213,9 @@ public:
 
   /// Overridden from class be_type.
   void gen_member_ostream_operator (TAO_OutStream *os,
-                                   std::string const& instance_name,
-                                   bool use_underscore,
-                                   bool accessor = false) override;
+                                    std::string const& instance_name,
+                                    bool use_underscore,
+                                    bool accessor = false) override;
 
   /// Sets the original interface from which this one was created,
   /// applies only to implied IDL.
@@ -438,9 +438,9 @@ class be_code_emitter_wrapper
 public:
   explicit be_code_emitter_wrapper (be_interface::tao_code_emitter emitter);
 
-  virtual int emit (be_interface *derived_interface,
-                    TAO_OutStream *output_stream,
-                    be_interface *base_interface) override;
+  int emit (be_interface *derived_interface,
+            TAO_OutStream *output_stream,
+            be_interface *base_interface) override;
 
 private:
   be_interface::tao_code_emitter emitter_;

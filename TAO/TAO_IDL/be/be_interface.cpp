@@ -711,7 +711,7 @@ be_interface::gen_operation_table (std::string const& flat_name,
 
         // Start the table generation.
         *os << be_nl_2
-            << "static const TAO_operation_db_entry " << flat_name
+            << "static TAO_operation_db_entry const " << flat_name
             << "_operations [] = {" << be_idt_nl;
 
         // Make sure the queues are empty.
@@ -828,7 +828,7 @@ be_interface::gen_operation_table (std::string const& flat_name,
 
         *os << "};" << be_nl_2;
         *os << "static const ::CORBA::Long _tao_" << flat_name
-            << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
+            << "_optable_size = sizeof (ACE_Hash_Map_Entry<char const *,"
             << " TAO::Operation_Skeletons>) * (" << (3 * this->skel_count_)
             << ");" << be_nl;
         *os << "static char _tao_" << flat_name << "_optable_pool "
@@ -1657,11 +1657,11 @@ be_interface::gen_perfect_hash_class_definition (std::string const &flat_name)
       << ": public TAO_Perfect_Hash_OpTable" << be_uidt_nl
       << "{" << be_nl
       << "private:" << be_idt_nl
-      << "std::size_t hash (const char *str, std::size_t len) override;"
+      << "std::size_t hash (char const *str, std::size_t len) override;"
       << be_uidt_nl
       << "public:" << be_idt_nl
-      << "const TAO_operation_db_entry * lookup "
-      << "(const char *str, std::size_t len) override;"
+      << "TAO_operation_db_entry const * lookup "
+      << "(char const *str, std::size_t len) override;"
       << be_uidt_nl
       << "};\n\n";
 }
@@ -1679,7 +1679,7 @@ be_interface::gen_binary_search_class_definition (std::string const &flat_name)
       << ": public TAO_Binary_Search_OpTable" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "const TAO_operation_db_entry * lookup (const char *str) override;"
+      << "TAO_operation_db_entry const * lookup (char const *str) override;"
       << be_uidt_nl
       << "};\n\n";
 }
@@ -1697,7 +1697,7 @@ be_interface::gen_linear_search_class_definition (std::string const &flat_name)
       << ": public TAO_Linear_Search_OpTable" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "const TAO_operation_db_entry * lookup (const char *str) override;"
+      << "TAO_operation_db_entry const * lookup (char const *str) override;"
       << be_uidt_nl
       << "};\n\n";
 }
@@ -1817,7 +1817,7 @@ be_interface::gen_gperf_lookup_methods (std::string const &flat_name)
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-D -E -T -f 0")
                                     ACE_TEXT (" ")
-                                    ACE_TEXT ("-F nullptr,nullptr,nullptr")
+                                    ACE_TEXT ("-F nullptr,nullptr")
                                     ACE_TEXT (" ")
                                     ACE_TEXT ("-a -o -t -p -K")
                                     ACE_TEXT (" ")
@@ -2342,18 +2342,15 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
       *os << "std::strcmp (value, \"IDL:omg.org/CORBA/LocalObject:1.0\") == 0";
     }
 
-  if (this->has_mixed_parentage () || this->is_local ())
+  if (! this->is_abstract ()
+      && (this->has_mixed_parentage () || this->is_local ()))
     {
       *os << " ||" << be_nl;
-    }
-  else if (this->is_abstract ())
-    {
-      *os << be_nl;
     }
 
   if (! this->is_abstract ())
     {
-      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0" << be_nl;
+      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
     }
 
   return 0;

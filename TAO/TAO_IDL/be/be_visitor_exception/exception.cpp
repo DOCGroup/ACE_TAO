@@ -34,7 +34,7 @@ be_visitor_exception::visit_field (be_field *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-  int status = 0;
+  int status {};
 
   // This switch is acceptable rather than having derived visitors overriding
   // this method and differing only in what state they set

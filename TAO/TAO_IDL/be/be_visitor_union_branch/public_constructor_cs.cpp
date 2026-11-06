@@ -35,7 +35,7 @@ be_visitor_union_branch_public_constructor_cs::visit_union_branch (
     be_union_branch *node)
 {
   // first generate the type information
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -65,9 +65,9 @@ be_visitor_union_branch_public_constructor_cs::visit_union_branch (
 int
 be_visitor_union_branch_public_constructor_cs::visit_array (be_array *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -105,7 +105,7 @@ be_visitor_union_branch_public_constructor_cs::visit_array (be_array *node)
 
       if (bt->is_nested ())
         {
-          be_decl *parent = dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
+          be_decl * const parent = dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
           fname = parent->full_name ();
           fname += "::_";
           fname += bt->local_name ()->get_string ();
@@ -137,9 +137,9 @@ be_visitor_union_branch_public_constructor_cs::visit_array (be_array *node)
 int
 be_visitor_union_branch_public_constructor_cs::value_initialize ()
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
 
   if (!ub || !bu)
@@ -205,9 +205,9 @@ be_visitor_union_branch_public_constructor_cs::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -250,9 +250,9 @@ be_visitor_union_branch_public_constructor_cs::visit_predefined_type (
 int
 be_visitor_union_branch_public_constructor_cs::visit_sequence (be_sequence *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -287,9 +287,9 @@ be_visitor_union_branch_public_constructor_cs::visit_sequence (be_sequence *node
 int
 be_visitor_union_branch_public_constructor_cs::visit_map (be_map *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -323,9 +323,9 @@ be_visitor_union_branch_public_constructor_cs::visit_map (be_map *node)
 int
 be_visitor_union_branch_public_constructor_cs::visit_structure (be_structure *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -369,7 +369,7 @@ int
 be_visitor_union_branch_public_constructor_cs::visit_structure_fwd (
   be_structure_fwd *node)
 {
-  be_structure *s =
+  be_structure * const s =
     dynamic_cast<be_structure*> (node->full_definition ());
 
   return this->visit_structure (s);
@@ -382,7 +382,7 @@ be_visitor_union_branch_public_constructor_cs::visit_typedef (be_typedef *node)
                            // as we visit the base type
 
   // the node to be visited in the base primitve type that gets typedefed
-  be_type *bt = node->primitive_base_type ();
+  be_type * const bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))
     {
@@ -400,9 +400,9 @@ be_visitor_union_branch_public_constructor_cs::visit_typedef (be_typedef *node)
 int
 be_visitor_union_branch_public_constructor_cs::visit_union (be_union *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -438,7 +438,7 @@ int
 be_visitor_union_branch_public_constructor_cs::visit_union_fwd (
   be_union_fwd *node)
 {
-  be_union *u =
+  be_union * const u =
     dynamic_cast<be_union*> (node->full_definition ());
 
   return this->visit_union (u);

@@ -36,7 +36,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
     }
 
   // Output stream.
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   UTL_Scope *s =
     this->ctx_->attribute ()
@@ -108,7 +108,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  bool is_an_exception_reply = false;
+  bool is_an_exception_reply {};
 
   // Find out if the operation is one of the *_excep() operations, the
   // conditions are:
@@ -194,7 +194,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
 int
 be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
   be_visitor_context ctx;
 
   // Now make sure that we have some in and inout parameters. Otherwise, there

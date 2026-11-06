@@ -24,9 +24,17 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
   // Get the enclosing union backend.
   be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type * const bt = this->ctx_->alias ()
-    ? static_cast<be_type*> (this->ctx_->alias ())
-    : static_cast<be_type*> (node);
+  be_type *bt {};
+
+  // Check if we are visiting this node via a visit to a typedef node.
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
 
   TAO_OutStream * const os = this->ctx_->stream ();
 
@@ -70,9 +78,17 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
   // get the enclosing union backend.
   be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type * const bt = this->ctx_->alias ()
-    ? static_cast<be_type*> (this->ctx_->alias ())
-    : static_cast<be_type*> (node);
+  be_type *bt {};
+
+  // Check if we are visiting this node via a visit to a typedef node.
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
 
   TAO_OutStream * const os = this->ctx_->stream ();
 

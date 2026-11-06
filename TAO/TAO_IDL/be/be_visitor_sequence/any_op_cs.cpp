@@ -36,7 +36,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   TAO_INSERT_COMMENT (os);
 
@@ -48,7 +48,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
       if (bt->node_type () == AST_Decl::NT_typedef)
         {
-          be_typedef *td = dynamic_cast<be_typedef*> (bt);
+          be_typedef * const td = dynamic_cast<be_typedef*> (bt);
           bt = td->primitive_base_type ();
         }
 
@@ -76,7 +76,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       *os << be_nl
           << "void operator<<= (" << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
-          << "std::vector< ::" << bt->full_name ()
+          << "std::vector<::" << bt->full_name ()
           << "> const &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "TAO::";
@@ -84,17 +84,17 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       switch (tc)
         {
         case ANY_OBJREF:
-          *os << "insert_objref_vector< ::"
+          *os << "insert_objref_vector<::"
               << bt->full_name () << "_ptr> (";
 
           break;
         case ANY_ARRAY:
-          *os << "insert_array_vector< ::"
+          *os << "insert_array_vector<::"
               << bt->full_name () << "_forany> (";
 
           break;
         default:
-          *os << "insert_value_vector< ::"
+          *os << "insert_value_vector<::"
               << bt->full_name () << "> (";
 
           break;
@@ -108,7 +108,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       *os << be_nl_2
           << "::CORBA::Boolean operator>>= (" << be_idt_nl
           << "::CORBA::Any const &_tao_any," << be_nl
-          << "std::vector< ::" << bt->full_name ()
+          << "std::vector<::" << bt->full_name ()
           << "> &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "return" << be_idt_nl
@@ -117,17 +117,17 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       switch (tc)
         {
         case ANY_OBJREF:
-          *os << "extract_objref_vector< ::"
+          *os << "extract_objref_vector<::"
               << bt->full_name () << "_ptr> (";
 
           break;
         case ANY_ARRAY:
-          *os << "extract_array_vector< ::"
+          *os << "extract_array_vector<::"
               << bt->full_name () << "_forany> (";
 
           break;
         default:
-          *os << "extract_value_vector< ::"
+          *os << "extract_value_vector<::"
               << bt->full_name () << "> (";
 
           break;
@@ -180,7 +180,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   // If this is non-zero, we want to call its tc_name()
   // for the TypeCode to pass to the Any operator impls.
-  be_typedef *td = this->ctx_->tdef ();
+  be_typedef * const td = this->ctx_->tdef ();
 
   *os << be_global->anyops_versioning_begin () << be_nl;
 
@@ -192,7 +192,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "::" << node->name () << " const &_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
+      << "TAO::Any_Dual_Impl_T<::" << node->name () << ">::insert_copy ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl
@@ -208,7 +208,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "::" << node->name () << " *_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert ("
+      << "TAO::Any_Dual_Impl_T<::" << node->name () << ">::insert ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl
@@ -224,7 +224,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "::" << node->name () << " const *&_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "return TAO::Any_Dual_Impl_T< ::" << node->name () << ">::extract ("
+      << "return TAO::Any_Dual_Impl_T<::" << node->name () << ">::extract ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl

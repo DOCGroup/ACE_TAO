@@ -243,7 +243,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
           << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "TAO::Objref_Traits< ::" << node->name ()
+      *os << "TAO::Objref_Traits<::" << node->name ()
           << ">::marshal (" << be_idt << be_idt_nl
           << this->pre_ << f->local_name ()
           << this->post_ << ".in ()," << be_nl
@@ -293,7 +293,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
           << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "TAO::Objref_Traits< ::" << node->name ()
+      *os << "TAO::Objref_Traits<::" << node->name ()
           << ">::marshal (" << be_idt << be_idt_nl
           << this->pre_ << f->local_name ()
           << this->post_ << ".in ()," << be_nl

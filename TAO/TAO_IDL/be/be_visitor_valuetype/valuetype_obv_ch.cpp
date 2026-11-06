@@ -211,12 +211,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
             {
               *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
-              *os << "::CORBA::Boolean" << be_nl
-                  << "_tao_marshal__" << node->flat_name()
+              *os << "::CORBA::Boolean _tao_marshal__" << node->flat_name ()
                   << " (TAO_OutputCDR &, TAO_ChunkInfo &) const override;" << be_nl_2;
 
-              *os << "::CORBA::Boolean" << be_nl
-                  << "_tao_unmarshal__" << node->flat_name()
+              *os << "::CORBA::Boolean _tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &, TAO_ChunkInfo &) override;" << be_nl_2;
 
               *os << "::CORBA::Boolean "

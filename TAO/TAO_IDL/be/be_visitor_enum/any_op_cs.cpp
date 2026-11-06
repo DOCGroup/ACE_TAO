@@ -83,7 +83,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-      << "const ::CORBA::Any &_tao_any," << be_nl
+      << "::CORBA::Any const &_tao_any," << be_nl
       << node->name () << " &_tao_elem)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl

@@ -57,7 +57,7 @@ be_visitor_union_branch_public_ci::emit_getter_validation (
 int
 be_visitor_union_branch_public_ci::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_type * const bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -87,9 +87,9 @@ be_visitor_union_branch_public_ci::visit_union_branch (be_union_branch *node)
 int
 be_visitor_union_branch_public_ci::visit_array (be_array *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -152,7 +152,7 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
 
       if (bt->is_nested ())
         {
-          be_decl *parent =
+          be_decl * const parent =
             dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
           fname = parent->full_name ();
           fname += "::_";
@@ -216,9 +216,9 @@ be_visitor_union_branch_public_ci::visit_array (be_array *node)
 int
 be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -288,9 +288,9 @@ be_visitor_union_branch_public_ci::visit_enum (be_enum *node)
 int
 be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -379,9 +379,9 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
 int
 be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -488,9 +488,9 @@ be_visitor_union_branch_public_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
 int
 be_visitor_union_branch_public_ci::emit_valuetype_common  (be_type *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -568,9 +568,9 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
     be_predefined_type *node
   )
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -803,9 +803,9 @@ be_visitor_union_branch_public_ci::visit_map (be_map *node)
 int
 be_visitor_union_branch_public_ci::visit_seq_map_common (be_type *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -888,9 +888,9 @@ be_visitor_union_branch_public_ci::visit_seq_map_common (be_type *node)
 int
 be_visitor_union_branch_public_ci::visit_string (be_string *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
 
   if (ub == nullptr || bu == nullptr)
@@ -1060,9 +1060,9 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
 int
 be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -1202,7 +1202,7 @@ be_visitor_union_branch_public_ci::visit_structure (be_structure *node)
 int
 be_visitor_union_branch_public_ci::visit_structure_fwd (be_structure_fwd *node)
 {
-  be_structure *s =
+  be_structure * const s =
     dynamic_cast<be_structure*> (node->full_definition ());
 
   return this->visit_structure (s);
@@ -1215,7 +1215,7 @@ be_visitor_union_branch_public_ci::visit_typedef (be_typedef *node)
   this->ctx_->alias (node);
 
   // The node to be visited in the base primitve type that gets typedefed.
-  be_type *bt = node->primitive_base_type ();
+  be_type * const bt = node->primitive_base_type ();
 
   if (!bt || (bt->accept (this) == -1))
     {
@@ -1233,9 +1233,9 @@ be_visitor_union_branch_public_ci::visit_typedef (be_typedef *node)
 int
 be_visitor_union_branch_public_ci::visit_union (be_union *node)
 {
-  be_union_branch *ub =
+  be_union_branch * const ub =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
-  be_union *bu =
+  be_union * const bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
   be_type *bt {};
 
@@ -1342,7 +1342,7 @@ be_visitor_union_branch_public_ci::visit_union (be_union *node)
 int
 be_visitor_union_branch_public_ci::visit_union_fwd (be_union_fwd *node)
 {
-  be_union *u =
+  be_union * const u =
     dynamic_cast<be_union*> (node->full_definition ());
 
   return this->visit_union (u);

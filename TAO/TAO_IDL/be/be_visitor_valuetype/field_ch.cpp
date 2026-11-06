@@ -112,8 +112,8 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
           << "_" << bt->local_name () << ")"
           << post_op () << be_nl;
       // The get method.
-      *os << pre_op () << "const _" << bt->local_name ()
-          << "_slice * " << ub->local_name ()
+      *os << pre_op () << "_" << bt->local_name () << "_slice const * "
+          << ub->local_name ()
           << " () const" << post_op () << be_nl;
       *os << pre_op () << "_" << bt->local_name ()
           << "_slice * " << ub->local_name ()
@@ -123,15 +123,15 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
     {
       // Now use this array as a "type" for the subsequent declarator.
       // The set method.
-      *os << pre_op () << "void " << ub->local_name () << " (const "
-          << bt->name () << ")" << post_op () << be_nl;
+      *os << pre_op () << "void " << ub->local_name () << " ("
+          << bt->name () << " const)" << post_op () << be_nl;
       // The get method.
       *os << pre_op ()
           << bt->name () << "_slice *" << ub->local_name ()
           << " ()" << post_op () << be_nl;
       // The get (read/write) method.
-      *os << pre_op () << "const "
-          << bt->name () << "_slice *" << ub->local_name ()
+      *os << pre_op ()
+          << bt->name () << "_slice const *" << ub->local_name ()
           << " () const" << post_op ();
     }
 
@@ -464,10 +464,10 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
     case AST_PredefinedType::PT_any:
       // Set method.
       *os << pre_op () << "void " << ub->local_name ()
-          << " (const ::"  << bt->name () << " &)"
+          << " (::"  << bt->name () << " const &)"
           << post_op () << be_nl;
       // Get method (read-only).
-      *os << pre_op () << "const ::" << bt->name () << " &"
+      *os << pre_op () << "::" << bt->name () << " const &"
           << ub->local_name () << " () const"
           << post_op () << be_nl;
       // Get method (read/write).
@@ -480,7 +480,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
     default:
       // Set method.
       *os << pre_op () << "void " << ub->local_name ()
-          << " (const ::" << bt->name () << ")"
+          << " (::" << bt->name () << " const)"
           << post_op () << be_nl;
       // Get method.
       *os << pre_op () << "::" << bt->name ()
@@ -561,11 +561,11 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
     }
 
   // Set method.
-  *os << pre_op () << "void " << ub->local_name () << " (const "
-      << bt->name () << " &)"
+      *os << pre_op () << "void " << ub->local_name () << " ("
+          << bt->name () << " const &)"
       << post_op () << be_nl;
   // Read-only.
-  *os << pre_op () << "const " << bt->name () << " &"
+  *os << pre_op () << bt->name () << " const &"
       << ub->local_name  () << " () const"
       << post_op () << be_nl;
   // Read/write.
@@ -679,11 +679,11 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
     }
 
   // Set method.
-  *os << pre_op () << "void " << ub->local_name () << " (const "
-      << bt->name () << " &)"
+  *os << pre_op () << "void " << ub->local_name () << " ("
+      << bt->name () << " const &)"
       << post_op () << be_nl;
     // Read-only.
-  *os << pre_op () << "const " << bt->name () << " &";
+  *os << pre_op () << bt->name () << " const &";
   *os << ub->local_name  () << " () const"
       << post_op () << be_nl
     // Read/write.
@@ -763,11 +763,11 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
     }
 
   // Set method.
-  *os << pre_op () << "void " << ub->local_name () << " (const "
-      << bt->name () << " &)"
+  *os << pre_op () << "void " << ub->local_name () << " ("
+      << bt->name () << " const &)"
       << post_op () << be_nl;
     // Read-only.
-  *os << pre_op () << "const " << bt->name () << " &"
+  *os << pre_op () << bt->name () << " const &"
       << ub->local_name  () << " () const"
       << post_op () << be_nl;
     // Read/write.

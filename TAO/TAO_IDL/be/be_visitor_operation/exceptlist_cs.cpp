@@ -28,7 +28,7 @@ be_visitor_operation_exceptlist_cs::~be_visitor_operation_exceptlist_cs () = def
 int
 be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
+  TAO_OutStream * const os = this->ctx_->stream ();
 
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
@@ -39,7 +39,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
           << "_exceptiondata [] =" << be_idt_nl;
       *os << "{" << be_idt_nl;
 
-      be_exception *ex = nullptr;
+      be_exception *ex {};
 
       // Initialize an iterator to iterate thru the exception list.
       // Continue until each element is visited.

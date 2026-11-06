@@ -23,7 +23,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#include "ace/ACE.h"
+#include "ace/Version.h"
 
 
-const char *version_string = "2.8 (ACE version)";
+char const *version_string = "2.8 (ACE version " ACE_VERSION ")";
