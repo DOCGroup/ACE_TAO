@@ -21,9 +21,9 @@ TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
     this->orb_core_->lane_resources ().acceptor_registry ();
 
   // Get the right acceptor for the tag in the TaggedProfile
-  TAO_Acceptor *acceptor = acceptor_registry.get_acceptor (profile.tag);
+  TAO_Acceptor *const acceptor = acceptor_registry.get_acceptor (profile.tag);
 
-  if (acceptor)
+  if (acceptor != nullptr)
     {
       // Get the object key
       if (acceptor->object_key (profile, this->object_key_) == -1)
@@ -83,20 +83,19 @@ TAO_Tagged_Profile::unmarshall_object_key (TAO_InputCDR &input)
   return this->unmarshall_object_key_i (input);
 }
 
-
 CORBA::Boolean
 TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
 {
   CORBA::Boolean hdr_status = input.good_bit ();
 
-  CORBA::Long key_length = 0;
+  CORBA::Long key_length {};
   hdr_status = hdr_status && input.read_long (key_length);
 
   if (hdr_status)
     {
       this->object_key_.replace (key_length,
                                  key_length,
-                                 (CORBA::Octet*)input.rd_ptr (),
+                                 reinterpret_cast<CORBA::Octet *> (input.rd_ptr ()),
                                  0);
       input.skip_bytes (key_length);
 
@@ -105,7 +104,6 @@ TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
 
   return hdr_status;
 }
-
 
 CORBA::Boolean
 TAO_Tagged_Profile::unmarshall_iop_profile_i (TAO_InputCDR &input)
@@ -140,7 +138,7 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (TAO_InputCDR &input)
    */
 
   // First read the profile index
-  CORBA::ULong prof_index =  0;
+  CORBA::ULong prof_index {};
 
   hdr_status = hdr_status && input.read_ulong (prof_index);
 
@@ -151,7 +149,7 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (TAO_InputCDR &input)
     }
 
   // Get the length of the type_id
-  CORBA::Long id_length = 0;
+  CORBA::Long id_length {};
   hdr_status = hdr_status && input.read_long (id_length);
 
   if (hdr_status)
@@ -170,7 +168,7 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (TAO_InputCDR &input)
   // Get the right TaggedProfile from the <ior_profiles>
   if (hdr_status)
     {
-      this->profile_ = ior_profiles [prof_index];
+      this->profile_ = ior_profiles[prof_index];
     }
 
   return hdr_status;

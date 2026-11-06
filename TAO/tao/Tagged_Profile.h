@@ -63,10 +63,10 @@ public:
   void object_key (TAO::ObjectKey &object_key);
 
   /// Return a const object key
-  const TAO::ObjectKey &object_key () const;
+  TAO::ObjectKey const &object_key () const;
 
   /// Get the tagged_profile
-  const IOP::TaggedProfile &tagged_profile () const;
+  IOP::TaggedProfile const &tagged_profile () const;
 
   /// Get the profile index, that needs to be used in the
   /// sequnce of TaggedProfiles contained  IOP::IOR that is
@@ -75,7 +75,7 @@ public:
 
   /// Accessor to the type_id contained in the IOP::IOR received from
   /// the client.
-  const char* type_id () const;
+  char const *type_id () const;
 
   CORBA::Short discriminator () const;
 
@@ -93,15 +93,15 @@ private:
   /// Unmarshalls the GIOP::IORAddressingInfo
   CORBA::Boolean unmarshall_ref_addr_i (TAO_InputCDR &cdr);
 
-private:
   /// Our ORB Core
-  TAO_ORB_Core *orb_core_;
+  /// Borrowed ORB core pointer, also copied directly by the CSD wrapper.
+  TAO_ORB_Core *orb_core_ {};
 
   /// Keep track of which kind of target profile that was extracted.
-  CORBA::Short discriminator_;
+  CORBA::Short discriminator_ {};
 
   /// Flag to denote whether the object key has been extracted yet.
-  CORBA::Boolean object_key_extracted_;
+  CORBA::Boolean object_key_extracted_ {};
 
   /// The object key
   TAO::ObjectKey object_key_;
@@ -133,11 +133,18 @@ private:
 
   /// The profile index incase we receive a GIOP::IORAddressingInfo
   /// information
-  CORBA::ULong profile_index_;
+  CORBA::ULong profile_index_ {};
 
   /// The type_id in the IOP::IOR in case we receive the
   /// GIOP::IORAddressingInfo information.
-  const char* type_id_;
+  /// This aliases the input CDR buffer; the CSD clone duplicates and owns its copy.
+  char const *type_id_ {};
+
+private:
+  TAO_Tagged_Profile (TAO_Tagged_Profile const &) = delete;
+  TAO_Tagged_Profile &operator= (TAO_Tagged_Profile const &) = delete;
+  TAO_Tagged_Profile (TAO_Tagged_Profile &&) = delete;
+  TAO_Tagged_Profile &operator= (TAO_Tagged_Profile &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
