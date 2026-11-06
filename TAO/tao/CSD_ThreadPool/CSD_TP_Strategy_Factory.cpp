@@ -89,7 +89,7 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             }
 
           // Create the ThreadPool strategy for each named poa.
-          TP_Strategy *strategy = nullptr;
+          TP_Strategy *strategy {};
           ACE_NEW_RETURN (strategy,
                           TP_Strategy (num_threads, serialize_servants),
                           -1);
