@@ -37,13 +37,17 @@ class Test_Consumer : public POA_RtecEventComm::PushConsumer
   //   of event on the EC.
   //
 public:
-  Test_Consumer (ECT_Driver* driver,
-                 void* cookie,
-                 int n_suppliers,
-                 int stall_length = 0);
+  explicit Test_Consumer (ECT_Driver& driver,
+                          int n_suppliers,
+                          int stall_length = 0);
+
+  Test_Consumer (Test_Consumer const&) = delete;
+  Test_Consumer (Test_Consumer&&) = delete;
+  Test_Consumer& operator= (Test_Consumer const&) = delete;
+  Test_Consumer& operator= (Test_Consumer&&) = delete;
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
-                const char* name,
+                char const* name,
                 int type_start,
                 int type_count,
                 RtecEventChannelAdmin::EventChannel_ptr ec);
@@ -52,24 +56,19 @@ public:
   void disconnect ();
   // Disconnect from the EC.
 
-  void dump_results (const ACE_TCHAR* name,
+  void dump_results (ACE_TCHAR const* name,
                      ACE_Basic_Stats::scale_factor_type global_scale_factor);
   // Print out the results
 
   void accumulate (ACE_Throughput_Stats& stats) const;
   // Add our throughput and latency statistics to <stats>
 
-  void push (const RtecEventComm::EventSet& events) override;
+  void push (RtecEventComm::EventSet const& events) override;
   void disconnect_push_consumer () override;
   // The skeleton methods.
 
 private:
-  ECT_Driver* driver_;
-  // The main driver for the test.
-
-  void* cookie_;
-  // A magic cookie passed by the driver that we pass back in our
-  // callbacks.
+  ECT_Driver& driver_;
 
   int n_suppliers_;
   // The number of suppliers that are feeding this consumer, we
@@ -79,14 +78,14 @@ private:
   // We talk to the EC using this proxy.
 
   TAO_SYNCH_MUTEX lock_;
-  int recv_count_;
-  ACE_hrtime_t first_event_;
+  int recv_count_ {};
+  ACE_hrtime_t first_event_ {};
   // How many events we have received.
 
   ACE_Throughput_Stats throughput_;
   // Used for reporting stats.
 
-  int shutdown_count_;
+  int shutdown_count_ {};
   // How many shutdown events we have received.
 
   int stall_length_;

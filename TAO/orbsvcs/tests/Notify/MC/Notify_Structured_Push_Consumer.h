@@ -21,21 +21,21 @@ class Notify_Structured_Push_Consumer:
       public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  Notify_Structured_Push_Consumer (const char* name,
+  Notify_Structured_Push_Consumer (char const* name,
                                    unsigned int expected,
                                    Notify_Test_Client& client);
 
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
-  void set_delay_parameters (unsigned int delayCount_, unsigned long delayPeriod_);
+  void set_delay_parameters (unsigned int delay_count, unsigned long delay_period);
 
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&);
+  void push_structured_event (CosNotification::StructuredEvent const&) override;
 
   ACE_CString name_;
-  unsigned int expected_;
-  unsigned int count_;
-  unsigned int delay_count_;
-  unsigned long delay_period_;
+  unsigned int expected_ {};
+  unsigned int count_ {};
+  unsigned int delay_count_ {};
+  unsigned long delay_period_ { 5 };
   Notify_Test_Client& client_;
 };
 

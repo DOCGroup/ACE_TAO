@@ -32,45 +32,49 @@ class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_Filter
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_RT_Test_Filter ();
-
-  /// Destructor
-  ~TAO_Notify_Tests_RT_Test_Filter ();
+  TAO_Notify_Tests_RT_Test_Filter () = default;
+  TAO_Notify_Tests_RT_Test_Filter (TAO_Notify_Tests_RT_Test_Filter const&) = delete;
+  TAO_Notify_Tests_RT_Test_Filter (TAO_Notify_Tests_RT_Test_Filter&&) = delete;
+  TAO_Notify_Tests_RT_Test_Filter& operator= (TAO_Notify_Tests_RT_Test_Filter const&) = delete;
+  TAO_Notify_Tests_RT_Test_Filter& operator= (TAO_Notify_Tests_RT_Test_Filter&&) = delete;
+  ~TAO_Notify_Tests_RT_Test_Filter () override = default;
 
 protected:
-  virtual char * constraint_grammar ();
+  char* constraint_grammar () override;
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * add_constraints (const CosNotifyFilter::ConstraintExpSeq & constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq* add_constraints (
+    CosNotifyFilter::ConstraintExpSeq const& constraint_list) override;
 
-  virtual void modify_constraints (const CosNotifyFilter::ConstraintIDSeq & del_list,
-                                   const CosNotifyFilter::ConstraintInfoSeq & modify_list);
+  void modify_constraints (CosNotifyFilter::ConstraintIDSeq const& del_list,
+                           CosNotifyFilter::ConstraintInfoSeq const& modify_list) override;
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list);
+  CosNotifyFilter::ConstraintInfoSeq* get_constraints (
+    CosNotifyFilter::ConstraintIDSeq const& id_list) override;
 
-  virtual CosNotifyFilter::ConstraintInfoSeq * get_all_constraints ();
+  CosNotifyFilter::ConstraintInfoSeq* get_all_constraints () override;
 
-  virtual void remove_all_constraints ();
+  void remove_all_constraints () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual CORBA::Boolean match (const CORBA::Any & filterable_data);
+  CORBA::Boolean match (CORBA::Any const& filterable_data) override;
 
-  virtual CORBA::Boolean match_structured (const CosNotification::StructuredEvent & filterable_data);
+  CORBA::Boolean match_structured (CosNotification::StructuredEvent const& filterable_data) override;
 
-  virtual CORBA::Boolean match_typed (const CosNotification::PropertySeq & filterable_data);
+  CORBA::Boolean match_typed (CosNotification::PropertySeq const& filterable_data) override;
 
-  virtual CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback);
+  CosNotifyFilter::CallbackID attach_callback (CosNotifyComm::NotifySubscribe_ptr callback) override;
 
-  virtual void detach_callback (CosNotifyFilter::CallbackID callback);
+  void detach_callback (CosNotifyFilter::CallbackID callback) override;
 
-  virtual CosNotifyFilter::CallbackIDSeq * get_callbacks ();
+  CosNotifyFilter::CallbackIDSeq* get_callbacks () override;
 
 protected:
   /// Lock to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;
 
-  CORBA::ULong expected_pool_id_;
-  CORBA::ULong expected_lane_id_;
+  CORBA::ULong expected_pool_id_ {};
+  CORBA::ULong expected_lane_id_ {};
 };
 
 #if defined(_MSC_VER)

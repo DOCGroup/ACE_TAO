@@ -3,6 +3,7 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Malloc_Base.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
 // Ensure that the PI library is linked in when building statically
@@ -11,42 +12,44 @@
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_fcntl.h"
+#include <memory>
 
-// Files which have the IOR
-const ACE_TCHAR *first_ior = 0;
-const ACE_TCHAR *second_ior = 0;
-const ACE_TCHAR *ior_output_file = 0;
+struct IOGR_IOR_Buffer_Deleter
+{
+  ACE_Allocator *allocator;
 
-// Reference to the IOR manipulator
-TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
+  void operator() (char *data) const
+  {
+    this->allocator->free (data);
+  }
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], IOGR_Options& options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:b:c:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'a':
-        first_ior = get_opts.opt_arg ();
+        options.first_ior = get_opts.opt_arg ();
         break;
       case 'b':
-        second_ior = get_opts.opt_arg ();
+        options.second_ior = get_opts.opt_arg ();
         break;
       case 'c':
-        ior_output_file = get_opts.opt_arg ();
+        options.output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
+                           ACE_TEXT ("usage:  %s "
                            "-a <iorfile>"
                            "-b <iorfile>"
                            "-c <output ior file>"
-                           "\n",
+                           "\n"),
                            argv [0]),
                           -1);
       }
@@ -58,32 +61,40 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Manager manager;
+  IOGR_Options options;
 
   try
     {
-      // Initilaize the ORB, POA etc.
+      // Initialize the ORB, POA etc.
       manager.init (argc, argv);
 
       // the command line arguments
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (argc, argv, options) == -1)
         return -1;
 
+      if (options.first_ior == nullptr || options.second_ior == nullptr
+          || options.output_file == nullptr)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Options -a, -b, and -c are required\n")),
+                          -1);
+
       // Merge the different IORS
-      manager.make_merged_iors ();
+      manager.make_merged_iors (options);
 
       // Set properties. This is the most important portion of the
       // test
       manager.set_properties ();
 
       // Write IOR to file
-      manager.write_to_file ();
+      manager.write_to_file (options.output_file);
 
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
       Client_i client_imp (manager.orb ());
-      client_imp.init ();
+      if (client_imp.init (options.output_file) != 0)
+        return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught");
       return -1;
@@ -113,33 +124,31 @@ Manager::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Manager::make_merged_iors ()
+Manager::make_merged_iors (IOGR_Options const& options)
 {
   // First  server
   this->object_primary_ =
-    this->orb_->string_to_object (first_ior);
+    this->orb_->string_to_object (options.first_ior);
 
-  //Second server
+  // Second server
   this->object_secondary_ =
-    this->orb_->string_to_object (second_ior);
+    this->orb_->string_to_object (options.second_ior);
 
-  // Get an object reference for the ORBs IORManipultion object!
-  CORBA::Object_var IORM =
+  // Get an object reference for the ORB's IORManipulation object!
+  CORBA::Object_var iorm_object =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                            0);
+                                            nullptr);
 
-  iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
-
-
+  TAO_IOP::TAO_IOR_Manipulation_var iorm =
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
   // Create the list
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
-  iors.length(2);
+  iors.length (2);
   iors [0] = CORBA::Object::_duplicate (this->object_primary_.in ());
   iors [1] = CORBA::Object::_duplicate (this->object_secondary_.in ());
 
-  // Create a merged set 1;
-  merged_set_ =
+  // Create a merged set.
+  this->merged_set_ =
     iorm->merge_iors (iors);
 
   return 0;
@@ -148,25 +157,29 @@ Manager::make_merged_iors ()
 int
 Manager::set_properties ()
 {
-  FT::TagFTGroupTaggedComponent ft_tag_component;
+  CORBA::Object_var iorm_object =
+    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
+                                            nullptr);
+  TAO_IOP::TAO_IOR_Manipulation_var iorm =
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
+
+  FT::TagFTGroupTaggedComponent ft_tag_component {};
 
   // Property values
 
   // Major and Minor revision numbers
-  ft_tag_component.component_version.major = (CORBA::Octet) 1;
-  ft_tag_component.component_version.minor = (CORBA::Octet) 0;
+  ft_tag_component.component_version.major = static_cast<CORBA::Octet> (1);
+  ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
 
   // Domain id
-  const char *id = "iogr_testing";
+  char const* id = "iogr_testing";
   ft_tag_component.group_domain_id = id;
 
   // Object group id
-  ft_tag_component.object_group_id =
-    (CORBA::ULongLong) 10;
+  ft_tag_component.object_group_id = static_cast<CORBA::ULongLong> (10);
 
   // Version
-  ft_tag_component.object_group_ref_version =
-    (CORBA::ULong) 5;
+  ft_tag_component.object_group_ref_version = static_cast<CORBA::ULong> (5);
 
   // Construct the IOGR Property class
   TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
@@ -177,7 +190,7 @@ Manager::set_properties ()
 
   // Set the primary
   // See we are setting the second ior as the primary
-  if (retval != 0)
+  if (retval)
     {
       retval = iorm->set_primary (&iogr_prop,
                                   this->object_secondary_.in (),
@@ -188,116 +201,80 @@ Manager::set_properties ()
 }
 
 int
-Manager::run ()
+Manager::write_to_file (ACE_TCHAR const* output_file_name)
 {
-  try
-    {
-      this->orb_->run ();
-    }
-  catch (const CORBA::Exception&)
-    {
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                         "Error in run\n"),
-                        -1);
-    }
-
-  return 0;
-}
-
-int
-Manager::write_to_file ()
-{
-  //
   CORBA::String_var iorref =
     this->orb_->object_to_string (this->merged_set_.in ());
 
-  if (ior_output_file != 0)
-    {
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", iorref.in ());
-      ACE_OS::fclose (output_file);
-    }
+  std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+    ACE_OS::fopen (output_file_name, "w"), ACE_OS::fclose);
+  if (!output_file)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                       output_file_name),
+                      1);
+  ACE_OS::fprintf (output_file.get (), "%s", iorref.in ());
 
   return 0;
 }
 
 CORBA::ORB_ptr
-Manager::orb ()
+Manager::orb () const
 {
   return this->orb_.in ();
 }
 
 Client_i::Client_i (CORBA::ORB_ptr orb)
-  :orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-void
+static void
 run_test (Simple_Server_ptr server);
 
-void
-Client_i::init ()
+int
+Client_i::init (ACE_TCHAR const* ior_file)
 {
-  // Open the file for reading.
-  ACE_HANDLE f_handle = ACE_OS::open (ior_output_file,
-                                      0);
+  FILE *input_file = ACE_OS::fopen (ior_file, "r");
+  if (input_file == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Unable to open %s for reading: %p\n"),
+                       ior_file),
+                      -1);
 
-  if (f_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR,
-                "Unable to open %s for writing: %p\n",
-                ior_output_file));
-
-  ACE_Read_Buffer ior_buffer (f_handle);
-
-  char *data = ior_buffer.read ();
-
-  if (data == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Unable to read ior: %p\n"));
-
-
-  int argc = 0;
-  ACE_TCHAR **argv = 0;
-  this->orb_ = CORBA::ORB_init (argc, argv);
+  ACE_Read_Buffer ior_buffer (input_file, true);
+  std::unique_ptr<char, IOGR_IOR_Buffer_Deleter> const data (
+    ior_buffer.read (), IOGR_IOR_Buffer_Deleter {ior_buffer.alloc ()});
+  if (!data)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to read IOR from %s\n"), ior_file), -1);
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (data);
+    this->orb_->string_to_object (data.get ());
 
   // Combined IOR stuff
   Simple_Server_var server =
     Simple_Server::_narrow (object.in ());
 
   if (CORBA::is_nil (server.in ()))
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Object reference <%C> is nil\n",
-                  data));
-    }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Object reference <%C> is nil\n"),
+                       data.get ()),
+                      -1);
 
   run_test (server.in ());
 
-  ior_buffer.alloc ()->free (data);
-  ACE_OS::close (f_handle);
+  return 0;
 }
 
-
-void run_test (Simple_Server_ptr server)
+static void
+run_test (Simple_Server_ptr server)
 {
   // We do this twice as we know that there are only two servers.
-  for (CORBA::ULong i = 0;
-       i < 2;
-       i++)
+  for (CORBA::ULong i {}; i < 2; ++i)
     {
       try
         {
-          for (CORBA::ULong j = 0;
-               j < 10;
-               j++)
+          for (CORBA::ULong j {}; j < 10; ++j)
             {
               // Make a remote call
               server->remote_call ();
@@ -310,7 +287,7 @@ void run_test (Simple_Server_ptr server)
           server->shutdown ();
           ACE_OS::sleep (2);
         }
-      catch (const CORBA::TRANSIENT& t)
+      catch (CORBA::TRANSIENT const& t)
         {
           if (t.completed () != CORBA::COMPLETED_NO)
             {
@@ -325,13 +302,13 @@ void run_test (Simple_Server_ptr server)
               ACE_OS::sleep (1);
             }
         }
-      catch (const CORBA::COMM_FAILURE& f)
+      catch (CORBA::COMM_FAILURE const& f)
         {
           f._tao_print_exception ("A (sort of) expected COMM_FAILURE");
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Automagically re-issuing request on COMM_FAILURE\n")));
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("Unexpected exception");
           throw;

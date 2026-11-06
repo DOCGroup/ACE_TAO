@@ -20,7 +20,11 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   It simply subscribes to one event type.
   //
 public:
-  Consumer ();
+  Consumer () = default;
+  Consumer (Consumer const&) = delete;
+  Consumer (Consumer&&) = delete;
+  Consumer& operator= (Consumer const&) = delete;
+  Consumer& operator= (Consumer&&) = delete;
   // Constructor
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
@@ -31,12 +35,12 @@ public:
 
   // = The RtecEventComm::PushConsumer methods
 
-  void push (RtecEventComm::EventSet const &events) override;
+  void push (RtecEventComm::EventSet const& events) override;
   void disconnect_push_consumer () override;
   // The skeleton methods.
 
 private:
-  CORBA::ULong event_count_;
+  CORBA::ULong event_count_ {};
   // Keep track of the number of events received.
 
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;

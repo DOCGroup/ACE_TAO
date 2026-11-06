@@ -1,29 +1,21 @@
 #include "RT_POA_Command.h"
 
-
 #include "tao/debug.h"
 #include "../lib/LookupManager.h"
 #include "../lib/Name.h"
 
 TAO_Notify_Tests_RT_POA_Command::TAO_Notify_Tests_RT_POA_Command ()
-  :priority_model_ (RTCORBA::CLIENT_PROPAGATED)
-  , server_priority_ (0)
-  , thread_pool_static_threads_ (0)
-  , thread_pool_default_priority_ (0)
+  : TAO_Notify_Tests_Command ()
 {
 }
 
-TAO_Notify_Tests_RT_POA_Command::~TAO_Notify_Tests_RT_POA_Command ()
-{
-}
-
-const char*
+char const*
 TAO_Notify_Tests_RT_POA_Command::get_name ()
 {
   return TAO_Notify_Tests_RT_POA_Command::name ();
 }
 
-const char*
+char const*
 TAO_Notify_Tests_RT_POA_Command::name ()
 {
   return TAO_Notify_Tests_Name::poa_command;
@@ -32,7 +24,7 @@ TAO_Notify_Tests_RT_POA_Command::name ()
 void
 TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const* current_arg {};
 
   if (arg_shifter.is_anything_left ())
     {
@@ -48,7 +40,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           while (arg_shifter.is_anything_left ())
             {
-              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))))
+              if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-PriorityModel"))) != nullptr)
                 {
                   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
                     priority_model_ = RTCORBA::CLIENT_PROPAGATED;
@@ -62,13 +54,13 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   continue;
                 }
               // -Lanes lane-count -Lane prio statc_thr dyn_thr
-              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"))))
+              if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Lanes"))) != nullptr)
                 {
-                  int lanecount = ACE_OS::atoi (current_arg);
+                  int const lanecount = ACE_OS::atoi (current_arg);
                   lanes_.length (lanecount);
                   arg_shifter.consume_arg ();
 
-                  int l_index = 0;
+                  int l_index {};
                   //parse lane values ...
                   while (arg_shifter.is_anything_left ())
                     {
@@ -89,8 +81,11 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                           arg_shifter.consume_arg ();
 
                           if (TAO_debug_level > 0)
-                            ACE_DEBUG ((LM_DEBUG, "POA Create: lane parsed - %d, %d, %d\n",
-                                        lanes_[l_index].lane_priority, lanes_[l_index].static_threads, lanes_[l_index].dynamic_threads));
+                            ACE_DEBUG ((LM_DEBUG,
+                                        "POA Create: lane parsed - %d, %d, %d\n",
+                                        lanes_[l_index].lane_priority,
+                                        lanes_[l_index].static_threads,
+                                        lanes_[l_index].dynamic_threads));
                           l_index++;
                         }
                       else
@@ -100,13 +95,13 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   continue;
                 } /* if -Lanes */
 
-              if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))))
+              if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Bands"))) != nullptr)
                 {
-                  int bandcount = ACE_OS::atoi (current_arg);
+                  int const bandcount = ACE_OS::atoi (current_arg);
                   bands_.length (bandcount);
                   arg_shifter.consume_arg ();
 
-                  int b_index = 0;
+                  int b_index {};
                   //parse band values ...
                   while (arg_shifter.is_anything_left ())
                     {
@@ -184,10 +179,10 @@ TAO_Notify_Tests_RT_POA_Command::execute_i ()
       LOOKUP_MANAGER->resolve (orb);
 
       // Resolve RTORB
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       // Resolve parent poa.
@@ -206,7 +201,7 @@ TAO_Notify_Tests_RT_POA_Command::execute_i ()
 
       LOOKUP_MANAGER->resolve (poa, this->POA_name_.c_str ());
 
-      poa->destroy (1,0);
+      poa->destroy (true, false);
 
       ACE_DEBUG ((LM_DEBUG, "Destroyed RT POA %s\n", this->POA_name_.c_str ()));
     }
@@ -248,11 +243,11 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
   if (lanes_.length () != 0)
     {
       // Create a thread-pool.
-      CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
-      CORBA::ULong max_buffered_requests = 0;
-      CORBA::ULong max_request_buffer_size = 0;
-      CORBA::Boolean allow_borrowing = 0;
+      CORBA::ULong const stacksize {};
+      CORBA::Boolean const allow_request_buffering {};
+      CORBA::ULong const max_buffered_requests {};
+      CORBA::ULong const max_request_buffer_size {};
+      CORBA::Boolean const allow_borrowing {};
       // CORBA::ULong static_threads = 1;
       // CORBA::ULong dynamic_threads = 0;
 
@@ -265,20 +260,19 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
                                               max_buffered_requests,
                                               max_request_buffer_size);
 
-
       // Create a thread-pool policy.
       lanes_policy =
         rt_orb->create_threadpool_policy (threadpool_id);
     }
   else if (thread_pool_static_threads_ > 0)
     {
-      CORBA::ULong stacksize = 0;
+      CORBA::ULong const stacksize {};
       CORBA::ULong static_threads = this->thread_pool_static_threads_;
-      CORBA::ULong dynamic_threads = 0;
+      CORBA::ULong const dynamic_threads {};
       RTCORBA::Priority default_priority = this->thread_pool_default_priority_;
-      CORBA::Boolean allow_request_buffering = 0;
-      CORBA::ULong max_buffered_requests = 0;
-      CORBA::ULong max_request_buffer_size = 0;
+      CORBA::Boolean const allow_request_buffering {};
+      CORBA::ULong const max_buffered_requests {};
+      CORBA::ULong const max_request_buffer_size {};
 
        // Create the thread-pool.
       RTCORBA::ThreadpoolId threadpool_id =
@@ -345,7 +339,7 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
     }
 
   // Add the activation policy
-  int act_index = poa_policy_list.length ();
+  int const act_index = poa_policy_list.length ();
   poa_policy_list.length (act_index + 1);
 
   poa_policy_list[act_index] = activation_policy;
@@ -354,7 +348,7 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
     ACE_DEBUG ((LM_DEBUG, "creating POA %C\n", POA_name_.c_str ()));
 
   // Get the POA Manager.
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     parent_poa->the_POAManager ();
 
   parent_poa->create_POA (POA_name_.c_str (),

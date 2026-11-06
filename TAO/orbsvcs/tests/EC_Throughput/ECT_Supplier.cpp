@@ -7,28 +7,20 @@
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 
-#include "ace/Get_Opt.h"
-#include <memory>
-#include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
-Test_Supplier::Test_Supplier (ECT_Driver *driver)
-  :  driver_ (driver),
-     supplier_ (this),
-     burst_count_ (0),
-     burst_size_ (0),
-     event_size_ (0),
-     burst_pause_ (0),
-     type_start_ (ACE_ES_EVENT_UNDEFINED),
-     type_count_ (1)
+Test_Supplier::Test_Supplier ()
+  : supplier_ (this),
+    type_start_ (ACE_ES_EVENT_UNDEFINED),
+    type_count_ (1)
 {
 }
 
 void
 Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
-                        const char* name,
+                        char const* name,
                         int burst_count,
                         int burst_size,
                         int event_size,
@@ -55,7 +47,7 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
   // lie to the scheduler to obtain right priorities; but we
   // don't care if the set is schedulable.
   tv.set (0, 2000);
-  TimeBase::TimeT time;
+  TimeBase::TimeT time {};
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
   scheduler->set (rt_info,
                   RtecScheduler::VERY_HIGH_CRITICALITY,
@@ -104,7 +96,7 @@ Test_Supplier::disconnect ()
     {
       this->consumer_proxy_->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // The consumer may be gone already, so we
       // will ignore this exception
@@ -138,7 +130,7 @@ Test_Supplier::svc ()
       event[0].header.source = this->supplier_id ();
       event[0].header.ttl = 1;
 
-      ACE_hrtime_t t = ACE_OS::gethrtime ();
+      ACE_hrtime_t const t = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
 
       // We use replace to minimize the copies, this should result
@@ -159,7 +151,7 @@ Test_Supplier::svc ()
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const test_start = ACE_OS::gethrtime ();
 
       for (int i = 0; i < this->burst_count_; ++i)
         {
@@ -168,13 +160,13 @@ Test_Supplier::svc ()
               event[0].header.type =
                 this->type_start_ + j % this->type_count_;
 
-              ACE_hrtime_t request_start = ACE_OS::gethrtime ();
+              ACE_hrtime_t const request_start = ACE_OS::gethrtime ();
               ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                              request_start);
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
               this->consumer_proxy ()->push (event);
 
-              ACE_hrtime_t end = ACE_OS::gethrtime ();
+              ACE_hrtime_t const end = ACE_OS::gethrtime ();
               this->throughput_.sample (end - test_start,
                                         end - request_start);
             }
@@ -192,19 +184,19 @@ Test_Supplier::svc ()
 
       // Send one event shutdown from each supplier
       event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
-      ACE_hrtime_t request_start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const request_start = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      request_start);
       this->consumer_proxy ()->push(event);
-      ACE_hrtime_t end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const end = ACE_OS::gethrtime ();
       this->throughput_.sample (end - test_start,
                                 end - request_start);
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const& sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("NON SYS EX");
     }
@@ -232,7 +224,7 @@ Test_Supplier::consumer_proxy ()
 }
 
 void
-Test_Supplier::dump_results (const ACE_TCHAR* name,
+Test_Supplier::dump_results (ACE_TCHAR const* name,
                              ACE_Basic_Stats::scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);

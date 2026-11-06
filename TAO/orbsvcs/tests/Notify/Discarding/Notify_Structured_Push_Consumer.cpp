@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "ace/OS_NS_unistd.h"
 #include "Notify_Structured_Push_Consumer.h"
 #include "Notify_Test_Client.h"
@@ -5,21 +7,17 @@
 #include "tao/debug.h"
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
-  const char* name,
+  char const* name,
   CORBA::Short policy,
   CORBA::Long max_events_per_consumer,
   Notify_Test_Client& client)
   : name_ (name),
   discard_policy_ (policy),
   max_events_per_consumer_ (max_events_per_consumer),
-  count_ (0),
-  first_ (0),
-  client_ (client),
-  sent_(40)
+  client_ (client)
 {
   this->client_.consumer_start (this);
 }
-
 
 void
 Notify_Structured_Push_Consumer::_connect (
@@ -51,33 +49,32 @@ Notify_Structured_Push_Consumer::_connect (
   this->_remove_ref ();
 }
 
-
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent& event)
+  CosNotification::StructuredEvent const& event)
 {
-  ACE_DEBUG((LM_DEBUG, "-"));
+  ACE_DEBUG ((LM_DEBUG, "-"));
 
   this->count_++;
-  if (this->count_ > max_events_per_consumer_ + 1)
-  {
-    this->client_.consumer_done (this);
-    ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
-      ACE_TEXT ("many events received (%d).\n"), this->count_));
-  }
+  if (this->count_ > this->max_events_per_consumer_ + 1)
+    {
+      this->client_.consumer_done (this);
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
+                  ACE_TEXT ("many events received (%d).\n"), this->count_));
+    }
 
-  ACE_ASSERT(ACE_OS::strcmp(event.header.variable_header[0].name.in(), "Id") == 0);
+  ACE_ASSERT (std::strcmp (event.header.variable_header[0].name.in (), "Id") == 0);
   CORBA::Any v = event.header.variable_header[0].value;
-  CORBA::Long id = 0;
+  CORBA::Long id {};
   v >>= id;
 
   // Force the notify service to queue events
   if (this->count_ == 1)
-  {
-    ACE_OS::sleep(2);
-    first_ = id;
-  }
+    {
+      ACE_OS::sleep (2);
+      this->first_ = id;
+    }
 
   // @@ The priority header isn't making it through the notify service.
   //n = event.header.variable_header[1].name;
@@ -89,43 +86,39 @@ Notify_Structured_Push_Consumer::push_structured_event (
   //v = event.header.variable_header[1].value;
   //CORBA::Long priority = 0;
   //v >>= priority;
-  CORBA::Long expected = 0;
-  if (discard_policy_ == CosNotification::PriorityOrder)
-  {
-    expected = sent_ - max_events_per_consumer_ + count_;
-    if (first_ != sent_ - max_events_per_consumer_ + 1)
-      --expected;
-  }
+  CORBA::Long expected {};
+  if (this->discard_policy_ == CosNotification::PriorityOrder)
+    {
+      expected = this->sent_ - this->max_events_per_consumer_ + this->count_;
+      if (this->first_ != this->sent_ - this->max_events_per_consumer_ + 1)
+        --expected;
+    }
   else if (discard_policy_ == CosNotification::FifoOrder)
-  {
-    expected = sent_ - max_events_per_consumer_ + count_;
-    if (first_ != sent_ - max_events_per_consumer_ + 1)
-      --expected;
-  }
+    {
+      expected = this->sent_ - this->max_events_per_consumer_ + this->count_;
+      if (this->first_ != this->sent_ - this->max_events_per_consumer_ + 1)
+        --expected;
+    }
   else if (discard_policy_ == CosNotification::LifoOrder)
-  {
-    expected = count_;
-  }
+    expected = this->count_;
   else
-  {
-    ACE_ERROR((LM_ERROR, "Error: Unexpected discard policy.\n"));
-    return;
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Error: Unexpected discard policy.\n"));
+      return;
+    }
 
-  if (id != expected && count_ != 1)
-  {
-    ACE_DEBUG((LM_DEBUG, "Error: Expected %d, ", expected));
-    this->client_.consumer_done (this);
-  }
+  if (id != expected && this->count_ != 1)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Error: Expected %d, ", expected));
+      this->client_.consumer_done (this);
+    }
 
-  ACE_DEBUG((LM_DEBUG, "received %d\n", id));
+  ACE_DEBUG ((LM_DEBUG, "received %d\n", id));
 
   // We should receive mepc + 1, because the first event will be in-transit
   // before our sleep causes the notify to queue events.
   // However, on some platforms, we'll only receive mepc, because filtering
   // happened before the first event.
   if (this->count_ >= this->max_events_per_consumer_)
-  {
     this->client_.consumer_done (this);
-  }
 }

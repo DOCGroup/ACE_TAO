@@ -11,10 +11,9 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
-
-int iterations = 1000;
-int do_dump_history = 0;
-const ACE_TCHAR *ec_ior = ACE_TEXT("file://ec.ior");
+static int iterations {1000};
+static bool do_dump_history {};
+static ACE_TCHAR const* ec_ior = ACE_TEXT("file://ec.ior");
 
 /// Parse the arguments.
 static int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -175,13 +174,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       task.activate ();
 
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const start = ACE_OS::gethrtime ();
       while (!task.done () || !consumer.done ())
         {
           ACE_Time_Value tv (1, 0);
           orb->run (tv);
         }
-      ACE_hrtime_t end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const end = ACE_OS::gethrtime ();
 
       ACE_Thread_Manager::instance ()->wait ();
 
@@ -190,7 +189,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
 
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
       if (do_dump_history)
@@ -202,11 +201,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       history.collect_basic_stats (stats);
       stats.dump_results (ACE_TEXT("Latency"), gsf);
 
-      ACE_hrtime_t elapsed_microseconds = (end - start) / gsf;
-      double elapsed_seconds =
+      ACE_hrtime_t const elapsed_microseconds = (end - start) / gsf;
+      double const elapsed_seconds =
         ACE_CU64_TO_CU32(elapsed_microseconds) / 1000000.0;
-      double throughput =
-        double(iterations) / elapsed_seconds;
+      double const throughput = static_cast<double> (iterations) / elapsed_seconds;
 
       ACE_DEBUG ((LM_DEBUG, "Throughtput: %f\n", throughput));
 
@@ -224,7 +222,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (argv[0]);
     }
@@ -237,13 +235,13 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hi:k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'h':
-        do_dump_history = 1;
+        do_dump_history = true;
         break;
 
       case 'i':
@@ -280,19 +278,19 @@ EC_Latency_Consumer::EC_Latency_Consumer (ACE_Sample_History *history,
 }
 
 int
-EC_Latency_Consumer::done ()
+EC_Latency_Consumer::done () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_, -1);
   return this->remaining_messages_ <= 0;
 }
 
 void
-EC_Latency_Consumer::push (const RtecEventComm::EventSet& events)
+EC_Latency_Consumer::push (RtecEventComm::EventSet const& events)
 {
-  ACE_hrtime_t creation;
+  ACE_hrtime_t creation {};
   ORBSVCS_Time::TimeT_to_hrtime (creation,
                                  events[0].header.creation_time);
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
   this->history_->sample (now - creation);
@@ -312,10 +310,6 @@ EC_Latency_Consumer::disconnect_push_consumer ()
 
 // ****************************************************************
 
-EC_Latency_Supplier::EC_Latency_Supplier ()
-{
-}
-
 void
 EC_Latency_Supplier::disconnect_push_supplier ()
 {
@@ -331,7 +325,7 @@ Task::Task (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
 }
 
 int
-Task::done ()
+Task::done () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 1);
   return this->remaining_messages_ == 0;
@@ -351,7 +345,7 @@ Task::svc ()
 
       for (;;)
         {
-          ACE_hrtime_t creation = ACE_OS::gethrtime ();
+          ACE_hrtime_t const creation = ACE_OS::gethrtime ();
           ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                          creation);
           this->consumer_->push (event);
@@ -371,7 +365,7 @@ Task::svc ()
             return 0;
         }
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const& ex)
     {
       ex._tao_print_exception ("Task::svc");
     }

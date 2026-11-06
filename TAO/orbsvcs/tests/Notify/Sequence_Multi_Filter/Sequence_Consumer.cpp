@@ -16,11 +16,14 @@
 // Data Section
 // ******************************************************************
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://supplier.ior");
-static unsigned int low = 10;
-static unsigned int high = 20;
-static CORBA::Boolean filter = 1;
-static const ACE_TCHAR *constraintString = ACE_TEXT ("Number == 10");
+struct Consumer_Options
+{
+  ACE_TCHAR const* ior { ACE_TEXT ("file://supplier.ior") };
+  unsigned int low { 10 };
+  unsigned int high { 20 };
+  bool filter { true };
+  ACE_TCHAR const* constraint { ACE_TEXT ("Number == 10") };
+};
 
 // ******************************************************************
 // Subroutine Section
@@ -29,43 +32,47 @@ static const ACE_TCHAR *constraintString = ACE_TEXT ("Number == 10");
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]) override;
+
+  Consumer_Options const& options () const
+  {
+    return this->options_;
+  }
+
+private:
+  Consumer_Options options_;
 };
 
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:l:h:d:c:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
   {
     case 'k':
-      ior = get_opts.optarg;
+      this->options_.ior = get_opts.optarg;
       break;
 
     case 'l':
-      low = ACE_OS::atoi (get_opts.optarg);
+      this->options_.low = ACE_OS::atoi (get_opts.optarg);
       break;
 
     case 'h':
-      high = ACE_OS::atoi (get_opts.optarg);
+      this->options_.high = ACE_OS::atoi (get_opts.optarg);
       break;
 
     case 'c':
-      constraintString = get_opts.optarg;
+      this->options_.constraint = get_opts.optarg;
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-        "usage:  %s "
-        "-k <ior> "
-        "-l <low expected events> "
-        "-h <high expected events> "
-        "-c <constraint string> "
-        "\n",
-        argv [0]),
-        -1);
+                         ACE_TEXT ("usage: %s -k <ior> -l <low expected events> "
+                                   "-h <high expected events> -c <constraint string>\n"),
+                         argv [0]),
+                        -1);
   }
   // Indicates successful parsing of the command line
   return 0;
@@ -87,17 +94,15 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
-                  Notify_Test_Client* client)
+                  Notify_Test_Client& client,
+                  Consumer_Options const& options)
 {
   // startup the first consumer
-  Notify_Sequence_Push_Consumer* consumer_1;
+  Notify_Sequence_Push_Consumer* consumer_1 {};
   ACE_NEW_THROW_EX (consumer_1,
-    Notify_Sequence_Push_Consumer ("consumer1",
-    low,
-    high,
-    *client),
+    Notify_Sequence_Push_Consumer (options.low, options.high, client),
     CORBA::NO_MEMORY ());
-  consumer_1->init(client->root_poa ());
+  consumer_1->init (client.root_poa ());
 
   consumer_1->_connect (admin);
 }
@@ -112,25 +117,25 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   {
     Consumer_Client client;
 
-    int status = client.init (argc, argv);
-    ACE_ASSERT(status == 0);
-    ACE_UNUSED_ARG(status);
+    int const status = client.init (argc, argv);
+    if (status != 0)
+      return 1;
 
     CosNotifyChannelAdmin::EventChannel_var ec =
       client.create_event_channel ("MyEventChannel", 1);
 
     CORBA::ORB_ptr orb = client.orb ();
     CORBA::Object_var object =
-      orb->string_to_object (ior);
+      orb->string_to_object (client.options ().ior);
 
     sig_var sig = sig::_narrow (object.in ());
 
-    ACE_ASSERT(! CORBA::is_nil (sig.in ()));
+    ACE_ASSERT (!CORBA::is_nil (sig.in ()));
 
     CosNotifyChannelAdmin::ConsumerAdmin_var admin =
       create_consumeradmin (ec.in ());
 
-    if (filter)
+    if (client.options ().filter)
     {
       CosNotifyFilter::FilterFactory_var ffact =
         ec->default_filter_factory ();
@@ -138,33 +143,34 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CosNotifyFilter::Filter_var filter =
         ffact->create_filter ("TCL");
 
-      ACE_ASSERT(! CORBA::is_nil(filter.in()));
+      ACE_ASSERT (!CORBA::is_nil (filter.in ()));
 
       CosNotifyFilter::ConstraintExpSeq constraint_list (1);
-      constraint_list.length(1);
+      constraint_list.length (1);
 
       constraint_list[0].event_types.length (0);
-      constraint_list[0].constraint_expr = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (constraintString));
+      constraint_list[0].constraint_expr = CORBA::string_dup (
+        ACE_TEXT_ALWAYS_CHAR (client.options ().constraint));
 
       CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
-      admin->add_filter(filter.in());
+      admin->add_filter (filter.in ());
     }
 
     ACE_ASSERT (!CORBA::is_nil (admin.in ()));
-    create_consumers(admin.in (), &client);
+    create_consumers (admin.in (), client, client.options ());
 
     // Tell the supplier to go
     sig->go ();
 
-    client.ORB_run();
-    ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
+    client.ORB_run ();
+    ACE_DEBUG ((LM_DEBUG, "Consumer done.\n"));
 
     sig->done ();
 
     return 0;
   }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const& e)
   {
     e._tao_print_exception ("Error: Consumer exception: ");
   }

@@ -21,7 +21,11 @@ class Supplier : public POA_RtecEventComm::PushSupplier
   //   method is invoked it pushes the event through the event service
   //
 public:
-  Supplier ();
+  Supplier () = default;
+  Supplier (Supplier const&) = delete;
+  Supplier (Supplier&&) = delete;
+  Supplier& operator= (Supplier const&) = delete;
+  Supplier& operator= (Supplier&&) = delete;
   // Constructor
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);

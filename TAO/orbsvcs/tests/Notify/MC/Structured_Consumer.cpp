@@ -6,74 +6,73 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 #include "Notify_Structured_Push_Consumer.h"
 #include "MonitorTestInterfaceC.h"
 
 #include "Notify_Test_Client.h"
 
-// ******************************************************************
-// Data Section
-// ******************************************************************
-
-static const ACE_TCHAR *ior = ACE_TEXT ("file://test_monitor.ior");
-static const ACE_TCHAR *ready_output_file = ACE_TEXT ("ready.txt");
-static unsigned int expected = 2000;
-static unsigned int delay_period = 5;
-static unsigned int delay_count = 0;
-static Notify_Structured_Push_Consumer* consumer_1 = 0;
+struct Consumer_Options
+{
+  ACE_TCHAR const* ior { ACE_TEXT ("file://test_monitor.ior") };
+  ACE_TCHAR const* ready_output_file { ACE_TEXT ("ready.txt") };
+  unsigned int expected { 2000 };
+  unsigned int delay_period { 5 };
+  unsigned int delay_count {};
+};
 
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR *argv[]);
-};
+  int parse_args (int argc, ACE_TCHAR* argv[]) override;
 
+  Consumer_Options const& options () const
+  {
+    return this->options_;
+  }
+
+private:
+  Consumer_Options options_ {};
+};
 
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:e:p:d:o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:e:p:d:o:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
+  while ((option = get_opts ()) != -1)
+    {
+      switch (option)
+        {
         case 'k':
-          ior = get_opts.optarg;
+          this->options_.ior = get_opts.opt_arg ();
           break;
-
         case 'e':
-          expected = ACE_OS::atoi (get_opts.optarg);
+          this->options_.expected = ACE_OS::atoi (get_opts.opt_arg ());
           break;
-
         case 'p':
-          delay_period = ACE_OS::atoi (get_opts.optarg);
+          this->options_.delay_period = ACE_OS::atoi (get_opts.opt_arg ());
           break;
-
         case 'd':
-          delay_count = ACE_OS::atoi (get_opts.optarg);
+          this->options_.delay_count = ACE_OS::atoi (get_opts.opt_arg ());
           break;
-
         case 'o':
-          ready_output_file = get_opts.optarg;
+          this->options_.ready_output_file = get_opts.opt_arg ();
           break;
-
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-            "usage:  %s "
-            "-k <ior> "
-            "-e <expected events> "
-            "-d <delay every 'n' seconds> "
-            "-p <how many seconds to delay> "
-            "-o <readyfile> -e <# of events> "
-            "\n",
-            argv [0]),
-            -1);
-      }
+                             ACE_TEXT ("usage: %s -k <ior> -e <expected events> "
+                                       "-d <delay every n seconds> -p <delay seconds> "
+                                       "-o <readyfile>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
-
 
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
 create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
@@ -85,20 +84,20 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
 
-
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
-                  Notify_Test_Client* client)
+                  Notify_Test_Client* client,
+                  Consumer_Options const& options,
+                  Notify_Structured_Push_Consumer*& consumer)
 {
-  // startup the consumer
-  ACE_NEW_THROW_EX (consumer_1,
+  ACE_NEW_THROW_EX (consumer,
                     Notify_Structured_Push_Consumer ("consumer1",
-                                                     expected,
+                                                     options.expected,
                                                      *client),
                     CORBA::NO_MEMORY ());
-  consumer_1->set_delay_parameters (delay_count, delay_period);
-  consumer_1->init (client->root_poa ());
-  consumer_1->_connect (admin);
+  consumer->set_delay_parameters (options.delay_count, options.delay_period);
+  consumer->init (client->root_poa ());
+  consumer->_connect (admin);
 }
 
 // ******************************************************************
@@ -121,7 +120,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CosNotifyChannelAdmin::EventChannel_var ec =
+      CosNotifyChannelAdmin::EventChannel_var const ec =
         client.create_event_channel ("MyEventChannel", 0);
 
 #ifdef TEST_QOS_MAX_QUEUE_LENGTH
@@ -133,9 +132,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ec->set_admin(properties);
 #endif //TEST_QOS_MAX_QUEUE_LENGTH
 
-      CORBA::ORB_ptr orb = client.orb ();
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      Consumer_Options const& options = client.options ();
+      CORBA::ORB_ptr const orb = client.orb ();
+      CORBA::Object_var const object = orb->string_to_object (options.ior);
 
       MonitorTestInterface_var sig =
         MonitorTestInterface::_narrow (object.in ());
@@ -147,7 +146,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CosNotifyChannelAdmin::ConsumerAdmin_var admin =
+      CosNotifyChannelAdmin::ConsumerAdmin_var const admin =
         create_consumeradmin (ec.in ());
 
       if (CORBA::is_nil (admin.in ()))
@@ -157,23 +156,25 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      create_consumers (admin.in (), &client);
+      Notify_Structured_Push_Consumer* consumer {};
+      create_consumers (admin.in (), &client, options, consumer);
 
       sig->running (MonitorTestInterface::Consumer);
 
       ACE_DEBUG ((LM_DEBUG, "\nConsumer waiting for events...\n"));
 
-      FILE* ready_file = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ready_output_file), "w");
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> ready_file (
+          ACE_OS::fopen (options.ready_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!ready_file)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open ready file for writing\n"),
+                              1);
+          }
 
-      if (ready_file == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open ready file for writing\n"),
-                            1);
-        }
-
-      ACE_OS::fprintf (ready_file, "ready\n");
-      ACE_OS::fclose (ready_file);
+        ACE_OS::fprintf (ready_file.get (), ACE_TEXT ("%s"), ACE_TEXT ("ready\n"));
+      }
 
       client.ORB_run ();
 #ifdef PAUSE_ON_EXIT
@@ -182,13 +183,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       _getch();
 #endif // PAUSE_ON_EXIT
       ACE_DEBUG ((LM_DEBUG, "Consumer done.\n"));
-      consumer_1->disconnect ();
+      consumer->disconnect ();
 
       ec->destroy ();
 
       sig->finished (MonitorTestInterface::Consumer);
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const& e)
     {
       e._tao_print_exception ("Consumer Error: ");
       status = 1;

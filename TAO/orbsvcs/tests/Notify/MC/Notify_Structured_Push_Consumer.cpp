@@ -13,21 +13,20 @@
 // ******************************************************************
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
-                                            const char* name,
+                                            char const* name,
                                             unsigned int expected,
                                             Notify_Test_Client& client)
  : name_ (name),
    expected_ (expected),
-   count_ (0),
-   delay_count_ (0),
-   delay_period_ (5),
    client_ (client)
 {
   this->client_.consumer_start (this);
 }
 
 void
-Notify_Structured_Push_Consumer::set_delay_parameters (unsigned int delay_count, unsigned long delay_period)
+Notify_Structured_Push_Consumer::set_delay_parameters (
+  unsigned int delay_count,
+  unsigned long delay_period)
 {
   this->delay_count_ = delay_count;
   this->delay_period_ = delay_period;
@@ -81,13 +80,12 @@ Notify_Structured_Push_Consumer::_connect (
   this->_remove_ref ();
 }
 
-
 void
 Notify_Structured_Push_Consumer::push_structured_event (
   const CosNotification::StructuredEvent&)
 {
   ACE_DEBUG ((LM_DEBUG, "-"));
-  static const ACE_Time_Value sl (0, 2000);
+  static ACE_Time_Value const sleep_time (0, 2000);
 
   this->count_++;
 
@@ -108,5 +106,5 @@ Notify_Structured_Push_Consumer::push_structured_event (
     ACE_DEBUG ((LM_DEBUG, "\nConsumer received %u events.\n", count_));
     this->client_.consumer_done (this);
   }
-  ACE_OS::sleep (sl);
+  ACE_OS::sleep (sleep_time);
 }

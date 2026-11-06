@@ -29,9 +29,14 @@ public:
   TAO_Notify_Tests_RT_Application_Command ();
 
   /// Destructor
-  ~TAO_Notify_Tests_RT_Application_Command ();
+  ~TAO_Notify_Tests_RT_Application_Command () override = default;
 
-  virtual void handle_init ();
+  TAO_Notify_Tests_RT_Application_Command (TAO_Notify_Tests_RT_Application_Command const&) = delete;
+  TAO_Notify_Tests_RT_Application_Command (TAO_Notify_Tests_RT_Application_Command&&) = delete;
+  TAO_Notify_Tests_RT_Application_Command& operator= (TAO_Notify_Tests_RT_Application_Command const&) = delete;
+  TAO_Notify_Tests_RT_Application_Command& operator= (TAO_Notify_Tests_RT_Application_Command&&) = delete;
+
+  void handle_init () override;
 };
 
 #include /**/ "ace/post.h"

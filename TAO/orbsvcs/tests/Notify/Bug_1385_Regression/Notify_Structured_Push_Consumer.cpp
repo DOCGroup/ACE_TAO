@@ -13,12 +13,11 @@
 // ******************************************************************
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
-                                            const char* name,
+                                            char const* name,
                                             unsigned int expected,
                                             Notify_Test_Client& client)
  : name_ (name),
    expected_ (expected),
-   count_ (0),
    client_ (client)
 {
   this->client_.consumer_start (this);
@@ -62,21 +61,19 @@ Notify_Structured_Push_Consumer::_connect (
 
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent&)
+  CosNotification::StructuredEvent const&)
 {
   ACE_DEBUG ((LM_DEBUG, "-"));
 
   this->count_++;
   if (this->count_ > this->expected_)
-  {
     ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
-      ACE_TEXT ("many events received.\n")));
-  }
+                ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
+                ACE_TEXT ("many events received.\n")));
 
   if (this->count_ >= this->expected_)
-  {
-    ACE_DEBUG ((LM_DEBUG, "\nConsumer received %u events.\n", count_));
-    this->client_.consumer_done (this);
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nConsumer received %u events.\n", this->count_));
+      this->client_.consumer_done (this);
+    }
 }

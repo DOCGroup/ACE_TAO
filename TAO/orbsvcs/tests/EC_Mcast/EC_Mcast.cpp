@@ -17,6 +17,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "EC_Mcast.inl"
 #endif /* __ACE_INLINE__ */
@@ -24,10 +26,15 @@
 ECM_Driver::ECM_Driver ()
   : event_period_ (250000),
     event_count_ (100),
-    config_filename_ (0),
-    pid_filename_ (0),
+    config_filename_ (nullptr),
+    pid_filename_ (nullptr),
     local_federations_count_ (0),
-    all_federations_count_ (0)
+    local_federations_ {},
+    local_names_ {},
+    all_federations_count_ (0),
+    all_federations_ {},
+    test_start_ {},
+    test_stop_ {}
 {
 }
 
@@ -106,10 +113,10 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      if (this->pid_filename_ != 0)
+      if (this->pid_filename_ != nullptr)
         {
           FILE* pid = ACE_OS::fopen (this->pid_filename_, "w");
-          if (pid != 0)
+          if (pid != nullptr)
             {
               ACE_OS::fprintf (pid, "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
@@ -172,11 +179,11 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
 
       ec_impl.shutdown ();
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const& sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("NON SYS EX");
     }
@@ -250,10 +257,11 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec)
               ACE_TEXT_ALWAYS_CHAR (buffer)));
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
-      TAO_ECG_UDP_Out_Endpoint* clone;
+      TAO_ECG_UDP_Out_Endpoint* clone {};
       ACE_NEW (clone,
                TAO_ECG_UDP_Out_Endpoint (this->endpoint_));
 
+      // ECM_Federation::open places the endpoint in a reference-counted owner.
       this->all_federations_[i]->open (clone, ec);
     }
 }
@@ -274,7 +282,7 @@ ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec)
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
       TAO_ECG_Refcounted_Endpoint endpoint;
-      TAO_ECG_UDP_Out_Endpoint* clone = 0;
+      TAO_ECG_UDP_Out_Endpoint* clone {};
       ACE_NEW (clone,
                TAO_ECG_UDP_Out_Endpoint (this->endpoint_));
       endpoint.reset (clone);
@@ -301,7 +309,6 @@ ECM_Driver::dump_results ()
       this->local_federations_[i]->dump_results ();
     }
 }
-
 
 // ****************************************************************
 
@@ -333,11 +340,11 @@ ECM_Driver::parse_args (int argc, ACE_TCHAR *argv [])
 
         case 'f':
           {
-            char* aux;
-            int i = 0;
+            char* aux {};
+            int i {};
             for (char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
-                 arg != 0 && i < ECM_Driver::MAX_LOCAL_FEDERATIONS;
-                 arg = ACE_OS::strtok_r (0, ",", &aux), ++i)
+                 arg != nullptr && i < ECM_Driver::MAX_LOCAL_FEDERATIONS;
+                 arg = ACE_OS::strtok_r (nullptr, ",", &aux), ++i)
               {
                 this->local_names_[i] = arg;
               }
@@ -379,13 +386,15 @@ ECM_Driver::parse_args (int argc, ACE_TCHAR *argv [])
 int
 ECM_Driver::parse_config_file ()
 {
-  FILE* cfg = 0;
-  if (this->config_filename_ != 0)
-    cfg = ACE_OS::fopen (this->config_filename_, "r");
-  else
-    cfg = stdin;
+  std::unique_ptr<FILE, int (*) (FILE*)> config_file (nullptr, ACE_OS::fclose);
+  FILE* cfg = stdin;
+  if (this->config_filename_ != nullptr)
+    {
+      config_file.reset (ACE_OS::fopen (this->config_filename_, "r"));
+      cfg = config_file.get ();
+    }
 
-  if (cfg == 0)
+  if (cfg == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "cannot open config file <%s>\n",
                          this->config_filename_), -1);
@@ -406,11 +415,10 @@ ECM_Driver::parse_config_file ()
         return -1;
       ACE_Read_Buffer reader(cfg);
       char* buf = reader.read (' ', ' ', '\0');
-      char* name = CORBA::string_dup (buf);
+      std::string name (buf);
       reader.alloc()->free (buf);
 
-
-      int port;
+      int port {};
       if (this->skip_blanks (cfg, "reading federation port number"))
         return -1;
       s = fscanf (cfg, "%d", &port);
@@ -422,7 +430,7 @@ ECM_Driver::parse_config_file ()
 
       CORBA::UShort mcast_port = static_cast<CORBA::UShort> (port);
 
-      int ns, nc;
+      int ns {}, nc {};
       if (this->skip_blanks (cfg, "reading supplier count"))
         return -1;
       s = fscanf (cfg, "%d", &ns);
@@ -444,17 +452,17 @@ ECM_Driver::parse_config_file ()
       // ACE_DEBUG ((LM_DEBUG, "i = %d <%s> <%d> <%d> <%d>\n",
       // i, name, mcast_port, ns, nc));
 
-      char** supplier_names;
-      char** consumer_names;
-      ACE_NEW_RETURN (supplier_names, char*[ns], -1);
-      ACE_NEW_RETURN (consumer_names, char*[nc], -1);
+      std::vector<std::string> supplier_names;
+      std::vector<std::string> consumer_names;
+      supplier_names.reserve (ns);
+      consumer_names.reserve (nc);
 
       if (this->parse_name_list (cfg, ns, supplier_names,
                                  "reading supplier list"))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "error parsing supplier list for <%s>\n",
-                             name), -1);
+                             name.c_str ()), -1);
         }
 
       if (this->parse_name_list (cfg, nc, consumer_names,
@@ -462,35 +470,35 @@ ECM_Driver::parse_config_file ()
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "error parsing consumer list for <%s>\n",
-                             name), -1);
+                             name.c_str ()), -1);
         }
 
-      ACE_NEW_RETURN (this->all_federations_[i],
-                      ECM_Federation (name, mcast_port,
-                                      ns, supplier_names,
-                                      nc, consumer_names), -1);
+      ECM_Federation* federation {};
+      ACE_NEW_RETURN (federation,
+                      ECM_Federation (std::move (name), mcast_port,
+                                      std::move (supplier_names),
+                                      std::move (consumer_names)), -1);
+      this->all_federations_[i].reset (federation);
     }
-  ACE_OS::fclose (cfg);
-
   for (int j = 0; j < this->local_federations_count_; ++j)
     {
       int k = 0;
       for (; k < this->all_federations_count_; ++k)
         {
-          if (ACE_OS::strcmp (this->local_names_[j],
-                              this->all_federations_[k]->name ()) == 0)
+          if (this->local_names_[j] == this->all_federations_[k]->name ())
             {
-              ACE_NEW_RETURN (this->local_federations_[j],
-                              ECM_Local_Federation (this->all_federations_[k],
-                                                    this),
-                              -1);
+              ECM_Local_Federation* local_federation {};
+              ACE_NEW_RETURN (local_federation,
+                              ECM_Local_Federation (this->all_federations_[k].get (),
+                                                    this), -1);
+              this->local_federations_[j].reset (local_federation);
               break;
             }
         }
       if (k == this->all_federations_count_)
         ACE_ERROR ((LM_ERROR,
                     "Cannot find federations <%s>\n",
-                    this->local_names_[j]));
+                    this->local_names_[j].c_str ()));
     }
 
   return 0;
@@ -499,8 +507,8 @@ ECM_Driver::parse_config_file ()
 int
 ECM_Driver::parse_name_list (FILE* file,
                              int n,
-                             char** names,
-                             const char* error_msg)
+                             std::vector<std::string>& names,
+                             char const* error_msg)
 {
   for (int i = 0; i < n; ++i)
     {
@@ -512,7 +520,7 @@ ECM_Driver::parse_name_list (FILE* file,
         }
       ACE_Read_Buffer tmp(file);
       char* buf = tmp.read ('\n', '\n', '\0');
-      names[i] = CORBA::string_dup (buf);
+      names.emplace_back (buf);
       tmp.alloc ()->free (buf);
     }
   return 0;
@@ -520,7 +528,7 @@ ECM_Driver::parse_name_list (FILE* file,
 
 int
 ECM_Driver::skip_blanks (FILE* file,
-                         const char* error_msg)
+                         char const* error_msg)
 {
   int c;
   // Consume all the blanks.
@@ -542,42 +550,31 @@ ECM_Driver::skip_blanks (FILE* file,
 }
 // ****************************************************************
 
-ECM_Federation::ECM_Federation (char* name,
+ECM_Federation::ECM_Federation (std::string name,
                                 CORBA::UShort mcast_port,
-                                int supplier_types,
-                                char** supplier_names,
-                                int consumer_types,
-                                char** consumer_names)
-  :  name_ (name),
-     mcast_port_ (mcast_port),
-     supplier_types_ (supplier_types),
-     supplier_names_ (supplier_names),
-     consumer_types_ (consumer_types),
-     consumer_names_ (consumer_names),
-     addr_server_ (mcast_port)
+                                std::vector<std::string> supplier_names,
+                                std::vector<std::string> consumer_names)
+  : name_ (std::move (name)),
+    mcast_port_ (mcast_port),
+    supplier_names_ (std::move (supplier_names)),
+    supplier_ipaddr_ (supplier_names_.size ()),
+    consumer_names_ (std::move (consumer_names)),
+    consumer_ipaddr_ (consumer_names_.size ()),
+    addr_server_ (mcast_port)
 {
   sender_ = TAO_ECG_UDP_Sender::create (true);
 
-  ACE_NEW (this->supplier_ipaddr_, CORBA::ULong[this->supplier_types_]);
-  ACE_NEW (this->consumer_ipaddr_, CORBA::ULong[this->consumer_types_]);
-
   int i;
-  for (i = 0; i < this->supplier_types_; ++i)
+  for (i = 0; i < static_cast<int> (this->supplier_names_.size ()); ++i)
     {
-      ACE_INET_Addr addr (u_short(0), this->supplier_names_[i], AF_INET);
+      ACE_INET_Addr addr (u_short(0), this->supplier_names_[i].c_str (), AF_INET);
       this->supplier_ipaddr_[i] = addr.get_ip_address ();
     }
-  for (i = 0; i < this->consumer_types_; ++i)
+  for (i = 0; i < static_cast<int> (this->consumer_names_.size ()); ++i)
     {
-      ACE_INET_Addr addr (u_short(0), this->consumer_names_[i], AF_INET);
+      ACE_INET_Addr addr (u_short(0), this->consumer_names_[i].c_str (), AF_INET);
       this->consumer_ipaddr_[i] = addr.get_ip_address ();
     }
-}
-
-ECM_Federation::~ECM_Federation ()
-{
-  delete[] this->consumer_ipaddr_;
-  delete[] this->supplier_ipaddr_;
 }
 
 void
@@ -628,12 +625,13 @@ ECM_Federation::addr_server ()
 
 ECM_Supplier::ECM_Supplier (ECM_Local_Federation* federation)
   :  federation_ (federation),
+     supplier_id_ {},
      consumer_ (this)
 {
 }
 
 void
-ECM_Supplier::open (const char* name,
+ECM_Supplier::open (char const* name,
                     RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   this->supplier_id_ = ACE::crc32 (name);
@@ -671,7 +669,7 @@ ECM_Supplier::close ()
 
   this->consumer_proxy_->disconnect_push_consumer ();
 
-  this->consumer_proxy_ = 0;
+  this->consumer_proxy_ = RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 void
@@ -705,11 +703,11 @@ ECM_Supplier::supplier_id () const
 }
 
 void
-ECM_Supplier::push (const RtecEventComm::EventSet& events)
+ECM_Supplier::push (RtecEventComm::EventSet const& events)
 {
   for (u_int i = 0; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const& e = events[i];
       if (e.header.type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
         continue;
 
@@ -731,14 +729,12 @@ ECM_Supplier::disconnect_push_consumer ()
 // ****************************************************************
 
 ECM_Consumer::ECM_Consumer (ECM_Local_Federation *federation)
-  : federation_ (federation),
-    supplier_proxy_ (0),
-    consumer_admin_ (0)
+  : federation_ (federation)
 {
 }
 
 void
-ECM_Consumer::open (const char*,
+ECM_Consumer::open (char const*,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     unsigned int *seed)
 {
@@ -766,7 +762,7 @@ ECM_Consumer::connect (unsigned int *seed)
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
   qos.insert_type (ACE_ES_EVENT_SHUTDOWN, 0);
-  const ECM_Federation* federation = this->federation_->federation ();
+  ECM_Federation const* federation = this->federation_->federation ();
   for (int i = 0; i < federation->consumer_types (); ++i)
     {
       unsigned int x = ACE_OS::rand_r (seed);
@@ -800,7 +796,6 @@ ECM_Consumer::disconnect ()
       || CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-
   RtecEventChannelAdmin::ProxyPushSupplier_var tmp =
     this->supplier_proxy_._retn ();
   tmp->disconnect_push_supplier ();
@@ -815,7 +810,7 @@ ECM_Consumer::close ()
       this->consumer_admin_ =
         RtecEventChannelAdmin::ConsumerAdmin::_nil ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       this->consumer_admin_ =
         RtecEventChannelAdmin::ConsumerAdmin::_nil ();
@@ -824,7 +819,7 @@ ECM_Consumer::close ()
 }
 
 void
-ECM_Consumer::push (const RtecEventComm::EventSet& events)
+ECM_Consumer::push (RtecEventComm::EventSet const& events)
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
   this->federation_->consumer_push (arrival, events);
@@ -850,23 +845,15 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
      event_count_ (0),
      last_publication_change_ (0),
      last_subscription_change_ (0),
-     mcast_eh_ (0),
+     mcast_eh_ {},
      seed_ (0),
      subscription_change_period_ (10000),
      publication_change_period_ (10000)
 {
   receiver_ = TAO_ECG_UDP_Receiver::create (true);
 
-  ACE_NEW (mcast_eh_, TAO_ECG_Mcast_EH((&*receiver_)));
-
-  ACE_NEW (this->subscription_subset_,
-           CORBA::Boolean[this->consumer_types ()]);
-}
-
-ECM_Local_Federation::~ECM_Local_Federation ()
-{
-  delete mcast_eh_;
-  delete[] this->subscription_subset_;
+  this->mcast_eh_ = std::make_unique<TAO_ECG_Mcast_EH> (&*this->receiver_);
+  this->subscription_subset_.resize (this->consumer_types ());
 }
 
 void
@@ -875,16 +862,13 @@ ECM_Local_Federation::open (int event_count,
 {
   this->event_count_ = event_count;
 
-  const int bufsize = 512;
-  char buf[bufsize];
-  ACE_OS::strcpy (buf, this->federation_->name ());
-  ACE_OS::strcat (buf, "/supplier");
+  std::string name (this->federation_->name ());
+  name += "/supplier";
+  this->supplier_.open (name.c_str (), ec);
 
-  this->supplier_.open (buf, ec);
-
-  ACE_OS::strcpy (buf, this->federation_->name ());
-  ACE_OS::strcat (buf, "/consumer");
-  this->consumer_.open (buf, ec, &this->seed_);
+  name = this->federation_->name ();
+  name += "/consumer";
+  this->consumer_.open (name.c_str (), ec, &this->seed_);
 
   this->last_subscription_change_ = ACE_OS::gettimeofday ();
 }
@@ -954,7 +938,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 
 void
 ECM_Local_Federation::consumer_push (ACE_hrtime_t,
-                                     const RtecEventComm::EventSet &event)
+                                     RtecEventComm::EventSet const& event)
 {
   if (event.length () == 0)
     {
@@ -963,11 +947,11 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
 
   for (CORBA::ULong i = 0; i < event.length (); ++i)
     {
-      const RtecEventComm::Event& e = event[i];
+      RtecEventComm::Event const& e = event[i];
 
       this->recv_count_++;
 
-      int j = 0;
+      int j {};
       for (; j < this->federation_->consumer_types (); ++j)
         {
           CORBA::ULong type = e.header.type;
@@ -996,12 +980,10 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                          ignore_from,
                          addr_server.in ());
 
-  const int bufsize = 512;
-  char buf[bufsize];
-  ACE_OS::strcpy (buf, this->name ());
-  ACE_OS::strcat (buf, "/receiver");
+  std::string name (this->name ());
+  name += "/receiver";
 
-  RtecEventComm::EventSourceID source = ACE::crc32 (buf);
+  RtecEventComm::EventSourceID source = ACE::crc32 (name.c_str ());
 
   this->mcast_eh_->reactor (reactor);
 
@@ -1031,10 +1013,10 @@ ECM_Local_Federation::close_receiver ()
 void
 ECM_Local_Federation::dump_results () const
 {
-  double unfiltered_ratio = 0;
+  double unfiltered_ratio {};
   if (this->recv_count_ != 0)
     unfiltered_ratio = double(this->unfiltered_count_)/this->recv_count_;
-  double invalid_ratio = 0;
+  double invalid_ratio {};
   if (this->recv_count_ != 0)
     invalid_ratio = double(this->invalid_count_)/this->recv_count_;
 

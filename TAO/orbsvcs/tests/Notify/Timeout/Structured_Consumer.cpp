@@ -13,14 +13,20 @@
 // Data Section
 // ******************************************************************
 
-static const ACE_TCHAR* ior = ACE_TEXT("file://supplier.ior");
-static unsigned int expected = 2;
-static Notify_Structured_Push_Consumer* consumer_1 = 0;
+constexpr unsigned int expected_events { 2 };
 
 class Consumer_Client : public Notify_Test_Client
 {
 public:
-  virtual int parse_args (int argc, ACE_TCHAR* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]) override;
+
+  ACE_TCHAR const* ior () const
+  {
+    return this->ior_;
+  }
+
+private:
+  ACE_TCHAR const* ior_ { ACE_TEXT ("file://supplier.ior") };
 };
 
 
@@ -28,22 +34,20 @@ int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
         case 'k':
-          ior = get_opts.optarg;
+          this->ior_ = get_opts.optarg;
           break;
 
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-            "usage:  %s "
-            "-k <ior> "
-            "\n",
-            argv [0]),
-            -1);
+                             ACE_TEXT ("usage: %s -k <ior>\n"),
+                             argv [0]),
+                            -1);
       }
   // Indicates successful parsing of the command line
   return 0;
@@ -66,13 +70,14 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                   Notify_Test_Client* client)
 {
   // startup the consumer
-  ACE_NEW_THROW_EX (consumer_1,
+  Notify_Structured_Push_Consumer* consumer {};
+  ACE_NEW_THROW_EX (consumer,
                     Notify_Structured_Push_Consumer ("consumer1",
-                                                     expected,
+                                                     expected_events,
                                                      *client),
                     CORBA::NO_MEMORY ());
-  consumer_1->init (client->root_poa ());
-  consumer_1->_connect (admin);
+  consumer->init (client->root_poa ());
+  consumer->_connect (admin);
 }
 
 // ******************************************************************
@@ -81,7 +86,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  int status = 0;
+  int status {};
   try
     {
       Consumer_Client client;
@@ -95,7 +100,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       CORBA::ORB_ptr orb = client.orb ();
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (client.ior ());
 
       sig_var sig = sig::_narrow (object.in ());
 
@@ -115,7 +120,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Consumer done.\n"));
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const& e)
     {
       e._tao_print_exception ("Consumer Error: ");
       status = 1;

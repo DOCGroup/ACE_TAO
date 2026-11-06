@@ -1,14 +1,9 @@
 #include "RT_Application_Command.h"
 
-
 #include "../lib/LookupManager.h"
 #include "RT_Priority_Mapping.h"
 
 TAO_Notify_Tests_RT_Application_Command::TAO_Notify_Tests_RT_Application_Command ()
-{
-}
-
-TAO_Notify_Tests_RT_Application_Command::~TAO_Notify_Tests_RT_Application_Command ()
 {
 }
 
@@ -22,6 +17,7 @@ TAO_Notify_Tests_RT_Application_Command::handle_init ()
 
   LOOKUP_MANAGER->resolve (orb);
 
+  // LookupManager keeps this mapping as a non-owning pointer until test shutdown.
   TAO_Notify_Tests_RT_Priority_Mapping* mapping = new TAO_Notify_Tests_RT_Priority_Mapping ();
 
   mapping->init (orb.in ());

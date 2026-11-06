@@ -2,14 +2,12 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
@@ -22,22 +20,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-ECT_Consumer_Driver::ECT_Consumer_Driver ()
-  : n_consumers_ (1),
-    n_suppliers_ (1),
-    type_start_ (ACE_ES_EVENT_UNDEFINED),
-    type_count_ (1),
-    stall_length_(0),
-    shutdown_event_channel_ (1),
-    pid_file_name_ (nullptr),
-    active_count_ (0)
-{
-}
-
-ECT_Consumer_Driver::~ECT_Consumer_Driver ()
-{
-}
 
 int
 ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
@@ -74,17 +56,19 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
                       "  type count = <%d>\n"
                       "  pid file name = <%s>\n",
 
-                      this->n_consumers_,
-                      this->n_suppliers_,
-                      this->type_start_,
-                      this->type_count_,
+                      this->options_.n_consumers,
+                      this->options_.n_suppliers,
+                      this->options_.type_start,
+                      this->options_.type_count,
 
-                      this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
+                      this->options_.pid_file_name != nullptr
+                        ? this->options_.pid_file_name
+                        : ACE_TEXT ("nil")));
         }
 
-      if (this->pid_file_name_ != nullptr)
+      if (this->options_.pid_file_name != nullptr)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+          FILE* pid = ACE_OS::fopen (this->options_.pid_file_name, "w");
           if (pid != nullptr)
             {
               ACE_OS::fprintf (pid, "%ld\n",
@@ -93,7 +77,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      int min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
+      int const min_priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
       // Enable FIFO scheduling
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
@@ -171,7 +155,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
 
       this->disconnect_consumers ();
 
-      if (this->shutdown_event_channel_ != 0)
+      if (this->options_.shutdown_event_channel)
         {
           channel->destroy ();
         }
@@ -180,11 +164,11 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const& sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("NON SYS EX");
     }
@@ -192,14 +176,8 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-ECT_Consumer_Driver::shutdown_consumer (void*)
+ECT_Consumer_Driver::shutdown_consumer ()
 {
-  // int ID =
-  //   (reinterpret_cast<Test_Consumer**> (consumer_cookie)
-  //    - this->consumers_);
-  //
-  // ACE_DEBUG ((LM_DEBUG, "(%t) events received by consumer %d\n", ID));
-
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->active_count_--;
 }
@@ -211,23 +189,22 @@ ECT_Consumer_Driver::connect_consumers
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-    this->active_count_ = this->n_consumers_;
+    this->active_count_ = this->options_.n_consumers;
   }
-  for (int i = 0; i < this->n_consumers_; ++i)
+  for (int i {}; i < this->options_.n_consumers; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "consumer_%02d", i);
 
-      ACE_NEW (this->consumers_[i],
-               Test_Consumer (this,
-                              this->consumers_ + i,
-                              this->n_suppliers_,
-                              this->stall_length_));
+      this->consumers_[i] = std::make_unique<Test_Consumer> (
+        *this,
+        this->options_.n_suppliers,
+        this->options_.stall_length);
 
       this->consumers_[i]->connect (scheduler,
                                     buf,
-                                    this->type_start_,
-                                    this->type_count_,
+                                    this->options_.type_start,
+                                    this->options_.type_count,
                                     channel);
     }
 }
@@ -235,11 +212,11 @@ ECT_Consumer_Driver::connect_consumers
 void
 ECT_Consumer_Driver::dump_results ()
 {
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Throughput_Stats throughput;
-  for (int i = 0; i < this->n_consumers_; ++i)
+  for (int i {}; i < this->options_.n_consumers; ++i)
     {
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::sprintf (buf, ACE_TEXT("consumer_%02d"), i);
@@ -253,12 +230,11 @@ ECT_Consumer_Driver::dump_results ()
 void
 ECT_Consumer_Driver::disconnect_consumers ()
 {
-  for (int i = 0; i < this->n_consumers_; ++i)
+  for (int i {}; i < this->options_.n_consumers; ++i)
     {
       this->consumers_[i]->disconnect ();
 
-      delete this->consumers_[i];
-      this->consumers_[i] = nullptr;
+      this->consumers_[i].reset ();
     }
 }
 
@@ -273,34 +249,35 @@ ECT_Consumer_Driver::parse_args (int argc, ACE_TCHAR *argv [])
       switch (opt)
         {
         case 'x':
-          this->shutdown_event_channel_ = 0;
+          this->options_.shutdown_event_channel = false;
           break;
 
         case 'c':
-          this->n_consumers_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.n_consumers = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 's':
-          this->n_suppliers_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.n_suppliers = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'h':
           {
-            char* aux;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            char* aux {};
+            char* arg = ACE_OS::strtok_r (
+              ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()), ",", &aux);
 
-            this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
-            this->type_count_ = ACE_OS::atoi (arg);
+            this->options_.type_start = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            this->options_.type_count = ACE_OS::atoi (arg);
           }
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.opt_arg ();
+          this->options_.pid_file_name = get_opt.opt_arg ();
           break;
 
         case 'o':
-          this->stall_length_ = ACE_OS::atoi (get_opt.opt_arg ());
+          this->options_.stall_length = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case '?':
@@ -319,26 +296,26 @@ ECT_Consumer_Driver::parse_args (int argc, ACE_TCHAR *argv [])
         }
     }
 
-  if (this->n_suppliers_ <= 0)
+  if (this->options_.n_suppliers <= 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "%s: number of suppliers (%d) is out of range, "
                   "reset to default (%d)\n",
-                  argv[0], this->n_suppliers_,
+                  argv[0], this->options_.n_suppliers,
                   1));
-      this->n_suppliers_ = 1;
+      this->options_.n_suppliers = 1;
     }
 
-  if (this->n_consumers_ <= 0)
+  if (this->options_.n_consumers <= 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of consumers or "
                          "suppliers out of range\n", argv[0]), -1);
     }
 
-  if (this->type_count_ <= 0)
+  if (this->options_.type_count <= 0)
     {
-      this->type_count_ = 1;
+      this->options_.type_count = 1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of event types "
                          "suppliers out of range, reset to default (1)\n",

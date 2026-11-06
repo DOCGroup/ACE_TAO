@@ -14,25 +14,25 @@
 
 #include "Notify_StructuredPushConsumer.h"
 
+#include <atomic>
+
 class Notify_Test_Client;
 
 class Notify_Structured_Push_Consumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  Notify_Structured_Push_Consumer (
-                        const char* name,
-                        unsigned int expected,
-                        Notify_Test_Client& client);
-  void set_delay_parameters (unsigned int delay_count, unsigned long delay_period);
+  Notify_Structured_Push_Consumer (unsigned int expected,
+                                   Notify_Test_Client& client);
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer&&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer&&) = delete;
 
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&);
+  void push_structured_event (CosNotification::StructuredEvent const&) override;
 
-  ACE_CString name_;
-  unsigned int expected_;
-  unsigned int count_;
-  unsigned int delay_count_;
-  unsigned long delay_period_;
+  unsigned int const expected_;
+  std::atomic<unsigned int> count_ {};
 
   Notify_Test_Client& client_;
 };
