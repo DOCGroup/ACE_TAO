@@ -170,7 +170,7 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa)
 
   if (impl_->local_orb) {
     int argc = 0;
-    char** argv = nullptr;
+    char** argv {};
     impl_->orb = CORBA::ORB_init(argc, argv, "FTEC_GatewayORB");
 
     Interceptor_Destoryer::execute(impl_->orb.in());
