@@ -237,7 +237,7 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
                 CORBA::ULong const count =
                   tc->member_count ();
 
-                char const *member_name = nullptr;
+                char const *member_name {};
                 CORBA::ULong i = 0;
 
                 for (i = 0; i < count; ++i)
@@ -1218,7 +1218,7 @@ TAO_Log_Constraint_Visitor::any_does_contain (
     CORBA::Any const *any,
     TAO_ETCL_Literal_Constraint &item)
 {
-  CORBA::Any const *result = nullptr;
+  CORBA::Any const *result {};
 
   *any >>= result;
 
