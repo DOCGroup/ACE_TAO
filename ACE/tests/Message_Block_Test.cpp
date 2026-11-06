@@ -12,6 +12,7 @@
 //=============================================================================
 
 #include "test_config.h"
+#include "ace/Message_Block.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Task.h"
@@ -355,10 +356,47 @@ alloc_struct_type alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 
 #endif /* ACE_HAS_THREADS */
 
+static int
+test_message_block_unique_ptr ()
+{
+  ACE_Message_Block *raw_message_block = nullptr;
+  ACE_NEW_RETURN (raw_message_block,
+                  ACE_Message_Block (16),
+                  -1);
+
+  ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
+  ACE_Message_Block_Unique_Ptr duplicate {message_block->duplicate ()};
+
+  if (!duplicate)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Failed to duplicate ACE_Message_Block.\n")),
+                      -1);
+
+  if (message_block->reference_count () != 2)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Unexpected message block reference count before reset.\n")),
+                      -1);
+
+  message_block.reset ();
+
+  if (duplicate->reference_count () != 1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Unique pointer did not release its message block reference.\n")),
+                      -1);
+
+  duplicate.reset ();
+  return 0;
+}
+
 int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Message_Block_Test"));
+
+  if (test_message_block_unique_ptr () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("ACE_Message_Block_Unique_Ptr test failed.\n")),
+                      -1);
 
   // A quick user-defined data block test, then the main event
   User_Data *user_data_block = nullptr;
