@@ -285,13 +285,7 @@ Gen_Perf::open ()
                   -1);
   ACE_OS::printf ("/* ");
 
-  if (option[C])
-    ACE_OS::printf ("C");
-
-  else if (option[CPLUSPLUS])
-    ACE_OS::printf ("C++");
-
-  ACE_OS::printf (" code produced by gperf version %s */\n",
+  ACE_OS::printf ("C++ code produced by ACE gperf version %s */\n",
                   version_string);
   Options::print_options ();
 

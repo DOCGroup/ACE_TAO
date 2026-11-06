@@ -36,7 +36,6 @@ enum Option_Type
 {
   DEBUGGING    = 01,            /* Enable debugging (prints diagnostics to stderr). */
   ORDER        = 02,            /**< Apply ordering heuristic to speed-up search time. */
-  ANSI         = 04,            /**< Generate ANSI prototypes. */
   ALLCHARS     = 010,           /**< Use all characters in hash function. */
   INLINE       = 020,           /**< Generate code for inline functions. */
   TYPE         = 040,           /**< Handle user-defined type structured keyword input. */
@@ -52,12 +51,9 @@ enum Option_Type
   COMP         = 0100000,       /**< Generate strncmp rather than strcmp. */
   GLOBAL       = 0200000,       /**< Make the keyword table a global variable. */
   CONSTANT     = 0400000,       /**< Make the generated tables readonly (const). */
-  CPLUSPLUS    = 01000000,      /**< Generate C++ code. */
-  C            = 02000000,      /**< Generate C code. */
   ENUM         = 04000000,      /**< Use enum for constants. */
   STRCASECMP   = 010000000,     /**< Use the case insensitive comparison. */
   OPTIMIZE     = 020000000,     /**< Assume all input keywords are in the keyset. */
-  ADA          = 040000000,     /**< Generate Ada code. */
   MUTE         = 0100000000,    /**< Dont print the warnings. */
   SKIPCLASS    = 0200000000,    /**< Skip the class definition part in the output while in C++ mode. */
   SKIPSTRINGH  = 0400000000,    /**< Skip including the header file ace/OS_NS_string.h. */
@@ -121,14 +117,10 @@ public:
   static const char *class_name ();
   static const char *hash_name ();
   static const char *delimiter ();
-  static bool cxx17 ();
 
 private:
   /// Holds the user-specified Options.
   static int option_word_;
-
-  /// Whether C++17 output was selected.
-  static bool cxx17_;
 
   /// Number of switch statements to generate.
   static int total_switches_;

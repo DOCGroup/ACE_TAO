@@ -105,10 +105,10 @@ bugs.
 
  --- The Detailed Node Listing ---
 
-High-Level Description of GNU @code{gperf}
+High-Level Description of ACE @code{gperf}
 
 * Input Format::		Input Format to @code{gperf}
-* Output Format::		Output Format for Generated C Code with @code{gperf}
+* Output Format::		Output Format for Generated C++17 Code with @code{ace_gperf}
 
 Input Format to @code{gperf}
 
@@ -447,8 +447,8 @@ transforms an @emph{n} element user-specified keyword set @emph{W} into
 a perfect hash function @emph{F}.  @emph{F} uniquely maps keywords in
 @emph{W} onto the range 0..@emph{k}, where @emph{k} >= @emph{n}.  If
 @emph{k = n} then @emph{F} is a @emph{minimal} perfect hash function.
-@code{gperf} generates a 0..@emph{k} element static lookup table and a
-pair of C functions.  These functions determine whether a given
+@code{ace_gperf} generates a 0..@emph{k} element static lookup table and a
+pair of C++ functions.  These functions determine whether a given
 character string @emph{s} occurs in @emph{W}, using at most one probe
 into the lookup table.
 
@@ -535,28 +535,28 @@ efficiently identify their respective reserved keywords.
 
 @menu
 * Input Format::		Input Format to @code{gperf}
-* Output Format::		Output Format for Generated C Code with @code{gperf}
+* Output Format::		Output Format for Generated C++17 Code with @code{ace_gperf}
 @end menu
 
-The perfect hash function generator @code{gperf} reads a set of
+The perfect hash function generator @code{ace_gperf} reads a set of
 ``keywords'' from a @dfn{keyfile} (or from the standard input by
 default).  It attempts to derive a perfect hashing function that
 recognizes a member of the @dfn{static keyword set} with at most a
-single probe into the lookup table.  If @code{gperf} succeeds in
-generating such a function it produces a pair of C source code routines
-that perform hashing and table lookup recognition.  All generated C code
+single probe into the lookup table.  If @code{ace_gperf} succeeds in
+generating such a function it produces a pair of C++ source code routines
+that perform hashing and table lookup recognition.  All generated C++ code
 is directed to the standard output.  Command-line options described
 below allow you to modify the input and output format to @code{gperf}.
 
-By default, @code{gperf} attempts to produce time-efficient code, with
+By default, @code{ace_gperf} attempts to produce time-efficient C++17 code, with
 less emphasis on efficient space utilization.  However, several options
 exist that permit trading-off execution time for storage space and vice
 versa.  In particular, expanding the generated table size produces a
 sparse search structure, generally yielding faster searches.
-Conversely, you can direct @code{gperf} to utilize a C @code{switch}
+Conversely, you can direct @code{ace_gperf} to utilize a C++ @code{switch}
 statement scheme that minimizes data space storage size.  Furthermore,
 using a C @code{switch} may actually speed up the keyword retrieval time
-somewhat.  Actual results depend on your C compiler, of course.
+somewhat.  Actual results depend on your C++ compiler, of course.
 
 In general, @code{gperf} assigns values to the characters it is using
 for hashing until some set of values gives each keyword a unique value.
@@ -721,10 +721,10 @@ it is your responsibility to ensure that the code contained in this
 section is valid C.
 
 @node Output Format,  , Input Format, Description
-@section Output Format for Generated C Code with @code{gperf}
+@section Output Format for Generated C++17 Code with @code{ace_gperf}
 
-Several options control how the generated C code appears on the standard
-output.  Two C function are generated.  They are called @code{hash} and
+Several options control how the generated C++17 code appears on the standard
+output.  Two C++ functions are generated.  They are called @code{hash} and
 @code{in_word_set}, although you may modify the name for
 @code{in_word_set} with a command-line option.  Both functions require
 two arguments, a string, @code{char *} @var{str}, and a length
@@ -733,8 +733,8 @@ as follows:
 
 @example
 @group
-static int hash (char *str, int len);
-int in_word_set (char *str, int len);
+static std::size_t hash (char const *str, std::size_t len);
+char * in_word_set (char const *str, std::size_t len);
 @end group
 @end example
 
@@ -742,17 +742,14 @@ By default, the generated @code{hash} function returns an integer value
 created by adding @var{len} to several user-specified @var{str} key
 positions indexed into an @dfn{associated values} table stored in a
 local static array.  The associated values table is constructed
-internally by @code{gperf} and later output as a static local C array called
+internally by @code{ace_gperf} and later output as a static local C++ array called
 @var{hash_table}; its meaning and properties are described below.
 @xref{Implementation}. The relevant key positions are specified via the
 @samp{-k} option when running @code{gperf}, as detailed in the @emph{Options}
 section below. @xref{Options}.
 
-Two options, @samp{-g} (assume you are compiling with GNU C and its
-@code{inline} feature) and @samp{-a} (assume ANSI C-style function
-prototypes), alter the content of both the generated @code{hash} and
-@code{in_word_set} routines.  However, function @code{in_word_set} may
-be modified more extensively, in response to your option settings.  The
+The @samp{-g} option requests @code{inline} functions. The function
+@code{in_word_set} may be modified more extensively, in response to your option settings.  The
 options that affect the @code{in_word_set} structure are:
 
 @itemize @bullet
@@ -764,9 +761,9 @@ Have function @code{in_word_set} return a pointer rather than a boolean.
 Make use of the user-defined @code{struct}.
 
 @item -S @var{total switch statements}
-Generate 1 or more C @code{switch} statement rather than use a large,
+Generate 1 or more C++ @code{switch} statements rather than use a large,
 (and potentially sparse) static array.  Although the exact time and
-space savings of this approach vary according to your C compiler's
+space savings of this approach vary according to your C++ compiler's
 degree of optimization, this method often results in smaller and faster
 code.
 @end table
@@ -776,7 +773,7 @@ If the @samp{-t}, @samp{-S}, and @samp{-p} options are omitted the
 default action is to generate a @code{char *} array containing the keys,
 together with additional null strings used for padding the array.  By
 experimenting with the various input and output options, and timing the
-resulting C code, you can determine the best option choices for
+resulting C++ code, you can determine the best option choices for
 different keyword set characteristics.
 
 @node Options, Bugs, Description, Top
@@ -789,12 +786,8 @@ include:
 
 @itemize @bullet
 @table @samp
-@item -a
-Generate ANSI Standard C code using function prototypes.  The default is
-to use ``classic'' K&R C function declaration syntax.
-
 @item -c
-Generates C code that uses the @code{strncmp} function to perform
+Generates code that uses the @code{std::strncmp} function to perform
 string comparisons.  The default action is to use @code{strcmp}.
 
 @item -C
@@ -825,7 +818,7 @@ Sometimes a set of keys may have the same names, but possess different
 attributes.  With the -D option @code{gperf} treats all these keys as part of
 an equivalence class and generates a perfect hash function with multiple
 comparisons for duplicate keys.  It is up to you to completely
-disambiguate the keywords by modifying the generated C code.  However,
+disambiguate the keywords by modifying the generated C++ code.  However,
 @code{gperf} helps you out by organizing the output.
 @end itemize
 
@@ -856,11 +849,9 @@ This option is probably most useful when used in conjunction with options
 @samp{-D} and/or @samp{-S} for @emph{large} keyword sets.
 
 @item -g
-Assume a GNU compiler, @emph{e.g.}, @code{g++} or @code{gcc}.  This
+Use @code{inline} on generated functions.  This
 makes all generated routines use the ``inline'' keyword to remove the
-cost of function calls.  Note that @samp{-g} does @emph{not} imply
-@samp{-a}, since other non-ANSI C compilers may have provisions for a
-function @code{inline} feature.
+cost of function calls.
 
 @item -G
 Generate the static table of keywords as a static global variable,
@@ -919,14 +910,9 @@ Compare key lengths before trying a string comparison.  This might cut
 down on the number of string comparisons made during the lookup, since
 keys with different lengths are never compared via @code{strcmp}.
 However, using @samp{-l} might greatly increase the size of the
-generated C code if the lookup table range is large (which implies that
+generated C++ code if the lookup table range is large (which implies that
 the switch option @samp{-S} is not enabled), since the length table
 contains as many elements as there are entries in the lookup table.
-
-@item -L @var{generated language name}
-Instructs @code{gperf} to generate code in the language specified by the
-option's argument.  Languages handled are currently C++ and C.  The
-default is C.
 
 @item -n
 Instructs the generator not to include the length of a keyword when
@@ -1001,13 +987,13 @@ of values.  Judicious use of the @samp{-f} option helps alleviate this
 overhead, however.
 
 @item -S @var{total switch statements}
-Causes the generated C code to use a @code{switch} statement scheme,
+Causes the generated C++ code to use a @code{switch} statement scheme,
 rather than an array lookup table.  This can lead to a reduction in both
 time and space requirements for some keyfiles.  The argument to this
 option determines how many @code{switch} statements are generated. A
 value of 1 generates 1 @code{switch} containing all the elements, a
 value of 2 generates 2 tables with 1/2 the elements in each
-@code{switch}, etc.  This is useful since many C compilers cannot
+@code{switch}, etc.  This is useful since many C++ compilers cannot
 correctly generate code for large @code{switch} statements. This option
 was inspired in part by Keith Bostic's original C program.
 

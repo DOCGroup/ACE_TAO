@@ -1,13 +1,13 @@
 #include "fe_private.h"
+#include <cstring>
+
+/* C++ code produced by ACE gperf version 8.0.8 */
+/* Command-line: ace_gperf -M -J -Q -c -C -D -E -T -f 0 -o -t -p
+ * -K keyword_ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ TAO/TAO_IDL/fe/keywords.dat */
+
 #include <array>
 #include <cstddef>
-#include <cstring>
 #include <memory>
-
-/* C++ code produced by gperf version 2.8 (ACE version 8.0.8) */
-/* Command-line: ace_gperf -M -J -Q -c -C -D -E -T -f 0 -a -o -t -p
- * -K keyword_ -L C++17 -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat */
-
 std::size_t
 TAO_IDL_CPP_Keyword_Table::hash (char const *str, std::size_t len)
 {
@@ -41,7 +41,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (char const *str, std::size_t len)
   constexpr int MIN_HASH_VALUE {6};
   constexpr int MAX_HASH_VALUE {251};
 
-  static constexpr std::array<struct TAO_IDL_CPP_Keyword_Entry , 252> wordlist =
+  static constexpr std::array<struct TAO_IDL_CPP_Keyword_Entry, 252> wordlist =
     {{
       {"", nullptr},
       {"", nullptr},

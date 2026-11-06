@@ -14,7 +14,7 @@ project(cinset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -a -p -c -l -S1 -o
+    commandflags += -p -c -l -S1 -o
     c.gperf
   }
 
@@ -38,7 +38,7 @@ project(adainset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -a -k1,4,$$
+    commandflags += -k1,4,$$
     ada.gperf
   }
 
@@ -62,7 +62,7 @@ project(cppinset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -a -D
+    commandflags += -D
     cpp.gperf
   }
 
@@ -86,7 +86,7 @@ project(preinset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -a -p -D -k1,$$ -s 2 -o
+    commandflags += -p -D -k1,$$ -s 2 -o
     adadefs.gperf
   }
 
@@ -110,7 +110,7 @@ project(m3inset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -a -k1,2,$$
+    commandflags += -k1,2,$$
     modula3.gperf
   }
 
@@ -134,7 +134,7 @@ project(pinset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -a -o -S2 -p
+    commandflags += -o -S2 -p
     pascal.gperf
   }
 
@@ -158,7 +158,7 @@ project(iinset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -m -M -c -C -D -S1 -E -T -a -o -p
+    commandflags += -m -c -C -D -S1 -E -T -o -p
     idl.gperf
   }
 
@@ -184,7 +184,7 @@ project(iinset2): gperf_test {
 
   GPERF_Files {
     gendir = iout2_gen
-    commandflags += -m -M -c -C -D -E -T -a -o -p
+    commandflags += -m -c -C -D -E -T -o -p
     idl.gperf
   }
 
@@ -208,7 +208,7 @@ project(tinset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -a -o
+    commandflags += -o
     corba.gperf
   }
 
@@ -232,7 +232,7 @@ project(taoinset): gperf_test {
   }
 
   GPERF_Files {
-    commandflags += -c -C -D -E -f 0 -a -o
+    commandflags += -c -C -D -E -f 0 -o
     tao.gperf
   }
 
