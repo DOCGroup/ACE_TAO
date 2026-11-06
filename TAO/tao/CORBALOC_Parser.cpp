@@ -16,6 +16,7 @@
 
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
 #if !defined(__ACE_INLINE__)
 #include "tao/CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
@@ -133,18 +134,17 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     size_t ndx = endpoints.size();
     endpoints.size(ndx+1);
     bool uiop_compatible = false;
-    TAO_ConnectorSetIterator conn_iter = nullptr;
-    for (conn_iter = conn_reg->begin();
-         conn_iter != conn_reg->end() &&
-           endpoints[ndx].profile_ == nullptr;
-         conn_iter ++)
+    for (std::unique_ptr<TAO_Connector> const& connector : *conn_reg)
       {
+        if (endpoints[ndx].profile_ != nullptr)
+          break;
+
         endpoints[ndx].profile_ =
-          (*conn_iter)->corbaloc_scan(ior,len);
+          connector->corbaloc_scan(ior,len);
 
         if (endpoints[ndx].profile_)
           {
-            endpoints[ndx].obj_key_sep_ = (*conn_iter)->object_key_delimiter();
+            endpoints[ndx].obj_key_sep_ = connector->object_key_delimiter();
             uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
             this->make_canonical (ior,len,endpoints[ndx].prot_addr_);
             ior += len;

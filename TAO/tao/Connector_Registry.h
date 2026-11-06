@@ -23,6 +23,7 @@
 #include "tao/Basic_Types.h"
 #include "ace/Global_Macros.h"
 #include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,8 +33,6 @@ class TAO_Connector;
 class TAO_MProfile;
 class TAO_Profile;
 class TAO_InputCDR;
-
-using TAO_ConnectorSetIterator = TAO_Connector**;
 
 /**
  * @class TAO_Connector_Registry
@@ -77,9 +76,10 @@ public:
   /// the provided URL style IOR.
   char object_key_delimiter (const char *ior);
 
-  // = Iterator.
-  TAO_ConnectorSetIterator begin () const;
-  TAO_ConnectorSetIterator end () const;
+  using const_iterator = std::vector<std::unique_ptr<TAO_Connector>>::const_iterator;
+
+  const_iterator begin () const;
+  const_iterator end () const;
 
 private:
   TAO_Connector_Registry (TAO_Connector_Registry const &) = delete;
@@ -89,10 +89,7 @@ private:
 
 private:
   /// List of connectors that are currently open.
-  std::unique_ptr<TAO_Connector *[]> connectors_;
-
-  /// Number of connectors that are currently open.
-  size_t size_ {};
+  std::vector<std::unique_ptr<TAO_Connector>> connectors_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
