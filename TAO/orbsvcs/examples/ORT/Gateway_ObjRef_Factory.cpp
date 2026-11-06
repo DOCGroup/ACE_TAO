@@ -13,7 +13,7 @@ Gateway_ObjRef_Factory (
 ::CORBA::ValueBase *
 Gateway_ObjRef_Factory::_copy_value ()
 {
-  Gateway_ObjRef_Factory *ret_val = nullptr;
+  Gateway_ObjRef_Factory *ret_val {};
   ACE_NEW_THROW_EX (
     ret_val,
     Gateway_ObjRef_Factory (

@@ -36,7 +36,7 @@ void
 Server_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr ior_info)
 {
-  Gateway_ObjRef_Factory *my_factory = nullptr;
+  Gateway_ObjRef_Factory *my_factory {};
 
   PortableInterceptor::ObjectReferenceFactory_var current_factory =
     ior_info->current_factory ();

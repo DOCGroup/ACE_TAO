@@ -103,12 +103,12 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request)
   // Use the NVList (with values) to create a DII Request...
   CORBA::Request_var dii_request;
 
-  CORBA::NamedValue *named_value = nullptr;
+  CORBA::NamedValue *named_value {};
 
   this->orb_->create_named_value (named_value);
 
-  CORBA::ContextList *context_list = nullptr;
-  CORBA::ExceptionList *exceptions = nullptr;
+  CORBA::ContextList *context_list {};
+  CORBA::ExceptionList *exceptions {};
 
   target_object->_create_request (CORBA::Context::_nil (),
                                   operation_name.in (),
