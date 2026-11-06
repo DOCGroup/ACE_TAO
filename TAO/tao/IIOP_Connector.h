@@ -126,8 +126,8 @@ private:
   /// The winning transport is returned.
   TAO_Transport *complete_connection (int result,
                                       TAO_Transport_Descriptor_Interface &desc,
-                                      TAO_IIOP_Connection_Handler **sh_list,
-                                      TAO_IIOP_Endpoint **ep_list,
+                                      TAO_IIOP_Connection_Handler * const *sh_list,
+                                      TAO_IIOP_Endpoint * const *ep_list,
                                       unsigned count,
                                       TAO::Profile_Transport_Resolver *r,
                                       TAO_LF_Multi_Event *mev,
