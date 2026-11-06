@@ -57,7 +57,7 @@ TAO_EC_Thread_Flags::parse_symbols (const char* syms)
   std::string s (syms);
 
   char const * const SEPARATORS = " |"; // this should probably be at class level
-  char* ptr = nullptr;
+  char* ptr = {};
   char* tok = ACE_OS::strtok_r (s.data (), SEPARATORS, &ptr);
   while (tok != nullptr)
     {

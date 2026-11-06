@@ -478,12 +478,12 @@ TAO_ECG_CDR_Message_Receiver::Request_Map::ENTRY*
 TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
 {
   // Get the entry for <from> from the <request_map_>.
-  Request_Map::ENTRY * entry = nullptr;
+  Request_Map::ENTRY * entry = {};
 
   if (this->request_map_.find (from, entry) == -1)
     {
       // Create an entry if one doesn't exist.
-      Requests *requests = nullptr;
+      Requests *requests = {};
       ACE_NEW_RETURN (requests,
                       Requests,
                       nullptr);

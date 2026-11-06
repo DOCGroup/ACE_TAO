@@ -104,7 +104,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               // need to parse the flags...ugh
               std::basic_string<ACE_TCHAR> opt (s);
 
-              ACE_TCHAR* aux = nullptr;
+              ACE_TCHAR* aux = {};
               ACE_TCHAR* flags = ACE_OS::strtok_r (opt.data (), ACE_TEXT (":"), &aux);
 
               TAO_EC_Thread_Flags tf(ACE_TEXT_ALWAYS_CHAR (flags)); // parse and set up
@@ -504,7 +504,7 @@ TAO_EC_Queue_Full_Service_Object*
 TAO_EC_Default_Factory::find_service_object (ACE_TCHAR const *wanted,
                                              ACE_TCHAR const *fallback)
 {
-  TAO_EC_Queue_Full_Service_Object* so = nullptr;
+  TAO_EC_Queue_Full_Service_Object* so = {};
   so = ACE_Dynamic_Service<TAO_EC_Queue_Full_Service_Object>::instance (wanted);
   if (so != nullptr)
     return so;
@@ -642,7 +642,7 @@ TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
   if (this->timeout_ == 0)
     {
       int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      ACE_TCHAR **argv = {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
@@ -671,14 +671,14 @@ TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *ec)
   else if (this->observer_ == 1)
     {
       // @@ The lock should also be under control of the user...
-      ACE_Lock* lock = nullptr;
+      ACE_Lock* lock = {};
       ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, nullptr);
       return new TAO_EC_Basic_ObserverStrategy (ec, lock);
     }
   else if (this->observer_ == 2)
     {
       // @@ The lock should also be under control of the user...
-      ACE_Lock* lock = nullptr;
+      ACE_Lock* lock = {};
       ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, nullptr);
       return new TAO_EC_Reactive_ObserverStrategy (ec, lock);
     }
@@ -948,7 +948,7 @@ TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
   else if (this->consumer_control_ == 1)
     {
       int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      ACE_TCHAR **argv = {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
@@ -972,7 +972,7 @@ TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
   else if (this->supplier_control_ == 1)
     {
       int argc = 0;
-      ACE_TCHAR **argv = nullptr;
+      ACE_TCHAR **argv = {};
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 

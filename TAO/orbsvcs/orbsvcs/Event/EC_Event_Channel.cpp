@@ -18,7 +18,7 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
 
       if (this->factory () == nullptr)
         {
-          TAO_EC_Factory *f = nullptr;
+          TAO_EC_Factory *f = {};
           ACE_NEW (f,
                    TAO_EC_Default_Factory);
           this->factory (f, 1);

@@ -68,7 +68,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
   int bindresult =
     this->consumer_task_map_.bind (RtecEventComm::PushConsumer::_duplicate(pc.in()),
                                    dtask);
-  char const *explanation = nullptr;
+  char const *explanation = {};
   if (bindresult == -1)
     explanation = "general failure";
   else if (bindresult == 1)
@@ -94,7 +94,7 @@ TAO_EC_TPC_Dispatching::remove_consumer (RtecEventComm::PushConsumer_ptr consume
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-  TAO_EC_Dispatching_Task* dtask = nullptr;
+  TAO_EC_Dispatching_Task* dtask = {};
 
   if (this->consumer_task_map_.find (consumer, dtask) == -1)
     {
@@ -133,7 +133,7 @@ TAO_EC_TPC_Dispatching::shutdown ()
   MAPTYPE::ITERATOR iter = this->consumer_task_map_.begin ();
   while (! iter.done())
     {
-      MAPTYPE::ENTRY* entry = nullptr;
+      MAPTYPE::ENTRY* entry = {};
       if (! iter.next(entry))
         continue;
 
@@ -148,7 +148,7 @@ TAO_EC_TPC_Dispatching::shutdown ()
   iter = this->consumer_task_map_.begin ();
   while (! iter.done())
     {
-      MAPTYPE::ENTRY* entry = nullptr;
+      MAPTYPE::ENTRY* entry = {};
       if (! iter.next(entry))
         continue;
 
@@ -179,7 +179,7 @@ TAO_EC_TPC_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::push_nocopy(supplier=%@,consumer=%@)\n", proxy, consumer));
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  TAO_EC_Dispatching_Task* dtask = nullptr;
+  TAO_EC_Dispatching_Task* dtask = {};
 
   if (this->consumer_task_map_.find (consumer, dtask) == -1)
     {

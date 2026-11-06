@@ -282,7 +282,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration ()
 TAO_ECG_Refcounted_Endpoint
 TAO_ECG_Mcast_Gateway::init_endpoint ()
 {
-  TAO_ECG_UDP_Out_Endpoint* endpoint = nullptr;
+  TAO_ECG_UDP_Out_Endpoint* endpoint = {};
   TAO_ECG_Refcounted_Endpoint refendpoint;
 
   // Try to allocate a new endpoint from the heap
@@ -423,7 +423,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   if (this->handler_type_ == ECG_HANDLER_BASIC)
     {
-      TAO_ECG_Simple_Mcast_EH * h = nullptr;
+      TAO_ECG_Simple_Mcast_EH * h = {};
       ACE_NEW_RETURN (h,
                       TAO_ECG_Simple_Mcast_EH (receiver),
                       handler);
@@ -436,7 +436,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   else if (this->handler_type_ == ECG_HANDLER_COMPLEX)
     {
-      TAO_ECG_Mcast_EH * h = nullptr;
+      TAO_ECG_Mcast_EH * h = {};
       ACE_NEW_RETURN (h,
                       TAO_ECG_Mcast_EH (receiver, nic),
                       handler);
@@ -449,7 +449,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   else if (this->handler_type_ == ECG_HANDLER_UDP)
     {
-      TAO_ECG_UDP_EH * h = nullptr;
+      TAO_ECG_UDP_EH * h = {};
       ACE_NEW_RETURN (h,
                       TAO_ECG_UDP_EH (receiver),
                       handler);

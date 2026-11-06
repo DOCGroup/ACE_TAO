@@ -30,7 +30,7 @@ TAO_ECG_Complex_Address_Server::init (char const *arg)
   while (*data != '\0')
     {
       // Extract lookup value (it is followed by '@').
-      char const *location = nullptr;
+      char const *location = {};
       location = std::strchr (data, '@');
       if (!location)
         {
@@ -88,7 +88,7 @@ TAO_ECG_Complex_Address_Server::add_entry (char const *key,
     }
 
   // Convert strings to values.
-  char * endptr = nullptr;
+  char * endptr = {};
   CORBA::Long header_value = ACE_OS::strtol (key, &endptr, 0);
   if (*endptr != '\0')
     {
@@ -129,7 +129,7 @@ TAO_ECG_Complex_Address_Server::get_addr (
   else
     key = header.type;
 
-  MAP::ENTRY * mapping_entry = nullptr;
+  MAP::ENTRY * mapping_entry = {};
   if (this->mcast_mapping_.find (key, mapping_entry) == -1)
     {
       // Key was not found in the mapping.  Use default.
@@ -162,7 +162,7 @@ TAO_ECG_Complex_Address_Server::get_address (
   else
     key = header.type;
 
-  MAP::ENTRY * mapping_entry = nullptr;
+  MAP::ENTRY * mapping_entry = {};
   ACE_INET_Addr &src_addr =
     (this->mcast_mapping_.find (key, mapping_entry) == -1) ?
     this->default_addr_ : mapping_entry->int_id_;
