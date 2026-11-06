@@ -21,6 +21,7 @@
 
 #include "ACEXML/common/Attributes.h"
 #include "ace/Containers_T.h"
+#include <memory>
 
 #if !defined ACEXML_AttributesImpl_Default_Size
 #define ACEXML_AttributesImpl_Default_Size 20
@@ -41,72 +42,75 @@ public:
   friend class ACEXML_AttributesImpl;
 
   /// Default constructor.
-  ACEXML_Attribute ();
+  ACEXML_Attribute () = default;
+
+  ACEXML_Attribute (ACEXML_Attribute&&) = delete;
+  ACEXML_Attribute& operator= (ACEXML_Attribute&&) = delete;
 
   /// Copy constructor.
-  ACEXML_Attribute (const ACEXML_Attribute &attr);
+  ACEXML_Attribute (ACEXML_Attribute const &attr);
 
   /// Initialize all constructor.
-  ACEXML_Attribute (const ACEXML_Char *uri,
-                    const ACEXML_Char *localName,
-                    const ACEXML_Char *qName,
-                    const ACEXML_Char *type,
-                    const ACEXML_Char *value);
+  ACEXML_Attribute (ACEXML_Char const *uri,
+                    ACEXML_Char const *localName,
+                    ACEXML_Char const *qName,
+                    ACEXML_Char const *type,
+                    ACEXML_Char const *value);
 
   /// Destructor.
-  ~ACEXML_Attribute ();
+  ~ACEXML_Attribute () = default;
 
   /// Set all members.
-  void setAttribute (const ACEXML_Char *uri,
-                     const ACEXML_Char *localName,
-                     const ACEXML_Char *qName,
-                     const ACEXML_Char *type,
-                     const ACEXML_Char *value);
+  void setAttribute (ACEXML_Char const *uri,
+                     ACEXML_Char const *localName,
+                     ACEXML_Char const *qName,
+                     ACEXML_Char const *type,
+                     ACEXML_Char const *value);
 
   /// Get \a uri_.
-  const ACEXML_Char *uri () const;
+  ACEXML_Char const *uri () const;
 
   /// Set \a uri_.
-  void uri (const ACEXML_Char *uri);
+  void uri (ACEXML_Char const *uri);
 
   /// Get \a localName_.
-  const ACEXML_Char *localName () const;
+  ACEXML_Char const *localName () const;
 
   /// Set \a localName_.
-  void localName (const ACEXML_Char *localName);
+  void localName (ACEXML_Char const *localName);
 
   /// Get \a qName_.
-  const ACEXML_Char *qName () const;
+  ACEXML_Char const *qName () const;
 
   /// Set \a qName_.
-  void qName (const ACEXML_Char *qName);
+  void qName (ACEXML_Char const *qName);
 
   /// Get \a type_.
-  const ACEXML_Char *type () const;
+  ACEXML_Char const *type () const;
 
   /// Set \a type_.
-  void type (const ACEXML_Char *type);
+  void type (ACEXML_Char const *type);
 
   /// Get \a value_.
-  const ACEXML_Char *value () const;
+  ACEXML_Char const *value () const;
 
   /// Set \a value_.
-  void value (const ACEXML_Char *value);
+  void value (ACEXML_Char const *value);
 
   /// Assignment operator.
-  ACEXML_Attribute &operator= (const ACEXML_Attribute &rhs);
+  ACEXML_Attribute &operator= (ACEXML_Attribute const &rhs);
 
   /// Comparison operator.
-  bool operator!= (const ACEXML_Attribute&rhs) const;
+  bool operator!= (ACEXML_Attribute const&rhs) const;
 
 private:
   /// Namespace URI of an attribute
-  ACEXML_Char *uri_;
+  std::unique_ptr<ACEXML_Char[]> uri_ {};
 
-  ACEXML_Char *localName_;
-  ACEXML_Char *qName_;
-  ACEXML_Char *type_;
-  ACEXML_Char *value_;
+  std::unique_ptr<ACEXML_Char[]> localName_ {};
+  std::unique_ptr<ACEXML_Char[]> qName_ {};
+  std::unique_ptr<ACEXML_Char[]> type_ {};
+  std::unique_ptr<ACEXML_Char[]> value_ {};
 };
 
 /**

@@ -9,6 +9,7 @@
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/common/InputSource.h"
 #include "ACEXML/common/LocatorImpl.h"
+#include "ACEXML/common/AttributesImpl.h"
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "ace/OS_main.h"
@@ -107,6 +108,37 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                                  9) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("LocatorImpl self-copy failed\n")));
+      return -1;
+    }
+
+  ACEXML_Attribute attribute (ACE_TEXT ("urn:"), ACE_TEXT ("local"),
+                              ACE_TEXT ("p:local"), ACE_TEXT ("CDATA"),
+                              ACE_TEXT ("value"));
+  attribute.uri (attribute.uri ());
+  attribute.localName (attribute.localName ());
+  attribute.qName (attribute.qName ());
+  attribute.type (attribute.type ());
+  attribute.value (attribute.value ());
+  ACEXML_Attribute attribute_copy (attribute);
+  ACEXML_Attribute assigned_attribute;
+  assigned_attribute = attribute_copy;
+  if (assigned_attribute.uri () == nullptr
+      || assigned_attribute.localName () == nullptr
+      || assigned_attribute.qName () == nullptr
+      || assigned_attribute.type () == nullptr
+      || assigned_attribute.value () == nullptr
+      || std::char_traits<ACEXML_Char>::compare (assigned_attribute.uri (),
+                                              ACE_TEXT ("urn:"), 4) != 0
+      || std::char_traits<ACEXML_Char>::compare (assigned_attribute.localName (),
+                                                 ACE_TEXT ("local"), 5) != 0
+      || std::char_traits<ACEXML_Char>::compare (assigned_attribute.qName (),
+                                                 ACE_TEXT ("p:local"), 7) != 0
+      || std::char_traits<ACEXML_Char>::compare (assigned_attribute.type (),
+                                                 ACE_TEXT ("CDATA"), 5) != 0
+      || std::char_traits<ACEXML_Char>::compare (assigned_attribute.value (),
+                                                 ACE_TEXT ("value"), 5) != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Attribute self-copy failed\n")));
       return -1;
     }
 
