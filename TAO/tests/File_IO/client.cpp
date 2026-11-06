@@ -110,7 +110,7 @@ validate_connection (CORBA::Object_ptr object)
     }
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 MTTEST (void *args)
 {
   Client_Context const &context = *static_cast<Client_Context *> (args);
@@ -147,10 +147,10 @@ MTTEST (void *args)
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in main");
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int

@@ -94,7 +94,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
     }
 
-    ACE_Time_Value const timeout (15);
+    ACE_Time_Value timeout (15);
     orb->run (timeout);
 
     // Destroy the POA, waiting until the destruction terminates

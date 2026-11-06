@@ -48,7 +48,7 @@ public:
 
   explicit ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, bool end = false);
 
-  explicit ACE_Unbounded_Set_Iterator (base_type const &s);
+  ACE_Unbounded_Set_Iterator (base_type const &s);
 };
 
 /**
@@ -65,7 +65,7 @@ public:
   explicit ACE_Unbounded_Set_Const_Iterator (ACE_Unbounded_Set<T> const &s,
                                              bool end = false);
 
-  explicit ACE_Unbounded_Set_Const_Iterator (base_type const &s);
+  ACE_Unbounded_Set_Const_Iterator (base_type const &s);
 };
 
 /**

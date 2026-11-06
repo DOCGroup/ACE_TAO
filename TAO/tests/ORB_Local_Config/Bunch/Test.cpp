@@ -116,7 +116,7 @@ testTSSGestalt (int , ACE_TCHAR *[])
 
   ACE_Service_Gestalt_Test one (10);  // Localized ones go here
 
-  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> global_instance = ACE_Service_Config::instance ();
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> global_instance {ACE_Service_Config::instance ()};
 
   // Sanity check
   if (global_instance == &one)
@@ -126,7 +126,7 @@ testTSSGestalt (int , ACE_TCHAR *[])
     // Make one be the ACE_Service_Config::instance () ...
     ACE_Service_Config_Guard temporary (&one);
 
-    ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> global_instance2 = ACE_Service_Config::instance ();
+    ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> global_instance2 {ACE_Service_Config::instance ()};
 
     if (global_instance == global_instance2)
       ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT("Expected to see a different global from before\n")), -1);

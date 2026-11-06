@@ -133,7 +133,12 @@ FileImpl::Descriptor::fd ()
     PortableServer::ObjectId_to_string (oid1.in ());
 
   // Get the ACE_HANDLE from the string
-  return static_cast<ACE_HANDLE> (static_cast<intptr_t> (ACE_OS::atol (s.in ())));
+  intptr_t const handle_value = ACE_OS::atol (s.in ());
+#if defined (ACE_WIN32)
+  return reinterpret_cast<ACE_HANDLE> (handle_value);
+#else
+  return static_cast<ACE_HANDLE> (handle_value);
+#endif
 }
 
 CORBA::Long
