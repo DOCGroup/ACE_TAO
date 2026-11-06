@@ -38,6 +38,15 @@ ECM_Driver::ECM_Driver ()
 {
 }
 
+ECM_Driver::~ECM_Driver ()
+{
+  // Local federations borrow the all-federation objects and release ORB servants.
+  for (std::unique_ptr<ECM_Local_Federation>& federation : this->local_federations_)
+    federation.reset ();
+  for (std::unique_ptr<ECM_Federation>& federation : this->all_federations_)
+    federation.reset ();
+}
+
 int
 ECM_Driver::run (int argc, ACE_TCHAR* argv[])
 {

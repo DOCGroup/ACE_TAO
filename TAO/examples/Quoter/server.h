@@ -85,7 +85,7 @@ private:
   /// Number of commandline arguments.
   int argc_ {};
 
-  /// Pointer-array copy made before ORB_init modifies argv.
+  /// Pointer-array copy made after ORB_init removes its own options.
   std::unique_ptr<ACE_TCHAR *[]> argv_;
 
   Options options_ {};

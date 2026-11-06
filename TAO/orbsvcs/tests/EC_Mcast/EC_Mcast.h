@@ -399,6 +399,7 @@ class ECM_Driver
   //
 public:
   ECM_Driver ();
+  ~ECM_Driver ();
   ECM_Driver (ECM_Driver const&) = delete;
   ECM_Driver (ECM_Driver&&) = delete;
   ECM_Driver& operator= (ECM_Driver const&) = delete;

@@ -67,10 +67,10 @@ private:
   /// Reference to the Quoter naming context.
   CosNaming::NamingContext_var quoterNamingContext_var_ {};
 
-  /// Number of commandline arguments preserved before ORB_init.
+  /// Number of application arguments remaining after ORB_init.
   int argc_ {};
 
-  /// Pointer-array copy made before ORB_init modifies argv.
+  /// Pointer-array copy made after ORB_init removes its own options.
   std::unique_ptr<ACE_TCHAR *[]> argv_;
 
   Options options_ {};

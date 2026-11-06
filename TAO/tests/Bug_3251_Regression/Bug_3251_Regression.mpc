@@ -6,6 +6,7 @@ project(*server) : taoserver, threads {
 }
 
 project(*lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
+  after += TAO_Utils
   libs += TAO_Utils
   libout = .
   sharedname = Bug_3251
