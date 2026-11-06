@@ -77,7 +77,7 @@ TAO_Root_POA::objectkey_prefix [TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
 PortableServer::ThreadPolicy_ptr
 TAO_Root_POA::create_thread_policy (PortableServer::ThreadPolicyValue value)
 {
-  TAO::Portable_Server::ThreadPolicy *policy = nullptr;
+  TAO::Portable_Server::ThreadPolicy *policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Portable_Server::ThreadPolicy (value),
                     CORBA::NO_MEMORY ());
@@ -92,7 +92,7 @@ TAO_Root_POA::create_thread_policy (PortableServer::ThreadPolicyValue value)
 PortableServer::LifespanPolicy_ptr
 TAO_Root_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value)
 {
-  TAO::Portable_Server::LifespanPolicy *policy = nullptr;
+  TAO::Portable_Server::LifespanPolicy *policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Portable_Server::LifespanPolicy (value),
                     CORBA::NO_MEMORY ());
@@ -106,7 +106,7 @@ TAO_Root_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value)
 PortableServer::IdUniquenessPolicy_ptr
 TAO_Root_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value)
 {
-  TAO::Portable_Server::IdUniquenessPolicy *policy = nullptr;
+  TAO::Portable_Server::IdUniquenessPolicy *policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Portable_Server::IdUniquenessPolicy (value),
                     CORBA::NO_MEMORY ());
@@ -119,7 +119,7 @@ TAO_Root_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyVal
 PortableServer::IdAssignmentPolicy_ptr
 TAO_Root_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value)
 {
-  TAO::Portable_Server::IdAssignmentPolicy *policy = nullptr;
+  TAO::Portable_Server::IdAssignmentPolicy *policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Portable_Server::IdAssignmentPolicy (value),
                     CORBA::NO_MEMORY ());
@@ -133,7 +133,7 @@ TAO_Root_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyVal
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_Root_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value)
 {
-  TAO::Portable_Server::ImplicitActivationPolicy *policy = nullptr;
+  TAO::Portable_Server::ImplicitActivationPolicy *policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Portable_Server::ImplicitActivationPolicy (value),
                     CORBA::NO_MEMORY ());
@@ -144,7 +144,7 @@ TAO_Root_POA::create_implicit_activation_policy (PortableServer::ImplicitActivat
 PortableServer::ServantRetentionPolicy_ptr
 TAO_Root_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value)
 {
-  TAO::Portable_Server::ServantRetentionPolicy *policy = nullptr;
+  TAO::Portable_Server::ServantRetentionPolicy *policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Portable_Server::ServantRetentionPolicy (value),
                     CORBA::NO_MEMORY ());
@@ -155,7 +155,7 @@ TAO_Root_POA::create_servant_retention_policy (PortableServer::ServantRetentionP
 PortableServer::RequestProcessingPolicy_ptr
 TAO_Root_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value)
 {
-  TAO::Portable_Server::RequestProcessingPolicy *policy = nullptr;
+  TAO::Portable_Server::RequestProcessingPolicy *policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Portable_Server::RequestProcessingPolicy (value),
                     CORBA::NO_MEMORY ());
@@ -321,7 +321,7 @@ TAO_Root_POA::complete_destruction_i ()
 
   PortableServer::POA_var poa;
   TAO::ORT_Array my_array_obj_ref_template;
-  TAO::ORT_Adapter *ort_adapter = nullptr;
+  TAO::ORT_Adapter *ort_adapter {};
   if (doing_complete_destruction)
     {
       ort_adapter = this->ORT_adapter_i ();
@@ -493,7 +493,7 @@ TAO_Root_POA::new_POA (const String &name,
                        TAO_ORB_Core &orb_core,
                        TAO_Object_Adapter *object_adapter)
 {
-  TAO_Regular_POA *poa = nullptr;
+  TAO_Regular_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_Regular_POA (name,
@@ -603,7 +603,7 @@ TAO_Root_POA *
 TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
                           CORBA::Boolean activate_it)
 {
-  TAO_Root_POA *child = nullptr;
+  TAO_Root_POA *child {};
   int result = this->children_.find (child_name, child);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
@@ -998,7 +998,7 @@ TAO_Root_POA::adapter_name_i ()
     }
 
   // Empty adapter name sequence.
-  PortableInterceptor::AdapterName *names = nullptr;
+  PortableInterceptor::AdapterName *names {};
   ACE_NEW_THROW_EX (names,
                     PortableInterceptor::AdapterName (len),
                     CORBA::NO_MEMORY (
@@ -1518,7 +1518,7 @@ TAO_Root_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 CORBA::OctetSeq *
 TAO_Root_POA::id ()
 {
-  CORBA::OctetSeq *id = nullptr;
+  CORBA::OctetSeq *id {};
   ACE_NEW_THROW_EX (id,
                     CORBA::OctetSeq (this->id_),
                     CORBA::NO_MEMORY ());
@@ -1699,7 +1699,7 @@ TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
 
   // Create the key, giving the ownership of the buffer to the
   // sequence.
-  TAO::ObjectKey *key = nullptr;
+  TAO::ObjectKey *key {};
   ACE_NEW_RETURN (key,
                   TAO::ObjectKey (buffer_size,
                                   buffer_size,
@@ -1987,7 +1987,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
   CORBA::PolicyList_var client_exposed_policies =
     this->client_exposed_policies (priority);
 
-  TAO_Acceptor_Filter *filter = nullptr;
+  TAO_Acceptor_Filter *filter {};
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   if (this->filter_factory_)
@@ -2153,7 +2153,7 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
 CORBA::PolicyList *
 TAO_Root_POA::client_exposed_policies (CORBA::Short /* object_priority */)
 {
-  CORBA::PolicyList *client_exposed_policies = nullptr;
+  CORBA::PolicyList *client_exposed_policies {};
   ACE_NEW_THROW_EX (client_exposed_policies,
                     CORBA::PolicyList (),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -2567,7 +2567,7 @@ TAO_Root_POA::_get_orb ()
 // Initialize instance_ to null, since this is what we test for in the call
 // to instance ().  Note that this does not require a constructor call, so
 // it is always initialized by the time that instance () can be called.
-TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ = nullptr;
+TAO_POA_Static_Resources* TAO_POA_Static_Resources::instance_ {};
 
 // Force an instance to be created at module initialization time,
 // since we do not want to worry about double checked locking and

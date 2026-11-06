@@ -524,7 +524,7 @@ TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
                                     PortableServer::Servant &servant)
 {
   PortableServer::ObjectId id;
-  TAO_Root_POA *poa = nullptr;
+  TAO_Root_POA *poa {};
 
   this->locate_poa (key, id, poa);
 

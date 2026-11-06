@@ -60,7 +60,7 @@ TAO_POAManager_Factory::create_POAManager (
   // this indirection brought to you by borland's compiler and its refusal
   // to directly assign the newly created TAO_POA_Manager to a POAManager_var.
   {
-    PortableServer::POAManager_ptr pm = nullptr;
+    PortableServer::POAManager_ptr pm {};
     ACE_NEW_THROW_EX (pm,
                       TAO_POA_Manager (object_adapter_, id, policies, this),
                       CORBA::NO_MEMORY

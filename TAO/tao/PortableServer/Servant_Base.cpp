@@ -435,13 +435,13 @@ TAO_ServantBase::_find (const char *opname,
 TAO_Stub *
 TAO_ServantBase::_create_stub ()
 {
-  TAO_Stub *stub = nullptr;
+  TAO_Stub *stub {};
 
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast<TAO::Portable_Server::POA_Current_Impl *>
                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-  CORBA::ORB_ptr servant_orb = nullptr;
+  CORBA::ORB_ptr servant_orb {};
 
   if (poa_current_impl != nullptr && this == poa_current_impl->servant ())
     {
