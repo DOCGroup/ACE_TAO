@@ -136,7 +136,7 @@ TAO::ORBInitializer_Registry::pre_init (
 
   if (initializer_count > 0)
     {
-      TAO_ORBInitInfo * orb_init_info_temp = nullptr;
+      TAO_ORBInitInfo * orb_init_info_temp {};
 
       ACE_NEW_THROW_EX (orb_init_info_temp,
                         TAO_ORBInitInfo (orb_core,
@@ -181,7 +181,7 @@ TAO::ORBInitializer_Registry::post_init (
                  guard,
                  this->lock_);
 
-      TAO_ORBInitInfo * orb_init_info_temp = nullptr;
+      TAO_ORBInitInfo * orb_init_info_temp {};
 
       ACE_NEW_THROW_EX (orb_init_info_temp,
                         TAO_ORBInitInfo (orb_core,

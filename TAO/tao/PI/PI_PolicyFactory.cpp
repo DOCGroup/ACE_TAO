@@ -16,7 +16,7 @@ TAO_PI_PolicyFactory::create_policy (
 {
   if (type == PortableInterceptor::PROCESSING_MODE_POLICY_TYPE)
     {
-      TAO_ProcessingModePolicy *processing_mode_policy = nullptr;
+      TAO_ProcessingModePolicy *processing_mode_policy {};
       PortableInterceptor::ProcessingMode policy_value;
 
       if ((value >>= policy_value) == 0)
