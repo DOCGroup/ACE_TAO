@@ -74,7 +74,7 @@ add_ft_prop (CORBA::ORB_ptr o,
   CORBA::Boolean retval = iorm->set_property (&iogr_prop,
                                               obj1);
 
-  if (!retval)
+  if (retval)
     {
       retval = iorm->set_primary (&iogr_prop,
                                   obj1,
@@ -89,7 +89,7 @@ add_ft_prop (CORBA::ORB_ptr o,
   retval = iorm->set_property (&iogr_prop,
                                obj2);
 
-  if (!retval)
+  if (retval)
     {
       retval = iorm->set_primary (&iogr_prop,
                                   obj2,
