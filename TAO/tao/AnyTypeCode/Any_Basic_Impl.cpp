@@ -73,7 +73,7 @@ namespace TAO
                           CORBA::TypeCode_ptr tc,
                           void const *value)
   {
-    Any_Basic_Impl *new_impl = nullptr;
+    Any_Basic_Impl *new_impl {};
     ACE_NEW (new_impl,
              Any_Basic_Impl (tc,
                              const_cast<void *> (value)));
@@ -253,7 +253,7 @@ namespace TAO
   {
     CORBA::TCKind const kind = tc->kind ();
 
-    TAO::Any_Basic_Impl *retval = nullptr;
+    TAO::Any_Basic_Impl *retval {};
 
     switch (kind)
     {

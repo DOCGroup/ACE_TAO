@@ -299,7 +299,7 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
 
       // @@ This can be optimized! Pre-allocating on the destination
       //    and then copying directly into that.
-      CORBA::Octet *body = nullptr;
+      CORBA::Octet *body {};
       ACE_NEW_RETURN (body,
                       CORBA::Octet[length],
                       TAO::TRAVERSE_STOP);

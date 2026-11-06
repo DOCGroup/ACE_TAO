@@ -375,7 +375,7 @@ TAO::TypeCode::Union<StringType,
   if (this->default_index_ > -1
       && static_cast<CORBA::ULong> (this->default_index_) == index)
     {
-      CORBA::Any *any = nullptr;
+      CORBA::Any *any {};
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY ());

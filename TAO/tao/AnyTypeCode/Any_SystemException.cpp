@@ -45,7 +45,7 @@ TAO::Any_SystemException::insert (CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
                                   CORBA::SystemException * const value)
 {
-  Any_SystemException *new_impl = nullptr;
+  Any_SystemException *new_impl {};
   ACE_NEW (new_impl,
            Any_SystemException (destructor,
                                 tc,
@@ -59,7 +59,7 @@ TAO::Any_SystemException::insert_copy (CORBA::Any & any,
                                        CORBA::TypeCode_ptr tc,
                                        CORBA::SystemException const & value)
 {
-  Any_SystemException *new_impl = nullptr;
+  Any_SystemException *new_impl {};
   ACE_NEW (new_impl,
            Any_SystemException (destructor,
                                 tc,
@@ -104,7 +104,7 @@ TAO::Any_SystemException::extract (CORBA::Any const & any,
 
       CORBA::SystemException *empty_value =  (*f) ();
 
-      TAO::Any_SystemException *replacement = nullptr;
+      TAO::Any_SystemException *replacement {};
       ACE_NEW_RETURN (replacement,
                       TAO::Any_SystemException (destructor,
                                                 any_tc,

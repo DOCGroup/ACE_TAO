@@ -28,7 +28,7 @@ TAO_NVList_Adapter_Impl::create_list (
 
       for (CORBA::Long i = 0; i < count; ++i)
         {
-          CORBA::NamedValue_ptr nv = nullptr;
+          CORBA::NamedValue_ptr nv {};
           ACE_NEW_THROW_EX (nv,
                             CORBA::NamedValue,
                             CORBA::NO_MEMORY (

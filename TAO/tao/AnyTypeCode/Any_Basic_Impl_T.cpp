@@ -32,7 +32,7 @@ TAO::Any_Basic_Impl_T<T>::insert (CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
                                   T const & value)
 {
-  Any_Basic_Impl_T<T> *new_impl = nullptr;
+  Any_Basic_Impl_T<T> *new_impl {};
   ACE_NEW (new_impl,
            Any_Basic_Impl_T (tc,
                              value));
@@ -125,7 +125,7 @@ template<typename T>
 TAO::Any_Basic_Impl_T<T> *
 TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
 {
-  TAO::Any_Basic_Impl_T<T> * retval = nullptr;
+  TAO::Any_Basic_Impl_T<T> * retval {};
   ACE_NEW_RETURN (retval,
                   TAO::Any_Basic_Impl_T<T> (tc,
                                             T{}),

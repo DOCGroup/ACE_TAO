@@ -60,7 +60,7 @@ TAO::Any_Dual_Impl_T<T>::insert (CORBA::Any & any,
                                  CORBA::TypeCode_ptr tc,
                                  T * const value)
 {
-  Any_Dual_Impl_T<T> *new_impl = nullptr;
+  Any_Dual_Impl_T<T> *new_impl {};
   ACE_NEW (new_impl,
            Any_Dual_Impl_T (destructor,
                             tc,
@@ -75,7 +75,7 @@ TAO::Any_Dual_Impl_T<T>::insert_copy (CORBA::Any & any,
                                       CORBA::TypeCode_ptr tc,
                                       T const & value)
 {
-  Any_Dual_Impl_T<T> *new_impl = nullptr;
+  Any_Dual_Impl_T<T> *new_impl {};
   ACE_NEW (new_impl,
            Any_Dual_Impl_T (destructor,
                             tc,
@@ -149,12 +149,12 @@ TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
                                   CORBA::TypeCode_ptr any_tc,
                                   T const *&_tao_elem)
 {
-  T *empty_value = nullptr;
+  T *empty_value {};
   ACE_NEW_RETURN (empty_value,
                   T,
                   false);
   std::unique_ptr<T> empty_value_safety (empty_value);
-  TAO::Any_Dual_Impl_T<T> *replacement = nullptr;
+  TAO::Any_Dual_Impl_T<T> *replacement {};
   ACE_NEW_RETURN (replacement,
                   TAO::Any_Dual_Impl_T<T> (destructor,
                                            any_tc,

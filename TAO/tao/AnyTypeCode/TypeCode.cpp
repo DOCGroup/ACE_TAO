@@ -218,7 +218,7 @@ CORBA::TypeCode::Bounds::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::Bounds::_alloc ()
 {
-  CORBA::Exception *retval = nullptr;
+  CORBA::Exception *retval {};
   ACE_NEW_RETURN (retval, ::CORBA::TypeCode::Bounds, nullptr);
   return retval;
 }
@@ -272,7 +272,7 @@ CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::BadKind::_tao_duplicate () const
 {
-  CORBA::Exception *result = nullptr;
+  CORBA::Exception *result {};
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::BadKind (*this),
                   nullptr);

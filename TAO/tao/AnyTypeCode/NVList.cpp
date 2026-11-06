@@ -74,7 +74,7 @@ CORBA::NVList::~NVList ()
 
   for (iter.first (); !iter.done (); iter.advance ())
     {
-      CORBA::NamedValue_ptr *nv = nullptr;
+      CORBA::NamedValue_ptr *nv {};
       (void) iter.next (nv);
       delete *nv;
     }
@@ -209,7 +209,7 @@ CORBA::NVList::add_element (CORBA::Flags flags)
     }
 
   // allocate a new NamedValue
-  CORBA::NamedValue_ptr nv = nullptr;
+  CORBA::NamedValue_ptr nv {};
   ACE_NEW_THROW_EX (nv, CORBA::NamedValue, CORBA::NO_MEMORY ());
 
   // Set the flags and add it to the list.
@@ -236,7 +236,7 @@ CORBA::NVList::item (CORBA::ULong n)
       throw ::CORBA::Bounds ();
     }
 
-  CORBA::NamedValue_ptr *nv = nullptr;
+  CORBA::NamedValue_ptr *nv {};
   this->values_.get (nv, n);
   return *nv;
 }
@@ -299,7 +299,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 
       for (i.first (); !i.done (); i.advance ())
         {
-          CORBA::NamedValue_ptr *item = nullptr;
+          CORBA::NamedValue_ptr *item {};
           (void) i.next (item);
           CORBA::NamedValue_ptr nv = *item;
           if (ACE_BIT_DISABLED (nv->flags (), flag))
@@ -339,7 +339,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item = nullptr;
+      CORBA::NamedValue_ptr *item {};
       (void) i.next (item);
       CORBA::NamedValue_ptr nv = *item;
       if (ACE_BIT_DISABLED (nv->flags (), flag))
@@ -365,7 +365,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
 
   for (i.first (); !i.done (); i.advance ())
     {
-      CORBA::NamedValue_ptr *item = nullptr;
+      CORBA::NamedValue_ptr *item {};
       (void) i.next (item);
       CORBA::NamedValue_ptr nv = *item;
       // check if it is an in or inout parameter
