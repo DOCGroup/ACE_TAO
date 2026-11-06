@@ -24,8 +24,8 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
                 "Client_Interceptor::send_request\n"));
 
   // Temporary current.
-  TAO_RTScheduler_Current_i *new_current = nullptr;
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *new_current {};
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -118,7 +118,7 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
                   "Client_Interceptor::send_poll\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -139,7 +139,7 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                   "Client_Interceptor::receive_reply\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -218,7 +218,7 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
                   "Client_Interceptor::receive_other\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -289,11 +289,11 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                 "Request from Distributable Thread\n"));
 
   RTScheduling::Current::IdType_var guid_var;
-  char *name = nullptr;
+  char *name {};
   CORBA::Policy_var sched_param = nullptr;
   CORBA::Policy_var implicit_sched_param = nullptr;
 
-  TAO_RTScheduler_Current_i *new_current = nullptr;
+  TAO_RTScheduler_Current_i *new_current {};
   ACE_NEW_THROW_EX (new_current,
                     TAO_RTScheduler_Current_i (this->current_->orb (),
                                                this->current_->dt_hash ()),
@@ -372,8 +372,8 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "Server_Interceptor::send_reply\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
-  TAO_RTScheduler_Current_i *prev_current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
+  TAO_RTScheduler_Current_i *prev_current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -420,7 +420,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
                   "Server_Interceptor::send_exception\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -445,7 +445,7 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "Server_Interceptor::send_other\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 

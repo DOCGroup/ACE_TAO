@@ -355,7 +355,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
 
-      TAO_RTScheduler_Current_i *new_current = nullptr;
+      TAO_RTScheduler_Current_i *new_current {};
         ACE_NEW_THROW_EX (new_current,
                           TAO_RTScheduler_Current_i (this->orb_,
                                                      this->dt_hash_,
@@ -451,7 +451,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
     }
 
   // Create new task for new DT.
-  DTTask *dttask = nullptr;
+  DTTask *dttask {};
 
   // If no scheduling parameter is specified then use the current
   // implicit scheduling parameter as the scheduling parameter
@@ -459,7 +459,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
     sched_param = this->implicit_sched_param_.in ();
 
   RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
-  TAO_RTScheduler_Current_i *new_current = nullptr;
+  TAO_RTScheduler_Current_i *new_current {};
 
   ACE_NEW_RETURN (new_current,
                   TAO_RTScheduler_Current_i (this->orb_,
