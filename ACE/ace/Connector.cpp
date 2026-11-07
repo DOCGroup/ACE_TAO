@@ -136,7 +136,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
   // This method is called if a connection times out before completing.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout");
 
-  SVC_HANDLER *svc_handler = nullptr;
+  SVC_HANDLER *svc_handler {};
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   // Forward to the SVC_HANDLER the <arg> that was passed in as a
@@ -158,7 +158,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
   // establishment.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input");
 
-  SVC_HANDLER *svc_handler = nullptr;
+  SVC_HANDLER *svc_handler {};
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   // Close Svc_Handler.
@@ -192,7 +192,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
 
   // Grab the connector ref before smashing ourselves in close().
   ACE_Connector_Base<SVC_HANDLER> &connector = this->connector_;
-  SVC_HANDLER *svc_handler = nullptr;
+  SVC_HANDLER *svc_handler {};
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   if (svc_handler != nullptr)
@@ -406,7 +406,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
   if (this->make_svc_handler (sh) == -1)
     return -1;
 
-  ACE_Time_Value *timeout = nullptr;
+  ACE_Time_Value *timeout {};
   bool const use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR] != 0;
 
   if (use_reactor)
@@ -525,7 +525,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::cancel (SVC_HANDLER *sh)
   if (nbch == nullptr)
     return -1;
 
-  SVC_HANDLER *tmp_sh = nullptr;
+  SVC_HANDLER *tmp_sh {};
 
   if (nbch->close (tmp_sh) == false)
     return -1;
@@ -549,8 +549,8 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
 
   ACE_HANDLE handle = sh->get_handle ();
   long timer_id = -1;
-  ACE_Time_Value *tv = nullptr;
-  NBCH *nbch = nullptr;
+  ACE_Time_Value *tv {};
+  NBCH *nbch {};
 
   ACE_NEW_RETURN (nbch,
                   NBCH (*this,
@@ -687,7 +687,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
   // Go through all the non-blocking handles.  It is necessary to
   // create a new iterator each time because we remove from the handle
   // set when we cancel the Svc_Handler.
-  ACE_HANDLE *handle = nullptr;
+  ACE_HANDLE *handle {};
   while (1)
     {
       ACE_Unbounded_Set_Iterator<ACE_HANDLE>

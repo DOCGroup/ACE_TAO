@@ -401,7 +401,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_input (ACE_HANDLE listener)
       // Create a service handler, using the appropriate creation
       // strategy.
 
-      SVC_HANDLER *svc_handler = nullptr;
+      SVC_HANDLER *svc_handler {};
 
       if (this->make_svc_handler (svc_handler) == -1)
         {
