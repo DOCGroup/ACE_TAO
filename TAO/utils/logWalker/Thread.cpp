@@ -288,7 +288,7 @@ Thread::get_summary (long &sent_reqs,
        !i.done();
        i.advance())
     {
-      Invocation *inv = nullptr;
+      Invocation *inv {};
       i.next(inv);
       if (inv->sent_request())
         {
@@ -315,7 +315,7 @@ Thread::dump_invocations (ostream &strm)
        !i.done();
        i.advance())
     {
-      Invocation *inv = nullptr;
+      Invocation *inv {};
       i.next(inv);
       size_t level = 0;
 
@@ -351,7 +351,7 @@ Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
        !i.done();
        i.advance())
     {
-      Invocation *inv = nullptr;
+      Invocation *inv {};
       i.next(inv);
       size_t level = nested_queue.size();
 
@@ -392,7 +392,7 @@ Thread::count_nesting ()
        !i.done();
        i.advance())
     {
-      Invocation *inv = nullptr;
+      Invocation *inv {};
       i.next(inv);
       size_t level = 0;
       while (!nested.empty ())

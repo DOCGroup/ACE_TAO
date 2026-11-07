@@ -207,7 +207,7 @@ PeerProcess::last_transport ()
 Transport *
 PeerProcess::find_transport (long handle)
 {
-  Transport *t = nullptr;
+  Transport *t {};
   for (ACE_DLList_Reverse_Iterator<Transport> i(this->transports_);
        !i.done();
        i.advance())
@@ -232,7 +232,7 @@ PeerProcess::match_hosts (Session *session)
     this->remote_ = session->find_host(this->server_ep_, true);
   else
     {
-      Transport *t = nullptr;
+      Transport *t {};
       this->transports_.get(t,0);
       if (t != nullptr)
         this->remote_ = session->find_host(t->client_endpoint_, false);
@@ -261,7 +261,7 @@ PeerProcess::split_filename (char *buffer, size_t len) const
 PeerObject *
 PeerProcess::object_for (const char *oid, size_t len)
 {
-  PeerObject *po = nullptr;
+  PeerObject *po {};
   u_long key = ACE::hash_pjw (oid,len);
   int result = objects_.find(key, po);
   if (result == -1)
@@ -290,7 +290,7 @@ PeerProcess::new_invocation (size_t req_id, Thread *thr)
 Invocation *
 PeerProcess::find_invocation (size_t req_id, long handle)
 {
-  Invocation *inv = nullptr;
+  Invocation *inv {};
   for (ACE_DLList_Reverse_Iterator<Invocation> i(this->invocations_);
        !i.done();
        i.advance())
@@ -309,7 +309,7 @@ PeerProcess::find_invocation (size_t req_id, long handle)
 Invocation *
 PeerProcess::find_invocation_size (size_t len)
 {
-  Invocation *inv = nullptr;
+  Invocation *inv {};
   for (ACE_DLList_Reverse_Iterator<Invocation> i(this->invocations_);
        !i.done();
        i.advance())
@@ -364,7 +364,7 @@ PeerProcess::dump_summary (ostream &strm)
        !i.done();
        i.advance())
     {
-      Transport *tran = nullptr;
+      Transport *tran {};
       i.next(tran);
       strm << "    connection[" << tran->handle_ << "] ";
       strm << (tran->client_endpoint_.is_client() ? "to " : "from ");
@@ -396,7 +396,7 @@ PeerProcess::dump_object_detail (ostream &strm)
        !i.done();
        i.advance())
     {
-      ObjectByIndex::ENTRY *entry = nullptr;
+      ObjectByIndex::ENTRY *entry {};
       i.next (entry);
       PeerObject *obj = entry->item();
       obj->dump_detail (strm);
@@ -415,7 +415,7 @@ PeerProcess::dump_invocation_detail (ostream &strm)
   else
     strm << "peer process " << this->ident_;
   strm << ":" << endl;
-  Invocation *inv = nullptr;
+  Invocation *inv {};
   bool show_handle = this->transports_.size() > 1;
   for (ACE_DLList_Iterator<Invocation> i(this->invocations_);
        !i.done();

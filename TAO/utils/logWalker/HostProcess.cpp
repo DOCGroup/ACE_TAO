@@ -59,7 +59,7 @@ HostProcess::proc_name () const
 Thread *
 HostProcess::find_thread (long tid, size_t offset)
 {
-  Thread *thr = nullptr;
+  Thread *thr {};
   for (ACE_DLList_Iterator<Thread> i(threads_);
        !i.done();
        i.advance())
@@ -79,7 +79,7 @@ HostProcess::find_thread (long tid, size_t offset)
 Thread *
 HostProcess::find_thread_for_peer (const ACE_CString &addr)
 {
-  Thread *thr = nullptr;
+  Thread *thr {};
   Endpoint ep (addr.c_str());
   for (ACE_DLList_Iterator<Thread> i(threads_);
        !i.done();
@@ -99,7 +99,7 @@ HostProcess::find_thread_for_peer (const ACE_CString &addr)
 Thread *
 HostProcess::find_thread_for_handle (long h)
 {
-  Thread *thr = nullptr;
+  Thread *thr {};
   for (ACE_DLList_Iterator<Thread> i(threads_);
        !i.done();
        i.advance())
@@ -114,7 +114,7 @@ HostProcess::find_thread_for_handle (long h)
 PeerProcess *
 HostProcess::find_peer (const ACE_CString &addr)
 {
-  PeerProcess *pp = nullptr;
+  PeerProcess *pp {};
   Endpoint ep (addr.c_str());
   (void)this->by_addr_.find(ep,pp);
   return pp;
@@ -164,7 +164,7 @@ HostProcess::has_endpoint (const Endpoint& addr, bool listen)
        !i.done();
        ++i)
     {
-      Endpoint *elem = nullptr;
+      Endpoint *elem {};
       i.next (elem);
       if (*elem == addr)
         return true;
@@ -237,7 +237,7 @@ HostProcess::dump_summary (ostream &strm)
            !t_iter.done();
            t_iter.advance())
         {
-          Endpoint *ep = nullptr;
+          Endpoint *ep {};
           t_iter.next(ep);
           strm << ep->addr_.c_str();
           if (++count < num)
@@ -277,7 +277,7 @@ HostProcess::dump_thread_summary (ostream &strm)
        !t_iter.done();
        t_iter.advance())
     {
-      Thread *thr = nullptr;
+      Thread *thr {};
       t_iter.next(thr);
       thr->dump_summary (strm);
       thr->get_summary (total_recv, total_sent, total_bytes_recv, total_bytes_sent);
@@ -293,7 +293,7 @@ HostProcess::split_thread_invocations (Session *session, const ACE_Time_Value& s
        !t_iter.done();
        t_iter.advance())
     {
-      Thread *thr = nullptr;
+      Thread *thr {};
       t_iter.next(thr);
       char fname[100];
       thr->split_filename(fname,100);
@@ -313,7 +313,7 @@ HostProcess::dump_thread_invocations (ostream &strm, const ACE_Time_Value& start
        !t_iter.done();
        t_iter.advance())
     {
-      Thread *thr = nullptr;
+      Thread *thr {};
       t_iter.next(thr);
       thr->dump_invocations (strm);
       strm << endl;

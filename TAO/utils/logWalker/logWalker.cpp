@@ -22,7 +22,7 @@
 
 #include <cstring>
 
-ACE_TCHAR *outfile = nullptr;
+ACE_TCHAR *outfile {};
 
 void
 parse_filename (Session &session, char * buffer)

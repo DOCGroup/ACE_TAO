@@ -73,7 +73,7 @@ void
 Log::get_preamble ()
 {
   char * p = std::strstr (this->line_, "(");
-  char *t = nullptr;
+  char *t {};
 
   this->info_ = this->line_;
 
@@ -165,7 +165,7 @@ Log::handle_msg_octets ()
            !t_iter.done();
            t_iter.advance())
         {
-          Thread *th = nullptr;
+          Thread *th {};
           t_iter.next(th);
           GIOP_Buffer *waiter = th->giop_target();
           if (waiter == nullptr)
@@ -236,7 +236,7 @@ Log::parse_dump_giop_msg_i ()
       return;
     }
 
-  GIOP_Buffer *target = nullptr;
+  GIOP_Buffer *target {};
   switch (mode)
     {
     case 1: { // receiving request
@@ -306,7 +306,7 @@ Log::parse_dump_giop_msg_i ()
   this->thr_->set_giop_target (target);
   if (this->giop_waiters_.size() > 0)
     {
-      Thread *other_thr = nullptr;
+      Thread *other_thr {};
       for (ACE_DLList_Iterator<Thread> t_iter(this->giop_waiters_);
            !t_iter.done();
            t_iter.advance())
@@ -559,7 +559,7 @@ Log::parse_complete_connection_i ()
            !c_iter.done();
            c_iter.advance())
         {
-          PeerProcess *waiter = nullptr;
+          PeerProcess *waiter {};
           c_iter.next(waiter);
           if (waiter != nullptr && waiter->match_server_addr (addr))
             {
@@ -610,7 +610,7 @@ Log::parse_handler_open_i (bool is_ssl)
            !c_iter.done();
            c_iter.advance())
         {
-          PeerProcess *waiter = nullptr;
+          PeerProcess *waiter {};
           c_iter.next(waiter);
           if (waiter != nullptr && waiter->match_server_addr (addr))
             {
@@ -676,7 +676,7 @@ Log::parse_handler_open_i (bool is_ssl)
   //               this->offset_, this->thr_->id () ));
 
 
-  Transport *trans = nullptr;
+  Transport *trans {};
   if (pp->is_server())
     {
       trans = pp->last_transport();
@@ -810,7 +810,7 @@ Log::parse_wait_for_connection_i ()
         return;
       pos = std::strchr (this->info_, '[') + 1;
       long handle = std::strtol (pos, nullptr, 10);
-      PeerProcess *pp = nullptr;
+      PeerProcess *pp {};
 
       // ACE_DEBUG ((LM_DEBUG,
       //             "%d: wait_for_connection: wait done, result = %d, "
@@ -823,7 +823,7 @@ Log::parse_wait_for_connection_i ()
                !c_iter.done();
                c_iter.advance())
             {
-              PeerProcess *waiter = nullptr;
+              PeerProcess *waiter {};
               c_iter.next(waiter);
               if (waiter != nullptr)
                 {
