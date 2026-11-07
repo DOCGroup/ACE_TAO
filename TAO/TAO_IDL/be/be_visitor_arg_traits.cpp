@@ -139,7 +139,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
 
   TAO_INSERT_COMMENT (os);
 
-  std::string guard_suffix = this->S_ + "arg_traits";
+  std::string const guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a forward declaration may appear more than once.
@@ -294,7 +294,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
 
   TAO_INSERT_COMMENT (&os);
 
-  std::string guard_suffix = this->S_ + "arg_traits";
+  std::string const guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a forward declaration may appear more than once.
@@ -360,7 +360,7 @@ be_visitor_arg_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   // The logic in visit_valuetype() should handle what gets generated
   // and what doesn't.
-  int status = this->visit_valuetype (fd);
+  int const status = this->visit_valuetype (fd);
 
   if (status != 0)
     {
@@ -395,7 +395,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
     }
 
   AST_Type *rt = node->return_type ();
-  AST_Decl::NodeType nt = rt->node_type ();
+  AST_Decl::NodeType const nt = rt->node_type ();
 
   // If our return type is an unaliased bounded (w)string, we create
   // an empty struct using the operation's flat name for the type,
@@ -407,7 +407,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
       AST_String *str = dynamic_cast<AST_String*> (rt);
-      ACE_CDR::ULong bound = str->max_size ()->ev ()->u.ulval;
+      ACE_CDR::ULong const bound = str->max_size ()->ev ()->u.ulval;
 
       if (bound > 0)
         {
@@ -415,7 +415,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
 
           TAO_INSERT_COMMENT (os);
 
-          std::string guard_suffix = this->S_ + "arg_traits";
+          std::string const guard_suffix = this->S_ + "arg_traits";
 
           // The guard should be generated to prevent multiple declarations,
           // since a bounded (w)string of the same length may be used or typedef'd
@@ -423,7 +423,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
 
           os->gen_ifdef_macro (node->flat_name (), guard_suffix, false);
 
-          bool wide = (str->width () != 1);
+          bool const wide = (str->width () != 1);
 
           *os << be_nl_2;
 
@@ -482,7 +482,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       return 0;
     }
 
-  ACE_CDR::ULong bound = st->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong const bound = st->max_size ()->ev ()->u.ulval;
 
   if (bound == 0)
     {
@@ -493,7 +493,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 
   TAO_INSERT_COMMENT (os);
 
-  std::string guard_suffix = this->S_ + "arg_traits";
+  std::string const guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a bounded (w)string of the same length may be used or typedef'd
@@ -501,7 +501,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 
   os->gen_ifdef_macro (node->flat_name (), guard_suffix, false);
 
-  bool wide = (st->width () != 1);
+  bool const wide = (st->width () != 1);
 
   // It is legal IDL to declare a bounded (w)string as an operation
   // parameter type. There could be any number of identical
@@ -549,7 +549,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
     }
 
   AST_Type *bt = node->field_type ();
-  AST_Decl::NodeType nt = bt->node_type ();
+  AST_Decl::NodeType const nt = bt->node_type ();
 
   // We are interested here only in unaliased, bounded
   // (w)strings.
@@ -560,7 +560,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
     }
 
   be_string *st = dynamic_cast<be_string*> (bt);
-  ACE_CDR::ULong bound = st->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong const bound = st->max_size ()->ev ()->u.ulval;
 
   if (bound == 0)
     {
@@ -571,7 +571,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   TAO_INSERT_COMMENT (os);
 
-  std::string guard_suffix = this->S_ + "arg_traits";
+  std::string const guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a bounded (w)string of the same length may be used or typedef'd
@@ -579,7 +579,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   os->gen_ifdef_macro (node->flat_name (), guard_suffix, false);
 
-  bool wide = (st->width () != 1);
+  bool const wide = (st->width () != 1);
 
   // It is legal IDL to declare a bounded (w)string as an operation
   // parameter type. There could be any number of identical
@@ -663,7 +663,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
 
   TAO_INSERT_COMMENT (os);
 
-  bool use_vec = (node->unbounded () && be_global->alt_mapping ());
+  bool const use_vec = (node->unbounded () && be_global->alt_mapping ());
   UTL_ScopedName *sn = alias->name ();
 
   *os << be_nl_2
@@ -700,7 +700,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       return 0;
     }
 
-  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  ACE_CDR::ULong const bound = node->max_size ()->ev ()->u.ulval;
   be_type *alias = this->ctx_->alias ();
 
   // Unbounded (w)string args are handled as a predefined type.
@@ -711,11 +711,11 @@ be_visitor_arg_traits::visit_string (be_string *node)
       return 0;
     }
 
-  bool wide = (node->width () != 1);
+  bool const wide = (node->width () != 1);
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  std::string guard_suffix = this->S_ + "arg_traits";
+  std::string const guard_suffix = this->S_ + "arg_traits";
 
   // The guard should be generated to prevent multiple declarations,
   // since a bounded (w)string of the same length may be used or typedef'd
@@ -964,7 +964,7 @@ be_visitor_arg_traits::visit_field (be_field *node)
   // get handled elsewhere, and will also avoid nested valuetype
   // recursion. So we set the field node as processed (the
   // field *type* may not have been reached yet) and return.
-  AST_Decl::NodeType nt = bt->base_node_type ();
+  AST_Decl::NodeType const nt = bt->base_node_type ();
 
   if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
     {
@@ -1046,7 +1046,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
 
   this->generated (node, true);
 
-  int status = this->visit_scope (node);
+  int const status = this->visit_scope (node);
 
   if (status != 0)
     {

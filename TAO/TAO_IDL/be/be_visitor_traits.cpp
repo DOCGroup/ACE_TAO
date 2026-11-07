@@ -209,7 +209,7 @@ be_visitor_traits::visit_valuetype (be_valuetype *node)
       os->gen_endif ();
     }
 
-  int status = this->visit_scope (node);
+  int const status = this->visit_scope (node);
 
   if (status != 0)
     {
@@ -235,7 +235,7 @@ be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   // The logic in visit_valuetype() should handle what gets generated
   // and what doesn't.
-  int status = this->visit_valuetype (fd);
+  int const status = this->visit_valuetype (fd);
 
   if (status != 0)
     {
@@ -334,7 +334,7 @@ int
 be_visitor_traits::visit_union_branch (be_union_branch *node)
 {
   be_type *ft = dynamic_cast<be_type*> (node->field_type ());
-  AST_Decl::NodeType nt = ft->node_type ();
+  AST_Decl::NodeType const nt = ft->node_type ();
 
   // All we are trying to catch in here are anonymous array members.
   if (nt != AST_Decl::NT_array)

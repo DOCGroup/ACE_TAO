@@ -752,7 +752,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
   be_type *bt =
     dynamic_cast<be_type*> (node->base_type ());
 
-  bool tmp = this->ref_type_;
+  bool const tmp = this->ref_type_;
   this->ref_type_ = true;
 
   if (bt->accept (this) != 0)
@@ -826,7 +826,7 @@ be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *node)
   be_type *bt =
     dynamic_cast<be_type*> (node->base_type ());
 
-  bool tmp = this->ref_type_;
+  bool const tmp = this->ref_type_;
   this->ref_type_ = true;
 
   if (bt->accept (this) != 0)
@@ -985,7 +985,7 @@ be_visitor_xplicit_pre_proc::xplicit () const
 void
 be_visitor_xplicit_pre_proc::check_and_store (AST_Decl *node)
 {
-  FE_Utils::Scoped_Name_Owner tmpl_tail (
+  FE_Utils::Scoped_Name_Owner const tmpl_tail (
     this->xplicit_iface_rel_name (node));
 
   if (tmpl_tail != nullptr)

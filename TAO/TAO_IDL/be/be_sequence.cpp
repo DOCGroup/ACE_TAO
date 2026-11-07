@@ -319,7 +319,7 @@ be_sequence::managed_type () const
               be_predefined_type * const bpd =
                 dynamic_cast<be_predefined_type*> (base_type);
 
-              AST_PredefinedType::PredefinedType pt = bpd->pt ();
+              AST_PredefinedType::PredefinedType const pt = bpd->pt ();
 
               switch (pt)
                 {
