@@ -26,7 +26,7 @@ private:
   CORBA::ORB_var const orb_;
 };
 
-Test_i::Test_i (CORBA::ORB_ptr orb)
+Test_i::Test_i (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -44,14 +44,16 @@ Test_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &simple_servant_ior_file)
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            ACE_TString &simple_servant_ior_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         simple_servant_ior_file = get_opts.opt_arg ();
@@ -62,8 +64,8 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &simple_servant_ior_file)
 }
 
 int
-create_object (PortableServer::POA_ptr poa,
-               CORBA::ORB_ptr orb,
+create_object (PortableServer::POA_ptr const poa,
+               CORBA::ORB_ptr const orb,
                Test_i &servant,
                ACE_TCHAR const *filename)
 {
@@ -79,11 +81,11 @@ create_object (PortableServer::POA_ptr poa,
 
   ACE_DEBUG ((LM_DEBUG, "<%C>\n\n", ior.in ()));
 
-  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-    ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
+  std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
   if (!output_file)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file for writing IOR: %s",
+                       ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
                        filename),
                       -1);
   ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
@@ -95,7 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       ACE_TString simple_servant_ior_file (ACE_TEXT("simple_servant.ior"));
@@ -106,10 +108,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       constexpr TAO::DiffservCodepoint dscp_cs3 {0x18};
@@ -134,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       policy_list[0] = TAO::NetworkPriorityPolicy::_duplicate (nw_priority.in ());
 
-      PortableServer::POA_var child_poa =
+      PortableServer::POA_var const child_poa =
         root_poa->create_POA ("Child_POA",
                               poa_manager.in (),
                               policy_list);
@@ -163,7 +165,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected exception caught:");
       return -1;

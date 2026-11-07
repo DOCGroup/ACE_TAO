@@ -8,31 +8,33 @@
 constexpr TAO::DiffservCodepoint dscp_af22 {0x14};
 constexpr TAO::DiffservCodepoint dscp_af23 {0x16};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior, int &iterations)
+static int
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            ACE_TString &ior,
+            int &iterations)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:n:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
         break;
 
-        // number of itarations
+        // Number of invocations.
       case 'n':
         iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s\n"
-                           "\t-k <ior> [default is %s]\n"
-                           "\t-n <number of invocations> [defaults to %d]\n"
-                           "\n",
-                           argv [0],
+                           ACE_TEXT ("usage:  %s\n"
+                                     "\t-k <ior> [default is %s]\n"
+                                     "\t-n <number of invocations> [defaults to %d]\n\n"),
+                           argv[0],
                            ior.c_str (),
                            iterations),
                           -1);
@@ -46,10 +48,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      ACE_TString ior (ACE_TEXT("file://simple_servant.ior"));
+      ACE_TString ior (ACE_TEXT ("file://simple_servant.ior"));
       int iterations {1};
       if (parse_args (argc, argv, ior, iterations) != 0)
         return -1;
@@ -89,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       server = Test::_narrow (over_ridden_object.in ());
 
       // Make several invocation,
-      for (int i = 0; i < iterations; ++i)
+      for (int i {}; i < iterations; ++i)
         {
           server->test_method ();
         }
@@ -102,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
