@@ -70,7 +70,6 @@ ForwardTest_Request_Interceptor::receive_request_service_contexts (
       throw PortableInterceptor::ForwardRequest (
         CORBA::Object::_duplicate (this->forward_location_.in ()));
     }
-
 }
 
 

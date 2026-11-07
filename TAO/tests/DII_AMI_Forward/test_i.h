@@ -16,7 +16,7 @@ class Forward_Test_i : public POA_Forward::Test
   //   target IOR, otherwise it echos the source string.
 
 public:
-  Forward_Test_i (CORBA::ORB_ptr orb);
+  explicit Forward_Test_i (CORBA::ORB_ptr orb);
   Forward_Test_i (Forward_Test_i const &) = delete;
   Forward_Test_i (Forward_Test_i &&) = delete;
   Forward_Test_i &operator= (Forward_Test_i const &) = delete;

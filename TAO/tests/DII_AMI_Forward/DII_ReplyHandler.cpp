@@ -19,23 +19,26 @@ DII_ReplyHandler::handle_response (TAO_InputCDR &incoming)
   CORBA::String_var result;
   try
     {
-      if (incoming >> result.inout())
-        ACE_DEBUG ((LM_DEBUG,"Got response: %C\n",result.in()));
+      if (incoming >> result.inout ())
+        {
+          ACE_DEBUG ((LM_DEBUG, "Got response: %C\n", result.in ()));
+        }
       else
-        ACE_ERROR ((LM_ERROR,"ERROR: Response is not a string!\n"));
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: Response is not a string!\n"));
+        }
     }
   catch (CORBA::SystemException const &ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: DII_ReplyHandler::handle_response caught %C\n",
-                  ex._name()));
+                  ex._name ()));
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR,
                   "DII_Reply_Handler::handle_response Unknown Exception\n"));
     }
-
 }
 
 void
@@ -44,7 +47,7 @@ DII_ReplyHandler::handle_excep (TAO_InputCDR &incoming,
 {
   TAO_InputCDR for_reading (incoming);
   CORBA::String_var id;
-  if ((for_reading >> id.inout()) == 0)
+  if ((for_reading >> id.inout ()) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "DII_ReplyHandler::handle_excep could not extract id\n"));
@@ -73,9 +76,8 @@ DII_ReplyHandler::handle_excep (TAO_InputCDR &incoming,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Got system exception: %C, minor = %d, completed = %d\n",
-                      id.in(), minor, completion));
+                      id.in (), minor, completion));
         }
-
     }
   else
     {
@@ -106,11 +108,10 @@ DII_ReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
   ACE_DEBUG ((LM_DEBUG,
               "DII_ReplyHandler::handle_location_forward"
               " got %C, is_perm = %b\n",
-              iorstr.in() ,is_perm));
+              iorstr.in (), is_perm));
 
   CORBA::Request_var const req = fwd->_request ("do_forward");
   CORBA::String_var const test_string = CORBA::string_dup ("123 look at me");
   req->add_in_arg ("text") <<= CORBA::Any::from_string (test_string.in (), 30);
   req->sendc (this);
-
 }

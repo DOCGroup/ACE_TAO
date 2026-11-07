@@ -11,7 +11,7 @@ class DII_ReplyHandler :
   public virtual Messaging::ReplyHandler
 {
 public:
-  DII_ReplyHandler (bool &reply_notifier);
+  explicit DII_ReplyHandler (bool &reply_notifier);
   DII_ReplyHandler (DII_ReplyHandler const &) = delete;
   DII_ReplyHandler (DII_ReplyHandler &&) = delete;
   DII_ReplyHandler &operator= (DII_ReplyHandler const &) = delete;
