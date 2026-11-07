@@ -47,7 +47,7 @@ Test_Small_Union::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Small_Union *tmp = nullptr;
+  Param_Test::Small_Union const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Small_Union (*tmp);
 

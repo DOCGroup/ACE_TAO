@@ -178,7 +178,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           {
             CORBA::Any any;
-            CORBA::Any *i = nullptr;
+            CORBA::Any *i {};
             ACE_NEW_RETURN (i,
                             CORBA::Any,
                             -1);
@@ -229,7 +229,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           {
             CORBA::Any any;
-            Param_Test::Fixed_Struct *i = nullptr;
+            Param_Test::Fixed_Struct *i {};
             ACE_NEW_RETURN (i,
                             Param_Test::Fixed_Struct,
                             -1);
@@ -242,7 +242,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             i->d = 3.1416;
 
             any <<= *i;
-            const Param_Test::Fixed_Struct *o = nullptr;
+            Param_Test::Fixed_Struct const *o {};
 
             if (!(any >>= o)
                 || o->l != i->l
@@ -278,7 +278,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             CORBA::ULong len = 3;
             CORBA::Any any;
-            CORBA::LongSeq *i = nullptr;
+            CORBA::LongSeq *i {};
             ACE_NEW_RETURN (i,
                             CORBA::LongSeq (len),
                             -1);
@@ -290,7 +290,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
 
             any <<= *i;
-            const CORBA::LongSeq *o = nullptr;
+            CORBA::LongSeq const *o {};
 
             if (!(any >>= o)
                 || (*i)[0] != (*o)[0]

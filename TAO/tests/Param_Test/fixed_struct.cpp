@@ -44,7 +44,7 @@ Test_Fixed_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Fixed_Struct *tmp = nullptr;
+  Param_Test::Fixed_Struct const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = *tmp;
 

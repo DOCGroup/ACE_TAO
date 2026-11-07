@@ -219,10 +219,10 @@ Test_ObjRef::print_values ()
   Coffee::Desc_var inout_desc;
   Coffee::Desc_var out_desc;
   Coffee::Desc_var ret_desc;
-  const char *in = nullptr;
-  const char *out = nullptr;
-  const char *inout = nullptr;
-  const char *ret = nullptr;
+  char const *in {};
+  char const *out {};
+  char const *inout {};
+  char const *ret {};
   try
     {
       if (!CORBA::is_nil (this->in_.in ()))

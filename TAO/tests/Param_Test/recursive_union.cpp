@@ -49,7 +49,7 @@ Test_Recursive_Union::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Recursive_Union *tmp = nullptr;
+  Param_Test::Recursive_Union const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Recursive_Union (*tmp);
 

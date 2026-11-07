@@ -49,7 +49,7 @@ Test_Long_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::LongSeq *tmp = nullptr;
+  CORBA::LongSeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = CORBA::LongSeq (*tmp);
 

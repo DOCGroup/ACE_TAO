@@ -51,7 +51,7 @@ Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::StringSeq *tmp = nullptr;
+  CORBA::StringSeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::StringSeq (*tmp);
 

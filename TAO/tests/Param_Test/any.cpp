@@ -217,8 +217,8 @@ Test_Any::reset_parameters ()
 
         if (TAO_debug_level > 0)
           {
-            const Param_Test::Big_Union *bu_in = nullptr;
-            const Param_Test::Big_Union *bu_inout = nullptr;
+            Param_Test::Big_Union const *bu_in {};
+            Param_Test::Big_Union const *bu_inout {};
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,
@@ -241,8 +241,8 @@ Test_Any::reset_parameters ()
 
         if (TAO_debug_level > 0)
           {
-            const Param_Test::Small_Union *bu_in = nullptr;
-            const Param_Test::Small_Union *bu_inout = nullptr;
+            Param_Test::Small_Union const *bu_in {};
+            Param_Test::Small_Union const *bu_inout {};
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,

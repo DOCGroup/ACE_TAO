@@ -48,7 +48,7 @@ Test_Bounded_Short_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Bounded_Short_Seq *tmp = nullptr;
+  Param_Test::Bounded_Short_Seq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_Short_Seq (*tmp);
 

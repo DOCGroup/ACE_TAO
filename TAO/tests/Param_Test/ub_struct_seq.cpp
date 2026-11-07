@@ -53,7 +53,7 @@ Test_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::StructSeq *tmp = nullptr;
+  Param_Test::StructSeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::StructSeq (*tmp);
 
@@ -249,7 +249,7 @@ Test_Unbounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::PathSpec *tmp = nullptr;
+  Param_Test::PathSpec const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::PathSpec (*tmp);
 

@@ -55,7 +55,7 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::AnySeq* tmp = nullptr;
+  CORBA::AnySeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::AnySeq (*tmp);
 

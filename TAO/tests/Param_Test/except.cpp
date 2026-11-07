@@ -68,8 +68,8 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   catch (CORBA::UnknownUserException& user_ex)
     {
-      const Param_Test::Ooops* oops = nullptr;
-      const Param_Test::BadBoy* bad_boy = nullptr;
+      Param_Test::Ooops const *oops {};
+      Param_Test::BadBoy const *bad_boy {};
 
       if (user_ex.exception () >>= oops)
         {

@@ -50,7 +50,7 @@ Test_Array_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::ArraySeq *tmp = nullptr;
+  Param_Test::ArraySeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::ArraySeq (*tmp);
 
