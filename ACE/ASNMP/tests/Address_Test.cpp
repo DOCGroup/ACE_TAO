@@ -53,6 +53,7 @@ static void TestGenAddr()
   ACE_ASSERT(ga3.valid() == 1);
   GenAddress ga4; // default constructor
   ACE_ASSERT(ga4.valid() == 0);
+  ACE_ASSERT(std::strcmp (ga4.to_string (), "") == 0);
   GenAddress ga5; // default constructor
   ACE_ASSERT(ga5.valid() == 0);
   GenAddress ga6("127.0.0.1:7"); // udp address
@@ -135,6 +136,9 @@ static void TestIpAddress()
   // constructors
   GenAddress ga("255.255.255.255");
   IpAddress ia1;
+  ACE_ASSERT(ia1.valid() == 0);
+  ACE_ASSERT(ia1[0] == 0);
+  ACE_ASSERT(std::strcmp (ia1.to_string (), "") == 0);
   IpAddress ia2("224.2.3.4");
   ACE_ASSERT(ia2.is_multicast());
   ACE_ASSERT(!ia2.is_loopback());
@@ -204,7 +208,6 @@ static void TestIpAddress()
    ACE_ASSERT(ia5.get_type() == type_ip);
    ACE_ASSERT(ia5.valid() == 1);
 }
-
 
 // --------------- Netbios ---------------
 /*
@@ -487,7 +490,6 @@ static void TestUdpAddress()
   ACE_ASSERT(ua7.valid() == 1);
   ACE_ASSERT(ua7.get_type() == type_udp);
 
-
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpAddress:ua1(\"\") [%s]\n",
     ua1.to_string()));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpAddress:ua2(\"127.0.0.1:161\") [%s]\n",
@@ -502,7 +504,6 @@ static void TestUdpAddress()
     ua6->to_string()));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpAddress:ua7()(\"localhost/162\") [%s]\n",
     ua7.to_string()));
-
 
   // assignment tests.
   ua1 = ua2;

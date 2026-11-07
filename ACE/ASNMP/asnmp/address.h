@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -88,7 +87,6 @@ class SIPAddress; // aka ipv6
 
 // TODO:
 // class AtmE164Address;
-
 
 //--------------------------------------------------------------------
 //----[ Address class ]-----------------------------------------------
@@ -171,12 +169,11 @@ public:
   /// return a hash key
   virtual unsigned int hashFunction() const { return 0;};
 
-
 protected:
   /// state of constructed object (1/0)
   /// addr internal representation
-  int valid_flag;
-  unsigned char address_buffer[MAX_ADDR_SZ];
+  int valid_flag {};
+  unsigned char address_buffer[MAX_ADDR_SZ] {};
 
   /// parse the address string
   /// redefined for each specific address subclass
@@ -189,7 +186,6 @@ protected:
   /// a reused trimm white space method
   void trim_white_space( char * ptr);
 };
-
 
 //-----------------------------------------------------------------------
 //---------[ IPv4 Address Class ]----------------------------------------
@@ -263,13 +259,13 @@ public:
   void to_octet(OctetStr& octet) const override;
 
 protected:
-  char output_buffer[MAX_DISPLAY_SZ];           // output buffer
+  char output_buffer[MAX_DISPLAY_SZ] {};        // output buffer
 
   /// friendly name storage
-  char iv_friendly_name_[MAX_DISPLAY_SZ];
+  char iv_friendly_name_[MAX_DISPLAY_SZ] {};
 
   /// did resolver call work? some addrs won't resolve
-  int  iv_friendly_name_status_;
+  int iv_friendly_name_status_ {};
 
   /// redefined parse address
   /// specific to IP addresses
@@ -388,7 +384,7 @@ public:
 
 protected:
   /// output buffer
-  char output_buffer[MAX_DISPLAY_SZ];
+  char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address
   /// specific to IP addresses
@@ -398,7 +394,6 @@ protected:
   /// specific to IP addresses
   void format_output() override;
 };
-
 
 //-------------------------------------------------------------------------
 //---------[ 802.3 MAC Address Class ]-------------------------------------
@@ -454,7 +449,7 @@ public:
 
 protected:
   /// output buffer containing string representation of object
-  char output_buffer[MAX_DISPLAY_SZ];
+  char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address for macs
   int parse_address( const char *inaddr) override;
@@ -516,7 +511,7 @@ public:
 
 protected:
   void InitNBAddr(const char *inaddr);
-  char output_buffer[MAX_DISPLAY_SZ];
+  char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// output buffer to hold string representation
   void format_output() override;
@@ -570,7 +565,7 @@ protected:
   int parse_address( const char *inaddr) override;
   addr_type get_type() const override;
   void format_output() override;
-  char output_buffer[MAX_DISPLAY_SZ];
+  char output_buffer[MAX_DISPLAY_SZ] {};
 };
 
 //------------------------------------------------------------------------
@@ -631,7 +626,7 @@ private:
   int parse_address( const char *inaddr) override;
   addr_type get_type() const override;
   void format_output() override;
-  char output_buffer[MAX_DISPLAY_SZ];
+  char output_buffer[MAX_DISPLAY_SZ] {};
 };
 
 //------------------------------------------------------------------------
@@ -690,7 +685,7 @@ protected:
   char separator;
 
   /// output buffer to hold string representation
-  char output_buffer[MAX_DISPLAY_SZ];
+  char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address for ipx strings
   int parse_address( const char  *inaddr) override;
@@ -699,7 +694,6 @@ protected:
   /// uses same separator as when constructed
   void format_output() override;
 };
-
 
 //------------------------------------------------------------------------
 //---------[ IpxSock Address Class ]--------------------------------------
@@ -758,7 +752,7 @@ public:
 
 protected:
   /// output buffer to hold string representation of object
-  char output_buffer[MAX_DISPLAY_SZ];
+  char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address for ipx strings
   int parse_address( const char  *inaddr) override;
@@ -821,7 +815,7 @@ protected:
   Address *address;
 
   /// output buffer of objects value
-  char output_buffer[MAX_DISPLAY_SZ];
+  char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address for macs
   int parse_address( const char *addr) override;
