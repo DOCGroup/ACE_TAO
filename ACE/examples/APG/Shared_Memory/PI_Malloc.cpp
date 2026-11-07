@@ -49,7 +49,7 @@ void showRecords ()
   {
     MALLOC_LIFO_ITERATOR iter (*g_allocator);
 
-    for (void *temp = nullptr; iter.next (temp) != 0; iter.advance ())
+    for (void *temp {}; iter.next (temp) != 0; iter.advance ())
       {
         Record *record =
           reinterpret_cast<Record *> (temp);
@@ -93,7 +93,7 @@ int addRecords ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
-  ALLOCATOR *allocator = nullptr;
+  ALLOCATOR *allocator {};
   if (argc > 1)
     {
       ACE_MMAP_Memory_Pool_Options options

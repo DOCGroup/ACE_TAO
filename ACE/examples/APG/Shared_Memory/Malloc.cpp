@@ -18,7 +18,7 @@ class Record
 {
 public:
   Record (int id1, int id2, char *name)
-    : id1_(id1), id2_(id2), name_(nullptr)
+    : id1_(id1), id2_(id2), name_ {}
   {
     size_t len = ACE_OS::strlen (name) + 1;
     this->name_ =
@@ -45,7 +45,7 @@ void showRecords ()
   {
     MALLOC_LIFO_ITERATOR iter (*g_allocator);
 
-    for (void *temp = nullptr; iter.next (temp) != 0; iter.advance ())
+    for (void *temp {}; iter.next (temp) != 0; iter.advance ())
       {
         Record *record =
           reinterpret_cast<Record *> (temp);
@@ -89,7 +89,7 @@ int addRecords ()
 
 int ACE_TMAIN (int argc, ACE_TCHAR *[])
 {
-  ALLOCATOR *allocator = nullptr;
+  ALLOCATOR *allocator {};
   ACE_NEW_RETURN (allocator,
                   ALLOCATOR (BACKING_STORE),
                   -1);
