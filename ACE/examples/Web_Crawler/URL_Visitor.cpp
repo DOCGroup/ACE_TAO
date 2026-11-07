@@ -72,7 +72,7 @@ HTTP_Header_Processing_Strategy::execute ()
           ACE_CString status = line.substring (status_index + 9, //HTTP/1.1 200
                                                3);
 
-           URL_Status *url_status = nullptr;
+          URL_Status *url_status {};
           ACE_NEW_RETURN (url_status,
                           URL_Status,
                           0);
