@@ -3,17 +3,7 @@
 #include "Server_Request_Interceptor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/Log_Msg.h"
-
-Server_Request_Interceptor::Server_Request_Interceptor ()
-  : request_count_ (0)
-{
-  this->obj_[0] = CORBA::Object::_nil ();
-  this->obj_[1] = CORBA::Object::_nil ();
-}
-
-Server_Request_Interceptor::~Server_Request_Interceptor ()
-{
-}
+#include <cstring>
 
 void
 Server_Request_Interceptor::forward_references (
@@ -40,8 +30,8 @@ Server_Request_Interceptor::name ()
 void
 Server_Request_Interceptor::destroy ()
 {
-  CORBA::release (this->obj_[0]);
-  CORBA::release (this->obj_[1]);
+  this->obj_[0] = CORBA::Object::_nil ();
+  this->obj_[1] = CORBA::Object::_nil ();
 }
 
 void
@@ -50,7 +40,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
 {
   this->request_count_++;
 
-  CORBA::Boolean response_expected =
+  CORBA::Boolean const response_expected =
     ri->response_expected ();
 
   if (!response_expected)   // A one-way request.
@@ -73,7 +63,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
                   "receive_request_service_contexts().\n",
                   this->request_count_));
 
-      throw PortableInterceptor::ForwardRequest (this->obj_[0]);
+      throw PortableInterceptor::ForwardRequest (this->obj_[0].in ());
     }
 }
 
@@ -81,7 +71,7 @@ void
 Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::Boolean response_expected =
+  CORBA::Boolean const response_expected =
     ri->response_expected ();
 
   if (!response_expected)   // A one-way request.
@@ -101,7 +91,6 @@ Server_Request_Interceptor::receive_request (
       // obj_[0] so re-forward it to obj_[1].  This will be the last
       // location forward.
 
-
       ACE_DEBUG ((LM_DEBUG,
                   "SERVER (%P|%t) Request %d will be forwarded "
                   "to object 2\n"  // "object 2" as in "obj_[1]"
@@ -110,7 +99,7 @@ Server_Request_Interceptor::receive_request (
       // "request_count_ - 1" is used above since there was a location
       // forward.
 
-      throw PortableInterceptor::ForwardRequest (this->obj_[1]);
+      throw PortableInterceptor::ForwardRequest (this->obj_[1].in ());
     }
 
   if (this->request_count_ == 7)
@@ -139,13 +128,13 @@ void
 Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::Any_var exception = ri->sending_exception ();
-  CORBA::TypeCode_var tc = exception->type ();
-  const char *id = tc->id ();
+  CORBA::Any_var exception (ri->sending_exception ());
+  CORBA::TypeCode_var tc (exception->type ());
+  CORBA::String_var const id (tc->id ());
 
   CORBA::OBJECT_NOT_EXIST nonexist_exception;
 
-  if (ACE_OS::strcmp (id, nonexist_exception._rep_id ()) == 0)
+  if (std::strcmp (id.in (), nonexist_exception._rep_id ()) == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "SERVER (%P|%t) OBJ_NOT_EXIST exception caught for request %d\n"
@@ -153,7 +142,7 @@ Server_Request_Interceptor::send_exception (
                   "SERVER (%P|%t) via send_exception().\n",
                   this->request_count_ - 2));
 
-      throw PortableInterceptor::ForwardRequest (this->obj_[0]);
+      throw PortableInterceptor::ForwardRequest (this->obj_[0].in ());
     }
 
 }
@@ -162,7 +151,7 @@ void
 Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::Boolean response_expected =
+  CORBA::Boolean const response_expected =
     ri->response_expected ();
 
   if (!response_expected)   // A one-way request.
@@ -174,7 +163,7 @@ Server_Request_Interceptor::send_other (
   // This will throw an exception if a location forward has not
   // occurred.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference ();
+  CORBA::Object_var const forward (ri->forward_reference ());
 
   if (CORBA::is_nil (forward.in ()))
     throw CORBA::INTERNAL ();
