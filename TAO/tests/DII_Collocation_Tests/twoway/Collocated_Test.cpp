@@ -1,7 +1,3 @@
-// This include is needed for static builds to initialize DII_Arguments_Converter
-// service object.
-//#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
-
 #include "Server_Task.h"
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
@@ -21,7 +17,7 @@ struct Test_Options
 
 bool debug {};
 
-int
+void
 parse_args (int argc, ACE_TCHAR *argv[], Test_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o:nd"));
@@ -46,19 +42,16 @@ parse_args (int argc, ACE_TCHAR *argv[], Test_Options &options)
         break;
       case '?':
       default:
-        // This is a hack but that is okay!
-        return 0;
+        // Leave arguments not handled here for ORB_init.
+        return;
       }
-  // Indicates successful parsing of the command line
-  return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Test_Options options;
-  if (parse_args (argc, argv, options) == -1)
-    return -1;
+  Test_Options options {};
+  parse_args (argc, argv, options);
 
   try
     {
@@ -124,9 +117,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
     }
-  catch (CORBA::Exception const &)
+  catch (CORBA::Exception const &ex)
     {
-      // Ignore exceptions..
+      ex._tao_print_exception ("DII collocation test failed");
+      return 1;
     }
   return 0;
 }
