@@ -4,7 +4,7 @@ ACEXML_Entity_Manager::add_entity (const ACEXML_Char *ref,
 {
   if (this->entities_ == nullptr)
     {
-      ACEXML_ENTITIES_MANAGER *entities = nullptr;
+      ACEXML_ENTITIES_MANAGER *entities {};
       ACE_NEW_RETURN (entities, ACEXML_ENTITIES_MANAGER, -1);
       this->entities_.reset (entities);
     }
@@ -19,7 +19,7 @@ ACEXML_Entity_Manager::resolve_entity (const ACEXML_Char *ref)
   if (this->entities_ == nullptr)
     return nullptr;
 
-  ACEXML_ENTITY_ENTRY *entry = nullptr;
+  ACEXML_ENTITY_ENTRY *entry {};
 
   if (this->entities_->find (ACEXML_String (ref, 0, false),
                             entry) == 0)

@@ -85,7 +85,7 @@ ACEXML_Parser::initialize(ACEXML_InputSource* input)
 void
 ACEXML_Parser::parse (const ACEXML_Char *systemId)
 {
-  ACEXML_InputSource* input = nullptr;
+  ACEXML_InputSource *input {};
   ACE_NEW (input, ACEXML_InputSource (systemId));
   this->parse (input);
 }
@@ -312,8 +312,8 @@ int
 ACEXML_Parser::parse_external_dtd ()
 {
   this->ref_state_ = ACEXML_ParserInt::IN_EXT_DTD;
-  ACEXML_Char* publicId = nullptr;
-  ACEXML_Char* systemId = nullptr;
+  ACEXML_Char *publicId {};
+  ACEXML_Char *systemId {};
   if (this->parse_external_id (publicId, systemId) != 0)
     {
       this->fatal_error (ACE_TEXT ("Error in parsing ExternalID"));
@@ -322,7 +322,7 @@ ACEXML_Parser::parse_external_dtd ()
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
       std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
-      ACEXML_InputSource* ip = nullptr;
+      ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
@@ -667,10 +667,10 @@ ACEXML_Parser::normalize_systemid (const ACEXML_Char* systemId)
     return nullptr;
   else
     {
-      ACEXML_Char* normalized_uri = nullptr;
+      ACEXML_Char *normalized_uri {};
       const ACEXML_Char* baseURI = this->current_->getLocator()->getSystemId();
       ACE_ASSERT (baseURI);
-      const ACEXML_Char* temp = nullptr;
+      ACEXML_Char const *temp {};
       if (ACE_OS::strstr (baseURI, ACE_TEXT ("http://")) != nullptr)
         {
           // baseURI is a HTTP URL and systemId is relative. Note that this
@@ -722,8 +722,8 @@ ACEXML_Parser::parse_element (bool is_root)
   bool ns_flag = false; // Push only one namespace context onto the stack
                      // if there are multiple namespaces declared.
 
-  const ACEXML_Char* ns_uri = nullptr;
-  const ACEXML_Char* ns_lname = nullptr; // namespace URI and localName
+  ACEXML_Char const *ns_uri {};
+  ACEXML_Char const *ns_lname {}; // namespace URI and localName
   bool start_element_done = false;
   while (!start_element_done)
     {
@@ -766,7 +766,7 @@ ACEXML_Parser::parse_element (bool is_root)
             start_element_done = true;
             break;
           default:
-            ACEXML_Char *attvalue = nullptr;
+            ACEXML_Char *attvalue {};
             ACEXML_Char *attname = this->parse_name (ch);
 
             if (attname == nullptr ||
@@ -1017,7 +1017,7 @@ ACEXML_Parser::parse_cdata ()
 
   ACEXML_Char ch;
   int datalen = 0;
-  ACEXML_Char *cdata = nullptr;
+  ACEXML_Char *cdata {};
   while (1)
     {
       ch = this->get ();
@@ -1082,7 +1082,7 @@ ACEXML_Parser::parse_entity_decl ()
   int retval = 0;
   if (nextch == '\'' || nextch == '"')
     {
-      ACEXML_Char *entity_value = nullptr;
+      ACEXML_Char *entity_value {};
       if (this->parse_entity_value (entity_value) != 0)
         {
           this->fatal_error(ACE_TEXT ("Invalid EntityValue"));
@@ -1105,7 +1105,7 @@ ACEXML_Parser::parse_entity_decl ()
     }
   else
     {
-      ACEXML_Char *systemid = nullptr, *publicid = nullptr;
+      ACEXML_Char *systemid {}, *publicid {};
 
       this->parse_external_id (publicid, systemid);
       if (systemid == nullptr)
@@ -1281,7 +1281,7 @@ ACEXML_Parser::parse_defaultdecl ()
 {
   // DefaultDecl ::=  '#REQUIRED' | '#IMPLIED' | (('#FIXED' S)? AttValue)
   ACEXML_Char nextch = this->peek ();
-  ACEXML_Char *fixed_attr = nullptr;
+  ACEXML_Char *fixed_attr {};
   switch (nextch)
     {
       case '#':
@@ -2054,8 +2054,8 @@ ACEXML_Parser::parse_entity_reference ()
       this->fatal_error (ACE_TEXT ("Undeclared Entity reference"));
     }
 
-  ACEXML_Char* systemId = nullptr;
-  ACEXML_Char* publicId = nullptr;
+  ACEXML_Char *systemId {};
+  ACEXML_Char *publicId {};
   if (!entity)
     {
       if (this->external_GE_.resolve_entity (replace, systemId, publicId) < 0)
@@ -2082,7 +2082,7 @@ ACEXML_Parser::parse_entity_reference ()
 
   if (!this->external_entity_)
     {
-      ACEXML_StrCharStream* raw_str = nullptr;
+      ACEXML_StrCharStream *raw_str {};
       ACE_NEW_RETURN (raw_str, ACEXML_StrCharStream, -1);
       std::unique_ptr<ACEXML_StrCharStream> str (raw_str);
       if (str->open (entity, replace) < 0)
@@ -2098,7 +2098,7 @@ ACEXML_Parser::parse_entity_reference ()
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
       std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
-      ACEXML_InputSource* ip = nullptr;
+      ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
@@ -2146,8 +2146,8 @@ ACEXML_Parser::parse_PE_reference ()
       this->fatal_error (ACE_TEXT ("Undefined Internal PEReference"));
     }
 
-  ACEXML_Char* systemId = nullptr;
-  ACEXML_Char* publicId = nullptr;
+  ACEXML_Char *systemId {};
+  ACEXML_Char *publicId {};
   if (!entity && this->validate_)
     {
       if (this->external_PE_.resolve_entity (replace, systemId, publicId) < 0)
@@ -2169,7 +2169,7 @@ ACEXML_Parser::parse_PE_reference ()
 
   if (entity && !this->external_entity_)
     {
-      ACEXML_StrCharStream* raw_sstream = nullptr;
+      ACEXML_StrCharStream *raw_sstream {};
       ACEXML_String str (entity);
       if (this->ref_state_ != ACEXML_ParserInt::IN_ENTITY_VALUE)
         {
@@ -2193,7 +2193,7 @@ ACEXML_Parser::parse_PE_reference ()
     {
       ACEXML_Char* uri = this->normalize_systemid (systemId);
       std::unique_ptr<ACEXML_Char[]> cleanup_uri (uri);
-      ACEXML_InputSource* ip = nullptr;
+      ACEXML_InputSource *ip {};
       if (this->entity_resolver_)
         {
           ip = this->entity_resolver_->resolveEntity (publicId,
@@ -2514,7 +2514,7 @@ ACEXML_Parser::switch_input (ACEXML_CharStream* cstream,
                              const ACEXML_Char* publicId)
 {
   std::unique_ptr<ACEXML_CharStream> cstream_owner (cstream);
-  ACEXML_InputSource* input = nullptr;
+  ACEXML_InputSource *input {};
   ACE_NEW_RETURN (input, ACEXML_InputSource (cstream), -1);
   cstream_owner.release ();
   return this->switch_input (input, systemId, publicId);
@@ -2526,12 +2526,12 @@ ACEXML_Parser::switch_input (ACEXML_InputSource* input,
                              const ACEXML_Char* publicId)
 {
   std::unique_ptr<ACEXML_InputSource> input_owner (input);
-  ACEXML_LocatorImpl* locator = nullptr;
+  ACEXML_LocatorImpl *locator {};
   if (!systemId)
     systemId = input_owner->getSystemId();
   ACE_NEW_RETURN (locator, ACEXML_LocatorImpl (systemId, publicId), -1);
   std::unique_ptr<ACEXML_LocatorImpl> locator_owner (locator);
-  ACEXML_Parser_Context* new_context = nullptr;
+  ACEXML_Parser_Context *new_context {};
   ACE_NEW_RETURN (new_context,
                   ACEXML_Parser_Context (input_owner.get (), locator_owner.get ()),
                   -1);
@@ -2568,7 +2568,7 @@ ACEXML_Parser::pop_context (int GE_ref)
       this->fatal_error(ACE_TEXT ("Unexpected end-of-file"));
     }
 
-  ACEXML_Parser_Context* temp = nullptr;
+  ACEXML_Parser_Context *temp {};
   int retval = this->ctx_stack_.pop (temp);
   if (retval != 0)
     {
@@ -2579,7 +2579,7 @@ ACEXML_Parser::pop_context (int GE_ref)
     {
       this->fatal_error (ACE_TEXT ("Unable to read top element of input stack"));
     }
-  ACEXML_Char* reference = nullptr;
+  ACEXML_Char *reference {};
   if (GE_ref == 1 && this->GE_reference_.size() > 0)
     {
       if (this->GE_reference_.pop (reference) < 0)
@@ -2717,7 +2717,7 @@ ACEXML_Parser::parse_version_info ()
 void
 ACEXML_Parser::parse_encoding_decl ()
 {
-  ACEXML_Char* astring = nullptr;
+  ACEXML_Char *astring {};
   if ((this->parse_token (ACE_TEXT("ncoding")) < 0)
       || this->skip_equal () != 0
       || this->parse_encname (astring) != 0)
@@ -2844,7 +2844,7 @@ int
 ACEXML_Parser::parse_processing_instruction ()
 {
   const ACEXML_Char *pitarget = this->parse_name ();
-  ACEXML_Char *instruction = nullptr;
+  ACEXML_Char *instruction {};
 
   if (!ACE_OS::strcasecmp (ACE_TEXT ("xml"), pitarget))
     {
@@ -2902,7 +2902,7 @@ ACEXML_Parser::reset ()
       this->current_ = nullptr;
     }
 
-  ACEXML_Char* temp = nullptr;
+  ACEXML_Char *temp {};
   while (this->GE_reference_.pop (temp) != -1)
     ;
   while (this->PE_reference_.pop (temp) != -1)
