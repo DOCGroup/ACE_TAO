@@ -105,7 +105,7 @@ UTL_ScopeStack::pop ()
       return;
     }
 
-  UTL_Scope *current = this->top ();
+  UTL_Scope * const current = this->top ();
 
   // If our top scope has a #pragma prefix associated with it,
   // it goes away with the scope.

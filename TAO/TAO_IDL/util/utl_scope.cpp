@@ -174,7 +174,7 @@ UTL_Scope::lookup_for_add (AST_Decl *d)
       return nullptr;
     }
 
-  Identifier *id = d->local_name ();
+  Identifier * const id = d->local_name ();
   if (this->idl_keyword_clash (id))
     {
       return nullptr;
@@ -308,7 +308,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
     }
 
   // Must be defined in the CORBA module.
-  AST_Decl *p = ScopeAsDecl (bt->defined_in ());
+  AST_Decl * const p = ScopeAsDecl (bt->defined_in ());
   if (p->local_name ()->get_string () != "CORBA")
     {
       return;
@@ -332,7 +332,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
     }
 
   // Now check for predefined base type.
-  AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (bt);
+  AST_PredefinedType * const pdt = dynamic_cast<AST_PredefinedType*> (bt);
   if (pdt == nullptr)
     {
       return;
@@ -481,7 +481,7 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
 AST_Field *
 UTL_Scope::fe_add_ref_decl (AST_Field *t)
 {
-  AST_Decl *d = this->fe_add_decl (t);
+  AST_Decl * const d = this->fe_add_decl (t);
   if (d != nullptr)
     {
       AST_Type *ft = t->field_type ();
@@ -496,7 +496,7 @@ UTL_Scope::fe_add_ref_decl (AST_Field *t)
 
   // Catches struct/union/exception which all maintain a queue
   // for fields as distinct from decls and enum values.
-  AST_Structure *s = dynamic_cast<AST_Structure*> (this);
+  AST_Structure * const s = dynamic_cast<AST_Structure*> (this);
   if (s != nullptr)
     {
       s->fields ().push_back (t);
@@ -508,7 +508,7 @@ UTL_Scope::fe_add_ref_decl (AST_Field *t)
 AST_Structure *
 UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
 {
-  AST_Decl *predef = this->lookup_for_add (t);
+  AST_Decl * const predef = this->lookup_for_add (t);
 
   if (predef != nullptr)
     {
@@ -1087,7 +1087,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 
   // Ok the name wasn't found in the current scope, if this
   // scope is a module, we can check it's previous openings!
-  AST_Module *m = dynamic_cast<AST_Module*> (this);
+  AST_Module * const m = dynamic_cast<AST_Module*> (this);
   if (m != nullptr)
     {
       d = m->look_in_prev_mods_local (e);
