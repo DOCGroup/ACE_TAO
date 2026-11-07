@@ -41,7 +41,7 @@ class Server_ORBInitializer
 {
 public:
   /// Constructor.
-  Server_ORBInitializer (bool & destroy_called);
+  explicit Server_ORBInitializer (bool & destroy_called);
 
   Server_ORBInitializer (Server_ORBInitializer const &) = delete;
   Server_ORBInitializer (Server_ORBInitializer &&) = delete;
