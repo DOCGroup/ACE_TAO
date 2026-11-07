@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var const tmp {
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()))};
+        orb->string_to_object (ior.c_str ())};
 
       Test::Service_var const service {Test::Service::_narrow (tmp.in ())};
 

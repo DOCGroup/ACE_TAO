@@ -56,7 +56,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var const tmp {
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ())) };
+        orb->string_to_object (ior.c_str ()) };
 
       Test::Process_Factory_var const process_factory {
         Test::Process_Factory::_narrow (tmp.in ())};

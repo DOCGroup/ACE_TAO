@@ -104,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (options.shutdown)
         {
           CORBA::Object_var const object =
-            orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+            orb->string_to_object (options.ior.c_str ());
 
           Simple_Server_var const server =
             Simple_Server::_narrow (object.in ());
@@ -153,7 +153,7 @@ Worker::run_test ()
   for (int j {}; j != this->iterations_; ++j)
     {
       CORBA::Object_var const object =
-        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ()));
+        this->orb_->string_to_object (this->ior_.c_str ());
 
       CORBA::Boolean const is_simple_server =
         object->_is_a ("IDL:Simple_Server:1.0");
@@ -163,7 +163,7 @@ Worker::run_test ()
     }
 
   CORBA::Object_var const object =
-    this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ()));
+    this->orb_->string_to_object (this->ior_.c_str ());
 
   Simple_Server_var const server =
     Simple_Server::_narrow (object.in ());
