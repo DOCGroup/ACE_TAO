@@ -32,7 +32,7 @@ ACE_Token_Manager::~ACE_Token_Manager ()
        iterator.advance ())
     {
       // @ should I be doing an unbind here?
-      delete temp->int_id_;
+      std::unique_ptr<ACE_Tokens> owned_token {temp->int_id_};
       // The ext_id_'s delete themselves when the array of
       // COLLECTION::ENTRYs goes away.
     }

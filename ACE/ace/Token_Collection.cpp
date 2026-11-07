@@ -249,7 +249,7 @@ ACE_Token_Collection::~ACE_Token_Collection ()
        iterator.next (temp) != 0;
        iterator.advance ())
     {
-      delete temp->int_id_;
+      std::unique_ptr<ACE_Token_Proxy> owned_proxy {temp->int_id_};
       // The ext_id_'s delete themselves when the array of
       // COLLECTION::ENTRYs goes away.
     }

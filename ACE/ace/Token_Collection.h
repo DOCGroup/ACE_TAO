@@ -64,6 +64,10 @@ public:
    */
   ACE_Token_Collection (bool debug = false,
                         const ACE_TCHAR *name = nullptr);
+  ACE_Token_Collection (ACE_Token_Collection const &) = delete;
+  ACE_Token_Collection (ACE_Token_Collection &&) = delete;
+  ACE_Token_Collection &operator= (ACE_Token_Collection const &) = delete;
+  ACE_Token_Collection &operator= (ACE_Token_Collection &&) = delete;
 
 // Collection Management operations
 
