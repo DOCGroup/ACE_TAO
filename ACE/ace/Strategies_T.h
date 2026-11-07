@@ -138,7 +138,7 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
-  ACE_Singleton_Strategy (SVC_HANDLER * = 0,
+  ACE_Singleton_Strategy (SVC_HANDLER * = nullptr,
                           ACE_Thread_Manager * = nullptr);
   int open (SVC_HANDLER *,
             ACE_Thread_Manager * = nullptr);
@@ -619,7 +619,7 @@ public:
   using stream_type = typename SVC_HANDLER::stream_type;
 
   /// Constructor
-  ACE_Scheduling_Strategy (SVC_HANDLER * = 0);
+  ACE_Scheduling_Strategy (SVC_HANDLER * = nullptr);
 
   /// Destructor
   virtual ~ACE_Scheduling_Strategy ();
@@ -654,7 +654,7 @@ public:
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
   /// Constructor
-  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = 0);
+  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
 
   // = Scheduling methods
 
@@ -690,7 +690,7 @@ public:
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
   /// Constructor
-  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = 0);
+  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
 
   // = Scheduling methods
 

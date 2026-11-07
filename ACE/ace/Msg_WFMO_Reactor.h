@@ -41,8 +41,8 @@ class ACE_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
 {
 public:
   /// Initialize ACE_Msg_WFMO_Reactor with the default size.
-  ACE_Msg_WFMO_Reactor (ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0);
+  ACE_Msg_WFMO_Reactor (ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr);
 
   /**
    * Initialize ACE_Msg_WFMO_Reactor with size @a size.  Two slots will be
@@ -51,8 +51,8 @@ public:
    */
   ACE_Msg_WFMO_Reactor (size_t size,
                         int unused = 0,
-                        ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0);
+                        ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr);
 
   /// Close down the ACE_Msg_WFMO_Reactor and release all of its resources.
   virtual ~ACE_Msg_WFMO_Reactor () = default;

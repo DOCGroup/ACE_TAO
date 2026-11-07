@@ -176,8 +176,8 @@ public:
   ACE_TP_Reactor &operator= (ACE_TP_Reactor &&) = delete;
 
   /// Initialize ACE_TP_Reactor with the default size.
-  ACE_TP_Reactor (ACE_Sig_Handler * = 0,
-                  ACE_Timer_Queue * = 0,
+  ACE_TP_Reactor (ACE_Sig_Handler * = nullptr,
+                  ACE_Timer_Queue * = nullptr,
                   bool mask_signals = true,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 

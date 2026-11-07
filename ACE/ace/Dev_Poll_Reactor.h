@@ -150,7 +150,7 @@ public:
    * purged. Returns -1 on error.
    */
   int purge_pending_notifications (
-    ACE_Event_Handler * = 0,
+    ACE_Event_Handler * = nullptr,
     ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Dump the state of an object.
@@ -402,8 +402,8 @@ public:
    * The default size for the @c ACE_Dev_Poll_Reactor is the maximum
    * number of open file descriptors for the process.
    */
-  ACE_Dev_Poll_Reactor (ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0,
+  ACE_Dev_Poll_Reactor (ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = nullptr,
                         int mask_signals = 1,
@@ -423,8 +423,8 @@ public:
    */
   ACE_Dev_Poll_Reactor (size_t size,
                         bool restart = false,
-                        ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0,
+                        ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = nullptr,
                         int mask_signals = 1,
@@ -436,10 +436,10 @@ public:
   /// Initialization.
   int open (size_t size,
                     bool restart = false,
-                    ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0,
+                    ACE_Sig_Handler * = nullptr,
+                    ACE_Timer_Queue * = nullptr,
                     int disable_notify_pipe = 0,
-                    ACE_Reactor_Notify * = 0) override;
+                    ACE_Reactor_Notify * = nullptr) override;
 
   /**
    * @param handle allows the reactor to check if the caller is
@@ -570,7 +570,7 @@ public:
   int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = nullptr,
-                                ACE_Event_Handler **old_sh = 0,
+                                ACE_Event_Handler **old_sh = nullptr,
                                 ACE_Sig_Action *old_disp = nullptr) override;
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
@@ -707,7 +707,7 @@ public:
    * wasn't found.
    */
   int cancel_timer (long timer_id,
-                            const void **arg = 0,
+                            const void **arg = nullptr,
                             int dont_call_handle_close = 1) override;
 
   // = High-level event handler scheduling operations
@@ -740,7 +740,7 @@ public:
    */
   int notify (ACE_Event_Handler *event_handler = nullptr,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value * = 0) override;
+                      ACE_Time_Value * = nullptr) override;
 
   /**
    * Set the maximum number of times that ACE_Reactor_Impl will
@@ -767,7 +767,7 @@ public:
    * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  int purge_pending_notifications (ACE_Event_Handler * = 0,
+  int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /**
@@ -783,7 +783,7 @@ public:
    */
   int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
-                       ACE_Event_Handler **event_handler = 0) override;
+                       ACE_Event_Handler **event_handler = nullptr) override;
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
@@ -791,7 +791,7 @@ public:
    * this @c handler if @a event_handler != 0.
    */
   int handler (int signum,
-                       ACE_Event_Handler ** = 0) override;
+                       ACE_Event_Handler ** = nullptr) override;
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.

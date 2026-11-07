@@ -45,7 +45,7 @@ public:
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
 private:
   /// Keeps track of our state.

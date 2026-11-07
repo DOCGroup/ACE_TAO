@@ -582,7 +582,7 @@ private:
    * <ACE_WFMO_Reactor> is signaled.  This dequeues all pending
    * ACE_Event_Handlers and dispatches them.
    */
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr);
 
   /// An auto event is used so that we can signal() it to wakeup one
   /// thread up (e.g., when the <notify> method is called).

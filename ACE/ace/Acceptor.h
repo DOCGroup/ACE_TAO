@@ -66,7 +66,7 @@ public:
   using stream_type = typename SVC_HANDLER::stream_type;
 
   /// "Do-nothing" constructor.
-  ACE_Acceptor (ACE_Reactor * = 0,
+  ACE_Acceptor (ACE_Reactor * = nullptr,
                 int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT);
 
   /**
@@ -570,7 +570,7 @@ public:
   // = Explicit factory operation.
   /// Create a {SVC_HANDLER}, accept the connection into the
   /// {SVC_HANDLER}, and activate the {SVC_HANDLER}.
-  virtual int accept (SVC_HANDLER * = 0,
+  virtual int accept (SVC_HANDLER * = nullptr,
                       typename PEER_ACCEPTOR::PEER_ADDR *remote_addr = nullptr,
                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                       bool restart = true,

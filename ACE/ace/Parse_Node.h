@@ -335,7 +335,7 @@ public:
   /// repository
   virtual void *symbol (ACE_Service_Gestalt *cfgptr,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator * = 0) = 0;
+                        ACE_Service_Object_Exterminator * = nullptr) = 0;
 
   /// Dump the state of an object.
   void dump () const;
@@ -384,7 +384,7 @@ public:
   ACE_Object_Node (const ACE_TCHAR *pathname, const ACE_TCHAR *obj_name);
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator * = 0) override;
+                        ACE_Service_Object_Exterminator * = nullptr) override;
   ~ACE_Object_Node () override;
 
   /// Dump the state of an object.
@@ -476,7 +476,7 @@ public:
   explicit ACE_Static_Function_Node (const ACE_TCHAR *func_name);
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator * = 0) override;
+                        ACE_Service_Object_Exterminator * = nullptr) override;
   ~ACE_Static_Function_Node () override;
 
   /// Dump the state of an object.

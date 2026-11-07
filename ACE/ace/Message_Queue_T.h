@@ -929,13 +929,13 @@ public:
   static ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_static_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                 ACE_Notification_Strategy * = 0);
+                                 ACE_Notification_Strategy * = nullptr);
 
   /// Factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_deadline_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                    size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                   ACE_Notification_Strategy * = 0,
+                                   ACE_Notification_Strategy * = nullptr,
                                    u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
                                    u_long static_bit_field_shift = 10,            // 10 low order bits
                                    u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
@@ -945,7 +945,7 @@ public:
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_laxity_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                 ACE_Notification_Strategy * = 0,
+                                 ACE_Notification_Strategy * = nullptr,
                                  u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
                                  u_long static_bit_field_shift = 10,            // 10 low order bits
                                  u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1

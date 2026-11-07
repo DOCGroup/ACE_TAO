@@ -231,7 +231,7 @@ protected:
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr);
 
   /// Called when object is removed from the ACE_Reactor.
   virtual int handle_close (ACE_HANDLE handle,

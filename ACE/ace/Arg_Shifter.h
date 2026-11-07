@@ -76,13 +76,13 @@ public:
    */
   ACE_Arg_Shifter_T (int &argc,
                      CHAR_TYPE const **argv,
-                     CHAR_TYPE const **temp = 0);
+                     CHAR_TYPE const **temp = nullptr);
 
   /// Same behavior as the preceding constructor, but without the
   /// "const" qualifier.
   ACE_Arg_Shifter_T (int &argc,
                      CHAR_TYPE **argv,
-                     CHAR_TYPE **temp = 0);
+                     CHAR_TYPE **temp = nullptr);
 
   /// Destructor.
   ~ACE_Arg_Shifter_T ();

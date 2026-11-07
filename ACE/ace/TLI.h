@@ -69,8 +69,8 @@ public:
 
   // = Calls to underlying TLI operations.
   int look () const;
-  int rcvdis (struct t_discon * = 0) const;
-  int snddis (struct t_call * = 0) const;
+  int rcvdis (struct t_discon * = nullptr) const;
+  int snddis (struct t_call * = nullptr) const;
   int sndrel () const;
   int rcvrel () const;
 

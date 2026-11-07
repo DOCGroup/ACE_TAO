@@ -35,7 +35,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Barrier
 {
 public:
-  ACE_Barrier (unsigned int, const ACE_TCHAR * = 0, void * = 0) {}
+  ACE_Barrier (unsigned int, const ACE_TCHAR * = nullptr, void * = nullptr) {}
   ~ACE_Barrier () = default;
   int wait () { ACE_NOTSUP_RETURN (-1); }
   void dump () const {}

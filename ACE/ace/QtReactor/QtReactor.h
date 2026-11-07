@@ -100,8 +100,8 @@ public:
         \param QApplication *qapp, qapplication which runs events loop
     */
     explicit ACE_QtReactor (QApplication *qapp = nullptr,
-        ACE_Sig_Handler * = 0,
-        ACE_Timer_Queue * = 0,
+        ACE_Sig_Handler * = nullptr,
+        ACE_Timer_Queue * = nullptr,
         int disable_notify_pipe = 0,
         ACE_Reactor_Notify *notify = nullptr,
         bool mask_signals = true,
@@ -113,8 +113,8 @@ public:
     explicit ACE_QtReactor (size_t size,
         QApplication *qapp = nullptr,
         bool restart = false,
-        ACE_Sig_Handler * = 0,
-        ACE_Timer_Queue * = 0,
+        ACE_Sig_Handler * = nullptr,
+        ACE_Timer_Queue * = nullptr,
         int disable_notify_pipe = 0,
         ACE_Reactor_Notify *notify = nullptr,
         bool mask_signals = true,

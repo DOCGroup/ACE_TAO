@@ -315,7 +315,7 @@ public:
    * wasn't found.
    */
   int cancel_timer (long timer_id,
-                    const void **act = 0,
+                    const void **act = nullptr,
                     int dont_call_handle_close = 1);
 
   /**
