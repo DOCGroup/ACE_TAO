@@ -398,7 +398,7 @@ Admin_Client::enum_test ()
 
   ACE_TEST_ASSERT (dkind == CORBA::dk_Enum);
 
-  const CORBA::TypeDescription *td = 0;
+  CORBA::TypeDescription const *td {};
   desc->value >>= td;
 
   if (this->debug_)
@@ -521,7 +521,7 @@ Admin_Client::enum_test ()
     evar->members ();
 
   count = fellows->length ();
-  const char *tmp = 0;
+  char const *tmp {};
 
   for (i = 0; i < count; ++i)
     {
@@ -739,7 +739,7 @@ Admin_Client::alias_test ()
   CORBA::Contained::Description_var desc =
     a_var->describe ();
 
-  const CORBA::TypeDescription *td = 0;
+  CORBA::TypeDescription const *td {};
   desc->value >>= td;
 
   if (this->debug_)
@@ -967,7 +967,7 @@ Admin_Client::struct_test ()
   CORBA::Contained::Description_var desc =
     svar->describe ();
 
-  const CORBA::TypeDescription *td = 0;
+  CORBA::TypeDescription const *td {};
   desc->value >>= td;
 
   if (this->debug_)
@@ -1204,7 +1204,7 @@ Admin_Client::struct_test ()
 
   for (i = 0; i < length; ++i)
     {
-      const CORBA::TypeDescription *td = 0;
+      CORBA::TypeDescription const *td {};
       cont_desc[i].value >>= td;
 
       str = td->type->id ();
@@ -1332,7 +1332,7 @@ Admin_Client::union_test ()
   TAO_OutputCDR maker2;
   maker2.write_ulong (3);  // THREE
   TAO_InputCDR maker2_in (maker2);
-  TAO::Unknown_IDL_Type *impl2 = 0;
+  TAO::Unknown_IDL_Type *impl2 {};
   ACE_NEW (impl2,
            TAO::Unknown_IDL_Type (d_type.in (),
                                   maker2_in));
@@ -1347,7 +1347,7 @@ Admin_Client::union_test ()
   TAO_OutputCDR maker0;
   maker0.write_ulong (2);  // TWO
   TAO_InputCDR maker0_in (maker0);
-  TAO::Unknown_IDL_Type *impl0 = 0;
+  TAO::Unknown_IDL_Type *impl0 {};
   ACE_NEW (impl0,
            TAO::Unknown_IDL_Type (d_type.in (),
                                   maker0_in));
@@ -1362,7 +1362,7 @@ Admin_Client::union_test ()
   TAO_OutputCDR maker1;
   maker1.write_ulong (0); // ZERO
   TAO_InputCDR maker1_in (maker1);
-  TAO::Unknown_IDL_Type *impl1 = 0;
+  TAO::Unknown_IDL_Type *impl1 {};
   ACE_NEW (impl1,
            TAO::Unknown_IDL_Type (d_type.in (),
                                   maker1_in));
@@ -1425,7 +1425,7 @@ Admin_Client::union_test ()
   ACE_TEST_ASSERT (slot == 2);
 
   CORBA::String_var str;
-  const char *tmp = 0;
+  char const *tmp {};
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -1568,7 +1568,7 @@ Admin_Client::exception_test ()
   CORBA::Contained::Description_var desc =
     exvar->describe ();
 
-  const CORBA::ExceptionDescription *ed = 0;
+  CORBA::ExceptionDescription const *ed {};
   desc->value >>= ed;
 
   if (this->debug_)
@@ -1825,7 +1825,7 @@ Admin_Client::exception_test ()
 
   ACE_TEST_ASSERT (length == 2);
 
-  const CORBA::TypeDescription *td = 0;
+  CORBA::TypeDescription const *td {};
 
   for (i = 0; i < length; ++i)
     {
@@ -2211,7 +2211,7 @@ Admin_Client::interface_test ()
   CORBA::Contained::Description_var desc =
     p_op->describe ();
 
-  const CORBA::OperationDescription *od = 0;
+  CORBA::OperationDescription const *od {};
   desc->value >>= od;
 
   if (this->debug_)
@@ -2249,7 +2249,7 @@ Admin_Client::interface_test ()
 
   ACE_TEST_ASSERT (length == 3);
 
-  const char *tmp = 0;
+  char const *tmp {};
 
   for (i = 0; i < length; ++i)
     {
@@ -2416,7 +2416,7 @@ Admin_Client::interface_test ()
 
   desc = ivar->describe ();
 
-  const CORBA::InterfaceDescription *ifd = 0;
+  CORBA::InterfaceDescription const *ifd {};
   desc->value >>= ifd;
 
   length = ifd->base_interfaces.length ();
@@ -2431,7 +2431,7 @@ Admin_Client::interface_test ()
 
   ACE_TEST_ASSERT (length == 2);
 
-  const char *base_iface_id = 0;
+  char const *base_iface_id {};
 
   for (i = 0; i < length; ++i)
     {
@@ -2628,7 +2628,7 @@ Admin_Client::move_test ()
   ACE_TEST_ASSERT (length == 2);
 
   CORBA::ULong i = 0;
-  const char *tmp = 0;
+  char const *tmp {};
 
   for (i = 0; i < length; ++i)
     {
