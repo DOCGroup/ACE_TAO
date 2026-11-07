@@ -7,7 +7,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Put orb outside try scope since there will be an
   // exception and it will not be possible to call
   // orb->destroy() at the end, hence memory leak.
-  CORBA::ORB_var orb = CORBA::ORB::_nil ();
+  CORBA::ORB_var orb {};
 
   try
     {
