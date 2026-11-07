@@ -27,21 +27,20 @@ class Bottom_Impl : public virtual POA_Multiple::Bottom
 {
 public:
   // Ctor-Dtor
-  Bottom_Impl (CORBA::ORB_ptr orb);
-  virtual ~Bottom_Impl ();
+  explicit Bottom_Impl (CORBA::ORB_ptr const orb);
+  Bottom_Impl (Bottom_Impl const &) = delete;
+  Bottom_Impl (Bottom_Impl &&) = delete;
+  Bottom_Impl &operator= (Bottom_Impl const &) = delete;
+  Bottom_Impl &operator= (Bottom_Impl &&) = delete;
 
   // IDL Interface Methods
-  virtual char * top_quote ();
-
-  virtual char * left_quote ();
-
-  virtual char * right_quote ();
-
-  virtual char * bottom_quote ();
-
-  virtual void shutdown ();
+  char *top_quote () override;
+  char *left_quote () override;
+  char *right_quote () override;
+  char *bottom_quote () override;
+  void shutdown () override;
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 /**
@@ -58,20 +57,20 @@ class Delegated_Bottom_Impl : public virtual POA_Multiple::Bottom
 {
 public:
   // Ctor-Dtor
-  Delegated_Bottom_Impl (Multiple::Bottom_ptr delegate, CORBA::ORB_ptr orb);
-  virtual ~Delegated_Bottom_Impl ();
+  explicit Delegated_Bottom_Impl (Multiple::Bottom_ptr const delegate);
+  Delegated_Bottom_Impl (Delegated_Bottom_Impl const &) = delete;
+  Delegated_Bottom_Impl (Delegated_Bottom_Impl &&) = delete;
+  Delegated_Bottom_Impl &operator= (Delegated_Bottom_Impl const &) = delete;
+  Delegated_Bottom_Impl &operator= (Delegated_Bottom_Impl &&) = delete;
 
   // IDL Interface Methods.
-  virtual char * top_quote ();
-  virtual char * left_quote ();
-  virtual char * right_quote ();
-  virtual char * bottom_quote ();
-
-  virtual void shutdown ();
+  char *top_quote () override;
+  char *left_quote () override;
+  char *right_quote () override;
+  char *bottom_quote () override;
+  void shutdown () override;
 
 private:
-  Multiple::Bottom_var delegate_;
-
-  CORBA::ORB_var orb_;
+  Multiple::Bottom_var const delegate_;
 };
 #endif /* TAO_MULTIPLE_IMPL_H_ */
