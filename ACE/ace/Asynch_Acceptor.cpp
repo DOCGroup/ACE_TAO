@@ -216,6 +216,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
   ACE_NEW_RETURN (message_block,
                   ACE_Message_Block (space_needed),
                   -1);
+  ACE_Message_Block_Unique_Ptr message_block_owner {message_block};
 
   // Initiate asynchronous accepts
   if (this->asynch_accept_.accept (*message_block,
@@ -225,11 +226,10 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
                                    0,
                                    ACE_SIGRTMIN,
                                    this->addr_family_) == -1)
-    {
-      // Cleanup on error
-      message_block->release ();
-      return -1;
-    }
+    return -1;
+
+  // Ownership is transferred to the asynchronous accept operation.
+  message_block_owner.release ();
   return 0;
 }
 
