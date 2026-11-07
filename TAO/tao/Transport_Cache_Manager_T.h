@@ -26,6 +26,8 @@
 #include "tao/Cache_Entries_T.h"
 #include "tao/orbconf.h"
 
+#include <memory>
+
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
@@ -96,11 +98,11 @@ namespace TAO
     using CONDITION = TAO_Condition<TAO_SYNCH_MUTEX>;
 
     // == Public methods
-    /// Constructor
+    /// Constructor; ownership of the purge strategy transfers to the cache manager.
     Transport_Cache_Manager_T (
       ACE_Reactor &reactor,
       int percent,
-      purging_strategy* purging_strategy,
+      purging_strategy *purging_strategy,
       size_t cache_maximum,
       bool locked,
       char const *orbid,
@@ -109,6 +111,11 @@ namespace TAO
 
     /// Destructor
     ~Transport_Cache_Manager_T ();
+
+    Transport_Cache_Manager_T (Transport_Cache_Manager_T const &) = delete;
+    Transport_Cache_Manager_T &operator= (Transport_Cache_Manager_T const &) = delete;
+    Transport_Cache_Manager_T (Transport_Cache_Manager_T &&) = delete;
+    Transport_Cache_Manager_T &operator= (Transport_Cache_Manager_T &&) = delete;
 
     /// Add the transport to the cache and record transport activity.
     /**
@@ -279,7 +286,7 @@ namespace TAO
     int percent_;
 
     /// The underlying connection purging strategy
-    purging_strategy *purging_strategy_;
+    std::unique_ptr<purging_strategy> purging_strategy_ {};
 
     /// The hash map that has the connections
     HASH_MAP cache_map_;
@@ -287,7 +294,7 @@ namespace TAO
     TAO_SYNCH_MUTEX cache_map_mutex_;
 
     /// The lock that is used by the cache map
-    ACE_Lock *cache_lock_;
+    std::unique_ptr<ACE_Lock> cache_lock_ {};
 
     /// Maximum size of the cache
     size_t cache_maximum_;

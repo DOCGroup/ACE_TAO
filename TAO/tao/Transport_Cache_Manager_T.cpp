@@ -9,6 +9,8 @@
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
 
+#include <cerrno>
+#include <new>
 #include <string>
 #include <vector>
 
@@ -39,7 +41,6 @@ namespace TAO
     : percent_ (percent)
     , purging_strategy_ (purging)
     , cache_map_ (cache_maximum)
-    , cache_lock_ (nullptr)
     , cache_maximum_ (cache_maximum)
     , reactor_ (reactor)
     , idle_timeout_ (idle_timeout)
@@ -52,13 +53,18 @@ namespace TAO
   {
     if (locked)
       {
-        ACE_NEW (this->cache_lock_,
-                 ACE_Lock_Adapter <TAO_SYNCH_MUTEX> (this->cache_map_mutex_));
+        this->cache_lock_.reset (
+          new (std::nothrow) ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (this->cache_map_mutex_));
       }
     else
       {
-        ACE_NEW (this->cache_lock_,
-                 ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>);
+        this->cache_lock_.reset (
+          new (std::nothrow) ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>);
+      }
+    if (!this->cache_lock_)
+      {
+        errno = ENOMEM;
+        return;
       }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
@@ -112,12 +118,6 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T ()
   {
-    delete this->cache_lock_;
-    this->cache_lock_ = nullptr;
-
-    delete this->purging_strategy_;
-    this->purging_strategy_ = nullptr;
-
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     this->purge_monitor_->remove_from_registry ();
     this->size_monitor_->remove_from_registry ();
@@ -564,8 +564,7 @@ namespace TAO
       }
 
     entry->item ().transport ()->touch_activity ();
-    purging_strategy *st = this->purging_strategy_;
-    (void) st->update_item (*(entry->item ().transport ()));
+    this->purging_strategy_->update_item (*(entry->item ().transport ()));
 
     return 0;
   }
