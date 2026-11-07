@@ -25,13 +25,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -o <iorfile>\n"),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -47,7 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
       PortableServer::POA_var const root_poa =

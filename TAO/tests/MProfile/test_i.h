@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   test_i.h
@@ -6,8 +5,6 @@
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
-
 #ifndef TAO_MPROFILE_TEST_I_H
 #define TAO_MPROFILE_TEST_I_H
 
@@ -36,7 +33,7 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   CORBA::Long val_ {1};
 };

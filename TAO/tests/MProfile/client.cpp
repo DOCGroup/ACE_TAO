@@ -30,14 +30,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-m <ior> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -k <ior> -m <ior>\n"),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
