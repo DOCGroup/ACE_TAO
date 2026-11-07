@@ -13,8 +13,8 @@ public:
                    CORBA::ULong iterations);
 
   void no_op (client_ptr remote_partner,
-              const act &act_for_iterations,
-              const act &act_for_flag) override;
+              act const &act_for_iterations,
+              act const &act_for_flag) override;
 
   void shutdown () override;
 
@@ -30,8 +30,8 @@ public:
   void loop (CORBA::ULong event_loop_depth,
              CORBA::ULong event_loop_iterations) override;
 
-  void oneway_no_op (const act &act_for_iterations,
-                     const act &act_for_flag) override;
+  void oneway_no_op (act const &act_for_iterations,
+                     act const &act_for_flag) override;
 
   void twoway_no_op () override;
 
