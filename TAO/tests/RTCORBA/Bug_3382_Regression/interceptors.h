@@ -29,20 +29,20 @@ public:
   virtual ~Client_Request_Interceptor () = default;
   // dtor.
 
-  virtual char * name ();
+  virtual char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  virtual void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
   const char *myname_;

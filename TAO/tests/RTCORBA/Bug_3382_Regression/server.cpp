@@ -16,9 +16,9 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (CORBA::Short priority);
+  void test_method (CORBA::Short priority) override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -103,7 +103,7 @@ public:
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc ();
+  int svc () override;
 
   CORBA::ORB_var orb_;
 };

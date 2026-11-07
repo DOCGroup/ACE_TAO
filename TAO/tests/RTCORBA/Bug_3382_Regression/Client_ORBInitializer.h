@@ -28,9 +28,9 @@ public:
   /// Constructor
   Client_ORBInitializer () = default;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 #if defined(_MSC_VER)
