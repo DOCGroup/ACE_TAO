@@ -34,6 +34,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
+#include <cerrno>
+#include <new>
+#include <utility>
 
 enum Defs {SNMPBUFFSIZE=300,
            SNMPCHARSIZE=15};          // max oid value (4294967295UL)
@@ -130,14 +133,7 @@ Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
 // free up the descriptor space
 Oid::~Oid()
 {
-  // free up the octet deep memory
-  if ( smival.value.oid.ptr ) {
-    set_invalid();
-  }
-
-  // free up the output string
-  if ( iv_str != 0)
-    delete [] iv_str;
+  set_invalid ();
 }
 
 
@@ -182,6 +178,12 @@ Oid& Oid::operator=( const Oid &oid)
   const SmiLPOID srcOid = (SmiLPOID) &(oid.smival.value.oid);
   init_value(srcOid, oid.smival.value.oid.len);
   return *this;
+}
+
+Oid& Oid::operator= (char const *dotted_oid_string)
+{
+  Oid const value (dotted_oid_string);
+  return *this = value;
 }
 
 // assign this object the oid, set to invalid if copy fails
@@ -379,18 +381,17 @@ void Oid::trim( const size_t n)
 // make this object invalid by resetting all values
 void Oid::set_invalid() {
   delete [] smival.value.oid.ptr;
-  smival.value.oid.ptr = 0;
+  smival.value.oid.ptr = nullptr;
   smival.value.oid.len = 0;
-  delete [] iv_str;
-  iv_str = 0;
+  iv_str.reset ();
 }
 
 //===============[Oid::set_null() ]====================
 void Oid::set_null() {
   smival.syntax = sNMP_SYNTAX_OID;
-  smival.value.oid.ptr = 0;
+  smival.value.oid.ptr = nullptr;
   smival.value.oid.len = 0;
-  iv_str = 0;
+  iv_str.reset ();
 }
 
 //===============[Oid::operator += const unsigned int) ]====================
@@ -495,17 +496,20 @@ const char * Oid::to_string()
     n = 1; // need at least 1 byte for a null string
 
   // adjust the len of output array in case size was adjusted
-  if ( iv_str != 0)
-    delete [] iv_str;
-  // allocate some space for the output string
-  ACE_NEW_RETURN(iv_str, char[ n], "");
+  std::unique_ptr<char[]> new_string {new (std::nothrow) char[n]};
+  if (!new_string)
+    {
+      errno = ENOMEM;
+      return "";
+    }
 
   // convert to an output string
-  size_t how_many;
-  if ( valid() && iv_str != 0)
-    if (OidToStr(&smival.value.oid,n,iv_str, how_many) < 0)
+  size_t how_many {};
+  if (valid ())
+    if (OidToStr (&smival.value.oid, n, new_string.get (), how_many) < 0)
       return "ERROR: Oid::OidToStr failed";
-  return iv_str;
+  iv_str = std::move (new_string);
+  return iv_str.get ();
 }
 
 //==============[Oid::suboid( unsigned int start, n) ]=============
@@ -553,7 +557,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
     }
   else {
      dstOid->len = 0;
-     dstOid->ptr = 0;
+     dstOid->ptr = nullptr;
      return -1;
   }
 

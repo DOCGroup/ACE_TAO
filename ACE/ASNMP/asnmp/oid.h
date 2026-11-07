@@ -41,6 +41,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "asnmp/smival.h"                // derived class for all values
+#include <memory>
 
 /**
  * @class Oid
@@ -55,6 +56,7 @@ public:
 
   /// constructor using another oid object
   Oid ( const Oid &oid);
+  Oid (Oid &&) = delete;
 
   /// constructor from raw form
   Oid(const unsigned long *raw_oid, size_t oid_len);
@@ -67,6 +69,10 @@ public:
 
   /// assignment to another oid object overloaded
   Oid& operator=( const Oid &oid);
+  Oid& operator= (Oid &&) = delete;
+
+  /// assignment from a dotted string
+  Oid& operator= (char const *dotted_oid_string);
 
   /// equal operator overloaded
   friend ASNMP_Export bool operator==( const Oid &lhs,const Oid &rhs);
@@ -148,7 +154,7 @@ public:
 
 protected:
   /// used for returning oid string
-  char *iv_str;
+  std::unique_ptr<char[]> iv_str {};
 
   /// convert a string to an smi oid
   int StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many_bytes);
