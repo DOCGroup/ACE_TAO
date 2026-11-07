@@ -1,5 +1,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 #include "JAWS/Cache_Manager.h"
 #include "JAWS/Cache_List_T.h"
@@ -19,7 +20,7 @@ JAWS_String_Equal_Functor::JAWS_String_Equal_Functor (const char *s1,
                                                     const char *s2)
   : i_ (0)
 {
-  this->i_ = ACE_OS::strcmp (s1, s2);
+  this->i_ = std::strcmp (s1, s2);
 }
 
 JAWS_String_Equal_Functor::operator int () const

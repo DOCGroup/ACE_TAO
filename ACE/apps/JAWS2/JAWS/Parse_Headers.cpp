@@ -1,6 +1,6 @@
 #include "JAWS/Parse_Headers.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 #define ACCESSOR(T,C,x) \
 T C :: x () const { return this-> x##_; }\
@@ -81,7 +81,7 @@ JAWS_Parse_Headers::skipset (const char *set, char *start, char *end)
   char *p = start;
   while (p < end)
     {
-      if (ACE_OS::strchr (set, *p) != 0)
+      if (std::strchr (set, *p) != nullptr)
         break;
       p++;
     }
@@ -94,7 +94,7 @@ JAWS_Parse_Headers::skipcset (const char *set, char *start, char *end)
   char *p = start;
   while (p < end)
     {
-      if (ACE_OS::strchr (set, *p) == 0)
+      if (std::strchr (set, *p) == nullptr)
         break;
       p++;
     }
