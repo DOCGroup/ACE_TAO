@@ -73,16 +73,18 @@ void
 DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
                            TAO_AMH_DSI_Response_Handler * rph)
 {
-  CORBA::NVList_ptr opList {};
-  this->orb_->create_list (0, opList);
+  CORBA::NVList_var opList {};
+  this->orb_->create_list (0, opList.out ());
 
-  request->arguments (opList);
+  // ServerRequest takes ownership of the argument list.
+  CORBA::NVList_ptr request_arguments = opList._retn ();
+  request->arguments (request_arguments);
 
   CORBA::Request_var target_request {};
 
   this->target_->_create_request (nullptr, // ctx
                                   request->operation (),
-                                  opList,
+                                  request_arguments,
                                   nullptr, // result
                                   nullptr, // exception_list,
                                   nullptr, // context_list,
