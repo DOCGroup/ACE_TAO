@@ -55,19 +55,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      Server_Options options;
+      Server_Options options {};
       if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      Hello *hello_impl {};
-      ACE_NEW_RETURN (hello_impl,
-                      Hello (orb.in ()),
-                      1);
-      // Keep a local servant reference while the POA establishes its ownership.
-      PortableServer::ServantBase_var owner_transfer (hello_impl);
+      PortableServer::ServantBase_var hello_impl;
+      ACE_NEW_RETURN (hello_impl.inout (), Hello (orb.in ()), 1);
 
       PortableServer::ObjectId_var const id =
-        root_poa->activate_object (hello_impl);
+        root_poa->activate_object (hello_impl.in ());
 
       CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
