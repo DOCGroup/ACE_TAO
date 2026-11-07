@@ -8,27 +8,30 @@
 class CSD_PT_TestInf_Export AppShutdown
 {
   public:
-    AppShutdown();
-    virtual ~AppShutdown();
+    AppShutdown () = default;
+    AppShutdown (AppShutdown const &) = delete;
+    AppShutdown (AppShutdown &&) = delete;
+    AppShutdown &operator= (AppShutdown const &) = delete;
+    AppShutdown &operator= (AppShutdown &&) = delete;
+    virtual ~AppShutdown ();
 
-    void init(CORBA::ORB_ptr orb,
-              unsigned num_clients);
+    void init (CORBA::ORB_ptr orb,
+               unsigned num_clients);
 
     void wait ();
 
-    void client_done();
+    void client_done ();
 
-    static AppShutdown* instance ();
+    static AppShutdown *instance ();
 
   private:
     TAO_SYNCH_MUTEX lock_;
     CORBA::ORB_var orb_;
-    unsigned num_clients_;
-    unsigned num_clients_shutdown_;
+    unsigned num_clients_ {};
+    unsigned num_clients_shutdown_ {};
 
     OrbShutdownTask orb_shutdown_task_;
 };
-
 
 #define TheAppShutdown AppShutdown::instance()
 

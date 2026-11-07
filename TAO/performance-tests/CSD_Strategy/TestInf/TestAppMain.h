@@ -8,7 +8,7 @@
 
 #define TEST_APP_MAIN(APP_TYPE) \
 int \
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])\
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])\
 { \
   ACE_LOG_MSG->priority_mask(LM_TRACE     | \
                              LM_DEBUG     | \
@@ -25,15 +25,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])\
 \
   try \
   { \
-    int ret = app.run(argc,argv); \
+    int const ret = app.run (argc, argv); \
 \
     return ret; \
   } \
-  catch (const CORBA::Exception& ex) \
+  catch (CORBA::Exception const &ex) \
   { \
      ex._tao_print_exception ("Caught exception:"); \
   } \
-  catch (...)\
+  catch (...) \
   { \
     ACE_ERROR((LM_ERROR, \
                "(%P|%t) Unknown (...) exception caught in main() " \
