@@ -943,7 +943,7 @@ Key_List::output_keyword_table ()
   int wordlist_size = wordlist_slot;
 
   char const *const qualifier = option[CONSTANT] ? "constexpr " : "";
-  size_t element_type_length = ACE_OS::strlen (struct_tag);
+  size_t element_type_length = std::strlen (struct_tag);
   while (element_type_length > 0
          && std::isspace (static_cast<unsigned char> (struct_tag[element_type_length - 1])))
     --element_type_length;
