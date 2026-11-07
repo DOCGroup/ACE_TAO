@@ -35,7 +35,7 @@ ACEXML_Namespace_Context_Stack::pop ()
   if (this->stack_.size() <= 0)
     return nullptr;
 
-  ACEXML_NS_CONTEXT* temp = nullptr;
+  ACEXML_NS_CONTEXT *temp {};
   int retval = this->stack_.pop (temp);
   if (retval != 0)
     {
@@ -64,7 +64,7 @@ ACEXML_NamespaceSupport::pushContext ()
                   -1);
 
   // @@ Copy everything from the old context to the new one.
-  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
+  ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   for (ACEXML_NS_CONTEXT_ITER iter (*temp);
        iter.next (entry) != 0;
@@ -118,7 +118,7 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
 int
 ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
 {
-  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
+  ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   // The prefix for default namespace (empty string) is included in
   // the return list.
@@ -136,7 +136,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
   if (uri == nullptr || *uri == 0)
     return nullptr;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
+  ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
@@ -150,7 +150,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
 int
 ACEXML_NamespaceSupport::getPrefixes (ACEXML_STR_LIST &prefixes) const
 {
-  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
+  ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   // The prefix for default namespace (empty string) is not included
   // in the return list.
@@ -168,7 +168,7 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
   if (uri == nullptr)
     return -1;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
+  ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
        iter.next (entry) != 0;
@@ -188,7 +188,7 @@ ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
   if (prefix == nullptr)
     return nullptr;
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
+  ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   if (this->effective_context_->find (ACEXML_String (prefix, 0, false),
                                       entry) == 0)
@@ -225,7 +225,7 @@ ACEXML_NamespaceSupport::processName (ACEXML_Char const *qName,
     return 0;
   }
 
-  ACEXML_NS_CONTEXT_ENTRY *entry = nullptr;
+  ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   if (this->effective_context_->find (prefix, entry) == 0)
     uri = entry->int_id_.c_str ();

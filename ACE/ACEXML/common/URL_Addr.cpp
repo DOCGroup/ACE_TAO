@@ -82,7 +82,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   if (ACE_OS::strncmp (http, s, http_len) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid URL %s\n"), s), -1);
 
-  const ACEXML_Char* url = nullptr;
+  ACEXML_Char const *url {};
   // Get the host name
   for (url = s + http_len; *url != '\0' && *url != ':' && *url != '/'; ++url)
     ;
@@ -90,7 +90,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   size_t host_len = url - s;
   host_len -= http_len;
 
-  ACEXML_Char* host_name = nullptr;
+  ACEXML_Char *host_name {};
   ACE_NEW_RETURN (host_name, ACEXML_Char[host_len + 1], -1);
   ACE_OS::strncpy (host_name, s + http_len, host_len);
   host_name[host_len] = '\0';
@@ -112,7 +112,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
     return -1;
 
   // Get the path name
-  const ACEXML_Char* path_name = nullptr;
+  ACEXML_Char const *path_name {};
   if (*url == '\0')
     path_name = ACE_TEXT ("/");
   else

@@ -14,8 +14,8 @@ ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
 {
   if (uri == nullptr)
     return nullptr;
-  ACEXML_FileCharStream* fstream = nullptr;
-  ACEXML_HttpCharStream* hstream = nullptr;
+  ACEXML_FileCharStream *fstream {};
+  ACEXML_HttpCharStream *hstream {};
 
   if (ACE_OS::strstr (uri, ACE_TEXT("ftp://")) != nullptr)
     {
@@ -37,7 +37,7 @@ ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
 #ifdef USE_ZZIP
       else
         {
-          ACEXML_ZipCharStream* zstream = nullptr;
+          ACEXML_ZipCharStream *zstream {};
           ACE_NEW_RETURN (zstream, ACEXML_ZipCharStream, nullptr);
           if (zstream->open (uri) != -1)
             return zstream;

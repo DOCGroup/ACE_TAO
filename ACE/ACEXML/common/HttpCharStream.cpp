@@ -114,7 +114,7 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   int header_state = HDST_LINE1_PROTOCOL;
   int status {};
   size_t b {};
-  char const * buf = nullptr;
+  char const *buf {};
   size_t buflen = BUFSIZ;
 
   for (;;)
