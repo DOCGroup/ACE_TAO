@@ -104,26 +104,22 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
   // Wait for a "readable future" signal from the message queue.
   if (this->future_notification_queue_->dequeue_head (mb, tv) != -1)
     {
-      // Extract future rep from the message block.
-      future_rep = reinterpret_cast<FUTURE_REP *> (mb->base ());
+      ACE_Message_Block_Unique_Ptr message_block_owner {mb};
 
-      // Delete the message block.
-      mb->release ();
+      // Extract future rep from the message block.
+      future_rep = reinterpret_cast<FUTURE_REP *> (message_block_owner->base ());
     }
   else
     return 0;
 
   // Remove the hash map entry with the specified future rep from our map.
   FUTURE_HOLDER *future_holder {};
-  if (this->future_map_.find (future_rep, future_holder) != -1)
-    {
-      future = future_holder->item_;
-      this->future_map_.unbind (future_rep);
-      delete future_holder;
-      return 1;
-    }
+  if (this->future_map_.unbind (future_rep, future_holder) == -1)
+    return 0;
 
-  return 0;
+  std::unique_ptr<FUTURE_HOLDER> owned_future_holder {future_holder};
+  future = owned_future_holder->item_;
+  return 1;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
