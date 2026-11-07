@@ -181,7 +181,7 @@ Activity::activate_schedule ()
     ACE_DEBUG ((LM_DEBUG, "Activating schedule, task count = %d\n",
                 count));
 
-  ACE_Barrier *barrier = nullptr;
+  ACE_Barrier *barrier {};
   ACE_NEW (barrier, ACE_Barrier (count + 1));
   barrier_.reset (barrier);
 
@@ -343,7 +343,7 @@ Activity::create_started_flag_file (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_TCHAR const *current_arg = nullptr;
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {

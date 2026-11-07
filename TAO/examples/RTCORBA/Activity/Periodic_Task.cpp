@@ -10,7 +10,7 @@
 int
 Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
 {
-  ACE_TCHAR const *current_arg = nullptr;
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {

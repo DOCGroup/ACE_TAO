@@ -22,7 +22,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_TCHAR const *current_arg = nullptr;
+  ACE_TCHAR const *current_arg {};
 
   int task_count = 0;
   int poa_count = 0;
@@ -66,7 +66,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
             {
               arg_shifter.consume_arg ();
 
-              Periodic_Task *task_pointer = nullptr;
+              Periodic_Task *task_pointer {};
               ACE_NEW_RETURN (task_pointer, Thread_Task (), -1);
               std::unique_ptr<Periodic_Task> task (task_pointer);
 
@@ -84,7 +84,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
             {
               arg_shifter.consume_arg ();
 
-              Job_i *job_pointer = nullptr;
+              Job_i *job_pointer {};
               ACE_NEW_RETURN (job_pointer, Job_i (), -1);
               std::unique_ptr<Job_i> job (job_pointer);
 
@@ -102,7 +102,7 @@ Builder::init (int argc, ACE_TCHAR *argv[])
             {
               arg_shifter.consume_arg ();
 
-              POA_Holder *poa_holder_pointer = nullptr;
+              POA_Holder *poa_holder_pointer {};
               ACE_NEW_RETURN (poa_holder_pointer, POA_Holder (), -1);
               std::unique_ptr<POA_Holder> poa_holder (poa_holder_pointer);
 
