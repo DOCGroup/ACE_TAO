@@ -26,15 +26,15 @@ public:
   Visual_i &operator= (Visual_i const &) = delete;
   Visual_i &operator= (Visual_i &&) = delete;
 
-  void normal (CORBA::Long arg);
+  void normal (CORBA::Long arg) override;
 
-  void nothing ();
+  void nothing () override;
 
-  void user ();
+  void user () override;
 
-  void system ();
+  void system () override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB pseudo-reference (for shutdown).
