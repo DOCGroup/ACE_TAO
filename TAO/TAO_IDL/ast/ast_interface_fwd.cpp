@@ -116,7 +116,7 @@ AST_InterfaceFwd::is_valuetype ()
 bool
 AST_InterfaceFwd::full_def_seen ()
 {
-  UTL_Scope *s = this->defined_in ();
+  UTL_Scope * const s = this->defined_in ();
   AST_Interface *i {};
 
   // If a full definition is seen in a previous module opening
@@ -126,7 +126,7 @@ AST_InterfaceFwd::full_def_seen ()
   if (AST_Decl::NT_module == s->scope_node_type ())
     {
       AST_Module *m = dynamic_cast<AST_Module*> (s);
-      AST_Decl *d =
+      AST_Decl * const d =
         m->look_in_prev_mods_local (this->local_name (),
                                     false);
 

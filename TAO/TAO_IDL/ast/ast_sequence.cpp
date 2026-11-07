@@ -189,7 +189,7 @@ AST_Sequence::in_recursion (std::vector<AST_Type *> &list)
     }
 
   bool recursion_found = false;
-  AST_Type *recursable_type = list.front ();
+  AST_Type * const recursable_type = list.front ();
   if (type->full_name () == recursable_type->full_name ())
     {
       // They match.

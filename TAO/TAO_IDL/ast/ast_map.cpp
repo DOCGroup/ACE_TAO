@@ -236,7 +236,7 @@ AST_Map::in_recursion (std::vector<AST_Type *> &list)
     }
 
   bool recursion_found = false;
-  AST_Type *recursable_type = list.front ();
+  AST_Type * const recursable_type = list.front ();
   if (key_type->full_name () == recursable_type->full_name ()
       || val_type->full_name () == recursable_type->full_name ())
     {

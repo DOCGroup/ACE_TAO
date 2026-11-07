@@ -52,7 +52,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   // and ast_visitor_reifying::template_module_rel_name()).
   UTL_ScopedName sn (node->local_name (), nullptr);
 
-  AST_Module *added_module =
+  AST_Module * const added_module =
     idl_global->gen ()->create_module (idl_global->scopes (). top (),
                                        &sn);
 
@@ -78,7 +78,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
     idl_global->current_params ();
 
   idl_global->alias_params (node->param_refs ());
-  AST_Template_Module *tm = node->ref ();
+  AST_Template_Module * const tm = node->ref ();
   idl_global->current_params (tm->template_params ());
 
   // Visit the scope of referenced template module. No need to

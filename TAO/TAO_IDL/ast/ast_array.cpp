@@ -173,7 +173,7 @@ AST_Array::ast_accept (ast_visitor *visitor)
 int
 AST_Array::compute_size_type ()
 {
-  AST_Type *type = this->base_type ();
+  AST_Type * const type = this->base_type ();
 
   if (!type)
     {

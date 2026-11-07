@@ -99,13 +99,13 @@ AST_Annotation_Appls::find (std::string const& annotation) const
       return nullptr;
     }
 
-  UTL_Scope * bottom = idl_global->scopes ().bottom ();
+  UTL_Scope * const bottom = idl_global->scopes ().bottom ();
   if (bottom == nullptr)
     {
       return nullptr;
     }
 
-  AST_Decl * decl = bottom->lookup_by_name (annotation);
+  AST_Decl * const decl = bottom->lookup_by_name (annotation);
   if (decl == nullptr)
     {
       return nullptr;

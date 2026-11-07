@@ -49,7 +49,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
-  AST_ValueType *pk = dynamic_cast<AST_ValueType*> (primary_key);
+  AST_ValueType * const pk = dynamic_cast<AST_ValueType*> (primary_key);
 
   if (pk != nullptr)
     {

@@ -51,7 +51,7 @@ AST_Component::~AST_Component () = default;
 void
 AST_Component::redefine (AST_Interface *from)
 {
-  AST_Component *c = dynamic_cast<AST_Component*> (from);
+  AST_Component * const c = dynamic_cast<AST_Component*> (from);
 
   if (c == nullptr)
     {
