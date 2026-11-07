@@ -19,7 +19,7 @@ ACE_Encoding_Converter_Factory::create (
 #else
   bool const convert_for_bigendian = false;
 #endif /* ACE_BIG_ENDIAN */
-  ACE_Encoding_Converter* converter = nullptr;
+  ACE_Encoding_Converter* converter {};
 
   switch (hint)
     {

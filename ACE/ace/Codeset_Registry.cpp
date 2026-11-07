@@ -25,7 +25,7 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
                                             ACE_CDR::UShort *num_sets,
                                             ACE_CDR::UShort **char_sets)
 {
-  registry_entry const *element = nullptr;
+  registry_entry const *element {};
   for (size_t i = 0; element == nullptr && i < num_registry_entries_; i++)
     if (std::strcmp (registry_db_[i].loc_name_, locale.c_str ()) == 0)
       element = &registry_db_[i];
@@ -53,7 +53,7 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
                                             ACE_CDR::UShort *num_sets,
                                             ACE_CDR::UShort **char_sets)
 {
-  registry_entry const *element = nullptr;
+  registry_entry const *element {};
   for (size_t i = 0; element == nullptr && i < num_registry_entries_; i++)
     if (codeset_id == registry_db_[i].codeset_id_)
       element = &registry_db_[i];
@@ -79,8 +79,8 @@ bool
 ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
                                        ACE_CDR::ULong other)
 {
-  registry_entry const *lhs = nullptr;
-  registry_entry const *rhs = nullptr;
+  registry_entry const *lhs {};
+  registry_entry const *rhs {};
   for (size_t i = 0; (lhs == nullptr || rhs == nullptr) && i < num_registry_entries_; i++)
     {
       if (codeset_id == registry_db_[i].codeset_id_)

@@ -20,7 +20,7 @@ ACE_Future_Set<T>::ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *new_queue)
     this->future_notification_queue_ = new_queue;
   else
     {
-      ACE_Message_Queue<ACE_SYNCH> *queue = nullptr;
+      ACE_Message_Queue<ACE_SYNCH> *queue {};
       ACE_NEW (queue,
                ACE_Message_Queue<ACE_SYNCH>);
       this->owned_future_notification_queue_.reset (queue);
@@ -80,7 +80,7 @@ ACE_Future_Set<T>::insert (ACE_Future<T> &future)
 template <class T> void
 ACE_Future_Set<T>::update (ACE_Future<T> const &future)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   ACE_NEW (mb,
            ACE_Message_Block (reinterpret_cast<char *> (future.get_rep ()), 0));
@@ -98,8 +98,8 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
   if (this->is_empty ())
     return 0;
 
-  ACE_Message_Block *mb = nullptr;
-  FUTURE_REP *future_rep = nullptr;
+  ACE_Message_Block *mb {};
+  FUTURE_REP *future_rep {};
 
   // Wait for a "readable future" signal from the message queue.
   if (this->future_notification_queue_->dequeue_head (mb, tv) != -1)
@@ -114,7 +114,7 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
     return 0;
 
   // Remove the hash map entry with the specified future rep from our map.
-  FUTURE_HOLDER *future_holder = nullptr;
+  FUTURE_HOLDER *future_holder {};
   if (this->future_map_.find (future_rep, future_holder) != -1)
     {
       future = future_holder->item_;
