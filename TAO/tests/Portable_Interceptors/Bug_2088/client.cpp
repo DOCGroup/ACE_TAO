@@ -1,13 +1,12 @@
-#include "ace/Get_Opt.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Client_ORBInitializer *initializer1 = nullptr;
-  Client_ORBInitializer *initializer2 = nullptr;
-  bool caught_exception = false;
+  Client_ORBInitializer *initializer1 {};
+  Client_ORBInitializer *initializer2 {};
+  bool caught_exception {};
 
   ACE_NEW_RETURN (initializer1,
                   Client_ORBInitializer,
@@ -17,8 +16,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   Client_ORBInitializer,
                   -1);  // No exceptions yet!
 
-  PortableInterceptor::ORBInitializer_var initializer_var1 = initializer1;
-  PortableInterceptor::ORBInitializer_var initializer_var2 = initializer2;
+  // Keep these typed pointers to inspect the initializer state; the vars own them.
+  PortableInterceptor::ORBInitializer_var const initializer_var1 = initializer1;
+  PortableInterceptor::ORBInitializer_var const initializer_var2 = initializer2;
 
   try
     {
@@ -26,9 +26,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableInterceptor::register_orb_initializer (initializer_var2.in ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
     }
-  catch (const CORBA::NO_MEMORY&)
+  catch (CORBA::NO_MEMORY const &)
     {
       // Initializer1 throws this exception and we should get it here
       caught_exception = true;

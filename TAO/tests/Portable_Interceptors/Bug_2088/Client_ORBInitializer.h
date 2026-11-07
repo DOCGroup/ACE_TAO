@@ -26,7 +26,7 @@ class Client_ORBInitializer :
 {
 public:
   /// Constructor
-  Client_ORBInitializer ();
+  Client_ORBInitializer () = default;
 
   Client_ORBInitializer (Client_ORBInitializer const &) = delete;
   Client_ORBInitializer (Client_ORBInitializer &&) = delete;
@@ -36,8 +36,8 @@ public:
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  bool pre_init_called;
-  bool post_init_called;
+  bool pre_init_called {};
+  bool post_init_called {};
 };
 
 #if defined(_MSC_VER)
