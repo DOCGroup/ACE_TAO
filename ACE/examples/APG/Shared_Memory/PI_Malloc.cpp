@@ -1,5 +1,5 @@
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include <memory>
 
 // Listing 1 code/ch17
@@ -21,10 +21,10 @@ public:
   Record (int id1, int id2, char *name)
     : id1_(id1), id2_(id2)
   {
-    size_t len = ACE_OS::strlen (name) + 1;
+    size_t len = std::strlen (name) + 1;
     char *buf =
       reinterpret_cast<char *> (g_allocator->malloc (len));
-    ACE_OS::strcpy (buf, name);
+    std::strcpy (buf, name);
     name_ = buf;
   }
 

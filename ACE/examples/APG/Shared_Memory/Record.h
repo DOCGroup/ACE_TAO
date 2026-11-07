@@ -6,7 +6,7 @@
 #ifndef __RECORD_H_
 #define __RECORD_H_
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/Based_Pointer_T.h"
 
 // Listing 11 code/ch17
@@ -19,7 +19,7 @@ public:
   Record (Record const &rec)
     : id1_(rec.id1_), id2_(rec.id2_)
   {
-    ACE_OS::strcpy (recName_, rec.name_);
+    std::strcpy (recName_, rec.name_);
     this->name_ = recName_;
   }
   Record &operator= (Record const &rec)
@@ -28,7 +28,7 @@ public:
       {
         this->id1_ = rec.id1_;
         this->id2_ = rec.id2_;
-        ACE_OS::strcpy (this->recName_, rec.name_);
+        std::strcpy (this->recName_, rec.name_);
         this->name_ = this->recName_;
       }
     return *this;
@@ -36,7 +36,7 @@ public:
   Record (int id1, int id2, char const *name)
     : id1_(id1), id2_(id2)
   {
-    ACE_OS::strcpy (recName_, name);
+    std::strcpy (recName_, name);
     this->name_ = recName_;
   }
   char *name () { return recName_; }

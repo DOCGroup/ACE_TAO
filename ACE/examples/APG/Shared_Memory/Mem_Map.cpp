@@ -1,5 +1,5 @@
 #include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
 
@@ -20,7 +20,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
                        ACE_MAP_SHARED);
   ACE_ASSERT(destMap.addr () != nullptr);
 
-  ACE_OS::memcpy (destMap.addr (),
+  std::memcpy (destMap.addr (),
                   srcMap.addr (),
                   srcMap.size ());
   destMap.sync ();
