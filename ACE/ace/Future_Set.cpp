@@ -42,9 +42,8 @@ ACE_Future_Set<T>::~ACE_Future_Set ()
        iterator != end;
        ++iterator)
     {
-      FUTURE_HOLDER *future_holder = (*iterator).int_id_;
+      std::unique_ptr<FUTURE_HOLDER> future_holder {(*iterator).int_id_};
       future_holder->item_.detach (this);
-      delete future_holder;
     }
 }
 
@@ -61,18 +60,19 @@ ACE_Future_Set<T>::insert (ACE_Future<T> &future)
   ACE_NEW_RETURN (future_holder,
                   FUTURE_HOLDER (future),
                   -1);
+  std::unique_ptr<FUTURE_HOLDER> owned_future_holder {future_holder};
 
   FUTURE_REP *future_rep = future.get_rep ();
-  int const result = this->future_map_.bind (future_rep, future_holder);
+  int const result = this->future_map_.bind (future_rep, owned_future_holder.get ());
 
-  // If a new map entry was created, then attach to the future,
-  // otherwise we were already attached to the future or some error
-  // occurred so just delete the future holder.
+  // The map takes ownership on success; otherwise the local unique pointer
+  // destroys the holder.
   if (result == 0)
-    // Attach ourself to the ACE_Futures list of observer
-    future.attach (this);
-  else
-    delete future_holder;
+    {
+      owned_future_holder.release ();
+      // Attach ourself to the ACE_Futures list of observer.
+      future.attach (this);
+    }
 
   return result;
 }
