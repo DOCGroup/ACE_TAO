@@ -35,7 +35,7 @@ ACEXML_Debug_Element_Builder::insertMixedElement (ACEXML_Char const *,
                                                   ACEXML_Char const *,
                                                   ACEXML_Char const *qName)
 {
-  ACEXML_Element_Tree_Name_Node *raw_node = nullptr;
+  ACEXML_Element_Tree_Name_Node *raw_node {};
 
   // @@ We should "throw" an exception here instead of returning -1.
   ACE_NEW_RETURN (raw_node,
@@ -45,7 +45,7 @@ ACEXML_Debug_Element_Builder::insertMixedElement (ACEXML_Char const *,
 
   if (this->root_ == nullptr)
     {
-      ACEXML_Element_Tree_List_Node *raw_root = nullptr;
+      ACEXML_Element_Tree_List_Node *raw_root {};
       ACE_NEW_RETURN (raw_root,
                       ACEXML_Element_Tree_List_Node (),
                       -1);
@@ -58,7 +58,7 @@ ACEXML_Debug_Element_Builder::insertMixedElement (ACEXML_Char const *,
 int
 ACEXML_Debug_Element_Builder::startChildGroup ()
 {
-  ACEXML_Element_Tree_List_Node *raw_lnode = nullptr;
+  ACEXML_Element_Tree_List_Node *raw_lnode {};
 
   ACE_NEW_RETURN (raw_lnode,
                   ACEXML_Element_Tree_List_Node (),
@@ -106,7 +106,7 @@ ACEXML_Debug_Element_Builder::insertElement (ACEXML_Char const *,
                                              ACEXML_Char const *,
                                              ACEXML_Char const *qName)
 {
-  ACEXML_Element_Tree_Name_Node *raw_node = nullptr;
+  ACEXML_Element_Tree_Name_Node *raw_node {};
 
   // @@ We should "throw" an exception here instead of returning -1.
   ACE_NEW_RETURN (raw_node,
