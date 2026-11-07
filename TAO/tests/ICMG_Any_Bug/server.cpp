@@ -12,10 +12,10 @@ int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
-  int c {};
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         options.ior_output_file = get_opts.opt_arg ();
@@ -24,13 +24,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -80,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Output the IOR to the <ior_output_file>
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)

@@ -12,10 +12,10 @@ int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c {};
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         options.ior = get_opts.opt_arg ();
@@ -24,13 +24,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -62,7 +59,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Request_var const request = tmp->_request ("get_helloworld");
       request->set_return_type (Test::_tc_HelloWorld);
 
-      CORBA::Any any;
+      CORBA::Any any {};
       any <<= "Hi From DOC Group";
       request->arguments ()->add_value ("msg", any, CORBA::ARG_IN);
 
