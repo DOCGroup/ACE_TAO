@@ -259,9 +259,9 @@ Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 HTTP_Handler *
 No_Cache_Synch_HTTP_Handler_Factory::create_http_handler ()
 {
-  JAWS_Synch_IO_No_Cache *io = nullptr;
+  JAWS_Synch_IO_No_Cache *io {};
   ACE_NEW_RETURN (io, JAWS_Synch_IO_No_Cache, nullptr);
-  HTTP_Handler *handler = nullptr;
+  HTTP_Handler *handler {};
   ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), nullptr);
 
   return handler;

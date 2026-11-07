@@ -118,7 +118,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
     ;
 
 
-  char *buf = nullptr;
+  char *buf {};
   char buf1[4 * BUFSIZ];
   char buf2[BUFSIZ];
 
@@ -153,7 +153,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 void
 HTTP_Response::normal_response ()
 {
-  char const *hv = nullptr;
+  char const *hv {};
 
   ACE_DEBUG ((LM_DEBUG, " (%t) %s request for %s [%s], version %s\n",
               request_.method (), request_.uri (), request_.path (),
@@ -282,7 +282,7 @@ HTTP_Response::cgi_response ()
                           ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i+1]));
 
   ACE_TCHAR buf[BUFSIZ];
-  ACE_TCHAR *p = nullptr, *q = nullptr;
+  ACE_TCHAR *p {}, *q {};
   ACE_OS::strcpy (buf, ACE_TEXT ("HTTP_"));
   p = q = buf + ACE_OS::strlen (buf);
 

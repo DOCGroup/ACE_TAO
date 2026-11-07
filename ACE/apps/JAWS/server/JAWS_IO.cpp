@@ -256,7 +256,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
                               int initial_data_length,
                               int entire_length)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_Filecache_Handle *handle;
 
   ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length, ACE_NOMAP));
@@ -304,7 +304,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
                                const char *trailer,
                                int trailer_size)
 {
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = nullptr;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
   ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, ACE_NOMAP);
 
   int result = handle->error ();
@@ -373,7 +373,7 @@ JAWS_Asynch_IO::send_message (const char *buffer,
                               int length,
                               int act)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
 
   if (mb == nullptr)

@@ -42,7 +42,7 @@ Headers::parse_header_line (char * const header_line)
   *ptr = '\0';
   ptr += offset;
 
-  char *value = nullptr;
+  char *value {};
   char *header = ACE_OS::strtok_r (buf, ":", &value);
 
   ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line [%s]\n",
