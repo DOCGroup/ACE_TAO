@@ -57,7 +57,7 @@ public:
   virtual ~TAO_Notify_Tests_Activation_Manager ();
 
   /// Interface impl.
-  virtual void start ();
+  void start () override;
 
   /// Register Supplier
   void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name);
@@ -83,8 +83,8 @@ public:
   void wait_for_completion ();
 
   /// TAO_Notify_Tests_Task_Callback methods
-  virtual void done (TAO_Notify_Tests_Periodic_Supplier* supplier);
-  virtual void done (TAO_Notify_Tests_Periodic_Consumer* consumer);
+  void done (TAO_Notify_Tests_Periodic_Supplier* supplier) override;
+  void done (TAO_Notify_Tests_Periodic_Consumer* consumer) override;
 
   // Dump stats gathered during exec..
   void dump_stats (int dump_samples);

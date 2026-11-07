@@ -32,7 +32,7 @@ public:
   ~TAO_Notify_Tests_Direct_Consumer ();
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect ();
+  void connect () override;
 };
 
 #include /**/ "ace/post.h"

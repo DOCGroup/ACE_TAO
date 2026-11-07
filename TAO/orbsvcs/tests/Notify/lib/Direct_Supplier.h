@@ -32,10 +32,10 @@ public:
   ~TAO_Notify_Tests_Direct_Supplier ();
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect ();
+  void connect () override;
 
   // Send one event. Bypass sending to the Notify and send directly to taget consumer.
-  virtual void send_event (const CosNotification::StructuredEvent& event);
+  void send_event (const CosNotification::StructuredEvent& event) override;
 
 protected:
   /// Target object.

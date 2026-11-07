@@ -42,13 +42,13 @@ public:
   void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
-  int init_state (ACE_Arg_Shifter& arg_shifter);
+  int init_state (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Activate this task, synch on the given barrier.
   virtual int activate_task (ACE_Barrier* barrier);
 
   /// task svc
-  virtual int svc ();
+  int svc () override;
 
   /// Dump stats.
   void dump_stats (ACE_TCHAR* msg, int dump_samples);

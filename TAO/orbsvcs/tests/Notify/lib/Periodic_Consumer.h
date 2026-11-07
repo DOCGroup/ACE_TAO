@@ -43,14 +43,14 @@ public:
   void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
-  virtual int init_state (ACE_Arg_Shifter& arg_shifter);
+  int init_state (ACE_Arg_Shifter& arg_shifter) override;
 
   /// dump stats
   void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
 protected:
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+        const CosNotification::StructuredEvent & notification) override;
 
   void handle_start_event (const CosNotification::PropertySeq& prop_seq);
   void check_priority (const CosNotification::PropertySeq& prop_seq);
