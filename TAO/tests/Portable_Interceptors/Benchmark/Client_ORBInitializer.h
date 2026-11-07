@@ -34,9 +34,9 @@ public:
   Client_ORBInitializer &operator= (Client_ORBInitializer const &) = delete;
   Client_ORBInitializer &operator= (Client_ORBInitializer &&) = delete;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
   Interceptor_Type const interceptor_type_;

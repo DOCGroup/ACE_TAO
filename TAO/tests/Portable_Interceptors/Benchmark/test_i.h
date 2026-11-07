@@ -29,15 +29,15 @@ public:
   Secure_Vault_i &operator= (Secure_Vault_i const &) = delete;
   Secure_Vault_i &operator= (Secure_Vault_i &&) = delete;
 
-  virtual CORBA::Short ready ();
+  CORBA::Short ready () override;
 
   /// Passwd sent in the service context list
-  virtual void authenticate (char const *user);
+  void authenticate (char const *user) override;
 
   CORBA::Long update_records (CORBA::Long id,
-                              Test_Interceptors::Secure_Vault::Record const &val);
+                              Test_Interceptors::Secure_Vault::Record const &val) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
  private:
   /// The ORB pointer (for shutdown.)

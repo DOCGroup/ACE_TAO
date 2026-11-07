@@ -24,26 +24,26 @@ class Vault_Client_Request_Interceptor
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
   Vault_Client_Request_Interceptor () = default;
-  virtual ~Vault_Client_Request_Interceptor () = default;
+  ~Vault_Client_Request_Interceptor () override = default;
   Vault_Client_Request_Interceptor (Vault_Client_Request_Interceptor const &) = delete;
   Vault_Client_Request_Interceptor (Vault_Client_Request_Interceptor &&) = delete;
   Vault_Client_Request_Interceptor &operator= (Vault_Client_Request_Interceptor const &) = delete;
   Vault_Client_Request_Interceptor &operator= (Vault_Client_Request_Interceptor &&) = delete;
 
-  virtual char * name ();
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
   char const *const myname_ { "Vault_Client_Interceptor" };
@@ -56,26 +56,26 @@ class Vault_Client_Request_Context_Interceptor
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
   Vault_Client_Request_Context_Interceptor () = default;
-  virtual ~Vault_Client_Request_Context_Interceptor () = default;
+  ~Vault_Client_Request_Context_Interceptor () override = default;
   Vault_Client_Request_Context_Interceptor (Vault_Client_Request_Context_Interceptor const &) = delete;
   Vault_Client_Request_Context_Interceptor (Vault_Client_Request_Context_Interceptor &&) = delete;
   Vault_Client_Request_Context_Interceptor &operator= (Vault_Client_Request_Context_Interceptor const &) = delete;
   Vault_Client_Request_Context_Interceptor &operator= (Vault_Client_Request_Context_Interceptor &&) = delete;
 
-  virtual char * name ();
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
   char const *const myname_ { "Vault_Client_Context_Interceptor" };
@@ -88,26 +88,26 @@ class Vault_Client_Request_Dynamic_Interceptor
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
   Vault_Client_Request_Dynamic_Interceptor () = default;
-  virtual ~Vault_Client_Request_Dynamic_Interceptor () = default;
+  ~Vault_Client_Request_Dynamic_Interceptor () override = default;
   Vault_Client_Request_Dynamic_Interceptor (Vault_Client_Request_Dynamic_Interceptor const &) = delete;
   Vault_Client_Request_Dynamic_Interceptor (Vault_Client_Request_Dynamic_Interceptor &&) = delete;
   Vault_Client_Request_Dynamic_Interceptor &operator= (Vault_Client_Request_Dynamic_Interceptor const &) = delete;
   Vault_Client_Request_Dynamic_Interceptor &operator= (Vault_Client_Request_Dynamic_Interceptor &&) = delete;
 
-  virtual char * name ();
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
   char const *const myname_ { "Vault_Client_Dynamic_Interceptor" };
@@ -120,26 +120,26 @@ class Vault_Client_Request_NOOP_Interceptor
   // = Client-side Vault interceptor.  For checking interceptor visually only.
 public:
   Vault_Client_Request_NOOP_Interceptor () = default;
-  virtual ~Vault_Client_Request_NOOP_Interceptor () = default;
+  ~Vault_Client_Request_NOOP_Interceptor () override = default;
   Vault_Client_Request_NOOP_Interceptor (Vault_Client_Request_NOOP_Interceptor const &) = delete;
   Vault_Client_Request_NOOP_Interceptor (Vault_Client_Request_NOOP_Interceptor &&) = delete;
   Vault_Client_Request_NOOP_Interceptor &operator= (Vault_Client_Request_NOOP_Interceptor const &) = delete;
   Vault_Client_Request_NOOP_Interceptor &operator= (Vault_Client_Request_NOOP_Interceptor &&) = delete;
 
-  virtual char * name ();
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
   char const *const myname_ { "Vault_Client_NOOP_Interceptor" };
