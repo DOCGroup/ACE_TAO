@@ -12,7 +12,6 @@
 //=============================================================================
 
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
@@ -31,6 +30,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include <cstring>
 
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
@@ -41,7 +41,7 @@
 
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = nullptr;
+static ACE_TCHAR *host {};
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
@@ -163,7 +163,7 @@ Receiver::initiate_read_stream ()
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the socket and to
   // <write> data asynchronously to the file.
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -345,10 +345,10 @@ Sender::Sender ()
     transmit_file_done_ (0)
 {
   // Moment of inspiration... :-)
-  static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+  static char const *const data = "Welcome to Irfan World! Irfan RULES here !!\n";
   this->welcome_message_.init (data,
-                               ACE_OS::strlen (data));
-  this->welcome_message_.wr_ptr (ACE_OS::strlen (data));
+                               std::strlen (data));
+  this->welcome_message_.wr_ptr (std::strlen (data));
 }
 
 Sender::~Sender ()
@@ -491,7 +491,7 @@ Sender::initiate_read_file ()
   // Create a new <Message_Block>.  Note that this message block will
   // be used both to <read> data asynchronously from the file and to
   // <write> data asynchronously to the socket.
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
