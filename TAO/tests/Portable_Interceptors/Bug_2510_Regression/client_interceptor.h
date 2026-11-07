@@ -22,8 +22,7 @@ class Echo_Client_Request_Interceptor
 {
   // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Client_Request_Interceptor ();
-  // ctor.
+  Echo_Client_Request_Interceptor () = default;
 
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
@@ -49,7 +48,7 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  char const *myname_;
+  char const *const myname_ { "Echo_Client_Interceptor" };
 };
 
 #if defined(_MSC_VER)

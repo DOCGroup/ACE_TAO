@@ -22,8 +22,7 @@ class Echo_Server_Request_Interceptor
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor ();
-  // cotr.
+  Echo_Server_Request_Interceptor () = default;
 
   Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor const &) = delete;
   Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor &&) = delete;
@@ -50,7 +49,7 @@ public:
   void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
 private:
-  char const *myname_;
+  char const *const myname_ { "Echo_Server_Interceptor" };
 };
 
 #if defined(_MSC_VER)

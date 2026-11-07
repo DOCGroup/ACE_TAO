@@ -12,21 +12,15 @@ void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  PortableInterceptor::SlotId slot_id = info->allocate_slot_id ();
-
-  PortableInterceptor::ClientRequestInterceptor_ptr interceptor =
-    PortableInterceptor::ClientRequestInterceptor::_nil ();
+  PortableInterceptor::ClientRequestInterceptor_ptr interceptor {};
 
   // Install the Echo client request interceptor
   ACE_NEW_THROW_EX (interceptor,
                     Echo_Client_Request_Interceptor (),
                     CORBA::NO_MEMORY ());
 
-  PortableInterceptor::ClientRequestInterceptor_var
-    client_interceptor = interceptor;
+  PortableInterceptor::ClientRequestInterceptor_var const client_interceptor (interceptor);
 
   info->add_client_request_interceptor (client_interceptor.in ());
-
-  ACE_UNUSED_ARG (slot_id);
 }
 
