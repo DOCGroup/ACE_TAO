@@ -503,7 +503,6 @@ FE_Utils::is_include_file_found (std::string &inc_file,
                                  std::string const& idl_file_name)
 {
   char abspath[MAXPATHLEN] = "";
-  char *full_path {};
 
   // If the include path has literal "s (because of an include
   // of a Windows path with spaces), we must remove them here.
@@ -517,10 +516,7 @@ FE_Utils::is_include_file_found (std::string &inc_file,
 
   inc_file += ACE_DIRECTORY_SEPARATOR_STR_A;
   inc_file += idl_file_name;
-  full_path =
-    ACE_OS::realpath (inc_file.c_str (), abspath);
-
-  if (full_path != nullptr)
+  if (ACE_OS::realpath (inc_file.c_str (), abspath) != nullptr)
     {
       FILE *test = ACE_OS::fopen (abspath, "r");
 
@@ -566,7 +562,6 @@ FE_Utils::validate_included_idl_files ()
 
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
-  char *full_path {};
 
   // We are going to assemble a list of the include files found in
   // the top level file in the order that they are found in the pre-
@@ -578,9 +573,7 @@ FE_Utils::validate_included_idl_files ()
   for (std::size_t i = 0u; i < n_post_preproc_includes; ++i)
     {
       std::string const& post_tmp = post_preproc_includes[i];
-      full_path = ACE_OS::realpath (post_tmp.c_str (), post_abspath);
-
-      if (full_path)
+      if (ACE_OS::realpath (post_tmp.c_str (), post_abspath) != nullptr)
         {
           for (std::size_t j = 0u; j < pre_preproc_includes.size (); ++j)
             {
@@ -588,9 +581,8 @@ FE_Utils::validate_included_idl_files ()
               // preprocessor.
 
               bool valid_file = false;
-              full_path = ACE_OS::realpath (pre_preproc_includes [j].c_str (),
-                                            pre_abspath);
-              if (full_path &&
+              if (ACE_OS::realpath (pre_preproc_includes [j].c_str (),
+                                    pre_abspath) != nullptr &&
                   FE_Utils::path_cmp (pre_abspath, post_abspath) == 0 &&
                   ACE_OS::access (post_abspath, R_OK) == 0)
                 {
@@ -612,11 +604,8 @@ FE_Utils::validate_included_idl_files ()
                     }
                   pre_partial += ACE_DIRECTORY_SEPARATOR_STR_A;
                   pre_partial += pre_preproc_includes [j];
-                  full_path =
-                    ACE_OS::realpath (pre_partial.c_str (),
-                                      pre_abspath);
-
-                  if (full_path &&
+                  if (ACE_OS::realpath (pre_partial.c_str (),
+                                        pre_abspath) != nullptr &&
                       FE_Utils::path_cmp (pre_abspath, post_abspath) == 0 &&
                       ACE_OS::access (post_abspath, R_OK) == 0)
                     {
