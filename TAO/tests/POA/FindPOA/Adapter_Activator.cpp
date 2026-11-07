@@ -15,7 +15,7 @@ Adapter_Activator::Adapter_Activator (
 
 CORBA::Boolean
 Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
-                                    const char *name)
+                                    char const *name)
 {
   // Default policies
   CORBA::PolicyList default_policies;
@@ -28,7 +28,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
     {
       child->the_activator (this);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       (void) child->destroy (1, 1);
 
