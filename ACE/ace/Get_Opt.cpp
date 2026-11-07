@@ -162,7 +162,7 @@ ACE_Get_Opt::~ACE_Get_Opt ()
 
   size_t i = 0;
   size_t size = this->long_opts_.size ();
-  ACE_Get_Opt_Long_Option *option = nullptr;
+  ACE_Get_Opt_Long_Option *option {};
   for (i = 0; i < size; ++i)
     {
       int retval = this->long_opts_.get (option, i);
@@ -239,7 +239,7 @@ ACE_Get_Opt::long_option_i ()
   ACE_TCHAR *s = this->nextchar_;
   int hits = 0;
   int exact = 0;
-  ACE_Get_Opt_Long_Option *pfound = nullptr;
+  ACE_Get_Opt_Long_Option *pfound {};
   int indfound = 0;
 
   // Advance to the end of the long option name so we can use
@@ -368,7 +368,7 @@ ACE_Get_Opt::short_option_i ()
   // Set last_option_ to opt
   this->last_option (opt);
 
-  ACE_TCHAR *oli = nullptr;
+  ACE_TCHAR *oli {};
   oli =
     const_cast<ACE_TCHAR*> (ACE_OS::strchr (this->optstring_->c_str (), opt));
 
@@ -491,7 +491,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
     {
       // If the short_option already exists, make sure it matches, otherwise
       // add it.
-      ACE_TCHAR *s = nullptr;
+      ACE_TCHAR *s {};
       if ((s = const_cast<ACE_TCHAR*> (
                  ACE_OS::strchr (this->optstring_->c_str (),
                                  short_option))) != nullptr)
@@ -636,7 +636,7 @@ ACE_Get_Opt::permute_args ()
   u_long cyclelen, i, j, ncycle, nnonopts, nopts;
   u_long opt_end = this->optind;
   int cstart, pos = 0;
-  ACE_TCHAR *swap = nullptr;
+  ACE_TCHAR *swap {};
 
   nnonopts = this->nonopt_end_ - this->nonopt_start_;
   nopts = opt_end - this->nonopt_end_;

@@ -172,8 +172,8 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
   int first_argc = 0;
   int second_argc = 0;
 
-  CHAR_TYPE *first_buf = nullptr;
-  CHAR_TYPE *second_buf = nullptr;
+  CHAR_TYPE *first_buf {};
+  CHAR_TYPE *second_buf {};
   size_t buf_len = 1;
 
   // convert the first argv to a string
@@ -359,7 +359,7 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
   // Get an iterator over the queue
   ACE_Unbounded_Queue_Iterator<ACE_ARGV_Queue_Entry_T<CHAR_TYPE> > iter (this->queue_);
 
-  ACE_ARGV_Queue_Entry_T<CHAR_TYPE> *arg = nullptr;
+  ACE_ARGV_Queue_Entry_T<CHAR_TYPE> *arg {};
   CHAR_TYPE *ptr = this->buf_;
   size_t len;
 

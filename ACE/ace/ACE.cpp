@@ -278,7 +278,7 @@ ACE::execname (const ACE_TCHAR *old_name)
   const ACE_TCHAR *suffix = ACE_OS::strrchr (old_name, ACE_TEXT ('.'));
   if (suffix == 0 || ACE_OS::strcasecmp (suffix, ACE_TEXT (".exe")) != 0)
     {
-      ACE_TCHAR *new_name = nullptr;
+      ACE_TCHAR *new_name {};
 
       size_t size =
         ACE_OS::strlen (old_name)
@@ -912,7 +912,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 {
   va_list argp;
   int const total_tuples = static_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -3221,7 +3221,7 @@ ACE::strndup (const wchar_t *str, size_t n)
     continue;
 
   size_t const size = (len + 1) * sizeof (wchar_t);
-  wchar_t *s = nullptr;
+  wchar_t *s {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<wchar_t*> (
@@ -3313,7 +3313,7 @@ ACE::strnew (const char *s)
 {
   if (s == nullptr)
     return nullptr;
-  char *t = nullptr;
+  char *t {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (t,
                         static_cast<char*> (ACE_Allocator::instance ()->malloc (sizeof (char) * (std::strlen (s) + 1))),
@@ -3335,7 +3335,7 @@ ACE::strnew (const wchar_t *s)
     return nullptr;
 
   size_t const n = ACE_OS::strlen (s) + 1;
-  wchar_t *t = nullptr;
+  wchar_t *t {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (t,
                         static_cast<wchar_t*> (
