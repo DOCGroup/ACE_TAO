@@ -90,7 +90,7 @@ ACE_URL_Addr::accept (ACE_URL_Addr_Visitor* visitor)
 ACE_URL_Addr*
 ACE_URL_Addr::create_address (const ACE_TCHAR *url)
 {
-  ACE_URL_Addr* addr = nullptr;
+  ACE_URL_Addr *addr {};
   if (ACE_OS::strncasecmp (http, url, http_size) == 0)
     ACE_NEW_RETURN (addr, ACE_HTTP_Addr (), nullptr);
   else if (ACE_OS::strncasecmp (ftp, url, ftp_size) == 0)
@@ -359,7 +359,7 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
   if (ACE_URL_Addr::known_scheme (url))
     return ACE_URL_Addr::create_address (url);
 
-  ACE_HTTP_Addr* addr = nullptr;
+  ACE_HTTP_Addr *addr {};
   if (url[0] == '/')
     {
       ACE_NEW_RETURN (addr, ACE_HTTP_Addr (this->get_hostname (),
