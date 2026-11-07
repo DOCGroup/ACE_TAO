@@ -10,7 +10,6 @@ TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager ()
   : active_suppliers_ (0)
   , active_consumers_ (0)
   , active_done_ (lock_)
-  , ior_output_file_ (0)
   , started_ (0)
   , started_condition_ (lock_)
 {
@@ -19,7 +18,7 @@ TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager ()
 
 TAO_Notify_Tests_Activation_Manager::~TAO_Notify_Tests_Activation_Manager ()
 {
-  if (this->ior_output_file_)
+  if (this->ior_output_file_ != nullptr)
     ACE_OS::fclose(this->ior_output_file_);
 }
 
@@ -28,7 +27,7 @@ TAO_Notify_Tests_Activation_Manager::ior_output_file (const ACE_TCHAR *file_name
 {
   this->ior_output_file_ = ACE_OS::fopen (file_name, ACE_TEXT("w"));
 
-  if (this->ior_output_file_ == 0)
+  if (this->ior_output_file_ == nullptr)
     return -1;
   else
     return 0;
@@ -151,7 +150,7 @@ TAO_Notify_Tests_Activation_Manager::activate_suppliers ()
   this->barrier_ = std::make_unique<ACE_Barrier> (this->supplier_count () + 1);
 
   // For each supplier : activate
-  TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
+  TAO_Notify_Tests_Periodic_Supplier* supplier {};
 
   for (; iter.done () == 0; iter.advance ())
     {
@@ -186,7 +185,7 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
   TAO_Notify_Tests_PeriodicSupplier_Entry* sup_entry;
 
   // For each supplier
-  TAO_Notify_Tests_Periodic_Supplier* supplier = 0;
+  TAO_Notify_Tests_Periodic_Supplier* supplier {};
 
   for (; sup_iter.done () == 0; sup_iter.advance ())
     {
@@ -202,7 +201,7 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
 
   TAO_Notify_Tests_PeriodicConsumer_Entry* cons_entry;
 
-  TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
+  TAO_Notify_Tests_Periodic_Consumer* consumer {};
   for (; cons_iter.done () == 0; cons_iter.advance ())
     {
       if (cons_iter.next (cons_entry) != 0)
@@ -233,7 +232,7 @@ TAO_Notify_Tests_Activation_Manager::write_ior ()
                        "%s",
                        str.in ());
       ACE_OS::fclose (this->ior_output_file_);
-      this->ior_output_file_ = 0;
+      this->ior_output_file_ = nullptr;
   }
 }
 

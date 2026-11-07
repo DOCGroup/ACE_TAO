@@ -83,11 +83,11 @@ public:
   void resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, const char *filter_admin_name);
 
 protected:
-  /// Application Starter
-  TAO_Notify_Tests_Driver_Base* app_;
+  /// Non-owning registered application starter.
+  TAO_Notify_Tests_Driver_Base* app_ {};
 
-  /// Activation Manager
-  TAO_Notify_Tests_Activation_Manager* activation_manager_;
+  /// Non-owning registered activation manager.
+  TAO_Notify_Tests_Activation_Manager* activation_manager_ {};
 
   /// Resolve to CORBA::Object
   CORBA::Object_ptr resolve_object (const char* obj_name);
@@ -101,8 +101,8 @@ protected:
   // A naming context.
   CosNaming::NamingContextExt_var naming_;
 
-  // Priority Mapping.
-  TAO_Notify_Tests_Priority_Mapping *priority_mapping_;
+  // Non-owning registered priority mapping.
+  TAO_Notify_Tests_Priority_Mapping* priority_mapping_ {};
 };
 
 TAO_NOTIFY_TEST_SINGLETON_DECLARE (ACE_Singleton, TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX)

@@ -18,7 +18,10 @@
 #include "tao/ORB.h"
 #include "Command.h"
 
+#include <memory>
+
 class TAO_Notify_Tests_Application_Command;
+class TAO_Notify_Tests_Priority_Mapping;
 
 /**
  * @class TAO_Notify_Tests_Application_Command
@@ -59,6 +62,9 @@ protected:
   /// Flag used with the DUMP_STATE command that asks for all samples to be put into the
   /// output data file.
   int dump_samples_;
+
+  /// Owns the priority mapping registered as a borrowed pointer with the lookup manager.
+  std::unique_ptr<TAO_Notify_Tests_Priority_Mapping> priority_mapping_;
 
   ///= Handlers
   virtual void handle_init ();

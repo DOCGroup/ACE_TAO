@@ -66,8 +66,8 @@ protected:
   /// Send Prologue
   void send_prologue ();
 
-  /// All tasks synch at this barrier.
-  ACE_Barrier* barrier_;
+  /// Non-owning barrier supplied by the activation manager.
+  ACE_Barrier* barrier_ {};
 
   /// The event to send.
   TAO_Notify_Tests_StructuredEvent event_;
@@ -101,8 +101,8 @@ protected:
   /// Stats house keeping
   Task_Stats stats_;
 
-  /// Client
-  TAO_Notify_Tests_Task_Callback* client_;
+  /// Non-owning callback supplied by the activation manager.
+  TAO_Notify_Tests_Task_Callback* client_ {};
 };
 
 #include /**/ "ace/post.h"

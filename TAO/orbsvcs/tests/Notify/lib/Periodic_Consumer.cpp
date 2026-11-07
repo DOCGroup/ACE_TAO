@@ -18,7 +18,6 @@ TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
   , warmup_countdown_ (WARMUP_COUNT)
   , max_count_ (-1)
   , load_ (0)
-  , client_ (0)
   , check_priority_ (0)
   , stop_received_ (0)
 {
@@ -41,11 +40,11 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
   if (TAO_Notify_Tests_StructuredPushConsumer::init_state (arg_shifter) == -1)
     return -1;
 
-  const ACE_TCHAR *current_arg = 0;
+  const ACE_TCHAR *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"))))
+      if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"))))
         {
           this->max_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();

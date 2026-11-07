@@ -76,8 +76,8 @@ protected:
   /// Stats house keeping
   Task_Stats stats_;
 
-  /// Client
-  TAO_Notify_Tests_Task_Callback* client_;
+  /// Non-owning callback supplied by the activation manager.
+  TAO_Notify_Tests_Task_Callback* client_ {};
 
   /// Flag to indicate if we want to check the expected priority.
   int check_priority_;

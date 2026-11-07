@@ -63,7 +63,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
               arg_shifter.consume_arg ();
             }
 
-          TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
+          TAO_Notify_Tests_Periodic_Consumer* consumer {};
 
           // create the consumer
           if (is_relay == 1)
@@ -75,7 +75,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           consumer->set_name (this->name_);
 
-         TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
+         TAO_Notify_Tests_Activation_Manager* act_mgr {};
          LOOKUP_MANAGER->resolve (act_mgr);
 
          {
@@ -142,18 +142,18 @@ TAO_Notify_Tests_Periodic_Consumer_Command::init (ACE_Arg_Shifter& arg_shifter)
 TAO_Notify_Tests_Periodic_Consumer*
 TAO_Notify_Tests_Periodic_Consumer_Command::consumer ()
 {
-  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr {};
 
   LOOKUP_MANAGER->resolve (act_mgr);
 
   // Locate the consumer
-  TAO_Notify_Tests_Periodic_Consumer* consumer = 0;
+  TAO_Notify_Tests_Periodic_Consumer* consumer {};
 
   {
     act_mgr->resolve (consumer, this->name_.c_str ());
   }
 
-  if (consumer == 0)
+  if (consumer == nullptr)
     ACE_DEBUG ((LM_DEBUG, "Consumer %s not found by Lookup Manager\n", this->name_.c_str ()));
 
   return consumer;
@@ -170,7 +170,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_create ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
-  if (consumer == 0)
+  if (consumer == nullptr)
     return;
 
   consumer->connect ();
@@ -181,8 +181,8 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_create ()
 void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions ()
 {
-  TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
-  if (consumer == 0)
+  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
+  if (consumer == nullptr)
     return;
 
   consumer->subscription_change (this->added_, this->removed_);
@@ -191,8 +191,8 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_subscriptions ()
 void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_disconnect ()
 {
-  TAO_Notify_Tests_Periodic_Consumer* consumer= this->consumer ();
-  if (consumer == 0)
+  TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
+  if (consumer == nullptr)
     return;
 
   consumer->disconnect ();
@@ -202,7 +202,7 @@ void
 TAO_Notify_Tests_Periodic_Consumer_Command::handle_deactivate ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
-  if (consumer == 0)
+  if (consumer == nullptr)
     return;
 
   consumer->deactivate ();
@@ -213,7 +213,7 @@ TAO_Notify_Tests_Periodic_Consumer_Command::handle_status ()
 {
   TAO_Notify_Tests_Periodic_Consumer* consumer = this->consumer ();
 
-  if (consumer == 0)
+  if (consumer == nullptr)
     return;
 
   consumer->status ();

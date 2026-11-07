@@ -3,7 +3,6 @@
 
 #include "Consumer_T.h"
 
-
 template <class Consumer_Traits>
 TAO_Notify_Tests_Consumer_T<Consumer_Traits>::TAO_Notify_Tests_Consumer_T ()
 {
@@ -28,7 +27,6 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::obtain_proxy (typename TAO_Notify_
   CosNotifyChannelAdmin::ProxySupplier_var proxy_supplier =
     admin_ptr->obtain_notification_push_supplier (traits.type_
                                                   , this->proxy_id_);
-
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier.in ()));
 
@@ -74,7 +72,7 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotificati
   /// subscribe
   typename Proxy_Traits::PTR proxy_supplier = this->get_proxy ();
 
-  if (proxy_supplier != 0)
+  if (proxy_supplier != nullptr)
     {
       proxy_supplier->subscription_change (added, removed);
     }

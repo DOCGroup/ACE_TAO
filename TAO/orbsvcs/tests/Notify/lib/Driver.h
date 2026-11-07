@@ -22,6 +22,8 @@
 
 #include "Driver_Base.h"
 
+#include <memory>
+
 class TAO_Notify_Tests_Command_Builder;
 class TAO_Notify_Tests_Activation_Manager;
 
@@ -45,10 +47,9 @@ public:
   void shutdown ();
 
 private:
-  /// The command builder
-  TAO_Notify_Tests_Command_Builder* cmd_builder_;
+  /// Non-owning pointer to the service-configured command builder.
+  TAO_Notify_Tests_Command_Builder* cmd_builder_ {};
 };
-
 
 /**
  * Run a server thread
@@ -77,7 +78,6 @@ private:
   ACE_Time_Value run_period_;
 };
 
-
 /**
  * @class TAO_Notify_Tests_Driver
  *
@@ -105,11 +105,11 @@ protected:
   /// Parse command line parameters.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  /// The command builder
-  TAO_Notify_Tests_Command_Builder* cmd_builder_;
+  /// Non-owning pointer to the service-configured command builder.
+  TAO_Notify_Tests_Command_Builder* cmd_builder_ {};
 
-  /// Manage activation of periodic suppliers and consumers.
-  TAO_Notify_Tests_Activation_Manager* activation_manager_;
+  /// The driver-owned activation manager.
+  std::unique_ptr<TAO_Notify_Tests_Activation_Manager> activation_manager_;
 
   /// Thread in which to run commands.
   TAO_Notify_Tests_Worker worker_;

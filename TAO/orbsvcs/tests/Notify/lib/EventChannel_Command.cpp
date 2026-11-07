@@ -1,7 +1,6 @@
 #include "EventChannel_Command.h"
 #include "ace/Log_Msg.h"
 
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
@@ -91,7 +90,7 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf ()
   // The Service Object.
   TAO_Notify_Service* notify_service = TAO_Notify_Service::load_default ();
 
-  if (notify_service == 0)
+  if (notify_service == nullptr)
     {
       ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
       return;

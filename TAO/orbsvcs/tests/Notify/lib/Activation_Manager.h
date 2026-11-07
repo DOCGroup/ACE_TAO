@@ -125,8 +125,8 @@ protected:
   // Map that stores consumers.
   TAO_Notify_Tests_PeriodicConsumer_Map consumer_map_;
 
-  /// The file for output
-  FILE *ior_output_file_;
+  /// Owned output stream; closed after writing or when the manager is destroyed.
+  FILE *ior_output_file_ {};
 
   /// The file for input
   ACE_TString ior_input_file_;

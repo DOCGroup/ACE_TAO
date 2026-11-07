@@ -1,6 +1,5 @@
 #include "Driver.h"
 
-
 #include "ace/Dynamic_Service.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Arg_Shifter.h"
@@ -16,7 +15,7 @@
 const char *
 sched_policy_name (int sched_policy)
 {
-  const char *name = 0;
+  const char *name {};
 
   switch (sched_policy)
     {
@@ -60,8 +59,7 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 }
 
 /*****************************************************************/
-TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker () :
-  cmd_builder_ (0)
+TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker ()
 {
 }
 
@@ -88,7 +86,6 @@ TAO_Notify_Tests_Worker::svc ()
   ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d\n", priority));
 #endif
 
-
   try
     {
       ACE_DEBUG ((LM_DEBUG, "Running Commands...\n"));
@@ -98,7 +95,6 @@ TAO_Notify_Tests_Worker::svc ()
     {
       ex._tao_print_exception ("Error: ORB run error\n");
     }
-
 
   ACE_DEBUG ((LM_DEBUG, "Finished executing commands\n"));
 
@@ -161,38 +157,37 @@ TAO_Notify_Tests_ORB_Run_Worker::svc ()
 /*****************************************************************/
 
 TAO_Notify_Tests_Driver::TAO_Notify_Tests_Driver ()
-  :cmd_builder_ (0), activation_manager_ (0), run_period_ (0,0), skip_priority_levels_check_ (0)
+  : activation_manager_ (std::make_unique<TAO_Notify_Tests_Activation_Manager> ()),
+    run_period_ (0, 0),
+    skip_priority_levels_check_ (0)
 {
-  this->activation_manager_ = new TAO_Notify_Tests_Activation_Manager ();
-  LOOKUP_MANAGER->_register (this->activation_manager_);
+  LOOKUP_MANAGER->_register (this->activation_manager_.get ());
 
   LOOKUP_MANAGER->_register (this);
 }
 
 TAO_Notify_Tests_Driver::~TAO_Notify_Tests_Driver ()
-{
-  delete this->activation_manager_;
-}
+= default;
 
 int
 TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = 0;
+  const ACE_TCHAR *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout")))) // -Timeout timeout_period_S
+      if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout")))) // -Timeout timeout_period_S
         {
-          if (current_arg != 0)
+          if (current_arg != nullptr)
             {
               this->run_period_ = ACE_Time_Value (ACE_OS::atoi (current_arg), 0);
             }
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput file_name
+      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput
         {
           if (this->activation_manager_->ior_output_file (current_arg) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -201,7 +196,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
+      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
         {
           if (this->activation_manager_->ior_input_file (current_arg) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -286,7 +281,6 @@ TAO_Notify_Tests_Driver::run ()
                     ACE_DEFAULT_THREAD_PRIORITY,
                     -1));
     }
-
 
   // Activate the ORB run worker.
   if (this->orb_run_worker_.activate (flags, 1, 0, priority) == -1)

@@ -1,13 +1,9 @@
 #include "LookupManager.h"
-#include "ace/OS_NS_string.h"
-
-
 #include "Name.h"
 
+#include <cstring>
+
 TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager ()
-  : app_ (0)
-    , activation_manager_ (0)
-    , priority_mapping_ (0)
 {
 }
 
@@ -94,7 +90,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNaming::NamingContextExt_var& naming
 void
 TAO_Notify_Tests_LookupManager::resolve (PortableServer::POA_var& poa, const char *poa_name)
 {
-  if (ACE_OS::strcmp (poa_name, TAO_Notify_Tests_Name::root_poa) == 0)
+  if (std::strcmp (poa_name, TAO_Notify_Tests_Name::root_poa) == 0)
     {
       CORBA::Object_ptr poa_object  =
                 this->orb_->resolve_initial_references(TAO_Notify_Tests_Name::root_poa);
