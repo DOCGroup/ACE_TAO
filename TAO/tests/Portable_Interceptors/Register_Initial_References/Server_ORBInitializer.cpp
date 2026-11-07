@@ -4,25 +4,22 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Constants.h"
 
-Server_ORBInitializer::Server_ORBInitializer ()
-{
-}
-
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr orbinitinfo)
 {
-  POA_TestModule::test *test = nullptr;
+  POA_TestModule::test *test {};
   ACE_NEW (test,
            test_i);
+  // Transfer ownership of the servant to the CORBA var.
   PortableServer::ServantBase_var safe (test);
 
-  CORBA::Object_var object = test->_this ();
+  CORBA::Object_var const object (test->_this ());
 
   orbinitinfo->register_initial_reference ("MyService",
                                            object.in ());
 
-  bool invalid_name = false;
+  bool invalid_name {};
   try
     {
       // Registering with an empty string should give an exception
@@ -41,7 +38,7 @@ Server_ORBInitializer::pre_init (
     ACE_ERROR ((LM_ERROR, "ERROR: Registering with an empty string doesn't "
                           "throw an exception\n"));
 
-  bool duplicate_name = false;
+  bool duplicate_name {};
   try
     {
       // Registering with an duplicate string should give an exception
@@ -60,7 +57,7 @@ Server_ORBInitializer::pre_init (
     ACE_ERROR ((LM_ERROR, "ERROR: Registering with a duplicate with ORBInitInfo "
                           "doesn't throw the expected exception\n"));
 
-  bool invalid_object = false;
+  bool invalid_object {};
   try
     {
       // Registering with a nil object
