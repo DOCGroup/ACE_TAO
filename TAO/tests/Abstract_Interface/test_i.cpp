@@ -51,16 +51,14 @@ passer_i::shutdown ()
 void
 passer_i::pass_ops (base_out outarg)
 {
-  foo_i *servant {};
-  ACE_NEW (servant,
-           foo_i);
+  PortableServer::ServantBase_var servant;
+  ACE_NEW (servant.inout (), foo_i);
 
   PortableServer::ObjectId_var id =
-    this->poa_->activate_object (servant);
+    this->poa_->activate_object (servant.in ());
 
   CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
 
-  PortableServer::ServantBase_var safety (servant);
   outarg = foo::_narrow (object.in ());
 }
 
@@ -68,27 +66,23 @@ void
 passer_i::pass_state (base_out outarg)
 {
   TreeController_var tc;
-  ACE_NEW (tc.inout (),
-           OBV_TreeController);
+  ACE_NEW (tc.inout (), OBV_TreeController);
 
   // Create the root node.
   StringNode_var sn;
-  ACE_NEW (sn.inout (),
-           OBV_StringNode);
+  ACE_NEW (sn.inout (), OBV_StringNode);
   sn->name ("RootNode");
   tc->root (sn.in ());
 
   // Create the left leaf.
   StringNode_var l_dummy;
-  ACE_NEW (l_dummy.inout (),
-           OBV_StringNode);
+  ACE_NEW (l_dummy.inout (), OBV_StringNode);
   l_dummy->name ("LeftNode");
   sn->left (l_dummy.in ());
 
   // Create the right leaf.
   StringNode_var r_dummy;
-  ACE_NEW (r_dummy.inout (),
-           OBV_StringNode);
+  ACE_NEW (r_dummy.inout (), OBV_StringNode);
   r_dummy->name ("RightNode");
   sn->right (r_dummy.in ());
 
