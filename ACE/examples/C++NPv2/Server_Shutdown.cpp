@@ -6,7 +6,7 @@
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -48,7 +48,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   for (;;) {
     char user_input[80];
     ACE_OS::fgets (user_input, sizeof (user_input), stdin);
-    if (ACE_OS::strcmp (user_input, "quit") == 0) {
+    if (std::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;
     }

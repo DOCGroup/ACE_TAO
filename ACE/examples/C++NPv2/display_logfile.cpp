@@ -15,6 +15,7 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/OS_NS_time.h"
 
 template <class TASK>
@@ -291,7 +292,7 @@ public:
     ACE_OS::ctime_r (&time_secs,
                      timestamp_t,
                      sizeof timestamp_t / sizeof (ACE_TCHAR));
-    ACE_OS::strcpy (timestamp, ACE_TEXT_ALWAYS_CHAR (timestamp_t));
+    std::strcpy (timestamp, ACE_TEXT_ALWAYS_CHAR (timestamp_t));
     mblk->size (26); // Max size of ctime_r() string.
     mblk->reset ();
     timestamp[19] = '\0'; // NUL-terminate after the time.
@@ -328,7 +329,7 @@ public:
       ACE_Message_Block *separator {};
       ACE_NEW_RETURN
         (separator,
-         ACE_Message_Block (ACE_OS::strlen ("|") + 1,
+         ACE_Message_Block (std::strlen ("|") + 1,
                             ACE_Message_Block::MB_DATA,
                             nullptr, nullptr, nullptr, &lock_strategy_),
          -1);

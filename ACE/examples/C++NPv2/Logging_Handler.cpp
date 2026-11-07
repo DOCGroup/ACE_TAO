@@ -14,7 +14,7 @@
 
 #include "Logging_Handler.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
 {
@@ -26,7 +26,7 @@ int Logging_Handler::recv_log_record (ACE_Message_Block *&mblk)
     new ACE_Message_Block (MAXHOSTNAMELEN + 1)};
   ACE_Message_Block *message_block = message_block_owner.get ();
   peer_addr.get_host_name (message_block->wr_ptr (), MAXHOSTNAMELEN);
-  message_block->wr_ptr (ACE_OS::strlen (message_block->wr_ptr ()) + 1); // Go past name
+  message_block->wr_ptr (std::strlen (message_block->wr_ptr ()) + 1); // Go past name
 
   // Allocate a message block for the payload; initially at least
   // large enough to hold the header, but needs some room for

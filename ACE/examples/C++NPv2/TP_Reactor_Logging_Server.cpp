@@ -14,6 +14,7 @@
 #else
 # include <string>
 #endif
+#include <cstring>
 
 #include <memory>
 #include "Reactor_Logging_Server_T.h"
@@ -59,7 +60,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   for (;;) {
     char user_input[80];
     ACE_OS::fgets (user_input, sizeof (user_input), stdin);
-    if (ACE_OS::strcmp (user_input, "quit") == 0) {
+    if (std::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;
     }

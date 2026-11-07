@@ -9,7 +9,7 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Thread_Manager.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
@@ -45,7 +45,7 @@ public:
       return -1;
 
     user_input[count] = '\0';
-    if (ACE_OS::strncmp (user_input, "quit", 4) == 0)
+    if (std::strncmp (user_input, "quit", 4) == 0)
       return -1;
     return 0;
   }
