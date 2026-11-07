@@ -62,6 +62,15 @@ static void TestAddressIter ()
   ACE_ASSERT(addresses_read == expected_count);
 }
 
+static void TestAppleTalkAddress ()
+{
+  char const address_bytes[] {1, 2, 3, '\0'};
+  AppleTalkAddress address (address_bytes);
+
+  ACE_ASSERT (address.valid () == 1);
+  ACE_ASSERT (std::strcmp (address.to_string (), "1.2.3") == 0);
+}
+
 // test the GenAddress interface
 static void TestGenAddr()
 {
@@ -549,6 +558,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Address_Test"));
 
   TestAddressIter();
+  TestAppleTalkAddress();
   TestGenAddr();
   TestIpAddress();
   TestUdpAddress();

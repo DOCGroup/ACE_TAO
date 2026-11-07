@@ -35,9 +35,9 @@
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_Memory.h"
+#include <cstdio>
 
 //=================================================================
 //======== Abstract Address Class Implementation ==================
@@ -619,8 +619,11 @@ void IpAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%d.%d.%d.%d",address_buffer[0],
-             address_buffer[1], address_buffer[2], address_buffer[3]);
+    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u.%u.%u",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]),
+                   static_cast<unsigned int> (address_buffer[2]),
+                   static_cast<unsigned int> (address_buffer[3]));
   else
     output_buffer[0] = 0;
 }
@@ -961,9 +964,12 @@ void UdpAddress::format_output()
 
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%s:%d",
-                    IpAddress::to_string(),
-                    get_port() );
+    {
+      char ip_address[16] {};
+      std::snprintf (ip_address, sizeof ip_address, "%s", IpAddress::to_string ());
+      std::snprintf (output_buffer, sizeof output_buffer, "%s:%u", ip_address,
+                     static_cast<unsigned int> (get_port ()));
+    }
   else
     output_buffer[0] = 0;
 }
@@ -1452,13 +1458,18 @@ const char * IpxAddress::to_string()
 void IpxAddress::format_output()
 {
   if ( valid_flag)
-    ACE_OS::sprintf((char *) output_buffer,
-            "%02x%02x%02x%02x%c%02x%02x%02x%02x%02x%02x",
-            address_buffer[0],address_buffer[1],
-            address_buffer[2],address_buffer[3],'-',
-            address_buffer[4],address_buffer[5],
-            address_buffer[6],address_buffer[7],
-            address_buffer[8],address_buffer[9]);
+    std::snprintf (output_buffer, sizeof output_buffer,
+                   "%02x%02x%02x%02x-%02x%02x%02x%02x%02x%02x",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]),
+                   static_cast<unsigned int> (address_buffer[2]),
+                   static_cast<unsigned int> (address_buffer[3]),
+                   static_cast<unsigned int> (address_buffer[4]),
+                   static_cast<unsigned int> (address_buffer[5]),
+                   static_cast<unsigned int> (address_buffer[6]),
+                   static_cast<unsigned int> (address_buffer[7]),
+                   static_cast<unsigned int> (address_buffer[8]),
+                   static_cast<unsigned int> (address_buffer[9]));
   else
     output_buffer[0] = 0;
 }
@@ -1470,10 +1481,13 @@ int IpxAddress::get_hostid( MacAddress& mac)
    if ( valid_flag)
    {
        char buffer[18];
-       ACE_OS::sprintf( buffer,"%02x:%02x:%02x:%02x:%02x:%02x",
-                address_buffer[4],
-                address_buffer[5], address_buffer[6], address_buffer[7],
-                address_buffer[8], address_buffer[9]);
+       std::snprintf (buffer, sizeof buffer, "%02x:%02x:%02x:%02x:%02x:%02x",
+                      static_cast<unsigned int> (address_buffer[4]),
+                      static_cast<unsigned int> (address_buffer[5]),
+                      static_cast<unsigned int> (address_buffer[6]),
+                      static_cast<unsigned int> (address_buffer[7]),
+                      static_cast<unsigned int> (address_buffer[8]),
+                      static_cast<unsigned int> (address_buffer[9]));
        MacAddress temp( buffer);
        // mac = (SnmpSyntax&) temp;
        mac = temp;
@@ -1674,8 +1688,12 @@ void IpxSockAddress::format_output()
   IpxAddress::format_output(); // allow ancestors to format their buffers
 
   if ( valid_flag)
-    ACE_OS::sprintf((char *) output_buffer,"%s/%d",
-            IpxAddress::to_string(), get_socket());
+    {
+      char ipx_address[22] {};
+      std::snprintf (ipx_address, sizeof ipx_address, "%s", IpxAddress::to_string ());
+      std::snprintf (output_buffer, sizeof output_buffer, "%s/%u", ipx_address,
+                     static_cast<unsigned int> (get_socket ()));
+    }
   else
     output_buffer[0] = 0;
 }
@@ -1958,9 +1976,13 @@ const char * MacAddress::to_string()
 void MacAddress::format_output()
 {
   if ( valid_flag)
-    ACE_OS::sprintf(output_buffer,"%02x:%02x:%02x:%02x:%02x:%02x",address_buffer[0],
-                    address_buffer[1],address_buffer[2],address_buffer[3],
-                    address_buffer[4],address_buffer[5]);
+    std::snprintf (output_buffer, sizeof output_buffer, "%02x:%02x:%02x:%02x:%02x:%02x",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]),
+                   static_cast<unsigned int> (address_buffer[2]),
+                   static_cast<unsigned int> (address_buffer[3]),
+                   static_cast<unsigned int> (address_buffer[4]),
+                   static_cast<unsigned int> (address_buffer[5]));
   else
     output_buffer[0] = 0;
 }
@@ -2527,8 +2549,9 @@ void DecNetAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%d.%d",address_buffer[0],
-             address_buffer[1]);
+    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]));
   else
     output_buffer[0] = 0;
 }
@@ -2663,8 +2686,10 @@ void AppleTalkAddress::format_output()
 {
   // if valid format else null it
   if ( valid_flag)
-    ACE_OS::sprintf( (char *) output_buffer,"%d.%d.%d", address_buffer[0],
-             address_buffer[1], address_buffer[3]);
+    std::snprintf (output_buffer, sizeof output_buffer, "%u.%u.%u",
+                   static_cast<unsigned int> (address_buffer[0]),
+                   static_cast<unsigned int> (address_buffer[1]),
+                   static_cast<unsigned int> (address_buffer[2]));
   else
     output_buffer[0] = 0;
 }
