@@ -24,6 +24,8 @@
 
 #include "tao/Endpoint_Selector_Factory.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward references
@@ -75,7 +77,7 @@ private:
 protected:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
-  TAO_Default_Endpoint_Selector * const default_endpoint_selector_;
+  std::unique_ptr<TAO_Default_Endpoint_Selector> const default_endpoint_selector_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Endpoint_Selector_Factory)
