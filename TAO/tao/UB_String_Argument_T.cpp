@@ -3,9 +3,9 @@
 
 #include "tao/UB_String_Argument_T.h"
 #include "tao/CDR.h"
-#include "ace/OS_NS_string.h"
 
 #include <memory>
+#include <string>
 
 #if !defined (__ACE_INLINE__)
 #include "tao/UB_String_Argument_T.inl"
@@ -51,10 +51,10 @@ template<typename S_var,
 TAO::Argument*
 TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::clone ()
 {
-  size_t const len = ACE_OS::strlen (this->x_);
-  std::unique_ptr<typename S_var::s_traits::char_type[]> clone_x (
-    new typename S_var::s_traits::char_type[len + 1]);
-  ACE_OS::strncpy (clone_x.get (), this->x_, len);
+  using char_type = typename S_var::s_traits::char_type;
+  size_t const len = std::char_traits<char_type>::length (this->x_);
+  std::unique_ptr<char_type[]> clone_x (new char_type[len + 1]);
+  std::char_traits<char_type>::copy (clone_x.get (), this->x_, len);
   clone_x[len] = '\0';
   std::unique_ptr<In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>> clone_arg =
     std::make_unique<In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>> (clone_x.get ());
