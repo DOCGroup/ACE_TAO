@@ -31,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
           if (monitor_point.ptr () == nullptr)
             {
-              ::Monitor::NameList *new_monitor_point = nullptr;
+              ::Monitor::NameList *new_monitor_point {};
               ACE_NEW_THROW_EX (new_monitor_point,
                                 ::Monitor::NameList,
                                 CORBA::NO_MEMORY ());
