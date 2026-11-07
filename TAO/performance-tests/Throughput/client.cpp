@@ -3,14 +3,17 @@
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int message_size  = 2048;
-int message_count = 10 * 1024;
-int test_runs   = 6;
-int do_shutdown = 0;
+struct Client_Options
+{
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+  int message_size = 2048;
+  int message_count = 10 * 1024;
+  int test_runs = 6;
+  bool shutdown = false;
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:b:i:n:x"));
   int c;
@@ -19,34 +22,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'b':
-        message_size = ACE_OS::atoi (get_opts.opt_arg ());
+        options.message_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        message_count = ACE_OS::atoi (get_opts.opt_arg ());
+        options.message_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'n':
-        test_runs = ACE_OS::atoi (get_opts.opt_arg ());
+        options.test_runs = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        do_shutdown = 1;
+        options.shutdown = true;
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-b <message_size> "
-                           "-i <message_count> "
-                           "-n <test_repetitions> "
-                           "\n",
+                           ACE_TEXT("usage: %s -k <ior> -b <message_size> "
+                                    "-i <message_count> -n <test_repetitions> [-x]\n"),
                            argv [0]),
                           -1);
       }
@@ -62,11 +61,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var tmp = orb->string_to_object (options.ior);
 
       Test::Receiver_Factory_var receiver_factory =
         Test::Receiver_Factory::_narrow(tmp.in ());
@@ -74,42 +73,43 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (receiver_factory.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil receiver factory reference <%s>\n",
-                             ior),
+                             ACE_TEXT("Nil receiver factory reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
 
       Test::Message message;
+      int message_size = options.message_size;
 
-      for (int j = 0; j != test_runs; ++j)
+      for (int j = 0; j != options.test_runs; ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Testing with %d bytes per message\n",
                       message_size));
 
-          message.the_payload.length (message_size);
+          message.the_payload.length (static_cast<CORBA::ULong> (message_size));
 
           Test::Receiver_var receiver =
             receiver_factory->create_receiver ();
 
-          ACE_hrtime_t start = ACE_OS::gethrtime ();
-          for (int i = 0; i != message_count; ++i)
+          ACE_hrtime_t const start = ACE_OS::gethrtime ();
+          for (int i = 0; i != options.message_count; ++i)
             {
               message.message_id = i;
               receiver->receive_data (message);
             }
 
           receiver->done ();
-          ACE_hrtime_t elapsed_time = ACE_OS::gethrtime () - start;
+          ACE_hrtime_t const elapsed_time = ACE_OS::gethrtime () - start;
 
           // convert to microseconds
-          ACE_UINT32 usecs = ACE_UINT32(elapsed_time / gsf);
+          ACE_UINT32 const usecs = ACE_UINT32 (elapsed_time / gsf);
 
           double bytes =
-            (1000000.0 * message_count * message_size) / usecs;
+            (1000000.0 * options.message_count * message_size) / usecs;
           double kbytes = bytes / 1024;
           double mbytes = kbytes / 1024;
           double mbits  = bytes * 8 / 1000000;
@@ -124,14 +124,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           message_size *= 2;
         }
 
-      if (do_shutdown)
+      if (options.shutdown)
         {
           receiver_factory->shutdown ();
         }
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -2,19 +2,10 @@
 #include "Receiver.h"
 #include "ace/High_Res_Timer.h"
 
-Receiver::Receiver ()
-  : start_time_ (0)
-  , message_count_ (0)
-  , byte_count_ (0)
-  , last_message_time_ (0)
-  , last_message_id_ (0)
-{
-}
-
 void
-Receiver::receive_data (const Test::Message &the_message)
+Receiver::receive_data (Test::Message const &the_message)
 {
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   if (this->message_count_ == 0)
     {
       this->start_time_ = now;
@@ -48,14 +39,14 @@ Receiver::done ()
     }
   else
     {
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
 
-      ACE_hrtime_t elapsed_time =
+      ACE_hrtime_t const elapsed_time =
         this->last_message_time_ - this->start_time_;
 
       // convert to microseconds
-      ACE_UINT32 usecs = ACE_UINT32(elapsed_time / gsf);
+      ACE_UINT32 const usecs = ACE_UINT32 (elapsed_time / gsf);
 
       if (usecs != 0)
         {
@@ -80,5 +71,7 @@ Receiver::done ()
         poa->servant_to_id (this);
       poa->deactivate_object (oid.in ());
     }
-  catch (const CORBA::Exception&){}
+  catch (CORBA::Exception const &)
+    {
+    }
 }

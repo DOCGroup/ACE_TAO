@@ -11,12 +11,16 @@ class Receiver_Factory
 {
 public:
   /// Constructor
-  Receiver_Factory (CORBA::ORB_ptr orb);
+  explicit Receiver_Factory (CORBA::ORB_ptr orb);
+  Receiver_Factory (Receiver_Factory const &) = delete;
+  Receiver_Factory (Receiver_Factory &&) = delete;
+  Receiver_Factory &operator= (Receiver_Factory const &) = delete;
+  Receiver_Factory &operator= (Receiver_Factory &&) = delete;
 
   // = The skeleton methods
-  virtual Test::Receiver_ptr create_receiver ();
+  Test::Receiver_ptr create_receiver () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Keep a reference to the ORB in order to shutdown the app

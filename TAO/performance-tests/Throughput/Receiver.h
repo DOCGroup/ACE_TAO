@@ -17,28 +17,32 @@ class Receiver
 {
 public:
   /// Constructor
-  Receiver ();
+  Receiver () = default;
+  Receiver (Receiver const &) = delete;
+  Receiver (Receiver &&) = delete;
+  Receiver &operator= (Receiver const &) = delete;
+  Receiver &operator= (Receiver &&) = delete;
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Message &message);
+  void receive_data (Test::Message const &message) override;
 
-  virtual void done ();
+  void done () override;
 
 private:
   /// The timestamp for the first message
-  ACE_hrtime_t start_time_;
+  ACE_hrtime_t start_time_ {};
 
   /// The number of messages received
-  size_t message_count_;
+  size_t message_count_ {};
 
   /// The number of bytes received
-  size_t byte_count_;
+  size_t byte_count_ {};
 
   /// The timestamp for the last message
-  ACE_hrtime_t last_message_time_;
+  ACE_hrtime_t last_message_time_ {};
 
   /// The id for the last message
-  CORBA::ULong last_message_id_;
+  CORBA::ULong last_message_id_ {};
 };
 
 #if defined(_MSC_VER)
