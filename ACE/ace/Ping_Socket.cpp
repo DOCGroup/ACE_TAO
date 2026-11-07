@@ -4,13 +4,14 @@
 
 #include "ace/INET_Addr.h"
 #include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Ping_Socket.inl"
@@ -105,8 +106,8 @@ ACE_Ping_Socket::ACE_Ping_Socket (ACE_Addr const & local,
 {
   ACE_TRACE ("ACE_Ping_Socket::ACE_Ping_Socket");
 
-  ACE_OS::memset (icmp_send_buff_, 0, sizeof (icmp_send_buff_));
-  ACE_OS::memset (icmp_recv_buff_, 0, sizeof (icmp_recv_buff_));
+  std::memset (icmp_send_buff_, 0, sizeof (icmp_send_buff_));
+  std::memset (icmp_recv_buff_, 0, sizeof (icmp_recv_buff_));
 
   if (this->open (local, protocol, reuse_addr) == -1)
     {
@@ -151,7 +152,7 @@ ACE_Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
   ACE_Time_Value *wait_time = const_cast<ACE_Time_Value *> (timeout);
   const ACE_Time_Value half_millisec (0, 500);
 
-  ACE_OS::memset (icmp_recv_buff_, 0, sizeof icmp_recv_buff_);
+  std::memset (icmp_recv_buff_, 0, sizeof icmp_recv_buff_);
 
   do
     {
@@ -299,9 +300,9 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
    * Nulling port field to prevent strange behavior, when a raw
    * socket is "connected" to a sockaddr_in with a non-nulled port.
    */
-  ACE_OS::memset ((void*) &addr_connect->sin_port,
-                  0,
-                  sizeof (addr_connect->sin_port));
+  std::memset (&addr_connect->sin_port,
+               0,
+               sizeof (addr_connect->sin_port));
 
   // to connect the socket
   if (to_connect && !this->connected_socket_)
@@ -316,7 +317,7 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
       this->connected_socket_ = true;
     }
 
-  ACE_OS::memset (this->icmp_send_buff_, 0, sizeof this->icmp_send_buff_);
+  std::memset (this->icmp_send_buff_, 0, sizeof this->icmp_send_buff_);
   int datalen = ICMP_DATA_LENGTH;
   struct icmp *_icmp = nullptr;
 
