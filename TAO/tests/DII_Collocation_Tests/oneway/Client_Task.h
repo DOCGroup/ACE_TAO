@@ -15,8 +15,8 @@ class Client_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Client_Task (const ACE_TCHAR *input,
-               const ACE_TCHAR *simple_test_ior,
+  Client_Task (ACE_TCHAR const *input,
+               ACE_TCHAR const *simple_test_ior,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
   Client_Task (Client_Task const &) = delete;
