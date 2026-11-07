@@ -26,7 +26,7 @@ class Client_ORBInitializer :
 {
 public:
   /// Constructor
-  Client_ORBInitializer (Client_ORBInitializer *second);
+  explicit Client_ORBInitializer (Client_ORBInitializer *second);
 
   Client_ORBInitializer (Client_ORBInitializer const &) = delete;
   Client_ORBInitializer (Client_ORBInitializer &&) = delete;
@@ -36,10 +36,12 @@ public:
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  int pre_init_called;
-  int post_init_called;
+  int pre_init_called {};
+  int post_init_called {};
+
 private:
-  Client_ORBInitializer *second_;
+  // Borrowed until it is registered; the client-side ORBInitializer_var owns it.
+  Client_ORBInitializer *second_ {};
 };
 
 #if defined(_MSC_VER)

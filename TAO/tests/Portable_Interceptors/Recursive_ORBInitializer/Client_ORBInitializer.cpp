@@ -3,10 +3,8 @@
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-Client_ORBInitializer::Client_ORBInitializer (Client_ORBInitializer *second) :
-  pre_init_called (0),
-  post_init_called (0),
-  second_ (second)
+Client_ORBInitializer::Client_ORBInitializer (Client_ORBInitializer *second)
+  : second_ (second)
 {
 }
 
