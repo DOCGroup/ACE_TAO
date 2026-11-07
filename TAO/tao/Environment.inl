@@ -19,7 +19,7 @@ CORBA::Environment::_duplicate (CORBA::Environment *x)
       return nullptr;
     }
 
-  CORBA::Environment* ptr = nullptr;
+  CORBA::Environment *ptr {};
   ACE_NEW_RETURN (ptr,
                   CORBA::Environment (*x),
                   nullptr);
