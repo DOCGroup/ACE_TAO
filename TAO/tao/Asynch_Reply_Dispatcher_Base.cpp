@@ -29,12 +29,9 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
                 TAO_DEF_GIOP_MINOR,
                 orb_core)
   , transport_ (nullptr)
-  , lock_ (nullptr)
+  , lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , is_reply_dispatched_ (false)
 {
-  // @@ NOTE: Need a separate option for this..
-  this->lock_ =
-    orb_core->resource_factory ()->create_cached_connection_lock ();
 }
 
 // Destructor.
@@ -43,9 +40,6 @@ TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base ()
   // Release the transport that we own
   if (this->transport_ != nullptr)
     this->transport_->remove_reference ();
-
-  if (this->lock_ != nullptr)
-    delete this->lock_;
 }
 
 void

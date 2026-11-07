@@ -17,6 +17,8 @@
 #include "tao/Reply_Dispatcher.h"
 #include "tao/CDR.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -110,7 +112,7 @@ protected:
 
 private:
   /// Lock to protect @c is_reply_dispatched_ flag.
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_ {};
 
   /// Has the reply been dispatched?
   bool is_reply_dispatched_;
