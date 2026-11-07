@@ -94,7 +94,7 @@ UTL_IdList::UTL_IdList (Identifier *s,
 UTL_IdList *
 UTL_IdList::copy ()
 {
-  UTL_IdList *retval = nullptr;
+  UTL_IdList *retval {};
   ACE_NEW_RETURN (retval,
                   UTL_IdList (this->head ()->copy (),
                               nullptr),

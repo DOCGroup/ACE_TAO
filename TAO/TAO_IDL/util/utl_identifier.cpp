@@ -186,7 +186,7 @@ Identifier::case_compare_quiet (Identifier const *o) const
 Identifier *
 Identifier::copy () const
 {
-  Identifier *retval = nullptr;
+  Identifier *retval {};
   ACE_NEW_RETURN (retval,
                   Identifier (*this),
                   nullptr);

@@ -271,7 +271,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
       return;
     }
 
-  AST_Type *bt = nullptr;
+  AST_Type *bt {};
   AST_Decl::NodeType nt = d->node_type ();
 
   // We are interested only in members, arguments and typedefs.
@@ -882,7 +882,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
       return nullptr;
     }
 
-  bool *seen = nullptr;
+  bool *seen {};
   std::string const& name = e->get_string ();
   bool mixed_case = false;
   UTL_Scope *start_scope = idl_global->corba_module ();
@@ -1163,7 +1163,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       work = idl_global->root ();
     }
 
-  AST_Decl *first_found_final_parent_decl = nullptr;
+  AST_Decl *first_found_final_parent_decl {};
   bool const searching_module_path = (e->length () != 1);
   AST_Decl *d = searching_module_path ?
     work->lookup_by_name_r (e, full_def_only, first_found_final_parent_decl) :
@@ -1175,7 +1175,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
            outer;
            outer = ScopeAsDecl (outer)->defined_in ())
         {
-          AST_Decl *next_found_final_parent_decl= nullptr;
+          AST_Decl *next_found_final_parent_decl {};
           d = outer->lookup_by_name_r (e, full_def_only, next_found_final_parent_decl);
           if (d != nullptr)
             {
@@ -1213,7 +1213,7 @@ AST_Decl *
 UTL_Scope::lookup_by_name_r (UTL_ScopedName *e,
                              bool full_def_only)
 {
-  AST_Decl *ignored= nullptr;
+  AST_Decl *ignored {};
   return UTL_Scope::lookup_by_name_r (e, full_def_only, ignored);
 }
 
@@ -1745,7 +1745,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
     idl_global->for_new_holder ();
   std::optional<UTL_StrList> const& alias_params_value =
     idl_global->alias_params ();
-  UTL_StrList const *alias_params = nullptr;
+  UTL_StrList const *alias_params {};
 
   if (for_new_holder)
     {
@@ -1938,7 +1938,7 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
       return nullptr;
     }
 
-  AST_Decl *result = nullptr;
+  AST_Decl *result {};
   if (0 < sc->nmembers ())
     {
       // Look up the first component of the scoped name.
