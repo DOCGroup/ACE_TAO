@@ -32,6 +32,8 @@ ACE_Time_Value const ACE_Time_Value::max_time (
   ACE_Numeric_Limits<time_t>::max (),
   ACE_ONE_SECOND_IN_USECS - 1);
 
+ACE_Time_Value::ACE_Time_Value () = default;
+
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 
 /// Increment microseconds (the only reason this is here is to allow
