@@ -7,6 +7,8 @@
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstring>
+
 constexpr int WAIT_FOR_REGISTRATION_TIME = 10; //sec
 // const int MAX_ID_STRING = 10;
 
@@ -36,10 +38,10 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
     ACE_Read_Buffer read_buf(file);
 
     while ((id_str = read_buf.read (' ')) != nullptr &&
-      (prog = read_buf.read ('\n')) != nullptr) {
-        id_str[strlen(id_str)-1] = '\0';
-        if (ACE_OS::strcmp(id_str, type_id) == 0) {
-          return create_process(prog, the_criteria, factory_creation_id);
+           (prog = read_buf.read ('\n')) != nullptr) {
+      id_str[std::strlen (id_str) - 1] = '\0';
+      if (std::strcmp (id_str, type_id) == 0) {
+        return create_process (prog, the_criteria, factory_creation_id);
       }
     }
   }
@@ -93,7 +95,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_Process_Options options;
   ACE_TString str;
 
-  char* pos = ACE_OS::strrchr(process_str, '/');
+  char* pos = std::strrchr (process_str, '/');
   if (pos != nullptr) { //
     *pos = '\0';
     options.working_directory(process_str);
@@ -163,7 +165,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
     byteRead += n;
   }
 
-  if (ACE_OS::strlen(ior) == 0)
+  if (std::strlen (ior) == 0)
     return result;
 
   try{
