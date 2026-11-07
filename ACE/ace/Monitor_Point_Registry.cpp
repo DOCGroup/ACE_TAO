@@ -149,7 +149,7 @@ namespace ACE
            i != this->map_.end ();
            i.advance ())
         {
-          Map::ENTRY* entry = nullptr;
+          Map::ENTRY* entry {};
           i.next (entry);
           entry->int_id_->remove_ref ();
         }

@@ -68,7 +68,7 @@ namespace ACE_Utils
     // gauge.  Don't forget the trailing nul.
     std::unique_ptr <char[]> auto_clean;
     size_t UUID_STRING_LENGTH = 36 + thr_id_.length () + pid_.length ();
-    char *buf = nullptr;
+    char *buf {};
 
     if (36 == UUID_STRING_LENGTH)
       {
@@ -134,7 +134,7 @@ namespace ACE_Utils
       }
 
     // Save the string.
-    ACE_CString * as_string = nullptr;
+    ACE_CString * as_string {};
 
     ACE_NEW_RETURN (as_string,
                     ACE_CString (buf, UUID_STRING_LENGTH),
@@ -421,7 +421,7 @@ namespace ACE_Utils
   UUID*
   UUID_Generator::generate_UUID (ACE_UINT16 version, u_char variant)
   {
-    UUID* uuid = nullptr;
+    UUID* uuid {};
     ACE_NEW_RETURN (uuid,
                     UUID,
                     nullptr);
