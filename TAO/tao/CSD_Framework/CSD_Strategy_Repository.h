@@ -15,9 +15,12 @@
 
 #include "tao/CSD_Framework/CSD_FW_Export.h"
 #include "tao/CSD_Framework/CSD_FrameworkC.h"
+
+#include <memory>
+#include <string>
+
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
-#include <string>
 #include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -57,7 +60,7 @@ private:
     Strategy_Node (std::string const &poa_name,
                    CSD_Framework::Strategy_ptr strategy);
     ~Strategy_Node ();
-    void add_node (Strategy_Node *);
+    void add_node (std::unique_ptr<Strategy_Node> node);
     Strategy_Node *find (std::string const &name);
 
   private:
@@ -70,7 +73,7 @@ private:
     std::string poa_name_;
     CSD_Framework::Strategy_var strategy_;
     /// The node owns the remainder of the linked list.
-    Strategy_Node *next_ {};
+    std::unique_ptr<Strategy_Node> next_ {};
   };
 
   TAO_CSD_Strategy_Repository (TAO_CSD_Strategy_Repository const &) = delete;
@@ -79,7 +82,7 @@ private:
   TAO_CSD_Strategy_Repository &operator= (TAO_CSD_Strategy_Repository &&) = delete;
 
   /// The repository owns the linked list beginning at this node.
-  Strategy_Node *strategy_list_head_ {};
+  std::unique_ptr<Strategy_Node> strategy_list_head_ {};
 };
 
 
