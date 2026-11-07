@@ -44,7 +44,11 @@ class IORInterceptor
 {
 public:
   /// Constructor
-  IORInterceptor ();
+  IORInterceptor () = default;
+  IORInterceptor (IORInterceptor const &) = delete;
+  IORInterceptor (IORInterceptor &&) = delete;
+  IORInterceptor &operator= (IORInterceptor const &) = delete;
+  IORInterceptor &operator= (IORInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -55,14 +59,14 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name ();
+  char * name () override;
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Add the tagged components to the IOR.
-  virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info);
+  void establish_components (
+      PortableInterceptor::IORInfo_ptr info) override;
   //@}
 
 protected:
@@ -71,11 +75,11 @@ protected:
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~IORInterceptor ();
+  ~IORInterceptor () override;
 
 private:
   /// IORInterceptor successfully called and executed.
-  bool success_;
+  bool success_ {};
 };
 
 #if defined(_MSC_VER)
