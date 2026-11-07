@@ -18,17 +18,17 @@
 class TAO_Notify_Tests_ConsumerAdmin_Traits
 {
  public:
-  typedef CosNotifyChannelAdmin::ConsumerAdmin INTERFACE;
-  typedef CosNotifyChannelAdmin::ConsumerAdmin_ptr PTR;
-  typedef CosNotifyChannelAdmin::ConsumerAdmin_var VAR;
+  using INTERFACE = CosNotifyChannelAdmin::ConsumerAdmin;
+  using PTR = CosNotifyChannelAdmin::ConsumerAdmin_ptr;
+  using VAR = CosNotifyChannelAdmin::ConsumerAdmin_var;
 };
 
 class TAO_Notify_Tests_ConsumerAdmin_Ext_Traits
 {
  public:
-  typedef NotifyExt::ConsumerAdmin INTERFACE;
-  typedef NotifyExt::ConsumerAdmin_ptr PTR;
-  typedef NotifyExt::ConsumerAdmin_var VAR;
+  using INTERFACE = NotifyExt::ConsumerAdmin;
+  using PTR = NotifyExt::ConsumerAdmin_ptr;
+  using VAR = NotifyExt::ConsumerAdmin_var;
 };
 
 /**
@@ -39,14 +39,14 @@ class TAO_Notify_Tests_ConsumerAdmin_Ext_Traits
 template <class Consumer_Traits>
 class TAO_Notify_Tests_Consumer_T : public TAO_Notify_Tests_Peer_T <Consumer_Traits>
 {
-  typedef typename Consumer_Traits::Admin_Traits Admin_Traits;
-  typedef typename Consumer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef typename Consumer_Traits::Proxy_Traits Proxy_Traits;
+  using Admin_Traits = typename Consumer_Traits::Admin_Traits;
+  using Admin_Ext_Traits = typename Consumer_Traits::Admin_Ext_Traits;
+  using Proxy_Traits = typename Consumer_Traits::Proxy_Traits;
 
-  typedef typename Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
-  typedef typename Proxy_Traits::PTR Proxy_Traits_PTR;
-  typedef typename Admin_Traits::PTR Admin_Traits_PTR;
-  typedef typename Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
+  using Proxy_Traits_INTERFACE = typename Proxy_Traits::INTERFACE;
+  using Proxy_Traits_PTR = typename Proxy_Traits::PTR;
+  using Admin_Traits_PTR = typename Admin_Traits::PTR;
+  using Admin_Ext_Traits_PTR = typename Admin_Ext_Traits::PTR;
 
 public:
   /// Constructor

@@ -37,12 +37,16 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_Notify_Tests_Task_Callback
                                                        , public POA_Notify_Test::Activation_Manager
 {
-  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicSupplier_Map;
-  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicConsumer_Map;
-  typedef ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicSupplier_Iterator;
-  typedef ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicConsumer_Iterator;
-  typedef ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*> TAO_Notify_Tests_PeriodicSupplier_Entry;
-  typedef ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*> TAO_Notify_Tests_PeriodicConsumer_Entry;
+  using TAO_Notify_Tests_PeriodicSupplier_Map =
+    ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
+  using TAO_Notify_Tests_PeriodicConsumer_Map =
+    ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
+  using TAO_Notify_Tests_PeriodicSupplier_Iterator =
+    ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
+  using TAO_Notify_Tests_PeriodicConsumer_Iterator =
+    ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
+  using TAO_Notify_Tests_PeriodicSupplier_Entry = ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*>;
+  using TAO_Notify_Tests_PeriodicConsumer_Entry = ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*>;
 
 public:
   /// Constructor

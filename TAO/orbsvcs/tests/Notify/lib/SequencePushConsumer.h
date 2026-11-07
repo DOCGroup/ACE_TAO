@@ -23,10 +23,10 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequenceProxyPushSupplier_Traits
 {
 public:
-  typedef CosNotifyChannelAdmin::SequenceProxyPushSupplier INTERFACE;
-  typedef CosNotifyChannelAdmin::SequenceProxyPushSupplier_ptr PTR;
-  typedef CosNotifyChannelAdmin::SequenceProxyPushSupplier_var VAR;
-  typedef CosNotifyChannelAdmin::ProxyID ID;
+  using INTERFACE = CosNotifyChannelAdmin::SequenceProxyPushSupplier;
+  using PTR = CosNotifyChannelAdmin::SequenceProxyPushSupplier_ptr;
+  using VAR = CosNotifyChannelAdmin::SequenceProxyPushSupplier_var;
+  using ID = CosNotifyChannelAdmin::ProxyID;
 };
 
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer_Traits
@@ -34,19 +34,20 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer_Traits
 public:
   TAO_Notify_Tests_SequencePushConsumer_Traits ();
 
-  typedef CosNotifyComm::SequencePushConsumer INTERFACE;
-  typedef CosNotifyComm::SequencePushConsumer_ptr PTR;
-  typedef CosNotifyComm::SequencePushConsumer_var VAR;
-  typedef POA_CosNotifyComm::SequencePushConsumer SKELETON;
+  using INTERFACE = CosNotifyComm::SequencePushConsumer;
+  using PTR = CosNotifyComm::SequencePushConsumer_ptr;
+  using VAR = CosNotifyComm::SequencePushConsumer_var;
+  using SKELETON = POA_CosNotifyComm::SequencePushConsumer;
 
-  typedef TAO_Notify_Tests_SequenceProxyPushSupplier_Traits Proxy_Traits;
-  typedef TAO_Notify_Tests_ConsumerAdmin_Traits Admin_Traits;
-  typedef TAO_Notify_Tests_ConsumerAdmin_Ext_Traits Admin_Ext_Traits;
+  using Proxy_Traits = TAO_Notify_Tests_SequenceProxyPushSupplier_Traits;
+  using Admin_Traits = TAO_Notify_Tests_ConsumerAdmin_Traits;
+  using Admin_Ext_Traits = TAO_Notify_Tests_ConsumerAdmin_Ext_Traits;
 
   const CosNotifyChannelAdmin::ClientType type_;
 };
 
-typedef TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_SequencePushConsumer_Traits> TAO_Notify_Tests_SequencePushConsumer_Base;
+using TAO_Notify_Tests_SequencePushConsumer_Base =
+  TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_SequencePushConsumer_Traits>;
 
 /**
  * @class TAO_Notify_Tests_SequencePushConsumer
@@ -55,10 +56,10 @@ typedef TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_SequencePushConsumer_Traits
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer_Base
 {
-  typedef TAO_Notify_Tests_SequencePushConsumer_Traits Peer_Traits;
-  typedef Peer_Traits::Admin_Traits Admin_Traits;
-  typedef Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef Peer_Traits::Proxy_Traits Proxy_Traits;
+  using Peer_Traits = TAO_Notify_Tests_SequencePushConsumer_Traits;
+  using Admin_Traits = Peer_Traits::Admin_Traits;
+  using Admin_Ext_Traits = Peer_Traits::Admin_Ext_Traits;
+  using Proxy_Traits = Peer_Traits::Proxy_Traits;
 
 public:
   /// Constructor

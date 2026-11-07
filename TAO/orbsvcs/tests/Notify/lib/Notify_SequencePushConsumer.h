@@ -17,7 +17,7 @@
 
 #include "SequencePushConsumer.h"
 
-typedef TAO_Notify_Tests_SequencePushConsumer TAO_Notify_SequencePushConsumer;
+using TAO_Notify_SequencePushConsumer = TAO_Notify_Tests_SequencePushConsumer;
 
 #include /**/ "ace/post.h"
 

@@ -23,10 +23,10 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredProxyPushConsumer_Traits
 {
 public:
-  typedef CosNotifyChannelAdmin::StructuredProxyPushConsumer INTERFACE;
-  typedef CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr PTR;
-  typedef CosNotifyChannelAdmin::StructuredProxyPushConsumer_var VAR;
-  typedef CosNotifyChannelAdmin::ProxyID ID;
+  using INTERFACE = CosNotifyChannelAdmin::StructuredProxyPushConsumer;
+  using PTR = CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr;
+  using VAR = CosNotifyChannelAdmin::StructuredProxyPushConsumer_var;
+  using ID = CosNotifyChannelAdmin::ProxyID;
 };
 
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier_Traits
@@ -34,31 +34,33 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier_Traits
 public:
   TAO_Notify_Tests_StructuredPushSupplier_Traits ();
 
-  typedef CosNotifyComm::StructuredPushSupplier INTERFACE;
-  typedef CosNotifyComm::StructuredPushSupplier_ptr PTR;
-  typedef CosNotifyComm::StructuredPushSupplier_var VAR;
-  typedef POA_CosNotifyComm::StructuredPushSupplier SKELETON;
+  using INTERFACE = CosNotifyComm::StructuredPushSupplier;
+  using PTR = CosNotifyComm::StructuredPushSupplier_ptr;
+  using VAR = CosNotifyComm::StructuredPushSupplier_var;
+  using SKELETON = POA_CosNotifyComm::StructuredPushSupplier;
 
-  typedef TAO_Notify_Tests_StructuredProxyPushConsumer_Traits Proxy_Traits;
-  typedef TAO_Notify_Tests_SupplierAdmin_Traits Admin_Traits;
-  typedef TAO_Notify_Tests_SupplierAdmin_Ext_Traits Admin_Ext_Traits;
+  using Proxy_Traits = TAO_Notify_Tests_StructuredProxyPushConsumer_Traits;
+  using Admin_Traits = TAO_Notify_Tests_SupplierAdmin_Traits;
+  using Admin_Ext_Traits = TAO_Notify_Tests_SupplierAdmin_Ext_Traits;
 
   const CosNotifyChannelAdmin::ClientType type_;
 };
 
-typedef TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_StructuredPushSupplier_Traits> TAO_Notify_Tests_StructuredPushSupplier_Base;
+using TAO_Notify_Tests_StructuredPushSupplier_Base =
+  TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_StructuredPushSupplier_Traits>;
 
 /**
  * @class TAO_Notify_Tests_StructuredPushSupplier
  *
  * @brief StructuredPushSupplier Implementation.
  */
-class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier_Base
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier
+  : public TAO_Notify_Tests_StructuredPushSupplier_Base
 {
-  typedef TAO_Notify_Tests_StructuredPushSupplier_Traits Peer_Traits;
-  typedef Peer_Traits::Admin_Traits Admin_Traits;
-  typedef Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef Peer_Traits::Proxy_Traits Proxy_Traits;
+  using Peer_Traits = TAO_Notify_Tests_StructuredPushSupplier_Traits;
+  using Admin_Traits = Peer_Traits::Admin_Traits;
+  using Admin_Ext_Traits = Peer_Traits::Admin_Ext_Traits;
+  using Proxy_Traits = Peer_Traits::Proxy_Traits;
 
 public:
   /// Constructor

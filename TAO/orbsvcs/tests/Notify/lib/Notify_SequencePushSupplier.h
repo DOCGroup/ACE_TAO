@@ -16,7 +16,7 @@
 
 #include "SequencePushSupplier.h"
 
-typedef TAO_Notify_Tests_SequencePushSupplier TAO_Notify_SequencePushSupplier;
+using TAO_Notify_SequencePushSupplier = TAO_Notify_Tests_SequencePushSupplier;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_SequencePUSHSUPPLIER_H */

@@ -30,7 +30,7 @@ class TAO_NOTIFY_TEST_Export Base_Time
   ACE_hrtime_t base_time_;
 };
 
-typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
+using BASE_TIME = ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
 
 /**
  * @class Task_Stats
