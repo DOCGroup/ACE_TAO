@@ -4,7 +4,7 @@
  * An answering machine based on a one-way ACE_Stream
  */
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/FILE_IO.h"
@@ -194,7 +194,7 @@ private:
   int write (ACE_FILE_IO &file, const char *str)
   {
   //FUZZ: enable check_for_lack_ACE_OS
-    return file.send (str, ACE_OS::strlen (str));
+    return file.send (str, std::strlen (str));
   }
 };
 // Listing 27
