@@ -15,6 +15,8 @@
 
 #include "tao/LF_Event.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -62,6 +64,8 @@ public:
 private:
   TAO_LF_Multi_Event (TAO_LF_Multi_Event const &) = delete;
   TAO_LF_Multi_Event &operator= (TAO_LF_Multi_Event const &) = delete;
+  TAO_LF_Multi_Event (TAO_LF_Multi_Event &&) = delete;
+  TAO_LF_Multi_Event &operator= (TAO_LF_Multi_Event &&) = delete;
 
 protected:
   /// Validate the state change
@@ -82,13 +86,15 @@ protected:
 
 private:
   struct Event_Node {
-    TAO_Connection_Handler * ptr_;
-    Event_Node *next_;
+    /// The connection handler is borrowed; only the list link is owned.
+    TAO_Connection_Handler *ptr_ {};
+    std::unique_ptr<Event_Node> next_ {};
   };
 
-  struct Event_Node *events_;
+  /// The event-node chain is owned by this multi-event.
+  std::unique_ptr<Event_Node> events_ {};
 
-  mutable TAO_Connection_Handler * winner_;
+  mutable TAO_Connection_Handler *winner_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
