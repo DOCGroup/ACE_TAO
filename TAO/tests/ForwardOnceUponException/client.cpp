@@ -22,11 +22,11 @@ constexpr ACE_TCHAR corbaloc_prefix[] = ACE_TEXT ("corbaloc:");
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:e:i:n:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xk:e:i:n:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'x':
         options.shutdown = true;
@@ -66,7 +66,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
                        ACE_OS::strlen (corbaloc_prefix)) != 0)
     return 1;
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -103,7 +102,7 @@ private:
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -183,9 +182,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 Worker::Worker (CORBA::ORB_ptr orb, Client_Options const &options)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    ior_ (options.ior),
-    num_requests_ (options.num_requests)
+  : orb_ (CORBA::ORB::_duplicate (orb))
+  , ior_ (options.ior)
+  , num_requests_ (options.num_requests)
 {
 }
 
@@ -203,12 +202,12 @@ Worker::svc ()
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR ((LM_ERROR,
-                      "Object reference <%s> is nil.\n",
-                      ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ())));
+                      ACE_TEXT ("Object reference <%s> is nil.\n"),
+                      this->ior_.c_str ()));
           return 0;
         }
 
-      for (int i {}; i < this->num_requests_; ++i)
+      for (int request {}; request < this->num_requests_; ++request)
         {
           try
             {

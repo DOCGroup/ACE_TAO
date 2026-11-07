@@ -16,11 +16,11 @@ struct Server_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:e:r:i:"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:e:r:i:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         options.ior_output_file = get_opts.opt_arg ();
@@ -43,12 +43,11 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -96,10 +95,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           1);
       table->bind ("Simple_Server", ior.in ());
 
-      //ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
-
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
           ACE_OS::fclose);
         if (!output_file)
