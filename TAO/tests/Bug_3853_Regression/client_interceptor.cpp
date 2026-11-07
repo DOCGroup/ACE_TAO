@@ -56,7 +56,7 @@ Echo_Client_Request_Interceptor::send_request (
         }
 
       CORBA::Object_var const hello_obj =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (server2_ior.c_str ()));
+        orb->string_to_object (server2_ior.c_str ());
       Demo::HelloWorld_var const hello = Demo::HelloWorld::_narrow (hello_obj.in ());
       if (CORBA::is_nil (hello.in ()))
         ACE_ERROR ((LM_ERROR,

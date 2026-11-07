@@ -39,7 +39,7 @@ public:
   int svc () override
   {
     CORBA::Object_var const hello_obj =
-      orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (server1_ior.c_str ()));
+      orb->string_to_object (server1_ior.c_str ());
     Demo::HelloWorld_var const hello = Demo::HelloWorld::_narrow (hello_obj.in ());
     if (CORBA::is_nil (hello.in ()))
       {
@@ -129,7 +129,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
 
       CORBA::Object_var const shutdown_obj =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (server1_shutdown_ior.c_str ()));
+        orb->string_to_object (server1_shutdown_ior.c_str ());
       server1_shutdownObj = Demo::HelloWorld::_narrow (shutdown_obj.in ());
       if (CORBA::is_nil (server1_shutdownObj.in ()))
         {
@@ -137,7 +137,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
       CORBA::Object_var const shutdown_obj2 =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (server2_shutdown_ior.c_str ()));
+        orb->string_to_object (server2_shutdown_ior.c_str ());
       server2_shutdownObj = Demo::HelloWorld::_narrow (shutdown_obj2.in ());
       if (CORBA::is_nil (server2_shutdownObj.in ()))
         {
