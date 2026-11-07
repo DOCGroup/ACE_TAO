@@ -8,7 +8,7 @@
 #include <cstring>
 
 // Probe without consuming anything. A timeout means the peer is still open.
-bool expect_open (ACE_SOCK_Stream &stream, bool open)
+static bool expect_open (ACE_SOCK_Stream &stream, bool open)
 {
   char byte {};
   ACE_Time_Value timeout (0, 100000);
@@ -26,7 +26,7 @@ bool expect_open (ACE_SOCK_Stream &stream, bool open)
   return true;
 }
 
-bool expect_close_connection (ACE_SOCK_Stream &stream)
+static bool expect_close_connection (ACE_SOCK_Stream &stream)
 {
   unsigned char message[12];
   ACE_Time_Value timeout (5);
