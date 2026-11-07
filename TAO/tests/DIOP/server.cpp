@@ -27,7 +27,7 @@ struct Server_Options
   ACE_TString ior_output_file {ACE_TEXT ("test.ior")};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:d"));
@@ -81,15 +81,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::PolicyList policies {};
       policies.length (2);
       policies[0] =
-        root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
       policies[1] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
 
       PortableServer::POA_var const persistent_poa =
         root_poa->create_POA ("persistent",
-                             poa_manager.in (),
-                             policies);
+                              poa_manager.in (),
+                              policies);
 
       policies[0]->destroy ();
 
@@ -109,7 +109,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const obj =
         persistent_poa->id_to_reference (id.in ());
 
-
       UDP_var const udp_var = UDP::_narrow (obj.in ());
 
       // UDP_var udp_var = udp_i._this ();
@@ -126,7 +125,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (!options.ior_output_file.empty ())
         {
           std::unique_ptr<FILE, int (*) (FILE *)> output_file (
-            ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+            ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
+            ACE_OS::fclose);
           if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Cannot open output file for writing IOR: %s"),

@@ -55,9 +55,9 @@ private:
 
   UDP_var udpHandler_;
 
-  unsigned int delay_;
+  unsigned int const delay_;
 
-  std::size_t iterations_;
+  std::size_t const iterations_;
 };
 
 

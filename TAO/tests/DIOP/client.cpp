@@ -32,7 +32,7 @@ struct Client_Options
   unsigned int iterations {1};
 };
 
-int
+static int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:t:i:"));
@@ -120,14 +120,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Instantiate client
       // The task must remain alive until its worker thread has been joined below.
-      UDP_Client_i *client {};
-      ACE_NEW_RETURN (client,
-                      UDP_Client_i (orb.in (), udp_var.in (), udpHandler_var.in (),
-                                    options.msec, options.iterations),
-                      1);
+      UDP_Client_i client (orb.in (), udp_var.in (), udpHandler_var.in (),
+                           options.msec, options.iterations);
 
       // let the client run in a separate thread
-      client->activate ();
+      if (client.activate () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate client thread\n"), 1);
 
       // ORB loop, will be shut down by our client thread
 
@@ -135,13 +133,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
+      client.wait ();
+
       root_poa->destroy (true,  // ethernalize objects
                          false);  // wait for completion
 
       orb->destroy ();
-
-      client->wait ();
-      delete client;
     }
   catch (CORBA::Exception const &ex)
     {
