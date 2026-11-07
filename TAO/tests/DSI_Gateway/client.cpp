@@ -16,7 +16,7 @@ struct Client_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xusk:i:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xusk:i:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -46,11 +46,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage: %s -x -u -s -k <ior> -i <niterations>\n"),
-                           argv [0]),
+                           argv[0]),
                           -1);
       }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -77,8 +76,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Object reference <%C> is nil.\n"),
-                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
@@ -120,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
               Structure_var the_out_structure {};
 
-             CORBA::Long const r =
+              CORBA::Long const r =
                 server->test_method (i,
                                      the_in_structure,
                                      the_out_structure.out (),

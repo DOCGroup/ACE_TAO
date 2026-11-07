@@ -48,7 +48,7 @@ public:
 
 private:
   // The ORB
-  CORBA::ORB_var orb_ {};
+  CORBA::ORB_var const orb_ {};
   CORBA::Long vlong_ {};
 };
 

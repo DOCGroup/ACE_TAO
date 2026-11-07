@@ -10,16 +10,19 @@
 void
 DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
 {
-  CORBA::NVList_ptr list {};
-  this->orb_->create_list (0, list);
+  CORBA::NVList_var list {};
+  this->orb_->create_list (0, list.out ());
 
-  request->arguments (list);
+  // ServerRequest takes ownership of the argument list.
+  CORBA::NVList_ptr const arguments = list._retn ();
+  CORBA::NVList_ptr borrowed_arguments = arguments;
+  request->arguments (borrowed_arguments);
 
   CORBA::Request_var target_request {};
 
   this->target_->_create_request (nullptr, // ctx
                                   request->operation (),
-                                  list,
+                                  arguments,
                                   nullptr, // result
                                   nullptr, // exception_list,
                                   nullptr, // context_list,

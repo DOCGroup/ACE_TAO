@@ -15,7 +15,7 @@ struct Gateway_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Gateway_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:o:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xk:i:o:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -41,11 +41,10 @@ parse_args (int argc, ACE_TCHAR *argv[], Gateway_Options &options)
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage: %s -x -k <ior> -i <niterations> -o <iorfile>\n"),
-                           argv [0]),
+                           argv[0]),
                           -1);
       }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
