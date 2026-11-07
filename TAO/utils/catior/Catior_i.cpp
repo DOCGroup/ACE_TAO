@@ -48,7 +48,7 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
   const ACE_CString iiopPrefix = "iiop:";
   const ACE_CString poopPrefix = ":IR:";
 
-  char * str = 0;
+  char *str {};
   CORBA::Boolean b = false;
   if (aString.find (iorPrefix) == 0)
     {
