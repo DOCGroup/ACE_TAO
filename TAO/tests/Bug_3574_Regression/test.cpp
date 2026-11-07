@@ -8,15 +8,15 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   constexpr CORBA::ULong initial_length = 100;
   constexpr CORBA::ULong shortened_length = initial_length - 1;
 
-  CORBA::StringSeq seq;
+  CORBA::StringSeq seq {};
   seq.length (initial_length);
-  for (CORBA::ULong i = 0; i < seq.length (); ++i)
+  for (CORBA::ULong i {}; i < seq.length (); ++i)
     {
       seq[i] = str;
     }
 
   // Save a pointer to the whole buffer.
-  char const *const *const wholebuf = seq.get_buffer ();
+  char const *const *const wholebuf {seq.get_buffer ()};
 
   // This call should reinitialize the 100th element
   // (the fact that the shrunk elements are reinitialized is TAO
