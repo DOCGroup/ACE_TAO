@@ -25,6 +25,8 @@
 
 #include /**/ "tao/TAO_Export.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
@@ -77,7 +79,8 @@ public:
   CORBA::Boolean legal_policy (CORBA::PolicyType type);
 
   /**
-   * Adds a validator to the "chain of validators". The <code>
+   * Adds a validator to the "chain of validators". Ownership of the validator
+   * is transferred to this chain. The <code>
    * TAO_POA_Policy_Validator </code> implements something that looks
    * like a chain of responsability in which different member of the
    * chain have the responsability of validating a given set of
@@ -106,7 +109,7 @@ private:
   TAO_Policy_Validator &operator= (TAO_Policy_Validator &&) = delete;
 
 private:
-  TAO_Policy_Validator *next_ {};
+  std::unique_ptr<TAO_Policy_Validator> next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
