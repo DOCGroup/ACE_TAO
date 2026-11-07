@@ -20,7 +20,7 @@ Client_Task::svc ()
   try
     {
       CORBA::Object_var const tmp {
-        this->corb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (this->input_.c_str ()))};
+        this->corb_->string_to_object (this->input_.c_str ())};
 
       Test::HelloAgain_var const hello_again {Test::HelloAgain::_narrow (tmp.in ())};
 
