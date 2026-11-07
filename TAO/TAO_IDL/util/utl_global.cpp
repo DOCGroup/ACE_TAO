@@ -724,7 +724,7 @@ IDL_GlobalData::update_prefix (std::string const& filename)
 
   std::string const& main_filename = this->pd_main_filename;
 
-  File_Prefix_Map::iterator entry = this->file_prefixes_.find (filename);
+  File_Prefix_Map::iterator const entry = this->file_prefixes_.find (filename);
 
   if (entry != this->file_prefixes_.end ())
     {

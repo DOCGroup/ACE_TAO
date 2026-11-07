@@ -432,9 +432,9 @@ UTL_Scope::fe_add_decl (AST_Decl *t)
       // if the instantiated module is meant to reopen a
       // previous one.
 
-      AST_Decl::NodeType lnt = d->node_type ();
-      AST_Decl::NodeType ant = t->node_type ();
-      bool need_ref_check =
+      AST_Decl::NodeType const lnt = d->node_type ();
+      AST_Decl::NodeType const ant = t->node_type ();
+      bool const need_ref_check =
         (   lnt != AST_Decl::NT_module
          || ant != AST_Decl::NT_module);
 
@@ -531,7 +531,7 @@ UTL_Scope::fe_add_full_struct_type (AST_Structure *t)
         }
     }
 
-  AST_Decl::NodeType nt = ScopeAsDecl (this)->node_type ();
+  AST_Decl::NodeType const nt = ScopeAsDecl (this)->node_type ();
 
   // Decls inside a struct or union are also referenced by
   // fields, and so must be handled differently.
@@ -970,7 +970,7 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
 {
   UTL_Scope *search = idl_global->corba_module ();
 
-  AST_PredefinedType::PredefinedType pdt =
+  AST_PredefinedType::PredefinedType const pdt =
     FE_Utils::ExprTypeToPredefinedType (et);
 
   /// This return value means there was no PredefinedType match
@@ -1342,7 +1342,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
   // Special case for forward declared interfaces in the
   // scope in which they're defined. Cannot add before full
   // definition is seen.
-  AST_Decl::NodeType nt = e->node_type ();
+  AST_Decl::NodeType const nt = e->node_type ();
   if (   nt == AST_Decl::NT_interface
       || nt == AST_Decl::NT_component)
     {
@@ -1445,7 +1445,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
 
   Identifier *decl_name = e->local_name ();
   std::string const& decl_string = decl_name->get_string ();
-  AST_Decl::NodeType new_nt = e->node_type ();
+  AST_Decl::NodeType const new_nt = e->node_type ();
 
   // First, make sure there's no clash between e, that was
   // just declared, and some other identifier referenced
@@ -1460,7 +1460,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
       // error, unless they're both modules (which can be
       // reopened) or we have a belated definition of a
       // forward-declared interface.
-      AST_Decl::NodeType scope_elem_nt = decl->node_type ();
+      AST_Decl::NodeType const scope_elem_nt = decl->node_type ();
 
       if (this->redef_clash (new_nt, scope_elem_nt)
           && decl_name->compare (ref_name))
@@ -1496,7 +1496,7 @@ UTL_Scope::add_to_scope (AST_Decl *e,
   // may not be redefined immediately within (and the root scope has no name).
   // As well as OBV factory construct.
   AST_Decl *d = ScopeAsDecl (this);
-  AST_Decl::NodeType nt = d->node_type ();
+  AST_Decl::NodeType const nt = d->node_type ();
   if (   nt != AST_Decl::NT_root
       && nt != AST_Decl::NT_op
       && nt != AST_Decl::NT_factory)
@@ -1808,7 +1808,7 @@ UTL_Scope::inherited_op_attr_clash (AST_Decl *t)
   AST_Decl *d = i->look_in_inherited (t->name (), false);
   if (d != nullptr)
     {
-      AST_Decl::NodeType nt = d->node_type ();
+      AST_Decl::NodeType const nt = d->node_type ();
       if (   nt == AST_Decl::NT_attr
           || nt == AST_Decl::NT_op)
         {
@@ -1833,7 +1833,7 @@ UTL_Scope::arg_specific_error (AST_Decl *t)
     }
 
   AST_Argument *arg = dynamic_cast<AST_Argument*> (t);
-  AST_Argument::Direction d = arg->direction ();
+  AST_Argument::Direction const d = arg->direction ();
 
   // Cannot add OUT or INOUT argument to oneway operation.
   if ((   d == AST_Argument::dir_OUT

@@ -1490,7 +1490,7 @@ UTL_Error::invalid_annotation_param_error (
   Identifier *invalid_id)
 {
   std::string const filename (get_filename (decl));
-  bool is_builtin = decl->builtin ();
+  bool const is_builtin = decl->builtin ();
   idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
     static_cast<AST_Decl*>(appl));
   invalid_id->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1511,7 +1511,7 @@ UTL_Error::invalid_annotation_param_type (
   AST_Expression *offending_value)
 {
   std::string const filename (get_filename (member));
-  bool is_builtin = member->builtin ();
+  bool const is_builtin = member->builtin ();
   idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
     static_cast<AST_Decl*>(appl));
   ACE_ERROR ((LM_ERROR,
@@ -1535,7 +1535,7 @@ UTL_Error::annotation_param_missing_error (
   AST_Annotation_Appl *appl, AST_Annotation_Member *member)
 {
   std::string const filename (get_filename (member));
-  bool is_builtin = member->builtin ();
+  bool const is_builtin = member->builtin ();
   idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
     static_cast<AST_Decl*>(appl));
   ACE_ERROR ((LM_ERROR,
