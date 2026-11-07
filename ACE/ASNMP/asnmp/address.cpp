@@ -880,10 +880,10 @@ int UdpAddress::parse_address( const char *inaddr)
   // like a normal IpAddress
   char *tmp;
   tmp = ACE_OS::strstr( buffer,":");
-  if (tmp==0)
+  if (tmp == nullptr)
     tmp = ACE_OS::strstr(buffer,"/");
 
-  if ( tmp != 0) {
+  if (tmp != nullptr) {
     *tmp=0;   // null terminator
     tmp++;
     port = ACE_OS::atoi( tmp);
@@ -1699,7 +1699,7 @@ int IpxSockAddress::parse_address( const char *inaddr)
    char *tmp;
    tmp = ACE_OS::strstr( buffer,"/");
 
-   if (tmp != 0)
+   if (tmp != nullptr)
    {
      *tmp=0;   // null terminator
      tmp++;

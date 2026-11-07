@@ -302,7 +302,7 @@ int wpdu::convert_vb_to_smival (Vb &tempvb, SmiVALUE *smival)
     {
       OctetStr os;
       tempvb.get_value(os);
-      smival->value.string.ptr = 0;
+      smival->value.string.ptr = nullptr;
       smival->value.string.len = os.length();
       if ( smival->value.string.len > 0 ) {
         ACE_NEW_RETURN(smival->value.string.ptr,

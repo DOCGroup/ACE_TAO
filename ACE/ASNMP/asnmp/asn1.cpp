@@ -79,7 +79,7 @@ u_char * asn1::parse_int(u_char *data,
   }
   *type = *bufp++;
   bufp =asn1::parse_length(bufp, &asn_length);
-  if (bufp == 0){
+  if (bufp == nullptr){
     ASNERROR("bad length");
     return 0;
   }
@@ -131,7 +131,7 @@ u_char * asn1::parse_unsigned_int( u_char *data,
   }
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
-  if (bufp == 0){
+  if (bufp == nullptr){
     ASNERROR("bad length");
     return 0;
   }
@@ -195,7 +195,7 @@ u_char * asn1::build_int( u_char *data,
     integer <<= 8;
   }
   data = asn1::build_header(data, datalength, type, intsize);
-  if (data == 0)
+  if (data == nullptr)
     return 0;
   if (*datalength < intsize)
     return 0;
@@ -257,7 +257,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
     integer <<= 8;
   }
   data = asn1::build_header(data, datalength, type, intsize);
-  if (data == 0)
+  if (data == nullptr)
     return 0;
   if (*datalength < intsize)
     return 0;
@@ -305,7 +305,7 @@ u_char * asn1::parse_string( u_char     *data,
 
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
-  if (bufp == 0)
+  if (bufp == nullptr)
     return 0;
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
@@ -347,7 +347,7 @@ u_char * asn1::build_string( u_char *data,
    * This code will never send a compound string.
    */
   data = asn1::build_header(data, datalength, type, strlength);
-  if (data == 0)
+  if (data == nullptr)
     return 0;
   if (*datalength < strlength)
     return 0;
@@ -383,7 +383,7 @@ u_char *asn1::parse_header( u_char *data,
   }
   *type = *bufp;
   bufp = asn1::parse_length(bufp + 1, &asn_length);
-  if (bufp == 0)
+  if (bufp == nullptr)
     return 0;
   header_len = bufp - data;
   if ((int)(header_len + asn_length) > *datalength){
@@ -553,7 +553,7 @@ u_char *asn1::parse_objid( u_char *data,
 
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
-  if (bufp == 0)
+  if (bufp == nullptr)
     return 0;
   if ((int)asn_length + (bufp - data) > *datalength){
     ASNERROR("overflow of message");
@@ -666,7 +666,7 @@ u_char *asn1::build_objid( u_char *data,
   }
   asnlength = bp - buf;
   data = asn1::build_header(data, datalength, type, asnlength);
-  if (data == 0)
+  if (data == nullptr)
     return 0;
   if (*datalength < asnlength)
     return 0;
@@ -699,7 +699,7 @@ u_char *asn1::parse_null(u_char *data,
 
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
-  if (bufp == 0)
+  if (bufp == nullptr)
     return 0;
   if (asn_length != 0){
     ASNERROR("Malformed 0");
@@ -758,7 +758,7 @@ u_char *asn1::parse_bitstring( u_char *data,
 
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
-  if (bufp == 0)
+  if (bufp == nullptr)
     return 0;
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
@@ -810,7 +810,7 @@ u_char *asn1::build_bitstring( u_char *data,
     return 0;
   }
   data = asn1::build_header(data, datalength, type, strlength);
-  if (data == 0)
+  if (data == nullptr)
     return 0;
   if (*datalength < strlength)
     return 0;
@@ -853,7 +853,7 @@ u_char * asn1::parse_unsigned_int64(u_char *data,
   }
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
-  if (bufp == 0){
+  if (bufp == nullptr){
     ASNERROR("bad length");
     return 0;
   }
@@ -935,7 +935,7 @@ u_char * asn1::build_unsigned_int64( u_char *data,
     low <<= 8;
   }
   data = asn1::build_header(data, datalength, type, intsize);
-  if (data == 0)
+  if (data == nullptr)
     return 0;
   if (*datalength < intsize)
     return 0;
@@ -965,9 +965,9 @@ struct snmp_pdu * cmu_snmp::pdu_create( int command)
   pdu->command = command;
   pdu->errstat = 0;
   pdu->errindex = 0;
-  pdu->enterprise = 0;
+  pdu->enterprise = nullptr;
   pdu->enterprise_length = 0;
-  pdu->variables = 0;
+  pdu->variables = nullptr;
   return pdu;
 }
 
@@ -1007,10 +1007,10 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
 {
   ACE_TRACE("cmu_snmp::add_var");
 
-  struct variable_list *vars = 0;
+  struct variable_list *vars {};
 
   // if we don't have a vb list ,create one
-  if (pdu->variables == 0)
+  if (pdu->variables == nullptr)
     {
       ACE_NEW(pdu->variables, variable_list);
       vars = pdu->variables;
@@ -1029,7 +1029,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
     }
 
   // add the oid with no data
-  vars->next_variable = 0;
+  vars->next_variable = nullptr;
 
   // hook in the Oid portion
   ACE_NEW(vars->name, oid[(name_length)]);
@@ -1048,7 +1048,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
     case sNMP_SYNTAX_ENDOFMIBVIEW:
       {
         vars->type = (u_char) smival->syntax;
-        vars->val.string = 0;
+        vars->val.string = nullptr;
         vars->val_len = 0;
       }
       break;
@@ -1145,7 +1145,7 @@ u_char *cmu_snmp::auth_build( u_char *data,
                             length,
                             (u_char)(ASN_SEQUENCE | ASN_CONSTRUCTOR),
                             messagelen + plen + 5);
-  if (data == 0){
+  if (data == nullptr){
     ASNERROR("buildheader");
     return 0;
   }
@@ -1154,7 +1154,7 @@ u_char *cmu_snmp::auth_build( u_char *data,
                        (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                        (long *)&version,
                        sizeof(version));
-  if (data == 0){
+  if (data == nullptr){
     ASNERROR("buildint");
     return 0;
   }
@@ -1164,7 +1164,7 @@ u_char *cmu_snmp::auth_build( u_char *data,
                           (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OCTET_STR),
                           params,
                           plen );
-  if (data == 0){
+  if (data == nullptr){
     ASNERROR("buildstring");
     return 0;
   }
@@ -1198,7 +1198,7 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
   data = asn1::build_objid( data, listlength,
                  (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OBJECT_ID),
                          var_name, *var_name_len);
-  if (data == 0) {
+  if (data == nullptr) {
     ASNERROR("");
     return 0;
   }
@@ -1261,7 +1261,7 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
     ASNERROR("wrong type");
     return 0;
   }
-  if (data == 0) {
+  if (data == nullptr) {
     ASNERROR("");
     return 0;
   }
@@ -1293,7 +1293,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                            &vp->name_length, vp->type,
                            vp->val_len, (u_char *)vp->val.string,
                            &length);
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
   }
   totallength = cp - packet;
@@ -1304,7 +1304,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
   cp = asn1::build_header( buf, &length,
                         (u_char)(ASN_SEQUENCE | ASN_CONSTRUCTOR),
                         totallength);
-  if (cp == 0)
+  if (cp == nullptr)
     return -1;
   ACE_OS::memcpy( (char *)cp, (char *)packet,totallength);
   totallength += cp - buf;
@@ -1317,7 +1317,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                (u_char )(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                        (long *)&pdu->reqid,
                        sizeof(pdu->reqid));
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
 
     // error status
@@ -1325,7 +1325,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                        &length,
                (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                        (long *)&pdu->errstat, sizeof(pdu->errstat));
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
 
     // error index
@@ -1333,7 +1333,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                        &length,
                (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                        (long *)&pdu->errindex, sizeof(pdu->errindex));
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
   }
   else {        // this is a trap message
@@ -1344,7 +1344,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                  (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OBJECT_ID),
                          (oid *)pdu->enterprise,
                          pdu->enterprise_length);
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
 
     // agent-addr
@@ -1355,7 +1355,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                             //(u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OCTET_STR),
                           (u_char *)&pdu->agent_addr.sin_addr.s_addr,
                           sizeof(pdu->agent_addr.sin_addr.s_addr));
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
 
     long tmp (static_cast <long> (pdu->trap_type));
@@ -1365,7 +1365,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                          (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                          &tmp,
                          sizeof(pdu->trap_type));
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
 
     tmp = static_cast <long> (pdu->specific_type);
@@ -1375,7 +1375,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                           (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                           &tmp,
                           sizeof(pdu->specific_type));
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
 
     // timestamp
@@ -1386,7 +1386,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                          //(u_char )(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
                        (long *)&pdu->time,
                        sizeof(pdu->time));
-    if (cp == 0)
+    if (cp == nullptr)
       return -1;
   }
 
@@ -1401,7 +1401,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                         &length,
                         (u_char)pdu->command,
                         totallength);
-  if (cp == 0)
+  if (cp == nullptr)
     return -1;
   if (length < totallength)
     return -1;
@@ -1417,7 +1417,7 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
                        community,
                        community_len,
                        totallength );
-  if (cp == 0)
+  if (cp == nullptr)
     return -1;
   if ((*out_length - (cp - packet)) < totallength)
     return -1;
@@ -1439,7 +1439,7 @@ u_char *cmu_snmp::auth_parse(u_char *data,
 
   // get the type
   data = asn1::parse_header( data, length, &type);
-  if (data == 0){
+  if (data == nullptr){
     ASNERROR("bad header");
     return 0;
   }
@@ -1451,14 +1451,14 @@ u_char *cmu_snmp::auth_parse(u_char *data,
 
   // get the version
   data = asn1::parse_int(data, length, &type, version, sizeof(*version));
-  if (data == 0) {
+  if (data == nullptr) {
     ASNERROR("bad parse of version");
     return 0;
   }
 
   // get the community name
   data = asn1::parse_string(data, length, &type, sid, slen);
-  if (data == 0) {
+  if (data == nullptr) {
     ASNERROR("bad parse of community");
     return 0;
   }
@@ -1487,14 +1487,14 @@ cmu_snmp::parse_var_op( u_char *data, oid *var_name,
   u_char *var_op_start = data;
 
   data = asn1::parse_header(data, &var_op_len, &var_op_type);
-  if (data == 0){
+  if (data == nullptr){
     ASNERROR("");
     return 0;
   }
   if (var_op_type != (u_char)(ASN_SEQUENCE | ASN_CONSTRUCTOR))
     return 0;
   data = asn1::parse_objid(data, &var_op_len, &var_op_type, var_name, var_name_len);
-  if (data == 0) {
+  if (data == nullptr) {
     ASNERROR("");
     return 0;
   }
@@ -1504,7 +1504,7 @@ cmu_snmp::parse_var_op( u_char *data, oid *var_name,
   *var_val = data;      /* save pointer to this object */
   /* find out what type of object this is */
   data = asn1::parse_header(data, &var_op_len, var_val_type);
-  if (data == 0) {
+  if (data == nullptr) {
     ASNERROR("");
     return 0;
   }
@@ -1531,7 +1531,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
   int       len, four;
   u_char community[256];
   int community_length = 256;
-  struct variable_list *vp = 0;
+  struct variable_list *vp {};
   oid       objid[MAX_NAME_LEN], *op;
 
   // authenticates message and returns length if valid
@@ -1540,7 +1540,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                          community,
                          &community_length,
                          &version);
-  if (data == 0)
+  if (data == nullptr)
     return -1;
 
   // copy the returned community name
@@ -1559,7 +1559,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
   data = asn1::parse_header(data,
                           &length,
                           &msg_type);
-  if (data == 0)
+  if (data == nullptr)
     return -1;
   pdu->command = msg_type;
 
@@ -1569,7 +1569,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                          &length, &type,
                          (long *)&pdu->reqid,
                          sizeof(pdu->reqid));
-    if (data == 0)
+    if (data == nullptr)
       return -1;
     // get the error status
     data = asn1::parse_int(data,
@@ -1577,7 +1577,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                          &type,
                          (long *)&pdu->errstat,
                          sizeof(pdu->errstat));
-    if (data == 0)
+    if (data == nullptr)
       return -1;
     // get the error index
     data = asn1::parse_int(data,
@@ -1585,7 +1585,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                          &type,
                          (long *)&pdu->errindex,
                          sizeof(pdu->errindex));
-    if (data == 0)
+    if (data == nullptr)
       return -1;
   }
   else {  // is a trap
@@ -1597,7 +1597,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
                            &type,
                            objid,
                            &pdu->enterprise_length);
-    if (data == 0)
+    if (data == nullptr)
       return -1;
 
     ACE_NEW_RETURN(pdu->enterprise,
@@ -1612,7 +1612,7 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
     data = asn1::parse_string(data, &length, &type,
                             (u_char *)&pdu->agent_addr.sin_addr.s_addr,
                             &four);
-    if (data == 0)
+    if (data == nullptr)
       return -1;
 
     long tmp (static_cast <long> (pdu->trap_type));
@@ -1620,48 +1620,48 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
     // get trap type
     data = asn1::parse_int(data, &length, &type, &tmp,
                          sizeof(pdu->trap_type));
-    if (data == 0)
+    if (data == nullptr)
       return -1;
 
     // trap type
     tmp = static_cast <long> (pdu->specific_type);
     data = asn1::parse_int(data, &length, &type, &tmp,
                          sizeof(pdu->specific_type));
-    if (data == 0)
+    if (data == nullptr)
       return -1;
 
     // timestamp
     data = asn1::parse_int(data, &length, &type, (long *)&pdu->time,
                             sizeof(pdu->time));
-    if (data == 0)
+    if (data == nullptr)
       return -1;
   }
 
   // get the vb list
   data = asn1::parse_header(data, &length, &type);
-  if (data == 0)
+  if (data == nullptr)
     return -1;
 
   if (type != (u_char)(ASN_SEQUENCE | ASN_CONSTRUCTOR))
     return -1;
 
   while((int)length > 0) {
-    if (pdu->variables == 0) {
+    if (pdu->variables == nullptr) {
       ACE_NEW_RETURN(pdu->variables, variable_list, -1);
       vp = pdu->variables;
     } else {
       ACE_NEW_RETURN(vp->next_variable, variable_list, -1);
       vp = vp->next_variable;
     }
-    vp->next_variable = 0;
-    vp->val.string = 0;
-    vp->name = 0;
+    vp->next_variable = nullptr;
+    vp->val.string = nullptr;
+    vp->name = nullptr;
     vp->name_length = MAX_NAME_LEN;
     data = cmu_snmp::parse_var_op( data, objid,
                              &vp->name_length, &vp->type,
                              &vp->val_len, &var_val,
                              (int *)&length);
-     if (data == 0)
+     if (data == nullptr)
       return -1;
 
     ACE_NEW_RETURN(op, oid[(unsigned)vp->name_length * sizeof(oid)], -1);
