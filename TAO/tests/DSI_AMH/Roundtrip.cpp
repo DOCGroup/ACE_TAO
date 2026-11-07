@@ -21,60 +21,62 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
   if (std::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (false);
-
       return;
     }
-
   else if (std::strcmp ("_is_a", request->operation ()) == 0)
     {
-      CORBA::NVList_ptr list {};
-      this->orb_->create_list (0, list);
+      CORBA::NVList_var list {};
+      this->orb_->create_list (0, list.out ());
 
       CORBA::Any type_id;
       type_id._tao_set_typecode (CORBA::_tc_string);
       list->add_value ("type_id", type_id, CORBA::ARG_IN);
 
-      request->arguments (list);
+      CORBA::NVList_ptr arguments = list._retn ();
+      request->arguments (arguments);
 
-      // list still has ownership of the item
-      CORBA::NamedValue_ptr nv = list->item (0);
+      // The request owns the list and its item; this pointer is borrowed.
+      CORBA::NamedValue_ptr const nv = arguments->item (0);
 
       char const *arg {};
-      *(nv->value ()) >>= arg;
-
       CORBA::Boolean type_matches {};
-      if (std::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
-          || std::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
-          || std::strcmp (arg, "") == 0)
-        type_matches = true;
+      if (nv != nullptr && nv->value () != nullptr)
+        {
+          *(nv->value ()) >>= arg;
+          if (arg != nullptr
+              && (std::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
+                  || std::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
+                  || std::strcmp (arg, "") == 0))
+            type_matches = true;
+        }
 
       CORBA::Any result_any {};
       result_any <<= CORBA::Any::from_boolean (type_matches);
 
-      // AMH way of replying
+      // AMH way of replying.
       CORBA::NamedValue_var result {};
       this->orb_->create_named_value (result.out ());
       *(result->value ()) = result_any;
-      rh->invoke_reply (list, result.in ());
+      rh->invoke_reply (arguments, result.in ());
 
       return;
     }
-
   else if (std::strcmp ("test_method", request->operation ()) == 0)
     {
-      CORBA::NVList_ptr list {}; // will become property of the arguments list
-      this->orb_->create_list (0, list);
+      CORBA::NVList_var list {};
+      this->orb_->create_list (0, list.out ());
 
       CORBA::Any send_time;
       send_time._tao_set_typecode (CORBA::_tc_ulonglong);
       list->add_value ("send_time", send_time, CORBA::ARG_IN);
 
-      request->arguments (list);
+      CORBA::NVList_ptr arguments = list._retn ();
+      request->arguments (arguments);
 
-      CORBA::NamedValue_ptr nv = list->item (0);
+      CORBA::NamedValue_ptr const nv = arguments->item (0);
 
       // AMH way of replying
-      rh->invoke_reply (list, nv);
+      rh->invoke_reply (arguments, nv);
 
       return;
     }
@@ -140,7 +142,6 @@ Roundtrip::_dispatch (TAO_ServerRequest &request,
           request.tao_send_reply_exception (ex);
         }
     }
-
 }
 
 void

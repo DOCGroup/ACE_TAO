@@ -14,7 +14,7 @@ struct Client_Options
 int
 parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xk:i:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("xk:i:"));
   int c {};
 
   while ((c = get_opts ()) != -1)
@@ -37,10 +37,9 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage: %s -k <ior> -i <niterations> "
                                      "-x (disable shutdown)\n"),
-                           argv [0]),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -50,14 +49,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Client_Options options;
   try
     {
-      CORBA::ORB_var const orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var const object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+        orb->string_to_object (options.ior.c_str ());
 
       Test::Roundtrip_var const roundtrip =
         Test::Roundtrip::_narrow (object.in ());
@@ -65,8 +63,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (roundtrip.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Nil Test::Roundtrip reference <%C>\n"),
-                             ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ())),
+                             ACE_TEXT ("Nil Test::Roundtrip reference <%s>\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
@@ -78,10 +76,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG, "test return value: %Q\n", retval));
         }
-
-
       ACE_DEBUG ((LM_DEBUG, "test finished\n"));
-
 
       if (options.do_shutdown)
         {
