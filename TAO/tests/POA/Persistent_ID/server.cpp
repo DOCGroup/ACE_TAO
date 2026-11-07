@@ -9,12 +9,13 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/SString.h"
 #include "testS.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/PortableServer/PortableServer.h"
+#include <cstring>
+#include <memory>
 
 class test_i :
   public virtual POA_test
@@ -22,18 +23,22 @@ class test_i :
 public:
   test_i (CORBA::ORB_ptr orb_ptr,
           PortableServer::POA_ptr poa);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  void method ();
+  void method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
 
-  test_ptr create_POA ();
+  test_ptr create_POA () override;
 
-  void destroy_POA ();
+  void destroy_POA () override;
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 protected:
   CORBA::ORB_var orb_;
@@ -52,16 +57,16 @@ test_i::test_i (CORBA::ORB_ptr orb,
 void
 test_i::method ()
 {
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->orb_->resolve_initial_references ("POACurrent");
 
-  PortableServer::Current_var current =
+  PortableServer::Current_var const current =
     PortableServer::Current::_narrow (obj.in ());
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     current->get_POA ();
 
-  CORBA::String_var poa_name =
+  CORBA::String_var const poa_name =
     poa->the_name ();
 
   ACE_DEBUG ((LM_DEBUG,
@@ -88,48 +93,45 @@ test_i::create_POA ()
   policies.length (2);
 
   policies[0] =
-    this->poa_->create_id_assignment_policy
-    (this->oid_.ptr () == 0 ? PortableServer::SYSTEM_ID :
-     PortableServer::USER_ID);
+    this->poa_->create_id_assignment_policy (
+      this->oid_.ptr () == nullptr ? PortableServer::SYSTEM_ID : PortableServer::USER_ID);
 
   policies[1] =
     this->poa_->create_lifespan_policy (PortableServer::PERSISTENT);
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     this->poa_->the_POAManager ();
 
-  ACE_CString name = "childPOA";
+  ACE_CString const name = "childPOA";
   this->child_poa_ =
     this->poa_->create_POA (name.c_str (),
                             poa_manager.in (),
                             policies);
 
   // Destroy the policies
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < policies.length ();
        ++i)
     {
       policies[i]->destroy ();
     }
 
-  test_i *servant =
+  PortableServer::ServantBase_var safe_servant (
     new test_i (this->orb_.in (),
-                this->child_poa_.in ());
+                this->child_poa_.in ()));
 
-  PortableServer::ServantBase_var safe_servant (servant);
-
-  if (this->oid_.ptr () == 0)
+  if (this->oid_.ptr () == nullptr)
     {
       this->oid_ =
-        this->child_poa_->activate_object (servant);
+        this->child_poa_->activate_object (safe_servant.in ());
     }
   else
     {
       this->child_poa_->activate_object_with_id (this->oid_.in (),
-                                                 servant);
+                                                 safe_servant.in ());
     }
 
-  CORBA::Object_var object = this->child_poa_->id_to_reference (this->oid_.in ());
+  CORBA::Object_var const object = this->child_poa_->id_to_reference (this->oid_.in ());
 
   test_var test = test::_narrow (object.in ());
 
@@ -142,13 +144,11 @@ test_i::destroy_POA ()
   this->child_poa_->destroy (1, 0);
 }
 
-const ACE_TCHAR *ior_file = ACE_TEXT ("ior");
-
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, ACE_TCHAR const *&ior_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -171,29 +171,23 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 static int
-write_ior_to_file (const char *ior)
+write_ior_to_file (ACE_TCHAR const *ior_file,
+                   char const *ior)
 {
-  FILE *output_file =
-    ACE_OS::fopen (ior_file, "w");
-
-  if (output_file == 0)
+  std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+    ACE_OS::fopen (ior_file, "w"), ACE_OS::fclose);
+  if (!output_file)
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IOR: %s\n",
                        ior_file),
                       -1);
 
-  u_int result = 0;
-
-  result = ACE_OS::fprintf (output_file,
-                            "%s",
-                            ior);
-  if (result != ACE_OS::strlen (ior))
+  int const result = ACE_OS::fprintf (output_file.get (), "%s", ior);
+  if (result < 0 || static_cast<size_t> (result) != std::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        ior,
                        ior_file),
                       -1);
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }
@@ -203,38 +197,39 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      ACE_TCHAR const *ior_file = ACE_TEXT ("ior");
+      int const result = parse_args (argc, argv, ior_file);
       if (result != 0)
         return result;
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       test_i servant (orb.in (),
                       root_poa.in ());
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&servant);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      test_var test =
+      test_var const test =
         test::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (test.in ());
 
-      int write_result =
-        write_ior_to_file (ior.in ());
+      int const write_result =
+        write_ior_to_file (ior_file, ior.in ());
       if (write_result != 0)
         return write_result;
 
@@ -244,7 +239,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;
