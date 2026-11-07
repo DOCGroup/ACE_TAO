@@ -14,7 +14,7 @@ TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
   : mutex_ (&m)
 {
   // @todo: Need to add the allocatore here..
-  TAO_SYNCH_CONDITION *cond = nullptr;
+  TAO_SYNCH_CONDITION *cond {};
   ACE_NEW (cond, TAO_SYNCH_CONDITION (*this->mutex_));
   this->cond_.reset (cond);
 }
@@ -24,12 +24,12 @@ TAO_Condition<MUTEX>::TAO_Condition ()
     : mutex_ (nullptr)
 {
   // @todo: Need to add the allocatore here..
-  MUTEX *mutex = nullptr;
+  MUTEX *mutex {};
   ACE_NEW (mutex, MUTEX);
   this->owned_mutex_.reset (mutex);
   this->mutex_ = this->owned_mutex_.get ();
 
-  TAO_SYNCH_CONDITION *cond = nullptr;
+  TAO_SYNCH_CONDITION *cond {};
   ACE_NEW (cond, TAO_SYNCH_CONDITION (*this->mutex_));
   this->cond_.reset (cond);
 }

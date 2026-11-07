@@ -74,7 +74,7 @@ TAO_Stub::profile_in_use ()
 ACE_INLINE TAO_MProfile *
 TAO_Stub::make_profiles ()
 {
-  TAO_MProfile * mp = nullptr;
+  TAO_MProfile * mp {};
 
   ACE_NEW_RETURN (mp,
                   TAO_MProfile (base_profiles_),
@@ -86,7 +86,7 @@ TAO_Stub::make_profiles ()
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_forward_profile ()
 {
-  TAO_Profile * pfile_next = nullptr;
+  TAO_Profile * pfile_next {};
 
   // Do not remove the permanent forward at the bottom of the stack.
   while (this->forward_profiles_
@@ -102,7 +102,7 @@ TAO_Stub::next_forward_profile ()
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile_i ()
 {
-  TAO_Profile * pfile_next = nullptr;
+  TAO_Profile * pfile_next {};
 
   // First handle the case that a permanent forward occurred
   if (this->forward_profiles_perm_) // the permanent forward defined

@@ -32,10 +32,10 @@ namespace TAO
     load_protocol_factory (TAO_ProtocolFactorySet &protocol_set,
                            const char *name)
     {
-      TAO_Protocol_Factory *protocol_factory = nullptr;
+      TAO_Protocol_Factory *protocol_factory {};
       std::unique_ptr<TAO_Protocol_Factory> safe_protocol_factory;
 
-      TAO_Protocol_Item *item = nullptr;
+      TAO_Protocol_Item *item {};
 
       // If a protocol factory is obtained from the Service
       // Configurator then do not transfer ownership to the

@@ -91,7 +91,7 @@ CORBA::WrongTransaction::_downcast (CORBA::Exception const *_tao_excp)
 
 CORBA::Exception *CORBA::WrongTransaction::_alloc ()
 {
-  CORBA::Exception *retval = nullptr;
+  CORBA::Exception *retval {};
   ACE_NEW_RETURN (retval, ::CORBA::WrongTransaction, nullptr);
   return retval;
 }
@@ -99,7 +99,7 @@ CORBA::Exception *CORBA::WrongTransaction::_alloc ()
 CORBA::Exception *
 CORBA::WrongTransaction::_tao_duplicate () const
 {
-  CORBA::Exception *result = nullptr;
+  CORBA::Exception *result {};
   ACE_NEW_RETURN (
       result,
       ::CORBA::WrongTransaction (*this),

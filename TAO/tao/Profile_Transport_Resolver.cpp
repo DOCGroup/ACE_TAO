@@ -228,7 +228,7 @@ namespace TAO
   void
   Profile_Transport_Resolver::init_inconsistent_policies ()
   {
-    CORBA::PolicyList *policies = nullptr;
+    CORBA::PolicyList *policies {};
     ACE_NEW_THROW_EX (policies,
                       CORBA::PolicyList (0),
                       CORBA::NO_MEMORY (
