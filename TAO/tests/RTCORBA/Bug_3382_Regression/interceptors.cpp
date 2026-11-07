@@ -9,10 +9,6 @@ Client_Request_Interceptor (const char *id)
 {
 }
 
-Client_Request_Interceptor::~Client_Request_Interceptor ()
-{
-}
-
 char *
 Client_Request_Interceptor::name ()
 {
@@ -73,7 +69,7 @@ Client_Request_Interceptor::receive_exception (
   if (CORBA::is_nil (this->orb_.in ()))
     {
       int argc = 0;
-      ACE_TCHAR **argv = 0;
+      ACE_TCHAR **argv {};
       this->orb_ = CORBA::ORB_init (argc, argv,
                                     this->orb_id_.in ());
     }

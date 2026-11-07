@@ -26,7 +26,7 @@ public:
   Client_Request_Interceptor (const char *orb_id);
   // ctor.
 
-  virtual ~Client_Request_Interceptor ();
+  virtual ~Client_Request_Interceptor () = default;
   // dtor.
 
   virtual char * name ();
