@@ -28,11 +28,13 @@
 =====================================================================*/
 
 #include "asnmp/octet.h"    // include definition for octet class
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
-#include "ace/os_include/os_ctype.h"
+#include <cerrno>
+#include <cstdio>
+#include <cstring>
+#include <memory>
+#include <new>
+#include <utility>
 
 //============[ syntax type ]=========================================
 SmiUINT32 OctetStr::get_syntax()
@@ -44,7 +46,7 @@ inline
 void init_octet_smi(SmiVALUE& smi)
 {
   smi.syntax = sNMP_SYNTAX_OCTETS;
-  smi.value.string.ptr = 0;
+  smi.value.string.ptr = nullptr;
   smi.value.string.len = 0;
 }
 
@@ -52,119 +54,127 @@ inline
 void reset_octet_smi(SmiVALUE& smi)
 {
   delete [] smi.value.string.ptr;
-  smi.value.string.ptr = 0;
+  smi.value.string.ptr = nullptr;
   smi.value.string.len = 0;
 }
 
 inline
-int copy_octet_smi(SmiVALUE& smi, int size, const char *src, int& valid_flag)
+int copy_octet_smi (SmiVALUE &smi, SmiUINT32 size, char const *src, int &valid_flag)
 {
-  valid_flag = 0;
+  std::unique_ptr<SmiBYTE[]> new_data {new (std::nothrow) SmiBYTE[size]};
+  if (!new_data)
+    {
+      valid_flag = 0;
+      errno = ENOMEM;
+      return 1;
+    }
 
-  if (smi.value.string.ptr)
-    delete [] smi.value.string.ptr;
-
-  ACE_NEW_RETURN(smi.value.string.ptr, SmiBYTE[size], 1);
-  ACE_OS::memcpy( smi.value.string.ptr, src, size);
+  std::memcpy (new_data.get (), src, size);
+  delete [] smi.value.string.ptr;
+  smi.value.string.ptr = new_data.release ();
   smi.value.string.len = size;
   valid_flag = 1;
   return 0;
 }
 
 //============[ default constructor ]=========================
-OctetStr::OctetStr( const char  * string, long size):
-  output_buffer(0), validity(0)
+OctetStr::OctetStr (char const *string, long size)
 {
-  init_octet_smi(smival);
+  init_octet_smi (smival);
 
   // check for null string
-  if ( !string)
+  if (!string)
     return;
 
   if (size == -1) // calc if no length given - assume c style string
-    size = ACE_OS::strlen( string);
+    size = static_cast<long> (std::strlen (string));
 
-  copy_octet_smi(smival, size, string, validity);
+  if (size < 0)
+    return;
+
+  copy_octet_smi (smival, static_cast<SmiUINT32> (size), string, validity);
 }
-
 
 //============[ set the data on an already constructed Octet ]============
 // TODO: should return status since it can fail in so many places
-void OctetStr::set_data( const SmiBYTE* string, long size)
+void OctetStr::set_data (SmiBYTE const *string, long size)
 {
   // invalid args, set octetStr to not valid
-  if ( !string || !size) {
-    validity = 0;
-    return;
-  }
+  if (!string || !size)
+    {
+      validity = 0;
+      return;
+    }
 
   // assume non-zero terminated string
   if (size == -1) // calc if no length given - assume c style string
-    size = ACE_OS::strlen( (char *)string);
+    size = static_cast<long> (std::strlen (reinterpret_cast<char const *> (string)));
+
+  if (size < 0)
+    {
+      validity = 0;
+      return;
+    }
 
   // free up already used space
-  if ( smival.value.string.ptr ) {
-    reset_octet_smi(smival);
-  }
+  if (smival.value.string.ptr)
+    reset_octet_smi (smival);
   smival.value.string.len = 0;
 
-
-  copy_octet_smi(smival, size, (const char *)string, validity);
+  copy_octet_smi (smival, static_cast<SmiUINT32> (size),
+                  reinterpret_cast<char const *> (string), validity);
 }
 
 //============[ constructor using another octet object ]==============
-OctetStr::OctetStr ( const OctetStr &octet):
-  SnmpSyntax (octet), output_buffer(0), validity(1)
+OctetStr::OctetStr (OctetStr const &octet)
+  : SnmpSyntax (octet), validity (1)
 {
-  init_octet_smi(smival);
-   // check for zero len case
-   if ( octet.smival.value.string.len == 0) {
-      return;
-   }
+  init_octet_smi (smival);
+  // check for zero len case
+  if (octet.smival.value.string.len == 0)
+    return;
 
-   // must be a valid object
-   if ( octet.validity == 0) {
+  // must be a valid object
+  if (octet.validity == 0)
+    {
       validity = 0;
       return;
-   }
+    }
 
-   // get the mem needed
-  copy_octet_smi(smival, octet.smival.value.string.len,
-                  (const char *)octet.smival.value.string.ptr, validity);
+  // get the mem needed
+  copy_octet_smi (smival, octet.smival.value.string.len,
+                  reinterpret_cast<char const *> (octet.smival.value.string.ptr), validity);
 }
 
 //=============[ destructor ]=========================================
-OctetStr::~OctetStr()
+OctetStr::~OctetStr ()
 {
- reset_octet_smi(smival);
- delete [] output_buffer;
+  reset_octet_smi (smival);
 }
 
-
 //=============[ assignment to a string operator overloaded ]=========
-OctetStr& OctetStr::operator=( const char  *string)
+OctetStr &OctetStr::operator= (char const *string)
 {
    // get the string size
-   size_t nz;
+   size_t nz {};
 
    // free up previous memory if needed
-   if ( smival.value.string.ptr ) {
-     reset_octet_smi(smival);
-   }
+   if (smival.value.string.ptr)
+     reset_octet_smi (smival);
 
    // if empty then we are done
-   if (!string || !(nz = ACE_OS::strlen( string))) {
+   if (!string || !(nz = std::strlen (string))) {
      validity = 1;
      return *this;
    }
 
    // get memory needed
-   copy_octet_smi(smival, nz, string, validity);
+   copy_octet_smi (smival, static_cast<SmiUINT32> (nz), string, validity);
    return *this;
 }
 
 //=============[ assignment to another oid object overloaded ]========
-OctetStr& OctetStr::operator=( const OctetStr &octet)
+OctetStr &OctetStr::operator= (OctetStr const &octet)
 {
    // protect against assignment from self
    if ( this == &octet )
@@ -176,9 +186,8 @@ OctetStr& OctetStr::operator=( const OctetStr &octet)
    }
 
    // free up previous memory if needed
-   if ( smival.value.string.len ) {
+   if (smival.value.string.ptr)
      reset_octet_smi(smival);
-   }
 
    if (!octet.smival.value.string.len) {
      validity = 1;
@@ -186,13 +195,13 @@ OctetStr& OctetStr::operator=( const OctetStr &octet)
    }
 
    // get some memory
-   copy_octet_smi(smival, octet.smival.value.string.len,
-                 (const char*) octet.smival.value.string.ptr, validity);
+   copy_octet_smi (smival, octet.smival.value.string.len,
+                   reinterpret_cast<char const *> (octet.smival.value.string.ptr), validity);
    return *this;                       // return self reference
 }
 
 //==============[ equivlence operator overloaded ]====================
-bool operator==( const OctetStr &lhs, const OctetStr &rhs)
+bool operator== (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0)
        return true;
@@ -201,7 +210,7 @@ bool operator==( const OctetStr &lhs, const OctetStr &rhs)
 }
 
 //==============[ not equivlence operator overloaded ]================
-bool operator!=( const OctetStr &lhs, const OctetStr &rhs)
+bool operator!= (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)!=0)
        return true;
@@ -210,7 +219,7 @@ bool operator!=( const OctetStr &lhs, const OctetStr &rhs)
 }
 
 //==============[ less than < overloaded ]============================
-bool operator<( const OctetStr &lhs, const OctetStr &rhs)
+bool operator< (OctetStr const &lhs, OctetStr const &rhs)
 {
    if( lhs.left_comparison( rhs.smival.value.string.len, rhs)<0)
       return true;
@@ -219,7 +228,7 @@ bool operator<( const OctetStr &lhs, const OctetStr &rhs)
 }
 
 //==============[ less than <= overloaded ]===========================
-bool operator<=( const OctetStr &lhs, const OctetStr &rhs)
+bool operator<= (OctetStr const &lhs, OctetStr const &rhs)
 {
    if(( lhs.left_comparison( rhs.smival.value.string.len, rhs)<0) ||
       ( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0))
@@ -229,7 +238,7 @@ bool operator<=( const OctetStr &lhs, const OctetStr &rhs)
 }
 
 //===============[ greater than > overloaded ]========================
-bool operator>( const OctetStr &lhs, const OctetStr &rhs)
+bool operator> (OctetStr const &lhs, OctetStr const &rhs)
 {
   if( lhs.left_comparison( rhs.smival.value.string.len, rhs)>0)
       return true;
@@ -238,7 +247,7 @@ bool operator>( const OctetStr &lhs, const OctetStr &rhs)
 }
 
 //===============[ greater than >= overloaded ]=======================
-bool operator>=( const OctetStr &lhs, const OctetStr &rhs)
+bool operator>= (OctetStr const &lhs, OctetStr const &rhs)
 {
   if(( lhs.left_comparison( rhs.smival.value.string.len, rhs)>0) ||
      ( lhs.left_comparison( rhs.smival.value.string.len, rhs)==0))
@@ -248,7 +257,7 @@ bool operator>=( const OctetStr &lhs, const OctetStr &rhs)
 }
 
 //===============[ equivlence operator overloaded ]===================
-bool operator==( const OctetStr &lhs,const char  *rhs)
+bool operator== (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if( lhs.left_comparison( to.smival.value.string.len,to)==0)
@@ -258,7 +267,7 @@ bool operator==( const OctetStr &lhs,const char  *rhs)
 }
 
 //===============[ not equivlence operator overloaded ]===============
-bool operator!=( const OctetStr &lhs,const char  *rhs)
+bool operator!= (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)!=0)
@@ -268,7 +277,7 @@ bool operator!=( const OctetStr &lhs,const char  *rhs)
 }
 
 //===============[ less than < operator overloaded ]==================
-bool operator<( const OctetStr &lhs,const char  *rhs)
+bool operator< (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)<0)
@@ -278,7 +287,7 @@ bool operator<( const OctetStr &lhs,const char  *rhs)
 }
 
 //===============[ less than <= operator overloaded ]=================
-bool operator<=( const OctetStr &lhs,char  *rhs)
+bool operator<= (OctetStr const &lhs, char *rhs)
 {
    OctetStr to( rhs);
    if (( lhs.left_comparison( to.smival.value.string.len,to)<0) ||
@@ -289,7 +298,7 @@ bool operator<=( const OctetStr &lhs,char  *rhs)
 }
 
 //===============[ greater than > operator overloaded ]===============
-bool operator>( const OctetStr &lhs,const char  *rhs)
+bool operator> (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)>0)
@@ -299,7 +308,7 @@ bool operator>( const OctetStr &lhs,const char  *rhs)
 }
 
 //===============[ greater than >= operator overloaded ]==============
-bool operator>=( const OctetStr &lhs,const char  *rhs)
+bool operator>= (OctetStr const &lhs, char const *rhs)
 {
    OctetStr to( rhs);
    if (( lhs.left_comparison( to.smival.value.string.len,to)>0) ||
@@ -310,34 +319,39 @@ bool operator>=( const OctetStr &lhs,const char  *rhs)
 }
 
 //===============[ append operator, appends a string ]================
-OctetStr& OctetStr::operator+=( const char  *a)
+OctetStr &OctetStr::operator+= (char const *a)
 {
-  SmiBYTE  *tmp;         // temp pointer
-  size_t slen,nlen;
+  size_t slen {};
+  size_t nlen {};
 
   // get len of string
-  if ( !a || ((slen = ACE_OS::strlen( a)) == 0))
+  if (!a || ((slen = std::strlen (a)) == 0))
     return *this;
 
   // total len of octet
   nlen =  slen + (size_t) smival.value.string.len;
-  ACE_NEW_RETURN(tmp, SmiBYTE [ nlen], *this);
-  ACE_OS::memcpy ( tmp, smival.value.string.ptr,
-                   (size_t) smival.value.string.len);
-  ACE_OS::memcpy( tmp + smival.value.string.len, a, (size_t) slen);
+  std::unique_ptr<SmiBYTE[]> tmp {new (std::nothrow) SmiBYTE[nlen]};
+  if (!tmp)
+    {
+      errno = ENOMEM;
+      return *this;
+    }
+  if (smival.value.string.len)
+    std::memcpy (tmp.get (), smival.value.string.ptr, smival.value.string.len);
+  std::memcpy (tmp.get () + smival.value.string.len, a, slen);
   // delete the original
   if ( smival.value.string.ptr )
      reset_octet_smi(smival);
-  smival.value.string.ptr = tmp;
+  smival.value.string.ptr = tmp.release ();
   smival.value.string.len = nlen;
   return *this;
 }
 
 //================[ append one OctetStr to another ]==================
-OctetStr& OctetStr::operator+=( const OctetStr& octetstr)
+OctetStr &OctetStr::operator+= (OctetStr const &octetstr)
 {
-  SmiBYTE  *tmp;         // temp pointer
-  size_t slen,nlen;
+  size_t slen {};
+  size_t nlen {};
 
   if (!octetstr.validity ||
       !(slen = (size_t)octetstr.length()))
@@ -346,40 +360,49 @@ OctetStr& OctetStr::operator+=( const OctetStr& octetstr)
   // total len of octet
   nlen =  slen + (size_t) smival.value.string.len;
   // get mem needed
-  ACE_NEW_RETURN(tmp, SmiBYTE[ nlen], *this);
-  ACE_OS::memcpy ( tmp, smival.value.string.ptr,
-                   (size_t) smival.value.string.len);
-  ACE_OS::memcpy( tmp + smival.value.string.len, octetstr.data(),
-                  (size_t) slen);
+  std::unique_ptr<SmiBYTE[]> tmp {new (std::nothrow) SmiBYTE[nlen]};
+  if (!tmp)
+    {
+      errno = ENOMEM;
+      return *this;
+    }
+  if (smival.value.string.len)
+    std::memcpy (tmp.get (), smival.value.string.ptr, smival.value.string.len);
+  std::memcpy (tmp.get () + smival.value.string.len, octetstr.data (), slen);
   if ( smival.value.string.ptr )
       reset_octet_smi(smival);
-  smival.value.string.ptr = tmp;
+  smival.value.string.ptr = tmp.release ();
   smival.value.string.len = nlen;
   return *this;
 }
 
 //================[ appends an int ]==================================
-OctetStr& OctetStr::operator+=( const char c)
+OctetStr &OctetStr::operator+= (char c)
 {
-    SmiBYTE  *tmp;
+    size_t const new_size = smival.value.string.len + 1;
     // get the memory needed plus one extra byte
-    ACE_NEW_RETURN(tmp, SmiBYTE[ smival.value.string.len + 1], *this);
-    ACE_OS::memcpy ( tmp, smival.value.string.ptr,
-                (size_t) smival.value.string.len); // len of original
-    tmp[ smival.value.string.len ] = c;         // assign in byte
+    std::unique_ptr<SmiBYTE[]> tmp {new (std::nothrow) SmiBYTE[new_size]};
+    if (!tmp)
+      {
+        errno = ENOMEM;
+        return *this;
+      }
+    if (smival.value.string.len)
+      std::memcpy (tmp.get (), smival.value.string.ptr, smival.value.string.len);
+    tmp[smival.value.string.len] = static_cast<SmiBYTE> (c);
     if ( smival.value.string.ptr )      // delete the original
       reset_octet_smi(smival);
 
-    smival.value.string.ptr = tmp;      // point to one
+    smival.value.string.ptr = tmp.release ();
     smival.value.string.len++;          // up the len
     return *this;
 }
 
-
 //================[ compare n elements of an Octet ]==================
-int OctetStr::left_comparison( const long n, const OctetStr &o) const
+int OctetStr::left_comparison (long n, OctetStr const &o) const
 {
-   long z, w;
+   long z {};
+   long w {};
 
    // both are empty, they are equal
    if (( smival.value.string.len == 0) &&
@@ -433,7 +456,7 @@ int OctetStr::left_comparison( const long n, const OctetStr &o) const
 }
 
 //================[ return the length of the oid ]=======================
-size_t OctetStr::length() const
+size_t OctetStr::length () const
 {
    return (size_t) smival.value.string.len;
 }
@@ -445,7 +468,7 @@ SmiBYTE& OctetStr::operator[]( int position)
 }
 
 //===============[ reuturns pointer to internal data ]===============
-SmiBYTE  * OctetStr::data() const
+SmiBYTE *OctetStr::data () const
 {
    return smival.value.string.ptr;
 }
@@ -457,14 +480,13 @@ int OctetStr::valid() const
 }
 
 //================[ clone() ]=========================================
-SnmpSyntax * OctetStr::clone() const
+SnmpSyntax *OctetStr::clone () const
 {
-  OctetStr *tmp = new OctetStr(*this);
-  return ( SnmpSyntax *) tmp;
+  return new OctetStr (*this);
 }
 
 //================[ ASCII format return ]=============================
-const char  * OctetStr::to_string()
+char const *OctetStr::to_string ()
 {
   for ( unsigned long i=0; i < smival.value.string.len; i++) {
     if (( smival.value.string.ptr[i] != '\r')&&
@@ -473,20 +495,21 @@ const char  * OctetStr::to_string()
          return(to_string_hex());
   }
 
-  if ( output_buffer != 0)
-          delete [] output_buffer;
-
-  ACE_NEW_RETURN(output_buffer, char[smival.value.string.len + 1], "");
+  std::unique_ptr<char[]> new_buffer {new (std::nothrow) char[smival.value.string.len + 1]};
+  if (!new_buffer)
+    {
+      errno = ENOMEM;
+      return "";
+    }
   if (smival.value.string.len)
-    ACE_OS::memcpy(output_buffer, smival.value.string.ptr,
-                   (int) smival.value.string.len);
-  output_buffer[smival.value.string.len] = '\0';
-  return output_buffer;
+    std::memcpy (new_buffer.get (), smival.value.string.ptr, smival.value.string.len);
+  new_buffer[smival.value.string.len] = '\0';
+  output_buffer = std::move (new_buffer);
+  return output_buffer.get ();
 }
 
-
 //================[ general Value = operator ]========================
-SnmpSyntax& OctetStr::operator=( SnmpSyntax &val)
+SnmpSyntax &OctetStr::operator= (SnmpSyntax &val)
 {
    // protect against assignment from self
    if ( this == &val )
@@ -502,8 +525,8 @@ SnmpSyntax& OctetStr::operator=( SnmpSyntax &val)
     switch (val.get_syntax()) {
       case sNMP_SYNTAX_OCTETS:
       case sNMP_SYNTAX_IPADDR:
-        set_data( ((OctetStr &)val).smival.value.string.ptr,
-                  ((OctetStr &)val).smival.value.string.len);
+        set_data (static_cast<OctetStr &> (val).smival.value.string.ptr,
+                  static_cast<OctetStr &> (val).smival.value.string.len);
         break;
     }
   }
@@ -511,25 +534,27 @@ SnmpSyntax& OctetStr::operator=( SnmpSyntax &val)
 }
 
 //================[ format the output into hex ]========================
-const char *OctetStr::to_string_hex()
+char const *OctetStr::to_string_hex ()
 {
-  int cnt;
-  char char_buf[80];              // holds ASCII representation of data
-  char *buf_ptr;                  // pointer into ASCII listing
-  char *line_ptr;                 // pointer into Hex listing
-  int  storageNeeded;             // how much space do we need ?
-  int  local_len = (int) smival.value.string.len;
+  int cnt {};
+  char char_buf[80] {};           // holds ASCII representation of data
+  char *buf_ptr {};
+  char *line_ptr {};
+  int storageNeeded {};
+  int local_len = static_cast<int> (smival.value.string.len);
   SmiBYTE *bytes = smival.value.string.ptr;
-
 
   storageNeeded = (int) ((smival.value.string.len/16)+1) * 72 + 1;
 
-  if ( output_buffer != 0)
-          delete [] output_buffer;
+  std::unique_ptr<char[]> new_buffer {new (std::nothrow) char[storageNeeded]};
+  if (!new_buffer)
+    {
+      errno = ENOMEM;
+      return "";
+    }
 
-  ACE_NEW_RETURN(output_buffer, char[storageNeeded], "");
-
-  line_ptr = output_buffer;
+  line_ptr = new_buffer.get ();
+  line_ptr[0] = '\0';
 
     /*----------------------------------------*/
     /* processing loop for entire data buffer */
@@ -537,20 +562,20 @@ const char *OctetStr::to_string_hex()
   while (local_len > 0) {
     cnt      = 16;        /* print 16 bytes per line */
     buf_ptr  = char_buf;
-    ACE_OS::sprintf(line_ptr, "  ");
+    std::sprintf (line_ptr, "  ");
     line_ptr += 2;  /* indent */
 
       /*-----------------------*/
       /* process a single line */
       /*-----------------------*/
     while (cnt-- > 0 && local_len-- > 0) {
-      ACE_OS::sprintf(line_ptr, "%2.2X ", *bytes);
+      std::sprintf (line_ptr, "%2.2X ", static_cast<unsigned int> (*bytes));
 
       line_ptr +=3;   /* the display of a byte always 3 chars long */
       if (ACE_OS::ace_isprint(*bytes))
-        ACE_OS::sprintf(buf_ptr, "%c", *bytes);
+        std::sprintf (buf_ptr, "%c", *bytes);
       else
-        ACE_OS::sprintf(buf_ptr, ".");
+        std::sprintf (buf_ptr, ".");
       bytes++;
       buf_ptr++;
     }
@@ -561,7 +586,7 @@ const char *OctetStr::to_string_hex()
        /* incomplete lines of hex                                  */
        /*----------------------------------------------------------*/
     while (cnt-- > 0) {
-      ACE_OS::sprintf(line_ptr,"   ");
+      std::sprintf (line_ptr, "   ");
       line_ptr += 3;
     }
 
@@ -572,14 +597,15 @@ const char *OctetStr::to_string_hex()
 // TODO: verify ACE_OS:: on NT works like this or not
 
 #if defined(ACE_WIN32)
-    const char *fmt = "   %s\r\n";
+  char const *fmt = "   %s\r\n";
 #else
-    const char *fmt = "   %s\n";
+    char const *fmt = "   %s\n";
 #endif // ACE_WIN32
 
-    ACE_OS::sprintf(line_ptr, fmt, char_buf);
-    line_ptr += 3 + ACE_OS::strlen(char_buf);
+    std::sprintf (line_ptr, fmt, char_buf);
+    line_ptr += 3 + std::strlen (char_buf);
   }
 
-  return output_buffer;
+  output_buffer = std::move (new_buffer);
+  return output_buffer.get ();
 }

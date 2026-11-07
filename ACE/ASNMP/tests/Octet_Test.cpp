@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 
@@ -81,6 +80,7 @@ static void TestOctet()
   ACE_ASSERT(o1.valid() == 1);
   ACE_ASSERT(o1.length() == 0);
   ACE_ASSERT(o1.data() != nullptr);
+  ACE_ASSERT (std::strcmp (o1.to_string_hex (), "") == 0);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o1(\"\") [%s]\n",
     o1.to_string()));
   o1.set_data (reinterpret_cast<SmiBYTE const *> (str));
