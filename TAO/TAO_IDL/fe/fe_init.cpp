@@ -87,7 +87,7 @@ fe_populate_global_scope ()
   // No need to create a scoped name for the basic types, the
   // AST_PredefinedType constructor will do that.
 
-  AST_PredefinedType *pdt = nullptr;
+  AST_PredefinedType *pdt {};
   AST_Root *root =
     dynamic_cast<AST_Root*> (idl_global->root ());
 
@@ -383,7 +383,7 @@ FE_init ()
 void
 FE_populate ()
 {
-  AST_Root *r = nullptr;
+  AST_Root *r {};
 
   // Check that the BE init created a generator object
   if (idl_global->gen () == nullptr)

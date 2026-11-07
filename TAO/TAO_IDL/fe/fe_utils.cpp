@@ -477,7 +477,7 @@ FILE *
 FE_Utils::open_included_file (std::string const& filename,
                               std::string &directory)
 {
-  FILE * f = nullptr;
+  FILE * f {};
   std::string the_file ("/");
   the_file += filename;
 
@@ -503,7 +503,7 @@ FE_Utils::is_include_file_found (std::string &inc_file,
                                  std::string const& idl_file_name)
 {
   char abspath[MAXPATHLEN] = "";
-  char *full_path = nullptr;
+  char *full_path {};
 
   // If the include path has literal "s (because of an include
   // of a Windows path with spaces), we must remove them here.
@@ -566,7 +566,7 @@ FE_Utils::validate_included_idl_files ()
 
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
-  char *full_path = nullptr;
+  char *full_path {};
 
   // We are going to assemble a list of the include files found in
   // the top level file in the order that they are found in the pre-
@@ -756,10 +756,10 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
 
   UTL_Scope *prev_scope = prev_decl->defined_in ();
   UTL_Scope *curr_scope = curr_decl->defined_in ();
-  AST_Structure *s = nullptr;
-  AST_StructureFwd *s_fwd = nullptr;
-  AST_Template_Module *ptm = nullptr;
-  AST_Template_Module *ctm = nullptr;
+  AST_Structure *s {};
+  AST_StructureFwd *s_fwd {};
+  AST_Template_Module *ptm {};
+  AST_Template_Module *ctm {};
 
   bool nt_eq = (pnt == cnt);
   bool s_eq = (prev_scope == curr_scope);

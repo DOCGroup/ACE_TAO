@@ -255,9 +255,9 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
       return;
     }
 
-  AST_Decl *d = nullptr;
-  UTL_ScopedName *item = nullptr;
-  AST_Interface *i = nullptr;
+  AST_Decl *d {};
+  UTL_ScopedName *item {};
+  AST_Interface *i {};
 
   // Compute expanded flattened non-repeating list of interfaces
   // which this one inherits from.

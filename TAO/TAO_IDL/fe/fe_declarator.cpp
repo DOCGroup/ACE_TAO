@@ -133,7 +133,7 @@ FE_Declarator::compose (AST_Decl *d)
         }
     }
 
-  AST_Array *arr = nullptr;
+  AST_Array *arr {};
 
   // All uses of forward declared types must
   // not have a different prefix from the place of declaration.
