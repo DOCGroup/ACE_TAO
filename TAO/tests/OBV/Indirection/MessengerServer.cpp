@@ -4,8 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-char const *server_ior_file = "server.ior";
-
+constexpr char server_ior_file[] = "server.ior";
 
 void
 write_ior (char const *ior)
@@ -18,7 +17,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (ac, av);
+      CORBA::ORB_var const orb = CORBA::ORB_init (ac, av);
 
       NodeFactory::register_new_factory (*orb.in ());
       BoxedValueFactory::register_new_factory (*orb.in ());
@@ -27,15 +26,15 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[])
       ConfigValueFactory::register_new_factory (*orb.in ());
 
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var poaman = poa->the_POAManager ();
+      PortableServer::POAManager_var const poaman = poa->the_POAManager ();
 
-      PortableServer::Servant_var<Messenger_i> svt = new Messenger_i;
+      PortableServer::Servant_var<Messenger_i> const svt (new Messenger_i);
 
-      PortableServer::ObjectId_var id = poa->activate_object (svt.in ());
+      PortableServer::ObjectId_var const id = poa->activate_object (svt.in ());
       obj = poa->id_to_reference (id.in ());
-      CORBA::String_var ior = orb->object_to_string (obj.in ());
+      CORBA::String_var const ior = orb->object_to_string (obj.in ());
       write_ior (ior.in ());
 
       std::cout << "Starting server." << std::endl;

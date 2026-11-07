@@ -2,6 +2,7 @@
 #include "tao/ORB.h"
 #include "MessengerC.h"
 
+// The ORB runtime assumes ownership of values returned by these factories.
 class NodeFactory : public CORBA::ValueFactoryBase
 {
  public:
@@ -14,7 +15,6 @@ class NodeFactory : public CORBA::ValueFactoryBase
   static void register_new_factory (CORBA::ORB& orb);
   CORBA::ValueBase *create_for_unmarshal () override;
 };
-
 
 class BoxedValueFactory : public CORBA::ValueFactoryBase
 {
@@ -29,7 +29,6 @@ class BoxedValueFactory : public CORBA::ValueFactoryBase
   CORBA::ValueBase *create_for_unmarshal () override;
 };
 
-
 class BaseValueFactory : public CORBA::ValueFactoryBase
 {
  public:
@@ -42,7 +41,6 @@ class BaseValueFactory : public CORBA::ValueFactoryBase
   static void register_new_factory (CORBA::ORB& orb);
   CORBA::ValueBase *create_for_unmarshal () override;
 };
-
 
 class TValueFactory : public CORBA::ValueFactoryBase
 {

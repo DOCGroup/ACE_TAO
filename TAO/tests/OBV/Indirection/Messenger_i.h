@@ -34,16 +34,4 @@ protected:
   ~Messenger_i () override = default;
 };
 
-
-
-//class NodeImpl : public virtual POA_demo::value::idl::Node
-//class NodeFactory
-//  : public virtual CORBA::ValueFactoryBase
-//{
-//public:
-//  static void register_new_factory(CORBA::ORB& orb);
-//private:
-//  virtual CORBA::ValueBase* create_for_unmarshal();
-//};
-
 #endif
