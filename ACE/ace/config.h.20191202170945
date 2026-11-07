@@ -1,3 +1,0 @@
-#define ACE_HAS_VERSIONED_NAMESPACE 1
-#define ACE_MONITOR_FRAMEWORK 0
-#include "ace/config-linux.h"

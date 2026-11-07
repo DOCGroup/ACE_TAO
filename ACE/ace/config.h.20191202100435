@@ -1,3 +1,0 @@
-#define ACE_HAS_VERSIONED_NAMESPACE 1
-#include "ace/config-linux.h"
-//#undef ACE_HAS_CPP11
