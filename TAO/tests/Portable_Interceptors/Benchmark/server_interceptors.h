@@ -23,10 +23,12 @@ class Vault_Server_Request_Interceptor
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Interceptor ();
-  // cotr.
-  ~Vault_Server_Request_Interceptor ();
-  // dotr.
+  Vault_Server_Request_Interceptor () = default;
+  ~Vault_Server_Request_Interceptor () = default;
+  Vault_Server_Request_Interceptor (Vault_Server_Request_Interceptor const &) = delete;
+  Vault_Server_Request_Interceptor (Vault_Server_Request_Interceptor &&) = delete;
+  Vault_Server_Request_Interceptor &operator= (Vault_Server_Request_Interceptor const &) = delete;
+  Vault_Server_Request_Interceptor &operator= (Vault_Server_Request_Interceptor &&) = delete;
 
   virtual char * name ();
   // Canonical name of the interceptor.
@@ -45,7 +47,7 @@ public:
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Vault_Server_Interceptor" };
 };
 
 class Vault_Server_Request_Context_Interceptor
@@ -54,10 +56,12 @@ class Vault_Server_Request_Context_Interceptor
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Context_Interceptor ();
-  // cotr.
-  ~Vault_Server_Request_Context_Interceptor ();
-  // dotr.
+  Vault_Server_Request_Context_Interceptor () = default;
+  ~Vault_Server_Request_Context_Interceptor () = default;
+  Vault_Server_Request_Context_Interceptor (Vault_Server_Request_Context_Interceptor const &) = delete;
+  Vault_Server_Request_Context_Interceptor (Vault_Server_Request_Context_Interceptor &&) = delete;
+  Vault_Server_Request_Context_Interceptor &operator= (Vault_Server_Request_Context_Interceptor const &) = delete;
+  Vault_Server_Request_Context_Interceptor &operator= (Vault_Server_Request_Context_Interceptor &&) = delete;
 
   virtual char * name ();
   // Canonical name of the interceptor.
@@ -76,7 +80,7 @@ public:
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Vault_Server_Context_Interceptor" };
 };
 
 class Vault_Server_Request_Dynamic_Interceptor
@@ -85,10 +89,12 @@ class Vault_Server_Request_Dynamic_Interceptor
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Dynamic_Interceptor ();
-  // cotr.
-  ~Vault_Server_Request_Dynamic_Interceptor ();
-  // dotr.
+  Vault_Server_Request_Dynamic_Interceptor () = default;
+  ~Vault_Server_Request_Dynamic_Interceptor () = default;
+  Vault_Server_Request_Dynamic_Interceptor (Vault_Server_Request_Dynamic_Interceptor const &) = delete;
+  Vault_Server_Request_Dynamic_Interceptor (Vault_Server_Request_Dynamic_Interceptor &&) = delete;
+  Vault_Server_Request_Dynamic_Interceptor &operator= (Vault_Server_Request_Dynamic_Interceptor const &) = delete;
+  Vault_Server_Request_Dynamic_Interceptor &operator= (Vault_Server_Request_Dynamic_Interceptor &&) = delete;
 
   virtual char * name ();
   // Canonical name of the interceptor.
@@ -107,7 +113,7 @@ public:
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Vault_Server_Dynamic_Interceptor" };
 };
 
 class Vault_Server_Request_NOOP_Interceptor
@@ -116,10 +122,12 @@ class Vault_Server_Request_NOOP_Interceptor
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_NOOP_Interceptor ();
-  // cotr.
-  ~Vault_Server_Request_NOOP_Interceptor ();
-  // dotr.
+  Vault_Server_Request_NOOP_Interceptor () = default;
+  ~Vault_Server_Request_NOOP_Interceptor () = default;
+  Vault_Server_Request_NOOP_Interceptor (Vault_Server_Request_NOOP_Interceptor const &) = delete;
+  Vault_Server_Request_NOOP_Interceptor (Vault_Server_Request_NOOP_Interceptor &&) = delete;
+  Vault_Server_Request_NOOP_Interceptor &operator= (Vault_Server_Request_NOOP_Interceptor const &) = delete;
+  Vault_Server_Request_NOOP_Interceptor &operator= (Vault_Server_Request_NOOP_Interceptor &&) = delete;
 
   virtual char * name ();
   // Canonical name of the interceptor.
@@ -138,7 +146,7 @@ public:
   virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Vault_Server_NOOP_Interceptor" };
 };
 
 #if defined(_MSC_VER)

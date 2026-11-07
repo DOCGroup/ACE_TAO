@@ -22,15 +22,20 @@ class Secure_Vault_i : public POA_Test_Interceptors::Secure_Vault
 {
 public:
   /// ctor
-  Secure_Vault_i (CORBA::ORB_ptr orb);
+  explicit Secure_Vault_i (CORBA::ORB_ptr orb);
+
+  Secure_Vault_i (Secure_Vault_i const &) = delete;
+  Secure_Vault_i (Secure_Vault_i &&) = delete;
+  Secure_Vault_i &operator= (Secure_Vault_i const &) = delete;
+  Secure_Vault_i &operator= (Secure_Vault_i &&) = delete;
 
   virtual CORBA::Short ready ();
 
   /// Passwd sent in the service context list
-  virtual void authenticate (const char * user);
+  virtual void authenticate (char const *user);
 
-  virtual CORBA::Long update_records (CORBA::Long id,
-                                      const Test_Interceptors::Secure_Vault::Record & val);
+  CORBA::Long update_records (CORBA::Long id,
+                              Test_Interceptors::Secure_Vault::Record const &val);
 
   virtual void shutdown ();
 

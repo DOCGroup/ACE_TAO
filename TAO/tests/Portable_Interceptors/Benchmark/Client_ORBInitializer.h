@@ -5,6 +5,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/PI/PI.h"
+#include "Interceptor_Type.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,14 +27,19 @@ class Client_ORBInitializer :
 {
 public:
   /// Constructor
-  Client_ORBInitializer (int interceptor_type);
+  explicit Client_ORBInitializer (Interceptor_Type interceptor_type);
+
+  Client_ORBInitializer (Client_ORBInitializer const &) = delete;
+  Client_ORBInitializer (Client_ORBInitializer &&) = delete;
+  Client_ORBInitializer &operator= (Client_ORBInitializer const &) = delete;
+  Client_ORBInitializer &operator= (Client_ORBInitializer &&) = delete;
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
-  int interceptor_type_;
+  Interceptor_Type const interceptor_type_;
   // The type of interceptor that this initializer will create
 };
 
