@@ -13,12 +13,12 @@
 #include "ace/OS_NS_unistd.h"
 
 // Files which have the IOR
-const ACE_TCHAR *first_ior = 0;
-const ACE_TCHAR *first_key = 0;
-const ACE_TCHAR *second_ior = 0;
-const ACE_TCHAR *second_key = 0;
-const ACE_TCHAR *first_iogr_file = 0;
-const ACE_TCHAR *second_iogr_file = 0;
+ACE_TCHAR const *first_ior {};
+ACE_TCHAR const *first_key {};
+ACE_TCHAR const *second_ior {};
+ACE_TCHAR const *second_key {};
+ACE_TCHAR const *first_iogr_file {};
+ACE_TCHAR const *second_iogr_file {};
 
 int sleep_delay = 15; //seconds
 
@@ -454,7 +454,7 @@ Client_i::init ()
   ACE_OS::sprintf (iogrstr, "file://%s", ACE_TEXT_ALWAYS_CHAR (first_iogr_file));
 
   int argc = 0;
-  ACE_TCHAR **argv = 0;
+  ACE_TCHAR **argv {};
   this->orb_ = CORBA::ORB_init (argc, argv);
 
   CORBA::Object_var object =
