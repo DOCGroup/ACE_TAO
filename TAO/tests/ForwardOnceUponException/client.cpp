@@ -142,7 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (options.shutdown)
         {
           CORBA::Object_var const object = orb->string_to_object (
-            ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+            options.ior.c_str ());
 
           Simple_Server_var const server =
             Simple_Server::_narrow (object.in ());
@@ -195,7 +195,7 @@ Worker::svc ()
   try
     {
       CORBA::Object_var const object = this->orb_->string_to_object (
-        ACE_TEXT_ALWAYS_CHAR (this->ior_.c_str ()));
+        this->ior_.c_str ());
 
       Simple_Server_var const server =
         Simple_Server::_narrow (object.in ());

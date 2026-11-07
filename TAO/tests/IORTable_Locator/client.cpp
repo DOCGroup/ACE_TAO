@@ -51,7 +51,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "IORTable::Locator entry...\n"));
 
           CORBA::Object_var const client_object =
-            orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.test_ior.c_str ()));
+            orb->string_to_object (options.test_ior.c_str ());
 
           simple::SimpleTest_T_var const simple_test_client =
             simple::SimpleTest_T::_narrow (client_object.in ());

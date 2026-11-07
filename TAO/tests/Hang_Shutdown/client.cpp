@@ -187,7 +187,7 @@ namespace Test
           return -1;
 
         CORBA::Object_var const tmp = orb->string_to_object (
-          ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+          options.ior.c_str ());
 
         Hang_var const test =
           Hang::_narrow (tmp.in ());

@@ -59,7 +59,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
 
   // Get the Object references.
   CORBA::Object_var object = this->orb_->string_to_object (
-    ACE_TEXT_ALWAYS_CHAR (this->base_object_ref_.c_str ()));
+    this->base_object_ref_.c_str ());
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
     return false;
@@ -71,7 +71,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
     return false;
 
   object = this->orb_->string_to_object (
-    ACE_TEXT_ALWAYS_CHAR (this->overridden_object_ref_.c_str ()));
+    this->overridden_object_ref_.c_str ());
 
   if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
     return false;

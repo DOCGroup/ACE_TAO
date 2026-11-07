@@ -143,7 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           // Get object reference for opponent.
           CORBA::Object_var const object =
-            orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.input_ior.c_str ()));
+            orb->string_to_object (options.input_ior.c_str ());
           opponent = A::Test::_narrow (object.in ());
         }
       while (options.mode == A::RM_SLAVE && CORBA::is_nil (opponent.in ()));

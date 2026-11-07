@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::Controller::_narrow (object_act.in ());
 
       CORBA::Object_var const manager_object =
-        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (options.ior.c_str ()));
+        orb->string_to_object (options.ior.c_str ());
 
       Test::Manager_var const manager =
         Test::Manager::_narrow (manager_object.in ());

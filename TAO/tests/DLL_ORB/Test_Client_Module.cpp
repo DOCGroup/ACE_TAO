@@ -93,7 +93,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var const obj =
-        this->orb_->string_to_object (ACE_TEXT_ALWAYS_CHAR (ior.c_str ()));
+        this->orb_->string_to_object (ior.c_str ());
 
       this->test_ =
         Test::_narrow (obj.in ());
